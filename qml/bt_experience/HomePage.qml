@@ -82,19 +82,23 @@ ToolBar {
 	 ListModel {
 		 id: usersModel
 		 ListElement {
-			 image: "bimbi.jpg"
-			 name: "bimbi"
+			 image: "profiles/camilla.jpg"
+			 name: "camilla"
 		 }
 		 ListElement {
-			 image: "papa.jpg"
+			 image: "profiles/mattia.jpg"
+			 name: "mattia"
+		 }
+		 ListElement {
+			 image: "profiles/papa.jpg"
 			 name: "papà"
 		 }
 		 ListElement {
-			 image: "mamma.jpg"
+			 image: "profiles/mamma.jpg"
 			 name: "mamma"
 		 }
 		 ListElement {
-			 image: "famiglia.jpg"
+			 image: "profiles/famiglia.jpg"
 			 name: "famiglia"
 		 }
 	 }
@@ -178,106 +182,39 @@ ToolBar {
 	  width: 150
 	  spacing: 5
 
-	  Rectangle {
-		  id: multimedia
+	  ButtonHomePageLink {
 		  width: parent.width
 		  height: 66
-		color: "#394d58"
-		opacity: 0.8
-		Text {
-	  color: "#ffffff"
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 10
-			anchors.right: parent.right
-			anchors.rightMargin: 20
-			text: "multimedia"
-			verticalAlignment: Text.AlignTop
-			font.bold: true
-		}
-		smooth: true
-		transform: Rotation { origin.x: multimedia.x + multimedia.width ; origin.y: multimedia.y + multimedia.height; axis { x: 0; y: 1; z: 0 } angle: -25 }
-
-		MouseArea {
-			anchors.fill: parent
-			onPressed: parent.color = "#475f69"
-			onReleased: parent.color = "#394d58"
-			onClicked: console.log("clicked")
-		}
+		  text: "multimedia"
+		  icon: "pages/ico_multimedia.png"
 	  }
 
-	  Rectangle {
-		id: rooms
-		width: parent.width
-		height: 66
-		color: "#394d58"
-		opacity: 0.8
-		Text {
-	  color: "#ffffff"
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 10
-			anchors.right: parent.right
-			anchors.rightMargin: 20
-			text: "stanze"
-			font.bold: true
-		}
-		smooth: true
-		transform: Rotation { origin.x: rooms.x + rooms.width ; origin.y: 0; axis { x: 0; y: 1; z: 0 } angle: -25 }
-		MouseArea {
-			anchors.fill: parent
-			onPressed: parent.color = "#475f69"
-			onReleased: parent.color = "#394d58"
-			onClicked: console.log("clicked")
-		}
-	  }
-
-	  Rectangle {
-		  id: systems
+	  ButtonHomePageLink {
 		  width: parent.width
-		  height: 64
-		  color: "#394d58"
-		  opacity: 0.8
-		Text {
-	  color: "#ffffff"
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 10
-			anchors.right: parent.right
-			anchors.rightMargin: 20
-			text: "sistemi"
-			font.bold: true
-		}
-		smooth: true
-		transform: Rotation { origin.x: systems.x + systems.width ; origin.y: 0; axis { x: 0; y: 1; z: 0 } angle: -25 }
-		MouseArea {
-			anchors.fill: parent
-			onPressed: parent.color = "#475f69"
-			onReleased: parent.color = "#394d58"
-			onClicked: Stack.openPage("Systems.qml")
-		}
+		  height: 66
+		  text: "stanze"
+		  icon: "pages/ico_stanze.png"
+		  x_origin: x + width
+		  y_origin: 0
 	  }
 
-	  Rectangle {
-		  id: settings
+	  ButtonHomePageLink {
 		  width: parent.width
-		  height: 68
-		  color: "#394d58"
-		  opacity: 0.8
-		Text {
-	  color: "#ffffff"
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 10
-			anchors.right: parent.right
-			anchors.rightMargin: 20
-			text: "opzioni"
-		font.bold: true
-		}
-		smooth: true
-		transform: Rotation { origin.x: settings.x + settings.width ; origin.y: 0; axis { x: 0; y: 1; z: 0 } angle: -25 }
-		MouseArea {
-			anchors.fill: parent
-			onPressed: parent.color = "#475f69"
-			onReleased: parent.color = "#394d58"
-			onClicked: console.log("clicked")
-		}
+		  height: 66
+		  text: "sistemi"
+		  icon: "pages/ico_sistemi.png"
+		  x_origin: x + width
+		  y_origin: 0
+		  onClicked: Stack.openPage("Systems.qml")
+	  }
+
+	  ButtonHomePageLink {
+		  width: parent.width
+		  height: 66
+		  text: "opzioni"
+		  icon: "pages/ico_opzioni.png"
+		  x_origin: x + width
+		  y_origin: 0
 	  }
   }
  }
