@@ -249,12 +249,18 @@ Image {
 			anchors.right: parent.right
 			anchors.rightMargin: 20
 			text: "multimedia"
-   verticalAlignment: Text.AlignTop
+			verticalAlignment: Text.AlignTop
 			font.bold: true
-
 		}
 		smooth: true
 		transform: Rotation { origin.x: multimedia.x + multimedia.width ; origin.y: multimedia.y + multimedia.height; axis { x: 0; y: 1; z: 0 } angle: -25 }
+
+		MouseArea {
+			anchors.fill: parent
+			onPressed: parent.color = "#475f69"
+			onReleased: parent.color = "#394d58"
+			onClicked: console.log("clicked")
+		}
 	  }
 
 	  Rectangle {
@@ -274,6 +280,12 @@ Image {
 		}
 		smooth: true
 		transform: Rotation { origin.x: rooms.x + rooms.width ; origin.y: 0; axis { x: 0; y: 1; z: 0 } angle: -25 }
+		MouseArea {
+			anchors.fill: parent
+			onPressed: parent.color = "#475f69"
+			onReleased: parent.color = "#394d58"
+			onClicked: console.log("clicked")
+		}
 	  }
 
 	  Rectangle {
@@ -293,6 +305,12 @@ Image {
 		}
 		smooth: true
 		transform: Rotation { origin.x: systems.x + systems.width ; origin.y: 0; axis { x: 0; y: 1; z: 0 } angle: -25 }
+		MouseArea {
+			anchors.fill: parent
+			onPressed: parent.color = "#475f69"
+			onReleased: parent.color = "#394d58"
+			onClicked: console.log("clicked")
+		}
 	  }
 
 	  Rectangle {
@@ -312,6 +330,12 @@ Image {
 		}
 		smooth: true
 		transform: Rotation { origin.x: settings.x + settings.width ; origin.y: 0; axis { x: 0; y: 1; z: 0 } angle: -25 }
+		MouseArea {
+			anchors.fill: parent
+			onPressed: parent.color = "#475f69"
+			onReleased: parent.color = "#394d58"
+			onClicked: console.log("clicked")
+		}
 	  }
   }
  }
