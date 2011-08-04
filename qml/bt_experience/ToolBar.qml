@@ -1,7 +1,9 @@
 import QtQuick 1.0
+import "Stack.js" as Stack
 
 Rectangle {
 	id: toolbar
+	property bool home: false
 	height: 50
 	gradient: Gradient {
 	 GradientStop {
@@ -26,6 +28,18 @@ Rectangle {
 	anchors.topMargin: 0
 	visible: true
 	opacity: 0.6
+
+	Image {
+		id: homebutton
+		x: 15
+		y: 18
+		source: "home.png"
+		visible: home
+		MouseArea {
+			anchors.fill: parent
+			onClicked: Stack.backToHome()
+		}
+	}
 
  Text {
 	 id: temperature
@@ -57,4 +71,6 @@ Rectangle {
 		 onTriggered: time.text = Qt.formatTime(new Date, "hh:mm")
 	 }
  }
+
+
 }

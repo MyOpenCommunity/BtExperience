@@ -1,9 +1,10 @@
 
 Page {
 	id: systems
-	source: "bg.png"
+	source: "bg2.jpg"
 
 	ToolBar {
 		id: toolbar
+		home: true
 	}
 }
