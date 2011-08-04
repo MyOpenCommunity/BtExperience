@@ -1,9 +1,11 @@
 import QtQuick 1.0
-import "Stack.js" as Stack
 
 Rectangle {
 	id: toolbar
-	property bool home: false
+
+	property string customButton: "ico_home.png"
+	signal customClicked
+
 	height: 50
 	gradient: Gradient {
 	 GradientStop {
@@ -29,48 +31,47 @@ Rectangle {
 	visible: true
 	opacity: 0.6
 
-	Image {
-		id: homebutton
-		x: 15
-		y: 18
-		source: "home.png"
-		visible: home
-		MouseArea {
-			anchors.fill: parent
-			onClicked: Stack.backToHome()
+
+		Image {
+			id: custombutton
+			y: 11
+			x: 20
+			source: customButton
+			MouseArea {
+				anchors.fill: parent
+				onClicked: toolbar.customClicked()
+			}
 		}
-	}
 
- Text {
-	 id: temperature
-	 x: 51
-	 y: 18
-	 text: "19°C"
-  font.bold: true
-	 font.pixelSize: 12
- }
+		Text {
+			id: temperature
+			y: 16
+			x: 60
+			text: "19°C"
+			font.bold: true
+			font.pixelSize: 12
+		}
 
- Text {
-	 id: date
-	 x: 110
-	 y: 18
-	 text: Qt.formatDate(new Date, "dd/MM/yyyy")
-	 font.bold: true
-	 font.pixelSize: 12
- }
+		Text {
+			id: date
+			y: 16
+			x: 120
+			text: Qt.formatDate(new Date, "dd/MM/yyyy")
+			font.bold: true
+			font.pixelSize: 12
+		}
 
- Text {
-	 id: time
-	 x: 214
-	 y: 18
-	 text: Qt.formatTime(new Date, "hh:mm")
-	 font.bold: true
-	 font.pixelSize: 12
-	 Timer {
-		 interval: 500; running: true; repeat: true
-		 onTriggered: time.text = Qt.formatTime(new Date, "hh:mm")
-	 }
- }
-
+		Text {
+			id: time
+			y: 16
+			x: 220
+			text: Qt.formatTime(new Date, "hh:mm")
+			font.bold: true
+			font.pixelSize: 12
+			Timer {
+				interval: 500; running: true; repeat: true
+				onTriggered: time.text = Qt.formatTime(new Date, "hh:mm")
+			}
+		}
 
 }

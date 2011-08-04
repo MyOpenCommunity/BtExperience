@@ -1,3 +1,6 @@
+import QtQuick 1.0
+import "Stack.js" as Stack
+
 
 Page {
 	id: systems
@@ -5,6 +8,6 @@ Page {
 
 	ToolBar {
 		id: toolbar
-		home: true
+		onCustomClicked: Stack.backToHome()
 	}
 }

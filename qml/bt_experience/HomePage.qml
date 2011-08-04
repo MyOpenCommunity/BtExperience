@@ -7,6 +7,8 @@ Page {
 
 ToolBar {
 	id: toolbar
+	customButton: "ico_spegni.png"
+	onCustomClicked: console.log("exit")
 }
 
  ListView {
