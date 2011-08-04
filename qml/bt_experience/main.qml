@@ -9,6 +9,21 @@ Image {
  Rectangle {
 	 id: toolbar
 	 height: 50
+  gradient: Gradient {
+	  GradientStop {
+		  position: 0
+		  color: "#ffffff"
+	  }
+
+	  GradientStop {
+		  position: 0.6
+		  color: "#c9c9c7"
+	  }
+	  GradientStop {
+		  position: 1
+		  color: "#757573"
+	  }
+  }
 	 anchors.right: parent.right
 	 anchors.rightMargin: 0
 	 anchors.left: parent.left
@@ -31,18 +46,22 @@ Image {
 	  id: date
 	  x: 110
 	  y: 18
-	  text: "03/08/2011"
-   font.bold: true
+	  text: Qt.formatDate(new Date, "dd/MM/yyyy")
+	  font.bold: true
 	  font.pixelSize: 12
   }
 
   Text {
-	  id: text1
+	  id: time
 	  x: 214
 	  y: 18
-	  text: "17:53"
-   font.bold: true
+	  text: Qt.formatTime(new Date, "hh:mm")
+	  font.bold: true
 	  font.pixelSize: 12
+	  Timer {
+		  interval: 500; running: true; repeat: true
+		  onTriggered: time.text = Qt.formatTime(new Date, "hh:mm")
+	  }
   }
  }
 
@@ -102,11 +121,13 @@ Image {
 	 }
 
 	 id: favourites
+  x: 0
 	 model: favouritesModel
 	 delegate: favouritesDelegate
 	 orientation: ListView.Horizontal
-	 y: 380
-	 height: 100
+	 y: 372
+  width: 800
+	 height: 108
 	 anchors.right: parent.right
 	 anchors.rightMargin: 0
 	 anchors.left: parent.left
