@@ -3,10 +3,11 @@ import QtQuick 1.0
 Rectangle {
 	id: toolbar
 
-	property string customButton: "ico_home.png"
+	property string customButton: "toolbar/ico_home.png"
 	signal customClicked
 
-	height: 50
+	width: 800 // useful for the Qt Quick designer
+	height: 49
 	gradient: Gradient {
 	 GradientStop {
 		 position: 0
@@ -73,5 +74,33 @@ Rectangle {
 				onTriggered: time.text = Qt.formatTime(new Date, "hh:mm")
 			}
 		}
+
+  Image {
+	  id: image1
+	  x: 560
+	  y: 11
+	  source: "toolbar/ico_ora.png"
+  }
+
+  Image {
+	  id: image2
+	  x: 600
+	  y: 11
+	  source: "toolbar/ico_allarme.png"
+  }
+
+  Image {
+	  id: image3
+	  x: 641
+	  y: 11
+	  source: "toolbar/ico_antifurtoIns.png"
+  }
+
+  Image {
+	  id: image4
+	  x: 696
+	  y: 14
+	  source: "toolbar/logo.png"
+  }
 
 }

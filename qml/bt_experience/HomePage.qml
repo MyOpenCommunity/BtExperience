@@ -7,7 +7,7 @@ Page {
 
 ToolBar {
 	id: toolbar
-	customButton: "ico_spegni.png"
+	customButton: "toolbar/ico_spegni.png"
 	onCustomClicked: console.log("exit")
 }
 
