@@ -16,21 +16,34 @@ function openPage(filename) {
 }
 
 function pushPage(page) {
-	for (var i = 0; i < stack.length; i++) // we can do better
-		stack[i].visible = false
 
+	if (stack.length > 0) {
+		page.state = 'offscreen_right'
+		page.state = ''
+	}
 	stack.push(page)
 }
 
+function pushPageDone() {
+	for (var i = 1; i < stack.length; i++)
+		stack[i].z = 0
+}
+
 function backToHome() {
+	stack[0].state = 'offscreen_left'
+	stack[0].state = ''
+
+	return stack[0]
+}
+
+function backToHomeDone() {
 	for (var i = 1; i < stack.length; i++) {
 		stack[i].visible = false
-		stack[i].destroy() // destroy or not destroy?
+		stack[i].destroy()
 	}
 
 	stack.length = 1
-
-	stack[0].visible = true
-	return stack[0]
+	stack[0].z = 0
 }
+
 
