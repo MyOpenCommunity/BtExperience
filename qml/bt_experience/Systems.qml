@@ -88,9 +88,9 @@ Page {
 		model: systemsModel
 		delegate: systemsDelegate
 		path:  Path {
-		   startX: 200; startY: 100
+		   startX: 300; startY: 100
 		   PathAttribute { name: "iconScale"; value: 0.6 }
-		   PathLine { x: 450; y: 240 }
+		   PathLine { x: 600; y: 240 }
 		   PathAttribute { name: "iconScale"; value: 1.0 }
 		}
 
@@ -99,4 +99,13 @@ Page {
 		y: 100
 		interactive: false
 	}
+
+ Text {
+	 id: text1
+	 x: 36
+	 y: 356
+	 color: "#ffffff"
+	 text: "SISTEMI"
+	 font.pixelSize: 80
+ }
 }
