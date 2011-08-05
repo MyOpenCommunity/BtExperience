@@ -15,6 +15,16 @@ Page {
 		ListModel {
 			id: systemsModel
 			ListElement {
+				image: "systems/automazione.jpg"
+				name: "automazione"
+				target: ""
+			}
+			ListElement {
+				image: "systems/scenari.jpg"
+				name: "scenari"
+				target: ""
+			}
+			ListElement {
 				image: "systems/termoregolazione.jpg"
 				name: "termoregolazione"
 				target: ""
@@ -43,16 +53,20 @@ Page {
 					opacity: 0.4
 					color: "#000000"
 				}
-				Text {
-					opacity: 1
-					color: "#ffffff"
-					rotation: 270
+				Item {
+					Text {
+						opacity: 1
+						color: "#ffffff"
+						rotation: 270
+						text: name
+						font.bold: false
+						font.pixelSize: 20
+						anchors.fill: parent
+					}
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
-					anchors.bottomMargin: 80
-					text: name
-					font.bold: false
-					font.pixelSize: 20
+					anchors.bottomMargin: 20
+					anchors.leftMargin: 10
 				}
 				source: image
 				smooth: true

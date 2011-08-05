@@ -120,16 +120,22 @@ ToolBar {
 				 opacity: 0.4
 				 color: "#000000"
 			 }
-			 Text {
-				 opacity: 1
-				 color: "#ffffff"
-				 rotation: 270
+
+
+			 Item {
+				 Text {
+					 opacity: 1
+					 color: "#ffffff"
+					 rotation: 270
+					 text: name
+					 font.bold: false
+					 font.pixelSize: 16
+					 anchors.fill: parent
+				 }
 				 anchors.bottom: parent.bottom
 				 anchors.left: parent.left
-				 anchors.bottomMargin: 30
-				 text: name
-				 font.bold: false
-				 font.pixelSize: 16
+				 anchors.bottomMargin: 20
+				 anchors.leftMargin: 10
 			 }
 			 source: image
 			 smooth: true
