@@ -10,14 +10,21 @@ Page {
 		id: toolbar
 		onCustomClicked: Stack.backToHome()
 	}
+	 FontLoader { id: localFont; source: "MyriadPro-Light.otf" }
 
- Text {
-	 id: text1
-	 x: -114
-	 y: 222
-	 color: "#ffffff"
-	 text: "illuminazione"
-	 rotation: 270
-	 font.pixelSize: 50
+ Item {
+	 x: 50
+	 y: 400
+
+	 Text {
+		 id: text1
+		 color: "#ffffff"
+		 text: "illuminazione"
+		 rotation: 270
+		 font.pixelSize: 54
+		 font.family: localFont.name
+		 anchors.fill: parent
+	 }
  }
+
 }
