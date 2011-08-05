@@ -47,7 +47,7 @@ Rectangle {
 		Text {
 			id: temperature
 			y: 16
-			x: 60
+			x: 69
 			text: "19°C"
 			font.bold: true
 			font.pixelSize: 12
@@ -56,7 +56,7 @@ Rectangle {
 		Text {
 			id: date
 			y: 16
-			x: 120
+			x: 124
 			text: Qt.formatDate(new Date, "dd/MM/yyyy")
 			font.bold: true
 			font.pixelSize: 12
@@ -65,7 +65,7 @@ Rectangle {
 		Text {
 			id: time
 			y: 16
-			x: 220
+			x: 221
 			text: Qt.formatTime(new Date, "hh:mm")
 			font.bold: true
 			font.pixelSize: 12

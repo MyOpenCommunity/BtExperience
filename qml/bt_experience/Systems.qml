@@ -17,10 +17,12 @@ Page {
 			ListElement {
 				image: "systems/termoregolazione.jpg"
 				name: "termoregolazione"
+				target: ""
 			}
 			ListElement {
 				image: "systems/illuminazione.jpg"
 				name: "illuminazione"
+				target: "Lighting.qml"
 			}
 
 		}
@@ -57,6 +59,14 @@ Page {
 				width: 450
 				height: 300
 				transform: Rotation { origin.x: 30; origin.y: 30; axis { x: 0; y: 1; z: 0 } angle: 30 }
+
+				MouseArea {
+					anchors.fill:  parent
+					onClicked: {
+						if (target !== "")
+							Stack.openPage(target)
+					}
+				}
 			}
 
 		}

@@ -16,7 +16,7 @@ function openPage(filename) {
 }
 
 function pushPage(page) {
-	for(var i = stack.length - 2; i >= 0; i--)
+	for (var i = 0; i < stack.length; i++) // we can do better
 		stack[i].visible = false
 
 	stack.push(page)
@@ -30,6 +30,7 @@ function backToHome() {
 
 	stack.length = 1
 
+	stack[0].visible = true
 	return stack[0]
 }
 
