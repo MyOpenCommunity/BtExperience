@@ -63,7 +63,7 @@ Page {
      anchors.left: back_button.right
      anchors.leftMargin: 20
 
-     delegate: Rectangle {
+     delegate: Item {
          height: 50
          width: background.sourceSize.width
 
@@ -79,8 +79,8 @@ Page {
              z: 1
 
              Image {
-                 id: status
-                 source: "common/off.png"
+                 id: icon_status
+                 source: is_on === true ? "common/on.png" :"common/off.png";
                  anchors.left: parent.left
                  anchors.leftMargin: 0
                  anchors.top: parent.top
@@ -91,7 +91,7 @@ Page {
                  id: text
                  text: name
                  wrapMode: "WordWrap"
-                 anchors.left: status.right
+                 anchors.left: icon_status.right
                  anchors.top: parent.top
                  anchors.topMargin: 5
                  anchors.bottom: parent.bottom
@@ -107,40 +107,43 @@ Page {
                  anchors.top: parent.top
                  anchors.topMargin: 0
              }
-
-
          }
-
-
      }
 
      model: ListModel {
          ListElement {
              name: "lampada scrivania"
+             is_on: true
          }
 
          ListElement {
              name: "lampadario soggiorno"
+             is_on: false
          }
 
          ListElement {
              name: "faretti soggiorno"
+             is_on: false
          }
 
          ListElement {
              name: "lampada da terra soggiorno"
+             is_on: false
          }
 
          ListElement {
              name: "abat jour"
+             is_on: true
          }
 
          ListElement {
              name: "abat jour"
+             is_on: true
          }
 
          ListElement {
              name: "lampada studio"
+             is_on: true
          }
      }
  }
