@@ -62,6 +62,8 @@ Page {
      height: 350
      anchors.left: back_button.right
      anchors.leftMargin: 20
+     currentIndex: -1
+
 
      delegate: Item {
          height: 50
@@ -71,7 +73,7 @@ Page {
              anchors.fill: parent
              z: 0
              id: background
-             source: "common/tasto_menu.png"
+             source: "common/tasto_menu.png";
          }
 
          Item {
@@ -107,6 +109,18 @@ Page {
                  anchors.top: parent.top
                  anchors.topMargin: 0
              }
+         }
+         MouseArea {
+             anchors.fill: parent
+             onClicked: objects_list.currentIndex = index
+         }
+
+         states: State {
+             name: "selected"
+             when: ListView.isCurrentItem
+             PropertyChanges { target: text; color: "#ffffff" }
+             PropertyChanges { target: arrow_right; source: "common/freccia_dxS.png" }
+             PropertyChanges { target: background; source: "common/tasto_menuS.png" }
          }
      }
 
