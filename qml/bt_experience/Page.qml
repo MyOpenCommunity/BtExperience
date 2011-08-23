@@ -27,7 +27,6 @@ Image {
 		Transition {
 			from: 'offscreen_right'; to: ''
 			SequentialAnimation {
-				PropertyAction { target: page; property: "z"; value: "1" }
 				PropertyAnimation { properties: "x"; duration: 1000; easing.type: Easing.OutBack }
 				ScriptAction { script: Stack.pushPageDone(); }
 			}
@@ -35,7 +34,6 @@ Image {
 			Transition {
 			from: 'offscreen_left'; to: ''
 			SequentialAnimation {
-				PropertyAction { target: page; property: "z"; value: "1" }
 				PropertyAnimation { properties: "x"; duration: 1000; easing.type: Easing.OutBack }
 				ScriptAction { script: Stack.backToHomeDone(); }
 			}
