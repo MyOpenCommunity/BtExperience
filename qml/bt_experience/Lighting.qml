@@ -1,6 +1,6 @@
 import QtQuick 1.0
 import "Stack.js" as Stack
-
+import "Library.js" as Library
 
 Page {
     id: systems
@@ -16,7 +16,7 @@ Page {
      anchors.left: parent.left
      anchors.leftMargin: 50
      y: 370
-     id: main_text
+     id: mainText
 
      Text {
              color: "#ffffff"
@@ -30,9 +30,9 @@ Page {
 
  Image {
      y: 80
-     id: back_button
+     id: backButton
      source: "common/tasto_indietro.png"
-     anchors.left: main_text.right
+     anchors.left: mainText.right
      anchors.leftMargin: 105
      Image {
          id: arrow_left
@@ -51,16 +51,16 @@ Page {
      states: State {
          name: "pressed"
          when: mousearea.pressed === true;
-//         PropertyChanges { target: back_button; source: "common/tasto_indietroP.png" }
+//         PropertyChanges { target: backButton; source: "common/tasto_indietroP.png" }
 //         PropertyChanges { target: arrow_left; source: "common/freccia_sxS.png" }
      }
  }
 
  ListView {
-     id: objects_list
+     id: itemList
      y: 80
      height: 350
-     anchors.left: back_button.right
+     anchors.left: backButton.right
      anchors.leftMargin: 20
      currentIndex: -1
 
@@ -82,7 +82,7 @@ Page {
 
              Image {
                  id: icon_status
-                 source: is_on === true ? "common/on.png" :"common/off.png";
+                 source: isOn === true ? "common/on.png" :"common/off.png";
                  anchors.left: parent.left
                  anchors.leftMargin: 0
                  anchors.top: parent.top
@@ -112,7 +112,11 @@ Page {
          }
          MouseArea {
              anchors.fill: parent
-             onClicked: objects_list.currentIndex = index
+             onClicked: {
+                 itemList.currentIndex = index
+                 itemDetails.visible = true
+                 Library.showItem(componentFile, itemDetails)
+             }
          }
 
          states: State {
@@ -127,39 +131,55 @@ Page {
      model: ListModel {
          ListElement {
              name: "lampada scrivania"
-             is_on: true
+             isOn: true
+             componentFile: "lights/Light.qml"
          }
 
          ListElement {
              name: "lampadario soggiorno"
-             is_on: false
+             isOn: false
+             componentFile: "lights/Light.qml"
          }
 
          ListElement {
              name: "faretti soggiorno"
-             is_on: false
+             isOn: false
+             componentFile: "lights/Dimmer.qml"
          }
 
          ListElement {
              name: "lampada da terra soggiorno"
-             is_on: false
+             isOn: false
+             componentFile: "lights/Light.qml"
          }
 
          ListElement {
              name: "abat jour"
-             is_on: true
+             isOn: true
+             componentFile: "lights/Light.qml"
          }
 
          ListElement {
              name: "abat jour"
-             is_on: true
+             isOn: true
+             componentFile: "lights/Light.qml"
          }
 
          ListElement {
              name: "lampada studio"
-             is_on: true
+             isOn: true
+             componentFile: "lights/Light.qml"
          }
      }
+ }
+
+ Item {
+     id: itemDetails
+     x: 417
+     y: 80
+     width: 204
+     height: 350
+     visible: false
  }
 
 }
