@@ -4,6 +4,7 @@ Image {
     source: "dimmer_bg.png"
     ButtonOnOff {
         id: onOff
+        onClicked: status = newStatus
     }
 
     Text {
@@ -22,17 +23,20 @@ Image {
     Image {
         id: dimmerReg
         source: "dimmer_reg_bg.png"
+        property alias percentage: barPercentage.percentage
         anchors.top: textDimmer.bottom
         anchors.topMargin: 11
         anchors.horizontalCenter: parent.horizontalCenter
 
         Image {
+            id: barPercentage
+            property int percentage: 75
             source: "dimmer_reg.png"
             anchors.left: parent.left
-            width: parent.width / 100 * 75
+            width: parent.width / 100 * percentage
 
             Text {
-                text: "75%"
+                text: parent.percentage + "%"
                 color: "#444546"
                 anchors.right: parent.right
                 anchors.rightMargin: 10
@@ -45,6 +49,16 @@ Image {
         id: dimmerMinusPlus
         anchors.top: dimmerReg.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+        onPlusClicked: {
+            dimmerReg.percentage += 5
+            if (dimmerReg.percentage > 100)
+                dimmerReg.percentage = 100
+        }
+        onMinusClicked: {
+            dimmerReg.percentage -= 5
+            if (dimmerReg.percentage < 0)
+                dimmerReg.percentage = 0
+        }
     }
 
     Image {
