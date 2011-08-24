@@ -26,7 +26,7 @@ Page {
                 ListElement {
                     image: "systems/termoregolazione.jpg"
                     name: "termoregolazione"
-                    target: ""
+                    target: "ThermalRegulation.qml"
                 }
                 ListElement {
                     image: "systems/illuminazione.jpg"
