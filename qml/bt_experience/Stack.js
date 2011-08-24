@@ -29,37 +29,33 @@ function pushPage(page) {
     current_index = stack.length - 1;
 }
 
-function pushPageDone() {
-    for (var i = 1; i < stack.length; i++)
-        stack[i].z = 0
+function showPreviousPage(index) {
+    stack[index].visible = true
+    stack[index].z = 1
+    stack[index].state = 'offscreen_left'
+    stack[index].state = ''
+    current_index = index
 }
 
-
 function popPage() {
-    if (stack.length > 1) {
-        var prev_index = stack.length - 2
-        stack[prev_index].state = 'offscreen_left'
-        stack[prev_index].state = ''
-        stack[prev_index].z = 1
-        current_index = prev_index
-    }
+    if (stack.length > 1)
+        showPreviousPage(stack.length - 2)
 }
 
 function backToHome() {
-    stack[0].state = 'offscreen_left'
-    stack[0].state = ''
-    stack[0].z = 1
-    current_index = 0
+    showPreviousPage(0)
 }
 
-function backToHomeDone() {
-    for (var i = current_index + 1; i < stack.length; i++) {
-        stack[i].visible = false
-        stack[i].destroy()
+function changePageDone() {
+    for (var i = 0; i < stack.length; i++) {
+        if (i != current_index)
+            stack[i].visible = false
+
+        if (i <= current_index)
+            stack[i].z = 0
+        else if (i > current_index)
+            stack[i].destroy()
     }
-
     stack.length = current_index + 1
-    stack[current_index].z = 0
 }
-
 
