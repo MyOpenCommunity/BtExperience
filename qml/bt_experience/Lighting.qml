@@ -116,6 +116,7 @@ Page {
                  itemList.currentIndex = index
                  itemDetails.visible = true
                  Library.showItem(componentFile, itemDetails)
+                 headingText.text = name
              }
          }
 
@@ -180,6 +181,18 @@ Page {
      width: 194
      height: 350
      visible: false
+ }
+
+ Text {
+     id: headingText
+     x: 225
+     y: 54
+     width: 544
+     height: 25
+     color: "#ffffff"
+     horizontalAlignment: Text.AlignHCenter
+     font.pixelSize: 14
+     font.capitalization: Font.AllUppercase
  }
 
 }
