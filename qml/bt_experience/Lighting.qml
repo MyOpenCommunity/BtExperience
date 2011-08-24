@@ -175,9 +175,9 @@ Page {
 
  Item {
      id: itemDetails
-     x: 417
+     x: 416
      y: 80
-     width: 204
+     width: 194
      height: 350
      visible: false
  }
