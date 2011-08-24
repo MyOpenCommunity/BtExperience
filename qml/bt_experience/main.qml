@@ -3,10 +3,10 @@ import "Stack.js" as Stack
 
 
 Page {
-	id: container
+    id: container
 
-	Component.onCompleted: {
-		Stack.container = container
-		Stack.openPage("HomePage.qml")
-	}
+    Component.onCompleted: {
+        Stack.container = container
+        Stack.openPage("HomePage.qml")
+    }
 }

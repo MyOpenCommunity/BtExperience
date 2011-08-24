@@ -109,6 +109,7 @@ ToolBar {
 		 id: usersDelegate
 		 Image {
 			scale: PathView.iconScale
+                        z: PathView.z
 			 Rectangle {
 				 id: userBox
 				 width: 50
@@ -152,8 +153,10 @@ ToolBar {
 	 path:  Path {
 	 	startX: 200; startY: 100
 	 	PathAttribute { name: "iconScale"; value: 0.6 }
+                PathAttribute { name: "z"; value: 0.0 }
 	 	PathLine { x: 450; y: 240 }
 	 	PathAttribute { name: "iconScale"; value: 1.0 }
+                PathAttribute { name: "z"; value: 1.0 }
 	 }
 
 
@@ -164,7 +167,6 @@ ToolBar {
 	 anchors.topMargin: 0
 	 anchors.left: parent.left
 	 anchors.leftMargin: 0
-	 interactive: false
  }
 
  Item {
