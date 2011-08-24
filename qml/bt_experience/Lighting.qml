@@ -28,32 +28,12 @@ Page {
      }
  }
 
- Image {
-     y: 80
+ ButtonBack {
      id: backButton
-     source: "common/tasto_indietro.png"
+     y: 80
      anchors.left: mainText.right
      anchors.leftMargin: 105
-     Image {
-         id: arrow_left
-         source: "common/freccia_sx.png"
-         anchors.left: parent.left
-         anchors.leftMargin: 0
-         anchors.top: parent.top
-         anchors.topMargin: 0
-     }
-     MouseArea {
-         id: mousearea
-         anchors.fill: parent
-         onClicked: Stack.popPage()
-
-     }
-     states: State {
-         name: "pressed"
-         when: mousearea.pressed === true;
-//         PropertyChanges { target: backButton; source: "common/tasto_indietroP.png" }
-//         PropertyChanges { target: arrow_left; source: "common/freccia_sxS.png" }
-     }
+     onClicked: Stack.popPage()
  }
 
  ListView {
