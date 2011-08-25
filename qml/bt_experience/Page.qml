@@ -7,6 +7,14 @@ Image {
     width:  800
     height: 480
 
+    property  alias lightFont: lightFont
+    property  alias regularFont: regularFont
+    property  alias semiBoldFont: semiBoldFont
+
+    FontLoader { id: lightFont; source: "MyriadPro-Light.otf" }
+    FontLoader { id: regularFont; source: "MyriadPro-Regular.otf" }
+    FontLoader { id: semiBoldFont; source: "MyriadPro-Semibold.otf" }
+
     states: [
         State {
             name: "offscreen_right"

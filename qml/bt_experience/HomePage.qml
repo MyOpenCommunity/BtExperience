@@ -2,13 +2,15 @@ import QtQuick 1.0
 import "Stack.js" as Stack
 
 Page {
-	id: mainarea
-	source: "bg.png"
+    id: mainarea
+    source: "bg.png"
 
 ToolBar {
-	id: toolbar
-	customButton: "toolbar/ico_spegni.png"
-	onCustomClicked: console.log("exit")
+    id: toolbar
+    customButton: "toolbar/ico_spegni.png"
+    onCustomClicked: console.log("exit")
+    fontFamily: semiBoldFont.name
+    fontSize: 15
 }
 
  ListView {

@@ -8,14 +8,15 @@ Page {
 
     ToolBar {
             id: toolbar
+            fontFamily: semiBoldFont.name
+            fontSize: 15
             onCustomClicked: Stack.backToHome()
     }
-     FontLoader { id: localFont; source: "MyriadPro-Light.otf" }
 
  Rectangle {
      anchors.left: parent.left
      anchors.leftMargin: 50
-     y: 370
+     y: 390
      id: mainText
 
      Text {
@@ -23,7 +24,7 @@ Page {
              text: "illuminazione"
              rotation: 270
              font.pixelSize: 54
-             font.family: localFont.name
+             font.family: lightFont.name
              anchors.fill: parent
      }
  }
@@ -72,6 +73,8 @@ Page {
              Text {
                  id: text
                  text: name
+                 font.family: semiBoldFont.name
+                 font.pixelSize: 13
                  wrapMode: "WordWrap"
                  anchors.left: icon_status.right
                  anchors.top: parent.top
@@ -171,7 +174,8 @@ Page {
      height: 25
      color: "#ffffff"
      horizontalAlignment: Text.AlignHCenter
-     font.pixelSize: 14
+     font.pixelSize: 13
+     font.family: semiBoldFont.name
      font.capitalization: Font.AllUppercase
  }
 

@@ -5,9 +5,10 @@ Page {
     id: page
     source: "systems/termoregolazione.jpg"
 
-    FontLoader { id: localFont; source: "MyriadPro-Light.otf" }
     ToolBar {
             id: toolbar
+            fontFamily: semiBoldFont.name
+            fontSize: 15
             onCustomClicked: Stack.backToHome()
     }
 
@@ -22,7 +23,7 @@ Page {
                 text: "termoregolazione"
                 rotation: 270
                 font.pixelSize: 54
-                font.family: localFont.name
+                font.family: lightFont.name
                 anchors.fill: parent
         }
     }

@@ -7,6 +7,8 @@ Page {
 
     ToolBar {
         id: toolbar
+        fontFamily: semiBoldFont.name
+        fontSize: 15
         onCustomClicked: Stack.backToHome()
     }
 
