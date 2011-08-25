@@ -1,6 +1,6 @@
 import QtQuick 1.0
 
-Rectangle {
+Image {
     id: toolbar
 
     property string fontFamily
@@ -8,14 +8,8 @@ Rectangle {
     property string customButton: "toolbar/ico_home.png"
     signal customClicked
 
-    width: 800 // useful for the Qt Quick designer
-    height: 49
-    gradient: Gradient {
-     GradientStop { position: 0; color: "#ffffff" }
+    source: "toolbar/barra.png"
 
-     GradientStop { position: 0.6; color: "#c9c9c7" }
-     GradientStop { position: 1; color: "#757573" }
-    }
     anchors.right: parent.right
     anchors.rightMargin: 0
     anchors.left: parent.left
@@ -23,7 +17,6 @@ Rectangle {
     anchors.top: parent.top
     anchors.topMargin: 0
     visible: true
-    opacity: 0.6
 
 
     Image {
