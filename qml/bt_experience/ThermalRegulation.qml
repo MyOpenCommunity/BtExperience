@@ -34,52 +34,7 @@ Page {
         y: 77
         width: 600
         height: 380
-        Component.onCompleted: {
-            level1.source = "ThermalRegulationLevel1.qml"
-            addItem(level1, 1)
-        }
-
+        rootElement: "ThermalRegulationLevel1.qml"
         onClosed: Stack.popPage()
-
-        Loader {
-            id: level1
-            onLoaded: item.loadComponent.connect(loadComponent)
-            function loadComponent(fileName) {
-                console.log("Livello 1 Richiede di caricare: "+ fileName)
-                // destroy the previus item and load the new one
-                level2.source = ""
-                level2.source = fileName
-                container.addItem(level2, 2)
-            }
-        }
-
-        Loader {
-            id: level2
-            onLoaded: item.loadComponent.connect(loadComponent)
-            function loadComponent(fileName) {
-                console.log("Livello 2 Richiede di caricare: "+ fileName)
-                level3.source = ""
-                level3.source = fileName
-                container.addItem(level3, 3)
-            }
-        }
-
-        Loader {
-            id: level3
-            onLoaded: item.loadComponent.connect(loadComponent)
-            function loadComponent(fileName) {
-                console.log("Livello 3 Richiede di caricare: "+ fileName)
-                level4.source = ""
-                level4.source = fileName
-                container.addItem(level4, 4)
-            }
-        }
-
-        Loader {
-            id: level4
-        }
     }
-
-
-
 }
