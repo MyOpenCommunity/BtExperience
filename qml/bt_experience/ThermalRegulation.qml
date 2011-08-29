@@ -46,6 +46,8 @@ Page {
             onLoaded: item.loadComponent.connect(loadComponent)
             function loadComponent(fileName) {
                 console.log("Livello 1 Richiede di caricare: "+ fileName)
+                // destroy the previus item and load the new one
+                level2.source = ""
                 level2.source = fileName
                 container.addItem(level2, 2)
             }
@@ -56,8 +58,18 @@ Page {
             onLoaded: item.loadComponent.connect(loadComponent)
             function loadComponent(fileName) {
                 console.log("Livello 2 Richiede di caricare: "+ fileName)
+                level3.source = ""
+                level3.source = fileName
+                container.addItem(level3, 3)
             }
+        }
 
+        Loader {
+            id: level3
+            onLoaded: item.loadComponent.connect(loadComponent)
+            function loadComponent(fileName) {
+                console.log("Livello 3 Richiede di caricare: "+ fileName)
+            }
         }
     }
 

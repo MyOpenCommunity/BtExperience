@@ -11,7 +11,6 @@ ListView {
     signal loadComponent(string fileName)
 
     delegate: Item {
-        id: listDelegate
         height: 50
         width: background.sourceSize.width
 

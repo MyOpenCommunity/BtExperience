@@ -6,7 +6,7 @@ ListView {
     y: 0
     x: 0
     height: 350
-    width: 200
+    width: 192
     currentIndex: -1
     signal loadComponent(string fileName)
 
@@ -69,22 +69,22 @@ ListView {
     model: ListModel {
         ListElement {
             name: "unità centrale"
-            componentFile: "1.qml"
+            componentFile: "ThermalCentralUnit.qml"
         }
 
         ListElement {
             name: "zona giorno"
-            componentFile: "2.qml"
+            componentFile: "ThermalControlledProbe.qml"
         }
 
         ListElement {
             name: "zona notte"
-            componentFile: "3.qml"
+            componentFile: "ThermalControlledProbe.qml"
         }
 
         ListElement {
             name: "zona taverna"
-            componentFile: "4.qml"
+            componentFile: "ThermalControlledProbe.qml"
         }
 
         ListElement {
