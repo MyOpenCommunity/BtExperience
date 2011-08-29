@@ -76,6 +76,26 @@ Item {
         }
     }
 
+// This probably works with QtQuick 1.1 ... check this code when the QtQuick is out!
+//    Component.onCompleted: {
+//        loaders.itemAt(0).source = container.rootElement
+//        addItem(loaders.itemAt(0), 1)
+//    }
+
+//    Repeater {
+//        id: loaders
+//        model: container.numItems
+//        Loader {
+//            onLoaded: item.loadComponent.connect(loadComponent)
+//            function loadComponent(fileName) {
+//                console.log("Livello 1 Richiede di caricare: "+ fileName)
+//                // destroy the previus item and load the new one
+//                loaders.itemAt(index + 1).source = ""
+//                loaders.itemAt(index + 1).source = fileName
+//                container.addItem(loaders.itemAt(index + 1), index + 1)
+//            }
+//        }
+//    }
 
     Component.onCompleted: {
        level1.source = container.rootElement
@@ -118,6 +138,17 @@ Item {
 
     Loader {
         id: level4
+        onLoaded: item.loadComponent.connect(loadComponent)
+        function loadComponent(fileName) {
+            console.log("Livello 4 Richiede di caricare: "+ fileName)
+            level5.source = ""
+            level5.source = fileName
+            container.addItem(level5, 5)
+        }
+    }
+
+    Loader {
+        id: level5
     }
 }
 
