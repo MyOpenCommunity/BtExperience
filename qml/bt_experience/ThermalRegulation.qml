@@ -69,7 +69,14 @@ Page {
             onLoaded: item.loadComponent.connect(loadComponent)
             function loadComponent(fileName) {
                 console.log("Livello 3 Richiede di caricare: "+ fileName)
+                level4.source = ""
+                level4.source = fileName
+                container.addItem(level4, 4)
             }
+        }
+
+        Loader {
+            id: level4
         }
     }
 

@@ -21,6 +21,8 @@ Item {
         if (Script.stack.length > 1) {
             Script.stack[Script.stack.length - 1].visible = false;
             Script.stack.length -= 1;
+            // update the ui
+            showItems(calculateFirstVisible());
         }
         else
             container.closed()

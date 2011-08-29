@@ -51,7 +51,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                mainItem.loadComponent("ThermalPrograms.qml")
+                mainItem.loadComponent("ThermalCentralUnitProgram.qml")
                 programItem.state = programItem.state == "" ? "selected" : ""
             }
         }
