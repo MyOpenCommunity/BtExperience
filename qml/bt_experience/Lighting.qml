@@ -116,43 +116,43 @@ Page {
          ListElement {
              name: "lampada scrivania"
              isOn: true
-             componentFile: "lights/Light.qml"
+             componentFile: "Light.qml"
          }
 
          ListElement {
              name: "lampadario soggiorno"
              isOn: false
-             componentFile: "lights/Light.qml"
+             componentFile: "Light.qml"
          }
 
          ListElement {
              name: "faretti soggiorno"
              isOn: false
-             componentFile: "lights/Dimmer.qml"
+             componentFile: "Dimmer.qml"
          }
 
          ListElement {
              name: "lampada da terra soggiorno"
              isOn: false
-             componentFile: "lights/Light.qml"
+             componentFile: "Light.qml"
          }
 
          ListElement {
              name: "abat jour"
              isOn: true
-             componentFile: "lights/Light.qml"
+             componentFile: "Light.qml"
          }
 
          ListElement {
              name: "abat jour"
              isOn: true
-             componentFile: "lights/Light.qml"
+             componentFile: "Light.qml"
          }
 
          ListElement {
              name: "lampada studio"
              isOn: true
-             componentFile: "lights/Light.qml"
+             componentFile: "Light.qml"
          }
      }
  }

@@ -10,7 +10,7 @@ Item {
         id: image1
         x: 0
         y: 0
-        source: "lights/dimmer_bg.png"
+        source: "common/dimmer_bg.png"
 
         Text {
             id: textTemperature

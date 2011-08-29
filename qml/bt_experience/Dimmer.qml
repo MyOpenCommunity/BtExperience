@@ -1,7 +1,7 @@
 import QtQuick 1.0
 
 Image {
-    source: "dimmer_bg.png"
+    source: "common/dimmer_bg.png"
     ButtonOnOff {
         id: onOff
         onClicked: status = newStatus
@@ -22,7 +22,7 @@ Image {
 
     Image {
         id: dimmerReg
-        source: "dimmer_reg_bg.png"
+        source: "common/dimmer_reg_bg.png"
         property alias percentage: barPercentage.percentage
         anchors.top: textDimmer.bottom
         anchors.topMargin: 11
@@ -31,7 +31,7 @@ Image {
         Image {
             id: barPercentage
             property int percentage: 75
-            source: "dimmer_reg.png"
+            source: "common/dimmer_reg.png"
             anchors.left: parent.left
             width: parent.width / 100 * percentage
 
@@ -62,7 +62,7 @@ Image {
     }
 
     Image {
-        source: "off_temporizzato.png"
+        source: "common/off_temporizzato.png"
         anchors.top: dimmerMinusPlus.bottom
         anchors.topMargin: 5
 

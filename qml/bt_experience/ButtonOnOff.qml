@@ -6,7 +6,7 @@ Row {
     signal clicked (bool newStatus)
     Image {
         id: imgOn
-        source: "../common/on_off.png"
+        source: "common/on_off.png"
         property alias textColor: textOn.color
         Text {
             id: textOn
@@ -22,7 +22,7 @@ Row {
     }
     Image {
         id: imgOff
-        source: "../common/on_offS.png"
+        source: "common/on_offS.png"
         property alias textColor: textOff.color
         Text {
             id: textOff
@@ -42,8 +42,8 @@ Row {
     states: State {
         when: status == true
         name: "on"
-        PropertyChanges { target: imgOn; source: "../common/on_offS.png"; textColor: "#ffffff"; }
-        PropertyChanges { target: imgOff; source: "../common/on_off.png"; textColor: "#000000"; }
+        PropertyChanges { target: imgOn; source: "common/on_offS.png"; textColor: "#ffffff"; }
+        PropertyChanges { target: imgOff; source: "common/on_off.png"; textColor: "#000000"; }
     }
 }
 
