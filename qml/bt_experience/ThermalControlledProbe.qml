@@ -6,6 +6,10 @@ Item {
     id: mainItem
     signal loadComponent(string fileName)
 
+    function reset() {
+        programItem.state = "";
+    }
+
     Image {
         id: image1
         x: 0

@@ -6,6 +6,10 @@ Item {
     height: 280
     signal loadComponent(string fileName)
 
+    function reset() {
+        programItem.state = "";
+    }
+
     Item {
         anchors.top: parent.top
         id: programItem

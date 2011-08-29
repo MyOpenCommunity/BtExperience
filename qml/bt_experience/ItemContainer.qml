@@ -1,6 +1,13 @@
 import QtQuick 1.0
 import "ItemContainer.js" as Script
 
+// The ItemContainer components encapsulates some logic to show a tree of
+// items. Using the itemsLeftMargin you can control the spacing between the
+// back button and the root element, while using the itemsSpacing you can control
+// the spacing between items.
+// Every item must emit the signal loadComponent(string fileName) to request
+// the loading of a child, and can implement the hook function reset(), called
+// when a child is closed.
 
 Item {
     id: container
@@ -23,6 +30,8 @@ Item {
             Script.stack[Script.stack.length - 1].visible = false;
             Script.stack.length -= 1;
             // update the ui
+            if (Script.stack[Script.stack.length - 1].item.reset)
+                Script.stack[Script.stack.length - 1].item.reset();
             showItems(calculateFirstVisible());
         }
         else
@@ -98,8 +107,9 @@ Item {
 //    }
 
     Component.onCompleted: {
-       level1.source = container.rootElement
-       addItem(level1, 1)
+        level1.source = container.rootElement
+        if (level1.item)
+            addItem(level1, 1)
     }
 
     Loader {
@@ -110,7 +120,8 @@ Item {
             // destroy the previus item and load the new one
             level2.source = ""
             level2.source = fileName
-            container.addItem(level2, 2)
+            if (level2.item)
+                container.addItem(level2, 2)
         }
     }
 
@@ -121,7 +132,8 @@ Item {
             console.log("Livello 2 Richiede di caricare: "+ fileName)
             level3.source = ""
             level3.source = fileName
-            container.addItem(level3, 3)
+            if (level3.item)
+                container.addItem(level3, 3)
         }
     }
 
@@ -132,7 +144,8 @@ Item {
             console.log("Livello 3 Richiede di caricare: "+ fileName)
             level4.source = ""
             level4.source = fileName
-            container.addItem(level4, 4)
+            if (level4.item)
+                container.addItem(level4, 4)
         }
     }
 
@@ -143,7 +156,8 @@ Item {
             console.log("Livello 4 Richiede di caricare: "+ fileName)
             level5.source = ""
             level5.source = fileName
-            container.addItem(level5, 5)
+            if (level5.item)
+                container.addItem(level5, 5)
         }
     }
 

@@ -10,6 +10,10 @@ ListView {
     currentIndex: -1
     signal loadComponent(string fileName)
 
+    function reset() {
+        currentIndex = -1;
+    }
+
     delegate: Item {
         height: 50
         width: background.sourceSize.width
