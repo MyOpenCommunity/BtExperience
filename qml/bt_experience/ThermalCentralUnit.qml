@@ -20,8 +20,7 @@ MenuElement {
 
     Item {
         id: mainItem
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
 
         Item {
             anchors.top: parent.top
@@ -80,7 +79,7 @@ MenuElement {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    element.loadChild("ThermalCentralUnitProgram.qml")
+                    element.loadChild(text.text, "ThermalCentralUnitProgram.qml")
                     programItem.state = programItem.state == "" ? "selected" : ""
                 }
             }

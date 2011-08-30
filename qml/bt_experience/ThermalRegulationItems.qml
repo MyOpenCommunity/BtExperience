@@ -2,7 +2,6 @@ import QtQuick 1.0
 
 MenuElement {
     id: element
-
     height: 300
     width: 192
 
@@ -12,11 +11,9 @@ MenuElement {
 
     ListView {
         id: itemList
-        y: 0
-        x: 0
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
         currentIndex: -1
+        interactive: false
 
         delegate: Item {
             height: 50
@@ -61,7 +58,7 @@ MenuElement {
                 anchors.fill: parent
                 onClicked: {
                     itemList.currentIndex = index
-                    element.loadChild(componentFile)
+                    element.loadChild("", componentFile)
                 }
             }
 

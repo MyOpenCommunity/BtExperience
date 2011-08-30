@@ -22,15 +22,26 @@ Item {
     property string rootElement
     signal closed
 
+    Item {
+        id: titlesContainer
+        y: 0
+        width: parent.width
+        height: 26
+        anchors.left: parent.left
+        anchors.right: parent.right
+    }
+
     ButtonBack {
         id: backButton
-        anchors.top: container.top
+        anchors.topMargin: 0
+        anchors.top: titlesContainer.bottom
+        anchors.leftMargin: 0
         anchors.left: container.left
         onClicked: Script.closeItem()
     }
 
     Component.onCompleted: {
-        Script.loadComponent(-1, container.rootElement)
+        Script.loadComponent(-1, "", container.rootElement)
     }
 }
 

@@ -2,18 +2,16 @@ import QtQuick 1.0
 
 MenuElement {
     id: element
-    height: 350
+    height: 260
     width: 192
 
     onChildDestroyed: itemList.currentIndex = -1
 
     ListView {
         id: itemList
-        y: 0
-        x: 0
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         currentIndex: -1
+        interactive: false
 
         delegate: Item {
             height: 50
@@ -58,7 +56,7 @@ MenuElement {
                 anchors.fill: parent
                 onClicked: {
                     itemList.currentIndex = index
-                    element.loadChild(componentFile)
+                    element.loadChild(name, componentFile)
                 }
             }
 

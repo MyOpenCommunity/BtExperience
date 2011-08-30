@@ -7,8 +7,7 @@ MenuElement {
     height: 280
 
     Item {
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         id: mainItem
 
         Image {
@@ -71,7 +70,7 @@ MenuElement {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        element.loadChild("xxx.qml")
+                        element.loadChild("", "xxx.qml")
                         programItem.state = programItem.state == "" ? "selected" : ""
                     }
                 }

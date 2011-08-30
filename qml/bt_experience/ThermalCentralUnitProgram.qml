@@ -12,9 +12,9 @@ MenuElement {
         id: itemList
         y: 0
         x: 0
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
         currentIndex: -1
+        interactive: false
 
         delegate: Item {
             height: 50

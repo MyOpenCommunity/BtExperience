@@ -1,14 +1,14 @@
-
-var stack = []
+// The containers for items and titles. Each item has its title, and the
+// containers has always the same size.
+var stackItems = []
+var stackTitles = []
 
 function closeItem() {
-    if (stack.length > 1) {
-        stack[stack.length - 1].visible = false;
-        stack[stack.length - 1].destroy();
-        stack.length -= 1;
-
-        stack[stack.length - 1].child = null
-        stack[stack.length - 1].childDestroyed();
+    if (stackItems.length > 1) {
+        destroyLast(stackItems)
+        destroyLast(stackTitles)
+        stackItems[stackItems.length - 1].child = null
+        stackItems[stackItems.length - 1].childDestroyed();
 
         // update the ui
         showItems(calculateFirstVisible());
@@ -17,40 +17,40 @@ function closeItem() {
         container.closed()
 }
 
-function loadComponent(menuLevel, fileName) {
-    var component = Qt.createComponent(fileName)
-    if (component.status == Component.Ready) {
-        var object = component.createObject(container)
-        if (object) {
-            object.menuLevel = menuLevel + 1
-            addItem(object)
-            object._loadComponent.connect(loadComponent)
-        }
-        else
-            console.log('Error on creating the object for the component: ' + fileName)
+function loadComponent(menuLevel, childTitle, fileName) {
+    var object = createComponent(fileName)
+    var title = createComponent("MenuTitle.qml")
+    if (object && title) {
+        object.menuLevel = menuLevel + 1
+        title.text = childTitle
+        addItem(object, title)
+        object._loadComponent.connect(loadComponent)
     }
-    else
-        console.log('Error loading the component: ' + fileName)
+    // Cleanup the memory in case of errors
+    else if (object) {
+        object.destroy()
+    }
+    else if (title) {
+        title.destroy()
+    }
 }
 
-function addItem(item) {
-    if (item.menuLevel < stack.length) {
-        for (var i = item.menuLevel; i < stack.length; i++) {
-            stack[i].visible = false;
-            stack[i].destroy()
-        }
-        stack.length = item.menuLevel;
+function addItem(item, title) {
+    while (item.menuLevel < stackItems.length) {
+        destroyLast(stackItems)
+        destroyLast(stackTitles)
     }
 
     item.visible = true;
-    item.y = 0
+    item.y = backButton.y
     item.parent = container
 
-    if (stack.length >= 1) {
-        stack[stack.length - 1].child = item
-        stack[stack.length - 1].childLoaded()
+    if (stackItems.length >= 1) {
+        stackItems[stackItems.length - 1].child = item
+        stackItems[stackItems.length - 1].childLoaded()
     }
-    stack.push(item)
+    stackItems.push(item)
+    stackTitles.push(title)
     showItems(calculateFirstVisible());
 }
 
@@ -61,8 +61,8 @@ function calculateFirstVisible() {
 
     var total_width = container.width - (backButton.x + backButton.width + container.itemsLeftMargin)
 
-    for (var i = stack.length - 1; i >= 0; i--) {
-        items_width += stack[i].width + container.itemsSpacing;
+    for (var i = stackItems.length - 1; i >= 0; i--) {
+        items_width += stackItems[i].width + container.itemsSpacing;
         if (items_width > total_width) {
             first_element = i + 1;
             break;
@@ -73,16 +73,42 @@ function calculateFirstVisible() {
 
 function showItems(first_element) {
     var x = backButton.x + backButton.width + container.itemsLeftMargin;
-    for (var i = 0; i < stack.length; i++) {
+    for (var i = 0; i < stackItems.length; i++) {
         if (i >= first_element) {
-            stack[i].x = x;
-            stack[i].visible = true;
-            x += stack[i].width + container.itemsSpacing;
+            stackItems[i].x = x;
+            stackItems[i].visible = true
+            stackTitles[i].x = x
+            stackTitles[i].visible = true
+            x += stackItems[i].width + container.itemsSpacing;
         }
-        else
-            stack[i].visible = false;
+        else {
+            stackItems[i].visible = false
+            stackTitles[i].visible = false
+        }
     }
 }
 
 
+// Generic functions
 
+// An utility function that destroys the last element from the container argument
+function destroyLast(container) {
+    container[container.length - 1].visible = false;
+    container[container.length - 1].destroy();
+    container.length -= 1;
+}
+
+// Create and return a component or null if an error occurred
+function createComponent(fileName) {
+    var component = Qt.createComponent(fileName)
+    var object = null
+    if (component.status == Component.Ready) {
+        object = component.createObject(container)
+        if (object == null)
+            console.log('Error on creating the object for the component: ' + fileName)
+    }
+    else
+        console.log('Error loading the component: ' + fileName)
+
+    return object
+}
