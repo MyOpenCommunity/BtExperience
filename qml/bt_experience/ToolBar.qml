@@ -8,15 +8,9 @@ Image {
     property string customButton: "toolbar/ico_home.png"
     signal customClicked
 
-    source: "toolbar/barra.png"
-
-    anchors.right: parent.right
-    anchors.rightMargin: 0
-    anchors.left: parent.left
-    anchors.leftMargin: 0
-    anchors.top: parent.top
-    anchors.topMargin: 0
-    visible: true
+    fillMode: Image.PreserveAspectCrop
+    height: 49
+    source: "toolbar/barra.png" // Damn image of 56 pixel of height!
 
 
     Image {
