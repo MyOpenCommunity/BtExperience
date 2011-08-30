@@ -17,5 +17,8 @@ Item {
     signal _loadComponent(int menuLevel, string childTitle, string fileName)
     onLoadChild: _loadComponent(menuLevel, childTitle, fileName)
 
+//    Behavior on x {
+//        NumberAnimation { duration: 500 }
+//    }
 }
 

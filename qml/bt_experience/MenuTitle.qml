@@ -8,5 +8,9 @@ Text {
     font.pixelSize: 13
     font.family: semiBoldFont.name
     font.capitalization: Font.AllUppercase
+
+//    Behavior on x {
+//        NumberAnimation { duration: 500 }
+//    }
 }
 
