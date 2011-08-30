@@ -28,7 +28,7 @@ Page {
         }
     }
 
-    ItemContainer {
+    MenuContainer {
         id: container
         x: 146
         y: 77
