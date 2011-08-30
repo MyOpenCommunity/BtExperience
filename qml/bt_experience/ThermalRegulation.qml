@@ -34,7 +34,7 @@ Page {
         y: 80
         width: 658
         height: 380
-        rootElement: "ThermalRegulationLevel1.qml"
+        rootElement: "ThermalRegulationItems.qml"
         onClosed: Stack.popPage()
     }
 }
