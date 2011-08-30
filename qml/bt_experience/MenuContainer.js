@@ -51,7 +51,6 @@ function addItem(item) {
         stack[stack.length - 1].childLoaded()
     }
     stack.push(item)
-
     showItems(calculateFirstVisible());
 }
 
@@ -60,9 +59,11 @@ function calculateFirstVisible() {
     var first_element = 0;
     var items_width = 0;
 
+    var total_width = container.width - (backButton.x + backButton.width + container.itemsLeftMargin)
+
     for (var i = stack.length - 1; i >= 0; i--) {
-        items_width += stack[i].width;
-        if (items_width > container.width) {
+        items_width += stack[i].width + container.itemsSpacing;
+        if (items_width > total_width) {
             first_element = i + 1;
             break;
         }

@@ -30,9 +30,9 @@ Page {
 
     MenuContainer {
         id: container
-        x: 146
-        y: 77
-        width: 600
+        x: 131
+        y: 80
+        width: 658
         height: 380
         rootElement: "ThermalRegulationLevel1.qml"
         onClosed: Stack.popPage()
