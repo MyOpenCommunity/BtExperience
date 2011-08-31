@@ -66,9 +66,6 @@ MenuElement {
             states: State {
                 name: "selected"
                 when: ListView.isCurrentItem
-                PropertyChanges { target: text; color: "#ffffff" }
-                PropertyChanges { target: arrow_right; source: "common/freccia_dxS.png" }
-                PropertyChanges { target: background; source: "common/tasto_menuS.png" }
             }
         }
 
