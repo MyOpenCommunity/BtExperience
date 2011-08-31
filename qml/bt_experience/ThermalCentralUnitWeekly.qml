@@ -1,20 +1,11 @@
 import QtQuick 1.0
 
-
 MenuElement {
     id: element
-    height: 350
+    height: 150
     width: 192
 
     signal programSelected(string programName)
-
-    onChildLoaded: {
-        child.programSelected.connect(childProgramSelected)
-    }
-
-    function childProgramSelected(programName) {
-        element.programSelected(itemList.currentItem.text + " " + programName)
-    }
 
     ListView {
         id: itemList
@@ -27,7 +18,6 @@ MenuElement {
         delegate: Item {
             height: 50
             width: background.sourceSize.width
-            property alias text: text.text
 
             Image {
                 anchors.fill: parent
@@ -52,27 +42,14 @@ MenuElement {
                     anchors.topMargin: 5
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 5
-                    anchors.right: arrow_right.left
-                }
-
-                Image {
-                    id: arrow_right
-                    opacity: componentFile ? 1 : 0
-                    source: "common/freccia_dx.png"
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
                 }
             }
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
                     itemList.currentIndex = index
-                    if (componentFile)
-                        element.loadChild(name, componentFile)
-                    else
-                        element.programSelected(name)
+                    element.programSelected(name)
                 }
             }
 
@@ -80,48 +57,24 @@ MenuElement {
                 name: "selected"
                 when: ListView.isCurrentItem
                 PropertyChanges { target: text; color: "#ffffff" }
-                PropertyChanges { target: arrow_right; source: "common/freccia_dxS.png" }
                 PropertyChanges { target: background; source: "common/tasto_menuS.png" }
             }
         }
 
         model: ListModel {
             ListElement {
-                name: "settimanale"
-                componentFile: "ThermalCentralUnitWeekly.qml"
+                name: "P1"
             }
 
             ListElement {
-                name: "festivi"
-                componentFile: "ThermalCentralUnitHolidays.qml"
+                name: "P2"
             }
 
             ListElement {
-                name: "vacanze"
-                componentFile: "ThermalCentralUnitVacations.qml"
+                name: "P3"
             }
-
-            ListElement {
-                name: "scenari"
-                componentFile: "ThermalCentralUnitScenari.qml"
-            }
-
-            ListElement {
-                name: "antigelo"
-                componentFile: ""
-            }
-
-            ListElement {
-                name: "manuale"
-                componentFile: ""
-            }
-
-            ListElement {
-                name: "off"
-                componentFile: ""
-            }
-
         }
 
     }
 }
+
