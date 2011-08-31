@@ -3,7 +3,7 @@ import QtQuick 1.0
 
 MenuElement {
     id: element
-    height: 300
+    height: 350
     width: 192
 
     signal programSelected(string programName)
@@ -48,6 +48,7 @@ MenuElement {
 
                 Image {
                     id: arrow_right
+                    opacity: componentFile ? 1 : 0
                     source: "common/freccia_dx.png"
                     anchors.right: parent.right
                     anchors.rightMargin: 0
@@ -75,27 +76,37 @@ MenuElement {
         model: ListModel {
             ListElement {
                 name: "settimanale"
+                componentFile: "ThermalCentralUnitWeekly.qml"
             }
 
             ListElement {
                 name: "festivi"
+                componentFile: "ThermalCentralUnitHolidays.qml"
             }
 
             ListElement {
                 name: "vacanze"
+                componentFile: "ThermalCentralUnitVacations.qml"
             }
 
             ListElement {
                 name: "scenari"
+                componentFile: "ThermalCentralUnitScenari.qml"
             }
+
             ListElement {
                 name: "antigelo"
+                componentFile: ""
             }
+
             ListElement {
                 name: "manuale"
+                componentFile: ""
             }
+
             ListElement {
                 name: "off"
+                componentFile: ""
             }
 
         }
