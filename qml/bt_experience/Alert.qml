@@ -48,7 +48,8 @@ Column {
         }
 
         onCancelClicked: {
-            source.alertCancelClicked()
+            if (source.alertCancelClicked)
+                source.alertCancelClicked()
             source = null
             alert.hideAlert()
         }

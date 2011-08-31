@@ -37,7 +37,7 @@ Item {
         anchors.top: titlesContainer.bottom
         anchors.leftMargin: 0
         anchors.left: container.left
-        onClicked: Script.closeItem()
+        onClicked: Script.closeLastItem()
     }
 
     Component.onCompleted: {

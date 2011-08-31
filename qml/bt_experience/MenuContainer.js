@@ -3,18 +3,36 @@
 var stackItems = []
 var stackTitles = []
 
-function closeItem() {
+
+function updateUi() {
+    showItems(calculateFirstVisible());
+}
+
+function closeLastItem() {
     if (stackItems.length > 1) {
         destroyLast(stackItems)
         destroyLast(stackTitles)
         stackItems[stackItems.length - 1].child = null
         stackItems[stackItems.length - 1].childDestroyed();
-
-        // update the ui
-        showItems(calculateFirstVisible());
+        updateUi()
     }
     else
         container.closed()
+}
+
+function closeItem(menuLevel) {
+    if (menuLevel == 0) {
+        console.log("Error: cannot close the root element! Use the closeLastItem instead.")
+        return
+    }
+
+    while (menuLevel < stackItems.length) {
+        destroyLast(stackItems)
+        destroyLast(stackTitles)
+    }
+    stackItems[stackItems.length - 1].child = null
+    stackItems[stackItems.length - 1].childDestroyed();
+    updateUi()
 }
 
 function loadComponent(menuLevel, childTitle, fileName) {
@@ -25,6 +43,7 @@ function loadComponent(menuLevel, childTitle, fileName) {
         title.text = childTitle
         addItem(object, title)
         object._loadComponent.connect(loadComponent)
+        object._closeElement.connect(closeItem)
     }
     // Cleanup the memory in case of errors
     else if (object) {
@@ -51,7 +70,7 @@ function addItem(item, title) {
     }
     stackItems.push(item)
     stackTitles.push(title)
-    showItems(calculateFirstVisible());
+    updateUi()
 }
 
 

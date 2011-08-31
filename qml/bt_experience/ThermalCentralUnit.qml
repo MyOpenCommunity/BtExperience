@@ -7,11 +7,7 @@ MenuElement {
     height: 310
 
     function alertOkClicked() {
-        console.log('l\'alert ha detto ok')
-    }
-
-    function alertCancelClicked() {
-        console.log('l\'alert ha detto no')
+        element.closeElement()
     }
 
     onChildLoaded: {
@@ -24,6 +20,10 @@ MenuElement {
 
     function programSelected(programName) {
         currentProgram.text = programName
+        if (programName == "antigelo")
+            element.state = "temperatureDisabled"
+        else
+            element.state = ""
     }
 
     Item {
@@ -108,6 +108,9 @@ MenuElement {
             anchors.top: programItem.bottom
             anchors.topMargin: 0
             source: "common/comando_bg.png"
+            Behavior on opacity {
+                NumberAnimation { duration: 200 }
+            }
 
             Text {
                 id: text1
@@ -229,7 +232,21 @@ MenuElement {
             onCancelClicked: {
                 page.showAlert(element, "Modifiche non salvate. Continuare?")
             }
+
+            onOkClicked: {
+                element.closeElement()
+            }
         }
     }
+    states: [
+        State {
+            name: "temperatureDisabled"
+
+            PropertyChanges {
+                target: itemTemperature
+                opacity: 0.400
+            }
+        }
+    ]
 
 }
