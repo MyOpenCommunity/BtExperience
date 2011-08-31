@@ -4,7 +4,15 @@ import QtQuick 1.0
 MenuElement {
     id: element
     width: 192
-    height: 280
+    height: 310
+
+    function alertOkClicked() {
+        console.log('l\'alert ha detto ok')
+    }
+
+    function alertCancelClicked() {
+        console.log('l\'alert ha detto no')
+    }
 
     onChildLoaded: {
         child.programSelected.connect(programSelected)
@@ -92,7 +100,6 @@ MenuElement {
                 PropertyChanges { target: background; source: "common/tasto_menuS.png" }
             }
         }
-
 
 
 
@@ -210,6 +217,17 @@ MenuElement {
                 color: "#ffffff"
                 text: qsTr("estate")
                 font.pixelSize: 14
+            }
+        }
+
+        ButtonOkCancel {
+            id: buttonokcancel
+            x: 0
+            y: 251
+            anchors.top: itemMode.bottom
+            anchors.topMargin: 0
+            onCancelClicked: {
+                page.showAlert(element, "Modifiche non salvate. Continuare?")
             }
         }
     }
