@@ -36,6 +36,11 @@ Image {
         opacity: 0
         z: 9
 
+        // A trick to block mouse events handled by the underlying page
+        MouseArea {
+            anchors.fill: parent
+        }
+
         Behavior on opacity {
             NumberAnimation { duration: 200 }
         }
