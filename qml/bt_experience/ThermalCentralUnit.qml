@@ -22,6 +22,8 @@ MenuElement {
         currentProgram.text = programName
         if (programName == "antigelo")
             element.state = "temperatureDisabled"
+        else if (programName == "off")
+            element.state = "controlsDisabled"
         else
             element.state = ""
     }
@@ -172,6 +174,10 @@ MenuElement {
             anchors.topMargin: 0
             source: "common/comando_bg.png"
 
+            Behavior on opacity {
+                NumberAnimation { duration: 200 }
+            }
+
             Image {
                 id: image5
                 x: 100
@@ -244,6 +250,18 @@ MenuElement {
 
             PropertyChanges {
                 target: itemTemperature
+                opacity: 0.400
+            }
+        },
+        State {
+            name: "controlsDisabled"
+            PropertyChanges {
+                target: itemTemperature
+                opacity: 0.400
+            }
+
+            PropertyChanges {
+                target: itemMode
                 opacity: 0.400
             }
         }
