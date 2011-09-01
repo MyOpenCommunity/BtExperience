@@ -25,6 +25,7 @@ MenuElement {
         interactive: false
 
         delegate: Item {
+            id: itemDelegate
             height: 50
             width: background.sourceSize.width
             property alias text: text.text
@@ -79,7 +80,7 @@ MenuElement {
 
             states: State {
                 name: "selected"
-                when: ListView.isCurrentItem
+                when: itemDelegate.ListView.isCurrentItem
                 PropertyChanges { target: text; color: "#ffffff" }
                 PropertyChanges { target: arrow_right; source: "common/freccia_dxS.png" }
                 PropertyChanges { target: background; source: "common/tasto_menuS.png" }

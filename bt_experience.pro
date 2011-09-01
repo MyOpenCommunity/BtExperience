@@ -16,3 +16,4 @@ qtcAddDeployment()
 RESOURCES +=
 
 TARGET = BtExperience
+
