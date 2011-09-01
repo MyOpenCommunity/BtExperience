@@ -5,6 +5,10 @@ MenuElement {
     height: 350
     width: 192
 
+    onChildDestroyed: {
+        itemList.currentIndex = -1
+    }
+
     ListView {
         id: itemList
         anchors.fill: parent
