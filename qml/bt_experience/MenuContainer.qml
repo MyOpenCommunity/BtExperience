@@ -1,4 +1,4 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import "MenuContainer.js" as Script
 
 // The MenuContainer components encapsulates some logic to show a gerarchic list

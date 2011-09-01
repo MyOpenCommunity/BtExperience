@@ -1,4 +1,4 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import "Stack.js" as Stack
 
 Page {
