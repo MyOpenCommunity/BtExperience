@@ -121,6 +121,7 @@ MenuElement {
                 anchors.top: programItem.bottom
                 anchors.topMargin: 0
                 source: "common/comando_bg.png"
+                property int temperature: 22
 
                 Text {
                     id: text1
@@ -135,19 +136,19 @@ MenuElement {
                 }
 
                 Text {
-                    id: text2
+                    id: labelTemperature
                     x: 17
                     y: 68
                     width: 24
                     height: 10
                     color: "#ffffff"
-                    text: qsTr("22°")
+                    text:  itemTemperature.temperature + "°"
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 14
                 }
 
                 Image {
-                    id: image3
+                    id: minusTemperature
                     x: 101
                     y: 50
                     source: "common/comando.png"
@@ -158,10 +159,16 @@ MenuElement {
                         y: 12
                         source: "common/meno.png"
                     }
+
+                    MouseArea {
+                        id: minusMouseArea
+                        anchors.fill: parent
+                        onClicked: itemTemperature.temperature -= 1
+                    }
                 }
 
                 Image {
-                    id: image2
+                    id: plusTemperature
                     x: 144
                     y: 50
                     source: "common/comando.png"
@@ -171,6 +178,12 @@ MenuElement {
                         x: 11
                         y: 12
                         source: "common/piu.png"
+                    }
+
+                    MouseArea {
+                        id: plusMouseArea
+                        anchors.fill: parent
+                        onClicked: itemTemperature.temperature += 1
                     }
                 }
             }
@@ -201,6 +214,16 @@ MenuElement {
             PropertyChanges {
                 target: itemTemperature
                 opacity: 0.400
+            }
+
+            PropertyChanges {
+                target: minusMouseArea
+                enabled: false
+            }
+
+            PropertyChanges {
+                target: plusMouseArea
+                enabled: false
             }
         }
     ]

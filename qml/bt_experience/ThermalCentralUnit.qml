@@ -4,7 +4,7 @@ import QtQuick 1.0
 MenuElement {
     id: element
     width: 192
-    height: 310
+    height: 300
 
     function alertOkClicked() {
         element.closeElement()
@@ -110,6 +110,7 @@ MenuElement {
             anchors.top: programItem.bottom
             anchors.topMargin: 0
             source: "common/comando_bg.png"
+            property int temperature: 22
             Behavior on opacity {
                 NumberAnimation { duration: 200 }
             }
@@ -127,19 +128,19 @@ MenuElement {
             }
 
             Text {
-                id: text2
+                id: labelTemperature
                 x: 17
                 y: 68
                 width: 24
                 height: 10
                 color: "#ffffff"
-                text: qsTr("22°")
+                text: itemTemperature.temperature + "°"
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 14
             }
 
             Image {
-                id: image1
+                id: minusTemperature
                 x: 101
                 y: 50
                 source: "common/comando.png"
@@ -150,10 +151,16 @@ MenuElement {
                     y: 12
                     source: "common/meno.png"
                 }
+
+                MouseArea {
+                    id: minusMouseArea
+                    anchors.fill: parent
+                    onClicked: itemTemperature.temperature -= 1
+                }
             }
 
             Image {
-                id: image2
+                id: plusTemperature
                 x: 144
                 y: 50
                 source: "common/comando.png"
@@ -164,6 +171,12 @@ MenuElement {
                     y: 12
                     source: "common/piu.png"
                 }
+
+                MouseArea {
+                    id: plusMouseArea
+                    anchors.fill: parent
+                    onClicked: itemTemperature.temperature += 1
+                }
             }
         }
 
@@ -173,38 +186,29 @@ MenuElement {
             anchors.top: itemTemperature.bottom
             anchors.topMargin: 0
             source: "common/comando_bg.png"
+            property string mode: qsTr("estate")
 
             Behavior on opacity {
                 NumberAnimation { duration: 200 }
             }
 
             Image {
-                id: image5
+                id: upMode
                 x: 100
                 y: 50
                 source: "common/comando.png"
-
-                Image {
-                    id: image6
-                    x: 43
-                    y: 0
-                    width: 44
-                    height: 45
-                    source: "common/comando.png"
-
-                    Image {
-                        id: image8
-                        x: 11
-                        y: 12
-                        source: "common/freccia_dw.png"
-                    }
-                }
 
                 Image {
                     id: image7
                     x: 11
                     y: 12
                     source: "common/freccia_up.png"
+                }
+
+                MouseArea {
+                    id: mouse_area1
+                    anchors.fill: parent
+                    onClicked: itemMode.mode = (itemMode.mode == qsTr("estate")) ? qsTr("inverno") : qsTr("estate")
                 }
             }
 
@@ -220,12 +224,34 @@ MenuElement {
             }
 
             Text {
-                id: text4
+                id: labelMode
                 x: 19
                 y: 65
                 color: "#ffffff"
-                text: qsTr("estate")
+                text: itemMode.mode
                 font.pixelSize: 14
+            }
+
+            Image {
+                id: downMode
+                x: 143
+                y: 50
+                width: 44
+                height: 45
+                source: "common/comando.png"
+
+                Image {
+                    id: image8
+                    x: 11
+                    y: 12
+                    source: "common/freccia_dw.png"
+                }
+
+                MouseArea {
+                    id: mouse_area2
+                    anchors.fill: parent
+                    onClicked: itemMode.mode = (itemMode.mode == qsTr("estate")) ? qsTr("inverno") : qsTr("estate")
+                }
             }
         }
 
@@ -252,6 +278,20 @@ MenuElement {
                 target: itemTemperature
                 opacity: 0.400
             }
+
+            PropertyChanges {
+                target: minusMouseArea
+                enabled: false
+            }
+
+            PropertyChanges {
+                target: plusMouseArea
+                enabled: false
+            }
+
+            PropertyChanges {
+                target: element
+            }
         },
         State {
             name: "controlsDisabled"
@@ -263,6 +303,26 @@ MenuElement {
             PropertyChanges {
                 target: itemMode
                 opacity: 0.400
+            }
+
+            PropertyChanges {
+                target: plusMouseArea
+                enabled: false
+            }
+
+            PropertyChanges {
+                target: minusMouseArea
+                enabled: false
+            }
+
+            PropertyChanges {
+                target: mouse_area2
+                enabled: false
+            }
+
+            PropertyChanges {
+                target: mouse_area1
+                enabled: false
             }
         }
     ]
