@@ -9,15 +9,22 @@ var container = null
 
 var current_index = -1
 
+var changing_page = false
+
 
 // Create a QML object from a given filename and push it on the stack
 function openPage(filename) {
+    if (changing_page == true)
+        return
+
+    if (stack.length > 0)
+        changing_page = true
+
     var page_component = Qt.createComponent(filename)
     var page = page_component.createObject(container)
     pushPage(page)
     return page
 }
-
 
 function pushPage(page) {
     if (stack.length > 0) {
@@ -25,11 +32,17 @@ function pushPage(page) {
         page.state = ''
         page.z = 1
     }
+
     stack.push(page)
     current_index = stack.length - 1;
 }
 
 function showPreviousPage(index) {
+    if (changing_page == true)
+        return
+
+    changing_page = true
+
     stack[index].visible = true
     stack[index].z = 1
     stack[index].state = 'offscreen_left'
@@ -57,5 +70,6 @@ function changePageDone() {
             stack[i].destroy()
     }
     stack.length = current_index + 1
+    changing_page = false
 }
 
