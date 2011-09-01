@@ -13,6 +13,7 @@ MenuElement {
         id: itemList
         anchors.fill: parent
         currentIndex: -1
+        interactive: false
 
 
         delegate: Item {
