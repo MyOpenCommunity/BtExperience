@@ -36,11 +36,9 @@ function closeItem(menuLevel) {
 }
 
 function loadComponent(menuLevel, childTitle, fileName) {
-    var object = createComponent(fileName)
-    var title = createComponent("MenuTitle.qml")
+    var object = createComponent(fileName, {"menuLevel": menuLevel + 1, "y": backButton.y, parent: container})
+    var title = createComponent("MenuTitle.qml", {"text": childTitle, parent: container})
     if (object && title) {
-        object.menuLevel = menuLevel + 1
-        title.text = childTitle
         addItem(object, title)
         object._loadComponent.connect(loadComponent)
         object._closeElement.connect(closeItem)
@@ -59,10 +57,6 @@ function addItem(item, title) {
         destroyLast(stackItems)
         destroyLast(stackTitles)
     }
-
-    item.visible = true;
-    item.y = backButton.y
-    item.parent = container
 
     if (stackItems.length >= 1) {
         stackItems[stackItems.length - 1].child = item
@@ -118,11 +112,11 @@ function destroyLast(container) {
 }
 
 // Create and return a component or null if an error occurred
-function createComponent(fileName) {
+function createComponent(fileName, initData) {
     var component = Qt.createComponent(fileName)
     var object = null
     if (component.status == Component.Ready) {
-        object = component.createObject(container)
+        object = component.createObject(container, initData)
         if (object == null)
             console.log('Error on creating the object for the component: ' + fileName)
     }
