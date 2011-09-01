@@ -68,6 +68,7 @@ MenuElement {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
+                    element.closeChild()
                     itemList.currentIndex = index
                     if (componentFile)
                         element.loadChild(name, componentFile)

@@ -55,6 +55,7 @@ MenuElement {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
+                    element.closeChild()
                     itemList.currentIndex = index
                     element.loadChild(name, componentFile)
                 }
@@ -92,7 +93,7 @@ MenuElement {
 
             ListElement {
                 name: "zona studio"
-                componentFile: "5.qml"
+                componentFile: "ThermalControlledProbe.qml"
             }
         }
     }

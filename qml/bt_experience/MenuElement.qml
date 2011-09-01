@@ -9,6 +9,9 @@ Item {
     // request to close the element itself and its children
     signal closeElement
 
+    // request to close the child's element (if present)
+    signal closeChild
+
     // Signals emitted from the container
 
     // This signal is emitted from the MenuContainer when the requested child
@@ -26,6 +29,8 @@ Item {
 
     signal _closeElement(int menuLevel)
     onCloseElement: _closeElement(menuLevel)
+
+    onCloseChild: _closeElement(menuLevel + 1)
 
 //    Behavior on x {
 //        NumberAnimation { duration: 500 }
