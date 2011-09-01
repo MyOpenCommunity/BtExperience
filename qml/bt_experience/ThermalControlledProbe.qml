@@ -4,7 +4,27 @@ import QtQuick 1.0
 MenuElement {
     id: element
     width: 192
-    height: 280
+    height: 250
+
+    function alertOkClicked() {
+        element.closeElement()
+    }
+
+    onChildLoaded: {
+        child.programSelected.connect(programSelected)
+    }
+
+    onChildDestroyed: {
+        programItem.state = "";
+    }
+
+    function programSelected(programName) {
+        currentProgram.text = programName
+        if (programName == "off" || programName == "antigelo")
+            element.state = "temperatureDisabled"
+        else
+            element.state = ""
+    }
 
     Item {
         anchors.fill: parent
@@ -66,11 +86,23 @@ MenuElement {
                         anchors.top: parent.top
                         anchors.topMargin: 0
                     }
+
+                    Text {
+                        id: currentProgram
+                        x: 10
+                        y: 30
+                        width: 78
+                        height: 15
+                        text: qsTr("")
+                        font.family: lightFont.name
+                        wrapMode: Text.NoWrap
+                        font.pixelSize: 13
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        element.loadChild("", "xxx.qml")
+                        element.loadChild("", "ThermalControlledProbePrograms.qml")
                         programItem.state = programItem.state == "" ? "selected" : ""
                     }
                 }
@@ -78,6 +110,7 @@ MenuElement {
                 states: State {
                     name: "selected"
                     PropertyChanges { target: text; color: "#ffffff" }
+                    PropertyChanges { target: currentProgram; color: "#ffffff" }
                     PropertyChanges { target: arrow_right; source: "common/freccia_dxS.png" }
                     PropertyChanges { target: background; source: "common/tasto_menuS.png" }
                 }
@@ -142,8 +175,34 @@ MenuElement {
                 }
             }
 
+            ButtonOkCancel {
+                id: buttonokcancel1
+                x: 0
+                y: 203
+                anchors.top: itemTemperature.bottom
+                anchors.topMargin: 0
+
+                onCancelClicked: {
+                    page.showAlert(element, "Modifiche non salvate. Continuare?")
+                }
+
+                onOkClicked: {
+                    element.closeElement()
+                }
+            }
+
 
         }
     }
+    states: [
+        State {
+            name: "temperatureDisabled"
+
+            PropertyChanges {
+                target: itemTemperature
+                opacity: 0.400
+            }
+        }
+    ]
 
 }
