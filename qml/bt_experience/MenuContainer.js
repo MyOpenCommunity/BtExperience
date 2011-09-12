@@ -52,19 +52,52 @@ function loadComponent(menuLevel, childTitle, fileName) {
     }
 }
 
+
 function addItem(item, title) {
     while (item.menuLevel < stackItems.length) {
         destroyLast(stackItems)
         destroyLast(stackTitles)
     }
 
+    for (var i = 0; i < stackItems.length; i++) {
+        stackItems[i].z = 0.1
+    }
+
     if (stackItems.length >= 1) {
         stackItems[stackItems.length - 1].child = item
         stackItems[stackItems.length - 1].childLoaded()
+
+        item.enableAnimation = false
+        title.enableAnimation = false
+        var last_item = stackItems[stackItems.length - 1]
+        var last_title = stackTitles[stackTitles.length - 1]
+        item.x = last_item.x
+        title.x = last_title.x
+
+        item.enableAnimation = true
+        title.enableAnimation = true
+        item.x += last_item.width + container.itemsSpacing
+        title.x += last_title.width + container.itemsSpacing
+
+        stackItems.push(item)
+        stackTitles.push(title)
+
+        var first = calculateFirstVisible();
+        if (first !== 0)
+            showItems(first)
     }
-    stackItems.push(item)
-    stackTitles.push(title)
-    updateUi()
+    else {
+        item.enableAnimation = false
+        item.enableAnimation = false
+        item.x = backButton.x + backButton.width + container.itemsLeftMargin
+        title.x = backButton.x + backButton.width + container.itemsLeftMargin
+        item.enableAnimation = true
+        title.enableAnimation = true
+
+        stackItems.push(item)
+        stackTitles.push(title)
+
+    }
 }
 
 

@@ -32,8 +32,11 @@ Item {
 
     onCloseChild: _closeElement(menuLevel + 1)
 
-//    Behavior on x {
-//        NumberAnimation { duration: 500 }
-//    }
+    property alias enableAnimation: animation.enabled
+    Behavior on x {
+        id: animation
+        NumberAnimation { duration: 400 }
+    }
+
 }
 

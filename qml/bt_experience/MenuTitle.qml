@@ -9,8 +9,11 @@ Text {
     font.family: semiBoldFont.name
     font.capitalization: Font.AllUppercase
 
-//    Behavior on x {
-//        NumberAnimation { duration: 500 }
-//    }
+    property alias enableAnimation: animation.enabled
+    Behavior on x {
+        id: animation
+        NumberAnimation { duration: 400 }
+    }
+
 }
 
