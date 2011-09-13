@@ -17,3 +17,5 @@ RESOURCES +=
 
 TARGET = BtExperience
 
+QT += opengl
+

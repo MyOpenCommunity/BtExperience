@@ -54,10 +54,12 @@ function loadComponent(menuLevel, childTitle, fileName) {
 
 
 function addItem(item, title) {
-    while (item.menuLevel < stackItems.length) {
-        destroyLast(stackItems)
-        destroyLast(stackTitles)
-    }
+    if (item.menuLevel < stackItems.length)
+        closeItem(item.menuLevel)
+//    while (item.menuLevel < stackItems.length) {
+//        destroyLast(stackItems)
+//        destroyLast(stackTitles)
+//    }
 
     for (var i = 0; i < stackItems.length; i++) {
         stackItems[i].z = 0.1
