@@ -60,7 +60,7 @@ MenuElement {
                 onClicked: {
                     element.closeChild()
                     itemList.currentIndex = index
-                    element.loadChild("", componentFile)
+                    element.loadChild(name, componentFile)
                 }
             }
 
