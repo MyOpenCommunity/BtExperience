@@ -8,12 +8,16 @@ MenuElement {
     onChildDestroyed: {
         itemList.currentIndex = -1
     }
+    onChildAnimation: {
+        itemList.transparent = running ? false : true
+    }
 
     ListView {
         id: itemList
         anchors.fill: parent
         currentIndex: -1
         interactive: false
+        property bool transparent: true
 
 
         delegate: Item {
@@ -26,6 +30,14 @@ MenuElement {
                 z: 0
                 id: background
                 source: "common/tasto_menu.png";
+            }
+
+            Rectangle {
+                id: bgRectangle
+                visible: itemList.transparent === false ? true : false
+                color: "white"
+                anchors.fill: parent
+                z: -1
             }
 
             Item {

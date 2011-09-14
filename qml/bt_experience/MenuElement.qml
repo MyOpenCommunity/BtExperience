@@ -33,9 +33,28 @@ Item {
     onCloseChild: _closeElement(menuLevel + 1)
 
     property alias enableAnimation: animation.enabled
+    property alias animationRunning: defaultanimation.running
+
     Behavior on x {
         id: animation
-        NumberAnimation { duration: 400 }
+        NumberAnimation { id: defaultanimation; duration: 400 }
+    }
+
+
+    onAnimationRunningChanged: {
+        // Required for establish the following connection.. why???
+    }
+
+    onChildLoaded: {
+        child.animationRunningChanged.connect(childAnimationHandler)
+    }
+
+    signal childAnimation(bool running)
+
+    function childAnimationHandler()
+    {
+        if (child)
+            childAnimation(child.animationRunning === true)
     }
 
 }
