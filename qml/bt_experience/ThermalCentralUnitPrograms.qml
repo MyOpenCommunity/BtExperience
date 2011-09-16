@@ -9,7 +9,8 @@ MenuElement {
     signal programSelected(string programName)
 
     onChildLoaded: {
-        child.programSelected.connect(childProgramSelected)
+        if (child.programSelected)
+            child.programSelected.connect(childProgramSelected)
     }
 
     function childProgramSelected(programName) {
