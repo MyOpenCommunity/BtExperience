@@ -5,12 +5,15 @@
 
 int main(int argc, char *argv[])
 {
-    qDebug("Paint engine opengl 1!");
-    QGL::setPreferredPaintEngine(QPaintEngine::OpenGL);
     QApplication app(argc, argv);
-
     QmlApplicationViewer viewer;
-    viewer.setViewport(new QGLWidget);
+
+    QGLFormat f = QGLFormat::defaultFormat();
+    f.setSampleBuffers(true);
+    f.setSamples(4);
+
+    QGLWidget *w = new QGLWidget(f);
+    viewer.setViewport(w);
     viewer.setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     viewer.setRenderHint(QPainter::Antialiasing, true);
     viewer.setRenderHint(QPainter::SmoothPixmapTransform, true);
