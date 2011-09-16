@@ -7,6 +7,14 @@ MenuElement {
     width: 192
     height: 300
 
+    function alertOkClicked() {
+        element.closeElement()
+    }
+
+    onChildDestroyed: {
+        imageBg.current_element = -1
+    }
+
     Image {
         id: imageBg
         x: 0
@@ -141,5 +149,12 @@ MenuElement {
         id: buttonokcancel1
         x: 0
         y: 250
+        onCancelClicked: {
+            page.showAlert(element, "Modifiche non salvate. Continuare?")
+        }
+
+        onOkClicked: {
+            element.closeElement()
+        }
     }
 }

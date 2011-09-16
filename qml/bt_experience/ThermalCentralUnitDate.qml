@@ -1,10 +1,13 @@
 import QtQuick 1.1
-import QtQuick 1.0
 
 MenuElement {
     id: element
     width: 192
-    height: 150
+    height: 200
+
+    function alertOkClicked() {
+        element.closeElement()
+    }
 
     Image {
         id: image1
@@ -127,6 +130,19 @@ MenuElement {
             color: "#444546"
             text: qsTr("30")
             font.pixelSize: 12
+        }
+    }
+
+    ButtonOkCancel {
+        id: buttonokcancel1
+        x: 0
+        y: 150
+        onCancelClicked: {
+            page.showAlert(element, "Modifiche non salvate. Continuare?")
+        }
+
+        onOkClicked: {
+            element.closeElement()
         }
     }
 }
