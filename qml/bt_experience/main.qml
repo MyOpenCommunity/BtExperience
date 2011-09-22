@@ -7,6 +7,6 @@ Page {
 
     Component.onCompleted: {
         Stack.container = container
-        Stack.openPage("HomePage.qml")
+        Stack.openPage("ThermalRegulation.qml")
     }
 }

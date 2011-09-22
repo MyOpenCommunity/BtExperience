@@ -49,7 +49,6 @@ MenuElement {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    element.closeChild()
                     itemList.currentIndex = index
                     element.programSelected(name)
                 }

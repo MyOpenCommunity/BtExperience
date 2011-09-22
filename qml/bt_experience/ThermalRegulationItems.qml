@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    height: 300
+    height: 200
     width: 192
 
     onChildDestroyed: {
@@ -58,7 +58,8 @@ MenuElement {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    element.closeChild()
+                    if (itemDelegate.ListView.isCurrentItem)
+                        return
                     itemList.currentIndex = index
                     element.loadChild(name, componentFile)
                 }

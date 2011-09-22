@@ -3,43 +3,14 @@
 var stackItems = []
 var stackTitles = []
 
-
-function updateUi() {
-    showItems(calculateFirstVisible());
-}
-
-function closeLastItem() {
-    if (stackItems.length > 1) {
-        destroyLast(stackItems)
-        destroyLast(stackTitles)
-        stackItems[stackItems.length - 1].child = null
-        stackItems[stackItems.length - 1].childDestroyed();
-        updateUi()
-    }
-    else
-        container.closed()
-}
-
-function closeItem(menuLevel) {
-    if (menuLevel == 0) {
-        console.log("Error: cannot close the root element! Use the closeLastItem instead.")
-        return
-    }
-
-    while (menuLevel < stackItems.length) {
-        destroyLast(stackItems)
-        destroyLast(stackTitles)
-    }
-    stackItems[stackItems.length - 1].child = null
-    stackItems[stackItems.length - 1].childDestroyed();
-    updateUi()
-}
-
 function loadComponent(menuLevel, childTitle, fileName) {
-    var object = createComponent(fileName, {"menuLevel": menuLevel + 1, "y": backButton.y, parent: container})
-    var title = createComponent("MenuTitle.qml", {"text": childTitle, parent: container})
+    if (pendingOperations.length > 0) // we are during an operation
+        return
+
+    var object = createComponent(fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer, "visible": false, "y": 26})
+    var title = createComponent("MenuTitle.qml", {"text": childTitle, "parent": elementsContainer, "visible": false})
     if (object && title) {
-        addItem(object, title)
+        _addItem(object, title)
         object._loadComponent.connect(loadComponent)
         object._closeElement.connect(closeItem)
     }
@@ -52,106 +23,230 @@ function loadComponent(menuLevel, childTitle, fileName) {
     }
 }
 
+var OP_CLOSE = 1
+var OP_OPEN = 2
+var OP_UPDATE_UI = 3
 
-function addItem(item, title) {
-    if (item.menuLevel < stackItems.length)
-        closeItem(item.menuLevel)
-//    while (item.menuLevel < stackItems.length) {
-//        destroyLast(stackItems)
-//        destroyLast(stackTitles)
-//    }
+var debug = false
 
-    for (var i = 0; i < stackItems.length; i++) {
-        stackItems[i].z = 0.1
+var pendingOperations = []
+
+
+function closeLastItem() {
+    if (pendingOperations.length > 0) // we are during an operation
+        return
+
+    debugMsg("closeLastItem")
+    if (stackItems.length > 1) {
+        pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
+        pendingOperations.push({'id': OP_UPDATE_UI})
+        processOperations();
+    }
+    else
+        container.closed()
+}
+
+function closeItem(menuLevel) {
+    if (pendingOperations.length > 0) // we are during an operation
+        return
+
+    if (menuLevel >= stackItems.length) { // the item to close does not exists
+        debugMsg("closeItem: nothing to do")
+        return
     }
 
-    if (stackItems.length >= 1) {
-        stackItems[stackItems.length - 1].child = item
-        stackItems[stackItems.length - 1].childLoaded()
-
-        item.enableAnimation = false
-        title.enableAnimation = false
-        var last_item = stackItems[stackItems.length - 1]
-        var last_title = stackTitles[stackTitles.length - 1]
-        item.x = last_item.x
-        title.x = last_title.x
-
-        item.enableAnimation = true
-        title.enableAnimation = true
-        item.x += last_item.width + container.itemsSpacing
-        title.x += last_title.width + container.itemsSpacing
-
-        stackItems.push(item)
-        stackTitles.push(title)
-
-        var first = calculateFirstVisible();
-        if (first !== 0)
-            showItems(first)
+    debugMsg("closeItem level to close: " + menuLevel)
+    for (var i = stackItems.length - 1; i >= menuLevel; i--) {
+        pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
     }
-    else {
-        item.enableAnimation = false
-        item.enableAnimation = false
-        item.x = backButton.x + backButton.width + container.itemsLeftMargin
-        title.x = backButton.x + backButton.width + container.itemsLeftMargin
-        item.enableAnimation = true
-        title.enableAnimation = true
 
-        stackItems.push(item)
-        stackTitles.push(title)
-
-    }
+    pendingOperations.push({'id': OP_UPDATE_UI})
+    processOperations();
 }
 
 
-function calculateFirstVisible() {
-    var first_element = 0;
-    var items_width = 0;
+function _addItem(item, title) {
+    debugMsg("_addItem level: " + item.menuLevel)
+    for (var i = stackItems.length - 1; i >= item.menuLevel; i--) {
+        pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': false})
+    }
 
-    var total_width = container.width - (backButton.x + backButton.width + container.itemsLeftMargin)
+    pendingOperations.push({'id': OP_UPDATE_UI, 'newItem': item})
+    pendingOperations.push({'id': OP_OPEN, 'item': item, 'title': title})
+    processOperations()
+}
+
+
+function processOperations() {
+
+    debugMsg('processOperations -> operations pending: ' + pendingOperations.length)
+
+    if (pendingOperations.length  === 0) {
+        return
+    }
+
+    var op = pendingOperations[0]
+
+    // Per far apparire il nuovo item da sotto (e farlo scomparire nello stesso modo)
+    for (var i = 0; i < stackItems.length; i++) {
+        stackItems[i].z = 1 - i * 0.01
+    }
+
+    if (op['id'] == OP_OPEN) {
+        _openItem()
+    }
+    else if (op['id'] == OP_CLOSE) {
+        _closeItem()
+    }
+    else if (op['id'] == OP_UPDATE_UI) {
+        _updateView();
+    }
+}
+
+function _calculateFirstElement(starting_width) {
+    var first_element = 0
+    var items_width = starting_width
+
+    var max_width = container.width - (backButton.x + backButton.width + container.itemsLeftMargin)
 
     for (var i = stackItems.length - 1; i >= 0; i--) {
         items_width += stackItems[i].width + container.itemsSpacing;
-        if (items_width > total_width) {
-            first_element = i + 1;
+        if (items_width > max_width) {
+            first_element = i + 1
             break;
         }
     }
     return first_element;
 }
 
-function showItems(first_element) {
-    var x = backButton.x + backButton.width + container.itemsLeftMargin;
-    for (var i = 0; i < stackItems.length; i++) {
-        if (i >= first_element) {
-            stackItems[i].x = x;
-            stackItems[i].visible = true
-            stackTitles[i].x = x
-            stackTitles[i].visible = true
-            x += stackItems[i].width + container.itemsSpacing;
-        }
-        else {
-            stackItems[i].visible = false
-            stackTitles[i].visible = false
-        }
+function _updateView() {
+    debugMsg('_updateView')
+    var item = pendingOperations[0]['newItem']
+
+    var starting_width = item ? item.width : 0
+    var first_item = _calculateFirstElement(starting_width)
+
+    var starting_x = 0
+    for (var i = 0; i < first_item; i++) {
+        starting_x += stackItems[i].width + container.itemsSpacing
+    }
+    debugMsg('starting x: ' + starting_x)
+
+    if (elementsContainer.x == -starting_x) {
+        pendingOperations.shift()
+        processOperations()
+        return
+    }
+
+    elementsContainer.animationRunningChanged.connect(_doUpdateView)
+    elementsContainer.x = - starting_x
+}
+
+function _doUpdateView() {
+    if (elementsContainer.animationRunning)
+        return
+
+    debugMsg('_doUpdateView')
+    elementsContainer.animationRunningChanged.disconnect(_doUpdateView)
+
+    pendingOperations.shift()
+    processOperations()
+}
+
+function _openItem() {
+    debugMsg('_openItem')
+
+    var item = pendingOperations[0]['item']
+    var title = pendingOperations[0]['title']
+
+    if (stackItems.length === 0) {
+        elementsContainer.width = item.width
+        item.visible = true
+        title.visible = true
+//        debugMsg('itemcontainer width: ' + elementsContainer.width)
+        _doOpenItem()
+    }
+    else {
+        var last_item = stackItems[stackItems.length - 1]
+        item.enableAnimation = false
+        title.enableAnimation = false
+        item.x = last_item.x
+        title.x = last_item.x
+        title.visible = true
+        item.visible = true
+        item.enableAnimation = true
+        title.enableAnimation = true
+        item.animationRunningChanged.connect(_doOpenItem)
+        elementsContainer.width += mainContainer.itemsSpacing + item.width
+
+        item.x = last_item.x + last_item.width + mainContainer.itemsSpacing
+        title.x = last_item.x + last_item.width + mainContainer.itemsSpacing
     }
 }
 
+function _doOpenItem() {
+    var item = pendingOperations[0]['item']
+    if (item.animationRunning)
+        return
 
-// Generic functions
+    debugMsg('_doOpenItem')
+    var title = pendingOperations[0]['title']
+    item.animationRunningChanged.disconnect(_doOpenItem)
 
-// An utility function that destroys the last element from the container argument
-function destroyLast(container) {
-    container[container.length - 1].visible = false;
-    container[container.length - 1].destroy();
-    container.length -= 1;
+    if (stackItems.length >= 1) {
+        stackItems[stackItems.length - 1].child = item
+        stackItems[stackItems.length - 1].childLoaded()
+    }
+
+    stackItems.push(item)
+    stackTitles.push(title)
+    pendingOperations.shift()
+    processOperations();
 }
+
+function _closeItem() {
+    debugMsg("_closeItem")
+    var item = stackItems[stackItems.length - 1]
+    var title = stackTitles[stackTitles.length - 1]
+    item.animationRunningChanged.connect(_doCloseItem)
+    if (stackItems.length > 1) {
+        item.x = stackItems[stackItems.length - 2].x
+        title.x = stackTitles[stackTitles.length - 2].x
+    }
+    else {
+        item.x = 0
+        title.x = 0
+    }
+}
+
+function _doCloseItem() {
+    var item = stackItems[stackItems.length -1]
+    if (item.animationRunning)
+        return
+
+    var title = stackTitles[stackTitles.length -1]
+
+    elementsContainer.width -= item.width + mainContainer.itemsSpacing
+    item.visible = false
+    title.visible = false
+    item.destroy()
+    title.destroy()
+    stackItems.length -= 1
+    stackTitles.length -= 1
+    stackItems[stackItems.length -1].child = null
+    if (pendingOperations[0]['notifyChildDestroyed'])
+        stackItems[stackItems.length - 1].childDestroyed();
+    pendingOperations.shift()
+    processOperations();
+}
+
 
 // Create and return a component or null if an error occurred
 function createComponent(fileName, initData) {
     var component = Qt.createComponent(fileName)
     var object = null
     if (component.status == Component.Ready) {
-        object = component.createObject(container, initData)
+        object = component.createObject(mainContainer, initData)
         if (object == null)
             console.log('Error on creating the object for the component: ' + fileName)
     }
@@ -160,3 +255,11 @@ function createComponent(fileName, initData) {
 
     return object
 }
+
+
+function debugMsg(message) {
+    if (debug)
+        console.log(Qt.formatTime(new Date, "hh:mm:ss.zzz => ") + message)
+}
+
+

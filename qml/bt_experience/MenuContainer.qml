@@ -14,7 +14,7 @@ import "MenuContainer.js" as Script
 // onChildDestroyed.
 
 Item {
-    id: container
+    id: mainContainer
     width: 600
     height: 400
     property int itemsLeftMargin: 20
@@ -22,22 +22,38 @@ Item {
     property string rootElement
     signal closed
 
-    Item {
-        id: titlesContainer
-        y: 0
-        width: parent.width
-        height: 26
-        anchors.left: parent.left
-        anchors.right: parent.right
-    }
-
     ButtonBack {
         id: backButton
-        anchors.topMargin: 0
-        anchors.top: titlesContainer.bottom
+        anchors.topMargin: 26
+        anchors.top: parent.top
         anchors.leftMargin: 0
         anchors.left: container.left
         onClicked: Script.closeLastItem()
+    }
+
+    Item {
+        id: clippingContainer
+        anchors.left: backButton.right
+        anchors.leftMargin: itemsLeftMargin
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: parent.width
+        clip: true
+
+        Item {
+            id: elementsContainer
+            width: 0
+            x: 0
+            y: 0
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            property bool animationRunning: defaultanimation.running
+
+            Behavior on x {
+                id: animation
+                NumberAnimation { id: defaultanimation; duration: 400 }
+            }
+        }
     }
 
     Component.onCompleted: {
