@@ -27,7 +27,7 @@ Item {
         anchors.topMargin: 26
         anchors.top: parent.top
         anchors.leftMargin: 0
-        anchors.left: container.left
+        anchors.left: mainContainer.left
         onClicked: Script.closeLastItem()
     }
 
@@ -57,7 +57,7 @@ Item {
     }
 
     Component.onCompleted: {
-        Script.loadComponent(-1, "", container.rootElement)
+        Script.loadComponent(-1, "", mainContainer.rootElement)
     }
 }
 

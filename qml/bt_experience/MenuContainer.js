@@ -43,7 +43,7 @@ function closeLastItem() {
         processOperations();
     }
     else
-        container.closed()
+        mainContainer.closed()
 }
 
 function closeItem(menuLevel) {
@@ -107,10 +107,10 @@ function _calculateFirstElement(starting_width) {
     var first_element = 0
     var items_width = starting_width
 
-    var max_width = container.width - (backButton.x + backButton.width + container.itemsLeftMargin)
+    var max_width = mainContainer.width - (backButton.x + backButton.width + mainContainer.itemsLeftMargin)
 
     for (var i = stackItems.length - 1; i >= 0; i--) {
-        items_width += stackItems[i].width + container.itemsSpacing;
+        items_width += stackItems[i].width + mainContainer.itemsSpacing;
         if (items_width > max_width) {
             first_element = i + 1
             break;
@@ -128,7 +128,7 @@ function _updateView() {
 
     var starting_x = 0
     for (var i = 0; i < first_item; i++) {
-        starting_x += stackItems[i].width + container.itemsSpacing
+        starting_x += stackItems[i].width + mainContainer.itemsSpacing
     }
     debugMsg('starting x: ' + starting_x)
 
