@@ -8,21 +8,21 @@ Page {
     ToolBar {
             id: toolbar
             fontFamily: semiBoldFont.name
-            fontSize: 15
+            fontSize: 17
             onCustomClicked: Stack.backToHome()
     }
 
     Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 50
-        y: 465
+        y: 560
         id: mainText
 
         Text {
                 color: "#ffffff"
                 text: "termoregolazione"
                 rotation: 270
-                font.pixelSize: 54
+                font.pixelSize: 60
                 font.family: lightFont.name
                 anchors.fill: parent
         }
@@ -30,10 +30,10 @@ Page {
 
     MenuContainer {
         id: container
-        x: 131
-        y: 49
-        width: 658
-        height: 411
+        x: 122
+        y: 75
+        width: 922
+        height: 490
         rootElement: "ThermalRegulationItems.qml"
         onClosed: Stack.popPage()
     }

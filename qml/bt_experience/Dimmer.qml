@@ -1,10 +1,13 @@
 import QtQuick 1.1
 
 MenuElement {
-    width: 192
-    height: 350
+    width: 245
+    height: 410
 
     Image {
+        width: 245
+        height: 411
+        anchors.bottomMargin: 39
         source: "common/dimmer_bg.png"
         anchors.fill: parent
         ButtonOnOff {
@@ -17,7 +20,7 @@ MenuElement {
             text: qsTr("regolazione intensità luce dimmer")
             color: "#444546"
             wrapMode: "WordWrap"
-            font.pixelSize: 12
+            font.pixelSize: 13
             anchors.top: onOff.bottom
             anchors.topMargin: 10
             anchors.left: parent.left
@@ -29,6 +32,8 @@ MenuElement {
             id: dimmerReg
             source: "common/dimmer_reg_bg.png"
             property alias percentage: barPercentage.percentage
+            width: 245
+            height: 65
             anchors.top: textDimmer.bottom
             anchors.topMargin: 11
             anchors.horizontalCenter: parent.horizontalCenter
@@ -39,6 +44,7 @@ MenuElement {
                 source: "common/dimmer_reg.png"
                 anchors.left: parent.left
                 width: parent.width / 100 * percentage
+                height: 65
 
                 Text {
                     text: parent.percentage + "%"
@@ -67,9 +73,13 @@ MenuElement {
         }
 
         Image {
+            x: 0
+            y: 240
+            width: 245
+            height: 172
             source: "common/off_temporizzato.png"
             anchors.top: dimmerMinusPlus.bottom
-            anchors.topMargin: 5
+            anchors.topMargin: 15
 
             Text {
                 id: timeText
@@ -77,6 +87,7 @@ MenuElement {
                 anchors.topMargin: 5
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("spegnimento temporizzato")
+                font.pointSize: 12
                 color: "#444546"
             }
 
@@ -86,42 +97,44 @@ MenuElement {
                 anchors.topMargin: 8
                 anchors.left: parent.left
                 width: parent.width / 2
-                spacing: 5
+                height: 131
+                spacing: 7
+
                 Text {
                     width: parent.width
                     text: qsTr("minuti")
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     width: parent.width
                     text: "0"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     width: parent.width
                     text: "1"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     color: "white"
                     width: parent.width
                     text: "2"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     width: parent.width
                     text: "3"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     width: parent.width
                     text: "4"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
 
@@ -133,42 +146,42 @@ MenuElement {
                 anchors.topMargin: 8
                 anchors.top: timeText.bottom
                 anchors.left: firstColumn.right
-                spacing: 5
+                spacing: 7
                 Text {
                     width: parent.width
                     text: qsTr("secondi")
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     width: parent.width
                     text: "26"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     width: parent.width
                     text: "27"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     color: "white"
                     width: parent.width
                     text: "28"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     width: parent.width
                     text: "29"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Text {
                     width: parent.width
                     text: "30"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
 

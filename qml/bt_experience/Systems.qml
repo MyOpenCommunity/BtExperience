@@ -8,7 +8,7 @@ Page {
     ToolBar {
         id: toolbar
         fontFamily: semiBoldFont.name
-        fontSize: 15
+        fontSize: 17
         onCustomClicked: Stack.backToHome()
     }
 
@@ -45,7 +45,7 @@ Page {
                     z: PathView.z
                     Rectangle {
                         id: systemBox
-                        width: 50
+                        width: 65
                         anchors.left: parent.left
                         anchors.leftMargin: -1
                         anchors.top: parent.top
@@ -61,7 +61,7 @@ Page {
                             rotation: 270
                             text: name
                             font.bold: false
-                            font.pixelSize: 20
+                            font.pixelSize: 22
                             anchors.fill: parent
                         }
                         anchors.bottom: parent.bottom
@@ -71,8 +71,8 @@ Page {
                     }
                     source: image
                     smooth: true
-                    width: 450
-                    height: 300
+                    width: 575
+                    height: 360
                     transform: Rotation { origin.x: 30; origin.y: 30; axis { x: 0; y: 1; z: 0 } angle: 30 }
 
                     MouseArea {
@@ -104,10 +104,10 @@ Page {
 
      Text {
          id: text1
-         x: 36
-         y: 356
+         x: 50
+         y: 480
          color: "#ffffff"
          text: "SISTEMI"
-         font.pixelSize: 80
+         font.pixelSize: 100
      }
 }

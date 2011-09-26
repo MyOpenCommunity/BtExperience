@@ -10,7 +10,7 @@ source: "bg.png"
         customButton: "toolbar/ico_spegni.png"
         onCustomClicked: console.log("exit")
         fontFamily: semiBoldFont.name
-        fontSize: 15
+        fontSize: 17
     }
 
     ListView {
@@ -39,11 +39,13 @@ source: "bg.png"
          Component {
                  id: favouritesDelegate
                  Item {
-                         width: 133
-                         height: 100
+                         width: 170
+                         height: 130
                          Image {
                              id: favouritesImage
                              source: thumb
+                             width: 150
+                             height: 100
                              anchors.horizontalCenter: parent.horizontalCenter
                              anchors.verticalCenter: parent.verticalCenter
                              z: 1
@@ -71,8 +73,8 @@ source: "bg.png"
          delegate: favouritesDelegate
          orientation: ListView.Horizontal
          y: 372
-         width: 800
-         height: 108
+         width: 1024
+         height: 138
          anchors.right: parent.right
          anchors.rightMargin: 0
          anchors.left: parent.left
@@ -113,7 +115,7 @@ source: "bg.png"
                      z: PathView.z
                      Rectangle {
                              id: userBox
-                             width: 50
+                             width: 65
                              anchors.left: parent.left
                              anchors.leftMargin: -1
                              anchors.top: parent.top
@@ -131,7 +133,7 @@ source: "bg.png"
                              rotation: 270
                              text: name
                              font.bold: false
-                             font.pixelSize: 16
+                             font.pixelSize: 20
                              anchors.fill: parent
                          }
                          anchors.bottom: parent.bottom
@@ -141,8 +143,8 @@ source: "bg.png"
                      }
                      source: image
                      smooth: true
-                     width: 380
-                     height: 210
+                     width: 490
+                     height: 270
                      transform: Rotation { origin.x: 30; origin.y: 30; axis { x: 0; y: 1; z: 0 } angle: 30 }
                }
          }
@@ -151,14 +153,14 @@ source: "bg.png"
          model: usersModel
          delegate: usersDelegate
          path:  Path {
-                startX: 200; startY: 100
+                startX: 260; startY: 130
                 PathAttribute { name: "iconScale"; value: 0.6 }
                 PathAttribute { name: "z"; value: 0.0 }
-                PathLine { x: 450; y: 240 }
+                PathLine { x: 570; y: 310 }
                 PathAttribute { name: "iconScale"; value: 1.0 }
                 PathAttribute { name: "z"; value: 1.0 }
          }
-         width: 480
+         width: 620
          anchors.bottom: favourites.top
          anchors.bottomMargin: 0
          anchors.top: toolbar.bottom
@@ -187,19 +189,19 @@ source: "bg.png"
           anchors.bottom: parent.bottom
           anchors.bottomMargin: 10
           anchors.right: parent.right
-          width: 150
+          width: 190
           spacing: 5
 
           ButtonHomePageLink {
               width: parent.width
-              height: 66
+              height: 85
               text: "multimedia"
               icon: "pages/ico_multimedia.png"
           }
 
           ButtonHomePageLink {
               width: parent.width
-              height: 66
+              height: 85
               text: "stanze"
               icon: "pages/ico_stanze.png"
               x_origin: x + width
@@ -208,7 +210,7 @@ source: "bg.png"
 
           ButtonHomePageLink {
               width: parent.width
-              height: 66
+              height: 85
               text: "sistemi"
               icon: "pages/ico_sistemi.png"
               x_origin: x + width
@@ -218,7 +220,7 @@ source: "bg.png"
 
           ButtonHomePageLink {
               width: parent.width
-              height: 66
+              height: 85
               text: "opzioni"
               icon: "pages/ico_opzioni.png"
               x_origin: x + width

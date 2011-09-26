@@ -3,8 +3,8 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    width: 192
-    height: 250
+    width: 245
+    height: 320
 
     function alertOkClicked() {
         element.closeElement()
@@ -34,6 +34,8 @@ MenuElement {
             id: image1
             x: 0
             y: 0
+            width: 245
+            height: 167
             source: "common/dimmer_bg.png"
 
             Text {
@@ -41,36 +43,52 @@ MenuElement {
                 x: 18
                 y: 13
                 text: qsTr("20° C")
-                font.pixelSize: 22
+                font.pixelSize: 24
             }
 
             Item {
                 x: 0
-                y: 50
+                y: 51
                 id: programItem
-                height: 50
+                height: 65
                 width: background.sourceSize.width
 
                 Image {
                     anchors.fill: parent
                     z: 0
                     id: background
+                    width: 245
+                    height: 65
+                    anchors.rightMargin: -53
                     source: "common/tasto_menu.png";
                 }
 
                 Item {
                     id: item2
+                    x: 0
+                    y: 0
+                    width: 245
+                    height: 65
+                    anchors.rightMargin: -53
+                    anchors.bottomMargin: 0
+                    anchors.leftMargin: 0
+                    anchors.topMargin: 0
                     anchors.fill: parent
                     z: 1
 
                     Text {
                         id: text
+                        x: 16
+                        y: 5
+                        width: 177
+                        height: 55
                         text: "programma"
+                        anchors.rightMargin: 30
                         font.family: semiBoldFont.name
-                        font.pixelSize: 13
+                        font.pixelSize: 15
                         wrapMode: "WordWrap"
                         anchors.left: parent.left
-                        anchors.leftMargin: 10
+                        anchors.leftMargin: 16
                         anchors.top: parent.top
                         anchors.topMargin: 5
                         anchors.bottom: parent.bottom
@@ -89,14 +107,14 @@ MenuElement {
 
                     Text {
                         id: currentProgram
-                        x: 10
+                        x: 16
                         y: 30
-                        width: 78
+                        width: 92
                         height: 15
                         text: qsTr("")
                         font.family: lightFont.name
                         wrapMode: Text.NoWrap
-                        font.pixelSize: 13
+                        font.pixelSize: 15
                     }
                 }
                 MouseArea {
@@ -122,6 +140,10 @@ MenuElement {
                 anchors.topMargin: 0
                 source: "common/comando_bg.png"
                 property int temperature: 22
+                x: 0
+                y: 116
+                width: 245
+                height: 137
 
                 Text {
                     id: text1
@@ -132,31 +154,33 @@ MenuElement {
                     color: "#000000"
                     text: qsTr("temperatura impostata")
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                 }
 
                 Text {
                     id: labelTemperature
                     x: 17
-                    y: 68
+                    y: 75
                     width: 24
-                    height: 10
+                    height: 15
                     color: "#ffffff"
                     text:  itemTemperature.temperature + "°"
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 14
+                    font.pixelSize: 16
                 }
 
                 Image {
                     id: minusTemperature
-                    x: 101
-                    y: 50
+                    x: 127
+                    y: 68
+                    width: 57
+                    height: 62
                     source: "common/comando.png"
 
                     Image {
                         id: image4
-                        x: 11
-                        y: 12
+                        x: 14
+                        y: 20
                         source: "common/meno.png"
                     }
 
@@ -169,14 +193,16 @@ MenuElement {
 
                 Image {
                     id: plusTemperature
-                    x: 144
-                    y: 50
+                    x: 183
+                    y: 68
+                    width: 57
+                    height: 62
                     source: "common/comando.png"
 
                     Image {
                         id: image5
-                        x: 11
-                        y: 12
+                        x: 18
+                        y: 20
                         source: "common/piu.png"
                     }
 
@@ -191,7 +217,9 @@ MenuElement {
             ButtonOkCancel {
                 id: buttonokcancel1
                 x: 0
-                y: 203
+                y: 288
+                width: 244
+                height: 57
                 anchors.top: itemTemperature.bottom
                 anchors.topMargin: 0
 

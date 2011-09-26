@@ -8,8 +8,8 @@ Image {
     property string customButton: "toolbar/ico_home.png"
     signal customClicked
 
-    fillMode: Image.PreserveAspectCrop
-    height: 49
+    width: 1024
+    height: 65
     source: "toolbar/barra.png" // Damn image of 56 pixel of height!
 
 
@@ -57,28 +57,28 @@ Image {
 
     Image {
           id: image1
-          x: 560
+          x: 798
           y: 11
           source: "toolbar/ico_ora.png"
     }
 
     Image {
           id: image2
-          x: 600
+          x: 838
           y: 11
           source: "toolbar/ico_allarme.png"
     }
 
     Image {
           id: image3
-          x: 641
+          x: 879
           y: 11
           source: "toolbar/ico_antifurtoIns.png"
     }
 
     Image {
           id: image4
-          x: 696
+          x: 934
           y: 14
           source: "toolbar/logo.png"
     }

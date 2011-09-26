@@ -3,8 +3,8 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    height: 350
-    width: 192
+    height: 455
+    width: 245
 
     signal programSelected(string programName)
 
@@ -27,8 +27,8 @@ MenuElement {
 
         delegate: Item {
             id: itemDelegate
-            height: 50
-            width: background.sourceSize.width
+            height: 65
+            width: 245
             property alias text: text.text
 
             Image {
@@ -46,7 +46,7 @@ MenuElement {
                     id: text
                     text: name
                     font.family: semiBoldFont.name
-                    font.pixelSize: 13
+                    font.pixelSize: 15
                     wrapMode: "WordWrap"
                     anchors.left: parent.left
                     anchors.leftMargin: 10

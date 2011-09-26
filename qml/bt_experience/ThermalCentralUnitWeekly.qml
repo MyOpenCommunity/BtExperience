@@ -2,8 +2,8 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    height: 150
-    width: 192
+    height: 195
+    width: 245
 
     signal programSelected(string programName)
 
@@ -17,8 +17,8 @@ MenuElement {
 
         delegate: Item {
             id: itemDelegate
-            height: 50
-            width: background.sourceSize.width
+            height: 65
+            width: 245
 
             Image {
                 anchors.fill: parent
@@ -35,7 +35,7 @@ MenuElement {
                     id: text
                     text: name
                     font.family: semiBoldFont.name
-                    font.pixelSize: 13
+                    font.pixelSize: 15
                     wrapMode: "WordWrap"
                     anchors.left: parent.left
                     anchors.leftMargin: 10

@@ -24,7 +24,7 @@ Item {
 
     ButtonBack {
         id: backButton
-        anchors.topMargin: 26
+        anchors.topMargin: 33
         anchors.top: parent.top
         anchors.leftMargin: 0
         anchors.left: mainContainer.left

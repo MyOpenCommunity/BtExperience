@@ -8,21 +8,21 @@ Page {
     ToolBar {
             id: toolbar
             fontFamily: semiBoldFont.name
-            fontSize: 15
+            fontSize: 17
             onCustomClicked: Stack.backToHome()
     }
 
  Rectangle {
      anchors.left: parent.left
      anchors.leftMargin: 50
-     y: 390
+     y: 450
      id: mainText
 
      Text {
              color: "#ffffff"
              text: "illuminazione"
              rotation: 270
-             font.pixelSize: 54
+             font.pixelSize: 60
              font.family: lightFont.name
              anchors.fill: parent
      }
@@ -30,10 +30,10 @@ Page {
 
  MenuContainer {
      id: menucontainer1
-     x: 121
-     y: 49
-     width: 658
-     height: 412
+     x: 122
+     y: 75
+     width: 828
+     height: 503
      rootElement: "LightingItems.qml"
      onClosed: Stack.popPage()
  }

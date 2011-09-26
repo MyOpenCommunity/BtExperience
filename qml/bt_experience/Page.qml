@@ -4,8 +4,8 @@ import "Stack.js" as Stack
 
 Image {
     id: page
-    width:  800
-    height: 480
+    width:  1024
+    height: 600
 
     property alias lightFont: lightFont
     property alias regularFont: regularFont
@@ -64,14 +64,14 @@ Image {
             name: "offscreen_right"
             PropertyChanges {
                 target: page
-                x: 800
+                x: 1024
             }
         },
         State {
             name: "offscreen_left"
             PropertyChanges {
                 target: page
-                x: -800
+                x: -1024
             }
         },
         State {

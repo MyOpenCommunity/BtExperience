@@ -3,7 +3,7 @@ import QtQuick 1.1
 MenuElement {
     id: element
     height: 260
-    width: 192
+    width: 245
 
     onChildDestroyed: itemList.currentIndex = -1
 
@@ -15,8 +15,8 @@ MenuElement {
 
         delegate: Item {
             id: itemDelegate
-            height: 50
-            width: background.sourceSize.width
+            height: 65
+            width: 245
 
             Image {
                 anchors.fill: parent
@@ -33,7 +33,7 @@ MenuElement {
                     id: text
                     text: name
                     font.family: semiBoldFont.name
-                    font.pixelSize: 13
+                    font.pixelSize: 15
                     wrapMode: "WordWrap"
                     anchors.left: parent.left
                     anchors.leftMargin: 10

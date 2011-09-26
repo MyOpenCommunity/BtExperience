@@ -9,8 +9,10 @@ Image {
 
     Image {
         id: image1
-        x: 21
-        y: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
         source: "common/freccia_dx.png"
     }
 

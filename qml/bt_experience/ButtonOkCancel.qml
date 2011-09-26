@@ -5,6 +5,8 @@ Row {
     signal cancelClicked
     Image {
         source: "common/on_off.png"
+        width: 122
+        height: 57
         Text {
             text: qsTr("OK")
             font.family: semiBoldFont.name
@@ -20,6 +22,8 @@ Row {
     }
     Image {
         source: "common/on_off.png"
+        width: 122
+        height: 57
         Text {
             text: qsTr("ANNULLA")
             font.family: semiBoldFont.name

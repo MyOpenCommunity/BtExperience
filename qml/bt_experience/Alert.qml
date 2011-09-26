@@ -22,6 +22,8 @@ Column {
 
     Image {
         id: alertBg
+        width: 244
+        height: 130
         source: "alert.png"
 
         Text {
@@ -35,7 +37,7 @@ Column {
             anchors.bottom: parent.bottom
             text: qsTr("")
             font.family: regularFont.name
-            font.pixelSize: 14
+            font.pixelSize: 16
             wrapMode: Text.WordWrap
         }
     }

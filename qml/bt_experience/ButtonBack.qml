@@ -3,6 +3,8 @@ import QtQuick 1.1
 Image {
     id: button
     source: "common/tasto_indietro.png"
+    width: 65
+    height: 65
     signal clicked
     Image {
         id: arrowLeft

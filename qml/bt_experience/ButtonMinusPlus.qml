@@ -6,6 +6,8 @@ Row {
     signal minusClicked
     Image {
         source: "common/piu_meno.png"
+        width: 122
+        height: 57
         Image {
             source: "common/meno.png"
             anchors.horizontalCenter: parent.horizontalCenter
@@ -18,6 +20,8 @@ Row {
     }
     Image {
         source: "common/piu_meno.png"
+        width: 122
+        height: 57
         Image {
             source: "common/piu.png"
             anchors.horizontalCenter: parent.horizontalCenter
