@@ -15,54 +15,16 @@ MenuElement {
         currentIndex: -1
         interactive: false
 
-        delegate: Item {
-            id: itemDelegate
-            height: 65
-            width: 245
-
-            Image {
-                anchors.fill: parent
-                z: 0
-                id: background
-                source: "common/tasto_menu.png";
-            }
-
-            Item {
-                anchors.fill: parent
-                z: 1
-
-                Text {
-                    id: text
-                    text: name
-                    font.family: semiBoldFont.name
-                    font.pixelSize: 15
-                    wrapMode: "WordWrap"
-                    anchors.left: parent.left
-                    anchors.leftMargin: 10
-                    anchors.top: parent.top
-                    anchors.topMargin: 5
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 5
-                    anchors.right: parent.right
-                }
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    itemList.currentIndex = index
-                    element.programSelected(name)
-                }
-            }
-
-            states: State {
-                name: "selected"
-                when: itemDelegate.ListView.isCurrentItem
-                PropertyChanges { target: text; color: "#ffffff" }
-                PropertyChanges { target: background; source: "common/tasto_menuS.png" }
+        delegate: MenuItemDelegate {
+            showRightArrow: false
+            onClicked: {
+                var clickedItem = modelList.get(index)
+                element.programSelected(clickedItem.name)
             }
         }
 
         model: ListModel {
+            id: modelList
             ListElement {
                 name: "auto"
             }
