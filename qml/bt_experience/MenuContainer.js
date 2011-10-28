@@ -155,6 +155,8 @@ function _doUpdateView() {
 
 function _openItem() {
     debugMsg('_openItem')
+    var verticalOffset = 10
+    var horizontalOverlap = 2
 
     var item = pendingOperations[0]['item']
     var title = pendingOperations[0]['title']
@@ -170,6 +172,7 @@ function _openItem() {
         var last_item = stackItems[stackItems.length - 1]
         item.enableAnimation = false
         title.enableAnimation = false
+        item.y = last_item.y + verticalOffset
         item.x = last_item.x
         title.x = last_item.x
         title.visible = true
@@ -179,7 +182,7 @@ function _openItem() {
         item.animationRunningChanged.connect(_doOpenItem)
         elementsContainer.width += mainContainer.itemsSpacing + item.width
 
-        item.x = last_item.x + last_item.width + mainContainer.itemsSpacing
+        item.x = last_item.x + last_item.width + mainContainer.itemsSpacing - horizontalOverlap
         title.x = last_item.x + last_item.width + mainContainer.itemsSpacing
     }
 }
