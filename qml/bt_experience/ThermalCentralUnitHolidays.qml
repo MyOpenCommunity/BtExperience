@@ -4,8 +4,8 @@ import QtQuick 1.0
 
 MenuElement {
     id: element
-    width: 245
-    height: 390
+    width: 212
+    height: 340
 
     function alertOkClicked() {
         element.closeElement()
@@ -19,8 +19,8 @@ MenuElement {
         id: imageBg
         x: 0
         y: 0
-        width: 245
-        height: 196
+        width: 212
+        height: 170
         source: "common/dimmer_bg.png"
         property int current_element: -1
 
@@ -37,20 +37,20 @@ MenuElement {
             font.bold: true
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignTop
-            font.pixelSize: 17
+            font.pixelSize: 16
         }
 
         Text {
             id: text2
             x: 22
-            y: 115
+            y: 100
             width: 79
             height: 19
             color: "#ffffff"
             text: qsTr("13:00")
             font.bold: true
             verticalAlignment: Text.AlignTop
-            font.pixelSize: 17
+            font.pixelSize: 16
         }
 
         Text {
@@ -66,10 +66,10 @@ MenuElement {
         }
 
         ButtonCommand {
-            x: 183
+            x: 159
             y: 55
-            width: 55
-            height: 55
+            width: 43
+            height: 45
             selected: imageBg.current_element == 1
 
             onClicked: {
@@ -81,10 +81,10 @@ MenuElement {
         }
 
         ButtonCommand {
-            x: 183
-            y: 115
-            width: 55
-            height: 55
+            x: 159
+            y: 100
+            width: 43
+            height: 45
             selected: imageBg.current_element == 2
             onClicked: {
                 if (!selected) {
@@ -98,39 +98,39 @@ MenuElement {
     Image {
         id: image2
         x: 1
-        y: 196
-        width: 244
-        height: 137
+        y: 170
+        width: 212
+        height: 118
         source: "common/comando_bg.png"
 
         Image {
             id: image3
-            x: 128
-            y: 68
-            width: 55
-            height: 62
-            source: "common/comando.png"
+            x: 112
+            y: 59
+            width: 49
+            height: 53
+            source: "common/btn_comando.png"
 
             Image {
                 id: image9
-                x: 17
-                y: 20
+                x: 14
+                y: 16
                 source: "common/freccia_up.png"
             }
         }
 
         Image {
             id: image4
-            x: 183
-            y: 68
-            width: 55
-            height: 62
-            source: "common/comando.png"
+            x: 160
+            y: 59
+            width: 49
+            height: 53
+            source: "common/btn_comando.png"
 
             Image {
                 id: image10
-                x: 17
-                y: 20
+                x: 14
+                y: 16
                 source: "common/freccia_dw.png"
             }
         }
@@ -155,14 +155,14 @@ MenuElement {
             text: qsTr("P3 Settimanale")
             font.bold: false
             wrapMode: Text.WordWrap
-            font.pixelSize: 15
+            font.pixelSize: 14
         }
     }
 
     ButtonOkCancel {
         id: buttonokcancel1
-        x: 1
-        y: 333
+        x: 2
+        y: 288
         onCancelClicked: {
             page.showAlert(element, "Modifiche non salvate. Continuare?")
         }

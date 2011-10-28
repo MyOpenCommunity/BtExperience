@@ -2,8 +2,8 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    width: 245
-    height: 255
+    width: 212
+    height: 225
 
     function alertOkClicked() {
         element.closeElement()
@@ -13,13 +13,13 @@ MenuElement {
         id: image1
         x: 0
         y: 0
-        width: 245
-        height: 198
+        width: 212
+        height: 170
         source: "common/ora.png"
 
         Text {
             id: text1
-            x: 48
+            x: 45
             y: 5
             text: qsTr("ore")
             font.pixelSize: 14
@@ -27,7 +27,7 @@ MenuElement {
 
         Text {
             id: text2
-            x: 157
+            x: 139
             y: 5
             text: qsTr("minuti")
             font.pixelSize: 14
@@ -35,40 +35,40 @@ MenuElement {
 
         Text {
             id: text3
-            x: 50
-            y: 41
+            x: 48
+            y: 35
             text: qsTr("15")
             font.pixelSize: 14
         }
 
         Text {
             id: text4
-            x: 169
-            y: 41
+            x: 151
+            y: 35
             text: qsTr("26")
             font.pixelSize: 14
         }
 
         Text {
             id: text5
-            x: 50
-            y: 68
+            x: 48
+            y: 60
             text: qsTr("16")
             font.pixelSize: 14
         }
 
         Text {
             id: text6
-            x: 169
-            y: 68
+            x: 151
+            y: 60
             text: qsTr("27")
             font.pixelSize: 14
         }
 
         Text {
             id: text7
-            x: 50
-            y: 105
+            x: 48
+            y: 89
             color: "#ffffff"
             text: qsTr("17")
             font.pixelSize: 14
@@ -76,8 +76,8 @@ MenuElement {
 
         Text {
             id: text8
-            x: 169
-            y: 105
+            x: 151
+            y: 89
             color: "#ffffff"
             text: qsTr("28")
             font.pixelSize: 14
@@ -85,32 +85,32 @@ MenuElement {
 
         Text {
             id: text9
-            x: 50
-            y: 138
+            x: 48
+            y: 120
             text: qsTr("18")
             font.pixelSize: 14
         }
 
         Text {
             id: text10
-            x: 50
-            y: 168
+            x: 48
+            y: 144
             text: qsTr("19")
             font.pixelSize: 14
         }
 
         Text {
             id: text11
-            x: 169
-            y: 138
+            x: 151
+            y: 120
             text: qsTr("29")
             font.pixelSize: 14
         }
 
         Text {
             id: text12
-            x: 169
-            y: 168
+            x: 151
+            y: 144
             text: qsTr("30")
             font.pixelSize: 14
         }
@@ -118,8 +118,8 @@ MenuElement {
 
     ButtonOkCancel {
         id: buttonokcancel1
-        x: 1
-        y: 198
+        x: 2
+        y: 170
 
         onCancelClicked: {
             page.showAlert(element, "Modifiche non salvate. Continuare?")

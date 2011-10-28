@@ -5,7 +5,7 @@ Image {
     property bool selected: false
     signal clicked(bool newStatus)
 
-    source: "common/comando.png"
+    source: "common/btn_comando.png"
 
     Image {
         id: image1
@@ -28,7 +28,7 @@ Image {
 
             PropertyChanges {
                 target: command
-                source: "common/comandoS.jpg"
+                source: "common/btn_comandoS.png"
             }
 
             PropertyChanges {

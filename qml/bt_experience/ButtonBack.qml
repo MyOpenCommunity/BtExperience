@@ -2,9 +2,9 @@ import QtQuick 1.1
 
 Image {
     id: button
-    source: "common/tasto_indietro.png"
-    width: 65
-    height: 65
+    source: "common/btn_indietro.png"
+    width: 50
+    height: 50
     signal clicked
     Image {
         id: arrowLeft
@@ -22,7 +22,7 @@ Image {
     states: State {
         name: "pressed"
         when: mousearea.pressed === true;
-//         PropertyChanges { target: button; source: "common/tasto_indietroP.png" }
+//         PropertyChanges { target: button; source: "common/btn_indietroP.png" }
 //         PropertyChanges { target: arrowLeft; source: "common/freccia_sxS.png" }
     }
 }

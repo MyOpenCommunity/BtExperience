@@ -3,8 +3,8 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    width: 245
-    height: 390
+    width: 212
+    height: 330
 
     function alertOkClicked() {
         element.closeElement()
@@ -30,19 +30,21 @@ MenuElement {
 
     Item {
         id: mainItem
+        width: 212
+        height: 326
         anchors.fill: parent
 
         Item {
             anchors.top: parent.top
             id: programItem
-            height: 65
-            width: 245
+            height: 50
+            width: element.width
 
             Image {
                 anchors.fill: parent
                 z: 0
                 id: background
-                source: "common/tasto_menu.png";
+                source: "common/btn_menu.png";
             }
 
             Item {
@@ -99,7 +101,7 @@ MenuElement {
                 PropertyChanges { target: text; color: "#ffffff" }
                 PropertyChanges { target: currentProgram; color: "#ffffff" }
                 PropertyChanges { target: arrowRight; source: "common/freccia_dxS.png" }
-                PropertyChanges { target: background; source: "common/tasto_menuS.png" }
+                PropertyChanges { target: background; source: "common/btn_menuS.png" }
             }
         }
 
@@ -111,8 +113,8 @@ MenuElement {
             anchors.topMargin: 0
             source: "common/comando_bg.png"
             property int temperature: 22
-            width: 245
-            height: 130
+            width: element.width
+            height: 112
             Behavior on opacity {
                 NumberAnimation { duration: 200 }
             }
@@ -126,7 +128,7 @@ MenuElement {
                 color: "#000000"
                 text: qsTr("temperatura impostata")
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 14
+                font.pixelSize: 13
             }
 
             Text {
@@ -138,21 +140,21 @@ MenuElement {
                 color: "#ffffff"
                 text: itemTemperature.temperature + "°"
                 verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 16
+                font.pixelSize: 15
             }
 
             Image {
                 id: minusTemperature
-                x: 127
-                y: 62
-                width: 54
-                height: 61
-                source: "common/comando.png"
+                x: 111
+                y: 56
+                width: 49
+                height: 51
+                source: "common/btn_comando.png"
 
                 Image {
                     id: image4
-                    x: 16
-                    y: 20
+                    x: 14
+                    y: 15
                     source: "common/meno.png"
                 }
 
@@ -165,16 +167,16 @@ MenuElement {
 
             Image {
                 id: plusTemperature
-                x: 181
-                y: 62
-                width: 58
-                height: 61
-                source: "common/comando.png"
+                x: 160
+                y: 56
+                width: 49
+                height: 51
+                source: "common/btn_comando.png"
 
                 Image {
                     id: image3
-                    x: 18
-                    y: 20
+                    x: 14
+                    y: 15
                     source: "common/piu.png"
                 }
 
@@ -189,8 +191,8 @@ MenuElement {
         Image {
             id: itemMode
             x: 0
-            width: 245
-            height: 133
+            width: element.width
+            height: 112
             anchors.top: itemTemperature.bottom
             anchors.topMargin: 0
             source: "common/comando_bg.png"
@@ -202,16 +204,16 @@ MenuElement {
 
             Image {
                 id: upMode
-                x: 128
-                y: 65
-                width: 52
-                height: 63
-                source: "common/comando.png"
+                x: 111
+                y: 56
+                width: 49
+                height: 51
+                source: "common/btn_comando.png"
 
                 Image {
                     id: image7
-                    x: 15
-                    y: 21
+                    x: 14
+                    y: 15
                     source: "common/freccia_up.png"
                 }
 
@@ -230,30 +232,30 @@ MenuElement {
                 height: 15
                 text: qsTr("modo")
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 14
+                font.pixelSize: 13
             }
 
             Text {
                 id: labelMode
                 x: 19
-                y: 88
+                y: 72
                 color: "#ffffff"
                 text: itemMode.mode
-                font.pixelSize: 16
+                font.pixelSize: 15
             }
 
             Image {
                 id: downMode
-                x: 180
-                y: 65
-                width: 58
-                height: 63
-                source: "common/comando.png"
+                x: 160
+                y: 56
+                width: 49
+                height: 51
+                source: "common/btn_comando.png"
 
                 Image {
                     id: image8
-                    x: 18
-                    y: 21
+                    x: 14
+                    y: 15
                     source: "common/freccia_dw.png"
                 }
 
@@ -267,10 +269,8 @@ MenuElement {
 
         ButtonOkCancel {
             id: buttonokcancel
-            x: 0
-            y: 328
-            width: 245
-            height: 57
+            x: 2
+            y: 274
             onCancelClicked: {
                 page.showAlert(element, "Modifiche non salvate. Continuare?")
             }

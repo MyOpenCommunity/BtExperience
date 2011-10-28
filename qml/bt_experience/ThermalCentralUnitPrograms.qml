@@ -3,8 +3,8 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    height: 455
-    width: 245
+    height: 355
+    width: 212
 
     signal programSelected(string programName)
 

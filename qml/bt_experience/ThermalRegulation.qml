@@ -32,7 +32,7 @@ Page {
         id: container
         x: 122
         y: 75
-        width: 922
+        width: 911
         height: 490
         rootElement: "ThermalRegulationItems.qml"
         onClosed: Stack.popPage()

@@ -1,7 +1,7 @@
 import QtQuick 1.1
 
 Text {
-    width: 245
+    width: 212
     height: 33
     color: "#ffffff"
     verticalAlignment: Text.AlignVCenter

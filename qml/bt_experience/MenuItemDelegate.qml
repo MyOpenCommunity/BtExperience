@@ -2,8 +2,8 @@ import QtQuick 1.1
 
 Item {
     id: itemDelegate
-    height: 65
-    width: 245
+    height: 50
+    width: 212
     // TODO: showStatus & showRightArrow is not necessary if we can check for the
     // existance of isOn and componentFile properties from the model
     property bool showStatus: false
@@ -14,7 +14,7 @@ Item {
         anchors.fill: parent
         z: 0
         id: background
-        source: "common/tasto_menu.png";
+        source: "common/btn_menu.png";
     }
 
     Item {
@@ -74,7 +74,7 @@ Item {
         when: itemDelegate.ListView.isCurrentItem
         PropertyChanges { target: text; color: "#ffffff" }
         PropertyChanges { target: arrow_right; source: "common/freccia_dxS.png" }
-        PropertyChanges { target: background; source: "common/tasto_menuS.png" }
+        PropertyChanges { target: background; source: "common/btn_menuS.png" }
     }
 }
 

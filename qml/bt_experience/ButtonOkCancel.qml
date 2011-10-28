@@ -4,9 +4,9 @@ Row {
     signal okClicked
     signal cancelClicked
     Image {
-        source: "common/on_off.png"
-        width: 122
-        height: 57
+        source: "common/btn_OKAnnulla.png"
+        width: 104
+        height: 50
         Text {
             text: qsTr("OK")
             font.family: semiBoldFont.name
@@ -21,9 +21,9 @@ Row {
         }
     }
     Image {
-        source: "common/on_off.png"
-        width: 122
-        height: 57
+        source: "common/btn_OKAnnulla.png"
+        width: 104
+        height: 50
         Text {
             text: qsTr("ANNULLA")
             font.family: semiBoldFont.name

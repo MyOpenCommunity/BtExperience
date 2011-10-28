@@ -6,6 +6,7 @@ Column {
     property alias message: text.text
     property Item source: null
     signal hideAlert
+    width: 212
 
     Text {
         id: warningText
@@ -22,7 +23,7 @@ Column {
 
     Image {
         id: alertBg
-        width: 244
+        width: 208
         height: 130
         source: "alert.png"
 

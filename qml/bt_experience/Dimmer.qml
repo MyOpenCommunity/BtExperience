@@ -1,7 +1,7 @@
 import QtQuick 1.1
 
 MenuElement {
-    width: 245
+    width: 212
     height: 410
 
     Image {
@@ -32,8 +32,8 @@ MenuElement {
             id: dimmerReg
             source: "common/dimmer_reg_bg.png"
             property alias percentage: barPercentage.percentage
-            width: 245
-            height: 65
+            width: 212
+            height: 50
             anchors.top: textDimmer.bottom
             anchors.topMargin: 11
             anchors.horizontalCenter: parent.horizontalCenter
@@ -44,7 +44,7 @@ MenuElement {
                 source: "common/dimmer_reg.png"
                 anchors.left: parent.left
                 width: parent.width / 100 * percentage
-                height: 65
+                height: 50
 
                 Text {
                     text: parent.percentage + "%"
@@ -75,8 +75,8 @@ MenuElement {
         Image {
             x: 0
             y: 240
-            width: 245
-            height: 172
+            width: 212
+            height: 150
             source: "common/off_temporizzato.png"
             anchors.top: dimmerMinusPlus.bottom
             anchors.topMargin: 15
@@ -87,7 +87,7 @@ MenuElement {
                 anchors.topMargin: 5
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("spegnimento temporizzato")
-                font.pointSize: 12
+                font.pointSize: 11
                 color: "#444546"
             }
 
@@ -98,7 +98,7 @@ MenuElement {
                 anchors.left: parent.left
                 width: parent.width / 2
                 height: 131
-                spacing: 7
+                spacing: 3
 
                 Text {
                     width: parent.width
@@ -146,7 +146,7 @@ MenuElement {
                 anchors.topMargin: 8
                 anchors.top: timeText.bottom
                 anchors.left: firstColumn.right
-                spacing: 7
+                spacing: 3
                 Text {
                     width: parent.width
                     text: qsTr("secondi")

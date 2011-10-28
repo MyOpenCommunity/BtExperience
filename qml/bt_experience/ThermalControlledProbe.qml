@@ -3,7 +3,7 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    width: 245
+    width: 212
     height: 320
 
     function alertOkClicked() {
@@ -34,8 +34,8 @@ MenuElement {
             id: image1
             x: 0
             y: 0
-            width: 245
-            height: 167
+            width: 212
+            height: 145
             source: "common/dimmer_bg.png"
 
             Text {
@@ -50,26 +50,26 @@ MenuElement {
                 x: 0
                 y: 51
                 id: programItem
-                height: 65
+                height: 50
                 width: background.sourceSize.width
 
                 Image {
                     anchors.fill: parent
                     z: 0
                     id: background
-                    width: 245
-                    height: 65
-                    anchors.rightMargin: -53
-                    source: "common/tasto_menu.png";
+                    width: 212
+                    height: 50
+                    anchors.rightMargin: 0
+                    source: "common/btn_menu.png";
                 }
 
                 Item {
                     id: item2
                     x: 0
                     y: 0
-                    width: 245
-                    height: 65
-                    anchors.rightMargin: -53
+                    width: 212
+                    height: 50
+                    anchors.rightMargin: 0
                     anchors.bottomMargin: 0
                     anchors.leftMargin: 0
                     anchors.topMargin: 0
@@ -85,7 +85,7 @@ MenuElement {
                         text: "programma"
                         anchors.rightMargin: 30
                         font.family: semiBoldFont.name
-                        font.pixelSize: 15
+                        font.pixelSize: 14
                         wrapMode: "WordWrap"
                         anchors.left: parent.left
                         anchors.leftMargin: 16
@@ -130,7 +130,7 @@ MenuElement {
                     PropertyChanges { target: text; color: "#ffffff" }
                     PropertyChanges { target: currentProgram; color: "#ffffff" }
                     PropertyChanges { target: arrow_right; source: "common/freccia_dxS.png" }
-                    PropertyChanges { target: background; source: "common/tasto_menuS.png" }
+                    PropertyChanges { target: background; source: "common/btn_menuS.png" }
                 }
             }
 
@@ -142,8 +142,8 @@ MenuElement {
                 property int temperature: 22
                 x: 0
                 y: 116
-                width: 245
-                height: 137
+                width: 212
+                height: 118
 
                 Text {
                     id: text1
@@ -154,33 +154,33 @@ MenuElement {
                     color: "#000000"
                     text: qsTr("temperatura impostata")
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 14
+                    font.pixelSize: 13
                 }
 
                 Text {
                     id: labelTemperature
                     x: 17
-                    y: 75
+                    y: 78
                     width: 24
                     height: 15
                     color: "#ffffff"
                     text:  itemTemperature.temperature + "°"
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 16
+                    font.pixelSize: 15
                 }
 
                 Image {
                     id: minusTemperature
-                    x: 127
-                    y: 68
-                    width: 57
-                    height: 62
-                    source: "common/comando.png"
+                    x: 111
+                    y: 59
+                    width: 49
+                    height: 53
+                    source: "common/btn_comando.png"
 
                     Image {
                         id: image4
                         x: 14
-                        y: 20
+                        y: 15
                         source: "common/meno.png"
                     }
 
@@ -193,16 +193,16 @@ MenuElement {
 
                 Image {
                     id: plusTemperature
-                    x: 183
-                    y: 68
-                    width: 57
-                    height: 62
-                    source: "common/comando.png"
+                    x: 160
+                    y: 59
+                    width: 49
+                    height: 53
+                    source: "common/btn_comando.png"
 
                     Image {
                         id: image5
-                        x: 18
-                        y: 20
+                        x: 14
+                        y: 15
                         source: "common/piu.png"
                     }
 
@@ -216,10 +216,8 @@ MenuElement {
 
             ButtonOkCancel {
                 id: buttonokcancel1
-                x: 0
-                y: 288
-                width: 244
-                height: 57
+                x: 2
+                y: 219
                 anchors.top: itemTemperature.bottom
                 anchors.topMargin: 0
 
