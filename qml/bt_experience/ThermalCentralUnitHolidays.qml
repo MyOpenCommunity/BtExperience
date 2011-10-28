@@ -29,7 +29,7 @@ MenuElement {
         Text {
             id: text1
             x: 22
-            y: 55
+            y: 68
             width: 115
             height: 24
             color: "#ffffff"
@@ -43,7 +43,7 @@ MenuElement {
         Text {
             id: text2
             x: 22
-            y: 100
+            y: 113
             width: 79
             height: 19
             color: "#ffffff"
@@ -67,7 +67,7 @@ MenuElement {
 
         ButtonCommand {
             x: 159
-            y: 55
+            y: 68
             width: 43
             height: 45
             selected: imageBg.current_element == 1
@@ -82,7 +82,7 @@ MenuElement {
 
         ButtonCommand {
             x: 159
-            y: 100
+            y: 113
             width: 43
             height: 45
             selected: imageBg.current_element == 2
