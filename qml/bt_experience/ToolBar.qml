@@ -1,33 +1,34 @@
 import QtQuick 1.1
+import QtQuick 1.0
 
 Image {
     id: toolbar
 
     property string fontFamily
     property int fontSize: 15
-    property string customButton: "toolbar/ico_home.png"
-    signal customClicked
+    signal homeClicked
+    signal exitClicked
 
     width: 1024
     height: 65
-    source: "toolbar/barra.png" // Damn image of 56 pixel of height!
+    source: "toolbar/toolbar.png"
 
 
     Image {
-        id: custombutton
-        y: 11
-        x: 20
-        source: customButton
+        id: homebutton
+        y: 5
+        x: 10
+        source: "toolbar/ico_home.png"
         MouseArea {
             anchors.fill: parent
-            onClicked: toolbar.customClicked()
+            onClicked: toolbar.homeClicked()
         }
     }
 
     Text {
         id: temperature
         y: 16
-        x: 69
+        x: 70
         text: "19°C"
         font.pixelSize: toolbar.fontSize
         font.family: toolbar.fontFamily
@@ -36,7 +37,7 @@ Image {
     Text {
         id: date
         y: 16
-        x: 124
+        x: 130
         text: Qt.formatDate(new Date, "dd/MM/yyyy")
         font.pixelSize: toolbar.fontSize
         font.family: toolbar.fontFamily
@@ -45,7 +46,7 @@ Image {
     Text {
         id: time
         y: 16
-        x: 221
+        x: 242
         text: Qt.formatTime(new Date, "hh:mm")
         font.pixelSize: toolbar.fontSize
         font.family: toolbar.fontFamily
@@ -56,31 +57,98 @@ Image {
     }
 
     Image {
-          id: image1
-          x: 798
-          y: 11
-          source: "toolbar/ico_ora.png"
-    }
-
-    Image {
-          id: image2
-          x: 838
-          y: 11
-          source: "toolbar/ico_allarme.png"
-    }
-
-    Image {
-          id: image3
-          x: 879
-          y: 11
-          source: "toolbar/ico_antifurtoIns.png"
-    }
-
-    Image {
           id: image4
-          x: 934
-          y: 14
+          x: 473
+          y: 16
           source: "toolbar/logo.png"
+    }
+
+    Image {
+        id: image5
+        x: 57
+        y: 1
+        source: "toolbar/toolbar_separazione.png"
+    }
+
+    Image {
+        id: image6
+        x: 115
+        y: 1
+        source: "toolbar/toolbar_separazione.png"
+    }
+
+    Image {
+        id: image7
+        x: 229
+        y: 1
+        source: "toolbar/toolbar_separazione.png"
+    }
+
+    Image {
+        id: image8
+        x: 295
+        y: 1
+        source: "toolbar/toolbar_separazione.png"
+    }
+
+    Image {
+        id: image1
+        x: 960
+        y: 5
+        source: "toolbar/ico_spegni.png"
+        MouseArea {
+            anchors.fill: parent
+            onClicked: toolbar.exitClicked()
+        }
+    }
+
+    Image {
+        id: image2
+        x: 942
+        y: 1
+        source: "toolbar/toolbar_separazione.png"
+    }
+
+    Image {
+        id: image3
+        x: 896
+        y: 5
+        source: "toolbar/ico_sveglia.png"
+    }
+
+    Image {
+        id: image9
+        x: 887
+        y: 1
+        source: "toolbar/toolbar_separazione.png"
+    }
+
+    Image {
+        id: image10
+        x: 841
+        y: 5
+        source: "toolbar/ico_antifurto.png"
+    }
+
+    Image {
+        id: image11
+        x: 831
+        y: 1
+        source: "toolbar/toolbar_separazione.png"
+    }
+
+    Image {
+        id: image12
+        x: 784
+        y: 5
+        source: "toolbar/ico_allarme.png"
+    }
+
+    Image {
+        id: image13
+        x: 772
+        y: 1
+        source: "toolbar/toolbar_separazione.png"
     }
 
 }

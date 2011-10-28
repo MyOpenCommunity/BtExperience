@@ -9,7 +9,7 @@ Page {
             id: toolbar
             fontFamily: semiBoldFont.name
             fontSize: 17
-            onCustomClicked: Stack.backToHome()
+            onHomeClicked: Stack.backToHome()
     }
 
  Rectangle {

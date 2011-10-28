@@ -7,8 +7,7 @@ source: "bg.png"
 
     ToolBar {
         id: toolbar
-        customButton: "toolbar/ico_spegni.png"
-        onCustomClicked: console.log("exit")
+        onExitClicked: console.log("exit")
         fontFamily: semiBoldFont.name
         fontSize: 17
     }
