@@ -13,6 +13,10 @@ MenuElement {
             child.programSelected.connect(childProgramSelected)
     }
 
+    onChildDestroyed: {
+        itemList.currentIndex = -1
+    }
+
     function childProgramSelected(programName) {
         element.programSelected(modelList.get(itemList.currentIndex).name + " " + programName)
     }
