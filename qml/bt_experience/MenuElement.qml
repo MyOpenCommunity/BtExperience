@@ -1,6 +1,7 @@
 import QtQuick 1.1
 
 Item {
+    id: element
     // Signals that the element can emit
 
     // request the loading of a child
@@ -32,12 +33,17 @@ Item {
 
     onCloseChild: _closeElement(menuLevel + 1)
 
-    property alias enableAnimation: animation.enabled
+    property bool enableAnimation: true
     property bool animationRunning: defaultanimation.running
 
     Behavior on x {
-        id: animation
-        NumberAnimation { id: defaultanimation; duration: 400 }
+        enabled: element.enableAnimation
+        NumberAnimation { id: defaultanimation; duration: 400; easing.type: Easing.InSine }
+    }
+
+    Behavior on opacity {
+        enabled: element.enableAnimation
+        NumberAnimation { duration: 400; easing.type: Easing.InSine }
     }
 
     onChildLoaded: {

@@ -7,7 +7,7 @@ function loadComponent(menuLevel, childTitle, fileName) {
     if (pendingOperations.length > 0) // we are during an operation
         return
 
-    var object = createComponent(fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer, "visible": false, "y": 33})
+    var object = createComponent(fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer, "opacity": 0, "y": 33})
     var title = createComponent("MenuTitle.qml", {"text": childTitle, "parent": elementsContainer, "visible": false})
     if (object && title) {
         _addItem(object, title)
@@ -163,7 +163,9 @@ function _openItem() {
 
     if (stackItems.length === 0) {
         elementsContainer.width = item.width
-        item.visible = true
+        item.enableAnimation = false
+        item.opacity = 1
+        item.enableAnimation = true
         title.visible = true
 //        debugMsg('itemcontainer width: ' + elementsContainer.width)
         _doOpenItem()
@@ -176,12 +178,12 @@ function _openItem() {
         item.x = last_item.x
         title.x = last_item.x
         title.visible = true
-        item.visible = true
         item.enableAnimation = true
         title.enableAnimation = true
         item.animationRunningChanged.connect(_doOpenItem)
         elementsContainer.width += mainContainer.itemsSpacing + item.width
 
+        item.opacity = 1
         item.x = last_item.x + last_item.width + mainContainer.itemsSpacing - horizontalOverlap
         title.x = last_item.x + last_item.width + mainContainer.itemsSpacing
     }
@@ -220,6 +222,7 @@ function _closeItem() {
         item.x = 0
         title.x = 0
     }
+    item.opacity = 0
 }
 
 function _doCloseItem() {
@@ -230,7 +233,6 @@ function _doCloseItem() {
     var title = stackTitles[stackTitles.length -1]
 
     elementsContainer.width -= item.width + mainContainer.itemsSpacing
-    item.visible = false
     title.visible = false
     item.destroy()
     title.destroy()
