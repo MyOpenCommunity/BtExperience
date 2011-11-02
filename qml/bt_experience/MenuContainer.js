@@ -172,6 +172,7 @@ function _openItem() {
     }
     else {
         var last_item = stackItems[stackItems.length - 1]
+        hideLine(last_item, RIGHT_TO_LEFT)
         item.enableAnimation = false
         title.enableAnimation = false
         item.y = last_item.y + verticalOffset
@@ -182,7 +183,6 @@ function _openItem() {
         title.enableAnimation = true
         item.animationRunningChanged.connect(_doOpenItem)
         elementsContainer.width += mainContainer.itemsSpacing + item.width
-
         item.opacity = 1
         item.x = last_item.x + last_item.width + mainContainer.itemsSpacing - horizontalOverlap
         title.x = last_item.x + last_item.width + mainContainer.itemsSpacing
@@ -195,6 +195,7 @@ function _doOpenItem() {
         return
 
     debugMsg('_doOpenItem')
+    showLine(item, RIGHT_TO_LEFT)
     var title = pendingOperations[0]['title']
     item.animationRunningChanged.disconnect(_doOpenItem)
 
@@ -209,10 +210,36 @@ function _doOpenItem() {
     processOperations();
 }
 
+var RIGHT_TO_LEFT = 1
+var LEFT_TO_RIGHT = 2
+
+function hideLine(item, direction) {
+    line.width = 0
+    if (direction === RIGHT_TO_LEFT)
+        line.x = item.x
+    else
+        line.x = item.x + item.width
+}
+
+function showLine(item, direction) {
+    line.enableAnimation = false
+    line.y = item.y - 4
+    line.width = 0
+    if (direction === RIGHT_TO_LEFT)
+        line.x = item.x + item.width
+    else
+        line.x = item.x
+
+    line.enableAnimation = true
+    line.width = item.width
+    line.x = item.x
+}
+
 function _closeItem() {
     debugMsg("_closeItem")
     var item = stackItems[stackItems.length - 1]
     var title = stackTitles[stackTitles.length - 1]
+    hideLine(item, LEFT_TO_RIGHT)
     item.animationRunningChanged.connect(_doCloseItem)
     if (stackItems.length > 1) {
         item.x = stackItems[stackItems.length - 2].x
@@ -241,6 +268,9 @@ function _doCloseItem() {
     stackItems[stackItems.length -1].child = null
     if (pendingOperations[0]['notifyChildDestroyed'])
         stackItems[stackItems.length - 1].childDestroyed();
+
+    var last_item = stackItems[stackItems.length -1]
+    showLine(last_item, LEFT_TO_RIGHT)
     pendingOperations.shift()
     processOperations();
 }

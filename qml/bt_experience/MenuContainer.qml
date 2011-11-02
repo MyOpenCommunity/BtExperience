@@ -22,6 +22,8 @@ Item {
     property string rootElement
     signal closed
 
+
+
     ButtonBack {
         id: backButton
         anchors.topMargin: 33
@@ -53,7 +55,28 @@ Item {
                 id: animation
                 NumberAnimation { id: defaultanimation; duration: 400 }
             }
+
+            Rectangle {
+                id: line
+                color: "#f27021"
+                height: 2
+                width: 0
+                y: 0
+                property bool enableAnimation: true
+
+                Behavior on width {
+                    enabled: line.enableAnimation
+                    PropertyAnimation { duration: 200; }
+                }
+
+                Behavior on x {
+                    enabled: line.enableAnimation
+                    PropertyAnimation { duration: 200; }
+                }
+            }
         }
+
+
     }
 
     Component.onCompleted: {
