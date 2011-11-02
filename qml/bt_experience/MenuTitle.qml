@@ -1,6 +1,7 @@
 import QtQuick 1.1
 
 Text {
+    id: title
     width: 212
     height: 33
     color: "#ffffff"
@@ -9,11 +10,15 @@ Text {
     font.family: semiBoldFont.name
     font.capitalization: Font.AllUppercase
 
-    property alias enableAnimation: animation.enabled
+    property bool enableAnimation: true
     Behavior on x {
-        id: animation
+        enabled: title.enableAnimation
         NumberAnimation { duration: 400 }
     }
 
+    Behavior on opacity {
+        enabled: title.enableAnimation
+        NumberAnimation { duration: 400 }
+    }
 }
 
