@@ -153,35 +153,48 @@ function _doUpdateView() {
     processOperations()
 }
 
+var verticalOffset = 10
+var horizontalOverlap = 2
+
+function _setStartProps() {
+    var item = pendingOperations[0]['item']
+    var title = pendingOperations[0]['title']
+
+    item.enableAnimation = false
+    title.enableAnimation = false
+
+    if (stackItems.length === 0) {
+        item.opacity = 1
+        title.opacity = 1
+    }
+    else {
+        var last_item = stackItems[stackItems.length - 1]
+        item.y = last_item.y + verticalOffset
+        item.x = last_item.x - horizontalOverlap
+        title.x = last_item.x
+    }
+    item.enableAnimation = true
+    title.enableAnimation = true
+}
+
 function _openItem() {
     debugMsg('_openItem')
-    var verticalOffset = 10
-    var horizontalOverlap = 2
 
     var item = pendingOperations[0]['item']
     var title = pendingOperations[0]['title']
 
+    _setStartProps()
     if (stackItems.length === 0) {
         elementsContainer.width = item.width
-        item.enableAnimation = false
-        item.opacity = 1
-        item.enableAnimation = true
-        title.opacity = 1
-//        debugMsg('itemcontainer width: ' + elementsContainer.width)
         _doOpenItem()
     }
     else {
+        item.animationRunningChanged.connect(_doOpenItem)
+        elementsContainer.width += mainContainer.itemsSpacing + item.width - horizontalOverlap
+
         var last_item = stackItems[stackItems.length - 1]
         hideLine(last_item, RIGHT_TO_LEFT)
-        item.enableAnimation = false
-        title.enableAnimation = false
-        item.y = last_item.y + verticalOffset
-        item.x = last_item.x
-        title.x = last_item.x
-        item.enableAnimation = true
-        title.enableAnimation = true
-        item.animationRunningChanged.connect(_doOpenItem)
-        elementsContainer.width += mainContainer.itemsSpacing + item.width
+
         title.opacity = 1
         item.opacity = 1
         item.x = last_item.x + last_item.width + mainContainer.itemsSpacing - horizontalOverlap
