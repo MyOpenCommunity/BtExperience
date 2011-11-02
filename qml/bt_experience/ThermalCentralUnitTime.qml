@@ -22,7 +22,7 @@ MenuElement {
             x: 45
             y: 5
             text: qsTr("ore")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -30,7 +30,7 @@ MenuElement {
             x: 139
             y: 5
             text: qsTr("minuti")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -38,7 +38,7 @@ MenuElement {
             x: 48
             y: 35
             text: qsTr("15")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -46,7 +46,7 @@ MenuElement {
             x: 151
             y: 35
             text: qsTr("26")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -54,7 +54,7 @@ MenuElement {
             x: 48
             y: 60
             text: qsTr("16")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -62,7 +62,7 @@ MenuElement {
             x: 151
             y: 60
             text: qsTr("27")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -71,7 +71,7 @@ MenuElement {
             y: 89
             color: "#ffffff"
             text: qsTr("17")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -80,7 +80,7 @@ MenuElement {
             y: 89
             color: "#ffffff"
             text: qsTr("28")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -88,7 +88,7 @@ MenuElement {
             x: 48
             y: 120
             text: qsTr("18")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -96,7 +96,7 @@ MenuElement {
             x: 48
             y: 144
             text: qsTr("19")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -104,7 +104,7 @@ MenuElement {
             x: 151
             y: 120
             text: qsTr("29")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -112,7 +112,7 @@ MenuElement {
             x: 151
             y: 144
             text: qsTr("30")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
     }
 

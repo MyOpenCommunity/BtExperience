@@ -23,7 +23,7 @@ MenuElement {
             y: 5
             color: "#444546"
             text: qsTr("data")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -33,7 +33,7 @@ MenuElement {
             width: 29
             height: 15
             text: qsTr("mesi")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -41,7 +41,7 @@ MenuElement {
             x: 139
             y: 33
             text: qsTr("giorni")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -50,7 +50,7 @@ MenuElement {
             y: 60
             color: "#444546"
             text: qsTr("settembre")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -59,7 +59,7 @@ MenuElement {
             y: 103
             color: "#ffffff"
             text: qsTr("novembre")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -68,7 +68,7 @@ MenuElement {
             y: 126
             color: "#444546"
             text: qsTr("dicembre")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -77,7 +77,7 @@ MenuElement {
             y: 60
             color: "#444546"
             text: qsTr("26")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -86,7 +86,7 @@ MenuElement {
             y: 82
             color: "#444546"
             text: qsTr("27")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -95,7 +95,7 @@ MenuElement {
             y: 82
             color: "#444546"
             text: qsTr("ottobre")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -104,7 +104,7 @@ MenuElement {
             y: 145
             color: "#444546"
             text: qsTr("gennaio")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -113,7 +113,7 @@ MenuElement {
             y: 103
             color: "#ffffff"
             text: qsTr("28")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -122,7 +122,7 @@ MenuElement {
             y: 126
             color: "#444546"
             text: qsTr("29")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {
@@ -131,7 +131,7 @@ MenuElement {
             y: 145
             color: "#444546"
             text: qsTr("30")
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
     }
 

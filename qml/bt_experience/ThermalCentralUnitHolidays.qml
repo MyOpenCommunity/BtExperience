@@ -61,7 +61,7 @@ MenuElement {
             text: qsTr("attivo fino al")
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         ButtonCommand {
@@ -141,7 +141,7 @@ MenuElement {
             text: qsTr("programma successivo")
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 14
+            font.pixelSize: 13
         }
 
         Text {

@@ -56,7 +56,7 @@ MenuElement {
                     id: text
                     text: "programma"
                     font.family: semiBoldFont.name
-                    font.pixelSize: 15
+                    font.pixelSize: 14
                     wrapMode: "WordWrap"
                     anchors.left: parent.left
                     anchors.leftMargin: 10

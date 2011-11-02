@@ -4,7 +4,7 @@ Item {
     id: itemDelegate
     height: 50
     width: 212
-    // TODO: showStatus & showRightArrow is not necessary if we can check for the
+    // TODO: showStatus & showRightArrow are not necessary if we can check for the
     // existance of isOn and componentFile properties from the model
     property bool showStatus: false
     property bool showRightArrow: true
@@ -35,7 +35,7 @@ Item {
             id: text
             text: name
             font.family: semiBoldFont.name
-            font.pixelSize: 15
+            font.pixelSize: 14
             wrapMode: "WordWrap"
             anchors.left: itemDelegate.showStatus ? iconStatus.right : parent.left
             anchors.leftMargin: itemDelegate.showStatus ? 0 : 10
