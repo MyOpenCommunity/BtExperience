@@ -23,7 +23,7 @@ Column {
 
     Image {
         id: alertBg
-        width: 208
+        width: parent.width
         height: 130
         source: "alert.png"
 

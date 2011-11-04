@@ -76,32 +76,29 @@ function _addItem(item, title) {
     processOperations()
 }
 
-
 function processOperations() {
 
     debugMsg('processOperations -> operations pending: ' + pendingOperations.length)
 
-    if (pendingOperations.length  === 0) {
+    if (pendingOperations.length  === 0)
         return
-    }
 
     var op = pendingOperations[0]
 
     // Per far apparire il nuovo item da sotto (e farlo scomparire nello stesso modo)
-    for (var i = 0; i < stackItems.length; i++) {
+    for (var i = 0; i < stackItems.length; i++)
         stackItems[i].z = 1 - i * 0.01
-    }
 
-    if (op['id'] == OP_OPEN) {
+    if (op['id'] == OP_OPEN)
         _openItem()
-    }
-    else if (op['id'] == OP_CLOSE) {
+    else if (op['id'] == OP_CLOSE)
         _closeItem()
-    }
-    else if (op['id'] == OP_UPDATE_UI) {
+    else if (op['id'] == OP_UPDATE_UI)
         _updateView();
-    }
 }
+
+var verticalOffset = 10
+var horizontalOverlap = 1
 
 function _calculateFirstElement(starting_width) {
     var first_element = 0
@@ -128,7 +125,7 @@ function _updateView() {
 
     var starting_x = 0
     for (var i = 0; i < first_item; i++) {
-        starting_x += stackItems[i].width + mainContainer.itemsSpacing
+        starting_x += stackItems[i].width + mainContainer.itemsSpacing // - horizontalOverlap
     }
     debugMsg('starting x: ' + starting_x)
 
@@ -152,9 +149,6 @@ function _doUpdateView() {
     pendingOperations.shift()
     processOperations()
 }
-
-var verticalOffset = 10
-var horizontalOverlap = 2
 
 function _setStartProps() {
     var item = pendingOperations[0]['item']
