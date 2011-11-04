@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    height: 260
+    height: 250
     width: 212
 
     onChildDestroyed: itemList.currentIndex = -1

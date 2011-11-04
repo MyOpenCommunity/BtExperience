@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    height: 260
+    height: 200
     width: 212
 
     onChildDestroyed: {
@@ -44,6 +44,7 @@ MenuElement {
                 componentFile: "ThermalProbe.qml"
             }
         }
+
     }
 }
 

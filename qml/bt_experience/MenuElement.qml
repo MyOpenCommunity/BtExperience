@@ -58,5 +58,15 @@ Item {
             childAnimation(child.animationRunning === true)
     }
 
+    BorderImage {
+        id: name
+        source: "common/ombra1elemento.png"
+        anchors.fill: parent
+        border { left: 30; top: 30; right: 30; bottom: 30; }
+        anchors { leftMargin: -25; topMargin: -25; rightMargin: -25; bottomMargin: -25 }
+        horizontalTileMode: BorderImage.Stretch
+        verticalTileMode: BorderImage.Stretch
+    }
+
 }
 

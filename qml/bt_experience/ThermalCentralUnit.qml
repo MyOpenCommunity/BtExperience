@@ -4,7 +4,7 @@ import QtQuick 1.1
 MenuElement {
     id: element
     width: 212
-    height: 330
+    height: 323
 
     function alertOkClicked() {
         element.closeElement()

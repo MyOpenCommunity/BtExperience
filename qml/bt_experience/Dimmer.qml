@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 MenuElement {
     width: 212
-    height: 410
+    height: 370
 
     Image {
         width: 245

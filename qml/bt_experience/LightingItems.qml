@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    height: 455
+    height: 350
     width: 212
 
     onChildDestroyed: {
