@@ -160,7 +160,7 @@ MenuElement {
 
     ButtonOkCancel {
         id: buttonokcancel1
-        x: 2
+        x: 0
         y: 288
         onCancelClicked: {
             page.showAlert(element, "Modifiche non salvate. Continuare?")

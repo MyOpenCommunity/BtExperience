@@ -216,7 +216,7 @@ MenuElement {
 
             ButtonOkCancel {
                 id: buttonokcancel1
-                x: 2
+                x: 0
                 y: 219
                 anchors.top: itemTemperature.bottom
                 anchors.topMargin: 0

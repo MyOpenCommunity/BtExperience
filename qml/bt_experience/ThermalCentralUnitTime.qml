@@ -118,7 +118,7 @@ MenuElement {
 
     ButtonOkCancel {
         id: buttonokcancel1
-        x: 2
+        x: 0
         y: 170
 
         onCancelClicked: {
