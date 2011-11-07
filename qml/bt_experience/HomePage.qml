@@ -110,56 +110,64 @@ source: "bg.png"
          Component {
                  id: usersDelegate
                  Image {
-                     scale: PathView.iconScale
-                     z: PathView.z
+                     id: imageDelegate
+                     scale: isNaN(PathView.iconScale) ? 0.1 : PathView.iconScale
+                     z: isNaN(PathView.z) ? 0.1 : PathView.z
                      Rectangle {
                              id: userBox
-                             width: 65
+                             height: 50
                              anchors.left: parent.left
-                             anchors.leftMargin: -1
-                             anchors.top: parent.top
-                             anchors.topMargin: -1
                              anchors.bottom: parent.bottom
+                             anchors.right: parent.right
                              opacity: 0.4
                              color: "#000000"
+
+                             Text {
+                                 opacity: 1
+                                 color: "#ffffff"
+                                 text: name
+                                 font.bold: false
+                                 font.pixelSize: 18
+                                 anchors.horizontalCenter: parent.horizontalCenter
+                                 anchors.verticalCenter: parent.verticalCenter
+                             }
                      }
 
-
-                     Item {
-                         Text {
-                             opacity: 1
-                             color: "#ffffff"
-                             rotation: 270
-                             text: name
-                             font.bold: false
-                             font.pixelSize: 20
-                             anchors.fill: parent
-                         }
-                         anchors.bottom: parent.bottom
-                         anchors.left: parent.left
-                         anchors.bottomMargin: 20
-                         anchors.leftMargin: 10
-                     }
                      source: image
                      smooth: true
-                     width: 490
-                     height: 270
-                     transform: Rotation { origin.x: 30; origin.y: 30; axis { x: 0; y: 1; z: 0 } angle: 30 }
+                     width: 230
+                     height: 350
+                     fillMode: Image.PreserveAspectCrop
+                     clip: true
+//                     Component.onCompleted: {
+//                         console.log('icon scale: ' + PathView.iconScale + ' x:' + imageDelegate.x)
+//                     }
                }
          }
 
          id: users
          model: usersModel
          delegate: usersDelegate
+
          path:  Path {
-                startX: 260; startY: 130
-                PathAttribute { name: "iconScale"; value: 0.6 }
-                PathAttribute { name: "z"; value: 0.0 }
-                PathLine { x: 570; y: 310 }
-                PathAttribute { name: "iconScale"; value: 1.0 }
-                PathAttribute { name: "z"; value: 1.0 }
+             startX: 100; startY: 200
+             PathAttribute { name: "iconScale"; value: 0.3 }
+             PathAttribute { name: "z"; value: 0.1 }
+             PathLine { x: 150; y: 200; }
+             PathAttribute { name: "iconScale"; value: 0.5 }
+             PathLine { x: 350; y: 200; }
+             PathAttribute { name: "iconScale"; value: 1.0 }
+             PathAttribute { name: "z"; value: 1.0 }
+             PathLine { x: 550; y: 200; }
+             PathAttribute { name: "iconScale"; value: 0.5 }
+             PathLine { x: 650; y: 200; }
+             PathAttribute { name: "iconScale"; value: 0.3 }
+             PathAttribute { name: "z"; value: 0.1 }
+             PathLine { x: 750; y: 200; }
+
          }
          width: 620
+         pathItemCount: 5
          anchors.bottom: favourites.top
          anchors.bottomMargin: 0
          anchors.top: toolbar.bottom
