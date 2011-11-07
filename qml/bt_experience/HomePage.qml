@@ -150,20 +150,20 @@ source: "home.jpg"
          delegate: usersDelegate
 
          path:  Path {
-             startX: 100; startY: 200
-             PathAttribute { name: "iconScale"; value: 0.3 }
+             startX: 120; startY: 200
+             PathAttribute { name: "iconScale"; value: 0.4 }
              PathAttribute { name: "z"; value: 0.1 }
              PathLine { x: 150; y: 200; }
-             PathAttribute { name: "iconScale"; value: 0.5 }
+             PathAttribute { name: "iconScale"; value: 0.6 }
              PathLine { x: 350; y: 200; }
              PathAttribute { name: "iconScale"; value: 1.0 }
              PathAttribute { name: "z"; value: 1.0 }
              PathLine { x: 550; y: 200; }
-             PathAttribute { name: "iconScale"; value: 0.5 }
-             PathLine { x: 650; y: 200; }
-             PathAttribute { name: "iconScale"; value: 0.3 }
+             PathAttribute { name: "iconScale"; value: 0.45 }
+             PathLine { x: 630; y: 200; }
+             PathAttribute { name: "iconScale"; value: 0.35 }
              PathAttribute { name: "z"; value: 0.1 }
-             PathLine { x: 750; y: 200; }
+             PathLine { x: 640; y: 200; }
 
          }
          width: 620
