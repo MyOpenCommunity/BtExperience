@@ -64,14 +64,16 @@ Image {
             name: "offscreen_right"
             PropertyChanges {
                 target: page
-                x: 1024
+//                x: 1024
+                opacity: 0
             }
         },
         State {
             name: "offscreen_left"
             PropertyChanges {
                 target: page
-                x: -1024
+//                x: -1024
+                opacity: 0
             }
         },
         State {
@@ -93,14 +95,16 @@ Image {
         Transition {
             from: 'offscreen_right'; to: ''
             SequentialAnimation {
-                PropertyAnimation { properties: "x"; duration: 1000; easing.type: Easing.OutBack }
+//                PropertyAnimation { properties: "x"; duration: 1000; easing.type: Easing.OutBack }
+                PropertyAnimation { properties: "opacity"; duration: 400; easing.type: Easing.Linear }
                 ScriptAction { script: Stack.changePageDone(); }
             }
         },
             Transition {
             from: 'offscreen_left'; to: ''
             SequentialAnimation {
-                PropertyAnimation { properties: "x"; duration: 1000; easing.type: Easing.OutBack }
+//                PropertyAnimation { properties: "x"; duration: 1000; easing.type: Easing.OutBack }
+                PropertyAnimation { properties: "opacity"; duration: 400; easing.type: Easing.Linear }
                 ScriptAction { script: Stack.changePageDone(); }
             }
         }
