@@ -3,7 +3,7 @@ import "Stack.js" as Stack
 
 Page {
 id: mainarea
-source: "bg.png"
+source: "home.jpg"
 
     ToolBar {
         id: toolbar
@@ -178,8 +178,8 @@ source: "bg.png"
 
     Item {
          id: pages
-         x: 480
-         y: 50
+         x: 620
+         y: 65
          anchors.right: parent.right
          anchors.rightMargin: 0
          anchors.left: users.right
@@ -189,50 +189,43 @@ source: "bg.png"
          anchors.top: toolbar.bottom
          anchors.topMargin: 0
 
-    Column {
+    Grid {
           id: column1
+          x: 116
+          y: 69
+          spacing: 0
+          columns: 2
           anchors.top: parent.top
-          anchors.topMargin: 10
+          anchors.topMargin: 69
           anchors.bottom: parent.bottom
-          anchors.bottomMargin: 10
+          anchors.bottomMargin: 0
           anchors.right: parent.right
-          width: 190
-          spacing: 5
+          width: 288
+          height: 328
 
-          ButtonHomePageLink {
-              width: parent.width
-              height: 85
-              text: "multimedia"
-              icon: "pages/ico_multimedia.png"
-          }
+              ButtonHomePageLink {
+                  textFirst: false
+                  text: "stanze"
+                  source: "pages/ico_stanze.png"
+              }
 
-          ButtonHomePageLink {
-              width: parent.width
-              height: 85
-              text: "stanze"
-              icon: "pages/ico_stanze.png"
-              x_origin: x + width
-              y_origin: 0
-          }
+              ButtonHomePageLink {
+                  textFirst: false
+                  text: "sistemi"
+                  source: "pages/ico_sistemi.png"
+                  onClicked: Stack.openPage("Systems.qml")
+              }
 
-          ButtonHomePageLink {
-              width: parent.width
-              height: 85
-              text: "sistemi"
-              icon: "pages/ico_sistemi.png"
-              x_origin: x + width
-              y_origin: 0
-              onClicked: Stack.openPage("Systems.qml")
-          }
+              ButtonHomePageLink {
+                  text: "opzioni"
+                  source: "pages/ico_opzioni.png"
+              }
 
-          ButtonHomePageLink {
-              width: parent.width
-              height: 85
-              text: "opzioni"
-              icon: "pages/ico_opzioni.png"
-              x_origin: x + width
-              y_origin: 0
-          }
+
+              ButtonHomePageLink {
+                  text: "multimedia"
+                  source: "pages/ico_multimedia.png"
+              }
         }
     }
 }
