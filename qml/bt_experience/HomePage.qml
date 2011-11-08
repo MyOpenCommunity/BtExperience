@@ -86,63 +86,59 @@ source: "home.jpg"
          ListModel {
                  id: usersModel
                  ListElement {
-                         image: "profiles/camilla.jpg"
-                         name: "camilla"
+                         image: "home/card_1.png"
+                         name: "famiglia"
                  }
                  ListElement {
-                         image: "profiles/mattia.jpg"
+                         image: "home/card_2.png"
                          name: "mattia"
                  }
                  ListElement {
-                         image: "profiles/papa.jpg"
-                         name: "papà"
+                         image: "home/card_3.png"
+                         name: "camilla"
                  }
                  ListElement {
-                         image: "profiles/mamma.jpg"
+                         image: "home/card_4.png"
                          name: "mamma"
                  }
                  ListElement {
-                         image: "profiles/famiglia.jpg"
-                         name: "famiglia"
+                         image: "home/card_5.png"
+                         name: "papà"
                  }
          }
 
          Component {
-                 id: usersDelegate
+             id: usersDelegate
+             Item {
+                 id: itemDelegate
+                 width: imageDelegate.sourceSize.width
+                 height: imageDelegate.sourceSize.height + textDelegate.height
+
+                 z: PathView.z
+                 scale: PathView.iconScale + 0.1
+
                  Image {
                      id: imageDelegate
-                     scale: isNaN(PathView.iconScale) ? 0.1 : PathView.iconScale
-                     z: isNaN(PathView.z) ? 0.1 : PathView.z
-                     Rectangle {
-                             id: userBox
-                             height: 50
-                             anchors.left: parent.left
-                             anchors.bottom: parent.bottom
-                             anchors.right: parent.right
-                             opacity: 0.4
-                             color: "#000000"
-
-                             Text {
-                                 opacity: 1
-                                 color: "#ffffff"
-                                 text: name
-                                 font.bold: false
-                                 font.pixelSize: 18
-                                 anchors.horizontalCenter: parent.horizontalCenter
-                                 anchors.verticalCenter: parent.verticalCenter
-                             }
-                     }
-
+                     anchors.top: parent.top
+                     anchors.left: parent.left
+                     anchors.right: parent.right
                      source: image
-                     smooth: true
-                     width: 230
-                     height: 350
-                     fillMode: Image.PreserveAspectCrop
-                     clip: true
-//                     Component.onCompleted: {
-//                         console.log('icon scale: ' + PathView.iconScale + ' x:' + imageDelegate.x)
-//                     }
-               }
+                 }
+
+                 Text {
+                     id: textDelegate
+                     text: name
+                     font.family: regularFont.name
+                     font.pixelSize: 22
+                     anchors.top: imageDelegate.bottom
+                     anchors.left: parent.left
+                     anchors.right: parent.right
+                     horizontalAlignment: Text.AlignHCenter
+                 }
+                 Component.onCompleted: {
+                     console.log('icon scale: ' + PathView.iconScale + ' x:' + imageDelegate.x)
+                 }
+             }
          }
 
          id: users
