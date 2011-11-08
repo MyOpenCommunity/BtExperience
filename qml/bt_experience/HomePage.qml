@@ -201,26 +201,22 @@ source: "home.jpg"
 
               ButtonHomePageLink {
                   textFirst: false
-                  text: "stanze"
-                  source: "pages/ico_stanze.png"
+                  source: "home/stanze.png"
               }
 
               ButtonHomePageLink {
                   textFirst: false
-                  text: "sistemi"
-                  source: "pages/ico_sistemi.png"
+                  source: "home/sistemi.png"
                   onClicked: Stack.openPage("Systems.qml")
               }
 
               ButtonHomePageLink {
-                  text: "opzioni"
-                  source: "pages/ico_opzioni.png"
+                  source: "home/opzioni.png"
               }
 
 
               ButtonHomePageLink {
-                  text: "multimedia"
-                  source: "pages/ico_multimedia.png"
+                  source: "home/multimedia.png"
               }
         }
     }
