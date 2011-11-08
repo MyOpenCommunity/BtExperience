@@ -135,9 +135,9 @@ source: "home.jpg"
                      anchors.right: parent.right
                      horizontalAlignment: Text.AlignHCenter
                  }
-                 Component.onCompleted: {
-                     console.log('icon scale: ' + PathView.iconScale + ' x:' + imageDelegate.x)
-                 }
+//                 Component.onCompleted: {
+//                     console.log('icon scale: ' + PathView.iconScale + ' x:' + itemDelegate.x)
+//                 }
              }
          }
 
@@ -146,17 +146,19 @@ source: "home.jpg"
          delegate: usersDelegate
 
          path:  Path {
-             startX: 100; startY: 200
+             startX: 90; startY: 200
              PathAttribute { name: "iconScale"; value: 0.4 }
              PathAttribute { name: "z"; value: 0.1 }
              PathLine { x: 150; y: 200; }
-             PathAttribute { name: "iconScale"; value: 0.6 }
-             PathLine { x: 350; y: 200; }
+             PathAttribute { name: "iconScale"; value: 0.5 }
+             PathLine { x: 300; y: 200; }
              PathAttribute { name: "iconScale"; value: 1.0 }
              PathAttribute { name: "z"; value: 1.0 }
+             PathLine { x: 420; y: 200; }
+             PathAttribute { name: "iconScale"; value: 0.6 }
              PathLine { x: 550; y: 200; }
-             PathAttribute { name: "iconScale"; value: 0.45 }
-             PathLine { x: 630; y: 200; }
+             PathAttribute { name: "iconScale"; value: 0.35 }
+             PathLine { x: 620; y: 200; }
          }
          width: 620
          pathItemCount: 5
