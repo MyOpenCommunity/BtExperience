@@ -15,11 +15,11 @@ MenuElement {
     }
 
     onChildDestroyed: {
-        programItem.state = "";
+        buttonItem.state = "";
     }
 
     function programSelected(programName) {
-        currentProgram.text = programName
+        buttonItem.description = programName
         if (programName == "off" || programName == "antigelo")
             element.state = "temperatureDisabled"
         else
@@ -63,74 +63,21 @@ MenuElement {
                     source: "common/btn_menu.png";
                 }
 
-                Item {
-                    id: item2
-                    x: 0
-                    y: 0
-                    width: 212
-                    height: 50
-                    anchors.rightMargin: 0
-                    anchors.bottomMargin: 0
-                    anchors.leftMargin: 0
-                    anchors.topMargin: 0
-                    anchors.fill: parent
-                    z: 1
-
-                    Text {
-                        id: text
-                        x: 16
-                        y: 5
-                        width: 177
-                        height: 55
-                        text: "programma"
-                        anchors.rightMargin: 30
-                        font.family: semiBoldFont.name
-                        font.pixelSize: 13
-                        wrapMode: "WordWrap"
-                        anchors.left: parent.left
-                        anchors.leftMargin: 16
-                        anchors.top: parent.top
-                        anchors.topMargin: 5
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 5
-                        anchors.right: arrow_right.left
-                    }
-
-                    Image {
-                        id: arrow_right
-                        source: "common/freccia_dx.png"
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                    }
-
-                    Text {
-                        id: currentProgram
-                        x: 16
-                        y: 30
-                        width: 92
-                        height: 15
-                        text: qsTr("")
-                        font.family: lightFont.name
-                        wrapMode: Text.NoWrap
-                        font.pixelSize: 15
-                    }
+                MenuItemDelegate {
+                    id: buttonItem
+                    showDescription: true
+                    property string componentFile: "ThermalControlledProbePrograms.qml"
+                    property string name: qsTr("programma")
+                    property string description: ""
                 }
+
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        element.loadChild("", "ThermalControlledProbePrograms.qml")
-                        programItem.state = programItem.state == "" ? "selected" : ""
+                        element.loadChild(buttonItem.name, buttonItem.componentFile)
+                        if (buttonItem.state == "")
+                            buttonItem.state =  "selected"
                     }
-                }
-
-                states: State {
-                    name: "selected"
-                    PropertyChanges { target: text; color: "#ffffff" }
-                    PropertyChanges { target: currentProgram; color: "#ffffff" }
-                    PropertyChanges { target: arrow_right; source: "common/freccia_dxS.png" }
-                    PropertyChanges { target: background; source: "common/btn_menuS.png" }
                 }
             }
 

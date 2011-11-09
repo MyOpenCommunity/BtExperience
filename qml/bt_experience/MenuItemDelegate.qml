@@ -8,6 +8,7 @@ Item {
     // existance of isOn and componentFile properties from the model
     property bool showStatus: false
     property bool showRightArrow: true
+    property bool showDescription: false
     signal clicked(int index)
 
     Image {
@@ -41,19 +42,31 @@ Item {
             anchors.leftMargin: itemDelegate.showStatus ? 0 : 10
             anchors.top: parent.top
             anchors.topMargin: 5
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 5
-            anchors.right: arrow_right.left
+            anchors.right: arrowRight.left
         }
 
         Image {
             visible: itemDelegate.showRightArrow && componentFile
-            id: arrow_right
+            id: arrowRight
             source: "common/freccia_dx.png"
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
+        }
+
+        Text {
+            id: textDescription
+            text: itemDelegate.showDescription ? description : ""
+            font.family: lightFont.name
+            wrapMode: Text.NoWrap
+            font.pixelSize: 14
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 5
+            anchors.top: text.bottom
+            anchors.left: itemDelegate.showStatus ? iconStatus.right : parent.left
+            anchors.leftMargin: itemDelegate.showStatus ? 0 : 10
+            verticalAlignment: Text.AlignBottom
         }
     }
 
@@ -73,7 +86,8 @@ Item {
         name: "selected"
         when: itemDelegate.ListView.isCurrentItem
         PropertyChanges { target: text; color: "#ffffff" }
-        PropertyChanges { target: arrow_right; source: "common/freccia_dxS.png" }
+        PropertyChanges { target: textDescription; color: "#ffffff" }
+        PropertyChanges { target: arrowRight; source: "common/freccia_dxS.png" }
         PropertyChanges { target: background; source: "common/btn_menuS.png" }
     }
 }
