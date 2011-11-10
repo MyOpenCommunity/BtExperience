@@ -16,7 +16,6 @@ MenuElement {
         interactive: false
 
         delegate: MenuItemDelegate {
-            showRightArrow: false
             onClicked: {
                 var clickedItem = modelList.get(index)
                 element.programSelected(clickedItem.name)

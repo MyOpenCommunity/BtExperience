@@ -15,11 +15,11 @@ MenuElement {
     }
 
     onChildDestroyed: {
-        buttonItem.state = "";
+        programItem.state = "";
     }
 
     function programSelected(programName) {
-        buttonItem.description = programName
+        programItem.description = programName
         if (programName == "antigelo")
             element.state = "temperatureDisabled"
         else if (programName == "off")
@@ -35,33 +35,16 @@ MenuElement {
         height: 326
         anchors.fill: parent
 
-        Item {
-            anchors.top: parent.top
+        MenuItem {
             id: programItem
-            height: 50
-            width: element.width
-
-            Image {
-                anchors.fill: parent
-                z: 0
-                id: background
-                source: "common/btn_menu.png";
-            }
-
-            MenuItemDelegate {
-                id: buttonItem
-                showDescription: true
-                property string componentFile: "ThermalCentralUnitPrograms.qml"
-                property string name: qsTr("programma")
-                property string description: ""
-            }
+            name: qsTr("programma")
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    element.loadChild(buttonItem.name, buttonItem.componentFile)
-                    if (buttonItem.state == "")
-                        buttonItem.state =  "selected"
+                    element.loadChild(programItem.name, "ThermalCentralUnitPrograms.qml")
+                    if (programItem.state == "")
+                        programItem.state =  "selected"
                 }
             }
         }

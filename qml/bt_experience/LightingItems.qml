@@ -20,7 +20,7 @@ MenuElement {
         property bool transparent: true
 
         delegate: MenuItemDelegate {
-            showStatus: true
+            status: model.isOn === true ? 1 : 0
             onClicked: {
                 var clickedItem = modelList.get(index)
                 element.loadChild(clickedItem.name, clickedItem.componentFile)
