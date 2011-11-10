@@ -289,7 +289,7 @@ function createComponent(fileName, initData) {
     var object = null
     if (component.status == Component.Ready) {
         object = component.createObject(mainContainer, initData)
-        if (object == null)
+        if (object === null)
             console.log('Error on creating the object for the component: ' + fileName)
     }
     else

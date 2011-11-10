@@ -3,20 +3,18 @@ import QtQuick 1.1
 
 MenuItem {
     id: itemDelegate
-    hasChild: model.componentFile !== undefined && model.componentFile !== ""
     name: model.name
+    hasChild: model.componentFile !== undefined && model.componentFile !== ""
 
-    signal clicked(int index)
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            // Avoid destroy and recreate the items if the element is already selected
-            if (itemDelegate.ListView.isCurrentItem)
-                return
+    signal delegateClicked(int index)
 
-            itemList.currentIndex = model.index
-            itemDelegate.clicked(model.index)
-        }
+    onClicked: {
+        // Avoid destroy and recreate the items if the element is already selected
+        if (itemDelegate.ListView.isCurrentItem)
+            return
+
+        itemList.currentIndex = model.index
+        itemDelegate.delegateClicked(model.index)
     }
 
     states: State {

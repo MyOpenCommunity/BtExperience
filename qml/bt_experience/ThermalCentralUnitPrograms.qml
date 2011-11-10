@@ -31,13 +31,35 @@ MenuElement {
 
 
         delegate: MenuItemDelegate {
-            onClicked: {
+            onDelegateClicked: {
                 var clickedItem = modelList.get(index)
                 if (clickedItem.componentFile)
                     element.loadChild(clickedItem.name, clickedItem.componentFile)
                 else {
                     element.closeChild()
                     element.programSelected(clickedItem.name)
+                }
+            }
+
+            onPressed: {
+                itemHighlighed.sourceComponent = menuItemComponent
+                itemHighlighed.item.state = "selected"
+                itemHighlighed.item.name = itemPressed.name
+                itemHighlighed.item.hasChild = itemPressed.hasChild
+                itemHighlighed.item.status = itemPressed.status
+                itemHighlighed.item.x = itemPressed.x + element.x - 5
+                itemHighlighed.item.y = itemPressed.y + element.y - 2
+            }
+
+            onReleased: {
+                itemHighlighed.sourceComponent = undefined
+            }
+
+            Component {
+                id: menuItemComponent
+                MenuItem {
+                    width: 222
+                    height: 55
                 }
             }
         }

@@ -39,14 +39,34 @@ MenuElement {
             id: programItem
             name: qsTr("programma")
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    element.loadChild(programItem.name, "ThermalCentralUnitPrograms.qml")
-                    if (programItem.state == "")
-                        programItem.state =  "selected"
+            onClicked: {
+                element.loadChild(programItem.name, "ThermalCentralUnitPrograms.qml")
+                if (programItem.state == "")
+                    programItem.state =  "selected"
+            }
+
+            onPressed: {
+                itemHighlighed.sourceComponent = menuItemComponent
+                itemHighlighed.item.state = "selected"
+                itemHighlighed.item.name = itemPressed.name
+                itemHighlighed.item.hasChild = itemPressed.hasChild
+                itemHighlighed.item.status = itemPressed.status
+                itemHighlighed.item.x = itemPressed.x + element.x - 5
+                itemHighlighed.item.y = itemPressed.y + element.y - 2
+            }
+
+            onReleased: {
+                itemHighlighed.sourceComponent = undefined
+            }
+
+            Component {
+                id: menuItemComponent
+                MenuItem {
+                    width: 222
+                    height: 55
                 }
             }
+
         }
 
         Image {

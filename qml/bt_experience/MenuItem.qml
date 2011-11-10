@@ -11,6 +11,10 @@ Item {
     property string description: ""
     property string name: ""
 
+    signal clicked(variant itemClicked)
+    signal pressed(variant itemPressed)
+    signal released(variant itemReleased)
+
     function statusVisible() {
         return menuItem.status > -1
     }
@@ -74,6 +78,12 @@ Item {
         }
     }
 
+    MouseArea {
+        anchors.fill: parent
+        onClicked: menuItem.clicked(menuItem)
+        onPressed: menuItem.pressed(menuItem)
+        onReleased: menuItem.released(menuItem)
+    }
 
     states: State {
         name: "selected"
@@ -82,5 +92,6 @@ Item {
         PropertyChanges { target: arrowRight; source: "common/freccia_dxS.png" }
         PropertyChanges { target: background; source: "common/btn_menuS.png" }
     }
+
 }
 

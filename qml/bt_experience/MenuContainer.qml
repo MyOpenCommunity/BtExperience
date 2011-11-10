@@ -22,8 +22,6 @@ Item {
     property string rootElement
     signal closed
 
-
-
     ButtonBack {
         id: backButton
         anchors.topMargin: 33
@@ -42,6 +40,8 @@ Item {
         width: parent.width
         clip: true
 
+
+
         Item {
             id: elementsContainer
             width: 0
@@ -54,6 +54,11 @@ Item {
             Behavior on x {
                 id: animation
                 NumberAnimation { id: defaultanimation; duration: 400 }
+            }
+
+            Loader {
+                id: itemHighlighed
+                z: 10
             }
 
             Rectangle {
