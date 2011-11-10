@@ -95,6 +95,13 @@ Item {
 
 
     onPressed: {
+        // TODO: Find a better way to disable the 'pressed effect' during the
+        // animation! We should not refer to an implicit defined parent (element)..
+        // because it limits the reusability of this piece of code.
+
+        if (element.animationRunning)
+            return
+
         var x = itemPressed.x
         var y = itemPressed.y
         var parent = itemPressed.parent
@@ -103,6 +110,8 @@ Item {
             y += parent.y
             parent = parent.parent
         }
+
+        // itemHighlighed is defined in MenuContainer.qml
         itemHighlighed.source = "MenuItem.qml"
         itemHighlighed.item.state = "selected"
         itemHighlighed.item.name = itemPressed.name
