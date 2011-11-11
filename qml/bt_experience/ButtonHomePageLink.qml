@@ -5,6 +5,7 @@ Image {
     opacity: 0.8
     property string text: ""
     property bool textFirst: true
+    property int textLeftMargin: 0
     signal clicked
 
     MouseArea {
@@ -15,7 +16,7 @@ Image {
     Text {
           color: "#000000"
           text: parent.text
-          horizontalAlignment: Text.AlignHCenter
+//          horizontalAlignment: Text.AlignHCenter
           font.pixelSize: 13
           anchors.horizontalCenter: parent.horizontalCenter
           anchors.top: parent.textFirst ? parent.top : undefined
@@ -23,6 +24,8 @@ Image {
 
           anchors.bottom: parent.textFirst ? undefined : parent.bottom
           anchors.bottomMargin: parent.textFirst ? 0 : 30
+          anchors.left: parent.left
+          anchors.leftMargin: textLeftMargin
     }
 
 }

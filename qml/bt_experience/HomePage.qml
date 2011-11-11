@@ -200,21 +200,29 @@ source: "home.jpg"
               ButtonHomePageLink {
                   textFirst: false
                   source: "home/stanze.png"
+                  text: qsTr("stanze")
+                  textLeftMargin: 70
               }
 
               ButtonHomePageLink {
                   textFirst: false
                   source: "home/sistemi.png"
+                  text: qsTr("sistemi")
+                  textLeftMargin: 30
                   onClicked: Stack.openPage("Systems.qml")
               }
 
               ButtonHomePageLink {
                   source: "home/opzioni.png"
+                  textLeftMargin: 70
+                  text: qsTr("opzioni")
               }
 
 
               ButtonHomePageLink {
                   source: "home/multimedia.png"
+                  text: qsTr("multimedia")
+                  textLeftMargin: 18
               }
         }
     }
