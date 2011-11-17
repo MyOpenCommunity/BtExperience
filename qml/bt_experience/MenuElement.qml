@@ -2,16 +2,25 @@ import QtQuick 1.1
 
 Item {
     id: element
-    // Signals that the element can emit
+    // Public functions
 
-    // request the loading of a child
-    signal loadChild(string childTitle, string fileName)
+    // load of a sub-element
+    function loadElement(fileName, title, model) {
+        if (model === undefined)
+            model = null
+        mainContainer.loadComponent(menuLevel, fileName, title, model)
+    }
 
-    // request to close the element itself and its children
-    signal closeElement
+    // Close the element itself and its children
+    function closeElement() {
+        mainContainer.closeItem(menuLevel)
+    }
 
-    // request to close the child's element (if present)
-    signal closeChild
+    // Close the child's element (if present)
+    function closeChild() {
+        mainContainer.closeItem(menuLevel + 1)
+    }
+
 
     // Signals emitted from the container
 
@@ -25,13 +34,6 @@ Item {
 
     // private stuff
     property int menuLevel: -1
-    signal _loadComponent(int menuLevel, string childTitle, string fileName)
-    onLoadChild: _loadComponent(menuLevel, childTitle, fileName)
-
-    signal _closeElement(int menuLevel)
-    onCloseElement: _closeElement(menuLevel)
-
-    onCloseChild: _closeElement(menuLevel + 1)
 
     property bool enableAnimation: true
     property bool animationRunning: defaultanimation.running
@@ -67,6 +69,8 @@ Item {
         horizontalTileMode: BorderImage.Stretch
         verticalTileMode: BorderImage.Stretch
     }
+
+    property QtObject dataModel: null
 
 }
 

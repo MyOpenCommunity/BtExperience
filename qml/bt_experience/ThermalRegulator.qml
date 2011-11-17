@@ -16,7 +16,7 @@ MenuElement {
         delegate: MenuItemDelegate {
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                element.loadChild(clickedItem.name, clickedItem.componentFile)
+                element.loadElement(clickedItem.componentFile, clickedItem.name)
             }
         }
 

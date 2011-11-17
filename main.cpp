@@ -1,16 +1,38 @@
 #include <QtGui/QApplication>
 #include <QtOpenGL/QGLWidget>
+#include <QDeclarativeContext>
+#include <QtDeclarative>
 
 #include "qmlapplicationviewer.h"
+#include "objectlistmodel.h"
+#include "lightobjects.h"
+#include "thermalobjects.h"
+
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QmlApplicationViewer viewer;
 
+    qmlRegisterType<CustomListModel>("bticino", 1, 0, "CustomListModel");
+    qmlRegisterUncreatableType<ObjectInterface>("bticino", 1, 0, "ObjectInterface",
+        "unable to create an ObjectInterface instance");
+
     QGLFormat f = QGLFormat::defaultFormat();
     f.setSampleBuffers(true);
     f.setSamples(4);
+
+    ObjectListModel objmodel;
+    objmodel.appendRow(new Light("lampada scrivania", true));
+    objmodel.appendRow(new Light("lampadario soggiorno", false));
+    objmodel.appendRow(new Dimmer("faretti soggiorno", false, 50));
+    objmodel.appendRow(new Light("lampada da terra soggiorno", false));
+    objmodel.appendRow(new Light("abat jour", true));
+    objmodel.appendRow(new Light("abat jour", true));
+    objmodel.appendRow(new Light("lampada studio", true));
+    objmodel.appendRow(new ThermalControlUnit("Impianto termico 1", 22, 0));
+
+    viewer.rootContext()->setContextProperty("mainModel", &objmodel);
 
     QGLWidget *w = new QGLWidget(f);
     viewer.setViewport(w);

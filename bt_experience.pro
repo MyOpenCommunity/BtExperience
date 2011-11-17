@@ -7,7 +7,10 @@ DEPLOYMENTFOLDERS = folder_01
 QML_IMPORT_PATH =
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    objectlistmodel.cpp \
+    lightobjects.cpp \
+    thermalobjects.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -19,4 +22,13 @@ TARGET = BtExperience
 
 QT += opengl
 
+HEADERS += \
+    objectlistmodel.h \
+    lightobjects.h \
+    thermalobjects.h \
+    objectinterface.h
+
+
+OBJECTS_DIR = obj
+MOC_DIR = moc
 

@@ -73,7 +73,7 @@ MenuElement {
 
             onClicked: {
                 if (!selected) {
-                    element.loadChild("DATA", "ThermalCentralUnitDate.qml")
+                    element.loadElement("ThermalCentralUnitDate.qml", "data")
                     imageBg.current_element = 1
                 }
             }
@@ -87,7 +87,7 @@ MenuElement {
             selected: imageBg.current_element == 2
             onClicked: {
                 if (!selected) {
-                    element.loadChild("ORA", "ThermalCentralUnitTime.qml")
+                    element.loadElement("ThermalCentralUnitTime.qml", "ora")
                     imageBg.current_element = 2
                 }
             }

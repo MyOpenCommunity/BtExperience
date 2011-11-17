@@ -34,7 +34,7 @@ MenuElement {
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
                 if (clickedItem.componentFile)
-                    element.loadChild(clickedItem.name, clickedItem.componentFile)
+                    element.loadElement(clickedItem.componentFile, clickedItem.name)
                 else {
                     element.closeChild()
                     element.programSelected(clickedItem.name)

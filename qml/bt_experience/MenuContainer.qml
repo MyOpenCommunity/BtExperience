@@ -10,7 +10,7 @@ import "MenuContainer.js" as Script
 // back button and the root element, while using the itemsSpacing you can control
 // the spacing between items.
 // Every item must emit the signal loadComponent(string fileName) to request
-// the loading of a child, and can implement the hooks onChildLoaded and
+// the loading of a child element, and can implement the hooks onChildLoaded and
 // onChildDestroyed.
 
 Item {
@@ -80,12 +80,18 @@ Item {
                 }
             }
         }
-
-
     }
 
     Component.onCompleted: {
-        Script.loadComponent(-1, "", mainContainer.rootElement)
+        Script.loadComponent(-1, mainContainer.rootElement, "", null)
+    }
+
+    function loadComponent(menuLevel, fileName, title, model) {
+        Script.loadComponent(menuLevel, fileName, title, model)
+    }
+
+    function closeItem(menuLevel) {
+        Script.closeItem(menuLevel)
     }
 }
 

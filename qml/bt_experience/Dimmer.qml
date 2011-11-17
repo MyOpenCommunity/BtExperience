@@ -12,7 +12,8 @@ MenuElement {
         anchors.fill: parent
         ButtonOnOff {
             id: onOff
-            onClicked: status = newStatus
+            status: dataModel.status
+            onClicked: dataModel.status = newStatus
         }
 
         Text {
@@ -31,7 +32,6 @@ MenuElement {
         Image {
             id: dimmerReg
             source: "common/dimmer_reg_bg.png"
-            property alias percentage: barPercentage.percentage
             width: 212
             height: 50
             anchors.top: textDimmer.bottom
@@ -40,14 +40,13 @@ MenuElement {
 
             Image {
                 id: barPercentage
-                property int percentage: 75
                 source: "common/dimmer_reg.png"
                 anchors.left: parent.left
-                width: parent.width / 100 * percentage
+                width: parent.width / 100 * dataModel.percentage
                 height: 50
 
                 Text {
-                    text: parent.percentage + "%"
+                    text: dataModel.percentage + "%"
                     color: "#444546"
                     anchors.right: parent.right
                     anchors.rightMargin: 10
@@ -61,14 +60,14 @@ MenuElement {
             anchors.top: dimmerReg.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             onPlusClicked: {
-                dimmerReg.percentage += 5
-                if (dimmerReg.percentage > 100)
-                    dimmerReg.percentage = 100
+                dataModel.percentage += 5
+                if (dataModel.percentage > 100)
+                    dataModel.percentage = 100
             }
             onMinusClicked: {
-                dimmerReg.percentage -= 5
-                if (dimmerReg.percentage < 0)
-                    dimmerReg.percentage = 0
+                dataModel.percentage -= 5
+                if (dataModel.percentage < 0)
+                    dataModel.percentage = 0
             }
         }
 

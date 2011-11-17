@@ -53,7 +53,7 @@ MenuElement {
                 y: 51
 
                 onClicked: {
-                    element.loadChild(programItem.name, "ThermalControlledProbePrograms.qml")
+                    element.loadElement("ThermalControlledProbePrograms.qml", programItem.name)
                     if (programItem.state == "")
                         programItem.state =  "selected"
                 }

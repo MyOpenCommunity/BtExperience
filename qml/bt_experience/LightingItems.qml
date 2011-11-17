@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 MenuElement {
     id: element
-    height: 350
+    height: 50 * itemList.count
     width: 212
 
     onChildDestroyed: {
@@ -20,58 +20,20 @@ MenuElement {
         property bool transparent: true
 
         delegate: MenuItemDelegate {
-            status: model.isOn === true ? 1 : 0
+            status: model.status === true ? 1 : 0
+            hasChild: true
             onClicked: {
-                var clickedItem = modelList.get(index)
-                element.loadChild(clickedItem.name, clickedItem.componentFile)
+                element.loadElement(lightingModel.getComponentFile(model.objectId), model.name,
+                                    lightingModel.getObject(model.index))
             }
         }
 
-        model: ListModel {
-            id: modelList
-            ListElement {
-                name: "lampada scrivania"
-                isOn: true
-                componentFile: "Light.qml"
-            }
-
-            ListElement {
-                name: "lampadario soggiorno"
-                isOn: false
-                componentFile: "Light.qml"
-            }
-
-            ListElement {
-                name: "faretti soggiorno"
-                isOn: false
-                componentFile: "Dimmer.qml"
-            }
-
-            ListElement {
-                name: "lampada da terra soggiorno"
-                isOn: false
-                componentFile: "Light.qml"
-            }
-
-            ListElement {
-                name: "abat jour"
-                isOn: true
-                componentFile: "Light.qml"
-            }
-
-            ListElement {
-                name: "abat jour"
-                isOn: true
-                componentFile: "Light.qml"
-            }
-
-            ListElement {
-                name: "lampada studio"
-                isOn: true
-                componentFile: "Light.qml"
-            }
-        }
+        model: lightingModel
     }
 
+    ObjectModel {
+        id: lightingModel
+        categories: "lighting"
+    }
 }
 

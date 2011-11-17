@@ -3,23 +3,21 @@
 var stackItems = []
 var stackTitles = []
 
-function loadComponent(menuLevel, childTitle, fileName) {
+function loadComponent(menuLevel, fileName, title, dataModel) {
     if (pendingOperations.length > 0) // we are during an operation
         return
 
-    var object = createComponent(fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer, "opacity": 0, "y": 33})
-    var title = createComponent("MenuTitle.qml", {"text": childTitle, "parent": elementsContainer, "opacity": 0})
-    if (object && title) {
-        _addItem(object, title)
-        object._loadComponent.connect(loadComponent)
-        object._closeElement.connect(closeItem)
+    var itemObject = createComponent(fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer, "opacity": 0, "y": 33, "dataModel": dataModel})
+    var titleObject = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
+    if (itemObject && titleObject) {
+        _addItem(itemObject, titleObject)
     }
     // Cleanup the memory in case of errors
-    else if (object) {
-        object.destroy()
+    else if (itemObject) {
+        itemObject.destroy()
     }
-    else if (title) {
-        title.destroy()
+    else if (titleObject) {
+        titleObject.destroy()
     }
 }
 
