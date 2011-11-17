@@ -1,5 +1,5 @@
-#ifndef LISTOBJECT_H
-#define LISTOBJECT_H
+#ifndef OBJECTINTERFACE_H
+#define OBJECTINTERFACE_H
 
 #include <QObject>
 #include <QString>
@@ -57,4 +57,4 @@ signals:
 };
 
 
-#endif // LISTOBJECT_H
+#endif // OBJECTINTERFACE_H

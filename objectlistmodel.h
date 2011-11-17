@@ -1,5 +1,5 @@
-#ifndef LISTMODEL_H
-#define LISTMODEL_H
+#ifndef OBJECTLISTMODEL_H
+#define OBJECTLISTMODEL_H
 
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>
@@ -76,4 +76,4 @@ private:
 };
 
 
-#endif // LISTMODEL_H
+#endif // OBJECTLISTMODEL_H
