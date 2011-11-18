@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     objmodel.appendRow(new Light("lampada studio", true));
     objmodel.appendRow(new ThermalControlUnit("Impianto termico 1", 22, 0));
 
-    viewer.rootContext()->setContextProperty("mainModel", &objmodel);
+    CustomListModel::setSource(&objmodel);
 
     QGLWidget *w = new QGLWidget(f);
     viewer.setViewport(w);

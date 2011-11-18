@@ -29,8 +29,8 @@ class ObjectListModel : public QAbstractListModel
 public:
     explicit ObjectListModel(QObject *parent = 0);
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role) const;
+    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    virtual QVariant data(const QModelIndex &index, int role) const;
 
     void appendRow(ObjectInterface *item);
 
@@ -56,9 +56,8 @@ class CustomListModel : public QSortFilterProxyModel
 
 public:
     CustomListModel();
-    // The argument must be a ObjectListModel*, but the qml does not know that
-    // type
-    Q_INVOKABLE void setSource(QObject *model);
+    static void setSource(ObjectListModel *model);
+
     Q_INVOKABLE QObject *getObject(int row);
 
     QString getCategories() const;
@@ -66,6 +65,7 @@ public:
 
 signals:
     void categoriesChanged();
+    void sourceChanged();
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
@@ -73,6 +73,7 @@ protected:
 private:
     QString categories;
     QList<int> category_types;
+    static ObjectListModel *source;
 };
 
 

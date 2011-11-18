@@ -20,6 +20,7 @@ public:
     {
         return ObjectInterface::Light;
     }
+
     virtual int getCategory() const
     {
         return LIGHTING;

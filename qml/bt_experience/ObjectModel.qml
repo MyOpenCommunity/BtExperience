@@ -13,6 +13,4 @@ CustomListModel {
             return ""
         }
     }
-
-    Component.onCompleted: setSource(mainModel)
 }

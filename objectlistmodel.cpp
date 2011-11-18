@@ -5,6 +5,9 @@
 #include <QStringList>
 
 
+ObjectListModel *CustomListModel::source = 0;
+
+
 ObjectListModel::ObjectListModel(QObject *parent) : QAbstractListModel(parent)
 {
     QHash<int, QByteArray> names;
@@ -79,6 +82,8 @@ QObject *ObjectListModel::getObject(int row)
 
 CustomListModel::CustomListModel()
 {
+    Q_ASSERT_X(source, "CustomListModel::CustomListModel", "source model not set!");
+    setSourceModel(source);
 }
 
 QString CustomListModel::getCategories() const
@@ -114,9 +119,9 @@ bool CustomListModel::filterAcceptsRow(int source_row, const QModelIndex &source
     return category_types.contains(category) || category_types.isEmpty();
 }
 
-void CustomListModel::setSource(QObject *model)
+void CustomListModel::setSource(ObjectListModel *model)
 {
-    setSourceModel(static_cast<ObjectListModel*>(model));
+    source = model;
 }
 
 QObject *CustomListModel::getObject(int row)
