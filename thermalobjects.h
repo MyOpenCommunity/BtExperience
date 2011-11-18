@@ -9,13 +9,20 @@
 class ThermalControlUnit : public ObjectInterface
 {
     Q_OBJECT
+    Q_ENUMS(ModeType)
     Q_PROPERTY(int objectId READ getObjectId CONSTANT)
     Q_PROPERTY(QString name READ getName CONSTANT)
     Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature)
-    Q_PROPERTY(int mode READ getMode WRITE setMode)
+    Q_PROPERTY(ModeType mode READ getMode WRITE setMode)
 
 public:
-    ThermalControlUnit(QString name, int temperature, int mode);
+    enum ModeType
+    {
+        SummerMode,
+        WinterMode
+    };
+
+    ThermalControlUnit(QString name, int temperature, ModeType mode);
 
     virtual int getObjectId() const
     {
@@ -34,16 +41,15 @@ public:
     int getTemperature() const;
     void setTemperature(int temp);
 
-    int getMode() const;
-    void setMode(int m);
+    ModeType getMode() const;
+    void setMode(ModeType m);
 
 
-//    Q_INVOKABLE QObject* programs(); // boh
+    private:
+        QString name;
+        int temperature;
+        ModeType mode;
 
-private:
-    QString name;
-    int temperature;
-    int mode; // enum?
 };
 
 /*

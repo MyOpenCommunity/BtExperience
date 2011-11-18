@@ -1,7 +1,7 @@
 #include "thermalobjects.h"
 
 
-ThermalControlUnit::ThermalControlUnit(QString _name, int _temperature, int _mode)
+ThermalControlUnit::ThermalControlUnit(QString _name, int _temperature, ModeType _mode)
 {
     name = _name;
     temperature = _temperature;
@@ -23,12 +23,12 @@ void ThermalControlUnit::setTemperature(int temp)
     temperature = temp;
 }
 
-int ThermalControlUnit::getMode() const
+ThermalControlUnit::ModeType ThermalControlUnit::getMode() const
 {
     return mode;
 }
 
-void ThermalControlUnit::setMode(int m)
+void ThermalControlUnit::setMode(ModeType m)
 {
     mode = m;
 }

@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     objmodel.appendRow(new Light("abat jour", true));
     objmodel.appendRow(new Light("abat jour", true));
     objmodel.appendRow(new Light("lampada studio", true));
-    objmodel.appendRow(new ThermalControlUnit("Impianto termico 1", 22, 0));
+    objmodel.appendRow(new ThermalControlUnit("Impianto termico 1", 22, ThermalControlUnit::SummerMode));
 
     CustomListModel::setSource(&objmodel);
 
