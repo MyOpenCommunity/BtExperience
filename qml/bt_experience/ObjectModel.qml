@@ -4,9 +4,9 @@ import bticino 1.0
 CustomListModel {
     function getComponentFile(objectId) {
         switch (objectId) {
-        case ObjectInterface.Light:
+        case ObjectInterface.IdLight:
             return "Light.qml"
-        case ObjectInterface.Dimmer:
+        case ObjectInterface.IdDimmer:
             return "Dimmer.qml"
         default:
             console.log("Unknown object id: " + objectId)

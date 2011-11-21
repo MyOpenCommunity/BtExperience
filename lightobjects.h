@@ -4,6 +4,10 @@
 #include <QObject>
 
 #include "objectinterface.h"
+#include "device.h" // DeviceValues
+
+class LightingDevice;
+class DimmerDevice;
 
 
 class Light : public ObjectInterface
@@ -14,16 +18,16 @@ class Light : public ObjectInterface
     Q_PROPERTY(bool status READ getStatus WRITE setStatus NOTIFY statusChanged)
 
 public:
-    Light(QString name, bool status);
+    Light(QString name, LightingDevice *d);
 
     virtual int getObjectId() const
     {
-        return ObjectInterface::Light;
+        return ObjectInterface::IdLight;
     }
 
     virtual int getCategory() const
     {
-        return LIGHTING;
+        return LIGHT_SYSTEM;
     }
 
     virtual QString getName() const;
@@ -33,9 +37,15 @@ public:
 signals:
     void statusChanged();
 
-private:
+protected slots:
+    virtual void valueReceived(const DeviceValues &values_list);
+
+protected:
     QString name;
     bool status;
+
+private:
+    LightingDevice *dev;
 };
 
 
@@ -45,11 +55,11 @@ class Dimmer : public Light
     Q_PROPERTY(int percentage READ getPercentage WRITE setPercentage NOTIFY percentageChanged)
 
 public:
-    Dimmer(QString name, bool status, int percentage);
+    Dimmer(QString name, DimmerDevice *d);
 
     virtual int getObjectId() const
     {
-        return ObjectInterface::Dimmer;
+        return ObjectInterface::IdDimmer;
     }
 
     virtual int getPercentage() const;
@@ -58,8 +68,14 @@ public:
 signals:
     void percentageChanged();
 
-private:
+protected slots:
+    virtual void valueReceived(const DeviceValues &values_list);
+
+protected:
     int percentage;
+
+private:
+    DimmerDevice *dev;
 };
 
 

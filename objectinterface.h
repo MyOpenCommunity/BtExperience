@@ -11,8 +11,8 @@
 enum ObjectCategory
 {
     NONE = 0,
-    LIGHTING = 1,
-    THERMAL_REGULATION = 2
+    LIGHT_SYSTEM = 1,
+    THERMAL_REGULATION_SYSTEM = 2
 };
 
 inline ObjectCategory nameToCategory(QString name)
@@ -20,8 +20,8 @@ inline ObjectCategory nameToCategory(QString name)
     static QHash<QString, ObjectCategory> c;
     if (c.isEmpty())
     {
-        c["lighting"] = LIGHTING;
-        c["thermalregulation"] = THERMAL_REGULATION;
+        c["lighting"] = LIGHT_SYSTEM;
+        c["thermalregulation"] = THERMAL_REGULATION_SYSTEM;
     }
 
     if (c.contains(name))
@@ -40,10 +40,10 @@ public:
 
     enum ObjectId
     {
-        Light = 1,
-        Dimmer = 2,
-        ThermalControlUnit = 3,
-        ThermalControlledProbe = 4
+        IdLight = 1,
+        IdDimmer = 2,
+        IdThermalControlUnit = 3,
+        IdThermalControlledProbe = 4
     };
 
     virtual int getObjectId() const = 0;

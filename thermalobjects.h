@@ -26,12 +26,12 @@ public:
 
     virtual int getObjectId() const
     {
-        return ObjectInterface::ThermalControlUnit;
+        return ObjectInterface::IdThermalControlUnit;
     }
 
     virtual int getCategory() const
     {
-        return THERMAL_REGULATION;
+        return THERMAL_REGULATION_SYSTEM;
     }
 
     virtual QString getName() const;
@@ -62,7 +62,7 @@ public:
 
     virtual int getObjectId() const
     {
-        return ObjectInterface::ThermalControlledProbe;
+        return ObjectInterface::IdThermalControlledProbe;
     }
     virtual QString getName() const;
     virtual bool getStatus() const { return false; }
