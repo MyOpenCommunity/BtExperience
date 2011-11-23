@@ -4,14 +4,20 @@
 #include <QDebug>
 
 
-Light::Light(QString _name, LightingDevice *d)
+Light::Light(QString _name, QString _key, LightingDevice *d)
 {
     dev = d;
     connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
+    key = _key;
     name = _name;
     status = false; // initial value
     connect(this, SIGNAL(statusChanged()), this, SIGNAL(dataChanged()));
+}
+
+QString Light::getObjectKey() const
+{
+    return key;
 }
 
 QString Light::getName() const
@@ -51,7 +57,7 @@ void Light::valueReceived(const DeviceValues &values_list)
 }
 
 
-Dimmer::Dimmer(QString name, DimmerDevice *d) : Light(name, d)
+Dimmer::Dimmer(QString name, QString key, DimmerDevice *d) : Light(name, key, d)
 {
     dev = d;
     percentage = 50; // initial value

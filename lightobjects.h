@@ -15,19 +15,22 @@ class Light : public ObjectInterface
     Q_OBJECT
     Q_PROPERTY(int objectId READ getObjectId CONSTANT)
     Q_PROPERTY(QString name READ getName CONSTANT)
+    Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
     Q_PROPERTY(bool status READ getStatus WRITE setStatus NOTIFY statusChanged)
 
 public:
-    Light(QString name, LightingDevice *d);
+    Light(QString name, QString key, LightingDevice *d);
 
     virtual int getObjectId() const
     {
         return ObjectInterface::IdLight;
     }
 
-    virtual int getCategory() const
+    virtual QString getObjectKey() const;
+
+    virtual ObjectCategory getCategory() const
     {
-        return LIGHT_SYSTEM;
+        return ObjectInterface::Lighting;
     }
 
     virtual QString getName() const;
@@ -42,6 +45,7 @@ protected slots:
 
 protected:
     QString name;
+    QString key;
     bool status;
 
 private:
@@ -55,7 +59,7 @@ class Dimmer : public Light
     Q_PROPERTY(int percentage READ getPercentage WRITE setPercentage NOTIFY percentageChanged)
 
 public:
-    Dimmer(QString name, DimmerDevice *d);
+    Dimmer(QString name, QString key, DimmerDevice *d);
 
     virtual int getObjectId() const
     {

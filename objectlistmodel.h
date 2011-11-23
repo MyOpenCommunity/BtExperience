@@ -17,7 +17,6 @@ class ObjectInterface;
 enum ItemRoles
 {
     ObjectIdRole = Qt::UserRole + 1,
-    CategoryRole,
     NameRole,
     StatusRole
 };
@@ -52,7 +51,8 @@ private:
 class CustomListModel : public QSortFilterProxyModel
 {
     Q_OBJECT
-    Q_PROPERTY(QString categories READ getCategories WRITE setCategories NOTIFY categoriesChanged)
+    Q_PROPERTY(QVariantList categories READ getCategories WRITE setCategories NOTIFY categoriesChanged)
+    Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
 
 public:
     CustomListModel();
@@ -60,19 +60,30 @@ public:
 
     Q_INVOKABLE QObject *getObject(int row);
 
-    QString getCategories() const;
-    void setCategories(QString cat);
+    // The categories argument is a QVariantList in order to set them from qml. The real
+    // type expected is a list of ObjectInterface::ObjectCategory
+    QVariantList getCategories() const;
+    void setCategories(QVariantList cat);
+
+    // The filters argument is a QVariantList in order to set them from qml. The real
+    // type expected is a list of javascript objects represented with a map that
+    // has an element with the objectId and objectKey keys.
+    QVariantList getFilters() const;
+    void setFilters(QVariantList f);
 
 signals:
     void categoriesChanged();
-    void sourceChanged();
+    void filtersChanged();
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
 
 private:
-    QString categories;
-    QList<int> category_types;
+    QVariantList input_categories;
+    QVariantList input_filters;
+
+    QList<int> categories;
+    QHash<int, QString> filters;
     static ObjectListModel *source;
 };
 

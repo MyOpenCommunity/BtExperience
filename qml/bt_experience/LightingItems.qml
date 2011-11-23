@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import bticino 1.0
 
 MenuElement {
     id: element
@@ -33,7 +34,7 @@ MenuElement {
 
     ObjectModel {
         id: lightingModel
-        categories: "lighting"
+        categories: [ObjectInterface.Lighting]
     }
 }
 

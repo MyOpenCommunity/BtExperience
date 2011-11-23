@@ -12,6 +12,7 @@ class ThermalControlUnit : public ObjectInterface
     Q_ENUMS(ModeType)
     Q_PROPERTY(int objectId READ getObjectId CONSTANT)
     Q_PROPERTY(QString name READ getName CONSTANT)
+    Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
     Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature)
     Q_PROPERTY(ModeType mode READ getMode WRITE setMode)
 
@@ -29,9 +30,11 @@ public:
         return ObjectInterface::IdThermalControlUnit;
     }
 
-    virtual int getCategory() const
+    virtual QString getObjectKey() const;
+
+    virtual ObjectCategory getCategory() const
     {
-        return THERMAL_REGULATION_SYSTEM;
+        return ObjectInterface::ThermalRegulation;
     }
 
     virtual QString getName() const;
@@ -44,11 +47,11 @@ public:
     ModeType getMode() const;
     void setMode(ModeType m);
 
-
-    private:
-        QString name;
-        int temperature;
-        ModeType mode;
+private:
+    QString name;
+    QString key;
+    int temperature;
+    ModeType mode;
 
 };
 

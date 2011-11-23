@@ -3,6 +3,7 @@ import bticino 1.0
 
 CustomListModel {
     function getComponentFile(objectId) {
+
         switch (objectId) {
         case ObjectInterface.IdLight:
             return "Light.qml"

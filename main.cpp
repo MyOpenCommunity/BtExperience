@@ -45,13 +45,13 @@ void startCore()
 
 void createObjects(ObjectListModel &objmodel)
 {
-    objmodel.appendRow(new Light("lampada scrivania", bt_global::add_device_to_cache(new LightingDevice("13"))));
-    objmodel.appendRow(new Light("lampadario soggiorno", bt_global::add_device_to_cache(new LightingDevice("1"))));
-    objmodel.appendRow(new Dimmer("faretti soggiorno", bt_global::add_device_to_cache(new DimmerDevice("29", PULL))));
-    objmodel.appendRow(new Light("lampada da terra soggiorno", bt_global::add_device_to_cache(new LightingDevice("2"))));
-    objmodel.appendRow(new Light("abat jour", bt_global::add_device_to_cache(new LightingDevice("3"))));
-    objmodel.appendRow(new Light("abat jour", bt_global::add_device_to_cache(new LightingDevice("4"))));
-    objmodel.appendRow(new Light("lampada studio", bt_global::add_device_to_cache(new LightingDevice("5"))));
+    objmodel.appendRow(new Light("lampada scrivania", "13", bt_global::add_device_to_cache(new LightingDevice("13"))));
+    objmodel.appendRow(new Light("lampadario soggiorno", "1", bt_global::add_device_to_cache(new LightingDevice("1"))));
+    objmodel.appendRow(new Dimmer("faretti soggiorno", "29", bt_global::add_device_to_cache(new DimmerDevice("29", PULL))));
+    objmodel.appendRow(new Light("lampada da terra soggiorno","2",  bt_global::add_device_to_cache(new LightingDevice("2"))));
+    objmodel.appendRow(new Light("abat jour", "3", bt_global::add_device_to_cache(new LightingDevice("3"))));
+    objmodel.appendRow(new Light("abat jour", "4", bt_global::add_device_to_cache(new LightingDevice("4"))));
+    objmodel.appendRow(new Light("lampada studio", "5", bt_global::add_device_to_cache(new LightingDevice("5"))));
     objmodel.appendRow(new ThermalControlUnit("Impianto termico 1", 22, ThermalControlUnit::SummerMode));
 }
 

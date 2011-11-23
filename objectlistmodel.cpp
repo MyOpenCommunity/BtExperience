@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <QStringList>
 
-
 ObjectListModel *CustomListModel::source = 0;
 
 
@@ -14,7 +13,6 @@ ObjectListModel::ObjectListModel(QObject *parent) : QAbstractListModel(parent)
     names[ObjectIdRole] = "objectId";
     names[NameRole] = "name";
     names[StatusRole] = "status";
-    names[CategoryRole] = "category";
 
     setRoleNames(names);
 }
@@ -39,8 +37,6 @@ QVariant ObjectListModel::data(const QModelIndex &index, int role) const
         return item->getName();
     case StatusRole:
         return item->getStatus();
-    case CategoryRole:
-        return item->getCategory();
     default:
         return QVariant();
     }
@@ -80,48 +76,85 @@ QObject *ObjectListModel::getObject(int row)
 }
 
 
+void CustomListModel::setSource(ObjectListModel *model)
+{
+    source = model;
+}
+
 CustomListModel::CustomListModel()
 {
     Q_ASSERT_X(source, "CustomListModel::CustomListModel", "source model not set!");
     setSourceModel(source);
 }
 
-QString CustomListModel::getCategories() const
+QVariantList CustomListModel::getCategories() const
 {
-    return categories;
+    return input_categories;
 }
 
-void CustomListModel::setCategories(QString cat)
+void CustomListModel::setCategories(QVariantList cat)
 {
-    qDebug() << "CustomListModel::setCategory" << cat;
-    if (cat == categories)
+    if (cat == input_categories)
         return;
 
-    foreach (const QString &name, cat.split(','))
+    foreach (const QVariant &v, cat)
+        categories << v.toInt();
+
+    emit categoriesChanged();
+    reset(); // I'd like to use invalidateFilter(), but it doesn't work
+}
+
+QVariantList CustomListModel::getFilters() const
+{
+    return input_filters;
+}
+
+void CustomListModel::setFilters(QVariantList f)
+{
+    if (f == input_filters)
+        return;
+
+    filters.clear();
+
+    foreach (const QVariant &v, f)
     {
-        ObjectCategory c = nameToCategory(name.trimmed());
-        if (c == NONE)
+        QVariantMap m = v.value<QVariantMap>();
+        int id = m["objectId"].toInt();
+        if (id > ObjectInterface::IdMax || id <= 0)
         {
-            qWarning() << "Unknown category:" <<  name.trimmed();
+            qDebug() << "CustomListModel::setFilters: invalid id requested " << id;
             continue;
         }
-
-        category_types << c;
+        filters[id] = m["objectKey"].toString();
     }
-    emit categoriesChanged();
+    emit filtersChanged();
+    reset();
 }
+
 
 bool CustomListModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
+    // No category or filter means all the items
+    if (categories.isEmpty() && filters.isEmpty())
+        return true;
+
     QModelIndex idx = sourceModel()->index(source_row, 0, source_parent);
 
-    int category = sourceModel()->data(idx, CategoryRole).toInt();
-    return category_types.contains(category) || category_types.isEmpty();
-}
+    ObjectListModel *model = static_cast<ObjectListModel*>(sourceModel());
+    ObjectInterface *obj = static_cast<ObjectInterface*>(model->getObject(idx.row()));
 
-void CustomListModel::setSource(ObjectListModel *model)
-{
-    source = model;
+    if (categories.contains(obj->getCategory()))
+        return true;
+
+    if (filters.contains(obj->getObjectId())) {
+        if (filters[obj->getObjectId()].isEmpty()) // no check on the key
+            return true;
+
+        if (filters[obj->getObjectId()] == obj->getObjectKey())
+            return true;
+    }
+
+    return false;
 }
 
 QObject *CustomListModel::getObject(int row)

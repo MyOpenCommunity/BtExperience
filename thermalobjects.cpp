@@ -4,8 +4,14 @@
 ThermalControlUnit::ThermalControlUnit(QString _name, int _temperature, ModeType _mode)
 {
     name = _name;
+    key = "TODO";
     temperature = _temperature;
     mode = _mode;
+}
+
+QString ThermalControlUnit::getObjectKey() const
+{
+    return key;
 }
 
 QString ThermalControlUnit::getName() const
