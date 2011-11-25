@@ -3,7 +3,7 @@ import "MenuContainer.js" as Script
 
 MenuElement {
     id: element
-    height: 200
+    height: 150
     width: 212
 
     onChildDestroyed: {
@@ -26,12 +26,7 @@ MenuElement {
         model: ListModel {
             id: modelList
             ListElement {
-                name: "impianto termico 1"
-                componentFile: "ThermalRegulator.qml"
-            }
-
-            ListElement {
-                name: "impianto termico 2"
+                name: "impianto termico"
                 componentFile: "ThermalRegulator.qml"
             }
 

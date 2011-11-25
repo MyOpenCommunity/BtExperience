@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import bticino 1.0
 
 
 MenuElement {
@@ -51,7 +52,6 @@ MenuElement {
             anchors.top: programItem.bottom
             anchors.topMargin: 0
             source: "common/comando_bg.png"
-            property int temperature: 22
             width: element.width
             height: 112
             Behavior on opacity {
@@ -77,7 +77,7 @@ MenuElement {
                 width: 24
                 height: 10
                 color: "#ffffff"
-                text: itemTemperature.temperature + "°"
+                text: dataModel.temperature / 10 + "°"
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 15
             }
@@ -100,7 +100,7 @@ MenuElement {
                 MouseArea {
                     id: minusMouseArea
                     anchors.fill: parent
-                    onClicked: itemTemperature.temperature -= 1
+                    onClicked: dataModel.temperature -= 5
                 }
             }
 
@@ -122,7 +122,7 @@ MenuElement {
                 MouseArea {
                     id: plusMouseArea
                     anchors.fill: parent
-                    onClicked: itemTemperature.temperature += 1
+                    onClicked: dataModel.temperature += 5
                 }
             }
         }
@@ -139,6 +139,11 @@ MenuElement {
 
             Behavior on opacity {
                 NumberAnimation { duration: 200 }
+            }
+
+            function changeMode() {
+                dataModel.mode = (dataModel.mode == ThermalControlUnit99Zones.SummerMode) ?
+                            ThermalControlUnit99Zones.WinterMode : ThermalControlUnit99Zones.SummerMode
             }
 
             Image {
@@ -159,7 +164,7 @@ MenuElement {
                 MouseArea {
                     id: mouse_area1
                     anchors.fill: parent
-                    onClicked: itemMode.mode = (itemMode.mode == qsTr("estate")) ? qsTr("inverno") : qsTr("estate")
+                    onClicked: itemMode.changeMode()
                 }
             }
 
@@ -179,7 +184,7 @@ MenuElement {
                 x: 19
                 y: 72
                 color: "#ffffff"
-                text: itemMode.mode
+                text:  dataModel.mode == ThermalControlUnit99Zones.SummerMode ? qsTr("estate") : qsTr("inverno")
                 font.pixelSize: 15
             }
 
@@ -201,7 +206,7 @@ MenuElement {
                 MouseArea {
                     id: mouse_area2
                     anchors.fill: parent
-                    onClicked: itemMode.mode = (itemMode.mode == qsTr("estate")) ? qsTr("inverno") : qsTr("estate")
+                    onClicked: itemMode.changeMode()
                 }
             }
         }

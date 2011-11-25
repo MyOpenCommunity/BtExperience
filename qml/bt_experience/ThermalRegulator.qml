@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import bticino 1.0
 
 MenuElement {
     id: element
@@ -14,38 +15,19 @@ MenuElement {
         interactive: false
 
         delegate: MenuItemDelegate {
-            onDelegateClicked: {
-                var clickedItem = modelList.get(index)
-                element.loadElement(clickedItem.componentFile, clickedItem.name)
+            hasChild: true
+            onClicked: {
+                element.loadElement(modelList.getComponentFile(model.objectId), model.name,
+                                    modelList.getObject(model.index))
             }
         }
 
-        model: ListModel {
+        model: modelList
+
+        ObjectModel {
             id: modelList
-            ListElement {
-                name: "unità centrale"
-                componentFile: "ThermalCentralUnit.qml"
-            }
-
-            ListElement {
-                name: "zona giorno"
-                componentFile: "ThermalControlledProbe.qml"
-            }
-
-            ListElement {
-                name: "zona notte"
-                componentFile: "ThermalControlledProbe.qml"
-            }
-
-            ListElement {
-                name: "zona taverna"
-                componentFile: "ThermalControlledProbe.qml"
-            }
-
-            ListElement {
-                name: "zona studio"
-                componentFile: "ThermalControlledProbe.qml"
-            }
+            filters: [{objectId: ObjectInterface.IdThermalControlUnit99},
+                      {objectId: ObjectInterface.IdThermalControlledProbe}]
         }
     }
 

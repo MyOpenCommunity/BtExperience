@@ -9,6 +9,10 @@ CustomListModel {
             return "Light.qml"
         case ObjectInterface.IdDimmer:
             return "Dimmer.qml"
+        case ObjectInterface.IdThermalControlUnit99:
+            return "ThermalCentralUnit.qml"
+        case ObjectInterface.IdThermalControlledProbe:
+            return "ThermalControlledProbe.qml"
         default:
             console.log("Unknown object id: " + objectId)
             return ""

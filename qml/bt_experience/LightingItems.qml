@@ -24,16 +24,16 @@ MenuElement {
             status: model.status === true ? 1 : 0
             hasChild: true
             onClicked: {
-                element.loadElement(lightingModel.getComponentFile(model.objectId), model.name,
-                                    lightingModel.getObject(model.index))
+                element.loadElement(modelList.getComponentFile(model.objectId), model.name,
+                                    modelList.getObject(model.index))
             }
         }
 
-        model: lightingModel
+        model: modelList
     }
 
     ObjectModel {
-        id: lightingModel
+        id: modelList
         categories: [ObjectInterface.Lighting]
     }
 }

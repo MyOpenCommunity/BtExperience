@@ -48,7 +48,10 @@ HEADERS += \
     frame_functions.h \
     lighting_device.h \
     openclient.h \
-    pulldevice.h
+    probe_device.h \
+    pulldevice.h \
+    scaleconversion.h \
+    thermal_device.h
 
 SOURCES += \
     bttime.cpp \
@@ -59,5 +62,8 @@ SOURCES += \
     frame_functions.cpp \
     lighting_device.cpp \
     openclient.cpp \
-    pulldevice.cpp
+    probe_device.cpp \
+    pulldevice.cpp \
+    scaleconversion.cpp \
+    thermal_device.cpp
 

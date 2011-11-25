@@ -67,7 +67,8 @@ public:
 
     // The filters argument is a QVariantList in order to set them from qml. The real
     // type expected is a list of javascript objects represented with a map that
-    // has an element with the objectId and objectKey keys.
+    // has an element with the objectId and objectKey keys (the latter can be omitted
+    // to get all the items with a certain objectId).
     QVariantList getFilters() const;
     void setFilters(QVariantList f);
 

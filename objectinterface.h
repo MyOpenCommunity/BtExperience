@@ -18,7 +18,7 @@ public:
     {
         IdLight = 1,
         IdDimmer = 2,
-        IdThermalControlUnit = 3,
+        IdThermalControlUnit99 = 3,
         IdThermalControlledProbe = 4,
         IdMax = 5 // the last value + 1, used to check the ids requested from qml
     };

@@ -14,6 +14,8 @@
 #include "device.h"
 #include "devices_cache.h"
 #include "lighting_device.h"
+#include "thermal_device.h"
+#include "probe_device.h"
 
 #include <logger.h>
 
@@ -43,6 +45,13 @@ void startCore()
     FrameSender::setClients(clients);
 }
 
+ControlledProbeDevice *getProbeDevice(QString probe_where)
+{
+    return bt_global::add_device_to_cache(new ControlledProbeDevice(probe_where, "0", probe_where,
+                                            ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL));
+}
+
+
 void createObjects(ObjectListModel &objmodel)
 {
     objmodel.appendRow(new Light("lampada scrivania", "13", bt_global::add_device_to_cache(new LightingDevice("13"))));
@@ -52,7 +61,11 @@ void createObjects(ObjectListModel &objmodel)
     objmodel.appendRow(new Light("abat jour", "3", bt_global::add_device_to_cache(new LightingDevice("3"))));
     objmodel.appendRow(new Light("abat jour", "4", bt_global::add_device_to_cache(new LightingDevice("4"))));
     objmodel.appendRow(new Light("lampada studio", "5", bt_global::add_device_to_cache(new LightingDevice("5"))));
-    objmodel.appendRow(new ThermalControlUnit("Impianto termico 1", 22, ThermalControlUnit::SummerMode));
+    objmodel.appendRow(new ThermalControlUnit99Zones(QString::fromLatin1("unità centrale"), "", bt_global::add_device_to_cache(new ThermalDevice99Zones("0"))));
+    objmodel.appendRow(new ThermalControlledProbe("zona giorno", "1", getProbeDevice("5")));
+    objmodel.appendRow(new ThermalControlledProbe("zona notte", "2", getProbeDevice("2")));
+    objmodel.appendRow(new ThermalControlledProbe("zona taverna", "3", getProbeDevice("3")));
+    objmodel.appendRow(new ThermalControlledProbe("zona studio", "4", getProbeDevice("4")));
 }
 
 int main(int argc, char *argv[])
@@ -65,6 +78,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<CustomListModel>("bticino", 1, 0, "CustomListModel");
     qmlRegisterUncreatableType<ObjectInterface>("bticino", 1, 0, "ObjectInterface",
         "unable to create an ObjectInterface instance");
+    qmlRegisterUncreatableType<ThermalControlUnit99Zones>("bticino", 1, 0, "ThermalControlUnit99Zones",
+        "unable to create an ThermalControlUnit99Zones instance");
 
     QGLFormat f = QGLFormat::defaultFormat();
     f.setSampleBuffers(true);

@@ -41,19 +41,19 @@ void Light::setStatus(bool st)
 
 void Light::valueReceived(const DeviceValues &values_list)
 {
-        DeviceValues::const_iterator it = values_list.constBegin();
-        while (it != values_list.constEnd()) {
-            if (it.key() == LightingDevice::DIM_DEVICE_ON) {
+    DeviceValues::const_iterator it = values_list.constBegin();
+    while (it != values_list.constEnd()) {
+        if (it.key() == LightingDevice::DIM_DEVICE_ON) {
 //                qDebug() << "Ricevuto status:" << it.value().toBool();
-                if (it.value().toBool() != status) {
-                    status = it.value().toBool() == true;
+            if (it.value().toBool() != status) {
+                status = it.value().toBool() == true;
 
-                    emit statusChanged();
-                    break;
-                }
+                emit statusChanged();
+                break;
             }
-            ++it;
         }
+        ++it;
+    }
 }
 
 

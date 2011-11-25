@@ -125,7 +125,7 @@ void CustomListModel::setFilters(QVariantList f)
             qDebug() << "CustomListModel::setFilters: invalid id requested " << id;
             continue;
         }
-        filters[id] = m["objectKey"].toString();
+        filters[id] = m.contains("objectKey") ? m["objectKey"].toString() : QString();
     }
     emit filtersChanged();
     reset();
