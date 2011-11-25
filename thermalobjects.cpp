@@ -83,7 +83,7 @@ ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, Cont
     name = _name;
     key = _key;
     dev = d;
-    connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
+//    connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
 QString ThermalControlledProbe::getObjectKey() const
