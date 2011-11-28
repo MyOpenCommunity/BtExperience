@@ -70,11 +70,23 @@ private:
 class ThermalControlledProbe : public ObjectInterface
 {
     Q_OBJECT
-
-public:
     Q_PROPERTY(int objectId READ getObjectId CONSTANT)
     Q_PROPERTY(QString name READ getName CONSTANT)
     Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
+    Q_PROPERTY(ProbeStatus probeStatus READ getProbeStatus WRITE setProbeStatus NOTIFY probeStatusChanged)
+    Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
+    Q_PROPERTY(int setpoint READ getSetpoint WRITE setSetpoint NOTIFY setpointChanged)
+    Q_ENUMS(ProbeStatus)
+
+public:
+    enum ProbeStatus
+    {
+        Unknown,
+        Manual,
+        Auto,
+        Antifreeze,
+        Off
+    };
 
     ThermalControlledProbe(QString name, QString key, ControlledProbeDevice *d);
 
@@ -94,12 +106,29 @@ public:
     virtual bool getStatus() const { return false; }
     virtual void setStatus(bool st) { Q_UNUSED(st); }
 
+    ProbeStatus getProbeStatus() const;
+    void setProbeStatus(ProbeStatus st);
+
+    int getTemperature() const;
+
+    int getSetpoint() const;
+    void setSetpoint(int sp);
+
+signals:
+    void probeStatusChanged();
+    void temperatureChanged();
+    void setpointChanged();
+
+
 private slots:
     void valueReceived(const DeviceValues &values_list);
 
 private:
     QString name;
     QString key;
+    ProbeStatus probe_status;
+    int setpoint;
+    int temperature;
     ControlledProbeDevice *dev;
 };
 

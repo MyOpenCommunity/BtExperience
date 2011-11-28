@@ -5,6 +5,7 @@ MenuItem {
     id: itemDelegate
     name: model.name
     hasChild: model.componentFile !== undefined && model.componentFile !== ""
+    property bool selectOnClick: true
 
     signal delegateClicked(int index)
 
@@ -13,7 +14,8 @@ MenuItem {
         if (itemDelegate.ListView.isCurrentItem)
             return
 
-        itemList.currentIndex = model.index
+        if (selectOnClick)
+            itemList.currentIndex = model.index
         itemDelegate.delegateClicked(model.index)
     }
 

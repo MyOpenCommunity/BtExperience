@@ -1,5 +1,5 @@
 import QtQuick 1.1
-
+import bticino 1.0
 
 MenuElement {
     id: element
@@ -8,10 +8,6 @@ MenuElement {
 
     function alertOkClicked() {
         element.closeElement()
-    }
-
-    onChildLoaded: {
-        child.programSelected.connect(programSelected)
     }
 
     onChildDestroyed: {
@@ -24,6 +20,28 @@ MenuElement {
             element.state = "temperatureDisabled"
         else
             element.state = ""
+    }
+
+    Connections {
+        target: dataModel
+        onProbeStatusChanged: {
+            var desc = "";
+            switch (dataModel.probeStatus) {
+            case ThermalControlledProbe.Auto:
+                desc = "auto"
+                break
+            case ThermalControlledProbe.Antifreeze:
+                desc = "antigelo"
+                break
+            case ThermalControlledProbe.Manual:
+                desc = "manuale"
+                break
+            case ThermalControlledProbe.Off:
+                desc = "off"
+                break
+            }
+            programSelected(desc)
+        }
     }
 
     Item {
@@ -42,7 +60,7 @@ MenuElement {
                 id: textTemperature
                 x: 18
                 y: 13
-                text: qsTr("20° C")
+                text: dataModel.temperature  / 10 + qsTr("° C")
                 font.pixelSize: 24
             }
 
@@ -53,7 +71,7 @@ MenuElement {
                 y: 51
 
                 onClicked: {
-                    element.loadElement("ThermalControlledProbePrograms.qml", programItem.name)
+                    element.loadElement("ThermalControlledProbePrograms.qml", programItem.name, dataModel)
                     if (programItem.state == "")
                         programItem.state =  "selected"
                 }
@@ -64,7 +82,6 @@ MenuElement {
                 anchors.top: programItem.bottom
                 anchors.topMargin: 0
                 source: "common/comando_bg.png"
-                property int temperature: 22
                 x: 0
                 y: 116
                 width: 212
@@ -89,7 +106,7 @@ MenuElement {
                     width: 24
                     height: 15
                     color: "#ffffff"
-                    text:  itemTemperature.temperature + "°"
+                    text:  dataModel.setpoint + "°"
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 15
                 }
@@ -112,7 +129,7 @@ MenuElement {
                     MouseArea {
                         id: minusMouseArea
                         anchors.fill: parent
-                        onClicked: itemTemperature.temperature -= 1
+                        onClicked: dataModel.setpoint -= 1
                     }
                 }
 
@@ -134,7 +151,7 @@ MenuElement {
                     MouseArea {
                         id: plusMouseArea
                         anchors.fill: parent
-                        onClicked: itemTemperature.temperature += 1
+                        onClicked: dataModel.setpoint += 1
                     }
                 }
             }

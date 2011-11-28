@@ -81,6 +81,9 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<ThermalControlUnit99Zones>("bticino", 1, 0, "ThermalControlUnit99Zones",
         "unable to create an ThermalControlUnit99Zones instance");
 
+    qmlRegisterUncreatableType<ThermalControlledProbe>("bticino", 1, 0, "ThermalControlledProbe",
+        "unable to create an ThermalControlledProbe instance");
+
     QGLFormat f = QGLFormat::defaultFormat();
     f.setSampleBuffers(true);
     f.setSamples(4);
