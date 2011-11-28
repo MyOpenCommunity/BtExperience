@@ -61,7 +61,7 @@ void createObjects(ObjectListModel &objmodel)
     objmodel.appendRow(new Light("abat jour", "3", bt_global::add_device_to_cache(new LightingDevice("3"))));
     objmodel.appendRow(new Light("abat jour", "4", bt_global::add_device_to_cache(new LightingDevice("4"))));
     objmodel.appendRow(new Light("lampada studio", "5", bt_global::add_device_to_cache(new LightingDevice("5"))));
-    objmodel.appendRow(new ThermalControlUnit99Zones(QString::fromLatin1("unità centrale"), "", bt_global::add_device_to_cache(new ThermalDevice99Zones("0"))));
+    objmodel.appendRow(new ThermalControlUnit99Zones(QString::fromLocal8Bit("unità centrale"), "", bt_global::add_device_to_cache(new ThermalDevice99Zones("0"))));
     objmodel.appendRow(new ThermalControlledProbe("zona giorno", "1", getProbeDevice("5")));
     objmodel.appendRow(new ThermalControlledProbe("zona notte", "2", getProbeDevice("2")));
     objmodel.appendRow(new ThermalControlledProbe("zona taverna", "3", getProbeDevice("3")));
