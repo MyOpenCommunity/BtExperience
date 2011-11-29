@@ -19,6 +19,7 @@
 
 #include <logger.h>
 
+#define OBJECTS_NAMESPACE "BtObjects"
 
 logger *app_logger;
 
@@ -75,13 +76,13 @@ int main(int argc, char *argv[])
     startCore();
     QmlApplicationViewer viewer;
 
-    qmlRegisterType<CustomListModel>("bticino", 1, 0, "CustomListModel");
-    qmlRegisterUncreatableType<ObjectInterface>("bticino", 1, 0, "ObjectInterface",
+    qmlRegisterType<CustomListModel>(OBJECTS_NAMESPACE, 1, 0, "CustomListModel");
+    qmlRegisterUncreatableType<ObjectInterface>(OBJECTS_NAMESPACE, 1, 0, "ObjectInterface",
         "unable to create an ObjectInterface instance");
-    qmlRegisterUncreatableType<ThermalControlUnit99Zones>("bticino", 1, 0, "ThermalControlUnit99Zones",
+    qmlRegisterUncreatableType<ThermalControlUnit99Zones>(OBJECTS_NAMESPACE, 1, 0, "ThermalControlUnit99Zones",
         "unable to create an ThermalControlUnit99Zones instance");
 
-    qmlRegisterUncreatableType<ThermalControlledProbe>("bticino", 1, 0, "ThermalControlledProbe",
+    qmlRegisterUncreatableType<ThermalControlledProbe>(OBJECTS_NAMESPACE, 1, 0, "ThermalControlledProbe",
         "unable to create an ThermalControlledProbe instance");
 
     QGLFormat f = QGLFormat::defaultFormat();

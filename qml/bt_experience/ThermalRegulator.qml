@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import bticino 1.0
+import BtObjects 1.0
 
 MenuElement {
     id: element
