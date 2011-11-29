@@ -4,8 +4,11 @@ import "Stack.js" as Stack
 
 Image {
     id: page
-    width:  1024
+    width: 1024
     height: 600
+    asynchronous: true
+    sourceSize.width: 1024
+    sourceSize.height: 600
 
     property alias lightFont: lightFont
     property alias regularFont: regularFont
