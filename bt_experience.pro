@@ -91,7 +91,6 @@ HEADERS += \
 
 SOURCES += \
     bttime.cpp \
-    definitions.cpp \
     device.cpp \
     devices_cache.cpp \
     frame_classes.cpp \
