@@ -19,6 +19,9 @@
 
 #include <logger.h>
 
+#define MAIN_WIDTH 1024
+#define MAIN_HEIGHT 600
+
 #define OBJECTS_NAMESPACE "BtObjects"
 
 // Start definitions required by libcommon
@@ -148,9 +151,12 @@ int main(int argc, char *argv[])
     viewer.setRenderHint(QPainter::TextAntialiasing, true);
 
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer.engine()->rootContext()->setContextProperty("main_width", MAIN_WIDTH);
+    viewer.engine()->rootContext()->setContextProperty("main_height", MAIN_HEIGHT);
     viewer.setMainQmlFile(QLatin1String("qml/bt_experience/main.qml"));
 
 #ifdef Q_WS_X11
+    viewer.resize(MAIN_WIDTH, MAIN_HEIGHT);
     viewer.showExpanded();
 #else
     viewer.showFullScreen();
