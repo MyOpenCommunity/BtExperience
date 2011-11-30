@@ -13,9 +13,6 @@ class DimmerDevice;
 class Light : public ObjectInterface
 {
     Q_OBJECT
-    Q_PROPERTY(int objectId READ getObjectId CONSTANT)
-    Q_PROPERTY(QString name READ getName CONSTANT)
-    Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
     Q_PROPERTY(bool status READ getStatus WRITE setStatus NOTIFY statusChanged)
 
 public:

@@ -72,7 +72,13 @@ QObject *ObjectListModel::getObject(int row)
     if (row < 0 || row >= item_list.size())
         return 0;
 
-     return item_list.at(row);
+    return item_list.at(row);
+}
+
+void ObjectListModel::reparentObjects()
+{
+    for (int i = 0; i < item_list.size(); ++i)
+        item_list.at(i)->setParent(this);
 }
 
 

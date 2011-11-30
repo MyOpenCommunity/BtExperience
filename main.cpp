@@ -40,6 +40,7 @@ QHash<GlobalField, QString> *bt_global::config;
 
 void startCore()
 {
+    qDebug() << "***** BtExperience start! *****";
     bt_global::config = new QHash<GlobalField, QString>();
     (*bt_global::config)[TS_NUMBER] = QString::number(0);
 
@@ -80,6 +81,7 @@ void createObjects(ObjectListModel &objmodel)
     objmodel.appendRow(new ThermalControlledProbe("zona notte", "2", getProbeDevice("2")));
     objmodel.appendRow(new ThermalControlledProbe("zona taverna", "3", getProbeDevice("3")));
     objmodel.appendRow(new ThermalControlledProbe("zona studio", "4", getProbeDevice("4")));
+    objmodel.reparentObjects();
 }
 
 void messageHandler(QtMsgType type, const char *msg)

@@ -9,10 +9,14 @@
 class ObjectInterface : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int objectId READ getObjectId CONSTANT)
+    Q_PROPERTY(QString name READ getName CONSTANT)
+    Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
     Q_ENUMS(ObjectId)
     Q_ENUMS(ObjectCategory)
 
 public:
+    virtual ~ObjectInterface() {}
 
     enum ObjectId
     {

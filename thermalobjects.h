@@ -14,9 +14,6 @@ class ThermalControlUnit99Zones : public ObjectInterface
 {
     Q_OBJECT
     Q_ENUMS(ModeType)
-    Q_PROPERTY(int objectId READ getObjectId CONSTANT)
-    Q_PROPERTY(QString name READ getName CONSTANT)
-    Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
     Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature NOTIFY temperatureChanged)
     Q_PROPERTY(ModeType mode READ getMode WRITE setMode NOTIFY modeChanged)
 
@@ -70,9 +67,6 @@ private:
 class ThermalControlledProbe : public ObjectInterface
 {
     Q_OBJECT
-    Q_PROPERTY(int objectId READ getObjectId CONSTANT)
-    Q_PROPERTY(QString name READ getName CONSTANT)
-    Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
     Q_PROPERTY(ProbeStatus probeStatus READ getProbeStatus WRITE setProbeStatus NOTIFY probeStatusChanged)
     Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
     Q_PROPERTY(int setpoint READ getSetpoint WRITE setSetpoint NOTIFY setpointChanged)

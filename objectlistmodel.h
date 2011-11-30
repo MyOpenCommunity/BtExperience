@@ -38,6 +38,13 @@ public:
     // https://bugreports.qt.nokia.com//browse/QTBUG-7932
     Q_INVOKABLE QObject *getObject(int row);
 
+    // Objects extracted using a C++ method and pass to a Qml Component have
+    // a 'javascript ownership', but in that way the qml has the freedom to
+    // delete the object. To avoid that, we set the model as a parent.
+    // See http://doc.trolltech.com/4.7/qdeclarativeengine.html#ObjectOwnership-enum
+    // for details.
+    void reparentObjects();
+
 private slots:
     void handleItemChange();
 
