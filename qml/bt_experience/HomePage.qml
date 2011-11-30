@@ -223,6 +223,7 @@ source: "home.jpg"
                   source: "home/multimedia.png"
                   text: qsTr("multimedia")
                   textLeftMargin: 18
+                  onClicked: Stack.openPage("Browser.qml")
               }
         }
     }
