@@ -6,7 +6,7 @@
 #include <QDebug>
 
 
-ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key, ThermalDevice99Zones *d)
+ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d)
 {
     name = _name;
     key = _key;
@@ -16,32 +16,32 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
     mode = SummerMode;
 }
 
-QString ThermalControlUnit99Zones::getObjectKey() const
+QString ThermalControlUnit::getObjectKey() const
 {
     return key;
 }
 
-QString ThermalControlUnit99Zones::getName() const
+QString ThermalControlUnit::getName() const
 {
     return name;
 }
 
-int ThermalControlUnit99Zones::getTemperature() const
+int ThermalControlUnit::getTemperature() const
 {
     return bt2Celsius(temperature);
 }
 
-void ThermalControlUnit99Zones::setTemperature(int temp)
+void ThermalControlUnit::setTemperature(int temp)
 {
     dev->setManualTemp(celsius2Bt(temp));
 }
 
-ThermalControlUnit99Zones::ModeType ThermalControlUnit99Zones::getMode() const
+ThermalControlUnit::ModeType ThermalControlUnit::getMode() const
 {
     return mode;
 }
 
-void ThermalControlUnit99Zones::setMode(ModeType m)
+void ThermalControlUnit::setMode(ModeType m)
 {
     if (m == SummerMode)
         dev->setSummer();
@@ -49,7 +49,7 @@ void ThermalControlUnit99Zones::setMode(ModeType m)
         dev->setWinter();
 }
 
-void ThermalControlUnit99Zones::valueReceived(const DeviceValues &values_list)
+void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 {
     DeviceValues::const_iterator it = values_list.constBegin();
     while (it != values_list.constEnd()) {
@@ -76,6 +76,20 @@ void ThermalControlUnit99Zones::valueReceived(const DeviceValues &values_list)
         }
         ++it;
     }
+}
+
+
+ThermalControlUnit4Zones::ThermalControlUnit4Zones(QString _name, QString _key, ThermalDevice4Zones *d) :
+    ThermalControlUnit(_name, _key, d)
+{
+    dev = d;
+}
+
+
+ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key, ThermalDevice99Zones *d) :
+    ThermalControlUnit(_name, _key, d)
+{
+    dev = d;
 }
 
 

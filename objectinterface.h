@@ -24,7 +24,8 @@ public:
         IdDimmer = 2,
         IdThermalControlUnit99 = 3,
         IdThermalControlledProbe = 4,
-        IdMax = 5 // the last value + 1, used to check the ids requested from qml
+        IdThermalControlUnit4 = 5,
+        IdMax = 6 // the last value + 1, used to check the ids requested from qml
     };
 
     enum ObjectCategory

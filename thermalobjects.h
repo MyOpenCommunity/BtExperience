@@ -6,11 +6,13 @@
 
 #include <QObject>
 
+class ThermalDevice;
+class ThermalDevice4Zones;
 class ThermalDevice99Zones;
 class ControlledProbeDevice;
 
 
-class ThermalControlUnit99Zones : public ObjectInterface
+class ThermalControlUnit : public ObjectInterface
 {
     Q_OBJECT
     Q_ENUMS(ModeType)
@@ -24,12 +26,7 @@ public:
         WinterMode
     };
 
-    ThermalControlUnit99Zones(QString name, QString key, ThermalDevice99Zones *d);
-
-    virtual int getObjectId() const
-    {
-        return ObjectInterface::IdThermalControlUnit99;
-    }
+    ThermalControlUnit(QString name, QString key, ThermalDevice *d);
 
     virtual QString getObjectKey() const;
 
@@ -52,14 +49,48 @@ signals:
     void temperatureChanged();
     void modeChanged();
 
-private slots:
-    void valueReceived(const DeviceValues &values_list);
+protected slots:
+    virtual void valueReceived(const DeviceValues &values_list);
 
 private:
     QString name;
     QString key;
     int temperature;
     ModeType mode;
+    ThermalDevice *dev;
+};
+
+
+class ThermalControlUnit4Zones : public ThermalControlUnit
+{
+    Q_OBJECT
+
+public:
+    ThermalControlUnit4Zones(QString name, QString key, ThermalDevice4Zones *d);
+
+    virtual int getObjectId() const
+    {
+        return ObjectInterface::IdThermalControlUnit4;
+    }
+
+private:
+    ThermalDevice4Zones *dev;
+};
+
+
+class ThermalControlUnit99Zones : public ThermalControlUnit
+{
+    Q_OBJECT
+
+public:
+    ThermalControlUnit99Zones(QString name, QString key, ThermalDevice99Zones *d);
+
+    virtual int getObjectId() const
+    {
+        return ObjectInterface::IdThermalControlUnit99;
+    }
+
+private:
     ThermalDevice99Zones *dev;
 };
 
