@@ -32,7 +32,6 @@ MenuElement {
         property bool transparent: true
 
         delegate: MenuItemDelegate {
-            status: model.status === true ? 1 : 0
             hasChild: modelList.getComponentFile(model.objectId) !== null
             onClicked: {
                 var component = modelList.getComponentFile(model.objectId)
