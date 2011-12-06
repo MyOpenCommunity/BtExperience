@@ -1,0 +1,11 @@
+# misc
+*.pro.user
+# symlink
+common_files
+devices
+ts
+# build
+BtExperience.*
+Makefile
+moc/
+obj/
