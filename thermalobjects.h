@@ -22,18 +22,23 @@ class ThermalControlUnitState : public ObjectInterface
     Q_OBJECT
 
 public:
-    ThermalControlUnitState(ThermalDevice *dev);
+    ThermalControlUnitState(QString name, ThermalDevice *dev);
+
+    virtual QString getObjectKey() const;
 
     virtual ObjectCategory getCategory() const
     {
         return ObjectInterface::ThermalRegulationUnitState;
     }
 
+    virtual QString getName() const;
+
     virtual bool getStatus() const { return false; }
     virtual void setStatus(bool st) { Q_UNUSED(st); }
 
 protected:
     ThermalDevice *dev;
+    QString name;
 };
 
 
@@ -50,14 +55,10 @@ class ThermalControlUnitHoliday : public ThermalControlUnitState
 public:
     ThermalControlUnitHoliday(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
 
-    virtual QString getObjectKey() const;
-
     virtual int getObjectId() const
     {
         return ObjectInterface::IdThermalControlUnitHoliday;
     }
-
-    virtual QString getName() const;
 
     int getProgramCount() const;
 
@@ -85,7 +86,6 @@ private:
     int programIndex;
     QDate date;
     QTime time;
-    QString name;
     ProgramList programs;
 };
 
@@ -95,22 +95,15 @@ class ThermalControlUnitOff : public ThermalControlUnitState
     Q_OBJECT
 
 public:
-    ThermalControlUnitOff(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
-
-    virtual QString getObjectKey() const;
+    ThermalControlUnitOff(QString name, ThermalDevice *dev);
 
     virtual int getObjectId() const
     {
         return ObjectInterface::IdThermalControlUnitOff;
     }
 
-    virtual QString getName() const;
-
 public slots:
     void apply();
-
-private:
-    QString name;
 };
 
 
@@ -119,22 +112,18 @@ class ThermalControlUnitAntifreeze : public ThermalControlUnitState
     Q_OBJECT
 
 public:
-    ThermalControlUnitAntifreeze(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
-
-    virtual QString getObjectKey() const;
+    ThermalControlUnitAntifreeze(QString name, ThermalDevice *dev);
 
     virtual int getObjectId() const
     {
         return ObjectInterface::IdThermalControlUnitAntifreeze;
     }
 
-    virtual QString getName() const;
 
 public slots:
     void apply();
 
 private:
-    QString name;
 };
 
 

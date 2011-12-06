@@ -7,31 +7,30 @@
 #include <QDebug>
 
 
-ThermalControlUnitState::ThermalControlUnitState(ThermalDevice *_dev)
+ThermalControlUnitState::ThermalControlUnitState(QString _name, ThermalDevice *_dev)
 {
     dev = _dev;
-}
-
-
-ThermalControlUnitHoliday::ThermalControlUnitHoliday(QString _name, const ThermalControlUnit *unit, ThermalDevice *dev) :
-    ThermalControlUnitState(dev)
-{
-    Q_UNUSED(unit);
     name = _name;
-    programs = unit->getPrograms();
-    programIndex = 0;
-    date = QDate::currentDate();
-    time = QTime::currentTime();
 }
 
-QString ThermalControlUnitHoliday::getObjectKey() const
+QString ThermalControlUnitState::getObjectKey() const
 {
     return QString();
 }
 
-QString ThermalControlUnitHoliday::getName() const
+QString ThermalControlUnitState::getName() const
 {
     return name;
+}
+
+
+ThermalControlUnitHoliday::ThermalControlUnitHoliday(QString name, const ThermalControlUnit *unit, ThermalDevice *dev) :
+    ThermalControlUnitState(name, dev)
+{
+    programs = unit->getPrograms();
+    programIndex = 0;
+    date = QDate::currentDate();
+    time = QTime::currentTime();
 }
 
 int ThermalControlUnitHoliday::getProgramCount() const
@@ -97,21 +96,9 @@ void ThermalControlUnitHoliday::apply()
 }
 
 
-ThermalControlUnitOff::ThermalControlUnitOff(QString _name, const ThermalControlUnit *unit, ThermalDevice *dev) :
-    ThermalControlUnitState(dev)
+ThermalControlUnitOff::ThermalControlUnitOff(QString name, ThermalDevice *dev) :
+    ThermalControlUnitState(name, dev)
 {
-    Q_UNUSED(unit);
-    name = _name;
-}
-
-QString ThermalControlUnitOff::getName() const
-{
-    return name;
-}
-
-QString ThermalControlUnitOff::getObjectKey() const
-{
-    return QString();
 }
 
 void ThermalControlUnitOff::apply()
@@ -120,21 +107,9 @@ void ThermalControlUnitOff::apply()
 }
 
 
-ThermalControlUnitAntifreeze::ThermalControlUnitAntifreeze(QString _name, const ThermalControlUnit *unit, ThermalDevice *dev) :
-    ThermalControlUnitState(dev)
+ThermalControlUnitAntifreeze::ThermalControlUnitAntifreeze(QString name, ThermalDevice *dev) :
+    ThermalControlUnitState(name, dev)
 {
-    Q_UNUSED(unit);
-    name = _name;
-}
-
-QString ThermalControlUnitAntifreeze::getName() const
-{
-    return name;
-}
-
-QString ThermalControlUnitAntifreeze::getObjectKey() const
-{
-    return QString();
 }
 
 void ThermalControlUnitAntifreeze::apply()
@@ -196,8 +171,8 @@ ObjectListModel *ThermalControlUnit::getMenuItems() const
 {
     ObjectListModel *items = new ObjectListModel;
 
-    items->appendRow(new ThermalControlUnitOff("Off", this, dev));
-    items->appendRow(new ThermalControlUnitAntifreeze("Antigelo", this, dev));
+    items->appendRow(new ThermalControlUnitOff("Off", dev));
+    items->appendRow(new ThermalControlUnitAntifreeze("Antigelo", dev));
     items->appendRow(new ThermalControlUnitHoliday("Festivi", this, dev));
     // TODO:
     // settimanale => ThermalCentralUnitWeekly.qml
