@@ -24,26 +24,27 @@ QString ThermalControlUnitState::getName() const
 }
 
 
-ThermalControlUnitHoliday::ThermalControlUnitHoliday(QString name, const ThermalControlUnit *unit, ThermalDevice *dev) :
+ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, const ThermalControlUnit *unit, ThermalDevice *dev) :
     ThermalControlUnitState(name, dev)
 {
+    object_id = _object_id;
     programs = unit->getPrograms();
     programIndex = 0;
     date = QDate::currentDate();
     time = QTime::currentTime();
 }
 
-int ThermalControlUnitHoliday::getProgramCount() const
+int ThermalControlUnitTimedProgram::getProgramCount() const
 {
     return programs.count();
 }
 
-int ThermalControlUnitHoliday::getProgramIndex() const
+int ThermalControlUnitTimedProgram::getProgramIndex() const
 {
     return programIndex;
 }
 
-void ThermalControlUnitHoliday::setProgramIndex(int index)
+void ThermalControlUnitTimedProgram::setProgramIndex(int index)
 {
     if (programIndex == index || index < 0 || index >= programs.count())
         return;
@@ -52,22 +53,22 @@ void ThermalControlUnitHoliday::setProgramIndex(int index)
     emit programChanged();
 }
 
-int ThermalControlUnitHoliday::getProgram() const
+int ThermalControlUnitTimedProgram::getProgram() const
 {
     return programs[programIndex].first;
 }
 
-QString ThermalControlUnitHoliday::getProgramDescription() const
+QString ThermalControlUnitTimedProgram::getProgramDescription() const
 {
     return programs[programIndex].second;
 }
 
-QDate ThermalControlUnitHoliday::getDate() const
+QDate ThermalControlUnitTimedProgram::getDate() const
 {
     return date;
 }
 
-void ThermalControlUnitHoliday::setDate(QDate _date)
+void ThermalControlUnitTimedProgram::setDate(QDate _date)
 {
     if (date == _date)
         return;
@@ -76,12 +77,12 @@ void ThermalControlUnitHoliday::setDate(QDate _date)
     emit dateChanged();
 }
 
-QTime ThermalControlUnitHoliday::getTime() const
+QTime ThermalControlUnitTimedProgram::getTime() const
 {
     return time;
 }
 
-void ThermalControlUnitHoliday::setTime(QTime _time)
+void ThermalControlUnitTimedProgram::setTime(QTime _time)
 {
     if (time == _time)
         return;
@@ -90,9 +91,12 @@ void ThermalControlUnitHoliday::setTime(QTime _time)
     emit timeChanged();
 }
 
-void ThermalControlUnitHoliday::apply()
+void ThermalControlUnitTimedProgram::apply()
 {
-    dev->setHolidayDateTime(date, time, programs[programIndex].first);
+    if (object_id == ObjectInterface::IdThermalControlUnitHoliday)
+        dev->setWeekendDateTime(date, time, programs[programIndex].first);
+    else
+        dev->setHolidayDateTime(date, time, programs[programIndex].first);
 }
 
 
@@ -202,10 +206,10 @@ ObjectListModel *ThermalControlUnit::getMenuItems() const
 
     items->appendRow(new ThermalControlUnitOff("Off", dev));
     items->appendRow(new ThermalControlUnitAntifreeze("Antigelo", dev));
-    items->appendRow(new ThermalControlUnitHoliday("Festivi", this, dev));
+    items->appendRow(new ThermalControlUnitTimedProgram("Festivi", ObjectInterface::IdThermalControlUnitHoliday, this, dev));
+    items->appendRow(new ThermalControlUnitTimedProgram("Vacanze", ObjectInterface::IdThermalControlUnitVacation, this, dev));
     items->appendRow(new ThermalControlUnitWeeklyPrograms("Settimanale", this, dev));
     // TODO:
-    // vacanze => ThermalCentralUnitVacations.qml
     // scenari => ThermalCentralUnitScenari.qml
     // manuale
     // manuale temporizzato

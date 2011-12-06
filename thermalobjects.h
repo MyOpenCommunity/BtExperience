@@ -43,7 +43,7 @@ protected:
 };
 
 
-class ThermalControlUnitHoliday : public ThermalControlUnitState
+class ThermalControlUnitTimedProgram : public ThermalControlUnitState
 {
     Q_OBJECT
     Q_PROPERTY(int programIndex READ getProgramIndex WRITE setProgramIndex NOTIFY programChanged)
@@ -54,11 +54,11 @@ class ThermalControlUnitHoliday : public ThermalControlUnitState
     Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
 
 public:
-    ThermalControlUnitHoliday(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
+    ThermalControlUnitTimedProgram(QString name, int object_id, const ThermalControlUnit *unit, ThermalDevice *dev);
 
     virtual int getObjectId() const
     {
-        return ObjectInterface::IdThermalControlUnitHoliday;
+        return object_id;
     }
 
     int getProgramCount() const;
@@ -88,6 +88,7 @@ private:
     QDate date;
     QTime time;
     ThermalRegulationProgramList programs;
+    int object_id;
 };
 
 

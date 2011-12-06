@@ -18,6 +18,7 @@ CustomListModel {
         case ObjectInterface.IdThermalControlUnitAntifreeze:
             return null
         case ObjectInterface.IdThermalControlUnitHoliday:
+        case ObjectInterface.IdThermalControlUnitVacation:
             return "ThermalCentralUnitHolidays.qml"
         case ObjectInterface.IdThermalControlUnitWeeklyPrograms:
             return "ThermalCentralUnitWeekly.qml"
