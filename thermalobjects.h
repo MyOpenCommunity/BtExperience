@@ -5,11 +5,137 @@
 #include "device.h" // DeviceValues
 
 #include <QObject>
+#include <QDateTime>
 
 class ThermalDevice;
 class ThermalDevice4Zones;
 class ThermalDevice99Zones;
 class ControlledProbeDevice;
+class ObjectListModel;
+class ThermalControlUnit;
+
+typedef QList<QPair<int, QString> > ProgramList;
+
+
+class ThermalControlUnitState : public ObjectInterface
+{
+    Q_OBJECT
+
+public:
+    ThermalControlUnitState(ThermalDevice *dev);
+
+    virtual ObjectCategory getCategory() const
+    {
+        return ObjectInterface::ThermalRegulationUnitState;
+    }
+
+    virtual bool getStatus() const { return false; }
+    virtual void setStatus(bool st) { Q_UNUSED(st); }
+
+protected:
+    ThermalDevice *dev;
+};
+
+
+class ThermalControlUnitHoliday : public ThermalControlUnitState
+{
+    Q_OBJECT
+    Q_PROPERTY(int programIndex READ getProgramIndex WRITE setProgramIndex NOTIFY programChanged)
+    Q_PROPERTY(int programCount READ getProgramCount)
+    Q_PROPERTY(int program READ getProgram NOTIFY programChanged)
+    Q_PROPERTY(QString programDescription READ getProgramDescription NOTIFY programChanged)
+    Q_PROPERTY(QDate date READ getDate WRITE setDate NOTIFY dateChanged)
+    Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
+
+public:
+    ThermalControlUnitHoliday(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
+
+    virtual QString getObjectKey() const;
+
+    virtual int getObjectId() const
+    {
+        return ObjectInterface::IdThermalControlUnitHoliday;
+    }
+
+    virtual QString getName() const;
+
+    int getProgramCount() const;
+
+    int getProgramIndex() const;
+    void setProgramIndex(int index);
+
+    int getProgram() const;
+    QString getProgramDescription() const;
+
+    QDate getDate() const;
+    void setDate(QDate date);
+
+    QTime getTime() const;
+    void setTime(QTime time);
+
+public slots:
+    void apply();
+
+signals:
+    void programChanged();
+    void dateChanged();
+    void timeChanged();
+
+private:
+    int programIndex;
+    QDate date;
+    QTime time;
+    QString name;
+    ProgramList programs;
+};
+
+
+class ThermalControlUnitOff : public ThermalControlUnitState
+{
+    Q_OBJECT
+
+public:
+    ThermalControlUnitOff(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
+
+    virtual QString getObjectKey() const;
+
+    virtual int getObjectId() const
+    {
+        return ObjectInterface::IdThermalControlUnitOff;
+    }
+
+    virtual QString getName() const;
+
+public slots:
+    void apply();
+
+private:
+    QString name;
+};
+
+
+class ThermalControlUnitAntifreeze : public ThermalControlUnitState
+{
+    Q_OBJECT
+
+public:
+    ThermalControlUnitAntifreeze(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
+
+    virtual QString getObjectKey() const;
+
+    virtual int getObjectId() const
+    {
+        return ObjectInterface::IdThermalControlUnitAntifreeze;
+    }
+
+    virtual QString getName() const;
+
+public slots:
+    void apply();
+
+private:
+    QString name;
+};
 
 
 class ThermalControlUnit : public ObjectInterface
@@ -18,6 +144,7 @@ class ThermalControlUnit : public ObjectInterface
     Q_ENUMS(ModeType)
     Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature NOTIFY temperatureChanged)
     Q_PROPERTY(ModeType mode READ getMode WRITE setMode NOTIFY modeChanged)
+    Q_PROPERTY(ObjectListModel *menuItemList READ getMenuItems NOTIFY menuItemListChanged)
 
 public:
     enum ModeType
@@ -45,9 +172,14 @@ public:
     ModeType getMode() const;
     void setMode(ModeType m);
 
+    ProgramList getPrograms() const;
+
+    ObjectListModel *getMenuItems() const;
+
 signals:
     void temperatureChanged();
     void modeChanged();
+    void menuItemListChanged();
 
 protected slots:
     virtual void valueReceived(const DeviceValues &values_list);
@@ -57,6 +189,7 @@ private:
     QString key;
     int temperature;
     ModeType mode;
+    ProgramList programs;
     ThermalDevice *dev;
 };
 

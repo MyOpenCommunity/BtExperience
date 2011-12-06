@@ -25,13 +25,17 @@ public:
         IdThermalControlUnit99 = 3,
         IdThermalControlledProbe = 4,
         IdThermalControlUnit4 = 5,
-        IdMax = 6 // the last value + 1, used to check the ids requested from qml
+        IdThermalControlUnitHoliday = 6,
+        IdThermalControlUnitOff = 7,
+        IdThermalControlUnitAntifreeze = 8,
+        IdMax // the last value + 1, used to check the ids requested from qml
     };
 
     enum ObjectCategory
     {
         Lighting = 1,
-        ThermalRegulation = 2
+        ThermalRegulation = 2,
+        ThermalRegulationUnitState = 3
     };
 
     virtual int getObjectId() const = 0;

@@ -2,8 +2,145 @@
 #include "thermal_device.h"
 #include "probe_device.h"
 #include "scaleconversion.h" // bt2Celsius
+#include "objectlistmodel.h"
 
 #include <QDebug>
+
+
+ThermalControlUnitState::ThermalControlUnitState(ThermalDevice *_dev)
+{
+    dev = _dev;
+}
+
+
+ThermalControlUnitHoliday::ThermalControlUnitHoliday(QString _name, const ThermalControlUnit *unit, ThermalDevice *dev) :
+    ThermalControlUnitState(dev)
+{
+    Q_UNUSED(unit);
+    name = _name;
+    programs = unit->getPrograms();
+    programIndex = 0;
+    date = QDate::currentDate();
+    time = QTime::currentTime();
+}
+
+QString ThermalControlUnitHoliday::getObjectKey() const
+{
+    return QString();
+}
+
+QString ThermalControlUnitHoliday::getName() const
+{
+    return name;
+}
+
+int ThermalControlUnitHoliday::getProgramCount() const
+{
+    return programs.count();
+}
+
+int ThermalControlUnitHoliday::getProgramIndex() const
+{
+    return programIndex;
+}
+
+void ThermalControlUnitHoliday::setProgramIndex(int index)
+{
+    if (programIndex == index || index < 0 || index >= programs.count())
+        return;
+
+    programIndex = index;
+    emit programChanged();
+}
+
+int ThermalControlUnitHoliday::getProgram() const
+{
+    return programs[programIndex].first;
+}
+
+QString ThermalControlUnitHoliday::getProgramDescription() const
+{
+    return programs[programIndex].second;
+}
+
+QDate ThermalControlUnitHoliday::getDate() const
+{
+    return date;
+}
+
+void ThermalControlUnitHoliday::setDate(QDate _date)
+{
+    if (date == _date)
+        return;
+
+    date = _date;
+    emit dateChanged();
+}
+
+QTime ThermalControlUnitHoliday::getTime() const
+{
+    return time;
+}
+
+void ThermalControlUnitHoliday::setTime(QTime _time)
+{
+    if (time == _time)
+        return;
+
+    time = _time;
+    emit timeChanged();
+}
+
+void ThermalControlUnitHoliday::apply()
+{
+    dev->setHolidayDateTime(date, time, programs[programIndex].first);
+}
+
+
+ThermalControlUnitOff::ThermalControlUnitOff(QString _name, const ThermalControlUnit *unit, ThermalDevice *dev) :
+    ThermalControlUnitState(dev)
+{
+    Q_UNUSED(unit);
+    name = _name;
+}
+
+QString ThermalControlUnitOff::getName() const
+{
+    return name;
+}
+
+QString ThermalControlUnitOff::getObjectKey() const
+{
+    return QString();
+}
+
+void ThermalControlUnitOff::apply()
+{
+    dev->setOff();
+}
+
+
+ThermalControlUnitAntifreeze::ThermalControlUnitAntifreeze(QString _name, const ThermalControlUnit *unit, ThermalDevice *dev) :
+    ThermalControlUnitState(dev)
+{
+    Q_UNUSED(unit);
+    name = _name;
+}
+
+QString ThermalControlUnitAntifreeze::getName() const
+{
+    return name;
+}
+
+QString ThermalControlUnitAntifreeze::getObjectKey() const
+{
+    return QString();
+}
+
+void ThermalControlUnitAntifreeze::apply()
+{
+    dev->setProtection();
+}
 
 
 ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d)
@@ -14,6 +151,7 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
     connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
     temperature = 0;
     mode = SummerMode;
+    programs << qMakePair(1, QString("P1")) << qMakePair(3, QString("P3")) << qMakePair(5, QString("P5"));
 }
 
 QString ThermalControlUnit::getObjectKey() const
@@ -47,6 +185,28 @@ void ThermalControlUnit::setMode(ModeType m)
         dev->setSummer();
     else
         dev->setWinter();
+}
+
+ProgramList ThermalControlUnit::getPrograms() const
+{
+    return programs;
+}
+
+ObjectListModel *ThermalControlUnit::getMenuItems() const
+{
+    ObjectListModel *items = new ObjectListModel;
+
+    items->appendRow(new ThermalControlUnitOff("Off", this, dev));
+    items->appendRow(new ThermalControlUnitAntifreeze("Antigelo", this, dev));
+    items->appendRow(new ThermalControlUnitHoliday("Festivi", this, dev));
+    // TODO:
+    // settimanale => ThermalCentralUnitWeekly.qml
+    // vacanze => ThermalCentralUnitVacations.qml
+    // scenari => ThermalCentralUnitScenari.qml
+    // manuale
+    // manuale temporizzato
+
+    return items;
 }
 
 void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
