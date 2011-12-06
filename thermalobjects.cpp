@@ -147,6 +147,8 @@ ObjectListModel *ThermalControlUnitWeeklyPrograms::getMenuItems() const
     foreach (const ThermalRegulationProgram &p, programs)
         items->appendRow(new ThermalControlUnitWeeklyProgram(p.second, p.first, dev));
 
+    items->reparentObjects();
+
     return items;
 }
 
@@ -177,6 +179,8 @@ ObjectListModel *ThermalControlUnitScenarios::getMenuItems() const
 
     foreach (const ThermalRegulationProgram &p, scenarios)
         items->appendRow(new ThermalControlUnitScenario(p.second, p.first, dev));
+
+    items->reparentObjects();
 
     return items;
 }
@@ -244,6 +248,8 @@ ObjectListModel *ThermalControlUnit::getMenuItems() const
     // manuale
     // manuale temporizzato
 
+    items->reparentObjects();
+
     return items;
 }
 
@@ -301,6 +307,7 @@ ObjectListModel *ThermalControlUnit99Zones::getMenuItems() const
     ObjectListModel *items = ThermalControlUnit::getMenuItems();
 
     items->appendRow(new ThermalControlUnitScenarios("Scenari", this, dev));
+    items->reparentObjects();
 
     return items;
 }
