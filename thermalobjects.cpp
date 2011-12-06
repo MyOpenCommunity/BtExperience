@@ -162,7 +162,7 @@ void ThermalControlUnit::setMode(ModeType m)
         dev->setWinter();
 }
 
-ProgramList ThermalControlUnit::getPrograms() const
+ThermalRegulationProgramList ThermalControlUnit::getPrograms() const
 {
     return programs;
 }

@@ -14,7 +14,8 @@ class ControlledProbeDevice;
 class ObjectListModel;
 class ThermalControlUnit;
 
-typedef QList<QPair<int, QString> > ProgramList;
+typedef QPair<int, QString> ThermalRegulationProgram;
+typedef QList<ThermalRegulationProgram> ThermalRegulationProgramList;
 
 
 class ThermalControlUnitState : public ObjectInterface
@@ -86,7 +87,7 @@ private:
     int programIndex;
     QDate date;
     QTime time;
-    ProgramList programs;
+    ThermalRegulationProgramList programs;
 };
 
 
@@ -161,7 +162,7 @@ public:
     ModeType getMode() const;
     void setMode(ModeType m);
 
-    ProgramList getPrograms() const;
+    ThermalRegulationProgramList getPrograms() const;
 
     ObjectListModel *getMenuItems() const;
 
@@ -178,7 +179,7 @@ private:
     QString key;
     int temperature;
     ModeType mode;
-    ProgramList programs;
+    ThermalRegulationProgramList programs;
     ThermalDevice *dev;
 };
 
