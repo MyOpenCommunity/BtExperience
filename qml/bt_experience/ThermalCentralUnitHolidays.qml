@@ -6,6 +6,8 @@ MenuElement {
     width: 212
     height: 338
 
+    signal programSelected(string programName)
+
     function alertOkClicked() {
         element.closeElement()
     }
@@ -23,8 +25,6 @@ MenuElement {
         source: "common/dimmer_bg.png"
         property int current_element: -1
 
-
-
         Text {
             id: text1
             x: 22
@@ -32,7 +32,7 @@ MenuElement {
             width: 115
             height: 24
             color: "#ffffff"
-            text: qsTr("18/01/2012")
+            text: Qt.formatDate(element.dataModel.date, "dd/MM/yy")
             font.bold: true
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignTop
@@ -46,7 +46,7 @@ MenuElement {
             width: 79
             height: 19
             color: "#ffffff"
-            text: qsTr("13:00")
+            text: Qt.formatTime(element.dataModel.time, "hh:mm")
             font.bold: true
             verticalAlignment: Text.AlignTop
             font.pixelSize: 16
@@ -95,12 +95,20 @@ MenuElement {
     }
 
     Image {
-        id: image2
+        id: programSelector
         x: 1
         y: 170
         width: 212
         height: 118
         source: "common/comando_bg.png"
+
+        function scrollProgram(offset) {
+            var next = element.dataModel.programIndex + offset
+
+            next = (next + element.dataModel.programCount) % element.dataModel.programCount
+
+            element.dataModel.programIndex = next
+        }
 
         Image {
             id: image3
@@ -115,6 +123,12 @@ MenuElement {
                 x: 14
                 y: 16
                 source: "common/freccia_up.png"
+            }
+
+            MouseArea {
+                id: mouse_areaup
+                anchors.fill: parent
+                onClicked: programSelector.scrollProgram(-1)
             }
         }
 
@@ -131,6 +145,12 @@ MenuElement {
                 x: 14
                 y: 16
                 source: "common/freccia_dw.png"
+            }
+
+            MouseArea {
+                id: mouse_areadown
+                anchors.fill: parent
+                onClicked: programSelector.scrollProgram(1)
             }
         }
 
@@ -151,7 +171,7 @@ MenuElement {
             width: 96
             height: 38
             color: "#ffffff"
-            text: qsTr("P3 Settimanale")
+            text: element.dataModel.programDescription
             font.bold: false
             wrapMode: Text.WordWrap
             font.pixelSize: 14
@@ -168,6 +188,8 @@ MenuElement {
 
         onOkClicked: {
             element.closeElement()
+            element.programSelected(dataModel.programDescription)
+            dataModel.apply()
         }
     }
 }
