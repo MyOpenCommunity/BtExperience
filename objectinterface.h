@@ -31,6 +31,8 @@ public:
         IdThermalControlUnitWeeklyProgram = 9,
         IdThermalControlUnitWeeklyPrograms = 10,
         IdThermalControlUnitVacation = 11,
+        IdThermalControlUnitScenario = 12,
+        IdThermalControlUnitScenarios = 13,
         IdMax // the last value + 1, used to check the ids requested from qml
     };
 

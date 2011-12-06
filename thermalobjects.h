@@ -13,6 +13,7 @@ class ThermalDevice99Zones;
 class ControlledProbeDevice;
 class ObjectListModel;
 class ThermalControlUnit;
+class ThermalControlUnit99Zones;
 
 typedef QPair<int, QString> ThermalRegulationProgram;
 typedef QList<ThermalRegulationProgram> ThermalRegulationProgramList;
@@ -169,6 +170,51 @@ private:
 };
 
 
+class ThermalControlUnitScenario : public ThermalControlUnitState
+{
+    Q_OBJECT
+
+public:
+    ThermalControlUnitScenario(QString name, int scenario, ThermalDevice99Zones *dev);
+
+    virtual int getObjectId() const
+    {
+        return ObjectInterface::IdThermalControlUnitScenario;
+    }
+
+public slots:
+    void apply();
+
+private:
+    ThermalDevice99Zones *dev;
+    int scenario;
+};
+
+
+class ThermalControlUnitScenarios : public ThermalControlUnitState
+{
+    Q_OBJECT
+    Q_PROPERTY(ObjectListModel *menuItemList READ getMenuItems NOTIFY menuItemListChanged)
+
+public:
+    ThermalControlUnitScenarios(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *dev);
+
+    virtual int getObjectId() const
+    {
+        return ObjectInterface::IdThermalControlUnitScenarios;
+    }
+
+    ObjectListModel *getMenuItems() const;
+
+signals:
+    void menuItemListChanged();
+
+private:
+    ThermalDevice99Zones *dev;
+    ThermalRegulationProgramList scenarios;
+};
+
+
 class ThermalControlUnit : public ObjectInterface
 {
     Q_OBJECT
@@ -205,7 +251,7 @@ public:
 
     ThermalRegulationProgramList getPrograms() const;
 
-    ObjectListModel *getMenuItems() const;
+    virtual ObjectListModel *getMenuItems() const;
 
 signals:
     void temperatureChanged();
@@ -254,8 +300,13 @@ public:
         return ObjectInterface::IdThermalControlUnit99;
     }
 
+    virtual ObjectListModel *getMenuItems() const;
+
+    ThermalRegulationProgramList getScenarios() const;
+
 private:
     ThermalDevice99Zones *dev;
+    ThermalRegulationProgramList scenarios;
 };
 
 

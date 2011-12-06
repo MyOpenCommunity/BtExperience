@@ -151,6 +151,37 @@ ObjectListModel *ThermalControlUnitWeeklyPrograms::getMenuItems() const
 }
 
 
+ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, int _scenario, ThermalDevice99Zones *_dev) :
+    ThermalControlUnitState(name, _dev)
+{
+    scenario = _scenario;
+    dev = _dev;
+}
+
+void ThermalControlUnitScenario::apply()
+{
+    dev->setScenario(scenario);
+}
+
+
+ThermalControlUnitScenarios::ThermalControlUnitScenarios(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *_dev) :
+    ThermalControlUnitState(name, _dev)
+{
+    scenarios = unit->getScenarios();
+    dev = _dev;
+}
+
+ObjectListModel *ThermalControlUnitScenarios::getMenuItems() const
+{
+    ObjectListModel *items = new ObjectListModel;
+
+    foreach (const ThermalRegulationProgram &p, scenarios)
+        items->appendRow(new ThermalControlUnitScenario(p.second, p.first, dev));
+
+    return items;
+}
+
+
 ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d)
 {
     name = _name;
@@ -210,7 +241,6 @@ ObjectListModel *ThermalControlUnit::getMenuItems() const
     items->appendRow(new ThermalControlUnitTimedProgram("Vacanze", ObjectInterface::IdThermalControlUnitVacation, this, dev));
     items->appendRow(new ThermalControlUnitWeeklyPrograms("Settimanale", this, dev));
     // TODO:
-    // scenari => ThermalCentralUnitScenari.qml
     // manuale
     // manuale temporizzato
 
@@ -258,6 +288,21 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
     ThermalControlUnit(_name, _key, d)
 {
     dev = d;
+    scenarios << qMakePair(1, QString("S1")) << qMakePair(3, QString("S3")) << qMakePair(5, QString("S5"));
+}
+
+ThermalRegulationProgramList ThermalControlUnit99Zones::getScenarios() const
+{
+    return scenarios;
+}
+
+ObjectListModel *ThermalControlUnit99Zones::getMenuItems() const
+{
+    ObjectListModel *items = ThermalControlUnit::getMenuItems();
+
+    items->appendRow(new ThermalControlUnitScenarios("Scenari", this, dev));
+
+    return items;
 }
 
 
