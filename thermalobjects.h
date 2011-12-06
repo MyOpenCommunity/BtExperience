@@ -120,11 +120,51 @@ public:
         return ObjectInterface::IdThermalControlUnitAntifreeze;
     }
 
+public slots:
+    void apply();
+};
+
+
+class ThermalControlUnitWeeklyProgram : public ThermalControlUnitState
+{
+    Q_OBJECT
+
+public:
+    ThermalControlUnitWeeklyProgram(QString name, int program, ThermalDevice *dev);
+
+    virtual int getObjectId() const
+    {
+        return ObjectInterface::IdThermalControlUnitWeeklyProgram;
+    }
 
 public slots:
     void apply();
 
 private:
+    int program;
+};
+
+
+class ThermalControlUnitWeeklyPrograms : public ThermalControlUnitState
+{
+    Q_OBJECT
+    Q_PROPERTY(ObjectListModel *menuItemList READ getMenuItems NOTIFY menuItemListChanged)
+
+public:
+    ThermalControlUnitWeeklyPrograms(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
+
+    virtual int getObjectId() const
+    {
+        return ObjectInterface::IdThermalControlUnitWeeklyPrograms;
+    }
+
+    ObjectListModel *getMenuItems() const;
+
+signals:
+    void menuItemListChanged();
+
+private:
+    ThermalRegulationProgramList programs;
 };
 
 

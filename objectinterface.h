@@ -28,6 +28,8 @@ public:
         IdThermalControlUnitHoliday = 6,
         IdThermalControlUnitOff = 7,
         IdThermalControlUnitAntifreeze = 8,
+        IdThermalControlUnitWeeklyProgram = 9,
+        IdThermalControlUnitWeeklyPrograms = 10,
         IdMax // the last value + 1, used to check the ids requested from qml
     };
 

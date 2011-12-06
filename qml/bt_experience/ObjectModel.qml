@@ -19,6 +19,8 @@ CustomListModel {
             return null
         case ObjectInterface.IdThermalControlUnitHoliday:
             return "ThermalCentralUnitHolidays.qml"
+        case ObjectInterface.IdThermalControlUnitWeeklyPrograms:
+            return "ThermalCentralUnitWeekly.qml"
         default:
             console.log("Unknown object id: " + objectId)
             return ""

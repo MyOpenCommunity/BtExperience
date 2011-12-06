@@ -118,6 +118,35 @@ void ThermalControlUnitAntifreeze::apply()
 }
 
 
+ThermalControlUnitWeeklyProgram::ThermalControlUnitWeeklyProgram(QString name, int _program, ThermalDevice *dev) :
+    ThermalControlUnitState(name, dev)
+{
+    program = _program;
+}
+
+void ThermalControlUnitWeeklyProgram::apply()
+{
+    dev->setWeekProgram(program);
+}
+
+
+ThermalControlUnitWeeklyPrograms::ThermalControlUnitWeeklyPrograms(QString name, const ThermalControlUnit *unit, ThermalDevice *dev) :
+    ThermalControlUnitState(name, dev)
+{
+    programs = unit->getPrograms();
+}
+
+ObjectListModel *ThermalControlUnitWeeklyPrograms::getMenuItems() const
+{
+    ObjectListModel *items = new ObjectListModel;
+
+    foreach (const ThermalRegulationProgram &p, programs)
+        items->appendRow(new ThermalControlUnitWeeklyProgram(p.second, p.first, dev));
+
+    return items;
+}
+
+
 ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d)
 {
     name = _name;
@@ -174,8 +203,8 @@ ObjectListModel *ThermalControlUnit::getMenuItems() const
     items->appendRow(new ThermalControlUnitOff("Off", dev));
     items->appendRow(new ThermalControlUnitAntifreeze("Antigelo", dev));
     items->appendRow(new ThermalControlUnitHoliday("Festivi", this, dev));
+    items->appendRow(new ThermalControlUnitWeeklyPrograms("Settimanale", this, dev));
     // TODO:
-    // settimanale => ThermalCentralUnitWeekly.qml
     // vacanze => ThermalCentralUnitVacations.qml
     // scenari => ThermalCentralUnitScenari.qml
     // manuale
