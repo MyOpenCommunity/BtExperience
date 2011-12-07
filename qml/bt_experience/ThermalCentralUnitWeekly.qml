@@ -17,26 +17,19 @@ MenuElement {
 
         delegate: MenuItemDelegate {
             onDelegateClicked: {
-                var clickedItem = modelList.get(index)
+                var clickedItem = itemList.model.getObject(model.index)
+
+                element.closeElement()
                 element.programSelected(clickedItem.name)
+                clickedItem.apply()
             }
         }
 
-        model: ListModel {
+        model: element.dataModel.menuItemList
+
+        ObjectModel {
             id: modelList
-            ListElement {
-                name: "P1"
-            }
-
-            ListElement {
-                name: "P2"
-            }
-
-            ListElement {
-                name: "P3"
-            }
         }
-
     }
 }
 

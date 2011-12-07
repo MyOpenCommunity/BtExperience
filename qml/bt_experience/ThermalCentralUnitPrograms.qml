@@ -1,9 +1,10 @@
 import QtQuick 1.1
+import BtObjects 1.0
 
 
 MenuElement {
     id: element
-    height: 350
+    height: 50 * itemList.count
     width: 212
 
     signal programSelected(string programName)
@@ -18,68 +19,38 @@ MenuElement {
     }
 
     function childProgramSelected(programName) {
-        element.programSelected(modelList.get(itemList.currentIndex).name + " " + programName)
+        var model = itemList.model.getObject(itemList.currentIndex);
+
+        element.programSelected(model.name + " " + programName)
     }
 
     ListView {
         id: itemList
-        y: 0
-        x: 0
         anchors.fill: parent
         currentIndex: -1
         interactive: false
-
+        property bool transparent: true
 
         delegate: MenuItemDelegate {
-            onDelegateClicked: {
-                var clickedItem = modelList.get(index)
-                if (clickedItem.componentFile)
-                    element.loadElement(clickedItem.componentFile, clickedItem.name)
+            hasChild: modelList.getComponentFile(model.objectId) !== null
+            onClicked: {
+                var component = modelList.getComponentFile(model.objectId)
+                var item = itemList.model.getObject(model.index)
+
+                if (component !== null)
+                    element.loadElement(component, model.name, item)
                 else {
                     element.closeChild()
-                    element.programSelected(clickedItem.name)
+                    element.programSelected(item.name)
+                    item.apply()
                 }
             }
         }
 
-        model: ListModel {
+        model: element.dataModel.menuItemList
+
+        ObjectModel {
             id: modelList
-            ListElement {
-                name: "settimanale"
-                componentFile: "ThermalCentralUnitWeekly.qml"
-            }
-
-            ListElement {
-                name: "festivi"
-                componentFile: "ThermalCentralUnitHolidays.qml"
-            }
-
-            ListElement {
-                name: "vacanze"
-                componentFile: "ThermalCentralUnitVacations.qml"
-            }
-
-            ListElement {
-                name: "scenari"
-                componentFile: "ThermalCentralUnitScenari.qml"
-            }
-
-            ListElement {
-                name: "antigelo"
-                componentFile: ""
-            }
-
-            ListElement {
-                name: "manuale"
-                componentFile: ""
-            }
-
-            ListElement {
-                name: "off"
-                componentFile: ""
-            }
-
         }
-
     }
 }

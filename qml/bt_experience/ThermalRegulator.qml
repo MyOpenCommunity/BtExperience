@@ -3,7 +3,7 @@ import BtObjects 1.0
 
 MenuElement {
     id: element
-    height: 250
+    height: 50 * itemList.count
     width: 212
 
     onChildDestroyed: itemList.currentIndex = -1

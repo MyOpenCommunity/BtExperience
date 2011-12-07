@@ -41,7 +41,7 @@ MenuElement {
             name: qsTr("programma")
 
             onClicked: {
-                element.loadElement("ThermalCentralUnitPrograms.qml", programItem.name)
+                element.loadElement("ThermalCentralUnitPrograms.qml", programItem.name, element.dataModel)
                 if (programItem.state == "")
                     programItem.state =  "selected"
             }

@@ -13,6 +13,16 @@ CustomListModel {
             return "ThermalCentralUnit.qml"
         case ObjectInterface.IdThermalControlledProbe:
             return "ThermalControlledProbe.qml"
+        case ObjectInterface.IdThermalControlUnitOff:
+            return null
+        case ObjectInterface.IdThermalControlUnitAntifreeze:
+            return null
+        case ObjectInterface.IdThermalControlUnitHoliday:
+        case ObjectInterface.IdThermalControlUnitVacation:
+            return "ThermalCentralUnitHolidays.qml"
+        case ObjectInterface.IdThermalControlUnitWeeklyPrograms:
+        case ObjectInterface.IdThermalControlUnitScenarios:
+            return "ThermalCentralUnitWeekly.qml"
         default:
             console.log("Unknown object id: " + objectId)
             return ""
