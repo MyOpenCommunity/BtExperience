@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
     startCore();
     QmlApplicationViewer viewer;
 
-    qmlRegisterType<ObjectListModel>(OBJECTS_NAMESPACE, 1, 0, "ObjectListModel");
+    qmlRegisterUncreatableType<ObjectListModel>(OBJECTS_NAMESPACE, 1, 0, "ObjectListModel", "");
     qmlRegisterType<CustomListModel>(OBJECTS_NAMESPACE, 1, 0, "CustomListModel");
     qmlRegisterUncreatableType<ObjectInterface>(OBJECTS_NAMESPACE, 1, 0, "ObjectInterface",
         "unable to create an ObjectInterface instance");

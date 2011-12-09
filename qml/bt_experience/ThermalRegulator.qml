@@ -30,5 +30,4 @@ MenuElement {
                       {objectId: ObjectInterface.IdThermalControlledProbe}]
         }
     }
-
 }

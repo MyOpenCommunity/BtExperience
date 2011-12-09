@@ -49,7 +49,7 @@ class ThermalControlUnitTimedProgram : public ThermalControlUnitState
     Q_OBJECT
     Q_PROPERTY(int programIndex READ getProgramIndex WRITE setProgramIndex NOTIFY programChanged)
     Q_PROPERTY(int programCount READ getProgramCount)
-    Q_PROPERTY(int program READ getProgram NOTIFY programChanged)
+    Q_PROPERTY(int programId READ getProgramId NOTIFY programChanged)
     Q_PROPERTY(QString programDescription READ getProgramDescription NOTIFY programChanged)
     Q_PROPERTY(QDate date READ getDate WRITE setDate NOTIFY dateChanged)
     Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
@@ -67,7 +67,7 @@ public:
     int getProgramIndex() const;
     void setProgramIndex(int index);
 
-    int getProgram() const;
+    int getProgramId() const;
     QString getProgramDescription() const;
 
     QDate getDate() const;
@@ -150,7 +150,7 @@ private:
 class ThermalControlUnitWeeklyPrograms : public ThermalControlUnitState
 {
     Q_OBJECT
-    Q_PROPERTY(ObjectListModel *menuItemList READ getMenuItems NOTIFY menuItemListChanged)
+    Q_PROPERTY(ObjectListModel *programs READ getPrograms NOTIFY programsChanged)
 
 public:
     ThermalControlUnitWeeklyPrograms(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
@@ -160,10 +160,10 @@ public:
         return ObjectInterface::IdThermalControlUnitWeeklyPrograms;
     }
 
-    ObjectListModel *getMenuItems() const;
+    ObjectListModel *getPrograms() const;
 
 signals:
-    void menuItemListChanged();
+    void programsChanged();
 
 private:
     ThermalRegulationProgramList programs;
@@ -194,7 +194,7 @@ private:
 class ThermalControlUnitScenarios : public ThermalControlUnitState
 {
     Q_OBJECT
-    Q_PROPERTY(ObjectListModel *menuItemList READ getMenuItems NOTIFY menuItemListChanged)
+    Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)
 
 public:
     ThermalControlUnitScenarios(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *dev);
@@ -204,10 +204,10 @@ public:
         return ObjectInterface::IdThermalControlUnitScenarios;
     }
 
-    ObjectListModel *getMenuItems() const;
+    ObjectListModel *getScenarios() const;
 
 signals:
-    void menuItemListChanged();
+    void scenariosChanged();
 
 private:
     ThermalDevice99Zones *dev;
@@ -221,7 +221,7 @@ class ThermalControlUnit : public ObjectInterface
     Q_ENUMS(ModeType)
     Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature NOTIFY temperatureChanged)
     Q_PROPERTY(ModeType mode READ getMode WRITE setMode NOTIFY modeChanged)
-    Q_PROPERTY(ObjectListModel *menuItemList READ getMenuItems NOTIFY menuItemListChanged)
+    Q_PROPERTY(ObjectListModel *modalities READ getModalities NOTIFY modalitiesChanged)
 
 public:
     enum ModeType
@@ -251,12 +251,12 @@ public:
 
     ThermalRegulationProgramList getPrograms() const;
 
-    virtual ObjectListModel *getMenuItems() const;
+    virtual ObjectListModel *getModalities() const;
 
 signals:
     void temperatureChanged();
     void modeChanged();
-    void menuItemListChanged();
+    void modalitiesChanged();
 
 protected slots:
     virtual void valueReceived(const DeviceValues &values_list);
@@ -300,7 +300,7 @@ public:
         return ObjectInterface::IdThermalControlUnit99;
     }
 
-    virtual ObjectListModel *getMenuItems() const;
+    virtual ObjectListModel *getModalities() const;
 
     ThermalRegulationProgramList getScenarios() const;
 

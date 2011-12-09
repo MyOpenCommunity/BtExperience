@@ -53,7 +53,7 @@ void ThermalControlUnitTimedProgram::setProgramIndex(int index)
     emit programChanged();
 }
 
-int ThermalControlUnitTimedProgram::getProgram() const
+int ThermalControlUnitTimedProgram::getProgramId() const
 {
     return programs[programIndex].first;
 }
@@ -140,7 +140,7 @@ ThermalControlUnitWeeklyPrograms::ThermalControlUnitWeeklyPrograms(QString name,
     programs = unit->getPrograms();
 }
 
-ObjectListModel *ThermalControlUnitWeeklyPrograms::getMenuItems() const
+ObjectListModel *ThermalControlUnitWeeklyPrograms::getPrograms() const
 {
     ObjectListModel *items = new ObjectListModel;
 
@@ -173,7 +173,7 @@ ThermalControlUnitScenarios::ThermalControlUnitScenarios(QString name, const The
     dev = _dev;
 }
 
-ObjectListModel *ThermalControlUnitScenarios::getMenuItems() const
+ObjectListModel *ThermalControlUnitScenarios::getScenarios() const
 {
     ObjectListModel *items = new ObjectListModel;
 
@@ -235,15 +235,16 @@ ThermalRegulationProgramList ThermalControlUnit::getPrograms() const
     return programs;
 }
 
-ObjectListModel *ThermalControlUnit::getMenuItems() const
+ObjectListModel *ThermalControlUnit::getModalities() const
 {
     ObjectListModel *items = new ObjectListModel;
 
-    items->appendRow(new ThermalControlUnitOff("Off", dev));
-    items->appendRow(new ThermalControlUnitAntifreeze("Antigelo", dev));
+    items->appendRow(new ThermalControlUnitWeeklyPrograms("Settimanale", this, dev));
     items->appendRow(new ThermalControlUnitTimedProgram("Festivi", ObjectInterface::IdThermalControlUnitHoliday, this, dev));
     items->appendRow(new ThermalControlUnitTimedProgram("Vacanze", ObjectInterface::IdThermalControlUnitVacation, this, dev));
-    items->appendRow(new ThermalControlUnitWeeklyPrograms("Settimanale", this, dev));
+    items->appendRow(new ThermalControlUnitAntifreeze("Antigelo", dev));
+    items->appendRow(new ThermalControlUnitOff("Off", dev));
+
     // TODO:
     // manuale
     // manuale temporizzato
@@ -302,9 +303,9 @@ ThermalRegulationProgramList ThermalControlUnit99Zones::getScenarios() const
     return scenarios;
 }
 
-ObjectListModel *ThermalControlUnit99Zones::getMenuItems() const
+ObjectListModel *ThermalControlUnit99Zones::getModalities() const
 {
-    ObjectListModel *items = ThermalControlUnit::getMenuItems();
+    ObjectListModel *items = ThermalControlUnit::getModalities();
 
     items->appendRow(new ThermalControlUnitScenarios("Scenari", this, dev));
     items->reparentObjects();

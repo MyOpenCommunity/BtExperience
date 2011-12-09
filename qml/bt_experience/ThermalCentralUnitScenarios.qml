@@ -25,7 +25,6 @@ MenuElement {
             }
         }
 
-        model: element.dataModel.programs
+        model: element.dataModel.scenarios
     }
 }
-

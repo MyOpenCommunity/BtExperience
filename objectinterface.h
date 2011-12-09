@@ -25,6 +25,8 @@ public:
         IdThermalControlUnit99 = 3,
         IdThermalControlledProbe = 4,
         IdThermalControlUnit4 = 5,
+        // TODO: the following ids should be local to the thermal control unit, in
+        // order to limit this enum to global objects.
         IdThermalControlUnitHoliday = 6,
         IdThermalControlUnitOff = 7,
         IdThermalControlUnitAntifreeze = 8,
@@ -40,7 +42,7 @@ public:
     {
         Lighting = 1,
         ThermalRegulation = 2,
-        ThermalRegulationUnitState = 3
+        ThermalRegulationUnitState = 3 // TODO: remove when the thermal control unit subobjects use local ids.
     };
 
     virtual int getObjectId() const = 0;
