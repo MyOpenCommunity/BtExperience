@@ -51,19 +51,19 @@ MenuElement {
 
         function getComponentFile(objectId) {
             switch (objectId) {
-            case ObjectInterface.IdThermalControlUnitOff:
+            case ThermalControlUnit99Zones.IdOff:
                 return null
-            case ObjectInterface.IdThermalControlUnitAntifreeze:
+            case ThermalControlUnit99Zones.IdAntifreeze:
                 return null
-            case ObjectInterface.IdThermalControlUnitHoliday:
-            case ObjectInterface.IdThermalControlUnitVacation:
+            case ThermalControlUnit99Zones.IdHoliday:
+            case ThermalControlUnit99Zones.IdVacation:
                 return "ThermalCentralUnitHolidays.qml"
-            case ObjectInterface.IdThermalControlUnitWeeklyPrograms:
+            case ThermalControlUnit99Zones.IdWeeklyPrograms:
                 return "ThermalCentralUnitWeekly.qml"
-            case ObjectInterface.IdThermalControlUnitScenarios:
+            case ThermalControlUnit99Zones.IdScenarios:
                 return "ThermalCentralUnitScenarios.qml"
             default:
-                console.log("Unknown object id: " + objectId)
+                console.log("Unknown thermal central unit subobject id: " + objectId)
                 return ""
             }
         }

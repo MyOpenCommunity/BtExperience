@@ -7,6 +7,134 @@
 #include <QDebug>
 
 
+ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d)
+{
+    name = _name;
+    key = _key;
+    dev = d;
+    connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
+    temperature = 0;
+    mode = SummerMode;
+    programs << qMakePair(1, QString("P1")) << qMakePair(3, QString("P3")) << qMakePair(5, QString("P5"));
+}
+
+QString ThermalControlUnit::getObjectKey() const
+{
+    return key;
+}
+
+QString ThermalControlUnit::getName() const
+{
+    return name;
+}
+
+int ThermalControlUnit::getTemperature() const
+{
+    return bt2Celsius(temperature);
+}
+
+void ThermalControlUnit::setTemperature(int temp)
+{
+    dev->setManualTemp(celsius2Bt(temp));
+}
+
+ThermalControlUnit::ModeType ThermalControlUnit::getMode() const
+{
+    return mode;
+}
+
+void ThermalControlUnit::setMode(ModeType m)
+{
+    if (m == SummerMode)
+        dev->setSummer();
+    else
+        dev->setWinter();
+}
+
+ThermalRegulationProgramList ThermalControlUnit::getPrograms() const
+{
+    return programs;
+}
+
+ObjectListModel *ThermalControlUnit::getModalities() const
+{
+    ObjectListModel *items = new ObjectListModel;
+
+    items->appendRow(new ThermalControlUnitWeeklyPrograms("Settimanale", this, dev));
+    items->appendRow(new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, this, dev));
+    items->appendRow(new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, this, dev));
+    items->appendRow(new ThermalControlUnitAntifreeze("Antigelo", dev));
+    items->appendRow(new ThermalControlUnitOff("Off", dev));
+
+    // TODO:
+    // manuale
+    // manuale temporizzato
+
+    items->reparentObjects();
+
+    return items;
+}
+
+void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
+{
+    DeviceValues::const_iterator it = values_list.constBegin();
+    while (it != values_list.constEnd()) {
+        if (it.key() == ThermalDevice::DIM_TEMPERATURE) {
+            if (it.value().toInt() != temperature) {
+//                qDebug() << "Ricevuto temperature:" << it.value().toInt();
+                temperature = it.value().toInt();
+
+                emit temperatureChanged();
+                break;
+            }
+        }
+        else if (it.key() == ThermalDevice::DIM_SEASON) {
+//            qDebug() << "Ricevuto season: " << it.value().toInt();
+            ThermalDevice::Season season = static_cast<ThermalDevice::Season>(it.value().toInt());
+            if (season == ThermalDevice::SE_SUMMER && mode != SummerMode) {
+                mode = SummerMode;
+                emit modeChanged();
+            }
+            else if (season == ThermalDevice::SE_WINTER && mode != WinterMode) {
+                mode = WinterMode;
+                emit modeChanged();
+            }
+        }
+        ++it;
+    }
+}
+
+
+ThermalControlUnit4Zones::ThermalControlUnit4Zones(QString _name, QString _key, ThermalDevice4Zones *d) :
+    ThermalControlUnit(_name, _key, d)
+{
+    dev = d;
+}
+
+
+ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key, ThermalDevice99Zones *d) :
+    ThermalControlUnit(_name, _key, d)
+{
+    dev = d;
+    scenarios << qMakePair(1, QString("S1")) << qMakePair(3, QString("S3")) << qMakePair(5, QString("S5"));
+}
+
+ThermalRegulationProgramList ThermalControlUnit99Zones::getScenarios() const
+{
+    return scenarios;
+}
+
+ObjectListModel *ThermalControlUnit99Zones::getModalities() const
+{
+    ObjectListModel *items = ThermalControlUnit::getModalities();
+
+    items->appendRow(new ThermalControlUnitScenarios("Scenari", this, dev));
+    items->reparentObjects();
+
+    return items;
+}
+
+
 ThermalControlUnitState::ThermalControlUnitState(QString _name, ThermalDevice *_dev)
 {
     dev = _dev;
@@ -93,7 +221,7 @@ void ThermalControlUnitTimedProgram::setTime(QTime _time)
 
 void ThermalControlUnitTimedProgram::apply()
 {
-    if (object_id == ObjectInterface::IdThermalControlUnitHoliday)
+    if (object_id == ThermalControlUnit::IdHoliday)
         dev->setWeekendDateTime(date, time, programs[programIndex].first);
     else
         dev->setHolidayDateTime(date, time, programs[programIndex].first);
@@ -180,134 +308,6 @@ ObjectListModel *ThermalControlUnitScenarios::getScenarios() const
     foreach (const ThermalRegulationProgram &p, scenarios)
         items->appendRow(new ThermalControlUnitScenario(p.second, p.first, dev));
 
-    items->reparentObjects();
-
-    return items;
-}
-
-
-ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d)
-{
-    name = _name;
-    key = _key;
-    dev = d;
-    connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
-    temperature = 0;
-    mode = SummerMode;
-    programs << qMakePair(1, QString("P1")) << qMakePair(3, QString("P3")) << qMakePair(5, QString("P5"));
-}
-
-QString ThermalControlUnit::getObjectKey() const
-{
-    return key;
-}
-
-QString ThermalControlUnit::getName() const
-{
-    return name;
-}
-
-int ThermalControlUnit::getTemperature() const
-{
-    return bt2Celsius(temperature);
-}
-
-void ThermalControlUnit::setTemperature(int temp)
-{
-    dev->setManualTemp(celsius2Bt(temp));
-}
-
-ThermalControlUnit::ModeType ThermalControlUnit::getMode() const
-{
-    return mode;
-}
-
-void ThermalControlUnit::setMode(ModeType m)
-{
-    if (m == SummerMode)
-        dev->setSummer();
-    else
-        dev->setWinter();
-}
-
-ThermalRegulationProgramList ThermalControlUnit::getPrograms() const
-{
-    return programs;
-}
-
-ObjectListModel *ThermalControlUnit::getModalities() const
-{
-    ObjectListModel *items = new ObjectListModel;
-
-    items->appendRow(new ThermalControlUnitWeeklyPrograms("Settimanale", this, dev));
-    items->appendRow(new ThermalControlUnitTimedProgram("Festivi", ObjectInterface::IdThermalControlUnitHoliday, this, dev));
-    items->appendRow(new ThermalControlUnitTimedProgram("Vacanze", ObjectInterface::IdThermalControlUnitVacation, this, dev));
-    items->appendRow(new ThermalControlUnitAntifreeze("Antigelo", dev));
-    items->appendRow(new ThermalControlUnitOff("Off", dev));
-
-    // TODO:
-    // manuale
-    // manuale temporizzato
-
-    items->reparentObjects();
-
-    return items;
-}
-
-void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
-{
-    DeviceValues::const_iterator it = values_list.constBegin();
-    while (it != values_list.constEnd()) {
-        if (it.key() == ThermalDevice::DIM_TEMPERATURE) {
-            if (it.value().toInt() != temperature) {
-//                qDebug() << "Ricevuto temperature:" << it.value().toInt();
-                temperature = it.value().toInt();
-
-                emit temperatureChanged();
-                break;
-            }
-        }
-        else if (it.key() == ThermalDevice::DIM_SEASON) {
-//            qDebug() << "Ricevuto season: " << it.value().toInt();
-            ThermalDevice::Season season = static_cast<ThermalDevice::Season>(it.value().toInt());
-            if (season == ThermalDevice::SE_SUMMER && mode != SummerMode) {
-                mode = SummerMode;
-                emit modeChanged();
-            }
-            else if (season == ThermalDevice::SE_WINTER && mode != WinterMode) {
-                mode = WinterMode;
-                emit modeChanged();
-            }
-        }
-        ++it;
-    }
-}
-
-
-ThermalControlUnit4Zones::ThermalControlUnit4Zones(QString _name, QString _key, ThermalDevice4Zones *d) :
-    ThermalControlUnit(_name, _key, d)
-{
-    dev = d;
-}
-
-
-ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key, ThermalDevice99Zones *d) :
-    ThermalControlUnit(_name, _key, d)
-{
-    dev = d;
-    scenarios << qMakePair(1, QString("S1")) << qMakePair(3, QString("S3")) << qMakePair(5, QString("S5"));
-}
-
-ThermalRegulationProgramList ThermalControlUnit99Zones::getScenarios() const
-{
-    return scenarios;
-}
-
-ObjectListModel *ThermalControlUnit99Zones::getModalities() const
-{
-    ObjectListModel *items = ThermalControlUnit::getModalities();
-
-    items->appendRow(new ThermalControlUnitScenarios("Scenari", this, dev));
     items->reparentObjects();
 
     return items;

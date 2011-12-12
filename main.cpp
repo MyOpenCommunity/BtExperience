@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
     QmlApplicationViewer viewer;
 
     qmlRegisterUncreatableType<ObjectListModel>(OBJECTS_NAMESPACE, 1, 0, "ObjectListModel", "");
-    qmlRegisterType<CustomListModel>(OBJECTS_NAMESPACE, 1, 0, "CustomListModel");
+    qmlRegisterType<FilterListModel>(OBJECTS_NAMESPACE, 1, 0, "FilterListModel");
     qmlRegisterUncreatableType<ObjectInterface>(OBJECTS_NAMESPACE, 1, 0, "ObjectInterface",
         "unable to create an ObjectInterface instance");
     qmlRegisterUncreatableType<ThermalControlUnit99Zones>(OBJECTS_NAMESPACE, 1, 0, "ThermalControlUnit99Zones",
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
     createObjects(objmodel);
 
     device::initDevices();
-    CustomListModel::setSource(&objmodel);
+    FilterListModel::setSource(&objmodel);
 
     QGLWidget *w = new QGLWidget(f);
     viewer.setViewport(w);

@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QStringList>
 
-ObjectListModel *CustomListModel::source = 0;
+ObjectListModel *FilterListModel::source = 0;
 
 
 ObjectListModel::ObjectListModel(QObject *parent) : QAbstractListModel(parent)
@@ -82,23 +82,23 @@ void ObjectListModel::reparentObjects()
 }
 
 
-void CustomListModel::setSource(ObjectListModel *model)
+void FilterListModel::setSource(ObjectListModel *model)
 {
     source = model;
 }
 
-CustomListModel::CustomListModel()
+FilterListModel::FilterListModel()
 {
-    Q_ASSERT_X(source, "CustomListModel::CustomListModel", "source model not set!");
+    Q_ASSERT_X(source, "FilterListModel::FilterListModel", "source model not set!");
     setSourceModel(source);
 }
 
-QVariantList CustomListModel::getCategories() const
+QVariantList FilterListModel::getCategories() const
 {
     return input_categories;
 }
 
-void CustomListModel::setCategories(QVariantList cat)
+void FilterListModel::setCategories(QVariantList cat)
 {
     if (cat == input_categories)
         return;
@@ -110,12 +110,12 @@ void CustomListModel::setCategories(QVariantList cat)
     reset(); // I'd like to use invalidateFilter(), but it doesn't work
 }
 
-QVariantList CustomListModel::getFilters() const
+QVariantList FilterListModel::getFilters() const
 {
     return input_filters;
 }
 
-void CustomListModel::setFilters(QVariantList f)
+void FilterListModel::setFilters(QVariantList f)
 {
     if (f == input_filters)
         return;
@@ -128,7 +128,7 @@ void CustomListModel::setFilters(QVariantList f)
         int id = m["objectId"].toInt();
         if (id > ObjectInterface::IdMax || id <= 0)
         {
-            qDebug() << "CustomListModel::setFilters: invalid id requested " << id;
+            qDebug() << "FilterListModel::setFilters: invalid id requested " << id;
             continue;
         }
         filters[id] = m.contains("objectKey") ? m["objectKey"].toString() : QString();
@@ -138,7 +138,7 @@ void CustomListModel::setFilters(QVariantList f)
 }
 
 
-bool CustomListModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     // No category or filter means all the items
     if (categories.isEmpty() && filters.isEmpty())
@@ -163,7 +163,7 @@ bool CustomListModel::filterAcceptsRow(int source_row, const QModelIndex &source
     return false;
 }
 
-QObject *CustomListModel::getObject(int row)
+QObject *FilterListModel::getObject(int row)
 {
     QModelIndex idx = index(row, 0);
     int original_row = mapToSource(idx).row();

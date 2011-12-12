@@ -25,24 +25,13 @@ public:
         IdThermalControlUnit99 = 3,
         IdThermalControlledProbe = 4,
         IdThermalControlUnit4 = 5,
-        // TODO: the following ids should be local to the thermal control unit, in
-        // order to limit this enum to global objects.
-        IdThermalControlUnitHoliday = 6,
-        IdThermalControlUnitOff = 7,
-        IdThermalControlUnitAntifreeze = 8,
-        IdThermalControlUnitWeeklyProgram = 9,
-        IdThermalControlUnitWeeklyPrograms = 10,
-        IdThermalControlUnitVacation = 11,
-        IdThermalControlUnitScenario = 12,
-        IdThermalControlUnitScenarios = 13,
         IdMax // the last value + 1, used to check the ids requested from qml
     };
 
     enum ObjectCategory
     {
         Lighting = 1,
-        ThermalRegulation = 2,
-        ThermalRegulationUnitState = 3 // TODO: remove when the thermal control unit subobjects use local ids.
+        ThermalRegulation = 2
     };
 
     virtual int getObjectId() const = 0;
@@ -57,8 +46,16 @@ public:
     virtual QString getName() const = 0;
 
     // the status (if applicable) of the object: on or off.
-    virtual bool getStatus() const = 0;
-    virtual void setStatus(bool st) = 0;
+    // for convenience, we provide an empty (fake) implementation of the (get|set)Status methods
+    virtual bool getStatus() const
+    {
+        return false;
+    }
+
+    virtual void setStatus(bool st)
+    {
+        Q_UNUSED(st)
+    }
 
 signals:
     void dataChanged();

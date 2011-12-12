@@ -55,14 +55,14 @@ private:
 };
 
 
-class CustomListModel : public QSortFilterProxyModel
+class FilterListModel : public QSortFilterProxyModel
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList categories READ getCategories WRITE setCategories NOTIFY categoriesChanged)
     Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
 
 public:
-    CustomListModel();
+    FilterListModel();
     static void setSource(ObjectListModel *model);
 
     Q_INVOKABLE QObject *getObject(int row);
