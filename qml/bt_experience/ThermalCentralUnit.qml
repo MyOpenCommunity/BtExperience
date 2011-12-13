@@ -51,7 +51,7 @@ MenuElement {
             id: itemTemperature
             anchors.top: programItem.bottom
             anchors.topMargin: 0
-            source: "common/comando_bg.png"
+            source: "images/common/comando_bg.png"
             width: element.width
             height: 112
             Behavior on opacity {
@@ -88,13 +88,13 @@ MenuElement {
                 y: 56
                 width: 49
                 height: 51
-                source: "common/btn_comando.png"
+                source: "images/common/btn_comando.png"
 
                 Image {
                     id: image4
                     x: 14
                     y: 15
-                    source: "common/meno.png"
+                    source: "images/common/meno.png"
                 }
 
                 MouseArea {
@@ -110,13 +110,13 @@ MenuElement {
                 y: 56
                 width: 49
                 height: 51
-                source: "common/btn_comando.png"
+                source: "images/common/btn_comando.png"
 
                 Image {
                     id: image3
                     x: 14
                     y: 15
-                    source: "common/piu.png"
+                    source: "images/common/piu.png"
                 }
 
                 MouseArea {
@@ -134,7 +134,7 @@ MenuElement {
             height: 112
             anchors.top: itemTemperature.bottom
             anchors.topMargin: 0
-            source: "common/comando_bg.png"
+            source: "images/common/comando_bg.png"
             property string mode: qsTr("estate")
 
             Behavior on opacity {
@@ -152,13 +152,13 @@ MenuElement {
                 y: 56
                 width: 49
                 height: 51
-                source: "common/btn_comando.png"
+                source: "images/common/btn_comando.png"
 
                 Image {
                     id: image7
                     x: 14
                     y: 15
-                    source: "common/freccia_up.png"
+                    source: "images/common/freccia_up.png"
                 }
 
                 MouseArea {
@@ -194,13 +194,13 @@ MenuElement {
                 y: 56
                 width: 49
                 height: 51
-                source: "common/btn_comando.png"
+                source: "images/common/btn_comando.png"
 
                 Image {
                     id: image8
                     x: 14
                     y: 15
-                    source: "common/freccia_dw.png"
+                    source: "images/common/freccia_dw.png"
                 }
 
                 MouseArea {

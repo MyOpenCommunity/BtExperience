@@ -3,7 +3,7 @@ import "Stack.js" as Stack
 
 Page {
     id: page
-    source: "systems/termoregolazione.jpg"
+    source: "images/termoregolazione.jpg"
 
     ToolBar {
             id: toolbar

@@ -15,7 +15,7 @@ MenuElement {
         y: 0
         width: 212
         height: 170
-        source: "common/data.png"
+        source: "images/common/data.png"
 
         Text {
             id: text1

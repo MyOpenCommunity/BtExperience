@@ -2,13 +2,13 @@ import QtQuick 1.1
 
 Image {
     id: button
-    source: "common/btn_indietro.png"
+    source: "images/common/btn_indietro.png"
     width: 50
     height: 50
     signal clicked
     Image {
         id: arrowLeft
-        source: "common/freccia_sx.png"
+        source: "images/common/freccia_sx.png"
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.top: parent.top
@@ -22,7 +22,7 @@ Image {
     states: State {
         name: "pressed"
         when: mousearea.pressed === true;
-//         PropertyChanges { target: button; source: "common/btn_indietroP.png" }
-//         PropertyChanges { target: arrowLeft; source: "common/freccia_sxS.png" }
+//         PropertyChanges { target: button; source: "images/common/btn_indietroP.png" }
+//         PropertyChanges { target: arrowLeft; source: "images/common/freccia_sxS.png" }
     }
 }

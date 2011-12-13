@@ -10,14 +10,14 @@ Image {
 
     width: 1024
     height: 65
-    source: "toolbar/toolbar.png"
+    source: "images/toolbar/toolbar.png"
 
 
     Image {
         id: homebutton
         y: 5
         x: 10
-        source: "toolbar/ico_home.png"
+        source: "images/toolbar/ico_home.png"
         MouseArea {
             anchors.fill: parent
             onClicked: toolbar.homeClicked()
@@ -59,42 +59,42 @@ Image {
           id: image4
           x: 473
           y: 16
-          source: "toolbar/logo.png"
+          source: "images/toolbar/logo.png"
     }
 
     Image {
         id: image5
         x: 57
         y: 1
-        source: "toolbar/toolbar_separazione.png"
+        source: "images/toolbar/toolbar_separazione.png"
     }
 
     Image {
         id: image6
         x: 115
         y: 1
-        source: "toolbar/toolbar_separazione.png"
+        source: "images/toolbar/toolbar_separazione.png"
     }
 
     Image {
         id: image7
         x: 229
         y: 1
-        source: "toolbar/toolbar_separazione.png"
+        source: "images/toolbar/toolbar_separazione.png"
     }
 
     Image {
         id: image8
         x: 295
         y: 1
-        source: "toolbar/toolbar_separazione.png"
+        source: "images/toolbar/toolbar_separazione.png"
     }
 
     Image {
         id: image1
         x: 960
         y: 5
-        source: "toolbar/ico_spegni.png"
+        source: "images/toolbar/ico_spegni.png"
         MouseArea {
             anchors.fill: parent
             onClicked: toolbar.exitClicked()
@@ -105,49 +105,49 @@ Image {
         id: image2
         x: 942
         y: 1
-        source: "toolbar/toolbar_separazione.png"
+        source: "images/toolbar/toolbar_separazione.png"
     }
 
     Image {
         id: image3
         x: 896
         y: 5
-        source: "toolbar/ico_sveglia.png"
+        source: "images/toolbar/ico_sveglia.png"
     }
 
     Image {
         id: image9
         x: 887
         y: 1
-        source: "toolbar/toolbar_separazione.png"
+        source: "images/toolbar/toolbar_separazione.png"
     }
 
     Image {
         id: image10
         x: 841
         y: 5
-        source: "toolbar/ico_antifurto.png"
+        source: "images/toolbar/ico_antifurto.png"
     }
 
     Image {
         id: image11
         x: 831
         y: 1
-        source: "toolbar/toolbar_separazione.png"
+        source: "images/toolbar/toolbar_separazione.png"
     }
 
     Image {
         id: image12
         x: 784
         y: 5
-        source: "toolbar/ico_allarme.png"
+        source: "images/toolbar/ico_allarme.png"
     }
 
     Image {
         id: image13
         x: 772
         y: 1
-        source: "toolbar/toolbar_separazione.png"
+        source: "images/toolbar/toolbar_separazione.png"
     }
 
 }

@@ -45,7 +45,7 @@ MenuElement {
         anchors.top: parent.top
         width: parent.width
         height: 100
-        source: "common/dimmer_bg.png"
+        source: "images/common/dimmer_bg.png"
 
         Text {
             id: textTemperature
@@ -76,7 +76,7 @@ MenuElement {
             id: itemTemperature
             visible: true
 
-            source: "common/comando_bg.png"
+            source: "images/common/comando_bg.png"
             width: element.width
             height: 118
 
@@ -110,13 +110,13 @@ MenuElement {
                 y: 59
                 width: 49
                 height: 53
-                source: "common/btn_comando.png"
+                source: "images/common/btn_comando.png"
 
                 Image {
                     id: image4
                     x: 14
                     y: 15
-                    source: "common/meno.png"
+                    source: "images/common/meno.png"
                 }
 
                 MouseArea {
@@ -132,13 +132,13 @@ MenuElement {
                 y: 59
                 width: 49
                 height: 53
-                source: "common/btn_comando.png"
+                source: "images/common/btn_comando.png"
 
                 Image {
                     id: image5
                     x: 14
                     y: 15
-                    source: "common/piu.png"
+                    source: "images/common/piu.png"
                 }
 
                 MouseArea {

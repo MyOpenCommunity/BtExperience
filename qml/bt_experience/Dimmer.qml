@@ -8,7 +8,7 @@ MenuElement {
         width: 245
         height: 411
         anchors.bottomMargin: 39
-        source: "common/dimmer_bg.png"
+        source: "images/common/dimmer_bg.png"
         anchors.fill: parent
         ButtonOnOff {
             id: onOff
@@ -31,7 +31,7 @@ MenuElement {
 
         Image {
             id: dimmerReg
-            source: "common/dimmer_reg_bg.png"
+            source: "images/common/dimmer_reg_bg.png"
             width: 212
             height: 50
             anchors.top: textDimmer.bottom
@@ -40,7 +40,7 @@ MenuElement {
 
             Image {
                 id: barPercentage
-                source: "common/dimmer_reg.png"
+                source: "images/common/dimmer_reg.png"
                 anchors.left: parent.left
                 width: parent.width / 100 * dataModel.percentage
                 height: 50
@@ -76,7 +76,7 @@ MenuElement {
             y: 240
             width: 212
             height: 150
-            source: "common/off_temporizzato.png"
+            source: "images/common/off_temporizzato.png"
             anchors.top: dimmerMinusPlus.bottom
             anchors.topMargin: 15
 

@@ -5,11 +5,11 @@ Row {
     signal plusClicked
     signal minusClicked
     Image {
-        source: "common/btn_comando.png"
+        source: "images/common/btn_comando.png"
         width: 104
         height: 50
         Image {
-            source: "common/meno.png"
+            source: "images/common/meno.png"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -19,11 +19,11 @@ Row {
         }
     }
     Image {
-        source: "common/btn_comando.png"
+        source: "images/common/btn_comando.png"
         width: 104
         height: 50
         Image {
-            source: "common/piu.png"
+            source: "images/common/piu.png"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
         }

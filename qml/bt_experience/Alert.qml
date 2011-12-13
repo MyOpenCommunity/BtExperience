@@ -25,7 +25,7 @@ Column {
         id: alertBg
         width: parent.width
         height: 130
-        source: "alert.png"
+        source: "images/home/alert.png"
 
         Text {
             id: text

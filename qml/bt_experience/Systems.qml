@@ -3,7 +3,7 @@ import "Stack.js" as Stack
 
 Page {
     id: systems
-    source: "bg2.jpg"
+    source: "images/bg2.jpg"
 
     ToolBar {
         id: toolbar
@@ -16,22 +16,22 @@ Page {
         ListModel {
                 id: systemsModel
                 ListElement {
-                    image: "systems/automazione.jpg"
+                    image: "images/automazione.jpg"
                     name: "automazione"
                     target: ""
                 }
                 ListElement {
-                    image: "systems/scenari.jpg"
+                    image: "images/scenari.jpg"
                     name: "scenari"
                     target: ""
                 }
                 ListElement {
-                    image: "systems/termoregolazione.jpg"
+                    image: "images/termoregolazione.jpg"
                     name: "termoregolazione"
                     target: "ThermalRegulation.qml"
                 }
                 ListElement {
-                    image: "systems/illuminazione.jpg"
+                    image: "images/illuminazione.jpg"
                     name: "illuminazione"
                     target: "Lighting.qml"
                 }

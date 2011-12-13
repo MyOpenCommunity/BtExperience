@@ -3,7 +3,7 @@ import "Stack.js" as Stack
 
 Page {
 id: mainarea
-source: "home.jpg"
+source: "images/home/home.jpg"
 
     ToolBar {
         id: toolbar
@@ -16,22 +16,22 @@ source: "home.jpg"
          ListModel {
                  id: favouritesModel
                  ListElement {
-                         thumb: "fav1.png"
+                         thumb: "images/home/fav1.png"
                  }
                  ListElement {
-                         thumb: "fav2.png"
+                         thumb: "images/home/fav2.png"
                  }
                  ListElement {
-                         thumb: "fav3.png"
+                         thumb: "images/home/fav3.png"
                  }
                  ListElement {
-                         thumb: "fav4.png"
+                         thumb: "images/home/fav4.png"
                  }
                  ListElement {
-                         thumb: "fav5.png"
+                         thumb: "images/home/fav5.png"
                  }
                  ListElement {
-                         thumb: "fav6.png"
+                         thumb: "images/home/fav6.png"
                  }
          }
 
@@ -86,23 +86,23 @@ source: "home.jpg"
          ListModel {
                  id: usersModel
                  ListElement {
-                         image: "home/card_1.png"
+                         image: "images/home/card_1.png"
                          name: "famiglia"
                  }
                  ListElement {
-                         image: "home/card_2.png"
+                         image: "images/home/card_2.png"
                          name: "mattia"
                  }
                  ListElement {
-                         image: "home/card_3.png"
+                         image: "images/home/card_3.png"
                          name: "camilla"
                  }
                  ListElement {
-                         image: "home/card_4.png"
+                         image: "images/home/card_4.png"
                          name: "mamma"
                  }
                  ListElement {
-                         image: "home/card_5.png"
+                         image: "images/home/card_5.png"
                          name: "papà"
                  }
          }
@@ -199,28 +199,28 @@ source: "home.jpg"
 
               ButtonHomePageLink {
                   textFirst: false
-                  source: "home/stanze.png"
+                  source: "images/home/stanze.png"
                   text: qsTr("stanze")
                   textLeftMargin: 70
               }
 
               ButtonHomePageLink {
                   textFirst: false
-                  source: "home/sistemi.png"
+                  source: "images/home/sistemi.png"
                   text: qsTr("sistemi")
                   textLeftMargin: 30
                   onClicked: Stack.openPage("Systems.qml")
               }
 
               ButtonHomePageLink {
-                  source: "home/opzioni.png"
+                  source: "images/home/opzioni.png"
                   textLeftMargin: 70
                   text: qsTr("opzioni")
               }
 
 
               ButtonHomePageLink {
-                  source: "home/multimedia.png"
+                  source: "images/home/multimedia.png"
                   text: qsTr("multimedia")
                   textLeftMargin: 18
                   onClicked: Stack.openPage("Browser.qml")

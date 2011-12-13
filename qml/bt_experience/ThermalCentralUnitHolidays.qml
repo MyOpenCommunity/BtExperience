@@ -22,7 +22,7 @@ MenuElement {
         y: 0
         width: 212
         height: 170
-        source: "common/dimmer_bg.png"
+        source: "images/common/dimmer_bg.png"
         property int current_element: -1
 
         Text {
@@ -100,7 +100,7 @@ MenuElement {
         y: 170
         width: 212
         height: 118
-        source: "common/comando_bg.png"
+        source: "images/common/comando_bg.png"
 
         function scrollProgram(offset) {
             var next = element.dataModel.programIndex + offset
@@ -116,13 +116,13 @@ MenuElement {
             y: 59
             width: 49
             height: 53
-            source: "common/btn_comando.png"
+            source: "images/common/btn_comando.png"
 
             Image {
                 id: image9
                 x: 14
                 y: 16
-                source: "common/freccia_up.png"
+                source: "images/common/freccia_up.png"
             }
 
             MouseArea {
@@ -138,13 +138,13 @@ MenuElement {
             y: 59
             width: 49
             height: 53
-            source: "common/btn_comando.png"
+            source: "images/common/btn_comando.png"
 
             Image {
                 id: image10
                 x: 14
                 y: 16
-                source: "common/freccia_dw.png"
+                source: "images/common/freccia_dw.png"
             }
 
             MouseArea {

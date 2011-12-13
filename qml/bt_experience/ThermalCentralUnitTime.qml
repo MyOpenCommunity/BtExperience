@@ -15,7 +15,7 @@ MenuElement {
         y: 0
         width: 212
         height: 170
-        source: "common/ora.png"
+        source: "images/common/ora.png"
 
         Text {
             id: text1

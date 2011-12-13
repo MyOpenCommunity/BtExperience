@@ -4,7 +4,7 @@ Row {
     signal okClicked
     signal cancelClicked
     Image {
-        source: "common/btn_OKAnnulla.png"
+        source: "images/common/btn_OKAnnulla.png"
         Text {
             text: qsTr("OK")
             font.family: semiBoldFont.name
@@ -19,7 +19,7 @@ Row {
         }
     }
     Image {
-        source: "common/btn_OKAnnulla.png"
+        source: "images/common/btn_OKAnnulla.png"
         Text {
             text: qsTr("ANNULLA")
             font.family: semiBoldFont.name
