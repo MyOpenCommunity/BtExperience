@@ -4,7 +4,7 @@ import BtObjects 1.0
 MenuElement {
     id: element
     width: 212
-    height: fixedItem.height + buttonokcancel.height + itemTemperature.height
+    height: fixedItem.height + buttonokcancel.height + itemLoader.height
 
     function alertOkClicked() {
         element.closeElement()
@@ -16,10 +16,6 @@ MenuElement {
 
     function programSelected(programName) {
         programItem.description = programName
-        if (programName == "off" || programName == "antigelo")
-            element.state = "temperatureDisabled"
-        else
-            element.state = ""
     }
 
     Connections {
@@ -73,82 +69,91 @@ MenuElement {
         }
     }
 
-    Image {
-        id: itemTemperature
-        visible: true
+    Component {
+        id: temperatureComponent
+        Image {
+
+            id: itemTemperature
+            visible: true
+
+            source: "common/comando_bg.png"
+            width: element.width
+            height: 118
+
+            Text {
+                id: text1
+                x: 17
+                y: 12
+                width: 158
+                height: 15
+                color: "#000000"
+                text: qsTr("temperatura impostata")
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 13
+            }
+
+            Text {
+                id: labelTemperature
+                x: 17
+                y: 78
+                width: 24
+                height: 15
+                color: "#ffffff"
+                text:  dataModel.setpoint + "°"
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 15
+            }
+
+            Image {
+                id: minusTemperature
+                x: 111
+                y: 59
+                width: 49
+                height: 53
+                source: "common/btn_comando.png"
+
+                Image {
+                    id: image4
+                    x: 14
+                    y: 15
+                    source: "common/meno.png"
+                }
+
+                MouseArea {
+                    id: minusMouseArea
+                    anchors.fill: parent
+                    onClicked: dataModel.setpoint -= 1
+                }
+            }
+
+            Image {
+                id: plusTemperature
+                x: 160
+                y: 59
+                width: 49
+                height: 53
+                source: "common/btn_comando.png"
+
+                Image {
+                    id: image5
+                    x: 14
+                    y: 15
+                    source: "common/piu.png"
+                }
+
+                MouseArea {
+                    id: plusMouseArea
+                    anchors.fill: parent
+                    onClicked: dataModel.setpoint += 1
+                }
+            }
+        }
+    }
+
+    Loader {
+        id: itemLoader
         anchors.top: fixedItem.bottom
-        anchors.topMargin: 0
-        source: "common/comando_bg.png"
-        width: parent.width
-        height: 118
-
-        Text {
-            id: text1
-            x: 17
-            y: 12
-            width: 158
-            height: 15
-            color: "#000000"
-            text: qsTr("temperatura impostata")
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 13
-        }
-
-        Text {
-            id: labelTemperature
-            x: 17
-            y: 78
-            width: 24
-            height: 15
-            color: "#ffffff"
-            text:  dataModel.setpoint + "°"
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 15
-        }
-
-        Image {
-            id: minusTemperature
-            x: 111
-            y: 59
-            width: 49
-            height: 53
-            source: "common/btn_comando.png"
-
-            Image {
-                id: image4
-                x: 14
-                y: 15
-                source: "common/meno.png"
-            }
-
-            MouseArea {
-                id: minusMouseArea
-                anchors.fill: parent
-                onClicked: dataModel.setpoint -= 1
-            }
-        }
-
-        Image {
-            id: plusTemperature
-            x: 160
-            y: 59
-            width: 49
-            height: 53
-            source: "common/btn_comando.png"
-
-            Image {
-                id: image5
-                x: 14
-                y: 15
-                source: "common/piu.png"
-            }
-
-            MouseArea {
-                id: plusMouseArea
-                anchors.fill: parent
-                onClicked: dataModel.setpoint += 1
-            }
-        }
+        sourceComponent: temperatureComponent
     }
 
     ButtonOkCancel {
@@ -165,25 +170,5 @@ MenuElement {
         }
     }
 
-    states: [
-        State {
-            name: "temperatureDisabled"
-
-            PropertyChanges {
-                target: itemTemperature
-                opacity: 0.400
-            }
-
-            PropertyChanges {
-                target: minusMouseArea
-                enabled: false
-            }
-
-            PropertyChanges {
-                target: plusMouseArea
-                enabled: false
-            }
-        }
-    ]
 
 }
