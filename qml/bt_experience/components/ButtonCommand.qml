@@ -5,7 +5,7 @@ Image {
     property bool selected: false
     signal clicked(bool newStatus)
 
-    source: "images/common/btn_comando.png"
+    source: "../images/common/btn_comando.png"
 
     Image {
         id: image1
@@ -13,7 +13,7 @@ Image {
         anchors.topMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        source: "images/common/freccia_dx.png"
+        source: "../images/common/freccia_dx.png"
     }
 
     MouseArea {
@@ -28,12 +28,12 @@ Image {
 
             PropertyChanges {
                 target: command
-                source: "images/common/btn_comandoS.png"
+                source: "../images/common/btn_comandoS.png"
             }
 
             PropertyChanges {
                 target: image1
-                source: "images/common/freccia_dxS.png"
+                source: "../images/common/freccia_dxS.png"
             }
         }
     ]

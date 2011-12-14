@@ -12,23 +12,23 @@ Page {
             onHomeClicked: Stack.backToHome()
     }
 
- Rectangle {
-     anchors.left: parent.left
-     anchors.leftMargin: 50
-     y: 450
-     id: mainText
+    Rectangle {
+        anchors.left: parent.left
+        anchors.leftMargin: 50
+        y: 450
+        id: mainText
 
-     Text {
+        Text {
              color: "#ffffff"
              text: "illuminazione"
              rotation: 270
              font.pixelSize: 60
              font.family: lightFont.name
              anchors.fill: parent
-     }
- }
+        }
+    }
 
- MenuContainer {
+    MenuContainer {
      id: menucontainer1
      x: 122
      y: 75
@@ -36,6 +36,6 @@ Page {
      height: 503
      rootElement: "LightingItems.qml"
      onClosed: Stack.popPage()
- }
-
+    }
 }
+
