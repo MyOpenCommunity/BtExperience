@@ -146,19 +146,19 @@ source: "images/home/home.jpg"
          delegate: usersDelegate
 
          path:  Path {
-             startX: 90; startY: 200
+             startX: 100; startY: 250
              PathAttribute { name: "iconScale"; value: 0.4 }
              PathAttribute { name: "z"; value: 0.1 }
-             PathLine { x: 150; y: 200; }
+             PathLine { x: 160; y: 250; }
              PathAttribute { name: "iconScale"; value: 0.5 }
-             PathLine { x: 300; y: 200; }
+             PathLine { x: 310; y: 210; }
              PathAttribute { name: "iconScale"; value: 1.0 }
              PathAttribute { name: "z"; value: 1.0 }
-             PathLine { x: 420; y: 200; }
+             PathLine { x: 420; y: 243; }
              PathAttribute { name: "iconScale"; value: 0.6 }
-             PathLine { x: 550; y: 200; }
+             PathLine { x: 560; y: 252; }
              PathAttribute { name: "iconScale"; value: 0.35 }
-             PathLine { x: 620; y: 200; }
+             PathLine { x: 630; y: 250; }
          }
          width: 620
          pathItemCount: 5
@@ -185,15 +185,16 @@ source: "images/home/home.jpg"
 
     Grid {
           id: column1
-          x: 116
-          y: 69
+          x: 92
+          y: 22
           spacing: 0
           columns: 2
           anchors.top: parent.top
-          anchors.topMargin: 69
+          anchors.topMargin: 22
           anchors.bottom: parent.bottom
-          anchors.bottomMargin: 0
+          anchors.bottomMargin: 48
           anchors.right: parent.right
+          anchors.rightMargin: 24
           width: 288
           height: 328
 
