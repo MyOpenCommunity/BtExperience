@@ -1,5 +1,4 @@
 import QtQuick 1.1
-import "MenuContainer.js" as Script
 
 MenuElement {
     id: element
