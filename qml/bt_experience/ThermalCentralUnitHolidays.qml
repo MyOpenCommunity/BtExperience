@@ -13,13 +13,12 @@ MenuElement {
     }
 
     onChildDestroyed: {
-        imageBg.current_element = -1
+        expireDateTime.current_element = -1
     }
 
     Image {
-        id: imageBg
-        x: 0
-        y: 0
+        id: expireDateTime
+        anchors.top: parent.top
         width: 212
         height: 170
         source: "images/common/dimmer_bg.png"
@@ -69,12 +68,12 @@ MenuElement {
             y: 68
             width: 43
             height: 45
-            selected: imageBg.current_element == 1
+            selected: expireDateTime.current_element == 1
 
             onClicked: {
                 if (!selected) {
                     element.loadElement("ThermalCentralUnitDate.qml", "data")
-                    imageBg.current_element = 1
+                    expireDateTime.current_element = 1
                 }
             }
         }
@@ -84,104 +83,35 @@ MenuElement {
             y: 113
             width: 43
             height: 45
-            selected: imageBg.current_element == 2
+            selected: expireDateTime.current_element == 2
             onClicked: {
                 if (!selected) {
                     element.loadElement("ThermalCentralUnitTime.qml", "ora")
-                    imageBg.current_element = 2
+                    expireDateTime.current_element = 2
                 }
             }
         }
     }
 
-    Image {
+    ControlUpDown {
         id: programSelector
-        x: 1
-        y: 170
-        width: 212
-        height: 118
-        source: "images/common/comando_bg.png"
+        anchors.top: expireDateTime.bottom
 
         function scrollProgram(offset) {
             var next = element.dataModel.programIndex + offset
-
             next = (next + element.dataModel.programCount) % element.dataModel.programCount
-
             element.dataModel.programIndex = next
         }
 
-        Image {
-            id: image3
-            x: 112
-            y: 59
-            width: 49
-            height: 53
-            source: "images/common/btn_comando.png"
-
-            Image {
-                id: image9
-                x: 14
-                y: 16
-                source: "images/common/freccia_up.png"
-            }
-
-            MouseArea {
-                id: mouse_areaup
-                anchors.fill: parent
-                onClicked: programSelector.scrollProgram(-1)
-            }
-        }
-
-        Image {
-            id: image4
-            x: 160
-            y: 59
-            width: 49
-            height: 53
-            source: "images/common/btn_comando.png"
-
-            Image {
-                id: image10
-                x: 14
-                y: 16
-                source: "images/common/freccia_dw.png"
-            }
-
-            MouseArea {
-                id: mouse_areadown
-                anchors.fill: parent
-                onClicked: programSelector.scrollProgram(1)
-            }
-        }
-
-        Text {
-            id: text4
-            x: 24
-            y: 16
-            text: qsTr("programma successivo")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 13
-        }
-
-        Text {
-            id: text5
-            x: 18
-            y: 68
-            width: 96
-            height: 38
-            color: "#ffffff"
-            text: element.dataModel.programDescription
-            font.bold: false
-            wrapMode: Text.WordWrap
-            font.pixelSize: 14
-        }
+        onUpClicked: programSelector.scrollProgram(-1)
+        onDownClicked: programSelector.scrollProgram(1)
+        title: qsTr("programma successivo")
+        text: element.dataModel.programDescription
     }
 
     ButtonOkCancel {
         id: buttonokcancel1
-        x: 0
-        y: 288
+        anchors.top: programSelector.bottom
         onCancelClicked: {
             page.showAlert(element, "Modifiche non salvate. Continuare?")
         }

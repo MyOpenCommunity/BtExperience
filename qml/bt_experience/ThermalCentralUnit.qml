@@ -57,88 +57,19 @@ MenuElement {
             onPlusClicked: dataModel.temperature += 5
         }
 
-        Image {
+        ControlUpDown {
             id: itemMode
-            x: 0
-            width: element.width
-            height: 112
             anchors.top: itemTemperature.bottom
             anchors.topMargin: 0
-            source: "images/common/comando_bg.png"
-            property string mode: qsTr("estate")
-
-            Behavior on opacity {
-                NumberAnimation { duration: 200 }
-            }
+            title: qsTr("modo")
+            text: dataModel.mode == ThermalControlUnit99Zones.SummerMode ? qsTr("estate") : qsTr("inverno")
 
             function changeMode() {
                 dataModel.mode = (dataModel.mode == ThermalControlUnit99Zones.SummerMode) ?
                             ThermalControlUnit99Zones.WinterMode : ThermalControlUnit99Zones.SummerMode
             }
-
-            Image {
-                id: upMode
-                x: 111
-                y: 56
-                width: 49
-                height: 51
-                source: "images/common/btn_comando.png"
-
-                Image {
-                    id: image7
-                    x: 14
-                    y: 15
-                    source: "images/common/freccia_up.png"
-                }
-
-                MouseArea {
-                    id: mouse_area1
-                    anchors.fill: parent
-                    onClicked: itemMode.changeMode()
-                }
-            }
-
-            Text {
-                id: text3
-                x: 19
-                y: 14
-                width: 154
-                height: 15
-                text: qsTr("modo")
-                horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 13
-            }
-
-            Text {
-                id: labelMode
-                x: 19
-                y: 72
-                color: "#ffffff"
-                text:  dataModel.mode == ThermalControlUnit99Zones.SummerMode ? qsTr("estate") : qsTr("inverno")
-                font.pixelSize: 15
-            }
-
-            Image {
-                id: downMode
-                x: 160
-                y: 56
-                width: 49
-                height: 51
-                source: "images/common/btn_comando.png"
-
-                Image {
-                    id: image8
-                    x: 14
-                    y: 15
-                    source: "images/common/freccia_dw.png"
-                }
-
-                MouseArea {
-                    id: mouse_area2
-                    anchors.fill: parent
-                    onClicked: itemMode.changeMode()
-                }
-            }
+            onUpClicked: changeMode();
+            onDownClicked: changeMode();
         }
 
         ButtonOkCancel {
