@@ -47,84 +47,14 @@ MenuElement {
             }
         }
 
-        Image {
+        ControlMinusPlus {
             id: itemTemperature
             anchors.top: programItem.bottom
             anchors.topMargin: 0
-            source: "images/common/comando_bg.png"
-            width: element.width
-            height: 112
-            Behavior on opacity {
-                NumberAnimation { duration: 200 }
-            }
-
-            Text {
-                id: text1
-                x: 17
-                y: 12
-                width: 158
-                height: 15
-                color: "#000000"
-                text: qsTr("temperatura impostata")
-                horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 13
-            }
-
-            Text {
-                id: labelTemperature
-                x: 17
-                y: 68
-                width: 24
-                height: 10
-                color: "#ffffff"
-                text: dataModel.temperature / 10 + "°"
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 15
-            }
-
-            Image {
-                id: minusTemperature
-                x: 111
-                y: 56
-                width: 49
-                height: 51
-                source: "images/common/btn_comando.png"
-
-                Image {
-                    id: image4
-                    x: 14
-                    y: 15
-                    source: "images/common/meno.png"
-                }
-
-                MouseArea {
-                    id: minusMouseArea
-                    anchors.fill: parent
-                    onClicked: dataModel.temperature -= 5
-                }
-            }
-
-            Image {
-                id: plusTemperature
-                x: 160
-                y: 56
-                width: 49
-                height: 51
-                source: "images/common/btn_comando.png"
-
-                Image {
-                    id: image3
-                    x: 14
-                    y: 15
-                    source: "images/common/piu.png"
-                }
-
-                MouseArea {
-                    id: plusMouseArea
-                    anchors.fill: parent
-                    onClicked: dataModel.temperature += 5
-                }
-            }
+            title: qsTr("temperatura impostata")
+            text: dataModel.temperature / 10 + "°"
+            onMinusClicked: dataModel.temperature -= 5
+            onPlusClicked: dataModel.temperature += 5
         }
 
         Image {

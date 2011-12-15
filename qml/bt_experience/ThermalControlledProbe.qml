@@ -71,82 +71,11 @@ MenuElement {
 
     Component {
         id: temperatureComponent
-        Image {
-
-            id: itemTemperature
-            visible: true
-
-            source: "images/common/comando_bg.png"
-            width: element.width
-            height: 118
-
-            Text {
-                id: text1
-                x: 17
-                y: 12
-                width: 158
-                height: 15
-                color: "#000000"
-                text: qsTr("temperatura impostata")
-                horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 13
-            }
-
-            Text {
-                id: labelTemperature
-                x: 17
-                y: 78
-                width: 24
-                height: 15
-                color: "#ffffff"
-                text:  dataModel.setpoint + "°"
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 15
-            }
-
-            Image {
-                id: minusTemperature
-                x: 111
-                y: 59
-                width: 49
-                height: 53
-                source: "images/common/btn_comando.png"
-
-                Image {
-                    id: image4
-                    x: 14
-                    y: 15
-                    source: "images/common/meno.png"
-                }
-
-                MouseArea {
-                    id: minusMouseArea
-                    anchors.fill: parent
-                    onClicked: dataModel.setpoint -= 1
-                }
-            }
-
-            Image {
-                id: plusTemperature
-                x: 160
-                y: 59
-                width: 49
-                height: 53
-                source: "images/common/btn_comando.png"
-
-                Image {
-                    id: image5
-                    x: 14
-                    y: 15
-                    source: "images/common/piu.png"
-                }
-
-                MouseArea {
-                    id: plusMouseArea
-                    anchors.fill: parent
-                    onClicked: dataModel.setpoint += 1
-                }
-            }
+        ControlMinusPlus {
+            title: qsTr("temperatura impostata")
+            text: dataModel.setpoint + "°"
+            onPlusClicked: dataModel.setpoint += 1
+            onMinusClicked: dataModel.setpoint -= 1
         }
     }
 

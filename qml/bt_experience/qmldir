@@ -3,4 +3,5 @@ ButtonMinusPlus components/ButtonMinusPlus.qml
 ButtonOkCancel components/ButtonOkCancel.qml
 ButtonOnOff components/ButtonOnOff.qml
 ButtonCommand components/ButtonCommand.qml
+ControlMinusPlus components/ControlMinusPlus.qml
 
