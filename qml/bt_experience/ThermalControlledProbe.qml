@@ -4,7 +4,7 @@ import BtObjects 1.0
 MenuElement {
     id: element
     width: 212
-    height: fixedItem.height + (itemLoader.sourceComponent !== null ? itemLoader.height : 0)
+    height: fixedItem.height + itemLoader.height
 
     function alertOkClicked() {
         element.closeElement()
@@ -19,12 +19,12 @@ MenuElement {
     }
 
     onChildDestroyed: {
-        programItem.state = "";
+        modalityItem.state = "";
     }
 
-    Component.onCompleted: showProgram()
+    Component.onCompleted: showModality()
 
-    function showProgram() {
+    function showModality() {
         var desc = "";
         switch (dataModel.probeStatus) {
         case ThermalControlledProbe.Auto:
@@ -44,12 +44,12 @@ MenuElement {
             desc = "off"
             break
         }
-        programItem.description = desc
+        modalityItem.description = desc
     }
 
     Connections {
         target: dataModel
-        onProbeStatusChanged: showProgram()
+        onProbeStatusChanged: showModality()
     }
 
     Image {
@@ -68,15 +68,15 @@ MenuElement {
         }
 
         MenuItem {
-            id: programItem
-            name: qsTr("programma")
+            id: modalityItem
+            name: qsTr("modalità")
             x: 0
             y: 51
 
             onClicked: {
-                element.loadElement("ThermalControlledProbePrograms.qml", programItem.name, dataModel)
-                if (programItem.state == "")
-                    programItem.state =  "selected"
+                element.loadElement("ThermalControlledProbeModalities.qml", modalityItem.name, dataModel)
+                if (modalityItem.state == "")
+                    modalityItem.state =  "selected"
             }
         }
     }
