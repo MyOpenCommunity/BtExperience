@@ -86,7 +86,7 @@ MenuElement {
         Column {
             ControlMinusPlus {
                 title: qsTr("temperatura impostata")
-                text: dataModel.setpoint + "°"
+                text: dataModel.setpoint / 10 + qsTr("° C")
                 onPlusClicked: dataModel.setpoint += 1
                 onMinusClicked: dataModel.setpoint -= 1
             }

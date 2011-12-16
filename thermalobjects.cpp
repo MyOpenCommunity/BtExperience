@@ -366,18 +366,18 @@ void ThermalControlledProbe::setProbeStatus(ProbeStatus st)
 
 int ThermalControlledProbe::getSetpoint() const
 {
-    return setpoint;
+    return bt2Celsius(setpoint);
 }
 
 void ThermalControlledProbe::setSetpoint(int sp)
 {
-    if (sp != setpoint)
-        dev->setManual(sp);
+    if (celsius2Bt(sp) != setpoint)
+        dev->setManual(celsius2Bt(sp));
 }
 
 int ThermalControlledProbe::getTemperature() const
 {
-    return temperature;
+    return bt2Celsius(temperature);
 }
 
 void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
@@ -386,16 +386,23 @@ void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
     while (it != values_list.constEnd()) {
 //        qDebug() << "VALORE RICEVUTO:" << it.key() << ": " << it.value().toInt();
         if (it.key() == ControlledProbeDevice::DIM_STATUS) {
-            probe_status = static_cast<ProbeStatus>(it.value().toInt());
-            emit probeStatusChanged();
+//            qDebug() << "PROBE STATUS CHANGED: " << it.value().toInt();
+            if (it.value().toInt() != probe_status) {
+                probe_status = static_cast<ProbeStatus>(it.value().toInt());
+                emit probeStatusChanged();
+            }
         }
         else if (it.key() == ControlledProbeDevice::DIM_SETPOINT) {
-            setpoint = it.value().toInt();
-            emit setpointChanged();
+            if (setpoint != it.value().toInt()) {
+                setpoint = it.value().toInt();
+                emit setpointChanged();
+            }
         }
         else if (it.key() == ControlledProbeDevice::DIM_TEMPERATURE) {
-            temperature = it.value().toInt();
-            emit temperatureChanged();
+            if (temperature != it.value().toInt()) {
+                temperature = it.value().toInt();
+                emit temperatureChanged();
+            }
         }
 
         ++it;
