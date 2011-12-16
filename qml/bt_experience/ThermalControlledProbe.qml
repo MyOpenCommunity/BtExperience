@@ -4,7 +4,7 @@ import BtObjects 1.0
 MenuElement {
     id: element
     width: 212
-    height: fixedItem.height + buttonokcancel.height + itemLoader.height
+    height: fixedItem.height + buttonokcancel.height + (itemLoader.sourceComponent !== null ? itemLoader.height : 0)
 
     function alertOkClicked() {
         element.closeElement()
@@ -24,15 +24,19 @@ MenuElement {
             var desc = "";
             switch (dataModel.probeStatus) {
             case ThermalControlledProbe.Auto:
+                itemLoader.sourceComponent = autoComponent
                 desc = "auto"
                 break
             case ThermalControlledProbe.Antifreeze:
+                itemLoader.sourceComponent = undefined
                 desc = "antigelo"
                 break
             case ThermalControlledProbe.Manual:
+                itemLoader.sourceComponent = manualComponent
                 desc = "manuale"
                 break
             case ThermalControlledProbe.Off:
+                itemLoader.sourceComponent = undefined
                 desc = "off"
                 break
             }
@@ -70,19 +74,34 @@ MenuElement {
     }
 
     Component {
-        id: temperatureComponent
-        ControlMinusPlus {
-            title: qsTr("temperatura impostata")
-            text: dataModel.setpoint + "°"
-            onPlusClicked: dataModel.setpoint += 1
-            onMinusClicked: dataModel.setpoint -= 1
+        id: autoComponent
+        ControlUpDown {
+            title: qsTr("velocità fancoil")
+            text: "alta"
         }
     }
+
+    Component {
+        id: manualComponent
+        Column {
+            ControlMinusPlus {
+                title: qsTr("temperatura impostata")
+                text: dataModel.setpoint + "°"
+                onPlusClicked: dataModel.setpoint += 1
+                onMinusClicked: dataModel.setpoint -= 1
+            }
+
+            ControlUpDown {
+                title: qsTr("velocità fancoil")
+                text: "alta"
+            }
+        }
+    }
+
 
     Loader {
         id: itemLoader
         anchors.top: fixedItem.bottom
-        sourceComponent: temperatureComponent
     }
 
     ButtonOkCancel {
