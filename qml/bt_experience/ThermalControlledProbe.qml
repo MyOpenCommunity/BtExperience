@@ -4,10 +4,18 @@ import BtObjects 1.0
 MenuElement {
     id: element
     width: 212
-    height: fixedItem.height + buttonokcancel.height + (itemLoader.sourceComponent !== null ? itemLoader.height : 0)
+    height: fixedItem.height + (itemLoader.sourceComponent !== null ? itemLoader.height : 0)
 
     function alertOkClicked() {
         element.closeElement()
+    }
+
+    function okClicked() {
+        closeElement();
+    }
+
+    function cancelClicked() {
+        page.showAlert(element, "Modifiche non salvate. Continuare?")
     }
 
     onChildDestroyed: {
@@ -17,6 +25,7 @@ MenuElement {
     function programSelected(programName) {
         programItem.description = programName
     }
+
 
     Connections {
         target: dataModel
@@ -28,7 +37,7 @@ MenuElement {
                 desc = "auto"
                 break
             case ThermalControlledProbe.Antifreeze:
-                itemLoader.sourceComponent = undefined
+                itemLoader.sourceComponent = antifreezeComponent
                 desc = "antigelo"
                 break
             case ThermalControlledProbe.Manual:
@@ -36,7 +45,7 @@ MenuElement {
                 desc = "manuale"
                 break
             case ThermalControlledProbe.Off:
-                itemLoader.sourceComponent = undefined
+                itemLoader.sourceComponent = offComponent
                 desc = "off"
                 break
             }
@@ -74,10 +83,33 @@ MenuElement {
     }
 
     Component {
+        id: offComponent
+        ButtonOkCancel {
+            onCancelClicked: element.cancelClicked();
+            onOkClicked: element.okClicked();
+        }
+    }
+
+    Component {
+        id: antifreezeComponent
+        ButtonOkCancel {
+            onCancelClicked: element.cancelClicked();
+            onOkClicked: element.okClicked();
+        }
+    }
+
+    Component {
         id: autoComponent
-        ControlUpDown {
-            title: qsTr("velocità fancoil")
-            text: "alta"
+        Column {
+            ControlUpDown {
+                title: qsTr("velocità fancoil")
+                text: "alta"
+            }
+
+            ButtonOkCancel {
+                onCancelClicked: element.cancelClicked();
+                onOkClicked: element.okClicked();
+            }
         }
     }
 
@@ -95,28 +127,17 @@ MenuElement {
                 title: qsTr("velocità fancoil")
                 text: "alta"
             }
+
+            ButtonOkCancel {
+                onCancelClicked: element.cancelClicked();
+                onOkClicked: element.okClicked();
+            }
         }
     }
-
 
     Loader {
         id: itemLoader
         anchors.top: fixedItem.bottom
     }
-
-    ButtonOkCancel {
-        id: buttonokcancel
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-
-        onCancelClicked: {
-            page.showAlert(element, "Modifiche non salvate. Continuare?")
-        }
-
-        onOkClicked: {
-            element.closeElement()
-        }
-    }
-
 
 }
