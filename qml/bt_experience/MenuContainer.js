@@ -291,7 +291,7 @@ function createComponent(fileName, initData) {
             console.log('Error on creating the object for the component: ' + fileName)
     }
     else
-        console.log('Error loading the component: ' + fileName)
+        console.log('Error loading the component: ' + fileName + ' error: ' + component.errorString())
 
     return object
 }
