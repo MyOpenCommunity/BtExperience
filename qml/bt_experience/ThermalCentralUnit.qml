@@ -5,28 +5,60 @@ import BtObjects 1.0
 MenuElement {
     id: element
     width: 212
-    height: 323
+    height: seasonItem.height + modalityItem.height + itemLoader.height
+
+    QtObject {
+        id: privateProps
+        property int current_element: -1
+    }
 
     function alertOkClicked() {
         element.closeElement()
     }
 
     onChildLoaded: {
-        child.programSelected.connect(programSelected)
+        if (child.modalitySelected)
+            child.modalitySelected.connect(modalitySelected)
     }
 
     onChildDestroyed: {
-        programItem.state = "";
+        modalityItem.state = "";
     }
 
-    function programSelected(programName) {
-        programItem.description = programName
-        if (programName == "antigelo")
-            element.state = "temperatureDisabled"
-        else if (programName == "off")
-            element.state = "controlsDisabled"
-        else
-            element.state = ""
+    function modalitySelected(modalityName, modalityId) {
+        modalityItem.description = modalityName
+
+        console.log('MODALITY ID: ' + modalityId)
+        switch (modalityId) {
+        case ThermalControlUnit99Zones.IdHoliday:
+            itemLoader.changeComponent(holidayComponent)
+            break
+        case ThermalControlUnit99Zones.IdOff:
+            itemLoader.changeComponent(offComponent)
+            break
+        case ThermalControlUnit99Zones.IdAntifreeze:
+            itemLoader.changeComponent(antifreezeComponent)
+            break
+        case ThermalControlUnit99Zones.IdWeeklyPrograms:
+            itemLoader.changeComponent(programsComponent)
+            break
+        case ThermalControlUnit99Zones.IdVacation:
+            itemLoader.changeComponent(vacationComponent)
+            break
+        case ThermalControlUnit99Zones.IdScenarios:
+            itemLoader.changeComponent(scenarioComponent)
+            break
+
+        }
+    }
+
+
+    function okClicked() {
+        closeElement();
+    }
+
+    function cancelClicked() {
+        page.showAlert(element, "Modifiche non salvate. Continuare?")
     }
 
 
@@ -37,19 +69,139 @@ MenuElement {
         anchors.fill: parent
 
         MenuItem {
-            id: programItem
-            name: qsTr("programma")
+            id: seasonItem
+            anchors.top: parent.top
+            name: qsTr("funzionamento")
+            state: privateProps.current_element == 1 ? "selected" : ""
 
             onClicked: {
-                element.loadElement("ThermalCentralUnitModalities.qml", programItem.name, element.dataModel)
-                if (programItem.state == "")
-                    programItem.state =  "selected"
+                element.loadElement("ThermalCentralUnitSeasons.qml", seasonItem.name, element.dataModel)
+                if (privateProps.current_element != 1)
+                    privateProps.current_element = 1
             }
         }
 
+        MenuItem {
+            id: modalityItem
+            anchors.top: seasonItem.bottom
+            name: qsTr("modalità")
+            state: privateProps.current_element == 2 ? "selected" : ""
+
+            onClicked: {
+                element.loadElement("ThermalCentralUnitModalities.qml", modalityItem.name, element.dataModel)
+                if ( privateProps.current_element != 2)
+                    privateProps.current_element = 2
+            }
+        }
+
+        Component {
+            id: holidayComponent
+            Column {
+                ControlDateTime {
+                    text: qsTr("attivo fino al")
+                    date: "18/01/2012"
+                    time: "13:00"
+                }
+                ControlUpDown {
+                    title: qsTr("programma successivo")
+                    text: "settimanale P1"
+//                    onUpClicked: changeMode();
+//                    onDownClicked: changeMode();
+                }
+                ButtonOkCancel {
+                    onCancelClicked: element.cancelClicked();
+                    onOkClicked: element.okClicked();
+                }
+            }
+        }
+
+        Component {
+            id: offComponent
+            Column {
+                ButtonOkCancel {
+                    onCancelClicked: element.cancelClicked();
+                    onOkClicked: element.okClicked();
+                }
+            }
+        }
+
+        Component {
+            id: antifreezeComponent
+            Column {
+                ButtonOkCancel {
+                    onCancelClicked: element.cancelClicked();
+                    onOkClicked: element.okClicked();
+                }
+            }
+        }
+
+        Component {
+            id: programsComponent
+            Column {
+                ControlDateTime {
+                    text: qsTr("attivo fino al")
+                    date: "18/01/2012"
+                    time: "13:00"
+                }
+                ControlUpDown {
+                    title: qsTr("programma successivo")
+                    text: "settimanale P1"
+//                    onUpClicked: changeMode();
+//                    onDownClicked: changeMode();
+                }
+                ButtonOkCancel {
+                    onCancelClicked: element.cancelClicked();
+                    onOkClicked: element.okClicked();
+                }
+            }
+        }
+
+        Component {
+            id: vacationComponent
+            Column {
+                ControlDateTime {
+                    text: qsTr("attivo fino al")
+                    date: "18/01/2012"
+                    time: "13:00"
+                }
+                ControlUpDown {
+                    title: qsTr("programma successivo")
+                    text: "settimanale P1"
+//                    onUpClicked: changeMode();
+//                    onDownClicked: changeMode();
+                }
+                ButtonOkCancel {
+                    onCancelClicked: element.cancelClicked();
+                    onOkClicked: element.okClicked();
+                }
+            }
+        }
+
+        Component {
+            id: scenarioComponent
+            Column {
+                ControlUpDown {
+                    title: qsTr("selezionato")
+                    text: "scenario 1"
+//                    onUpClicked: changeMode();
+//                    onDownClicked: changeMode();
+                }
+                ButtonOkCancel {
+                    onCancelClicked: element.cancelClicked();
+                    onOkClicked: element.okClicked();
+                }
+            }
+        }
+
+        AnimatedLoader {
+            id: itemLoader
+            anchors.top: modalityItem.bottom
+        }
+
+        /*
         ControlMinusPlus {
             id: itemTemperature
-            anchors.top: programItem.bottom
+            anchors.top: modalityItem.bottom
             anchors.topMargin: 0
             title: qsTr("temperatura impostata")
             text: dataModel.temperature / 10 + "°"
@@ -71,74 +223,7 @@ MenuElement {
             onUpClicked: changeMode();
             onDownClicked: changeMode();
         }
+        */
 
-        ButtonOkCancel {
-            id: buttonokcancel
-            anchors.top: itemMode.bottom
-            onCancelClicked: {
-                page.showAlert(element, "Modifiche non salvate. Continuare?")
-            }
-
-            onOkClicked: {
-                element.closeElement()
-            }
-        }
     }
-    states: [
-        State {
-            name: "temperatureDisabled"
-
-            PropertyChanges {
-                target: itemTemperature
-                opacity: 0.400
-            }
-
-            PropertyChanges {
-                target: minusMouseArea
-                enabled: false
-            }
-
-            PropertyChanges {
-                target: plusMouseArea
-                enabled: false
-            }
-
-            PropertyChanges {
-                target: element
-            }
-        },
-        State {
-            name: "controlsDisabled"
-            PropertyChanges {
-                target: itemTemperature
-                opacity: 0.400
-            }
-
-            PropertyChanges {
-                target: itemMode
-                opacity: 0.400
-            }
-
-            PropertyChanges {
-                target: plusMouseArea
-                enabled: false
-            }
-
-            PropertyChanges {
-                target: minusMouseArea
-                enabled: false
-            }
-
-            PropertyChanges {
-                target: mouse_area2
-                enabled: false
-            }
-
-            PropertyChanges {
-                target: mouse_area1
-                enabled: false
-            }
-        }
-    ]
-
 }

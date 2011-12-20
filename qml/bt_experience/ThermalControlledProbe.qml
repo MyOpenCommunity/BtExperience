@@ -134,43 +134,9 @@ MenuElement {
         }
     }
 
-    Loader {
+    AnimatedLoader {
         id: itemLoader
         anchors.top: fixedItem.bottom
-
-        property variant _pendingComponent: undefined
-
-        function changeComponent(newComponent) {
-            _pendingComponent = newComponent
-            if (sourceComponent !== null)
-                opacity = 0 // implictly use the Connections object
-            else
-                _showComponent()
-        }
-
-        Connections {
-            target: opacityanimation
-            onRunningChanged: {
-                if (opacityanimation.running) // at the end of the animation
-                    return
-                // if there is a pending component, we show it
-                if (itemLoader._pendingComponent !== undefined)
-                    itemLoader._showComponent()
-            }
-        }
-
-        function _showComponent() {
-            opacity = 1
-            sourceComponent = _pendingComponent
-            _pendingComponent = undefined
-        }
-
-        Behavior on opacity {
-            NumberAnimation {
-                id: opacityanimation
-                duration: 200
-            }
-        }
     }
 }
 
