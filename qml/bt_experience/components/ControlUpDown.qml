@@ -36,23 +36,26 @@ Image {
     }
 
     Text {
-        id: text3
+        id: textTitle
         x: 19
         y: 14
         width: 154
         height: 15
-        text: title
+        text: control.title
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 13
     }
 
     Text {
-        id: label
+        id: textText
         x: 19
-        y: 72
+        y: 64
+        width: 92
+        height: 35
         color: "#ffffff"
         text:  control.text
         font.pixelSize: 15
+        wrapMode: Text.WordWrap
     }
 
     Image {
