@@ -28,19 +28,19 @@ MenuElement {
         var desc = "";
         switch (dataModel.probeStatus) {
         case ThermalControlledProbe.Auto:
-            itemLoader.changeComponent(autoComponent)
+            itemLoader.setComponent(autoComponent)
             desc = "auto"
             break
         case ThermalControlledProbe.Antifreeze:
-            itemLoader.changeComponent(antifreezeComponent)
+            itemLoader.setComponent(antifreezeComponent)
             desc = "antigelo"
             break
         case ThermalControlledProbe.Manual:
-            itemLoader.changeComponent(manualComponent)
+            itemLoader.setComponent(manualComponent)
             desc = "manuale"
             break
         case ThermalControlledProbe.Off:
-            itemLoader.changeComponent(offComponent)
+            itemLoader.setComponent(offComponent)
             desc = "off"
             break
         }

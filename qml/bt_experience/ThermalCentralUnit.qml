@@ -12,6 +12,14 @@ MenuElement {
         property int current_element: -1
     }
 
+    function okClicked() {
+        closeElement();
+    }
+
+    function cancelClicked() {
+        page.showAlert(element, "Modifiche non salvate. Continuare?")
+    }
+
     function alertOkClicked() {
         element.closeElement()
     }
@@ -25,40 +33,33 @@ MenuElement {
         modalityItem.state = "";
     }
 
-    function modalitySelected(modalityName, modalityId) {
-        modalityItem.description = modalityName
+    function modalitySelected(obj) {
+        modalityItem.description = obj.name
+        var properties = {'objModel': obj}
 
-        console.log('MODALITY ID: ' + modalityId)
-        switch (modalityId) {
+        switch (obj.objectId) {
         case ThermalControlUnit99Zones.IdHoliday:
-            itemLoader.changeComponent(holidayComponent)
+            itemLoader.setComponent(holidayComponent, properties)
             break
         case ThermalControlUnit99Zones.IdOff:
-            itemLoader.changeComponent(offComponent)
+            itemLoader.setComponent(offComponent, properties)
+            break
+        case ThermalControlUnit99Zones.IdManual:
+            itemLoader.setComponent(manualComponent, properties)
             break
         case ThermalControlUnit99Zones.IdAntifreeze:
-            itemLoader.changeComponent(antifreezeComponent)
+            itemLoader.setComponent(antifreezeComponent, properties)
             break
         case ThermalControlUnit99Zones.IdWeeklyPrograms:
-            itemLoader.changeComponent(programsComponent)
+            itemLoader.setComponent(programsComponent, properties)
             break
         case ThermalControlUnit99Zones.IdVacation:
-            itemLoader.changeComponent(vacationComponent)
+            itemLoader.setComponent(vacationComponent, properties)
             break
         case ThermalControlUnit99Zones.IdScenarios:
-            itemLoader.changeComponent(scenarioComponent)
+            itemLoader.setComponent(scenarioComponent, properties)
             break
-
         }
-    }
-
-
-    function okClicked() {
-        closeElement();
-    }
-
-    function cancelClicked() {
-        page.showAlert(element, "Modifiche non salvate. Continuare?")
     }
 
 
@@ -97,20 +98,61 @@ MenuElement {
         Component {
             id: holidayComponent
             Column {
+                property variant objModel
+
                 ControlDateTime {
                     text: qsTr("attivo fino al")
-                    date: "18/01/2012"
-                    time: "13:00"
+                    date: Qt.formatDate(objModel.date, "dd/MM/yyyy")
+                    time: Qt.formatTime(objModel.time, "hh:mm")
                 }
+
                 ControlUpDown {
+                    id: programSelector
+                    function scrollProgram(offset) {
+                        var next = objModel.programIndex + offset
+                        next = (next + objModel.programCount) % objModel.programCount
+                        objModel.programIndex = next
+                    }
+                    onUpClicked: programSelector.scrollProgram(-1)
+                    onDownClicked: programSelector.scrollProgram(1)
                     title: qsTr("programma successivo")
-                    text: "settimanale P1"
-//                    onUpClicked: changeMode();
-//                    onDownClicked: changeMode();
+                    text: qsTr("settimanale ") + objModel.programDescription
                 }
+
                 ButtonOkCancel {
-                    onCancelClicked: element.cancelClicked();
-                    onOkClicked: element.okClicked();
+                    onCancelClicked: {
+                        element.cancelClicked();
+                        objModel.reset();
+                    }
+
+                    onOkClicked: {
+                        element.okClicked()
+                        objModel.apply()
+                    }
+                }
+            }
+        }
+
+        Component {
+            id: manualComponent
+            Column {
+                property variant objModel
+                ControlMinusPlus {
+                    title: qsTr("temperatura impostata")
+                    text: objModel.temperature / 10 + "°C"
+                    onMinusClicked: objModel.temperature -= 5
+                    onPlusClicked: objModel.temperature += 5
+                }
+
+                ButtonOkCancel {
+                    onCancelClicked: {
+                        element.cancelClicked();
+                        objModel.reset();
+                    }
+                    onOkClicked: {
+                        element.okClicked()
+                        objModel.apply()
+                    }
                 }
             }
         }
@@ -118,9 +160,13 @@ MenuElement {
         Component {
             id: offComponent
             Column {
+                property variant objModel
                 ButtonOkCancel {
                     onCancelClicked: element.cancelClicked();
-                    onOkClicked: element.okClicked();
+                    onOkClicked: {
+                        element.okClicked()
+                        objModel.apply()
+                    }
                 }
             }
         }
@@ -128,9 +174,13 @@ MenuElement {
         Component {
             id: antifreezeComponent
             Column {
+                property variant objModel
                 ButtonOkCancel {
                     onCancelClicked: element.cancelClicked();
-                    onOkClicked: element.okClicked();
+                    onOkClicked: {
+                        element.okClicked()
+                        objModel.apply()
+                    }
                 }
             }
         }
@@ -138,20 +188,26 @@ MenuElement {
         Component {
             id: programsComponent
             Column {
-                ControlDateTime {
-                    text: qsTr("attivo fino al")
-                    date: "18/01/2012"
-                    time: "13:00"
-                }
+                property variant objModel
                 ControlUpDown {
+                    id: programSelector
+                    function scrollProgram(offset) {
+                        var next = objModel.programIndex + offset
+                        next = (next + objModel.programCount) % objModel.programCount
+                        objModel.programIndex = next
+                    }
+                    onUpClicked: programSelector.scrollProgram(-1)
+                    onDownClicked: programSelector.scrollProgram(1)
                     title: qsTr("programma successivo")
-                    text: "settimanale P1"
-//                    onUpClicked: changeMode();
-//                    onDownClicked: changeMode();
+                    text: qsTr("settimanale ") + objModel.programDescription
                 }
+
                 ButtonOkCancel {
                     onCancelClicked: element.cancelClicked();
-                    onOkClicked: element.okClicked();
+                    onOkClicked: {
+                        element.okClicked()
+                        objModel.apply()
+                    }
                 }
             }
         }
@@ -159,20 +215,37 @@ MenuElement {
         Component {
             id: vacationComponent
             Column {
+                property variant objModel
+
                 ControlDateTime {
                     text: qsTr("attivo fino al")
-                    date: "18/01/2012"
-                    time: "13:00"
+                    date: Qt.formatDate(objModel.date, "dd/MM/yyyy")
+                    time: Qt.formatTime(objModel.time, "hh:mm")
                 }
+
                 ControlUpDown {
+                    id: programSelector
+                    function scrollProgram(offset) {
+                        var next = objModel.programIndex + offset
+                        next = (next + objModel.programCount) % objModel.programCount
+                        objModel.programIndex = next
+                    }
+                    onUpClicked: programSelector.scrollProgram(-1)
+                    onDownClicked: programSelector.scrollProgram(1)
                     title: qsTr("programma successivo")
-                    text: "settimanale P1"
-//                    onUpClicked: changeMode();
-//                    onDownClicked: changeMode();
+                    text: qsTr("settimanale ") + objModel.programDescription
                 }
+
                 ButtonOkCancel {
-                    onCancelClicked: element.cancelClicked();
-                    onOkClicked: element.okClicked();
+                    onCancelClicked: {
+                        element.cancelClicked();
+                        objModel.reset();
+                    }
+
+                    onOkClicked: {
+                        element.okClicked()
+                        objModel.apply()
+                    }
                 }
             }
         }
@@ -180,6 +253,7 @@ MenuElement {
         Component {
             id: scenarioComponent
             Column {
+                property variant objModel: null
                 ControlUpDown {
                     title: qsTr("selezionato")
                     text: "scenario 1"
@@ -188,7 +262,11 @@ MenuElement {
                 }
                 ButtonOkCancel {
                     onCancelClicked: element.cancelClicked();
-                    onOkClicked: element.okClicked();
+                    onOkClicked: {
+                        element.okClicked()
+                        objModel.apply()
+                    }
+
                 }
             }
         }
@@ -197,33 +275,5 @@ MenuElement {
             id: itemLoader
             anchors.top: modalityItem.bottom
         }
-
-        /*
-        ControlMinusPlus {
-            id: itemTemperature
-            anchors.top: modalityItem.bottom
-            anchors.topMargin: 0
-            title: qsTr("temperatura impostata")
-            text: dataModel.temperature / 10 + "°"
-            onMinusClicked: dataModel.temperature -= 5
-            onPlusClicked: dataModel.temperature += 5
-        }
-
-        ControlUpDown {
-            id: itemMode
-            anchors.top: itemTemperature.bottom
-            anchors.topMargin: 0
-            title: qsTr("modo")
-            text: dataModel.mode == ThermalControlUnit99Zones.SummerMode ? qsTr("estate") : qsTr("inverno")
-
-            function changeMode() {
-                dataModel.mode = (dataModel.mode == ThermalControlUnit99Zones.SummerMode) ?
-                            ThermalControlUnit99Zones.WinterMode : ThermalControlUnit99Zones.SummerMode
-            }
-            onUpClicked: changeMode();
-            onDownClicked: changeMode();
-        }
-        */
-
     }
 }

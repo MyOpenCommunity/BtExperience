@@ -7,7 +7,7 @@ MenuElement {
     height: 50 * itemList.count
     width: 212
 
-    signal modalitySelected(string modalityName, int modalityId)
+    signal modalitySelected(variant obj)
 
     ListView {
         id: itemList
@@ -19,7 +19,7 @@ MenuElement {
         delegate: MenuItemDelegate {
             onClicked: {
                 var obj = itemList.model.getObject(model.index)
-                element.modalitySelected(obj.name, obj.objectId)
+                element.modalitySelected(obj)
             }
         }
 

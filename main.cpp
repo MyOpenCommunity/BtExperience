@@ -7,6 +7,7 @@
 #include "objectlistmodel.h"
 #include "lightobjects.h"
 #include "thermalobjects.h"
+#include "thermalprobes.h"
 
 #include "openclient.h"
 #include "frame_classes.h"

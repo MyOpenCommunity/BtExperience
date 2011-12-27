@@ -10,8 +10,8 @@
 class ThermalDevice;
 class ThermalDevice4Zones;
 class ThermalDevice99Zones;
-class ControlledProbeDevice;
 class ObjectListModel;
+class ThermalControlUnitState;
 
 typedef QPair<int, QString> ThermalRegulationProgram;
 typedef QList<ThermalRegulationProgram> ThermalRegulationProgramList;
@@ -22,7 +22,6 @@ class ThermalControlUnit : public ObjectInterface
     Q_OBJECT
     Q_ENUMS(ModeType)
     Q_ENUMS(ThermalControlUnitId)
-    Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature NOTIFY temperatureChanged)
     Q_PROPERTY(ModeType mode READ getMode WRITE setMode NOTIFY modeChanged)
     Q_PROPERTY(ObjectListModel *modalities READ getModalities NOTIFY modalitiesChanged)
 
@@ -32,6 +31,7 @@ public:
         IdHoliday,
         IdOff,
         IdAntifreeze,
+        IdManual,
         IdWeeklyPrograms,
         IdVacation,
         IdScenarios
@@ -54,23 +54,22 @@ public:
 
     virtual QString getName() const;
 
-    int getTemperature() const;
-    void setTemperature(int temp);
-
     ModeType getMode() const;
     void setMode(ModeType m);
 
     ThermalRegulationProgramList getPrograms() const;
 
-    virtual ObjectListModel *getModalities() const;
+    ObjectListModel *getModalities() const;
 
 signals:
-    void temperatureChanged();
     void modeChanged();
     void modalitiesChanged();
 
 protected slots:
     virtual void valueReceived(const DeviceValues &values_list);
+
+protected:
+    QList<ThermalControlUnitState*> objs;
 
 private:
     QString name;
@@ -111,8 +110,6 @@ public:
         return ObjectInterface::IdThermalControlUnit99;
     }
 
-    virtual ObjectListModel *getModalities() const;
-
     ThermalRegulationProgramList getScenarios() const;
 
 private:
@@ -137,6 +134,9 @@ public:
     }
 
     virtual QString getName() const;
+
+public slots:
+//    virtual void apply() = 0;
 
 
 protected:
@@ -178,19 +178,30 @@ public:
     void setTime(QTime time);
 
 public slots:
-    void apply();
+    virtual void apply();
+    void reset();
 
 signals:
     void programChanged();
     void dateChanged();
     void timeChanged();
 
+protected slots:
+    void valueReceived(const DeviceValues &values_list);
+
 private:
-    int programIndex;
-    QDate date;
-    QTime time;
     ThermalRegulationProgramList programs;
     int object_id;
+
+    struct Data
+    {
+        int programIndex;
+        QDate date;
+        QTime time;
+        bool operator==(const Data &other) { return programIndex == other.programIndex && date == other.date && time == other.time; }
+    };
+
+    Data current, to_apply;
 };
 
 
@@ -207,7 +218,7 @@ public:
     }
 
 public slots:
-    void apply();
+    virtual void apply();
 };
 
 
@@ -224,7 +235,45 @@ public:
     }
 
 public slots:
-    void apply();
+    virtual void apply();
+};
+
+
+class ThermalControlUnitManual : public ThermalControlUnitState
+{
+    Q_OBJECT
+    Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature NOTIFY temperatureChanged)
+
+public:
+    ThermalControlUnitManual(QString name, ThermalDevice *dev);
+
+    virtual int getObjectId() const
+    {
+        return ThermalControlUnit::IdManual;
+    }
+
+    int getTemperature() const;
+    void setTemperature(int temp);
+
+
+public slots:
+    virtual void apply();
+    void reset();
+
+signals:
+    void temperatureChanged();
+
+protected slots:
+    void valueReceived(const DeviceValues &values_list);
+
+private:
+    struct Data
+    {
+        int temperature;
+        bool operator==(const Data &other) { return temperature == other.temperature; }
+    };
+
+    Data current, to_apply;
 };
 
 
@@ -241,7 +290,7 @@ public:
     }
 
 public slots:
-    void apply();
+    virtual void apply();
 
 private:
     int program;
@@ -313,68 +362,6 @@ signals:
 private:
     ThermalDevice99Zones *dev;
     ThermalRegulationProgramList scenarios;
-};
-
-
-
-class ThermalControlledProbe : public ObjectInterface
-{
-    Q_OBJECT
-    Q_PROPERTY(ProbeStatus probeStatus READ getProbeStatus WRITE setProbeStatus NOTIFY probeStatusChanged)
-    Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
-    Q_PROPERTY(int setpoint READ getSetpoint WRITE setSetpoint NOTIFY setpointChanged)
-    Q_ENUMS(ProbeStatus)
-
-public:
-    enum ProbeStatus
-    {
-        Unknown,
-        Manual,
-        Auto,
-        Antifreeze,
-        Off
-    };
-
-    ThermalControlledProbe(QString name, QString key, ControlledProbeDevice *d);
-
-    virtual int getObjectId() const
-    {
-        return ObjectInterface::IdThermalControlledProbe;
-    }
-
-    virtual QString getObjectKey() const;
-
-    virtual ObjectCategory getCategory() const
-    {
-        return ObjectInterface::ThermalRegulation;
-    }
-
-    virtual QString getName() const;
-
-    ProbeStatus getProbeStatus() const;
-    void setProbeStatus(ProbeStatus st);
-
-    int getTemperature() const;
-
-    int getSetpoint() const;
-    void setSetpoint(int sp);
-
-signals:
-    void probeStatusChanged();
-    void temperatureChanged();
-    void setpointChanged();
-
-
-private slots:
-    void valueReceived(const DeviceValues &values_list);
-
-private:
-    QString name;
-    QString key;
-    ProbeStatus probe_status;
-    int setpoint;
-    int temperature;
-    ControlledProbeDevice *dev;
 };
 
 

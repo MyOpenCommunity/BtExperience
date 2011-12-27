@@ -67,13 +67,15 @@ HEADERS += \
     objectlistmodel.h \
     lightobjects.h \
     thermalobjects.h \
+    thermalprobes.h \
     objectinterface.h
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     objectlistmodel.cpp \
     lightobjects.cpp \
-    thermalobjects.cpp
+    thermalobjects.cpp \
+    thermalprobes.cpp
 
 
 HEADERS += \
