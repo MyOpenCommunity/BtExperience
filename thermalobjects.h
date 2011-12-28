@@ -142,7 +142,7 @@ public:
     virtual QString getName() const;
 
 public slots:
-    virtual void apply() {} // = 0;
+    virtual void apply() = 0;
     virtual void reset();
 
 protected:
