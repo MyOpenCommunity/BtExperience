@@ -22,25 +22,34 @@ Item {
     property string rootElement
     signal closed
 
-    ButtonBack {
-        id: backButton
+    Column {
+        id: buttonsColumn
+        width: backButton.width
+        spacing: 10
         anchors.topMargin: 33
         anchors.top: parent.top
         anchors.leftMargin: 0
         anchors.left: mainContainer.left
-        onClicked: Script.closeLastItem()
+
+        ButtonBack {
+            id: backButton
+            onClicked: Script.closeLastItem()
+        }
+
+        ButtonSystems {
+            onClicked: mainContainer.closed()
+        }
     }
+
 
     Item {
         id: clippingContainer
-        anchors.left: backButton.right
+        anchors.left: buttonsColumn.right
         anchors.leftMargin: itemsLeftMargin
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         width: parent.width
         clip: true
-
-
 
         Item {
             id: elementsContainer
