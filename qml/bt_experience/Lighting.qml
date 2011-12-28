@@ -29,13 +29,13 @@ Page {
     }
 
     MenuContainer {
-     id: menucontainer1
-     x: 122
-     y: 75
-     width: 828
-     height: 503
-     rootElement: "LightingItems.qml"
-     onClosed: Stack.popPage()
+         id: menucontainer1
+         x: 122
+         y: 75
+         width: 828
+         height: 503
+         rootElement: "LightingItems.qml"
+         onClosed: Stack.popPage()
     }
 }
 
