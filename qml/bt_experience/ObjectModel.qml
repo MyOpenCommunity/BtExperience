@@ -10,7 +10,7 @@ FilterListModel {
         case ObjectInterface.IdDimmer:
             return "Dimmer.qml"
         case ObjectInterface.IdThermalControlUnit99:
-            return "ThermalCentralUnit.qml"
+            return "ThermalControlUnit.qml"
         case ObjectInterface.IdThermalControlledProbe:
             return "ThermalControlledProbe.qml"
         default:

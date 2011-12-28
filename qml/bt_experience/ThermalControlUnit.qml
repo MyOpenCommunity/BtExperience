@@ -76,7 +76,7 @@ MenuElement {
             state: privateProps.current_element == 1 ? "selected" : ""
 
             onClicked: {
-                element.loadElement("ThermalCentralUnitSeasons.qml", seasonItem.name, element.dataModel)
+                element.loadElement("ThermalControlUnitSeasons.qml", seasonItem.name, element.dataModel)
                 if (privateProps.current_element != 1)
                     privateProps.current_element = 1
             }
@@ -89,7 +89,7 @@ MenuElement {
             state: privateProps.current_element == 2 ? "selected" : ""
 
             onClicked: {
-                element.loadElement("ThermalCentralUnitModalities.qml", modalityItem.name, element.dataModel)
+                element.loadElement("ThermalControlUnitModalities.qml", modalityItem.name, element.dataModel)
                 if ( privateProps.current_element != 2)
                     privateProps.current_element = 2
             }
