@@ -6,15 +6,21 @@
 
 #include <QObject>
 #include <QDateTime>
+#include <QList>
+#include <QPair>
+#include <QHash>
+#include <QString>
+#include <QVariant>
 
 class ThermalDevice;
 class ThermalDevice4Zones;
 class ThermalDevice99Zones;
 class ObjectListModel;
-class ThermalControlUnitState;
+class ThermalControlUnitObject;
 
 typedef QPair<int, QString> ThermalRegulationProgram;
 typedef QList<ThermalRegulationProgram> ThermalRegulationProgramList;
+typedef QHash<int, QVariant> ThermalRegulationState;
 
 
 class ThermalControlUnit : public ObjectInterface
@@ -69,7 +75,7 @@ protected slots:
     virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
-    QList<ThermalControlUnitState*> objs;
+    QList<ThermalControlUnitObject*> objs;
 
 private:
     QString name;
@@ -119,12 +125,12 @@ private:
 
 
 
-class ThermalControlUnitState : public ObjectInterface
+class ThermalControlUnitObject : public ObjectInterface
 {
     Q_OBJECT
 
 public:
-    ThermalControlUnitState(QString name, ThermalDevice *dev);
+    ThermalControlUnitObject(QString name, ThermalDevice *dev);
 
     virtual QString getObjectKey() const;
 
@@ -136,8 +142,11 @@ public:
     virtual QString getName() const;
 
 public slots:
-//    virtual void apply() = 0;
+    virtual void apply() {} // = 0;
+    virtual void reset();
 
+protected:
+    ThermalRegulationState current, to_apply;
 
 protected:
     ThermalDevice *dev;
@@ -145,18 +154,16 @@ protected:
 };
 
 
-class ThermalControlUnitTimedProgram : public ThermalControlUnitState
+class ThermalControlUnitProgram : public ThermalControlUnitObject
 {
     Q_OBJECT
     Q_PROPERTY(int programIndex READ getProgramIndex WRITE setProgramIndex NOTIFY programChanged)
     Q_PROPERTY(int programCount READ getProgramCount)
     Q_PROPERTY(int programId READ getProgramId NOTIFY programChanged)
     Q_PROPERTY(QString programDescription READ getProgramDescription NOTIFY programChanged)
-    Q_PROPERTY(QDate date READ getDate WRITE setDate NOTIFY dateChanged)
-    Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
 
 public:
-    ThermalControlUnitTimedProgram(QString name, int object_id, const ThermalControlUnit *unit, ThermalDevice *dev);
+    ThermalControlUnitProgram(QString name, int object_id, const ThermalControlUnit *unit, ThermalDevice *dev);
 
     virtual int getObjectId() const
     {
@@ -171,6 +178,30 @@ public:
     int getProgramId() const;
     QString getProgramDescription() const;
 
+public slots:
+    virtual void apply();
+
+signals:
+    void programChanged();
+
+protected slots:
+    void valueReceived(const DeviceValues &values_list);
+
+private:
+    ThermalRegulationProgramList programs;
+    int object_id;
+};
+
+
+class ThermalControlUnitTimedProgram : public ThermalControlUnitProgram
+{
+    Q_OBJECT
+    Q_PROPERTY(QDate date READ getDate WRITE setDate NOTIFY dateChanged)
+    Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
+
+public:
+    ThermalControlUnitTimedProgram(QString name, int object_id, const ThermalControlUnit *unit, ThermalDevice *dev);
+
     QDate getDate() const;
     void setDate(QDate date);
 
@@ -179,33 +210,14 @@ public:
 
 public slots:
     virtual void apply();
-    void reset();
 
 signals:
-    void programChanged();
     void dateChanged();
     void timeChanged();
-
-protected slots:
-    void valueReceived(const DeviceValues &values_list);
-
-private:
-    ThermalRegulationProgramList programs;
-    int object_id;
-
-    struct Data
-    {
-        int programIndex;
-        QDate date;
-        QTime time;
-        bool operator==(const Data &other) { return programIndex == other.programIndex && date == other.date && time == other.time; }
-    };
-
-    Data current, to_apply;
 };
 
 
-class ThermalControlUnitOff : public ThermalControlUnitState
+class ThermalControlUnitOff : public ThermalControlUnitObject
 {
     Q_OBJECT
 
@@ -222,7 +234,7 @@ public slots:
 };
 
 
-class ThermalControlUnitAntifreeze : public ThermalControlUnitState
+class ThermalControlUnitAntifreeze : public ThermalControlUnitObject
 {
     Q_OBJECT
 
@@ -239,7 +251,7 @@ public slots:
 };
 
 
-class ThermalControlUnitManual : public ThermalControlUnitState
+class ThermalControlUnitManual : public ThermalControlUnitObject
 {
     Q_OBJECT
     Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature NOTIFY temperatureChanged)
@@ -258,69 +270,16 @@ public:
 
 public slots:
     virtual void apply();
-    void reset();
 
 signals:
     void temperatureChanged();
 
 protected slots:
     void valueReceived(const DeviceValues &values_list);
-
-private:
-    struct Data
-    {
-        int temperature;
-        bool operator==(const Data &other) { return temperature == other.temperature; }
-    };
-
-    Data current, to_apply;
 };
 
 
-class ThermalControlUnitWeeklyProgram : public ThermalControlUnitState
-{
-    Q_OBJECT
-
-public:
-    ThermalControlUnitWeeklyProgram(QString name, int program, ThermalDevice *dev);
-
-    virtual int getObjectId() const
-    {
-        return -1;
-    }
-
-public slots:
-    virtual void apply();
-
-private:
-    int program;
-};
-
-
-class ThermalControlUnitWeeklyPrograms : public ThermalControlUnitState
-{
-    Q_OBJECT
-    Q_PROPERTY(ObjectListModel *programs READ getPrograms NOTIFY programsChanged)
-
-public:
-    ThermalControlUnitWeeklyPrograms(QString name, const ThermalControlUnit *unit, ThermalDevice *dev);
-
-    virtual int getObjectId() const
-    {
-        return ThermalControlUnit::IdWeeklyPrograms;
-    }
-
-    ObjectListModel *getPrograms() const;
-
-signals:
-    void programsChanged();
-
-private:
-    ThermalRegulationProgramList programs;
-};
-
-
-class ThermalControlUnitScenario : public ThermalControlUnitState
+class ThermalControlUnitScenario : public ThermalControlUnitObject
 {
     Q_OBJECT
 
@@ -341,7 +300,7 @@ private:
 };
 
 
-class ThermalControlUnitScenarios : public ThermalControlUnitState
+class ThermalControlUnitScenarios : public ThermalControlUnitObject
 {
     Q_OBJECT
     Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)

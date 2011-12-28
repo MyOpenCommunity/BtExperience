@@ -6,6 +6,15 @@
 #include <QDebug>
 
 
+enum ThermalRegulationStateKeys
+{
+    PROGRAM_INDEX,
+    DATE,
+    TIME,
+    TEMPERATURE
+};
+
+
 ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d)
 {
     name = _name;
@@ -15,7 +24,7 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
     mode = SummerMode;
     programs << qMakePair(1, QString("P1")) << qMakePair(3, QString("P3")) << qMakePair(5, QString("P5"));
 
-    objs << new ThermalControlUnitWeeklyPrograms("Settimanale", this, dev);
+    objs << new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, this, dev);
     objs << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, this, dev);
     objs << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, this, dev);
     objs << new ThermalControlUnitAntifreeze("Antigelo", dev);
@@ -103,89 +112,128 @@ ThermalRegulationProgramList ThermalControlUnit99Zones::getScenarios() const
     return scenarios;
 }
 
-ThermalControlUnitState::ThermalControlUnitState(QString _name, ThermalDevice *_dev)
+
+ThermalControlUnitObject::ThermalControlUnitObject(QString _name, ThermalDevice *_dev)
 {
     dev = _dev;
     name = _name;
 }
 
-QString ThermalControlUnitState::getObjectKey() const
+QString ThermalControlUnitObject::getObjectKey() const
 {
     return QString();
 }
 
-QString ThermalControlUnitState::getName() const
+QString ThermalControlUnitObject::getName() const
 {
     return name;
 }
 
+void ThermalControlUnitObject::reset()
+{
+    to_apply = current;
+}
 
-ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, const ThermalControlUnit *unit, ThermalDevice *dev) :
-    ThermalControlUnitState(name, dev)
+
+ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_id, const ThermalControlUnit *unit, ThermalDevice *dev) :
+    ThermalControlUnitObject(name, dev)
 {
     object_id = _object_id;
     programs = unit->getPrograms();
-    current.programIndex = 0;
-    current.date = QDate::currentDate();
-    current.time = QTime::currentTime();
+    current[PROGRAM_INDEX] = 0;
     to_apply = current;
     connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
-int ThermalControlUnitTimedProgram::getProgramCount() const
+int ThermalControlUnitProgram::getProgramCount() const
 {
     return programs.count();
 }
 
-int ThermalControlUnitTimedProgram::getProgramIndex() const
+int ThermalControlUnitProgram::getProgramIndex() const
 {
-    return to_apply.programIndex;
+    return to_apply[PROGRAM_INDEX].toInt();
 }
 
-void ThermalControlUnitTimedProgram::setProgramIndex(int index)
+void ThermalControlUnitProgram::setProgramIndex(int index)
 {
-    if (to_apply.programIndex == index || index < 0 || index >= programs.count())
+    if (to_apply[PROGRAM_INDEX].toInt() == index || index < 0 || index >= programs.count())
         return;
 
-    to_apply.programIndex = index;
+    to_apply[PROGRAM_INDEX] = index;
     emit programChanged();
 }
 
-int ThermalControlUnitTimedProgram::getProgramId() const
+int ThermalControlUnitProgram::getProgramId() const
 {
-    return programs[to_apply.programIndex].first;
+    return programs[to_apply[PROGRAM_INDEX].toInt()].first;
 }
 
-QString ThermalControlUnitTimedProgram::getProgramDescription() const
+QString ThermalControlUnitProgram::getProgramDescription() const
 {
-    return programs[to_apply.programIndex].second;
+    return programs[to_apply[PROGRAM_INDEX].toInt()].second;
+}
+
+void ThermalControlUnitProgram::apply()
+{
+    if (to_apply == current)
+        return;
+
+    current = to_apply;
+
+    dev->setWeekProgram(programs[to_apply[PROGRAM_INDEX].toInt()].first);
+}
+
+void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
+{
+    if (values_list.contains(ThermalDevice99Zones::DIM_PROGRAM)) {
+        int val = values_list[ThermalDevice99Zones::DIM_PROGRAM].toInt();
+        for (int i = 0; i < programs.length(); ++i) {
+            if (programs[i].first == val) {
+                qDebug() << "ThermalControlUnitProgram program changed:" << val;
+                current[PROGRAM_INDEX] = i;
+                to_apply = current;
+                emit programChanged();
+                break;
+            }
+        }
+    }
+}
+
+
+ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, const ThermalControlUnit *unit, ThermalDevice *dev) :
+    ThermalControlUnitProgram(name, _object_id, unit, dev)
+{
+    current[DATE] = QDate::currentDate();
+    current[TIME] = QTime::currentTime();
+    to_apply = current;
 }
 
 QDate ThermalControlUnitTimedProgram::getDate() const
 {
-    return to_apply.date;
+    return to_apply[DATE].toDate();
 }
 
-void ThermalControlUnitTimedProgram::setDate(QDate _date)
+void ThermalControlUnitTimedProgram::setDate(QDate date)
 {
-    if (to_apply.date == _date)
+    if (to_apply[DATE].toDate() == date)
         return;
 
-    to_apply.date = _date;
+    to_apply[DATE] = date;
     emit dateChanged();
 }
 
 QTime ThermalControlUnitTimedProgram::getTime() const
 {
-    return to_apply.time;
+    return to_apply[TIME].toTime();
 }
 
-void ThermalControlUnitTimedProgram::setTime(QTime _time)
+void ThermalControlUnitTimedProgram::setTime(QTime time)
 {
-    if (to_apply.time == _time)
+    if (to_apply[TIME].toTime() == time)
         return;
 
-    to_apply.time = _time;
+    to_apply[TIME] = time;
     emit timeChanged();
 }
 
@@ -196,36 +244,19 @@ void ThermalControlUnitTimedProgram::apply()
 
     current = to_apply;
 
-    if (object_id == ThermalControlUnit::IdHoliday)
-        dev->setWeekendDateTime(to_apply.date, to_apply.time, programs[to_apply.programIndex].first);
+    int program_id = getProgramId();
+    const QDate &date = to_apply[DATE].toDate();
+    const QTime &time = to_apply[TIME].toTime();
+
+    if (getObjectId() == ThermalControlUnit::IdHoliday)
+        dev->setWeekendDateTime(date, time, program_id);
     else
-        dev->setHolidayDateTime(to_apply.date, to_apply.time, programs[to_apply.programIndex].first);
+        dev->setHolidayDateTime(date, time, program_id);
 }
 
-void ThermalControlUnitTimedProgram::reset()
-{
-    to_apply = current;
-}
-
-void ThermalControlUnitTimedProgram::valueReceived(const DeviceValues &values_list)
-{
-    if (values_list.contains(ThermalDevice99Zones::DIM_PROGRAM)) {
-        int val = values_list[ThermalDevice99Zones::DIM_PROGRAM].toInt();
-        for (int i = 0; i < programs.length(); ++i) {
-            if (programs[i].first == val) {
-                qDebug() << "ThermalControlUnitTimedProgram program changed:" << val;
-                current.programIndex = i;
-                emit programChanged();
-                break;
-            }
-            else
-                qWarning() << "ThermalControlUnitTimedProgram unknown program:" << val;
-        }
-    }
-}
 
 ThermalControlUnitOff::ThermalControlUnitOff(QString name, ThermalDevice *dev) :
-    ThermalControlUnitState(name, dev)
+    ThermalControlUnitObject(name, dev)
 {
 }
 
@@ -236,22 +267,22 @@ void ThermalControlUnitOff::apply()
 
 
 ThermalControlUnitManual::ThermalControlUnitManual(QString name, ThermalDevice *dev) :
-    ThermalControlUnitState(name, dev)
+    ThermalControlUnitObject(name, dev)
 {
-    current.temperature = 0;
+    current[TEMPERATURE] = 0;
     to_apply = current;
     connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
 int ThermalControlUnitManual::getTemperature() const
 {
-    return bt2Celsius(to_apply.temperature);
+    return bt2Celsius(to_apply[TEMPERATURE].toInt());
 }
 
 void ThermalControlUnitManual::setTemperature(int temp)
 {
-    if (celsius2Bt(temp) != to_apply.temperature) {
-        to_apply.temperature = celsius2Bt(temp);
+    if (celsius2Bt(temp) != to_apply[TEMPERATURE].toInt()) {
+        to_apply[TEMPERATURE] = celsius2Bt(temp);
         emit temperatureChanged();
     }
 }
@@ -262,21 +293,17 @@ void ThermalControlUnitManual::apply()
         return;
 
     current = to_apply;
-    dev->setManualTemp(to_apply.temperature);
-}
-
-void ThermalControlUnitManual::reset()
-{
-    to_apply = current;
+    dev->setManualTemp(to_apply[TEMPERATURE].toInt());
 }
 
 void ThermalControlUnitManual::valueReceived(const DeviceValues &values_list)
 {
     if (values_list.contains(ThermalDevice::DIM_TEMPERATURE)) {
         int val = values_list[ThermalDevice::DIM_TEMPERATURE].toInt();
-        if (val != current.temperature) {
+        if (val != current[TEMPERATURE].toInt()) {
             qDebug() << "ThermalControlUnitManual temperature received:" << val;
-            current.temperature = val;
+            current[TEMPERATURE] = val;
+            to_apply = current;
             emit temperatureChanged();
         }
     }
@@ -284,7 +311,7 @@ void ThermalControlUnitManual::valueReceived(const DeviceValues &values_list)
 
 
 ThermalControlUnitAntifreeze::ThermalControlUnitAntifreeze(QString name, ThermalDevice *dev) :
-    ThermalControlUnitState(name, dev)
+    ThermalControlUnitObject(name, dev)
 {
 }
 
@@ -294,39 +321,8 @@ void ThermalControlUnitAntifreeze::apply()
 }
 
 
-ThermalControlUnitWeeklyProgram::ThermalControlUnitWeeklyProgram(QString name, int _program, ThermalDevice *dev) :
-    ThermalControlUnitState(name, dev)
-{
-    program = _program;
-}
-
-void ThermalControlUnitWeeklyProgram::apply()
-{
-    dev->setWeekProgram(program);
-}
-
-
-ThermalControlUnitWeeklyPrograms::ThermalControlUnitWeeklyPrograms(QString name, const ThermalControlUnit *unit, ThermalDevice *dev) :
-    ThermalControlUnitState(name, dev)
-{
-    programs = unit->getPrograms();
-}
-
-ObjectListModel *ThermalControlUnitWeeklyPrograms::getPrograms() const
-{
-    ObjectListModel *items = new ObjectListModel;
-
-    foreach (const ThermalRegulationProgram &p, programs)
-        items->appendRow(new ThermalControlUnitWeeklyProgram(p.second, p.first, dev));
-
-    items->reparentObjects();
-
-    return items;
-}
-
-
 ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, int _scenario, ThermalDevice99Zones *_dev) :
-    ThermalControlUnitState(name, _dev)
+    ThermalControlUnitObject(name, _dev)
 {
     scenario = _scenario;
     dev = _dev;
@@ -339,7 +335,7 @@ void ThermalControlUnitScenario::apply()
 
 
 ThermalControlUnitScenarios::ThermalControlUnitScenarios(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *_dev) :
-    ThermalControlUnitState(name, _dev)
+    ThermalControlUnitObject(name, _dev)
 {
     scenarios = unit->getScenarios();
     dev = _dev;
