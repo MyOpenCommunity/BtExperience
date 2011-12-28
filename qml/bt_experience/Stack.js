@@ -21,9 +21,20 @@ function openPage(filename) {
         changing_page = true
 
     var page_component = Qt.createComponent(filename)
-    var page = page_component.createObject(container)
-    pushPage(page)
-    return page
+    // The component status (like the Component.Ready that has 1 as value) is not currently
+    // available on js files that uses .pragma library declaration.
+    // This should be fixed in the future:
+    // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
+    if (page_component.status == 1) {
+        var page = page_component.createObject(container)
+        if (page === null)
+            console.log('Error on creating the object for the page: ' + filename)
+
+        pushPage(page)
+        return page
+    }
+    console.log('Error loading the page: ' + filename + ' error: ' + page_component.errorString())
+    return null
 }
 
 function pushPage(page) {
