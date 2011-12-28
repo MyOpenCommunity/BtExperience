@@ -194,8 +194,8 @@ MenuElement {
                     }
                     onUpClicked: programSelector.scrollProgram(-1)
                     onDownClicked: programSelector.scrollProgram(1)
-                    title: qsTr("programma successivo")
-                    text: qsTr("settimanale ") + objModel.programDescription
+                    title: qsTr("selezionato")
+                    text: objModel.programDescription
                 }
 
                 ButtonOkCancel {
