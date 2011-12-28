@@ -159,28 +159,24 @@ MenuElement {
 
         Component {
             id: offComponent
-            Column {
+            ButtonOkCancel {
                 property variant objModel
-                ButtonOkCancel {
-                    onCancelClicked: element.cancelClicked();
-                    onOkClicked: {
-                        element.okClicked()
-                        objModel.apply()
-                    }
+                onCancelClicked: element.cancelClicked();
+                onOkClicked: {
+                    element.okClicked()
+                    objModel.apply()
                 }
             }
         }
 
         Component {
             id: antifreezeComponent
-            Column {
+            ButtonOkCancel {
                 property variant objModel
-                ButtonOkCancel {
-                    onCancelClicked: element.cancelClicked();
-                    onOkClicked: {
-                        element.okClicked()
-                        objModel.apply()
-                    }
+                onCancelClicked: element.cancelClicked();
+                onOkClicked: {
+                    element.okClicked()
+                    objModel.apply()
                 }
             }
         }
@@ -253,20 +249,26 @@ MenuElement {
         Component {
             id: scenarioComponent
             Column {
-                property variant objModel: null
+                property variant objModel
                 ControlUpDown {
+                    id: scenarioSelector
+                    function scrollScenario(offset) {
+                        var next = objModel.scenarioIndex + offset
+                        next = (next + objModel.scenarioCount) % objModel.scenarioCount
+                        objModel.scenarioIndex = next
+                    }
+                    onUpClicked: scenarioSelector.scrollScenario(-1)
+                    onDownClicked: scenarioSelector.scrollScenario(1)
                     title: qsTr("selezionato")
-                    text: "scenario 1"
-//                    onUpClicked: changeMode();
-//                    onDownClicked: changeMode();
+                    text: qsTr("scenario ") + objModel.scenarioDescription
                 }
+
                 ButtonOkCancel {
                     onCancelClicked: element.cancelClicked();
                     onOkClicked: {
                         element.okClicked()
                         objModel.apply()
                     }
-
                 }
             }
         }

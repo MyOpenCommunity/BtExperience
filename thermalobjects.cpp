@@ -11,7 +11,8 @@ enum ThermalRegulationStateKeys
     PROGRAM_INDEX,
     DATE,
     TIME,
-    TEMPERATURE
+    TEMPERATURE,
+    SCENARIO_INDEX
 };
 
 
@@ -104,7 +105,7 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 {
     dev = d;
     scenarios << qMakePair(1, QString("S1")) << qMakePair(3, QString("S3")) << qMakePair(5, QString("S5"));
-    objs << new ThermalControlUnitScenarios("Scenari", this, dev);
+    objs << new ThermalControlUnitScenario("Scenari", this, dev);
 }
 
 ThermalRegulationProgramList ThermalControlUnit99Zones::getScenarios() const
@@ -321,36 +322,67 @@ void ThermalControlUnitAntifreeze::apply()
 }
 
 
-ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, int _scenario, ThermalDevice99Zones *_dev) :
+ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *_dev) :
     ThermalControlUnitObject(name, _dev)
 {
-    scenario = _scenario;
     dev = _dev;
+    scenarios = unit->getScenarios();
+    current[SCENARIO_INDEX] = 0;
+    to_apply = current;
+    connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
+}
+
+int ThermalControlUnitScenario::getScenarioCount() const
+{
+    return scenarios.count();
+}
+
+int ThermalControlUnitScenario::getScenarioIndex() const
+{
+    return to_apply[SCENARIO_INDEX].toInt();
+}
+
+void ThermalControlUnitScenario::setScenarioIndex(int index)
+{
+    if (to_apply[SCENARIO_INDEX].toInt() == index || index < 0 || index >= scenarios.count())
+        return;
+
+    to_apply[SCENARIO_INDEX] = index;
+    emit scenarioChanged();
+}
+
+int ThermalControlUnitScenario::getScenarioId() const
+{
+    return scenarios[to_apply[SCENARIO_INDEX].toInt()].first;
+}
+
+QString ThermalControlUnitScenario::getScenarioDescription() const
+{
+    return scenarios[to_apply[SCENARIO_INDEX].toInt()].second;
 }
 
 void ThermalControlUnitScenario::apply()
 {
-    dev->setScenario(scenario);
+    if (to_apply == current)
+        return;
+
+    current = to_apply;
+
+    dev->setScenario(scenarios[to_apply[SCENARIO_INDEX].toInt()].first);
 }
 
-
-ThermalControlUnitScenarios::ThermalControlUnitScenarios(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *_dev) :
-    ThermalControlUnitObject(name, _dev)
+void ThermalControlUnitScenario::valueReceived(const DeviceValues &values_list)
 {
-    scenarios = unit->getScenarios();
-    dev = _dev;
+    if (values_list.contains(ThermalDevice99Zones::DIM_SCENARIO)) {
+        int val = values_list[ThermalDevice99Zones::DIM_SCENARIO].toInt();
+        for (int i = 0; i < scenarios.length(); ++i) {
+            if (scenarios[i].first == val) {
+                qDebug() << "ThermalControlUnitScenario scenario changed:" << val;
+                current[SCENARIO_INDEX] = i;
+                to_apply = current;
+                emit scenarioChanged();
+                break;
+            }
+        }
+    }
 }
-
-ObjectListModel *ThermalControlUnitScenarios::getScenarios() const
-{
-    ObjectListModel *items = new ObjectListModel;
-
-    foreach (const ThermalRegulationProgram &p, scenarios)
-        items->appendRow(new ThermalControlUnitScenario(p.second, p.first, dev));
-
-    items->reparentObjects();
-
-    return items;
-}
-
-

@@ -282,41 +282,35 @@ protected slots:
 class ThermalControlUnitScenario : public ThermalControlUnitObject
 {
     Q_OBJECT
+    Q_PROPERTY(int scenarioIndex READ getScenarioIndex WRITE setScenarioIndex NOTIFY scenarioChanged)
+    Q_PROPERTY(int scenarioCount READ getScenarioCount)
+    Q_PROPERTY(int scenarioId READ getScenarioId NOTIFY scenarioChanged)
+    Q_PROPERTY(QString scenarioDescription READ getScenarioDescription NOTIFY scenarioChanged)
 
 public:
-    ThermalControlUnitScenario(QString name, int scenario, ThermalDevice99Zones *dev);
-
-    virtual int getObjectId() const
-    {
-        return -1;
-    }
-
-public slots:
-    void apply();
-
-private:
-    ThermalDevice99Zones *dev;
-    int scenario;
-};
-
-
-class ThermalControlUnitScenarios : public ThermalControlUnitObject
-{
-    Q_OBJECT
-    Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)
-
-public:
-    ThermalControlUnitScenarios(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *dev);
+    ThermalControlUnitScenario(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *dev);
 
     virtual int getObjectId() const
     {
         return ThermalControlUnit::IdScenarios;
     }
 
-    ObjectListModel *getScenarios() const;
+    int getScenarioCount() const;
+
+    int getScenarioIndex() const;
+    void setScenarioIndex(int index);
+
+    int getScenarioId() const;
+    QString getScenarioDescription() const;
+
+public slots:
+    virtual void apply();
 
 signals:
-    void scenariosChanged();
+    void scenarioChanged();
+
+protected slots:
+    void valueReceived(const DeviceValues &values_list);
 
 private:
     ThermalDevice99Zones *dev;
