@@ -134,8 +134,8 @@ MenuElement {
 
                 ButtonOkCancel {
                     onCancelClicked: {
-                        element.cancelClicked();
-                        objModel.reset();
+                        element.cancelClicked()
+                        objModel.reset()
                     }
 
                     onOkClicked: {
@@ -159,8 +159,8 @@ MenuElement {
 
                 ButtonOkCancel {
                     onCancelClicked: {
-                        element.cancelClicked();
-                        objModel.reset();
+                        element.cancelClicked()
+                        objModel.reset()
                     }
                     onOkClicked: {
                         element.okClicked()
@@ -174,7 +174,7 @@ MenuElement {
             id: offComponent
             ButtonOkCancel {
                 property variant objModel
-                onCancelClicked: element.cancelClicked();
+                onCancelClicked: element.cancelClicked() // Nothing to reset
                 onOkClicked: {
                     element.okClicked()
                     objModel.apply()
@@ -186,7 +186,7 @@ MenuElement {
             id: antifreezeComponent
             ButtonOkCancel {
                 property variant objModel
-                onCancelClicked: element.cancelClicked();
+                onCancelClicked: element.cancelClicked() // Nothing to reset
                 onOkClicked: {
                     element.okClicked()
                     objModel.apply()
@@ -212,7 +212,10 @@ MenuElement {
                 }
 
                 ButtonOkCancel {
-                    onCancelClicked: element.cancelClicked();
+                    onCancelClicked: {
+                        element.cancelClicked()
+                        objModel.reset()
+                    }
                     onOkClicked: {
                         element.okClicked()
                         objModel.apply()
@@ -247,8 +250,8 @@ MenuElement {
 
                 ButtonOkCancel {
                     onCancelClicked: {
-                        element.cancelClicked();
-                        objModel.reset();
+                        element.cancelClicked()
+                        objModel.reset()
                     }
 
                     onOkClicked: {
@@ -277,7 +280,10 @@ MenuElement {
                 }
 
                 ButtonOkCancel {
-                    onCancelClicked: element.cancelClicked();
+                    onCancelClicked: {
+                        element.cancelClicked()
+                        objModel.reset()
+                    }
                     onOkClicked: {
                         element.okClicked()
                         objModel.apply()
