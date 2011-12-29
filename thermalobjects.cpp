@@ -22,7 +22,7 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
     key = _key;
     dev = d;
     connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
-    mode = SummerMode;
+    season = Summer;
     programs << qMakePair(1, QString("P1")) << qMakePair(3, QString("P3")) << qMakePair(5, QString("P5"));
     current_modality = -1;
 
@@ -45,14 +45,14 @@ QString ThermalControlUnit::getName() const
     return name;
 }
 
-ThermalControlUnit::ModeType ThermalControlUnit::getMode() const
+ThermalControlUnit::SeasonType ThermalControlUnit::getSeason() const
 {
-    return mode;
+    return season;
 }
 
-void ThermalControlUnit::setMode(ModeType m)
+void ThermalControlUnit::setSeason(SeasonType s)
 {
-    if (m == SummerMode)
+    if (s == Summer)
         dev->setSummer();
     else
         dev->setWinter();
@@ -85,14 +85,14 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
     while (it != values_list.constEnd()) {
         if (it.key() == ThermalDevice::DIM_SEASON) {
 //            qDebug() << "Ricevuto season: " << it.value().toInt();
-            ThermalDevice::Season season = static_cast<ThermalDevice::Season>(it.value().toInt());
-            if (season == ThermalDevice::SE_SUMMER && mode != SummerMode) {
-                mode = SummerMode;
-                emit modeChanged();
+            ThermalDevice::Season s = static_cast<ThermalDevice::Season>(it.value().toInt());
+            if (s == ThermalDevice::SE_SUMMER && season != Summer) {
+                season = Summer;
+                emit seasonChanged();
             }
-            else if (season == ThermalDevice::SE_WINTER && mode != WinterMode) {
-                mode = WinterMode;
-                emit modeChanged();
+            else if (s == ThermalDevice::SE_WINTER && season != Winter) {
+                season = Winter;
+                emit seasonChanged();
             }
         }
         else if (it.key() == ThermalDevice::DIM_STATUS) {

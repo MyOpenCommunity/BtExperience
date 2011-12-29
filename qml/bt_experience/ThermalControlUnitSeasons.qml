@@ -14,37 +14,30 @@ MenuElement {
 
         function selectItem() {
             for (var i = 0; i < modelList.count; i++) {
-                if (modelList.get(i).type === dataModel.mode) {
-                    itemList.currentIndex = i;
-                    return;
-                }
-                itemList.currentIndex = -1
+                if (modelList.get(i).type === dataModel.season)
+                    return i;
             }
+            return -1
         }
 
         delegate: MenuItemDelegate {
             selectOnClick: false
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                dataModel.mode = clickedItem.type
+                dataModel.season = clickedItem.type
             }
-        }
-
-        Connections {
-            target: dataModel
-            onModeChanged: itemList.selectItem()
         }
 
         model: ListModel {
             id: modelList
             ListElement {
                 name: "estate"
-                type: ThermalControlUnit99Zones.SummerMode
+                type: ThermalControlUnit99Zones.Summer
             }
 
             ListElement {
                 name: "inverno"
-                type: ThermalControlUnit99Zones.WinterMode
+                type: ThermalControlUnit99Zones.Winter
             }
         }
 

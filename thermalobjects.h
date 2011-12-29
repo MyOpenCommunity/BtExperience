@@ -27,9 +27,9 @@ typedef QHash<int, QVariant> ThermalRegulationState;
 class ThermalControlUnit : public ObjectInterface
 {
     Q_OBJECT
-    Q_ENUMS(ModeType)
+    Q_ENUMS(SeasonType)
     Q_ENUMS(ThermalControlUnitId)
-    Q_PROPERTY(ModeType mode READ getMode WRITE setMode NOTIFY modeChanged)
+    Q_PROPERTY(SeasonType season READ getSeason WRITE setSeason NOTIFY seasonChanged)
     Q_PROPERTY(ObjectListModel *modalities READ getModalities NOTIFY modalitiesChanged)
     Q_PROPERTY(QObject *currentModality READ getCurrentModality NOTIFY currentModalityChanged)
 
@@ -45,10 +45,10 @@ public:
         IdScenarios
     };
 
-    enum ModeType
+    enum SeasonType
     {
-        SummerMode,
-        WinterMode
+        Summer,
+        Winter
     };
 
     ThermalControlUnit(QString name, QString key, ThermalDevice *d);
@@ -62,8 +62,8 @@ public:
 
     virtual QString getName() const;
 
-    ModeType getMode() const;
-    void setMode(ModeType m);
+    SeasonType getSeason() const;
+    void setSeason(SeasonType s);
 
     ThermalRegulationProgramList getPrograms() const;
 
@@ -72,7 +72,7 @@ public:
     QObject* getCurrentModality() const;
 
 signals:
-    void modeChanged();
+    void seasonChanged();
     void modalitiesChanged();
     void currentModalityChanged();
 
@@ -86,7 +86,7 @@ private:
     QString name;
     QString key;
     int temperature;
-    ModeType mode;
+    SeasonType season;
     ThermalRegulationProgramList programs;
     ThermalDevice *dev;
     int current_modality;
