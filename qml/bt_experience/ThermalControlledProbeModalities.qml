@@ -16,12 +16,10 @@ MenuElement {
 
         function selectItem() {
             for (var i = 0; i < modelList.count; i++) {
-                if (modelList.get(i).type === dataModel.probeStatus) {
-                    itemList.currentIndex = i;
-                    return;
-                }
-                itemList.currentIndex = -1
+                if (modelList.get(i).type === dataModel.probeStatus)
+                    return i;
             }
+            return -1
         }
 
         delegate: MenuItemDelegate {
@@ -30,11 +28,6 @@ MenuElement {
                 var clickedItem = modelList.get(index)
                 dataModel.probeStatus = clickedItem.type
             }
-        }
-
-        Connections {
-            target: dataModel
-            onProbeStatusChanged: itemList.selectItem()
         }
 
         model: ListModel {
