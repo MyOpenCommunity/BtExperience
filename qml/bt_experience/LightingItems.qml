@@ -9,16 +9,12 @@ MenuElement {
     onChildDestroyed: {
         itemList.currentIndex = -1
     }
-    onChildAnimation: {
-        itemList.transparent = running ? false : true
-    }
 
     ListView {
         id: itemList
         anchors.fill: parent
         currentIndex: -1
         interactive: false
-        property bool transparent: true
 
         delegate: MenuItemDelegate {
             status: model.status === true ? 1 : 0

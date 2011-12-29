@@ -14,11 +14,8 @@ MenuElement {
         anchors.fill: parent
         currentIndex: selectItem()
         interactive: false
-        property bool transparent: true
-
 
         function selectItem() {
-
             if (element.dataModel.currentModality) {
                 for (var i = 0; i < itemList.count; i++) {
                     if (itemList.model.getObject(i).objectId === element.dataModel.currentModality.objectId)
