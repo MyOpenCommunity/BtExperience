@@ -24,7 +24,9 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
     connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
     mode = SummerMode;
     programs << qMakePair(1, QString("P1")) << qMakePair(3, QString("P3")) << qMakePair(5, QString("P5"));
+    current_modality = -1;
 
+    // The objects list should contain only one item per id
     objs << new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, this, dev);
     objs << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, this, dev);
     objs << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, this, dev);
@@ -72,6 +74,11 @@ ObjectListModel *ThermalControlUnit::getModalities() const
     return items;
 }
 
+QObject* ThermalControlUnit::getCurrentModality() const
+{
+    return current_modality == -1 ? 0 : objs.at(current_modality);
+}
+
 void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 {
     DeviceValues::const_iterator it = values_list.constBegin();
@@ -86,6 +93,51 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
             else if (season == ThermalDevice::SE_WINTER && mode != WinterMode) {
                 mode = WinterMode;
                 emit modeChanged();
+            }
+        }
+        else if (it.key() == ThermalDevice::DIM_STATUS) {
+            ThermalDevice::Status status = static_cast<ThermalDevice::Status>(it.value().toInt());
+            int id = -1;
+            switch (status) {
+            case ThermalDevice::ST_HOLIDAY:
+                id = ThermalControlUnit::IdHoliday;
+                break;
+            case ThermalDevice::ST_OFF:
+                id = ThermalControlUnit::IdOff;
+                break;
+            case ThermalDevice::ST_PROTECTION:
+                id = ThermalControlUnit::IdAntifreeze;
+                break;
+            case ThermalDevice::ST_MANUAL:
+                id = ThermalControlUnit::IdManual;
+                break;
+            case ThermalDevice::ST_MANUAL_TIMED:
+                break; // Not implemented for now
+            case ThermalDevice::ST_WEEKEND:
+                id = ThermalControlUnit::IdVacation;
+                break;
+            case ThermalDevice::ST_PROGRAM:
+                id = ThermalControlUnit::IdWeeklyPrograms;
+                break;
+            case ThermalDevice::ST_SCENARIO:
+                id = ThermalControlUnit::IdScenarios;
+                break;
+            default:
+                break;
+            }
+            if (id == -1) {
+                qWarning() << "ThermalControlUnit unknown status: " << status;
+                continue;
+            }
+
+            for (int i = 0; i < objs.length(); ++i) {
+                if (objs[i]->getObjectId() == id) {
+                    if (i != current_modality) {
+                        current_modality = i;
+                        emit currentModalityChanged();
+                    }
+                    break;
+                }
             }
         }
         ++it;

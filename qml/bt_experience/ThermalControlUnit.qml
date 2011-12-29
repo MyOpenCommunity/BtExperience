@@ -33,6 +33,19 @@ MenuElement {
         modalityItem.state = "";
     }
 
+    Connections {
+        target: dataModel
+        onCurrentModalityChanged: {
+            if (dataModel.currentModality)
+                modalitySelected(dataModel.currentModality)
+        }
+    }
+
+    Component.onCompleted: {
+        if (dataModel.currentModality)
+            modalitySelected(dataModel.currentModality)
+    }
+
     function modalitySelected(obj) {
         modalityItem.description = obj.name
         var properties = {'objModel': obj}
@@ -90,7 +103,7 @@ MenuElement {
 
             onClicked: {
                 element.loadElement("ThermalControlUnitModalities.qml", modalityItem.name, element.dataModel)
-                if ( privateProps.current_element != 2)
+                if (privateProps.current_element != 2)
                     privateProps.current_element = 2
             }
         }

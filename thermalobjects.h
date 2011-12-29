@@ -12,6 +12,7 @@
 #include <QString>
 #include <QVariant>
 
+
 class ThermalDevice;
 class ThermalDevice4Zones;
 class ThermalDevice99Zones;
@@ -30,6 +31,7 @@ class ThermalControlUnit : public ObjectInterface
     Q_ENUMS(ThermalControlUnitId)
     Q_PROPERTY(ModeType mode READ getMode WRITE setMode NOTIFY modeChanged)
     Q_PROPERTY(ObjectListModel *modalities READ getModalities NOTIFY modalitiesChanged)
+    Q_PROPERTY(QObject *currentModality READ getCurrentModality NOTIFY currentModalityChanged)
 
 public:
     enum ThermalControlUnitId
@@ -67,9 +69,12 @@ public:
 
     ObjectListModel *getModalities() const;
 
+    QObject* getCurrentModality() const;
+
 signals:
     void modeChanged();
     void modalitiesChanged();
+    void currentModalityChanged();
 
 protected slots:
     virtual void valueReceived(const DeviceValues &values_list);
@@ -84,6 +89,7 @@ private:
     ModeType mode;
     ThermalRegulationProgramList programs;
     ThermalDevice *dev;
+    int current_modality;
 };
 
 
@@ -122,7 +128,6 @@ private:
     ThermalDevice99Zones *dev;
     ThermalRegulationProgramList scenarios;
 };
-
 
 
 class ThermalControlUnitObject : public ObjectInterface
