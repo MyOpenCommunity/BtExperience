@@ -177,11 +177,7 @@ QString ThermalControlUnitProgram::getProgramDescription() const
 
 void ThermalControlUnitProgram::apply()
 {
-    if (to_apply == current)
-        return;
-
     current = to_apply;
-
     dev->setWeekProgram(programs[to_apply[PROGRAM_INDEX].toInt()].first);
 }
 
@@ -240,9 +236,6 @@ void ThermalControlUnitTimedProgram::setTime(QTime time)
 
 void ThermalControlUnitTimedProgram::apply()
 {
-    if (to_apply == current)
-        return;
-
     current = to_apply;
 
     int program_id = getProgramId();
@@ -290,9 +283,6 @@ void ThermalControlUnitManual::setTemperature(int temp)
 
 void ThermalControlUnitManual::apply()
 {
-    if (to_apply == current)
-        return;
-
     current = to_apply;
     dev->setManualTemp(to_apply[TEMPERATURE].toInt());
 }
@@ -363,11 +353,7 @@ QString ThermalControlUnitScenario::getScenarioDescription() const
 
 void ThermalControlUnitScenario::apply()
 {
-    if (to_apply == current)
-        return;
-
     current = to_apply;
-
     dev->setScenario(scenarios[to_apply[SCENARIO_INDEX].toInt()].first);
 }
 
