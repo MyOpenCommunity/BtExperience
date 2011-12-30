@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer.engine()->rootContext()->setContextProperty("main_width", MAIN_WIDTH);
     viewer.engine()->rootContext()->setContextProperty("main_height", MAIN_HEIGHT);
-    viewer.setMainQmlFile(QLatin1String("qml/bt_experience/main.qml"));
+    viewer.setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
 
 #ifdef Q_WS_X11
     viewer.resize(MAIN_WIDTH, MAIN_HEIGHT);
