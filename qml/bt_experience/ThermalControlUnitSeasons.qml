@@ -1,10 +1,12 @@
 import QtQuick 1.1
 import BtObjects 1.0
 
+
 MenuElement {
     id: element
     height: 100
     width: 212
+    signal seasonSelected(int season)
 
     ListView {
         id: itemList
@@ -21,10 +23,9 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
-            selectOnClick: false
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                dataModel.season = clickedItem.type
+                element.seasonSelected(clickedItem.type)
             }
         }
 
@@ -40,6 +41,6 @@ MenuElement {
                 type: ThermalControlUnit99Zones.Winter
             }
         }
-
     }
 }
+

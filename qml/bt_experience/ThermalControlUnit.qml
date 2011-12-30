@@ -10,10 +10,15 @@ MenuElement {
     QtObject {
         id: privateProps
         property int current_element: -1
+        property int pendingSeason: -1
     }
 
     function okClicked() {
-        closeElement();
+        closeElement()
+        if (privateProps.pendingSeason != -1) {
+            dataModel.season = privateProps.pendingSeason
+            privateProps.pendingSeason = -1
+        }
     }
 
     function cancelClicked() {
@@ -27,6 +32,8 @@ MenuElement {
     onChildLoaded: {
         if (child.modalitySelected)
             child.modalitySelected.connect(modalitySelected)
+        else if (child.seasonSelected)
+            child.seasonSelected.connect(seasonSelected)
     }
 
     onChildDestroyed: {
@@ -44,6 +51,10 @@ MenuElement {
     Component.onCompleted: {
         if (dataModel.currentModality)
             modalitySelected(dataModel.currentModality)
+    }
+
+    function seasonSelected(season) {
+        privateProps.pendingSeason = season
     }
 
     function modalitySelected(obj) {
