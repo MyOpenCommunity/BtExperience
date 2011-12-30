@@ -37,10 +37,7 @@ defineTest(isArm) {
     OBJECTS_DIR = obj/x86
     MOC_DIR = moc/x86
 
-    DEFINES += OPENSERVER_ADDR=\\\"btouch_10\\\"
     LIBS += -L./common_files/lib/x86 -lcommon
-    INCLUDEPATH += ./common_files
-
 
 } else {
     message(ARM architecture detected.)
@@ -50,57 +47,14 @@ defineTest(isArm) {
     MOC_DIR = moc/arm
 
     LIBS += -L./common_files -lcommon -lexpat
-    INCLUDEPATH += ./common_files
 }
 
+INCLUDEPATH += ./common_files
 LIBS += -lssl
 
-QT += opengl network
+QT += opengl
 
-
-
-
-INCLUDEPATH += . ./ts ./devices
-DEPENDPATH += . ./ts ./devices
-
-HEADERS += \
-    objectlistmodel.h \
-    lightobjects.h \
-    thermalobjects.h \
-    thermalprobes.h \
-    objectinterface.h
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp \
-    objectlistmodel.cpp \
-    lightobjects.cpp \
-    thermalobjects.cpp \
-    thermalprobes.cpp
-
-
-HEADERS += \
-    bttime.h \
-    device.h \
-    devices_cache.h \
-    frame_classes.h \
-    frame_functions.h \
-    lighting_device.h \
-    openclient.h \
-    probe_device.h \
-    pulldevice.h \
-    scaleconversion.h \
-    thermal_device.h
-
-SOURCES += \
-    bttime.cpp \
-    device.cpp \
-    devices_cache.cpp \
-    frame_classes.cpp \
-    frame_functions.cpp \
-    lighting_device.cpp \
-    openclient.cpp \
-    probe_device.cpp \
-    pulldevice.cpp \
-    scaleconversion.cpp \
-    thermal_device.cpp
+SOURCES += main.cpp
 
