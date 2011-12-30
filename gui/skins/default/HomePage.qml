@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "Stack.js" as Stack
+import BtObjects 1.0 // a temporary workaround to load immediately the BtObjects module
 
 Page {
 id: mainarea

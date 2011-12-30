@@ -1,6 +1,6 @@
 # Add more folders to ship with the application, here
-folder_01.source = qml/bt_experience
-folder_01.target = qml
+folder_01.source = skins/default
+folder_01.target = skins
 DEPLOYMENTFOLDERS = folder_01
 
 # Additional import path used to resolve QML modules in Creator's code model
