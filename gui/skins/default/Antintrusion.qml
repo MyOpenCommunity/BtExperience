@@ -22,9 +22,22 @@ SystemPage {
         opacity: 0
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        keypadText: qsTr("inserisci il codice")
+        helperLabel: qsTr("inserisci il codice")
+
         onCancelClicked: antintrusion.state = ""
+        onTextInsertedChanged: {
+            if (textInserted.length >= 5) {
+                if (textInserted === "12345")
+                    state = "okState"
+                else
+                    state = "errorState"
+            }
+            else
+                state = ""
+        }
+
         Behavior on opacity { NumberAnimation { duration: 200 } }
+
     }
 
     states: [
@@ -42,7 +55,7 @@ SystemPage {
 
 
     function showKeyPad(title) {
-        keypad.mainText = title
+        keypad.mainLabel = title
         antintrusion.state = "keypadShown"
     }
 }

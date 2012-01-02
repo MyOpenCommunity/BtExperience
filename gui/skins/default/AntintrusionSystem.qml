@@ -145,7 +145,6 @@ MenuElement {
                     name: "cameretta"
                     status: false
                 }
-
             }
 
         }
