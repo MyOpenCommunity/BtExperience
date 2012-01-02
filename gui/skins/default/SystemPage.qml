@@ -5,13 +5,14 @@ Page {
     id: systemPage
     property string text
     property string rootElement
-    source: "images/illuminazione.jpg"
+    property alias rootObject: container.rootObject
+    property alias currentObject: container.currentObject
 
     ToolBar {
-            id: toolbar
-            fontFamily: semiBoldFont.name
-            fontSize: 17
-            onHomeClicked: Stack.backToHome()
+        id: toolbar
+        fontFamily: semiBoldFont.name
+        fontSize: 17
+        onHomeClicked: Stack.backToHome()
     }
 
     Text {
@@ -28,12 +29,13 @@ Page {
     }
 
     MenuContainer {
-         x: 122
-         y: 75
-         width: 893
-         height: 503
-         rootElement: systemPage.rootElement
-         onClosed: Stack.popPage()
+        id: container
+        x: 122
+        y: 75
+        width: 893
+        height: 503
+        rootElement: systemPage.rootElement
+        onClosed: Stack.popPage()
     }
 }
 

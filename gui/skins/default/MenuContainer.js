@@ -211,6 +211,11 @@ function _doOpenItem() {
 
     stackItems.push(item)
     stackTitles.push(title)
+
+    if (stackItems.length === 1)
+        mainContainer.rootObject = item
+
+    mainContainer.currentObject = item
     pendingOperations.shift()
     processOperations();
 }
@@ -270,11 +275,12 @@ function _doCloseItem() {
     title.destroy()
     stackItems.length -= 1
     stackTitles.length -= 1
-    stackItems[stackItems.length -1].child = null
-    if (pendingOperations[0]['notifyChildDestroyed'])
-        stackItems[stackItems.length - 1].childDestroyed();
-
     var last_item = stackItems[stackItems.length -1]
+    last_item.child = null
+    if (pendingOperations[0]['notifyChildDestroyed'])
+        last_item.childDestroyed();
+
+    mainContainer.currentObject = last_item
     showLine(last_item, LEFT_TO_RIGHT)
     pendingOperations.shift()
     processOperations();

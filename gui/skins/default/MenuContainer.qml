@@ -20,6 +20,9 @@ Item {
     property int itemsLeftMargin: 20
     property int itemsSpacing: 0
     property string rootElement
+    property variant rootObject: undefined
+    property variant currentObject: undefined
+
     signal closed
 
     Column {

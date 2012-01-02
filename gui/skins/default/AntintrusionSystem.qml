@@ -2,6 +2,8 @@ import QtQuick 1.1
 
 MenuElement {
     id: system
+    signal showKeyPad(string title)
+
     Column {
         MenuItem {
             name: qsTr("registro allarmi")
@@ -160,7 +162,8 @@ MenuElement {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: system.state = system.state == "" ? "systemActive" : ""
+//                onClicked: system.state = system.state == "" ? "systemActive" : ""
+                onClicked: showKeyPad(qsTr("imposta zone"))
             }
         }
     }

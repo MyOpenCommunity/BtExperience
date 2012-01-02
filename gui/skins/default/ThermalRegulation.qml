@@ -8,4 +8,3 @@ SystemPage {
     rootElement: "ThermalRegulationItems.qml"
 }
 
-
