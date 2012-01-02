@@ -1,14 +1,32 @@
 import QtQuick 1.1
 
 MenuElement {
+    id: system
     Column {
         MenuItem {
             name: qsTr("registro allarmi")
             hasChild: true
+
+            Rectangle {
+                id: registerDarkRect
+                z: 1
+                anchors.fill: parent
+                color: "black"
+                opacity: 0.7
+                visible: false
+            }
         }
         MenuItem {
-            name: qsTr("sistema attivo")
+            id: systemItem
+            name: qsTr("sistema disattivo")
             hasChild: true
+            Image {
+                id: systemIcon
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                anchors.verticalCenter: parent.verticalCenter
+                source: "images/common/ico_sistema_disattivato.png"
+            }
         }
         MenuItem {
             name: qsTr("scenario")
@@ -18,6 +36,16 @@ MenuElement {
 
         Image {
             source: "images/common/bg_zone.png"
+
+            Rectangle {
+                id: zoneDarkRect
+                z: 1
+                anchors.fill: parent
+                color: "black"
+                opacity: 0.7
+                visible: false
+            }
+
             Text {
                 id: zoneText
                 text: qsTr("zone")
@@ -132,8 +160,17 @@ MenuElement {
 
             MouseArea {
                 anchors.fill: parent
+                onClicked: system.state = system.state == "" ? "systemActive" : ""
             }
         }
-
     }
+    states: [
+        State {
+            name: "systemActive"
+            PropertyChanges { target: systemItem; name: qsTr("sistema attivo") }
+            PropertyChanges { target: systemIcon; source: "images/common/ico_sistema_attivato.png" }
+            PropertyChanges { target: zoneDarkRect; visible: true }
+            PropertyChanges { target: registerDarkRect; visible: true }
+        }
+    ]
 }
