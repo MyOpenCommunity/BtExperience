@@ -10,9 +10,10 @@ Column {
 
     Text {
         id: warningText
-        text: qsTr("ATTENZIONE")
+        text: qsTr("attenzione")
         color: "#ff2e2e"
         font.family: semiBoldFont.name
+        font.capitalization: Font.AllUppercase
         font.pixelSize: 16
     }
     // A kind of spacing
