@@ -122,7 +122,7 @@ MenuElement {
         y: 170
 
         onCancelClicked: {
-            page.showAlert(element, "Modifiche non salvate. Continuare?")
+            pageObject.showAlert(element, "Modifiche non salvate. Continuare?")
         }
 
         onOkClicked: {

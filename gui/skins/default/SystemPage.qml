@@ -35,6 +35,7 @@ Page {
         width: 893
         height: 503
         rootElement: systemPage.rootElement
+        pageObject: systemPage
         onClosed: Stack.popPage()
     }
 }

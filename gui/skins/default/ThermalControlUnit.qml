@@ -22,7 +22,7 @@ MenuElement {
     }
 
     function cancelClicked() {
-        page.showAlert(element, "Modifiche non salvate. Continuare?")
+        pageObject.showAlert(element, "Modifiche non salvate. Continuare?")
     }
 
     function alertOkClicked() {

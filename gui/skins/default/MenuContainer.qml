@@ -17,10 +17,23 @@ Item {
     id: mainContainer
     width: 600
     height: 400
+
+    // The spacing between the buttons on the left and the first column
     property int itemsLeftMargin: 20
+
+    // the spacing between columns
     property int itemsSpacing: 0
+
+    // The filename of the root element (without scroll, the first column)
     property string rootElement
+
+    // the page where the container is placed
+    property variant pageObject: undefined
+
+    // the object that represents the root element (without scroll, the first column)
     property variant rootObject: undefined
+
+    // the object that represents the current element (the last column open)
     property variant currentObject: undefined
 
     signal closed
