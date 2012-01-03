@@ -31,14 +31,11 @@ MenuElement {
 
         model: ListModel {
             id: modelList
-            ListElement {
-                name: "estate"
-                type: ThermalControlUnit99Zones.Summer
-            }
-
-            ListElement {
-                name: "inverno"
-                type: ThermalControlUnit99Zones.Winter
+            Component.onCompleted: {
+                var l = [ThermalControlUnit99Zones.Summer,
+                         ThermalControlUnit99Zones.Winter]
+                for (var i = 0; i < l.length; i++)
+                    append({"type": l[i], "name": pageObject.names.get('SEASON', l[i])})
             }
         }
     }

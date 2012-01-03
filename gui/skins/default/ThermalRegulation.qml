@@ -5,5 +5,6 @@ SystemPage {
     source: "images/termoregolazione.jpg"
     text: qsTr("termoregolazione")
     rootElement: "ThermalRegulationItems.qml"
+    names: ThermalNames { }
 }
 

@@ -48,12 +48,22 @@ MenuElement {
         }
     }
 
+    Connections {
+        target: dataModel
+        onSeasonChanged: {
+            seasonItem.description = pageObject.names.get('SEASON', season)
+        }
+    }
+
     Component.onCompleted: {
         if (dataModel.currentModality)
             modalitySelected(dataModel.currentModality)
+
+        seasonItem.description = pageObject.names.get('SEASON', dataModel.season)
     }
 
     function seasonSelected(season) {
+        seasonItem.description = pageObject.names.get('SEASON', season)
         privateProps.pendingSeason = season
     }
 
