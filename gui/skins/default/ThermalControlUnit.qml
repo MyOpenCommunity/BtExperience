@@ -9,7 +9,7 @@ MenuElement {
 
     QtObject {
         id: privateProps
-        property int current_element: -1
+        property int currentElement: -1
         property int pendingSeason: -1
     }
 
@@ -107,12 +107,12 @@ MenuElement {
             id: seasonItem
             anchors.top: parent.top
             name: qsTr("funzionamento")
-            state: privateProps.current_element == 1 ? "selected" : ""
+            state: privateProps.currentElement == 1 ? "selected" : ""
 
             onClicked: {
                 element.loadElement("ThermalControlUnitSeasons.qml", seasonItem.name, element.dataModel)
-                if (privateProps.current_element != 1)
-                    privateProps.current_element = 1
+                if (privateProps.currentElement != 1)
+                    privateProps.currentElement = 1
             }
         }
 
@@ -120,12 +120,12 @@ MenuElement {
             id: modalityItem
             anchors.top: seasonItem.bottom
             name: qsTr("modalità")
-            state: privateProps.current_element == 2 ? "selected" : ""
+            state: privateProps.currentElement == 2 ? "selected" : ""
 
             onClicked: {
                 element.loadElement("ThermalControlUnitModalities.qml", modalityItem.name, element.dataModel)
-                if (privateProps.current_element != 2)
-                    privateProps.current_element = 2
+                if (privateProps.currentElement != 2)
+                    privateProps.currentElement = 2
             }
         }
 
