@@ -31,8 +31,6 @@ defineTest(isArm) {
     OBJECTS_DIR = obj/x86
     MOC_DIR = moc/x86
 
-    DEFINES += OPENSERVER_ADDR=\\\"btouch_10\\\"
-
 } else {
     message(ARM architecture detected.)
 
@@ -40,6 +38,9 @@ defineTest(isArm) {
     OBJECTS_DIR = obj/arm
     MOC_DIR = moc/arm
 }
+
+
+DEFINES += OPENSERVER_ADDR=\\\"openserver\\\"
 
 INCLUDEPATH += ./common_files
 
