@@ -7,7 +7,7 @@ Page {
     property string rootElement
     property alias rootObject: container.rootObject
     property alias currentObject: container.currentObject
-    property QtObject names: undefined
+    property QtObject names: null
 
     ToolBar {
         id: toolbar
