@@ -7,6 +7,12 @@ QtObject {
         Script.container['SEASON'] = []
         Script.container['SEASON'][ThermalControlUnit99Zones.Summer] = qsTr("estate")
         Script.container['SEASON'][ThermalControlUnit99Zones.Winter] = qsTr("inverno")
+
+        Script.container['PROBE_STATUS'] = []
+        Script.container['PROBE_STATUS'][ThermalControlledProbe.Auto] = qsTr("auto")
+        Script.container['PROBE_STATUS'][ThermalControlledProbe.Antifreeze] = qsTr("antigelo")
+        Script.container['PROBE_STATUS'][ThermalControlledProbe.Manual] = qsTr("manuale")
+        Script.container['PROBE_STATUS'][ThermalControlledProbe.Off] = qsTr("off")
     }
 
     function get(context, id) {

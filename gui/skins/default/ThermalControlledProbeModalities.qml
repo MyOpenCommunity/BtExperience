@@ -5,6 +5,7 @@ MenuElement {
     id: element
     height: 200
     width: 212
+    signal modalitySelected(int modality)
 
     ListView {
         id: itemList
@@ -23,35 +24,23 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
-            selectOnClick: false
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                dataModel.probeStatus = clickedItem.type
+                element.modalitySelected(clickedItem.type)
             }
         }
 
         model: ListModel {
             id: modelList
-            ListElement {
-                name: "auto"
-                type: ThermalControlledProbe.Auto
-            }
 
-            ListElement {
-                name: "antigelo"
-                type: ThermalControlledProbe.Antifreeze
+            Component.onCompleted: {
+                var l = [ThermalControlledProbe.Auto,
+                         ThermalControlledProbe.Antifreeze,
+                        ThermalControlledProbe.Manual,
+                        ThermalControlledProbe.Off]
+                for (var i = 0; i < l.length; i++)
+                    append({"type": l[i], "name": pageObject.names.get('PROBE_STATUS', l[i])})
             }
-
-            ListElement {
-                name: "manuale"
-                type: ThermalControlledProbe.Manual
-            }
-
-            ListElement {
-                name: "off"
-                type: ThermalControlledProbe.Off
-            }
-
         }
 
     }

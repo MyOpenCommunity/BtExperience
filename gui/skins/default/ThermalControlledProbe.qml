@@ -6,11 +6,18 @@ MenuElement {
     width: 212
     height: fixedItem.height + itemLoader.height
 
+    QtObject {
+        id: privateProps
+        property int pendingModality: -1
+    }
+
     function alertOkClicked() {
         element.closeElement()
     }
 
     function okClicked() {
+        if (privateProps.pendingModality !== dataModel.probeStatus)
+            dataModel.probeStatus = privateProps.pendingModality
         closeElement();
     }
 
@@ -22,35 +29,40 @@ MenuElement {
         modalityItem.state = "";
     }
 
-    Component.onCompleted: showModality()
-
-    function showModality() {
-        var desc = "";
-        switch (dataModel.probeStatus) {
-        case ThermalControlledProbe.Auto:
-            itemLoader.setComponent(autoComponent)
-            desc = "auto"
-            break
-        case ThermalControlledProbe.Antifreeze:
-            itemLoader.setComponent(antifreezeComponent)
-            desc = "antigelo"
-            break
-        case ThermalControlledProbe.Manual:
-            itemLoader.setComponent(manualComponent)
-            desc = "manuale"
-            break
-        case ThermalControlledProbe.Off:
-            itemLoader.setComponent(offComponent)
-            desc = "off"
-            break
-        }
-        modalityItem.description = desc
+    onChildLoaded: {
+        if (child.modalitySelected)
+            child.modalitySelected.connect(modalitySelected)
     }
 
     Connections {
         target: dataModel
-        onProbeStatusChanged: showModality()
+        onProbeStatusChanged: {
+            modalitySelected(dataModel.probeStatus)
+        }
     }
+
+    function modalitySelected(modality) {
+        privateProps.pendingModality = modality
+        switch (modality) {
+        case ThermalControlledProbe.Auto:
+            itemLoader.setComponent(autoComponent)
+            break
+        case ThermalControlledProbe.Antifreeze:
+            itemLoader.setComponent(antifreezeComponent)
+            break
+        case ThermalControlledProbe.Manual:
+            itemLoader.setComponent(manualComponent)
+            break
+        case ThermalControlledProbe.Off:
+            itemLoader.setComponent(offComponent)
+            break
+        case ThermalControlledProbe.Unknown:
+            return
+        }
+        modalityItem.description = pageObject.names.get('PROBE_STATUS', modality)
+    }
+
+    Component.onCompleted: modalitySelected(dataModel.probeStatus)
 
     Image {
         id: fixedItem
@@ -115,11 +127,14 @@ MenuElement {
     Component {
         id: manualComponent
         Column {
+            id: rootManualComponent
+            property int setpoint
+
             ControlMinusPlus {
                 title: qsTr("temperatura impostata")
-                text: dataModel.setpoint / 10 + qsTr("° C")
-                onPlusClicked: dataModel.setpoint += 1
-                onMinusClicked: dataModel.setpoint -= 1
+                text: setpoint / 10 + qsTr("° C")
+                onPlusClicked: setpoint += 1
+                onMinusClicked: setpoint -= 1
             }
 
             ControlUpDown {
@@ -128,8 +143,25 @@ MenuElement {
             }
 
             ButtonOkCancel {
-                onCancelClicked: element.cancelClicked();
-                onOkClicked: element.okClicked();
+                onCancelClicked: {
+                    setpoint = dataModel.setpoint
+                    element.cancelClicked()
+
+                }
+                onOkClicked: {
+                    dataModel.setpoint = setpoint
+                    element.okClicked()
+                }
+            }
+
+            Component.onCompleted: {
+                rootManualComponent.setpoint = dataModel.setpoint // we want an assignment, not a binding
+            }
+            Connections {
+                target: dataModel
+                onSetpointChanged: {
+                    rootManualComponent.setpoint = setpoint
+                }
             }
         }
     }
