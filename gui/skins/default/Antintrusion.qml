@@ -31,9 +31,25 @@ SystemPage {
                     state = "okState"
                 else
                     state = "errorState"
+
+                keypadTimer.start()
             }
             else
                 state = ""
+        }
+
+        Timer {
+            id: keypadTimer
+            repeat: false
+            interval: 1000
+            running: false
+            onTriggered: {
+                if (keypad.state == "okState")
+                    antintrusion.state = ""
+
+                keypad.textInserted = ""
+                keypad.state = ""
+            }
         }
 
         Behavior on opacity { NumberAnimation { duration: 200 } }
