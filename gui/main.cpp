@@ -65,10 +65,9 @@ void setupLogger(QString log_file)
 }
 
 
-// work around a bug with input context handling in QVFb.  See discussion at
+// work around a bug with input context handling in WebKit/Maliit.  See discussion at
 // - https://bugs.webkit.org/show_bug.cgi?id=60161
-// - http://comments.gmane.org/gmane.comp.lib.qt.qml/2322
-class EventFilter : public QObject
+class InputMethodEventFilter : public QObject
 {
 protected:
     bool eventFilter(QObject *obj, QEvent *event)
@@ -114,7 +113,7 @@ int main(int argc, char *argv[])
 #endif
 
         // see comment on EventFilter above
-        viewer.installEventFilter(new EventFilter);
+        viewer.installEventFilter(new InputMethodEventFilter);
     }
 
 #if USE_OPENGL
