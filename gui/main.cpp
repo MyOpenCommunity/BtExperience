@@ -1,5 +1,16 @@
+#include <QtGlobal> // Q_WS_QWS
+
+#if defined(Q_WS_QWS) && !defined(__arm__)
+    // assume that QWS on PC is using QVFb and does not support OpenGL
+    #define USE_OPENGL 0
+#else
+    #define USE_OPENGL 1
+#endif
+
 #include <QtGui/QApplication>
+#if USE_OPENGL
 #include <QtOpenGL/QGLWidget>
+#endif
 #include <QDeclarativeContext>
 #include <QtDeclarative>
 
@@ -63,6 +74,7 @@ int main(int argc, char *argv[])
     QmlApplicationViewer viewer;
     qDebug() << "***** BtExperience start! *****";
 
+#if USE_OPENGL
     QGLFormat f = QGLFormat::defaultFormat();
     f.setSampleBuffers(true);
     f.setSamples(4);
@@ -74,6 +86,7 @@ int main(int argc, char *argv[])
     viewer.setRenderHint(QPainter::SmoothPixmapTransform, true);
     viewer.setRenderHint(QPainter::HighQualityAntialiasing, true);
     viewer.setRenderHint(QPainter::TextAntialiasing, true);
+#endif
 
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer.engine()->rootContext()->setContextProperty("main_width", MAIN_WIDTH);
