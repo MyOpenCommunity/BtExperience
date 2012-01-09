@@ -65,6 +65,36 @@ void setupLogger(QString log_file)
 }
 
 
+// work around a bug with input context handling in QVFb.  See discussion at
+// - https://bugs.webkit.org/show_bug.cgi?id=60161
+// - http://comments.gmane.org/gmane.comp.lib.qt.qml/2322
+class EventFilter : public QObject
+{
+protected:
+    bool eventFilter(QObject *obj, QEvent *event)
+    {
+        QInputContext *ic = qApp->inputContext();
+
+        if (ic) {
+            if (ic->focusWidget() == 0 && prevFocusWidget) {
+                QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
+                ic->filterEvent(&closeSIPEvent);
+            } else if (prevFocusWidget == 0 && ic->focusWidget()) {
+                QEvent openSIPEvent(QEvent::RequestSoftwareInputPanel);
+                ic->filterEvent(&openSIPEvent);
+            }
+
+            prevFocusWidget = ic->focusWidget();
+        }
+
+        return QObject::eventFilter(obj,event);
+    }
+
+private:
+    QWidget *prevFocusWidget;
+};
+
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -73,6 +103,19 @@ int main(int argc, char *argv[])
 
     QmlApplicationViewer viewer;
     qDebug() << "***** BtExperience start! *****";
+
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+
+    if (env.contains("QT_IM_MODULE"))
+    {
+#if (defined(Q_WS_QPA) || defined(Q_WS_QWS)) && (QT_VERSION < 0x050000)
+        // Workaround for Lighthouse/QWS, copied from Maliit PlainQT example app
+        app.setInputContext(QInputContextFactory::create(env.value("QT_IM_MODULE"), &app));
+#endif
+
+        // see comment on EventFilter above
+        viewer.installEventFilter(new EventFilter);
+    }
 
 #if USE_OPENGL
     QGLFormat f = QGLFormat::defaultFormat();
