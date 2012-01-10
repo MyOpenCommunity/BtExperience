@@ -1,5 +1,16 @@
+#include <QtGlobal> // Q_WS_QWS
+
+#if defined(Q_WS_QWS) && !defined(__arm__)
+    // assume that QWS on PC is using QVFb and does not support OpenGL
+    #define USE_OPENGL 0
+#else
+    #define USE_OPENGL 1
+#endif
+
 #include <QtGui/QApplication>
+#if USE_OPENGL
 #include <QtOpenGL/QGLWidget>
+#endif
 #include <QDeclarativeContext>
 #include <QtDeclarative>
 
@@ -54,6 +65,35 @@ void setupLogger(QString log_file)
 }
 
 
+// work around a bug with input context handling in WebKit/Maliit.  See discussion at
+// - https://bugs.webkit.org/show_bug.cgi?id=60161
+class InputMethodEventFilter : public QObject
+{
+protected:
+    bool eventFilter(QObject *obj, QEvent *event)
+    {
+        QInputContext *ic = qApp->inputContext();
+
+        if (ic) {
+            if (ic->focusWidget() == 0 && prevFocusWidget) {
+                QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
+                ic->filterEvent(&closeSIPEvent);
+            } else if (prevFocusWidget == 0 && ic->focusWidget()) {
+                QEvent openSIPEvent(QEvent::RequestSoftwareInputPanel);
+                ic->filterEvent(&openSIPEvent);
+            }
+
+            prevFocusWidget = ic->focusWidget();
+        }
+
+        return QObject::eventFilter(obj,event);
+    }
+
+private:
+    QWidget *prevFocusWidget;
+};
+
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -63,6 +103,20 @@ int main(int argc, char *argv[])
     QmlApplicationViewer viewer;
     qDebug() << "***** BtExperience start! *****";
 
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+
+    if (env.contains("QT_IM_MODULE"))
+    {
+#if (defined(Q_WS_QPA) || defined(Q_WS_QWS)) && (QT_VERSION < 0x050000)
+        // Workaround for Lighthouse/QWS, copied from Maliit PlainQT example app
+        app.setInputContext(QInputContextFactory::create(env.value("QT_IM_MODULE"), &app));
+#endif
+
+        // see comment on EventFilter above
+        viewer.installEventFilter(new InputMethodEventFilter);
+    }
+
+#if USE_OPENGL
     QGLFormat f = QGLFormat::defaultFormat();
     f.setSampleBuffers(true);
     f.setSamples(4);
@@ -74,6 +128,7 @@ int main(int argc, char *argv[])
     viewer.setRenderHint(QPainter::SmoothPixmapTransform, true);
     viewer.setRenderHint(QPainter::HighQualityAntialiasing, true);
     viewer.setRenderHint(QPainter::TextAntialiasing, true);
+#endif
 
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer.engine()->rootContext()->setContextProperty("main_width", MAIN_WIDTH);
