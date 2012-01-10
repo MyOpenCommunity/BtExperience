@@ -1,8 +1,14 @@
 import QtQuick 1.1
+import BtObjects 1.0
 
 MenuElement {
     id: system
     signal showKeyPad(string title)
+
+    ObjectModel {
+        id: objectModel
+        categories: [ObjectInterface.Antintrusion]
+    }
 
     Column {
         MenuItem {
@@ -71,82 +77,37 @@ MenuElement {
                 cellHeight: 50
 
                 delegate: Image {
+                    // We need the following trick because the model is not directly editable.
+                    // See the comment on ObjectListModel::getObject
+                    property variant dataModel: objectModel.getObject(0).zones.getObject(index)
                     source: "images/common/btn_zona.png"
                     Row {
                         anchors.top: parent.top
                         Image {
-                            source: model.status ? "images/common/on.png" : "images/common/off.png"
+                            source: dataModel.partialization ? "images/common/off.png" : "images/common/on.png"
                         }
                         Text {
-                            text: model.number
+                            text: dataModel.objectId
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
 
                     Text {
-                        text: model.name
+                        text: dataModel.name
                         anchors.bottom: parent.bottom
                         anchors.bottomMargin: 5
                         anchors.left: parent.left
                         anchors.leftMargin: 10
                         verticalAlignment: Text.AlignVCenter
                     }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: dataModel.partialization = !dataModel.partialization
+                    }
                 }
 
-                model: zoneModel
+                model: objectModel.getObject(0).zones
             }
-
-            ListModel {
-                id: zoneModel
-                ListElement {
-                    number: 1
-                    name: "ingresso"
-                    status: true
-                }
-
-                ListElement {
-                    number: 2
-                    name: "taverna"
-                    status: true
-                }
-
-                ListElement {
-                    number: 3
-                    name: "mansarda"
-                    status: false
-                }
-
-                ListElement {
-                    number: 4
-                    name: "box/cantina"
-                    status: true
-                }
-
-                ListElement {
-                    number: 5
-                    name: "soggiorno"
-                    status: false
-                }
-
-                ListElement {
-                    number: 6
-                    name: "cucina"
-                    status: false
-                }
-
-                ListElement {
-                    number: 7
-                    name: "camera"
-                    status: false
-                }
-
-                ListElement {
-                    number: 8
-                    name: "cameretta"
-                    status: false
-                }
-            }
-
         }
 
         Image {

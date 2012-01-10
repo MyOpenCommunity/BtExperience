@@ -21,17 +21,19 @@ public:
     enum ObjectId
     {
         IdLight = 1,
-        IdDimmer = 2,
-        IdThermalControlUnit99 = 3,
-        IdThermalControlledProbe = 4,
-        IdThermalControlUnit4 = 5,
+        IdDimmer,
+        IdThermalControlUnit99,
+        IdThermalControlledProbe,
+        IdThermalControlUnit4,
+        IdAntintrusionSystem,
         IdMax // the last value + 1, used to check the ids requested from qml
     };
 
     enum ObjectCategory
     {
         Lighting = 1,
-        ThermalRegulation = 2
+        ThermalRegulation,
+        Antintrusion
     };
 
     virtual int getObjectId() const = 0;

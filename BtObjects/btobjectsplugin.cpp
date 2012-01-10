@@ -7,10 +7,12 @@
 #include "lighting_device.h"
 #include "thermal_device.h"
 #include "probe_device.h"
+#include "antintrusion_device.h"
 #include "objectlistmodel.h"
 #include "lightobjects.h"
 #include "thermalobjects.h"
 #include "thermalprobes.h"
+#include "antintrusionsystem.h"
 
 #include <QtDeclarative/qdeclarative.h>
 
@@ -65,6 +67,7 @@ void BtObjectsPlugin::createObjects()
     objmodel.appendRow(new ThermalControlledProbe("zona notte", "2", getProbeDevice("2")));
     objmodel.appendRow(new ThermalControlledProbe("zona taverna", "3", getProbeDevice("3")));
     objmodel.appendRow(new ThermalControlledProbe("zona studio", "4", getProbeDevice("4")));
+    objmodel.appendRow(new AntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice)));
     objmodel.reparentObjects();
 }
 

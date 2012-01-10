@@ -57,15 +57,18 @@ INCLUDEPATH += . ./ts ./devices
 DEPENDPATH += . ./ts ./devices
 
 HEADERS += \
-    objectlistmodel.h \
+    antintrusionsystem.h \
     lightobjects.h \
+    objectlistmodel.h \
+    objectinterface.h \
     thermalobjects.h \
-    thermalprobes.h \
-    objectinterface.h
+    thermalprobes.h
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += objectlistmodel.cpp \
+SOURCES += \
+    antintrusionsystem.cpp \
     lightobjects.cpp \
+    objectlistmodel.cpp \
     thermalobjects.cpp \
     thermalprobes.cpp
 
@@ -81,7 +84,8 @@ HEADERS += \
     probe_device.h \
     pulldevice.h \
     scaleconversion.h \
-    thermal_device.h
+    thermal_device.h \
+    antintrusion_device.h
 
 SOURCES += \
     bttime.cpp \
@@ -94,7 +98,8 @@ SOURCES += \
     probe_device.cpp \
     pulldevice.cpp \
     scaleconversion.cpp \
-    thermal_device.cpp
+    thermal_device.cpp \
+    antintrusion_device.cpp
 
 OTHER_FILES = qmldir
 
