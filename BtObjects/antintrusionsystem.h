@@ -20,7 +20,7 @@ public:
     AntintrusionZone(int id, QString name);
     virtual int getObjectId() const
     {
-        return object_id;
+        return zone_number;
     }
 
     virtual QString getObjectKey() const { return QString(); }
@@ -33,13 +33,14 @@ public:
     virtual QString getName() const { return name; }
 
     bool getPartialization() const;
-    void setPartialization(bool p);
+    void setPartialization(bool p, bool request_partialization = true);
 
 signals:
     void partializationChanged();
+    void requestPartialization(int zone_number, bool partialize);
 
 private:
-    int object_id;
+    int zone_number;
     QString name;
     bool partialized;
 };
@@ -49,6 +50,7 @@ class AntintrusionSystem : public ObjectInterface
 {
     Q_OBJECT
     Q_PROPERTY(ObjectListModel *zones READ getZones NOTIFY zonesChanged)
+    Q_PROPERTY(bool status READ getStatus NOTIFY statusChanged)
 
 public:
     AntintrusionSystem(AntintrusionDevice *d);
@@ -69,15 +71,26 @@ public:
 
     ObjectListModel *getZones() const;
 
+
+    Q_INVOKABLE void requestPartialization(const QString &password);
+    Q_INVOKABLE void toggleActivation(const QString &password);
+    bool getStatus() const
+    {
+        return status;
+    }
+
+
 private slots:
     virtual void valueReceived(const DeviceValues &values_list);
 
 signals:
     void zonesChanged();
+    void statusChanged();
 
 private:
     AntintrusionDevice *dev;
     QList<AntintrusionZone*> zones;
+    bool status;
 };
 
 

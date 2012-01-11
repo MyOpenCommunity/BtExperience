@@ -10,6 +10,11 @@ MenuElement {
         categories: [ObjectInterface.Antintrusion]
     }
 
+    QtObject {
+        id: privateProps
+        property variant rootObject: objectModel.getObject(0)
+    }
+
     Column {
         MenuItem {
             name: qsTr("registro allarmi")
@@ -79,7 +84,7 @@ MenuElement {
                 delegate: Image {
                     // We need the following trick because the model is not directly editable.
                     // See the comment on ObjectListModel::getObject
-                    property variant dataModel: objectModel.getObject(0).zones.getObject(index)
+                    property variant dataModel: privateProps.rootObject.zones.getObject(index)
                     source: "images/common/btn_zona.png"
                     Row {
                         anchors.top: parent.top
@@ -130,6 +135,7 @@ MenuElement {
     states: [
         State {
             name: "systemActive"
+            when: privateProps.rootObject.status === true
             PropertyChanges { target: systemItem; name: qsTr("sistema attivo") }
             PropertyChanges { target: systemIcon; source: "images/common/ico_sistema_attivato.png" }
             PropertyChanges { target: zoneDarkRect; visible: true }
