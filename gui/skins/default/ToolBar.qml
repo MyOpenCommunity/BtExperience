@@ -37,9 +37,11 @@ Image {
         id: date
         y: 16
         x: 130
-        text: Qt.formatDate(new Date, "dd/MM/yyyy")
         font.pixelSize: toolbar.fontSize
         font.family: toolbar.fontFamily
+        function setDate(d) {
+            text = Qt.formatDate(d, "dd/MM/yyyy")
+        }
     }
 
     Text {
@@ -49,10 +51,18 @@ Image {
         text: Qt.formatTime(new Date, "hh:mm")
         font.pixelSize: toolbar.fontSize
         font.family: toolbar.fontFamily
-        Timer {
-            interval: 500; running: true; repeat: true
-            onTriggered: time.text = Qt.formatTime(new Date, "hh:mm")
+        function setTime(d) {
+            text = Qt.formatTime(d, "hh:mm")
         }
+    }
+
+    Timer {
+        id: changeDateTime
+        interval: 500
+        repeat: true
+        running: true
+        triggeredOnStart: true
+        onTriggered: { var d = new Date(); date.setDate(d); time.setTime(d) }
     }
 
     Image {
