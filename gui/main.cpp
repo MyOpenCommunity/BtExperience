@@ -76,22 +76,24 @@ protected:
         QInputContext *ic = qApp->inputContext();
 
         if (ic) {
-            if (ic->focusWidget() == 0 && prevFocusWidget) {
+            const QWidget *focused = ic->focusWidget();
+
+            if (focused == 0 && prevFocusWidget) {
                 QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
                 ic->filterEvent(&closeSIPEvent);
-            } else if (prevFocusWidget == 0 && ic->focusWidget()) {
+            } else if (prevFocusWidget == 0 && focused) {
                 QEvent openSIPEvent(QEvent::RequestSoftwareInputPanel);
                 ic->filterEvent(&openSIPEvent);
             }
 
-            prevFocusWidget = ic->focusWidget();
+            prevFocusWidget = focused;
         }
 
         return QObject::eventFilter(obj,event);
     }
 
 private:
-    QWidget *prevFocusWidget;
+    const QWidget *prevFocusWidget;
 };
 
 int main(int argc, char *argv[])
@@ -114,7 +116,7 @@ int main(int argc, char *argv[])
         app.setInputContext(QInputContextFactory::create(env.value("QT_IM_MODULE"), &app));
 #endif
 
-        // see comment on EventFilter above
+        // see comment on InputMethodEventFilter above
         viewer.installEventFilter(new InputMethodEventFilter);
     }
 
