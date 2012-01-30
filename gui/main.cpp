@@ -77,6 +77,20 @@ protected:
 
         if (ic) {
             const QWidget *focused = ic->focusWidget();
+            const QGraphicsView *graphicsView = qobject_cast<const QGraphicsView *>(focused);
+
+            // handle the case when the current input widget loses focus because the web view
+            // is reloaded (for example when using the "enter" key on a search field)
+            // but the graphics view is still marked as the focused widget
+            if (graphicsView && graphicsView->scene() && graphicsView->scene()->focusItem()) {
+                QRect rect = graphicsView->inputMethodQuery(Qt::ImMicroFocus).toRect();
+
+                if (!rect.height())
+                {
+                    ic->setFocusWidget(0);
+                    focused = 0;
+                }
+            }
 
             if (focused == 0 && prevFocusWidget) {
                 QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
