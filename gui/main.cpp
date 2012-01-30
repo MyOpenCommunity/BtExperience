@@ -17,6 +17,7 @@
 #include <logger.h>
 
 #include "qmlapplicationviewer.h"
+#include "inputcontextwrapper.h"
 
 // Start definitions required by libcommon
 logger *app_logger;
@@ -93,12 +94,13 @@ private:
     QWidget *prevFocusWidget;
 };
 
-
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     setupLogger("/var/tmp/BTicino.log");
     VERBOSITY_LEVEL = 3;
+
+    qmlRegisterType<QInputContext>();
 
     QmlApplicationViewer viewer;
     qDebug() << "***** BtExperience start! *****";
@@ -133,6 +135,7 @@ int main(int argc, char *argv[])
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer.engine()->rootContext()->setContextProperty("main_width", MAIN_WIDTH);
     viewer.engine()->rootContext()->setContextProperty("main_height", MAIN_HEIGHT);
+    viewer.engine()->rootContext()->setContextProperty("input_context", new InputContextWrapper);
     viewer.setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
 
 #ifdef Q_WS_X11
