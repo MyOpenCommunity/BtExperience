@@ -1,0 +1,67 @@
+import QtQuick 1.0
+
+// assumes that it only has one child, and the child is a Flickable
+//
+// when the on-screen keyboard is displayed, move the flickable content so the
+// input cursor is entirely on-screen and (if necessary) move the flickable upwards
+// so the input field is not obscured by the on-screen keyboard
+Item {
+    // bind this property to the .y property of the Flickable child
+    property real childOffset: 0.0
+    property Flickable contentItem: children[0]
+
+    id: container
+    clip: true
+
+    Connections {
+        target: input_context.inputContext
+        onInputMethodAreaChanged: {
+            setKeyboardRect(region)
+            setCursorRect(input_context.cursorRect)
+            setKeyboardVisible(region.height != 0)
+        }
+    }
+
+    // sets the area covered by the keyboard, in screen coordinates
+    function setKeyboardRect(rect) {
+        var mapped = mapFromItem(null, 0, rect.y)
+
+        this.keyboardHeight = height - mapped.y
+        this.keyboardTop = mapped.y
+    }
+
+    // sets the area used by the input cursor, in screen coordinates
+    function setCursorRect(rect) {
+        var OFFSET = 10.0 // arbitrary border between the widget border and the input field
+        var mappedTop = mapFromItem(null, 0, rect.y - OFFSET)
+        var mappedBottom = mapFromItem(null, 0, rect.y + rect.height + OFFSET)
+
+        this.focusRect = {top: mappedTop.y, bottom: mappedBottom.y}
+    }
+
+    function setKeyboardVisible(visible) {
+        var delta = 0
+
+        if (!visible) {
+            this.childOffset = 0.0
+
+            return
+        }
+
+        // if the input field is partially outside the screen, move it into view;
+        // this is not rolled back when the keyboard is hidden
+        if (this.focusRect.top < 0)
+            delta = this.focusRect.top;
+        else if (this.focusRect.bottom > height)
+            delta = this.focusRect.bottom - height
+
+        contentItem.contentY += delta
+        this.focusRect.top -= delta
+        this.focusRect.bottom -= delta
+
+        // if the input field is covered by the keyboard, move the entire widget
+        // upwards se the input field is visible
+        if (this.focusRect.bottom > this.keyboardTop)
+            this.childOffset -= this.focusRect.bottom - this.keyboardTop
+    }
+}
