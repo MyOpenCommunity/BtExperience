@@ -5,6 +5,8 @@
 
 #include "objectlistmodel.h"
 
+class QDomDocument;
+
 
 class BtObjectsPlugin : public QDeclarativeExtensionPlugin
 {
@@ -17,7 +19,7 @@ public:
 private:
     ObjectListModel objmodel;
 
-    void createObjects();
+    void createObjects(QDomDocument document);
 };
 
 

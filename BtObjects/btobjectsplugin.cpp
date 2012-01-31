@@ -13,8 +13,15 @@
 #include "thermalobjects.h"
 #include "thermalprobes.h"
 #include "antintrusionsystem.h"
+#include "xml_functions.h"
 
 #include <QtDeclarative/qdeclarative.h>
+#include <QFile>
+#include <QFileInfo>
+
+#include <QDomNode>
+
+#define CONF_FILE "conf.xml"
 
 
 QHash<GlobalField, QString> *bt_global::config;
@@ -29,6 +36,11 @@ ControlledProbeDevice *getProbeDevice(QString probe_where)
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
+    QFile fh(CONF_FILE);
+    QDomDocument document;
+    if (!fh.exists() || !document.setContent(&fh))
+        qFatal("The config file %s does not seem a valid xml configuration file", qPrintable(QFileInfo(fh).absoluteFilePath()));
+
     bt_global::config = new QHash<GlobalField, QString>();
     (*bt_global::config)[TS_NUMBER] = QString::number(0);
 
@@ -48,25 +60,52 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
     FrameReceiver::setClientsMonitor(monitors);
     FrameSender::setClients(clients);
 
-    createObjects();
+    createObjects(document);
     device::initDevices();
     FilterListModel::setSource(&objmodel);
 }
 
-void BtObjectsPlugin::createObjects()
+void BtObjectsPlugin::createObjects(QDomDocument document)
 {
-    objmodel.appendRow(new Light("lampada scrivania", "13", bt_global::add_device_to_cache(new LightingDevice("13"))));
-    objmodel.appendRow(new Light("lampadario soggiorno", "1", bt_global::add_device_to_cache(new LightingDevice("1"))));
-    objmodel.appendRow(new Dimmer("faretti soggiorno", "29", bt_global::add_device_to_cache(new DimmerDevice("29", PULL))));
-    objmodel.appendRow(new Light("lampada da terra soggiorno","2",  bt_global::add_device_to_cache(new LightingDevice("2"))));
-    objmodel.appendRow(new Light("abat jour", "3", bt_global::add_device_to_cache(new LightingDevice("3"))));
-    objmodel.appendRow(new Light("abat jour", "4", bt_global::add_device_to_cache(new LightingDevice("4"))));
-    objmodel.appendRow(new Light("lampada studio", "5", bt_global::add_device_to_cache(new LightingDevice("5"))));
-    objmodel.appendRow(new ThermalControlUnit99Zones(QString::fromLocal8Bit("unità centrale"), "", bt_global::add_device_to_cache(new ThermalDevice99Zones("0"))));
-    objmodel.appendRow(new ThermalControlledProbe("zona giorno", "1", getProbeDevice("5")));
-    objmodel.appendRow(new ThermalControlledProbe("zona notte", "2", getProbeDevice("2")));
-    objmodel.appendRow(new ThermalControlledProbe("zona taverna", "3", getProbeDevice("3")));
-    objmodel.appendRow(new ThermalControlledProbe("zona studio", "4", getProbeDevice("4")));
+    foreach (const QDomNode &item, getChildren(document.documentElement(), "item"))
+    {
+        ObjectInterface *obj = 0;
+
+        int id = getTextChild(item, "id").toInt();
+        QString descr = getTextChild(item, "descr");
+        QString where = getTextChild(item, "where");
+
+        switch (id) {
+        case ObjectInterface::IdLight:
+        {
+            PullMode p = getTextChild(item, "pul").toInt() == 1 ? PULL : NOT_PULL;
+            obj = new Light(descr, where, bt_global::add_device_to_cache(new LightingDevice(where, p)));
+            break;
+        }
+        case ObjectInterface::IdDimmer:
+        {
+            PullMode p = getTextChild(item, "pul").toInt() == 1 ? PULL : NOT_PULL;
+            obj = new Dimmer(descr, where, bt_global::add_device_to_cache(new DimmerDevice(where, p)));
+            break;
+        }
+        case ObjectInterface::IdThermalControlUnit99:
+            obj = new ThermalControlUnit99Zones(descr, "", bt_global::add_device_to_cache(new ThermalDevice99Zones("0")));
+            break;
+        case ObjectInterface::IdThermalControlledProbe:
+        {
+            ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?
+                ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
+            obj = new ThermalControlledProbe(descr, where,
+                      new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+            break;
+        }
+        default:
+            Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
+        }
+        objmodel.appendRow(obj);
+    }
+
+
     objmodel.appendRow(new AntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice)));
     objmodel.reparentObjects();
 }

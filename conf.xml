@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuratore>
+  <item>
+    <id>1</id>
+    <itemID>1</itemID>
+    <descr>lampada scrivania</descr>
+    <where>13</where>
+    <pul>0</pul>
+  </item>
+  <item>
+    <id>1</id>
+    <itemID>2</itemID>
+    <descr>lampadario soggiorno</descr>
+    <where>1</where>
+    <pul>0</pul>
+  </item>
+  <item>
+    <id>2</id>
+    <itemID>3</itemID>
+    <descr>faretti soggiorno</descr>
+    <where>29</where>
+    <pul>1</pul>
+  </item>
+  <item>
+    <id>1</id>
+    <itemID>4</itemID>
+    <descr>lampada da terra soggiorno</descr>
+    <where>2</where>
+    <pul>0</pul>
+  </item>
+  <item>
+    <id>1</id>
+    <itemID>5</itemID>
+    <descr>abat jour</descr>
+    <where>3</where>
+    <pul>0</pul>
+  </item>
+  <item>
+    <id>1</id>
+    <itemID>6</itemID>
+    <descr>abat jour</descr>
+    <where>4</where>
+    <pul>0</pul>
+  </item>
+  <item>
+    <id>1</id>
+    <itemID>7</itemID>
+    <descr>lampada studio</descr>
+    <where>5</where>
+    <pul>0</pul>
+  </item>
+  <item>
+    <id>3</id>
+    <itemID>8</itemID>
+    <descr>unità centrale</descr>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>9</itemID>
+    <descr>zona giorna</descr>
+    <where>5</where>
+    <fancoil>1</fancoil>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>10</itemID>
+    <descr>zona notte</descr>
+    <where>2</where>
+    <fancoil>0</fancoil>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>11</itemID>
+    <descr>zona taverna</descr>
+    <where>3</where>
+    <fancoil>0</fancoil>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>12</itemID>
+    <descr>zona studio</descr>
+    <where>4</where>
+    <fancoil>0</fancoil>
+  </item>
+</configuratore>
+

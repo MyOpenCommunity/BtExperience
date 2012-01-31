@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = btobjects
-QT += declarative network
+QT += declarative network xml
 CONFIG += qt plugin
 
 
@@ -74,6 +74,7 @@ SOURCES += \
 
 
 HEADERS += \
+    antintrusion_device.h \
     bttime.h \
     device.h \
     devices_cache.h \
@@ -85,9 +86,10 @@ HEADERS += \
     pulldevice.h \
     scaleconversion.h \
     thermal_device.h \
-    antintrusion_device.h
+    xml_functions.h
 
 SOURCES += \
+    antintrusion_device.cpp \
     bttime.cpp \
     device.cpp \
     devices_cache.cpp \
@@ -99,7 +101,7 @@ SOURCES += \
     pulldevice.cpp \
     scaleconversion.cpp \
     thermal_device.cpp \
-    antintrusion_device.cpp
+    xml_functions.cpp
 
 OTHER_FILES = qmldir
 
