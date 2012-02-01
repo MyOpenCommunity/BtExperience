@@ -48,18 +48,6 @@ Item {
         NumberAnimation { duration: 400; easing.type: Easing.InSine }
     }
 
-    onChildLoaded: {
-        child.animationRunningChanged.connect(childAnimationHandler)
-    }
-
-    signal childAnimation(bool running)
-
-    function childAnimationHandler()
-    {
-        if (child)
-            childAnimation(child.animationRunning === true)
-    }
-
     BorderImage {
         id: name
         source: "images/common/ombra1elemento.png"
