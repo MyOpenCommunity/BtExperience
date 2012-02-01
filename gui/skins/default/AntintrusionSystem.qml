@@ -128,7 +128,34 @@ MenuElement {
             MouseArea {
                 anchors.fill: parent
 //                onClicked: system.state = system.state == "" ? "systemActive" : ""
-                onClicked: showKeyPad(qsTr("imposta zone"))
+                onClicked: pageObject.showKeyPad(qsTr("imposta zone"))
+            }
+
+            Connections {
+                target: pageObject.keypadObject
+                onTextInsertedChanged: {
+                    var keypad = pageObject.keypadObject
+                    if (keypad.textInserted.length >= 5) {
+                        if (keypad.textInserted === "12345")
+                            keypad.state = "okState"
+                        else
+                            keypad.state = "errorState"
+                        keypadTimer.start()
+                    }
+                }
+            }
+
+            Timer {
+                id: keypadTimer
+                repeat: false
+                interval: 1000
+                running: false
+                onTriggered: {
+                    if (pageObject.keypadObject.state === "okState")
+                        pageObject.closeKeyPad()
+                    else
+                        pageObject.resetKeyPad()
+                }
             }
         }
     }

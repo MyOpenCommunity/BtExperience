@@ -6,6 +6,8 @@ SystemPage {
     text: qsTr("antintrusione")
     rootElement: "AntintrusionSystem.qml"
 
+    property alias keypadObject: keypad
+
     Rectangle {
         id: darkRect
         anchors.fill: parent
@@ -25,33 +27,6 @@ SystemPage {
         helperLabel: qsTr("inserisci il codice")
 
         onCancelClicked: antintrusion.state = ""
-        onTextInsertedChanged: {
-            if (textInserted.length >= 5) {
-                if (textInserted === "12345")
-                    state = "okState"
-                else
-                    state = "errorState"
-
-                keypadTimer.start()
-            }
-            else
-                state = ""
-        }
-
-        Timer {
-            id: keypadTimer
-            repeat: false
-            interval: 1000
-            running: false
-            onTriggered: {
-                if (keypad.state == "okState")
-                    antintrusion.state = ""
-
-                keypad.textInserted = ""
-                keypad.state = ""
-            }
-        }
-
         Behavior on opacity { NumberAnimation { duration: 200 } }
     }
 
@@ -63,15 +38,19 @@ SystemPage {
         }
     ]
 
-    onRootObjectChanged: {
-        if (rootObject !== undefined)
-            rootObject.showKeyPad.connect(showKeyPad)
-    }
-
-
     function showKeyPad(title) {
         keypad.mainLabel = title
         antintrusion.state = "keypadShown"
+    }
+
+    function closeKeyPad() {
+        antintrusion.state = ""
+        resetkeyPad();
+    }
+
+    function resetKeyPad() {
+        keypad.textInserted = ""
+        keypad.state = ""
     }
 }
 
