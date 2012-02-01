@@ -7,6 +7,10 @@
     #define USE_OPENGL 1
 #endif
 
+#if defined(Q_WS_QWS)
+#include <QScreen>
+#endif
+
 #include <QtGui/QApplication>
 #if USE_OPENGL
 #include <QtOpenGL/QGLWidget>
@@ -135,8 +139,13 @@ int main(int argc, char *argv[])
 #endif
 
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+#ifdef Q_WS_QWS
+    viewer.engine()->rootContext()->setContextProperty("main_width", QScreen::instance()->width());
+    viewer.engine()->rootContext()->setContextProperty("main_height", QScreen::instance()->height());
+#else
     viewer.engine()->rootContext()->setContextProperty("main_width", MAIN_WIDTH);
     viewer.engine()->rootContext()->setContextProperty("main_height", MAIN_HEIGHT);
+#endif
     viewer.engine()->rootContext()->setContextProperty("input_context", new InputContextWrapper);
     viewer.setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
 
