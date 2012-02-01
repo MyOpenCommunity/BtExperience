@@ -7,7 +7,8 @@ function loadComponent(menuLevel, fileName, title, dataModel) {
     if (pendingOperations.length > 0) // we are during an operation
         return
 
-    var itemObject = createComponent(fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer, "opacity": 0, "y": 33, "dataModel": dataModel})
+    var itemObject = createComponent(fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer,
+                                                "opacity": 0, "y": 33, "dataModel": dataModel, "pageObject": pageObject})
     var titleObject = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
     if (itemObject && titleObject) {
         _addItem(itemObject, titleObject)

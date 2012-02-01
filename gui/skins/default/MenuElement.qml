@@ -21,6 +21,8 @@ Item {
         mainContainer.closeItem(menuLevel + 1)
     }
 
+    // the page where the element is placed
+    property variant pageObject: undefined
 
     // Signals emitted from the container
 
