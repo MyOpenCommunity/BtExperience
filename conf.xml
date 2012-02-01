@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuratore>
   <item>
-    <id>1</id>
+    <id>1</id> <!-- Light -->
     <itemID>1</itemID>
     <descr>lampada scrivania</descr>
     <where>13</where>
@@ -15,7 +15,7 @@
     <pul>0</pul>
   </item>
   <item>
-    <id>2</id>
+    <id>2</id> <!-- Dimmer -->
     <itemID>3</itemID>
     <descr>faretti soggiorno</descr>
     <where>29</where>
@@ -50,14 +50,14 @@
     <pul>0</pul>
   </item>
   <item>
-    <id>3</id>
+    <id>3</id> <!-- Thermal Control unit 99zones -->
     <itemID>8</itemID>
     <descr>unità centrale</descr>
   </item>
   <item>
-    <id>4</id>
+    <id>4</id> <!-- Thermal Controlled probe -->
     <itemID>9</itemID>
-    <descr>zona giorna</descr>
+    <descr>zona giorno</descr>
     <where>5</where>
     <fancoil>1</fancoil>
   </item>
