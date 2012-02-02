@@ -45,7 +45,7 @@ SystemPage {
 
     function closeKeyPad() {
         antintrusion.state = ""
-        resetkeyPad();
+        resetKeyPad();
     }
 
     function resetKeyPad() {

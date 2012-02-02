@@ -30,6 +30,7 @@ void AntintrusionZone::setPartialization(bool p, bool request_partialization)
 
 AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d)
 {
+    initialized = false;
     status = false;
     dev = d;
     connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
@@ -69,11 +70,23 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
         case AntintrusionDevice::DIM_SYSTEM_INSERTED:
         {
             bool inserted = it.value().toBool();
-            if (inserted && !status)
-            {
-                // TODO: delete all the old alarms
+            if (!initialized) {
+                initialized = true;
+                status = inserted;
             }
-            status = inserted;
+            else {
+                if (inserted == status) {
+                    emit codeRefused();
+                }
+                else {
+                    if (!status) {
+                        // TODO: delete all the old alarms
+                    }
+                    status = inserted;
+                    emit statusChanged();
+                    emit codeAccepted();
+                }
+            }
             break;
         }
 
@@ -82,10 +95,19 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
             foreach (AntintrusionZone *z, zones)
                 if (z->getObjectId() == it.value().toInt())
                     z->setPartialization(it.key() == AntintrusionDevice::DIM_ZONE_PARTIALIZED, false);
-
             break;
         }
 
         ++it;
     }
+}
+
+void AntintrusionSystem::requestPartialization(const QString &password)
+{
+    dev->setPartialization(password);
+}
+
+void AntintrusionSystem::toggleActivation(const QString &password)
+{
+    dev->toggleActivation(password);
 }

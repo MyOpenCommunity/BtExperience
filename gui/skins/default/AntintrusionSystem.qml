@@ -12,7 +12,7 @@ MenuElement {
 
     QtObject {
         id: privateProps
-        property variant rootObject: objectModel.getObject(0)
+        property variant model: objectModel.getObject(0)
     }
 
     Column {
@@ -84,7 +84,7 @@ MenuElement {
                 delegate: Image {
                     // We need the following trick because the model is not directly editable.
                     // See the comment on ObjectListModel::getObject
-                    property variant dataModel: privateProps.rootObject.zones.getObject(index)
+                    property variant dataModel: privateProps.model.zones.getObject(index)
                     source: "images/common/btn_zona.png"
                     Row {
                         anchors.top: parent.top
@@ -127,34 +127,55 @@ MenuElement {
 
             MouseArea {
                 anchors.fill: parent
-//                onClicked: system.state = system.state == "" ? "systemActive" : ""
-                onClicked: pageObject.showKeyPad(qsTr("imposta zone"))
-            }
+                onClicked: {
+                    pageObject.showKeyPad(qsTr("imposta zone"))
+                    connectCallbacks()
+                }
 
-            Connections {
-                target: pageObject.keypadObject
-                onTextInsertedChanged: {
+                function connectCallbacks() {
+                    pageObject.keypadObject.textInsertedChanged.connect(handleTextInserted)
+                    privateProps.model.codeAccepted.connect(handleCodeAccepted)
+                    privateProps.model.codeRefused.connect(handleCodeRefused)
+                }
+
+                function disconnectCallbacks() {
+                    pageObject.keypadObject.textInsertedChanged.disconnect(handleTextInserted)
+                    privateProps.model.codeAccepted.disconnect(handleCodeAccepted)
+                    privateProps.model.codeRefused.disconnect(handleCodeRefused)
+                }
+
+                function handleTextInserted() {
                     var keypad = pageObject.keypadObject
                     if (keypad.textInserted.length >= 5) {
-                        if (keypad.textInserted === "12345")
-                            keypad.state = "okState"
-                        else
-                            keypad.state = "errorState"
-                        keypadTimer.start()
+                        privateProps.model.requestPartialization(keypad.textInserted)
+                        keypad.state = "disabled"
                     }
                 }
-            }
 
-            Timer {
-                id: keypadTimer
-                repeat: false
-                interval: 1000
-                running: false
-                onTriggered: {
-                    if (pageObject.keypadObject.state === "okState")
-                        pageObject.closeKeyPad()
-                    else
-                        pageObject.resetKeyPad()
+                function handleCodeAccepted() {
+                    keypad.state = "ok"
+                    keypadTimer.start()
+                }
+
+                function handleCodeRefused() {
+                    keypad.state = "error"
+                    keypadTimer.start()
+                }
+
+                Timer {
+                    id: keypadTimer
+                    repeat: false
+                    interval: 1000
+                    running: false
+                    onTriggered: {
+
+                        if (pageObject.keypadObject.state === "ok") {
+                            pageObject.closeKeyPad()
+                            parent.disconnectCallbacks()
+                        }
+                        else
+                            pageObject.resetKeyPad()
+                    }
                 }
             }
         }
@@ -162,7 +183,6 @@ MenuElement {
     states: [
         State {
             name: "systemActive"
-            when: privateProps.rootObject.status === true
             PropertyChanges { target: systemItem; name: qsTr("sistema attivo") }
             PropertyChanges { target: systemIcon; source: "images/common/ico_sistema_attivato.png" }
             PropertyChanges { target: zoneDarkRect; visible: true }

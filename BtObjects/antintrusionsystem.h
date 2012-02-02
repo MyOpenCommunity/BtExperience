@@ -71,14 +71,13 @@ public:
 
     ObjectListModel *getZones() const;
 
-
     Q_INVOKABLE void requestPartialization(const QString &password);
     Q_INVOKABLE void toggleActivation(const QString &password);
+
     bool getStatus() const
     {
         return status;
     }
-
 
 private slots:
     virtual void valueReceived(const DeviceValues &values_list);
@@ -87,10 +86,14 @@ signals:
     void zonesChanged();
     void statusChanged();
 
+    void codeAccepted();
+    void codeRefused();
+
 private:
     AntintrusionDevice *dev;
     QList<AntintrusionZone*> zones;
     bool status;
+    bool initialized;
 };
 
 

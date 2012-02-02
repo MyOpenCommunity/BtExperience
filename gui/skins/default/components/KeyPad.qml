@@ -8,7 +8,6 @@ Column {
     property string okLabel: qsTr("zone impostate")
     property string textInserted
 
-
     signal cancelClicked
     signal digitClicked(string digit)
 
@@ -36,7 +35,7 @@ Column {
         }
         else
             textInserted += digit
-        console.log('textInserted: ' + textInserted)
+//        console.log('textInserted: ' + textInserted)
     }
 
     onTextInsertedChanged: {
@@ -190,15 +189,20 @@ Column {
 
     states: [
         State {
-            name: "errorState"
+            name: "error"
             PropertyChanges { target: labelLoader; sourceComponent: errorLabelText }
             PropertyChanges { target: darkRect; opacity: 0.7 }
         },
         State {
-            name: "okState"
+            name: "ok"
             PropertyChanges { target: labelLoader; sourceComponent: okLabelText }
             PropertyChanges { target: darkRect; opacity: 0.7 }
+        },
+        State {
+            name: "disabled"
+            PropertyChanges { target: darkRect; opacity: 0.7 }
         }
+
     ]
 }
 
