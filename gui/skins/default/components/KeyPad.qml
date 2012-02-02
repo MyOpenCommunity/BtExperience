@@ -202,7 +202,6 @@ Column {
             name: "disabled"
             PropertyChanges { target: darkRect; opacity: 0.7 }
         }
-
     ]
 }
 

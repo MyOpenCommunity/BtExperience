@@ -76,6 +76,7 @@ SOURCES += \
 HEADERS += \
     antintrusion_device.h \
     bttime.h \
+    delayedslotcaller.h \
     device.h \
     devices_cache.h \
     frame_classes.h \
@@ -91,6 +92,7 @@ HEADERS += \
 SOURCES += \
     antintrusion_device.cpp \
     bttime.cpp \
+    delayedslotcaller.cpp \
     device.cpp \
     devices_cache.cpp \
     frame_classes.cpp \

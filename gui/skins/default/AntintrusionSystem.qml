@@ -3,16 +3,67 @@ import BtObjects 1.0
 
 MenuElement {
     id: system
-    signal showKeyPad(string title)
 
     ObjectModel {
         id: objectModel
         categories: [ObjectInterface.Antintrusion]
     }
 
+    Timer {
+        id: keypadTimer
+        repeat: false
+        interval: 1000
+        running: false
+        onTriggered: privateProps.finalizeAction();
+    }
+
     QtObject {
         id: privateProps
         property variant model: objectModel.getObject(0)
+
+        property bool actionPartialize: false
+
+        // Callbacks for the keypad management
+        function connectCallbacks() {
+            pageObject.keypadObject.textInsertedChanged.connect(handleTextInserted)
+            model.codeRefused.connect(handleCodeRefused)
+        }
+
+        function disconnectCallbacks() {
+            pageObject.keypadObject.textInsertedChanged.disconnect(handleTextInserted)
+            model.codeAccepted.disconnect(handleCodeAccepted)
+            model.codeRefused.disconnect(handleCodeRefused)
+        }
+
+        function handleTextInserted() {
+            var keypad = pageObject.keypadObject
+            if (keypad.textInserted.length >= 5) {
+                if (actionPartialize)
+                    model.requestPartialization(keypad.textInserted)
+                else
+                    model.toggleActivation(keypad.textInserted)
+                keypad.state = "disabled"
+            }
+        }
+
+        function handleCodeAccepted() {
+            keypad.state = "ok"
+            keypadTimer.start()
+        }
+
+        function handleCodeRefused() {
+            keypad.state = "error"
+            keypadTimer.start()
+        }
+
+        function finalizeAction() {
+            if (pageObject.keypadObject.state === "ok") {
+                pageObject.closeKeyPad()
+                disconnectCallbacks()
+            }
+            else
+                pageObject.resetKeyPad()
+        }
     }
 
     Column {
@@ -32,13 +83,28 @@ MenuElement {
         MenuItem {
             id: systemItem
             name: qsTr("sistema disattivo")
-            hasChild: true
+            hasChild: false
             Image {
                 id: systemIcon
                 anchors.right: parent.right
                 anchors.rightMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
                 source: "images/common/ico_sistema_disattivato.png"
+                states: [
+                    State {
+                        name: "active"
+                        PropertyChanges { target: systemIcon; source: "images/common/ico_sistema_attivato.png" }
+                    }
+                ]
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    var title = systemIcon.state === "" ? qsTr("attiva sistema") : qsTr("disattiva sistema")
+                    pageObject.showKeyPad(title)
+                    privateProps.actionPartialize = false
+                    privateProps.connectCallbacks()
+                }
             }
         }
         MenuItem {
@@ -129,53 +195,8 @@ MenuElement {
                 anchors.fill: parent
                 onClicked: {
                     pageObject.showKeyPad(qsTr("imposta zone"))
-                    connectCallbacks()
-                }
-
-                function connectCallbacks() {
-                    pageObject.keypadObject.textInsertedChanged.connect(handleTextInserted)
-                    privateProps.model.codeAccepted.connect(handleCodeAccepted)
-                    privateProps.model.codeRefused.connect(handleCodeRefused)
-                }
-
-                function disconnectCallbacks() {
-                    pageObject.keypadObject.textInsertedChanged.disconnect(handleTextInserted)
-                    privateProps.model.codeAccepted.disconnect(handleCodeAccepted)
-                    privateProps.model.codeRefused.disconnect(handleCodeRefused)
-                }
-
-                function handleTextInserted() {
-                    var keypad = pageObject.keypadObject
-                    if (keypad.textInserted.length >= 5) {
-                        privateProps.model.requestPartialization(keypad.textInserted)
-                        keypad.state = "disabled"
-                    }
-                }
-
-                function handleCodeAccepted() {
-                    keypad.state = "ok"
-                    keypadTimer.start()
-                }
-
-                function handleCodeRefused() {
-                    keypad.state = "error"
-                    keypadTimer.start()
-                }
-
-                Timer {
-                    id: keypadTimer
-                    repeat: false
-                    interval: 1000
-                    running: false
-                    onTriggered: {
-
-                        if (pageObject.keypadObject.state === "ok") {
-                            pageObject.closeKeyPad()
-                            parent.disconnectCallbacks()
-                        }
-                        else
-                            pageObject.resetKeyPad()
-                    }
+                    privateProps.actionPartialize = true
+                    privateProps.connectCallbacks()
                 }
             }
         }
