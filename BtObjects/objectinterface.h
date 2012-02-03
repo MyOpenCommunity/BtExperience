@@ -26,6 +26,7 @@ public:
         IdThermalControlledProbe,
         IdThermalControlUnit4,
         IdAntintrusionSystem,
+        IdHardwareSettings,
         IdMax // the last value + 1, used to check the ids requested from qml
     };
 
@@ -33,7 +34,8 @@ public:
     {
         Lighting = 1,
         ThermalRegulation,
-        Antintrusion
+        Antintrusion,
+        Settings
     };
 
     virtual int getObjectId() const = 0;

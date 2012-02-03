@@ -14,6 +14,7 @@
 #include "thermalprobes.h"
 #include "antintrusionsystem.h"
 #include "xml_functions.h"
+#include "settings.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
@@ -99,6 +100,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
                       new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
             break;
         }
+        case ObjectInterface::IdHardwareSettings:
+            obj = new HardwareSettings;
+            break;
         default:
             Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
         }

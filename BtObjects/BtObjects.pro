@@ -61,6 +61,7 @@ HEADERS += \
     lightobjects.h \
     objectlistmodel.h \
     objectinterface.h \
+    settings.h \
     thermalobjects.h \
     thermalprobes.h
 
@@ -69,6 +70,7 @@ SOURCES += \
     antintrusionsystem.cpp \
     lightobjects.cpp \
     objectlistmodel.cpp \
+    settings.cpp \
     thermalobjects.cpp \
     thermalprobes.cpp
 

@@ -13,6 +13,8 @@ FilterListModel {
             return "ThermalControlUnit.qml"
         case ObjectInterface.IdThermalControlledProbe:
             return "ThermalControlledProbe.qml"
+        case ObjectInterface.IdHardwareSettings:
+            return "Brightness.qml"
         default:
             console.log("Unknown object id: " + objectId)
             return ""

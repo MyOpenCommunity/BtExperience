@@ -82,5 +82,8 @@
     <where>4</where>
     <fancoil>0</fancoil>
   </item>
+  <item>
+    <id>7</id> <!-- Hardware settings -->
+  </item>
 </configuratore>
 
