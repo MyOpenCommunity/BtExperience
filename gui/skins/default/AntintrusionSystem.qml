@@ -24,12 +24,13 @@ MenuElement {
         property bool actionPartialize: false
 
         // Callbacks for the keypad management
-        function connectCallbacks() {
+        function connectKeyPad() {
             pageObject.keypadObject.textInsertedChanged.connect(handleTextInserted)
+            model.codeAccepted.connect(handleCodeAccepted)
             model.codeRefused.connect(handleCodeRefused)
         }
 
-        function disconnectCallbacks() {
+        function disconnectKeyPad() {
             pageObject.keypadObject.textInsertedChanged.disconnect(handleTextInserted)
             model.codeAccepted.disconnect(handleCodeAccepted)
             model.codeRefused.disconnect(handleCodeRefused)
@@ -56,10 +57,11 @@ MenuElement {
             keypadTimer.start()
         }
 
+
         function finalizeAction() {
             if (pageObject.keypadObject.state === "ok") {
                 pageObject.closeKeyPad()
-                disconnectCallbacks()
+                disconnectKeyPad()
             }
             else
                 pageObject.resetKeyPad()
@@ -103,7 +105,7 @@ MenuElement {
                     var title = systemIcon.state === "" ? qsTr("attiva sistema") : qsTr("disattiva sistema")
                     pageObject.showKeyPad(title)
                     privateProps.actionPartialize = false
-                    privateProps.connectCallbacks()
+                    privateProps.connectKeyPad()
                 }
             }
         }
@@ -196,7 +198,7 @@ MenuElement {
                 onClicked: {
                     pageObject.showKeyPad(qsTr("imposta zone"))
                     privateProps.actionPartialize = true
-                    privateProps.connectCallbacks()
+                    privateProps.connectKeyPad()
                 }
             }
         }

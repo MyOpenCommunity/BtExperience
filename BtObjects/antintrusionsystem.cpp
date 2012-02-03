@@ -30,6 +30,7 @@ void AntintrusionZone::setPartialization(bool p, bool request_partialization)
 
 AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d)
 {
+    waiting_response = false;
     initialized = false;
     status = false;
     dev = d;
@@ -76,7 +77,10 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
             }
             else {
                 if (inserted == status) {
-                    emit codeRefused();
+                    if (waiting_response) {
+                        emit codeRefused();
+                        waiting_response = false;
+                    }
                 }
                 else {
                     if (!status) {
@@ -84,7 +88,11 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
                     }
                     status = inserted;
                     emit statusChanged();
-                    emit codeAccepted();
+
+                    if (waiting_response) {
+                        emit codeAccepted();
+                        waiting_response = false;
+                    }
                 }
             }
             break;
@@ -105,9 +113,11 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 void AntintrusionSystem::requestPartialization(const QString &password)
 {
     dev->setPartialization(password);
+    waiting_response = true;
 }
 
 void AntintrusionSystem::toggleActivation(const QString &password)
 {
     dev->toggleActivation(password);
+    waiting_response = true;
 }

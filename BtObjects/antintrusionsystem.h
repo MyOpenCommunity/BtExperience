@@ -94,6 +94,7 @@ private:
     QList<AntintrusionZone*> zones;
     bool status;
     bool initialized;
+    bool waiting_response;
 };
 
 
