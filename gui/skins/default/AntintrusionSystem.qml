@@ -28,12 +28,14 @@ MenuElement {
             pageObject.keypadObject.textInsertedChanged.connect(handleTextInserted)
             model.codeAccepted.connect(handleCodeAccepted)
             model.codeRefused.connect(handleCodeRefused)
+            model.codeTimeout.connect(handleCodeTimeout)
         }
 
         function disconnectKeyPad() {
             pageObject.keypadObject.textInsertedChanged.disconnect(handleTextInserted)
             model.codeAccepted.disconnect(handleCodeAccepted)
             model.codeRefused.disconnect(handleCodeRefused)
+            model.codeTimeout.disconnect(handleCodeTimeout)
         }
 
         function handleTextInserted() {
@@ -57,6 +59,10 @@ MenuElement {
             keypadTimer.start()
         }
 
+        function handleCodeTimeout() {
+            pageObject.closeKeyPad()
+            disconnectKeyPad()
+        }
 
         function finalizeAction() {
             if (pageObject.keypadObject.state === "ok") {

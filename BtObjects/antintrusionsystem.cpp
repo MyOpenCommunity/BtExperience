@@ -4,6 +4,7 @@
 
 #include <QDebug>
 
+#define CODE_TIMEOUT_SECS 10
 
 AntintrusionZone::AntintrusionZone(int id, QString _name)
 {
@@ -110,10 +111,21 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
     }
 }
 
+void AntintrusionSystem::handleCodeTimeout()
+{
+    if (!waiting_response) // we have already received the response
+        return;
+
+    qDebug() << "AntintrusionSystem -> code timeout";
+    waiting_response = false;
+    emit codeTimeout();
+}
+
 void AntintrusionSystem::requestPartialization(const QString &password)
 {
     dev->setPartialization(password);
     waiting_response = true;
+    QTimer::singleShot(CODE_TIMEOUT_SECS * 1000, this, SLOT(handleCodeTimeout()));
 }
 
 void AntintrusionSystem::toggleActivation(const QString &password)

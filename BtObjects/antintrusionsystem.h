@@ -79,15 +79,17 @@ public:
         return status;
     }
 
-private slots:
-    virtual void valueReceived(const DeviceValues &values_list);
-
 signals:
     void zonesChanged();
     void statusChanged();
 
     void codeAccepted();
     void codeRefused();
+    void codeTimeout();
+
+private slots:
+    virtual void valueReceived(const DeviceValues &values_list);
+    void handleCodeTimeout();
 
 private:
     AntintrusionDevice *dev;
