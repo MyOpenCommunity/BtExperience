@@ -2,10 +2,10 @@ import QtQuick 1.1
 
 Column {
     id: keypad
-    property string mainLabel: qsTr("imposta zone")
+    property string mainLabel
     property string helperLabel: qsTr("inserisci il codice")
-    property string errorLabel: qsTr("codice errato")
-    property string okLabel: qsTr("zone impostate")
+    property string errorLabel
+    property string okLabel
     property string textInserted
 
     signal cancelClicked

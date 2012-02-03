@@ -103,7 +103,8 @@ MenuElement {
                 anchors.fill: parent
                 onClicked: {
                     var title = system.state === "" ? qsTr("attiva sistema") : qsTr("disattiva sistema")
-                    pageObject.showKeyPad(title)
+                    var okMessage = system.state === "" ? qsTr("sistema attivato") : qsTr("sistema disattivato")
+                    pageObject.showKeyPad(title, qsTr("codice errato"), okMessage)
                     privateProps.actionPartialize = false
                     privateProps.connectKeyPad()
                 }
@@ -196,7 +197,7 @@ MenuElement {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageObject.showKeyPad(qsTr("imposta zone"))
+                    pageObject.showKeyPad(qsTr("imposta zone"), qsTr("codice errato"), qsTr("zone impostate"))
                     privateProps.actionPartialize = true
                     privateProps.connectKeyPad()
                 }

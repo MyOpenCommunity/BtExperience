@@ -38,8 +38,10 @@ SystemPage {
         }
     ]
 
-    function showKeyPad(title) {
+    function showKeyPad(title, errorMessage, okMessage) {
         keypad.mainLabel = title
+        keypad.errorLabel = errorMessage
+        keypad.okLabel = okMessage
         antintrusion.state = "keypadShown"
     }
 
