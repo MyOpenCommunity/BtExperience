@@ -92,17 +92,11 @@ MenuElement {
                 anchors.rightMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
                 source: "images/common/ico_sistema_disattivato.png"
-                states: [
-                    State {
-                        name: "active"
-                        PropertyChanges { target: systemIcon; source: "images/common/ico_sistema_attivato.png" }
-                    }
-                ]
             }
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    var title = systemIcon.state === "" ? qsTr("attiva sistema") : qsTr("disattiva sistema")
+                    var title = system.state === "" ? qsTr("attiva sistema") : qsTr("disattiva sistema")
                     pageObject.showKeyPad(title)
                     privateProps.actionPartialize = false
                     privateProps.connectKeyPad()
@@ -206,6 +200,7 @@ MenuElement {
     states: [
         State {
             name: "systemActive"
+            when: privateProps.model.status === true
             PropertyChanges { target: systemItem; name: qsTr("sistema attivo") }
             PropertyChanges { target: systemIcon; source: "images/common/ico_sistema_attivato.png" }
             PropertyChanges { target: zoneDarkRect; visible: true }
