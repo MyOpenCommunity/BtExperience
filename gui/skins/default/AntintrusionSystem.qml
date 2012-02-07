@@ -141,6 +141,8 @@ MenuElement {
 
             GridView {
                 id: zoneView
+                property variant zones: privateProps.model.zones
+
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 5
@@ -153,7 +155,7 @@ MenuElement {
                 delegate: Image {
                     // We need the following trick because the model is not directly editable.
                     // See the comment on ObjectListModel::getObject
-                    property variant dataModel: privateProps.model.zones.getObject(index)
+                    property variant dataModel: zoneView.zones.getObject(index)
                     source: "images/common/btn_zona.png"
                     Row {
                         anchors.top: parent.top
@@ -180,7 +182,7 @@ MenuElement {
                     }
                 }
 
-                model: objectModel.getObject(0).zones
+                model: zones
             }
         }
 
