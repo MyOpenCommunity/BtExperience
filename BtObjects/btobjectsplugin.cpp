@@ -103,14 +103,15 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
         case ObjectInterface::IdHardwareSettings:
             obj = new HardwareSettings;
             break;
+        case ObjectInterface::IdAntintrusionSystem:
+            obj = new AntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice), item);
+            break;
         default:
             Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
         }
         objmodel.appendRow(obj);
     }
 
-
-    objmodel.appendRow(new AntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice)));
     objmodel.reparentObjects();
 }
 

@@ -9,6 +9,7 @@
 
 class AntintrusionDevice;
 class ObjectListModel;
+class QDomNode;
 
 
 class AntintrusionZone : public ObjectInterface
@@ -50,10 +51,11 @@ class AntintrusionSystem : public ObjectInterface
 {
     Q_OBJECT
     Q_PROPERTY(ObjectListModel *zones READ getZones NOTIFY zonesChanged)
+//    Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)
     Q_PROPERTY(bool status READ getStatus NOTIFY statusChanged)
 
 public:
-    AntintrusionSystem(AntintrusionDevice *d);
+    AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xml_node);
 
     virtual int getObjectId() const
     {

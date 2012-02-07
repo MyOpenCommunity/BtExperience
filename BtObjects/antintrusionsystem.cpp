@@ -2,6 +2,8 @@
 #include "antintrusion_device.h"
 #include "objectlistmodel.h"
 
+#include "xml_functions.h"
+
 #include <QDebug>
 
 #define CODE_TIMEOUT_SECS 10
@@ -29,8 +31,13 @@ void AntintrusionZone::setPartialization(bool p, bool request_partialization)
 }
 
 
-AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d)
+AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xml_node)
 {
+    foreach (const QDomNode &scenario, getChildren(getChildWithName(xml_node, "scenarios"), "scenario"))
+    {
+
+    }
+
     waiting_response = false;
     initialized = false;
     status = false;
@@ -104,6 +111,12 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
             foreach (AntintrusionZone *z, zones)
                 if (z->getObjectId() == it.value().toInt())
                     z->setPartialization(it.key() == AntintrusionDevice::DIM_ZONE_PARTIALIZED, false);
+            break;
+        case AntintrusionDevice::DIM_ANTIPANIC_ALARM:
+        case AntintrusionDevice::DIM_INTRUSION_ALARM:
+        case AntintrusionDevice::DIM_TAMPER_ALARM:
+        case AntintrusionDevice::DIM_TECHNICAL_ALARM:
+//            emit alarmReceived();
             break;
         }
 
