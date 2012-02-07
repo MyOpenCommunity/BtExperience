@@ -69,6 +69,7 @@ ObjectListModel *ThermalControlUnit::getModalities() const
     for (int i = 0; i < objs.length(); ++i)
         items->appendRow(objs[i]);
 
+    items->setRoleNames();
     items->reparentObjects();
 
     return items;

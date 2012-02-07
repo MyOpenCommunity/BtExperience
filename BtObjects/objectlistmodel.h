@@ -11,15 +11,7 @@
 #include <QHash>
 #include <QByteArray>
 
-
 class ObjectInterface;
-
-enum ItemRoles
-{
-    ObjectIdRole = Qt::UserRole + 1,
-    NameRole,
-    StatusRole
-};
 
 
 class ObjectListModel : public QAbstractListModel
@@ -45,6 +37,14 @@ public:
     // for details.
     void reparentObjects();
 
+    // Set the rolenames for the model using the union of the rolenames of each
+    // ObjectInterface object. In this way each instance of the ObjectListModel
+    // can expose a different set of role names, depending on the role names
+    // of its elements.
+    // NOTE: This method must be called before set the model.
+    // See also  http://doc.trolltech.com/4.7/qabstractitemmodel.html#roleNames
+    void setRoleNames();
+
 private slots:
     void handleItemChange();
 
@@ -52,6 +52,7 @@ private:
     QModelIndex indexFromItem(const ObjectInterface *item) const;
 
     QList<ObjectInterface*> item_list;
+    QHash<int, QByteArray> names;
 };
 
 

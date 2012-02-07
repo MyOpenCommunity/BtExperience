@@ -10,10 +10,27 @@ class LightingDevice;
 class DimmerDevice;
 
 
-class Light : public ObjectInterface
+class LightInterface : public ObjectInterface
 {
     Q_OBJECT
     Q_PROPERTY(bool status READ getStatus WRITE setStatus NOTIFY statusChanged)
+
+public:
+    // the status of the object: on or off.
+    virtual bool getStatus() const = 0;
+    virtual void setStatus(bool st) = 0;
+
+    virtual QVariant data(int role) const;
+    virtual QHash<int, QByteArray> roleNames();
+
+signals:
+    void statusChanged();
+};
+
+
+class Light : public LightInterface
+{
+    Q_OBJECT
 
 public:
     Light(QString name, QString key, LightingDevice *d);
@@ -33,9 +50,6 @@ public:
     virtual QString getName() const;
     virtual bool getStatus() const;
     virtual void setStatus(bool st);
-
-signals:
-    void statusChanged();
 
 protected slots:
     virtual void valueReceived(const DeviceValues &values_list);

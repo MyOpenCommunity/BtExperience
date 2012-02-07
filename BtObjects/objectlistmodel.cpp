@@ -9,12 +9,6 @@ ObjectListModel *FilterListModel::source = 0;
 
 ObjectListModel::ObjectListModel(QObject *parent) : QAbstractListModel(parent)
 {
-    QHash<int, QByteArray> names;
-    names[ObjectIdRole] = "objectId";
-    names[NameRole] = "name";
-    names[StatusRole] = "status";
-
-    setRoleNames(names);
 }
 
 int ObjectListModel::rowCount(const QModelIndex &parent) const
@@ -28,18 +22,12 @@ QVariant ObjectListModel::data(const QModelIndex &index, int role) const
     if (index.row() < 0 || index.row() >= item_list.size())
         return QVariant();
 
-    ObjectInterface *item = item_list.at(index.row());
-    switch (role)
-    {
-    case ObjectIdRole:
-        return item->getObjectId();
-    case NameRole:
-        return item->getName();
-    case StatusRole:
-        return item->getStatus();
-    default:
-        return QVariant();
-    }
+    return item_list.at(index.row())->data(role);
+}
+
+void ObjectListModel::setRoleNames()
+{
+    QAbstractListModel::setRoleNames(names);
 }
 
 void ObjectListModel::appendRow(ObjectInterface *item)
@@ -48,6 +36,15 @@ void ObjectListModel::appendRow(ObjectInterface *item)
     connect(item, SIGNAL(dataChanged()), SLOT(handleItemChange()));
     item_list.append(item);
     endInsertRows();
+
+    QHash<int, QByteArray> n = item->roleNames();
+    QHashIterator<int, QByteArray> it(n);
+    while (it.hasNext())
+    {
+        it.next();
+        if (!names.contains(it.key()))
+            names[it.key()] = it.value();
+    }
 }
 
 void ObjectListModel::handleItemChange()

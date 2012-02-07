@@ -64,6 +64,7 @@ ObjectListModel *AntintrusionSystem::getZones() const
     for (int i = 0; i < zones.length(); ++i)
         items->appendRow(zones[i]);
 
+    items->setRoleNames();
     items->reparentObjects();
 
     return items;
