@@ -47,11 +47,42 @@ private:
 };
 
 
+class AntintrusionScenario : public ObjectInterface
+{
+    Q_OBJECT
+
+public:
+    AntintrusionScenario(QString name, QList<int> zones);
+
+    virtual QVariant data(int role) const;
+    virtual QHash<int, QByteArray> roleNames();
+
+    virtual int getObjectId() const
+    {
+        return -1;
+    }
+
+    virtual QString getObjectKey() const { return QString(); }
+
+    virtual ObjectCategory getCategory() const
+    {
+        return ObjectInterface::Antintrusion;
+    }
+
+    virtual QString getName() const { return name; }
+    QString getDescription() const;
+
+private:
+    QString name;
+    QList<int> zones;
+};
+
+
 class AntintrusionSystem : public ObjectInterface
 {
     Q_OBJECT
     Q_PROPERTY(ObjectListModel *zones READ getZones NOTIFY zonesChanged)
-//    Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)
+    Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)
     Q_PROPERTY(bool status READ getStatus NOTIFY statusChanged)
 
 public:
@@ -72,6 +103,8 @@ public:
     virtual QString getName() const { return QString(); }
 
     ObjectListModel *getZones() const;
+    ObjectListModel *getScenarios() const;
+
 
     Q_INVOKABLE void requestPartialization(const QString &password);
     Q_INVOKABLE void toggleActivation(const QString &password);
@@ -82,7 +115,9 @@ public:
     }
 
 signals:
-    void zonesChanged();
+    void zonesChanged(); // never emitted
+    void scenariosChanged(); // never emitted
+
     void statusChanged();
 
     void codeAccepted();
@@ -96,6 +131,7 @@ private slots:
 private:
     AntintrusionDevice *dev;
     QList<AntintrusionZone*> zones;
+    QList<AntintrusionScenario*> scenarios;
     bool status;
     bool initialized;
     bool waiting_response;

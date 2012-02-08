@@ -11,7 +11,8 @@ enum ItemRoles
 {
     ObjectIdRole = Qt::UserRole + 1,
     NameRole,
-    StatusRole
+    StatusRole,
+    DescriptionRole
 };
 
 

@@ -3,6 +3,7 @@ import BtObjects 1.0
 
 MenuElement {
     id: system
+    width: 212
 
     ObjectModel {
         id: objectModel
@@ -114,6 +115,9 @@ MenuElement {
             name: qsTr("scenario")
             description: qsTr("giorno")
             hasChild: true
+            onClicked: {
+                system.loadElement("AntintrusionScenarios.qml", name, privateProps.model.scenarios)
+            }
         }
 
         Image {

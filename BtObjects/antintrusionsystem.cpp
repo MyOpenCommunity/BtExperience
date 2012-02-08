@@ -5,8 +5,10 @@
 #include "xml_functions.h"
 
 #include <QDebug>
+#include <QStringList>
 
 #define CODE_TIMEOUT_SECS 10
+
 
 AntintrusionZone::AntintrusionZone(int id, QString _name)
 {
@@ -31,11 +33,56 @@ void AntintrusionZone::setPartialization(bool p, bool request_partialization)
 }
 
 
+AntintrusionScenario::AntintrusionScenario(QString _name, QList<int> _zones)
+{
+    name = _name;
+    zones = _zones;
+}
+
+QVariant AntintrusionScenario::data(int role) const
+{
+    QVariant v = ObjectInterface::data(role);
+
+    if (v.isNull() && role == DescriptionRole)
+        return getDescription();
+
+    return v;
+}
+
+QHash<int, QByteArray> AntintrusionScenario::roleNames()
+{
+    QHash<int, QByteArray> names = ObjectInterface::roleNames();
+    names[DescriptionRole] = "description";
+    return names;
+}
+
+QString AntintrusionScenario::getDescription() const
+{
+    QStringList l;
+    foreach (int z, zones)
+        l << QString::number(z);
+
+    return l.join(".");
+}
+
+
+
 AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xml_node)
 {
     foreach (const QDomNode &scenario, getChildren(getChildWithName(xml_node, "scenarios"), "scenario"))
     {
-
+        QString n = getTextChild(scenario, "name");
+        QList<int> zones;
+        foreach (QString s, getTextChild(scenario, "zones").split(",")) {
+            bool ok;
+            int z = s.toInt(&ok);
+            if (!ok) {
+                qWarning() << "Invalid zone" << z << "for the scenario:" << n;
+                continue;
+            }
+            zones << z;
+        }
+        scenarios << new AntintrusionScenario(n, zones);
     }
 
     waiting_response = false;
@@ -56,6 +103,18 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xm
         connect(z, SIGNAL(requestPartialization(int,bool)), dev, SLOT(partializeZone(int,bool)));
         zones << z;
     }
+}
+
+ObjectListModel *AntintrusionSystem::getScenarios() const
+{
+    ObjectListModel *items = new ObjectListModel;
+    for (int i = 0; i < scenarios.length(); ++i)
+        items->appendRow(scenarios[i]);
+
+    items->setRoleNames();
+    items->reparentObjects();
+
+    return items;
 }
 
 ObjectListModel *AntintrusionSystem::getZones() const
