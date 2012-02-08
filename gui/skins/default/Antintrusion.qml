@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 SystemPage {
     id: antintrusion
-    source: "images/automazione.jpg"
+    source: "images/antintrusion.jpg"
     text: qsTr("antintrusione")
     rootElement: "AntintrusionSystem.qml"
 

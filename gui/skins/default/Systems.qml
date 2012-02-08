@@ -16,7 +16,7 @@ Page {
         ListModel {
                 id: systemsModel
                 ListElement {
-                    image: "images/automazione.jpg"
+                    image: "images/antintrusion.jpg"
                     name: "antintrusione"
                     target: "Antintrusion.qml"
                 }
