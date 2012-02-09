@@ -15,6 +15,7 @@ MenuElement {
 
 
         delegate: MenuItemDelegate {
+            active: element.animationRunning === false
             description: model.description
             onClicked: {
                 var obj = itemList.model.getObject(model.index)

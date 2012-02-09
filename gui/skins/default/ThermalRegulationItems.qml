@@ -16,6 +16,7 @@ MenuElement {
         interactive: false
 
         delegate: MenuItemDelegate {
+            active: element.animationRunning === false
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
                 element.loadElement(clickedItem.componentFile, clickedItem.name)

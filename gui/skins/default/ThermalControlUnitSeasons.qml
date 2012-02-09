@@ -23,6 +23,7 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
+            active: element.animationRunning === false
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
                 element.seasonSelected(clickedItem.type)

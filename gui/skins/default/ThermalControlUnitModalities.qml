@@ -26,6 +26,7 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
+            active: element.animationRunning === false
             onClicked: {
                 var obj = itemList.model.getObject(model.index)
                 element.modalitySelected(obj)

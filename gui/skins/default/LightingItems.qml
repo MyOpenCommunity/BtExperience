@@ -17,6 +17,7 @@ MenuElement {
         interactive: false
 
         delegate: MenuItemDelegate {
+            active: element.animationRunning === false
             status: model.status === true ? 1 : 0
             hasChild: true
             onClicked: {

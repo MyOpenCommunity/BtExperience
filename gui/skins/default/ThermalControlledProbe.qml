@@ -81,6 +81,7 @@ MenuElement {
 
         MenuItem {
             id: modalityItem
+            active: element.animationRunning === false
             name: qsTr("modalità")
             x: 0
             y: 51

@@ -6,6 +6,8 @@ Item {
     height: 50
     width: 212
 
+    property bool active: false
+
     property string name: ""
     property string description: ""
     property int status: -1
@@ -80,9 +82,9 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: menuItem.clicked(menuItem)
-        onPressed: menuItem.pressed(menuItem)
-        onReleased: menuItem.released(menuItem)
+        onClicked: if (menuItem.active) menuItem.clicked(menuItem)
+        onPressed: if (menuItem.active) menuItem.pressed(menuItem)
+        onReleased: if (menuItem.active) menuItem.released(menuItem)
     }
 
     states: State {
@@ -95,13 +97,6 @@ Item {
 
 
     onPressed: {
-        // TODO: Find a better way to disable the 'pressed effect' during the
-        // animation! We should not refer to an implicit defined parent (element)..
-        // because it limits the reusability of this piece of code.
-
-        if (element.animationRunning)
-            return
-
         var x = itemPressed.x
         var y = itemPressed.y
         var parent = itemPressed.parent

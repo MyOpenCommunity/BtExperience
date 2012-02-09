@@ -105,6 +105,7 @@ MenuElement {
 
         MenuItem {
             id: seasonItem
+            active: element.animationRunning === false
             anchors.top: parent.top
             name: qsTr("funzionamento")
             state: privateProps.currentElement == 1 ? "selected" : ""
@@ -118,6 +119,7 @@ MenuElement {
 
         MenuItem {
             id: modalityItem
+            active: element.animationRunning === false
             anchors.top: seasonItem.bottom
             name: qsTr("modalità")
             state: privateProps.currentElement == 2 ? "selected" : ""

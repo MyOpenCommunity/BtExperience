@@ -15,6 +15,7 @@ MenuElement {
         interactive: false
 
         delegate: MenuItemDelegate {
+            active: element.animationRunning === false
             hasChild: true
             onClicked: {
                 element.loadElement(modelList.getComponentFile(model.objectId), model.name,
@@ -31,3 +32,4 @@ MenuElement {
         }
     }
 }
+

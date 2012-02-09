@@ -77,6 +77,7 @@ MenuElement {
 
     Column {
         MenuItem {
+            active: system.animationRunning === false
             name: qsTr("registro allarmi")
             hasChild: true
 
@@ -91,6 +92,7 @@ MenuElement {
         }
         MenuItem {
             id: systemItem
+            active: system.animationRunning === false
             name: qsTr("sistema disattivo")
             hasChild: false
             Image {
@@ -112,6 +114,7 @@ MenuElement {
             }
         }
         MenuItem {
+            active: system.animationRunning === false
             name: qsTr("scenario")
             description: qsTr("giorno")
             hasChild: true
