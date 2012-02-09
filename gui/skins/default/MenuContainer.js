@@ -8,7 +8,8 @@ function loadComponent(menuLevel, fileName, title, dataModel) {
         return
 
     var itemObject = createComponent(fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer,
-                                                "opacity": 0, "y": 33, "dataModel": dataModel, "pageObject": pageObject})
+                                                "opacity": 0, "y": 33, "dataModel": dataModel,
+                                                "pageObject": pageObject, "containerObject": mainContainer})
     var titleObject = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
     if (itemObject && titleObject) {
         _addItem(itemObject, titleObject)

@@ -8,21 +8,24 @@ Item {
     function loadElement(fileName, title, model) {
         if (model === undefined)
             model = null
-        mainContainer.loadComponent(menuLevel, fileName, title, model)
+        containerObject.loadComponent(menuLevel, fileName, title, model)
     }
 
     // Close the element itself and its children
     function closeElement() {
-        mainContainer.closeItem(menuLevel)
+        containerObject.closeItem(menuLevel)
     }
 
     // Close the child's element (if present)
     function closeChild() {
-        mainContainer.closeItem(menuLevel + 1)
+        containerObject.closeItem(menuLevel + 1)
     }
 
     // the page where the element is placed
     property variant pageObject: undefined
+
+    // the container where the element is placed
+    property variant containerObject: undefined
 
     // Signals emitted from the container
 
