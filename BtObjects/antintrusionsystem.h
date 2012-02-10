@@ -52,7 +52,8 @@ class AntintrusionScenario : public ObjectInterface
     Q_OBJECT
 
 public:
-    AntintrusionScenario(QString name, QList<int> zones);
+    AntintrusionScenario(QString name, QList<int> scenario_zones, QList<AntintrusionZone*> zones);
+    Q_PROPERTY(bool selected READ isSelected NOTIFY selectionChanged)
 
     virtual QVariant data(int role) const;
     virtual QHash<int, QByteArray> roleNames();
@@ -70,11 +71,27 @@ public:
     }
 
     virtual QString getName() const { return name; }
+
+    // return the description of the scenario, used by the omonymous role
     QString getDescription() const;
+
+    // apply the scenario
+    Q_INVOKABLE void apply();
+
+    // check if the scenario is selected
+    bool isSelected() const;
+
+signals:
+    void selectionChanged();
+
+private slots:
+    void verifySelection(bool notify = true);
 
 private:
     QString name;
-    QList<int> zones;
+    QList<int> scenario_zones;
+    QList<AntintrusionZone*> zones;
+    bool selected;
 };
 
 

@@ -33,10 +33,14 @@ void AntintrusionZone::setPartialization(bool p, bool request_partialization)
 }
 
 
-AntintrusionScenario::AntintrusionScenario(QString _name, QList<int> _zones)
+AntintrusionScenario::AntintrusionScenario(QString _name, QList<int> _scenario_zones, QList<AntintrusionZone*> _zones)
 {
     name = _name;
+    scenario_zones = _scenario_zones;
     zones = _zones;
+    foreach (AntintrusionZone *z, zones)
+        connect(z, SIGNAL(requestPartialization(int,bool)), SLOT(verifySelection()));
+    verifySelection(false);
 }
 
 QVariant AntintrusionScenario::data(int role) const
@@ -59,32 +63,46 @@ QHash<int, QByteArray> AntintrusionScenario::roleNames()
 QString AntintrusionScenario::getDescription() const
 {
     QStringList l;
-    foreach (int z, zones)
+    foreach (int z, scenario_zones)
         l << QString::number(z);
 
     return l.join(".");
 }
 
+void AntintrusionScenario::verifySelection(bool notify)
+{
+    QList<int> selected_zones;
+    foreach (AntintrusionZone *z, zones)
+        if (!z->getPartialization())
+            selected_zones.append(z->getObjectId());
+
+    bool s = (scenario_zones == selected_zones);
+    if (notify && selected != s)
+    {
+        selected = s;
+        emit selectionChanged();
+    }
+    else
+        selected = s;
+}
+
+bool AntintrusionScenario::isSelected() const
+{
+    return selected;
+}
+
+void AntintrusionScenario::apply()
+{
+    foreach (AntintrusionZone *z, zones)
+    {
+        bool inserted = scenario_zones.contains(z->getObjectId());
+        z->setPartialization(!inserted);
+    }
+}
 
 
 AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xml_node)
 {
-    foreach (const QDomNode &scenario, getChildren(getChildWithName(xml_node, "scenarios"), "scenario"))
-    {
-        QString n = getTextChild(scenario, "name");
-        QList<int> zones;
-        foreach (QString s, getTextChild(scenario, "zones").split(",")) {
-            bool ok;
-            int z = s.toInt(&ok);
-            if (!ok) {
-                qWarning() << "Invalid zone" << z << "for the scenario:" << n;
-                continue;
-            }
-            zones << z;
-        }
-        scenarios << new AntintrusionScenario(n, zones);
-    }
-
     waiting_response = false;
     initialized = false;
     status = false;
@@ -97,11 +115,28 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xm
               << qMakePair(5, QString("soggiorno")) << qMakePair(6, QString("cucina"))
               << qMakePair(7, QString("camera")) << qMakePair(8, QString("cameretta"));
 
-    for (int i = 0; i < zone_list.length(); ++i) {
+    for (int i = 0; i < zone_list.length(); ++i)
+    {
         AntintrusionZone *z = new AntintrusionZone(zone_list.at(i).first, zone_list.at(i).second);
         dev->partializeZone(zone_list.at(i).first, z->getPartialization()); // initialization
         connect(z, SIGNAL(requestPartialization(int,bool)), dev, SLOT(partializeZone(int,bool)));
         zones << z;
+    }
+
+    foreach (const QDomNode &scenario, getChildren(getChildWithName(xml_node, "scenarios"), "scenario"))
+    {
+        QString name = getTextChild(scenario, "name");
+        QList<int> scenario_zones;
+        foreach (QString s, getTextChild(scenario, "zones").split(",")) {
+            bool ok;
+            int z = s.toInt(&ok);
+            if (!ok) {
+                qWarning() << "Invalid zone" << z << "for the scenario:" << name;
+                continue;
+            }
+            scenario_zones << z;
+        }
+        scenarios << new AntintrusionScenario(name, scenario_zones, zones);
     }
 }
 

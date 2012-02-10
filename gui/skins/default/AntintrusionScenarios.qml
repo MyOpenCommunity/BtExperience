@@ -8,11 +8,23 @@ MenuElement {
 
     signal scenarioSelected(variant obj)
 
+    onScenarioSelected: obj.apply()
+
     ListView {
         id: itemList
         anchors.fill: parent
         interactive: false
 
+        currentIndex: selectItem()
+
+        function selectItem() {
+            for (var i = 0; i < itemList.count; i++) {
+                if (itemList.model.getObject(i).selected === true)
+                    return i;
+            }
+
+            return -1
+        }
 
         delegate: MenuItemDelegate {
             active: element.animationRunning === false
@@ -23,6 +35,6 @@ MenuElement {
             }
         }
 
-        model: element.dataModel
+        model: element.dataModel.scenarios
     }
 }

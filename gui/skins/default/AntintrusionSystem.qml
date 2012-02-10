@@ -119,7 +119,7 @@ MenuElement {
             description: qsTr("giorno")
             hasChild: true
             onClicked: {
-                system.loadElement("AntintrusionScenarios.qml", name, privateProps.model.scenarios)
+                system.loadElement("AntintrusionScenarios.qml", name, privateProps.model)
             }
         }
 
