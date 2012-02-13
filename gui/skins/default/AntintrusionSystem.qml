@@ -15,7 +15,9 @@ MenuElement {
             child.scenarioSelected.connect(privateProps.scenarioSelected)
     }
 
-
+    onChildDestroyed: {
+        privateProps.currentElement = -1
+    }
 
     Timer {
         id: keypadTimer
@@ -30,6 +32,8 @@ MenuElement {
         property variant model: objectModel.getObject(0)
 
         property bool actionPartialize: false
+
+        property int currentElement: -1
 
         // 'Public' API
         function scenarioSelected(obj) {
@@ -104,6 +108,7 @@ MenuElement {
     Column {
         MenuItem {
             active: system.animationRunning === false
+            state: privateProps.currentElement == 1 ? "selected" : ""
             name: qsTr("registro allarmi")
             hasChild: true
 
@@ -139,12 +144,15 @@ MenuElement {
         }
         MenuItem {
             id: scenarioItem
+            state: privateProps.currentElement == 2 ? "selected" : ""
             active: system.animationRunning === false
             name: qsTr("scenario")
             description: qsTr("giorno")
             hasChild: true
             onClicked: {
                 system.loadElement("AntintrusionScenarios.qml", name, privateProps.model)
+                if (privateProps.currentElement != 2)
+                    privateProps.currentElement = 2
             }
         }
 
