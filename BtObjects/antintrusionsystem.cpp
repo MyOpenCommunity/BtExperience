@@ -103,6 +103,7 @@ void AntintrusionScenario::apply()
 
 AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xml_node)
 {
+    current_scenario = -1;
     waiting_response = false;
     initialized = false;
     status = false;
@@ -136,7 +137,9 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xm
             }
             scenario_zones << z;
         }
-        scenarios << new AntintrusionScenario(name, scenario_zones, zones);
+        AntintrusionScenario *s = new AntintrusionScenario(name, scenario_zones, zones);
+        connect(s, SIGNAL(selectionChanged()), this, SIGNAL(currentScenarioChanged()));
+        scenarios << s;
     }
 }
 
@@ -241,3 +244,13 @@ void AntintrusionSystem::toggleActivation(const QString &password)
     dev->toggleActivation(password);
     waiting_response = true;
 }
+
+QObject *AntintrusionSystem::getCurrentScenario() const
+{
+    foreach (AntintrusionScenario *s, scenarios) {
+        if (s->isSelected())
+            return s;
+    }
+    return 0;
+}
+

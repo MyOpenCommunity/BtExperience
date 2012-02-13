@@ -73,7 +73,7 @@ public:
     virtual QString getName() const { return name; }
 
     // return the description of the scenario, used by the omonymous role
-    QString getDescription() const;
+    Q_INVOKABLE QString getDescription() const;
 
     // apply the scenario
     Q_INVOKABLE void apply();
@@ -101,6 +101,7 @@ class AntintrusionSystem : public ObjectInterface
     Q_PROPERTY(ObjectListModel *zones READ getZones NOTIFY zonesChanged)
     Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)
     Q_PROPERTY(bool status READ getStatus NOTIFY statusChanged)
+    Q_PROPERTY(QObject *currentScenario READ getCurrentScenario NOTIFY currentScenarioChanged)
 
 public:
     AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xml_node);
@@ -131,11 +132,14 @@ public:
         return status;
     }
 
+    QObject *getCurrentScenario() const;
+
 signals:
     void zonesChanged(); // never emitted
     void scenariosChanged(); // never emitted
 
     void statusChanged();
+    void currentScenarioChanged();
 
     void codeAccepted();
     void codeRefused();
@@ -152,6 +156,7 @@ private:
     bool status;
     bool initialized;
     bool waiting_response;
+    int current_scenario;
 };
 
 

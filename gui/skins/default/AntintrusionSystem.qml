@@ -10,6 +10,13 @@ MenuElement {
         categories: [ObjectInterface.Antintrusion]
     }
 
+    Connections {
+        target: privateProps.model
+        onCurrentScenarioChanged: privateProps.setScenarioDescription()
+    }
+
+    Component.onCompleted: privateProps.setScenarioDescription()
+
     onChildLoaded: {
         if (child.scenarioSelected)
             child.scenarioSelected.connect(privateProps.scenarioSelected)
@@ -51,6 +58,10 @@ MenuElement {
             pageObject.showKeyPad(qsTr("imposta zone"), qsTr("codice errato"), qsTr("zone impostate"))
             actionPartialize = true
             connectKeyPad()
+        }
+
+        function setScenarioDescription() {
+            scenarioItem.description = model.currentScenario ? model.currentScenario.name : ""
         }
 
         // Private API
@@ -147,7 +158,6 @@ MenuElement {
             state: privateProps.currentElement == 2 ? "selected" : ""
             active: system.animationRunning === false
             name: qsTr("scenario")
-            description: qsTr("giorno")
             hasChild: true
             onClicked: {
                 system.loadElement("AntintrusionScenarios.qml", name, privateProps.model)
