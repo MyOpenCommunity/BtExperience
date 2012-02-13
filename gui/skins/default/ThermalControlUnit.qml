@@ -15,7 +15,7 @@ MenuElement {
 
     function okClicked() {
         closeElement()
-        if (privateProps.pendingSeason != -1) {
+        if (privateProps.pendingSeason !== -1) {
             dataModel.season = privateProps.pendingSeason
             privateProps.pendingSeason = -1
         }
@@ -37,7 +37,7 @@ MenuElement {
     }
 
     onChildDestroyed: {
-        modalityItem.state = "";
+        privateProps.currentElement = -1
     }
 
     Connections {
@@ -108,11 +108,11 @@ MenuElement {
             active: element.animationRunning === false
             anchors.top: parent.top
             name: qsTr("funzionamento")
-            state: privateProps.currentElement == 1 ? "selected" : ""
+            state: privateProps.currentElement === 1 ? "selected" : ""
 
             onClicked: {
                 element.loadElement("ThermalControlUnitSeasons.qml", seasonItem.name, element.dataModel)
-                if (privateProps.currentElement != 1)
+                if (privateProps.currentElement !== 1)
                     privateProps.currentElement = 1
             }
         }
@@ -122,11 +122,11 @@ MenuElement {
             active: element.animationRunning === false
             anchors.top: seasonItem.bottom
             name: qsTr("modalità")
-            state: privateProps.currentElement == 2 ? "selected" : ""
+            state: privateProps.currentElement === 2 ? "selected" : ""
 
             onClicked: {
                 element.loadElement("ThermalControlUnitModalities.qml", modalityItem.name, element.dataModel)
-                if (privateProps.currentElement != 2)
+                if (privateProps.currentElement !== 2)
                     privateProps.currentElement = 2
             }
         }
