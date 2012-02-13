@@ -10,6 +10,13 @@ MenuElement {
         categories: [ObjectInterface.Antintrusion]
     }
 
+    onChildLoaded: {
+        if (child.scenarioSelected)
+            child.scenarioSelected.connect(privateProps.scenarioSelected)
+    }
+
+
+
     Timer {
         id: keypadTimer
         repeat: false
@@ -24,6 +31,25 @@ MenuElement {
 
         property bool actionPartialize: false
 
+        // 'Public' API
+        function scenarioSelected(obj) {
+            if (privateProps.model.status === true)
+                partialize()
+        }
+
+        function toggleActivation(title, errorMessage, okMessage) {
+            pageObject.showKeyPad(title, errorMessage, okMessage)
+            actionPartialize = false
+            connectKeyPad()
+        }
+
+        function partialize() {
+            pageObject.showKeyPad(qsTr("imposta zone"), qsTr("codice errato"), qsTr("zone impostate"))
+            actionPartialize = true
+            connectKeyPad()
+        }
+
+        // Private API
         // Callbacks for the keypad management
         function connectKeyPad() {
             pageObject.keypadObject.textInsertedChanged.connect(handleTextInserted)
@@ -107,13 +133,12 @@ MenuElement {
                 onClicked: {
                     var title = system.state === "" ? qsTr("attiva sistema") : qsTr("disattiva sistema")
                     var okMessage = system.state === "" ? qsTr("sistema attivato") : qsTr("sistema disattivato")
-                    pageObject.showKeyPad(title, qsTr("codice errato"), okMessage)
-                    privateProps.actionPartialize = false
-                    privateProps.connectKeyPad()
+                    privateProps.toggleActivation(title, qsTr("codice errato"), okMessage)
                 }
             }
         }
         MenuItem {
+            id: scenarioItem
             active: system.animationRunning === false
             name: qsTr("scenario")
             description: qsTr("giorno")
@@ -205,11 +230,7 @@ MenuElement {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    pageObject.showKeyPad(qsTr("imposta zone"), qsTr("codice errato"), qsTr("zone impostate"))
-                    privateProps.actionPartialize = true
-                    privateProps.connectKeyPad()
-                }
+                onClicked: privateProps.partialize()
             }
         }
     }

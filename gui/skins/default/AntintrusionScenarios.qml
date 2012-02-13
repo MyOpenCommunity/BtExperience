@@ -27,6 +27,7 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
+            selectOnClick: false // we don't want to break the binding for currentIndex
             active: element.animationRunning === false
             description: model.description
             onClicked: {

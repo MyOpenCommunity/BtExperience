@@ -39,7 +39,7 @@ AntintrusionScenario::AntintrusionScenario(QString _name, QList<int> _scenario_z
     scenario_zones = _scenario_zones;
     zones = _zones;
     foreach (AntintrusionZone *z, zones)
-        connect(z, SIGNAL(requestPartialization(int,bool)), SLOT(verifySelection()));
+        connect(z, SIGNAL(partializationChanged()), SLOT(verifySelection()));
     verifySelection(false);
 }
 
