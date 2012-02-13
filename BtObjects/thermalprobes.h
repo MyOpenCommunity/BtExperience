@@ -12,76 +12,76 @@ class ControlledProbeDevice;
 
 class ThermalControlledProbe : public ObjectInterface
 {
-    Q_OBJECT
-    Q_PROPERTY(ProbeStatus probeStatus READ getProbeStatus WRITE setProbeStatus NOTIFY probeStatusChanged)
-    Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
-    Q_PROPERTY(int setpoint READ getSetpoint WRITE setSetpoint NOTIFY setpointChanged)
-    Q_PROPERTY(FancoilSpeed fancoil READ getFancoil WRITE setFancoil NOTIFY fancoilChanged)
-    Q_ENUMS(ProbeStatus)
-    Q_ENUMS(FancoilSpeed)
+	Q_OBJECT
+	Q_PROPERTY(ProbeStatus probeStatus READ getProbeStatus WRITE setProbeStatus NOTIFY probeStatusChanged)
+	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
+	Q_PROPERTY(int setpoint READ getSetpoint WRITE setSetpoint NOTIFY setpointChanged)
+	Q_PROPERTY(FancoilSpeed fancoil READ getFancoil WRITE setFancoil NOTIFY fancoilChanged)
+	Q_ENUMS(ProbeStatus)
+	Q_ENUMS(FancoilSpeed)
 
 public:
-    enum ProbeStatus
-    {
-        Unknown,
-        Manual,
-        Auto,
-        Antifreeze,
-        Off
-    };
+	enum ProbeStatus
+	{
+		Unknown,
+		Manual,
+		Auto,
+		Antifreeze,
+		Off
+	};
 
-    enum FancoilSpeed
-    {
-        FancoilMin = 1, // this values are the same of the ControlledProbeDevice
-        FancoilMed,
-        FancoilMax,
-        FancoilAuto
-    };
+	enum FancoilSpeed
+	{
+		FancoilMin = 1, // this values are the same of the ControlledProbeDevice
+		FancoilMed,
+		FancoilMax,
+		FancoilAuto
+	};
 
-    ThermalControlledProbe(QString name, QString key, ControlledProbeDevice *d);
+	ThermalControlledProbe(QString name, QString key, ControlledProbeDevice *d);
 
-    virtual int getObjectId() const
-    {
-        return ObjectInterface::IdThermalControlledProbe;
-    }
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdThermalControlledProbe;
+	}
 
-    virtual QString getObjectKey() const;
+	virtual QString getObjectKey() const;
 
-    virtual ObjectCategory getCategory() const
-    {
-        return ObjectInterface::ThermalRegulation;
-    }
+	virtual ObjectCategory getCategory() const
+	{
+		return ObjectInterface::ThermalRegulation;
+	}
 
-    virtual QString getName() const;
+	virtual QString getName() const;
 
-    ProbeStatus getProbeStatus() const;
-    void setProbeStatus(ProbeStatus st);
+	ProbeStatus getProbeStatus() const;
+	void setProbeStatus(ProbeStatus st);
 
-    int getTemperature() const;
+	int getTemperature() const;
 
-    int getSetpoint() const;
-    void setSetpoint(int sp);
+	int getSetpoint() const;
+	void setSetpoint(int sp);
 
-    FancoilSpeed getFancoil() const;
-    void setFancoil(FancoilSpeed s);
+	FancoilSpeed getFancoil() const;
+	void setFancoil(FancoilSpeed s);
 
 signals:
-    void probeStatusChanged();
-    void temperatureChanged();
-    void setpointChanged();
-    void fancoilChanged();
+	void probeStatusChanged();
+	void temperatureChanged();
+	void setpointChanged();
+	void fancoilChanged();
 
 private slots:
-    void valueReceived(const DeviceValues &values_list);
+	void valueReceived(const DeviceValues &values_list);
 
 private:
-    QString name;
-    QString key;
-    ProbeStatus probe_status;
-    FancoilSpeed fancoil_speed;
-    int setpoint;
-    int temperature;
-    ControlledProbeDevice *dev;
+	QString name;
+	QString key;
+	ProbeStatus probe_status;
+	FancoilSpeed fancoil_speed;
+	int setpoint;
+	int temperature;
+	ControlledProbeDevice *dev;
 };
 
 

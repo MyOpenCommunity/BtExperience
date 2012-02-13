@@ -10,16 +10,16 @@ class QDomDocument;
 
 class BtObjectsPlugin : public QDeclarativeExtensionPlugin
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    BtObjectsPlugin(QObject *parent = 0);
+	BtObjectsPlugin(QObject *parent = 0);
 
-    void registerTypes(const char *uri);
+	void registerTypes(const char *uri);
 
 private:
-    ObjectListModel objmodel;
+	ObjectListModel objmodel;
 
-    void createObjects(QDomDocument document);
+	void createObjects(QDomDocument document);
 };
 
 
