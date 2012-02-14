@@ -225,7 +225,7 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 		case AntintrusionDevice::DIM_INTRUSION_ALARM:
 		case AntintrusionDevice::DIM_TAMPER_ALARM:
 		case AntintrusionDevice::DIM_TECHNICAL_ALARM:
-			//            emit alarmReceived();
+			// emit alarmReceived();
 			break;
 		}
 

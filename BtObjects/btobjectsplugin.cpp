@@ -28,13 +28,6 @@
 QHash<GlobalField, QString> *bt_global::config;
 
 
-ControlledProbeDevice *getProbeDevice(QString probe_where)
-{
-	return bt_global::add_device_to_cache(new ControlledProbeDevice(probe_where, "0", probe_where,
-		ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL));
-}
-
-
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
 	QFile fh(CONF_FILE);
@@ -96,9 +89,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdThermalControlledProbe:
 		{
 			ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?
-						ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
+				ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
 			obj = new ThermalControlledProbe(descr, where,
-											 new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+				new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
 			break;
 		}
 		case ObjectInterface::IdHardwareSettings:
