@@ -236,10 +236,19 @@ QObject *AntintrusionSystem::getCurrentScenario() const
 AntintrusionSystem *createAntintrusionSystem(AntintrusionDevice *dev, const QDomNode &xml_node)
 {
 	QList<QPair<int, QString> > zone_list;
-	zone_list << qMakePair(1, QString("ingresso")) << qMakePair(2, QString("taverna"))
-		<< qMakePair(3, QString("mansarda")) << qMakePair(4, QString("box/cantina"))
-		<< qMakePair(5, QString("soggiorno")) << qMakePair(6, QString("cucina"))
-		<< qMakePair(7, QString("camera")) << qMakePair(8, QString("cameretta"));
+	foreach (const QDomNode &zone, getChildren(getChildWithName(xml_node, "zones"), "zone"))
+	{
+		QString name = getTextChild(zone, "name");
+		QString s = getTextChild(zone, "num");
+		bool ok;
+		int z = s.toInt(&ok);
+		if (!ok)
+		{
+			qWarning() << "Invalid zone number" << s << "for zone" << name;
+			continue;
+		}
+		zone_list << qMakePair(z, name);
+	}
 
 	QList<AntintrusionZone *> zones;
 	for (int i = 0; i < zone_list.length(); ++i)
