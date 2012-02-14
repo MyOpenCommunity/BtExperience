@@ -104,7 +104,7 @@ class AntintrusionSystem : public ObjectInterface
 	Q_PROPERTY(QObject *currentScenario READ getCurrentScenario NOTIFY currentScenarioChanged)
 
 public:
-	AntintrusionSystem(AntintrusionDevice *d, const QDomNode &xml_node);
+	AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionZone*> _zones);
 
 	virtual int getObjectId() const
 	{
@@ -158,6 +158,8 @@ private:
 	bool waiting_response;
 	int current_scenario;
 };
+
+AntintrusionSystem *createAntintrusionSystem(AntintrusionDevice *dev, const QDomNode &xml_node);
 
 
 #endif // ANTINTRUSIONSYSTEM_H
