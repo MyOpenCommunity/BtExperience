@@ -42,16 +42,11 @@ public:
 		return QVariant();
 	}
 
-	void appendRow(ObjectInterface *item);
+	// Append an item to the model. The model takes the ownership of the item
+	// and reparent it.
+	void operator<<(ObjectInterface *item);
 
-	Q_INVOKABLE QObject *getObject(int row);
-
-	// Objects extracted using a C++ method and pass to a Qml Component have
-	// a 'javascript ownership', but in that way the qml has the freedom to
-	// delete the object. To avoid that, we set the model as a parent.
-	// See http://doc.trolltech.com/4.7/qdeclarativeengine.html#ObjectOwnership-enum
-	// for details.
-	void reparentObjects();
+	Q_INVOKABLE ObjectInterface *getObject(int row) const;
 
 	int getSize() const
 	{

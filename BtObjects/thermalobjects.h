@@ -2,6 +2,7 @@
 #define THERMALOBJECTS_H
 
 #include "objectinterface.h"
+#include "objectlistmodel.h"
 #include "device.h" // DeviceValues
 
 #include <QObject>
@@ -80,7 +81,7 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
-	QList<ThermalControlUnitObject*> objs;
+	ObjectListModel modalities;
 
 private:
 	QString name;

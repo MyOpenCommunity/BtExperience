@@ -103,10 +103,8 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
-		objmodel.appendRow(obj);
+		objmodel << obj;
 	}
-
-	objmodel.reparentObjects();
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)

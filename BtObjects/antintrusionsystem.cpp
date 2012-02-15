@@ -142,10 +142,14 @@ void AntintrusionScenario::apply()
 }
 
 
-AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionZone*> _zones) :
-	zones(_zones),
-	scenarios(_scenarios)
+AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionZone*> _zones)
 {
+	foreach (AntintrusionScenario *s, _scenarios)
+		scenarios << s;
+
+	foreach (AntintrusionZone *z, _zones)
+		zones << z;
+
 	current_scenario = -1;
 	waiting_response = false;
 	initialized = false;
@@ -156,24 +160,14 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 
 ObjectListModel *AntintrusionSystem::getScenarios() const
 {
-	ObjectListModel *items = new ObjectListModel;
-	for (int i = 0; i < scenarios.length(); ++i)
-		items->appendRow(scenarios[i]);
-
-	items->reparentObjects();
-
-	return items;
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ObjectListModel*>(&scenarios);
 }
 
 ObjectListModel *AntintrusionSystem::getZones() const
 {
-	ObjectListModel *items = new ObjectListModel;
-	for (int i = 0; i < zones.length(); ++i)
-		items->appendRow(zones[i]);
-
-	items->reparentObjects();
-
-	return items;
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ObjectListModel*>(&zones);
 }
 
 void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
@@ -222,9 +216,12 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 
 		case AntintrusionDevice::DIM_ZONE_INSERTED:
 		case AntintrusionDevice::DIM_ZONE_PARTIALIZED:
-			foreach (AntintrusionZone *z, zones)
+			for (int i = 0; i < zones.getSize(); ++i)
+			{
+				AntintrusionZone *z = static_cast<AntintrusionZone*>(zones.getObject(i));
 				if (z->getObjectId() == it.value().toInt())
 					z->setPartialization(it.key() == AntintrusionDevice::DIM_ZONE_PARTIALIZED, false);
+			}
 			break;
 		case AntintrusionDevice::DIM_ANTIPANIC_ALARM:
 		case AntintrusionDevice::DIM_INTRUSION_ALARM:
@@ -263,11 +260,13 @@ void AntintrusionSystem::toggleActivation(const QString &password)
 
 QObject *AntintrusionSystem::getCurrentScenario() const
 {
-	foreach (AntintrusionScenario *s, scenarios)
+	for (int i = 0; i < scenarios.getSize(); ++i)
 	{
+		AntintrusionScenario* s = static_cast<AntintrusionScenario*>(scenarios.getObject(i));
 		if (s->isSelected())
 			return s;
 	}
+
 	return 0;
 }
 

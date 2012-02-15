@@ -27,12 +27,12 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	current_modality = -1;
 
 	// The objects list should contain only one item per id
-	objs << new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, this, dev);
-	objs << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, this, dev);
-	objs << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, this, dev);
-	objs << new ThermalControlUnitAntifreeze("Antigelo", dev);
-	objs << new ThermalControlUnitManual("Manuale", dev);
-	objs << new ThermalControlUnitOff("Off", dev);
+	modalities << new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, this, dev);
+	modalities << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, this, dev);
+	modalities << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, this, dev);
+	modalities << new ThermalControlUnitAntifreeze("Antigelo", dev);
+	modalities << new ThermalControlUnitManual("Manuale", dev);
+	modalities << new ThermalControlUnitOff("Off", dev);
 }
 
 QString ThermalControlUnit::getObjectKey() const
@@ -65,18 +65,14 @@ ThermalRegulationProgramList ThermalControlUnit::getPrograms() const
 
 ObjectListModel *ThermalControlUnit::getModalities() const
 {
-	ObjectListModel *items = new ObjectListModel;
-	for (int i = 0; i < objs.length(); ++i)
-		items->appendRow(objs[i]);
-
-	items->reparentObjects();
-
-	return items;
+	// TODO: we remove the const because it produces an error when we export the
+	// type to the qml engine. Find a solution.
+	return const_cast<ObjectListModel*>(&modalities);
 }
 
 QObject* ThermalControlUnit::getCurrentModality() const
 {
-	return current_modality == -1 ? 0 : objs.at(current_modality);
+	return current_modality == -1 ? 0 : modalities.getObject(current_modality);
 }
 
 void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
@@ -136,9 +132,9 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 				continue;
 			}
 
-			for (int i = 0; i < objs.length(); ++i)
+			for (int i = 0; i < modalities.getSize(); ++i)
 			{
-				if (objs[i]->getObjectId() == id)
+				if (modalities.getObject(i)->getObjectId() == id)
 				{
 					if (i != current_modality)
 					{
@@ -166,7 +162,7 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 {
 	dev = d;
 	scenarios << qMakePair(1, QString("S1")) << qMakePair(3, QString("S3")) << qMakePair(5, QString("S5"));
-	objs << new ThermalControlUnitScenario("Scenari", this, dev);
+	modalities << new ThermalControlUnitScenario("Scenari", this, dev);
 }
 
 ThermalRegulationProgramList ThermalControlUnit99Zones::getScenarios() const

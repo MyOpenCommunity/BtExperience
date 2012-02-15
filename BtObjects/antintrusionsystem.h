@@ -2,6 +2,7 @@
 #define ANTINTRUSIONSYSTEM_H
 
 #include "objectinterface.h"
+#include "objectlistmodel.h"
 #include "device.h" // DeviceValues
 
 #include <QString>
@@ -153,8 +154,8 @@ private slots:
 
 private:
 	AntintrusionDevice *dev;
-	QList<AntintrusionZone*> zones;
-	QList<AntintrusionScenario*> scenarios;
+	ObjectListModel zones;
+	ObjectListModel scenarios;
 	bool status;
 	bool initialized;
 	bool waiting_response;

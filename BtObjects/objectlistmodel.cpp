@@ -17,8 +17,15 @@ int ObjectListModel::rowCount(const QModelIndex &parent) const
 	return item_list.size();
 }
 
-void ObjectListModel::appendRow(ObjectInterface *item)
+void ObjectListModel::operator <<(ObjectInterface *item)
 {
+	// Objects extracted using a C++ method and passed to a Qml Component have
+	// a 'javascript ownership', but in that way the qml has the freedom to
+	// delete the object. To avoid that, we set the model as a parent.
+	// See http://doc.trolltech.com/4.7/qdeclarativeengine.html#ObjectOwnership-enum
+	// for details.
+	item->setParent(this);
+
 	beginInsertRows(QModelIndex(), rowCount(), rowCount() + 1);
 	connect(item, SIGNAL(dataChanged()), SLOT(handleItemChange()));
 	item_list.append(item);
@@ -42,18 +49,12 @@ QModelIndex ObjectListModel::indexFromItem(const ObjectInterface *item) const
 	return QModelIndex();
 }
 
-QObject *ObjectListModel::getObject(int row)
+ObjectInterface *ObjectListModel::getObject(int row) const
 {
 	if (row < 0 || row >= item_list.size())
 		return 0;
 
 	return item_list.at(row);
-}
-
-void ObjectListModel::reparentObjects()
-{
-	for (int i = 0; i < item_list.size(); ++i)
-		item_list.at(i)->setParent(this);
 }
 
 
