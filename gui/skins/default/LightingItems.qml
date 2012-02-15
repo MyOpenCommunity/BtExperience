@@ -17,11 +17,13 @@ MenuElement {
         interactive: false
 
         delegate: MenuItemDelegate {
+            itemObject: modelList.getObject(index)
+
             active: element.animationRunning === false
-            status: model.status === true ? 1 : 0
+            status: itemObject.status === true ? 1 : 0
             hasChild: true
             onClicked: {
-                element.loadElement(modelList.getComponentFile(model.objectId), model.name,
+                element.loadElement(modelList.getComponentFile(itemObject.objectId), itemObject.name,
                                     modelList.getObject(model.index))
             }
         }

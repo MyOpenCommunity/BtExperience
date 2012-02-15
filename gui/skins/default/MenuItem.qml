@@ -11,7 +11,7 @@ Item {
     property string name: ""
     property string description: ""
     property int status: -1
-    property bool hasChild: true
+    property bool hasChild: false
 
     signal clicked(variant itemClicked)
     signal pressed(variant itemPressed)

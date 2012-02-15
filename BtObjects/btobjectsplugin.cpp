@@ -107,7 +107,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	}
 
 	objmodel.reparentObjects();
-	objmodel.setRoleNames();
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)

@@ -160,7 +160,7 @@ MenuElement {
             name: qsTr("scenario")
             hasChild: true
             onClicked: {
-                system.loadElement("AntintrusionScenarios.qml", name, privateProps.model)
+                system.loadElement("AntintrusionScenarios.qml", name, privateProps.model.scenarios)
                 if (privateProps.currentElement != 2)
                     privateProps.currentElement = 2
             }
@@ -205,21 +205,21 @@ MenuElement {
                 delegate: Image {
                     // We need the following trick because the model is not directly editable.
                     // See the comment on ObjectListModel::getObject
-                    property variant dataModel: zoneView.zones.getObject(index)
+                    property variant itemObject: zoneView.zones.getObject(index)
                     source: "images/common/btn_zona.png"
                     Row {
                         anchors.top: parent.top
                         Image {
-                            source: dataModel.partialization ? "images/common/off.png" : "images/common/on.png"
+                            source: itemObject.partialization ? "images/common/off.png" : "images/common/on.png"
                         }
                         Text {
-                            text: dataModel.objectId
+                            text: itemObject.objectId
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
 
                     Text {
-                        text: dataModel.name
+                        text: itemObject.name
                         anchors.bottom: parent.bottom
                         anchors.bottomMargin: 5
                         anchors.left: parent.left
@@ -228,7 +228,7 @@ MenuElement {
                     }
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: dataModel.partialization = !dataModel.partialization
+                        onClicked: itemObject.partialization = !itemObject.partialization
                     }
                 }
 

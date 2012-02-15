@@ -105,6 +105,7 @@ MenuElement {
 
         MenuItem {
             id: seasonItem
+            hasChild: true
             active: element.animationRunning === false
             anchors.top: parent.top
             name: qsTr("funzionamento")
@@ -119,6 +120,7 @@ MenuElement {
 
         MenuItem {
             id: modalityItem
+            hasChild: true
             active: element.animationRunning === false
             anchors.top: seasonItem.bottom
             name: qsTr("modalità")

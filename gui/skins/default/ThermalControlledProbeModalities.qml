@@ -9,8 +9,6 @@ MenuElement {
 
     ListView {
         id: itemList
-        y: 0
-        x: 0
         anchors.fill: parent
         currentIndex: selectItem()
         interactive: false
@@ -24,6 +22,7 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
+            name: model.name
             active: element.animationRunning === false
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)

@@ -20,9 +20,6 @@ public:
     virtual bool getStatus() const = 0;
     virtual void setStatus(bool st) = 0;
 
-    virtual QVariant data(int role) const;
-    virtual QHash<int, QByteArray> roleNames();
-
 signals:
     void statusChanged();
 };

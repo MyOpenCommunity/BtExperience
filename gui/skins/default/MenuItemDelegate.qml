@@ -3,9 +3,10 @@ import QtQuick 1.1
 
 MenuItem {
     id: itemDelegate
-    name: model.name
-    hasChild: model.componentFile !== undefined && model.componentFile !== ""
+
     property bool selectOnClick: true
+    property variant itemObject
+    name: itemObject.name
 
     signal delegateClicked(int index)
 

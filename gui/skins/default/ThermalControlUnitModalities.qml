@@ -26,11 +26,9 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
+            itemObject: element.dataModel.modalities.getObject(index)
             active: element.animationRunning === false
-            onClicked: {
-                var obj = itemList.model.getObject(model.index)
-                element.modalitySelected(obj)
-            }
+            onClicked: element.modalitySelected(itemObject)
         }
 
         model: element.dataModel.modalities

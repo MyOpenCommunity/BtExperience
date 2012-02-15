@@ -17,34 +17,12 @@ int ObjectListModel::rowCount(const QModelIndex &parent) const
 	return item_list.size();
 }
 
-QVariant ObjectListModel::data(const QModelIndex &index, int role) const
-{
-	if (index.row() < 0 || index.row() >= item_list.size())
-		return QVariant();
-
-	return item_list.at(index.row())->data(role);
-}
-
-void ObjectListModel::setRoleNames()
-{
-	QAbstractListModel::setRoleNames(names);
-}
-
 void ObjectListModel::appendRow(ObjectInterface *item)
 {
 	beginInsertRows(QModelIndex(), rowCount(), rowCount() + 1);
 	connect(item, SIGNAL(dataChanged()), SLOT(handleItemChange()));
 	item_list.append(item);
 	endInsertRows();
-
-	QHash<int, QByteArray> n = item->roleNames();
-	QHashIterator<int, QByteArray> it(n);
-	while (it.hasNext())
-	{
-		it.next();
-		if (!names.contains(it.key()))
-			names[it.key()] = it.value();
-	}
 }
 
 void ObjectListModel::handleItemChange()

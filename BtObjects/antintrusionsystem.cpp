@@ -44,23 +44,6 @@ AntintrusionScenario::AntintrusionScenario(QString _name, QList<int> _scenario_z
 	verifySelection(false);
 }
 
-QVariant AntintrusionScenario::data(int role) const
-{
-	QVariant v = ObjectInterface::data(role);
-
-	if (v.isNull() && role == DescriptionRole)
-		return getDescription();
-
-	return v;
-}
-
-QHash<int, QByteArray> AntintrusionScenario::roleNames()
-{
-	QHash<int, QByteArray> names = ObjectInterface::roleNames();
-	names[DescriptionRole] = "description";
-	return names;
-}
-
 QString AntintrusionScenario::getDescription() const
 {
 	QStringList l;
@@ -153,7 +136,6 @@ ObjectListModel *AntintrusionSystem::getScenarios() const
 	for (int i = 0; i < scenarios.length(); ++i)
 		items->appendRow(scenarios[i]);
 
-	items->setRoleNames();
 	items->reparentObjects();
 
 	return items;
@@ -165,7 +147,6 @@ ObjectListModel *AntintrusionSystem::getZones() const
 	for (int i = 0; i < zones.length(); ++i)
 		items->appendRow(zones[i]);
 
-	items->setRoleNames();
 	items->reparentObjects();
 
 	return items;

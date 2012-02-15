@@ -21,13 +21,27 @@ public:
 	explicit ObjectListModel(QObject *parent = 0);
 
 	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
-	virtual QVariant data(const QModelIndex &index, int role) const;
+
+	// We cannot use the roles system offered by Qt models because we don't want
+	// a double interface for the ObjectInterface objects.
+	// In fact, we have to extract single qt objects, using the getObject method,
+	// to pass them to their specific components (ex: the Light object must to
+	// be passed to the Light.qml component).
+	// An object extracted in that way offers a public API formed by properties,
+	// public slots, Q_INVOKABLE methods and signals but the same object when
+	// used inside the model's delegate exposes an API composed by the roles of
+	// the model.
+	// So, in order to obtain an unique API, we use the getObject method even
+	// inside delegates.
+	virtual QVariant data(const QModelIndex &index, int role) const
+	{
+		Q_UNUSED(index)
+		Q_UNUSED(role)
+		return QVariant();
+	}
 
 	void appendRow(ObjectInterface *item);
 
-	// Models in qml are not directly editable. Return a QObject and modify it
-	// is a workaround.
-	// https://bugreports.qt.nokia.com//browse/QTBUG-7932
 	Q_INVOKABLE QObject *getObject(int row);
 
 	// Objects extracted using a C++ method and pass to a Qml Component have
@@ -36,14 +50,6 @@ public:
 	// See http://doc.trolltech.com/4.7/qdeclarativeengine.html#ObjectOwnership-enum
 	// for details.
 	void reparentObjects();
-
-	// Set the rolenames for the model using the union of the rolenames of each
-	// ObjectInterface object. In this way each instance of the ObjectListModel
-	// can expose a different set of role names, depending on the role names
-	// of its elements.
-	// NOTE: This method must be called before set the model.
-	// See also  http://doc.trolltech.com/4.7/qabstractitemmodel.html#roleNames
-	void setRoleNames();
 
 private slots:
 	void handleItemChange();

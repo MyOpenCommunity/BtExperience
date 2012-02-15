@@ -23,6 +23,7 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
+            name: model.name
             active: element.animationRunning === false
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)

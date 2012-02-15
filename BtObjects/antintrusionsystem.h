@@ -54,9 +54,7 @@ class AntintrusionScenario : public ObjectInterface
 public:
 	AntintrusionScenario(QString name, QList<int> scenario_zones, QList<AntintrusionZone*> zones);
 	Q_PROPERTY(bool selected READ isSelected NOTIFY selectionChanged)
-
-	virtual QVariant data(int role) const;
-	virtual QHash<int, QByteArray> roleNames();
+	Q_PROPERTY(QString description READ getDescription CONSTANT)
 
 	virtual int getObjectId() const
 	{

@@ -70,7 +70,6 @@ SOURCES += \
     antintrusionsystem.cpp \
     lightobjects.cpp \
     objectlistmodel.cpp \
-    objectinterface.cpp \
     settings.cpp \
     thermalobjects.cpp \
     thermalprobes.cpp

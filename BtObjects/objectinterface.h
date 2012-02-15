@@ -3,17 +3,6 @@
 
 #include <QObject>
 #include <QString>
-#include <QHash>
-#include <QVariant>
-
-
-enum ItemRoles
-{
-	ObjectIdRole = Qt::UserRole + 1,
-	NameRole,
-	StatusRole,
-	DescriptionRole
-};
 
 
 class ObjectInterface : public QObject
@@ -58,14 +47,6 @@ public:
 
 	// the name of the object
 	virtual QString getName() const = 0;
-
-	// The following two methods should be reimplemented together. The data
-	// method return the real data, while the roleNames returns the names which
-	// can be used from qml. See also:
-	// http://doc.trolltech.com/4.7/qabstractitemmodel.html#roleNames
-	// http://doc.trolltech.com/4.7/qabstractitemmodel.html#data
-	virtual QVariant data(int role) const;
-	virtual QHash<int, QByteArray> roleNames();
 
 signals:
 	void dataChanged();

@@ -15,10 +15,11 @@ MenuElement {
         interactive: false
 
         delegate: MenuItemDelegate {
+            itemObject: modelList.getObject(index)
             active: element.animationRunning === false
             hasChild: true
             onClicked: {
-                element.loadElement(modelList.getComponentFile(model.objectId), model.name,
+                element.loadElement(modelList.getComponentFile(itemObject.objectId), itemObject.name,
                                     modelList.getObject(model.index))
             }
         }

@@ -4,24 +4,6 @@
 #include <QDebug>
 
 
-QVariant LightInterface::data(int role) const
-{
-	QVariant v = ObjectInterface::data(role);
-
-	if (v.isNull() && role == StatusRole)
-		return getStatus();
-
-	return v;
-}
-
-QHash<int, QByteArray> LightInterface::roleNames()
-{
-	QHash<int, QByteArray> names = ObjectInterface::roleNames();
-	names[StatusRole] = "status";
-	return names;
-}
-
-
 Light::Light(QString _name, QString _key, LightingDevice *d)
 {
 	dev = d;
