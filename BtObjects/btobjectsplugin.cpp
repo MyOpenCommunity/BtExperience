@@ -98,7 +98,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj = new HardwareSettings;
 			break;
 		case ObjectInterface::IdAntintrusionSystem:
-			obj = new AntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice), item);
+			obj = createAntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice), item);
 			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));

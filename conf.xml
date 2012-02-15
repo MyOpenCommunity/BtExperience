@@ -87,6 +87,24 @@
   </item>
   <item>
     <id>6</id> <!-- Antintrusion system -->
+    <zones>
+	    <zone>
+		    <num>1</num>
+		    <name>ingresso</name>
+	    </zone>
+	    <zone>
+		    <num>2</num>
+		    <name>taverna</name>
+	    </zone>
+	    <zone>
+		    <num>3</num>
+		    <name>mansarda</name>
+	    </zone>
+	    <zone>
+		    <num>4</num>
+		    <name>box/cantina</name>
+	    </zone>
+    </zones>
     <scenarios>
       <scenario>
         <name>giorno</name>
