@@ -7,9 +7,13 @@
 #include <QString>
 
 
+class AntintrusionSystem;
 class AntintrusionDevice;
 class ObjectListModel;
 class QDomNode;
+
+
+AntintrusionSystem *createAntintrusionSystem(AntintrusionDevice *dev, const QDomNode &xml_node);
 
 
 class AntintrusionZone : public ObjectInterface
@@ -156,8 +160,6 @@ private:
 	bool waiting_response;
 	int current_scenario;
 };
-
-AntintrusionSystem *createAntintrusionSystem(AntintrusionDevice *dev, const QDomNode &xml_node);
 
 
 #endif // ANTINTRUSIONSYSTEM_H

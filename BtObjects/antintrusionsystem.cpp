@@ -10,6 +10,63 @@
 #define CODE_TIMEOUT_SECS 10
 
 
+AntintrusionSystem *createAntintrusionSystem(AntintrusionDevice *dev, const QDomNode &xml_node)
+{
+	QList<QPair<int, QString> > zone_list;
+	foreach (const QDomNode &zone, getChildren(getChildWithName(xml_node, "zones"), "zone"))
+	{
+		QString name = getTextChild(zone, "name");
+		QString s = getTextChild(zone, "num");
+		bool ok;
+		int z = s.toInt(&ok);
+		if (!ok)
+		{
+			qWarning() << "Invalid zone number" << s << "for zone" << name;
+			continue;
+		}
+		zone_list << qMakePair(z, name);
+	}
+
+	QList<AntintrusionZone *> zones;
+	for (int i = 0; i < zone_list.length(); ++i)
+	{
+		AntintrusionZone *z = new AntintrusionZone(zone_list.at(i).first, zone_list.at(i).second);
+		dev->partializeZone(zone_list.at(i).first, z->getPartialization()); // initialization
+		QObject::connect(z, SIGNAL(requestPartialization(int,bool)), dev, SLOT(partializeZone(int,bool)));
+		zones << z;
+	}
+
+	QList<AntintrusionScenario *> scenarios;
+	foreach (const QDomNode &scenario, getChildren(getChildWithName(xml_node, "scenarios"), "scenario"))
+	{
+		QString name = getTextChild(scenario, "name");
+		QList<int> scenario_zones;
+		foreach (QString s, getTextChild(scenario, "zones").split(","))
+		{
+			bool ok;
+			int z = s.toInt(&ok);
+			if (!ok)
+			{
+				qWarning() << "Invalid zone" << z << "for the scenario:" << name;
+				continue;
+			}
+			scenario_zones << z;
+		}
+
+		scenarios << new AntintrusionScenario(name, scenario_zones, zones);
+	}
+
+	AntintrusionSystem *system = new AntintrusionSystem(dev, scenarios, zones);
+
+	// we need to connect each scenario to antitrusion system object, which
+	// cannot be done above
+	foreach (AntintrusionScenario *s, scenarios)
+		QObject::connect(s, SIGNAL(selectionChanged()), system, SIGNAL(currentScenarioChanged()));
+
+	return system;
+}
+
+
 AntintrusionZone::AntintrusionZone(int id, QString _name)
 {
 	zone_number = id;
@@ -214,58 +271,3 @@ QObject *AntintrusionSystem::getCurrentScenario() const
 	return 0;
 }
 
-AntintrusionSystem *createAntintrusionSystem(AntintrusionDevice *dev, const QDomNode &xml_node)
-{
-	QList<QPair<int, QString> > zone_list;
-	foreach (const QDomNode &zone, getChildren(getChildWithName(xml_node, "zones"), "zone"))
-	{
-		QString name = getTextChild(zone, "name");
-		QString s = getTextChild(zone, "num");
-		bool ok;
-		int z = s.toInt(&ok);
-		if (!ok)
-		{
-			qWarning() << "Invalid zone number" << s << "for zone" << name;
-			continue;
-		}
-		zone_list << qMakePair(z, name);
-	}
-
-	QList<AntintrusionZone *> zones;
-	for (int i = 0; i < zone_list.length(); ++i)
-	{
-		AntintrusionZone *z = new AntintrusionZone(zone_list.at(i).first, zone_list.at(i).second);
-		dev->partializeZone(zone_list.at(i).first, z->getPartialization()); // initialization
-		QObject::connect(z, SIGNAL(requestPartialization(int,bool)), dev, SLOT(partializeZone(int,bool)));
-		zones << z;
-	}
-
-	QList<AntintrusionScenario *> scenarios;
-	foreach (const QDomNode &scenario, getChildren(getChildWithName(xml_node, "scenarios"), "scenario"))
-	{
-		QString name = getTextChild(scenario, "name");
-		QList<int> scenario_zones;
-		foreach (QString s, getTextChild(scenario, "zones").split(","))
-		{
-			bool ok;
-			int z = s.toInt(&ok);
-			if (!ok)
-			{
-				qWarning() << "Invalid zone" << z << "for the scenario:" << name;
-				continue;
-			}
-			scenario_zones << z;
-		}
-
-		scenarios << new AntintrusionScenario(name, scenario_zones, zones);
-	}
-
-	AntintrusionSystem *system = new AntintrusionSystem(dev, scenarios, zones);
-
-	// we need to connect each scenario to antitrusion system object, which
-	// cannot be done above
-	foreach (AntintrusionScenario *s, scenarios)
-		QObject::connect(s, SIGNAL(selectionChanged()), system, SIGNAL(currentScenarioChanged()));
-
-	return system;
-}
