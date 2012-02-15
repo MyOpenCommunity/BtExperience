@@ -17,6 +17,8 @@ class ObjectInterface;
 class ObjectListModel : public QAbstractListModel
 {
 	Q_OBJECT
+	Q_PROPERTY(int size READ getSize CONSTANT)
+
 public:
 	explicit ObjectListModel(QObject *parent = 0);
 
@@ -51,6 +53,11 @@ public:
 	// for details.
 	void reparentObjects();
 
+	int getSize() const
+	{
+		return item_list.size();
+	}
+
 private slots:
 	void handleItemChange();
 
@@ -67,6 +74,7 @@ class FilterListModel : public QSortFilterProxyModel
 	Q_OBJECT
 	Q_PROPERTY(QVariantList categories READ getCategories WRITE setCategories NOTIFY categoriesChanged)
 	Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
+	Q_PROPERTY(int size READ getSize CONSTANT)
 
 public:
 	FilterListModel();
@@ -85,6 +93,11 @@ public:
 	// to get all the items with a certain objectId).
 	QVariantList getFilters() const;
 	void setFilters(QVariantList f);
+
+	int getSize() const
+	{
+		return source->getSize();
+	}
 
 signals:
 	void categoriesChanged();

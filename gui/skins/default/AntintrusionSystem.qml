@@ -168,6 +168,7 @@ MenuElement {
 
         Image {
             source: "images/common/bg_zone.png"
+            height: zoneText.height + zoneView.height + spacingItem.height
 
             Rectangle {
                 id: zoneDarkRect
@@ -180,6 +181,7 @@ MenuElement {
 
             Text {
                 id: zoneText
+                height: 50
                 text: qsTr("zone")
                 font.pixelSize: 14
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -194,10 +196,9 @@ MenuElement {
                 property variant zones: privateProps.model.zones
 
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 5
+                anchors.top: zoneText.bottom
                 width: cellWidth * 2
-                height: cellHeight * 4
+                height: cellHeight * zoneView.zones.size / 2
                 interactive: false
                 cellWidth: 102
                 cellHeight: 50
@@ -233,6 +234,11 @@ MenuElement {
                 }
 
                 model: zones
+            }
+            Item {
+                id: spacingItem
+                height: 5
+                anchors.top: zoneView.bottom
             }
         }
 

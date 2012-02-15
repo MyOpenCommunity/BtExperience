@@ -88,22 +88,38 @@
   <item>
     <id>6</id> <!-- Antintrusion system -->
     <zones>
-	    <zone>
-		    <num>1</num>
-		    <name>ingresso</name>
-	    </zone>
-	    <zone>
-		    <num>2</num>
-		    <name>taverna</name>
-	    </zone>
-	    <zone>
-		    <num>3</num>
-		    <name>mansarda</name>
-	    </zone>
-	    <zone>
-		    <num>4</num>
-		    <name>box/cantina</name>
-	    </zone>
+    <zone>
+	    <num>1</num>
+	    <name>ingresso</name>
+    </zone>
+    <zone>
+	    <num>2</num>
+	    <name>taverna</name>
+    </zone>
+    <zone>
+	    <num>3</num>
+	    <name>mansarda</name>
+    </zone>
+    <zone>
+	    <num>4</num>
+	    <name>box/cantina</name>
+    </zone>
+    <zone>
+	    <num>5</num>
+	    <name>soggiorno</name>
+    </zone>
+    <zone>
+	    <num>6</num>
+	    <name>cucina</name>
+    </zone>
+    <zone>
+	    <num>7</num>
+	    <name>camera</name>
+    </zone>
+    <zone>
+	    <num>8</num>
+	    <name>cameretta</name>
+    </zone>
     </zones>
     <scenarios>
       <scenario>
