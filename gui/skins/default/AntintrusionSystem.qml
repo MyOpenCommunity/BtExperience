@@ -122,6 +122,11 @@ MenuElement {
             state: privateProps.currentElement == 1 ? "selected" : ""
             name: qsTr("registro allarmi")
             hasChild: true
+            onClicked: {
+                system.loadElement("AntintrusionAlarms.qml", name, privateProps.model.alarms)
+                if (privateProps.currentElement != 1)
+                    privateProps.currentElement = 1
+            }
 
             Rectangle {
                 id: registerDarkRect
