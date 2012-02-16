@@ -75,7 +75,7 @@ public:
 	FilterListModel();
 	static void setSource(ObjectListModel *model);
 
-	Q_INVOKABLE QObject *getObject(int row);
+	Q_INVOKABLE ObjectInterface *getObject(int row);
 
 	// The categories argument is a QVariantList in order to set them from qml. The real
 	// type expected is a list of ObjectInterface::ObjectCategory

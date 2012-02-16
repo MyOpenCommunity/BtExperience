@@ -104,7 +104,7 @@ void FilterListModel::setFilters(QVariantList f)
 		int id = m["objectId"].toInt();
 		if (id > ObjectInterface::IdMax || id <= 0)
 		{
-			qDebug() << "FilterListModel::setFilters: invalid id requested " << id;
+			qDebug() << "FilterListModel::setFilters: invalid id requested" << id;
 			continue;
 		}
 		filters[id] = m.contains("objectKey") ? m["objectKey"].toString() : QString();
@@ -120,10 +120,9 @@ bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source
 	if (categories.isEmpty() && filters.isEmpty())
 		return true;
 
-	QModelIndex idx = sourceModel()->index(source_row, 0, source_parent);
+	QModelIndex idx = source->index(source_row, 0, source_parent);
 
-	ObjectListModel *model = static_cast<ObjectListModel*>(sourceModel());
-	ObjectInterface *obj = static_cast<ObjectInterface*>(model->getObject(idx.row()));
+	ObjectInterface *obj = source->getObject(idx.row());
 
 	if (categories.contains(obj->getCategory()))
 		return true;
@@ -140,10 +139,10 @@ bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source
 	return false;
 }
 
-QObject *FilterListModel::getObject(int row)
+ObjectInterface *FilterListModel::getObject(int row)
 {
 	QModelIndex idx = index(row, 0);
 	int original_row = mapToSource(idx).row();
-	return static_cast<ObjectListModel*>(sourceModel())->getObject(original_row);
+	return source->getObject(original_row);
 }
 
