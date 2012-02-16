@@ -4,6 +4,7 @@ import BtObjects 1.0
 MenuElement {
     id: system
     width: 212
+    height: antintrusionColumn.height
 
     ObjectModel {
         id: objectModel
@@ -117,6 +118,7 @@ MenuElement {
     }
 
     Column {
+        id: antintrusionColumn
         MenuItem {
             active: system.animationRunning === false
             state: privateProps.currentElement == 1 ? "selected" : ""
