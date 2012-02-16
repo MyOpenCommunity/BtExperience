@@ -118,6 +118,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a ThermalControlUnit99Zones instance");
 	qmlRegisterUncreatableType<ThermalControlledProbe>(uri, 1, 0, "ThermalControlledProbe",
 		"unable to create a ThermalControlledProbe instance");
+	qmlRegisterUncreatableType<AntintrusionAlarm>(uri, 1, 0, "AntintrusionAlarm",
+		"unable to create an AntintrusionAlarm instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
