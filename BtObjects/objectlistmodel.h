@@ -69,6 +69,7 @@ class FilterListModel : public QSortFilterProxyModel
 	Q_OBJECT
 	Q_PROPERTY(QVariantList categories READ getCategories WRITE setCategories NOTIFY categoriesChanged)
 	Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
+	Q_PROPERTY(QVariantList range READ getRange WRITE setRange NOTIFY rangeChanged)
 	Q_PROPERTY(int size READ getSize CONSTANT)
 
 public:
@@ -89,6 +90,11 @@ public:
 	QVariantList getFilters() const;
 	void setFilters(QVariantList f);
 
+	// The range argument is a QVariantList in order to set them from qml. The real
+	// type expected is a couple of int [min, max)
+	QVariantList getRange() const;
+	void setRange(QVariantList range);
+
 	int getSize() const
 	{
 		return source->getSize();
@@ -97,6 +103,7 @@ public:
 signals:
 	void categoriesChanged();
 	void filtersChanged();
+	void rangeChanged();
 
 protected:
 	bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
@@ -104,6 +111,11 @@ protected:
 private:
 	QVariantList input_categories;
 	QVariantList input_filters;
+
+	int min_range, max_range;
+	// used for the pagination. We need a mutable because the filterAcceptRow
+	// is a const method.
+	mutable int counter;
 
 	QList<int> categories;
 	QHash<int, QString> filters;

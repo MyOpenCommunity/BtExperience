@@ -67,6 +67,9 @@ FilterListModel::FilterListModel()
 {
 	Q_ASSERT_X(source, "FilterListModel::FilterListModel", "source model not set!");
 	setSourceModel(source);
+	min_range = -1;
+	max_range = -1;
+	counter = 0;
 }
 
 QVariantList FilterListModel::getCategories() const
@@ -113,27 +116,67 @@ void FilterListModel::setFilters(QVariantList f)
 	reset();
 }
 
+QVariantList FilterListModel::getRange() const
+{
+	return QVariantList() << min_range << max_range;
+}
+
+void FilterListModel::setRange(QVariantList range)
+{
+	if (range.length() != 2)
+	{
+		qDebug() << "FilterListModel::setRange: the range must be a couple of int [min, max)";
+		return;
+	}
+
+	bool min_ok, max_ok;
+	int min = range.at(0).toInt(&min_ok);
+	int max = range.at(1).toInt(&max_ok);
+
+	if (!min_ok || !max_ok)
+	{
+		qDebug() << "FilterListModel::setRange: one of [min, max) is not an integer";
+		return;
+	}
+
+	if (min_range == min && max_range == max)
+		return;
+
+	min_range = min;
+	max_range = max;
+
+	emit rangeChanged();
+	reset(); // I'd like to use invalidateFilter(), but it doesn't work
+}
 
 bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-	// No category or filter means all the items
-	if (categories.isEmpty() && filters.isEmpty())
+	// No category or filter or range means all the items
+	if (categories.isEmpty() && filters.isEmpty() && min_range == -1 && max_range == -1)
 		return true;
+
+	if (source_row == 0) // restart from the beginning
+		counter = 0;
 
 	QModelIndex idx = source->index(source_row, 0, source_parent);
 
 	ObjectInterface *obj = source->getObject(idx.row());
 
+	bool match_conditions = false;
 	if (categories.contains(obj->getCategory()))
-		return true;
-
-	if (filters.contains(obj->getObjectId()))
+		match_conditions = true;
+	else if (filters.contains(obj->getObjectId()))
 	{
-		if (filters[obj->getObjectId()].isEmpty()) // no check on the key
-			return true;
+		QString key = filters[obj->getObjectId()];
+		if (key.isEmpty() || key == obj->getObjectKey())
+			match_conditions = true;
+	}
 
-		if (filters[obj->getObjectId()] == obj->getObjectKey())
-			return true;
+	if (match_conditions)
+	{
+		bool match_range = counter >= min_range && (counter < max_range || max_range == -1);
+		++counter;
+		return match_range;
 	}
 
 	return false;
