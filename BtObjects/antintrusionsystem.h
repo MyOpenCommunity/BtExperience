@@ -147,6 +147,7 @@ class AntintrusionSystem : public ObjectInterface
 	Q_OBJECT
 	Q_PROPERTY(ObjectListModel *zones READ getZones NOTIFY zonesChanged)
 	Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)
+	Q_PROPERTY(ObjectListModel *alarms READ getAlarms NOTIFY alarmsChanged)
 	Q_PROPERTY(bool status READ getStatus NOTIFY statusChanged)
 	Q_PROPERTY(QObject *currentScenario READ getCurrentScenario NOTIFY currentScenarioChanged)
 
@@ -169,6 +170,7 @@ public:
 
 	ObjectListModel *getZones() const;
 	ObjectListModel *getScenarios() const;
+	ObjectListModel *getAlarms() const;
 
 
 	Q_INVOKABLE void requestPartialization(const QString &password);
@@ -184,6 +186,7 @@ public:
 signals:
 	void zonesChanged(); // never emitted
 	void scenariosChanged(); // never emitted
+	void alarmsChanged();
 
 	void statusChanged();
 	void currentScenarioChanged();
@@ -200,6 +203,7 @@ private:
 	AntintrusionDevice *dev;
 	ObjectListModel zones;
 	ObjectListModel scenarios;
+	ObjectListModel alarms;
 	bool status;
 	bool initialized;
 	bool waiting_response;
