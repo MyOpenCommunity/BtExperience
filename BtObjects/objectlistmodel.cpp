@@ -17,7 +17,7 @@ int ObjectListModel::rowCount(const QModelIndex &parent) const
 	return item_list.size();
 }
 
-void ObjectListModel::operator <<(ObjectInterface *item)
+ObjectListModel &ObjectListModel::operator<<(ObjectInterface *item)
 {
 	// Objects extracted using a C++ method and passed to a Qml Component have
 	// a 'javascript ownership', but in that way the qml has the freedom to
@@ -30,6 +30,7 @@ void ObjectListModel::operator <<(ObjectInterface *item)
 	connect(item, SIGNAL(dataChanged()), SLOT(handleItemChange()));
 	item_list.append(item);
 	endInsertRows();
+	return *this;
 }
 
 void ObjectListModel::handleItemChange()

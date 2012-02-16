@@ -142,6 +142,29 @@ void AntintrusionScenario::apply()
 }
 
 
+AntintrusionAlarm::AntintrusionAlarm(AlarmType _type, const AntintrusionZone *_zone, QDateTime time)
+{
+	type = _type;
+	zone = _zone;
+	date_time = time;
+}
+
+AntintrusionAlarm::AlarmType AntintrusionAlarm::getType()
+{
+	return type;
+}
+
+ObjectInterface *AntintrusionAlarm::getZone()
+{
+	return const_cast<AntintrusionZone *>(zone);
+}
+
+QDateTime AntintrusionAlarm::getDateTime()
+{
+	return date_time;
+}
+
+
 AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionZone*> _zones)
 {
 	foreach (AntintrusionScenario *s, _scenarios)
@@ -149,6 +172,10 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 
 	foreach (AntintrusionZone *z, _zones)
 		zones << z;
+
+	alarms << new AntintrusionAlarm(AntintrusionAlarm::ANTIPANIC_ALARM, _zones[0], QDateTime::currentDateTime())
+		   << new AntintrusionAlarm(AntintrusionAlarm::TAMPER_ALARM, _zones[2], QDateTime::currentDateTime())
+			  << new AntintrusionAlarm(AntintrusionAlarm::TECHNICAL_ALARM, _zones[1], QDateTime::currentDateTime());
 
 	current_scenario = -1;
 	waiting_response = false;
@@ -162,6 +189,12 @@ ObjectListModel *AntintrusionSystem::getScenarios() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
 	return const_cast<ObjectListModel*>(&scenarios);
+}
+
+ObjectListModel *AntintrusionSystem::getAlarms() const
+{
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ObjectListModel*>(&alarms);
 }
 
 ObjectListModel *AntintrusionSystem::getZones() const

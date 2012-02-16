@@ -4,6 +4,7 @@ import BtObjects 1.0
 MenuElement {
     id: system
     width: 212
+    height: antintrusionColumn.height
 
     ObjectModel {
         id: objectModel
@@ -117,11 +118,17 @@ MenuElement {
     }
 
     Column {
+        id: antintrusionColumn
         MenuItem {
             active: system.animationRunning === false
             state: privateProps.currentElement == 1 ? "selected" : ""
             name: qsTr("registro allarmi")
             hasChild: true
+            onClicked: {
+                system.loadElement("AntintrusionAlarms.qml", name, privateProps.model.alarms)
+                if (privateProps.currentElement != 1)
+                    privateProps.currentElement = 1
+            }
 
             Rectangle {
                 id: registerDarkRect

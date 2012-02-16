@@ -44,7 +44,7 @@ public:
 
 	// Append an item to the model. The model takes the ownership of the item
 	// and reparent it.
-	void operator<<(ObjectInterface *item);
+	ObjectListModel &operator<<(ObjectInterface *item);
 
 	Q_INVOKABLE ObjectInterface *getObject(int row) const;
 
