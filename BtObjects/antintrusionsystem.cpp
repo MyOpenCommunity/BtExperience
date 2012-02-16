@@ -174,7 +174,8 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 		zones << z;
 
 	alarms << new AntintrusionAlarm(AntintrusionAlarm::ANTIPANIC_ALARM, _zones[0], QDateTime::currentDateTime())
-		   << new AntintrusionAlarm(AntintrusionAlarm::TAMPER_ALARM, _zones[2], QDateTime::currentDateTime());
+		   << new AntintrusionAlarm(AntintrusionAlarm::TAMPER_ALARM, _zones[2], QDateTime::currentDateTime())
+			  << new AntintrusionAlarm(AntintrusionAlarm::TECHNICAL_ALARM, _zones[1], QDateTime::currentDateTime());
 
 	current_scenario = -1;
 	waiting_response = false;
