@@ -6,6 +6,7 @@
 #include "device.h" // DeviceValues
 
 #include <QString>
+#include <QDateTime>
 
 
 class AntintrusionSystem;
@@ -95,6 +96,49 @@ private:
 	QList<int> scenario_zones;
 	QList<AntintrusionZone*> zones;
 	bool selected;
+};
+
+
+class AntintrusionAlarm : public ObjectInterface
+{
+	Q_OBJECT
+	Q_PROPERTY(AlarmType type READ getType CONSTANT)
+	Q_PROPERTY(ObjectInterface *zone READ getZone CONSTANT)
+	Q_PROPERTY(QDateTime date_time READ getDateTime CONSTANT)
+	Q_ENUMS(AlarmType)
+
+public:
+	// Defined the same as AntintrusionDevice for convenience
+	enum AlarmType{
+		ANTIPANIC_ALARM,
+		INTRUSION_ALARM,
+		TAMPER_ALARM,
+		TECHNICAL_ALARM,
+	};
+	AntintrusionAlarm(AlarmType type, const AntintrusionZone *zone, QDateTime time);
+
+	virtual int getObjectId() const
+	{
+		return -1;
+	}
+
+	virtual QString getObjectKey() const { return QString(); }
+
+	virtual ObjectCategory getCategory() const
+	{
+		return ObjectInterface::Antintrusion;
+	}
+
+	virtual QString getName() const { return QString(); }
+
+	AlarmType getType();
+	ObjectInterface *getZone();
+	QDateTime getDateTime();
+
+private:
+	const AntintrusionZone *zone;
+	AlarmType type;
+	QDateTime date_time;
 };
 
 

@@ -142,6 +142,29 @@ void AntintrusionScenario::apply()
 }
 
 
+AntintrusionAlarm::AntintrusionAlarm(AlarmType _type, const AntintrusionZone *_zone, QDateTime time)
+{
+	type = _type;
+	zone = _zone;
+	date_time = time;
+}
+
+AntintrusionAlarm::AlarmType AntintrusionAlarm::getType()
+{
+	return type;
+}
+
+ObjectInterface *AntintrusionAlarm::getZone()
+{
+	return const_cast<AntintrusionZone *>(zone);
+}
+
+QDateTime AntintrusionAlarm::getDateTime()
+{
+	return date_time;
+}
+
+
 AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionZone*> _zones)
 {
 	foreach (AntintrusionScenario *s, _scenarios)
