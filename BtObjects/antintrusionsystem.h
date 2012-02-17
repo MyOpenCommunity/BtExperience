@@ -109,7 +109,8 @@ class AntintrusionAlarm : public ObjectInterface
 
 public:
 	// Defined the same as AntintrusionDevice for convenience
-	enum AlarmType{
+	enum AlarmType
+	{
 		Antipanic,
 		Intrusion,
 		Tamper,
