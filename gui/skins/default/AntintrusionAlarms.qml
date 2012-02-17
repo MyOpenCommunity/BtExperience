@@ -50,13 +50,13 @@ MenuElement {
         }
 
         function typeToText(type) {
-            if (type === AntintrusionAlarm.ANTIPANIC_ALARM)
+            if (type === AntintrusionAlarm.Antipanic)
                 return qsTr("anti-panico");
-            else if (type === AntintrusionAlarm.INTRUSION_ALARM)
+            else if (type === AntintrusionAlarm.Intrusion)
                 return qsTr("intrusione");
-            else if (type === AntintrusionAlarm.TAMPER_ALARM)
+            else if (type === AntintrusionAlarm.Tamper)
                 return qsTr("manomissione");
-            else if (type === AntintrusionAlarm.TECHNICAL_ALARM)
+            else if (type === AntintrusionAlarm.Technical)
                 return qsTr("tecnico");
         }
 

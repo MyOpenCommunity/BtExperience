@@ -173,9 +173,9 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 	foreach (AntintrusionZone *z, _zones)
 		zones << z;
 
-	alarms << new AntintrusionAlarm(AntintrusionAlarm::ANTIPANIC_ALARM, _zones[0], QDateTime::currentDateTime())
-		   << new AntintrusionAlarm(AntintrusionAlarm::TAMPER_ALARM, _zones[2], QDateTime::currentDateTime())
-			  << new AntintrusionAlarm(AntintrusionAlarm::TECHNICAL_ALARM, _zones[1], QDateTime::currentDateTime());
+	alarms << new AntintrusionAlarm(AntintrusionAlarm::Antipanic, _zones[0], QDateTime::currentDateTime())
+		   << new AntintrusionAlarm(AntintrusionAlarm::Tamper, _zones[2], QDateTime::currentDateTime())
+			  << new AntintrusionAlarm(AntintrusionAlarm::Technical, _zones[1], QDateTime::currentDateTime());
 
 	current_scenario = -1;
 	waiting_response = false;

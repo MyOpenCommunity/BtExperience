@@ -110,10 +110,10 @@ class AntintrusionAlarm : public ObjectInterface
 public:
 	// Defined the same as AntintrusionDevice for convenience
 	enum AlarmType{
-		ANTIPANIC_ALARM,
-		INTRUSION_ALARM,
-		TAMPER_ALARM,
-		TECHNICAL_ALARM,
+		Antipanic,
+		Intrusion,
+		Tamper,
+		Technical,
 	};
 	AntintrusionAlarm(AlarmType type, const AntintrusionZone *zone, QDateTime time);
 
