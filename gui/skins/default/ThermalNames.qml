@@ -13,6 +13,7 @@ QtObject {
         Script.container['PROBE_STATUS'][ThermalControlledProbe.Antifreeze] = qsTr("antigelo")
         Script.container['PROBE_STATUS'][ThermalControlledProbe.Manual] = qsTr("manuale")
         Script.container['PROBE_STATUS'][ThermalControlledProbe.Off] = qsTr("off")
+        Script.container['PROBE_STATUS'][ThermalControlledProbe.Unknown] = qsTr("--")
     }
 
     function get(context, id) {

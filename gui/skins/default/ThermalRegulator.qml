@@ -15,8 +15,22 @@ MenuElement {
         interactive: false
 
         delegate: MenuItemDelegate {
+            function getDescription() {
+                if (itemObject.objectId === ObjectInterface.IdThermalControlledProbe) {
+                    var descr = itemObject.temperature / 10 + qsTr("°C") + " ";
+                    if (itemObject.probeStatus === ThermalControlledProbe.Manual)
+                        descr += itemObject.setpoint / 10 + qsTr("°C") + " ";
+
+                    descr += pageObject.names.get('PROBE_STATUS', itemObject.probeStatus);
+                    return descr;
+                }
+                else
+                    return ''
+            }
+
             itemObject: modelList.getObject(index)
             active: element.animationRunning === false
+            description: getDescription()
             hasChild: true
             onClicked: {
                 element.loadElement(modelList.getComponentFile(itemObject.objectId), itemObject.name,
