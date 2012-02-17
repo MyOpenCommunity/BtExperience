@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QStringList>
 
-ObjectListModel *FilterListModel::source = 0;
+ObjectListModel *FilterListModel::global_source = 0;
 
 
 ObjectListModel::ObjectListModel(QObject *parent) : QAbstractListModel(parent)
@@ -59,18 +59,35 @@ ObjectInterface *ObjectListModel::getObject(int row) const
 }
 
 
-void FilterListModel::setSource(ObjectListModel *model)
+void FilterListModel::setGlobalSource(ObjectListModel *model)
 {
-	source = model;
+	global_source = model;
 }
 
 FilterListModel::FilterListModel()
 {
-	Q_ASSERT_X(source, "FilterListModel::FilterListModel", "source model not set!");
-	setSourceModel(source);
+	Q_ASSERT_X(global_source, "FilterListModel::FilterListModel", "global source model not set!");
+	local_source = 0;
+	setSourceModel(global_source);
 	min_range = -1;
 	max_range = -1;
 	counter = 0;
+}
+
+int FilterListModel::getSize() const
+{
+	return getSource()->getSize();
+}
+
+void FilterListModel::setSource(ObjectListModel *s)
+{
+	local_source = s;
+	setSourceModel(local_source);
+}
+
+ObjectListModel *FilterListModel::getSource() const
+{
+	return local_source ? local_source : global_source;
 }
 
 QVariantList FilterListModel::getCategories() const
@@ -159,12 +176,14 @@ bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source
 	if (source_row == 0) // restart from the beginning
 		counter = 0;
 
-	QModelIndex idx = source->index(source_row, 0, source_parent);
+	QModelIndex idx = getSource()->index(source_row, 0, source_parent);
 
-	ObjectInterface *obj = source->getObject(idx.row());
+	ObjectInterface *obj = getSource()->getObject(idx.row());
 
 	bool match_conditions = false;
-	if (categories.contains(obj->getCategory()))
+	if (categories.isEmpty() && filters.isEmpty()) // no conditions, we keep all the items
+		match_conditions = true;
+	else if (categories.contains(obj->getCategory()))
 		match_conditions = true;
 	else if (filters.contains(obj->getObjectId()))
 	{
@@ -187,6 +206,6 @@ ObjectInterface *FilterListModel::getObject(int row)
 {
 	QModelIndex idx = index(row, 0);
 	int original_row = mapToSource(idx).row();
-	return source->getObject(original_row);
+	return getSource()->getObject(original_row);
 }
 

@@ -70,11 +70,12 @@ class FilterListModel : public QSortFilterProxyModel
 	Q_PROPERTY(QVariantList categories READ getCategories WRITE setCategories NOTIFY categoriesChanged)
 	Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
 	Q_PROPERTY(QVariantList range READ getRange WRITE setRange NOTIFY rangeChanged)
+	Q_PROPERTY(ObjectListModel* source READ getSource WRITE setSource NOTIFY sourceChanged)
 	Q_PROPERTY(int size READ getSize CONSTANT)
 
 public:
 	FilterListModel();
-	static void setSource(ObjectListModel *model);
+	static void setGlobalSource(ObjectListModel *model);
 
 	Q_INVOKABLE ObjectInterface *getObject(int row);
 
@@ -95,15 +96,16 @@ public:
 	QVariantList getRange() const;
 	void setRange(QVariantList range);
 
-	int getSize() const
-	{
-		return source->getSize();
-	}
+	int getSize() const;
+
+	void setSource(ObjectListModel *s);
+	ObjectListModel *getSource() const;
 
 signals:
 	void categoriesChanged();
 	void filtersChanged();
 	void rangeChanged();
+	void sourceChanged();
 
 protected:
 	bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
@@ -119,7 +121,8 @@ private:
 
 	QList<int> categories;
 	QHash<int, QString> filters;
-	static ObjectListModel *source;
+	ObjectListModel *local_source;
+	static ObjectListModel *global_source;
 };
 
 

@@ -54,9 +54,9 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameReceiver::setClientsMonitor(monitors);
 	FrameSender::setClients(clients);
 
+	FilterListModel::setGlobalSource(&objmodel);
 	createObjects(document);
 	device::initDevices();
-	FilterListModel::setSource(&objmodel);
 }
 
 void BtObjectsPlugin::createObjects(QDomDocument document)

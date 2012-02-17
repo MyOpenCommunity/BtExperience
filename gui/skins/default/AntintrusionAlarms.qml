@@ -88,6 +88,11 @@ MenuElement {
             text: qsTr("Pagina 1 di 4")
         }
 
-        model: element.dataModel
+        model: modelList
+    }
+
+    ObjectModel {
+        id: modelList
+        source: element.dataModel
     }
 }
