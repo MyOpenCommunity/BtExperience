@@ -15,6 +15,11 @@ public:
 	~ObjectTester();
 	void checkSignalCount(const char *sig, int sig_count);
 
+	/**
+	 * Checks that all signals defined in ctor are emitted once.
+	 */
+	void checkSignals();
+
 private:
 	QObject *obj;
 	QList<QSignalSpy *> sl;

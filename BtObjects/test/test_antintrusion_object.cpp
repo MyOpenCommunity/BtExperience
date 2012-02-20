@@ -112,8 +112,7 @@ void TestAntintrusionSystem::testActivateSystem()
 
 	obj->valueReceived(v);
 	QCOMPARE(obj->getStatus(), true);
-	t.checkSignalCount(SIGNAL(codeAccepted()), 1);
-	t.checkSignalCount(SIGNAL(statusChanged()), 1);
+	t.checkSignals();
 }
 
 void TestAntintrusionSystem::testPasswordFail()
@@ -130,7 +129,7 @@ void TestAntintrusionSystem::testPasswordFail()
 
 	obj->valueReceived(v);
 	QCOMPARE(obj->getStatus(), false);
-	t.checkSignalCount(SIGNAL(codeRefused()), 1);
+	t.checkSignals();
 }
 
 void TestAntintrusionSystem::testIntrusionAlarm()

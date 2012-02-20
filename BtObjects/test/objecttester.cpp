@@ -29,4 +29,10 @@ void ObjectTester::checkSignalCount(const char *sig, int sig_count)
 	QCOMPARE(spy->count(), sig_count);
 }
 
+void ObjectTester::checkSignals()
+{
+	foreach (const QSignalSpy *spy, sl)
+		QCOMPARE(spy->count(), 1);
+}
+
 
