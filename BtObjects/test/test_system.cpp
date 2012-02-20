@@ -32,7 +32,7 @@
 #include <QtTest>
 
 
-TestSystem::TestSystem()
+TestBtObject::TestBtObject()
 {
 	// To use DeviceValues in signal/slots and watch them through QSignalSpy
 	qRegisterMetaType<DeviceValues>("DeviceValues");
@@ -40,7 +40,7 @@ TestSystem::TestSystem()
 	server_compare = new OpenServerMock;
 }
 
-void TestSystem::initTestSystem()
+void TestBtObject::initTestSystem()
 {
 	client_command = server->connectCommand();
 	client_request = server->connectRequest();
@@ -63,13 +63,13 @@ void TestSystem::initTestSystem()
 	FrameSender::setClients(clients);
 }
 
-TestSystem::~TestSystem()
+TestBtObject::~TestBtObject()
 {
 	delete server;
 	delete server_compare;
 }
 
-void TestSystem::compareClientCommand()
+void TestBtObject::compareClientCommand()
 {
 	client_command->flush();
 	client_command_compare->flush();

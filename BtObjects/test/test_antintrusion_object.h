@@ -30,7 +30,7 @@ class AntintrusionDevice;
 class OpenServerMock;
 class QSignalSpy;
 
-class TestAntintrusionSystem : public TestSystem
+class TestAntintrusionSystem : public TestBtObject
 {
 Q_OBJECT
 private slots:

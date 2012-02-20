@@ -35,7 +35,7 @@ logger *app_logger;
 int main(int argc, char *argv[])
 {
 	QCoreApplication app(argc, argv);
-	QList<TestSystem *> test_list;
+	QList<TestBtObject *> test_list;
 
 	TestAntintrusionSystem test_antintrusion_system;
 	test_list << &test_antintrusion_system;
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 		std::cout << " --help\t\t\tprint this help" << std::endl;
 		std::cout << std::endl;
 		std::cout << "Class List:" << std::endl;
-		foreach (TestSystem *sys, test_list)
+		foreach (TestBtObject *sys, test_list)
 			std::cout << " " << sys->metaObject()->className() << std::endl;
 		return 0;
 	}
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
 	// use regular expressions to avoid writing the full class name each time
 	QRegExp re(testing_class, Qt::CaseInsensitive);
-	foreach (TestSystem *tester, test_list)
+	foreach (TestBtObject *tester, test_list)
 	{
 		QString class_name = tester->metaObject()->className();
 		if (testing_class.isEmpty() || class_name.contains(re))

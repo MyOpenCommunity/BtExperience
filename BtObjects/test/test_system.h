@@ -39,12 +39,12 @@ class device;
  * 2. send* -> verify that the frame to be sent to the server is correctly created.
  * 3. test* -> tests that cannot be included in 1. & 2.
  */
-class TestSystem : public QObject
+class TestBtObject : public QObject
 {
 public:
-	TestSystem();
+	TestBtObject();
 	void initTestSystem();
-	virtual ~TestSystem();
+	virtual ~TestBtObject();
 
 protected:
 	void compareClientCommand();
