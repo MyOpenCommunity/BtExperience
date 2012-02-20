@@ -37,6 +37,7 @@ private slots:
 	void init();
 	void cleanup();
 
+	void testToggleActivation();
 	void testActivateSystem();
 	void testPasswordFail();
 

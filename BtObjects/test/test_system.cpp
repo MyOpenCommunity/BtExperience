@@ -29,6 +29,7 @@
 #include <QVariant>
 #include <QMetaType>
 #include <QDebug>
+#include <QtTest>
 
 
 TestSystem::TestSystem()
@@ -66,4 +67,11 @@ TestSystem::~TestSystem()
 {
 	delete server;
 	delete server_compare;
+}
+
+void TestSystem::compareClientCommand()
+{
+	client_command->flush();
+	client_command_compare->flush();
+	QCOMPARE(server->frameCommand(), server_compare->frameCommand());
 }

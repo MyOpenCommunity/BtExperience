@@ -47,6 +47,8 @@ public:
 	virtual ~TestSystem();
 
 protected:
+	void compareClientCommand();
+
 	OpenServerMock *server;
 	OpenServerMock *server_compare;
 	ClientWriter *client_command;

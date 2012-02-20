@@ -73,6 +73,13 @@ void TestAntintrusionSystem::cleanup()
 	spy_list.clear();
 }
 
+void TestAntintrusionSystem::testToggleActivation()
+{
+	obj->toggleActivation("12345");
+	dev->toggleActivation("12345");
+	compareClientCommand();
+}
+
 
 // TODO: Simplify test creation, some points to explore are:
 //  - generic creation of signal spies with variable number of arguments
@@ -84,11 +91,8 @@ void TestAntintrusionSystem::testActivateSystem()
 	obj->initialized = true;
 	obj->status = false;
 
+	// simulate activation
 	obj->toggleActivation("12345");
-	client_command->flush();
-	dev->toggleActivation("12345");
-	client_command_compare->flush();
-	QCOMPARE(server->frameCommand(), server_compare->frameCommand());
 
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_SYSTEM_INSERTED] = true;
@@ -106,12 +110,7 @@ void TestAntintrusionSystem::testPasswordFail()
 	obj->initialized = true;
 	obj->status = false;
 
-	obj->toggleActivation("1234");
-	dev->toggleActivation("12345");
-	client_command->flush();
-	client_command_compare->flush();
-	QEXPECT_FAIL("", "Passwords are different", Continue);
-	QCOMPARE(server->frameCommand(), server_compare->frameCommand());
+	obj->toggleActivation("12345");
 
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_SYSTEM_INSERTED] = false;
