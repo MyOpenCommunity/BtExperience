@@ -10,6 +10,12 @@ ObjectTester::ObjectTester(QObject *_obj, SignalList l)
 		sl << new QSignalSpy(obj, sig);
 }
 
+ObjectTester::ObjectTester(QObject *_obj, const char *sig)
+{
+	obj = _obj;
+	sl << new QSignalSpy(obj, sig);
+}
+
 ObjectTester::~ObjectTester()
 {
 	foreach(QSignalSpy *spy, sl)

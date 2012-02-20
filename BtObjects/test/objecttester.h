@@ -12,6 +12,10 @@ class ObjectTester
 {
 public:
 	ObjectTester(QObject *_obj, SignalList l);
+	/**
+	 * Convenience ctor for only one signal.
+	 */
+	ObjectTester(QObject *_obj, const char *sig);
 	~ObjectTester();
 	void checkSignalCount(const char *sig, int sig_count);
 
