@@ -47,6 +47,7 @@ private slots:
 	void testTamperingAlarm();
 	void testTechincalAlarm();
 	void testAntipanicAlarm();
+	void testNoDoubleAlarms();
 
 private:
 	void checkAlarmedZones(AlarmZoneList l);

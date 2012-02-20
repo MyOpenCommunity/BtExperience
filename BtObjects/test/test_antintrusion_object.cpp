@@ -180,6 +180,15 @@ void TestAntintrusionSystem::testAntipanicAlarm()
 	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Antipanic, 6));
 }
 
+void TestAntintrusionSystem::testNoDoubleAlarms()
+{
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 6;
+	obj->valueReceived(v);
+	obj->valueReceived(v);
+	QCOMPARE(obj->getAlarms()->getSize(), 1);
+}
+
 void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
 {
 	AlarmZoneList actual;
