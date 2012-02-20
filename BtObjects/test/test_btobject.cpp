@@ -19,7 +19,7 @@
  */
 
 
-#include "test_system.h"
+#include "test_btobject.h"
 #include "openserver_mock.h"
 #include "openclient.h"
 #include "device.h"

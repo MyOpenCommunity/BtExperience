@@ -21,7 +21,7 @@
 #ifndef TEST_ANTINTRUSION_DEVICE_H
 #define TEST_ANTINTRUSION_DEVICE_H
 
-#include "test_system.h"
+#include "test_btobject.h"
 
 #include <QObject>
 

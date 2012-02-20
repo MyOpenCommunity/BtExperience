@@ -25,7 +25,7 @@ LIBS+= -L ../../../common_files/lib/x86 -lcommon -lssl
 VPATH = ../.. ..
 
 HEADERS += test_antintrusion_object.h \
-	test_system.h \
+	test_btobject.h \
 	../devices/antintrusion_device.h \
 	../devices/device.h \
 	../devices/test/openserver_mock.h \
@@ -40,7 +40,7 @@ HEADERS += test_antintrusion_object.h \
 
 SOURCES += test_main.cpp \
 	test_antintrusion_object.cpp \
-	test_system.cpp \
+	test_btobject.cpp \
 	../devices/antintrusion_device.cpp \
 	../devices/device.cpp \
 	../devices/test/openserver_mock.cpp \
