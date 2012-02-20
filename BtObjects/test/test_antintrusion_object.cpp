@@ -64,15 +64,71 @@ void TestAntintrusionSystem::init()
 
 void TestAntintrusionSystem::cleanup()
 {
+	// TODO: AntintrusionSystem doesn't have a proper dtor...
 	delete obj->dev;
 	delete obj;
+	delete dev;
+	foreach(QSignalSpy *spy, spy_list)
+		delete spy;
+	spy_list.clear();
 }
 
-void TestAntintrusionSystem::testToggleActivation()
+
+// TODO: Simplify test creation, some points to explore are:
+//  - generic creation of signal spies with variable number of arguments
+//  - check of emitted signals and arguments
+//  - move such methods into TestSystem base class
+void TestAntintrusionSystem::testActivateSystem()
 {
+	// system not active
+	obj->initialized = true;
+	obj->status = false;
+
 	obj->toggleActivation("12345");
 	client_command->flush();
-	dev->toggleActivation("1245");
+	dev->toggleActivation("12345");
 	client_command_compare->flush();
 	QCOMPARE(server->frameCommand(), server_compare->frameCommand());
+
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_SYSTEM_INSERTED] = true;
+	prepareChecks(obj, QList<const char *>() << SIGNAL(codeAccepted()) << SIGNAL(statusChanged()));
+
+	obj->valueReceived(v);
+	QCOMPARE(obj->status, true);
+	checkSignalCount(0, 1);
+	checkSignalCount(1, 1);
+}
+
+void TestAntintrusionSystem::testPasswordFail()
+{
+	// system not active
+	obj->initialized = true;
+	obj->status = false;
+
+	obj->toggleActivation("1234");
+	dev->toggleActivation("12345");
+	client_command->flush();
+	client_command_compare->flush();
+	QEXPECT_FAIL("", "Passwords are different", Continue);
+	QCOMPARE(server->frameCommand(), server_compare->frameCommand());
+
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_SYSTEM_INSERTED] = false;
+	prepareChecks(obj, QList<const char *>() << SIGNAL(codeRefused()));
+
+	obj->valueReceived(v);
+	QCOMPARE(obj->status, false);
+	checkSignalCount(0, 1);
+}
+
+void TestAntintrusionSystem::prepareChecks(QObject *obj, QList<const char *> sigs)
+{
+	foreach (const char *sig, sigs)
+		spy_list << new QSignalSpy(obj, sig);
+}
+
+void TestAntintrusionSystem::checkSignalCount(int idx, int compare)
+{
+	QCOMPARE(spy_list.at(idx)->count(), compare);
 }

@@ -28,6 +28,7 @@
 class AntintrusionSystem;
 class AntintrusionDevice;
 class OpenServerMock;
+class QSignalSpy;
 
 class TestAntintrusionSystem : public TestSystem
 {
@@ -36,11 +37,16 @@ private slots:
 	void init();
 	void cleanup();
 
-	void testToggleActivation();
+	void testActivateSystem();
+	void testPasswordFail();
 
 private:
+	void prepareChecks(QObject *obj, QList<const char *> sigs);
+	void checkSignalCount(int idx, int compare);
 	AntintrusionSystem *obj;
 	AntintrusionDevice *dev;
+
+	QList<QSignalSpy *> spy_list;
 };
 
 #endif
