@@ -145,6 +145,8 @@ private:
 
 class AntintrusionSystem : public ObjectInterface
 {
+friend class TestAntintrusionSystem;
+
 	Q_OBJECT
 	Q_PROPERTY(ObjectListModel *zones READ getZones NOTIFY zonesChanged)
 	Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)
