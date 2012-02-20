@@ -69,9 +69,6 @@ void TestAntintrusionSystem::cleanup()
 	delete obj->dev;
 	delete obj;
 	delete dev;
-	foreach(QSignalSpy *spy, spy_list)
-		delete spy;
-	spy_list.clear();
 }
 
 void TestAntintrusionSystem::testToggleActivation()
@@ -118,15 +115,4 @@ void TestAntintrusionSystem::testPasswordFail()
 	obj->valueReceived(v);
 	QCOMPARE(obj->status, false);
 	t.checkSignalCount(SIGNAL(codeRefused()), 1);
-}
-
-void TestAntintrusionSystem::prepareChecks(QObject *obj, QList<const char *> sigs)
-{
-	foreach (const char *sig, sigs)
-		spy_list << new QSignalSpy(obj, sig);
-}
-
-void TestAntintrusionSystem::checkSignalCount(int idx, int compare)
-{
-	QCOMPARE(spy_list.at(idx)->count(), compare);
 }
