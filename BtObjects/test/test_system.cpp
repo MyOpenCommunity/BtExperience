@@ -65,4 +65,5 @@ void TestSystem::initTestSystem()
 TestSystem::~TestSystem()
 {
 	delete server;
+	delete server_compare;
 }
