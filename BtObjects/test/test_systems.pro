@@ -26,6 +26,7 @@ VPATH = ../.. ..
 
 HEADERS += test_antintrusion_object.h \
 	test_btobject.h \
+	objecttester.h \
 	../devices/antintrusion_device.h \
 	../devices/device.h \
 	../devices/test/openserver_mock.h \
@@ -41,6 +42,7 @@ HEADERS += test_antintrusion_object.h \
 SOURCES += test_main.cpp \
 	test_antintrusion_object.cpp \
 	test_btobject.cpp \
+	objecttester.cpp \
 	../devices/antintrusion_device.cpp \
 	../devices/device.cpp \
 	../devices/test/openserver_mock.cpp \
