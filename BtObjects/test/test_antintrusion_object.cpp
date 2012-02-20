@@ -54,7 +54,7 @@ void TestAntintrusionSystem::init()
 		zones << z;
 	}
 	QList<AntintrusionScenario *> scenarios;
-	scenarios << new AntintrusionScenario("notte", splitZones("1.3.5"), zones)<<
+	scenarios << new AntintrusionScenario("notte", splitZones("1.3.5"), zones) <<
 		new AntintrusionScenario("inverno", splitZones("1.2.3"), zones) <<
 		new AntintrusionScenario("estate", splitZones("4.5.7"), zones);
 

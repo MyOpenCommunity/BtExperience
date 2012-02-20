@@ -48,26 +48,26 @@ int main(int argc, char *argv[])
 		std::cout << " --help\t\t\tprint this help" << std::endl;
 		std::cout << std::endl;
 		std::cout << "Class List:" << std::endl;
-		foreach (TestSystem *dev, test_list)
-			std::cout << " " << dev->metaObject()->className() << std::endl;
+		foreach (TestSystem *sys, test_list)
+			std::cout << " " << sys->metaObject()->className() << std::endl;
 		return 0;
 	}
 
-	QString testingClass;
+	QString testing_class;
 	int custom_param_pos = arglist.indexOf("--test-class");
 	if (custom_param_pos != -1 && custom_param_pos < arglist.size() - 1)
 	{
-		testingClass = arglist.at(custom_param_pos + 1);
+		testing_class = arglist.at(custom_param_pos + 1);
 		arglist.removeAt(custom_param_pos + 1);
 		arglist.removeAt(custom_param_pos);
 	}
 
 	// use regular expressions to avoid writing the full class name each time
-	QRegExp re(testingClass, Qt::CaseInsensitive);
+	QRegExp re(testing_class, Qt::CaseInsensitive);
 	foreach (TestSystem *tester, test_list)
 	{
 		QString class_name = tester->metaObject()->className();
-		if (testingClass.isEmpty() || class_name.contains(re))
+		if (testing_class.isEmpty() || class_name.contains(re))
 		{
 			tester->initTestSystem();
 			QTest::qExec(tester, arglist);
