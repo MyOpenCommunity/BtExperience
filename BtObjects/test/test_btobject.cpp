@@ -31,6 +31,19 @@
 #include <QDebug>
 #include <QtTest>
 
+namespace QTest {
+	template<>
+	char *toString(const QList<int> &l)
+	{
+		QByteArray ba = "QList(";
+		foreach (int i, l)
+			ba += QByteArray::number(i) + ",";
+		ba = ba.left(ba.length() - 1);
+		ba += ")";
+		return qstrdup(ba.data());
+	}
+}
+
 
 TestBtObject::TestBtObject()
 {
