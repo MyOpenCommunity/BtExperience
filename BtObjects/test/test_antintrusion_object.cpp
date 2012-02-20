@@ -46,7 +46,7 @@ namespace QTest {
 		for (int i = 0; i < l.length(); ++i)
 		{
 			QPair<AntintrusionAlarm::AlarmType, int> al = l[i];
-			ba += "(" + QByteArray::number(al.first) + "," + QByteArray::number(al.second) + "), ";
+			ba += "(" + QByteArray::number(al.first) + "," + QByteArray::number(al.second) + "),";
 		}
 		ba = ba.left(ba.length() - 1) + ")";
 		return qstrdup(ba.data());
@@ -141,8 +141,43 @@ void TestAntintrusionSystem::testIntrusionAlarm()
 	ObjectTester t(obj, SignalList() << sig);
 	obj->valueReceived(v);
 	t.checkSignalCount(sig, 1);
-	checkAlarmedZones(AlarmZoneList() <<
-		qMakePair(AntintrusionAlarm::Intrusion, 2));
+	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Intrusion, 2));
+}
+
+void TestAntintrusionSystem::testTamperingAlarm()
+{
+	const char *sig = SIGNAL(alarmsChanged());
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_TAMPER_ALARM] = 1;
+
+	ObjectTester t(obj, sig);
+	obj->valueReceived(v);
+	t.checkSignals();
+	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Tamper, 1));
+}
+
+void TestAntintrusionSystem::testTechincalAlarm()
+{
+	const char *sig = SIGNAL(alarmsChanged());
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_TECHNICAL_ALARM] = 5;
+
+	ObjectTester t(obj, sig);
+	obj->valueReceived(v);
+	t.checkSignals();
+	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Technical, 5));
+}
+
+void TestAntintrusionSystem::testAntipanicAlarm()
+{
+	const char *sig = SIGNAL(alarmsChanged());
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 6;
+
+	ObjectTester t(obj, sig);
+	obj->valueReceived(v);
+	t.checkSignals();
+	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Antipanic, 6));
 }
 
 void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)

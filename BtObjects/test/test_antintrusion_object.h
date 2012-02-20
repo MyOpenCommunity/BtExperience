@@ -44,6 +44,9 @@ private slots:
 	void testActivateSystem();
 	void testPasswordFail();
 	void testIntrusionAlarm();
+	void testTamperingAlarm();
+	void testTechincalAlarm();
+	void testAntipanicAlarm();
 
 private:
 	void checkAlarmedZones(AlarmZoneList l);
