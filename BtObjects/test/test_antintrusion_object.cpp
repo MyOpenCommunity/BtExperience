@@ -23,6 +23,7 @@
 #include "../devices/antintrusion_device.h"
 #include "openserver_mock.h"
 #include "openclient.h"
+#include "objecttester.h"
 
 #include <QtTest/QtTest>
 #include <QPair>
@@ -82,9 +83,7 @@ void TestAntintrusionSystem::testToggleActivation()
 
 
 // TODO: Simplify test creation, some points to explore are:
-//  - generic creation of signal spies with variable number of arguments
-//  - check of emitted signals and arguments
-//  - move such methods into TestSystem base class
+//  - generic creation of signal spies with variable number of arguments - maybe not needed?
 void TestAntintrusionSystem::testActivateSystem()
 {
 	// system not active
@@ -93,15 +92,15 @@ void TestAntintrusionSystem::testActivateSystem()
 
 	// simulate activation
 	obj->toggleActivation("12345");
-
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_SYSTEM_INSERTED] = true;
-	prepareChecks(obj, QList<const char *>() << SIGNAL(codeAccepted()) << SIGNAL(statusChanged()));
+
+	ObjectTester t(obj, SignalList() << SIGNAL(codeAccepted()) << SIGNAL(statusChanged()));
 
 	obj->valueReceived(v);
 	QCOMPARE(obj->status, true);
-	checkSignalCount(0, 1);
-	checkSignalCount(1, 1);
+	t.checkSignalCount(SIGNAL(codeAccepted()), 1);
+	t.checkSignalCount(SIGNAL(statusChanged()), 1);
 }
 
 void TestAntintrusionSystem::testPasswordFail()
@@ -111,14 +110,14 @@ void TestAntintrusionSystem::testPasswordFail()
 	obj->status = false;
 
 	obj->toggleActivation("12345");
-
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_SYSTEM_INSERTED] = false;
-	prepareChecks(obj, QList<const char *>() << SIGNAL(codeRefused()));
+
+	ObjectTester t(obj, SignalList() << SIGNAL(codeRefused()));
 
 	obj->valueReceived(v);
 	QCOMPARE(obj->status, false);
-	checkSignalCount(0, 1);
+	t.checkSignalCount(SIGNAL(codeRefused()), 1);
 }
 
 void TestAntintrusionSystem::prepareChecks(QObject *obj, QList<const char *> sigs)
