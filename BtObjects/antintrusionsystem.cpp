@@ -253,13 +253,16 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 			}
 			break;
 		case AntintrusionDevice::DIM_ANTIPANIC_ALARM:
+			addAlarm(AntintrusionAlarm::Antipanic, it.value().toInt());
 			break;
 		case AntintrusionDevice::DIM_INTRUSION_ALARM:
 			addAlarm(AntintrusionAlarm::Intrusion, it.value().toInt());
 			break;
 		case AntintrusionDevice::DIM_TAMPER_ALARM:
+			addAlarm(AntintrusionAlarm::Tamper, it.value().toInt());
 			break;
 		case AntintrusionDevice::DIM_TECHNICAL_ALARM:
+			addAlarm(AntintrusionAlarm::Technical, it.value().toInt());
 			break;
 		}
 
