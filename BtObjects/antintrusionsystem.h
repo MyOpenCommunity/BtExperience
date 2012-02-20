@@ -203,6 +203,7 @@ private slots:
 	void handleCodeTimeout();
 
 private:
+	void addAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
 	AntintrusionDevice *dev;
 	ObjectListModel zones;
 	ObjectListModel scenarios;

@@ -173,10 +173,6 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 	foreach (AntintrusionZone *z, _zones)
 		zones << z;
 
-	alarms << new AntintrusionAlarm(AntintrusionAlarm::Antipanic, _zones[0], QDateTime::currentDateTime())
-		   << new AntintrusionAlarm(AntintrusionAlarm::Tamper, _zones[2], QDateTime::currentDateTime())
-			  << new AntintrusionAlarm(AntintrusionAlarm::Technical, _zones[1], QDateTime::currentDateTime());
-
 	current_scenario = -1;
 	waiting_response = false;
 	initialized = false;
@@ -257,10 +253,13 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 			}
 			break;
 		case AntintrusionDevice::DIM_ANTIPANIC_ALARM:
+			break;
 		case AntintrusionDevice::DIM_INTRUSION_ALARM:
+			addAlarm(AntintrusionAlarm::Intrusion, it.value().toInt());
+			break;
 		case AntintrusionDevice::DIM_TAMPER_ALARM:
+			break;
 		case AntintrusionDevice::DIM_TECHNICAL_ALARM:
-			// emit alarmReceived();
 			break;
 		}
 
@@ -276,6 +275,22 @@ void AntintrusionSystem::handleCodeTimeout()
 	qDebug() << "AntintrusionSystem -> code timeout";
 	waiting_response = false;
 	emit codeTimeout();
+}
+
+void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
+{
+	AntintrusionZone *zone;
+	for (int i = 0; i < zones.getSize(); ++i)
+	{
+		ObjectInterface *z = zones.getObject(i);
+		if (z->getObjectId() == zone_num)
+		{
+			zone = static_cast<AntintrusionZone *>(z);
+			break;
+		}
+	}
+	alarms << new AntintrusionAlarm(t, zone, QDateTime::currentDateTime());
+	emit alarmsChanged();
 }
 
 void AntintrusionSystem::requestPartialization(const QString &password)
