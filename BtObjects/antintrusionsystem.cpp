@@ -282,6 +282,13 @@ void AntintrusionSystem::handleCodeTimeout()
 
 void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 {
+	// ensure that no other same alarm is already present
+	if (isDuplicateAlarm(t, zone_num))
+	{
+		qDebug() << "Ignoring duplicate alarm";
+		return;
+	}
+
 	AntintrusionZone *zone;
 	for (int i = 0; i < zones.getSize(); ++i)
 	{
@@ -292,8 +299,21 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 			break;
 		}
 	}
+
 	alarms << new AntintrusionAlarm(t, zone, QDateTime::currentDateTime());
 	emit alarmsChanged();
+}
+
+bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
+{
+	for (int i = 0; i < alarms.getSize(); ++i)
+	{
+		AntintrusionAlarm *alarm = static_cast<AntintrusionAlarm *>(alarms.getObject(i));
+		AntintrusionZone *z = static_cast<AntintrusionZone *>(alarm->getZone());
+		if (t == alarm->getType() && z->getObjectId() == zone_num)
+			return true;
+	}
+	return false;
 }
 
 void AntintrusionSystem::requestPartialization(const QString &password)
