@@ -19,7 +19,6 @@
  */
 
 #include "test_antintrusion_object.h"
-#include "antintrusionsystem.h"
 #include "../devices/antintrusion_device.h"
 #include "openserver_mock.h"
 #include "openclient.h"
@@ -37,6 +36,23 @@ namespace {
 		return l;
 	}
 }
+
+
+namespace QTest {
+	template<>
+	char *toString(const AlarmZoneList &l)
+	{
+		QByteArray ba = "AlarmZoneList(";
+		for (int i = 0; i < l.length(); ++i)
+		{
+			QPair<AntintrusionAlarm::AlarmType, int> al = l[i];
+			ba += "(" + QByteArray::number(al.first) + "," + QByteArray::number(al.second) + "), ";
+		}
+		ba = ba.left(ba.length() - 1) + ")";
+		return qstrdup(ba.data());
+	}
+}
+
 
 void TestAntintrusionSystem::init()
 {
@@ -115,4 +131,31 @@ void TestAntintrusionSystem::testPasswordFail()
 	obj->valueReceived(v);
 	QCOMPARE(obj->getStatus(), false);
 	t.checkSignalCount(SIGNAL(codeRefused()), 1);
+}
+
+void TestAntintrusionSystem::testIntrusionAlarm()
+{
+	const char *sig = SIGNAL(alarmsChanged());
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_INTRUSION_ALARM] = 2;
+
+	ObjectTester t(obj, SignalList() << sig);
+	obj->valueReceived(v);
+	t.checkSignalCount(sig, 1);
+	checkAlarmedZones(AlarmZoneList() <<
+		qMakePair(AntintrusionAlarm::Intrusion, 2));
+}
+
+void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
+{
+	AlarmZoneList actual;
+	ObjectListModel *alarms = obj->getAlarms();
+	for (int i = 0; i < alarms->getSize(); ++i)
+	{
+		AntintrusionAlarm *a = static_cast<AntintrusionAlarm *>(alarms->getObject(i));
+		AntintrusionZone *z = static_cast<AntintrusionZone *>(a->getZone());
+		actual << qMakePair(a->getType(), z->getObjectId());
+	}
+
+	QCOMPARE(actual, expected);
 }

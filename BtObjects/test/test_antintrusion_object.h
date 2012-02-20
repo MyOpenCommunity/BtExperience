@@ -22,6 +22,7 @@
 #define TEST_ANTINTRUSION_DEVICE_H
 
 #include "test_btobject.h"
+#include "antintrusionsystem.h"
 
 #include <QObject>
 
@@ -29,6 +30,8 @@ class AntintrusionSystem;
 class AntintrusionDevice;
 class OpenServerMock;
 class QSignalSpy;
+
+typedef QList<QPair<AntintrusionAlarm::AlarmType, int> > AlarmZoneList;
 
 class TestAntintrusionSystem : public TestBtObject
 {
@@ -40,8 +43,10 @@ private slots:
 	void testToggleActivation();
 	void testActivateSystem();
 	void testPasswordFail();
+	void testIntrusionAlarm();
 
 private:
+	void checkAlarmedZones(AlarmZoneList l);
 	AntintrusionSystem *obj;
 	AntintrusionDevice *dev;
 };
