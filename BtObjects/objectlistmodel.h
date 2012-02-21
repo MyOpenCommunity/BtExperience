@@ -23,6 +23,8 @@ public:
 	explicit ObjectListModel(QObject *parent = 0);
 
 	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
+	virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+	void clear();
 
 	// We cannot use the roles system offered by Qt models because we don't want
 	// a double interface for the ObjectInterface objects.

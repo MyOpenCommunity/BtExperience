@@ -17,6 +17,25 @@ int ObjectListModel::rowCount(const QModelIndex &parent) const
 	return item_list.size();
 }
 
+bool ObjectListModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+	Q_UNUSED(parent);
+	if (row <= item_list.size() && row + count <= item_list.size())
+	{
+		beginRemoveRows(parent, row, row + count - 1);
+		for (int i = 0; i < count; ++i)
+			delete item_list.takeAt(row);
+		endRemoveRows();
+		return true;
+	}
+	return false;
+}
+
+void ObjectListModel::clear()
+{
+	removeRows(0, item_list.size());
+}
+
 ObjectListModel &ObjectListModel::operator<<(ObjectInterface *item)
 {
 	// Objects extracted using a C++ method and passed to a Qml Component have
