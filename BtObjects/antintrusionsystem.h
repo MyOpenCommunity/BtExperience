@@ -204,6 +204,7 @@ private slots:
 
 private:
 	void addAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
+	void removeAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
 	bool isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
 	AntintrusionDevice *dev;
 	ObjectListModel zones;

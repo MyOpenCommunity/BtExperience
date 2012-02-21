@@ -228,7 +228,8 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 				{
 					if (!status)
 					{
-						// TODO: delete all the old alarms
+						alarms.clear();
+						emit alarmsChanged();
 					}
 					status = inserted;
 					emit statusChanged();
@@ -263,6 +264,10 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 			break;
 		case AntintrusionDevice::DIM_TECHNICAL_ALARM:
 			addAlarm(AntintrusionAlarm::Technical, it.value().toInt());
+			break;
+
+		case AntintrusionDevice::DIM_RESET_TECHNICAL_ALARM:
+			removeAlarm(AntintrusionAlarm::Technical, it.value().toInt());
 			break;
 		}
 
@@ -302,6 +307,22 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 
 	alarms << new AntintrusionAlarm(t, zone, QDateTime::currentDateTime());
 	emit alarmsChanged();
+}
+
+void AntintrusionSystem::removeAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
+{
+	for (int i = 0; i < alarms.getSize(); ++i)
+	{
+		AntintrusionAlarm *alarm = static_cast<AntintrusionAlarm *>(alarms.getObject(i));
+		AntintrusionZone *z = static_cast<AntintrusionZone *>(alarm->getZone());
+
+		if (alarm->getType() == t && z->getObjectId() == zone_num)
+		{
+			alarms.removeRow(i);
+			emit alarmsChanged();
+			return;
+		}
+	}
 }
 
 bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
