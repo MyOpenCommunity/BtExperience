@@ -189,6 +189,39 @@ void TestAntintrusionSystem::testNoDoubleAlarms()
 	QCOMPARE(obj->getAlarms()->getSize(), 1);
 }
 
+void TestAntintrusionSystem::testResetTechnicalAlarm()
+{
+	ObjectTester t(obj, SIGNAL(alarmsChanged()));
+
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_TECHNICAL_ALARM] = 5;
+	obj->valueReceived(v);
+	t.checkSignals();
+
+	v.clear();
+	v[AntintrusionDevice::DIM_RESET_TECHNICAL_ALARM] = 5;
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getAlarms()->getSize(), 0);
+}
+
+void TestAntintrusionSystem::testClearAlarmsOnInsert()
+{
+	// init: not inserted and 1 alarm pending
+	obj->initialized = true;
+	obj->status = false;
+	obj->alarms << new AntintrusionAlarm(AntintrusionAlarm::Intrusion,
+		static_cast<const AntintrusionZone *>(obj->zones.getObject(0)), QDateTime::currentDateTime());
+
+	ObjectTester t(obj, SIGNAL(alarmsChanged()));
+
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_SYSTEM_INSERTED] = true;
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getAlarms()->getSize(), 0);
+}
+
 void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
 {
 	AlarmZoneList actual;
