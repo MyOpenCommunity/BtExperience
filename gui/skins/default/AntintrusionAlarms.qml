@@ -49,17 +49,6 @@ MenuElement {
             }
         }
 
-        function typeToText(type) {
-            if (type === AntintrusionAlarm.Antipanic)
-                return qsTr("anti-panico");
-            else if (type === AntintrusionAlarm.Intrusion)
-                return qsTr("intrusione");
-            else if (type === AntintrusionAlarm.Tamper)
-                return qsTr("manomissione");
-            else if (type === AntintrusionAlarm.Technical)
-                return qsTr("tecnico");
-        }
-
         delegate: Image {
             id: itemBackground
             property variant itemObject: element.dataModel.getObject(index)
@@ -80,7 +69,7 @@ MenuElement {
                     Text {
                         width: 125
                         color: "white"
-                        text: itemList.typeToText(itemObject.type)
+                        text: pageObject.names.get('ALARM_TYPE', itemObject.type)
                         font.pointSize: 12
                     }
 

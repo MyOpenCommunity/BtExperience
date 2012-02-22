@@ -5,6 +5,7 @@ SystemPage {
     source: "images/antintrusion.jpg"
     text: qsTr("antintrusione")
     rootElement: "AntintrusionSystem.qml"
+    names: AntintrusionNames { }
 
     property alias keypadObject: keypad
 
