@@ -22,9 +22,11 @@ bool ObjectListModel::removeRows(int row, int count, const QModelIndex &parent)
 	Q_UNUSED(parent);
 	if (row <= item_list.size() && row + count <= item_list.size())
 	{
+		// FIXME: this call incorrectly always deletes the last item in the view
+		// instead of the right row, what's wrong?
 		beginRemoveRows(parent, row, row + count - 1);
 		for (int i = 0; i < count; ++i)
-			delete item_list.takeAt(row);
+			item_list.takeAt(row)->deleteLater();
 		endRemoveRows();
 		return true;
 	}
@@ -45,7 +47,7 @@ ObjectListModel &ObjectListModel::operator<<(ObjectInterface *item)
 	// for details.
 	item->setParent(this);
 
-	beginInsertRows(QModelIndex(), rowCount(), rowCount() + 1);
+	beginInsertRows(QModelIndex(), rowCount(), rowCount());
 	connect(item, SIGNAL(dataChanged()), SLOT(handleItemChange()));
 	item_list.append(item);
 	endInsertRows();
