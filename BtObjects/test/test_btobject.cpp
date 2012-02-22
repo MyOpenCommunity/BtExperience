@@ -31,9 +31,9 @@
 #include <QDebug>
 #include <QtTest>
 
-namespace QTest {
-	template<>
-	char *toString(const QList<int> &l)
+namespace QTest
+{
+	template<> char *toString(const QList<int> &l)
 	{
 		QByteArray ba = "QList(";
 		foreach (int i, l)

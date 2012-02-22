@@ -27,7 +27,8 @@
 #include <QtTest/QtTest>
 #include <QPair>
 
-namespace {
+namespace
+{
 	QList<int> splitZones(QString zones)
 	{
 		QList<int> l;
@@ -38,9 +39,9 @@ namespace {
 }
 
 
-namespace QTest {
-	template<>
-	char *toString(const AlarmZoneList &l)
+namespace QTest
+{
+	template<> char *toString(const AlarmZoneList &l)
 	{
 		QByteArray ba = "AlarmZoneList(";
 		for (int i = 0; i < l.length(); ++i)
