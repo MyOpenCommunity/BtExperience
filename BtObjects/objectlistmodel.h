@@ -49,6 +49,7 @@ public:
 	ObjectListModel &operator<<(ObjectInterface *item);
 
 	Q_INVOKABLE ObjectInterface *getObject(int row) const;
+	Q_INVOKABLE void remove(int index);
 
 	int getSize() const
 	{

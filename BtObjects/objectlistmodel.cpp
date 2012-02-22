@@ -79,6 +79,11 @@ ObjectInterface *ObjectListModel::getObject(int row) const
 	return item_list.at(row);
 }
 
+void ObjectListModel::remove(int index)
+{
+	removeRow(index);
+}
+
 
 void FilterListModel::setGlobalSource(ObjectListModel *model)
 {
