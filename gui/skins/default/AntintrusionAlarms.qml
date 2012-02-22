@@ -101,10 +101,11 @@ MenuElement {
                 }
 
                 Image {
-                    source: btnArea.pressed ? "images/common/btn_eliminaP.png" : "images/common/btn_elimina.png"
+                    source: "images/common/btn_elimina.png"
                     MouseArea {
                         id: btnArea
                         anchors.fill: parent
+                        onClicked: element.dataModel.remove(index);
                     }
                 }
             }
