@@ -24,4 +24,3 @@ void HardwareSettings::sendCommand(const QString &cmd)
 	system(qPrintable(cmd));
 }
 
-
