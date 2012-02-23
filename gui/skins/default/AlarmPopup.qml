@@ -58,7 +58,6 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    console.log("alarm log clicked");
                     alarmAlert.alarmLogClicked();
                 }
             }
@@ -76,7 +75,6 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    console.log("ignore clicked");
                     alarmAlert.ignoreClicked();
                 }
             }
