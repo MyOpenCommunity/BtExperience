@@ -31,10 +31,26 @@ SystemPage {
         Behavior on opacity { NumberAnimation { duration: 200 } }
     }
 
+    AlarmPopup {
+        id: alarmPopup
+        z: 2
+        opacity: 0
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        onIgnoreClicked: antintrusion.state = ""
+        Behavior on opacity { NumberAnimation {duration: 200 } }
+    }
+
     states: [
         State {
             name: "keypadShown"
             PropertyChanges { target: keypad; opacity: 1 }
+            PropertyChanges { target: darkRect; opacity: 0.7 }
+        },
+        State {
+            name: "alarmShown"
+            PropertyChanges { target: alarmPopup; opacity: 1 }
             PropertyChanges { target: darkRect; opacity: 0.7 }
         }
     ]
@@ -44,6 +60,12 @@ SystemPage {
         keypad.errorLabel = errorMessage
         keypad.okLabel = okMessage
         antintrusion.state = "keypadShown"
+    }
+
+    function showAlarmPopup(type, zone, time) {
+        antintrusion.state = "alarmShown"
+        alarmPopup.alarmDateTime = Qt.formatDateTime(time, "hh:mm - dd/MM/yyyy");
+        alarmPopup.alarmLocation = antintrusion.names.get('ALARM_TYPE', type) + ": zone " + zone.objectId + " - " + zone.name
     }
 
     function closeKeyPad() {
