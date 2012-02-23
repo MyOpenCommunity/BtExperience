@@ -5,80 +5,79 @@ Rectangle {
     id: alarmAlert
     width: 300
     height: 150
+    property string alarmDateTime: "20:15 - 21/01/2012"
+    property string alarmLocation: "Intrusione: zona 6 - cucina"
 
     signal ignoreClicked
     signal alarmLogClicked
 
-    Column {
-        id: column1
-        anchors.fill: parent
 
-        Column {
-            id: column2
-            width: parent.width
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-            anchors.topMargin: 20
-            spacing: 10
+    Text {
+        id: tagline
+        font.bold: true
+        font.pointSize: 12
+        text: qsTr("Allarme!")
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 10
+    }
+
+    Text {
+        id: datetime
+        text: alarmAlert.alarmDateTime
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: tagline.bottom
+        anchors.topMargin: 15
+    }
+
+
+    Text {
+        id: location
+        text: alarmAlert.alarmLocation
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: datetime.bottom
+        anchors.topMargin: 10
+    }
+
+    Row {
+        id: row1
+        width: parent.width
+        anchors.bottom: parent.bottom
+
+        Rectangle {
+            id: rectangle1
+            width: parent.width / 2; height: 30
+            color: "lightgreen"
 
             Text {
-                font.bold: true
-                font.pointSize: 12
-                text: qsTr("Allarme!")
-                anchors.horizontalCenter: parent.horizontalCenter
+                wrapMode: Text.WordWrap
+                text: qsTr("Registro allarmi")
+                anchors.fill: parent
             }
 
-            Text {
-                text: "20:15 - 21/01/2012"
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            Text {
-                text: "Intrusione: zona 6 - cucina"
-                anchors.horizontalCenter: parent.horizontalCenter
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    console.log("alarm log clicked");
+                    alarmAlert.alarmLogClicked();
+                }
             }
         }
 
-        Row {
-            id: row1
-            width: parent.width
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: column2.bottom
-            anchors.bottom: parent.bottom
+        Rectangle {
+            width: parent.width / 2; height: 30
+            color: "lightgreen"
 
-            Rectangle {
-                id: rectangle1
-                width: parent.width / 2; height: 30
-                color: "lightgreen"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-
-                Text {
-                    wrapMode: Text.WordWrap
-                    text: qsTr("Registro allarmi")
-                    anchors.fill: parent
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: alarmAlert.alarmLogClicked()
-                }
+            Text {
+                anchors.fill: parent
+                text: qsTr("Ignora")
             }
 
-            Rectangle {
-                width: parent.width / 2; height: 30
-                color: "lightgreen"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-
-                Text {
-                    anchors.fill: parent
-                    text: qsTr("Ignora")
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: alarmAlert.ignoreClicked()
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    console.log("ignore clicked");
+                    alarmAlert.ignoreClicked();
                 }
             }
         }
