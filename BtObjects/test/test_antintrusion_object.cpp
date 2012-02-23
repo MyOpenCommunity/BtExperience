@@ -62,7 +62,7 @@ void TestAntintrusionSystem::init()
 	QList<QPair<int, QString> > zone_list;
 	zone_list << qMakePair(1, QString("ingresso")) << qMakePair(2, QString("cucina")) << qMakePair(3, QString("box")) <<
 		qMakePair(4, QString("bagno")) << qMakePair(5, QString("camera")) << qMakePair(6, QString("mansarda")) <<
-		qMakePair(7, QString("giardino")) << qMakePair(8, QString("piscina"));
+		qMakePair(7, QString("giardino"));
 
 	QList<AntintrusionZone *> zones;
 	for (int i = 0; i < zone_list.length(); ++i)
@@ -217,6 +217,17 @@ void TestAntintrusionSystem::testClearAlarmsOnInsert()
 	obj->valueReceived(v);
 	t.checkSignals();
 	QCOMPARE(obj->getAlarms()->getSize(), 0);
+}
+
+void TestAntintrusionSystem::testAlarmOnNotConfiguredZone()
+{
+	const char *sig = SIGNAL(alarmsChanged());
+
+	ObjectTester t(obj, sig);
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_INTRUSION_ALARM] = 8;
+	obj->valueReceived(v);
+	t.checkSignalCount(sig, 0);
 }
 
 void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)

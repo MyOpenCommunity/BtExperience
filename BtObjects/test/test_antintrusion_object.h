@@ -50,6 +50,7 @@ private slots:
 	void testNoDoubleAlarms();
 	void testResetTechnicalAlarm();
 	void testClearAlarmsOnInsert();
+	void testAlarmOnNotConfiguredZone();
 
 private:
 	void checkAlarmedZones(AlarmZoneList l);
