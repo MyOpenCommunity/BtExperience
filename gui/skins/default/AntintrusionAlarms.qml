@@ -106,7 +106,7 @@ MenuElement {
                 height: 5
             }
             Text {
-                width: parent.width; height: 60
+                height: 60
                 text: qsTr("Pagina 1 di 4")
                 color: "#4F4F4F"
             }
