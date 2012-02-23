@@ -124,6 +124,12 @@ MenuElement {
         }
     }
 
+    function showAlarmLog(name) {
+        system.loadElement("AntintrusionAlarms.qml", name, privateProps.model.alarms)
+        if (privateProps.currentElement != 1)
+            privateProps.currentElement = 1
+    }
+
     Column {
         id: antintrusionColumn
         MenuItem {
@@ -132,18 +138,7 @@ MenuElement {
             name: qsTr("registro allarmi")
             hasChild: true
             onClicked: {
-                system.loadElement("AntintrusionAlarms.qml", name, privateProps.model.alarms)
-                if (privateProps.currentElement != 1)
-                    privateProps.currentElement = 1
-            }
-
-            Rectangle {
-                id: registerDarkRect
-                z: 1
-                anchors.fill: parent
-                color: "black"
-                opacity: 0.7
-                visible: false
+                showAlarmLog(name)
             }
         }
         MenuItem {

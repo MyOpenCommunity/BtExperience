@@ -39,6 +39,11 @@ SystemPage {
         anchors.horizontalCenter: parent.horizontalCenter
 
         onIgnoreClicked: antintrusion.state = ""
+        onAlarmLogClicked: {
+            antintrusion.state = ""
+            antintrusion.rootObject.showAlarmLog();
+        }
+
         Behavior on opacity { NumberAnimation {duration: 200 } }
     }
 
