@@ -19,14 +19,17 @@ int ObjectListModel::rowCount(const QModelIndex &parent) const
 
 bool ObjectListModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-	Q_UNUSED(parent);
-	if (row <= item_list.size() && row + count <= item_list.size())
+	if (row >= 0 && row + count <= item_list.size())
 	{
 		// FIXME: this call incorrectly always deletes the last item in the view
 		// instead of the right row, what's wrong?
 		beginRemoveRows(parent, row, row + count - 1);
 		for (int i = 0; i < count; ++i)
-			item_list.takeAt(row)->deleteLater();
+		{
+			QObject *it = item_list.takeAt(row);
+			it->disconnect();
+			it->deleteLater();
+		}
 		endRemoveRows();
 		return true;
 	}
