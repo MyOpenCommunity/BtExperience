@@ -305,8 +305,10 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 		}
 	}
 
-	alarms << new AntintrusionAlarm(t, zone, QDateTime::currentDateTime());
+	AntintrusionAlarm *a = new AntintrusionAlarm(t, zone, QDateTime::currentDateTime());
+	alarms << a;
 	emit alarmsChanged();
+	emit newAlarm(a);
 }
 
 void AntintrusionSystem::removeAlarm(AntintrusionAlarm::AlarmType t, int zone_num)

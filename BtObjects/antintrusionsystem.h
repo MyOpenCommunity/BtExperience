@@ -190,6 +190,7 @@ signals:
 	void zonesChanged(); // never emitted
 	void scenariosChanged(); // never emitted
 	void alarmsChanged();
+	void newAlarm(AntintrusionAlarm *alarm);
 
 	void statusChanged();
 	void currentScenarioChanged();
