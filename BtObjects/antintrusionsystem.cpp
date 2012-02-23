@@ -294,7 +294,7 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 		return;
 	}
 
-	AntintrusionZone *zone;
+	AntintrusionZone *zone = 0;
 	for (int i = 0; i < zones.getSize(); ++i)
 	{
 		ObjectInterface *z = zones.getObject(i);
@@ -303,6 +303,12 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 			zone = static_cast<AntintrusionZone *>(z);
 			break;
 		}
+	}
+
+	if (!zone)
+	{
+		qWarning() << "Zone" << zone_num << "not configured, ignoring event";
+		return;
 	}
 
 	AntintrusionAlarm *a = new AntintrusionAlarm(t, zone, QDateTime::currentDateTime());
@@ -325,6 +331,7 @@ void AntintrusionSystem::removeAlarm(AntintrusionAlarm::AlarmType t, int zone_nu
 			return;
 		}
 	}
+	qWarning() << "Zone" << zone_num << "is not configured";
 }
 
 bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
