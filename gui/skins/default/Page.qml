@@ -20,7 +20,6 @@ Image {
     FontLoader { id: regularFont; source: "MyriadPro-Regular.otf" }
     FontLoader { id: semiBoldFont; source: "MyriadPro-Semibold.otf" }
 
-
     function showAlert(sourceElement, message) {
         alert.hideAlert.connect(hideAlert)
         alert.message = message
@@ -30,6 +29,22 @@ Image {
 
     function hideAlert() {
         page.state = ""
+    }
+
+    function pushInStart() {
+        animation.item.pushInStart()
+    }
+
+    function popInStart() {
+        animation.item.popInStart()
+    }
+
+    function pushOutStart() {
+        animation.item.pushOutStart()
+    }
+
+    function popOutStart() {
+        animation.item.popOutStart()
     }
 
     Rectangle {
@@ -62,55 +77,19 @@ Image {
 
     }
 
-    states: [
-        State {
-            name: "offscreen_right"
-            PropertyChanges {
-                target: page
-//                x: 1024
-                opacity: 0
-            }
-        },
-        State {
-            name: "offscreen_left"
-            PropertyChanges {
-                target: page
-//                x: -1024
-                opacity: 0
-            }
-        },
-        State {
-            name: "alert"
-
-            PropertyChanges {
-                target: alert
-                opacity: 1
-            }
-
-            PropertyChanges {
-                target: blackBg
-                opacity: 0.85
-            }
+    Connections {
+        target: animation.item
+        onAnimationCompleted: {
+            Stack.changePageDone()
         }
+    }
 
-    ]
-    transitions: [
-        Transition {
-            from: 'offscreen_right'; to: ''
-            SequentialAnimation {
-//                PropertyAnimation { properties: "x"; duration: 1000; easing.type: Easing.OutBack }
-                PropertyAnimation { properties: "opacity"; duration: 400; easing.type: Easing.Linear }
-                ScriptAction { script: Stack.changePageDone(); }
-            }
-        },
-            Transition {
-            from: 'offscreen_left'; to: ''
-            SequentialAnimation {
-//                PropertyAnimation { properties: "x"; duration: 1000; easing.type: Easing.OutBack }
-                PropertyAnimation { properties: "opacity"; duration: 400; easing.type: Easing.Linear }
-                ScriptAction { script: Stack.changePageDone(); }
-            }
+    Loader {
+        id: animation;
+        source: "FadeAnimation.qml"
+        onLoaded: {
+            item.page = page
         }
-    ]
+    }
 }
 

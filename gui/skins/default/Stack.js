@@ -37,15 +37,30 @@ function openPage(filename) {
     return null
 }
 
-function pushPage(page) {
-    if (stack.length > 0) {
-        page.state = 'offscreen_right'
-        page.state = ''
-        page.z = 1
-    }
+function transitionAfterPush() {
+    var out_index = stack.length - 2
+    var in_index = stack.length - 1
+    if (out_index >= 0)
+        stack[out_index].pushOutStart()
+    if (in_index >= 0)
+        stack[in_index].pushInStart()
+}
 
+function transitionBeforePop(target_index) {
+    var out_index = stack.length - 1
+    var in_index = target_index
+
+    if (out_index >= 0)
+        stack[out_index].popOutStart()
+    if (in_index >= 0)
+        stack[in_index].popInStart()
+}
+
+function pushPage(page) {
     stack.push(page)
     current_index = stack.length - 1;
+    if (stack.length > 1)
+        transitionAfterPush()
 }
 
 function showPreviousPage(index) {
@@ -55,9 +70,7 @@ function showPreviousPage(index) {
     changing_page = true
 
     stack[index].visible = true
-    stack[index].z = 1
-    stack[index].state = 'offscreen_left'
-    stack[index].state = ''
+    transitionBeforePop(index)
     current_index = index
 }
 
@@ -75,9 +88,7 @@ function changePageDone() {
         if (i != current_index)
             stack[i].visible = false
 
-        if (i <= current_index)
-            stack[i].z = 0
-        else if (i > current_index)
+        if (i > current_index)
             stack[i].destroy()
     }
     stack.length = current_index + 1
