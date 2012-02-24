@@ -16,6 +16,12 @@ MenuElement {
         onCurrentScenarioChanged: privateProps.setScenarioDescription()
     }
 
+    function showAlarmLog(name) {
+        system.loadElement("AntintrusionAlarms.qml", name, privateProps.model.alarms)
+        if (privateProps.currentElement != 1)
+            privateProps.currentElement = 1
+    }
+
     Component.onCompleted: privateProps.setScenarioDescription()
 
     onChildLoaded: {
@@ -122,12 +128,6 @@ MenuElement {
             else
                 pageObject.resetKeyPad()
         }
-    }
-
-    function showAlarmLog(name) {
-        system.loadElement("AntintrusionAlarms.qml", name, privateProps.model.alarms)
-        if (privateProps.currentElement != 1)
-            privateProps.currentElement = 1
     }
 
     Column {
