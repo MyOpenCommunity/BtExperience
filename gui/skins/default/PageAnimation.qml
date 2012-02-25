@@ -12,15 +12,8 @@ Item {
     property int transition_duration: 400
     signal animationCompleted
 
-    function pushInStart() {
-    }
-
-    function popInStart() {
-    }
-
-    function pushOutStart() {
-    }
-
-    function popOutStart() {
-    }
+    property variant animationPushIn
+    property variant animationPushOut
+    property variant animationPopIn
+    property variant animationPopOut
 }

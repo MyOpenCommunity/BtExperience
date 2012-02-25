@@ -32,19 +32,23 @@ Image {
     }
 
     function pushInStart() {
-        animation.item.pushInStart()
+        if (animation.item.animationPushIn)
+            animation.item.animationPushIn.start()
     }
 
     function popInStart() {
-        animation.item.popInStart()
+        if (animation.item.animationPopIn)
+            animation.item.animationPopIn.start()
     }
 
     function pushOutStart() {
-        animation.item.pushOutStart()
+        if (animation.item.animationPushOut)
+            animation.item.animationPushOut.start()
     }
 
     function popOutStart() {
-        animation.item.popOutStart()
+        if (animation.item.animationPopOut)
+            animation.item.animationPopOut.start()
     }
 
     Rectangle {
@@ -86,7 +90,7 @@ Image {
 
     Loader {
         id: animation;
-        source: "FadeAnimation.qml"
+        source: "SlideAnimation.qml"
         onLoaded: {
             item.page = page
         }

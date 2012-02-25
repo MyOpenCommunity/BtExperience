@@ -1,19 +1,8 @@
 import QtQuick 1.1
 
 PageAnimation {
-    function pushInStart() {
-        animPushIn.start()
-    }
-
-    function popInStart() {
-        animPopIn.start()
-    }
-
-    function pushOutStart() {
-    }
-
-    function popOutStart() {
-    }
+    animationPushIn: animPushIn
+    animationPopIn: animPopIn
 
     SequentialAnimation {
         id: animPushIn
