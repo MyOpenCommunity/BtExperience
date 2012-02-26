@@ -1,14 +1,14 @@
 import QtQuick 1.1
 
 PageAnimation {
-    animationPushIn: animPushIn
-    animationPopIn: animPopIn
+    pushIn: animPushIn
+    popIn: animPopIn
 
     SequentialAnimation {
         id: animPushIn
         alwaysRunToEnd: true
         PropertyAction { target: page; property: "z"; value: 1 }
-        NumberAnimation { target: page; property: "x"; from: 1024; to: 0; duration: transition_duration }
+        NumberAnimation { target: page; property: "x"; from: 1024; to: 0; duration: transitionDuration }
 
         PropertyAction { target: page; property: "z"; value: 0 }
         ScriptAction {
@@ -20,7 +20,7 @@ PageAnimation {
         id: animPopIn
         alwaysRunToEnd: true
         PropertyAction { target: page; property: "z"; value: 1 }
-        NumberAnimation { target: page; property: "x"; from: -1024; to: 0; duration: transition_duration }
+        NumberAnimation { target: page; property: "x"; from: -1024; to: 0; duration: transitionDuration }
 
         PropertyAction { target: page; property: "z"; value: 0 }
         ScriptAction {

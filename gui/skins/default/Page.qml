@@ -31,24 +31,34 @@ Image {
         page.state = ""
     }
 
+    // The hooks called by the Stack javascript manager. See also PageAnimation
+    // If a page want to use a different animation, reimplement this hooks.
     function pushInStart() {
-        if (animation.item.animationPushIn)
-            animation.item.animationPushIn.start()
+        var animation = Stack.container.animation.item
+        animation.page = page
+        if (animation.pushIn)
+            animation.pushIn.start()
     }
 
     function popInStart() {
-        if (animation.item.animationPopIn)
-            animation.item.animationPopIn.start()
+        var animation = Stack.container.animation.item
+        animation.page = page
+        if (animation.popIn)
+            animation.popIn.start()
     }
 
     function pushOutStart() {
-        if (animation.item.animationPushOut)
-            animation.item.animationPushOut.start()
+        var animation = Stack.container.animation.item
+        animation.page = page
+        if (animation.pushOut)
+            animation.pushOut.start()
     }
 
     function popOutStart() {
-        if (animation.item.animationPopOut)
-            animation.item.animationPopOut.start()
+        var animation = Stack.container.animation.item
+        animation.page = page
+        if (animation.popOut)
+            animation.popOut.start()
     }
 
     Rectangle {
@@ -81,19 +91,5 @@ Image {
 
     }
 
-    Connections {
-        target: animation.item
-        onAnimationCompleted: {
-            Stack.changePageDone()
-        }
-    }
-
-    Loader {
-        id: animation;
-        source: "SlideAnimation.qml"
-        onLoaded: {
-            item.page = page
-        }
-    }
 }
 

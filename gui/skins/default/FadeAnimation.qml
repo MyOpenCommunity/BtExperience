@@ -1,15 +1,15 @@
 import QtQuick 1.1
 
 PageAnimation {
-    animationPushIn: animIn
-    animationPushOut: animOut
-    animationPopIn: animIn
-    animationPopOut: animOut
+    pushIn: animIn
+    pushOut: animOut
+    popIn: animIn
+    popOut: animOut
 
     SequentialAnimation {
         id: animIn
         alwaysRunToEnd: true
-        NumberAnimation { target: page; property: "opacity"; from: 0; to: 1; duration: transition_duration }
+        NumberAnimation { target: page; property: "opacity"; from: 0; to: 1; duration: transitionDuration }
         ScriptAction {
             script: animationCompleted()
         }
@@ -18,7 +18,7 @@ PageAnimation {
     SequentialAnimation {
         id: animOut
         alwaysRunToEnd: true
-        NumberAnimation { target: page; property: "opacity"; from: 1; to: 0; duration: transition_duration }
+        NumberAnimation { target: page; property: "opacity"; from: 1; to: 0; duration: transitionDuration }
 
         ScriptAction {
             script: animationCompleted()
