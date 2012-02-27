@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "Stack.js" as Stack
+import "constants.js" as Constants
 
 
 Image {
@@ -74,7 +75,7 @@ Image {
         }
 
         Behavior on opacity {
-            NumberAnimation { duration: 200 }
+            NumberAnimation { duration: Constants.alertTransitionDuration }
         }
     }
 
@@ -86,7 +87,7 @@ Image {
         z: 10
 
         Behavior on opacity {
-            NumberAnimation { duration: 200 }
+            NumberAnimation { duration: Constants.alertTransitionDuration }
         }
 
     }

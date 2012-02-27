@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "constants.js" as Constants
 
 SystemPage {
     id: antintrusion
@@ -16,7 +17,7 @@ SystemPage {
         opacity: 0
         z: 1
         MouseArea { anchors.fill: parent }
-        Behavior on opacity { NumberAnimation { duration: 200 } }
+        Behavior on opacity { NumberAnimation { duration: Constants.alertTransitionDuration } }
     }
 
     KeyPad {
@@ -28,7 +29,7 @@ SystemPage {
         helperLabel: qsTr("inserisci il codice")
 
         onCancelClicked: antintrusion.state = ""
-        Behavior on opacity { NumberAnimation { duration: 200 } }
+        Behavior on opacity { NumberAnimation { duration: Constants.alertTransitionDuration } }
     }
 
     AlarmPopup {
@@ -44,7 +45,7 @@ SystemPage {
             antintrusion.rootObject.showAlarmLog();
         }
 
-        Behavior on opacity { NumberAnimation {duration: 200 } }
+        Behavior on opacity { NumberAnimation {duration: Constants.alertTransitionDuration } }
     }
 
     states: [

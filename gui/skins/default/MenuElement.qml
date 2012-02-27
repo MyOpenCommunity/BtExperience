@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "constants.js" as Constants
 
 Item {
     id: element
@@ -45,12 +46,12 @@ Item {
 
     Behavior on x {
         enabled: element.enableAnimation
-        NumberAnimation { id: defaultanimation; duration: 400; easing.type: Easing.InSine }
+        NumberAnimation { id: defaultanimation; duration: Constants.elementTransitionDuration; easing.type: Easing.InSine }
     }
 
     Behavior on opacity {
         enabled: element.enableAnimation
-        NumberAnimation { duration: 400; easing.type: Easing.InSine }
+        NumberAnimation { duration: Constants.elementTransitionDuration; easing.type: Easing.InSine }
     }
 
     BorderImage {

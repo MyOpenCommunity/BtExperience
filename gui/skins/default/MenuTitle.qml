@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "constants.js" as Constants
 
 Text {
     id: title
@@ -13,12 +14,12 @@ Text {
     property bool enableAnimation: true
     Behavior on x {
         enabled: title.enableAnimation
-        NumberAnimation { duration: 400 }
+        NumberAnimation { duration: Constants.elementTransitionDuration }
     }
 
     Behavior on opacity {
         enabled: title.enableAnimation
-        NumberAnimation { duration: 400 }
+        NumberAnimation { duration: Constants.elementTransitionDuration }
     }
 }
 
