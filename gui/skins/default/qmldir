@@ -9,3 +9,4 @@ ControlUpDown components/ControlUpDown.qml
 ControlDateTime components/ControlDateTime.qml
 AnimatedLoader components/AnimatedLoader.qml
 KeyPad components/KeyPad.qml
+TwoButtonsSettings components/TwoButtonsSettings.qml
