@@ -2,6 +2,8 @@ import QtQuick 1.1
 
 Row {
     id: button
+    width: 208
+    height: 50
     property string leftImage: ""
     property string rightImage: ""
     signal leftClicked
