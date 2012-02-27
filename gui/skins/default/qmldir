@@ -10,3 +10,6 @@ ControlDateTime components/ControlDateTime.qml
 AnimatedLoader components/AnimatedLoader.qml
 KeyPad components/KeyPad.qml
 TwoButtonsSettings components/TwoButtonsSettings.qml
+ButtonLeftRight components/ButtonLeftRight.qml
+ControlSlider components/ControlSlider.qml
+ControlBalance components/ControlBalance.qml
