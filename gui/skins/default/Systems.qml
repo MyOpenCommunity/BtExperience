@@ -35,6 +35,11 @@ Page {
                     name: "illuminazione"
                     target: "Lighting.qml"
                 }
+                ListElement {
+                    image: "images/sound_diffusion.jpg"
+                    name: "diffusione sonora"
+                    target: "SoundDiffusion.qml"
+                }
             }
 
 
