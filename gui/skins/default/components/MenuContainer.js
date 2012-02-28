@@ -31,12 +31,14 @@ var OP_UPDATE_UI = 3
 
 var pendingOperations = []
 
+var transitionDebug = false
+
 
 function closeLastItem() {
     if (pendingOperations.length > 0) // we are during an operation
         return
 
-    logDebug("closeLastItem")
+    debugMsg("closeLastItem")
     if (stackItems.length > 1) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
         pendingOperations.push({'id': OP_UPDATE_UI})
@@ -51,11 +53,11 @@ function closeItem(menuLevel) {
         return
 
     if (menuLevel >= stackItems.length) { // the item to close does not exists
-        logDebug("closeItem: nothing to do")
+        debugMsg("closeItem: nothing to do")
         return
     }
 
-    logDebug("closeItem level to close: " + menuLevel)
+    debugMsg("closeItem level to close: " + menuLevel)
     for (var i = stackItems.length - 1; i >= menuLevel; i--) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
     }
@@ -66,7 +68,7 @@ function closeItem(menuLevel) {
 
 
 function _addItem(item, title) {
-    logDebug("_addItem level: " + item.menuLevel)
+    debugMsg("_addItem level: " + item.menuLevel)
     for (var i = stackItems.length - 1; i >= item.menuLevel; i--) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': false})
     }
@@ -78,7 +80,7 @@ function _addItem(item, title) {
 
 function processOperations() {
 
-    logDebug('processOperations -> operations pending: ' + pendingOperations.length)
+    debugMsg('processOperations -> operations pending: ' + pendingOperations.length)
 
     if (pendingOperations.length  === 0)
         return
@@ -117,7 +119,7 @@ function _calculateFirstElement(starting_width) {
 }
 
 function _updateView() {
-    logDebug('_updateView')
+    debugMsg('_updateView')
     var item = pendingOperations[0]['newItem']
 
     var starting_width = item ? item.width : 0
@@ -127,7 +129,7 @@ function _updateView() {
     for (var i = 0; i < first_item; i++) {
         starting_x += stackItems[i].width + mainContainer.itemsSpacing // - horizontalOverlap
     }
-    logDebug('starting x: ' + starting_x)
+    debugMsg('starting x: ' + starting_x)
 
     if (elementsContainer.x == -starting_x) {
         pendingOperations.shift()
@@ -143,7 +145,7 @@ function _doUpdateView() {
     if (elementsContainer.animationRunning)
         return
 
-    logDebug('_doUpdateView')
+    debugMsg('_doUpdateView')
     elementsContainer.animationRunningChanged.disconnect(_doUpdateView)
 
     pendingOperations.shift()
@@ -172,7 +174,7 @@ function _setStartProps() {
 }
 
 function _openItem() {
-    logDebug('_openItem')
+    debugMsg('_openItem')
 
     var item = pendingOperations[0]['item']
     var title = pendingOperations[0]['title']
@@ -201,7 +203,7 @@ function _doOpenItem() {
     if (item.animationRunning)
         return
 
-    logDebug('_doOpenItem')
+    debugMsg('_doOpenItem')
     showLine(item, RIGHT_TO_LEFT)
     var title = pendingOperations[0]['title']
     item.animationRunningChanged.disconnect(_doOpenItem)
@@ -248,7 +250,7 @@ function showLine(item, direction) {
 }
 
 function _closeItem() {
-    logDebug("_closeItem")
+    debugMsg("_closeItem")
     var item = stackItems[stackItems.length - 1]
     var title = stackTitles[stackTitles.length - 1]
     hideLine(item, LEFT_TO_RIGHT)
@@ -304,4 +306,7 @@ function createComponent(fileName, initData) {
     return object
 }
 
-
+function debugMsg(message) {
+    if (transitionDebug)
+        console.log(message)
+}
