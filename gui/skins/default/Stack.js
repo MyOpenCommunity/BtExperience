@@ -2,6 +2,7 @@
 // different qml files.
 
 .pragma library
+Qt.include("logging.js")
 
 var stack = []
 
@@ -28,12 +29,12 @@ function openPage(filename) {
     if (page_component.status == 1) {
         var page = page_component.createObject(container)
         if (page === null)
-            console.log('Error on creating the object for the page: ' + filename)
+            logError('Error on creating the object for the page: ' + filename)
 
         pushPage(page)
         return page
     }
-    console.log('Error loading the page: ' + filename + ' error: ' + page_component.errorString())
+    logError('Error loading the page: ' + filename + ' error: ' + page_component.errorString())
     return null
 }
 

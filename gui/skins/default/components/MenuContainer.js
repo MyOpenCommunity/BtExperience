@@ -1,5 +1,7 @@
 // The containers for items and titles. Each item has its title, and the
 // containers has always the same size.
+Qt.include("../logging.js")
+
 var stackItems = []
 var stackTitles = []
 
@@ -27,8 +29,6 @@ var OP_CLOSE = 1
 var OP_OPEN = 2
 var OP_UPDATE_UI = 3
 
-var debug = false
-
 var pendingOperations = []
 
 
@@ -36,7 +36,7 @@ function closeLastItem() {
     if (pendingOperations.length > 0) // we are during an operation
         return
 
-    debugMsg("closeLastItem")
+    logDebug("closeLastItem")
     if (stackItems.length > 1) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
         pendingOperations.push({'id': OP_UPDATE_UI})
@@ -51,11 +51,11 @@ function closeItem(menuLevel) {
         return
 
     if (menuLevel >= stackItems.length) { // the item to close does not exists
-        debugMsg("closeItem: nothing to do")
+        logDebug("closeItem: nothing to do")
         return
     }
 
-    debugMsg("closeItem level to close: " + menuLevel)
+    logDebug("closeItem level to close: " + menuLevel)
     for (var i = stackItems.length - 1; i >= menuLevel; i--) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
     }
@@ -66,7 +66,7 @@ function closeItem(menuLevel) {
 
 
 function _addItem(item, title) {
-    debugMsg("_addItem level: " + item.menuLevel)
+    logDebug("_addItem level: " + item.menuLevel)
     for (var i = stackItems.length - 1; i >= item.menuLevel; i--) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': false})
     }
@@ -78,7 +78,7 @@ function _addItem(item, title) {
 
 function processOperations() {
 
-    debugMsg('processOperations -> operations pending: ' + pendingOperations.length)
+    logDebug('processOperations -> operations pending: ' + pendingOperations.length)
 
     if (pendingOperations.length  === 0)
         return
@@ -117,7 +117,7 @@ function _calculateFirstElement(starting_width) {
 }
 
 function _updateView() {
-    debugMsg('_updateView')
+    logDebug('_updateView')
     var item = pendingOperations[0]['newItem']
 
     var starting_width = item ? item.width : 0
@@ -127,7 +127,7 @@ function _updateView() {
     for (var i = 0; i < first_item; i++) {
         starting_x += stackItems[i].width + mainContainer.itemsSpacing // - horizontalOverlap
     }
-    debugMsg('starting x: ' + starting_x)
+    logDebug('starting x: ' + starting_x)
 
     if (elementsContainer.x == -starting_x) {
         pendingOperations.shift()
@@ -143,7 +143,7 @@ function _doUpdateView() {
     if (elementsContainer.animationRunning)
         return
 
-    debugMsg('_doUpdateView')
+    logDebug('_doUpdateView')
     elementsContainer.animationRunningChanged.disconnect(_doUpdateView)
 
     pendingOperations.shift()
@@ -172,7 +172,7 @@ function _setStartProps() {
 }
 
 function _openItem() {
-    debugMsg('_openItem')
+    logDebug('_openItem')
 
     var item = pendingOperations[0]['item']
     var title = pendingOperations[0]['title']
@@ -201,7 +201,7 @@ function _doOpenItem() {
     if (item.animationRunning)
         return
 
-    debugMsg('_doOpenItem')
+    logDebug('_doOpenItem')
     showLine(item, RIGHT_TO_LEFT)
     var title = pendingOperations[0]['title']
     item.animationRunningChanged.disconnect(_doOpenItem)
@@ -248,7 +248,7 @@ function showLine(item, direction) {
 }
 
 function _closeItem() {
-    debugMsg("_closeItem")
+    logDebug("_closeItem")
     var item = stackItems[stackItems.length - 1]
     var title = stackTitles[stackTitles.length - 1]
     hideLine(item, LEFT_TO_RIGHT)
@@ -296,18 +296,12 @@ function createComponent(fileName, initData) {
     if (component.status == Component.Ready) {
         object = component.createObject(mainContainer, initData)
         if (object === null)
-            console.log('Error on creating the object for the component: ' + fileName)
+            logError('Error on creating the object for the component: ' + fileName)
     }
     else
-        console.log('Error loading the component: ' + fileName + ' error: ' + component.errorString())
+        logError('Error loading the component: ' + fileName + ' error: ' + component.errorString())
 
     return object
-}
-
-
-function debugMsg(message) {
-    if (debug)
-        console.log(Qt.formatTime(new Date, "hh:mm:ss.zzz => ") + message)
 }
 
 
