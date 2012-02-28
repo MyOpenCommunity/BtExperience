@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import "MenuContainer.js" as Script
-import "constants.js" as Constants
 
 // The MenuContainer components encapsulates some logic to show a gerarchic list
 // of MenuElement with different sizes and behaviour. The items are arranged
@@ -58,6 +57,10 @@ Item {
         }
     }
 
+    Constants {
+        id: constants
+    }
+
 
     Item {
         id: clippingContainer
@@ -79,7 +82,7 @@ Item {
 
             Behavior on x {
                 id: animation
-                NumberAnimation { id: defaultanimation; duration: Constants.elementTransitionDuration }
+                NumberAnimation { id: defaultanimation; duration: constants.elementTransitionDuration }
             }
 
             Loader {
@@ -97,12 +100,12 @@ Item {
 
                 Behavior on width {
                     enabled: line.enableAnimation
-                    PropertyAnimation { duration: Constants.lineTransitionDuration }
+                    PropertyAnimation { duration: constants.lineTransitionDuration }
                 }
 
                 Behavior on x {
                     enabled: line.enableAnimation
-                    PropertyAnimation { duration: Constants.lineTransitionDuration }
+                    PropertyAnimation { duration: constants.lineTransitionDuration }
                 }
             }
         }
