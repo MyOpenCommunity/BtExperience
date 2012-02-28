@@ -25,7 +25,7 @@ Item {
         anchors.fill: parent
         z: 0
         id: background
-        source: "images/common/btn_menu.png";
+        source: "../images/common/btn_menu.png";
     }
 
     Item {
@@ -35,7 +35,7 @@ Item {
         Image {
             visible: statusVisible()
             id: iconStatus
-            source: (statusVisible() ? (menuItem.status === 1 ? "images/common/on.png" :"images/common/off.png") : "");
+            source: (statusVisible() ? (menuItem.status === 1 ? "../images/common/on.png" :"../images/common/off.png") : "");
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: parent.top
@@ -58,7 +58,7 @@ Item {
         Image {
             visible: menuItem.hasChild
             id: arrowRight
-            source: "images/common/freccia_dx.png"
+            source: "../images/common/freccia_dx.png"
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.top: parent.top
@@ -91,8 +91,8 @@ Item {
         name: "selected"
         PropertyChanges { target: text; color: "#ffffff" }
         PropertyChanges { target: textDescription; color: "#ffffff" }
-        PropertyChanges { target: arrowRight; source: "images/common/freccia_dxS.png" }
-        PropertyChanges { target: background; source: "images/common/btn_menuS.png" }
+        PropertyChanges { target: arrowRight; source: "../images/common/freccia_dxS.png" }
+        PropertyChanges { target: background; source: "../images/common/btn_menuS.png" }
     }
 
 

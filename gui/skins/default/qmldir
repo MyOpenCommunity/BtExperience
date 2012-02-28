@@ -14,3 +14,4 @@ ButtonLeftRight components/ButtonLeftRight.qml
 ControlSlider components/ControlSlider.qml
 ControlBalance components/ControlBalance.qml
 MenuTitle components/MenuTitle.qml
+MenuItem components/MenuItem.qml
