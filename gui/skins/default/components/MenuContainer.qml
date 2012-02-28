@@ -112,11 +112,11 @@ Item {
     }
 
     Component.onCompleted: {
-        Script.loadComponent(-1, mainContainer.rootElement, "", null)
+        Script.loadComponent(-1, "../" + mainContainer.rootElement, "", null)
     }
 
     function loadComponent(menuLevel, fileName, title, model) {
-        Script.loadComponent(menuLevel, fileName, title, model)
+        Script.loadComponent(menuLevel, "../" + fileName, title, model)
     }
 
     function closeItem(menuLevel) {
