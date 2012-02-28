@@ -1,5 +1,4 @@
 import QtQuick 1.1
-import "constants.js" as Constants
 
 Item {
     id: element
@@ -44,19 +43,23 @@ Item {
     property bool enableAnimation: true
     property bool animationRunning: defaultanimation.running
 
+    Constants {
+        id: constants
+    }
+
     Behavior on x {
         enabled: element.enableAnimation
-        NumberAnimation { id: defaultanimation; duration: Constants.elementTransitionDuration; easing.type: Easing.InSine }
+        NumberAnimation { id: defaultanimation; duration: constants.elementTransitionDuration; easing.type: Easing.InSine }
     }
 
     Behavior on opacity {
         enabled: element.enableAnimation
-        NumberAnimation { duration: Constants.elementTransitionDuration; easing.type: Easing.InSine }
+        NumberAnimation { duration: constants.elementTransitionDuration; easing.type: Easing.InSine }
     }
 
     BorderImage {
         id: name
-        source: "images/common/ombra1elemento.png"
+        source: "../images/common/ombra1elemento.png"
         anchors.fill: parent
         border { left: 30; top: 30; right: 30; bottom: 30; }
         anchors { leftMargin: -25; topMargin: -25; rightMargin: -25; bottomMargin: -25 }
