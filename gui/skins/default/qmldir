@@ -13,3 +13,4 @@ TwoButtonsSettings components/TwoButtonsSettings.qml
 ButtonLeftRight components/ButtonLeftRight.qml
 ControlSlider components/ControlSlider.qml
 ControlBalance components/ControlBalance.qml
+MenuTitle components/MenuTitle.qml
