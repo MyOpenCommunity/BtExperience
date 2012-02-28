@@ -11,7 +11,7 @@ MenuElement {
 
     MenuItem {
         id: equalizer
-        name: qsTr("equalizzatore")
+        name: qsTr("equalizer")
         anchors.top: balance.bottom
         description: "off"
         hasChild: true
@@ -19,7 +19,7 @@ MenuElement {
 
     MenuItem {
         id: loudness
-        name: qsTr("loudness")
+        name: qsTr("loud")
         anchors.top: equalizer.bottom
         description: "on"
         hasChild: true

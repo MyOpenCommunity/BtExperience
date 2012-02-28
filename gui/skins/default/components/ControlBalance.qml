@@ -6,7 +6,7 @@ Image {
     width: 212
     height: 150
     property int percentage: 30
-    property string description: "bilanciamento"
+    property string description: qsTr("balance")
 
     Text {
         id: labelText
