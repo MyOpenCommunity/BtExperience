@@ -11,14 +11,14 @@ function logDebug(str) {
 }
 
 function logWarning(str) {
-    logWithLevel(levelWarning, str);
+    logWithLevel(levelWarning, "WARN: " + str);
 }
 
 function logError(str) {
-    logWithLevel(levelError, str);
+    logWithLevel(levelError, "ERR:" + str);
 }
 
 function logWithLevel(level, str) {
     if (level >= currentLogLevel)
-        console.log(str + " ");
+        console.log(str);
 }
