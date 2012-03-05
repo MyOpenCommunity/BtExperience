@@ -8,16 +8,13 @@ Image {
     property int percentage: 85
     property string description: qsTr("Volume")
 
-    Text {
+    Text_12pt_bold {
         id: label
         x: 85
         y: 15
         text: buttonSlider.description
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pixelSize: 13
-        font.bold: true
-        color: "#444546"
     }
 
     Image {

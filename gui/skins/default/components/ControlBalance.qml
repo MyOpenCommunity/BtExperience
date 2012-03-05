@@ -8,13 +8,12 @@ Image {
     property int percentage: 30
     property string description: qsTr("balance")
 
-    Text {
+    Text_12pt_bold {
         id: labelText
         text: description
         anchors.top: controlBalance.top
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pixelSize: 12
     }
 
     Image {
