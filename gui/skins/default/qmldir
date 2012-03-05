@@ -7,6 +7,7 @@ ButtonCommand components/ButtonCommand.qml
 ControlMinusPlus components/ControlMinusPlus.qml
 ControlUpDown components/ControlUpDown.qml
 ControlDateTime components/ControlDateTime.qml
+ControlFMRadio components/ControlFMRadio.qml
 AnimatedLoader components/AnimatedLoader.qml
 KeyPad components/KeyPad.qml
 TwoButtonsSettings components/TwoButtonsSettings.qml
