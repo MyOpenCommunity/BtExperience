@@ -9,7 +9,11 @@ MenuElement {
         name: "Current source"
         hasChild: true
         active: element.animationRunning === false
-        onClicked: sourceSelected({name: "radio"})//element.loadElement("SourceList.qml", qsTr("source change"))
+        onClicked: element.loadElement("SourceList.qml", qsTr("source change"))
+    }
+
+    onChildLoaded: {
+        element.child.sourceSelected.connect(element.sourceSelected)
     }
 
     function sourceSelected(obj) {
