@@ -37,16 +37,22 @@ MenuElement {
             id: equalizer
             name: qsTr("equalizer")
             anchors.top: balance.bottom
+            active: amplifierSettings.animationRunning === false
             description: "off"
             hasChild: true
+            onClicked: amplifierSettings.loadElement("AmplifierEqualizer.qml", qsTr("equalizer"))
         }
 
         MenuItem {
             id: loudness
             name: qsTr("loud")
             anchors.top: equalizer.bottom
+            active: amplifierSettings.animationRunning === false
             description: "on"
             hasChild: true
+            // TODO: a dirty trick to avoid creating another almost empty file.
+            // This must be linked to the model anyway.
+            onClicked: amplifierSettings.loadElement("Light.qml", qsTr("loud"))
         }
     }
 
