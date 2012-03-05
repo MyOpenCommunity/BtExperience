@@ -19,3 +19,4 @@ MenuItemDelegate components/MenuItemDelegate.qml
 MenuElement components/MenuElement.qml
 MenuContainer components/MenuContainer.qml
 Constants components/Constants.qml
+ButtonPagination components/ButtonPagination.qml
