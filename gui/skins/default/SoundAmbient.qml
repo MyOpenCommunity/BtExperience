@@ -3,17 +3,21 @@ import BtObjects 1.0
 
 MenuElement {
     id: element
-    height: 50 * itemList.count
+    height: 50 * (itemList.count + 1)
     width: 212
+
+    MenuItem {
+        id: sourceItem
+        active: element.animationRunning === false
+        name: qsTr("source")
+        hasChild: true
+        description: "Radio | FM 108.7 - Radio Cassadritta"
+        onClicked: element.loadElement("SourceSelection.qml", qsTr("source"))
+    }
 
     ListModel {
         id: listModel
-        ListElement {
-            name: "sorgente"
-            description: "radio | FM 105 - Radio 105"
-            status: false
-            hasChild: false
-        }
+
         ListElement {
             name: "generale camera"
             description: ""
@@ -42,7 +46,9 @@ MenuElement {
 
     ListView {
         id: itemList
-        anchors.fill: parent
+        width: 212
+        height: model.count * 50
+        anchors.top: sourceItem.bottom
         interactive: false
 
         delegate: MenuItemDelegate {
