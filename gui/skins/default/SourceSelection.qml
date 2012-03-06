@@ -19,7 +19,22 @@ MenuElement {
     function sourceSelected(obj) {
         sourceSelect.name = obj.name
         var properties = {'objModel': obj}
-        itemLoader.setComponent(fmRadio, properties)
+
+        if (obj.name === "radio")
+        {
+            itemLoader.setComponent(fmRadio, properties)
+            sourceControl.sourceComponent = undefined
+        }
+        else if (obj.name === "webradio")
+        {
+            itemLoader.setComponent(ipRadio, properties)
+            sourceControl.sourceComponent = extraButton
+        }
+        else
+        {
+            itemLoader.setComponent(mediaPlayer, properties)
+            sourceControl.sourceComponent = extraButton
+        }
     }
 
     Component {
@@ -32,20 +47,43 @@ MenuElement {
         }
     }
 
+    Component {
+        id: ipRadio
+        Column {
+            property variant objModel: undefined
+            ControlIPRadio {
+
+            }
+        }
+    }
+
+    Component {
+        id: mediaPlayer
+        Column {
+            property variant objModel: undefined
+            ControlMediaPlayer {
+
+            }
+        }
+    }
+
+    Component {
+        id: extraButton
+
+        MenuItem {
+            name: "browse"
+        }
+    }
+
     Loader {
         id: sourceControl
         anchors.top: sourceSelect.bottom
-        visible: false
-        source: "components/MenuItem.qml"
-        onLoaded: {
-            item.name = "browse"
-        }
+        sourceComponent: extraButton
+        onHeightChanged: console.log("height: " + height)
     }
 
     AnimatedLoader {
         id: itemLoader
         anchors.top: sourceControl.visible ? sourceControl.bottom : sourceSelect.bottom
     }
-
-
 }
