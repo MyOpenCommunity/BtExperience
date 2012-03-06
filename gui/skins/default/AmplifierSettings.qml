@@ -3,65 +3,69 @@ import QtQuick 1.1
 MenuElement {
     id: amplifierSettings
     width: 212
-    height: page1.visible ? page1.height : page2.height
+    height: pageLoader.height + paginator.height
 
-    Item {
+    Component {
         id: page1
-        height: childrenRect.height
 
-        ControlSlider {
-            id: treble
-            description: qsTr("treble")
-            percentage: 10
-        }
+        Column {
+            ControlSlider {
+                id: treble
+                description: qsTr("treble")
+                percentage: 10
+            }
 
-        ControlSlider {
-            id: bass
-            description: qsTr("bass")
-            percentage: 35
-            anchors.top: treble.bottom
+            ControlSlider {
+                id: bass
+                description: qsTr("bass")
+                percentage: 35
+            }
         }
     }
 
-    Item {
+    Component {
         id: page2
-        visible: false
-        height: childrenRect.height
 
-        ControlBalance {
-            id: balance
-            percentage: 10
-        }
+        Column {
+            ControlBalance {
+                id: balance
+                percentage: 10
+            }
 
-        MenuItem {
-            id: equalizer
-            name: qsTr("equalizer")
-            anchors.top: balance.bottom
-            active: amplifierSettings.animationRunning === false
-            description: "off"
-            hasChild: true
-            onClicked: amplifierSettings.loadElement("AmplifierEqualizer.qml", qsTr("equalizer"))
-        }
+            MenuItem {
+                id: equalizer
+                name: qsTr("equalizer")
+                active: amplifierSettings.animationRunning === false
+                description: "off"
+                hasChild: true
+                onClicked: amplifierSettings.loadElement("AmplifierEqualizer.qml", qsTr("equalizer"))
+            }
 
-        MenuItem {
-            id: loudness
-            name: qsTr("loud")
-            anchors.top: equalizer.bottom
-            active: amplifierSettings.animationRunning === false
-            description: "on"
-            hasChild: true
-            // TODO: a dirty trick to avoid creating another almost empty file.
-            // This must be linked to the model anyway.
-            onClicked: amplifierSettings.loadElement("Light.qml", qsTr("loud"))
+            MenuItem {
+                id: loudness
+                name: qsTr("loud")
+                active: amplifierSettings.animationRunning === false
+                description: "on"
+                hasChild: true
+                // TODO: a dirty trick to avoid creating another almost empty file.
+                // This must be linked to the model anyway.
+                onClicked: amplifierSettings.loadElement("Light.qml", qsTr("loud"))
+            }
         }
+    }
+
+    Loader {
+        id: pageLoader
+        sourceComponent: page1
+        anchors.top: parent.top
     }
 
     Image {
-        id: rectangle1
+        id: paginator
         width: 212
         height: 35
         source: "images/common/bg_paginazione.png"
-        anchors.top: amplifierSettings.bottom
+        anchors.bottom: parent.bottom
 
         Row {
             anchors.fill: parent
@@ -83,12 +87,12 @@ MenuElement {
 
             ButtonPagination {
                 pageNumber: 1
-                onClicked: amplifierSettings.state = "page" + pageNumber
+                onClicked: amplifierSettings.state = (pageNumber === 1) ? "" : "page" + pageNumber
             }
 
             ButtonPagination {
                 pageNumber: 2
-                onClicked: amplifierSettings.state = "page" + pageNumber
+                onClicked: amplifierSettings.state = (pageNumber === 1) ? "" : "page" + pageNumber
             }
 
             Image {
@@ -109,28 +113,12 @@ MenuElement {
     }
 
 
-
     states: [
-        State {
-            name: "page1"
-            PropertyChanges {
-                target: page2
-                visible: false
-            }
-            PropertyChanges {
-                target: page1
-                visible: true
-            }
-        },
         State {
             name: "page2"
             PropertyChanges {
-                target: page1
-                visible: false
-            }
-            PropertyChanges {
-                target: page2
-                visible: true
+                target: pageLoader
+                sourceComponent: page2
             }
         }
     ]
