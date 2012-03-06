@@ -49,6 +49,9 @@ MenuElement {
                 anchors.left: parent.left
                 width: parent.width / 100 * dataModel.percentage
                 height: 50
+                Behavior on width {
+                    NumberAnimation { duration: 100; }
+                }
             }
         }
 
