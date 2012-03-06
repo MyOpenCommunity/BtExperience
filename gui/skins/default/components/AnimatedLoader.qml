@@ -3,6 +3,7 @@ import QtQuick 1.1
 Item {
     id: itemLoader
     property variant item: undefined
+    height: 0
 
     function setComponent(component, properties) {
         privateObj.pendingComponent = component
@@ -29,6 +30,7 @@ Item {
 
             itemLoader.opacity = 1
             itemLoader.item = privateObj.pendingComponent.createObject(itemLoader, privateObj.pendingProperties)
+            itemLoader.height = item.height
             privateObj.pendingComponent = undefined
             privateObj.pendingProperties = undefined
         }
