@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "../logging.js" as Log
 
 Image {
     id: control
@@ -9,45 +10,22 @@ Image {
 
     source: "../images/common/bg_UnaRegolazione.png"
 
-    Image {
-        id: minus
-        x: 111
-        y: 43
-        width: 49
-        height: 53
-        source: "../images/common/btn_comando.png"
-
-        Image {
-            id: image4
-            anchors.centerIn: parent
-            source: "../images/common/precedente.png"
+    Row {
+        anchors {
+            bottom: control.bottom
+            bottomMargin: 5
+            right: control.right
+            rightMargin: 5
         }
 
-        MouseArea {
-            id: minusMouseArea
-            anchors.fill: parent
-            onClicked: control.minusClicked()
-        }
-    }
-
-    Image {
-        id: plus
-        x: 160
-        y: 43
-        width: 49
-        height: 53
-        source: "../images/common/btn_comando.png"
-
-        Image {
-            id: image5
-            anchors.centerIn: parent
-            source: "../images/common/successivo.png"
+        ButtonMediaControl {
+            insideImage: "../images/common/precedente.png"
+            onClicked: Log.logDebug("Prev clicked")
         }
 
-        MouseArea {
-            id: plusMouseArea
-            anchors.fill: parent
-            onClicked: control.plusClicked()
+        ButtonMediaControl {
+            insideImage: "../images/common/successivo.png"
+            onClicked: Log.logDebug("Next clicked")
         }
     }
 
@@ -66,6 +44,4 @@ Image {
         font.pointSize: 12
         color: "white"
     }
-
-
 }
