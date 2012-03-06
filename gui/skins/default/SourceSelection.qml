@@ -3,7 +3,7 @@ import QtQuick 1.1
 MenuElement {
     id: element
     width: 212
-    height: sourceSelect.height + itemLoader.height + (sourceControl.sourceComponent !== null ? sourceControl.height : 0)
+    height: sourceSelect.height + itemLoader.height + (sourceControl.item.state !== "" ? sourceControl.height : 0)
 
     MenuItem {
         id: sourceSelect
@@ -36,17 +36,17 @@ MenuElement {
         if (obj.name === "radio")
         {
             itemLoader.setComponent(fmRadio, properties)
-            sourceControl.sourceComponent = null
+            sourceControl.item.state = ""
         }
         else if (obj.name === "webradio")
         {
             itemLoader.setComponent(ipRadio, properties)
-            sourceControl.sourceComponent = extraButton
+            sourceControl.item.state = "webradio"
         }
         else
         {
             itemLoader.setComponent(mediaPlayer, properties)
-            sourceControl.sourceComponent = extraButton
+            sourceControl.item.state = "mediaplayer"
         }
     }
 
@@ -84,8 +84,39 @@ MenuElement {
         id: extraButton
 
         MenuItem {
-            name: "browse"
+            id: button
+            name: "text"
+            active: element.animationRunning === false
+
+            states: [
+                State {
+                    name: ""
+                    PropertyChanges {
+                        target: button
+                        opacity: 0
+                    }
+                },
+                State {
+                    name: "webradio"
+                    PropertyChanges {
+                        target: button
+                        name: qsTr("Saved IP radios")
+                        hasChild: true
+                        opacity: 1
+                        onClicked: console.log("cliccato su " + sourceControl.item.name)
+                    }
+                },
+                State {
+                    name: "mediaplayer"
+                    PropertyChanges {
+                        target: button
+                        name: qsTr("browse")
+                        hasChild: true
+                        opacity: 1
+                        onClicked: console.log("cliccato su " + sourceControl.item.name)
+                    }
+                }
+            ]
         }
     }
-
 }
