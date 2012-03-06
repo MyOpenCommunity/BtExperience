@@ -5,9 +5,6 @@ MenuElement {
     height: 370
 
     Image {
-        width: 245
-        height: 411
-        anchors.bottomMargin: 39
         source: "images/common/dimmer_bg.png"
         anchors.fill: parent
         ButtonOnOff {
@@ -18,15 +15,23 @@ MenuElement {
 
         Text {
             id: textDimmer
-            text: qsTr("regolazione intensità luce dimmer")
+            text: qsTr("intensità luce")
             color: "#444546"
             wrapMode: "WordWrap"
             font.pixelSize: 13
             anchors.top: onOff.bottom
             anchors.topMargin: 10
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.right: parent.right
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        Text {
+            id: textPercentage
+            text: dataModel.percentage + "%"
+            font.bold: true
+            color: "#444546"
+            anchors.top: textDimmer.bottom
+            anchors.topMargin: 5
+            anchors.horizontalCenter: parent.horizontalCenter
         }
 
         Image {
@@ -34,8 +39,8 @@ MenuElement {
             source: "images/common/dimmer_reg_bg.png"
             width: 212
             height: 50
-            anchors.top: textDimmer.bottom
-            anchors.topMargin: 11
+            anchors.top: textPercentage.bottom
+            anchors.topMargin: 10
             anchors.horizontalCenter: parent.horizontalCenter
 
             Image {
@@ -44,14 +49,6 @@ MenuElement {
                 anchors.left: parent.left
                 width: parent.width / 100 * dataModel.percentage
                 height: 50
-
-                Text {
-                    text: dataModel.percentage + "%"
-                    color: "#444546"
-                    anchors.right: parent.right
-                    anchors.rightMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                }
             }
         }
 
@@ -72,13 +69,11 @@ MenuElement {
         }
 
         Image {
-            x: 0
-            y: 240
             width: 212
             height: 150
             source: "images/common/off_temporizzato.png"
             anchors.top: dimmerMinusPlus.bottom
-            anchors.topMargin: 15
+            anchors.topMargin: 7
 
             Text {
                 id: timeText
