@@ -3,30 +3,26 @@ import QtQuick 1.1
 MenuElement {
     id: element
     width: 212
-    // the Loader doesn't change its height when the internal item is reset and
-    // I can't set the height by hand otherwise the binding is broken and it's
-    // not automatically updated anymore.
-    height: sourceSelect.height + itemLoader.height + (sourceControl.opacity ? sourceControl.height : 0)
+    height: sourceSelect.height + itemLoader.height + (sourceControl.sourceComponent !== null ? sourceControl.height : 0)
 
-    Column {
-        id: controls
-        MenuItem {
-            id: sourceSelect
-            name: "Current source"
-            hasChild: true
-            active: element.animationRunning === false
-            onClicked: element.loadElement("SourceList.qml", qsTr("source change"))
-        }
+    MenuItem {
+        id: sourceSelect
+        anchors.top: parent.top
+        name: "Current source"
+        hasChild: true
+        active: element.animationRunning === false
+        onClicked: element.loadElement("SourceList.qml", qsTr("source change"))
+    }
 
-        Loader {
-            id: sourceControl
-            sourceComponent: extraButton
-        }
+    Loader {
+        id: sourceControl
+        anchors.top: sourceSelect.bottom
+        sourceComponent: extraButton
     }
 
     AnimatedLoader {
         id: itemLoader
-        anchors.top: controls.bottom
+        anchors.bottom: parent.bottom
     }
 
     onChildLoaded: {
@@ -40,19 +36,17 @@ MenuElement {
         if (obj.name === "radio")
         {
             itemLoader.setComponent(fmRadio, properties)
-            sourceControl.opacity = 0
+            sourceControl.sourceComponent = null
         }
         else if (obj.name === "webradio")
         {
             itemLoader.setComponent(ipRadio, properties)
             sourceControl.sourceComponent = extraButton
-            sourceControl.opacity = 1
         }
         else
         {
             itemLoader.setComponent(mediaPlayer, properties)
             sourceControl.sourceComponent = extraButton
-            sourceControl.opacity = 1
         }
     }
 
