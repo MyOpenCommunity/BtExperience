@@ -28,7 +28,7 @@ MenuElement {
             id: itemDelegate
             active: element.animationRunning === false
             name: model.name
-            onClicked: equalizerList.currentIndex = index
+            onClicked: itemDelegate.ListView.view.currentIndex = index
 
             states: State {
                 name: "delegateselected"

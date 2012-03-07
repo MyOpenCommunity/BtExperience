@@ -16,7 +16,7 @@ MenuItem {
             return
 
         if (selectOnClick)
-            itemList.currentIndex = model.index
+            itemDelegate.ListView.view.currentIndex = model.index
         itemDelegate.delegateClicked(model.index)
     }
 
