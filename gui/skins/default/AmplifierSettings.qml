@@ -87,11 +87,13 @@ MenuElement {
 
             ButtonPagination {
                 pageNumber: 1
+                enabled: amplifierSettings.child === null
                 onClicked: amplifierSettings.state = (pageNumber === 1) ? "" : "page" + pageNumber
             }
 
             ButtonPagination {
                 pageNumber: 2
+                enabled: amplifierSettings.child === null
                 onClicked: amplifierSettings.state = (pageNumber === 1) ? "" : "page" + pageNumber
             }
 

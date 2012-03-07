@@ -3,6 +3,7 @@ import QtQuick 1.1
 Image {
     id: pageButton
     property int pageNumber: 1
+    property alias enabled: mouseArea.enabled
     signal clicked(int pageNumber)
 
     width: 42
