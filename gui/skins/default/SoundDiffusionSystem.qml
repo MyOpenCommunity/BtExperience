@@ -10,21 +10,21 @@ MenuElement {
         id: objectModelTemp
         ListElement {
             name: "Generale"
-            status: false
+            status: -1
         }
         ListElement {
             name: "camera"
-            status: true
+            status: 1
         }
 
         ListElement {
             name: "bagno"
-            status: false
+            status: 0
         }
 
         ListElement {
             name: "soggiorno"
-            status: false
+            status: 0
         }
     }
 
@@ -44,7 +44,7 @@ MenuElement {
             itemObject: objectModelTemp.get(index)
 
             active: system.animationRunning === false
-            status: itemObject.status === true ? 1 : 0
+            status: itemObject.status
             hasChild: true
             onClicked: {
                 console.log("delegate clicked " + index)
