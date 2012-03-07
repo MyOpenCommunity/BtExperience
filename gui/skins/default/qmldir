@@ -4,6 +4,7 @@ ButtonMinusPlus components/ButtonMinusPlus.qml
 ButtonOkCancel components/ButtonOkCancel.qml
 ButtonOnOff components/ButtonOnOff.qml
 ButtonCommand components/ButtonCommand.qml
+ButtonFMStation components/ButtonFMStation.qml
 ControlMinusPlus components/ControlMinusPlus.qml
 ControlUpDown components/ControlUpDown.qml
 ControlDateTime components/ControlDateTime.qml
