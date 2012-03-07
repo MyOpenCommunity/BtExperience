@@ -4,14 +4,15 @@ Image {
     id: button
     width: 43
     height: 45
-    property string insideImage: "../images/common/successivo.png"
+    property alias insideImage: internalImage.source
     signal clicked
 
     source: "../images/common/btn_ModTacciaAudio.png"
 
     Image {
+        id: internalImage
         anchors.centerIn: parent
-        source: insideImage
+        source: "../images/common/successivo.png"
     }
 
     MouseArea {
