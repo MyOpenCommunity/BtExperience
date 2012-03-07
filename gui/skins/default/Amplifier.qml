@@ -24,6 +24,9 @@ MenuElement {
         anchors.top: volumeSlider.bottom
         name: qsTr("impostazioni")
         hasChild: true
-        onClicked: element.loadElement("AmplifierSettings.qml", "impostazioni", undefined)
+        onClicked: {
+            state = "selected"
+            element.loadElement("AmplifierSettings.qml", "impostazioni", undefined)
+        }
     }
 }

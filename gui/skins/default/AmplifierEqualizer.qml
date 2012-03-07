@@ -22,15 +22,27 @@ MenuElement {
         }
     }
 
+    Component {
+        id: viewDelegate
+        MenuItem {
+            id: itemDelegate
+            active: element.animationRunning === false
+            name: model.name
+            onClicked: equalizerList.currentIndex = index
+
+            states: State {
+                name: "delegateselected"
+                extend: "selected"
+                when: itemDelegate.ListView.isCurrentItem
+            }
+        }
+    }
 
 
     ListView {
+        id: equalizerList
         height: listModel.count * 50
-        delegate: MenuItem {
-            active: element.animationRunning === false
-            name: model.name
-            onClicked: element.closeElement()
-        }
+        delegate: viewDelegate
 
         model: listModel
     }
