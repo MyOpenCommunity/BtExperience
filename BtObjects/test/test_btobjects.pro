@@ -29,6 +29,7 @@ HEADERS += test_antintrusion_object.h \
 	objecttester.h \
 	../devices/antintrusion_device.h \
 	../devices/device.h \
+	../devices/probe_device.h \
 	../devices/test/openserver_mock.h \
 	../ts/delayedslotcaller.h \
 	../ts/frame_classes.h \
@@ -37,7 +38,9 @@ HEADERS += test_antintrusion_object.h \
 	../ts/devices_cache.h \
 	../ts/xml_functions.h \
 	../ts/main.h \
-	../common_files/logger.h
+	../ts/scaleconversion.h \
+	../common_files/logger.h \
+	test_thermalprobes_object.h
 
 SOURCES += test_main.cpp \
 	test_antintrusion_object.cpp \
@@ -45,6 +48,7 @@ SOURCES += test_main.cpp \
 	objecttester.cpp \
 	../devices/antintrusion_device.cpp \
 	../devices/device.cpp \
+	../devices/probe_device.cpp \
 	../devices/test/openserver_mock.cpp \
 	../ts/delayedslotcaller.cpp \
 	../ts/openclient.cpp \
@@ -52,6 +56,8 @@ SOURCES += test_main.cpp \
 	../ts/devices_cache.cpp \
 	../ts/xml_functions.cpp \
 	../ts/definitions.cpp \
-	../ts/frame_classes.cpp
+	../ts/frame_classes.cpp \
+	../ts/scaleconversion.cpp \
+	test_thermalprobes_object.cpp
 
 include(../btobjects.pri)

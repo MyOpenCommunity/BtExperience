@@ -12,6 +12,8 @@ class ControlledProbeDevice;
 
 class ThermalControlledProbe : public ObjectInterface
 {
+	friend class TestThermalProbes;
+
 	Q_OBJECT
 	Q_PROPERTY(ProbeStatus probeStatus READ getProbeStatus WRITE setProbeStatus NOTIFY probeStatusChanged)
 	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)

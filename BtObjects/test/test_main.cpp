@@ -27,6 +27,7 @@
 #include <logger.h>
 
 #include "test_antintrusion_object.h"
+#include "test_thermalprobes_object.h"
 #include "main.h"
 
 logger *app_logger;
@@ -39,6 +40,9 @@ int main(int argc, char *argv[])
 
 	TestAntintrusionSystem test_antintrusion_system;
 	test_list << &test_antintrusion_system;
+
+	TestThermalProbes test_thermal_probes;
+	test_list << &test_thermal_probes;
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))
