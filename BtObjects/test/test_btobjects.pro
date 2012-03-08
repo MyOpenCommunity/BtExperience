@@ -26,12 +26,15 @@ VPATH = ../.. ..
 
 HEADERS += test_antintrusion_object.h \
 	test_btobject.h \
+	test_thermal_objects.h \
 	test_thermalprobes_object.h \
 	objecttester.h \
 	../devices/antintrusion_device.h \
 	../devices/device.h \
 	../devices/probe_device.h \
+	../devices/thermal_device.h \
 	../devices/test/openserver_mock.h \
+	../ts/bttime.h \
 	../ts/delayedslotcaller.h \
 	../ts/frame_classes.h \
 	../ts/openclient.h \
@@ -45,12 +48,15 @@ HEADERS += test_antintrusion_object.h \
 SOURCES += test_main.cpp \
 	test_antintrusion_object.cpp \
 	test_btobject.cpp \
+	test_thermal_objects.cpp \
 	test_thermalprobes_object.cpp \
 	objecttester.cpp \
 	../devices/antintrusion_device.cpp \
 	../devices/device.cpp \
 	../devices/probe_device.cpp \
+	../devices/thermal_device.cpp \
 	../devices/test/openserver_mock.cpp \
+	../ts/bttime.cpp \
 	../ts/delayedslotcaller.cpp \
 	../ts/openclient.cpp \
 	../ts/frame_functions.cpp \

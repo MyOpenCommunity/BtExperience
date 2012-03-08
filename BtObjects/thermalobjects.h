@@ -27,6 +27,9 @@ typedef QHash<int, QVariant> ThermalRegulationState;
 
 class ThermalControlUnit : public ObjectInterface
 {
+	friend class TestThermalControlUnit;
+	friend class TestThermalControlUnitObject;
+
 	Q_OBJECT
 	Q_ENUMS(SeasonType)
 	Q_ENUMS(ThermalControlUnitId)
@@ -113,6 +116,8 @@ private:
 
 class ThermalControlUnit99Zones : public ThermalControlUnit
 {
+	friend class TestThermalControlUnit99Zones;
+
 	Q_OBJECT
 
 public:
@@ -162,6 +167,8 @@ protected:
 
 class ThermalControlUnitProgram : public ThermalControlUnitObject
 {
+	friend class TestThermalControlUnitProgram;
+
 	Q_OBJECT
 	Q_PROPERTY(int programIndex READ getProgramIndex WRITE setProgramIndex NOTIFY programChanged)
 	Q_PROPERTY(int programCount READ getProgramCount)
@@ -259,6 +266,8 @@ public slots:
 
 class ThermalControlUnitManual : public ThermalControlUnitObject
 {
+	friend class TestThermalControlUnitManual;
+
 	Q_OBJECT
 	Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature NOTIFY temperatureChanged)
 
@@ -287,6 +296,8 @@ protected slots:
 
 class ThermalControlUnitScenario : public ThermalControlUnitObject
 {
+	friend class TestThermalControlUnitScenario;
+
 	Q_OBJECT
 	Q_PROPERTY(int scenarioIndex READ getScenarioIndex WRITE setScenarioIndex NOTIFY scenarioChanged)
 	Q_PROPERTY(int scenarioCount READ getScenarioCount)
