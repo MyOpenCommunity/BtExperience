@@ -75,7 +75,7 @@ int ThermalControlledProbe::getSetpoint() const
 
 void ThermalControlledProbe::setSetpoint(int sp)
 {
-	if (celsius2Bt(sp) != setpoint)
+	if (celsius2Bt(sp) != static_cast<unsigned>(setpoint))
 		dev->setManual(celsius2Bt(sp));
 }
 

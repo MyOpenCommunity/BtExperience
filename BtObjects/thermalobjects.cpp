@@ -335,7 +335,7 @@ int ThermalControlUnitManual::getTemperature() const
 
 void ThermalControlUnitManual::setTemperature(int temp)
 {
-	if (celsius2Bt(temp) != to_apply[TEMPERATURE].toInt())
+	if (celsius2Bt(temp) != to_apply[TEMPERATURE].toUInt())
 	{
 		to_apply[TEMPERATURE] = celsius2Bt(temp);
 		emit temperatureChanged();
