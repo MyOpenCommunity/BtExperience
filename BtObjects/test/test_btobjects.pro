@@ -26,6 +26,7 @@ VPATH = ../.. ..
 
 HEADERS += test_antintrusion_object.h \
 	test_btobject.h \
+	test_thermalprobes_object.h \
 	objecttester.h \
 	../devices/antintrusion_device.h \
 	../devices/device.h \
@@ -39,12 +40,12 @@ HEADERS += test_antintrusion_object.h \
 	../ts/xml_functions.h \
 	../ts/main.h \
 	../ts/scaleconversion.h \
-	../common_files/logger.h \
-	test_thermalprobes_object.h
+	../common_files/logger.h
 
 SOURCES += test_main.cpp \
 	test_antintrusion_object.cpp \
 	test_btobject.cpp \
+	test_thermalprobes_object.cpp \
 	objecttester.cpp \
 	../devices/antintrusion_device.cpp \
 	../devices/device.cpp \
@@ -57,7 +58,6 @@ SOURCES += test_main.cpp \
 	../ts/xml_functions.cpp \
 	../ts/definitions.cpp \
 	../ts/frame_classes.cpp \
-	../ts/scaleconversion.cpp \
-	test_thermalprobes_object.cpp
+	../ts/scaleconversion.cpp
 
 include(../btobjects.pri)
