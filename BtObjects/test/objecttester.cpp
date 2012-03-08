@@ -44,4 +44,8 @@ void ObjectTester::checkSignals()
 	}
 }
 
-
+void ObjectTester::checkNoSignals()
+{
+	foreach (QSignalSpy *spy, sl)
+		QCOMPARE(spy->count(), 0);
+}

@@ -88,3 +88,9 @@ void TestBtObject::compareClientCommand()
 	client_command_compare->flush();
 	QCOMPARE(server->frameCommand(), server_compare->frameCommand());
 }
+
+void TestBtObject::flushCompressedFrames(device *dev)
+{
+	dev->frame_compressor.flushCompressedFrames();
+	dev->request_compressor.flushCompressedFrames();
+}

@@ -24,6 +24,11 @@ public:
 	 */
 	void checkSignals();
 
+	/**
+	 * Checks that none of the signals defined in ctor are emitted.
+	 */
+	void checkNoSignals();
+
 private:
 	QObject *obj;
 	QList<QSignalSpy *> sl;
