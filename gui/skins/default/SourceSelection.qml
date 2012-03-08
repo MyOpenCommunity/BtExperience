@@ -8,7 +8,7 @@ MenuElement {
     MenuItem {
         id: sourceSelect
         anchors.top: parent.top
-        name: "Current source"
+        name: "radio"
         hasChild: true
         active: element.animationRunning === false
         onClicked: element.loadElement("SourceList.qml", qsTr("source change"))
@@ -24,6 +24,9 @@ MenuElement {
         id: itemLoader
         anchors.bottom: parent.bottom
     }
+
+    // TODO: since we start off from radio, this will make the mockup prettier
+    Component.onCompleted: sourceSelected({name: "radio"})
 
     onChildLoaded: {
         element.child.sourceSelected.connect(element.sourceSelected)

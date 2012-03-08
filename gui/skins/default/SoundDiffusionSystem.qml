@@ -6,25 +6,36 @@ MenuElement {
     width: 212
     height: itemList.height
 
+    function getFile(type) {
+        if (type === 0)
+            return ""
+        else if (type === 1)
+            return "SoundAmbient.qml"
+    }
+
     ListModel {
         id: objectModelTemp
         ListElement {
             name: "Generale"
             status: -1
+            type: 0
         }
         ListElement {
             name: "camera"
             status: 1
+            type: 1
         }
 
         ListElement {
             name: "bagno"
             status: 0
+            type: 1
         }
 
         ListElement {
             name: "soggiorno"
             status: 0
+            type: 1
         }
     }
 
@@ -48,7 +59,7 @@ MenuElement {
             hasChild: true
             onClicked: {
                 console.log("delegate clicked " + index)
-                system.loadElement("SoundAmbient.qml", itemObject.name,
+                system.loadElement(getFile(itemObject.type), itemObject.name,
                                     objectModelTemp.get(model.index))
             }
         }

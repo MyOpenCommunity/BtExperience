@@ -6,6 +6,8 @@ MenuElement {
     height: buttonOnOff.height + volumeSlider.height + amplifierSettings.height
     width: 212
 
+    onChildDestroyed: amplifierSettings.state = ""
+
     ButtonOnOff {
         id: buttonOnOff
         status: false

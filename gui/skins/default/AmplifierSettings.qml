@@ -23,6 +23,13 @@ MenuElement {
         }
     }
 
+    onChildDestroyed: privateProps.currentElement = -1
+
+    QtObject {
+        id: privateProps
+        property int currentElement: -1
+    }
+
     Component {
         id: page2
 
@@ -38,7 +45,12 @@ MenuElement {
                 active: amplifierSettings.animationRunning === false
                 description: "off"
                 hasChild: true
-                onClicked: amplifierSettings.loadElement("AmplifierEqualizer.qml", qsTr("equalizer"))
+                state: privateProps.currentElement === 0 ? "selected" : ""
+                onClicked: {
+                    amplifierSettings.loadElement("AmplifierEqualizer.qml", qsTr("equalizer"))
+                    if (privateProps.currentElement !== 0)
+                        privateProps.currentElement = 0
+                }
             }
 
             MenuItem {
@@ -47,9 +59,14 @@ MenuElement {
                 active: amplifierSettings.animationRunning === false
                 description: "on"
                 hasChild: true
+                state: privateProps.currentElement === 1 ? "selected" : ""
                 // TODO: a dirty trick to avoid creating another almost empty file.
                 // This must be linked to the model anyway.
-                onClicked: amplifierSettings.loadElement("Light.qml", qsTr("loud"))
+                onClicked: {
+                    amplifierSettings.loadElement("Light.qml", qsTr("loud"))
+                    if (privateProps.currentElement !== 1)
+                        privateProps.currentElement = 1
+                }
             }
         }
     }
