@@ -42,7 +42,6 @@ Row {
             onClicked: button.clicked(false)
         }
     }
-    anchors.top: parent.top
     anchors.horizontalCenter: parent.horizontalCenter
     states: State {
         when: status == true
