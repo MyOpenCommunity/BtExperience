@@ -8,7 +8,7 @@ MenuElement {
 
     function getFile(type) {
         if (type === 0)
-            return ""
+            return "GeneralAmbient.qml"
         else if (type === 1)
             return "SoundAmbient.qml"
     }
