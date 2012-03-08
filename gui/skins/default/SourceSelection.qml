@@ -3,7 +3,7 @@ import QtQuick 1.1
 MenuElement {
     id: element
     width: 212
-    height: sourceSelect.height + itemLoader.height + (sourceControl.item.state !== "" ? sourceControl.height : 0)
+    height: sourceSelect.height + itemLoader.height
 
     MenuItem {
         id: sourceSelect
@@ -11,13 +11,12 @@ MenuElement {
         name: "radio"
         hasChild: true
         active: element.animationRunning === false
-        onClicked: element.loadElement("SourceList.qml", qsTr("source change"))
-    }
-
-    Loader {
-        id: sourceControl
-        anchors.top: sourceSelect.bottom
-        sourceComponent: extraButton
+        state: privateProps.currentElement === 0 ? "selected" : ""
+        onClicked: {
+            if (privateProps.currentElement !== 0)
+                privateProps.currentElement = 0
+            element.loadElement("SourceList.qml", qsTr("source change"))
+        }
     }
 
     AnimatedLoader {
@@ -32,6 +31,13 @@ MenuElement {
         element.child.sourceSelected.connect(element.sourceSelected)
     }
 
+    onChildDestroyed: privateProps.currentElement = -1
+
+    QtObject {
+        id: privateProps
+        property int currentElement: -1
+    }
+
     function sourceSelected(obj) {
         sourceSelect.name = obj.name
         var properties = {'objModel': obj}
@@ -39,17 +45,14 @@ MenuElement {
         if (obj.name === "radio")
         {
             itemLoader.setComponent(fmRadio, properties)
-            sourceControl.item.state = ""
         }
         else if (obj.name === "webradio")
         {
             itemLoader.setComponent(ipRadio, properties)
-            sourceControl.item.state = "webradio"
         }
         else
         {
             itemLoader.setComponent(mediaPlayer, properties)
-            sourceControl.item.state = "mediaplayer"
         }
     }
 
@@ -139,6 +142,18 @@ MenuElement {
         id: ipRadio
         Column {
             property variant objModel: undefined
+            MenuItem {
+                name: qsTr("saved IP radios")
+                hasChild: true
+                active: element.animationRunning === false
+                state: privateProps.currentElement === 1 ? "selected" : ""
+                onClicked: {
+                    if (privateProps.currentElement !== 1)
+                        privateProps = 1
+                    console.log("cliccato su " + name)
+                }
+            }
+
             ControlIPRadio {
 
             }
@@ -149,49 +164,21 @@ MenuElement {
         id: mediaPlayer
         Column {
             property variant objModel: undefined
+            MenuItem {
+                name: qsTr("browse")
+                hasChild: true
+                active: element.animationRunning === false
+                state: privateProps.currentElement === 1 ? "selected" : ""
+                onClicked: {
+                    if (privateProps.currentElement !== 1)
+                        privateProps = 1
+                    console.log("cliccato su " + name)
+                }
+            }
+
             ControlMediaPlayer {
 
             }
-        }
-    }
-
-    Component {
-        id: extraButton
-
-        MenuItem {
-            id: button
-            name: "text"
-            active: element.animationRunning === false
-
-            states: [
-                State {
-                    name: ""
-                    PropertyChanges {
-                        target: button
-                        opacity: 0
-                    }
-                },
-                State {
-                    name: "webradio"
-                    PropertyChanges {
-                        target: button
-                        name: qsTr("Saved IP radios")
-                        hasChild: true
-                        opacity: 1
-                        onClicked: console.log("cliccato su " + sourceControl.item.name)
-                    }
-                },
-                State {
-                    name: "mediaplayer"
-                    PropertyChanges {
-                        target: button
-                        name: qsTr("browse")
-                        hasChild: true
-                        opacity: 1
-                        onClicked: console.log("cliccato su " + sourceControl.item.name)
-                    }
-                }
-            ]
         }
     }
 }
