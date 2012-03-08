@@ -54,58 +54,23 @@ HEADERS += btobjectsplugin.h
 
 
 INCLUDEPATH += . ./ts ./devices
-DEPENDPATH += . ./ts ./devices
+
+include(btobjects.pri)
 
 HEADERS += \
-    antintrusionsystem.h \
     lightobjects.h \
-    objectlistmodel.h \
-    objectinterface.h \
-    settings.h \
-    thermalobjects.h \
-    thermalprobes.h
+    settings.h
 
-# The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += \
-    antintrusionsystem.cpp \
     lightobjects.cpp \
-    objectlistmodel.cpp \
-    settings.cpp \
-    thermalobjects.cpp \
-    thermalprobes.cpp
-
+    settings.cpp
 
 HEADERS += \
-    antintrusion_device.h \
-    bttime.h \
-    delayedslotcaller.h \
-    device.h \
-    devices_cache.h \
-    frame_classes.h \
-    frame_functions.h \
-    lighting_device.h \
-    openclient.h \
-    probe_device.h \
-    pulldevice.h \
-    scaleconversion.h \
-    thermal_device.h \
-    xml_functions.h
+    devices/lighting_device.h
 
 SOURCES += \
-    antintrusion_device.cpp \
-    bttime.cpp \
-    delayedslotcaller.cpp \
-    device.cpp \
-    devices_cache.cpp \
-    frame_classes.cpp \
-    frame_functions.cpp \
-    lighting_device.cpp \
-    openclient.cpp \
-    probe_device.cpp \
-    pulldevice.cpp \
-    scaleconversion.cpp \
-    thermal_device.cpp \
-    xml_functions.cpp
+    devices/lighting_device.cpp \
+    devices/pulldevice.cpp
 
 OTHER_FILES = qmldir
 
