@@ -26,8 +26,8 @@ public:
 		Unknown,
 		Manual,
 		Auto,
-		Antifreeze,
-		Off
+		Off,
+		Antifreeze
 	};
 
 	enum FancoilSpeed
