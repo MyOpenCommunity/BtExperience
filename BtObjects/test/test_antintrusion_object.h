@@ -26,11 +26,6 @@
 
 #include <QObject>
 
-class AntintrusionSystem;
-class AntintrusionDevice;
-class OpenServerMock;
-class QSignalSpy;
-
 typedef QList<QPair<AntintrusionAlarm::AlarmType, int> > AlarmZoneList;
 
 class TestAntintrusionSystem : public TestBtObject
