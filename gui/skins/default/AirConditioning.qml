@@ -6,6 +6,7 @@ MenuElement {
     height: fakeModel.count * 50
 
     onChildDestroyed: ambientList.currentIndex = -1
+    Component.onCompleted: ambientList.currentIndex = -1
 
     // TODO: fake model
     ListModel {
