@@ -13,6 +13,7 @@
 #include "thermalobjects.h"
 #include "thermalprobes.h"
 #include "antintrusionsystem.h"
+#include "mediaobjects.h"
 #include "xml_functions.h"
 #include "settings.h"
 
@@ -100,10 +101,18 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdAntintrusionSystem:
 			obj = createAntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice), item);
 			break;
+		case ObjectInterface::IdMultiChannelSoundAmbient:
+		{
+			QList<ObjectInterface *> objects = createSoundDiffusionSystem(item);
+
+			foreach (ObjectInterface *obj, objects)
+				objmodel << obj;
+		}
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
-		objmodel << obj;
+		if (obj)
+			objmodel << obj;
 	}
 }
 

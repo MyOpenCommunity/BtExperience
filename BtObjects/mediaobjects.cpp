@@ -1,6 +1,25 @@
 #include "mediaobjects.h"
 
 
+QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
+{
+	QList<ObjectInterface *> objects;
+
+	objects << new SoundAmbient(2, "Cucina");
+	objects << new SoundAmbient(3, "Salotto");
+	objects << new SoundGeneralAmbient("Generale");
+	objects << new SoundSourceRadio(1, "Radio");
+	objects << new SoundSourceAux(3, "Touch");
+	objects << new SoundAmplifier(2, "Amplificatore");
+	objects << new SoundAmplifier(2, "Amplificatore");
+	objects << new SoundAmplifier(2, "Generale", ObjectInterface::IdSoundAmplifierGeneral);
+	objects << new SoundAmplifier(3, "Amplificatore");
+	objects << new SoundAmplifier(3, "Generale", ObjectInterface::IdSoundAmplifierGeneral);
+
+	return objects;
+}
+
+
 SoundAmbientBase::SoundAmbientBase(QString _key, QString _name)
 {
 	key = _key;
@@ -40,7 +59,7 @@ SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
 }
 
 
-SoundSourceBase::SoundSourceBase(QString _name)
+SoundSourceBase::SoundSourceBase(int id, QString _name)
 {
 	name = _name;
 }
@@ -71,6 +90,17 @@ void SoundSourceBase::nextTrack()
 {
 }
 
+
+SoundSourceAux::SoundSourceAux(int id, QString name) :
+	SoundSourceBase(id, name)
+{
+}
+
+
+SoundSourceRadio::SoundSourceRadio(int id, QString name) :
+	SoundSourceBase(id, name)
+{
+}
 
 int SoundSourceRadio::getCurrentStation() const
 {
@@ -111,9 +141,11 @@ void SoundSourceRadio::searchDown()
 }
 
 
-SoundAmplifier::SoundAmplifier(int area)
+SoundAmplifier::SoundAmplifier(int area, QString _name, int _object_id)
 {
 	key = QString::number(area);
+	name = _name;
+	object_id = _object_id;
 }
 
 bool SoundAmplifier::isActive() const

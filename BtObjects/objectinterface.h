@@ -27,7 +27,9 @@ public:
 		IdAntintrusionSystem,
 		IdHardwareSettings,
 		IdMultiChannelSoundAmbient,
+		IdMultiChannelGeneralAmbient,
 		IdSoundAmplifier,
+		IdSoundAmplifierGeneral,
 		IdSoundSource,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
