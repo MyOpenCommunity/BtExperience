@@ -362,7 +362,7 @@ void TestThermalControlUnitVacation::testApply()
 
 	obj->setProgramIndex(1);
 	obj->setDate(date);
-	obj->setTime(QTime::currentTime());
+	obj->setTime(time);
 
 	obj->apply();
 	dev->setHolidayDateTime(date, time, 3);
@@ -382,7 +382,7 @@ void TestThermalControlUnitHoliday::testApply()
 
 	obj->setProgramIndex(1);
 	obj->setDate(date);
-	obj->setTime(QTime::currentTime());
+	obj->setTime(time);
 
 	obj->apply();
 	dev->setWeekendDateTime(date, time, 3);
