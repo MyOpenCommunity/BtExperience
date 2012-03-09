@@ -138,6 +138,8 @@ private:
 
 class ThermalControlUnitObject : public ObjectInterface
 {
+	friend class TestThermalControlUnitObject;
+
 	Q_OBJECT
 
 public:
@@ -176,7 +178,7 @@ class ThermalControlUnitProgram : public ThermalControlUnitObject
 	Q_PROPERTY(QString programDescription READ getProgramDescription NOTIFY programChanged)
 
 public:
-	ThermalControlUnitProgram(QString name, int object_id, const ThermalControlUnit *unit, ThermalDevice *dev);
+	ThermalControlUnitProgram(QString name, int object_id, ThermalRegulationProgramList scenarios, ThermalDevice *dev);
 
 	virtual int getObjectId() const
 	{
@@ -213,7 +215,7 @@ class ThermalControlUnitTimedProgram : public ThermalControlUnitProgram
 	Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
 
 public:
-	ThermalControlUnitTimedProgram(QString name, int object_id, const ThermalControlUnit *unit, ThermalDevice *dev);
+	ThermalControlUnitTimedProgram(QString name, int object_id, ThermalRegulationProgramList scenarios, ThermalDevice *dev);
 
 	QDate getDate() const;
 	void setDate(QDate date);
@@ -305,7 +307,7 @@ class ThermalControlUnitScenario : public ThermalControlUnitObject
 	Q_PROPERTY(QString scenarioDescription READ getScenarioDescription NOTIFY scenarioChanged)
 
 public:
-	ThermalControlUnitScenario(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *dev);
+	ThermalControlUnitScenario(QString name, ThermalRegulationProgramList scenarios, ThermalDevice99Zones *dev);
 
 	virtual int getObjectId() const
 	{

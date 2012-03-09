@@ -27,9 +27,9 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	current_modality = -1;
 
 	// The objects list should contain only one item per id
-	modalities << new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, this, dev);
-	modalities << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, this, dev);
-	modalities << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, this, dev);
+	modalities << new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, programs, dev);
 	modalities << new ThermalControlUnitAntifreeze("Antigelo", dev);
 	modalities << new ThermalControlUnitManual("Manuale", dev);
 	modalities << new ThermalControlUnitOff("Off", dev);
@@ -162,7 +162,7 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 {
 	dev = d;
 	scenarios << qMakePair(1, QString("S1")) << qMakePair(3, QString("S3")) << qMakePair(5, QString("S5"));
-	modalities << new ThermalControlUnitScenario("Scenari", this, dev);
+	modalities << new ThermalControlUnitScenario("Scenari", scenarios, dev);
 }
 
 ThermalRegulationProgramList ThermalControlUnit99Zones::getScenarios() const
@@ -193,11 +193,11 @@ void ThermalControlUnitObject::reset()
 }
 
 
-ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_id, const ThermalControlUnit *unit, ThermalDevice *dev) :
+ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_id, ThermalRegulationProgramList _programs, ThermalDevice *dev) :
 	ThermalControlUnitObject(name, dev)
 {
 	object_id = _object_id;
-	programs = unit->getPrograms();
+	programs = _programs;
 	current[PROGRAM_INDEX] = 0;
 	to_apply = current;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
@@ -258,8 +258,8 @@ void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 }
 
 
-ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, const ThermalControlUnit *unit, ThermalDevice *dev) :
-	ThermalControlUnitProgram(name, _object_id, unit, dev)
+ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ThermalRegulationProgramList _programs, ThermalDevice *dev) :
+	ThermalControlUnitProgram(name, _object_id, _programs, dev)
 {
 	current[DATE] = QDate::currentDate();
 	current[TIME] = QTime::currentTime();
@@ -375,11 +375,11 @@ void ThermalControlUnitAntifreeze::apply()
 }
 
 
-ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, const ThermalControlUnit99Zones *unit, ThermalDevice99Zones *_dev) :
+ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, ThermalRegulationProgramList _programs, ThermalDevice99Zones *_dev) :
 	ThermalControlUnitObject(name, _dev)
 {
 	dev = _dev;
-	scenarios = unit->getScenarios();
+	scenarios = _programs;
 	current[SCENARIO_INDEX] = 0;
 	to_apply = current;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));

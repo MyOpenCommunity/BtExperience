@@ -84,7 +84,7 @@ class TestThermalControlUnitObject : public TestBtObject
 	Q_OBJECT
 
 protected:
-	void initObjects(ThermalDevice *dev, ThermalControlUnit *cu, ThermalControlUnitObject *obj);
+	void initObjects(ThermalDevice *dev, ThermalControlUnitObject *obj);
 	void cleanup();
 
 private slots:
