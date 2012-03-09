@@ -28,8 +28,10 @@
 
 class ThermalControlUnit;
 class ThermalControlUnitObject;
+class ThermalControlUnit4Zones;
 class ThermalControlUnit99Zones;
 class ThermalControlUnitManual;
+class ThermalControlUnitTimedManual;
 class ThermalControlUnitScenario;
 class ThermalControlUnitProgram;
 class ThermalControlUnitTimedProgram;
@@ -79,6 +81,22 @@ private:
 };
 
 
+class TestThermalControlUnit4Zones : public TestThermalControlUnit
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+	void cleanup();
+
+	void testModalityTimedManual();
+
+private:
+	ThermalDevice4Zones *dev;
+	ThermalControlUnit4Zones *obj;
+};
+
+
 class TestThermalControlUnitObject : public TestBtObject
 {
 	Q_OBJECT
@@ -102,6 +120,9 @@ class TestThermalControlUnitManual : public TestThermalControlUnitObject
 {
 	Q_OBJECT
 
+protected:
+	void initObjects(ThermalDevice *dev, ThermalControlUnitManual *obj);
+
 private slots:
 	void init();
 
@@ -113,6 +134,23 @@ private:
 
 	ThermalDevice *dev;
 	ThermalControlUnitManual *obj;
+};
+
+
+class TestThermalControlUnitTimedManual : public TestThermalControlUnitManual
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+
+	void testSetTime();
+
+private:
+	virtual void testApply();
+
+	ThermalDevice4Zones *dev;
+	ThermalControlUnitTimedManual *obj;
 };
 
 

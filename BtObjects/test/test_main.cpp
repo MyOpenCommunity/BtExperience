@@ -45,11 +45,17 @@ int main(int argc, char *argv[])
 	TestThermalProbes test_thermal_probes;
 	test_list << &test_thermal_probes;
 
+	TestThermalControlUnit4Zones test_thermal_control_unit_4z;
+	test_list << &test_thermal_control_unit_4z;
+
 	TestThermalControlUnit99Zones test_thermal_control_unit_99z;
 	test_list << &test_thermal_control_unit_99z;
 
 	TestThermalControlUnitManual test_thermal_control_unit_manual;
 	test_list << &test_thermal_control_unit_manual;
+
+	TestThermalControlUnitTimedManual test_thermal_control_unit_timed_manual;
+	test_list << &test_thermal_control_unit_timed_manual;
 
 	TestThermalControlUnitScenario test_thermal_control_unit_scenario;
 	test_list << &test_thermal_control_unit_scenario;

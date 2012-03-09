@@ -113,7 +113,8 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 				id = ThermalControlUnit::IdManual;
 				break;
 			case ThermalDevice::ST_MANUAL_TIMED:
-				break; // Not implemented for now
+				id = ThermalControlUnit::IdTimedManual;
+				break;
 			case ThermalDevice::ST_WEEKEND:
 				id = ThermalControlUnit::IdVacation;
 				break;
@@ -154,6 +155,7 @@ ThermalControlUnit4Zones::ThermalControlUnit4Zones(QString _name, QString _key, 
 	ThermalControlUnit(_name, _key, d)
 {
 	dev = d;
+	modalities << new ThermalControlUnitTimedManual("Manuale temporizzato", d);
 }
 
 
@@ -361,6 +363,35 @@ void ThermalControlUnitManual::valueReceived(const DeviceValues &values_list)
 			emit temperatureChanged();
 		}
 	}
+}
+
+
+ThermalControlUnitTimedManual::ThermalControlUnitTimedManual(QString name, ThermalDevice4Zones *_dev) :
+	ThermalControlUnitManual(name, _dev)
+{
+	dev = _dev;
+	current[TIME] = QTime::currentTime();
+	to_apply = current;
+}
+
+QTime ThermalControlUnitTimedManual::getTime() const
+{
+	return to_apply[TIME].toTime();
+}
+
+void ThermalControlUnitTimedManual::setTime(QTime time)
+{
+	if (to_apply[TIME].toTime() == time)
+		return;
+
+	to_apply[TIME] = time;
+	emit timeChanged();
+}
+
+void ThermalControlUnitTimedManual::apply()
+{
+	current = to_apply;
+	dev->setManualTempTimed(getTemperature(), to_apply[TIME].toTime());
 }
 
 

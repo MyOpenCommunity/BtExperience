@@ -161,6 +161,33 @@ void TestThermalControlUnit99Zones::testModalityScenarios()
 }
 
 
+void TestThermalControlUnit4Zones::init()
+{
+	ThermalDevice4Zones *d = new ThermalDevice4Zones("1#2");
+
+	obj = new ThermalControlUnit4Zones("", "", d);
+	dev = new ThermalDevice4Zones("1#2", 1);
+
+	initObjects(dev, obj);
+}
+
+void TestThermalControlUnit4Zones::cleanup()
+{
+	delete obj->dev;
+	delete obj;
+	delete dev;
+}
+
+void TestThermalControlUnit4Zones::testModalityTimedManual()
+{
+	ThermalControlUnitTimedManual *man;
+
+	testChangeModality(ThermalDevice::ST_MANUAL_TIMED, ThermalControlUnit::IdTimedManual, &man);
+
+	QVERIFY(man != NULL);
+}
+
+
 void TestThermalControlUnitObject::initObjects(ThermalDevice *_dev, ThermalControlUnitObject *_obj)
 {
 	dev = _dev;
@@ -181,7 +208,15 @@ void TestThermalControlUnitManual::init()
 
 	dev = new ThermalDevice99Zones("0", 1);
 
-	initObjects(dev, obj);
+	TestThermalControlUnitObject::initObjects(dev, obj);
+}
+
+void TestThermalControlUnitManual::initObjects(ThermalDevice *_dev, ThermalControlUnitManual *_obj)
+{
+	dev = _dev;
+	obj = _obj;
+
+	TestThermalControlUnitObject::initObjects(_dev, _obj);
 }
 
 void TestThermalControlUnitManual::testSetTemperature()
@@ -215,6 +250,42 @@ void TestThermalControlUnitManual::testApply()
 
 	obj->apply();
 	dev->setManualTemp(20);
+	compareClientCommand();
+}
+
+
+void TestThermalControlUnitTimedManual::init()
+{
+	ThermalDevice4Zones *d = new ThermalDevice4Zones("1#2");
+	obj = new ThermalControlUnitTimedManual("", d);
+
+	dev = new ThermalDevice4Zones("1#2", 1);
+
+	initObjects(dev, obj);
+}
+
+void TestThermalControlUnitTimedManual::testSetTime()
+{
+	QTime time = QTime::currentTime().addSecs(-10);
+
+	ObjectTester t(obj, SIGNAL(timeChanged()));
+	obj->setTime(time);
+	t.checkSignals();
+	QCOMPARE(obj->getTime(), time);
+
+	obj->setTime(time);
+	t.checkNoSignals();
+}
+
+void TestThermalControlUnitTimedManual::testApply()
+{
+	QTime time = QTime::currentTime();
+
+	obj->setTime(time);
+	obj->setTemperature(20);
+
+	obj->apply();
+	dev->setManualTempTimed(20, time);
 	compareClientCommand();
 }
 

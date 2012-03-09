@@ -44,6 +44,7 @@ public:
 		IdOff,
 		IdAntifreeze,
 		IdManual,
+		IdTimedManual,
 		IdWeeklyPrograms,
 		IdVacation,
 		IdScenarios
@@ -99,6 +100,8 @@ private:
 
 class ThermalControlUnit4Zones : public ThermalControlUnit
 {
+	friend class TestThermalControlUnit4Zones;
+
 	Q_OBJECT
 
 public:
@@ -293,6 +296,36 @@ signals:
 
 protected slots:
 	void valueReceived(const DeviceValues &values_list);
+};
+
+
+class ThermalControlUnitTimedManual : public ThermalControlUnitManual
+{
+	friend class TestThermalControlUnitTimedManual;
+
+	Q_OBJECT
+	Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
+
+public:
+	ThermalControlUnitTimedManual(QString name, ThermalDevice4Zones *dev);
+
+	virtual int getObjectId() const
+	{
+		return ThermalControlUnit::IdTimedManual;
+	}
+
+	QTime getTime() const;
+	void setTime(QTime time);
+
+
+public slots:
+	virtual void apply();
+
+signals:
+	void timeChanged();
+
+private:
+	ThermalDevice4Zones *dev;
 };
 
 
