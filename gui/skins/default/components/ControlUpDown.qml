@@ -4,8 +4,8 @@ import QtQuick 1.1
 Image {
     id: control
     width: 212
-    height: 112
-    source: "../images/common/comando_bg.png"
+    height: 100
+    source: "../images/common/bg_UnaRegolazione.png"
 
     property string title
     property string text
@@ -15,16 +15,17 @@ Image {
 
     Image {
         id: up
-        x: 111
-        y: 56
-        width: 49
-        height: 51
+        width: 43
+        height: 45
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 5
+        anchors.right: down.left
         source: "../images/common/btn_comando.png"
 
         Image {
             id: image7
-            x: 14
-            y: 15
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
             source: "../images/common/freccia_up.png"
         }
 
@@ -37,39 +38,40 @@ Image {
 
     Text {
         id: textTitle
-        x: 19
-        y: 14
-        width: 154
-        height: 15
-        text: control.title
+        text: "title"
+        anchors.top: parent.top
+        anchors.topMargin: 5
+        anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 13
     }
 
     Text {
         id: textText
-        x: 19
+        x: 33
         y: 64
-        width: 92
-        height: 35
         color: "#ffffff"
-        text:  control.text
+        text: "label"
+        anchors.left: parent.left
+        anchors.leftMargin: 33
         font.pixelSize: 15
         wrapMode: Text.WordWrap
     }
 
     Image {
         id: down
-        x: 160
-        y: 56
-        width: 49
-        height: 51
+        width: 43
+        height: 45
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 5
         source: "../images/common/btn_comando.png"
 
         Image {
             id: image8
-            x: 14
-            y: 15
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
             source: "../images/common/freccia_dw.png"
         }
 
