@@ -9,13 +9,11 @@
 class SoundAmbientBase : public ObjectInterface
 {
 	Q_OBJECT
-	Q_PROPERTY(ObjectListModel *sources READ getSources CONSTANT)
 	Q_PROPERTY(ObjectListModel *amplifiers READ getAmplifiers CONSTANT)
 	Q_PROPERTY(QObject *generalAmplifier READ getGeneralAmplifier CONSTANT)
 	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
 
 public:
-	ObjectListModel *getSources() const;
 	ObjectListModel *getAmplifiers() const;
 	QObject *getGeneralAmplifier() const;
 	QObject *getCurrentSource() const;
@@ -48,22 +46,22 @@ class SoundGeneralAmbient : public SoundAmbientBase
 class SoundSourceBase : public ObjectInterface
 {
 	Q_OBJECT
-	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
+	Q_PROPERTY(QList<int> activeAreas READ getActiveAreas NOTIFY activeAreasChanged)
 	Q_PROPERTY(int currentTrack READ getCurrentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
 
 public:
-	bool isActive() const;
-	void setActive(bool active);
+	QList<int> getActiveAreas() const;
 
 	int getCurrentTrack() const;
 	void setCurrentTrack(int track);
 
 public slots:
+	void setActive(int area, bool status);
 	void previousTrack();
 	void nextTrack();
 
 signals:
-	void activeChanged();
+	void activeAreasChanged();
 	void currentTrackChanged();
 };
 

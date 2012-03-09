@@ -1,11 +1,6 @@
 #include "mediaobjects.h"
 
 
-ObjectListModel *SoundAmbientBase::getSources() const
-{
-	return NULL;
-}
-
 ObjectListModel *SoundAmbientBase::getAmplifiers() const
 {
 	return NULL;
@@ -28,12 +23,12 @@ bool SoundAmbient::getHasActiveAmplifier()
 }
 
 
-bool SoundSourceBase::isActive() const
+QList<int> SoundSourceBase::getActiveAreas() const
 {
-	return false;
+	return QList<int>();
 }
 
-void SoundSourceBase::setActive(bool active)
+void SoundSourceBase::setActive(int area, bool active)
 {
 }
 
