@@ -1,6 +1,12 @@
 #include "mediaobjects.h"
 
 
+SoundAmbientBase::SoundAmbientBase(QString _key, QString _name)
+{
+	key = _key;
+	name = _name;
+}
+
 ObjectListModel *SoundAmbientBase::getAmplifiers() const
 {
 	return NULL;
@@ -17,11 +23,27 @@ QObject *SoundAmbientBase::getCurrentSource() const
 }
 
 
+SoundAmbient::SoundAmbient(int area, QString name) :
+	SoundAmbientBase(QString::number(area), name)
+{
+}
+
 bool SoundAmbient::getHasActiveAmplifier()
 {
 	return false;
 }
 
+
+SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
+	SoundAmbientBase(QString(), name)
+{
+}
+
+
+SoundSourceBase::SoundSourceBase(QString _name)
+{
+	name = _name;
+}
 
 QList<int> SoundSourceBase::getActiveAreas() const
 {
@@ -88,6 +110,11 @@ void SoundSourceRadio::searchDown()
 {
 }
 
+
+SoundAmplifier::SoundAmplifier(int area)
+{
+	key = QString::number(area);
+}
 
 bool SoundAmplifier::isActive() const
 {

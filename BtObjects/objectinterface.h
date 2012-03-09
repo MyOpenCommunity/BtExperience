@@ -26,6 +26,9 @@ public:
 		IdThermalControlUnit4,
 		IdAntintrusionSystem,
 		IdHardwareSettings,
+		IdMultiChannelSoundAmbient,
+		IdSoundAmplifier,
+		IdSoundSource,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
@@ -34,7 +37,8 @@ public:
 		Lighting = 1,
 		ThermalRegulation,
 		Antintrusion,
-		Settings
+		Settings,
+		SoundDiffusion
 	};
 
 	virtual int getObjectId() const = 0;

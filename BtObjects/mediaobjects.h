@@ -14,12 +14,27 @@ class SoundAmbientBase : public ObjectInterface
 	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
 
 public:
+	virtual QString getObjectKey() const { return key; }
+
+	virtual ObjectCategory getCategory() const
+	{
+		return ObjectInterface::SoundDiffusion;
+	}
+
+	virtual QString getName() const { return name; }
+
 	ObjectListModel *getAmplifiers() const;
 	QObject *getGeneralAmplifier() const;
 	QObject *getCurrentSource() const;
 
 signals:
 	void currentSourceChanged();
+
+protected:
+	SoundAmbientBase(QString key, QString name);
+
+private:
+	QString key, name;
 };
 
 
@@ -29,6 +44,8 @@ class SoundAmbient : public SoundAmbientBase
 	Q_PROPERTY(bool hasActiveAmplifier READ getHasActiveAmplifier NOTIFY activeAmplifierChanged)
 
 public:
+	SoundAmbient(int area, QString name);
+
 	bool getHasActiveAmplifier();
 
 signals:
@@ -39,6 +56,9 @@ signals:
 class SoundGeneralAmbient : public SoundAmbientBase
 {
 	Q_OBJECT
+
+public:
+	SoundGeneralAmbient(QString name);
 };
 
 
@@ -50,6 +70,15 @@ class SoundSourceBase : public ObjectInterface
 	Q_PROPERTY(int currentTrack READ getCurrentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
 
 public:
+	virtual QString getObjectKey() const { return QString(); }
+
+	virtual ObjectCategory getCategory() const
+	{
+		return ObjectInterface::SoundDiffusion;
+	}
+
+	virtual QString getName() const { return name; }
+
 	QList<int> getActiveAreas() const;
 
 	int getCurrentTrack() const;
@@ -63,6 +92,12 @@ public slots:
 signals:
 	void activeAreasChanged();
 	void currentTrackChanged();
+
+protected:
+	SoundSourceBase(QString name);
+
+private:
+	QString name;
 };
 
 
@@ -108,6 +143,17 @@ class SoundAmplifier : public ObjectInterface
 	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
 
 public:
+	SoundAmplifier(int area);
+
+	virtual QString getObjectKey() const { return key; }
+
+	virtual ObjectCategory getCategory() const
+	{
+		return ObjectInterface::SoundDiffusion;
+	}
+
+	virtual QString getName() const { return name; }
+
 	bool isActive() const;
 	void setActive(bool active);
 
@@ -117,6 +163,9 @@ public:
 signals:
 	void activeChanged();
 	void volumeChanged();
+
+private:
+	QString key, name;
 };
 
 #endif // MEDIAOBJECTS_H
