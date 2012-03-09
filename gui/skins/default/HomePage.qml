@@ -219,7 +219,7 @@ source: "images/home/home.jpg"
                   source: "images/home/opzioni.png"
                   textLeftMargin: 70
                   text: qsTr("opzioni")
-                  onClicked: Stack.openPage("Brightness.qml")
+                  onClicked: Stack.openPage("Settings.qml")
               }
 
 
