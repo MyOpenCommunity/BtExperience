@@ -5,3 +5,7 @@ BtExperience.*
 Makefile
 moc/
 obj/
+BtObjects/libbtobjects.*.so
+BtObjects/test/test
+common_files
+devices
