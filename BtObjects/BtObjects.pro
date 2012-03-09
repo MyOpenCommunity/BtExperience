@@ -66,7 +66,9 @@ SOURCES += \
     settings.cpp
 
 HEADERS += \
-    devices/lighting_device.h
+	devices/lighting_device.h \
+	devices/pulldevice.h
+
 
 SOURCES += \
     devices/lighting_device.cpp \
