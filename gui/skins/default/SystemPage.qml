@@ -32,9 +32,9 @@ Page {
     MenuContainer {
         id: container
         x: 122
-        y: 75
+        y: 63
         width: 893
-        height: 503
+        height: 530
         rootElement: systemPage.rootElement
         pageObject: systemPage
         onClosed: Stack.popPage()
