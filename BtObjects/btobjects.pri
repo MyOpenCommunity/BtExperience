@@ -1,11 +1,13 @@
 HEADERS += \
 	antintrusionsystem.h \
+	mediaobjects.h \
 	objectlistmodel.h \
 	objectinterface.h \
 	thermalobjects.h \
 	thermalprobes.h \
 	devices/antintrusion_device.h \
 	devices/device.h \
+	devices/media_device.h \
 	devices/probe_device.h \
 	devices/thermal_device.h \
 	ts/bttime.h \
@@ -19,11 +21,13 @@ HEADERS += \
 
 SOURCES += \
 	antintrusionsystem.cpp \
+	mediaobjects.cpp \
 	objectlistmodel.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \
 	devices/antintrusion_device.cpp \
 	devices/device.cpp \
+	devices/media_device.cpp \
 	devices/probe_device.cpp \
 	devices/thermal_device.cpp \
 	ts/bttime.cpp \
