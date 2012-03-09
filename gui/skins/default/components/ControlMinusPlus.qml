@@ -5,13 +5,13 @@ Image {
     source: "../images/common/bg_UnaRegolazione.png"
     width: 212
     height: 100
-    property string title
-    property string text
+    property alias title: title.text
+    property alias text: label.text
     signal minusClicked
     signal plusClicked
 
     Text {
-        id: text1
+        id: title
         color: "#000000"
         text: "title"
         anchors.horizontalCenter: parent.horizontalCenter

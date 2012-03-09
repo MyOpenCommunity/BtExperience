@@ -7,8 +7,8 @@ Image {
     height: 100
     source: "../images/common/bg_UnaRegolazione.png"
 
-    property string title
-    property string text
+    property alias title: title.text
+    property alias text: label.text
     signal downClicked()
     signal upClicked()
 
@@ -37,7 +37,7 @@ Image {
     }
 
     Text {
-        id: textTitle
+        id: title
         text: "title"
         anchors.top: parent.top
         anchors.topMargin: 5
@@ -47,7 +47,7 @@ Image {
     }
 
     Text {
-        id: textText
+        id: label
         x: 33
         y: 64
         color: "#ffffff"
