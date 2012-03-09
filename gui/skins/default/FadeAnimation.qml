@@ -23,5 +23,6 @@ PageAnimation {
         ScriptAction {
             script: animationCompleted()
         }
+        PropertyAction { target: page; property: "opacity"; value: 1}
     }
 }
