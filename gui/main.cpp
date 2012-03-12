@@ -22,6 +22,7 @@
 
 #include "qmlapplicationviewer.h"
 #include "inputcontextwrapper.h"
+#include "eventfilters.h"
 
 // Start definitions required by libcommon
 logger *app_logger;
@@ -69,41 +70,6 @@ void setupLogger(QString log_file)
 
 	qInstallMsgHandler(messageHandler);
 }
-
-
-// work around a bug with input context handling in WebKit/Maliit.  See discussion at
-// - https://bugs.webkit.org/show_bug.cgi?id=60161
-class InputMethodEventFilter : public QObject
-{
-protected:
-	bool eventFilter(QObject *obj, QEvent *event)
-	{
-		QInputContext *ic = qApp->inputContext();
-
-		if (ic)
-		{
-			const QWidget *focused = ic->focusWidget();
-
-			if (focused == 0 && prevFocusWidget)
-			{
-				QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
-				ic->filterEvent(&closeSIPEvent);
-			}
-			else if (prevFocusWidget == 0 && focused)
-			{
-				QEvent openSIPEvent(QEvent::RequestSoftwareInputPanel);
-				ic->filterEvent(&openSIPEvent);
-			}
-
-			prevFocusWidget = focused;
-		}
-
-		return QObject::eventFilter(obj,event);
-	}
-
-private:
-	const QWidget *prevFocusWidget;
-};
 
 
 int main(int argc, char *argv[])
