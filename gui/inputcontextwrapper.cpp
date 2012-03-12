@@ -5,19 +5,19 @@
 
 
 InputContextWrapper::InputContextWrapper(QObject *parent) :
-    QObject(parent)
+	QObject(parent)
 {
 }
 
 QInputContext *InputContextWrapper::inputContext() const
 {
-    return qApp->inputContext();
+	return qApp->inputContext();
 }
 
 QRect InputContextWrapper::cursorRect() const
 {
-    if (!inputContext()->focusWidget())
-        return QRect();
+	if (!inputContext()->focusWidget())
+		return QRect();
 
-    return inputContext()->focusWidget()->inputMethodQuery(Qt::ImMicroFocus).toRect();
+	return inputContext()->focusWidget()->inputMethodQuery(Qt::ImMicroFocus).toRect();
 }

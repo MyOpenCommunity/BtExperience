@@ -11,21 +11,21 @@ class QInputContext;
 // methods/properties to QML
 class InputContextWrapper : public QObject
 {
-    Q_OBJECT
-    Q_PROPERTY(QInputContext *inputContext READ inputContext CONSTANT)
-    Q_PROPERTY(QRect cursorRect READ cursorRect NOTIFY cursorRectChanged)
+	Q_OBJECT
+	Q_PROPERTY(QInputContext *inputContext READ inputContext CONSTANT)
+	Q_PROPERTY(QRect cursorRect READ cursorRect NOTIFY cursorRectChanged)
 
 public:
-    explicit InputContextWrapper(QObject *parent = 0);
+	explicit InputContextWrapper(QObject *parent = 0);
 
-    QInputContext *inputContext() const;
-    QRect cursorRect() const;
+	QInputContext *inputContext() const;
+	QRect cursorRect() const;
 
 signals:
-    void cursorRectChanged();
+	void cursorRectChanged();
 
 private:
-    QRect currentCursorRect;
+	QRect currentCursorRect;
 };
 
 #endif // INPUTCONTEXTWRAPPER_H
