@@ -51,7 +51,7 @@ MenuElement {
 
         delegate: Image {
             id: itemBackground
-            property variant itemObject: element.dataModel.getObject(index)
+            property variant itemObject: modelList.getObject(index)
             property bool active: element.animationRunning === false
 
             source: index % 2 === 0 ? "images/common/bg_registro_riga1.png" : "images/common/bg_registro_riga2.png"
