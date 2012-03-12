@@ -77,7 +77,7 @@ public:
 
 
 // internal class
-class SoundSourceBase : public ObjectInterface
+class SourceBase : public ObjectInterface
 {
 	Q_OBJECT
 	Q_PROPERTY(QList<int> activeAreas READ getActiveAreas NOTIFY activeAreasChanged)
@@ -113,30 +113,30 @@ signals:
 	void currentTrackChanged();
 
 protected:
-	SoundSourceBase(int id, QString name);
+	SourceBase(int id, QString name);
 
 private:
 	QString name;
 };
 
 
-class SoundSourceAux : public SoundSourceBase
+class SourceAux : public SourceBase
 {
 	Q_OBJECT
 
 public:
-	SoundSourceAux(int id, QString name);
+	SourceAux(int id, QString name);
 };
 
 
-class SoundSourceRadio : public SoundSourceBase
+class SourceRadio : public SourceBase
 {
 	Q_OBJECT
 	Q_PROPERTY(int currentStation READ getCurrentStation WRITE setCurrentStation NOTIFY currentStationChanged)
 	Q_PROPERTY(int currentFrequency READ getCurrentFrequency NOTIFY currentFrequencyChanged)
 
 public:
-	SoundSourceRadio(int id, QString name);
+	SourceRadio(int id, QString name);
 
 	int getCurrentStation() const;
 	void setCurrentStation(int station);
@@ -160,14 +160,14 @@ signals:
 };
 
 
-class SoundAmplifier : public ObjectInterface
+class Amplifier : public ObjectInterface
 {
 	Q_OBJECT
 	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
 	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
 
 public:
-	SoundAmplifier(int area, QString name, int object_id = ObjectInterface::IdSoundAmplifier);
+	Amplifier(int area, QString name, int object_id = ObjectInterface::IdSoundAmplifier);
 
 	virtual QString getObjectKey() const { return key; }
 

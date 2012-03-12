@@ -8,13 +8,13 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 	objects << new SoundAmbient(2, "Cucina");
 	objects << new SoundAmbient(3, "Salotto");
 	objects << new SoundGeneralAmbient("Generale");
-	objects << new SoundSourceRadio(1, "Radio");
-	objects << new SoundSourceAux(3, "Touch");
-	objects << new SoundAmplifier(2, "Amplificatore");
-	objects << new SoundAmplifier(2, "Amplificatore");
-	objects << new SoundAmplifier(2, "Generale", ObjectInterface::IdSoundAmplifierGeneral);
-	objects << new SoundAmplifier(3, "Amplificatore");
-	objects << new SoundAmplifier(3, "Generale", ObjectInterface::IdSoundAmplifierGeneral);
+	objects << new SourceRadio(1, "Radio");
+	objects << new SourceAux(3, "Touch");
+	objects << new Amplifier(2, "Amplificatore");
+	objects << new Amplifier(2, "Amplificatore");
+	objects << new Amplifier(2, "Generale", ObjectInterface::IdSoundAmplifierGeneral);
+	objects << new Amplifier(3, "Amplificatore");
+	objects << new Amplifier(3, "Generale", ObjectInterface::IdSoundAmplifierGeneral);
 
 	return objects;
 }
@@ -59,109 +59,109 @@ SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
 }
 
 
-SoundSourceBase::SoundSourceBase(int id, QString _name)
+SourceBase::SourceBase(int id, QString _name)
 {
 	name = _name;
 }
 
-QList<int> SoundSourceBase::getActiveAreas() const
+QList<int> SourceBase::getActiveAreas() const
 {
 	return QList<int>();
 }
 
-void SoundSourceBase::setActive(int area, bool active)
+void SourceBase::setActive(int area, bool active)
 {
 }
 
-int SoundSourceBase::getCurrentTrack() const
-{
-	return 0;
-}
-
-void SoundSourceBase::setCurrentTrack(int track)
-{
-}
-
-void SoundSourceBase::previousTrack()
-{
-}
-
-void SoundSourceBase::nextTrack()
-{
-}
-
-
-SoundSourceAux::SoundSourceAux(int id, QString name) :
-	SoundSourceBase(id, name)
-{
-}
-
-
-SoundSourceRadio::SoundSourceRadio(int id, QString name) :
-	SoundSourceBase(id, name)
-{
-}
-
-int SoundSourceRadio::getCurrentStation() const
+int SourceBase::getCurrentTrack() const
 {
 	return 0;
 }
 
-void SoundSourceRadio::setCurrentStation(int station)
+void SourceBase::setCurrentTrack(int track)
 {
 }
 
-int SoundSourceRadio::getCurrentFrequency() const
+void SourceBase::previousTrack()
+{
+}
+
+void SourceBase::nextTrack()
+{
+}
+
+
+SourceAux::SourceAux(int id, QString name) :
+	SourceBase(id, name)
+{
+}
+
+
+SourceRadio::SourceRadio(int id, QString name) :
+	SourceBase(id, name)
+{
+}
+
+int SourceRadio::getCurrentStation() const
 {
 	return 0;
 }
 
-void SoundSourceRadio::previousStation()
+void SourceRadio::setCurrentStation(int station)
 {
 }
 
-void SoundSourceRadio::nextStation()
+int SourceRadio::getCurrentFrequency() const
+{
+	return 0;
+}
+
+void SourceRadio::previousStation()
 {
 }
 
-void SoundSourceRadio::frequencyUp(int steps)
+void SourceRadio::nextStation()
 {
 }
 
-void SoundSourceRadio::frequencyDown(int steps)
+void SourceRadio::frequencyUp(int steps)
 {
 }
 
-void SoundSourceRadio::searchUp()
+void SourceRadio::frequencyDown(int steps)
 {
 }
 
-void SoundSourceRadio::searchDown()
+void SourceRadio::searchUp()
+{
+}
+
+void SourceRadio::searchDown()
 {
 }
 
 
-SoundAmplifier::SoundAmplifier(int area, QString _name, int _object_id)
+Amplifier::Amplifier(int area, QString _name, int _object_id)
 {
 	key = QString::number(area);
 	name = _name;
 	object_id = _object_id;
 }
 
-bool SoundAmplifier::isActive() const
+bool Amplifier::isActive() const
 {
 	return false;
 }
 
-void SoundAmplifier::setActive(bool active)
+void Amplifier::setActive(bool active)
 {
 }
 
-int SoundAmplifier::getVolume() const
+int Amplifier::getVolume() const
 {
 	return 0;
 }
 
-void SoundAmplifier::setVolume(int volume)
+void Amplifier::setVolume(int volume)
 {
 }
