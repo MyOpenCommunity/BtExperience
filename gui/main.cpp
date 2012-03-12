@@ -70,13 +70,28 @@ void setupLogger(QString log_file)
 }
 
 
+void setupOpenGL(QDeclarativeView *v)
+{
+	QGLFormat f = QGLFormat::defaultFormat();
+	f.setSampleBuffers(true);
+	f.setSamples(4);
+
+	QGLWidget *w = new QGLWidget(f);
+	v->setViewport(w);
+	v->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	v->setRenderHint(QPainter::Antialiasing, true);
+	v->setRenderHint(QPainter::SmoothPixmapTransform, true);
+	v->setRenderHint(QPainter::HighQualityAntialiasing, true);
+	v->setRenderHint(QPainter::TextAntialiasing, true);
+}
+
+
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 	setupLogger("/var/tmp/BTicino.log");
 	VERBOSITY_LEVEL = 3;
 
-	qmlRegisterType<QInputContext>();
 
 	QmlApplicationViewer viewer;
 	qDebug() << "***** BtExperience start! *****";
@@ -91,27 +106,16 @@ int main(int argc, char *argv[])
 #endif
 
 		// see comment on InputMethodEventFilter
-		viewer.installEventFilter(new InputMethodEventFilter);
+		app.installEventFilter(new InputMethodEventFilter);
 	}
 
 	LastClickTime *last_click = new LastClickTime;
-	// I'd like to install this event filter on the QDeclarativeView, however if I do that,
-	// the LastClickTime object does not receive the events inside some qml elements (like
-	// the PathView in the HomePage and all the buttons).
-	qApp->installEventFilter(last_click);
+	// To receive all the events, even if there is some qml elements which manage
+	// their, we have to install the event filter in the QApplication
+	app.installEventFilter(last_click);
 
 #if USE_OPENGL
-	QGLFormat f = QGLFormat::defaultFormat();
-	f.setSampleBuffers(true);
-	f.setSamples(4);
-
-	QGLWidget *w = new QGLWidget(f);
-	viewer.setViewport(w);
-	viewer.setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-	viewer.setRenderHint(QPainter::Antialiasing, true);
-	viewer.setRenderHint(QPainter::SmoothPixmapTransform, true);
-	viewer.setRenderHint(QPainter::HighQualityAntialiasing, true);
-	viewer.setRenderHint(QPainter::TextAntialiasing, true);
+	setupOpenGL(&viewer);
 #endif
 
 	viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

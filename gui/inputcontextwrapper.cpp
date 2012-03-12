@@ -2,11 +2,12 @@
 
 #include <QApplication>
 #include <QInputContext>
-
+#include <QtDeclarative>
 
 InputContextWrapper::InputContextWrapper(QObject *parent) :
 	QObject(parent)
 {
+	qmlRegisterType<QInputContext>();
 }
 
 QInputContext *InputContextWrapper::inputContext() const

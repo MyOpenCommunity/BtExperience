@@ -21,7 +21,7 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(int mainHeight READ getMainHeight CONSTANT)
 	// The number of seconds since last click
 	Q_PROPERTY(int lastTimePress READ getLastTimePress NOTIFY lastTimePressChanged)
-	// The input context wrapper, used to show/hide the virtual keyboard
+	// The input context wrapper, used to manage the virtual keyboard
 	Q_PROPERTY(QObject *inputWrapper READ getInputWrapper CONSTANT)
 
 public:
