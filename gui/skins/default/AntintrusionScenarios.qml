@@ -19,7 +19,7 @@ MenuElement {
 
         function selectItem() {
             for (var i = 0; i < itemList.count; i++) {
-                if (element.dataModel.getObject(i).selected === true)
+                if (scenariosModel.getObject(i).selected === true)
                     return i;
             }
 
@@ -27,7 +27,7 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
-            itemObject: element.dataModel.getObject(index)
+            itemObject: scenariosModel.getObject(index)
 
             selectOnClick: false // we don't want to break the binding for currentIndex
             active: element.animationRunning === false
@@ -35,6 +35,11 @@ MenuElement {
             onClicked: element.scenarioSelected(itemObject)
         }
 
-        model: element.dataModel
+        model: scenariosModel
+
+        ObjectModel {
+            id: scenariosModel
+            source: element.dataModel
+        }
     }
 }

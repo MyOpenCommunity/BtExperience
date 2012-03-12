@@ -13,11 +13,11 @@
 
 class ObjectInterface;
 
-
+// The model that contains all the objects. Do not use this in Qml, use
+// the FilterListModel instead.
 class ObjectListModel : public QAbstractListModel
 {
 	Q_OBJECT
-	Q_PROPERTY(int size READ getSize CONSTANT)
 
 public:
 	explicit ObjectListModel(QObject *parent = 0);
@@ -48,8 +48,8 @@ public:
 	// and reparent it.
 	ObjectListModel &operator<<(ObjectInterface *item);
 
-	Q_INVOKABLE ObjectInterface *getObject(int row) const;
-	Q_INVOKABLE void remove(int index);
+	ObjectInterface *getObject(int row) const;
+	void remove(int index);
 
 	int getSize() const
 	{
@@ -67,6 +67,8 @@ private:
 };
 
 
+// A view around the data contained in a ObjectListModel. It contains some
+// functions to make it easy to use this model from qml
 class FilterListModel : public QSortFilterProxyModel
 {
 	Q_OBJECT

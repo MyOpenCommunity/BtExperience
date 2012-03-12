@@ -18,7 +18,7 @@ MenuElement {
         function selectItem() {
             if (element.dataModel.currentModality) {
                 for (var i = 0; i < itemList.count; i++) {
-                    if (itemList.model.getObject(i).objectId === element.dataModel.currentModality.objectId)
+                    if (modalitiesModel.getObject(i).objectId === element.dataModel.currentModality.objectId)
                         return i;
                 }
             }
@@ -26,11 +26,15 @@ MenuElement {
         }
 
         delegate: MenuItemDelegate {
-            itemObject: element.dataModel.modalities.getObject(index)
+            itemObject: modalitiesModel.getObject(index)
             active: element.animationRunning === false
             onClicked: element.modalitySelected(itemObject)
         }
+        model: modalitiesModel
 
-        model: element.dataModel.modalities
+        ObjectModel {
+            id: modalitiesModel
+            source: element.dataModel.modalities
+        }
     }
 }
