@@ -238,3 +238,7 @@ ObjectInterface *FilterListModel::getObject(int row)
 	return getSource()->getObject(original_row);
 }
 
+void FilterListModel::remove(int index)
+{
+	removeRow(index);
+}
