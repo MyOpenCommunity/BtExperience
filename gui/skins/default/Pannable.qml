@@ -14,10 +14,10 @@ Item {
     clip: true
 
     Connections {
-        target: input_context.inputContext
+        target: global.inputWrapper.inputContext
         onInputMethodAreaChanged: {
             setKeyboardRect(region)
-            setCursorRect(input_context.cursorRect)
+            setCursorRect(global.inputWrapper.cursorRect)
             setKeyboardVisible(region.height != 0)
         }
     }

@@ -21,8 +21,9 @@
 #include <logger.h>
 
 #include "qmlapplicationviewer.h"
-#include "inputcontextwrapper.h"
 #include "eventfilters.h"
+#include "globalproperties.h"
+
 
 // Start definitions required by libcommon
 logger *app_logger;
@@ -34,9 +35,6 @@ int use_ssl = false;
 char *ssl_cert_key_path = NULL;
 char *ssl_certificate_path = NULL;
 // End definitions required by libcommon
-
-#define MAIN_WIDTH 1024
-#define MAIN_HEIGHT 600
 
 
 void messageHandler(QtMsgType type, const char *msg)
@@ -92,9 +90,15 @@ int main(int argc, char *argv[])
 		app.setInputContext(QInputContextFactory::create(env.value("QT_IM_MODULE"), &app));
 #endif
 
-		// see comment on InputMethodEventFilter above
+		// see comment on InputMethodEventFilter
 		viewer.installEventFilter(new InputMethodEventFilter);
 	}
+
+	LastClickTime *last_click = new LastClickTime;
+	// I'd like to install this event filter on the QDeclarativeView, however if I do that,
+	// the LastClickTime object does not receive the events inside some qml elements (like
+	// the PathView in the HomePage and all the buttons).
+	qApp->installEventFilter(last_click);
 
 #if USE_OPENGL
 	QGLFormat f = QGLFormat::defaultFormat();
@@ -111,18 +115,14 @@ int main(int argc, char *argv[])
 #endif
 
 	viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-#ifdef Q_WS_QWS
-	viewer.engine()->rootContext()->setContextProperty("main_width", QScreen::instance()->width());
-	viewer.engine()->rootContext()->setContextProperty("main_height", QScreen::instance()->height());
-#else
-	viewer.engine()->rootContext()->setContextProperty("main_width", MAIN_WIDTH);
-	viewer.engine()->rootContext()->setContextProperty("main_height", MAIN_HEIGHT);
-#endif
-	viewer.engine()->rootContext()->setContextProperty("input_context", new InputContextWrapper);
+
+	GlobalProperties global;
+	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
+	viewer.engine()->rootContext()->setContextProperty("global", &global);
 	viewer.setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
 
 #ifdef Q_WS_X11
-	viewer.resize(MAIN_WIDTH, MAIN_HEIGHT);
+	viewer.resize(global.getMainWidth(), global.getMainHeight());
 	viewer.showExpanded();
 #else
 	viewer.showFullScreen();

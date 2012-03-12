@@ -59,10 +59,12 @@ QT += opengl
 SOURCES += \
     main.cpp \
     eventfilters.cpp \
+    globalproperties.cpp \
     inputcontextwrapper.cpp
 
 DESTDIR = ..
 
 HEADERS += \
     eventfilters.h \
+    globalproperties.h \
     inputcontextwrapper.h

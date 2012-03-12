@@ -32,3 +32,25 @@ bool InputMethodEventFilter::eventFilter(QObject *obj, QEvent *event)
 }
 
 
+
+bool LastClickTime::pressed = false;
+
+bool LastClickTime::eventFilter(QObject *obj, QEvent *ev)
+{
+	Q_UNUSED(obj)
+	// Save last click time
+	if (ev->type() == QEvent::MouseButtonPress || ev->type() == QEvent::MouseButtonDblClick)
+	{
+		emit updateTime();
+		pressed = true;
+	}
+
+	if (ev->type() == QEvent::MouseButtonRelease)
+	{
+		emit updateTime();
+		pressed = false;
+	}
+
+	return false;
+}
+
