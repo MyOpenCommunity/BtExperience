@@ -94,7 +94,7 @@ MenuElement {
                     MouseArea {
                         id: btnArea
                         anchors.fill: parent
-                        onClicked: element.dataModel.remove(index);
+                        onClicked: modelList.remove(index);
                     }
                 }
             }
