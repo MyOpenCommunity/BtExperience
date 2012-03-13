@@ -206,7 +206,7 @@ MenuElement {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: zoneText.bottom
                 width: cellWidth * 2
-                height: cellHeight * zoneModel.size / 2
+                height: 200 // (cellHeight * zoneModel.size / 2) // Why it does not work???
                 interactive: false
                 cellWidth: 102
                 cellHeight: 50
