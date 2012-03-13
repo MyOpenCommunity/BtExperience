@@ -152,11 +152,11 @@ public:
 		return ObjectInterface::IdThermalControlUnit99;
 	}
 
-	ThermalRegulationProgramList getScenarios() const;
+	ObjectListModel *getScenarios() const;
 
 private:
 	ThermalDevice99Zones *dev;
-	ThermalRegulationProgramList scenarios;
+	ObjectListModel scenarios;
 };
 
 
@@ -354,24 +354,22 @@ class ThermalControlUnitScenario : public ThermalControlUnitObject
 
 	Q_OBJECT
 	Q_PROPERTY(int scenarioIndex READ getScenarioIndex WRITE setScenarioIndex NOTIFY scenarioChanged)
-	Q_PROPERTY(int scenarioCount READ getScenarioCount)
-	Q_PROPERTY(int scenarioId READ getScenarioId NOTIFY scenarioChanged)
 	Q_PROPERTY(QString scenarioDescription READ getScenarioDescription NOTIFY scenarioChanged)
+	Q_PROPERTY(ObjectListModel *scenarios READ getScenarios CONSTANT)
 
 public:
-	ThermalControlUnitScenario(QString name, ThermalRegulationProgramList scenarios, ThermalDevice99Zones *dev);
+	ThermalControlUnitScenario(QString name, const ObjectListModel *scenarios, ThermalDevice99Zones *dev);
 
 	virtual int getObjectId() const
 	{
 		return ThermalControlUnit::IdScenarios;
 	}
 
-	int getScenarioCount() const;
-
 	int getScenarioIndex() const;
 	void setScenarioIndex(int index);
 
-	int getScenarioId() const;
+	ObjectListModel *getScenarios() const;
+
 	QString getScenarioDescription() const;
 
 public slots:
@@ -384,8 +382,10 @@ protected slots:
 	void valueReceived(const DeviceValues &values_list);
 
 private:
+	int getScenarioId() const;
+
 	ThermalDevice99Zones *dev;
-	ThermalRegulationProgramList scenarios;
+	const ObjectListModel *scenarios;
 };
 
 

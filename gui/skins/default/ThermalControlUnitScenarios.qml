@@ -14,15 +14,15 @@ MenuElement {
         interactive: false
 
         delegate: MenuItemDelegate {
-            itemObject: programModel.getObject(index)
+            itemObject: scenarioModel.getObject(index)
             active: element.animationRunning === false
-            onClicked: element.dataModel.programIndex = index
+            onClicked: element.dataModel.scenarioIndex = index
         }
 
-        model: programModel
+        model: scenarioModel
         ObjectModel {
-            id: programModel
-            source: element.dataModel.programs
+            id: scenarioModel
+            source: element.dataModel.scenarios
         }
     }
 }

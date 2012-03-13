@@ -292,17 +292,18 @@ MenuElement {
             id: scenarioComponent
             Column {
                 property variant objModel
-                ControlUpDown {
-                    id: scenarioSelector
-                    function scrollScenario(offset) {
-                        var next = objModel.scenarioIndex + offset
-                        next = (next + objModel.scenarioCount) % objModel.scenarioCount
-                        objModel.scenarioIndex = next
+
+                MenuItem {
+                    name: qsTr("Next scenario")
+                    description: objModel.scenarioDescription
+                    hasChild: true
+                    active: element.animationRunning === false
+                    state: privateProps.currentElement === 3 ? "selected" : ""
+                    onClicked: {
+                        element.loadElement("ThermalControlUnitScenarios.qml", qsTr("scenarios"), objModel)
+                        if (privateProps.currentElement !== 3)
+                            privateProps.currentElement = 3
                     }
-                    onUpClicked: scenarioSelector.scrollScenario(-1)
-                    onDownClicked: scenarioSelector.scrollScenario(1)
-                    title: qsTr("selezionato")
-                    text: qsTr("scenario ") + objModel.scenarioDescription
                 }
 
                 ButtonOkCancel {
