@@ -20,11 +20,11 @@ Page {
                     name: "antintrusione"
                     target: "Antintrusion.qml"
                 }
-                ListElement {
-                    image: "images/scenari.jpg"
-                    name: "scenari"
-                    target: ""
-                }
+//                ListElement {
+//                    image: "images/scenari.jpg"
+//                    name: "scenari"
+//                    target: ""
+//                }
                 ListElement {
                     image: "images/termoregolazione.jpg"
                     name: "termoregolazione"
