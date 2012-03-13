@@ -237,7 +237,7 @@ class ThermalControlUnitTimedProgram : public ThermalControlUnitProgram
 	Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
 
 public:
-	ThermalControlUnitTimedProgram(QString name, int object_id, ThermalRegulationProgramList scenarios, ThermalDevice *dev);
+	ThermalControlUnitTimedProgram(QString name, int object_id, ObjectListModel *programs, ThermalDevice *dev);
 
 	QDate getDate() const;
 	void setDate(QDate date);

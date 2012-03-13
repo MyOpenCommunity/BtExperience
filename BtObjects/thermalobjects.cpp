@@ -31,8 +31,8 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	// The objects list should contain only one item per id
 	// TODO: fix the the timed programs
 	modalities << new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, &programs, dev);
-//	modalities << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, programs, dev);
-//	modalities << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, &programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, &programs, dev);
 	modalities << new ThermalControlUnitAntifreeze("Antigelo", dev);
 	modalities << new ThermalControlUnitManual("Manuale", dev);
 	modalities << new ThermalControlUnitOff("Off", dev);
@@ -267,8 +267,8 @@ void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 }
 
 
-ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ThermalRegulationProgramList _programs, ThermalDevice *dev) :
-	ThermalControlUnitProgram(name, _object_id, 0, dev)
+ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ObjectListModel *programs, ThermalDevice *dev) :
+	ThermalControlUnitProgram(name, _object_id, programs, dev)
 {
 	current[DATE] = QDate::currentDate();
 	current[TIME] = QTime::currentTime();
