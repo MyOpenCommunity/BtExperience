@@ -24,12 +24,6 @@
 
 #include <QtTest/QtTest>
 
-namespace
-{
-    ThermalRegulationProgramList test_programs = ThermalRegulationProgramList() << qMakePair(1, QString("P1")) << qMakePair(3, QString("P3")) << qMakePair(5, QString("P5"));
-    ThermalRegulationProgramList test_scenarios = ThermalRegulationProgramList() << qMakePair(1, QString("S1")) << qMakePair(3, QString("S3")) << qMakePair(5, QString("S5"));
-}
-
 void TestThermalControlUnit::initObjects(ThermalDevice *_dev, ThermalControlUnit *_obj)
 {
 	dev = _dev;
@@ -192,6 +186,10 @@ void TestThermalControlUnitObject::initObjects(ThermalDevice *_dev, ThermalContr
 {
 	dev = _dev;
 	obj = _obj;
+	if (!test_programs.getSize())
+		test_programs << new ThermalRegulationProgram(1, QString("P1")) << new ThermalRegulationProgram(3, QString("P3")) << new ThermalRegulationProgram(5, QString("P5"));
+	if (!test_scenarios.getSize())
+		test_scenarios << new ThermalRegulationProgram(1, QString("S1")) << new ThermalRegulationProgram(3, QString("S3")) << new ThermalRegulationProgram(5, QString("S5"));
 }
 
 void TestThermalControlUnitObject::cleanup()
@@ -293,7 +291,7 @@ void TestThermalControlUnitTimedManual::testApply()
 void TestThermalControlUnitScenario::init()
 {
 	ThermalDevice99Zones *d = new ThermalDevice99Zones("0");
-	obj = new ThermalControlUnitScenario("", test_scenarios, d);
+	obj = new ThermalControlUnitScenario("", &test_scenarios, d);
 
 	dev = new ThermalDevice99Zones("0", 1);
 
@@ -340,7 +338,7 @@ void TestThermalControlUnitScenario::testApply()
 void TestThermalControlUnitProgram::init()
 {
 	ThermalDevice99Zones *d = new ThermalDevice99Zones("0");
-	obj = new ThermalControlUnitProgram("", 0, test_programs, d);
+	obj = new ThermalControlUnitProgram("", 0, &test_programs, d);
 
 	dev = new ThermalDevice99Zones("0", 1);
 
@@ -387,7 +385,7 @@ void TestThermalControlUnitProgram::testApply()
 void TestThermalControlUnitTimedProgram::initProgram(int object_id)
 {
 	ThermalDevice99Zones *d = new ThermalDevice99Zones("0");
-	TestThermalControlUnitProgram::obj = obj = new ThermalControlUnitTimedProgram("", object_id, test_programs, d);
+	TestThermalControlUnitProgram::obj = obj = new ThermalControlUnitTimedProgram("", object_id, &test_programs, d);
 
 	dev = new ThermalDevice99Zones("0", 1);
 

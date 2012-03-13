@@ -22,7 +22,6 @@ class ThermalControlUnitObject;
 
 typedef QHash<int, QVariant> ThermalRegulationState;
 
-// TODO: rename this to ThermalRegulationProgram
 class ThermalRegulationProgram : public ObjectInterface
 {
 	Q_OBJECT
