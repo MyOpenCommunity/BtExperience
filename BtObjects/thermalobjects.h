@@ -24,6 +24,26 @@ typedef QPair<int, QString> ThermalRegulationProgram;
 typedef QList<ThermalRegulationProgram> ThermalRegulationProgramList;
 typedef QHash<int, QVariant> ThermalRegulationState;
 
+// TODO: rename this to ThermalRegulationProgram
+class ThermalRegulationProgramObject : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	ThermalRegulationProgramObject(int number, const QString &name);
+	virtual int getObjectId() const { return program_number; }
+
+	virtual QString getObjectKey() const { return QString(); }
+
+	virtual ObjectCategory getCategory() const { return ThermalRegulation; }
+
+	virtual QString getName() const { return program_name; }
+
+private:
+	int program_number;
+	QString program_name;
+};
+
 
 class ThermalControlUnit : public ObjectInterface
 {
@@ -35,6 +55,7 @@ class ThermalControlUnit : public ObjectInterface
 	Q_ENUMS(ThermalControlUnitId)
 	Q_PROPERTY(SeasonType season READ getSeason WRITE setSeason NOTIFY seasonChanged)
 	Q_PROPERTY(ObjectListModel *modalities READ getModalities NOTIFY modalitiesChanged)
+	Q_PROPERTY(ObjectListModel *programs READ getPrograms NOTIFY programsChanged)
 	Q_PROPERTY(QObject *currentModality READ getCurrentModality NOTIFY currentModalityChanged)
 
 public:
@@ -70,15 +91,15 @@ public:
 	SeasonType getSeason() const;
 	void setSeason(SeasonType s);
 
-	ThermalRegulationProgramList getPrograms() const;
-
 	ObjectListModel *getModalities() const;
+	ObjectListModel *getPrograms() const;
 
 	QObject* getCurrentModality() const;
 
 signals:
 	void seasonChanged();
 	void modalitiesChanged();
+	void programsChanged();
 	void currentModalityChanged();
 
 protected slots:
@@ -92,7 +113,7 @@ private:
 	QString key;
 	int temperature;
 	SeasonType season;
-	ThermalRegulationProgramList programs;
+	ObjectListModel programs;
 	ThermalDevice *dev;
 	int current_modality;
 };
@@ -176,25 +197,23 @@ class ThermalControlUnitProgram : public ThermalControlUnitObject
 
 	Q_OBJECT
 	Q_PROPERTY(int programIndex READ getProgramIndex WRITE setProgramIndex NOTIFY programChanged)
-	Q_PROPERTY(int programCount READ getProgramCount)
-	Q_PROPERTY(int programId READ getProgramId NOTIFY programChanged)
 	Q_PROPERTY(QString programDescription READ getProgramDescription NOTIFY programChanged)
+	Q_PROPERTY(ObjectListModel *programs READ getPrograms CONSTANT)
 
 public:
-	ThermalControlUnitProgram(QString name, int object_id, ThermalRegulationProgramList scenarios, ThermalDevice *dev);
+	ThermalControlUnitProgram(QString name, int object_id, const ObjectListModel *_programs, ThermalDevice *dev);
 
 	virtual int getObjectId() const
 	{
 		return object_id;
 	}
 
-	int getProgramCount() const;
-
 	int getProgramIndex() const;
 	void setProgramIndex(int index);
 
 	int getProgramId() const;
 	QString getProgramDescription() const;
+	ObjectListModel *getPrograms() const;
 
 public slots:
 	virtual void apply();
@@ -206,7 +225,7 @@ protected slots:
 	void valueReceived(const DeviceValues &values_list);
 
 private:
-	ThermalRegulationProgramList programs;
+	const ObjectListModel *programs;
 	int object_id;
 };
 

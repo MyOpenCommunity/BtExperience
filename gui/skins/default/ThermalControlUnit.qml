@@ -223,17 +223,18 @@ MenuElement {
             id: programsComponent
             Column {
                 property variant objModel
-                ControlUpDown {
-                    id: programSelector
-                    function scrollProgram(offset) {
-                        var next = objModel.programIndex + offset
-                        next = (next + objModel.programCount) % objModel.programCount
-                        objModel.programIndex = next
+
+                MenuItem {
+                    name: qsTr("Next program")
+                    description: objModel.programDescription
+                    hasChild: true
+                    active: element.animationRunning === false
+                    state: privateProps.currentElement === 3 ? "selected" : ""
+                    onClicked: {
+                        element.loadElement("ThermalControlUnitPrograms.qml", qsTr("programs"), objModel)
+                        if (privateProps.currentElement !== 3)
+                            privateProps.currentElement = 3
                     }
-                    onUpClicked: programSelector.scrollProgram(-1)
-                    onDownClicked: programSelector.scrollProgram(1)
-                    title: qsTr("selezionato")
-                    text: objModel.programDescription
                 }
 
                 ButtonOkCancel {
