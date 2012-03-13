@@ -23,9 +23,9 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 	season = Summer;
-	programs << new ThermalRegulationProgramObject(1, QString("P1")) <<
-				new ThermalRegulationProgramObject(3, QString("P3")) <<
-				new ThermalRegulationProgramObject(5, QString("P5"));
+	programs << new ThermalRegulationProgram(1, QString("P1")) <<
+				new ThermalRegulationProgram(3, QString("P3")) <<
+				new ThermalRegulationProgram(5, QString("P5"));
 	current_modality = -1;
 
 	// The objects list should contain only one item per id
@@ -168,9 +168,9 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 	ThermalControlUnit(_name, _key, d)
 {
 	dev = d;
-	scenarios << new ThermalRegulationProgramObject(1, QString("S1")) <<
-				 new ThermalRegulationProgramObject(3, QString("S3")) <<
-				 new ThermalRegulationProgramObject(5, QString("S5"));
+	scenarios << new ThermalRegulationProgram(1, QString("S1")) <<
+				 new ThermalRegulationProgram(3, QString("S3")) <<
+				 new ThermalRegulationProgram(5, QString("S5"));
 	modalities << new ThermalControlUnitScenario("Scenari", &scenarios, dev);
 }
 
@@ -483,7 +483,7 @@ void ThermalControlUnitScenario::valueReceived(const DeviceValues &values_list)
 	}
 }
 
-ThermalRegulationProgramObject::ThermalRegulationProgramObject(int number, const QString &name)
+ThermalRegulationProgram::ThermalRegulationProgram(int number, const QString &name)
 {
 	program_number = number;
 	program_name = name;

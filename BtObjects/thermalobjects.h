@@ -20,17 +20,15 @@ class ThermalDevice99Zones;
 class ObjectListModel;
 class ThermalControlUnitObject;
 
-typedef QPair<int, QString> ThermalRegulationProgram;
-typedef QList<ThermalRegulationProgram> ThermalRegulationProgramList;
 typedef QHash<int, QVariant> ThermalRegulationState;
 
 // TODO: rename this to ThermalRegulationProgram
-class ThermalRegulationProgramObject : public ObjectInterface
+class ThermalRegulationProgram : public ObjectInterface
 {
 	Q_OBJECT
 
 public:
-	ThermalRegulationProgramObject(int number, const QString &name);
+	ThermalRegulationProgram(int number, const QString &name);
 	virtual int getObjectId() const { return program_number; }
 
 	virtual QString getObjectKey() const { return QString(); }
