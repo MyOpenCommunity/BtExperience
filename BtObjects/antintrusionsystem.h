@@ -148,8 +148,8 @@ class AntintrusionSystem : public ObjectInterface
 friend class TestAntintrusionSystem;
 
 	Q_OBJECT
-	Q_PROPERTY(ObjectListModel *zones READ getZones NOTIFY zonesChanged)
-	Q_PROPERTY(ObjectListModel *scenarios READ getScenarios NOTIFY scenariosChanged)
+	Q_PROPERTY(ObjectListModel *zones READ getZones CONSTANT)
+	Q_PROPERTY(ObjectListModel *scenarios READ getScenarios CONSTANT)
 	Q_PROPERTY(ObjectListModel *alarms READ getAlarms NOTIFY alarmsChanged)
 	Q_PROPERTY(bool status READ getStatus NOTIFY statusChanged)
 	Q_PROPERTY(QObject *currentScenario READ getCurrentScenario NOTIFY currentScenarioChanged)
@@ -187,8 +187,6 @@ public:
 	QObject *getCurrentScenario() const;
 
 signals:
-	void zonesChanged(); // never emitted
-	void scenariosChanged(); // never emitted
 	void alarmsChanged();
 	void newAlarm(AntintrusionAlarm *alarm);
 
