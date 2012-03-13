@@ -5,6 +5,7 @@ MenuElement {
     id: system
     width: 212
     height: antintrusionColumn.height
+    property string alarmLogTitle: qsTr("registro allarmi")
 
     ObjectModel {
         id: objectModel
@@ -17,7 +18,7 @@ MenuElement {
     }
 
     function showAlarmLog(name) {
-        system.loadElement("AntintrusionAlarms.qml", name, privateProps.model.alarms)
+        system.loadElement("AntintrusionAlarms.qml", system.alarmLogTitle, privateProps.model.alarms)
         if (privateProps.currentElement != 1)
             privateProps.currentElement = 1
     }
@@ -135,11 +136,9 @@ MenuElement {
         MenuItem {
             active: system.animationRunning === false
             state: privateProps.currentElement == 1 ? "selected" : ""
-            name: qsTr("registro allarmi")
+            name: system.alarmLogTitle
             hasChild: true
-            onClicked: {
-                showAlarmLog(name)
-            }
+            onClicked: showAlarmLog()
         }
         MenuItem {
             id: systemItem
