@@ -69,14 +69,14 @@ MenuElement {
                     Text {
                         width: 125
                         color: "white"
-                        text: pageObject.names.get('ALARM_TYPE', itemObject.type)
+                        text: itemObject !== undefined ? pageObject.names.get('ALARM_TYPE', itemObject.type) : ""
                         font.pointSize: 12
                     }
 
                     Text {
                         width: 125
                         color: "white"
-                        text: itemObject.zone.objectId + "\n" + itemObject.zone.name
+                        text: itemObject !== undefined ? itemObject.zone.objectId + "\n" + itemObject.zone.name : ""
                         wrapMode: Text.WordWrap
                         font.pointSize: 12
                     }
@@ -84,7 +84,7 @@ MenuElement {
                     Text {
                         color: "white"
                         width: 105
-                        text: Qt.formatDateTime(itemObject.date_time, "dd/MM/yyyy\nhh:mm")
+                        text: itemObject !== undefined ? Qt.formatDateTime(itemObject.date_time, "dd/MM/yyyy\nhh:mm") : ""
                         font.pointSize: 12
                     }
                 }
