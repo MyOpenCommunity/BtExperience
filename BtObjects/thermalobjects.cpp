@@ -23,13 +23,16 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 	season = Summer;
-	programs << qMakePair(1, QString("P1")) << qMakePair(3, QString("P3")) << qMakePair(5, QString("P5"));
+	programs << new ThermalRegulationProgram(1, QString("P1")) <<
+				new ThermalRegulationProgram(3, QString("P3")) <<
+				new ThermalRegulationProgram(5, QString("P5"));
 	current_modality = -1;
 
 	// The objects list should contain only one item per id
-	modalities << new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, programs, dev);
-	modalities << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, programs, dev);
-	modalities << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, programs, dev);
+	// TODO: fix the the timed programs
+	modalities << new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, &programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, &programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, &programs, dev);
 	modalities << new ThermalControlUnitAntifreeze("Antigelo", dev);
 	modalities << new ThermalControlUnitManual("Manuale", dev);
 	modalities << new ThermalControlUnitOff("Off", dev);
@@ -58,9 +61,11 @@ void ThermalControlUnit::setSeason(SeasonType s)
 		dev->setWinter();
 }
 
-ThermalRegulationProgramList ThermalControlUnit::getPrograms() const
+ObjectListModel *ThermalControlUnit::getPrograms() const
 {
-	return programs;
+	// TODO: we remove the const because it produces an error when we export the
+	// type to the qml engine. Find a solution.
+	return const_cast<ObjectListModel*>(&programs);
 }
 
 ObjectListModel *ThermalControlUnit::getModalities() const
@@ -163,13 +168,17 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 	ThermalControlUnit(_name, _key, d)
 {
 	dev = d;
-	scenarios << qMakePair(1, QString("S1")) << qMakePair(3, QString("S3")) << qMakePair(5, QString("S5"));
-	modalities << new ThermalControlUnitScenario("Scenari", scenarios, dev);
+	scenarios << new ThermalRegulationProgram(1, QString("S1")) <<
+				 new ThermalRegulationProgram(3, QString("S3")) <<
+				 new ThermalRegulationProgram(5, QString("S5"));
+	modalities << new ThermalControlUnitScenario("Scenari", &scenarios, dev);
 }
 
-ThermalRegulationProgramList ThermalControlUnit99Zones::getScenarios() const
+ObjectListModel *ThermalControlUnit99Zones::getScenarios() const
 {
-	return scenarios;
+	// TODO: we remove the const because it produces an error when we export the
+	// type to the qml engine. Find a solution.
+	return const_cast<ObjectListModel*>(&scenarios);
 }
 
 
@@ -195,7 +204,7 @@ void ThermalControlUnitObject::reset()
 }
 
 
-ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_id, ThermalRegulationProgramList _programs, ThermalDevice *dev) :
+ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_id, const ObjectListModel *_programs, ThermalDevice *dev) :
 	ThermalControlUnitObject(name, dev)
 {
 	object_id = _object_id;
@@ -205,11 +214,6 @@ ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_i
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
-int ThermalControlUnitProgram::getProgramCount() const
-{
-	return programs.count();
-}
-
 int ThermalControlUnitProgram::getProgramIndex() const
 {
 	return to_apply[PROGRAM_INDEX].toInt();
@@ -217,7 +221,7 @@ int ThermalControlUnitProgram::getProgramIndex() const
 
 void ThermalControlUnitProgram::setProgramIndex(int index)
 {
-	if (to_apply[PROGRAM_INDEX].toInt() == index || index < 0 || index >= programs.count())
+	if (to_apply[PROGRAM_INDEX].toInt() == index || index < 0 || index >= programs->rowCount())
 		return;
 
 	to_apply[PROGRAM_INDEX] = index;
@@ -226,18 +230,25 @@ void ThermalControlUnitProgram::setProgramIndex(int index)
 
 int ThermalControlUnitProgram::getProgramId() const
 {
-	return programs[to_apply[PROGRAM_INDEX].toInt()].first;
+	return programs->getObject(to_apply[PROGRAM_INDEX].toInt())->getObjectId();
 }
 
 QString ThermalControlUnitProgram::getProgramDescription() const
 {
-	return programs[to_apply[PROGRAM_INDEX].toInt()].second;
+	return programs->getObject(to_apply[PROGRAM_INDEX].toInt())->getName();
+}
+
+ObjectListModel *ThermalControlUnitProgram::getPrograms() const
+{
+	// TODO: we remove the const because it produces an error when we export the
+	// type to the qml engine. Find a solution.
+	return const_cast<ObjectListModel *>(programs);
 }
 
 void ThermalControlUnitProgram::apply()
 {
 	current = to_apply;
-	dev->setWeekProgram(programs[to_apply[PROGRAM_INDEX].toInt()].first);
+	dev->setWeekProgram(programs->getObject(to_apply[PROGRAM_INDEX].toInt())->getObjectId());
 }
 
 void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
@@ -245,9 +256,9 @@ void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 	if (values_list.contains(ThermalDevice99Zones::DIM_PROGRAM))
 	{
 		int val = values_list[ThermalDevice99Zones::DIM_PROGRAM].toInt();
-		for (int i = 0; i < programs.length(); ++i)
+		for (int i = 0; i < programs->rowCount(); ++i)
 		{
-			if (programs[i].first == val)
+			if (programs->getObject(i)->getObjectId() == val)
 			{
 				qDebug() << "ThermalControlUnitProgram program changed:" << val;
 				current[PROGRAM_INDEX] = i;
@@ -260,8 +271,8 @@ void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 }
 
 
-ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ThermalRegulationProgramList _programs, ThermalDevice *dev) :
-	ThermalControlUnitProgram(name, _object_id, _programs, dev)
+ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ObjectListModel *programs, ThermalDevice *dev) :
+	ThermalControlUnitProgram(name, _object_id, programs, dev)
 {
 	current[DATE] = QDate::currentDate();
 	current[TIME] = QTime::currentTime();
@@ -406,7 +417,7 @@ void ThermalControlUnitAntifreeze::apply()
 }
 
 
-ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, ThermalRegulationProgramList _programs, ThermalDevice99Zones *_dev) :
+ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, const ObjectListModel *_programs, ThermalDevice99Zones *_dev) :
 	ThermalControlUnitObject(name, _dev)
 {
 	dev = _dev;
@@ -416,11 +427,6 @@ ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, ThermalRegu
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
-int ThermalControlUnitScenario::getScenarioCount() const
-{
-	return scenarios.count();
-}
-
 int ThermalControlUnitScenario::getScenarioIndex() const
 {
 	return to_apply[SCENARIO_INDEX].toInt();
@@ -428,27 +434,34 @@ int ThermalControlUnitScenario::getScenarioIndex() const
 
 void ThermalControlUnitScenario::setScenarioIndex(int index)
 {
-	if (to_apply[SCENARIO_INDEX].toInt() == index || index < 0 || index >= scenarios.count())
+	if (to_apply[SCENARIO_INDEX].toInt() == index || index < 0 || index >= scenarios->getSize())
 		return;
 
 	to_apply[SCENARIO_INDEX] = index;
 	emit scenarioChanged();
 }
 
+ObjectListModel *ThermalControlUnitScenario::getScenarios() const
+{
+	// TODO: we remove the const because it produces an error when we export the
+	// type to the qml engine. Find a solution.
+	return const_cast<ObjectListModel*>(scenarios);
+}
+
 int ThermalControlUnitScenario::getScenarioId() const
 {
-	return scenarios[to_apply[SCENARIO_INDEX].toInt()].first;
+	return scenarios->getObject(to_apply[SCENARIO_INDEX].toInt())->getObjectId();
 }
 
 QString ThermalControlUnitScenario::getScenarioDescription() const
 {
-	return scenarios[to_apply[SCENARIO_INDEX].toInt()].second;
+	return scenarios->getObject(to_apply[SCENARIO_INDEX].toInt())->getName();
 }
 
 void ThermalControlUnitScenario::apply()
 {
 	current = to_apply;
-	dev->setScenario(scenarios[to_apply[SCENARIO_INDEX].toInt()].first);
+	dev->setScenario(getScenarioId());
 }
 
 void ThermalControlUnitScenario::valueReceived(const DeviceValues &values_list)
@@ -456,9 +469,9 @@ void ThermalControlUnitScenario::valueReceived(const DeviceValues &values_list)
 	if (values_list.contains(ThermalDevice99Zones::DIM_SCENARIO))
 	{
 		int val = values_list[ThermalDevice99Zones::DIM_SCENARIO].toInt();
-		for (int i = 0; i < scenarios.length(); ++i)
+		for (int i = 0; i < scenarios->getSize(); ++i)
 		{
-			if (scenarios[i].first == val)
+			if (scenarios->getObject(i)->getObjectId() == val)
 			{
 				qDebug() << "ThermalControlUnitScenario scenario changed:" << val;
 				current[SCENARIO_INDEX] = i;
@@ -468,4 +481,10 @@ void ThermalControlUnitScenario::valueReceived(const DeviceValues &values_list)
 			}
 		}
 	}
+}
+
+ThermalRegulationProgram::ThermalRegulationProgram(int number, const QString &name)
+{
+	program_number = number;
+	program_name = name;
 }
