@@ -28,7 +28,7 @@ MenuElement {
         hasChild: true
         onClicked: {
             state = "selected"
-            element.loadElement("AmplifierSettings.qml", "impostazioni", undefined)
+            element.loadElement("AmplifierSettings.qml", qsTr("settings"))
         }
     }
 }

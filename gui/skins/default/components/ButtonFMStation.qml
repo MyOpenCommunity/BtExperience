@@ -26,13 +26,6 @@ Image {
 
     states: [
         State {
-            name: ""
-            PropertyChanges {
-                target: savedStation
-                visible: false
-            }
-        },
-        State {
             name: "playing"
             PropertyChanges {
                 target: savedStation
