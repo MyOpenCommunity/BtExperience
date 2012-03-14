@@ -94,5 +94,20 @@ Image {
         id: constants
     }
 
+    states: [
+        State {
+            name: "alert"
+
+            PropertyChanges {
+                target: alert
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: blackBg
+                opacity: 0.85
+            }
+        }
+    ]
 }
 
