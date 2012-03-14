@@ -19,8 +19,9 @@ MenuElement {
 
     function showAlarmLog(name) {
         system.loadElement("AntintrusionAlarms.qml", system.alarmLogTitle, privateProps.model.alarms)
-        if (privateProps.currentElement != 1)
+        if (privateProps.currentElement != 1) {
             privateProps.currentElement = 1
+        }
     }
 
     Component.onCompleted: privateProps.setScenarioDescription()
