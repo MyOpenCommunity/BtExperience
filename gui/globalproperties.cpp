@@ -3,6 +3,7 @@
 
 #include <QTimer>
 #include <QDateTime>
+#include <QScreen>
 
 
 GlobalProperties::GlobalProperties()
@@ -19,7 +20,7 @@ GlobalProperties::GlobalProperties()
 int GlobalProperties::getMainWidth() const
 {
 #ifdef Q_WS_QWS
-	return Screen::instance()->width();
+	return QScreen::instance()->width();
 #else
 	return MAIN_WIDTH;
 #endif
