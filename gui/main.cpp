@@ -70,6 +70,7 @@ void setupLogger(QString log_file)
 }
 
 
+#if USE_OPENGL
 void setupOpenGL(QDeclarativeView *v)
 {
 	QGLFormat f = QGLFormat::defaultFormat();
@@ -84,6 +85,7 @@ void setupOpenGL(QDeclarativeView *v)
 	v->setRenderHint(QPainter::HighQualityAntialiasing, true);
 	v->setRenderHint(QPainter::TextAntialiasing, true);
 }
+#endif
 
 
 int main(int argc, char *argv[])
