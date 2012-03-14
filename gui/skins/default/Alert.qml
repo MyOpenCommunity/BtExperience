@@ -5,7 +5,7 @@ Column {
     id: alert
     property alias message: text.text
     property Item source: null
-    signal hideAlert
+    signal closeAlert
     width: 212
 
     Text {
@@ -48,14 +48,14 @@ Column {
         onOkClicked: {
             source.alertOkClicked()
             source = null
-            alert.hideAlert()
+            alert.closeAlert()
         }
 
         onCancelClicked: {
             if (source.alertCancelClicked)
                 source.alertCancelClicked()
             source = null
-            alert.hideAlert()
+            alert.closeAlert()
         }
     }
 }

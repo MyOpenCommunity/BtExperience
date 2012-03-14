@@ -82,21 +82,14 @@ MenuElement {
         // Private API
         // Callbacks for the keypad management
         function connectKeyPad() {
-            pageObject.keypadObject.textInsertedChanged.connect(handleTextInserted)
+            popupLoader.item.textInsertedChanged.connect(handleTextInserted)
             model.codeAccepted.connect(handleCodeAccepted)
             model.codeRefused.connect(handleCodeRefused)
             model.codeTimeout.connect(handleCodeTimeout)
         }
 
-        function disconnectKeyPad() {
-            pageObject.keypadObject.textInsertedChanged.disconnect(handleTextInserted)
-            model.codeAccepted.disconnect(handleCodeAccepted)
-            model.codeRefused.disconnect(handleCodeRefused)
-            model.codeTimeout.disconnect(handleCodeTimeout)
-        }
-
         function handleTextInserted() {
-            var keypad = pageObject.keypadObject
+            var keypad = popupLoader.item
             if (keypad.textInserted.length >= 5) {
                 if (actionPartialize)
                     model.requestPartialization(keypad.textInserted)
@@ -106,25 +99,24 @@ MenuElement {
             }
         }
 
+        // Callbacks called from the model
         function handleCodeAccepted() {
-            keypad.state = "ok"
+            popupLoader.item.state = "ok"
             keypadTimer.start()
         }
 
         function handleCodeRefused() {
-            keypad.state = "error"
+            popupLoader.item.state = "error"
             keypadTimer.start()
         }
 
         function handleCodeTimeout() {
             pageObject.closeKeyPad()
-            disconnectKeyPad()
         }
 
         function finalizeAction() {
-            if (pageObject.keypadObject.state === "ok") {
+            if (popupLoader.item.state === "ok") {
                 pageObject.closeKeyPad()
-                disconnectKeyPad()
             }
             else
                 pageObject.resetKeyPad()
@@ -139,6 +131,16 @@ MenuElement {
             name: system.alarmLogTitle
             hasChild: true
             onClicked: showAlarmLog()
+
+            Rectangle {
+                id: registerDarkRect
+                z: 1
+                anchors.fill: parent
+                color: "black"
+                opacity: 0.7
+                visible: false
+                MouseArea { anchors.fill: parent } // block the mouse clicks
+            }
         }
         MenuItem {
             id: systemItem
@@ -185,6 +187,7 @@ MenuElement {
                 color: "black"
                 opacity: 0.7
                 visible: false
+                MouseArea { anchors.fill: parent } // block the mouse clicks
             }
 
             Text {
