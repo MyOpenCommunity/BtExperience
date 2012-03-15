@@ -7,6 +7,9 @@ MenuElement {
     width: 212
 
     property int maxHeight: 300
+    // cannot export categories only, otherwise menus that use this component
+    // will have one page more. I don't understand why.
+    property alias paginatorModel: modelList
 
     onChildDestroyed: {
         itemList.currentIndex = -1
