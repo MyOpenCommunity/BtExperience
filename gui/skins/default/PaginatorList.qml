@@ -33,22 +33,27 @@ MenuElement {
         model: modelList
     }
 
-    property int elementsOnPage: maxHeight / 50
+    QtObject {
+        id: privateProps
+        property int elementsOnPage: maxHeight / 50
+    }
+
 
     ObjectModel {
         id: modelList
-        categories: [ObjectInterface.Lighting]//, ObjectInterface.ThermalRegulation]
-        range: [0, elementsOnPage]
+        categories: [ObjectInterface.Lighting]
+        range: [0, privateProps.elementsOnPage]
     }
 
     Paginator {
         id: paginator
         anchors.top: itemList.bottom
-        pages: modelList.size % elementsOnPage ?
-                   modelList.size / elementsOnPage + 1 : modelList.size / elementsOnPage
+        pages: modelList.size % privateProps.elementsOnPage ?
+                   modelList.size / privateProps.elementsOnPage + 1 :
+                   modelList.size / privateProps.elementsOnPage
 
         onPageChanged: {
-            modelList.range = [(page - 1) * elementsOnPage, page * elementsOnPage]
+            modelList.range = [(page - 1) * privateProps.elementsOnPage, page * privateProps.elementsOnPage]
         }
     }
 }
