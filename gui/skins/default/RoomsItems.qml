@@ -32,28 +32,21 @@ MenuElement {
     ListModel {
         id: modelList
         ListElement {
-            name: "generals"
-            componentFile: "SettingsGenerals.qml"
+            name: "Aggiungi nuova stanza"
+            componentFile: ""
+        }
+
+        ListElement {
+            name: "Cucina"
+            componentFile: "RoomModify.qml"
         }
         ListElement {
-            name: "profiles"
-            componentFile:""
+            name: "Camera ragazzi"
+            componentFile: "RoomModify.qml"
         }
         ListElement {
-            name: "rooms"
-            componentFile:"Floor.qml"
-        }
-        ListElement {
-            name: "alarm clock"
-            componentFile:""
-        }
-        ListElement {
-            name: "notifications"
-            componentFile:""
-        }
-        ListElement {
-            name: "multimedia"
-            componentFile:""
+            name: "box"
+            componentFile: "RoomModify.qml"
         }
     }
 }

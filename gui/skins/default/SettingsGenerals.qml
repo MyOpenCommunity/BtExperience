@@ -32,27 +32,27 @@ MenuElement {
     ListModel {
         id: modelList
         ListElement {
-            name: "generals"
-            componentFile: "SettingsGenerals.qml"
-        }
-        ListElement {
-            name: "profiles"
+            name: "version"
             componentFile:""
         }
         ListElement {
-            name: "rooms"
-            componentFile:"Floor.qml"
-        }
-        ListElement {
-            name: "alarm clock"
+            name: "date & time"
             componentFile:""
         }
         ListElement {
-            name: "notifications"
+            name: "network"
             componentFile:""
         }
         ListElement {
-            name: "multimedia"
+            name: "display"
+            componentFile: "SettingsDisplay.qml"
+        }
+        ListElement {
+            name: "international"
+            componentFile:""
+        }
+        ListElement {
+            name: "password"
             componentFile:""
         }
     }

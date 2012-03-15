@@ -32,28 +32,12 @@ MenuElement {
     ListModel {
         id: modelList
         ListElement {
-            name: "generals"
-            componentFile: "SettingsGenerals.qml"
+            name: "Piano terra"
+            componentFile: "RoomsItems.qml"
         }
         ListElement {
-            name: "profiles"
-            componentFile:""
-        }
-        ListElement {
-            name: "rooms"
-            componentFile:"Floor.qml"
-        }
-        ListElement {
-            name: "alarm clock"
-            componentFile:""
-        }
-        ListElement {
-            name: "notifications"
-            componentFile:""
-        }
-        ListElement {
-            name: "multimedia"
-            componentFile:""
+            name: "Primo piano"
+            componentFile: "RoomsItems.qml"
         }
     }
 }

@@ -32,28 +32,24 @@ MenuElement {
     ListModel {
         id: modelList
         ListElement {
-            name: "generals"
-            componentFile: "SettingsGenerals.qml"
+            name: "brightness"
         }
         ListElement {
-            name: "profiles"
-            componentFile:""
+            name: "contrast"
         }
         ListElement {
-            name: "rooms"
-            componentFile:"Floor.qml"
+            name: "screensaver"
+            componentFile: "ScreenSaverList.qml"
         }
         ListElement {
-            name: "alarm clock"
-            componentFile:""
+            name: "calibration"
         }
         ListElement {
-            name: "notifications"
-            componentFile:""
+            name: "clean"
         }
         ListElement {
-            name: "multimedia"
-            componentFile:""
+            name: "transition effects"
+            componentFile: "TransitionEffects.qml"
         }
     }
 }
