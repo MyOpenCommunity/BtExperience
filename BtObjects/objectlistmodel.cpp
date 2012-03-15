@@ -105,7 +105,7 @@ FilterListModel::FilterListModel()
 
 int FilterListModel::getSize() const
 {
-	return getSource()->getSize();
+	return counter;
 }
 
 void FilterListModel::setSource(ObjectListModel *s)
