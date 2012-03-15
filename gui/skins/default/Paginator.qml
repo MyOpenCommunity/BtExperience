@@ -5,12 +5,16 @@ Image {
     width: 210 // 5 ButtonPagination in row
     height: 35
     source: "images/common/bg_paginazione.png"
+    visible: pages > 1
 
-    property int pages: 10
+    property int pages: 6
+    signal pageChanged(int page)
 
     QtObject {
         id: privateProps
         property int currentPage: 1
+        onCurrentPageChanged: paginator.pageChanged(currentPage)
+
         // lower page visible (inclusive)
         property int windowLower: 1
         // upper page visible (inclusive)
@@ -47,8 +51,10 @@ Image {
         if (privateProps.windowUpper + delta <= paginator.pages)
             privateProps.windowUpper += delta
 
-        var windowLength = 5
-        if (privateProps.windowLower === 1)
+        var windowLength = 0
+        if (paginator.pages <= 5)
+            windowLength = 5
+        else if (privateProps.windowLower === 1)
             windowLength = 4
         else if (privateProps.windowUpper === paginator.pages)
             windowLength = 4
@@ -145,7 +151,7 @@ Image {
     states: [
         State {
             name: "right_direction"
-            when: privateProps.windowLower === 1
+            when: paginator.pages > 5 && privateProps.windowLower === 1
             PropertyChanges {
                 target: rightArrow
                 visible: true
@@ -153,7 +159,7 @@ Image {
         },
         State {
             name: "left_direction"
-            when: privateProps.windowUpper === paginator.pages
+            when: paginator.pages > 5 && privateProps.windowUpper === paginator.pages
             PropertyChanges {
                 target: leftArrow
                 visible: true
@@ -161,7 +167,7 @@ Image {
         },
         State {
             name: "both_directions"
-            when: privateProps.windowUpper - privateProps.windowLower + 1 === 3
+            when: paginator.pages > 5 && privateProps.windowUpper - privateProps.windowLower + 1 === 3
             PropertyChanges {
                 target: rightArrow
                 visible: true
