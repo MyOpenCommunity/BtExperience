@@ -25,3 +25,4 @@ MenuContainer components/MenuContainer.qml
 Constants components/Constants.qml
 ButtonPagination components/ButtonPagination.qml
 RoomItems components/RoomItems.qml
+Alert components/Alert.qml

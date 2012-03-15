@@ -12,22 +12,29 @@ Image {
     property alias lightFont: lightFont
     property alias regularFont: regularFont
     property alias semiBoldFont: semiBoldFont
-
-    property alias alertMessage: alert.message
+    property alias popupLoader: popupLoader
 
     FontLoader { id: lightFont; source: "MyriadPro-Light.otf" }
     FontLoader { id: regularFont; source: "MyriadPro-Regular.otf" }
     FontLoader { id: semiBoldFont; source: "MyriadPro-Semibold.otf" }
 
+    // The alert management and API.
     function showAlert(sourceElement, message) {
-        alert.hideAlert.connect(hideAlert)
-        alert.message = message
-        alert.source = sourceElement
+        popupLoader.sourceComponent = alertComponent
+        popupLoader.item.closeAlert.connect(closeAlert)
+        popupLoader.item.message = message
+        popupLoader.item.source = sourceElement
         page.state = "alert"
     }
 
-    function hideAlert() {
-        page.state = ""
+    function closeAlert() {
+        closePopup()
+    }
+
+    Component {
+        id: alertComponent
+        Alert {
+        }
     }
 
     // The hooks called by the Stack javascript manager. See also PageAnimation
@@ -60,6 +67,7 @@ Image {
             animation.popOut.start()
     }
 
+    // The management for popups using by alerts, keypad, etc..
     Rectangle {
         id: blackBg
         anchors.fill: parent
@@ -77,22 +85,38 @@ Image {
         }
     }
 
-    Alert {
-        id: alert
+    Loader {
+        id: popupLoader
         opacity: 0
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
         z: 10
-
         Behavior on opacity {
             NumberAnimation { duration: constants.alertTransitionDuration }
         }
+    }
 
+    function closePopup() {
+        page.state = ""
+        popupLoader.sourceComponent = undefined
     }
 
     Constants {
         id: constants
     }
 
+
+    states: [
+        State {
+            name: "alert"
+            PropertyChanges { target: popupLoader; opacity: 1 }
+            PropertyChanges { target: blackBg; opacity: 0.85 }
+        },
+        State {
+            name: "popup"
+            PropertyChanges { target: popupLoader; opacity: 1 }
+            PropertyChanges { target: blackBg; opacity: 0.7 }
+        }
+    ]
 }
 
