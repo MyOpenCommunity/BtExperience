@@ -22,5 +22,16 @@ Image {
         onClicked: pageButton.clicked(pageButton.pageNumber)
     }
 
+    states: [
+        State {
+            name: "selected"
+            PropertyChanges {
+                target: label
+                color: "red"
+                font.bold: true
+            }
+        }
+    ]
+
     // TODO: states: pressed, released
 }
