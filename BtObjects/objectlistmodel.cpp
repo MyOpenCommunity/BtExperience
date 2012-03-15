@@ -129,6 +129,8 @@ void FilterListModel::setCategories(QVariantList cat)
 	if (cat == input_categories)
 		return;
 
+	input_categories = cat;
+
 	foreach (const QVariant &v, cat)
 		categories << v.toInt();
 
