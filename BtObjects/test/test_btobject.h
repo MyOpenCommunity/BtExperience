@@ -49,6 +49,7 @@ public:
 protected:
 	void compareClientCommand();
 	void flushCompressedFrames(device *dev);
+	void clearDeviceCache();
 
 	OpenServerMock *server;
 	OpenServerMock *server_compare;

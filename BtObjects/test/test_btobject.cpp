@@ -23,6 +23,7 @@
 #include "openserver_mock.h"
 #include "openclient.h"
 #include "device.h"
+#include "devices_cache.h"
 
 #include <frame_classes.h>
 
@@ -93,4 +94,9 @@ void TestBtObject::flushCompressedFrames(device *dev)
 {
 	dev->frame_compressor.flushCompressedFrames();
 	dev->request_compressor.flushCompressedFrames();
+}
+
+void TestBtObject::clearDeviceCache()
+{
+	bt_global::devices_cache.clear();
 }
