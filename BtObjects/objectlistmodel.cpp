@@ -251,4 +251,5 @@ ObjectInterface *FilterListModel::getObject(int row)
 void FilterListModel::remove(int index)
 {
 	removeRow(index);
+	invalidate();
 }
