@@ -45,19 +45,13 @@ MenuElement {
     ObjectModel {
         id: modelList
         categories: [ObjectInterface.Lighting]
-        range: [0, privateProps.elementsOnPage]
+        range: paginator.computePageRange(paginator.currentPage, privateProps.elementsOnPage)
     }
 
     Paginator {
         id: paginator
         anchors.top: itemList.bottom
-        pages: modelList.size % privateProps.elementsOnPage ?
-                   modelList.size / privateProps.elementsOnPage + 1 :
-                   modelList.size / privateProps.elementsOnPage
-
-        onPageChanged: {
-            modelList.range = [(page - 1) * privateProps.elementsOnPage, page * privateProps.elementsOnPage]
-        }
+        pages: paginator.computePagesFromModelSize(modelList.size, privateProps.elementsOnPage)
     }
 }
 

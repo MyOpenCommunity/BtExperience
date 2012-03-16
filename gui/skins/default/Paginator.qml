@@ -8,12 +8,22 @@ Image {
     visible: pages > 1
 
     property int pages: 6
-    signal pageChanged(int page)
+    property alias currentPage: privateProps.currentPage
+
+    function computePageRange(page, elementsOnPage) {
+        return [(page - 1) * elementsOnPage, page * elementsOnPage]
+    }
+
+    function computePagesFromModelSize(modelSize, elementsOnPage) {
+        var ret = modelSize % elementsOnPage ?
+               modelSize / elementsOnPage + 1 :
+               modelSize / elementsOnPage
+        return Math.floor(ret)
+    }
 
     QtObject {
         id: privateProps
         property int currentPage: 1
-        onCurrentPageChanged: paginator.pageChanged(currentPage)
 
         // lower page visible (inclusive)
         property int windowLower: 1
