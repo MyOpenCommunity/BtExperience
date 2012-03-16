@@ -46,6 +46,9 @@ int main(int argc, char *argv[])
 	TestAmplifier test_amplifier;
 	test_list << &test_amplifier;
 
+	TestSourceAux test_source_aux;
+	test_list << &test_source_aux;
+
 	TestThermalProbes test_thermal_probes;
 	test_list << &test_thermal_probes;
 

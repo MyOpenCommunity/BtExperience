@@ -7,6 +7,8 @@
 
 class QDomNode;
 class AmplifierDevice;
+class SourceDevice;
+class RadioSourceDevice;
 
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node);
@@ -81,9 +83,12 @@ public:
 // internal class
 class SourceBase : public ObjectInterface
 {
+	friend class TestSourceBase;
+
 	Q_OBJECT
+	Q_PROPERTY(bool active READ isActive NOTIFY activeChanged)
 	Q_PROPERTY(QList<int> activeAreas READ getActiveAreas NOTIFY activeAreasChanged)
-	Q_PROPERTY(int currentTrack READ getCurrentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
+	Q_PROPERTY(int currentTrack READ getCurrentTrack NOTIFY currentTrackChanged)
 
 public:
 	virtual QString getObjectKey() const { return QString(); }
@@ -102,23 +107,31 @@ public:
 
 	QList<int> getActiveAreas() const;
 
+	bool isActive() const;
+
 	int getCurrentTrack() const;
-	void setCurrentTrack(int track);
 
 public slots:
-	void setActive(int area, bool status);
+	void setActive(int area);
 	void previousTrack();
 	void nextTrack();
 
 signals:
+	void activeChanged();
 	void activeAreasChanged();
 	void currentTrackChanged();
 
 protected:
-	SourceBase(int id, QString name);
+	SourceBase(SourceDevice *d, QString name);
+
+private slots:
+	void valueReceived(const DeviceValues &values_list);
 
 private:
 	QString name;
+	SourceDevice *dev;
+	int track;
+	QList<int> active_areas;
 };
 
 
@@ -127,7 +140,7 @@ class SourceAux : public SourceBase
 	Q_OBJECT
 
 public:
-	SourceAux(int id, QString name);
+	SourceAux(SourceDevice *d, QString name);
 };
 
 
@@ -138,7 +151,7 @@ class SourceRadio : public SourceBase
 	Q_PROPERTY(int currentFrequency READ getCurrentFrequency NOTIFY currentFrequencyChanged)
 
 public:
-	SourceRadio(int id, QString name);
+	SourceRadio(RadioSourceDevice *d, QString name);
 
 	int getCurrentStation() const;
 	void setCurrentStation(int station);

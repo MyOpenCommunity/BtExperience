@@ -23,8 +23,42 @@
 
 #include "test_btobject.h"
 
+class SourceBase;
+class SourceDevice;
 class Amplifier;
 class AmplifierDevice;
+
+
+class TestSourceBase : public TestBtObject
+{
+	Q_OBJECT
+
+protected:
+	void initObjects(SourceDevice *dev, SourceBase *obj);
+
+private slots:
+	void cleanup();
+
+	void testSetActive();
+	void testPreviousTrack();
+	void testNextTrack();
+
+	void testReceiveAreaChanged();
+	void testReceiveCurrentTrack();
+
+private:
+	SourceBase *obj;
+	SourceDevice *dev;
+};
+
+
+class TestSourceAux : public TestSourceBase
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+};
 
 
 class TestAmplifier : public TestBtObject

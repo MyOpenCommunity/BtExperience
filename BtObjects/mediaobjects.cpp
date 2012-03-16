@@ -1,5 +1,6 @@
 #include "mediaobjects.h"
 #include "media_device.h"
+#include "devices_cache.h"
 
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
@@ -8,11 +9,14 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 
 	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
 
+	RadioSourceDevice *radio = bt_global::add_device_to_cache(new RadioSourceDevice("1"));
+	SourceDevice *touch = bt_global::add_device_to_cache(new SourceDevice("3"));
+
 	objects << new SoundAmbient(2, "Cucina");
 	objects << new SoundAmbient(3, "Salotto");
 	objects << new SoundGeneralAmbient("Generale");
-	objects << new SourceRadio(1, "Radio");
-	objects << new SourceAux(3, "Touch");
+	objects << new SourceRadio(radio, "Radio");
+	objects << new SourceAux(touch, "Touch");
 	objects << new Amplifier(2, "Amplificatore 2", AmplifierDevice::createDevice("22"));
 	objects << new Amplifier(2, "Amplificatore 3", AmplifierDevice::createDevice("23"));
 	objects << new Amplifier(2, "Generale", AmplifierDevice::createDevice("#2"),
@@ -64,46 +68,90 @@ SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
 }
 
 
-SourceBase::SourceBase(int id, QString _name)
+SourceBase::SourceBase(SourceDevice *d, QString _name)
 {
 	name = _name;
+	dev = d;
+	track = 0;
 }
 
 QList<int> SourceBase::getActiveAreas() const
 {
-	return QList<int>();
+	return active_areas;
 }
 
-void SourceBase::setActive(int area, bool active)
+void SourceBase::setActive(int area)
 {
+	dev->turnOn(QString::number(area));
+}
+
+bool SourceBase::isActive() const
+{
+	return dev->isActive();
 }
 
 int SourceBase::getCurrentTrack() const
 {
-	return 0;
-}
-
-void SourceBase::setCurrentTrack(int track)
-{
+	return track;
 }
 
 void SourceBase::previousTrack()
 {
+	dev->prevTrack();
 }
 
 void SourceBase::nextTrack()
 {
+	dev->nextTrack();
+}
+
+void SourceBase::valueReceived(const DeviceValues &values_list)
+{
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		if (it.key() == SourceDevice::DIM_TRACK)
+		{
+			int val = it.value().toInt();
+			if (track != val)
+			{
+				track = val;
+				emit currentTrackChanged();
+			}
+		}
+		else if (it.key() == SourceDevice::DIM_AREAS_UPDATED)
+		{
+			QList<int> val;
+
+			for (int i = 0; i <= 8; ++i)
+				if (dev->isActive(QString::number(i)))
+					val.append(i);
+
+			if (active_areas != val)
+			{
+				// only emit activeChanged() after assigning active_areas
+				bool active_changed = val.count() == 0 || active_areas.count() == 0;
+
+				active_areas = val;
+				emit activeAreasChanged();
+
+				if (active_changed)
+					emit activeChanged();
+			}
+		}
+		++it;
+	}
 }
 
 
-SourceAux::SourceAux(int id, QString name) :
-	SourceBase(id, name)
+SourceAux::SourceAux(SourceDevice *d, QString name) :
+	SourceBase(d, name)
 {
 }
 
 
-SourceRadio::SourceRadio(int id, QString name) :
-	SourceBase(id, name)
+SourceRadio::SourceRadio(RadioSourceDevice *d, QString name) :
+	SourceBase(d, name)
 {
 }
 
