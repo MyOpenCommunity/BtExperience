@@ -139,7 +139,7 @@ MenuElement {
         Image {
             source: "images/common/btn_OKAnnulla.png"
             height: 35
-            width: img.width - paginator.width
+            width: img.width - paginator.width * paginator.visible
 
             Text {
                 text: qsTr("Remove all")
