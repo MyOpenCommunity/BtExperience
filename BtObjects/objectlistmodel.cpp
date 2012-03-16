@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QStringList>
+#include <QTimer>
 
 ObjectListModel *FilterListModel::global_source = 0;
 
@@ -110,6 +111,9 @@ int FilterListModel::getSize() const
 
 void FilterListModel::setSource(ObjectListModel *s)
 {
+	if (s == local_source)
+		return;
+
 	local_source = s;
 	setSourceModel(local_source);
 }
@@ -208,6 +212,8 @@ bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source
 
 	if (source_row == 0) // restart from the beginning
 		counter = 0;
+	if (source_row == getSource()->getSize() - 1)
+		QTimer::singleShot(0, const_cast<FilterListModel *>(this), SIGNAL(sizeChanged()));
 
 	QModelIndex idx = getSource()->index(source_row, 0, source_parent);
 

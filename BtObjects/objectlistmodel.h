@@ -76,7 +76,7 @@ class FilterListModel : public QSortFilterProxyModel
 	Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
 	Q_PROPERTY(QVariantList range READ getRange WRITE setRange NOTIFY rangeChanged)
 	Q_PROPERTY(ObjectListModel* source READ getSource WRITE setSource NOTIFY sourceChanged)
-	Q_PROPERTY(int size READ getSize CONSTANT)
+	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
 
 public:
 	FilterListModel();
@@ -112,6 +112,7 @@ signals:
 	void filtersChanged();
 	void rangeChanged();
 	void sourceChanged();
+	void sizeChanged();
 
 protected:
 	bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
