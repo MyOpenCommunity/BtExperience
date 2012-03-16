@@ -109,7 +109,7 @@ MenuElement {
                 }
                 Text {
                     height: 60
-                    text: qsTr("Page " + paginator.currentPage + " of " + paginator.pages)
+                    text: qsTr("Page " + paginator.currentPage + " of " + paginator.totalPages)
                     color: "#4F4F4F"
                 }
             }
@@ -133,7 +133,7 @@ MenuElement {
         anchors.top: img.bottom
         Paginator {
             id: paginator
-            pages: paginator.computePagesFromModelSize(modelList.size, privateProps.elementsOnPage)
+            totalPages: paginator.computePagesFromModelSize(modelList.size, privateProps.elementsOnPage)
         }
 
         Image {

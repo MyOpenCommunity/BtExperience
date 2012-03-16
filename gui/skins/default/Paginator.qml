@@ -5,9 +5,9 @@ Image {
     width: 210 // 5 ButtonPagination in row
     height: 35
     source: "images/common/bg_paginazione.png"
-    visible: pages > 1
+    visible: totalPages > 1
 
-    property int pages: 6
+    property int totalPages: 6
     property alias currentPage: privateProps.currentPage
 
     function computePageRange(page, elementsOnPage) {
@@ -29,15 +29,19 @@ Image {
         property int windowLower: 1
         // upper page visible (inclusive)
         property int windowUpper: 5
+
+        function needPagination() {
+            return paginator.totalPages > 5
+        }
     }
 
-    onPagesChanged: {
-        if (privateProps.currentPage > paginator.pages && paginator.pages > 0)
-            privateProps.currentPage = paginator.pages
+    onTotalPagesChanged: {
+        if (privateProps.currentPage > paginator.totalPages && paginator.totalPages > 0)
+            privateProps.currentPage = paginator.totalPages
     }
 
     Component.onCompleted: {
-        if (pages * 42 > paginator.width)
+        if (totalPages * 42 > paginator.width)
             privateProps.windowUpper = 4
         showButtons()
     }
@@ -57,24 +61,24 @@ Image {
     // Window length is adjusted based depending on the position of the
     // current page and the window itself
     function choosePage(delta) {
-        if (privateProps.currentPage + delta >= 1 && privateProps.currentPage + delta <= pages)
+        if (privateProps.currentPage + delta >= 1 && privateProps.currentPage + delta <= totalPages)
             privateProps.currentPage += delta
 
         if (privateProps.windowLower + delta >= 1)
             privateProps.windowLower += delta
 
-        if (privateProps.windowUpper + delta <= paginator.pages)
+        if (privateProps.windowUpper + delta <= paginator.totalPages)
             privateProps.windowUpper += delta
 
-        var windowLength = 0
-        if (paginator.pages <= 5)
+        var windowLength = 3 // need both buttons
+        if (!privateProps.needPagination())
             windowLength = 5
-        else if (privateProps.windowLower === 1)
-            windowLength = 4
-        else if (privateProps.windowUpper === paginator.pages)
-            windowLength = 4
-        else if (paginator.pages > 5)
-            windowLength = 3
+        else {
+            if (privateProps.windowLower === 1)
+                windowLength = 4
+            else if (privateProps.windowUpper === paginator.totalPages)
+                windowLength = 4
+        }
 
         console.log("computed window length: " + windowLength)
 
@@ -84,8 +88,8 @@ Image {
             privateProps.windowUpper = privateProps.windowLower + windowLength - 1
 
         // clamp window borders
-        if (privateProps.windowUpper > paginator.pages)
-            privateProps.windowUpper = paginator.pages
+        if (privateProps.windowUpper > paginator.totalPages)
+            privateProps.windowUpper = paginator.totalPages
         if (privateProps.windowLower < 1)
             privateProps.windowLower = 1
 
@@ -125,7 +129,7 @@ Image {
         }
 
         Repeater {
-            model: paginator.pages
+            model: paginator.totalPages
             ButtonPagination {
                 pageNumber: index + 1
                 onClicked: privateProps.currentPage = pageNumber
@@ -166,7 +170,7 @@ Image {
     states: [
         State {
             name: "right_direction"
-            when: paginator.pages > 5 && privateProps.windowLower === 1
+            when: privateProps.needPagination() && privateProps.windowLower === 1
             PropertyChanges {
                 target: rightArrow
                 visible: true
@@ -174,7 +178,7 @@ Image {
         },
         State {
             name: "left_direction"
-            when: paginator.pages > 5 && privateProps.windowUpper === paginator.pages
+            when: privateProps.needPagination() && privateProps.windowUpper === paginator.totalPages
             PropertyChanges {
                 target: leftArrow
                 visible: true
@@ -182,7 +186,7 @@ Image {
         },
         State {
             name: "both_directions"
-            when: paginator.pages > 5 && privateProps.windowUpper - privateProps.windowLower + 1 === 3
+            when: privateProps.needPagination() && privateProps.windowUpper - privateProps.windowLower + 1 === 3
             PropertyChanges {
                 target: rightArrow
                 visible: true

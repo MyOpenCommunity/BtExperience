@@ -51,7 +51,7 @@ MenuElement {
     Paginator {
         id: paginator
         anchors.top: itemList.bottom
-        pages: paginator.computePagesFromModelSize(modelList.size, privateProps.elementsOnPage)
+        totalPages: paginator.computePagesFromModelSize(modelList.size, privateProps.elementsOnPage)
     }
 }
 
