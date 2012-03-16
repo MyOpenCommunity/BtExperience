@@ -3,8 +3,10 @@
 
 #include "objectinterface.h"
 #include "objectlistmodel.h"
+#include "device.h" // DeviceValues
 
 class QDomNode;
+class AmplifierDevice;
 
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node);
@@ -162,12 +164,14 @@ signals:
 
 class Amplifier : public ObjectInterface
 {
+	friend class TestAmplifier;
+
 	Q_OBJECT
 	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
 	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
 
 public:
-	Amplifier(int area, QString name, int object_id = ObjectInterface::IdSoundAmplifier);
+	Amplifier(int area, QString name, AmplifierDevice *d, int object_id = ObjectInterface::IdSoundAmplifier);
 
 	virtual QString getObjectKey() const { return key; }
 
@@ -193,9 +197,15 @@ signals:
 	void activeChanged();
 	void volumeChanged();
 
+private  slots:
+	void valueReceived(const DeviceValues &values_list);
+
 private:
+	AmplifierDevice *dev;
 	QString key, name;
 	int object_id;
+	bool active;
+	int volume;
 };
 
 #endif // MEDIAOBJECTS_H

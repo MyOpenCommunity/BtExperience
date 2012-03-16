@@ -27,6 +27,7 @@
 #include <logger.h>
 
 #include "test_antintrusion_object.h"
+#include "test_media_objects.h"
 #include "test_thermalprobes_object.h"
 #include "test_thermal_objects.h"
 #include "main.h"
@@ -41,6 +42,9 @@ int main(int argc, char *argv[])
 
 	TestAntintrusionSystem test_antintrusion_system;
 	test_list << &test_antintrusion_system;
+
+	TestAmplifier test_amplifier;
+	test_list << &test_amplifier;
 
 	TestThermalProbes test_thermal_probes;
 	test_list << &test_thermal_probes;
