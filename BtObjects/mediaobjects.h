@@ -141,7 +141,7 @@ signals:
 protected:
 	SourceBase(SourceDevice *d, QString name);
 
-private slots:
+protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
@@ -163,32 +163,53 @@ public:
 
 class SourceRadio : public SourceBase
 {
+	friend class TestSourceRadio;
+
 	Q_OBJECT
 	Q_PROPERTY(int currentStation READ getCurrentStation WRITE setCurrentStation NOTIFY currentStationChanged)
 	Q_PROPERTY(int currentFrequency READ getCurrentFrequency NOTIFY currentFrequencyChanged)
+	Q_PROPERTY(QString rdsText READ getRdsText NOTIFY rdsTextChanged)
 
 public:
 	SourceRadio(RadioSourceDevice *d, QString name);
 
-	int getCurrentStation() const;
+	int getCurrentStation() const { return getCurrentTrack(); }
 	void setCurrentStation(int station);
 
 	int getCurrentFrequency() const;
 
+	QString getRdsText() const;
+
 public slots:
 	void previousStation();
 	void nextStation();
+	void saveStation(int station);
+
+	void startRdsUpdates();
+	void stopRdsUpdates();
 
 	// changes frequency by steps * 0.05 MHz
 	void frequencyUp(int steps);
 	void frequencyDown(int steps);
 
+	// automatic scan up/down; sets frequency to -1 during scanning
 	void searchUp();
 	void searchDown();
 
 signals:
 	void currentStationChanged();
 	void currentFrequencyChanged();
+	void rdsTextChanged();
+
+private slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+	void requestFrequency();
+
+private:
+	RadioSourceDevice *dev;
+	int frequency;
+	QString rds_text;
+	QTimer request_frequency;
 };
 
 

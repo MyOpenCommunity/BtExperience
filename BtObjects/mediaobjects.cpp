@@ -2,6 +2,8 @@
 #include "media_device.h"
 #include "devices_cache.h"
 
+#define REQUEST_FREQUENCY_TIME 1000
+
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 {
@@ -228,44 +230,114 @@ SourceAux::SourceAux(SourceDevice *d, QString name) :
 SourceRadio::SourceRadio(RadioSourceDevice *d, QString name) :
 	SourceBase(d, name)
 {
-}
+	dev = d;
 
-int SourceRadio::getCurrentStation() const
-{
-	return 0;
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
+	connect(this, SIGNAL(currentTrackChanged()), this, SIGNAL(currentStationChanged()));
+
+	request_frequency.setInterval(REQUEST_FREQUENCY_TIME);
+	request_frequency.setSingleShot(true);
+	connect(&request_frequency, SIGNAL(timeout()), this, SLOT(requestFrequency()));
 }
 
 void SourceRadio::setCurrentStation(int station)
 {
+	dev->setStation(QString::number(station));
 }
 
 int SourceRadio::getCurrentFrequency() const
 {
-	return 0;
+	return frequency;
+}
+
+QString SourceRadio::getRdsText() const
+{
+	return rds_text;
 }
 
 void SourceRadio::previousStation()
 {
+	dev->prevTrack();
 }
 
 void SourceRadio::nextStation()
 {
+	dev->nextTrack();
+}
+
+void SourceRadio::saveStation(int station)
+{
+	dev->saveStation(QString::number(station));
+}
+
+void SourceRadio::startRdsUpdates()
+{
+	dev->requestStartRDS();
+}
+
+void SourceRadio::stopRdsUpdates()
+{
+	dev->requestStopRDS();
 }
 
 void SourceRadio::frequencyUp(int steps)
 {
+	dev->frequenceUp(QString::number(steps));
+	request_frequency.start();
 }
 
 void SourceRadio::frequencyDown(int steps)
 {
+	dev->frequenceDown(QString::number(steps));
+	request_frequency.start();
 }
 
 void SourceRadio::searchUp()
 {
+	frequency = -1;
+	dev->frequenceUp();
+	emit currentFrequencyChanged();
 }
 
 void SourceRadio::searchDown()
 {
+	frequency = -1;
+	dev->frequenceDown();
+	emit currentFrequencyChanged();
+}
+
+void SourceRadio::requestFrequency()
+{
+	dev->requestFrequency();
+}
+
+void SourceRadio::valueReceived(const DeviceValues &values_list)
+{
+	SourceBase::valueReceived(values_list);
+
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		if (it.key() == RadioSourceDevice::DIM_FREQUENCY)
+		{
+			int val = it.value().toInt();
+			if (frequency != val)
+			{
+				frequency = val;
+				emit currentFrequencyChanged();
+			}
+		}
+		else if (it.key() == RadioSourceDevice::DIM_RDS)
+		{
+			QString val = it.value().toString();
+			if (rds_text != val)
+			{
+				rds_text = val;
+				emit rdsTextChanged();
+			}
+		}
+		++it;
+	}
 }
 
 
