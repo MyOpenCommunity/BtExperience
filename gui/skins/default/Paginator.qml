@@ -31,6 +31,11 @@ Image {
         property int windowUpper: 5
     }
 
+    onPagesChanged: {
+        if (privateProps.currentPage > paginator.pages && paginator.pages > 0)
+            privateProps.currentPage = paginator.pages
+    }
+
     Component.onCompleted: {
         if (pages * 42 > paginator.width)
             privateProps.windowUpper = 4
