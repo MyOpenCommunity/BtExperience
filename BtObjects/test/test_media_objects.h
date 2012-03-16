@@ -27,6 +27,28 @@ class SourceBase;
 class SourceDevice;
 class Amplifier;
 class AmplifierDevice;
+class SoundAmbient;
+
+
+class TestSoundAmbient : public TestBtObject
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+	void cleanup();
+
+	void testActiveAmplifiers();
+	void testActiveSource();
+
+private:
+	SourceDevice *srcd1, *srcd2;
+	AmplifierDevice *ampd22, *ampd23, *ampd33;
+
+	SoundAmbient *obj2, *obj3;
+	SourceBase *src1, *src2;
+	Amplifier *amp22, *amp23, *amp33;
+};
 
 
 class TestSourceBase : public TestBtObject

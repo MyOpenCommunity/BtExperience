@@ -12,58 +12,128 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 	RadioSourceDevice *radio = bt_global::add_device_to_cache(new RadioSourceDevice("1"));
 	SourceDevice *touch = bt_global::add_device_to_cache(new SourceDevice("3"));
 
-	objects << new SoundAmbient(2, "Cucina");
-	objects << new SoundAmbient(3, "Salotto");
+	QList<SourceBase *> sources;
+	QList<SoundAmbient *> ambients;
+
+	sources << new SourceRadio(radio, "Radio");
+	sources << new SourceAux(touch, "Touch");
+
+	QList<Amplifier *> amplifiers;
+
+	ambients << new SoundAmbient(2, "Cucina");
+	ambients << new SoundAmbient(3, "Salotto");
+
+	amplifiers << new Amplifier(2, "Amplificatore 2", AmplifierDevice::createDevice("22"));
+	amplifiers << new Amplifier(2, "Amplificatore 3", AmplifierDevice::createDevice("23"));
+	amplifiers << new Amplifier(2, "Generale", AmplifierDevice::createDevice("#2"),
+				    ObjectInterface::IdSoundAmplifierGeneral);
+	amplifiers << new Amplifier(3, "Amplificatore 2", AmplifierDevice::createDevice("32"));
+	amplifiers << new Amplifier(3, "Generale", AmplifierDevice::createDevice("#3"),
+				    ObjectInterface::IdSoundAmplifierGeneral);
+
+	// connect sources with ambients
+	foreach (SoundAmbient *ambient, ambients)
+		ambient->connectSources(sources);
+
+	// connect amplifiers with ambients
+	foreach (SoundAmbient *ambient, ambients)
+		ambient->connectAmplifiers(amplifiers);
+
+	foreach (Amplifier *amplifier, amplifiers)
+		objects << amplifier;
+	foreach (SourceBase *source, sources)
+		objects << source;
+	foreach (SoundAmbient *ambient, ambients)
+		objects << ambient;
+
 	objects << new SoundGeneralAmbient("Generale");
-	objects << new SourceRadio(radio, "Radio");
-	objects << new SourceAux(touch, "Touch");
-	objects << new Amplifier(2, "Amplificatore 2", AmplifierDevice::createDevice("22"));
-	objects << new Amplifier(2, "Amplificatore 3", AmplifierDevice::createDevice("23"));
-	objects << new Amplifier(2, "Generale", AmplifierDevice::createDevice("#2"),
-				 ObjectInterface::IdSoundAmplifierGeneral);
-	objects << new Amplifier(3, "Amplificatore 2", AmplifierDevice::createDevice("32"));
-	objects << new Amplifier(3, "Generale", AmplifierDevice::createDevice("#3"),
-				 ObjectInterface::IdSoundAmplifierGeneral);
 
 	return objects;
 }
 
 
-SoundAmbientBase::SoundAmbientBase(QString _key, QString _name)
+SoundAmbientBase::SoundAmbientBase(QString _name)
 {
-	key = _key;
 	name = _name;
 }
 
-ObjectListModel *SoundAmbientBase::getAmplifiers() const
+
+SoundAmbient::SoundAmbient(int _area, QString name) :
+	SoundAmbientBase(name)
 {
-	return NULL;
+	area = _area;
+	amplifier_count = 0;
+	current_source = NULL;
 }
 
-QObject *SoundAmbientBase::getGeneralAmplifier() const
+void SoundAmbient::connectSources(QList<SourceBase *> sources)
 {
-	return NULL;
+	foreach (SourceBase *source, sources)
+		QObject::connect(source, SIGNAL(activeAreasChanged()), this, SLOT(updateActiveSource()));
 }
 
-QObject *SoundAmbientBase::getCurrentSource() const
+void SoundAmbient::connectAmplifiers(QList<Amplifier *> amplifiers)
 {
-	return NULL;
+	foreach (Amplifier *amplifier, amplifiers)
+		if (amplifier->getArea() == getArea())
+			QObject::connect(amplifier, SIGNAL(activeChanged()), this, SLOT(updateActiveAmplifier()));
 }
 
-
-SoundAmbient::SoundAmbient(int area, QString name) :
-	SoundAmbientBase(QString::number(area), name)
+bool SoundAmbient::getHasActiveAmplifier() const
 {
+	return amplifier_count != 0;
 }
 
-bool SoundAmbient::getHasActiveAmplifier()
+int SoundAmbient::getArea() const
 {
-	return false;
+	return area;
+}
+
+QObject *SoundAmbient::getCurrentSource() const
+{
+	return current_source;
+}
+
+void SoundAmbient::updateActiveSource()
+{
+	SourceBase *source = static_cast<SourceBase *>(sender());
+
+	if (source->isActiveInArea(area))
+	{
+		current_source = source;
+		emit currentSourceChanged();
+	}
+	else if (source == current_source)
+	{
+		current_source = NULL;
+		emit currentSourceChanged();
+	}
+}
+
+void SoundAmbient::updateActiveAmplifier()
+{
+	Amplifier *amplifier = static_cast<Amplifier *>(sender());
+	int count = amplifier_count;
+
+	if (amplifier->isActive())
+	{
+		amplifier_count += 1;
+
+		if (count == 0)
+			emit activeAmplifierChanged();
+	}
+	else
+	{
+		amplifier_count -= 1;
+
+		if (amplifier_count == 0)
+			emit activeAmplifierChanged();
+	}
 }
 
 
 SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
-	SoundAmbientBase(QString(), name)
+	SoundAmbientBase(name)
 {
 }
 
@@ -87,7 +157,12 @@ void SourceBase::setActive(int area)
 
 bool SourceBase::isActive() const
 {
-	return dev->isActive();
+	return active_areas.count() != 0;
+}
+
+bool SourceBase::isActiveInArea(int area) const
+{
+	return active_areas.contains(area);
 }
 
 int SourceBase::getCurrentTrack() const
@@ -194,10 +269,10 @@ void SourceRadio::searchDown()
 }
 
 
-Amplifier::Amplifier(int area, QString _name, AmplifierDevice *d, int _object_id)
+Amplifier::Amplifier(int _area, QString _name, AmplifierDevice *d, int _object_id)
 {
 	dev = d;
-	key = QString::number(area);
+	area = _area;
 	name = _name;
 	object_id = _object_id;
 	active = false;
@@ -226,6 +301,11 @@ int Amplifier::getVolume() const
 void Amplifier::setVolume(int volume)
 {
 	dev->setVolume(volume);
+}
+
+int Amplifier::getArea() const
+{
+	return area;
 }
 
 void Amplifier::valueReceived(const DeviceValues &values_list)

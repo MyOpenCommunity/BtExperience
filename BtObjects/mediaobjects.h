@@ -9,7 +9,11 @@ class QDomNode;
 class AmplifierDevice;
 class SourceDevice;
 class RadioSourceDevice;
+class Amplifier;
+class SourceBase;
 
+
+// ambients and amplifiers have the area number as the key
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node);
 
@@ -17,13 +21,8 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node);
 class SoundAmbientBase : public ObjectInterface
 {
 	Q_OBJECT
-	Q_PROPERTY(ObjectListModel *amplifiers READ getAmplifiers CONSTANT)
-	Q_PROPERTY(QObject *generalAmplifier READ getGeneralAmplifier CONSTANT)
-	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
 
 public:
-	virtual QString getObjectKey() const { return key; }
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::SoundDiffusion;
@@ -31,38 +30,52 @@ public:
 
 	virtual QString getName() const { return name; }
 
-	ObjectListModel *getAmplifiers() const;
-	QObject *getGeneralAmplifier() const;
-	QObject *getCurrentSource() const;
-
-signals:
-	void currentSourceChanged();
-
 protected:
-	SoundAmbientBase(QString key, QString name);
+	SoundAmbientBase(QString name);
 
 private:
-	QString key, name;
+	QString name;
 };
 
 
 class SoundAmbient : public SoundAmbientBase
 {
+	friend class TestSoundAmbient;
+
 	Q_OBJECT
 	Q_PROPERTY(bool hasActiveAmplifier READ getHasActiveAmplifier NOTIFY activeAmplifierChanged)
+	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
 
 public:
 	SoundAmbient(int area, QString name);
+
+	virtual QString getObjectKey() const { return QString::number(area); }
 
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdMultiChannelSoundAmbient;
 	}
 
-	bool getHasActiveAmplifier();
+	bool getHasActiveAmplifier() const;
+
+	int getArea() const;
+
+	QObject *getCurrentSource() const;
+
+	void connectSources(QList<SourceBase *> sources);
+	void connectAmplifiers(QList<Amplifier *> amplifiers);
 
 signals:
+	void currentSourceChanged();
 	void activeAmplifierChanged();
+
+private slots:
+	void updateActiveSource();
+	void updateActiveAmplifier();
+
+private:
+	int area, amplifier_count;
+	SourceBase *current_source;
 };
 
 
@@ -72,6 +85,8 @@ class SoundGeneralAmbient : public SoundAmbientBase
 
 public:
 	SoundGeneralAmbient(QString name);
+
+	virtual QString getObjectKey() const { return QString(); }
 
 	virtual int getObjectId() const
 	{
@@ -84,6 +99,7 @@ public:
 class SourceBase : public ObjectInterface
 {
 	friend class TestSourceBase;
+	friend class TestSoundAmbient;
 
 	Q_OBJECT
 	Q_PROPERTY(bool active READ isActive NOTIFY activeChanged)
@@ -108,6 +124,7 @@ public:
 	QList<int> getActiveAreas() const;
 
 	bool isActive() const;
+	bool isActiveInArea(int area) const;
 
 	int getCurrentTrack() const;
 
@@ -178,6 +195,7 @@ signals:
 class Amplifier : public ObjectInterface
 {
 	friend class TestAmplifier;
+	friend class TestSoundAmbient;
 
 	Q_OBJECT
 	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
@@ -186,7 +204,7 @@ class Amplifier : public ObjectInterface
 public:
 	Amplifier(int area, QString name, AmplifierDevice *d, int object_id = ObjectInterface::IdSoundAmplifier);
 
-	virtual QString getObjectKey() const { return key; }
+	virtual QString getObjectKey() const { return QString::number(area); }
 
 	virtual ObjectCategory getCategory() const
 	{
@@ -206,6 +224,8 @@ public:
 	int getVolume() const;
 	void setVolume(int volume);
 
+	int getArea() const;
+
 signals:
 	void activeChanged();
 	void volumeChanged();
@@ -215,8 +235,8 @@ private  slots:
 
 private:
 	AmplifierDevice *dev;
-	QString key, name;
-	int object_id;
+	QString name;
+	int object_id, area;
 	bool active;
 	int volume;
 };
