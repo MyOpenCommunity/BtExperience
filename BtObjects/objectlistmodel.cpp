@@ -130,6 +130,7 @@ void FilterListModel::setCategories(QVariantList cat)
 		return;
 
 	input_categories = cat;
+	categories.clear();
 
 	foreach (const QVariant &v, cat)
 		categories << v.toInt();
@@ -148,6 +149,7 @@ void FilterListModel::setFilters(QVariantList f)
 	if (f == input_filters)
 		return;
 
+	input_filters = f;
 	filters.clear();
 
 	foreach (const QVariant &v, f)
