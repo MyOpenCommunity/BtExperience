@@ -142,7 +142,7 @@ protected:
 	SourceBase(SourceDevice *d, QString name);
 
 private slots:
-	void valueReceived(const DeviceValues &values_list);
+	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
 	QString name;
@@ -231,7 +231,7 @@ signals:
 	void volumeChanged();
 
 private  slots:
-	void valueReceived(const DeviceValues &values_list);
+	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
 	AmplifierDevice *dev;
