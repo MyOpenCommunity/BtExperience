@@ -107,6 +107,8 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 			foreach (ObjectInterface *obj, objects)
 				objmodel << obj;
+
+			break;
 		}
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
