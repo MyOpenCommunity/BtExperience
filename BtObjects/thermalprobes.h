@@ -74,7 +74,7 @@ signals:
 	void fancoilChanged();
 
 private slots:
-	void valueReceived(const DeviceValues &values_list);
+	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
 	QString name;

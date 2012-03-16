@@ -6,6 +6,142 @@
 #include <QtTest/QtTest>
 
 
+void TestSoundAmbient::init()
+{
+	srcd1 = new SourceDevice("1");
+	srcd2 = new SourceDevice("2");
+
+	ampd22 = AmplifierDevice::createDevice("22");
+	ampd23 = AmplifierDevice::createDevice("23");
+	ampd33 = AmplifierDevice::createDevice("33");
+
+	obj2 = new SoundAmbient(2, "");
+	obj3 = new SoundAmbient(3, "");
+
+	src1 = new SourceAux(srcd1, "");
+	src2 = new SourceAux(srcd2, "");
+
+	amp22 = new Amplifier(2, "", ampd22);
+	amp23 = new Amplifier(2, "", ampd23);
+	amp33 = new Amplifier(3, "", ampd33);
+
+	QList<SoundAmbient *> ambients;
+	QList<Amplifier *> amplifiers;
+	QList<SourceBase *> sources;
+
+	ambients << obj2 << obj3;
+	amplifiers << amp22 << amp23 << amp33;
+	sources << src1 << src2;
+
+	foreach (SoundAmbient *ambient, ambients)
+	{
+		ambient->connectSources(sources);
+		ambient->connectAmplifiers(amplifiers);
+	}
+}
+
+void TestSoundAmbient::cleanup()
+{
+	delete srcd1;
+	delete srcd2;
+
+	delete obj2;
+	delete obj3;
+	delete src1;
+	delete src2;
+	delete amp22;
+	delete amp23;
+	delete amp33;
+
+	clearDeviceCache();
+}
+
+void TestSoundAmbient::testActiveAmplifiers()
+{
+	DeviceValues v;
+	ObjectTester t2(obj2, SIGNAL(activeAmplifierChanged()));
+	ObjectTester t3(obj3, SIGNAL(activeAmplifierChanged()));
+
+	v[AmplifierDevice::DIM_STATUS] = true;
+
+	// turn on first amplifier
+	amp22->valueReceived(v);
+	t2.checkSignals();
+	t3.checkNoSignals();
+	QVERIFY(obj2->getHasActiveAmplifier());
+	QCOMPARE(obj2->amplifier_count, 1);
+	QVERIFY(!obj3->getHasActiveAmplifier());
+
+	// no change when turning on second amplifier
+	amp23->valueReceived(v);
+	t2.checkNoSignals();
+	t3.checkNoSignals();
+	QVERIFY(obj2->getHasActiveAmplifier());
+	QCOMPARE(obj2->amplifier_count, 2);
+	QVERIFY(!obj3->getHasActiveAmplifier());
+
+	v[AmplifierDevice::DIM_STATUS] = false;
+
+	// no change when turning off one amplifier
+	amp23->valueReceived(v);
+	t2.checkNoSignals();
+	t3.checkNoSignals();
+	QVERIFY(obj2->getHasActiveAmplifier());
+	QCOMPARE(obj2->amplifier_count, 1);
+	QVERIFY(!obj3->getHasActiveAmplifier());
+
+	// change status when turning off last amplifier
+	amp22->valueReceived(v);
+	t2.checkSignals();
+	t3.checkNoSignals();
+	QVERIFY(!obj2->getHasActiveAmplifier());
+	QCOMPARE(obj2->amplifier_count, 0);
+	QVERIFY(!obj3->getHasActiveAmplifier());
+
+	// no change for duplicate off notification
+	amp22->valueReceived(v);
+	t2.checkNoSignals();
+	t3.checkNoSignals();
+	QVERIFY(!obj2->getHasActiveAmplifier());
+	QCOMPARE(obj2->amplifier_count, 0);
+	QVERIFY(!obj3->getHasActiveAmplifier());
+}
+
+void TestSoundAmbient::testActiveSource()
+{
+	DeviceValues v;
+	ObjectTester t2(obj2, SIGNAL(currentSourceChanged()));
+	ObjectTester t3(obj3, SIGNAL(currentSourceChanged()));
+
+	v[SourceDevice::DIM_AREAS_UPDATED] = true;
+
+	// turn on source on environment 2
+	srcd1->active_areas.insert("2");
+	src1->valueReceived(v);
+	t2.checkSignals();
+	t3.checkNoSignals();
+	QCOMPARE(obj2->getCurrentSource(), src1);
+	QCOMPARE(obj3->getCurrentSource(), static_cast<QObject *>(0));
+
+	// switch source from anvironment 2 to 3
+	srcd1->active_areas.clear();
+	srcd1->active_areas.insert("3");
+	src1->valueReceived(v);
+	t2.checkSignals();
+	t3.checkSignals();
+	QCOMPARE(obj2->getCurrentSource(), static_cast<QObject *>(0));
+	QCOMPARE(obj3->getCurrentSource(), src1);
+
+	// turn off source on environment 2
+	srcd1->active_areas.clear();
+	src1->valueReceived(v);
+	t2.checkNoSignals();
+	t3.checkSignals();
+	QCOMPARE(obj2->getCurrentSource(), static_cast<QObject *>(0));
+	QCOMPARE(obj3->getCurrentSource(), static_cast<QObject *>(0));
+}
+
+
 void TestSourceBase::initObjects(SourceDevice *_dev, SourceBase *_obj)
 {
 	dev = _dev;
@@ -107,6 +243,147 @@ void TestSourceAux::init()
 	SourceDevice *dev = new SourceDevice("3", 1);
 
 	initObjects(dev, obj);
+}
+
+
+void TestSourceRadio::init()
+{
+	RadioSourceDevice *d = new RadioSourceDevice("3");
+
+	obj = new SourceRadio(d, "");
+	dev = new RadioSourceDevice("3", 1);
+
+	initObjects(dev, obj);
+}
+
+void TestSourceRadio::testSetStation()
+{
+	obj->setCurrentStation(2);
+	dev->setStation("2");
+	compareClientCommand();
+}
+
+void TestSourceRadio::testPreviousStation()
+{
+	obj->previousStation();
+	dev->prevTrack();
+	compareClientCommand();
+}
+
+void TestSourceRadio::testNextStation()
+{
+	obj->nextStation();
+	dev->nextTrack();
+	compareClientCommand();
+}
+
+void TestSourceRadio::testFrequencyUp()
+{
+	ObjectTester t(obj, SIGNAL(currentFrequencyChanged()));
+
+	obj->frequency = obj->dev->frequency = 9800;
+	QVERIFY(!obj->request_frequency.isActive());
+
+	obj->frequencyUp(2);
+	dev->frequenceUp("2");
+	compareClientCommand();
+	t.checkSignals();
+	QVERIFY(obj->request_frequency.isActive());
+	QCOMPARE(obj->getCurrentFrequency(), 9810);
+}
+
+void TestSourceRadio::testFrequencyDown()
+{
+	ObjectTester t(obj, SIGNAL(currentFrequencyChanged()));
+
+	obj->frequency = obj->dev->frequency = 9800;
+	QVERIFY(!obj->request_frequency.isActive());
+
+	obj->frequencyDown(2);
+	dev->frequenceDown("2");
+	compareClientCommand();
+	t.checkSignals();
+	QVERIFY(obj->request_frequency.isActive());
+	QCOMPARE(obj->getCurrentFrequency(), 9790);
+}
+
+void TestSourceRadio::testSearchUp()
+{
+	ObjectTester t(obj, SIGNAL(currentFrequencyChanged()));
+
+	obj->frequency = obj->dev->frequency = 9800;
+	QVERIFY(!obj->request_frequency.isActive());
+
+	obj->searchUp();
+	dev->frequenceUp();
+	compareClientCommand();
+	t.checkSignals();
+	QVERIFY(!obj->request_frequency.isActive());
+	QCOMPARE(obj->getCurrentFrequency(), -1);
+}
+
+void TestSourceRadio::testSearchDown()
+{
+	ObjectTester t(obj, SIGNAL(currentFrequencyChanged()));
+
+	obj->frequency = obj->dev->frequency = 9800;
+	QVERIFY(!obj->request_frequency.isActive());
+
+	obj->searchDown();
+	dev->frequenceDown();
+	compareClientCommand();
+	t.checkSignals();
+	QVERIFY(!obj->request_frequency.isActive());
+	QCOMPARE(obj->getCurrentFrequency(), -1);
+}
+
+void TestSourceRadio::testReceiveFrequency()
+{
+	DeviceValues v;
+	ObjectTester t(obj, SIGNAL(currentFrequencyChanged()));
+
+	v[RadioSourceDevice::DIM_FREQUENCY] = 9800;
+
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getCurrentFrequency(), 9800);
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+void TestSourceRadio::testReceiveRds()
+{
+	DeviceValues v;
+	ObjectTester t(obj, SIGNAL(rdsTextChanged()));
+
+	v[RadioSourceDevice::DIM_RDS] = "Prova 123";
+
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getRdsText(), QString("Prova 123"));
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+void TestSourceRadio::testReceiveStation()
+{
+	DeviceValues v;
+	ObjectTester track(obj, SIGNAL(currentTrackChanged()));
+	ObjectTester station(obj, SIGNAL(currentStationChanged()));
+
+	v[RadioSourceDevice::DIM_TRACK] = 3;
+
+	obj->valueReceived(v);
+	track.checkSignals();
+	station.checkSignals();
+	QCOMPARE(obj->getCurrentTrack(), 3);
+	QCOMPARE(obj->getCurrentStation(), 3);
+
+	obj->valueReceived(v);
+	track.checkNoSignals();
+	station.checkNoSignals();
 }
 
 

@@ -219,7 +219,7 @@ signals:
 	void programChanged();
 
 protected slots:
-	void valueReceived(const DeviceValues &values_list);
+	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
 	const ObjectListModel *programs;
@@ -311,7 +311,7 @@ signals:
 	void temperatureChanged();
 
 protected slots:
-	void valueReceived(const DeviceValues &values_list);
+	virtual void valueReceived(const DeviceValues &values_list);
 };
 
 
@@ -376,7 +376,7 @@ signals:
 	void scenarioChanged();
 
 protected slots:
-	void valueReceived(const DeviceValues &values_list);
+	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
 	int getScenarioId() const;
