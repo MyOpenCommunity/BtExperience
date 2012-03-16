@@ -3,7 +3,8 @@ import BtObjects 1.0
 
 MenuElement {
     id: element
-    width: img.width; height: img.height
+    width: img.width;
+    height: img.height + paginator.height
 
     Image {
         id: img
@@ -11,15 +12,17 @@ MenuElement {
 
         ListView {
             id: itemList
+
             anchors.rightMargin: 5
             anchors.leftMargin: 5
             anchors.bottomMargin: 5
             anchors.topMargin: 10
             anchors.fill: parent
+
             interactive: false
 
             header: Row {
-                width: parent.width; height: 30
+                width: itemList.width; height: 30
 
                 Item {
                     width: 10
@@ -106,7 +109,7 @@ MenuElement {
                 }
                 Text {
                     height: 60
-                    text: qsTr("Pagina 1 di 4")
+                    text: qsTr("Page " + paginator.currentPage + " of " + paginator.pages)
                     color: "#4F4F4F"
                 }
             }
@@ -118,5 +121,37 @@ MenuElement {
     ObjectModel {
         id: modelList
         source: element.dataModel
+        range: paginator.computePageRange(paginator.currentPage, privateProps.elementsOnPage)
+    }
+
+    QtObject {
+        id: privateProps
+        property int elementsOnPage: 5
+    }
+
+    Row {
+        anchors.top: img.bottom
+        Paginator {
+            id: paginator
+            pages: paginator.computePagesFromModelSize(modelList.size, privateProps.elementsOnPage)
+        }
+
+        Image {
+            source: "images/common/btn_OKAnnulla.png"
+            height: 35
+            width: img.width - paginator.width
+
+            Text {
+                text: qsTr("Remove all")
+                font.capitalization: Font.AllUppercase
+                font.pixelSize: 12
+                anchors.centerIn: parent
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: console.log("Delete all alarms")
+            }
+        }
     }
 }
