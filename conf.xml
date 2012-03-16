@@ -86,6 +86,9 @@
     <id>7</id> <!-- Hardware settings -->
   </item>
   <item>
+    <id>8</id> <!-- Sound diffusion -->
+  </item>
+  <item>
     <id>6</id> <!-- Antintrusion system -->
     <zones>
     <zone>
