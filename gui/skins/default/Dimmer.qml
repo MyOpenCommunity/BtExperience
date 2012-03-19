@@ -59,16 +59,8 @@ MenuElement {
             id: dimmerMinusPlus
             anchors.top: dimmerReg.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            onPlusClicked: {
-                dataModel.percentage += 5
-                if (dataModel.percentage > 100)
-                    dataModel.percentage = 100
-            }
-            onMinusClicked: {
-                dataModel.percentage -= 5
-                if (dataModel.percentage < 0)
-                    dataModel.percentage = 0
-            }
+            onPlusClicked: dataModel.increaseLevel()
+            onMinusClicked: dataModel.decreaseLevel()
         }
 
         Image {

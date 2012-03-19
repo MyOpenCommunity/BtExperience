@@ -53,7 +53,7 @@ private:
 class Dimmer : public Light
 {
 	Q_OBJECT
-	Q_PROPERTY(int percentage READ getPercentage WRITE setPercentage NOTIFY percentageChanged)
+	Q_PROPERTY(int percentage READ getPercentage NOTIFY percentageChanged)
 
 public:
 	Dimmer(QString name, QString key, DimmerDevice *d);
@@ -64,7 +64,10 @@ public:
 	}
 
 	virtual int getPercentage() const;
-	virtual void setPercentage(int val);
+
+public slots:
+	void increaseLevel();
+	void decreaseLevel();
 
 signals:
 	void percentageChanged();

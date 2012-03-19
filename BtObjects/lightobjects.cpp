@@ -71,13 +71,14 @@ int Dimmer::getPercentage() const
 	return percentage;
 }
 
-void Dimmer::setPercentage(int val)
+void Dimmer::decreaseLevel()
 {
-	qDebug() << "Dimmer::setPercentage";
-	if (percentage < val)
-		dev->increaseLevel();
-	else
-		dev->decreaseLevel();
+	dev->decreaseLevel();
+}
+
+void Dimmer::increaseLevel()
+{
+	dev->increaseLevel();
 }
 
 void Dimmer::valueReceived(const DeviceValues &values_list)
@@ -88,14 +89,10 @@ void Dimmer::valueReceived(const DeviceValues &values_list)
 	{
 		if (it.key() == LightingDevice::DIM_DIMMER_LEVEL)
 		{
-			if (status != true)
+			int val = dimmerLevelTo100(it.value().toInt());
+			if (percentage != val)
 			{
-				status = true;
-				emit statusChanged();
-			}
-			if (percentage != it.value().toInt() * 10)
-			{
-				percentage = it.value().toInt() * 10;
+				percentage = val;
 				emit percentageChanged();
 			}
 		}
