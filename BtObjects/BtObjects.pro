@@ -58,21 +58,10 @@ INCLUDEPATH += . ./ts ./devices
 include(btobjects.pri)
 
 HEADERS += \
-    lightobjects.h \
     settings.h
 
 SOURCES += \
-    lightobjects.cpp \
     settings.cpp
-
-HEADERS += \
-	devices/lighting_device.h \
-	devices/pulldevice.h
-
-
-SOURCES += \
-    devices/lighting_device.cpp \
-    devices/pulldevice.cpp
 
 OTHER_FILES = qmldir
 

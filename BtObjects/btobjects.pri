@@ -1,5 +1,6 @@
 HEADERS += \
 	antintrusionsystem.h \
+	lightobjects.h \
 	mediaobjects.h \
 	objectlistmodel.h \
 	objectinterface.h \
@@ -7,8 +8,10 @@ HEADERS += \
 	thermalprobes.h \
 	devices/antintrusion_device.h \
 	devices/device.h \
+	devices/lighting_device.h \
 	devices/media_device.h \
 	devices/probe_device.h \
+	devices/pulldevice.h \
 	devices/thermal_device.h \
 	ts/bttime.h \
 	ts/delayedslotcaller.h \
@@ -21,14 +24,17 @@ HEADERS += \
 
 SOURCES += \
 	antintrusionsystem.cpp \
+	lightobjects.cpp \
 	mediaobjects.cpp \
 	objectlistmodel.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \
 	devices/antintrusion_device.cpp \
 	devices/device.cpp \
+	devices/lighting_device.cpp \
 	devices/media_device.cpp \
 	devices/probe_device.cpp \
+	devices/pulldevice.cpp \
 	devices/thermal_device.cpp \
 	ts/bttime.cpp \
 	ts/delayedslotcaller.cpp \
