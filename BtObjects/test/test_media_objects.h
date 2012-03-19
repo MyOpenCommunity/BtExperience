@@ -30,6 +30,8 @@ class RadioSourceDevice;
 class Amplifier;
 class AmplifierDevice;
 class SoundAmbient;
+class PowerAmplifier;
+class PowerAmplifierDevice;
 
 
 class TestSoundAmbient : public TestBtObject
@@ -116,6 +118,9 @@ class TestAmplifier : public TestBtObject
 {
 	Q_OBJECT
 
+protected:
+	void initObjects(AmplifierDevice *dev, Amplifier *obj);
+
 private slots:
 	void init();
 	void cleanup();
@@ -129,6 +134,31 @@ private slots:
 private:
 	Amplifier *obj;
 	AmplifierDevice *dev;
+};
+
+
+class TestPowerAmplifier : public TestAmplifier
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+
+	void testBass();
+	void testTreble();
+	void testBalance();
+	void testPreset();
+	void testLoud();
+
+	void testReceiveBass();
+	void testReceiveTreble();
+	void testReceiveBalance();
+	void testReceivePreset();
+	void testReceiveLoud();
+
+private:
+	PowerAmplifier *obj;
+	PowerAmplifierDevice *dev;
 };
 
 #endif // TEST_MEDIA_OBJECT_H

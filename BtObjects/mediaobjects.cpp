@@ -4,6 +4,21 @@
 
 #define REQUEST_FREQUENCY_TIME 1000
 
+const char *PowerAmplifier::standard_presets[] =
+{
+	QT_TR_NOOP("Normal"),
+	QT_TR_NOOP("Dance"),
+	QT_TR_NOOP("Pop"),
+	QT_TR_NOOP("Rock"),
+	QT_TR_NOOP("Classical"),
+	QT_TR_NOOP("Techno"),
+	QT_TR_NOOP("Party"),
+	QT_TR_NOOP("Soft"),
+	QT_TR_NOOP("Full Bass"),
+	QT_TR_NOOP("Full Treble"),
+};
+#define standard_presets_size int(sizeof(standard_presets) / sizeof(standard_presets[0]))
+
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 {
@@ -401,6 +416,181 @@ void Amplifier::valueReceived(const DeviceValues &values_list)
 			{
 				volume = val;
 				emit volumeChanged();
+			}
+		}
+		++it;
+	}
+}
+
+
+PowerAmplifierPreset::PowerAmplifierPreset(int number, const QString &name)
+{
+	preset_number = number;
+	preset_name = name;
+}
+
+
+PowerAmplifier::PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, QList<QString> _presets) :
+	Amplifier(area, name, d, ObjectInterface::IdPowerAmplifier)
+{
+	dev = d;
+	bass = treble = balance = preset = 0;
+	loud = false;
+
+	connect(this, SIGNAL(presetChanged()), this, SIGNAL(presetDescriptionChanged()));
+
+	for (int i = 0; i < standard_presets_size; ++i)
+		presets << new PowerAmplifierPreset(i, tr(standard_presets[i]));
+
+	for (int i = 0; i < _presets.size(); ++i)
+		presets << new PowerAmplifierPreset(i, _presets[i]);
+}
+
+ObjectListModel *PowerAmplifier::getPresets() const
+{
+	// TODO: we remove the const because it produces an error when we export the
+	// type to the qml engine. Find a solution.
+	return const_cast<ObjectListModel*>(&presets);
+}
+
+int PowerAmplifier::getBass() const
+{
+	return bass;
+}
+
+int PowerAmplifier::getTreble() const
+{
+	return treble;
+}
+
+int PowerAmplifier::getBalance() const
+{
+	return balance;
+}
+
+int PowerAmplifier::getPreset() const
+{
+	return preset;
+}
+
+void PowerAmplifier::setPreset(int preset)
+{
+	dev->setPreset(preset);
+}
+
+QString PowerAmplifier::getPresetDescription() const
+{
+	ObjectInterface *p = presets.getObject(preset);
+
+	if (p)
+		return p->getName();
+	else
+		return QString();
+}
+
+bool PowerAmplifier::getLoud() const
+{
+	return loud;
+}
+
+void PowerAmplifier::setLoud(bool loud)
+{
+	if (loud)
+		dev->loudOn();
+	else
+		dev->loudOff();
+}
+
+void PowerAmplifier::bassDown()
+{
+	dev->bassDown();
+}
+
+void PowerAmplifier::bassUp()
+{
+	dev->bassUp();
+}
+
+void PowerAmplifier::trebleDown()
+{
+	dev->trebleDown();
+}
+
+void PowerAmplifier::trebleUp()
+{
+	dev->trebleUp();
+}
+
+void PowerAmplifier::balanceLeft()
+{
+	dev->balanceDown();
+}
+
+void PowerAmplifier::balanceRight()
+{
+	dev->balanceUp();
+}
+
+void PowerAmplifier::previousPreset()
+{
+	dev->prevPreset();
+}
+
+void PowerAmplifier::nextPreset()
+{
+	dev->nextPreset();
+}
+
+void PowerAmplifier::valueReceived(const DeviceValues &values_list)
+{
+	Amplifier::valueReceived(values_list);
+
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		if (it.key() == PowerAmplifierDevice::DIM_BASS)
+		{
+			int val = it.value().toInt();
+			if (bass != val)
+			{
+				bass = val;
+				emit bassChanged();
+			}
+		}
+		else if (it.key() == PowerAmplifierDevice::DIM_TREBLE)
+		{
+			int val = it.value().toInt();
+			if (treble != val)
+			{
+				treble = val;
+				emit trebleChanged();
+			}
+		}
+		else if (it.key() == PowerAmplifierDevice::DIM_BALANCE)
+		{
+			int val = it.value().toInt();
+			if (balance != val)
+			{
+				balance = val;
+				emit balanceChanged();
+			}
+		}
+		else if (it.key() == PowerAmplifierDevice::DIM_PRESET)
+		{
+			int val = it.value().toInt();
+			if (preset != val)
+			{
+				preset = val;
+				emit presetChanged();
+			}
+		}
+		else if (it.key() == PowerAmplifierDevice::DIM_LOUD)
+		{
+			bool val = it.value().toBool();
+			if (loud != val)
+			{
+				loud = val;
+				emit loudChanged();
 			}
 		}
 		++it;

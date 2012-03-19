@@ -387,6 +387,12 @@ void TestSourceRadio::testReceiveStation()
 }
 
 
+void TestAmplifier::initObjects(AmplifierDevice *_dev, Amplifier *_obj)
+{
+	dev = _dev;
+	obj = _obj;
+}
+
 void TestAmplifier::init()
 {
 	AmplifierDevice *d = AmplifierDevice::createDevice("32");
@@ -467,6 +473,162 @@ void TestAmplifier::testReceiveVolume()
 	obj->valueReceived(v);
 	t.checkSignals();
 	QCOMPARE(obj->getVolume(), 13);
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+
+void TestPowerAmplifier::init()
+{
+	PowerAmplifierDevice *d = new PowerAmplifierDevice("32");
+	QList<QString> presets;
+
+	presets << "P1" << "P2" << "P3" << "P4" << "P5";
+
+	obj = new PowerAmplifier(3, "", d, presets);
+	dev = new PowerAmplifierDevice("32", 1);
+
+	initObjects(dev, obj);
+}
+
+void TestPowerAmplifier::testBass()
+{
+	obj->bassDown();
+	dev->bassDown();
+	compareClientCommand();
+
+	obj->bassUp();
+	dev->bassUp();
+	compareClientCommand();
+}
+
+void TestPowerAmplifier::testTreble()
+{
+	obj->trebleDown();
+	dev->trebleDown();
+	compareClientCommand();
+
+	obj->trebleUp();
+	dev->trebleUp();
+	compareClientCommand();
+}
+
+void TestPowerAmplifier::testBalance()
+{
+	obj->balanceLeft();
+	dev->balanceDown();
+	compareClientCommand();
+
+	obj->balanceRight();
+	dev->balanceUp();
+	compareClientCommand();
+}
+
+void TestPowerAmplifier::testPreset()
+{
+	obj->previousPreset();
+	dev->prevPreset();
+	compareClientCommand();
+
+	obj->nextPreset();
+	dev->nextPreset();
+	compareClientCommand();
+
+	obj->setPreset(12);
+	dev->setPreset(12);
+	compareClientCommand();
+}
+
+void TestPowerAmplifier::testLoud()
+{
+	obj->setLoud(true);
+	dev->loudOn();
+	compareClientCommand();
+
+	obj->setLoud(false);
+	dev->loudOff();
+	compareClientCommand();
+}
+
+void TestPowerAmplifier::testReceiveBass()
+{
+	DeviceValues v;
+	ObjectTester t(obj, SIGNAL(bassChanged()));
+
+	v[PowerAmplifierDevice::DIM_BASS] = 2;
+
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getBass(), 2);
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+void TestPowerAmplifier::testReceiveTreble()
+{
+	DeviceValues v;
+	ObjectTester t(obj, SIGNAL(trebleChanged()));
+
+	v[PowerAmplifierDevice::DIM_TREBLE] = 2;
+
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getTreble(), 2);
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+void TestPowerAmplifier::testReceiveBalance()
+{
+	DeviceValues v;
+	ObjectTester t(obj, SIGNAL(balanceChanged()));
+
+	v[PowerAmplifierDevice::DIM_BALANCE] = 2;
+
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getBalance(), 2);
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+void TestPowerAmplifier::testReceivePreset()
+{
+	DeviceValues v;
+	ObjectTester t(obj, SIGNAL(presetChanged()));
+
+	v[PowerAmplifierDevice::DIM_PRESET] = 2;
+
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getPreset(), 2);
+	QCOMPARE(obj->getPresetDescription(), QString("Pop"));
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+
+	v[PowerAmplifierDevice::DIM_PRESET] = 12;
+
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getPreset(), 12);
+	QCOMPARE(obj->getPresetDescription(), QString("P3"));
+}
+
+void TestPowerAmplifier::testReceiveLoud()
+{
+	DeviceValues v;
+	ObjectTester t(obj, SIGNAL(loudChanged()));
+
+	v[PowerAmplifierDevice::DIM_LOUD] = true;
+
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getLoud(), true);
 
 	obj->valueReceived(v);
 	t.checkNoSignals();

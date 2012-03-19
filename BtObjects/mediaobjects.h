@@ -11,6 +11,7 @@ class SourceDevice;
 class RadioSourceDevice;
 class Amplifier;
 class SourceBase;
+class PowerAmplifierDevice;
 
 
 // ambients and amplifiers have the area number as the key
@@ -251,7 +252,7 @@ signals:
 	void activeChanged();
 	void volumeChanged();
 
-private  slots:
+protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
@@ -260,6 +261,90 @@ private:
 	int object_id, area;
 	bool active;
 	int volume;
+};
+
+
+class PowerAmplifierPreset : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	PowerAmplifierPreset(int number, const QString &name);
+
+	virtual int getObjectId() const { return preset_number; }
+
+	virtual QString getObjectKey() const { return QString(); }
+
+	virtual ObjectCategory getCategory() const { return SoundDiffusion; }
+
+	virtual QString getName() const { return preset_name; }
+
+private:
+	int preset_number;
+	QString preset_name;
+};
+
+
+class PowerAmplifier : public Amplifier
+{
+	friend class TestPowerAmplifier;
+
+	Q_OBJECT
+	Q_PROPERTY(int bass READ getBass NOTIFY bassChanged)
+	Q_PROPERTY(int treble READ getTreble NOTIFY trebleChanged)
+	Q_PROPERTY(int balance READ getBalance NOTIFY balanceChanged)
+	Q_PROPERTY(int preset READ getPreset WRITE setPreset NOTIFY presetChanged)
+	Q_PROPERTY(QString presetDescription READ getPresetDescription NOTIFY presetDescriptionChanged)
+	Q_PROPERTY(bool loud READ getLoud WRITE setLoud NOTIFY loudChanged)
+	Q_PROPERTY(ObjectListModel *presets READ getPresets CONSTANT)
+
+public:
+	PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, QList<QString> custom_presets);
+
+	ObjectListModel *getPresets() const;
+
+	int getBass() const;
+	int getTreble() const;
+	int getBalance() const;
+
+	int getPreset() const;
+	QString getPresetDescription() const;
+	void setPreset(int preset);
+
+	bool getLoud() const;
+	void setLoud(bool loud);
+
+public slots:
+	void bassDown();
+	void bassUp();
+
+	void trebleDown();
+	void trebleUp();
+
+	void balanceLeft();
+	void balanceRight();
+
+	void previousPreset();
+	void nextPreset();
+
+signals:
+	void bassChanged();
+	void trebleChanged();
+	void balanceChanged();
+	void presetChanged();
+	void presetDescriptionChanged();
+	void loudChanged();
+
+private  slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
+private:
+	PowerAmplifierDevice *dev;
+	ObjectListModel presets;
+	int bass, treble, balance, preset;
+	bool loud;
+
+	static const char *standard_presets[];
 };
 
 #endif // MEDIAOBJECTS_H
