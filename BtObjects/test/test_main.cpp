@@ -92,6 +92,9 @@ int main(int argc, char *argv[])
 	TestDimmer test_dimmer;
 	test_list << &test_dimmer;
 
+	TestDimmer100 test_dimmer_100;
+	test_list << &test_dimmer_100;
+
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))
 	{

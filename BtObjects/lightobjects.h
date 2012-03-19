@@ -55,6 +55,7 @@ private:
 class Dimmer : public Light
 {
 	friend class TestDimmer;
+	friend class TestDimmer100;
 
 	Q_OBJECT
 	Q_PROPERTY(int percentage READ getPercentage NOTIFY percentageChanged)

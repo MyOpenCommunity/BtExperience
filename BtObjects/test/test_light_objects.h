@@ -53,6 +53,9 @@ class TestDimmer : public TestLight
 {
 	Q_OBJECT
 
+protected:
+	void initObjects(DimmerDevice *dev, Dimmer *obj);
+
 private slots:
 	void init();
 
@@ -60,6 +63,21 @@ private slots:
 	void testLevelDown();
 
 	void testReceiveLevel();
+
+private:
+	Dimmer *obj;
+	DimmerDevice *dev;
+};
+
+
+class TestDimmer100 : public TestDimmer
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+
+	void testReceiveLevel100();
 
 private:
 	Dimmer *obj;

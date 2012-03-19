@@ -60,6 +60,14 @@ void TestLight::testReceiveStatus()
 }
 
 
+void TestDimmer::initObjects(DimmerDevice *_dev, Dimmer *_obj)
+{
+	dev = _dev;
+	obj = _obj;
+
+	TestLight::initObjects(dev, obj);
+}
+
 void TestDimmer::init()
 {
 	bt_global::config = new QHash<GlobalField, QString>();
@@ -100,6 +108,41 @@ void TestDimmer::testReceiveLevel()
 	tperc.checkSignals();
 	QCOMPARE(obj->getStatus(), true);
 	QCOMPARE(obj->getPercentage(), 10);
+
+	obj->valueReceived(v);
+	tstatus.checkNoSignals();
+	tperc.checkNoSignals();
+}
+
+
+void TestDimmer100::init()
+{
+	bt_global::config = new QHash<GlobalField, QString>();
+	(*bt_global::config)[TS_NUMBER] = 2;
+
+	Dimmer100Device *d = new Dimmer100Device("3", NOT_PULL);
+
+	obj = new Dimmer("", "", d);
+	dev = new Dimmer100Device("3", NOT_PULL, 1);
+
+	initObjects(dev, obj);
+}
+
+void TestDimmer100::testReceiveLevel100()
+{
+	DeviceValues v;
+	v[LightingDevice::DIM_DEVICE_ON] = true;
+	v[LightingDevice::DIM_DIMMER_LEVEL] = 5;
+	v[LightingDevice::DIM_DIMMER100_LEVEL] = 34;
+	v[LightingDevice::DIM_DIMMER100_SPEED] = 50;
+
+	ObjectTester tstatus(obj, SIGNAL(statusChanged()));
+	ObjectTester tperc(obj, SIGNAL(percentageChanged()));
+	obj->valueReceived(v);
+	tstatus.checkSignals();
+	tperc.checkSignals();
+	QCOMPARE(obj->getStatus(), true);
+	QCOMPARE(obj->getPercentage(), 30);
 
 	obj->valueReceived(v);
 	tstatus.checkNoSignals();
