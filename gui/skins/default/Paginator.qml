@@ -33,10 +33,14 @@ Image {
     //
     QtObject {
         id: privateProps
+        // currently selected page
         property int currentPage: 1
+        // which slot is currentPage in
         property int offset: 1
+        // total number of buttons (arrows + page numbers) visible in the paginator
         property int numSlots: 5
-        property int totalPages: 20
+        // total number of pages handled by the paginator
+        property int totalPages: 1
 
         function needPagination() {
             return totalPages > numSlots
@@ -54,16 +58,12 @@ Image {
             currentPage += 1
             if (offset < numSlots -1)
                 offset += 1
-
-            showButtons()
         }
 
         function previousPage() {
             currentPage -= 1
             if (offset > 2)
                 offset -= 1
-
-            showButtons()
         }
 
         function goToPage(pageNumber) {
@@ -71,19 +71,11 @@ Image {
             currentPage = pageNumber
         }
 
-        function showButtons() {
+        function isButtonVisible(index) {
             var lowerPage = currentPage - (offset - 1 - (needLeftArrow() ? 1 : 0))
             var upperPage = currentPage + (numSlots - offset - (needRightArrow() ? 1 : 0))
-
-            for (var i = 1; i < buttonRow.children.length - 2; i++) {
-                var child = buttonRow.children[i]
-                child.visible = (i >= lowerPage && i <= upperPage)
-            }
+            return (index >= lowerPage) && (index <= upperPage)
         }
-    }
-
-    Component.onCompleted: {
-        privateProps.showButtons()
     }
 
     // Needed when the model changes, eg. in antintrusion the alarms may be
@@ -121,10 +113,12 @@ Image {
         }
 
         Repeater {
+            id: repeater
             model: paginator.totalPages
             ButtonPagination {
                 pageNumber: index + 1
                 onClicked: privateProps.goToPage(pageNumber)
+                visible: privateProps.isButtonVisible(pageNumber)
                 states: [
                     State {
                         name: "extselected"
