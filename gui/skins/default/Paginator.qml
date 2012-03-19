@@ -2,18 +2,26 @@ import QtQuick 1.1
 
 Image {
     id: paginator
-//    width: 210 // 5 ButtonPagination in row
+    // all buttons in the paginator have the same width
+    width: privateProps.numSlots * leftArrow.width
     height: 35
     source: "images/common/bg_paginazione.png"
     visible: totalPages > 1
 
+    // Number of pages present in the paginator
     property alias totalPages: privateProps.totalPages
+    // Currently selected page in the paginator. At the moment this is read only.
     property alias currentPage: privateProps.currentPage
+    // The total number of buttons (numbers + arrows) shown in the paginator element.
+    property alias numSlots: privateProps.numSlots
 
+    // Convenience function to compute the visible range of a model
     function computePageRange(page, elementsOnPage) {
         return [(page - 1) * elementsOnPage, page * elementsOnPage]
     }
 
+    // Convenience function to compute the number of pages in the paginator
+    // from the model size
     function computePagesFromModelSize(modelSize, elementsOnPage) {
         var ret = modelSize % elementsOnPage ?
                modelSize / elementsOnPage + 1 :
@@ -21,12 +29,14 @@ Image {
         return Math.floor(ret)
     }
 
+    // Private details
+    //
     QtObject {
         id: privateProps
         property int currentPage: 1
         property int offset: 1
         property int numSlots: 5
-        property int totalPages: 6
+        property int totalPages: 20
 
         function needPagination() {
             return totalPages > numSlots
@@ -71,10 +81,13 @@ Image {
             }
         }
     }
+
     Component.onCompleted: {
         privateProps.showButtons()
     }
 
+    // Needed when the model changes, eg. in antintrusion the alarms may be
+    // removed from the model
     onTotalPagesChanged: {
         if (privateProps.currentPage > paginator.totalPages && paginator.totalPages > 0)
             privateProps.currentPage = paginator.totalPages
