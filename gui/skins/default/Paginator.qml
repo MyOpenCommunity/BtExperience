@@ -91,7 +91,7 @@ Image {
             width: 42
             height: 35
             source: "images/common/btn_NumeroPagina.png"
-            visible: false
+            visible: privateProps.needPagination() && privateProps.needLeftArrow()
 
             Image {
                 id: image1
@@ -129,7 +129,7 @@ Image {
             width: 42
             height: 35
             source: "images/common/btn_NumeroPagina.png"
-            visible: false
+            visible: privateProps.needPagination() && privateProps.needRightArrow()
 
             Image {
                 id: image2
@@ -143,35 +143,4 @@ Image {
             }
         }
     }
-
-    states: [
-        State {
-            name: "right_direction"
-            when: privateProps.needPagination() && !privateProps.needLeftArrow() && privateProps.needRightArrow()
-            PropertyChanges {
-                target: rightArrow
-                visible: true
-            }
-        },
-        State {
-            name: "left_direction"
-            when: privateProps.needPagination() && privateProps.needLeftArrow() && !privateProps.needRightArrow()
-            PropertyChanges {
-                target: leftArrow
-                visible: true
-            }
-        },
-        State {
-            name: "both_directions"
-            when: privateProps.needPagination() && privateProps.needLeftArrow() && privateProps.needRightArrow()
-            PropertyChanges {
-                target: rightArrow
-                visible: true
-            }
-            PropertyChanges {
-                target: leftArrow
-                visible: true
-            }
-        }
-    ]
 }
