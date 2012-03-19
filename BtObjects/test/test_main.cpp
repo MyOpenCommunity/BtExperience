@@ -27,6 +27,7 @@
 #include <logger.h>
 
 #include "test_antintrusion_object.h"
+#include "test_light_objects.h"
 #include "test_media_objects.h"
 #include "test_thermalprobes_object.h"
 #include "test_thermal_objects.h"
@@ -84,6 +85,12 @@ int main(int argc, char *argv[])
 
 	TestThermalControlUnitHoliday test_thermal_control_unit_timed_holiday;
 	test_list << &test_thermal_control_unit_timed_holiday;
+
+	TestLight test_light;
+	test_list << &test_light;
+
+	TestDimmer test_dimmer;
+	test_list << &test_dimmer;
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))

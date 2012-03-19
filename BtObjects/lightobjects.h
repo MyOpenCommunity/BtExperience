@@ -12,6 +12,8 @@ class DimmerDevice;
 
 class Light : public ObjectInterface
 {
+	friend class TestLight;
+
 	Q_OBJECT
 	Q_PROPERTY(bool status READ getStatus WRITE setStatus NOTIFY statusChanged)
 
@@ -52,6 +54,8 @@ private:
 
 class Dimmer : public Light
 {
+	friend class TestDimmer;
+
 	Q_OBJECT
 	Q_PROPERTY(int percentage READ getPercentage NOTIFY percentageChanged)
 
