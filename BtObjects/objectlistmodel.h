@@ -84,6 +84,7 @@ public:
 
 	Q_INVOKABLE ObjectInterface *getObject(int row);
 	Q_INVOKABLE void remove(int index);
+	Q_INVOKABLE void clear();
 
 	// The categories argument is a QVariantList in order to set them from qml. The real
 	// type expected is a list of ObjectInterface::ObjectCategory
@@ -116,6 +117,7 @@ signals:
 
 protected:
 	bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+	bool removeRows(int row, int count, const QModelIndex &parent);
 
 private:
 	QVariantList input_categories;

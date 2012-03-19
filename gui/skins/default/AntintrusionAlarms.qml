@@ -103,6 +103,7 @@ MenuElement {
             }
 
             footer: Row {
+                visible: paginator.totalPages > 1
                 Item {
                     width: 10
                     height: 5
@@ -150,7 +151,9 @@ MenuElement {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: console.log("Delete all alarms")
+                onClicked: {
+                    modelList.clear()
+                }
             }
         }
     }

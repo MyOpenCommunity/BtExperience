@@ -241,6 +241,17 @@ bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source
 	return false;
 }
 
+bool FilterListModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+	if (getSource()->removeRows(row, count, parent))
+	{
+		counter -= count;
+		return true;
+	}
+	else
+		return false;
+}
+
 ObjectInterface *FilterListModel::getObject(int row)
 {
 	QModelIndex idx = index(row, 0);
@@ -252,4 +263,10 @@ void FilterListModel::remove(int index)
 {
 	removeRow(index);
 	invalidate();
+}
+
+void FilterListModel::clear()
+{
+	if (removeRows(0, counter, QModelIndex()))
+		emit sizeChanged();
 }
