@@ -22,6 +22,12 @@ class ThermalControlUnitObject;
 
 typedef QHash<int, QVariant> ThermalRegulationState;
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Container for a thermal regulation program or scenario
+
+	The program/scenario number is in the object id, the program/scenario name in the object name.
+*/
 class ThermalRegulationProgram : public ObjectInterface
 {
 	Q_OBJECT
@@ -42,6 +48,13 @@ private:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Base class for the 4 zones and 99 zones control units
+
+	The only difference is that only the 4 zones control unit has timed manual mode
+	and only 99 zones control unit has scenario mode.
+*/
 class ThermalControlUnit : public ObjectInterface
 {
 	friend class TestThermalControlUnit;
@@ -50,9 +63,46 @@ class ThermalControlUnit : public ObjectInterface
 	Q_OBJECT
 	Q_ENUMS(SeasonType)
 	Q_ENUMS(ThermalControlUnitId)
+
+	/*!
+		\brief Sets and gets the current season
+	*/
 	Q_PROPERTY(SeasonType season READ getSeason WRITE setSeason NOTIFY seasonChanged)
+
+	/*!
+		\brief Gets yje list of modality object configured for this control unit
+
+		Each object can be used to set the control unit to a different modality.
+
+		\see ThermalControlUnitObject
+		\see ThermalControlUnitProgram
+		\see ThermalControlUnitTimedProgram
+		\see ThermalControlUnitOff
+		\see ThermalControlUnitAntifreeze
+		\see ThermalControlUnitManual
+		\see ThermalControlUnitTimedManual
+		\see ThermalControlUnitScenario
+
+	*/
 	Q_PROPERTY(ObjectListModel *modalities READ getModalities NOTIFY modalitiesChanged)
+
+	/*!
+		\brief The list of \a ThermalRegulationProgram configured for the control unit
+	*/
 	Q_PROPERTY(ObjectListModel *programs READ getPrograms NOTIFY programsChanged)
+
+	/*!
+		\brief A \a ThermalControlUnitObject subclass representing the current modality
+
+		\see ThermalControlUnitObject
+		\see ThermalControlUnitProgram
+		\see ThermalControlUnitTimedProgram
+		\see ThermalControlUnitOff
+		\see ThermalControlUnitAntifreeze
+		\see ThermalControlUnitManual
+		\see ThermalControlUnitTimedManual
+		\see ThermalControlUnitScenario
+	*/
 	Q_PROPERTY(QObject *currentModality READ getCurrentModality NOTIFY currentModalityChanged)
 
 public:
@@ -116,6 +166,12 @@ private:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Manages a 4 zones control unit
+
+	The object id is \a ObjectInterface::IdThermalControlUnit4
+*/
 class ThermalControlUnit4Zones : public ThermalControlUnit
 {
 	friend class TestThermalControlUnit4Zones;
@@ -135,6 +191,12 @@ private:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Manages a 99 zones control unit
+
+	The object id is \a ObjectInterface::IdThermalControlUnit99
+*/
 class ThermalControlUnit99Zones : public ThermalControlUnit
 {
 	friend class TestThermalControlUnit99Zones;
@@ -157,6 +219,25 @@ private:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Base class for thermal control unit modality objects
+
+	The objects contain two states: the current state for the modality (read
+	from the device) and the editing state (used when the user sets new parameters
+	before applying the modality to the control unit).
+
+	The properties only alter the editing state of the object; the state is applied
+	to the device when calling \a apply().
+
+	\see ThermalControlUnitProgram
+	\see ThermalControlUnitTimedProgram
+	\see ThermalControlUnitOff
+	\see ThermalControlUnitAntifreeze
+	\see ThermalControlUnitManual
+	\see ThermalControlUnitTimedManual
+	\see ThermalControlUnitScenario
+*/
 class ThermalControlUnitObject : public ObjectInterface
 {
 	friend class TestThermalControlUnitObject;
@@ -176,7 +257,17 @@ public:
 	virtual QString getName() const;
 
 public slots:
+	/*!
+		\brief Apply the modality to the control unit
+
+		Switches the control unit to the new modality using the parameters
+		contained in the editing state and sets current state to the editing state.
+	*/
 	virtual void apply() = 0;
+
+	/*!
+		\brief Reset the editing state to the device state
+	*/
 	virtual void reset();
 
 protected:
@@ -188,13 +279,31 @@ protected:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Switch to preset program mode
+
+	The object id is \a ThermalControlUnit::IdWeeklyPrograms.
+*/
 class ThermalControlUnitProgram : public ThermalControlUnitObject
 {
 	friend class TestThermalControlUnitProgram;
 
 	Q_OBJECT
+
+	/*!
+		\brief Sets and gets the program index
+	*/
 	Q_PROPERTY(int programIndex READ getProgramIndex WRITE setProgramIndex NOTIFY programChanged)
+
+	/*!
+		\brief Gets the description for the current program
+	*/
 	Q_PROPERTY(QString programDescription READ getProgramDescription NOTIFY programChanged)
+
+	/*!
+		\brief The list of \a ThermalRegulationProgram configured for the control unit
+	*/
 	Q_PROPERTY(ObjectListModel *programs READ getPrograms CONSTANT)
 
 public:
@@ -227,10 +336,29 @@ private:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Switch to holiday or vacation mode.
+
+	The object id is either ThermalControlUnit::IdHoliday or ThermalControlUnit::IdVacation
+
+	In holiday mode, run the given program until the specified date/time, then switch to the
+	specified weekly program.
+
+	In vacation mode, go to antifreeze mode until the specified date/time, then switch to the specified program.
+*/
 class ThermalControlUnitTimedProgram : public ThermalControlUnitProgram
 {
 	Q_OBJECT
+
+	/*!
+		\brief Sets and gets the date used in the modality
+	*/
 	Q_PROPERTY(QDate date READ getDate WRITE setDate NOTIFY dateChanged)
+
+	/*!
+		\brief Sets and gets the time used in the modality
+	*/
 	Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
 
 public:
@@ -251,6 +379,12 @@ signals:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Turn off the control unit
+
+	The object id is ThermalControlUnit::IdOff.
+*/
 class ThermalControlUnitOff : public ThermalControlUnitObject
 {
 	Q_OBJECT
@@ -268,6 +402,12 @@ public slots:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Switch to anti-freeze mode.
+
+	The object id is ThermalControlUnit::IdAntifreeze.
+*/
 class ThermalControlUnitAntifreeze : public ThermalControlUnitObject
 {
 	Q_OBJECT
@@ -285,11 +425,21 @@ public slots:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Switch to manual mode.
+
+	The object id is ThermalControlUnit::IdManual.
+*/
 class ThermalControlUnitManual : public ThermalControlUnitObject
 {
 	friend class TestThermalControlUnitManual;
 
 	Q_OBJECT
+
+	/*!
+		\brief Sets and gets the temperature to use in the program (in Celsius degrees * 10)
+	*/
 	Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature NOTIFY temperatureChanged)
 
 public:
@@ -315,11 +465,21 @@ protected slots:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Switch to manual mode for up to 24 hours
+
+	The object id is ThermalControlUnit::IdTimedManual.
+*/
 class ThermalControlUnitTimedManual : public ThermalControlUnitManual
 {
 	friend class TestThermalControlUnitTimedManual;
 
 	Q_OBJECT
+
+	/*!
+		\brief Sets and gets the time used in the modality
+	*/
 	Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
 
 public:
@@ -333,7 +493,6 @@ public:
 	QTime getTime() const;
 	void setTime(QTime time);
 
-
 public slots:
 	virtual void apply();
 
@@ -345,13 +504,31 @@ private:
 };
 
 
+/*!
+	\ingroup ThermalRegulation
+	\brief Switch to preset scenario mode
+
+	The object id is \a ThermalControlUnit::IdScenarios.
+*/
 class ThermalControlUnitScenario : public ThermalControlUnitObject
 {
 	friend class TestThermalControlUnitScenario;
 
 	Q_OBJECT
+
+	/*!
+		\brief Sets and gets the scenario index
+	*/
 	Q_PROPERTY(int scenarioIndex READ getScenarioIndex WRITE setScenarioIndex NOTIFY scenarioChanged)
+
+	/*!
+		\brief Gets the description for the current scenario
+	*/
 	Q_PROPERTY(QString scenarioDescription READ getScenarioDescription NOTIFY scenarioChanged)
+
+	/*!
+		\brief The list of \a ThermalRegulationProgram configured for the control unit
+	*/
 	Q_PROPERTY(ObjectListModel *scenarios READ getScenarios CONSTANT)
 
 public:
@@ -384,6 +561,5 @@ private:
 	ThermalDevice99Zones *dev;
 	const ObjectListModel *scenarios;
 };
-
 
 #endif // THERMALOBJECTS_H
