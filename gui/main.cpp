@@ -126,6 +126,7 @@ int main(int argc, char *argv[])
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
 	viewer.engine()->rootContext()->setContextProperty("global", &global);
 	viewer.setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
+	global.setMainWidget(&viewer);
 
 #ifdef Q_WS_X11
 	viewer.resize(global.getMainWidth(), global.getMainHeight());
