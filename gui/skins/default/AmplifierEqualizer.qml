@@ -3,47 +3,24 @@ import QtQuick 1.1
 MenuElement {
     id: element
     width: 212
-    height: listModel.count * 50
-
-    ListModel {
-        id: listModel
-
-        ListElement {
-            name: "off"
-        }
-        ListElement {
-            name: "pop"
-        }
-        ListElement {
-            name: "rock"
-        }
-        ListElement {
-            name: "classical"
-        }
-    }
-
-    Component {
-        id: viewDelegate
-        MenuItem {
-            id: itemDelegate
-            active: element.animationRunning === false
-            name: model.name
-            onClicked: itemDelegate.ListView.view.currentIndex = index
-
-            states: State {
-                name: "delegateselected"
-                extend: "selected"
-                when: itemDelegate.ListView.isCurrentItem
-            }
-        }
-    }
-
+    height: equalizerList.height
 
     ListView {
         id: equalizerList
-        height: listModel.count * 50
-        delegate: viewDelegate
+        height: objectModel.size * 50
+        delegate: MenuItemDelegate {
+            itemObject: objectModel.getObject(index)
+            active: element.animationRunning === false
+            name: itemObject.name
+            selectOnClick: true
+            onDelegateClicked: element.dataModel.preset = index
+        }
 
-        model: listModel
+        model: objectModel
+    }
+
+    ObjectModel {
+        id: objectModel
+        source: element.dataModel.presets
     }
 }
