@@ -4,11 +4,14 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QScreen>
+#include <QPixmap>
+#include <QDeclarativeView>
 
 
 GlobalProperties::GlobalProperties()
 {
 	wrapper = new InputContextWrapper(this);
+	main_widget = NULL;
 
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -48,4 +51,19 @@ int GlobalProperties::getLastTimePress() const
 void GlobalProperties::updateTime()
 {
 	last_press = QDateTime::currentDateTime();
+}
+
+void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
+{
+	main_widget = _viewport;
+}
+
+QImage GlobalProperties::takeScreenshot(QRect rect)
+{
+	QWidget *viewport = main_widget->viewport();
+
+	if (!viewport)
+		viewport = main_widget;
+
+	return QPixmap::grabWidget(viewport, rect.isValid() ? rect : main_widget->rect()).toImage();
 }

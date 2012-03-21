@@ -3,7 +3,10 @@
 
 #include <QObject>
 #include <QDateTime>
+#include <QRect>
+#include <QImage>
 
+class QDeclarativeView;
 class InputContextWrapper;
 
 #define MAIN_WIDTH 1024
@@ -31,6 +34,9 @@ public:
 	int getLastTimePress() const;
 	QObject *getInputWrapper() const;
 
+	void setMainWidget(QDeclarativeView *main_widget);
+	Q_INVOKABLE QImage takeScreenshot(QRect rect = QRect());
+
 public slots:
 	void updateTime();
 
@@ -39,6 +45,7 @@ signals:
 
 private:
 	InputContextWrapper *wrapper;
+	QDeclarativeView *main_widget;
 	QDateTime last_press;
 };
 
