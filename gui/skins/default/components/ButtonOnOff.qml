@@ -31,7 +31,7 @@ Row {
         property alias textColor: textOff.color
         Text {
             id: textOff
-            text: asTf("off")
+            text: qsTr("off")
             color: "#ffffff";
             font.pixelSize: 18
             anchors.verticalCenter: parent.verticalCenter
