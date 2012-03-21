@@ -203,7 +203,7 @@ source: "images/home/home.jpg"
                   textFirst: false
                   source: "images/home/stanze.png"
                   text: qsTr("stanze")
-                  onClicked: Stack.container.animation.source = "SlideAnimation.qml"
+                  onClicked: Stack.openPage("Rooms.qml")
                   textLeftMargin: 70
               }
 
