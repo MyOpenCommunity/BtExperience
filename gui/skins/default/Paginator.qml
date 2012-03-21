@@ -4,7 +4,7 @@ Image {
     id: paginator
     // all buttons in the paginator have the same width
     width: privateProps.numSlots * leftArrow.width
-    height: 35
+    height: leftArrow.height
     source: "images/common/bg_paginazione.png"
     visible: totalPages > 1
 
@@ -42,15 +42,15 @@ Image {
         // total number of pages handled by the paginator
         property int totalPages: 1
 
-        function needPagination() {
+        function needScrolling() {
             return totalPages > numSlots
         }
 
-        function needRightArrow() {
+        function needScrollRight() {
             return totalPages - currentPage > numSlots - offset
         }
 
-        function needLeftArrow() {
+        function needScrollLeft() {
             return currentPage > offset
         }
 
@@ -72,8 +72,8 @@ Image {
         }
 
         function isButtonVisible(index) {
-            var lowerPage = currentPage - (offset - 1 - (needLeftArrow() ? 1 : 0))
-            var upperPage = currentPage + (numSlots - offset - (needRightArrow() ? 1 : 0))
+            var lowerPage = currentPage - (offset - 1 - (needScrollLeft() ? 1 : 0))
+            var upperPage = currentPage + (numSlots - offset - (needScrollRight() ? 1 : 0))
             return (index >= lowerPage) && (index <= upperPage)
         }
     }
@@ -96,7 +96,7 @@ Image {
             width: 42
             height: 35
             source: "images/common/btn_NumeroPagina.png"
-            visible: privateProps.needPagination() && privateProps.needLeftArrow()
+            visible: privateProps.needScrolling() && privateProps.needScrollLeft()
 
             Image {
                 id: image1
@@ -136,7 +136,7 @@ Image {
             width: 42
             height: 35
             source: "images/common/btn_NumeroPagina.png"
-            visible: privateProps.needPagination() && privateProps.needRightArrow()
+            visible: privateProps.needScrolling() && privateProps.needScrollRight()
 
             Image {
                 id: image2
