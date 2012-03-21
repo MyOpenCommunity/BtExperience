@@ -11,8 +11,8 @@ Light::Light(QString _name, QString _key, LightingDevice *d)
 
 	key = _key;
 	name = _name;
-	status = false; // initial value
-	connect(this, SIGNAL(statusChanged()), this, SIGNAL(dataChanged()));
+	active = false; // initial value
+	connect(this, SIGNAL(activeChanged()), this, SIGNAL(dataChanged()));
 }
 
 QString Light::getObjectKey() const
@@ -25,14 +25,14 @@ QString Light::getName() const
 	return name;
 }
 
-bool Light::getStatus() const
+bool Light::isActive() const
 {
-	return status;
+	return active;
 }
 
-void Light::setStatus(bool st)
+void Light::setActive(bool st)
 {
-	qDebug() << "Light::setStatus";
+	qDebug() << "Light::setActive";
 	if (st)
 		dev->turnOn();
 	else
@@ -46,11 +46,11 @@ void Light::valueReceived(const DeviceValues &values_list)
 	{
 		if (it.key() == LightingDevice::DIM_DEVICE_ON)
 		{
-			if (it.value().toBool() != status)
+			if (it.value().toBool() != active)
 			{
-				status = it.value().toBool() == true;
+				active = it.value().toBool() == true;
 
-				emit statusChanged();
+				emit activeChanged();
 				break;
 			}
 		}
