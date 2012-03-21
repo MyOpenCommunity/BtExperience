@@ -6,7 +6,7 @@ FilterListModel {
 
         switch (objectId) {
         case ObjectInterface.IdLight:
-            return "Light.qml"
+            return "Actuator.qml"
         case ObjectInterface.IdDimmer:
             return "Dimmer.qml"
         case ObjectInterface.IdThermalControlUnit99:
@@ -20,11 +20,11 @@ FilterListModel {
         case ObjectInterface.IdMultiChannelSoundAmbient:
             return "SoundAmbient.qml"
         case ObjectInterface.IdSoundAmplifier:
-            return "Light.qml"
+            return "Actuator.qml"
         case ObjectInterface.IdPowerAmplifier:
             return "Amplifier.qml"
         case ObjectInterface.IdSoundAmplifierGeneral:
-            return "Light.qml"
+            return "Actuator.qml"
         default:
             console.log("getComponentFile(): Unknown object id: " + objectId)
             return ""
