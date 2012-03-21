@@ -13,19 +13,22 @@ bool InputMethodEventFilter::eventFilter(QObject *obj, QEvent *event)
 	if (ic)
 	{
 		const QWidget *focused = ic->focusWidget();
+		const QWidget *prevFocused = prevFocusWidget;
 
-		if (focused == 0 && prevFocusWidget)
+		// set focus widget before forwarding the event, to avoid
+		// an infinite loop when the filter is installed on QApplication
+		prevFocusWidget = focused;
+
+		if (focused == 0 && prevFocused)
 		{
 			QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
 			ic->filterEvent(&closeSIPEvent);
 		}
-		else if (prevFocusWidget == 0 && focused)
+		else if (prevFocused == 0 && focused)
 		{
 			QEvent openSIPEvent(QEvent::RequestSoftwareInputPanel);
 			ic->filterEvent(&openSIPEvent);
 		}
-
-		prevFocusWidget = focused;
 	}
 
 	return QObject::eventFilter(obj,event);

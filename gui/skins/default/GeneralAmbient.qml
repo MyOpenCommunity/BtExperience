@@ -42,7 +42,6 @@ MenuElement {
         ButtonOnOff {
             id: buttonOnOff
             status: false
-            anchors.top: volume.bottom
         }
     }
 }

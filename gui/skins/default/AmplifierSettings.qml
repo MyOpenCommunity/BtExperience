@@ -21,31 +21,33 @@ MenuElement {
             ControlSlider {
                 id: treble
                 description: qsTr("treble")
-                percentage: 10
+                // TODO: wrong value (#13411)
+                percentage: amplifierSettings.dataModel.treble
             }
 
             ControlSlider {
                 id: bass
                 description: qsTr("bass")
-                percentage: 35
+                // TODO: this is the wrong value, see ticket #13411
+                percentage: amplifierSettings.dataModel.bass
             }
         }
 
         Column {
             ControlBalance {
                 id: balance
-                percentage: 10
+                percentage: amplifierSettings.dataModel.balance
             }
 
             MenuItem {
                 id: equalizer
                 name: qsTr("equalizer")
                 active: amplifierSettings.animationRunning === false
-                description: "off"
+                description: amplifierSettings.dataModel.presetDescription
                 hasChild: true
                 state: privateProps.currentElement === 0 ? "selected" : ""
                 onClicked: {
-                    amplifierSettings.loadElement("AmplifierEqualizer.qml", qsTr("equalizer"))
+                    amplifierSettings.loadElement("AmplifierEqualizer.qml", qsTr("equalizer"), amplifierSettings.dataModel)
                     if (privateProps.currentElement !== 0)
                         privateProps.currentElement = 0
                 }
@@ -55,7 +57,7 @@ MenuElement {
                 id: loudness
                 name: qsTr("loud")
                 active: amplifierSettings.animationRunning === false
-                description: "on"
+                description: amplifierSettings.dataModel.loud ? qsTr("on") : qsTr("off")
                 hasChild: true
                 state: privateProps.currentElement === 1 ? "selected" : ""
                 // TODO: a dirty trick to avoid creating another almost empty file.

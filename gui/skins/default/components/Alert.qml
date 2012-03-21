@@ -10,7 +10,7 @@ Column {
 
     Text {
         id: warningText
-        text: qsTr("attenzione")
+        text: qsTr("warning")
         color: "#ff2e2e"
         font.family: semiBoldFont.name
         font.capitalization: Font.AllUppercase

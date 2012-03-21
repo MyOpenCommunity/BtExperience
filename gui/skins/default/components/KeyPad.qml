@@ -3,7 +3,7 @@ import QtQuick 1.1
 Column {
     id: keypad
     property string mainLabel
-    property string helperLabel: qsTr("inserisci il codice")
+    property string helperLabel: qsTr("enter code")
     property string errorLabel
     property string okLabel
     property string textInserted
@@ -158,7 +158,7 @@ Column {
                     anchors.fill: parent
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    text: "C"
+                    text: qsTr("C")
                     MouseArea { anchors.fill: parent; onClicked: keypad.digitClicked(parent.text) }
                 }
             }
@@ -178,7 +178,7 @@ Column {
                 anchors.fill: parent
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                text: qsTr("annulla")
+                text: qsTr("cancel")
                 font.pixelSize: 15
                 font.capitalization: Font.AllUppercase
 

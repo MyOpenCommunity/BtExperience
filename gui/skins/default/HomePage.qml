@@ -202,7 +202,7 @@ source: "images/home/home.jpg"
               ButtonHomePageLink {
                   textFirst: false
                   source: "images/home/stanze.png"
-                  text: qsTr("stanze")
+                  text: qsTr("rooms")
                   onClicked: Stack.openPage("Rooms.qml")
                   textLeftMargin: 70
               }
@@ -210,7 +210,7 @@ source: "images/home/home.jpg"
               ButtonHomePageLink {
                   textFirst: false
                   source: "images/home/sistemi.png"
-                  text: qsTr("sistemi")
+                  text: qsTr("systems")
                   textLeftMargin: 30
                   onClicked: Stack.openPage("Systems.qml")
               }
@@ -218,7 +218,7 @@ source: "images/home/home.jpg"
               ButtonHomePageLink {
                   source: "images/home/opzioni.png"
                   textLeftMargin: 70
-                  text: qsTr("opzioni")
+                  text: qsTr("options")
                   onClicked: Stack.openPage("Settings.qml")
               }
 

@@ -38,7 +38,7 @@ Image {
 
     Text {
         id: title
-        text: "title"
+        text: qsTr("title")
         anchors.top: parent.top
         anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
@@ -51,7 +51,7 @@ Image {
         x: 33
         y: 64
         color: "#ffffff"
-        text: "label"
+        text: qsTr("label")
         anchors.left: parent.left
         anchors.leftMargin: 33
         font.pixelSize: 15

@@ -6,7 +6,7 @@ Image {
     width: 212
     height: 150
     property int percentage: 85
-    property string description: qsTr("Volume")
+    property string description: qsTr("volume")
 
     Text_12pt_bold {
         id: label

@@ -22,7 +22,7 @@ MenuElement {
     }
 
     function cancelClicked() {
-        pageObject.showAlert(element, "Modifiche non salvate. Continuare?")
+        pageObject.showAlert(element, qsTr("unsaved changes. continue?"))
     }
 
     function alertOkClicked() {
@@ -108,7 +108,7 @@ MenuElement {
             hasChild: true
             active: element.animationRunning === false
             anchors.top: parent.top
-            name: qsTr("funzionamento")
+            name: qsTr("season")
             state: privateProps.currentElement === 1 ? "selected" : ""
 
             onClicked: {
@@ -123,7 +123,7 @@ MenuElement {
             hasChild: true
             active: element.animationRunning === false
             anchors.top: seasonItem.bottom
-            name: qsTr("modalità")
+            name: qsTr("mode")
             state: privateProps.currentElement === 2 ? "selected" : ""
 
             onClicked: {
@@ -139,13 +139,13 @@ MenuElement {
                 property variant objModel
 
                 ControlDateTime {
-                    text: qsTr("attivo fino al")
+                    text: qsTr("valid until")
                     date: Qt.formatDate(objModel.date, "dd/MM/yyyy")
                     time: Qt.formatTime(objModel.time, "hh:mm")
                 }
 
                 MenuItem {
-                    name: qsTr("Next program")
+                    name: qsTr("next program")
                     description: objModel.programDescription
                     hasChild: true
                     active: element.animationRunning === false
@@ -176,7 +176,7 @@ MenuElement {
             Column {
                 property variant objModel
                 ControlMinusPlus {
-                    title: qsTr("temperatura impostata")
+                    title: qsTr("temperature set")
                     text: objModel.temperature / 10 + "°C"
                     onMinusClicked: objModel.temperature -= 5
                     onPlusClicked: objModel.temperature += 5
@@ -225,7 +225,7 @@ MenuElement {
                 property variant objModel
 
                 MenuItem {
-                    name: qsTr("Next program")
+                    name: qsTr("next program")
                     description: objModel.programDescription
                     hasChild: true
                     active: element.animationRunning === false
@@ -256,13 +256,13 @@ MenuElement {
                 property variant objModel
 
                 ControlDateTime {
-                    text: qsTr("attivo fino al")
+                    text: qsTr("valid until")
                     date: Qt.formatDate(objModel.date, "dd/MM/yyyy")
                     time: Qt.formatTime(objModel.time, "hh:mm")
                 }
 
                 MenuItem {
-                    name: qsTr("Next program")
+                    name: qsTr("next program")
                     description: objModel.programDescription
                     hasChild: true
                     active: element.animationRunning === false
@@ -294,7 +294,7 @@ MenuElement {
                 property variant objModel
 
                 MenuItem {
-                    name: qsTr("Next scenario")
+                    name: qsTr("next scenario")
                     description: objModel.scenarioDescription
                     hasChild: true
                     active: element.animationRunning === false
