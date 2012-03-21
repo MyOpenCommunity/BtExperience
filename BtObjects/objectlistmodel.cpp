@@ -206,14 +206,17 @@ void FilterListModel::setRange(QVariantList range)
 
 bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-	// No category or filter or range means all the items
-	if (categories.isEmpty() && filters.isEmpty() && min_range == -1 && max_range == -1)
-		return true;
-
 	if (source_row == 0) // restart from the beginning
 		counter = 0;
 	if (source_row == getSource()->getSize() - 1)
 		QTimer::singleShot(0, const_cast<FilterListModel *>(this), SIGNAL(sizeChanged()));
+
+	// No category or filter or range means all the items
+	if (categories.isEmpty() && filters.isEmpty() && min_range == -1 && max_range == -1)
+	{
+		++counter;
+		return true;
+	}
 
 	QModelIndex idx = getSource()->index(source_row, 0, source_parent);
 
