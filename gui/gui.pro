@@ -52,6 +52,12 @@ defineTest(isArm) {
 INCLUDEPATH += ./common_files
 LIBS += -lssl
 
+maliit {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += maliit-1.0
+    DEFINES += BT_MALIIT
+}
+
 QT += opengl
 
 

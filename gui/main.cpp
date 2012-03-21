@@ -18,6 +18,10 @@
 #include <QDeclarativeContext>
 #include <QtDeclarative>
 
+#ifdef BT_MALIIT
+#include <maliit/inputmethod.h>
+#endif
+
 #include <logger.h>
 
 #include "qmlapplicationviewer.h"
@@ -123,6 +127,7 @@ int main(int argc, char *argv[])
 
 	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
+#if defined(BT_MALIIT)
 	if (env.contains("QT_IM_MODULE"))
 	{
 #if (defined(Q_WS_QPA) || defined(Q_WS_QWS)) && (QT_VERSION < 0x050000)
@@ -138,6 +143,7 @@ int main(int argc, char *argv[])
 		// see comment on InputMethodEventFilter
 		app.installEventFilter(new InputMethodEventFilter);
 	}
+#endif
 
 	LastClickTime *last_click = new LastClickTime;
 	// To receive all the events, even if there is some qml elements which manage
@@ -146,6 +152,18 @@ int main(int argc, char *argv[])
 
 #if USE_OPENGL
 	setupOpenGL(&viewer);
+#endif
+
+#if defined(BT_MALIIT)
+	QWidget *im_widget = Maliit::InputMethod::instance()->widget();
+
+	if (!im_widget)
+		qFatal("Maliit initialization failed");
+
+	im_widget->setParent(&viewer);
+	im_widget->setMinimumSize(1024, 600);
+	im_widget->setStyleSheet("background: white");
+	im_widget->hide();
 #endif
 
 	viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
