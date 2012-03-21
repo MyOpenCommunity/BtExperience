@@ -5,10 +5,10 @@ import BtObjects 1.0
 QtObject {
     function initNames() {
         Script.container['ALARM_TYPE'] = []
-        Script.container['ALARM_TYPE'][AntintrusionAlarm.Antipanic] = qsTr("anti-panico")
-        Script.container['ALARM_TYPE'][AntintrusionAlarm.Intrusion] = qsTr("intrusione")
-        Script.container['ALARM_TYPE'][AntintrusionAlarm.Technical] = qsTr("tecnico")
-        Script.container['ALARM_TYPE'][AntintrusionAlarm.Tamper] = qsTr("manomissione")
+        Script.container['ALARM_TYPE'][AntintrusionAlarm.Antipanic] = qsTr("panic")
+        Script.container['ALARM_TYPE'][AntintrusionAlarm.Intrusion] = qsTr("intrusion detection")
+        Script.container['ALARM_TYPE'][AntintrusionAlarm.Technical] = qsTr("technical")
+        Script.container['ALARM_TYPE'][AntintrusionAlarm.Tamper] = qsTr("anti-tampering")
     }
 
     function get(context, id) {

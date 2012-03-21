@@ -17,7 +17,7 @@ Page {
                 id: systemsModel
                 ListElement {
                     image: "images/antintrusion.jpg"
-                    name: "antintrusione"
+                    name: qsTr("antintrusion")
                     target: "Antintrusion.qml"
                 }
 //                ListElement {
@@ -27,17 +27,17 @@ Page {
 //                }
                 ListElement {
                     image: "images/termoregolazione.jpg"
-                    name: "termoregolazione"
+                    name: qsTr("temperature control")
                     target: "ThermalRegulation.qml"
                 }
                 ListElement {
                     image: "images/illuminazione.jpg"
-                    name: "illuminazione"
+                    name: qsTr("lighting")
                     target: "Lighting.qml"
                 }
                 ListElement {
                     image: "images/sound_diffusion.jpg"
-                    name: "diffusione sonora"
+                    name: qsTr("sound diffusion system")
                     target: "SoundDiffusion.qml"
                 }
             }
@@ -112,7 +112,7 @@ Page {
          x: 50
          y: 480
          color: "#ffffff"
-         text: "SISTEMI"
+         text: qsTr("systems")
          font.pixelSize: 100
      }
 }

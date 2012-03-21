@@ -15,7 +15,7 @@ Rectangle {
         id: tagline
         font.bold: true
         font.pointSize: 12
-        text: qsTr("Allarme!")
+        text: qsTr("alarm!")
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 10
@@ -50,7 +50,7 @@ Rectangle {
 
             Text {
                 wrapMode: Text.WordWrap
-                text: qsTr("Registro allarmi")
+                text: qsTr("alarm log")
                 anchors.fill: parent
             }
 
@@ -68,7 +68,7 @@ Rectangle {
 
             Text {
                 anchors.fill: parent
-                text: qsTr("Ignora")
+                text: qsTr("ignore")
             }
 
             MouseArea {

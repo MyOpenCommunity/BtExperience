@@ -25,7 +25,7 @@ MenuElement {
     MenuItem {
         id: programItem
         name: qsTr("program")
-        description: "morning"
+        description: qsTr("morning")
         hasChild: true
         active: element.animationRunning === false
         state: privateProps.currentIndex === 1 ? "selected" : ""
@@ -41,7 +41,7 @@ MenuElement {
         id: modalityItem
         anchors.top: programItem.bottom
         name: qsTr("modality")
-        description: "warm"
+        description: qsTr("warm")
         hasChild: true
         active: element.animationRunning === false
         state: privateProps.currentIndex === 2 ? "selected" : ""
@@ -72,12 +72,12 @@ MenuElement {
 
         Column {
             ControlUpDown {
-                title: "fancoil"
-                text: "high"
+                title: qsTr("fancoil")
+                text: qsTr("high")
             }
             ControlUpDown {
-                title: "swing"
-                text: "disabled"
+                title: qsTr("swing")
+                text: qsTr("disabled")
             }
             ButtonOkCancel {
             }
@@ -105,12 +105,12 @@ MenuElement {
                 text: "22 " + qsTr("°C")
             }
             ControlUpDown {
-                title: "fancoil"
-                text: "high"
+                title: qsTr("fancoil")
+                text: qsTr("high")
             }
             ControlUpDown {
-                title: "swing"
-                text: "disabled"
+                title: qsTr("swing")
+                text: qsTr("disabled")
             }
             ButtonOkCancel {
             }
