@@ -87,6 +87,20 @@ void setupOpenGL(QDeclarativeView *v)
 }
 #endif
 
+// TODO Copied&pasted from ts_3_5.x11, must be readapted.
+// The template path to find the language file.
+#define LANGUAGE_FILE_TMPL "cfg/extra/2/bt_experience_%s.qm"
+
+void installTranslator(QApplication &a, QString language_suffix)
+{
+	QString language_file;
+	language_file.sprintf(LANGUAGE_FILE_TMPL, language_suffix.toAscii().constData());
+	QTranslator *translator = new QTranslator(0);
+	if (translator->load(language_file))
+		a.installTranslator(translator);
+	else
+		qWarning() << "File " << language_file << " not found for language " << language_suffix;
+}
 
 int main(int argc, char *argv[])
 {
@@ -135,5 +149,7 @@ int main(int argc, char *argv[])
 	viewer.showFullScreen();
 #endif
 
+	// TODO pass gui language
+	installTranslator(app, "it");
 	return app.exec();
 }

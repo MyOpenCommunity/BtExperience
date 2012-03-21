@@ -55,7 +55,7 @@ MenuElement {
                 id: loudness
                 name: qsTr("loud")
                 active: amplifierSettings.animationRunning === false
-                description: "on"
+                description: qsTr("on")
                 hasChild: true
                 state: privateProps.currentElement === 1 ? "selected" : ""
                 // TODO: a dirty trick to avoid creating another almost empty file.

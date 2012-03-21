@@ -30,7 +30,7 @@ Page {
         width: 208
         height: 0
         color: "#0a0a0d"
-        text: qsTr("Regolazione luminosita")
+        text: qsTr("brightness adjustment")
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 18

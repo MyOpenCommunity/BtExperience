@@ -22,7 +22,7 @@ MenuElement {
     }
 
     function cancelClicked() {
-        pageObject.showAlert(element, "Modifiche non salvate. Continuare?")
+        pageObject.showAlert(element, qsTr("unsaved changes. continue?"))
     }
 
     onChildDestroyed: {
@@ -75,7 +75,7 @@ MenuElement {
             id: textTemperature
             x: 18
             y: 13
-            text: dataModel.temperature  / 10 + qsTr("° C")
+            text: dataModel.temperature  / 10 + qsTr("°C")
             font.pixelSize: 24
         }
 
@@ -83,7 +83,7 @@ MenuElement {
             id: modalityItem
             hasChild: true
             active: element.animationRunning === false
-            name: qsTr("modalità")
+            name: qsTr("modes")
             x: 0
             y: 51
 
@@ -115,8 +115,8 @@ MenuElement {
         id: autoComponent
         Column {
             ControlUpDown {
-                title: qsTr("velocità fancoil")
-                text: "alta"
+                title: qsTr("fan coil speed")
+                text: qsTr("high")
             }
 
             ButtonOkCancel {
@@ -133,15 +133,15 @@ MenuElement {
             property int setpoint
 
             ControlMinusPlus {
-                title: qsTr("temperatura impostata")
-                text: setpoint / 10 + qsTr("° C")
+                title: qsTr("temperature set")
+                text: setpoint / 10 + qsTr("°C")
                 onPlusClicked: setpoint += 1
                 onMinusClicked: setpoint -= 1
             }
 
             ControlUpDown {
-                title: qsTr("velocità fancoil")
-                text: "alta"
+                title: qsTr("fan coil speed")
+                text: qsTr("high")
             }
 
             ButtonOkCancel {

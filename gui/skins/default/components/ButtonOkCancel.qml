@@ -6,7 +6,7 @@ Row {
     Image {
         source: "../images/common/btn_OKAnnulla.png"
         Text {
-            text: qsTr("OK")
+            text: qsTr("ok")
             font.family: semiBoldFont.name
             font.pixelSize: 16
             anchors.verticalCenter: parent.verticalCenter
@@ -21,7 +21,7 @@ Row {
     Image {
         source: "../images/common/btn_OKAnnulla.png"
         Text {
-            text: qsTr("ANNULLA")
+            text: qsTr("cancel")
             font.family: semiBoldFont.name
             font.pixelSize: 16
             anchors.verticalCenter: parent.verticalCenter

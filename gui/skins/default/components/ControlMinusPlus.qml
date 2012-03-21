@@ -13,7 +13,7 @@ Image {
     Text {
         id: title
         color: "#000000"
-        text: "title"
+        text: qsTr("title")
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 5
@@ -26,7 +26,7 @@ Image {
         x: 32
         y: 65
         color: "#ffffff"
-        text: "label"
+        text: qsTr("label")
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: 15
     }

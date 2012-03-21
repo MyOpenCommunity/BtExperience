@@ -5,7 +5,7 @@ MenuElement {
     id: system
     width: 212
     height: antintrusionColumn.height
-    property string alarmLogTitle: qsTr("registro allarmi")
+    property string alarmLogTitle: qsTr("alarm log")
 
     ObjectModel {
         id: objectModel
@@ -71,7 +71,7 @@ MenuElement {
         }
 
         function partialize() {
-            pageObject.showKeyPad(qsTr("imposta zone"), qsTr("codice errato"), qsTr("zone impostate"))
+            pageObject.showKeyPad(qsTr("modify zones"), qsTr("wrong code"), qsTr("zone settings"))
             actionPartialize = true
             connectKeyPad()
         }
@@ -146,7 +146,7 @@ MenuElement {
         MenuItem {
             id: systemItem
             active: system.animationRunning === false
-            name: qsTr("sistema disattivo")
+            name: qsTr("system disabled")
             hasChild: false
             Image {
                 id: systemIcon
@@ -158,9 +158,9 @@ MenuElement {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    var title = system.state === "" ? qsTr("attiva sistema") : qsTr("disattiva sistema")
-                    var okMessage = system.state === "" ? qsTr("sistema attivato") : qsTr("sistema disattivato")
-                    privateProps.toggleActivation(title, qsTr("codice errato"), okMessage)
+                    var title = system.state === "" ? qsTr("enable system") : qsTr("disable system")
+                    var okMessage = system.state === "" ? qsTr("system enabled") : qsTr("system disabled")
+                    privateProps.toggleActivation(title, qsTr("wrong code"), okMessage)
                 }
             }
         }
@@ -263,7 +263,7 @@ MenuElement {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("imposta zone")
+                text: qsTr("modify zones")
                 font.capitalization: Font.AllUppercase
                 font.pixelSize: 15
             }
@@ -278,7 +278,7 @@ MenuElement {
         State {
             name: "systemActive"
             when: privateProps.model.status === true
-            PropertyChanges { target: systemItem; name: qsTr("sistema attivo") }
+            PropertyChanges { target: systemItem; name: qsTr("system enabled") }
             PropertyChanges { target: systemIcon; source: "images/common/ico_sistema_attivato.png" }
             PropertyChanges { target: zoneDarkRect; visible: true }
             PropertyChanges { target: registerDarkRect; visible: true }

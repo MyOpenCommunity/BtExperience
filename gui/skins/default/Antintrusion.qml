@@ -3,7 +3,7 @@ import QtQuick 1.1
 SystemPage {
     id: antintrusion
     source: "images/antintrusion.jpg"
-    text: qsTr("antintrusione")
+    text: qsTr("antintrusion")
     rootElement: "AntintrusionSystem.qml"
     names: AntintrusionNames { }
 
@@ -29,7 +29,7 @@ SystemPage {
     Component {
         id: keypadComponent
         KeyPad {
-            helperLabel: qsTr("inserisci il codice")
+            helperLabel: qsTr("enter code")
         }
     }
 
@@ -43,7 +43,7 @@ SystemPage {
     function showAlarmPopup(type, zone, time) {
         popupLoader.sourceComponent = alarmComponent
         popupLoader.item.alarmDateTime = Qt.formatDateTime(time, "hh:mm - dd/MM/yyyy")
-        popupLoader.item.alarmLocation = antintrusion.names.get('ALARM_TYPE', type) + ": zone " + zone.objectId + " - " + zone.name
+        popupLoader.item.alarmLocation = antintrusion.names.get('ALARM_TYPE', type) + ": " + qsTr("zone %1 - %2").arg(zone.objectId).arg(zone.name)
         popupLoader.item.ignoreClicked.connect(closeAlarmPopup)
         popupLoader.item.alarmLogClicked.connect(closeAlarmAndShowLog)
         antintrusion.state = "popup"

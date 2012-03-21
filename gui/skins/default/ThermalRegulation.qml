@@ -3,7 +3,7 @@ import "Stack.js" as Stack
 
 SystemPage {
     source: "images/termoregolazione.jpg"
-    text: qsTr("termoregolazione")
+    text: qsTr("temperature control")
     rootElement: "ThermalRegulationItems.qml"
     names: ThermalNames { }
 }

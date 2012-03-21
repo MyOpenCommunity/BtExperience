@@ -31,21 +31,21 @@ MenuElement {
 
                 Text {
                     width: 125
-                    text: qsTr("TIPO")
+                    text: qsTr("type")
                     color: "#4F4F4F"
                     font.pointSize: 12
                 }
 
                 Text {
                     width: 125
-                    text: qsTr("ZONA")
+                    text: qsTr("zone")
                     color: "#4F4F4F"
                     font.pointSize: 12
                 }
 
                 Text {
                     width: 105
-                    text: qsTr("DATA E ORA")
+                    text: qsTr("date and time")
                     color: "#4F4F4F"
                     font.pointSize: 12
                 }
@@ -110,7 +110,7 @@ MenuElement {
                 }
                 Text {
                     height: 60
-                    text: qsTr("Page " + paginator.currentPage + " of " + paginator.totalPages)
+                    text: qsTr("page %1 of %2").arg(paginator.currentPage).arg(paginator.totalPages)
                     color: "#4F4F4F"
                 }
             }
@@ -143,7 +143,7 @@ MenuElement {
             width: img.width - paginator.width * paginator.visible
 
             Text {
-                text: qsTr("Remove all")
+                text: qsTr("remove all")
                 font.capitalization: Font.AllUppercase
                 font.pixelSize: 12
                 anchors.centerIn: parent

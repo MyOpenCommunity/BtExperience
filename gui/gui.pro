@@ -68,3 +68,5 @@ HEADERS += \
     eventfilters.h \
     globalproperties.h \
     inputcontextwrapper.h
+
+TRANSLATIONS += linguist-ts/bt_experience_it.ts

@@ -15,7 +15,7 @@ MenuElement {
 
         Text {
             id: textDimmer
-            text: qsTr("intensità luce")
+            text: qsTr("light intensity")
             color: "#444546"
             wrapMode: "WordWrap"
             font.pixelSize: 13
@@ -75,7 +75,7 @@ MenuElement {
                 anchors.top: parent.top
                 anchors.topMargin: 5
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("spegnimento temporizzato")
+                text: qsTr("timed turn off")
                 font.pointSize: 11
                 color: "#444546"
             }
@@ -91,7 +91,7 @@ MenuElement {
 
                 Text {
                     width: parent.width
-                    text: qsTr("minuti")
+                    text: qsTr("minutes")
                     font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -138,7 +138,7 @@ MenuElement {
                 spacing: 3
                 Text {
                     width: parent.width
-                    text: qsTr("secondi")
+                    text: qsTr("seconds")
                     font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
