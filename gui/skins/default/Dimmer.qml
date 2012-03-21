@@ -9,8 +9,8 @@ MenuElement {
         anchors.fill: parent
         ButtonOnOff {
             id: onOff
-            status: dataModel.status
-            onClicked: dataModel.status = newStatus
+            status: dataModel.active
+            onClicked: dataModel.active = newStatus
         }
 
         Text {

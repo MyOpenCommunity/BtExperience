@@ -4,8 +4,8 @@ MenuElement {
     width: 212
     height: 50
     ButtonOnOff {
-        status: dataModel.status
-        onClicked: dataModel.status = newStatus
+        status: dataModel.active
+        onClicked: dataModel.active = newStatus
     }
 }
 
