@@ -25,7 +25,7 @@ MenuElement {
         id: amplifierSettings
         active: element.animationRunning === false
         anchors.top: volumeSlider.bottom
-        name: qsTr("impostazioni")
+        name: qsTr("settings")
         hasChild: true
         onClicked: {
             state = "selected"
