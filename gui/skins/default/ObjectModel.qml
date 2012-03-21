@@ -20,9 +20,9 @@ FilterListModel {
         case ObjectInterface.IdMultiChannelSoundAmbient:
             return "SoundAmbient.qml"
         case ObjectInterface.IdSoundAmplifier:
-            return "Actuator.qml"
-        case ObjectInterface.IdPowerAmplifier:
             return "Amplifier.qml"
+        case ObjectInterface.IdPowerAmplifier:
+            return "PowerAmplifier.qml"
         case ObjectInterface.IdSoundAmplifierGeneral:
             return "Actuator.qml"
         default:

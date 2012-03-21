@@ -3,14 +3,14 @@ import BtObjects 1.0
 
 MenuElement {
     id: element
-    height: buttonOnOff.height + volumeSlider.height + amplifierSettings.height
+    height: buttonOnOff.height + volumeSlider.height
     width: 212
 
     onChildDestroyed: amplifierSettings.state = ""
 
     ButtonOnOff {
         id: buttonOnOff
-        status: false
+        status: element.dataModel.active
         height: 50
     }
 
@@ -18,17 +18,6 @@ MenuElement {
         id: volumeSlider
         anchors.top: buttonOnOff.bottom
         description: qsTr("volume")
-    }
-
-    MenuItem {
-        id: amplifierSettings
-        active: element.animationRunning === false
-        anchors.top: volumeSlider.bottom
-        name: qsTr("impostazioni")
-        hasChild: true
-        onClicked: {
-            state = "selected"
-            element.loadElement("AmplifierSettings.qml", qsTr("settings"))
-        }
+        percentage: (element.dataModel.volume) * 100 / 31
     }
 }
