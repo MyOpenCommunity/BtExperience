@@ -40,6 +40,7 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 	ambients << new SoundAmbient(2, "Cucina");
 	ambients << new SoundAmbient(3, "Salotto");
 
+	amplifiers << new PowerAmplifier(2, "Amplificatore di potenza", bt_global::add_device_to_cache(new PowerAmplifierDevice("21")), QList<QString>());
 	amplifiers << new Amplifier(2, "Amplificatore 2", AmplifierDevice::createDevice("22"));
 	amplifiers << new Amplifier(2, "Amplificatore 3", AmplifierDevice::createDevice("23"));
 	amplifiers << new Amplifier(2, "Generale", AmplifierDevice::createDevice("#2"),

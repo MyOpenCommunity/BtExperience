@@ -15,8 +15,18 @@ FilterListModel {
             return "ThermalControlledProbe.qml"
         case ObjectInterface.IdHardwareSettings:
             return "Brightness.qml"
+        case ObjectInterface.IdMultiChannelGeneralAmbient:
+            return "GeneralAmbient.qml"
+        case ObjectInterface.IdMultiChannelSoundAmbient:
+            return "SoundAmbient.qml"
+        case ObjectInterface.IdSoundAmplifier:
+            return "Light.qml"
+        case ObjectInterface.IdPowerAmplifier:
+            return "Amplifier.qml"
+        case ObjectInterface.IdSoundAmplifierGeneral:
+            return "Light.qml"
         default:
-            console.log("Unknown object id: " + objectId)
+            console.log("getComponentFile(): Unknown object id: " + objectId)
             return ""
         }
     }
