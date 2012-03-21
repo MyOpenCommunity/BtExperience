@@ -127,7 +127,12 @@ int main(int argc, char *argv[])
 	{
 #if (defined(Q_WS_QPA) || defined(Q_WS_QWS)) && (QT_VERSION < 0x050000)
 		// Workaround for Lighthouse/QWS, copied from Maliit PlainQT example app
-		app.setInputContext(QInputContextFactory::create(env.value("QT_IM_MODULE"), &app));
+		QInputContext *ic = QInputContextFactory::create(env.value("QT_IM_MODULE"), &app);
+
+		if (!ic)
+			qFatal("Unable to create input context for '%s'", env.value("QT_IM_MODULE").toUtf8().data());
+
+		app.setInputContext(ic);
 #endif
 
 		// see comment on InputMethodEventFilter
