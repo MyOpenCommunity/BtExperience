@@ -364,7 +364,7 @@ Amplifier::Amplifier(int _area, QString _name, AmplifierDevice *d, int _object_i
 	name = _name;
 	object_id = _object_id;
 	active = false;
-	volume = 0;
+	volume = 1;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
