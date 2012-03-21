@@ -89,15 +89,19 @@ void setupOpenGL(QDeclarativeView *v)
 
 // TODO Copied&pasted from ts_3_5.x11, must be readapted.
 // The template path to find the language file.
-#define LANGUAGE_FILE_TMPL "cfg/extra/2/bt_experience_%s.qm"
+#define LANGUAGE_FILE_TMPL "%s/gui/linguist-ts/bt_experience_%s"
 
 void installTranslator(QApplication &a, QString language_suffix)
 {
 	QString language_file;
-	language_file.sprintf(LANGUAGE_FILE_TMPL, language_suffix.toAscii().constData());
-	QTranslator *translator = new QTranslator(0);
+	language_file.sprintf(LANGUAGE_FILE_TMPL,
+						  QDir::currentPath().toAscii().constData(),
+						  language_suffix.toAscii().constData());
+	QTranslator *translator = new QTranslator();
 	if (translator->load(language_file))
+	{
 		a.installTranslator(translator);
+	}
 	else
 		qWarning() << "File " << language_file << " not found for language " << language_suffix;
 }
@@ -105,6 +109,11 @@ void installTranslator(QApplication &a, QString language_suffix)
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
+
+	// TODO pass gui language; I hardcoded Italian for now
+	// pay attention to the fact that the translator MUST be installed before doing anything else
+	installTranslator(app, "it");
+
 	setupLogger("/var/tmp/BTicino.log");
 	VERBOSITY_LEVEL = 3;
 
@@ -149,7 +158,5 @@ int main(int argc, char *argv[])
 	viewer.showFullScreen();
 #endif
 
-	// TODO pass gui language
-	installTranslator(app, "it");
 	return app.exec();
 }
