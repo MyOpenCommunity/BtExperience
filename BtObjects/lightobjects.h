@@ -27,7 +27,7 @@ class Light : public ObjectInterface
 	/*!
 		\brief Sets and gets the on/off status of the light
 	*/
-	Q_PROPERTY(bool status READ getStatus WRITE setStatus NOTIFY statusChanged)
+	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
 
 public:
 	Light(QString name, QString key, LightingDevice *d);
@@ -45,11 +45,11 @@ public:
 	}
 
 	virtual QString getName() const;
-	virtual bool getStatus() const;
-	virtual void setStatus(bool st);
+	virtual bool isActive() const;
+	virtual void setActive(bool st);
 
 signals:
-	void statusChanged();
+	void activeChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -57,7 +57,7 @@ protected slots:
 protected:
 	QString name;
 	QString key;
-	bool status;
+	bool active;
 
 private:
 	LightingDevice *dev;
