@@ -2,16 +2,11 @@ import QtQuick 1.1
 import "Stack.js" as Stack
 import BtObjects 1.0
 
-Page {
-    id: brightnessarea
-    source: "images/home/home.jpg"
+MenuElement {
+    width: 212
+    height: 164
 
-    ToolBar {
-        id: toolbar
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
+    onChildDestroyed: privateProps.currentIndex = -1
 
     ObjectModel {
         id: objectModel
@@ -23,128 +18,177 @@ Page {
         property variant model: objectModel.getObject(0)
     }
 
-    Text {
-        id: text1
-        x: 383
-        y: 83
-        width: 208
-        height: 0
-        color: "#0a0a0d"
-        text: qsTr("Regolazione luminosita")
-        font.bold: true
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 18
+    Connections {
+        target: privateProps.model
+        onCurrentScenarioChanged: privateProps.model.brightness()
     }
 
     Image {
-        id: image1
-        x: 160
-        y: 136
-        source: "images/1.png"
-    }
+        x: 0
+        y: 0
+        width: 212
+        height: 331
+        anchors.rightMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
+        anchors.bottomMargin: -167
+        source: "images/common/dimmer_bg.png"
+        anchors.fill: parent
 
-    Image {
-        id: image2
-        x: 160
-        y: 197
-        source: "images/2.png"
-    }
+        Text {
+            id: textBrightness
+            x: 72
+            y: 7
+            text: qsTr("luminosità")
+            anchors.horizontalCenterOffset: 1
+            color: "#444546"
+            wrapMode: "WordWrap"
+            font.pixelSize: 13
+            anchors.top: onOff.bottom
+            anchors.topMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
 
-    Image {
-        id: image3
-        x: 160
-        y: 257
-        source: "images/3.png"
-    }
+        Text {
+            id: textPercentage
+            text: dataModel.percentage + "%"
+            font.bold: true
+            color: "#444546"
+            anchors.top: textBrightness.bottom
+            anchors.topMargin: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
 
-    Image {
-        id: image4
-        x: 160
-        y: 318
-        source: "images/4.png"
-    }
+        Image {
+            id: brightnessReg
+            x: 2
+            y: 56
+            source: "images/common/dimmer_reg_bg.png"
+            width: 212
+            height: 108
+            anchors.horizontalCenterOffset: 2
+            anchors.top: textPercentage.bottom
+            anchors.topMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
 
-    Image {
-        id: image5
-        x: 160
-        y: 375
-        source: "images/5.png"
-    }
+            Image {
+                id: barPercentage
+                x: 0
+                y: 0
+                source: "images/common/dimmer_reg.png"
+                anchors.left: parent.left
+                width: parent.width / 100 * dataModel.sendCommand
+                height: 59
+                anchors.leftMargin: 0
+                Behavior on width {
+                    NumberAnimation { duration: 100; }
+                }
+            }
+        }
 
-    Rectangle {
-        x: 160
-        y: 136
-        width: 40
-        height: 40
-        color: "red"
-
-        MouseArea {
-            id: mouse_area2
-            anchors.fill: parent
-
-            onClicked: {
-                privateProps.model.brightness = 2
+        ButtonMinusPlus {
+            id: brightnessMinusPlus
+            x: 2
+            y: 115
+            height: 49
+            anchors.horizontalCenterOffset: 0
+            anchors.topMargin: -49
+            anchors.top: brightnessReg.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            onPlusClicked: {
+                Settings.setBrightness +=25
+                dataModel.percentage += 5
+                if (dataModel.percentage > 100)
+                    dataModel.percentage = 100
+            }
+            onMinusClicked: {
+                dataModel.percentage -= 5
+                if (dataModel.percentage < 0)
+                    dataModel.percentage = 0
             }
         }
     }
+    Image {
+        x: 0
+        y: 164
+        width: 212
+        height: 0
+        anchors.topMargin: 164
+        anchors.bottomMargin: 0
+        source: "images/common/dimmer_bg.png"
+        anchors.fill: parent
 
-    MouseArea {
-        id: mouse_area4
-        x: 160
-        y: 197
-        width: 40
-        height: 40
-
-        onClicked: {
-            Settings.setBrightness("25")
-            Settings.setBrightness("14")
-            console.log ("i2cset -y 1 0x4a 0xf0 0x25")
-            console.log ("i2cset -y 1 0x4a 0xf9 0x14")
+        Text {
+            id: textContrast
+            x: 72
+            y: 7
+            text: qsTr("contrasto")
+            anchors.horizontalCenterOffset: 1
+            color: "#444546"
+            wrapMode: "WordWrap"
+            font.pixelSize: 13
+            anchors.top: onOff.bottom
+            anchors.topMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
         }
-    }
 
-    MouseArea {
-        id: mouse_area5
-        x: 160
-        y: 257
-        width: 40
-        height: 40
-
-        onClicked: {
-            Settings.setBrightness("50")
-            Settings.setBrightness("36")
-            console.log ("i2cset -y 1 0x4a 0xf0 0x50")
-            console.log ("i2cset -y 1 0x4a 0xf9 0x36")
+        Text {
+            id: textPercentageContrast
+            text: dataModel.percentage + "%"
+            font.bold: true
+            color: "#444546"
+            anchors.top: textBrightness.bottom
+            anchors.topMargin: 5
+            anchors.horizontalCenter: parent.horizontalCenter
         }
-    }
 
-    MouseArea {
-        id: mouse_area6
-        x: 160
-        y: 318
-        width: 40
-        height: 40
+        Image {
+            id: contrastReg
+            x: 2
+            y: 56
+            source: "images/common/dimmer_reg_bg.png"
+            width: 212
+            height: 108
+            anchors.horizontalCenterOffset: 2
+            anchors.top: textPercentage.bottom
+            anchors.topMargin: setBrightness
+            anchors.horizontalCenter: parent.horizontalCenter
 
-        onClicked: {
-            Settings.setBrightness("75")
-            Settings.setBrightness("48")
-            console.log ("i2cset -y 1 0x4a 0xf0 0x75")
-            console.log ("i2cset -y 1 0x4a 0xf9 0x48")
+            Image {
+                id: barPercentageContrast
+                x: 0
+                y: 0
+                source: "images/common/dimmer_reg.png"
+                anchors.left: parent.left
+                width: parent.width / 100 * dataModel.sendCommand
+                height: 59
+                anchors.leftMargin: 0
+                Behavior on width {
+                    NumberAnimation { duration: 100; }
+                }
+            }
         }
-    }
 
-    MouseArea {
-        id: mouse_area8
-        x: 160
-        y: 375
-        width: 40
-        height: 40
-
-        onClicked: {
-            Settings.setBrightness("01")
-            Settings.setBrightness("01")
-            console.log ("i2cset -y 1 0x4a 0xf0 0x01")
-            console.log ("i2cset -y 1 0x4a 0xf9 0x01")
+        ButtonMinusPlus {
+            id: contrastMinusPlus
+            x: 2
+            y: 115
+            height: 49
+            anchors.horizontalCenterOffset: 0
+            anchors.topMargin: -49
+            anchors.top: brightnessReg.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            onPlusClicked: {
+                Settings.setBrightness +=25
+                dataModel.percentage += 5
+                if (dataModel.percentage > 100)
+                    dataModel.percentage = 100
+            }
+            onMinusClicked: {
+                dataModel.percentage -= 5
+                if (dataModel.percentage < 0)
+                    dataModel.percentage = 0
+            }
         }
     }
 }

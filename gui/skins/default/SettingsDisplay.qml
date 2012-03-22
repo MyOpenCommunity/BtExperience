@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import QtQuick 1.0
 
 MenuElement {
     id: element
@@ -32,24 +33,25 @@ MenuElement {
     ListModel {
         id: modelList
         ListElement {
-            name: "brightness"
-        }
-        ListElement {
-            name: "contrast"
+            name: "Brightness/Contrast"
+            componentFile: "Brightness.qml"
         }
         ListElement {
             name: "screensaver"
             componentFile: "ScreenSaverList.qml"
         }
         ListElement {
-            name: "calibration"
-        }
-        ListElement {
-            name: "clean"
-        }
-        ListElement {
             name: "transition effects"
             componentFile: "TransitionEffects.qml"
         }
+        ListElement {
+            name: "calibration"
+            componentFile: ""
+        }
+        ListElement {
+            name: "clean"
+            componentFile: ""
+        }
+
     }
 }
