@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import "datetime.js" as DateTime
 
 MenuElement {
     id: element
@@ -86,7 +87,7 @@ MenuElement {
                         Text {
                             color: "white"
                             width: 105
-                            text: itemObject !== undefined ? Qt.formatDateTime(itemObject.date_time, "dd/MM/yyyy\nhh:mm") : ""
+                            text: itemObject !== undefined ? DateTime.format(itemObject.date_time)["date"] + "\n" + DateTime.format(itemObject.date_time)["time"] : ""
                             font.pointSize: 12
                         }
                     }

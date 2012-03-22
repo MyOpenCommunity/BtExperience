@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "datetime.js" as DateTime
 
 Image {
     id: toolbar
@@ -40,7 +41,7 @@ Image {
         font.pixelSize: toolbar.fontSize
         font.family: toolbar.fontFamily
         function setDate(d) {
-            text = Qt.formatDate(d, "dd/MM/yyyy")
+            text = DateTime.format(d)["date"]
         }
     }
 
@@ -48,11 +49,11 @@ Image {
         id: time
         y: 16
         x: 242
-        text: Qt.formatTime(new Date, "hh:mm")
+        text: DateTime.format()["time"]
         font.pixelSize: toolbar.fontSize
         font.family: toolbar.fontFamily
         function setTime(d) {
-            text = Qt.formatTime(d, "hh:mm")
+            text = DateTime.format(d)["time"]
         }
     }
 

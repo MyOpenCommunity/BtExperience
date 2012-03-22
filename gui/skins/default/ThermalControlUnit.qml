@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import "datetime.js" as DateTime
 
 
 MenuElement {
@@ -140,8 +141,8 @@ MenuElement {
 
                 ControlDateTime {
                     text: qsTr("valid until")
-                    date: Qt.formatDate(objModel.date, "dd/MM/yyyy")
-                    time: Qt.formatTime(objModel.time, "hh:mm")
+                    date: DateTime.format(objModel.date)["date"]
+                    time: DateTime.format(objModel.date)["time"]
                 }
 
                 MenuItem {
@@ -257,8 +258,8 @@ MenuElement {
 
                 ControlDateTime {
                     text: qsTr("valid until")
-                    date: Qt.formatDate(objModel.date, "dd/MM/yyyy")
-                    time: Qt.formatTime(objModel.time, "hh:mm")
+                    date: DateTime.format(objModel.date)["date"]
+                    time: DateTime.format(objModel.date)["time"]
                 }
 
                 MenuItem {

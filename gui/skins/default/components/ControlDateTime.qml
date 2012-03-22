@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "../datetime.js" as DateTime
 
 Image {
     id: control
@@ -6,8 +7,8 @@ Image {
     height: 170
     source: "../images/common/dimmer_bg.png"
     property string text
-    property string date: Qt.formatDate(element.dataModel.date, "dd/MM/yy")
-    property string time: Qt.formatTime(element.dataModel.time, "hh:mm")
+    property string date: DateTime.format(element.dataModel.date)["date"]
+    property string time: DateTime.format(element.dataModel.time)["time"]
 
 
     QtObject {

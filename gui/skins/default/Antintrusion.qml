@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "datetime.js" as DateTime
 
 SystemPage {
     id: antintrusion
@@ -42,7 +43,7 @@ SystemPage {
 
     function showAlarmPopup(type, zone, time) {
         popupLoader.sourceComponent = alarmComponent
-        popupLoader.item.alarmDateTime = Qt.formatDateTime(time, "hh:mm - dd/MM/yyyy")
+        popupLoader.item.alarmDateTime = DateTime.format(time)["time"] + " - " + DateTime.format(time)["date"]
         popupLoader.item.alarmLocation = antintrusion.names.get('ALARM_TYPE', type) + ": " + qsTr("zone %1 - %2").arg(zone.objectId).arg(zone.name)
         popupLoader.item.ignoreClicked.connect(closeAlarmPopup)
         popupLoader.item.alarmLogClicked.connect(closeAlarmAndShowLog)
