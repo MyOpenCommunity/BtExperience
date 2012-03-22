@@ -1,57 +1,36 @@
 import QtQuick 1.1
-import BtObjects 1.0
 
-MenuElement {
+ListView {
     id: element
-    height: itemList.height + paginator.height * paginator.visible
-    width: 212
+    height: 50 * count + paginator.height
+    currentIndex: -1
+    interactive: false
 
     property int maxHeight: 300
-    // cannot export categories only, otherwise menus that use this component
-    // will have one page more. I don't understand why.
-    property alias paginatorModel: modelList
+    property int elementsOnPage: maxHeight / 50
+    // TODO: is it necessary to expose it?
+    property alias currentPage: paginator.currentPage
 
-    onChildDestroyed: {
-        itemList.currentIndex = -1
+
+    // Convenience function to compute the visible range of a model
+    function computePageRange(page, elementsOnPage) {
+        return [(page - 1) * elementsOnPage, page * elementsOnPage]
     }
 
-    ListView {
-        id: itemList
-        height: 50 * count
-        currentIndex: -1
-        interactive: false
-
-        delegate: MenuItemDelegate {
-            itemObject: modelList.getObject(index)
-
-            active: element.animationRunning === false
-            status: itemObject.status === true ? 1 : 0
-            hasChild: true
-            onClicked: {
-                element.loadElement(modelList.getComponentFile(itemObject.objectId), itemObject.name,
-                                    modelList.getObject(model.index))
-            }
-        }
-
-        model: modelList
-    }
-
-    QtObject {
-        id: privateProps
-        property int elementsOnPage: maxHeight / 50
-    }
-
-
-    ObjectModel {
-        id: modelList
-        categories: [ObjectInterface.Lighting]
-        range: paginator.computePageRange(paginator.currentPage, privateProps.elementsOnPage)
+    // Convenience function to compute the number of pages in the paginator
+    // from the model size
+    function computePagesFromModelSize(modelSize, elementsOnPage) {
+        var ret = modelSize % elementsOnPage ?
+               modelSize / elementsOnPage + 1 :
+               modelSize / elementsOnPage
+        return Math.floor(ret)
     }
 
     Paginator {
         id: paginator
-        anchors.top: itemList.bottom
-        totalPages: paginator.computePagesFromModelSize(modelList.size, privateProps.elementsOnPage)
+        y: 50 * count
+        width: parent.width
+        totalPages: computePagesFromModelSize(model.size, elementsOnPage)
     }
 }
 

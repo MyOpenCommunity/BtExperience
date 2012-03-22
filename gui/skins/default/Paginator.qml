@@ -15,20 +15,6 @@ Image {
     // The total number of buttons (numbers + arrows) shown in the paginator element.
     property alias numSlots: privateProps.numSlots
 
-    // Convenience function to compute the visible range of a model
-    function computePageRange(page, elementsOnPage) {
-        return [(page - 1) * elementsOnPage, page * elementsOnPage]
-    }
-
-    // Convenience function to compute the number of pages in the paginator
-    // from the model size
-    function computePagesFromModelSize(modelSize, elementsOnPage) {
-        var ret = modelSize % elementsOnPage ?
-               modelSize / elementsOnPage + 1 :
-               modelSize / elementsOnPage
-        return Math.floor(ret)
-    }
-
     // Private details
     //
     QtObject {
