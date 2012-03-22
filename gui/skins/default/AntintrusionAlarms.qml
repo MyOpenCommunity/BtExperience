@@ -22,35 +22,7 @@ MenuElement {
 
             interactive: false
 
-            header: Row {
-                width: itemList.width; height: 30
-
-                Item {
-                    width: 10
-                    height: 5
-                }
-
-                Text {
-                    width: 125
-                    text: qsTr("type")
-                    color: "#4F4F4F"
-                    font.pointSize: 12
-                }
-
-                Text {
-                    width: 125
-                    text: qsTr("zone")
-                    color: "#4F4F4F"
-                    font.pointSize: 12
-                }
-
-                Text {
-                    width: 105
-                    text: qsTr("date and time")
-                    color: "#4F4F4F"
-                    font.pointSize: 12
-                }
-            }
+            header: listHeader
 
             delegate: Image {
                 id: itemBackground
@@ -103,20 +75,59 @@ MenuElement {
                 }
             }
 
-            footer: Row {
-                visible: paginator.totalPages > 1
-                Item {
-                    width: 10
-                    height: 5
-                }
-                Text {
-                    height: 60
-                    text: qsTr("page %1 of %2").arg(paginator.currentPage).arg(paginator.totalPages)
-                    color: "#4F4F4F"
-                }
-            }
+            footer: listFooter
 
             model: modelList
+        }
+    }
+
+    Component {
+        id: listHeader
+
+        Row {
+            width: itemList.width; height: 30
+
+            Item {
+                width: 10
+                height: 5
+            }
+
+            Text {
+                width: 125
+                text: qsTr("type")
+                color: "#4F4F4F"
+                font.pointSize: 12
+            }
+
+            Text {
+                width: 125
+                text: qsTr("zone")
+                color: "#4F4F4F"
+                font.pointSize: 12
+            }
+
+            Text {
+                width: 105
+                text: qsTr("date and time")
+                color: "#4F4F4F"
+                font.pointSize: 12
+            }
+        }
+    }
+
+    Component {
+        id: listFooter
+        Row {
+            visible: paginator.totalPages > 1
+            Item {
+                width: 10
+                height: 5
+            }
+            Text {
+                height: 60
+                text: qsTr("page %1 of %2").arg(paginator.currentPage).arg(paginator.totalPages)
+                color: "#4F4F4F"
+            }
         }
     }
 
