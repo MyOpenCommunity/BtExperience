@@ -16,6 +16,8 @@
 #include "mediaobjects.h"
 #include "xml_functions.h"
 #include "settings.h"
+#include "networksettings.h"
+#include "platform_device.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
@@ -116,6 +118,8 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		if (obj)
 			objmodel << obj;
 	}
+	// TODO put in the right implementation; for now, use this for testing the interface
+	objmodel << new NetworkSettings(new PlatformDevice);
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)

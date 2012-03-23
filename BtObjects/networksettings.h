@@ -1,0 +1,101 @@
+#ifndef NETWORKSETTINGS_H
+#define NETWORKSETTINGS_H
+
+#include "objectinterface.h"
+#include "device.h" // DeviceValues
+
+#include <QObject>
+
+class PlatformDevice;
+
+
+/*!
+	\ingroup Network
+	\brief Manages network settings
+
+	Class to provide services to read and write network settings.
+	Be aware network settings are writable only for static configuration.
+	MAC address is always read-only.
+
+	The object id is \a ObjectInterface::IdNetwork, the key is the SCS where.
+*/
+class NetworkSettings : public ObjectInterface
+{
+	friend class TestNetworkSettings;
+
+	Q_OBJECT
+
+	/*!
+		\brief Sets and gets the IP address
+	*/
+	Q_PROPERTY(QString address READ getAddress WRITE setAddress NOTIFY addressChanged)
+
+	/*!
+		\brief Sets and gets the DNS address
+	*/
+	Q_PROPERTY(QString dns READ getDns WRITE setDns NOTIFY dnsChanged)
+
+	/*!
+		\brief Sets and gets the gateway address
+	*/
+	Q_PROPERTY(QString gateway READ getGateway WRITE setGateway NOTIFY gatewayChanged)
+
+	/*!
+		\brief Sets and gets the subnet mask
+	*/
+	Q_PROPERTY(QString mac READ getMac NOTIFY macChanged)
+
+	/*!
+		\brief Sets and gets the subnet mask
+	*/
+	Q_PROPERTY(QString subnet READ getSubnet WRITE setSubnet NOTIFY subnetChanged)
+
+public:
+	NetworkSettings(PlatformDevice *d);
+	
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdNetwork;
+	}
+
+	virtual QString getObjectKey() const;
+
+	virtual ObjectCategory getCategory() const
+	{
+		return ObjectInterface::Settings;
+	}
+
+	virtual QString getName() const;
+
+	virtual QString getAddress() const;
+	virtual void setAddress(QString a);
+	virtual QString getDns() const;
+	virtual void setDns(QString d);
+	virtual QString getGateway() const;
+	virtual void setGateway(QString g);
+	virtual QString getMac() const;
+	virtual QString getSubnet() const;
+	virtual void setSubnet(QString s);
+
+signals:
+	void addressChanged();
+	void dnsChanged();
+	void gatewayChanged();
+	void subnetChanged();
+	void macChanged();
+
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
+protected:
+	QString address;
+	QString dns;
+	QString gateway;
+	QString mac;
+	QString subnet;
+
+private:
+	PlatformDevice *dev;
+};
+
+#endif // NETWORKSETTINGS_H

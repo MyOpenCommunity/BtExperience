@@ -41,7 +41,7 @@ MenuElement {
         }
         ListElement {
             name: "network"
-            componentFile:""
+            componentFile:"SettingsNetwork.qml"
         }
         ListElement {
             name: "display"

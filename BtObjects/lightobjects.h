@@ -1,10 +1,10 @@
 #ifndef LIGHTOBJECTS_H
 #define LIGHTOBJECTS_H
 
-#include <QObject>
-
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
+
+#include <QObject>
 
 class LightingDevice;
 class DimmerDevice;
