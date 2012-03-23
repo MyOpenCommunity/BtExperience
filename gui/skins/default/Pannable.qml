@@ -16,9 +16,18 @@ Item {
     Connections {
         target: global.inputWrapper.inputContext
         onInputMethodAreaChanged: {
+            var cursor = global.inputWrapper.cursorRect;
+
+            // On the touch (probably depends on Qt version rather than environemnt),
+            // we get a first input method area change event with
+            // non-empty region when the cursor rect is still empty, and then another
+            // one with cursor rect set; ignore the first one
+            if (cursor.y === 0 && cursor.height === 0 && region.height !== 0)
+                return;
+
             setKeyboardRect(region)
-            setCursorRect(global.inputWrapper.cursorRect)
-            setKeyboardVisible(region.height != 0)
+            setCursorRect(cursor)
+            setKeyboardVisible(region.height !== 0)
         }
     }
 
