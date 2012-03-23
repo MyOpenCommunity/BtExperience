@@ -85,6 +85,11 @@ Page {
 //                 Component.onCompleted: {
 //                     console.log('icon scale: ' + PathView.iconScale + ' x:' + itemDelegate.x)
 //                 }
+
+                 MouseArea {
+                     anchors.fill: parent
+                     onClicked: Stack.openPage("Room.qml")
+                 }
              }
          }
 
