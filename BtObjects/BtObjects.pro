@@ -43,6 +43,7 @@ defineTest(isArm) {
 DEFINES += OPENSERVER_ADDR=\\\"openserver\\\"
 
 INCLUDEPATH += ./common_files
+DEPENDPATH += . devices ts
 
 TARGET = $$qtLibraryTarget($$TARGET)
 
