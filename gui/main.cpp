@@ -121,29 +121,33 @@ int main(int argc, char *argv[])
 	setupLogger("/var/tmp/BTicino.log");
 	VERBOSITY_LEVEL = 3;
 
-
-	QmlApplicationViewer viewer;
-	qDebug() << "***** BtExperience start! *****";
-
 	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
 #if defined(BT_MALIIT)
 	if (env.contains("QT_IM_MODULE"))
 	{
-#if (defined(Q_WS_QPA) || defined(Q_WS_QWS)) && (QT_VERSION < 0x050000)
-		// Workaround for Lighthouse/QWS, copied from Maliit PlainQT example app
-		QInputContext *ic = QInputContextFactory::create(env.value("QT_IM_MODULE"), &app);
+		// In the Maliit code this is marked as a workaround for Lighthouse/QWS;
+		// however when embedding Maliit into the application this is required to avoid
+		// an initialization loop: creatinginput context creates the host widget, which
+		// is inputmethod-enabled and tries to create the input method
+		QString module = env.value("QT_IM_MODULE");
+
+		unsetenv("QT_IM_MODULE");
+
+		QInputContext *ic = QInputContextFactory::create(module, &app);
 
 		if (!ic)
-			qFatal("Unable to create input context for '%s'", env.value("QT_IM_MODULE").toUtf8().data());
+			qFatal("Unable to create input context for '%s'", module.toUtf8().data());
 
 		app.setInputContext(ic);
-#endif
 
 		// see comment on InputMethodEventFilter
 		app.installEventFilter(new InputMethodEventFilter);
 	}
 #endif
+
+	QmlApplicationViewer viewer;
+	qDebug() << "***** BtExperience start! *****";
 
 	LastClickTime *last_click = new LastClickTime;
 	// To receive all the events, even if there is some qml elements which manage
