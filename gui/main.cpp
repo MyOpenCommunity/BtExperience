@@ -19,6 +19,7 @@
 #include <QtDeclarative>
 
 #ifdef BT_MALIIT
+#include <QGraphicsProxyWidget>
 #include <maliit/inputmethod.h>
 #endif
 
@@ -95,6 +96,46 @@ void setupOpenGL(QDeclarativeView *v)
 // The template path to find the language file.
 #define LANGUAGE_FILE_TMPL "%s/gui/linguist-ts/bt_experience_%s"
 
+
+#if defined(BT_MALIIT)
+// QGraphicsProxyWidget::paint() uses QWidget::render() which seems to render the masked
+// region of a widget at coordinates (0, 0) rather than using the original coordinates
+//
+// just a temporary workaround until the Maliit surfaces branch lands
+class KeyboardHost : public QGraphicsProxyWidget
+{
+	Q_OBJECT
+
+public:
+	KeyboardHost(QWidget *keyboard)
+	{
+		setWidget(keyboard);
+
+		connect(qApp->inputContext(), SIGNAL(inputMethodAreaChanged(QRect)),
+			this, SLOT(setKeyboardRect(QRect)));
+	}
+
+protected:
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+	{
+		painter->translate(0, rect.top());
+
+		QGraphicsProxyWidget::paint(painter, option, widget);
+	}
+
+private slots:
+	void setKeyboardRect(QRect _rect)
+	{
+		rect = _rect;
+	}
+
+private:
+	QRect rect;
+};
+
+#include "main.moc"
+#endif
+
 void installTranslator(QApplication &a, QString language_suffix)
 {
 	QString language_file;
@@ -158,18 +199,6 @@ int main(int argc, char *argv[])
 	setupOpenGL(&viewer);
 #endif
 
-#if defined(BT_MALIIT)
-	QWidget *im_widget = Maliit::InputMethod::instance()->widget();
-
-	if (!im_widget)
-		qFatal("Maliit initialization failed");
-
-	im_widget->setParent(&viewer);
-	im_widget->setMinimumSize(1024, 600);
-	im_widget->setStyleSheet("background: white");
-	im_widget->hide();
-#endif
-
 	viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
 
 	GlobalProperties global;
@@ -177,6 +206,25 @@ int main(int argc, char *argv[])
 	viewer.engine()->rootContext()->setContextProperty("global", &global);
 	viewer.setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
 	global.setMainWidget(&viewer);
+
+#if defined(BT_MALIIT)
+	QWidget *im_widget = Maliit::InputMethod::instance()->widget();
+
+	if (!im_widget)
+		qFatal("Maliit initialization failed");
+
+	im_widget->resize(global.getMainWidth(), global.getMainHeight());
+	im_widget->hide();
+
+	im_widget->setParent(NULL);
+
+	QGraphicsProxyWidget *wid = new KeyboardHost(im_widget);
+
+	viewer.scene()->addItem(wid);
+
+	wid->setFocusPolicy(Qt::NoFocus);
+	wid->setZValue(1200);
+#endif
 
 #ifdef Q_WS_X11
 	viewer.resize(global.getMainWidth(), global.getMainHeight());
