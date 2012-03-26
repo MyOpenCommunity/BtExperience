@@ -1,5 +1,5 @@
-#ifndef NETWORKSETTINGS_H
-#define NETWORKSETTINGS_H
+#ifndef NETWORK_H
+#define NETWORK_H
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
@@ -19,9 +19,9 @@ class PlatformDevice;
 
 	The object id is \a ObjectInterface::IdNetwork, the key is the SCS where.
 */
-class NetworkSettings : public ObjectInterface
+class Network : public ObjectInterface
 {
-	friend class TestNetworkSettings;
+	friend class TestNetwork;
 
 	Q_OBJECT
 
@@ -51,7 +51,7 @@ class NetworkSettings : public ObjectInterface
 	Q_PROPERTY(QString subnet READ getSubnet WRITE setSubnet NOTIFY subnetChanged)
 
 public:
-	NetworkSettings(PlatformDevice *d);
+	Network(PlatformDevice *d);
 	
 	virtual int getObjectId() const
 	{
@@ -98,4 +98,4 @@ private:
 	PlatformDevice *dev;
 };
 
-#endif // NETWORKSETTINGS_H
+#endif // NETWORK_H

@@ -2,7 +2,7 @@ HEADERS += \
 	antintrusionsystem.h \
 	lightobjects.h \
 	mediaobjects.h \
-	networksettings.h \
+	network.h \
 	objectlistmodel.h \
 	objectinterface.h \
 	thermalobjects.h \
@@ -28,7 +28,7 @@ SOURCES += \
 	antintrusionsystem.cpp \
 	lightobjects.cpp \
 	mediaobjects.cpp \
-	networksettings.cpp \
+	network.cpp \
 	objectlistmodel.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \
