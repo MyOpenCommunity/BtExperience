@@ -75,9 +75,8 @@ public:
 
 	enum LanStatus
 	{
-		Unknown,    /*!< No state received yet (only during initialization). */
-		Enabled,    /*!< Network adapter is enabled. */
-		Disabled    /*!< Network adapter is disabled. */
+		Disabled,   /*!< Network adapter is disabled. */
+		Enabled     /*!< Network adapter is enabled. */
 	};
 
 	virtual int getObjectId() const
@@ -130,7 +129,7 @@ protected:
 	QString address;
 	QString dns;
 	QString gateway;
-	LanStatus lan_config;
+	LanConfig lan_config;
 	LanStatus lan_status;
 	QString mac;
 	QString subnet;

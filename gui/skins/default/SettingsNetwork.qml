@@ -90,14 +90,14 @@ MenuElement {
     }
 
     // slot to manage the change of IP configuration type
-    function ipConfigurationChanged(ipConfiguration) {
-        Log.logDebug("Received IP configuration: " + ipConfiguration)
-        if (ipConfiguration === "DHCP")
+    function ipConfigurationChanged(configuration) {
+        Log.logDebug("Received IP configuration: " + configuration)
+        if (configuration === Network.Dhcp)
             configurationLoader.setComponent(summaryItem)
-        else if (ipConfiguration === "static IP address")
+        else if (configuration === Network.Static)
             configurationLoader.setComponent(optionsItem)
         else
-            Log.logWarning("Unrecognized IP configuration")
+            Log.logWarning("Unrecognized IP configuration" + configuration)
     }
 
 

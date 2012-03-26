@@ -14,7 +14,7 @@ Network::Network(PlatformDevice *d)
 	dns = "UNKNOWN";
 	gateway = "UNKNOWN";
 	lan_config = Unknown;
-	lan_status = Unknown;
+	lan_status = Disabled; // at start, we assume network is disabled
 	mac = "UNKNOWN";
 	subnet = "UNKNOWN";
 	connect(this, SIGNAL(addressChanged()), this, SIGNAL(dataChanged()));
@@ -100,9 +100,6 @@ void Network::setLanStatus(LanStatus ls)
 	case Disabled:
 		dev->enableLan(false);
 		break;
-	case Unknown:
-		qWarning() << "Are you sure you want to set status to Unknown?";
-		break;
 	default:
 		qWarning() << "Unhandled status: " << ls;
 	}
@@ -169,7 +166,7 @@ void Network::valueReceived(const DeviceValues &values_list)
 			break;
 		// TODO use the right value (when defined)
 		//case PlatformDevice::DIM_CONFIG:
-		case PlatformDevice::DIM_STATUS:
+		case 111111:
 			if (it.value().toInt() != lan_config)
 			{
 				lan_config = static_cast<LanConfig>(it.value().toInt());
