@@ -16,7 +16,6 @@ MenuElement {
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
 
-            active: element.animationRunning === false
             status: itemObject.status === true ? 1 : 0
             hasChild: true
             onClicked: {

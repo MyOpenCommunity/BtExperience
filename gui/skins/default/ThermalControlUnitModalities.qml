@@ -27,7 +27,6 @@ MenuElement {
 
         delegate: MenuItemDelegate {
             itemObject: modalitiesModel.getObject(index)
-            active: element.animationRunning === false
             onClicked: element.modalitySelected(itemObject)
         }
         model: modalitiesModel

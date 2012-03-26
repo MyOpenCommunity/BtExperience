@@ -23,7 +23,6 @@ MenuElement {
 
     MenuItem {
         id: amplifierSettings
-        active: element.animationRunning === false
         anchors.top: volumeSlider.bottom
         name: qsTr("settings")
         hasChild: true

@@ -27,7 +27,6 @@ MenuElement {
         name: qsTr("program")
         description: qsTr("morning")
         hasChild: true
-        active: element.animationRunning === false
         state: privateProps.currentIndex === 1 ? "selected" : ""
         onClicked: {
             if (privateProps.currentIndex !== 1)
@@ -43,7 +42,6 @@ MenuElement {
         name: qsTr("modality")
         description: qsTr("warm")
         hasChild: true
-        active: element.animationRunning === false
         state: privateProps.currentIndex === 2 ? "selected" : ""
         onClicked: {
             if (privateProps.currentIndex !== 2)

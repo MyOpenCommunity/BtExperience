@@ -29,7 +29,6 @@ MenuElement {
             }
 
             itemObject: modelList.getObject(index)
-            active: element.animationRunning === false
             description: getDescription()
             hasChild: true
             onClicked: {
@@ -46,5 +45,6 @@ MenuElement {
                       {objectId: ObjectInterface.IdThermalControlledProbe}]
         }
     }
+
 }
 

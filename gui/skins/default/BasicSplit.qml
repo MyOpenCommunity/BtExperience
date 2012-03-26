@@ -29,7 +29,6 @@ MenuElement {
         delegate: MenuItemDelegate {
             itemObject: fakeModel.get(index)
             hasChild: name !== "off"
-            active: element.animationRunning === false
             onClicked: console.log("Clicked on program " + name)
         }
     }

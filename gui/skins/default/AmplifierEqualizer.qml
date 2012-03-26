@@ -10,7 +10,6 @@ MenuElement {
         height: objectModel.size * 50
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
-            active: element.animationRunning === false
             name: itemObject.name
             selectOnClick: true
             onDelegateClicked: element.dataModel.preset = index

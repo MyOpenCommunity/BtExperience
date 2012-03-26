@@ -10,7 +10,6 @@ MenuElement {
         anchors.top: parent.top
         name: "radio"
         hasChild: true
-        active: element.animationRunning === false
         state: privateProps.currentElement === 0 ? "selected" : ""
         onClicked: {
             if (privateProps.currentElement !== 0)
@@ -145,7 +144,6 @@ MenuElement {
             MenuItem {
                 name: qsTr("saved IP radios")
                 hasChild: true
-                active: element.animationRunning === false
                 state: privateProps.currentElement === 1 ? "selected" : ""
                 onClicked: {
                     if (privateProps.currentElement !== 1)
@@ -167,7 +165,6 @@ MenuElement {
             MenuItem {
                 name: qsTr("browse")
                 hasChild: true
-                active: element.animationRunning === false
                 state: privateProps.currentElement === 1 ? "selected" : ""
                 onClicked: {
                     if (privateProps.currentElement !== 1)

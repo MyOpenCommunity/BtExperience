@@ -19,7 +19,6 @@ MenuElement {
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
 
-            active: element.animationRunning === false
             status: itemObject.active
             hasChild: true
             onClicked: element.loadElement(objectModel.getComponentFile(itemObject.objectId), itemObject.name, itemObject);

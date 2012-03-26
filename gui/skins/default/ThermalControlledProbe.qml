@@ -82,7 +82,6 @@ MenuElement {
         MenuItem {
             id: modalityItem
             hasChild: true
-            active: element.animationRunning === false
             name: qsTr("modes")
             x: 0
             y: 51

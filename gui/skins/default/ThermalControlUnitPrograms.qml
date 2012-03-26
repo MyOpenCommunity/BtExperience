@@ -15,7 +15,6 @@ MenuElement {
 
         delegate: MenuItemDelegate {
             itemObject: programModel.getObject(index)
-            active: element.animationRunning === false
             onClicked: element.dataModel.programIndex = index
         }
 

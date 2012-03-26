@@ -30,7 +30,6 @@ MenuElement {
             itemObject: scenariosModel.getObject(index)
 
             selectOnClick: false // we don't want to break the binding for currentIndex
-            active: element.animationRunning === false
             description: itemObject.description
             onClicked: element.scenarioSelected(itemObject)
         }

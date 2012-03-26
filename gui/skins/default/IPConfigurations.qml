@@ -23,7 +23,6 @@ MenuElement {
         model: fakeModel
         delegate: MenuItemDelegate {
             itemObject: fakeModel.get(index)
-            active: element.animationRunning === false
             hasChild: false
             name: itemObject.name
             onClicked: ipConfigurationChanged(itemObject.name)
