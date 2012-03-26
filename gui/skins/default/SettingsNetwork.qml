@@ -44,11 +44,11 @@ MenuElement {
         description: qsTr("connected")
         hasChild: true
         state: privateProps.currentIndex === 1 ? "selected" : ""
+        status: privateProps.model.lanStatus ? 1 : 0
         onClicked: {
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1
-            // TODO: implement submenu
-            element.loadElement("BasicSplit.qml", name)
+            element.loadElement("NetworkState.qml", name)
         }
     }
 
@@ -85,17 +85,23 @@ MenuElement {
     onChildLoaded: {
         if (child.ipConfigurationChanged)
             child.ipConfigurationChanged.connect(ipConfigurationChanged)
+        if (child.networkChanged)
+            child.networkChanged.connect(networkChanged)
     }
 
     // slot to manage the change of IP configuration type
     function ipConfigurationChanged(configuration) {
-        Log.logDebug("Received IP configuration: " + configuration)
         if (configuration === Network.Dhcp)
             configurationLoader.setComponent(summaryItem)
         else if (configuration === Network.Static)
             configurationLoader.setComponent(optionsItem)
         else
             Log.logWarning("Unrecognized IP configuration" + configuration)
+    }
+
+    // slot to manage enable/disable of the network adapter
+    function networkChanged(state) {
+        privateProps.model.LanStatus = state;
     }
 
 

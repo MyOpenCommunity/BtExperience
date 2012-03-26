@@ -5,22 +5,22 @@ MenuElement {
     id: element
     width: 212
     height: 100
-    signal ipConfigurationChanged(int ipConfiguration)
+    signal networkChanged(int state)
 
     ListView {
-        id: ipConfigurationView
+        id: networkStateView
         anchors.fill: parent
         delegate: MenuItemDelegate {
             name: model.name
-            onClicked: ipConfigurationChanged(model.type)
+            onClicked: networkChanged(model.type)
         }
         model: ListModel {
             id: modelList
             Component.onCompleted: {
-                var l = [Network.Dhcp,
-                         Network.Static]
+                var l = [Network.Disabled,
+                         Network.Enabled]
                 for (var i = 0; i < l.length; i++)
-                    append({"type": l[i], "name": pageObject.names.get('CONFIG', l[i])})
+                    append({"type": l[i], "name": pageObject.names.get('STATE', l[i])})
             }
         }
     }
