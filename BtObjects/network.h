@@ -41,7 +41,7 @@ class Network : public ObjectInterface
 	Q_PROPERTY(QString gateway READ getGateway WRITE setGateway NOTIFY gatewayChanged)
 
 	/*!
-		\brief Sets and gets the subnet mask
+		\brief Gets the mac address
 	*/
 	Q_PROPERTY(QString mac READ getMac NOTIFY macChanged)
 
