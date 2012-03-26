@@ -17,7 +17,7 @@ class PlatformDevice;
 	Be aware network settings are writable only for static configuration.
 	MAC address is always read-only.
 
-	The object id is \a ObjectInterface::IdNetwork, the key is the SCS where.
+	The object id is \a ObjectInterface::IdNetwork.
 */
 class Network : public ObjectInterface
 {
