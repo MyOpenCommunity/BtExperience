@@ -8,7 +8,7 @@ MenuElement {
 
     // dimensions
     width: 212
-    height: networkStateItem.height + ipConfigurationItem.height + configurationItem.height
+    height: networkStateItem.height + ipConfigurationItem.height + configurationLoader.height
 
     // object model to retrieve network data
     ObjectModel {
@@ -73,14 +73,14 @@ MenuElement {
     // (DHCP case) or a list of controls to change network configuration
     // (static IP case)
     AnimatedLoader {
-        id: configurationItem
+        id: configurationLoader
         anchors.bottom: parent.bottom
     }
 
     // retrieves actual configuration information and sets the right component
     Component.onCompleted: {
         // TODO: load item wrt IP configuration type
-        configurationItem.setComponent(summaryItem)
+        configurationLoader.setComponent(summaryItem)
     }
 
     // connects child signals to slots
@@ -93,16 +93,16 @@ MenuElement {
     function ipConfigurationChanged(ipConfiguration) {
         Log.logDebug("Received IP configuration: " + ipConfiguration)
         if (ipConfiguration === "DHCP")
-            configurationItem.setComponent(summaryItem)
+            configurationLoader.setComponent(summaryItem)
         else if (ipConfiguration === "static IP address")
-            configurationItem.setComponent(optionsItem)
+            configurationLoader.setComponent(optionsItem)
         else
             Log.logWarning("Unrecognized IP configuration")
     }
 
 
 
-    // TODO: implement
+    // TODO: use the right background
     Component {
         id: summaryItem
         Column {
@@ -197,7 +197,7 @@ MenuElement {
         }
     }
 
-    // TODO: implement
+    // TODO: use the right background; add the keyboard
     Component {
         id: optionsItem
 

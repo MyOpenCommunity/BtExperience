@@ -2,8 +2,8 @@ HEADERS += \
 	antintrusionsystem.h \
 	lightobjects.h \
 	mediaobjects.h \
-        networksettings.h \
-        objectlistmodel.h \
+	network.h \
+	objectlistmodel.h \
 	objectinterface.h \
 	thermalobjects.h \
 	thermalprobes.h \
@@ -11,8 +11,8 @@ HEADERS += \
 	devices/device.h \
 	devices/lighting_device.h \
 	devices/media_device.h \
-        devices/platform_device.h \
-        devices/probe_device.h \
+	devices/platform_device.h \
+	devices/probe_device.h \
 	devices/pulldevice.h \
 	devices/thermal_device.h \
 	ts/bttime.h \
@@ -22,23 +22,23 @@ HEADERS += \
 	ts/frame_functions.h \
 	ts/devices_cache.h \
 	ts/xml_functions.h \
-        ts/scaleconversion.h
+	ts/scaleconversion.h
 
 SOURCES += \
 	antintrusionsystem.cpp \
 	lightobjects.cpp \
 	mediaobjects.cpp \
-        networksettings.cpp \
-        objectlistmodel.cpp \
+	network.cpp \
+	objectlistmodel.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \
 	devices/antintrusion_device.cpp \
 	devices/device.cpp \
 	devices/lighting_device.cpp \
 	devices/media_device.cpp \
-        devices/platform_device.cpp \
-        devices/probe_device.cpp \
-        devices/pulldevice.cpp \
+	devices/platform_device.cpp \
+	devices/probe_device.cpp \
+	devices/pulldevice.cpp \
 	devices/thermal_device.cpp \
 	ts/bttime.cpp \
 	ts/delayedslotcaller.cpp \
@@ -47,4 +47,4 @@ SOURCES += \
 	ts/devices_cache.cpp \
 	ts/xml_functions.cpp \
 	ts/frame_classes.cpp \
-        ts/scaleconversion.cpp
+	ts/scaleconversion.cpp

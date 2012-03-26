@@ -1,5 +1,5 @@
-#ifndef NETWORKSETTINGS_H
-#define NETWORKSETTINGS_H
+#ifndef NETWORK_H
+#define NETWORK_H
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
@@ -17,11 +17,11 @@ class PlatformDevice;
 	Be aware network settings are writable only for static configuration.
 	MAC address is always read-only.
 
-	The object id is \a ObjectInterface::IdNetwork, the key is the SCS where.
+	The object id is \a ObjectInterface::IdNetwork.
 */
-class NetworkSettings : public ObjectInterface
+class Network : public ObjectInterface
 {
-	friend class TestNetworkSettings;
+	friend class TestNetwork;
 
 	Q_OBJECT
 
@@ -41,7 +41,7 @@ class NetworkSettings : public ObjectInterface
 	Q_PROPERTY(QString gateway READ getGateway WRITE setGateway NOTIFY gatewayChanged)
 
 	/*!
-		\brief Sets and gets the subnet mask
+		\brief Gets the mac address
 	*/
 	Q_PROPERTY(QString mac READ getMac NOTIFY macChanged)
 
@@ -51,31 +51,37 @@ class NetworkSettings : public ObjectInterface
 	Q_PROPERTY(QString subnet READ getSubnet WRITE setSubnet NOTIFY subnetChanged)
 
 public:
-	NetworkSettings(PlatformDevice *d);
+	Network(PlatformDevice *d);
 	
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdNetwork;
 	}
 
-	virtual QString getObjectKey() const;
+	virtual QString getObjectKey() const
+	{
+		return QString();
+	}
 
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Settings;
 	}
 
-	virtual QString getName() const;
+	virtual QString getName() const
+	{
+		return QString();
+	}
 
-	virtual QString getAddress() const;
-	virtual void setAddress(QString a);
-	virtual QString getDns() const;
-	virtual void setDns(QString d);
-	virtual QString getGateway() const;
-	virtual void setGateway(QString g);
-	virtual QString getMac() const;
-	virtual QString getSubnet() const;
-	virtual void setSubnet(QString s);
+	QString getAddress() const;
+	void setAddress(QString a);
+	QString getDns() const;
+	void setDns(QString d);
+	QString getGateway() const;
+	void setGateway(QString g);
+	QString getMac() const;
+	QString getSubnet() const;
+	void setSubnet(QString s);
 
 signals:
 	void addressChanged();
@@ -98,4 +104,4 @@ private:
 	PlatformDevice *dev;
 };
 
-#endif // NETWORKSETTINGS_H
+#endif // NETWORK_H

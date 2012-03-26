@@ -1,10 +1,10 @@
-#include "networksettings.h"
+#include "network.h"
 #include "platform_device.h"
 
 #include <QDebug>
 
 
-NetworkSettings::NetworkSettings(PlatformDevice *d)
+Network::Network(PlatformDevice *d)
 {
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
@@ -18,70 +18,60 @@ NetworkSettings::NetworkSettings(PlatformDevice *d)
 	connect(this, SIGNAL(addressChanged()), this, SIGNAL(dataChanged()));
 }
 
-QString NetworkSettings::getObjectKey() const
-{
-	return "";
-}
-
-QString NetworkSettings::getName() const
-{
-	return "";
-}
-
-QString NetworkSettings::getAddress() const
+QString Network::getAddress() const
 {
 	return address;
 }
 
-void NetworkSettings::setAddress(QString a)
+void Network::setAddress(QString a)
 {
-	qDebug() << QString("NetworkSettings::setAddress(%1)").arg(a);
+	qDebug() << QString("Network::setAddress(%1)").arg(a);
 	// TODO set the value on the device
 	address = a;
 }
 
-QString NetworkSettings::getDns() const
+QString Network::getDns() const
 {
 	return dns;
 }
 
-void NetworkSettings::setDns(QString d)
+void Network::setDns(QString d)
 {
-	qDebug() << QString("NetworkSettings::setDns(%1)").arg(d);
+	qDebug() << QString("Network::setDns(%1)").arg(d);
 	// TODO set the value on the device
 	dns = d;
 }
 
-QString NetworkSettings::getGateway() const
+QString Network::getGateway() const
 {
 	return gateway;
 }
 
-void NetworkSettings::setGateway(QString g)
+void Network::setGateway(QString g)
 {
-	qDebug() << QString("NetworkSettings::setGateway(%1)").arg(g);
+	qDebug() << QString("Network::setGateway(%1)").arg(g);
 	// TODO set the value on the device
 	gateway = g;
 }
 
-QString NetworkSettings::getMac() const
+QString Network::getMac() const
 {
 	return mac;
 }
 
-QString NetworkSettings::getSubnet() const
+QString Network::getSubnet() const
 {
 	return subnet;
 }
 
-void NetworkSettings::setSubnet(QString s)
+void Network::setSubnet(QString s)
 {
-	qDebug() << QString("NetworkSettings::setSubnet(%1)").arg(s);
+	qDebug() << QString("Network::setSubnet(%1)").arg(s);
 	// TODO set the value on the device
 	subnet = s;
 }
 
-void NetworkSettings::valueReceived(const DeviceValues &values_list)
+void Network::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.begin();
 	while (it != values_list.constEnd())
