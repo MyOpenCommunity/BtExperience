@@ -6,15 +6,17 @@ MenuElement {
     width: 212
     height: fakeModel.count * 50
 
-    signal ipConfigurationChanged(string ipConfiguration)
+    signal ipConfigurationChanged(int ipConfiguration)
 
     ListModel {
         id: fakeModel
         ListElement {
             name: Network.Dhcp
+            text: qsTr("dhcp")
         }
         ListElement {
             name: Network.Static
+            text: qsTr("static IP address")
         }
     }
 
@@ -25,7 +27,7 @@ MenuElement {
         delegate: MenuItemDelegate {
             itemObject: fakeModel.get(index)
             hasChild: false
-            name: itemObject.name
+            name: itemObject.text
             onClicked: ipConfigurationChanged(itemObject.name)
         }
     }
