@@ -127,7 +127,6 @@ MenuElement {
     Column {
         id: antintrusionColumn
         MenuItem {
-            active: system.animationRunning === false
             state: privateProps.currentElement == 1 ? "selected" : ""
             name: system.alarmLogTitle
             hasChild: true
@@ -145,7 +144,6 @@ MenuElement {
         }
         MenuItem {
             id: systemItem
-            active: system.animationRunning === false
             name: qsTr("system disabled")
             hasChild: false
             Image {
@@ -167,7 +165,6 @@ MenuElement {
         MenuItem {
             id: scenarioItem
             state: privateProps.currentElement == 2 ? "selected" : ""
-            active: system.animationRunning === false
             name: qsTr("scenario")
             hasChild: true
             onClicked: {

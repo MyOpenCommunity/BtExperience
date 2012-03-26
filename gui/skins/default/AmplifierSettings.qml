@@ -42,7 +42,6 @@ MenuElement {
             MenuItem {
                 id: equalizer
                 name: qsTr("equalizer")
-                active: amplifierSettings.animationRunning === false
                 description: amplifierSettings.dataModel.presetDescription
                 hasChild: true
                 state: privateProps.currentElement === 0 ? "selected" : ""
@@ -56,7 +55,6 @@ MenuElement {
             MenuItem {
                 id: loudness
                 name: qsTr("loud")
-                active: amplifierSettings.animationRunning === false
                 description: amplifierSettings.dataModel.loud ? qsTr("on") : qsTr("off")
                 hasChild: true
                 state: privateProps.currentElement === 1 ? "selected" : ""

@@ -14,7 +14,6 @@ MenuElement {
         currentIndex: -1
 
         delegate: MenuItemDelegate {
-            active: true
             name: model.name
             hasChild: false
             selectOnClick: true
