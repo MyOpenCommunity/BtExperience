@@ -3,15 +3,14 @@ import "MenuContainer.js" as Script
 
 // The MenuContainer components encapsulates some logic to show a gerarchic list
 // of MenuElement with different sizes and behaviour. The items are arranged
-// horizontally  inside the container until the sum of their width overtakes
+// horizontally inside the container until the sum of their width overtakes
 // the width of the container. In this case, the first element (or elements) are
 // hidden.
 // Using the itemsLeftMargin you can control the spacing between the
-// back button and the root element, while using the itemsSpacing you can control
-// the spacing between items.
-// Every item must emit the signal loadComponent(string fileName) to request
-// the loading of a child element, and can implement the hooks onChildLoaded and
-// onChildDestroyed.
+// back button and the root element.
+// Every item must emit the signal loadComponent to request the loading of a
+// child element, or the closeItem to close it and can optionally implement the
+// hooks onChildLoaded and onChildDestroyed.
 
 Item {
     id: mainContainer
@@ -112,15 +111,7 @@ Item {
     }
 
     Component.onCompleted: {
-        Script.loadComponent(-1, "../" + mainContainer.rootElement, "", null)
-    }
-
-    function loadComponent(menuLevel, fileName, title, model) {
-        Script.loadComponent(menuLevel, "../" + fileName, title, model)
-    }
-
-    function closeItem(menuLevel) {
-        Script.closeItem(menuLevel)
+        Script.loadComponent(-1, mainContainer.rootElement, "", null)
     }
 }
 

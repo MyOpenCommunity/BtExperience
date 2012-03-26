@@ -6,15 +6,24 @@ var stackItems = []
 var stackTitles = []
 
 function loadComponent(menuLevel, fileName, title, dataModel) {
+
     if (pendingOperations.length > 0) // we are during an operation
         return
 
-    var itemObject = createComponent(fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer,
+    // We need to pass the dataModel as a variant (because we use it in a signal),
+    // but in the end the property is a QtObject. To avoid warning about the type
+    // we do this trick.
+    if (dataModel === undefined)
+        dataModel = null
+
+    var itemObject = createComponent("../" + fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer,
                                                 "opacity": 0, "y": 33, "dataModel": dataModel,
-                                                "pageObject": pageObject, "containerObject": mainContainer})
+                                                "pageObject": pageObject})
     var titleObject = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
     if (itemObject && titleObject) {
         _addItem(itemObject, titleObject)
+        itemObject.closeItem.connect(closeItem)
+        itemObject.loadComponent.connect(loadComponent)
     }
     // Cleanup the memory in case of errors
     else if (itemObject) {
