@@ -102,7 +102,7 @@ MenuElement {
 
 
 
-    // TODO: implement
+    // TODO: use the right background
     Component {
         id: summaryItem
         Column {
@@ -197,7 +197,7 @@ MenuElement {
         }
     }
 
-    // TODO: implement
+    // TODO: use the right background; add the keyboard
     Component {
         id: optionsItem
 
