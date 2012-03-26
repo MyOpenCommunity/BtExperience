@@ -8,6 +8,7 @@ import QtQuick 1.0
 Item {
     // bind this property to the .y property of the Flickable child
     property real childOffset: 0.0
+    property bool keyboardVisible: false
     property Flickable contentItem: children[0]
 
     id: container
@@ -23,7 +24,13 @@ Item {
             // non-empty region when the cursor rect is still empty, and then another
             // one with cursor rect set; ignore the first one
             if (cursor.y === 0 && cursor.height === 0 && region.height !== 0)
-                return;
+                return
+
+            // do not reposition the content to avoid the pop-up accented letter: since the
+            // box does not cover the width of the screen, moving the content to avoid it looks
+            // ugly (it could be handled separately, but it's not worth the trouble at the moment)
+            if (keyboardVisible && region.height !== 0)
+                return
 
             setKeyboardRect(region)
             setCursorRect(cursor)
@@ -50,6 +57,8 @@ Item {
 
     function setKeyboardVisible(visible) {
         var delta = 0
+
+        keyboardVisible = visible
 
         if (!visible) {
             this.childOffset = 0.0
