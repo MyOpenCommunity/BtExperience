@@ -50,9 +50,23 @@ class Network : public ObjectInterface
 	*/
 	Q_PROPERTY(QString subnet READ getSubnet WRITE setSubnet NOTIFY subnetChanged)
 
+	/*!
+		\brief Sets or gets the status of the network adapter
+	*/
+	Q_PROPERTY(LanStatus lanStatus READ getLanStatus WRITE setLanStatus NOTIFY lanStatusChanged)
+
+	Q_ENUMS(LanStatus)
+
 public:
 	Network(PlatformDevice *d);
-	
+
+	enum LanStatus
+	{
+		Unknown,    /*!< No state received yet (only during initialization). */
+		Enabled,    /*!< Network adapter is enabled. */
+		Disabled    /*!< Network adapter is disabled. */
+	};
+
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdNetwork;
@@ -79,6 +93,8 @@ public:
 	void setDns(QString d);
 	QString getGateway() const;
 	void setGateway(QString g);
+	LanStatus getLanStatus() const;
+	void setLanStatus(LanStatus ls);
 	QString getMac() const;
 	QString getSubnet() const;
 	void setSubnet(QString s);
@@ -87,8 +103,9 @@ signals:
 	void addressChanged();
 	void dnsChanged();
 	void gatewayChanged();
-	void subnetChanged();
+	void lanStatusChanged();
 	void macChanged();
+	void subnetChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -97,6 +114,7 @@ protected:
 	QString address;
 	QString dns;
 	QString gateway;
+	LanStatus lan_status;
 	QString mac;
 	QString subnet;
 

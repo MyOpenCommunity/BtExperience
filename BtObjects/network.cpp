@@ -13,6 +13,7 @@ Network::Network(PlatformDevice *d)
 	address = "UNKNOWN";
 	dns = "UNKNOWN";
 	gateway = "UNKNOWN";
+	lan_status = Unknown;
 	mac = "UNKNOWN";
 	subnet = "UNKNOWN";
 	connect(this, SIGNAL(addressChanged()), this, SIGNAL(dataChanged()));
@@ -54,6 +55,32 @@ void Network::setGateway(QString g)
 	gateway = g;
 }
 
+Network::LanStatus Network::getLanStatus() const
+{
+	return lan_status;
+}
+
+void Network::setLanStatus(LanStatus ls)
+{
+	if (ls == lan_status)
+		return;
+
+	switch (ls)
+	{
+	case Enabled:
+		dev->enableLan(true);
+		break;
+	case Disabled:
+		dev->enableLan(false);
+		break;
+	case Unknown:
+		qWarning() << "Are you sure you want to set status to Unknown?";
+		break;
+	default:
+		qWarning() << "Unhandled status: " << ls;
+	}
+}
+
 QString Network::getMac() const
 {
 	return mac;
@@ -73,44 +100,50 @@ void Network::setSubnet(QString s)
 
 void Network::valueReceived(const DeviceValues &values_list)
 {
-	DeviceValues::const_iterator it = values_list.begin();
+	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
 	{
-		QString s = it.value().toString();
 		switch (it.key())
 		{
 		case PlatformDevice::DIM_IP:
-			if (s != address)
+			if (it.value().toString() != address)
 			{
-				address = s;
+				address = it.value().toString();
 				emit addressChanged();
 			}
 			break;
 		case PlatformDevice::DIM_DNS1:
-			if (s != dns)
+			if (it.value().toString() != dns)
 			{
-				dns = s;
+				dns = it.value().toString();
 				emit dnsChanged();
 			}
 			break;
 		case PlatformDevice::DIM_GATEWAY:
-			if (s != gateway)
+			if (it.value().toString() != gateway)
 			{
-				gateway = s;
+				gateway = it.value().toString();
 				emit gatewayChanged();
 			}
 			break;
 		case PlatformDevice::DIM_MACADDR:
-			if (s != mac)
+			if (it.value().toString() != mac)
 			{
-				mac = s;
+				mac = it.value().toString();
 				emit macChanged();
 			}
 			break;
-		case PlatformDevice::DIM_NETMASK:
-			if (s != subnet)
+		case PlatformDevice::DIM_STATUS:
+			if (it.value().toInt() != lan_status)
 			{
-				subnet = s;
+				lan_status = static_cast<LanStatus>(it.value().toInt());
+				emit lanStatusChanged();
+			}
+			break;
+		case PlatformDevice::DIM_NETMASK:
+			if (it.value().toString() != subnet)
+			{
+				subnet = it.value().toString();
 				emit subnetChanged();
 			}
 			break;
