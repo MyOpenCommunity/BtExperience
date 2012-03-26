@@ -18,16 +18,6 @@ Network::Network(PlatformDevice *d)
 	connect(this, SIGNAL(addressChanged()), this, SIGNAL(dataChanged()));
 }
 
-QString Network::getObjectKey() const
-{
-	return QString();
-}
-
-QString Network::getName() const
-{
-	return QString();
-}
-
 QString Network::getAddress() const
 {
 	return address;

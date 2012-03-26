@@ -58,14 +58,20 @@ public:
 		return ObjectInterface::IdNetwork;
 	}
 
-	virtual QString getObjectKey() const;
+	virtual QString getObjectKey() const
+	{
+		return QString();
+	}
 
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Settings;
 	}
 
-	virtual QString getName() const;
+	virtual QString getName() const
+	{
+		return QString();
+	}
 
 	virtual QString getAddress() const;
 	virtual void setAddress(QString a);
