@@ -20,12 +20,12 @@ Network::Network(PlatformDevice *d)
 
 QString Network::getObjectKey() const
 {
-	return "";
+	return QString();
 }
 
 QString Network::getName() const
 {
-	return "";
+	return QString();
 }
 
 QString Network::getAddress() const
