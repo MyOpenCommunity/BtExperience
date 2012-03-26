@@ -8,7 +8,7 @@ MenuElement {
 
     // dimensions
     width: 212
-    height: networkStateItem.height + ipConfigurationItem.height + configurationLoader.height
+    height: paginator.height
 
     // object model to retrieve network data
     ObjectModel {
@@ -37,74 +37,80 @@ MenuElement {
 
     onChildDestroyed: privateProps.currentIndex = -1
 
-    // network state menu item (currentIndex === 1)
-    MenuItem {
-        id: networkStateItem
-        name: qsTr("network state")
-        description: qsTr("connected")
-        hasChild: true
-        state: privateProps.currentIndex === 1 ? "selected" : ""
-        status: privateProps.model.lanStatus ? 1 : 0
-        onClicked: {
-            if (privateProps.currentIndex !== 1)
-                privateProps.currentIndex = 1
-            element.loadElement("NetworkState.qml", name)
+    PaginatorColumn {
+        id: paginator
+        anchors.horizontalCenter: parent.horizontalCenter
+        maxHeight: 350
+
+        Column {
+            // network state menu item (currentIndex === 1)
+            MenuItem {
+                id: networkStateItem
+                name: qsTr("network state")
+                description: qsTr("connected")
+                hasChild: true
+                state: privateProps.currentIndex === 1 ? "selected" : ""
+                status: privateProps.model.lanStatus ? 1 : 0
+                onClicked: {
+                    if (privateProps.currentIndex !== 1)
+                        privateProps.currentIndex = 1
+                    element.loadElement("NetworkState.qml", name)
+                }
+            }
+
+            // ip configuration menu item (currentIndex === 2)
+            MenuItem {
+                id: ipConfigurationItem
+                anchors.top: networkStateItem.bottom
+                name: qsTr("IP configuration")
+                description: qsTr("DHCP")
+                hasChild: true
+                state: privateProps.currentIndex === 2 ? "selected" : ""
+                onClicked: {
+                    if (privateProps.currentIndex !== 2)
+                        privateProps.currentIndex = 2
+                    element.loadElement("IPConfigurations.qml", name)
+                }
+            }
+
+            // configuration item: it may be a static list of textual informations
+            // (DHCP case) or a list of controls to change network configuration
+            // (static IP case)
+            AnimatedLoader {
+                id: configurationLoader
+                anchors.bottom: parent.bottom
+            }
+
+            // retrieves actual configuration information and sets the right component
+            Component.onCompleted: {
+                // TODO: load item wrt IP configuration type
+                configurationLoader.setComponent(summaryItem)
+            }
+
+            // connects child signals to slots
+            onChildLoaded: {
+                if (child.ipConfigurationChanged)
+                    child.ipConfigurationChanged.connect(ipConfigurationChanged)
+                if (child.networkChanged)
+                    child.networkChanged.connect(networkChanged)
+            }
+
+            // slot to manage the change of IP configuration type
+            function ipConfigurationChanged(configuration) {
+                if (configuration === Network.Dhcp)
+                    configurationLoader.setComponent(summaryItem)
+                else if (configuration === Network.Static)
+                    configurationLoader.setComponent(optionsItem)
+                else
+                    Log.logWarning("Unrecognized IP configuration" + configuration)
+            }
+
+            // slot to manage enable/disable of the network adapter
+            function networkChanged(state) {
+                privateProps.model.LanStatus = state;
+            }
         }
     }
-
-    // ip configuration menu item (currentIndex === 2)
-    MenuItem {
-        id: ipConfigurationItem
-        anchors.top: networkStateItem.bottom
-        name: qsTr("IP configuration")
-        description: qsTr("DHCP")
-        hasChild: true
-        state: privateProps.currentIndex === 2 ? "selected" : ""
-        onClicked: {
-            if (privateProps.currentIndex !== 2)
-                privateProps.currentIndex = 2
-            element.loadElement("IPConfigurations.qml", name)
-        }
-    }
-
-    // configuration item: it may be a static list of textual informations
-    // (DHCP case) or a list of controls to change network configuration
-    // (static IP case)
-    AnimatedLoader {
-        id: configurationLoader
-        anchors.bottom: parent.bottom
-    }
-
-    // retrieves actual configuration information and sets the right component
-    Component.onCompleted: {
-        // TODO: load item wrt IP configuration type
-        configurationLoader.setComponent(summaryItem)
-    }
-
-    // connects child signals to slots
-    onChildLoaded: {
-        if (child.ipConfigurationChanged)
-            child.ipConfigurationChanged.connect(ipConfigurationChanged)
-        if (child.networkChanged)
-            child.networkChanged.connect(networkChanged)
-    }
-
-    // slot to manage the change of IP configuration type
-    function ipConfigurationChanged(configuration) {
-        if (configuration === Network.Dhcp)
-            configurationLoader.setComponent(summaryItem)
-        else if (configuration === Network.Static)
-            configurationLoader.setComponent(optionsItem)
-        else
-            Log.logWarning("Unrecognized IP configuration" + configuration)
-    }
-
-    // slot to manage enable/disable of the network adapter
-    function networkChanged(state) {
-        privateProps.model.LanStatus = state;
-    }
-
-
 
     // TODO: use the right background
     Component {
