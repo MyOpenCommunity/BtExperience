@@ -15,7 +15,6 @@ MenuElement {
 
         delegate: MenuItemDelegate {
             itemObject: scenarioModel.getObject(index)
-            active: element.animationRunning === false
             onClicked: element.dataModel.scenarioIndex = index
         }
 

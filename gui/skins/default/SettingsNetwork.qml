@@ -43,7 +43,6 @@ MenuElement {
         name: qsTr("network state")
         description: qsTr("connected")
         hasChild: true
-        active: element.animationRunning === false
         state: privateProps.currentIndex === 1 ? "selected" : ""
         onClicked: {
             if (privateProps.currentIndex !== 1)
@@ -60,7 +59,6 @@ MenuElement {
         name: qsTr("IP configuration")
         description: qsTr("DHCP")
         hasChild: true
-        active: element.animationRunning === false
         state: privateProps.currentIndex === 2 ? "selected" : ""
         onClicked: {
             if (privateProps.currentIndex !== 2)

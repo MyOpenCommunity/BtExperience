@@ -107,7 +107,6 @@ MenuElement {
         MenuItem {
             id: seasonItem
             hasChild: true
-            active: element.animationRunning === false
             anchors.top: parent.top
             name: qsTr("season")
             state: privateProps.currentElement === 1 ? "selected" : ""
@@ -122,7 +121,6 @@ MenuElement {
         MenuItem {
             id: modalityItem
             hasChild: true
-            active: element.animationRunning === false
             anchors.top: seasonItem.bottom
             name: qsTr("mode")
             state: privateProps.currentElement === 2 ? "selected" : ""
@@ -149,7 +147,6 @@ MenuElement {
                     name: qsTr("next program")
                     description: objModel.programDescription
                     hasChild: true
-                    active: element.animationRunning === false
                     state: privateProps.currentElement === 3 ? "selected" : ""
                     onClicked: {
                         element.loadElement("ThermalControlUnitPrograms.qml", qsTr("programs"), objModel)
@@ -229,7 +226,6 @@ MenuElement {
                     name: qsTr("next program")
                     description: objModel.programDescription
                     hasChild: true
-                    active: element.animationRunning === false
                     state: privateProps.currentElement === 3 ? "selected" : ""
                     onClicked: {
                         element.loadElement("ThermalControlUnitPrograms.qml", qsTr("programs"), objModel)
@@ -266,7 +262,6 @@ MenuElement {
                     name: qsTr("next program")
                     description: objModel.programDescription
                     hasChild: true
-                    active: element.animationRunning === false
                     state: privateProps.currentElement === 3 ? "selected" : ""
                     onClicked: {
                         element.loadElement("ThermalControlUnitPrograms.qml", qsTr("programs"), objModel)
@@ -298,7 +293,6 @@ MenuElement {
                     name: qsTr("next scenario")
                     description: objModel.scenarioDescription
                     hasChild: true
-                    active: element.animationRunning === false
                     state: privateProps.currentElement === 3 ? "selected" : ""
                     onClicked: {
                         element.loadElement("ThermalControlUnitScenarios.qml", qsTr("scenarios"), objModel)

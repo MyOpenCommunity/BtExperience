@@ -70,7 +70,7 @@ class ThermalControlUnit : public ObjectInterface
 	Q_PROPERTY(SeasonType season READ getSeason WRITE setSeason NOTIFY seasonChanged)
 
 	/*!
-		\brief Gets yje list of modality object configured for this control unit
+		\brief Gets the list of modality object configured for this control unit
 
 		Each object can be used to set the control unit to a different modality.
 

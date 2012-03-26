@@ -31,7 +31,6 @@ MenuElement {
         delegate: MenuItemDelegate {
             itemObject: fakeModel.get(index)
 
-            active: element.animationRunning === false
             hasChild: true
             onClicked: loadElement(itemObject.advanced ? "AdvancedSplit.qml" : "BasicSplit.qml", name)
         }

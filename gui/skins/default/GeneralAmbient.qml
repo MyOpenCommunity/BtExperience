@@ -12,7 +12,6 @@ MenuElement {
             hasChild: true
             description: "Radio | FM 108.7 - Radio Cassadritta"
             status: -1
-            active: element.animationRunning === false
             onClicked: element.loadElement("SourceSelection.qml", qsTr("source"))
         }
 

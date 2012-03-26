@@ -52,7 +52,6 @@ MenuElement {
             id: sourceDelegate
             property variant itemObject: sourceModel.get(index)
             name: model.name
-            active: element.animationRunning === false
             onClicked: element.sourceSelected(itemObject)
         }
         model: sourceModel

@@ -19,7 +19,6 @@ MenuElement {
         delegate: MenuItemDelegate {
             name: model.name
             hasChild: model.componentFile !== ""
-            active: element.animationRunning === false
 
             onClicked: {
                 if (model.componentFile !== "")
