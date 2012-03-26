@@ -4,31 +4,24 @@ import BtObjects 1.0
 MenuElement {
     id: element
     width: 212
-    height: fakeModel.count * 50
-
+    height: 100
     signal ipConfigurationChanged(int ipConfiguration)
-
-    ListModel {
-        id: fakeModel
-        ListElement {
-            name: Network.Dhcp
-            text: qsTr("dhcp")
-        }
-        ListElement {
-            name: Network.Static
-            text: qsTr("static IP address")
-        }
-    }
 
     ListView {
         id: ipConfigurationView
         anchors.fill: parent
-        model: fakeModel
         delegate: MenuItemDelegate {
-            itemObject: fakeModel.get(index)
-            hasChild: false
-            name: itemObject.text
-            onClicked: ipConfigurationChanged(itemObject.name)
+            name: model.name
+            onClicked: ipConfigurationChanged(model.type)
+        }
+        model: ListModel {
+            id: modelList
+            Component.onCompleted: {
+                var l = [Network.Dhcp,
+                         Network.Static]
+                for (var i = 0; i < l.length; i++)
+                    append({"type": l[i], "name": pageObject.names.get('NETWORK', l[i])})
+            }
         }
     }
 }

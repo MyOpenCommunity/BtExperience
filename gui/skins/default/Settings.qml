@@ -4,5 +4,6 @@ SystemPage {
     source: "images/illuminazione.jpg"
     text: qsTr("settings")
     rootElement: "SettingsItems.qml"
+    names: SettingsNames { }
 }
 
