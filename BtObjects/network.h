@@ -51,14 +51,27 @@ class Network : public ObjectInterface
 	Q_PROPERTY(QString subnet READ getSubnet WRITE setSubnet NOTIFY subnetChanged)
 
 	/*!
+		\brief Sets or gets the configuration type of the LAN (DHCP, static IP)
+	*/
+	Q_PROPERTY(LanConfig lanConfig READ getLanConfig WRITE setLanConfig NOTIFY lanConfigChanged)
+
+	/*!
 		\brief Sets or gets the status of the network adapter
 	*/
 	Q_PROPERTY(LanStatus lanStatus READ getLanStatus WRITE setLanStatus NOTIFY lanStatusChanged)
 
+	Q_ENUMS(LanConfig)
 	Q_ENUMS(LanStatus)
 
 public:
 	Network(PlatformDevice *d);
+
+	enum LanConfig
+	{
+		Unknown,    /*!< No config received yet (only during initialization). */
+		Dhcp,       /*!< Network is configured by DHCP. */
+		Static      /*!< Network is statically configured. */
+	};
 
 	enum LanStatus
 	{
@@ -93,6 +106,8 @@ public:
 	void setDns(QString d);
 	QString getGateway() const;
 	void setGateway(QString g);
+	LanConfig getLanConfig() const;
+	void setLanConfig(LanConfig lc);
 	LanStatus getLanStatus() const;
 	void setLanStatus(LanStatus ls);
 	QString getMac() const;
@@ -103,6 +118,7 @@ signals:
 	void addressChanged();
 	void dnsChanged();
 	void gatewayChanged();
+	void lanConfigChanged();
 	void lanStatusChanged();
 	void macChanged();
 	void subnetChanged();
@@ -114,6 +130,7 @@ protected:
 	QString address;
 	QString dns;
 	QString gateway;
+	LanStatus lan_config;
 	LanStatus lan_status;
 	QString mac;
 	QString subnet;

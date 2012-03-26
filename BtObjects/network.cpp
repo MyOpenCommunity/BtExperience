@@ -13,6 +13,7 @@ Network::Network(PlatformDevice *d)
 	address = "UNKNOWN";
 	dns = "UNKNOWN";
 	gateway = "UNKNOWN";
+	lan_config = Unknown;
 	lan_status = Unknown;
 	mac = "UNKNOWN";
 	subnet = "UNKNOWN";
@@ -53,6 +54,32 @@ void Network::setGateway(QString g)
 	qDebug() << QString("Network::setGateway(%1)").arg(g);
 	// TODO set the value on the device
 	gateway = g;
+}
+
+Network::LanConfig Network::getLanConfig() const
+{
+	return lan_config;
+}
+
+void Network::setLanConfig(LanConfig lc)
+{
+	if (lc == lan_config)
+		return;
+
+	// TODO set the value on the device
+	switch (lc)
+	{
+	case Dhcp:
+		break;
+	case Static:
+		break;
+	case Unknown:
+		qWarning() << "Are you sure you want to set config to Unknown?";
+		break;
+	default:
+		qWarning() << "Unhandled config: " << lc;
+	}
+	lan_config = lc;
 }
 
 Network::LanStatus Network::getLanStatus() const
@@ -138,6 +165,15 @@ void Network::valueReceived(const DeviceValues &values_list)
 			{
 				lan_status = static_cast<LanStatus>(it.value().toInt());
 				emit lanStatusChanged();
+			}
+			break;
+		// TODO use the right value (when defined)
+		//case PlatformDevice::DIM_CONFIG:
+		case PlatformDevice::DIM_STATUS:
+			if (it.value().toInt() != lan_config)
+			{
+				lan_config = static_cast<LanConfig>(it.value().toInt());
+				emit lanConfigChanged();
 			}
 			break;
 		case PlatformDevice::DIM_NETMASK:
