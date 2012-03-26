@@ -73,15 +73,15 @@ public:
 		return QString();
 	}
 
-	virtual QString getAddress() const;
-	virtual void setAddress(QString a);
-	virtual QString getDns() const;
-	virtual void setDns(QString d);
-	virtual QString getGateway() const;
-	virtual void setGateway(QString g);
-	virtual QString getMac() const;
-	virtual QString getSubnet() const;
-	virtual void setSubnet(QString s);
+	QString getAddress() const;
+	void setAddress(QString a);
+	QString getDns() const;
+	void setDns(QString d);
+	QString getGateway() const;
+	void setGateway(QString g);
+	QString getMac() const;
+	QString getSubnet() const;
+	void setSubnet(QString s);
 
 signals:
 	void addressChanged();
