@@ -37,6 +37,37 @@ MenuElement {
 
     onChildDestroyed: privateProps.currentIndex = -1
 
+    // retrieves actual configuration information and sets the right component
+    Component.onCompleted: {
+        if (privateProps.model.lanConfig === Network.Static)
+            configurationLoader.setComponent(optionsItem);
+        else
+            configurationLoader.setComponent(summaryItem);
+    }
+
+    // connects child signals to slots
+    onChildLoaded: {
+        if (child.ipConfigurationChanged)
+            child.ipConfigurationChanged.connect(ipConfigurationChanged)
+        if (child.networkChanged)
+            child.networkChanged.connect(networkChanged)
+    }
+
+    // slot to manage the change of IP configuration type
+    function ipConfigurationChanged(configuration) {
+        if (configuration === Network.Dhcp)
+            configurationLoader.setComponent(summaryItem)
+        else if (configuration === Network.Static)
+            configurationLoader.setComponent(optionsItem)
+        else
+            Log.logWarning("Unrecognized IP configuration" + configuration)
+    }
+
+    // slot to manage enable/disable of the network adapter
+    function networkChanged(state) {
+        privateProps.model.LanStatus = state;
+    }
+
     PaginatorColumn {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
@@ -61,7 +92,6 @@ MenuElement {
             // ip configuration menu item (currentIndex === 2)
             MenuItem {
                 id: ipConfigurationItem
-                anchors.top: networkStateItem.bottom
                 name: qsTr("IP configuration")
                 description: qsTr("DHCP")
                 hasChild: true
@@ -72,42 +102,14 @@ MenuElement {
                     element.loadElement("IPConfigurations.qml", name)
                 }
             }
+        }
 
+        Column {
             // configuration item: it may be a static list of textual informations
             // (DHCP case) or a list of controls to change network configuration
             // (static IP case)
             AnimatedLoader {
                 id: configurationLoader
-                anchors.bottom: parent.bottom
-            }
-
-            // retrieves actual configuration information and sets the right component
-            Component.onCompleted: {
-                // TODO: load item wrt IP configuration type
-                configurationLoader.setComponent(summaryItem)
-            }
-
-            // connects child signals to slots
-            onChildLoaded: {
-                if (child.ipConfigurationChanged)
-                    child.ipConfigurationChanged.connect(ipConfigurationChanged)
-                if (child.networkChanged)
-                    child.networkChanged.connect(networkChanged)
-            }
-
-            // slot to manage the change of IP configuration type
-            function ipConfigurationChanged(configuration) {
-                if (configuration === Network.Dhcp)
-                    configurationLoader.setComponent(summaryItem)
-                else if (configuration === Network.Static)
-                    configurationLoader.setComponent(optionsItem)
-                else
-                    Log.logWarning("Unrecognized IP configuration" + configuration)
-            }
-
-            // slot to manage enable/disable of the network adapter
-            function networkChanged(state) {
-                privateProps.model.LanStatus = state;
             }
         }
     }
@@ -115,94 +117,32 @@ MenuElement {
     // TODO: use the right background
     Component {
         id: summaryItem
-        Column {
-            Image {
-                width: 212
-                height: 50 * 5
-                source: "images/common/bg_zone.png"
-                anchors.bottom: parent.bottom
-
-                Text {
-                    id: macAddressTitle
-                    text: qsTr("MAC address")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    anchors.topMargin: 5
+        Image {
+            width: 212
+            height: 50 * 5
+            source: "images/common/bg_zone.png"
+            Column {
+                spacing: 5
+                ControlTitleValue {
+                    title: qsTr("MAC address")
+                    value: privateProps.model.mac
                 }
-                Text {
-                    id: macAddressValue
-                    text: privateProps.model.mac
-                    font.pixelSize: 16
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: macAddressTitle.bottom
-                    anchors.topMargin: 5
-                    anchors.bottomMargin: 5
+                ControlTitleValue {
+                    title: qsTr("IP address")
+                    value: privateProps.model.address
                 }
-
-                Text {
-                    id: ipAddressTitle
-                    text: qsTr("IP address")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: macAddressValue.bottom
-                    anchors.topMargin: 5
+                ControlTitleValue {
+                    title: qsTr("Subnet mask")
+                    value: privateProps.model.subnet
                 }
-                Text {
-                    id: ipAddressValue
-                    text: privateProps.model.address
-                    font.pixelSize: 16
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: ipAddressTitle.bottom
-                    anchors.topMargin: 5
+                ControlTitleValue {
+                    title: qsTr("Gateway")
+                    value: privateProps.model.gateway
                 }
-
-                Text {
-                    id: subnetMaskTitle
-                    text: qsTr("Subnet mask")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: ipAddressValue.bottom
-                    anchors.topMargin: 5
+                ControlTitleValue {
+                    title: qsTr("DNS")
+                    value: privateProps.model.dns
                 }
-                Text {
-                    id: subnetMaskValue
-                    text: privateProps.model.subnet
-                    font.pixelSize: 16
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: subnetMaskTitle.bottom
-                    anchors.topMargin: 5
-                }
-
-                Text {
-                    id: gatewayTitle
-                    text: qsTr("Gateway")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: subnetMaskValue.bottom
-                    anchors.topMargin: 5
-                }
-                Text {
-                    id: gatewayValue
-                    text: privateProps.model.gateway
-                    font.pixelSize: 16
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: gatewayTitle.bottom
-                    anchors.topMargin: 5
-                }
-
-                Text {
-                    id: dnsTitle
-                    text: qsTr("DNS")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: gatewayValue.bottom
-                    anchors.topMargin: 5
-                }
-                Text {
-                    id: dnsValue
-                    text: privateProps.model.dns
-                    font.pixelSize: 16
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: dnsTitle.bottom
-                    anchors.topMargin: 5
-                }
-
             }
         }
     }
@@ -219,100 +159,42 @@ MenuElement {
             y: background.y
             width: background.width
             height: background.height
-
-            Column {
-                Image {
-                    id: background
-                    width: 212
-                    height: 50 * 5
-                    source: "images/common/bg_zone.png"
-                    anchors.bottom: parent.bottom
-
-                    Text {
-                        id: macAddressTitle
-                        text: qsTr("MAC address")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: parent.top
-                        anchors.topMargin: 5
+            Image {
+                id: background
+                width: 212
+                height: 50 * 5
+                source: "images/common/bg_zone.png"
+                Column {
+                    spacing: 5
+                    ControlTitleValue {
+                        title: qsTr("MAC address")
+                        value: privateProps.model.mac
+                        readOnly: false
                     }
-                    Text {
-                        id: macAddressValue
-                        text: privateProps.model.mac
-                        font.pixelSize: 16
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: macAddressTitle.bottom
-                        anchors.topMargin: 5
-                        anchors.bottomMargin: 5
+                    ControlTitleValue {
+                        title: qsTr("IP address")
+                        value: privateProps.model.address
+                        readOnly: false
+                        onAccepted: privateProps.model.address = value
                     }
-
-                    Text {
-                        id: ipAddressTitle
-                        text: qsTr("IP address")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: macAddressValue.bottom
-                        anchors.topMargin: 5
+                    ControlTitleValue {
+                        title: qsTr("Subnet mask")
+                        value: privateProps.model.subnet
+                        readOnly: false
+                        onAccepted: privateProps.model.subnet = value
                     }
-                    TextInput {
-                        id: ipAddressValue
-                        text: privateProps.model.address
-                        font.pixelSize: 16
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: ipAddressTitle.bottom
-                        anchors.topMargin: 5
-                        onAccepted: privateProps.model.address = text
+                    ControlTitleValue {
+                        title: qsTr("Gateway")
+                        value: privateProps.model.gateway
+                        readOnly: false
+                        onAccepted: privateProps.model.gateway = value
                     }
-
-                    Text {
-                        id: subnetMaskTitle
-                        text: qsTr("Subnet mask")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: ipAddressValue.bottom
-                        anchors.topMargin: 5
+                    ControlTitleValue {
+                        title: qsTr("DNS")
+                        value: privateProps.model.dns
+                        readOnly: false
+                        onAccepted: privateProps.model.dns = value
                     }
-                    TextInput {
-                        id: subnetMaskValue
-                        text: privateProps.model.subnet
-                        font.pixelSize: 16
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: subnetMaskTitle.bottom
-                        anchors.topMargin: 5
-                        onAccepted: privateProps.model.subnet = text
-                    }
-
-                    Text {
-                        id: gatewayTitle
-                        text: qsTr("Gateway")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: subnetMaskValue.bottom
-                        anchors.topMargin: 5
-                    }
-                    TextInput {
-                        id: gatewayValue
-                        text: privateProps.model.gateway
-                        font.pixelSize: 16
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: gatewayTitle.bottom
-                        anchors.topMargin: 5
-                        onAccepted: privateProps.model.gateway = text
-                    }
-
-                    Text {
-                        id: dnsTitle
-                        text: qsTr("DNS")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: gatewayValue.bottom
-                        anchors.topMargin: 5
-                    }
-                    TextInput {
-                        id: dnsValue
-                        text: privateProps.model.dns
-                        font.pixelSize: 16
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: dnsTitle.bottom
-                        anchors.topMargin: 5
-                        onAccepted: privateProps.model.dns = text
-                    }
-
                 }
             }
         }

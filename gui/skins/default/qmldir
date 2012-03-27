@@ -11,6 +11,7 @@ ControlDateTime components/ControlDateTime.qml
 ControlFMRadio components/ControlFMRadio.qml
 ControlIPRadio components/ControlIPRadio.qml
 ControlMediaPlayer components/ControlMediaPlayer.qml
+ControlTitleValue components/ControlTitleValue.qml
 AnimatedLoader components/AnimatedLoader.qml
 KeyPad components/KeyPad.qml
 TwoButtonsSettings components/TwoButtonsSettings.qml

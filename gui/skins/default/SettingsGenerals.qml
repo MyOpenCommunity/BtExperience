@@ -32,7 +32,7 @@ MenuElement {
         id: modelList
         ListElement {
             name: "version"
-            componentFile:""
+            componentFile:"SettingsVersion.qml"
         }
         ListElement {
             name: "date & time"
