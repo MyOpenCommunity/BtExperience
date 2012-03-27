@@ -52,6 +52,16 @@ class Platform : public ObjectInterface
 	Q_PROPERTY(QString mac READ getMac NOTIFY macChanged)
 
 	/*!
+		\brief Gets the serial number.
+	*/
+	Q_PROPERTY(QString serialNumber READ getSerialNumber NOTIFY serialNumberChanged)
+
+	/*!
+		\brief Gets the software version.
+	*/
+	Q_PROPERTY(QString software READ getSoftware NOTIFY softwareChanged)
+
+	/*!
 		\brief Sets and gets the subnet mask
 	*/
 	Q_PROPERTY(QString subnet READ getSubnet WRITE setSubnet NOTIFY subnetChanged)
@@ -117,6 +127,8 @@ public:
 	LanStatus getLanStatus() const;
 	void setLanStatus(LanStatus ls);
 	QString getMac() const;
+	QString getSerialNumber() const;
+	QString getSoftware() const;
 	QString getSubnet() const;
 	void setSubnet(QString s);
 
@@ -128,6 +140,8 @@ signals:
 	void lanConfigChanged();
 	void lanStatusChanged();
 	void macChanged();
+	void serialNumberChanged();
+	void softwareChanged();
 	void subnetChanged();
 
 protected slots:
@@ -141,6 +155,8 @@ protected:
 	LanConfig lan_config;
 	LanStatus lan_status;
 	QString mac;
+	QString serial_number;
+	QString software;
 	QString subnet;
 
 private:

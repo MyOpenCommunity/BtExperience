@@ -4,20 +4,26 @@
 #include <QDebug>
 
 
+namespace {
+	QString unknown = QString("UNKNOWN"); // maybe empty string?
+}
+
 Platform::Platform(PlatformDevice *d)
 {
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
 	// initial values
-	address = "UNKNOWN";
-	dns = "UNKNOWN";
-	firmware = "UNKNOWN";
-	gateway = "UNKNOWN";
+	address = unknown;
+	dns = unknown;
+	firmware = unknown;
+	gateway = unknown;
 	lan_config = Unknown;
 	lan_status = Disabled; // at start, we assume network is disabled
-	mac = "UNKNOWN";
-	subnet = "UNKNOWN";
+	mac = unknown;
+	serial_number = unknown;
+	software = unknown;
+	subnet = unknown;
 	connect(this, SIGNAL(addressChanged()), this, SIGNAL(dataChanged()));
 }
 
@@ -116,6 +122,16 @@ QString Platform::getMac() const
 	return mac;
 }
 
+QString Platform::getSerialNumber() const
+{
+	return serial_number;
+}
+
+QString Platform::getSoftware() const
+{
+	return software;
+}
+
 QString Platform::getSubnet() const
 {
 	return subnet;
@@ -152,10 +168,26 @@ void Platform::valueReceived(const DeviceValues &values_list)
 		case PlatformDevice::DIM_FW_VERS:
 			if (it.value().toString() != firmware)
 			{
-				firmware= it.value().toString();
+				firmware = it.value().toString();
 				emit firmwareChanged();
 			}
 			break;
+		// TODO kernel == software is a guess of mine: check it is right!
+		case PlatformDevice::DIM_KERN_VERS:
+			if (it.value().toString() != software)
+			{
+				software = it.value().toString();
+				emit softwareChanged();
+			}
+			break;
+		// TODO discover how to retrieve serial number information
+//		case PlatformDevice::DIM_PIC_VERS:
+//			if (it.value().toString() != serial_number)
+//			{
+//				serial_number = it.value().toString();
+//				emit serialNumberChanged();
+//			}
+//			break;
 		case PlatformDevice::DIM_GATEWAY:
 			if (it.value().toString() != gateway)
 			{

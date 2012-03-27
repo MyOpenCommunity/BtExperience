@@ -55,20 +55,15 @@ MenuElement {
                 spacing: 5
                 ControlTitleValue {
                     title: qsTr("firmware")
-                    // TODO use the model value
                     value: privateProps.model.firmware
                 }
                 ControlTitleValue {
                     title: qsTr("software")
-                    // TODO use the model value
-                    //value: privateProps.model.software
-                    value: "v.00000.1"
+                    value: privateProps.model.software
                 }
                 ControlTitleValue {
                     title: qsTr("serial number")
-                    // TODO use the model value
-                    //value: privateProps.model.serialNumber
-                    value: "A0000000000"
+                    value: privateProps.model.serialNumber
                 }
             }
         }
