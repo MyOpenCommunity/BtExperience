@@ -36,7 +36,7 @@ MenuElement {
         }
         ListElement {
             name: "date & time"
-            componentFile:""
+            componentFile:"SettingsDateTime.qml"
         }
         ListElement {
             name: "network"
