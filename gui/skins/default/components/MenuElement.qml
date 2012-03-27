@@ -6,26 +6,26 @@ Item {
 
     // load of a sub-element
     function loadElement(fileName, title, model) {
-        if (model === undefined)
-            model = null
-        containerObject.loadComponent(menuLevel, fileName, title, model)
+        element.loadComponent(menuLevel, fileName, title, model)
     }
 
     // Close the element itself and its children
     function closeElement() {
-        containerObject.closeItem(menuLevel)
+        element.closeItem(menuLevel)
     }
 
     // Close the child's element (if present)
     function closeChild() {
-        containerObject.closeItem(menuLevel + 1)
+        element.closeItem(menuLevel + 1)
     }
+
+    // The signals captured from the MenuContainer to create/close child or the element
+    // itself.
+    signal closeItem(int menuLevel)
+    signal loadComponent(int menuLevel, string fileName, string title, variant dataModel)
 
     // the page where the element is placed
     property variant pageObject: undefined
-
-    // the container where the element is placed
-    property variant containerObject: undefined
 
     // Signals emitted from the container
 
@@ -81,6 +81,5 @@ Item {
     }
 
     property QtObject dataModel: null
-
 }
 

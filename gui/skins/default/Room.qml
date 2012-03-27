@@ -1,8 +1,9 @@
 import QtQuick 1.1
 import "Stack.js" as Stack
-
+import BtObjects 1.0
 
 Page {
+    id: page
     source: "images/imgsfondo_sfumato.png"
 
     ToolBar {
@@ -18,6 +19,41 @@ Page {
         anchors.top: toolbar.bottom
         anchors.topMargin: 30
         onClicked: Stack.popPage()
+    }
+
+    Component {
+        id: itemComponent
+        MenuElement {
+            property variant itemObject
+            MenuItem {
+                name: itemObject.name
+                status: itemObject.status === true ? 1 : 0
+                hasChild: true
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        var positions = [{'x': 100, 'y': 100}, {'x': 200, 'y': 400}, {'x': 400, 'y': 200}]
+        for (var i = 0; i < objectList.size; ++i) {
+//            console.log('creating object: ' + objectList.getObject(i).name)
+            var object = itemComponent.createObject(page, {"itemObject": objectList.getObject(i), 'x': positions[i].x + (i * 10), 'y': positions[i].y})
+        }
+    }
+
+
+    ObjectModel {
+        id: objectList
+        filters: [{objectId: ObjectInterface.IdLight, objectKey: "13"},
+                  {objectId: ObjectInterface.IdSoundSource}]
+    }
+
+    // An ugly workaround: the ObjectModel and the underlying FilterListModel is not
+    // populated unless the model is used in a View item.
+    ListView {
+        visible: false
+        delegate: Item {}
+        model: objectList
     }
 
     ListView {

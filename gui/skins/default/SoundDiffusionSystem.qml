@@ -19,8 +19,6 @@ MenuElement {
 
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
-
-            active: system.animationRunning === false
             status: itemObject.hasActiveAmplifier === undefined ? -1 : itemObject.hasActiveAmplifier
             hasChild: true
             onClicked:
