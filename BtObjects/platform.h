@@ -1,5 +1,5 @@
-#ifndef NETWORK_H
-#define NETWORK_H
+#ifndef PLATFORM_H
+#define PLATFORM_H
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
@@ -10,18 +10,19 @@ class PlatformDevice;
 
 
 /*!
-	\ingroup Network
-	\brief Manages network settings
+	\ingroup Platform
+	\brief Manages platform information and network settings
 
 	Class to provide services to read and write network settings.
 	Be aware network settings are writable only for static configuration.
 	MAC address is always read-only.
+	This class also provides information about the platform.
 
 	The object id is \a ObjectInterface::IdPlatform.
 */
-class Network : public ObjectInterface
+class Platform : public ObjectInterface
 {
-	friend class TestNetwork;
+	friend class TestPlatform;
 
 	Q_OBJECT
 
@@ -34,6 +35,11 @@ class Network : public ObjectInterface
 		\brief Sets and gets the DNS address
 	*/
 	Q_PROPERTY(QString dns READ getDns WRITE setDns NOTIFY dnsChanged)
+
+	/*!
+		\brief Gets the firmware version.
+	*/
+	Q_PROPERTY(QString firmware READ getFirmware NOTIFY firmwareChanged)
 
 	/*!
 		\brief Sets and gets the gateway address
@@ -64,19 +70,19 @@ class Network : public ObjectInterface
 	Q_ENUMS(LanStatus)
 
 public:
-	Network(PlatformDevice *d);
+	Platform(PlatformDevice *d);
 
 	enum LanConfig
 	{
 		Unknown,    /*!< No config received yet (only during initialization). */
-		Dhcp,       /*!< Network is configured by DHCP. */
-		Static      /*!< Network is statically configured. */
+		Dhcp,       /*!< Platform is configured by DHCP. */
+		Static      /*!< Platform is statically configured. */
 	};
 
 	enum LanStatus
 	{
-		Disabled,   /*!< Network adapter is disabled. */
-		Enabled     /*!< Network adapter is enabled. */
+		Disabled,   /*!< Platform adapter is disabled. */
+		Enabled     /*!< Platform adapter is enabled. */
 	};
 
 	virtual int getObjectId() const
@@ -103,6 +109,7 @@ public:
 	void setAddress(QString a);
 	QString getDns() const;
 	void setDns(QString d);
+	QString getFirmware() const;
 	QString getGateway() const;
 	void setGateway(QString g);
 	LanConfig getLanConfig() const;
@@ -116,6 +123,7 @@ public:
 signals:
 	void addressChanged();
 	void dnsChanged();
+	void firmwareChanged();
 	void gatewayChanged();
 	void lanConfigChanged();
 	void lanStatusChanged();
@@ -128,6 +136,7 @@ protected slots:
 protected:
 	QString address;
 	QString dns;
+	QString firmware;
 	QString gateway;
 	LanConfig lan_config;
 	LanStatus lan_status;
@@ -138,4 +147,4 @@ private:
 	PlatformDevice *dev;
 };
 
-#endif // NETWORK_H
+#endif // PLATFORM_H

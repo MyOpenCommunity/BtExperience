@@ -2,9 +2,9 @@ HEADERS += \
 	antintrusionsystem.h \
 	lightobjects.h \
 	mediaobjects.h \
-	network.h \
 	objectlistmodel.h \
 	objectinterface.h \
+	platform.h \
 	thermalobjects.h \
 	thermalprobes.h \
 	devices/antintrusion_device.h \
@@ -28,8 +28,8 @@ SOURCES += \
 	antintrusionsystem.cpp \
 	lightobjects.cpp \
 	mediaobjects.cpp \
-	network.cpp \
 	objectlistmodel.cpp \
+	platform.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \
 	devices/antintrusion_device.cpp \

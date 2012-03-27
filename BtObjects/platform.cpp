@@ -1,10 +1,10 @@
-#include "network.h"
+#include "platform.h"
 #include "platform_device.h"
 
 #include <QDebug>
 
 
-Network::Network(PlatformDevice *d)
+Platform::Platform(PlatformDevice *d)
 {
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
@@ -12,6 +12,7 @@ Network::Network(PlatformDevice *d)
 	// initial values
 	address = "UNKNOWN";
 	dns = "UNKNOWN";
+	firmware = "UNKNOWN";
 	gateway = "UNKNOWN";
 	lan_config = Unknown;
 	lan_status = Disabled; // at start, we assume network is disabled
@@ -20,48 +21,53 @@ Network::Network(PlatformDevice *d)
 	connect(this, SIGNAL(addressChanged()), this, SIGNAL(dataChanged()));
 }
 
-QString Network::getAddress() const
+QString Platform::getAddress() const
 {
 	return address;
 }
 
-void Network::setAddress(QString a)
+void Platform::setAddress(QString a)
 {
-	qDebug() << QString("Network::setAddress(%1)").arg(a);
+	qDebug() << QString("Platform::setAddress(%1)").arg(a);
 	// TODO set the value on the device
 	address = a;
 }
 
-QString Network::getDns() const
+QString Platform::getDns() const
 {
 	return dns;
 }
 
-void Network::setDns(QString d)
+void Platform::setDns(QString d)
 {
-	qDebug() << QString("Network::setDns(%1)").arg(d);
+	qDebug() << QString("Platform::setDns(%1)").arg(d);
 	// TODO set the value on the device
 	dns = d;
 }
 
-QString Network::getGateway() const
+QString Platform::getFirmware() const
+{
+	return firmware;
+}
+
+QString Platform::getGateway() const
 {
 	return gateway;
 }
 
-void Network::setGateway(QString g)
+void Platform::setGateway(QString g)
 {
-	qDebug() << QString("Network::setGateway(%1)").arg(g);
+	qDebug() << QString("Platform::setGateway(%1)").arg(g);
 	// TODO set the value on the device
 	gateway = g;
 }
 
-Network::LanConfig Network::getLanConfig() const
+Platform::LanConfig Platform::getLanConfig() const
 {
 	return lan_config;
 }
 
-void Network::setLanConfig(LanConfig lc)
+void Platform::setLanConfig(LanConfig lc)
 {
 	if (lc == lan_config)
 		return;
@@ -82,12 +88,12 @@ void Network::setLanConfig(LanConfig lc)
 	lan_config = lc;
 }
 
-Network::LanStatus Network::getLanStatus() const
+Platform::LanStatus Platform::getLanStatus() const
 {
 	return lan_status;
 }
 
-void Network::setLanStatus(LanStatus ls)
+void Platform::setLanStatus(LanStatus ls)
 {
 	if (ls == lan_status)
 		return;
@@ -105,24 +111,24 @@ void Network::setLanStatus(LanStatus ls)
 	}
 }
 
-QString Network::getMac() const
+QString Platform::getMac() const
 {
 	return mac;
 }
 
-QString Network::getSubnet() const
+QString Platform::getSubnet() const
 {
 	return subnet;
 }
 
-void Network::setSubnet(QString s)
+void Platform::setSubnet(QString s)
 {
-	qDebug() << QString("Network::setSubnet(%1)").arg(s);
+	qDebug() << QString("Platform::setSubnet(%1)").arg(s);
 	// TODO set the value on the device
 	subnet = s;
 }
 
-void Network::valueReceived(const DeviceValues &values_list)
+void Platform::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
@@ -141,6 +147,13 @@ void Network::valueReceived(const DeviceValues &values_list)
 			{
 				dns = it.value().toString();
 				emit dnsChanged();
+			}
+			break;
+		case PlatformDevice::DIM_FW_VERS:
+			if (it.value().toString() != firmware)
+			{
+				firmware= it.value().toString();
+				emit firmwareChanged();
 			}
 			break;
 		case PlatformDevice::DIM_GATEWAY:

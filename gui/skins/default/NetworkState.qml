@@ -17,8 +17,8 @@ MenuElement {
         model: ListModel {
             id: modelList
             Component.onCompleted: {
-                var l = [Network.Disabled,
-                         Network.Enabled]
+                var l = [Platform.Disabled,
+                         Platform.Enabled]
                 for (var i = 0; i < l.length; i++)
                     append({"type": l[i], "name": pageObject.names.get('STATE', l[i])})
             }

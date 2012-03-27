@@ -16,7 +16,7 @@
 #include "mediaobjects.h"
 #include "xml_functions.h"
 #include "settings.h"
-#include "network.h"
+#include "platform.h"
 #include "platform_device.h"
 
 #include <QtDeclarative/qdeclarative.h>
@@ -119,7 +119,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			objmodel << obj;
 	}
 	// TODO put in the right implementation; for now, use this for testing the interface
-	objmodel << new Network(new PlatformDevice);
+	objmodel << new Platform(new PlatformDevice);
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)
@@ -133,8 +133,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a ThermalControlUnit99Zones instance");
 	qmlRegisterUncreatableType<ThermalControlledProbe>(uri, 1, 0, "ThermalControlledProbe",
 		"unable to create a ThermalControlledProbe instance");
-	qmlRegisterUncreatableType<Network>(uri, 1, 0, "Network",
-		"unable to create a Network instance");
+	qmlRegisterUncreatableType<Platform>(uri, 1, 0, "Platform",
+		"unable to create a Platform instance");
 	qmlRegisterUncreatableType<AntintrusionAlarm>(uri, 1, 0, "AntintrusionAlarm",
 		"unable to create an AntintrusionAlarm instance");
 }

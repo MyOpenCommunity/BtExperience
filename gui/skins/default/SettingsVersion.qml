@@ -56,8 +56,7 @@ MenuElement {
                 ControlTitleValue {
                     title: qsTr("firmware")
                     // TODO use the model value
-                    //value: privateProps.model.firmware
-                    value: "f.00000.1"
+                    value: privateProps.model.firmware
                 }
                 ControlTitleValue {
                     title: qsTr("software")
