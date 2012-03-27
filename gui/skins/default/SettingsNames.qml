@@ -12,6 +12,12 @@ QtObject {
         Script.container['STATE'][Platform.Enabled] = qsTr("Connect")
         Script.container['STATE'][Platform.Disabled] = qsTr("Disconnect")
 
+        Script.container['SCREEN_SAVER_TYPE'] = []
+        Script.container['SCREEN_SAVER_TYPE'][0] = qsTr("Image")
+        Script.container['SCREEN_SAVER_TYPE'][1] = qsTr("Text")
+        Script.container['SCREEN_SAVER_TYPE'][2] = qsTr("Date and Time")
+        Script.container['SCREEN_SAVER_TYPE'][3] = qsTr("None")
+
         Script.container['TURN_OFF_DISPLAY_LIST'] = []
         Script.container['TURN_OFF_DISPLAY_LIST'][0] = qsTr("15 sec")
         Script.container['TURN_OFF_DISPLAY_LIST'][1] = qsTr("30 sec")
