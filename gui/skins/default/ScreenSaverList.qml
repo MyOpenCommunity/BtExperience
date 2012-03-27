@@ -61,10 +61,20 @@ MenuElement {
         maxHeight: 250
 
         Column {
-            Rectangle {
+            Image {
                 width: 212
                 height: 100
-                color: "#00e6ff"
+                source: "images/common/bg_UnaRegolazione.png"
+                Rectangle {
+                    width: 200
+                    height: 90
+                    color: "#88333333"
+                    anchors.centerIn: parent
+                    Text {
+                        text: qsTr("preview")
+                        anchors.centerIn: parent
+                    }
+                }
             }
 
             // screen saver type menu item (currentIndex === 2)
