@@ -17,7 +17,7 @@ class PlatformDevice;
 	Be aware network settings are writable only for static configuration.
 	MAC address is always read-only.
 
-	The object id is \a ObjectInterface::IdNetwork.
+	The object id is \a ObjectInterface::IdPlatform.
 */
 class Network : public ObjectInterface
 {
@@ -81,7 +81,7 @@ public:
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdNetwork;
+		return ObjectInterface::IdPlatform;
 	}
 
 	virtual QString getObjectKey() const
