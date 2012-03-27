@@ -44,13 +44,13 @@ MenuElement {
     function screenSaverTypesChanged(type) {
         typeItem.description = type;
         if (type === pageObject.names.get('SCREEN_SAVER_TYPE', 0))
-            screenSaverLoader.setComponent(imageItem)
-        else if (type === pageObject.names.get('SCREEN_SAVER_TYPE', 1))
-            screenSaverLoader.setComponent(textItem)
-        else if (type === pageObject.names.get('SCREEN_SAVER_TYPE', 2))
-            screenSaverLoader.setComponent(dateTimeItem)
-        else if (type === pageObject.names.get('SCREEN_SAVER_TYPE', 3))
             screenSaverLoader.setComponent(noneItem)
+        else if (type === pageObject.names.get('SCREEN_SAVER_TYPE', 1))
+            screenSaverLoader.setComponent(imageItem)
+        else if (type === pageObject.names.get('SCREEN_SAVER_TYPE', 2))
+            screenSaverLoader.setComponent(textItem)
+        else if (type === pageObject.names.get('SCREEN_SAVER_TYPE', 3))
+            screenSaverLoader.setComponent(dateTimeItem)
         else
             Log.logWarning("Unrecognized screen saver type" + type)
     }
@@ -102,76 +102,159 @@ MenuElement {
 
     Component {
         id: noneItem
-        ControlChoices {
-            description: qsTr("turn off display")
-            choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', 5)
-            property int currentIndex: 5
-            onPlusClicked: {
-                if (currentIndex < 9) {
-                    choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', ++currentIndex)
+        Column {
+            ControlChoices {
+                description: qsTr("turn off display")
+                choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', 5)
+                property int currentIndex: 5
+                onPlusClicked: {
+                    if (currentIndex < 9) {
+                        choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', ++currentIndex)
+                    }
+                }
+                onMinusClicked: {
+                    if (currentIndex >= 0) {
+                        choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', --currentIndex)
+                    }
                 }
             }
-            onMinusClicked: {
-                if (currentIndex >= 0) {
-                    choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', --currentIndex)
-                }
+            ButtonOkCancel {
+                // TODO manage OK and Cancel buttons
             }
         }
     }
 
     Component {
         id: imageItem
-        ControlChoices {
-            description: qsTr("turn off display")
-            choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', 5)
-            property int currentIndex: 5
-            onPlusClicked: {
-                if (currentIndex < 9) {
-                    choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', ++currentIndex)
+        Column {
+            Image {
+                width: 212
+                height: 50
+                source: "images/common/btn_menu.png"
+                Text {
+                    text: qsTr("Browse")
+                    anchors.fill: parent
                 }
             }
-            onMinusClicked: {
-                if (currentIndex >= 0) {
-                    choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', --currentIndex)
+            ControlChoices {
+                description: qsTr("screen saver time out")
+                choice: pageObject.names.get('SCREEN_SAVER_TIMEOUT', 5)
+                property int currentIndex: 5
+                onPlusClicked: {
+                    if (currentIndex < 8) {
+                        choice = pageObject.names.get('SCREEN_SAVER_TIMEOUT', ++currentIndex)
+                    }
                 }
+                onMinusClicked: {
+                    if (currentIndex >= 0) {
+                        choice = pageObject.names.get('SCREEN_SAVER_TIMEOUT', --currentIndex)
+                    }
+                }
+            }
+            ControlChoices {
+                description: qsTr("turn off display")
+                choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', 5)
+                property int currentIndex: 5
+                onPlusClicked: {
+                    if (currentIndex < 9) {
+                        choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', ++currentIndex)
+                    }
+                }
+                onMinusClicked: {
+                    if (currentIndex >= 0) {
+                        choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', --currentIndex)
+                    }
+                }
+            }
+            ButtonOkCancel {
+                // TODO manage OK and Cancel buttons
             }
         }
     }
 
     Component {
         id: textItem
-        ControlChoices {
-            description: qsTr("turn off display")
-            choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', 5)
-            property int currentIndex: 5
-            onPlusClicked: {
-                if (currentIndex < 9) {
-                    choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', ++currentIndex)
+        Column {
+            Image {
+                width: 212
+                height: 50
+                source: "images/common/btn_menu.png"
+                Text {
+                    text: qsTr("Change text")
+                    anchors.fill: parent
                 }
             }
-            onMinusClicked: {
-                if (currentIndex >= 0) {
-                    choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', --currentIndex)
+            ControlChoices {
+                description: qsTr("screen saver time out")
+                choice: pageObject.names.get('SCREEN_SAVER_TIMEOUT', 5)
+                property int currentIndex: 5
+                onPlusClicked: {
+                    if (currentIndex < 8) {
+                        choice = pageObject.names.get('SCREEN_SAVER_TIMEOUT', ++currentIndex)
+                    }
                 }
+                onMinusClicked: {
+                    if (currentIndex >= 0) {
+                        choice = pageObject.names.get('SCREEN_SAVER_TIMEOUT', --currentIndex)
+                    }
+                }
+            }
+            ControlChoices {
+                description: qsTr("turn off display")
+                choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', 5)
+                property int currentIndex: 5
+                onPlusClicked: {
+                    if (currentIndex < 9) {
+                        choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', ++currentIndex)
+                    }
+                }
+                onMinusClicked: {
+                    if (currentIndex >= 0) {
+                        choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', --currentIndex)
+                    }
+                }
+            }
+            ButtonOkCancel {
+                // TODO manage OK and Cancel buttons
             }
         }
     }
 
     Component {
         id: dateTimeItem
-        ControlChoices {
-            description: qsTr("turn off display")
-            choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', 5)
-            property int currentIndex: 5
-            onPlusClicked: {
-                if (currentIndex < 9) {
-                    choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', ++currentIndex)
+        Column {
+            ControlChoices {
+                description: qsTr("screen saver time out")
+                choice: pageObject.names.get('SCREEN_SAVER_TIMEOUT', 5)
+                property int currentIndex: 5
+                onPlusClicked: {
+                    if (currentIndex < 8) {
+                        choice = pageObject.names.get('SCREEN_SAVER_TIMEOUT', ++currentIndex)
+                    }
+                }
+                onMinusClicked: {
+                    if (currentIndex >= 0) {
+                        choice = pageObject.names.get('SCREEN_SAVER_TIMEOUT', --currentIndex)
+                    }
                 }
             }
-            onMinusClicked: {
-                if (currentIndex >= 0) {
-                    choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', --currentIndex)
+            ControlChoices {
+                description: qsTr("turn off display")
+                choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', 5)
+                property int currentIndex: 5
+                onPlusClicked: {
+                    if (currentIndex < 9) {
+                        choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', ++currentIndex)
+                    }
                 }
+                onMinusClicked: {
+                    if (currentIndex >= 0) {
+                        choice = pageObject.names.get('TURN_OFF_DISPLAY_LIST', --currentIndex)
+                    }
+                }
+            }
+            ButtonOkCancel {
+                // TODO manage OK and Cancel buttons
             }
         }
     }

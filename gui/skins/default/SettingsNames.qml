@@ -13,10 +13,10 @@ QtObject {
         Script.container['STATE'][Platform.Disabled] = qsTr("Disconnect")
 
         Script.container['SCREEN_SAVER_TYPE'] = []
-        Script.container['SCREEN_SAVER_TYPE'][0] = qsTr("Image")
-        Script.container['SCREEN_SAVER_TYPE'][1] = qsTr("Text")
-        Script.container['SCREEN_SAVER_TYPE'][2] = qsTr("Date and Time")
-        Script.container['SCREEN_SAVER_TYPE'][3] = qsTr("None")
+        Script.container['SCREEN_SAVER_TYPE'][0] = qsTr("None")
+        Script.container['SCREEN_SAVER_TYPE'][1] = qsTr("Image")
+        Script.container['SCREEN_SAVER_TYPE'][2] = qsTr("Text")
+        Script.container['SCREEN_SAVER_TYPE'][3] = qsTr("Date and Time")
 
         Script.container['TURN_OFF_DISPLAY_LIST'] = []
         Script.container['TURN_OFF_DISPLAY_LIST'][0] = qsTr("15 sec")
@@ -28,6 +28,16 @@ QtObject {
         Script.container['TURN_OFF_DISPLAY_LIST'][6] = qsTr("30 min")
         Script.container['TURN_OFF_DISPLAY_LIST'][7] = qsTr("1 hour")
         Script.container['TURN_OFF_DISPLAY_LIST'][8] = qsTr("never")
+
+        Script.container['SCREEN_SAVER_TIMEOUT'] = []
+        Script.container['SCREEN_SAVER_TIMEOUT'][0] = qsTr("15 sec")
+        Script.container['SCREEN_SAVER_TIMEOUT'][1] = qsTr("30 sec")
+        Script.container['SCREEN_SAVER_TIMEOUT'][2] = qsTr("1 min")
+        Script.container['SCREEN_SAVER_TIMEOUT'][3] = qsTr("2 min")
+        Script.container['SCREEN_SAVER_TIMEOUT'][4] = qsTr("5 min")
+        Script.container['SCREEN_SAVER_TIMEOUT'][5] = qsTr("10 min")
+        Script.container['SCREEN_SAVER_TIMEOUT'][6] = qsTr("30 min")
+        Script.container['SCREEN_SAVER_TIMEOUT'][7] = qsTr("1 hour")
     }
 
     function get(context, id) {
