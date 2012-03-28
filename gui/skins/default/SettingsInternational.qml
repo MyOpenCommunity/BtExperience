@@ -56,13 +56,13 @@ MenuElement {
         // TODO assign to a model property
         //privateProps.model.TextLanguage = value;
         // TODO remove when model is implemented
-        textLanguageItem.description = pageObject.names.get('LANGUAGE', value)
+        textLanguageItem.description = pageObject.names.get('LANGUAGE', value);
     }
     function keyboardLanguageChanged(value) {
         // TODO assign to a model property
-        //privateProps.model.KeyboardLanguage = value;
+        //privateProps.model.TextLanguage = value;
         // TODO remove when model is implemented
-        keyboardLanguageItem.description = pageObject.names.get('LANGUAGE', value)
+        keyboardLanguageItem.description = pageObject.names.get('LANGUAGE', value);
     }
     function temperatureChanged(value) {
         // TODO assign to a model property
@@ -105,7 +105,7 @@ MenuElement {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                element.loadElement("", name)
+                element.loadElement("TextLanguage.qml", name)
             }
         }
         MenuItem {
@@ -117,7 +117,7 @@ MenuElement {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                element.loadElement("", name)
+                element.loadElement("KeyboardLanguage.qml", name)
             }
         }
         MenuItem {
