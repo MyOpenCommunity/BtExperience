@@ -48,7 +48,7 @@ MenuElement {
         }
         ListElement {
             name: "international"
-            componentFile:""
+            componentFile:"SettingsInternational.qml"
         }
         ListElement {
             name: "password"
