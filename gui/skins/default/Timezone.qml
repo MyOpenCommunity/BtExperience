@@ -7,28 +7,31 @@ MenuElement {
     height: 200
     signal timezoneChanged(int gmtOffset)
 
-    ListView {
-        id: view
-        anchors.fill: parent
-        delegate: MenuItemDelegate {
-            name: model.name
-            onClicked: timezoneChanged(model.type)
+
+    PaginatorColumn {
+        id: paginator
+        anchors.horizontalCenter: parent.horizontalCenter
+        maxHeight: 400
+
+        ControlChoices {
+            id: tmz
+            description: qsTr("time zone")
+            choice: pageObject.names.get('TIMEZONE', 0)
+            property int currentIndex: 0
+            onPlusClicked: {
+                if (currentIndex < 2) {
+                    choice = pageObject.names.get('TIMEZONE', ++currentIndex)
+                }
+            }
+            onMinusClicked: {
+                if (currentIndex > -2) {
+                    choice = pageObject.names.get('TIMEZONE', --currentIndex)
+                }
+            }
         }
-        model: ListModel {
-            id: modelList
-            Component.onCompleted: {
-                // TODO maybe we need some enum
-                var l = [-2,
-                         -1,
-                         0,
-                         1,
-                         2,
-                        ]
-                for (var i = 0; i < l.length; i++)
-                    append({
-                               "type": l[i],
-                               "name": pageObject.names.get('TIMEZONE', l[i])
-                           })
+        ButtonOkCancel {
+            onOkClicked: {
+                element.timezoneChanged(tmz.currentIndex)
             }
         }
     }

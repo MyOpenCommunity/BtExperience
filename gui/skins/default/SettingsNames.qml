@@ -20,6 +20,10 @@ QtObject {
         Script.container['FORMAT'][0] = qsTr("12h")
         Script.container['FORMAT'][1] = qsTr("24h")
 
+        Script.container['DST'] = []
+        Script.container['DST'][0] = qsTr("Enable")
+        Script.container['DST'][1] = qsTr("Disable")
+
         Script.container['SCREEN_SAVER_TYPE'] = []
         Script.container['SCREEN_SAVER_TYPE'][0] = qsTr("None")
         Script.container['SCREEN_SAVER_TYPE'][1] = qsTr("Image")

@@ -57,10 +57,13 @@ MenuElement {
         // TODO assign to a model property
         //privateProps.model.timezone = value;
         // TODO remove when model is implemented
-        timezoneItem.description = "GMT " + value;
+        timezoneItem.description = pageObject.names.get('TIMEZONE', value);
     }
     function daylightSavingTimeChanged(value) {
-        privateProps.model.daylightSavingTime = value;
+        // TODO assign to a model property
+        //privateProps.model.daylightSavingTime = value;
+        // TODO remove when model is implemented
+        daylightSavingTimeItem.description = pageObject.names.get('DST', value)
     }
 
     PaginatorColumn {
@@ -100,7 +103,7 @@ MenuElement {
             MenuItem {
                 id: timezoneItem
                 name: qsTr("timezone")
-                description: qsTr("GMT +1")
+                description: pageObject.names.get('TIMEZONE', 1)
                 hasChild: true
                 state: privateProps.currentIndex === 3 ? "selected" : ""
                 onClicked: {
@@ -114,13 +117,13 @@ MenuElement {
             MenuItem {
                 id: daylightSavingTimeItem
                 name: qsTr("daylight saving time")
-                description: qsTr("automatic")
+                description: pageObject.names.get('DST', 0)
                 hasChild: true
                 state: privateProps.currentIndex === 4 ? "selected" : ""
                 onClicked: {
                     if (privateProps.currentIndex !== 4)
                         privateProps.currentIndex = 4
-                    element.loadElement("", name)
+                    element.loadElement("DaylightSavingTime.qml", name)
                 }
             }
     }
