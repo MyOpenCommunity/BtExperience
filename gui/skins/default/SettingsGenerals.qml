@@ -52,7 +52,7 @@ MenuElement {
         }
         ListElement {
             name: "password"
-            componentFile:""
+            componentFile:"SettingsPassword.qml"
         }
     }
 }

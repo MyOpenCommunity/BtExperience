@@ -24,6 +24,10 @@ QtObject {
         Script.container['DST'][0] = qsTr("Enable")
         Script.container['DST'][1] = qsTr("Disable")
 
+        Script.container['PASSWORD'] = []
+        Script.container['PASSWORD'][0] = qsTr("Enable")
+        Script.container['PASSWORD'][1] = qsTr("Disable")
+
         Script.container['SCREEN_SAVER_TYPE'] = []
         Script.container['SCREEN_SAVER_TYPE'][0] = qsTr("None")
         Script.container['SCREEN_SAVER_TYPE'][1] = qsTr("Image")
