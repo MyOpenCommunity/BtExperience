@@ -58,9 +58,8 @@ MenuElement {
     PaginatorColumn {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
-        maxHeight: 250
+        maxHeight: 400
 
-        Column {
             Image {
                 width: 212
                 height: 100
@@ -90,14 +89,11 @@ MenuElement {
                     element.loadElement("ScreenSaverTypes.qml", name)
                 }
             }
-        }
 
-        Column {
             // type item: it is a static list of all possible screen saver types
             AnimatedLoader {
                 id: screenSaverLoader
             }
-        }
     }
 
     Component {

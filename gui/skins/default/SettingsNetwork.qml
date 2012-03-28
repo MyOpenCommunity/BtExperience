@@ -73,7 +73,6 @@ MenuElement {
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 350
 
-        Column {
             // network state menu item (currentIndex === 1)
             MenuItem {
                 id: networkStateItem
@@ -102,16 +101,12 @@ MenuElement {
                     element.loadElement("IPConfigurations.qml", name)
                 }
             }
-        }
-
-        Column {
             // configuration item: it may be a static list of textual informations
             // (DHCP case) or a list of controls to change network configuration
             // (static IP case)
             AnimatedLoader {
                 id: configurationLoader
             }
-        }
     }
 
     // TODO: use the right background

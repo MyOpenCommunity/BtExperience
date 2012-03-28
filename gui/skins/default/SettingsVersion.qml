@@ -35,11 +35,9 @@ MenuElement {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 150
-        Column {
-            // version item: it is a static list of values retrieved from app
-            AnimatedLoader {
-                id: versionLoader
-            }
+        // version item: it is a static list of values retrieved from app
+        AnimatedLoader {
+            id: versionLoader
         }
     }
 

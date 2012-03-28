@@ -64,7 +64,6 @@ MenuElement {
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 350
 
-        Column {
             // date menu item (currentIndex === 1)
             MenuItem {
                 id: dateItem
@@ -120,6 +119,5 @@ MenuElement {
                     element.loadElement("", name)
                 }
             }
-        }
     }
 }
