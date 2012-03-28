@@ -12,6 +12,14 @@ QtObject {
         Script.container['STATE'][Platform.Enabled] = qsTr("Connect")
         Script.container['STATE'][Platform.Disabled] = qsTr("Disconnect")
 
+        Script.container['AUTO_UPDATE'] = []
+        Script.container['AUTO_UPDATE'][0] = qsTr("Enabled")
+        Script.container['AUTO_UPDATE'][1] = qsTr("Disabled")
+
+        Script.container['FORMAT'] = []
+        Script.container['FORMAT'][0] = qsTr("12h")
+        Script.container['FORMAT'][1] = qsTr("24h")
+
         Script.container['SCREEN_SAVER_TYPE'] = []
         Script.container['SCREEN_SAVER_TYPE'][0] = qsTr("None")
         Script.container['SCREEN_SAVER_TYPE'][1] = qsTr("Image")
@@ -38,6 +46,14 @@ QtObject {
         Script.container['SCREEN_SAVER_TIMEOUT'][5] = qsTr("10 min")
         Script.container['SCREEN_SAVER_TIMEOUT'][6] = qsTr("30 min")
         Script.container['SCREEN_SAVER_TIMEOUT'][7] = qsTr("1 hour")
+
+        // TODO when using an enum change accordingly
+        Script.container['TIMEZONE'] = []
+        Script.container['TIMEZONE'][-2] = qsTr("GMT -2")
+        Script.container['TIMEZONE'][-1] = qsTr("GMT -1")
+        Script.container['TIMEZONE'][0] = qsTr("GMT 0")
+        Script.container['TIMEZONE'][1] = qsTr("GMT +1")
+        Script.container['TIMEZONE'][2] = qsTr("GMT +2")
     }
 
     function get(context, id) {

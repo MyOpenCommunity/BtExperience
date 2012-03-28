@@ -49,11 +49,15 @@ MenuElement {
     function dateChanged(value) {
         privateProps.model.date = value;
     }
-    function timeChanged(value) {
-        privateProps.model.time = value;
+    function timeChanged(auto, format) {
+        // TODO assign to a model property
+        //privateProps.model.time = value;
     }
     function timezoneChanged(value) {
-        privateProps.model.timezone = value;
+        // TODO assign to a model property
+        //privateProps.model.timezone = value;
+        // TODO remove when model is implemented
+        timezoneItem.description = "GMT " + value;
     }
     function daylightSavingTimeChanged(value) {
         privateProps.model.daylightSavingTime = value;
@@ -88,7 +92,7 @@ MenuElement {
                 onClicked: {
                     if (privateProps.currentIndex !== 2)
                         privateProps.currentIndex = 2
-                    element.loadElement("", name)
+                    element.loadElement("Time.qml", name)
                 }
             }
 
@@ -102,7 +106,7 @@ MenuElement {
                 onClicked: {
                     if (privateProps.currentIndex !== 3)
                         privateProps.currentIndex = 3
-                    element.loadElement("", name)
+                    element.loadElement("Timezone.qml", name)
                 }
             }
 
