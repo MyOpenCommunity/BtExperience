@@ -17,8 +17,8 @@ MenuElement {
         model: ListModel {
             id: modelList
             Component.onCompleted: {
-                var l = [Platform.Dhcp,
-                         Platform.Static]
+				var l = [PlatformSettings.Dhcp,
+						 PlatformSettings.Static]
                 for (var i = 0; i < l.length; i++)
                     append({"type": l[i], "name": pageObject.names.get('CONFIG', l[i])})
             }

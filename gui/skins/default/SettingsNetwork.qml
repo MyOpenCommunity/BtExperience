@@ -39,7 +39,7 @@ MenuElement {
 
 	// retrieves actual configuration information and sets the right component
 	Component.onCompleted: {
-		if (privateProps.model.lanConfig === Platform.Static)
+		if (privateProps.model.lanConfig === PlatformSettings.Static)
 			configurationLoader.setComponent(optionsItem);
 		else
 			configurationLoader.setComponent(summaryItem);
@@ -55,9 +55,9 @@ MenuElement {
 
 	// slot to manage the change of IP configuration type
 	function ipConfigurationChanged(configuration) {
-		if (configuration === Platform.Dhcp)
+		if (configuration === PlatformSettings.Dhcp)
 			configurationLoader.setComponent(summaryItem)
-		else if (configuration === Platform.Static)
+		else if (configuration === PlatformSettings.Static)
 			configurationLoader.setComponent(optionsItem)
 		else
 			Log.logWarning("Unrecognized IP configuration" + configuration)
