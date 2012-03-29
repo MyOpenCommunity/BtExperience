@@ -123,7 +123,7 @@ MenuElement {
         MenuItem {
             id: temperatureItem
             name: qsTr("temperature")
-            description: pageObject.names.get('LANGUAGE', 0)
+            description: "°C"
             hasChild: true
             state: privateProps.currentIndex === 3 ? "selected" : ""
             onClicked: {
@@ -135,7 +135,7 @@ MenuElement {
         MenuItem {
             id: unitSystemItem
             name: qsTr("unit system")
-            description: pageObject.names.get('LANGUAGE', 0)
+            description: "metric"
             hasChild: true
             state: privateProps.currentIndex === 4 ? "selected" : ""
             onClicked: {
@@ -147,7 +147,7 @@ MenuElement {
         MenuItem {
             id: currencyItem
             name: qsTr("currency")
-            description: pageObject.names.get('LANGUAGE', 0)
+            description: "euro €"
             hasChild: true
             state: privateProps.currentIndex === 5 ? "selected" : ""
             onClicked: {
@@ -159,7 +159,7 @@ MenuElement {
         MenuItem {
             id: numberSeparatorItem
             name: qsTr("number separator")
-            description: pageObject.names.get('LANGUAGE', 0)
+            description: "0.000,00"
             hasChild: true
             state: privateProps.currentIndex === 6 ? "selected" : ""
             onClicked: {
