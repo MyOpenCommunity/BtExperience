@@ -28,6 +28,7 @@ void HardwareSettings::setBrightness(int b)
 	// TODO: perform the proper conversion
 	sendCommand(QString("i2cset -y 1 0x4a 0xf0 0x") + QString::number(b, 16));
 	sendCommand(QString("i2cset -y 1 0x4a 0xf9 0x") + QString::number(b, 16));
+	// TODO save value somewhere
 	brightness = b;
 	emit brightnessChanged();
 }
