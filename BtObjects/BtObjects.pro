@@ -31,12 +31,15 @@ defineTest(isArm) {
     OBJECTS_DIR = obj/x86
     MOC_DIR = moc/x86
 
+    LIBS += -L./common_files/lib/x86 -lcommon -lexpat
 } else {
     message(ARM architecture detected.)
 
     TARGET = $${TARGET}.arm
     OBJECTS_DIR = obj/arm
     MOC_DIR = moc/arm
+
+    LIBS += -L./common_files -lcommon -lexpat
 }
 
 
