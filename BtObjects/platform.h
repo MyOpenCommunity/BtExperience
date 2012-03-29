@@ -18,11 +18,11 @@ class PlatformDevice;
 	MAC address is always read-only.
 	This class also provides information about the platform.
 
-	The object id is \a ObjectInterface::IdPlatform.
+	The object id is \a ObjectInterface::IdPlatformSettings.
 */
-class Platform : public ObjectInterface
+class PlatformSettings : public ObjectInterface
 {
-	friend class TestPlatform;
+	friend class TestPlatformSettings;
 
 	Q_OBJECT
 
@@ -80,7 +80,7 @@ class Platform : public ObjectInterface
 	Q_ENUMS(LanStatus)
 
 public:
-	Platform(PlatformDevice *d);
+	PlatformSettings(PlatformDevice *d);
 
 	enum LanConfig
 	{
@@ -97,7 +97,7 @@ public:
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdPlatform;
+		return ObjectInterface::IdPlatformSettings;
 	}
 
 	virtual QString getObjectKey() const

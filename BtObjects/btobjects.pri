@@ -1,5 +1,7 @@
 HEADERS += \
 	antintrusionsystem.h \
+	gui.h \
+	hardware.h \
 	lightobjects.h \
 	mediaobjects.h \
 	objectlistmodel.h \
@@ -26,6 +28,8 @@ HEADERS += \
 
 SOURCES += \
 	antintrusionsystem.cpp \
+	gui.cpp \
+	hardware.cpp \
 	lightobjects.cpp \
 	mediaobjects.cpp \
 	objectlistmodel.cpp \
@@ -48,3 +52,4 @@ SOURCES += \
 	ts/xml_functions.cpp \
 	ts/frame_classes.cpp \
 	ts/scaleconversion.cpp
+

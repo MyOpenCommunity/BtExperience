@@ -58,11 +58,5 @@ INCLUDEPATH += . ./ts ./devices
 
 include(btobjects.pri)
 
-HEADERS += \
-    settings.h
-
-SOURCES += \
-    settings.cpp
-
 OTHER_FILES = qmldir
 

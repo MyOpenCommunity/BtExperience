@@ -13,7 +13,7 @@ MenuElement {
 	// object model to retrieve network data
 	ObjectModel {
 		id: objectModel
-		filters: [{objectId: ObjectInterface.IdPlatform}]
+		filters: [{objectId: ObjectInterface.IdNetworkSettings}]
 	}
 	// TODO investigate why dataModel is not working as expected
 	//dataModel: objectModel.getObject(0)

@@ -8,7 +8,7 @@ namespace {
 	QString unknown = QString("UNKNOWN"); // maybe empty string?
 }
 
-Platform::Platform(PlatformDevice *d)
+PlatformSettings::PlatformSettings(PlatformDevice *d)
 {
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
@@ -27,53 +27,53 @@ Platform::Platform(PlatformDevice *d)
 	connect(this, SIGNAL(addressChanged()), this, SIGNAL(dataChanged()));
 }
 
-QString Platform::getAddress() const
+QString PlatformSettings::getAddress() const
 {
 	return address;
 }
 
-void Platform::setAddress(QString a)
+void PlatformSettings::setAddress(QString a)
 {
-	qDebug() << QString("Platform::setAddress(%1)").arg(a);
+	qDebug() << QString("PlatformSettings::setAddress(%1)").arg(a);
 	// TODO set the value on the device
 	address = a;
 }
 
-QString Platform::getDns() const
+QString PlatformSettings::getDns() const
 {
 	return dns;
 }
 
-void Platform::setDns(QString d)
+void PlatformSettings::setDns(QString d)
 {
-	qDebug() << QString("Platform::setDns(%1)").arg(d);
+	qDebug() << QString("PlatformSettings::setDns(%1)").arg(d);
 	// TODO set the value on the device
 	dns = d;
 }
 
-QString Platform::getFirmware() const
+QString PlatformSettings::getFirmware() const
 {
 	return firmware;
 }
 
-QString Platform::getGateway() const
+QString PlatformSettings::getGateway() const
 {
 	return gateway;
 }
 
-void Platform::setGateway(QString g)
+void PlatformSettings::setGateway(QString g)
 {
-	qDebug() << QString("Platform::setGateway(%1)").arg(g);
+	qDebug() << QString("PlatformSettings::setGateway(%1)").arg(g);
 	// TODO set the value on the device
 	gateway = g;
 }
 
-Platform::LanConfig Platform::getLanConfig() const
+PlatformSettings::LanConfig PlatformSettings::getLanConfig() const
 {
 	return lan_config;
 }
 
-void Platform::setLanConfig(LanConfig lc)
+void PlatformSettings::setLanConfig(LanConfig lc)
 {
 	if (lc == lan_config)
 		return;
@@ -94,12 +94,12 @@ void Platform::setLanConfig(LanConfig lc)
 	lan_config = lc;
 }
 
-Platform::LanStatus Platform::getLanStatus() const
+PlatformSettings::LanStatus PlatformSettings::getLanStatus() const
 {
 	return lan_status;
 }
 
-void Platform::setLanStatus(LanStatus ls)
+void PlatformSettings::setLanStatus(LanStatus ls)
 {
 	if (ls == lan_status)
 		return;
@@ -117,34 +117,34 @@ void Platform::setLanStatus(LanStatus ls)
 	}
 }
 
-QString Platform::getMac() const
+QString PlatformSettings::getMac() const
 {
 	return mac;
 }
 
-QString Platform::getSerialNumber() const
+QString PlatformSettings::getSerialNumber() const
 {
 	return serial_number;
 }
 
-QString Platform::getSoftware() const
+QString PlatformSettings::getSoftware() const
 {
 	return software;
 }
 
-QString Platform::getSubnet() const
+QString PlatformSettings::getSubnet() const
 {
 	return subnet;
 }
 
-void Platform::setSubnet(QString s)
+void PlatformSettings::setSubnet(QString s)
 {
-	qDebug() << QString("Platform::setSubnet(%1)").arg(s);
+	qDebug() << QString("PlatformSettings::setSubnet(%1)").arg(s);
 	// TODO set the value on the device
 	subnet = s;
 }
 
-void Platform::valueReceived(const DeviceValues &values_list)
+void PlatformSettings::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())

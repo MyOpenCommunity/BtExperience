@@ -14,7 +14,7 @@ MenuElement {
     ObjectModel {
         id: objectModel
         // TODO update filter to retrieve version data
-        filters: [{objectId: ObjectInterface.IdPlatform}]
+		filters: [{objectId: ObjectInterface.IdNetworkSettings}]
     }
 
     // TODO investigate why dataModel is not working as expected
