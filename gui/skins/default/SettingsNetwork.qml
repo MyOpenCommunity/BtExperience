@@ -112,12 +112,10 @@ MenuElement {
 	// TODO: use the right background
 	Component {
 		id: summaryItem
-		Image {
+		Item {
 			width: 212
 			height: 50 * 5
-			source: "images/common/bg_zone.png"
 			Column {
-				spacing: 5
 				ControlTitleValue {
 					title: qsTr("MAC address")
 					value: privateProps.model.mac
@@ -154,13 +152,11 @@ MenuElement {
 			y: background.y
 			width: background.width
 			height: background.height
-			Image {
+			Item {
 				id: background
 				width: 212
 				height: 50 * 5
-				source: "images/common/bg_zone.png"
 				Column {
-					spacing: 5
 					ControlTitleValue {
 						title: qsTr("MAC address")
 						value: privateProps.model.mac
