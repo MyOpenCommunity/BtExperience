@@ -78,3 +78,16 @@ HEADERS += \
     inputcontextwrapper.h
 
 TRANSLATIONS += linguist-ts/bt_experience_it.ts
+
+mac {
+    APP_DIR = $${DESTDIR}/$${TARGET}.app/Contents
+
+    QMAKE_POST_LINK += ln -sf ../../../gui $${APP_DIR}/Resources/gui &&
+    QMAKE_POST_LINK += mkdir -p $${APP_DIR}/MacOS/BtObjects &&
+    QMAKE_POST_LINK += cp -L ../BtObjects/libbtobjects.dylib $${APP_DIR}/MacOS/BtObjects/ &&
+    QMAKE_POST_LINK += cp -L ../BtObjects/qmldir $${APP_DIR}/MacOS/BtObjects/ &&
+    QMAKE_POST_LINK += cp -L common_files/lib/x86/libcommon.dylib.0 $${APP_DIR}/MacOS/ &&
+    QMAKE_POST_LINK += install_name_tool -change libcommon.dylib.0 @executable_path/libcommon.dylib.0 $${APP_DIR}/MacOS/BtObjects/libbtobjects.dylib &&
+    QMAKE_POST_LINK += install_name_tool -change libcommon.dylib.0 @executable_path/libcommon.dylib.0 $${APP_DIR}/MacOS/BtExperience.x86 && 
+    QMAKE_POST_LINK += true
+}
