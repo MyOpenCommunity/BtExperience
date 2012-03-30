@@ -17,8 +17,8 @@ MenuElement {
         model: ListModel {
             id: modelList
             Component.onCompleted: {
-                var l = [0,
-                         1,
+                var l = [GuiSettings.Dst_enabled,
+                         GuiSettings.Dst_disabled,
                         ]
                 for (var i = 0; i < l.length; i++)
                     append({

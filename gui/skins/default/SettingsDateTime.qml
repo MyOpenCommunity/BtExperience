@@ -13,7 +13,7 @@ MenuElement {
     // object model to retrieve network data
     ObjectModel {
         id: objectModel
-		filters: [{objectId: ObjectInterface.IdGuiSettings}]
+        filters: [{objectId: ObjectInterface.IdGuiSettings}]
     }
     // TODO investigate why dataModel is not working as expected
     //dataModel: objectModel.getObject(0)
@@ -49,21 +49,16 @@ MenuElement {
     function dateChanged(value) {
         privateProps.model.date = value;
     }
-    function timeChanged(auto, format) {
-        // TODO assign to a model property
-        //privateProps.model.time = value;
+    function timeChanged(value, auto, format) {
+        privateProps.model.time = value;
+        privateProps.model.autoupdate = auto
+        privateProps.model.format = format
     }
     function timezoneChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.timezone = value;
-        // TODO remove when model is implemented
-        timezoneItem.description = pageObject.names.get('TIMEZONE', value);
+        privateProps.model.timezone = value;
     }
     function daylightSavingTimeChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.daylightSavingTime = value;
-        // TODO remove when model is implemented
-        daylightSavingTimeItem.description = pageObject.names.get('DST', value)
+        privateProps.model.daylightSavingTime = value;
     }
 
     PaginatorColumn {
@@ -71,60 +66,60 @@ MenuElement {
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 350
 
-            // date menu item (currentIndex === 1)
-            MenuItem {
-                id: dateItem
-                name: qsTr("date")
-                description: qsTr("22/11/2011")
-                hasChild: true
-                state: privateProps.currentIndex === 1 ? "selected" : ""
-                onClicked: {
-                    if (privateProps.currentIndex !== 1)
-                        privateProps.currentIndex = 1
-                    element.loadElement("", name)
-                }
+        // date menu item (currentIndex === 1)
+        MenuItem {
+            id: dateItem
+            name: qsTr("date")
+            description: privateProps.model.date
+            hasChild: true
+            state: privateProps.currentIndex === 1 ? "selected" : ""
+            onClicked: {
+                if (privateProps.currentIndex !== 1)
+                    privateProps.currentIndex = 1
+                element.loadElement("", name)
             }
+        }
 
-            // time menu item (currentIndex === 2)
-            MenuItem {
-                id: timeItem
-                name: qsTr("time")
-                description: qsTr("16.39")
-                hasChild: true
-                state: privateProps.currentIndex === 2 ? "selected" : ""
-                onClicked: {
-                    if (privateProps.currentIndex !== 2)
-                        privateProps.currentIndex = 2
-                    element.loadElement("Time.qml", name)
-                }
+        // time menu item (currentIndex === 2)
+        MenuItem {
+            id: timeItem
+            name: qsTr("time")
+            description: privateProps.model.time
+            hasChild: true
+            state: privateProps.currentIndex === 2 ? "selected" : ""
+            onClicked: {
+                if (privateProps.currentIndex !== 2)
+                    privateProps.currentIndex = 2
+                element.loadElement("Time.qml", name)
             }
+        }
 
-            // timezone menu item (currentIndex === 3)
-            MenuItem {
-                id: timezoneItem
-                name: qsTr("timezone")
-                description: pageObject.names.get('TIMEZONE', 1)
-                hasChild: true
-                state: privateProps.currentIndex === 3 ? "selected" : ""
-                onClicked: {
-                    if (privateProps.currentIndex !== 3)
-                        privateProps.currentIndex = 3
-                    element.loadElement("Timezone.qml", name)
-                }
+        // timezone menu item (currentIndex === 3)
+        MenuItem {
+            id: timezoneItem
+            name: qsTr("timezone")
+            description: pageObject.names.get('TIMEZONE', privateProps.model.timezone)
+            hasChild: true
+            state: privateProps.currentIndex === 3 ? "selected" : ""
+            onClicked: {
+                if (privateProps.currentIndex !== 3)
+                    privateProps.currentIndex = 3
+                element.loadElement("Timezone.qml", name)
             }
+        }
 
-            // daylight saving time menu item (currentIndex === 4)
-            MenuItem {
-                id: daylightSavingTimeItem
-                name: qsTr("daylight saving time")
-                description: pageObject.names.get('DST', 0)
-                hasChild: true
-                state: privateProps.currentIndex === 4 ? "selected" : ""
-                onClicked: {
-                    if (privateProps.currentIndex !== 4)
-                        privateProps.currentIndex = 4
-                    element.loadElement("DaylightSavingTime.qml", name)
-                }
+        // daylight saving time menu item (currentIndex === 4)
+        MenuItem {
+            id: daylightSavingTimeItem
+            name: qsTr("daylight saving time")
+            description: pageObject.names.get('DST', privateProps.model.daylightSavingTime)
+            hasChild: true
+            state: privateProps.currentIndex === 4 ? "selected" : ""
+            onClicked: {
+                if (privateProps.currentIndex !== 4)
+                    privateProps.currentIndex = 4
+                element.loadElement("DaylightSavingTime.qml", name)
             }
+        }
     }
 }

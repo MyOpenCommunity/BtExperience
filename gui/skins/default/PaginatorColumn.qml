@@ -9,17 +9,17 @@ Item {
 
     QtObject {
         id: privateProps
-		property int currentPageSize: 100
+        property int currentPageSize: 100
     }
 
     Component.onCompleted: {
-		showPage(paginator.currentPage)
+        showPage(paginator.currentPage)
     }
 
     function showPage(requestedPage) {
         var pageSize = 0
         var pageNumber = 1
-		for (var i = 1; i < element.children.length; i++)
+        for (var i = 1; i < element.children.length; i++)
         {
             var child = element.children[i]
             var y = pageSize

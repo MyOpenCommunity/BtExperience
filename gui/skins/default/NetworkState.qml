@@ -17,8 +17,8 @@ MenuElement {
         model: ListModel {
             id: modelList
             Component.onCompleted: {
-				var l = [PlatformSettings.Disabled,
-						 PlatformSettings.Enabled]
+                var l = [PlatformSettings.Disabled,
+                         PlatformSettings.Enabled]
                 for (var i = 0; i < l.length; i++)
                     append({"type": l[i], "name": pageObject.names.get('STATE', l[i])})
             }
