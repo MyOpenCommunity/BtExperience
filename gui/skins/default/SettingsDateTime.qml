@@ -51,7 +51,7 @@ MenuElement {
     }
     function timeChanged(value, auto, format) {
         privateProps.model.time = value;
-        privateProps.model.autoupdate = auto
+        privateProps.model.autoUpdate = auto
         privateProps.model.format = format
     }
     function timezoneChanged(value) {

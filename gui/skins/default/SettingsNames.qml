@@ -40,19 +40,19 @@ QtObject {
         Script.container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Hours_1] = qsTr("1 hour")
         Script.container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Never] = qsTr("never") // not really used
 
-        // TODO from here on, change  wrt to model developments
-
         Script.container['AUTO_UPDATE'] = []
-        Script.container['AUTO_UPDATE'][0] = qsTr("Enabled")
-        Script.container['AUTO_UPDATE'][1] = qsTr("Disabled")
+        Script.container['AUTO_UPDATE'][GuiSettings.AutoUpdate_enabled] = qsTr("Enabled")
+        Script.container['AUTO_UPDATE'][GuiSettings.AutoUpdate_disabled] = qsTr("Disabled")
 
         Script.container['FORMAT'] = []
-        Script.container['FORMAT'][0] = qsTr("12h")
-        Script.container['FORMAT'][1] = qsTr("24h")
+        Script.container['FORMAT'][GuiSettings.TimeFormat_12h] = qsTr("12h")
+        Script.container['FORMAT'][GuiSettings.TimeFormat_24h] = qsTr("24h")
 
         Script.container['DST'] = []
-        Script.container['DST'][0] = qsTr("Enable")
-        Script.container['DST'][1] = qsTr("Disable")
+        Script.container['DST'][GuiSettings.Dst_enabled] = qsTr("Enable")
+        Script.container['DST'][GuiSettings.Dst_disabled] = qsTr("Disable")
+
+        // TODO from here on, change  wrt to model developments
 
         Script.container['PASSWORD'] = []
         Script.container['PASSWORD'][0] = qsTr("Enable")

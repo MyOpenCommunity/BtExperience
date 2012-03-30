@@ -44,7 +44,7 @@ MenuElement {
             id: auto
             description: qsTr("automatic update")
             choice: pageObject.names.get('AUTO_UPDATE', currentIndex)
-            property int currentIndex: privateProps.model.autoupdate
+            property int currentIndex: privateProps.model.autoUpdate
             onPlusClicked: {
                 if (currentIndex < 1) {
                     choice = pageObject.names.get('AUTO_UPDATE', ++currentIndex)
