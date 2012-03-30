@@ -36,11 +36,11 @@ void TestLight::cleanup()
 
 void TestLight::testSetStatus()
 {
-	obj->setStatus(true);
+	obj->setActive(true);
 	dev->turnOn();
 	compareClientCommand();
 
-	obj->setStatus(false);
+	obj->setActive(false);
 	dev->turnOff();
 	compareClientCommand();
 }
@@ -50,10 +50,10 @@ void TestLight::testReceiveStatus()
 	DeviceValues v;
 	v[LightingDevice::DIM_DEVICE_ON] = true;
 
-	ObjectTester t(obj, SIGNAL(statusChanged()));
+	ObjectTester t(obj, SIGNAL(activeChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(obj->getStatus(), true);
+	QCOMPARE(obj->isActive(), true);
 
 	obj->valueReceived(v);
 	t.checkNoSignals();
@@ -101,12 +101,12 @@ void TestDimmer::testReceiveLevel()
 	v[LightingDevice::DIM_DEVICE_ON] = true;
 	v[LightingDevice::DIM_DIMMER_LEVEL] = 3;
 
-	ObjectTester tstatus(obj, SIGNAL(statusChanged()));
+	ObjectTester tstatus(obj, SIGNAL(activeChanged()));
 	ObjectTester tperc(obj, SIGNAL(percentageChanged()));
 	obj->valueReceived(v);
 	tstatus.checkSignals();
 	tperc.checkSignals();
-	QCOMPARE(obj->getStatus(), true);
+	QCOMPARE(obj->isActive(), true);
 	QCOMPARE(obj->getPercentage(), 10);
 
 	obj->valueReceived(v);
@@ -136,12 +136,12 @@ void TestDimmer100::testReceiveLevel100()
 	v[LightingDevice::DIM_DIMMER100_LEVEL] = 34;
 	v[LightingDevice::DIM_DIMMER100_SPEED] = 50;
 
-	ObjectTester tstatus(obj, SIGNAL(statusChanged()));
+	ObjectTester tstatus(obj, SIGNAL(activeChanged()));
 	ObjectTester tperc(obj, SIGNAL(percentageChanged()));
 	obj->valueReceived(v);
 	tstatus.checkSignals();
 	tperc.checkSignals();
-	QCOMPARE(obj->getStatus(), true);
+	QCOMPARE(obj->isActive(), true);
 	QCOMPARE(obj->getPercentage(), 30);
 
 	obj->valueReceived(v);
