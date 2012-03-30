@@ -6,6 +6,7 @@ Makefile
 moc/
 obj/
 BtObjects/libbtobjects.*.so
+BtObjects/libbtobjects.*.dylib
 BtObjects/test/test
 common_files
 devices

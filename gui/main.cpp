@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
 	wid->setZValue(1200);
 #endif
 
-#ifdef Q_WS_X11
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
 	viewer.resize(global.getMainWidth(), global.getMainHeight());
 	viewer.showExpanded();
 #else
