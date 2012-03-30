@@ -118,7 +118,10 @@ private slots:
 
 protected:
 	TreeBrowser *browser;
-	int min_range, max_range, filter;
+	int min_range, max_range;
+
+private:
+	int filter;
 	QString pending_dirchange;
 	QVariantList current_path;
 };
