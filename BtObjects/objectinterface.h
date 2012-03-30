@@ -15,6 +15,7 @@ class ObjectInterface : public QObject
 	Q_ENUMS(ObjectCategory)
 
 public:
+	ObjectInterface(QObject *parent = 0) : QObject(parent) {}
 	virtual ~ObjectInterface() {}
 
 	enum ObjectId
