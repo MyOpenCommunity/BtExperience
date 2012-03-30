@@ -123,7 +123,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	// TODO put in the right implementation; for now, use this for testing the interface
 	objmodel << new PlatformSettings(new PlatformDevice);
 	objmodel << new GuiSettings();
-	objmodel << new HardwareSettings();
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)
