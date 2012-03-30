@@ -105,6 +105,7 @@ MenuElement {
 		id: noneItem
 		Column {
 			ControlChoices {
+				id: turnOffTime
 				description: qsTr("turn off display")
 				choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', currentIndex)
 				property int currentIndex: privateProps.model.turnOffTime
@@ -128,6 +129,7 @@ MenuElement {
 				height: 50
 				source: "images/common/btn_menu.png"
 				Text {
+					id: screensaverImage
 					text: qsTr("Browse")
 					anchors.fill: parent
 				}
