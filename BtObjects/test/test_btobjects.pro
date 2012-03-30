@@ -26,6 +26,7 @@ DEPENDPATH = ../.. ..
 
 HEADERS += test_antintrusion_object.h \
 	test_btobject.h \
+	test_filebrowser.h \
 	test_light_objects.h \
 	test_media_objects.h \
 	test_thermal_objects.h \
@@ -38,6 +39,7 @@ HEADERS += test_antintrusion_object.h \
 SOURCES += test_main.cpp \
 	test_antintrusion_object.cpp \
 	test_btobject.cpp \
+	test_filebrowser.cpp \
 	test_light_objects.cpp \
 	test_media_objects.cpp \
 	test_thermal_objects.cpp \

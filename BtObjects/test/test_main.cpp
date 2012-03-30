@@ -31,6 +31,7 @@
 #include "test_media_objects.h"
 #include "test_thermalprobes_object.h"
 #include "test_thermal_objects.h"
+#include "test_filebrowser.h"
 #include "main.h"
 
 logger *app_logger;
@@ -38,6 +39,9 @@ logger *app_logger;
 
 int main(int argc, char *argv[])
 {
+	// for filesystem model tests
+	qRegisterMetaType<QModelIndex>("QModelIndex");
+
 	QCoreApplication app(argc, argv);
 	QList<TestBtObject *> test_list;
 
@@ -94,6 +98,12 @@ int main(int argc, char *argv[])
 
 	TestDimmer100 test_dimmer_100;
 	test_list << &test_dimmer_100;
+
+	TestFolderListModel test_folder_model;
+	test_list << &test_folder_model;
+
+	TestFileObject test_file_object;
+	test_list << &test_file_object;
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))
