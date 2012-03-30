@@ -281,7 +281,7 @@ void TestSourceRadio::testFrequencyUp()
 {
 	ObjectTester t(obj, SIGNAL(currentFrequencyChanged()));
 
-	obj->frequency = obj->dev->frequency = 9800;
+	dev->frequency = obj->frequency = obj->dev->frequency = 9800;
 	QVERIFY(!obj->request_frequency.isActive());
 
 	obj->frequencyUp(2);
@@ -296,7 +296,7 @@ void TestSourceRadio::testFrequencyDown()
 {
 	ObjectTester t(obj, SIGNAL(currentFrequencyChanged()));
 
-	obj->frequency = obj->dev->frequency = 9800;
+	dev->frequency = obj->frequency = obj->dev->frequency = 9800;
 	QVERIFY(!obj->request_frequency.isActive());
 
 	obj->frequencyDown(2);
