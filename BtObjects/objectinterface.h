@@ -40,6 +40,7 @@ public:
 
 	enum ObjectCategory
 	{
+		Unassigned = -1,
 		Lighting = 1,
 		ThermalRegulation,
 		Antintrusion,
