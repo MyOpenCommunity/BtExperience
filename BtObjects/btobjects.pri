@@ -1,5 +1,6 @@
 HEADERS += \
 	antintrusionsystem.h \
+	folderlistmodel.h \
 	gui.h \
 	hardware.h \
 	lightobjects.h \
@@ -21,13 +22,17 @@ HEADERS += \
 	ts/delayedslotcaller.h \
 	ts/frame_classes.h \
 	ts/openclient.h \
+	ts/treebrowser.h \
 	ts/frame_functions.h \
 	ts/devices_cache.h \
 	ts/xml_functions.h \
+	ts/xmldevice.h \
+	ts/xmlclient.h \
 	ts/scaleconversion.h
 
 SOURCES += \
 	antintrusionsystem.cpp \
+	folderlistmodel.cpp \
 	gui.cpp \
 	hardware.cpp \
 	lightobjects.cpp \
@@ -36,6 +41,7 @@ SOURCES += \
 	platform.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \
+	generic_functions.cpp \
 	devices/antintrusion_device.cpp \
 	devices/device.cpp \
 	devices/lighting_device.cpp \
@@ -47,9 +53,12 @@ SOURCES += \
 	ts/bttime.cpp \
 	ts/delayedslotcaller.cpp \
 	ts/openclient.cpp \
+	ts/treebrowser.cpp \
 	ts/frame_functions.cpp \
 	ts/devices_cache.cpp \
 	ts/xml_functions.cpp \
+	ts/xmldevice.cpp \
+	ts/xmlclient.cpp \
 	ts/frame_classes.cpp \
 	ts/scaleconversion.cpp
 
