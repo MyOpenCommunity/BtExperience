@@ -288,7 +288,7 @@ void TestTreeBrowserListModelBase::testNavigation()
 
 void TestTreeBrowserListModelBase::testListItems()
 {
-	ObjectTester t(obj, SIGNAL(rowsInserted(QModelIndex,int,int)));
+	ObjectTester t(obj, SIGNAL(modelReset()));
 
 	enterDirectoryAndWait(obj, "c");
 
@@ -307,23 +307,29 @@ void TestTreeBrowserListModelBase::testListItems()
 
 void TestTreeBrowserListModelBase::testRange()
 {
-	ObjectTester t(obj, SIGNAL(rowsInserted(QModelIndex,int,int)));
+	ObjectTester t(obj, SIGNAL(modelReset()));
 
 	enterDirectoryAndWait(obj, "c");
+
+	t.checkSignals();
+
 	setRangeAndWait(obj, QVariantList() << 4 << 8);
 
+	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
 	QCOMPARE(obj->rowCount(), 4);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(), QString("/a/c/e"));
 
 	setRangeAndWait(obj, QVariantList() << 8 << 12);
 
+	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
 	QCOMPARE(obj->rowCount(), 4);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(), QString("/a/c/i"));
 
 	setRangeAndWait(obj, QVariantList() << 24 << 28);
 
+	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
 	QCOMPARE(obj->rowCount(), 2);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(), QString("/a/c/y"));

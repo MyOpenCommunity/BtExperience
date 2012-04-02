@@ -199,6 +199,8 @@ void TreeBrowserListModelBase::setRange(QVariantList range)
 	max_range = max;
 
 	emit rangeChanged();
+	// assumes ranges do not overlap, so there is no point in trying to minimize reloads
+	reset();
 }
 
 
@@ -233,22 +235,16 @@ int FolderListModel::getSize() const
 
 void FolderListModel::gotFileList(EntryInfoList list)
 {
-	if (item_list.count())
-	{
-		emit beginRemoveRows(QModelIndex(), 0, item_list.count() - 1);
-		clearList(item_list);
-		emit endRemoveRows();
-	}
+	int size = getSize();
 
-	if (list.count())
-	{
-		emit beginInsertRows(QModelIndex(), 0, list.count() - 1);
+	clearList(item_list);
 
-		foreach (const EntryInfo &entry, list)
-			item_list.append(new FileObject(entry, this));
+	foreach (const EntryInfo &entry, list)
+		item_list.append(new FileObject(entry, this));
 
-		emit endInsertRows();
-	}
+	if (size != getSize())
+		emit sizeChanged();
+	reset();
 }
 
 
