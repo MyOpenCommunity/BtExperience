@@ -15,13 +15,15 @@ class FileObject : public ObjectInterface
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QString name READ getName NOTIFY loadingComplete)
 	Q_PROPERTY(QVariantList path READ getPath CONSTANT)
-	Q_PROPERTY(FileType fileType READ getFileType CONSTANT)
-	Q_PROPERTY(QVariantMap metadata READ getMetadata CONSTANT)
-	Q_PROPERTY(bool isLoading READ isLoading CONSTANT)
+	Q_PROPERTY(FileType fileType READ getFileType NOTIFY loadingComplete)
+	Q_PROPERTY(QVariantMap metadata READ getMetadata NOTIFY loadingComplete)
+	Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingComplete)
 	Q_ENUMS(FileType)
 
 public:
+	FileObject(QObject *parent = 0);
 	FileObject(const EntryInfo &entry, QVariantList path, QObject *parent = 0);
 
 	enum FileType
@@ -45,6 +47,11 @@ public:
 	FileType getFileType() const;
 	QVariantMap getMetadata() const;
 	bool isLoading() const;
+
+	void setFileInfo(const EntryInfo &entry, QVariantList path);
+
+signals:
+	void loadingComplete();
 
 private:
 	EntryInfo entry;

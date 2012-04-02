@@ -35,6 +35,13 @@ namespace
 	}
 }
 
+
+FileObject::FileObject(QObject *parent) :
+	ObjectInterface(parent)
+{
+	loading = true;
+}
+
 FileObject::FileObject(const EntryInfo &_entry, QVariantList _path, QObject *parent) :
 	ObjectInterface(parent),
 	entry(_entry),
@@ -72,6 +79,17 @@ QVariantMap FileObject::getMetadata() const
 bool FileObject::isLoading() const
 {
 	return loading;
+}
+
+void FileObject::setFileInfo(const EntryInfo &_entry, QVariantList _path)
+{
+	entry = _entry;
+	path = _path << _entry.name;
+	loading = false;
+
+	// we could use a more fine-grained signal, but there is little point in optimizing,
+	// since it's only emitted once per object
+	emit loadingComplete();
 }
 
 
