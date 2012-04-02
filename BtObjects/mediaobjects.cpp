@@ -1,6 +1,10 @@
 #include "mediaobjects.h"
 #include "media_device.h"
 #include "devices_cache.h"
+#include "xml_functions.h"
+
+#include <QDebug>
+#include <QStringList>
 
 #define REQUEST_FREQUENCY_TIME 1000
 
@@ -36,18 +40,41 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 	sources << new SourceAux(touch, "Touch");
 
 	QList<Amplifier *> amplifiers;
+	foreach (const QDomNode &amplifier, getChildren(getChildWithName(xml_node, "amplifiers"), "item"))
+	{
+		int id = getTextChild(amplifier, "id").toInt();
+		QString name = getTextChild(amplifier, "name");
+		int area = getTextChild(amplifier, "env").toInt();
+		QString where = getTextChild(amplifier, "where");
 
-	ambients << new SoundAmbient(2, "Cucina");
-	ambients << new SoundAmbient(3, "Salotto");
+		switch (id)
+		{
+		case ObjectInterface::IdSoundAmplifier:
+			amplifiers << new Amplifier(area, name, AmplifierDevice::createDevice(where));
+			break;
+		case ObjectInterface::IdSoundAmplifierGeneral:
+			amplifiers << new Amplifier(area, name, AmplifierDevice::createDevice(where),
+								ObjectInterface::IdSoundAmplifierGeneral);
+			break;
+		case ObjectInterface::IdPowerAmplifier:
+			QStringList sl;
+			foreach(const QDomNode &preset, getChildren(amplifier, "preset"))
+			{
+				QString preset_name = getTextChild(amplifier, "");
+				sl << preset_name;
+			}
+			amplifiers << new PowerAmplifier(area, name, bt_global::add_device_to_cache(new PowerAmplifierDevice(where)), sl);
+			break;
+		}
+	}
 
-	amplifiers << new PowerAmplifier(2, "Amplificatore di potenza", bt_global::add_device_to_cache(new PowerAmplifierDevice("21")), QList<QString>());
-	amplifiers << new Amplifier(2, "Amplificatore 2", AmplifierDevice::createDevice("22"));
-	amplifiers << new Amplifier(2, "Amplificatore 3", AmplifierDevice::createDevice("23"));
-	amplifiers << new Amplifier(2, "Generale", AmplifierDevice::createDevice("#2"),
-				    ObjectInterface::IdSoundAmplifierGeneral);
-	amplifiers << new Amplifier(3, "Amplificatore 2", AmplifierDevice::createDevice("32"));
-	amplifiers << new Amplifier(3, "Generale", AmplifierDevice::createDevice("#3"),
-				    ObjectInterface::IdSoundAmplifierGeneral);
+	foreach (const QDomNode &ambient, getChildren(getChildWithName(xml_node, "ambients"), "item"))
+	{
+		QString name = getTextChild(ambient, "name");
+		int env = getTextChild(ambient, "env").toInt();
+
+		ambients << new SoundAmbient(env, name);
+	}
 
 	// connect sources with ambients
 	foreach (SoundAmbient *ambient, ambients)

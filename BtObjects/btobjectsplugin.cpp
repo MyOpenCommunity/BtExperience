@@ -70,6 +70,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	foreach (const QDomNode &item, getChildren(document.documentElement(), "item"))
 	{
 		ObjectInterface *obj = 0;
+		QList<ObjectInterface *> obj_list;
 
 		int id = getTextChild(item, "id").toInt();
 		QString descr = getTextChild(item, "descr");
@@ -106,20 +107,19 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdAntintrusionSystem:
 			obj = createAntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice), item);
 			break;
-		case ObjectInterface::IdMultiChannelSoundAmbient:
-		{
-			QList<ObjectInterface *> objects = createSoundDiffusionSystem(item);
-
-			foreach (ObjectInterface *obj, objects)
-				objmodel << obj;
-
+		case ObjectInterface::IdSoundDiffusionSystem:
+			obj_list = createSoundDiffusionSystem(item);
 			break;
-		}
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
 		if (obj)
 			objmodel << obj;
+		else if (!obj_list.isEmpty())
+		{
+			foreach (ObjectInterface *oi, obj_list)
+				objmodel << oi;
+		}
 	}
 	// TODO put in the right implementation; for now, use this for testing the interface
 	objmodel << new PlatformSettings(new PlatformDevice);

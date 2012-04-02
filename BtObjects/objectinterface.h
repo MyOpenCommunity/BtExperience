@@ -27,6 +27,7 @@ public:
 		IdThermalControlUnit4,
 		IdAntintrusionSystem,
 		IdHardwareSettings,
+		IdSoundDiffusionSystem,
 		IdMultiChannelSoundAmbient,
 		IdMultiChannelGeneralAmbient,
 		IdSoundAmplifier,
