@@ -26,7 +26,7 @@ namespace
 		return res;
 	}
 
-	void clearList(QList<ObjectInterface *> &list)
+	void clearList(QList<FileObject *> &list)
 	{
 		foreach (QObject *obj, list)
 			obj->deleteLater();

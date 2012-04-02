@@ -198,7 +198,7 @@ private slots:
 	void gotFileList(EntryInfoList list);
 
 private:
-	QList<ObjectInterface *> item_list;
+	QList<FileObject *> item_list;
 };
 
 
