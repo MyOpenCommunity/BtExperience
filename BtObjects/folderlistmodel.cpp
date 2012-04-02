@@ -156,10 +156,13 @@ int TreeBrowserListModelBase::getFilter() const
 
 void TreeBrowserListModelBase::directoryChanged()
 {
-	if (pending_dirchange.isEmpty())
-		current_path.pop_back();
-	else if (!pending_dirchange.isNull())
-		current_path << pending_dirchange;
+	if (!pending_dirchange.isNull())
+	{
+		if (pending_dirchange.isEmpty())
+			current_path.pop_back();
+		else
+			current_path << pending_dirchange;
+	}
 
 	pending_dirchange = QString();
 
