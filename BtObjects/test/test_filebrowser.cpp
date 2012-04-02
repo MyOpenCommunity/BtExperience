@@ -321,6 +321,12 @@ void TestTreeBrowserListModelBase::testRange()
 	QCOMPARE(obj->getSize(), 26);
 	QCOMPARE(obj->rowCount(), 4);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(), QString("/a/c/i"));
+
+	setRangeAndWait(obj, QVariantList() << 24 << 28);
+
+	QCOMPARE(obj->getSize(), 26);
+	QCOMPARE(obj->rowCount(), 2);
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(), QString("/a/c/y"));
 }
 
 

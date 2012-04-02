@@ -221,7 +221,7 @@ ObjectInterface *FolderListModel::getObject(int row)
 int FolderListModel::rowCount(const QModelIndex &parent) const
 {
 	if (min_range != -1 && max_range != -1)
-		return max_range - min_range;
+		return qMin(max_range, getSize()) - min_range;
 
 	return item_list.size();
 }
@@ -275,7 +275,7 @@ ObjectInterface *PagedFolderListModel::getObject(int row)
 int PagedFolderListModel::rowCount(const QModelIndex &parent) const
 {
 	if (min_range != -1 && max_range != -1)
-		return max_range - min_range;
+		return qMin(max_range, getSize()) - min_range;
 
 	return browser->getNumElements();
 }
