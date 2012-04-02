@@ -166,4 +166,13 @@ private:
 	QList<ObjectInterface *> item_list;
 };
 
+
+class DirectoryListModel : public FolderListModel
+{
+	Q_OBJECT
+
+public:
+	DirectoryListModel(QObject *parent = 0);
+};
+
 #endif // FOLDERLISTMODEL_H

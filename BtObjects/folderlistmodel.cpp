@@ -280,3 +280,9 @@ int PagedFolderListModel::getSize() const
 {
 	return browser->getNumElements();
 }
+
+
+DirectoryListModel::DirectoryListModel(QObject *parent) :
+	FolderListModel(new DirectoryTreeBrowser, parent)
+{
+}
