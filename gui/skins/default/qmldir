@@ -28,3 +28,6 @@ Constants components/Constants.qml
 ButtonPagination components/ButtonPagination.qml
 RoomItems components/RoomItems.qml
 Alert components/Alert.qml
+Paginator components/Paginator.qml
+PaginatorColumn components/PaginatorColumn.qml
+PaginatorList components/PaginatorList.qml

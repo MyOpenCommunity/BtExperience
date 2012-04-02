@@ -5,7 +5,7 @@ Image {
     // all buttons in the paginator have the same width
     width: privateProps.numSlots * leftArrow.width
     height: leftArrow.height
-    source: "images/common/bg_paginazione.png"
+    source: "../images/common/bg_paginazione.png"
     visible: totalPages > 1
 
     // Number of pages present in the paginator
@@ -81,14 +81,14 @@ Image {
             id: leftArrow
             width: 42
             height: 35
-            source: "images/common/btn_NumeroPagina.png"
+            source: "../images/common/btn_NumeroPagina.png"
             visible: privateProps.needScrolling() && privateProps.needScrollLeft()
 
             Image {
                 id: image1
                 x: 10
                 y: 4
-                source: "images/common/freccia_sx.png"
+                source: "../images/common/freccia_sx.png"
             }
 
             MouseArea {
@@ -121,14 +121,14 @@ Image {
             id: rightArrow
             width: 42
             height: 35
-            source: "images/common/btn_NumeroPagina.png"
+            source: "../images/common/btn_NumeroPagina.png"
             visible: privateProps.needScrolling() && privateProps.needScrollRight()
 
             Image {
                 id: image2
                 x: 10
                 y: 3
-                source: "images/common/freccia_dx.png"
+                source: "../images/common/freccia_dx.png"
             }
             MouseArea {
                 anchors.fill: parent

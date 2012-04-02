@@ -55,7 +55,7 @@ Item {
 
         Image {
             id: button
-            source: "images/common/btn_OKAnnulla.png"
+            source: "../images/common/btn_OKAnnulla.png"
             height: paginator.height
             visible: false
             width: parent.width - paginator.width * paginator.visible
