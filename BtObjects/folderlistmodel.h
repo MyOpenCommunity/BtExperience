@@ -14,15 +14,15 @@ class UPnpClientBrowser;
 class FileObject : public ObjectInterface
 {
 	Q_OBJECT
-	// TODO use a QVariantList
-	Q_PROPERTY(QString path READ getPath CONSTANT)
+
+	Q_PROPERTY(QVariantList path READ getPath CONSTANT)
 	Q_PROPERTY(FileType fileType READ getFileType CONSTANT)
 	Q_PROPERTY(QVariantMap metadata READ getMetadata CONSTANT)
 	Q_PROPERTY(bool isLoading READ isLoading CONSTANT)
 	Q_ENUMS(FileType)
 
 public:
-	FileObject(const EntryInfo &entry, QObject *parent = 0);
+	FileObject(const EntryInfo &entry, QVariantList path, QObject *parent = 0);
 
 	enum FileType
 	{
@@ -41,13 +41,14 @@ public:
 
 	virtual QString getName() const;
 
-	QString getPath() const;
+	QVariantList getPath() const;
 	FileType getFileType() const;
 	QVariantMap getMetadata() const;
 	bool isLoading() const;
 
 private:
 	EntryInfo entry;
+	QVariantList path;
 	bool loading;
 };
 

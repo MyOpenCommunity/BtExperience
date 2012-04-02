@@ -35,10 +35,12 @@ namespace
 	}
 }
 
-FileObject::FileObject(const EntryInfo &_entry, QObject *parent) :
+FileObject::FileObject(const EntryInfo &_entry, QVariantList _path, QObject *parent) :
 	ObjectInterface(parent),
-	entry(_entry)
+	entry(_entry),
+	path(_path)
 {
+	path << entry.name;
 	loading = false;
 }
 
@@ -47,9 +49,9 @@ QString FileObject::getName() const
 	return entry.name;
 }
 
-QString FileObject::getPath() const
+QVariantList FileObject::getPath() const
 {
-	return entry.path;
+	return path;
 }
 
 FileObject::FileType FileObject::getFileType() const
@@ -240,7 +242,7 @@ void FolderListModel::gotFileList(EntryInfoList list)
 	clearList(item_list);
 
 	foreach (const EntryInfo &entry, list)
-		item_list.append(new FileObject(entry, this));
+		item_list.append(new FileObject(entry, getCurrentPath(), this));
 
 	if (size != getSize())
 		emit sizeChanged();

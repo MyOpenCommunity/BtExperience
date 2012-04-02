@@ -295,14 +295,16 @@ void TestTreeBrowserListModelBase::testListItems()
 	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
 	QCOMPARE(obj->rowCount(), 26);
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getPath(), QString("/a/c/g"));
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getPath(),
+		 obj->getRootPath() << "c" << "g");
 
 	enterDirectoryAndWait(obj, "b");
 
 	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
 	QCOMPARE(obj->rowCount(), 26);
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getPath(), QString("/a/c/b/g"));
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getPath(),
+		 obj->getRootPath() << "c" << "b" << "g");
 }
 
 void TestTreeBrowserListModelBase::testRange()
@@ -318,21 +320,24 @@ void TestTreeBrowserListModelBase::testRange()
 	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
 	QCOMPARE(obj->rowCount(), 4);
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(), QString("/a/c/e"));
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(),
+		obj->getRootPath() << "c" << "e");
 
 	setRangeAndWait(obj, QVariantList() << 8 << 12);
 
 	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
 	QCOMPARE(obj->rowCount(), 4);
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(), QString("/a/c/i"));
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(),
+		 obj->getRootPath() << "c" << "i");
 
 	setRangeAndWait(obj, QVariantList() << 24 << 28);
 
 	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
 	QCOMPARE(obj->rowCount(), 2);
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(), QString("/a/c/y"));
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(),
+		 obj->getRootPath() << "c" << "y");
 }
 
 
@@ -347,10 +352,10 @@ void TestFolderListModel::init()
 void TestFileObject::testGetters()
 {
 	EntryInfo entry("name", EntryInfo::AUDIO, "/path/to/name");
-	FileObject fo(entry);
+	FileObject fo(entry, QVariantList() << "path" << "to");
 
 	QCOMPARE(fo.isLoading(), false);
 	QCOMPARE(fo.getName(), QString("name"));
-	QCOMPARE(fo.getPath(), QString("/path/to/name"));
+	QCOMPARE(fo.getPath(), QVariantList() << "path" << "to" << "name");
 	QCOMPARE(fo.getFileType(), FileObject::Audio);
 }
