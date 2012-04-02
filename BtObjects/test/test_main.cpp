@@ -102,6 +102,9 @@ int main(int argc, char *argv[])
 	TestFolderListModel test_folder_model;
 	test_list << &test_folder_model;
 
+	TestPagedFolderListModel test_paged_folder_model;
+	test_list << &test_paged_folder_model;
+
 	TestFileObject test_file_object;
 	test_list << &test_file_object;
 

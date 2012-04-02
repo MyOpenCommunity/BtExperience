@@ -26,6 +26,8 @@
 
 #include <QtTest>
 
+#define ASYNC_DELAY 100
+
 
 class MockTreeBrowser : public TreeBrowser
 {
@@ -114,16 +116,170 @@ private:
 	QStringList current_path;
 };
 
+
+class MockPagedTreeBrowser : public PagedTreeBrowser
+{
+	Q_OBJECT
+
+public:
+	virtual void setRootPath(const QStringList &_root_path)
+	{
+		current_path = root_path = _root_path;
+	}
+
+	virtual QStringList getRootPath()
+	{
+		return root_path;
+	}
+
+	virtual void enterDirectory(const QString &name)
+	{
+		if (name.length() != 1 || name[0] < 'a' || name[0] > 'e')
+		{
+			QTimer::singleShot(ASYNC_DELAY, this, SIGNAL(directoryChangeError()));
+
+			return;
+		}
+
+		pending_directory = name;
+		QTimer::singleShot(ASYNC_DELAY, this, SLOT(directoryChangeComplete()));
+	}
+
+	virtual void exitDirectory()
+	{
+		if (isRoot())
+			return;
+
+		pending_directory = "";
+		QTimer::singleShot(ASYNC_DELAY, this, SLOT(directoryChangeComplete()));
+	}
+
+	virtual void getFileList()
+	{
+		range_start = 0;
+		range_end = 26;
+
+		QTimer::singleShot(ASYNC_DELAY, this, SLOT(fileListComplete()));
+	}
+
+	virtual bool isRoot()
+	{
+		return current_path.length() == root_path.length();
+	}
+
+	virtual QString pathKey()
+	{
+		// not used by TreeBrowserListModel
+		return QString();
+	}
+
+	virtual void setContext(const QStringList &context)
+	{
+		// not used by TreeBrowserListModel
+	}
+
+	virtual void reset()
+	{
+		// not used by TreeBrowserListModel
+	}
+
+	// TODO implement
+	virtual void getPreviousFileList()
+	{
+		// not used by TreeBrowserListModel
+	}
+
+	virtual void getNextFileList()
+	{
+		range_start = range_end;
+		range_end = range_start + 4;
+
+		QTimer::singleShot(ASYNC_DELAY, this, SLOT(fileListComplete()));
+	}
+
+	virtual int getNumElements()
+	{
+		return 26;
+	}
+
+	virtual int getStartingElement()
+	{
+		return range_start;
+	}
+
+	virtual void getFileList(int starting_element)
+	{
+		range_start = starting_element - 1;
+		range_end = range_start + 4;
+
+		QTimer::singleShot(ASYNC_DELAY, this, SLOT(fileListComplete()));
+	}
+
+private slots:
+	void directoryChangeComplete()
+	{
+		if (!pending_directory.isNull())
+		{
+			if (pending_directory.isEmpty())
+				current_path.pop_back();
+			else
+				current_path.append(pending_directory);
+		}
+
+		pending_directory = QString();
+
+		emit directoryChanged();
+	}
+
+	void fileListComplete()
+	{
+		EntryInfoList res;
+
+		for (int i = range_start; i < range_end; ++i)
+		{
+			EntryInfo entry;
+
+			if (i < 5)
+				entry.type = EntryInfo::DIRECTORY;
+			else if (i & 1)
+				entry.type = EntryInfo::AUDIO;
+			else
+				entry.type = EntryInfo::VIDEO;
+
+			entry.name = 'a' + i;
+			entry.path = "/" + current_path.join("/") + "/" + entry.name;
+
+			res.append(entry);
+		}
+
+		emit listReceived(res);
+	}
+
+private:
+	QStringList root_path;
+	QStringList current_path;
+	QString pending_directory;
+	int range_start, range_end;
+};
+
 #include "test_filebrowser.moc"
+
 
 namespace
 {
-	void enterDirectoryAndWait(TreeBrowserListModelBase *obj, QString dir)
+	void enterDirectoryAndWait(TreeBrowserListModelBase *obj, QString dir, bool async)
 	{
+		QSignalSpy spy(obj, SIGNAL(loadingChanged()));
+
 		obj->enterDirectory(dir);
+
+		QCOMPARE(obj->isLoading(), async);
+		QCOMPARE(spy.count(), async ? 1 : 0);
 
 		while (obj->isLoading())
 			qApp->processEvents();
+
+		QCOMPARE(spy.count(), async ? 2 : 0);
 	}
 
 	void enterDirectoryAndWait(TreeBrowser *dev, QString dir, const char *signal = SIGNAL(directoryChanged()))
@@ -136,12 +292,19 @@ namespace
 			qApp->processEvents();
 	}
 
-	void exitDirectoryAndWait(TreeBrowserListModelBase *obj)
+	void exitDirectoryAndWait(TreeBrowserListModelBase *obj, bool async)
 	{
+		QSignalSpy spy(obj, SIGNAL(loadingChanged()));
+
 		obj->exitDirectory();
+
+		QCOMPARE(obj->isLoading(), async);
+		QCOMPARE(spy.count(), async ? 1 : 0);
 
 		while (obj->isLoading())
 			qApp->processEvents();
+
+		QCOMPARE(spy.count(), async ? 2 : 0);
 	}
 
 	void exitDirectoryAndWait(TreeBrowser *dev, const char *signal = SIGNAL(directoryChanged()))
@@ -171,26 +334,14 @@ void TestTreeBrowserListModelBase::initObjects(TreeBrowserListModelBase *_obj, T
 
 	obj->setRootPath(QVariantList() << "a");
 	dev->setRootPath(QStringList() << "a");
+
+	QVERIFY(!obj->isLoading());
 }
 
 void TestTreeBrowserListModelBase::cleanup()
 {
 	delete obj;
 	delete dev;
-}
-
-void TestTreeBrowserListModelBase::testSetRoot()
-{
-	ObjectTester t(obj, SIGNAL(rootPathChanged()));
-
-	obj->setRootPath(QVariantList() << "q");
-
-	t.checkSignals();
-	QCOMPARE(obj->getRootPath(), QVariantList() << "q");
-
-	obj->setRootPath(QVariantList() << "q");
-
-	t.checkNoSignals();
 }
 
 void TestTreeBrowserListModelBase::testSetFilter()
@@ -242,13 +393,13 @@ void TestTreeBrowserListModelBase::testIsRoot()
 	QVERIFY(obj->isRoot());
 	QVERIFY(dev->isRoot());
 
-	enterDirectoryAndWait(obj, "c");
+	enterDirectoryAndWait(obj, "c", isAsync());
 	enterDirectoryAndWait(dev, "c");
 
 	QVERIFY(!obj->isRoot());
 	QVERIFY(!dev->isRoot());
 
-	exitDirectoryAndWait(obj);
+	exitDirectoryAndWait(obj, isAsync());
 	exitDirectoryAndWait(dev);
 
 	QVERIFY(obj->isRoot());
@@ -257,6 +408,7 @@ void TestTreeBrowserListModelBase::testIsRoot()
 	obj->exitDirectory();
 	dev->exitDirectory();
 
+	QCOMPARE(obj->isLoading(), false);
 	QVERIFY(obj->isRoot());
 	QVERIFY(dev->isRoot());
 }
@@ -265,44 +417,62 @@ void TestTreeBrowserListModelBase::testNavigation()
 {
 	ObjectTester t(obj, SIGNAL(currentPathChanged()));
 
-	enterDirectoryAndWait(obj, "c");
+	enterDirectoryAndWait(obj, "c", isAsync());
 
 	t.checkSignals();
-	QCOMPARE(obj->getCurrentPath(), QVariantList() << "a" << "c");
+	QCOMPARE(obj->getCurrentPath(), obj->getRootPath() << "c");
 
-	enterDirectoryAndWait(obj, "b");
+	enterDirectoryAndWait(obj, "b", isAsync());
 
 	t.checkSignals();
-	QCOMPARE(obj->getCurrentPath(), QVariantList() << "a" << "c" << "b");
+	QCOMPARE(obj->getCurrentPath(), obj->getRootPath() << "c" << "b");
 
-	enterDirectoryAndWait(obj, "f");
+	enterDirectoryAndWait(obj, "f", isAsync());
 
 	t.checkNoSignals();
-	QCOMPARE(obj->getCurrentPath(), QVariantList() << "a" << "c" << "b");
+	QCOMPARE(obj->getCurrentPath(), obj->getRootPath() << "c" << "b");
 
-	exitDirectoryAndWait(obj);
+	exitDirectoryAndWait(obj, isAsync());
 
 	t.checkSignals();
-	QCOMPARE(obj->getCurrentPath(), QVariantList() << "a" << "c");
+	QCOMPARE(obj->getCurrentPath(), obj->getRootPath() << "c");
 }
 
 void TestTreeBrowserListModelBase::testListItems()
 {
 	ObjectTester t(obj, SIGNAL(modelReset()));
+	FileObject *file;
 
-	enterDirectoryAndWait(obj, "c");
+	enterDirectoryAndWait(obj, "c", isAsync());
+
+	// here reset() is called a different number of times for sync(1) and async(2) folder model
+	// (and it's correct this way) but we do not care to test it here, so we just reset the
+	// signal count
+	t.clearSignals();
+
+	setRangeAndWait(obj, QVariantList() << 0 << 8);
 
 	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
-	QCOMPARE(obj->rowCount(), 26);
+	QCOMPARE(obj->rowCount(), 8);
+
+	file = qobject_cast<FileObject *>(obj->getObject(6));
+	while (file->isLoading())
+		qApp->processEvents();
+
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getPath(),
 		 obj->getRootPath() << "c" << "g");
 
-	enterDirectoryAndWait(obj, "b");
+	enterDirectoryAndWait(obj, "b", isAsync());
 
 	t.checkSignals();
 	QCOMPARE(obj->getSize(), 26);
-	QCOMPARE(obj->rowCount(), 26);
+	QCOMPARE(obj->rowCount(), 8);
+
+	file = qobject_cast<FileObject *>(obj->getObject(6));
+	while (file->isLoading())
+		qApp->processEvents();
+
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getPath(),
 		 obj->getRootPath() << "c" << "b" << "g");
 }
@@ -311,9 +481,10 @@ void TestTreeBrowserListModelBase::testRange()
 {
 	ObjectTester t(obj, SIGNAL(modelReset()));
 
-	enterDirectoryAndWait(obj, "c");
+	enterDirectoryAndWait(obj, "c", isAsync());
 
-	t.checkSignals();
+	// see comment in TestTreeBrowserListModelBase::testListItems
+	t.clearSignals();
 
 	setRangeAndWait(obj, QVariantList() << 4 << 8);
 
@@ -346,6 +517,28 @@ void TestFolderListModel::init()
 	TreeBrowser *browser = new MockTreeBrowser();
 
 	initObjects(new FolderListModel(browser), new MockTreeBrowser);
+}
+
+void TestFolderListModel::testSetRoot()
+{
+	ObjectTester t(obj, SIGNAL(rootPathChanged()));
+
+	obj->setRootPath(QVariantList() << "q");
+
+	t.checkSignals();
+	QCOMPARE(obj->getRootPath(), QVariantList() << "q");
+
+	obj->setRootPath(QVariantList() << "q");
+
+	t.checkNoSignals();
+}
+
+
+void TestPagedFolderListModel::init()
+{
+	PagedTreeBrowser *browser = new MockPagedTreeBrowser();
+
+	initObjects(new PagedFolderListModel(browser), new MockPagedTreeBrowser);
 }
 
 

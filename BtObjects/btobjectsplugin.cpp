@@ -132,6 +132,7 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<ObjectListModel>(uri, 1, 0, "ObjectListModel", "");
 	qmlRegisterType<FilterListModel>(uri, 1, 0, "FilterListModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
+	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
 	qmlRegisterUncreatableType<ObjectInterface>(uri, 1, 0, "ObjectInterface",
 		"unable to create an ObjectInterface instance");
 	qmlRegisterUncreatableType<ThermalControlUnit99Zones>(uri, 1, 0, "ThermalControlUnit99Zones",

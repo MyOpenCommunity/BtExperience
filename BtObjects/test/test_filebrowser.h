@@ -42,11 +42,11 @@ class TestTreeBrowserListModelBase : public TestBtObject
 
 protected:
 	void initObjects(TreeBrowserListModelBase *obj, TreeBrowser *dev);
+	virtual bool isAsync() const = 0;
 
 private slots:
 	void cleanup();
 
-	void testSetRoot();
 	void testSetFilter();
 	void testSetRange();
 
@@ -55,7 +55,7 @@ private slots:
 	void testListItems();
 	void testRange();
 
-private:
+protected:
 	TreeBrowserListModelBase *obj;
 	TreeBrowser *dev;
 };
@@ -64,6 +64,23 @@ private:
 class TestFolderListModel : public TestTreeBrowserListModelBase
 {
 	Q_OBJECT
+
+protected:
+	virtual bool isAsync() const { return false; }
+
+private slots:
+	void init();
+
+	void testSetRoot();
+};
+
+
+class TestPagedFolderListModel : public TestTreeBrowserListModelBase
+{
+	Q_OBJECT
+
+protected:
+	virtual bool isAsync() const { return true; }
 
 private slots:
 	void init();

@@ -7,7 +7,8 @@
 #include <QAbstractListModel>
 
 class TreeBrowser;
-class UPnpClientBrowser;
+class PagedTreeBrowser;
+class XmlDevice;
 
 
 // TODO add interface to set new file data
@@ -127,8 +128,8 @@ public:
 
 	Q_INVOKABLE virtual ObjectInterface *getObject(int row) = 0;
 
-	void setRootPath(QVariantList path);
-	QVariantList getRootPath() const;
+	virtual void setRootPath(QVariantList path);
+	virtual QVariantList getRootPath() const;
 
 	bool isRoot() const;
 
@@ -137,10 +138,10 @@ public:
 	void setFilter(int mask);
 	int getFilter() const;
 
-	virtual bool isLoading() const { return false; }
+	bool isLoading() const;
 
 	QVariantList getRange() const;
-	void setRange(QVariantList range);
+	virtual void setRange(QVariantList range);
 
 	virtual int getSize() const = 0;
 
@@ -176,15 +177,23 @@ signals:
 	void directoryChangeError();
 	void emptyDirectory();
 
-private slots:
-	void directoryChanged();
+protected slots:
+	virtual void directoryChanged();
 
 protected:
+	virtual void setLoadingIfAsynchronous();
+
+	void setLoading(bool loading);
+
 	TreeBrowser *browser;
 	int min_range, max_range;
 
+private slots:
+	void resetLoadingFlag() { setLoading(false); }
+
 private:
 	int filter;
+	bool loading;
 	QString pending_dirchange;
 	QVariantList current_path;
 };
@@ -201,6 +210,11 @@ public:
 	virtual int rowCount(const QModelIndex &parent) const;
 	virtual int getSize() const;
 
+	void setRange(QVariantList range);
+
+protected slots:
+	virtual void directoryChanged();
+
 private slots:
 	void gotFileList(EntryInfoList list);
 
@@ -214,19 +228,43 @@ class PagedFolderListModel : public TreeBrowserListModelBase
 	Q_OBJECT
 
 public:
-	PagedFolderListModel(UPnpClientBrowser *browser, QObject *parent = 0);
+	PagedFolderListModel(PagedTreeBrowser *browser, QObject *parent = 0);
 
 	virtual ObjectInterface *getObject(int row);
 	virtual int rowCount(const QModelIndex &parent) const;
 	virtual int getSize() const;
 
+	virtual void setRange(QVariantList range);
+	virtual void setRootPath(QVariantList path);
+	virtual QVariantList getRootPath() const;
+
+protected:
+	virtual void setLoadingIfAsynchronous();
+
+protected slots:
+	void directoryChanged();
+
+private slots:
+	void gotFileList(EntryInfoList list);
+
 private:
-	UPnpClientBrowser *browser;
+	void requestFirstPage();
+
+	PagedTreeBrowser *browser;
 
 	// item_list is a cache of recently-used objects, starting at index
 	// start_index
+	QList<FileObject *> item_list;
+	// the i-th item in item_list is the (start_index + i)-th item in the directory
 	int start_index;
-	QList<ObjectInterface *> item_list;
+	// index of the first item requested to the UPnP server
+	int current_index;
+	// the total number of items in the directory
+	int item_count;
+	bool pending_operation, discard_pending;
+
+	// when min_range and max_range are set, we always have:
+	// start_index <= min_range <= current_index <= max_range
 };
 
 
@@ -236,6 +274,19 @@ class DirectoryListModel : public FolderListModel
 
 public:
 	DirectoryListModel(QObject *parent = 0);
+};
+
+
+class UPnPListModel : public PagedFolderListModel
+{
+	Q_OBJECT
+
+public:
+	UPnPListModel(QObject *parent = 0);
+
+private:
+	static XmlDevice *getXmlDevice();
+	static XmlDevice *xml_device;
 };
 
 #endif // FOLDERLISTMODEL_H
