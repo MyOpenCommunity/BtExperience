@@ -44,6 +44,7 @@ defineTest(isArm) {
 
 
 DEFINES += OPENSERVER_ADDR=\\\"openserver\\\"
+DEFINES += XML_SERVER_ADDRESS=\\\"openserver\\\"
 
 INCLUDEPATH += ./common_files
 DEPENDPATH += . devices ts
