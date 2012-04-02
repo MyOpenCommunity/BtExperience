@@ -29,6 +29,11 @@ public:
 	 */
 	void checkNoSignals();
 
+	/**
+	 * Clear signal state
+	 */
+	void clearSignals();
+
 private:
 	QObject *obj;
 	QList<QSignalSpy *> sl;
