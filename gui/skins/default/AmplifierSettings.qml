@@ -61,7 +61,7 @@ MenuElement {
                 // TODO: a dirty trick to avoid creating another almost empty file.
                 // This must be linked to the model anyway.
                 onClicked: {
-                    amplifierSettings.loadElement("Light.qml", qsTr("loud"))
+                    amplifierSettings.loadElement("Loudness.qml", qsTr("loud"), amplifierSettings.dataModel)
                     if (privateProps.currentElement !== 1)
                         privateProps.currentElement = 1
                 }
