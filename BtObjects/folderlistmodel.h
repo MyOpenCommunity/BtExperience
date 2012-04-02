@@ -52,17 +52,57 @@ private:
 };
 
 
+/*!
+	\brief List model for paged navigation on filesystem and UPnP
+
+	Example use:
+
+	DirectoryListModel {
+		id: files
+		rootPath: ['media', 'video', 'tv']
+		range: [0, 6] // obtain range from paginator
+	}
+
+	The interface is similar \a FilterListModel, but it only implements a range filter
+	for pagination.
+
+	The objects returned by \a getObject() are \a FileObject instances.
+*/
 class TreeBrowserListModelBase : public QAbstractListModel
 {
 	Q_OBJECT
 
+	/*!
+		\brief Sets and gets he root path for navigation
+	*/
 	Q_PROPERTY(QVariantList rootPath READ getRootPath WRITE setRootPath NOTIFY rootPathChanged)
+
+	/*!
+		\brief Whether the current directory is the root directory
+	*/
 	Q_PROPERTY(bool isRoot READ isRoot NOTIFY isRootChanged)
+
+	/*!
+		\brief Current directory path
+	*/
 	Q_PROPERTY(QVariantList currentPath READ getCurrentPath NOTIFY currentPathChanged)
+
 	// TODO use a list rather than a bitmask?
 	Q_PROPERTY(int filter READ getFilter WRITE setFilter NOTIFY filterChanged)
+
+	/*!
+		\brief Set to \c true when an asynchronous operation is in progress
+	*/
 	Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingChanged)
+
+	/*!
+		\brief Sets and gets the currently-displayed range (use with Paginator object)
+	*/
 	Q_PROPERTY(QVariantList range READ getRange WRITE setRange NOTIFY rangeChanged)
+
+	/*!
+		\brief Gets total number of items in the model
+	*/
 	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
 
 public:
@@ -97,7 +137,22 @@ public:
 	virtual int getSize() const = 0;
 
 public slots:
+	/*!
+		\brief Navigate into a directory
+
+		Emits \a directoryChangeError() on failure.  On success, automatically loads
+		the files for the new directory.
+	*/
 	void enterDirectory(QString name);
+
+	/*!
+		\brief Navigate out of a directory
+
+		Emits \a directoryChangeError() on failure.  On success, automatically loads
+		the files for the new directory.
+
+		If the current path is the root directory, returns without doing anything.
+	*/
 	void exitDirectory();
 
 signals:
