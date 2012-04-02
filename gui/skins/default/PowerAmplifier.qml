@@ -12,6 +12,7 @@ MenuElement {
         id: buttonOnOff
         status: element.dataModel.active
         height: 50
+        onClicked: element.dataModel.active = newStatus
     }
 
     ControlSlider {
@@ -19,6 +20,9 @@ MenuElement {
         anchors.top: buttonOnOff.bottom
         description: qsTr("volume")
         percentage: (element.dataModel.volume) * 100 / 31
+        // TODO: add a volumeUp/Down in the model
+//        onMinusClicked: element.dataModel.volume = element.dataModel.volume - 1
+//        onPlusClicked: element.dataModel.volume = element.dataModel.volume + 1
     }
 
     MenuItem {
