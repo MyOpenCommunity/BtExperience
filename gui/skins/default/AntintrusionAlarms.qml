@@ -5,28 +5,30 @@ import "datetime.js" as DateTime
 MenuElement {
     id: element
     width: img.width;
-    height: img.height + paginator.height
+    height: paginator.height
 
     Image {
         id: img
+        width: 424
+        height: 390
         source: "images/common/bg_registro_allarmi.png"
 
-        ListView {
-            id: itemList
-
-            anchors.rightMargin: 5
-            anchors.leftMargin: 5
-            anchors.bottomMargin: 5
-            anchors.topMargin: 10
-            anchors.fill: parent
-
-            interactive: false
+        PaginatorList {
+            id: paginator
+            width: parent.width
+            listWidth: parent.width
+            listHeight: parent.height
+            buttonVisible: true
+            elementsOnPage: privateProps.elementsOnPage
 
             header: listHeader
+
+            onButtonClicked: modelList.clear()
 
             delegate: Image {
                 id: itemBackground
                 property variant itemObject: modelList.getObject(index)
+                property bool active: element.animationRunning === false
 
                 source: index % 2 === 0 ? "images/common/bg_registro_riga1.png" : "images/common/bg_registro_riga2.png"
                 Row {
@@ -84,7 +86,7 @@ MenuElement {
         id: listHeader
 
         Row {
-            width: itemList.width; height: 30
+            width: paginator.width; height: 30
 
             Item {
                 width: 10
@@ -138,34 +140,6 @@ MenuElement {
 
     QtObject {
         id: privateProps
-        property int elementsOnPage: 5
-    }
-
-    Row {
-        anchors.top: img.bottom
-        Paginator {
-            id: paginator
-            totalPages: paginator.computePagesFromModelSize(modelList.size, privateProps.elementsOnPage)
-        }
-
-        Image {
-            source: "images/common/btn_OKAnnulla.png"
-            height: 35
-            width: img.width - paginator.width * paginator.visible
-
-            Text {
-                text: qsTr("remove all")
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: 12
-                anchors.centerIn: parent
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    modelList.clear()
-                }
-            }
-        }
+        property int elementsOnPage: 6
     }
 }

@@ -13,6 +13,10 @@ MenuElement {
     PaginatorList {
         id: paginator
         width: parent.width
+        // TODO: is it ever possible to get the height of a MenuItemDelegate
+        // without doing this??
+        listHeight: 50 * paginator.elementsOnPage
+
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
 

@@ -1,16 +1,26 @@
 import QtQuick 1.1
 
-ListView {
-    id: element
-    height: 50 * count + paginator.height
-    currentIndex: -1
-    interactive: false
+Item {
+    id: paginatorItem
+    height: internalList.height + bottomRow.height
+
+    // expose some ListView properties
+    property alias footer: internalList.footer
+    property alias header: internalList.header
+    property alias delegate: internalList.delegate
+    property alias model: internalList.model
+    property alias listHeight: internalList.height
+    property alias listWidth: internalList.width
+    property alias buttonVisible: button.visible
+    property alias currentIndex: internalList.currentIndex
 
     property int maxHeight: 300
     property int elementsOnPage: maxHeight / 50
     // TODO: is it necessary to expose it?
     property alias currentPage: paginator.currentPage
+    property alias totalPages: paginator.totalPages
 
+    signal buttonClicked
 
     // Convenience function to compute the visible range of a model
     function computePageRange(page, elementsOnPage) {
@@ -26,11 +36,42 @@ ListView {
         return Math.floor(ret)
     }
 
-    Paginator {
-        id: paginator
-        y: 50 * count
+    ListView {
+        id: internalList
+        interactive: false
+        currentIndex: -1
+    }
+
+    Row {
+        id: bottomRow
+        height: paginator.height
         width: parent.width
-        totalPages: computePagesFromModelSize(model.size, elementsOnPage)
+        anchors.bottom: parent.bottom
+
+        Paginator {
+            id: paginator
+            totalPages: computePagesFromModelSize(internalList.model.size, elementsOnPage)
+        }
+
+        Image {
+            id: button
+            source: "images/common/btn_OKAnnulla.png"
+            height: paginator.height
+            visible: false
+            width: parent.width - paginator.width * paginator.visible
+
+            Text {
+                text: qsTr("remove all")
+                font.capitalization: Font.AllUppercase
+                font.pixelSize: 12
+                anchors.centerIn: parent
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: paginatorItem.buttonClicked()
+            }
+        }
     }
 }
 
