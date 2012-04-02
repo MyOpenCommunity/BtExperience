@@ -246,7 +246,8 @@ bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source
 
 bool FilterListModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-	if (getSource()->removeRows(row, count, parent))
+	// TODO: probably we need to also map the row?
+	if (getSource()->removeRows(row, count, mapToSource(parent)))
 	{
 		counter -= count;
 		return true;
