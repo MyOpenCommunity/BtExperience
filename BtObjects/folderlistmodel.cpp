@@ -80,7 +80,7 @@ TreeBrowserListModelBase::TreeBrowserListModelBase(TreeBrowser *_browser, QObjec
 	min_range = max_range = -1;
 	filter = 0;
 
-	connect(browser, SIGNAL(directoryChanged()), this, SLOT(directoryChanged()));
+	connect(this, SIGNAL(currentPathChanged()), this, SLOT(directoryChanged()));
 	connect(browser, SIGNAL(directoryChanged()), this, SIGNAL(currentPathChanged()));
 	connect(browser, SIGNAL(directoryChangeError()), this, SIGNAL(directoryChangeError()));
 	connect(browser, SIGNAL(emptyDirectory()), this, SIGNAL(emptyDirectory()));
@@ -94,6 +94,7 @@ TreeBrowserListModelBase::~TreeBrowserListModelBase()
 void TreeBrowserListModelBase::setRootPath(QVariantList _path)
 {
 	QStringList path = fromVariantList(_path);
+	QVariantList old_current = current_path;
 
 	if (path == browser->getRootPath())
 		return;
@@ -106,6 +107,8 @@ void TreeBrowserListModelBase::setRootPath(QVariantList _path)
 	if (root != browser->isRoot())
 		emit isRootChanged();
 	emit rootPathChanged();
+	if (old_current != current_path)
+		emit currentPathChanged();
 }
 
 QVariantList TreeBrowserListModelBase::getRootPath() const
