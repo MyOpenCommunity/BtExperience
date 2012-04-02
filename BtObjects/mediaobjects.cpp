@@ -60,7 +60,7 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 			QStringList sl;
 			foreach(const QDomNode &preset, getChildren(amplifier, "preset"))
 			{
-				QString preset_name = getTextChild(amplifier, "");
+				QString preset_name = preset.toElement().text();
 				sl << preset_name;
 			}
 			amplifiers << new PowerAmplifier(area, name, bt_global::add_device_to_cache(new PowerAmplifierDevice(where)), sl);
