@@ -17,6 +17,8 @@ class PlatformDevice;
 	Be aware network settings are writable only for static configuration.
 	MAC address is always read-only.
 	This class also provides information about the platform.
+	In general, this class read and write settings independent from hardware.
+	Settings in this file need a device to be managed.
 
 	The object id is \a ObjectInterface::IdPlatformSettings.
 */

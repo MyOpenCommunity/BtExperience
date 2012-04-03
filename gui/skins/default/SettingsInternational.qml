@@ -105,7 +105,7 @@ MenuElement {
         MenuItem {
             id: textLanguageItem
             name: qsTr("text language")
-            description: pageObject.names.get('LANGUAGE', 0)
+            description: pageObject.names.get('LANGUAGE', privateProps.model.language)
             hasChild: true
             state: privateProps.currentIndex === 1 ? "selected" : ""
             onClicked: {

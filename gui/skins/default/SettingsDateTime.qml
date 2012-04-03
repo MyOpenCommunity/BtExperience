@@ -58,7 +58,7 @@ MenuElement {
         privateProps.model.timezone = value;
     }
     function daylightSavingTimeChanged(value) {
-        privateProps.model.daylightSavingTime = value;
+        privateProps.model.dst = value;
     }
 
     PaginatorColumn {
@@ -112,7 +112,7 @@ MenuElement {
         MenuItem {
             id: daylightSavingTimeItem
             name: qsTr("daylight saving time")
-            description: pageObject.names.get('DST', privateProps.model.daylightSavingTime)
+            description: pageObject.names.get('DST', privateProps.model.dst)
             hasChild: true
             state: privateProps.currentIndex === 4 ? "selected" : ""
             onClicked: {
