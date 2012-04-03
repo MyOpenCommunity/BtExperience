@@ -52,6 +52,17 @@ QtObject {
         Script.container['DST'][GuiSettings.Dst_enabled] = qsTr("Enable")
         Script.container['DST'][GuiSettings.Dst_disabled] = qsTr("Disable")
 
+        Script.container['LANGUAGE'] = []
+        Script.container['LANGUAGE'][GuiSettings.Italian] = qsTr("Italian")
+        Script.container['LANGUAGE'][GuiSettings.English] = qsTr("English")
+
+        Script.container['CURRENCY'] = []
+        Script.container['CURRENCY'][GuiSettings.CHF] = qsTr("CHF")
+        Script.container['CURRENCY'][GuiSettings.EUR] = qsTr("EUR")
+        Script.container['CURRENCY'][GuiSettings.GBP] = qsTr("GBP")
+        Script.container['CURRENCY'][GuiSettings.JPY] = qsTr("JPY")
+        Script.container['CURRENCY'][GuiSettings.USD] = qsTr("USD")
+
         // TODO from here on, change  wrt to model developments
 
         Script.container['PASSWORD'] = []
@@ -64,11 +75,6 @@ QtObject {
         Script.container['TIMEZONE'][0] = qsTr("GMT 0")
         Script.container['TIMEZONE'][1] = qsTr("GMT +1")
         Script.container['TIMEZONE'][2] = qsTr("GMT +2")
-
-        Script.container['LANGUAGE'] = []
-        Script.container['LANGUAGE'][0] = qsTr("Italian")
-        Script.container['LANGUAGE'][1] = qsTr("English")
-        Script.container['LANGUAGE'][2] = qsTr("Spanish")
     }
 
     function get(context, id) {

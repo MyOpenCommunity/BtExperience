@@ -10,10 +10,17 @@ GuiSettings::GuiSettings()
 {
 	// TODO read values from somewhere or implement something valueReceived-like
 	autoUpdate = AutoUpdate_enabled;
+	currency = EUR;
 	date = QDate::currentDate().toString(QString("dd/MM/yyyy"));
 	dst = Dst_enabled;
+	keyboardLayout = "";
+	language = Italian;
+	measurementSystem = Metric;
+	numberSeparators = Dot_Comma;
+	screensaverImage = QString("");
 	screensaverText = QString(tr("change text"));
 	screensaverType = None;
+	temperatureUnit = Celsius;
 	time = QTime::currentTime().toString((QString("hh:mm")));
 	timeFormat = TimeFormat_24h;
 	timeOut = Minutes_10;
@@ -31,6 +38,18 @@ void GuiSettings::setAutoUpdate(AutoUpdate v)
 	// TODO save value somewhere
 	autoUpdate = v;
 	emit autoUpdateChanged();
+}
+
+GuiSettings::Currency GuiSettings::getCurrency() const
+{
+	return currency;
+}
+
+void GuiSettings::setCurrency(Currency c)
+{
+	// TODO save value somewhere
+	currency = c;
+	emit currencyChanged();
 }
 
 QString GuiSettings::getDate() const
@@ -69,6 +88,66 @@ void GuiSettings::setFormat(TimeFormat f)
 	emit formatChanged();
 }
 
+QString GuiSettings::getKeyboardLayout() const
+{
+	return keyboardLayout;
+}
+
+void GuiSettings::setKeyboardLayout(QString l)
+{
+	// TODO save value somewhere
+	keyboardLayout = l;
+	emit keyboardLayoutChanged();
+}
+
+GuiSettings::Language GuiSettings::getLanguage() const
+{
+	return language;
+}
+
+void GuiSettings::setLanguage(Language l)
+{
+	// TODO save value somewhere
+	language = l;
+	emit languageChanged();
+}
+
+GuiSettings::MeasurementSystem GuiSettings::getMeasurementSystem() const
+{
+	return measurementSystem;
+}
+
+void GuiSettings::setMeasurementSystem(MeasurementSystem m)
+{
+	// TODO save value somewhere
+	measurementSystem = m;
+	emit measurementSystemChanged();
+}
+
+GuiSettings::NumberSeparators GuiSettings::getNumberSeparators() const
+{
+	return numberSeparators;
+}
+
+void GuiSettings::setNumberSeparators(NumberSeparators s)
+{
+	// TODO save value somewhere
+	numberSeparators = s;
+	emit numberSeparatorsChanged();
+}
+
+QString GuiSettings::getScreensaverImage() const
+{
+	return screensaverImage;
+}
+
+void GuiSettings::setScreensaverImage(QString i)
+{
+	// TODO save value somewhere
+	screensaverImage = i;
+	emit screensaverImageChanged();
+}
+
 QString GuiSettings::getScreensaverText() const
 {
 	return screensaverText;
@@ -91,6 +170,18 @@ void GuiSettings::setScreensaverType(ScreensaverType st)
 	// TODO save value somewhere
 	screensaverType = st;
 	emit screensaverTypeChanged();
+}
+
+GuiSettings::TemperatureUnit GuiSettings::getTemperatureUnit() const
+{
+	return temperatureUnit;
+}
+
+void GuiSettings::setTemperatureUnit(TemperatureUnit u)
+{
+	// TODO save value somewhere
+	temperatureUnit = u;
+	emit temperatureUnitChanged();
 }
 
 QString GuiSettings::getTime() const

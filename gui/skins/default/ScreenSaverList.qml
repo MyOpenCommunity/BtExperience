@@ -129,8 +129,13 @@ MenuElement {
                 height: 50
                 source: "images/common/btn_menu.png"
                 Text {
-                    id: screensaverImage
+                    // TODO implementation of browsing/setting of an image
                     text: qsTr("Browse")
+                    anchors.fill: parent
+                }
+                Text {
+                    id: screensaverImage
+                    text: privateProps.model.screensaverImage
                     anchors.fill: parent
                 }
             }
@@ -153,6 +158,7 @@ MenuElement {
             ButtonOkCancel {
                 onOkClicked: {
                     privateProps.model.screensaverType = privateProps.type
+                    privateProps.model.screensaverImage = screensaverImage.text
                     privateProps.model.timeOut = screensaverTimeout.currentIndex
                     privateProps.model.turnOffTime = turnOffTime.currentIndex
                 }
