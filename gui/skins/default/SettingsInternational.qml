@@ -6,6 +6,10 @@ import "logging.js" as Log
 MenuElement {
     id: element
 
+    function alertOkClicked() {
+        global.reboot()
+    }
+
     // dimensions
     width: 212
     height: paginator.height
@@ -56,6 +60,8 @@ MenuElement {
         // TODO assign to a model property
         //privateProps.model.TextLanguage = value;
         // TODO remove when model is implemented
+        pageObject.showAlert(element, qsTr("L'azione selezionata produrra' un riavvio dell'interfaccia grafica. Continuare?"))
+
         textLanguageItem.description = pageObject.names.get('LANGUAGE', value);
     }
     function keyboardLanguageChanged(value) {
