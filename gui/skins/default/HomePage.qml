@@ -203,7 +203,7 @@ source: "images/home/home.jpg"
                   textFirst: false
                   source: "images/home/stanze.png"
                   text: qsTr("rooms")
-                  onClicked: Stack.openPage("Rooms.qml")
+                  onClicked: Stack.openPage("Rooms/Rooms.qml")
                   textLeftMargin: 70
               }
 

@@ -1,11 +1,12 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
+import "../js/Stack.js" as Stack
 import BtObjects 1.0
 import Components 1.0
+import ".."
 
 Page {
     id: page
-    source: "images/imgsfondo_sfumato.png"
+    source: "../images/imgsfondo_sfumato.png"
 
     ToolBar {
         id: toolbar
@@ -65,7 +66,7 @@ Page {
 
         orientation: ListView.Horizontal
         delegate: Image {
-            source: model.selected ? "images/common/stanzaS.png" : "images/common/stanza.png"
+            source: model.selected ? "../images/common/stanzaS.png" : "../images/common/stanza.png"
             Image {
                 source: model.image
                 fillMode: Image.PreserveAspectCrop
@@ -83,37 +84,37 @@ Page {
             id: roomsModel
 
             ListElement {
-                image: "images/rooms/studio.png"
+                image: "../images/rooms/studio.png"
                 name: "studio"
                 selected: false
             }
             ListElement {
-                image: "images/rooms/box.png"
+                image: "../images/rooms/box.png"
                 name: "box"
                 selected: false
             }
             ListElement {
-                image: "images/rooms/cameretta.png"
+                image: "../images/rooms/cameretta.png"
                 name: "camera ragazzi"
                 selected: true
             }
             ListElement {
-                image: "images/rooms/camera.png"
+                image: "../images/rooms/camera.png"
                 name: "camera genitori"
                 selected: false
             }
             ListElement {
-                image: "images/rooms/bagno.png"
+                image: "../images/rooms/bagno.png"
                 name: "bagno zona giorno"
                 selected: false
             }
             ListElement {
-                image: "images/rooms/cucina.png"
+                image: "../images/rooms/cucina.png"
                 name: "cucina"
                 selected: false
             }
             ListElement {
-                image: "images/rooms/soggiorno.png"
+                image: "../images/rooms/soggiorno.png"
                 name: "soggiorno"
                 selected: false
             }

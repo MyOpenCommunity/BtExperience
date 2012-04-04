@@ -1,9 +1,10 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
+import ".."
+import "../js/Stack.js" as Stack
 
 Page {
     id: mainarea
-    source: "images/home/home.jpg"
+    source: "../images/home/home.jpg"
 
     ToolBar {
         id: toolbar
@@ -23,31 +24,31 @@ Page {
          ListModel {
              id: roomsModel
              ListElement {
-                 image: "images/rooms/studio.png"
+                 image: "../images/rooms/studio.png"
                  name: "studio"
              }
              ListElement {
-                 image: "images/rooms/box.png"
+                 image: "../images/rooms/box.png"
                  name: "box"
              }
              ListElement {
-                 image: "images/rooms/cameretta.png"
+                 image: "../images/rooms/cameretta.png"
                  name: "camera ragazzi"
              }
              ListElement {
-                 image: "images/rooms/camera.png"
+                 image: "../images/rooms/camera.png"
                  name: "camera genitori"
              }
              ListElement {
-                 image: "images/rooms/bagno.png"
+                 image: "../images/rooms/bagno.png"
                  name: "bagno zona giorno"
              }
              ListElement {
-                 image: "images/rooms/cucina.png"
+                 image: "../images/rooms/cucina.png"
                  name: "cucina"
              }
              ListElement {
-                 image: "images/rooms/soggiorno.png"
+                 image: "../images/rooms/soggiorno.png"
                  name: "soggiorno"
              }
          }
@@ -87,7 +88,7 @@ Page {
 
                  MouseArea {
                      anchors.fill: parent
-                     onClicked: Stack.openPage("Room.qml")
+                     onClicked: Stack.openPage("Rooms/Room.qml")
                  }
              }
          }
@@ -129,7 +130,7 @@ Page {
         height: 100
         width: 140 * floorModel.count
         delegate: Image {
-            source: model.selected === true ? "images/common/pianoS.png" : "images/common/piano.png"
+            source: model.selected === true ? "../images/common/pianoS.png" : "../images/common/piano.png"
             Text {
                 text: model.name
                 anchors.horizontalCenter: parent.horizontalCenter
