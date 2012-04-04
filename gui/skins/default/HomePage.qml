@@ -212,7 +212,7 @@ source: "images/home/home.jpg"
                   source: "images/home/sistemi.png"
                   text: qsTr("systems")
                   textLeftMargin: 30
-                  onClicked: Stack.openPage("Systems.qml")
+                  onClicked: Stack.openPage("Systems/Systems.qml")
               }
 
               ButtonHomePageLink {

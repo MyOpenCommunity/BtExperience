@@ -1,9 +1,10 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
+import "../js/Stack.js" as Stack
+import ".."
 
 Page {
     id: systems
-    source: "images/bg2.jpg"
+    source: "../images/bg2.jpg"
 
     ToolBar {
         id: toolbar
@@ -16,27 +17,27 @@ Page {
         ListModel {
                 id: systemsModel
                 ListElement {
-                    image: "images/antintrusion.jpg"
+                    image: "../images/antintrusion.jpg"
                     name: "antintrusion"
                     target: "Antintrusion.qml"
                 }
 //                ListElement {
-//                    image: "images/scenari.jpg"
+//                    image: "../images/scenari.jpg"
 //                    name: "scenari"
 //                    target: ""
 //                }
                 ListElement {
-                    image: "images/termoregolazione.jpg"
+                    image: "../images/termoregolazione.jpg"
                     name: "temperature control"
                     target: "ThermalRegulation.qml"
                 }
                 ListElement {
-                    image: "images/illuminazione.jpg"
+                    image: "../images/illuminazione.jpg"
                     name: "lighting"
                     target: "Lighting.qml"
                 }
                 ListElement {
-                    image: "images/sound_diffusion.jpg"
+                    image: "../images/sound_diffusion.jpg"
                     name: "sound diffusion system"
                     target: "SoundDiffusion.qml"
                 }
