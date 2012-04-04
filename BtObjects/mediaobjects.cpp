@@ -143,10 +143,18 @@ void SoundAmbient::updateActiveSource()
 {
 	SourceBase *source = static_cast<SourceBase *>(sender());
 
+	// there are 3 cases
+	//
+	// - source is not active on area (isActive is true and current_source != source)
+	// - source is turned on on a new area (isActive is true and current_source == source)
+	// - source is turned off on the area (isActive is false and current_source == source)
 	if (source->isActiveInArea(area))
 	{
-		current_source = source;
-		emit currentSourceChanged();
+		if (current_source != source)
+		{
+			current_source = source;
+			emit currentSourceChanged();
+		}
 	}
 	else if (source == current_source)
 	{

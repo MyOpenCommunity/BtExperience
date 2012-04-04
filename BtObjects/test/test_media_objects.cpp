@@ -132,7 +132,15 @@ void TestSoundAmbient::testActiveSource()
 	QCOMPARE(obj2->getCurrentSource(), static_cast<QObject *>(0));
 	QCOMPARE(obj3->getCurrentSource(), src1);
 
-	// turn off source on environment 2
+	// switch source on in environemnt 4
+	srcd1->active_areas.insert("4");
+	src1->valueReceived(v);
+	t2.checkNoSignals();
+	t3.checkNoSignals();
+	QCOMPARE(obj2->getCurrentSource(), static_cast<QObject *>(0));
+	QCOMPARE(obj3->getCurrentSource(), src1);
+
+	// turn off source on environment 3
 	srcd1->active_areas.clear();
 	src1->valueReceived(v);
 	t2.checkNoSignals();
