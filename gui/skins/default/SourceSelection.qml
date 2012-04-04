@@ -168,8 +168,8 @@ MenuElement {
                 state: privateProps.currentElement === 1 ? "selected" : ""
                 onClicked: {
                     if (privateProps.currentElement !== 1)
-                        privateProps = 1
-                    console.log("cliccato su " + name)
+                        privateProps.currentElement = 1
+                    element.loadElement("SongBrowser.qml", "Browse")
                 }
             }
 
