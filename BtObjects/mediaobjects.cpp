@@ -218,7 +218,8 @@ SourceBase::SourceType SourceBase::getType() const
 
 void SourceBase::setActive(int area)
 {
-	dev->turnOn(QString::number(area));
+	if (!isActiveInArea(area))
+		dev->turnOn(QString::number(area));
 }
 
 bool SourceBase::isActive() const
