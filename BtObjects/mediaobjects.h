@@ -14,7 +14,7 @@ class SourceBase;
 class PowerAmplifierDevice;
 
 
-QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node);
+QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id);
 
 // internal class
 class SoundAmbientBase : public ObjectInterface
@@ -62,13 +62,13 @@ class SoundAmbient : public SoundAmbientBase
 	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
 
 public:
-	SoundAmbient(int area, QString name);
+	SoundAmbient(int area, QString name, int object_id);
 
 	virtual QString getObjectKey() const { return QString::number(area); }
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdMultiChannelSoundAmbient;
+		return object_id;
 	}
 
 	bool getHasActiveAmplifier() const;
@@ -89,7 +89,7 @@ private slots:
 	void updateActiveAmplifier();
 
 private:
-	int area, amplifier_count;
+	int area, amplifier_count, object_id;
 	SourceBase *current_source;
 };
 

@@ -27,7 +27,7 @@ public:
 		IdThermalControlUnit4,
 		IdAntintrusionSystem,
 		IdHardwareSettings,
-		IdSoundDiffusionSystem,
+		IdMultiChannelSoundDiffusionSystem,
 		IdMultiChannelSoundAmbient,
 		IdMultiChannelGeneralAmbient,
 		IdSoundAmplifier,
@@ -36,6 +36,8 @@ public:
 		IdSoundSource,
 		IdPlatformSettings,
 		IdGuiSettings,
+		IdMonoChannelSoundDiffusionSystem,
+		IdMonoChannelSoundAmbient,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 

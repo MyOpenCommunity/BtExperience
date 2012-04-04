@@ -107,8 +107,11 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdAntintrusionSystem:
 			obj = createAntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice), item);
 			break;
-		case ObjectInterface::IdSoundDiffusionSystem:
-			obj_list = createSoundDiffusionSystem(item);
+		case ObjectInterface::IdMultiChannelSoundDiffusionSystem:
+			obj_list = createSoundDiffusionSystem(item, id);
+			break;
+		case ObjectInterface::IdMonoChannelSoundDiffusionSystem:
+			obj_list = createSoundDiffusionSystem(item, id);
 			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));

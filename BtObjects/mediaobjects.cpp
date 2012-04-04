@@ -24,7 +24,7 @@ const char *PowerAmplifier::standard_presets[] =
 #define standard_presets_size int(sizeof(standard_presets) / sizeof(standard_presets[0]))
 
 
-QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
+QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id)
 {
 	QList<ObjectInterface *> objects;
 
@@ -34,7 +34,6 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 	SourceDevice *touch = bt_global::add_device_to_cache(new SourceDevice("3"));
 
 	QList<SourceBase *> sources;
-	QList<SoundAmbient *> ambients;
 
 	sources << new SourceRadio(radio, "Radio");
 	sources << new SourceAux(touch, "Touch");
@@ -68,12 +67,14 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 		}
 	}
 
+	QList<SoundAmbient *> ambients;
 	foreach (const QDomNode &ambient, getChildren(getChildWithName(xml_node, "ambients"), "item"))
 	{
+		int id = getTextChild(ambient, "id").toInt();
 		QString name = getTextChild(ambient, "name");
 		int env = getTextChild(ambient, "env").toInt();
 
-		ambients << new SoundAmbient(env, name);
+		ambients << new SoundAmbient(env, name, id);
 	}
 
 	// connect sources with ambients
@@ -103,11 +104,12 @@ SoundAmbientBase::SoundAmbientBase(QString _name)
 }
 
 
-SoundAmbient::SoundAmbient(int _area, QString name) :
+SoundAmbient::SoundAmbient(int _area, QString name, int _object_id) :
 	SoundAmbientBase(name)
 {
 	area = _area;
 	amplifier_count = 0;
+	object_id = _object_id;
 	current_source = NULL;
 }
 
