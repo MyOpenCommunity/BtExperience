@@ -16,7 +16,11 @@ var changing_page = false
 // Create a QML object from a given filename and push it on the stack
 function openPage(filename) {
     // now, Stack.js is in a js subdir so we have to trick the filename
-    filename = "../" + filename
+    return _openPage("../" + filename)
+}
+
+// Create a QML object from a given filename and push it on the stack
+function _openPage(filename) {
     if (changing_page == true)
         return
 
