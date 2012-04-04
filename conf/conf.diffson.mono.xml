@@ -41,6 +41,20 @@
 			  <env>0</env>
 		  </item>
 	  </ambients>
+	  <sources>
+		  <item>
+			  <id>14</id> <!-- Sound diffusion source -->
+			  <name>Radio</name>
+			  <where>2</where>
+			  <type>1</type>
+		  </item>
+		  <item>
+			  <id>14</id>
+			  <name>Touch</name>
+			  <where>4</where>
+			  <type>2</type>
+		  </item>
+	  </sources>
   </item>
 </configuratore>
 
