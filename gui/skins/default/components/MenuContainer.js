@@ -1,6 +1,6 @@
 // The containers for items and titles. Each item has its title, and the
 // containers has always the same size.
-Qt.include("../logging.js")
+Qt.include("../js/logging.js")
 
 var stackItems = []
 var stackTitles = []

@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "Stack.js" as Stack
+import "js/Stack.js" as Stack
 
 Page {
     id: systems

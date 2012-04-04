@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import QtWebKit 1.0
-import "Stack.js" as Stack
+import "js/Stack.js" as Stack
 
 Page {
     ToolBar {

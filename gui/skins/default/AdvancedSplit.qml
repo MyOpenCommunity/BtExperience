@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "logging.js" as Log
+import "js/logging.js" as Log
 
 MenuElement {
     id: element
