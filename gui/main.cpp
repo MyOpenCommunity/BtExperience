@@ -188,6 +188,7 @@ int main(int argc, char *argv[])
 #endif
 
 	QmlApplicationViewer viewer;
+
 	qDebug() << "***** BtExperience start! *****";
 
 	LastClickTime *last_click = new LastClickTime;
@@ -204,7 +205,8 @@ int main(int argc, char *argv[])
 	GlobalProperties global;
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
 	viewer.engine()->rootContext()->setContextProperty("global", &global);
-	viewer.setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
+	viewer.engine()->addImportPath(global.getBasePath());
+	viewer.setMainQmlFile(QLatin1String(global.getBasePath().append("main.qml").toLatin1()));
 	global.setMainWidget(&viewer);
 
 #if defined(BT_MALIIT)

@@ -26,6 +26,8 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(int lastTimePress READ getLastTimePress NOTIFY lastTimePressChanged)
 	// The input context wrapper, used to manage the virtual keyboard
 	Q_PROPERTY(QObject *inputWrapper READ getInputWrapper CONSTANT)
+	// The base path for the QML application. It is used for import path, for example.
+	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
 
 public:
 	GlobalProperties();
@@ -33,6 +35,7 @@ public:
 	int getMainHeight() const;
 	int getLastTimePress() const;
 	QObject *getInputWrapper() const;
+	QString getBasePath() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE QImage takeScreenshot(QRect rect = QRect());
