@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuratore>
   <item>
+    <id>7</id> <!-- Hardware settings -->
+  </item>
+  <item>
     <id>1</id> <!-- Light -->
     <itemID>1</itemID>
     <descr>lampada scrivania</descr>
@@ -81,9 +84,6 @@
     <descr>zona studio</descr>
     <where>4</where>
     <fancoil>0</fancoil>
-  </item>
-  <item>
-    <id>7</id> <!-- Hardware settings -->
   </item>
   <item>
     <id>6</id> <!-- Antintrusion system -->

@@ -10,3 +10,4 @@ BtObjects/libbtobjects.*.dylib
 BtObjects/test/test
 common_files
 devices
+conf.xml
