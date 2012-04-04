@@ -29,17 +29,29 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 	bool is_multichannel = id == ObjectInterface::IdMultiChannelSoundDiffusionSystem;
 	QList<ObjectInterface *> objects;
 
-	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
 	SourceDevice::setIsMultichannel(is_multichannel);
 	AmplifierDevice::setIsMultichannel(is_multichannel);
 
-	RadioSourceDevice *radio = bt_global::add_device_to_cache(new RadioSourceDevice("1"));
-	SourceDevice *touch = bt_global::add_device_to_cache(new SourceDevice("4"));
+	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
+	//      and send sound diffusion initialization frame
 
 	QList<SourceBase *> sources;
+	foreach (const QDomNode &source, getChildren(getChildWithName(xml_node, "sources"), "item"))
+	{
+		QString name = getTextChild(source, "name");
+		int type = getTextChild(source, "type").toInt();
+		QString where = getTextChild(source, "where");
 
-	sources << new SourceRadio(radio, "Radio");
-	sources << new SourceAux(touch, "Touch");
+		switch (type)
+		{
+		case SourceBase::Radio:
+			sources << new SourceRadio(bt_global::add_device_to_cache(new RadioSourceDevice(where)), name);
+			break;
+		case SourceBase::Aux:
+			sources << new SourceAux(bt_global::add_device_to_cache(new SourceDevice(where)), name);
+			break;
+		}
+	}
 
 	QList<Amplifier *> amplifiers;
 	foreach (const QDomNode &amplifier, getChildren(getChildWithName(xml_node, "amplifiers"), "item"))

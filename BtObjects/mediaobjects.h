@@ -156,7 +156,7 @@ class SourceBase : public ObjectInterface
 public:
 
 	enum SourceType {
-		Radio,
+		Radio = 1,
 		Aux,
 	};
 
