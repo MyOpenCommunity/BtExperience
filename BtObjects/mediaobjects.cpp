@@ -196,11 +196,12 @@ SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
 }
 
 
-SourceBase::SourceBase(SourceDevice *d, QString _name)
+SourceBase::SourceBase(SourceDevice *d, QString _name, SourceType t)
 {
 	name = _name;
 	dev = d;
 	track = 0;
+	type = t;
 
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 }
@@ -208,6 +209,11 @@ SourceBase::SourceBase(SourceDevice *d, QString _name)
 QList<int> SourceBase::getActiveAreas() const
 {
 	return active_areas;
+}
+
+SourceBase::SourceType SourceBase::getType() const
+{
+	return type;
 }
 
 void SourceBase::setActive(int area)
@@ -280,13 +286,13 @@ void SourceBase::valueReceived(const DeviceValues &values_list)
 
 
 SourceAux::SourceAux(SourceDevice *d, QString name) :
-	SourceBase(d, name)
+	SourceBase(d, name, Aux)
 {
 }
 
 
 SourceRadio::SourceRadio(RadioSourceDevice *d, QString name) :
-	SourceBase(d, name)
+	SourceBase(d, name, Radio)
 {
 	dev = d;
 

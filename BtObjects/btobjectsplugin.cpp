@@ -152,6 +152,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create an AntintrusionAlarm instance");
 	qmlRegisterUncreatableType<FileObject>(uri, 1, 0, "FileObject",
 		"unable to create an FileObject instance");
+	qmlRegisterUncreatableType<SourceBase>(uri, 1, 0, "SourceBase",
+		"unable to create an SourceBase instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

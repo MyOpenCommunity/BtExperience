@@ -147,7 +147,17 @@ class SourceBase : public ObjectInterface
 	*/
 	Q_PROPERTY(int currentTrack READ getCurrentTrack NOTIFY currentTrackChanged)
 
+	Q_PROPERTY(SourceType type READ getType CONSTANT)
+
+	Q_ENUMS(SourceType)
+
 public:
+
+	enum SourceType {
+		Radio,
+		Aux,
+	};
+
 	virtual QString getObjectKey() const { return QString(); }
 
 	virtual ObjectCategory getCategory() const
@@ -163,6 +173,8 @@ public:
 	}
 
 	QList<int> getActiveAreas() const;
+
+	SourceType getType() const;
 
 	bool isActive() const;
 	bool isActiveInArea(int area) const;
@@ -191,7 +203,7 @@ signals:
 	void currentTrackChanged();
 
 protected:
-	SourceBase(SourceDevice *d, QString name);
+	SourceBase(SourceDevice *d, QString name, SourceType t);
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -200,6 +212,7 @@ private:
 	QString name;
 	SourceDevice *dev;
 	int track;
+	SourceType type;
 	QList<int> active_areas;
 };
 
