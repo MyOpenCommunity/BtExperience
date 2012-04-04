@@ -196,6 +196,8 @@ SourceBase::SourceBase(SourceDevice *d, QString _name)
 	name = _name;
 	dev = d;
 	track = 0;
+
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 }
 
 QList<int> SourceBase::getActiveAreas() const
@@ -283,7 +285,6 @@ SourceRadio::SourceRadio(RadioSourceDevice *d, QString name) :
 {
 	dev = d;
 
-	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 	connect(this, SIGNAL(currentTrackChanged()), this, SIGNAL(currentStationChanged()));
 
 	request_frequency.setInterval(REQUEST_FREQUENCY_TIME);
