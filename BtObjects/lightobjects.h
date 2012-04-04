@@ -25,7 +25,7 @@ class Light : public ObjectInterface
 	Q_OBJECT
 
 	/*!
-		\brief Sets and gets the on/off status of the light
+		\brief Sets and gets if the light is active (on) or not (off)
 	*/
 	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
 

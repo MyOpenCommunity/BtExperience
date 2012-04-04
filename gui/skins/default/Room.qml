@@ -27,7 +27,7 @@ Page {
             property variant itemObject
             MenuItem {
                 name: itemObject.name
-                status: itemObject.status === true ? 1 : 0
+                status: itemObject.active === true ? 1 : 0
                 hasChild: true
             }
         }
