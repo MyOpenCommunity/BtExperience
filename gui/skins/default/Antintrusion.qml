@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "js/datetime.js" as DateTime
+import Components 1.0
 
 SystemPage {
     id: antintrusion

@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import "js/Stack.js" as Stack
 import BtObjects 1.0
+import Components 1.0
 
 Page {
     id: page
