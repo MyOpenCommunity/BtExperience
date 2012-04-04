@@ -34,7 +34,7 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 	AmplifierDevice::setIsMultichannel(is_multichannel);
 
 	RadioSourceDevice *radio = bt_global::add_device_to_cache(new RadioSourceDevice("1"));
-	SourceDevice *touch = bt_global::add_device_to_cache(new SourceDevice("3"));
+	SourceDevice *touch = bt_global::add_device_to_cache(new SourceDevice("4"));
 
 	QList<SourceBase *> sources;
 
