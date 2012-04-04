@@ -26,9 +26,12 @@ const char *PowerAmplifier::standard_presets[] =
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id)
 {
+	bool is_multichannel = id == ObjectInterface::IdMultiChannelSoundDiffusionSystem;
 	QList<ObjectInterface *> objects;
 
 	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
+	SourceDevice::setIsMultichannel(is_multichannel);
+	AmplifierDevice::setIsMultichannel(is_multichannel);
 
 	RadioSourceDevice *radio = bt_global::add_device_to_cache(new RadioSourceDevice("1"));
 	SourceDevice *touch = bt_global::add_device_to_cache(new SourceDevice("3"));
