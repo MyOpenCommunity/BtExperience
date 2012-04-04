@@ -61,6 +61,8 @@ class SoundAmbient : public SoundAmbientBase
 	*/
 	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
 
+	Q_PROPERTY(int area READ getArea CONSTANT)
+
 public:
 	SoundAmbient(int area, QString name, int object_id);
 
