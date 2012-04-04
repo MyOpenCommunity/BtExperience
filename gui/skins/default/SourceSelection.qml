@@ -47,10 +47,13 @@ MenuElement {
             itemLoader.setComponent(fmRadio, properties)
             break
         case SourceBase.Aux:
+            itemLoader.setComponent(auxComponent, properties)
+            break
         default:
             itemLoader.setComponent(mediaPlayer, properties)
             break
         }
+        sourceObj.setActive(element.dataModel.area)
     }
 
     Component {
@@ -175,6 +178,28 @@ MenuElement {
             ControlMediaPlayer {
 
             }
+        }
+    }
+
+    Component {
+        id: auxComponent
+
+        Image {
+            id: control
+            width: 212
+            height: 100
+            property variant objModel: undefined
+
+            source: "images/common/bg_UnaRegolazione.png"
+
+            Text {
+                y: 10
+                font.bold: true
+                font.pointSize: 12
+                anchors.horizontalCenter: control.horizontalCenter
+                text: objModel.currentTrack
+            }
+
         }
     }
 }
