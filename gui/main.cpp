@@ -151,6 +151,7 @@ void installTranslator(QApplication &a, QString language_suffix)
 }
 
 
+// Manage the boot (or reboot) of the gui part
 class BootManager : public QObject
 {
 	Q_OBJECT
@@ -164,6 +165,8 @@ public:
 
 	~BootManager()
 	{
+		// We need to destroy the viewer before exit from the event loop to avoid
+		// a warning message 'QGLContext::makeCurrent(): Cannot make invalid context current.'
 		viewer->disconnect();
 		delete viewer;
 	}
