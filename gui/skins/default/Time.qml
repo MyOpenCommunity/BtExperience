@@ -4,7 +4,7 @@ import BtObjects 1.0
 MenuElement {
     id: element
     width: 212
-    height: 250
+    height: paginator.height
     signal timeChanged(string value, int auto, int format)
 
     // object model to retrieve network data

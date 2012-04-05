@@ -4,7 +4,7 @@ import BtObjects 1.0
 MenuElement {
     id: element
     width: 212
-    height: 200
+    height: paginator.height
     signal timezoneChanged(int gmtOffset)
 
     // object model to retrieve network data
