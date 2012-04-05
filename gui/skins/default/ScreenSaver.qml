@@ -36,8 +36,8 @@ Rectangle {
 
     function screensaverMgmt() {
         // TODO manage activation time (now it is hardcoded!)
-        if (global.lastTimePress > 3)
-            screensaver.opacity = 0.6
+        if (global.lastTimePress > 60)
+            screensaver.opacity = 0.8
         else
             screensaver.opacity = 0
     }

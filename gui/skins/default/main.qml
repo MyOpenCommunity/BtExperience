@@ -32,6 +32,7 @@ Item {
     }
 
     ScreenSaver {
+        // TODO load the right screensaver depending on configuration
         source: "ScreenSaverBouncingImage.qml"
     }
 }

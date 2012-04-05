@@ -2,25 +2,29 @@ import QtQuick 1.1
 
 Item {
     id: bouncer
-    property int duration_x: 4000
-    property int duration_y: 5000
 
     Image {
         id: image
-        source: "images/bticino_logo.jpg"
+        source: "images/bticino_logo.svg"
+        x: 0
+        y: 0
+        width: 236
+        height: 76
+        sourceSize.width: 236
+        sourceSize.height: 76
 
         SequentialAnimation on x {
             running: true
             loops: Animation.Infinite
             NumberAnimation {
                 to: global.mainWidth - image.width
-                duration: bouncer.duration_x
-                easing.type: Easing.InOutQuad
+                duration: 2000
+                easing.type: Easing.Linear
             }
             NumberAnimation {
                 to: 0
-                duration: bouncer.duration_x
-                easing.type: Easing.InOutQuad
+                duration: 2000
+                easing.type: Easing.Linear
             }
         }
 
@@ -29,13 +33,13 @@ Item {
             loops: Animation.Infinite
             NumberAnimation {
                 to: global.mainHeight - image.height
-                duration: bouncer.duration_y
-                easing.type: Easing.InOutQuad
+                duration: 3000
+                easing.type: Easing.OutBounce
             }
             NumberAnimation {
                 to: 0
-                duration: bouncer.duration_y
-                easing.type: Easing.InOutQuad
+                duration: 500
+                easing.type: Easing.Linear
             }
         }
     }
