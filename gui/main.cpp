@@ -133,7 +133,6 @@ private:
 	QRect rect;
 };
 
-#include "main.moc"
 #endif
 
 void installTranslator(QApplication &a, QString language_suffix)
@@ -150,6 +149,87 @@ void installTranslator(QApplication &a, QString language_suffix)
 	else
 		qWarning() << "File " << language_file << " not found for language " << language_suffix;
 }
+
+
+// Manage the boot (or reboot) of the gui part
+class BootManager : public QObject
+{
+	Q_OBJECT
+public:
+	BootManager(GlobalProperties *g)
+	{
+		global = g;
+		connect(global, SIGNAL(requestReboot()), SLOT(reboot()));
+		boot();
+	}
+
+	~BootManager()
+	{
+		// We need to destroy the viewer before exit from the event loop to avoid
+		// a warning message 'QGLContext::makeCurrent(): Cannot make invalid context current.'
+		viewer->disconnect();
+		delete viewer;
+	}
+
+	void boot()
+	{
+		viewer = new QmlApplicationViewer;
+	#if USE_OPENGL
+		setupOpenGL(viewer);
+	#endif
+
+		viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+
+		viewer->engine()->rootContext()->setContextProperty("global", global);
+		viewer->setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
+		global->setMainWidget(viewer);
+
+#if defined(BT_MALIIT)
+		QWidget *im_widget = Maliit::InputMethod::instance()->widget();
+
+		if (!im_widget)
+			qFatal("Maliit initialization failed");
+
+		im_widget->resize(global.getMainWidth(), global.getMainHeight());
+		im_widget->hide();
+
+		im_widget->setParent(NULL);
+
+		QGraphicsProxyWidget *wid = new KeyboardHost(im_widget);
+
+		viewer->scene()->addItem(wid);
+
+		wid->setFocusPolicy(Qt::NoFocus);
+		wid->setZValue(1200);
+#endif
+
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
+		if (!viewer_pos.isNull())
+			viewer->move(viewer_pos);
+		viewer->resize(global->getMainWidth(), global->getMainHeight());
+		viewer->showExpanded();
+#else
+		viewer->showFullScreen();
+#endif
+	}
+
+public slots:
+	void reboot()
+	{
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
+		viewer_pos = viewer->pos();
+#endif
+		viewer->deleteLater();
+		boot();
+	}
+
+private:
+	QmlApplicationViewer *viewer;
+	GlobalProperties *global;
+	QPoint viewer_pos;
+};
+
+
 
 int main(int argc, char *argv[])
 {
@@ -187,7 +267,7 @@ int main(int argc, char *argv[])
 	}
 #endif
 
-	QmlApplicationViewer viewer;
+
 	qDebug() << "***** BtExperience start! *****";
 
 	LastClickTime *last_click = new LastClickTime;
@@ -195,43 +275,10 @@ int main(int argc, char *argv[])
 	// their, we have to install the event filter in the QApplication
 	app.installEventFilter(last_click);
 
-#if USE_OPENGL
-	setupOpenGL(&viewer);
-#endif
-
-	viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-
 	GlobalProperties global;
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
-	viewer.engine()->rootContext()->setContextProperty("global", &global);
-	viewer.setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
-	global.setMainWidget(&viewer);
-
-#if defined(BT_MALIIT)
-	QWidget *im_widget = Maliit::InputMethod::instance()->widget();
-
-	if (!im_widget)
-		qFatal("Maliit initialization failed");
-
-	im_widget->resize(global.getMainWidth(), global.getMainHeight());
-	im_widget->hide();
-
-	im_widget->setParent(NULL);
-
-	QGraphicsProxyWidget *wid = new KeyboardHost(im_widget);
-
-	viewer.scene()->addItem(wid);
-
-	wid->setFocusPolicy(Qt::NoFocus);
-	wid->setZValue(1200);
-#endif
-
-#if defined(Q_WS_X11) || defined(Q_WS_MAC)
-	viewer.resize(global.getMainWidth(), global.getMainHeight());
-	viewer.showExpanded();
-#else
-	viewer.showFullScreen();
-#endif
-
+	BootManager boot_manager(&global);
 	return app.exec();
 }
+
+#include "main.moc"

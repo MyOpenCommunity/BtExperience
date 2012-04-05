@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuratore>
+  <item>
+    <id>7</id> <!-- Hardware settings -->
+  </item>
+  <item>
+	  <id>8</id> <!-- Multichannel sound diffusion system -->
+	  <amplifiers>
+		  <item>
+			  <id>11</id> <!-- Amplifier -->
+			  <name>Amplificatore 2</name>
+			  <env>2</env>
+			  <where>22</where>
+		  </item>
+		  <item>
+			  <id>11</id> <!-- Amplifier -->
+			  <name>Amplificatore 3</name>
+			  <env>2</env>
+			  <where>23</where>
+		  </item>
+		  <item>
+			  <id>13</id> <!-- Power amplifier -->
+			  <name>Amplificatore di potenza</name>
+			  <env>2</env>
+			  <where>21</where>
+			  <preset>User preset 1</preset>
+			  <preset>User preset 2</preset>
+			  <preset>User preset 3</preset>
+		  </item>
+		  <item>
+			  <id>12</id> <!-- General ambient -->
+			  <name>Generale</name>
+			  <env>2</env>
+			  <where>#2</where>
+		  </item>
+		  <item>
+			  <id>11</id>
+			  <name>Amplificatore 2</name>
+			  <env>3</env>
+			  <where>32</where>
+		  </item>
+		  <item>
+			  <id>12</id>
+			  <name>Generale</name>
+			  <env>3</env>
+			  <where>#3</where>
+		  </item>
+	  </amplifiers>
+	  <ambients>
+		  <item>
+			  <id>9</id> <!-- Sound diffusion ambient -->
+			  <name>Cucina</name>
+			  <env>2</env>
+		  </item>
+		  <item>
+			  <id>9</id>
+			  <name>Salotto</name>
+			  <env>3</env>
+		  </item>
+	  </ambients>
+  </item>
+</configuratore>
+

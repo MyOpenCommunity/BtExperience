@@ -20,7 +20,7 @@ MenuElement {
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
 
-            status: itemObject.status === true ? 1 : 0
+            status: itemObject.active === true ? 1 : 0
             hasChild: true
             onClicked: {
                 element.loadElement(objectModel.getComponentFile(itemObject.objectId), itemObject.name,

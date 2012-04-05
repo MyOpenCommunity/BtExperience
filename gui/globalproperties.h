@@ -37,11 +37,17 @@ public:
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE QImage takeScreenshot(QRect rect = QRect());
 
+	Q_INVOKABLE void reboot()
+	{
+		emit requestReboot();
+	}
+
 public slots:
 	void updateTime();
 
 signals:
 	void lastTimePressChanged();
+	void requestReboot();
 
 private:
 	InputContextWrapper *wrapper;

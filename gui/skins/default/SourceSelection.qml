@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 
 MenuElement {
     id: element
@@ -23,8 +24,7 @@ MenuElement {
         anchors.bottom: parent.bottom
     }
 
-    // TODO: since we start off from radio, this will make the mockup prettier
-    Component.onCompleted: sourceSelected({name: "radio"})
+    Component.onCompleted: sourceSelected(element.dataModel.currentSource)
 
     onChildLoaded: {
         element.child.sourceSelected.connect(element.sourceSelected)
@@ -37,22 +37,23 @@ MenuElement {
         property int currentElement: -1
     }
 
-    function sourceSelected(obj) {
-        sourceSelect.name = obj.name
-        var properties = {'objModel': obj}
+    function sourceSelected(sourceObj) {
+        sourceSelect.name = sourceObj.name
+        var properties = {'objModel': sourceObj}
 
-        if (obj.name === "radio")
+        switch (sourceObj.type)
         {
+        case SourceBase.Radio:
             itemLoader.setComponent(fmRadio, properties)
-        }
-        else if (obj.name === "webradio")
-        {
-            itemLoader.setComponent(ipRadio, properties)
-        }
-        else
-        {
+            break
+        case SourceBase.Aux:
+            itemLoader.setComponent(auxComponent, properties)
+            break
+        default:
             itemLoader.setComponent(mediaPlayer, properties)
+            break
         }
+        sourceObj.setActive(element.dataModel.area)
     }
 
     Component {
@@ -60,7 +61,8 @@ MenuElement {
         Column {
             property variant objModel: undefined
             ControlFMRadio {
-
+                radioName: "radio - " + objModel.rdsText
+                radioFrequency: "FM " + (objModel.currentFrequency / 100)
             }
 
             Image {
@@ -168,14 +170,36 @@ MenuElement {
                 state: privateProps.currentElement === 1 ? "selected" : ""
                 onClicked: {
                     if (privateProps.currentElement !== 1)
-                        privateProps = 1
-                    console.log("cliccato su " + name)
+                        privateProps.currentElement = 1
+                    element.loadElement("SongBrowser.qml", "Browse")
                 }
             }
 
             ControlMediaPlayer {
 
             }
+        }
+    }
+
+    Component {
+        id: auxComponent
+
+        Image {
+            id: control
+            width: 212
+            height: 100
+            property variant objModel: undefined
+
+            source: "images/common/bg_UnaRegolazione.png"
+
+            Text {
+                y: 10
+                font.bold: true
+                font.pointSize: 12
+                anchors.horizontalCenter: control.horizontalCenter
+                text: objModel.currentTrack
+            }
+
         }
     }
 }

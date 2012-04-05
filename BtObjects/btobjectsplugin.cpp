@@ -107,8 +107,11 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdAntintrusionSystem:
 			obj = createAntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice), item);
 			break;
-		case ObjectInterface::IdSoundDiffusionSystem:
-			obj_list = createSoundDiffusionSystem(item);
+		case ObjectInterface::IdMultiChannelSoundDiffusionSystem:
+			obj_list = createSoundDiffusionSystem(item, id);
+			break;
+		case ObjectInterface::IdMonoChannelSoundDiffusionSystem:
+			obj_list = createSoundDiffusionSystem(item, id);
 			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
@@ -147,6 +150,10 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a HardwareSettings instance");
 	qmlRegisterUncreatableType<AntintrusionAlarm>(uri, 1, 0, "AntintrusionAlarm",
 		"unable to create an AntintrusionAlarm instance");
+	qmlRegisterUncreatableType<FileObject>(uri, 1, 0, "FileObject",
+		"unable to create an FileObject instance");
+	qmlRegisterUncreatableType<SourceBase>(uri, 1, 0, "SourceBase",
+		"unable to create an SourceBase instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

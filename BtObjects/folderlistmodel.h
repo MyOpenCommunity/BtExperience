@@ -68,7 +68,7 @@ private:
 
 	DirectoryListModel {
 		id: files
-		rootPath: ['media', 'video', 'tv']
+		rootPath: ['media', 'video', 'tv'] // UNIX path "/media/video/tv"
 		range: [0, 6] // obtain range from paginator
 	}
 
@@ -83,6 +83,10 @@ class TreeBrowserListModelBase : public QAbstractListModel
 
 	/*!
 		\brief Sets and gets he root path for navigation
+
+		Each element in the list is a level in the file system tree, for example:
+		\c [] (the empty list) is the root path \c "/", and the list
+		\c ["usr", "local", "media"] is the path \c "/usr/local/media".
 	*/
 	Q_PROPERTY(QVariantList rootPath READ getRootPath WRITE setRootPath NOTIFY rootPathChanged)
 
@@ -93,6 +97,10 @@ class TreeBrowserListModelBase : public QAbstractListModel
 
 	/*!
 		\brief Current directory path
+
+		Each element in the list is a level in the file system tree, for example:
+		\c [] (the empty list) is the root path \c "/", and the list
+		\c ["usr", "local", "media"] is the path \c "/usr/local/media".
 	*/
 	Q_PROPERTY(QVariantList currentPath READ getCurrentPath NOTIFY currentPathChanged)
 

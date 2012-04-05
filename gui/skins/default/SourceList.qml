@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 
 MenuElement {
     id: element
@@ -7,54 +8,21 @@ MenuElement {
 
     signal sourceSelected(variant object)
 
-    ListModel {
-        id: sourceModel
-        ListElement {
-            name: "SD card"
-            action: "browse"
-        }
-        ListElement {
-            name: "usb 1"
-            action: "browse"
-        }
-        ListElement {
-            name: "usb 2"
-            action: "browse"
-        }
-        ListElement {
-            name: "LAN"
-            action: "browse"
-        }
-        ListElement {
-            name: "radio"
-            action: ""
-        }
-        ListElement {
-            name: "webradio"
-            action: "saved IP radios"
-        }
-        ListElement {
-            name: "MMT"
-            action: "???"
-        }
-        ListElement {
-            name: "AUX"
-            action: "???"
+    PaginatorList {
+        id: paginator
+        listHeight: sourceModel.size * 50
+        elementsOnPage: 8
+        model: sourceModel
+        delegate: MenuItem {
+            id: sourceDelegate
+            property variant itemObject: sourceModel.getObject(index)
+            name: itemObject.name
+            onClicked: element.sourceSelected(itemObject)
         }
     }
 
-
-
-    ListView {
-        width: parent.width
-        height: model.count * 50
-        delegate: MenuItem {
-            id: sourceDelegate
-            property variant itemObject: sourceModel.get(index)
-            name: model.name
-            onClicked: element.sourceSelected(itemObject)
-        }
-        model: sourceModel
-        interactive: false
+    ObjectModel {
+        id: sourceModel
+        filters: [{objectId: ObjectInterface.IdSoundSource}]
     }
 }

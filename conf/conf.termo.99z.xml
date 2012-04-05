@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuratore>
+  <item>
+    <id>7</id> <!-- Hardware settings -->
+  </item>
+  <item>
+    <id>3</id> <!-- Thermal Control unit 99zones -->
+    <itemID>8</itemID>
+    <descr>unità centrale</descr>
+  </item>
+  <item>
+    <id>4</id> <!-- Thermal Controlled probe -->
+    <itemID>9</itemID>
+    <descr>zona giorno</descr>
+    <where>5</where>
+    <fancoil>1</fancoil>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>10</itemID>
+    <descr>zona notte</descr>
+    <where>2</where>
+    <fancoil>0</fancoil>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>11</itemID>
+    <descr>zona taverna</descr>
+    <where>3</where>
+    <fancoil>0</fancoil>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>12</itemID>
+    <descr>zona studio</descr>
+    <where>4</where>
+    <fancoil>0</fancoil>
+  </item>
+</configuratore>
+

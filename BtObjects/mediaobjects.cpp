@@ -24,17 +24,19 @@ const char *PowerAmplifier::standard_presets[] =
 #define standard_presets_size int(sizeof(standard_presets) / sizeof(standard_presets[0]))
 
 
-QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
+QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id)
 {
+	bool is_multichannel = id == ObjectInterface::IdMultiChannelSoundDiffusionSystem;
 	QList<ObjectInterface *> objects;
 
 	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
+	SourceDevice::setIsMultichannel(is_multichannel);
+	AmplifierDevice::setIsMultichannel(is_multichannel);
 
 	RadioSourceDevice *radio = bt_global::add_device_to_cache(new RadioSourceDevice("1"));
-	SourceDevice *touch = bt_global::add_device_to_cache(new SourceDevice("3"));
+	SourceDevice *touch = bt_global::add_device_to_cache(new SourceDevice("4"));
 
 	QList<SourceBase *> sources;
-	QList<SoundAmbient *> ambients;
 
 	sources << new SourceRadio(radio, "Radio");
 	sources << new SourceAux(touch, "Touch");
@@ -68,12 +70,14 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node)
 		}
 	}
 
+	QList<SoundAmbient *> ambients;
 	foreach (const QDomNode &ambient, getChildren(getChildWithName(xml_node, "ambients"), "item"))
 	{
+		int id = getTextChild(ambient, "id").toInt();
 		QString name = getTextChild(ambient, "name");
 		int env = getTextChild(ambient, "env").toInt();
 
-		ambients << new SoundAmbient(env, name);
+		ambients << new SoundAmbient(env, name, id);
 	}
 
 	// connect sources with ambients
@@ -103,11 +107,12 @@ SoundAmbientBase::SoundAmbientBase(QString _name)
 }
 
 
-SoundAmbient::SoundAmbient(int _area, QString name) :
+SoundAmbient::SoundAmbient(int _area, QString name, int _object_id) :
 	SoundAmbientBase(name)
 {
 	area = _area;
 	amplifier_count = 0;
+	object_id = _object_id;
 	current_source = NULL;
 }
 
@@ -143,10 +148,18 @@ void SoundAmbient::updateActiveSource()
 {
 	SourceBase *source = static_cast<SourceBase *>(sender());
 
+	// there are 3 cases
+	//
+	// - source is not active on area (isActive is true and current_source != source)
+	// - source is turned on on a new area (isActive is true and current_source == source)
+	// - source is turned off on the area (isActive is false and current_source == source)
 	if (source->isActiveInArea(area))
 	{
-		current_source = source;
-		emit currentSourceChanged();
+		if (current_source != source)
+		{
+			current_source = source;
+			emit currentSourceChanged();
+		}
 	}
 	else if (source == current_source)
 	{
@@ -183,11 +196,14 @@ SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
 }
 
 
-SourceBase::SourceBase(SourceDevice *d, QString _name)
+SourceBase::SourceBase(SourceDevice *d, QString _name, SourceType t)
 {
 	name = _name;
 	dev = d;
 	track = 0;
+	type = t;
+
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 }
 
 QList<int> SourceBase::getActiveAreas() const
@@ -195,9 +211,15 @@ QList<int> SourceBase::getActiveAreas() const
 	return active_areas;
 }
 
+SourceBase::SourceType SourceBase::getType() const
+{
+	return type;
+}
+
 void SourceBase::setActive(int area)
 {
-	dev->turnOn(QString::number(area));
+	if (!isActiveInArea(area))
+		dev->turnOn(QString::number(area));
 }
 
 bool SourceBase::isActive() const
@@ -265,17 +287,16 @@ void SourceBase::valueReceived(const DeviceValues &values_list)
 
 
 SourceAux::SourceAux(SourceDevice *d, QString name) :
-	SourceBase(d, name)
+	SourceBase(d, name, Aux)
 {
 }
 
 
 SourceRadio::SourceRadio(RadioSourceDevice *d, QString name) :
-	SourceBase(d, name)
+	SourceBase(d, name, Radio)
 {
 	dev = d;
 
-	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 	connect(this, SIGNAL(currentTrackChanged()), this, SIGNAL(currentStationChanged()));
 
 	request_frequency.setInterval(REQUEST_FREQUENCY_TIME);
