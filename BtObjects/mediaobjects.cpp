@@ -444,6 +444,16 @@ int Amplifier::getArea() const
 	return area;
 }
 
+void Amplifier::volumeUp() const
+{
+	dev->volumeUp();
+}
+
+void Amplifier::volumeDown() const
+{
+	dev->volumeDown();
+}
+
 void Amplifier::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.constBegin();

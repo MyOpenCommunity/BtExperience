@@ -378,6 +378,9 @@ public:
 
 	int getArea() const;
 
+	Q_INVOKABLE void volumeUp() const;
+	Q_INVOKABLE void volumeDown() const;
+
 signals:
 	void activeChanged();
 	void volumeChanged();
