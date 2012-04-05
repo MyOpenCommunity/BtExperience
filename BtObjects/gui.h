@@ -68,17 +68,17 @@ class GuiSettings : public ObjectInterface
 	Q_PROPERTY(NumberSeparators numberSeparators READ getNumberSeparators WRITE setNumberSeparators NOTIFY numberSeparatorsChanged)
 
 	/*!
-		\brief Sets or gets the type of screen saver in use
+		\brief Sets or gets the image of screensaver in use
 	*/
 	Q_PROPERTY(QString screensaverImage READ getScreensaverImage WRITE setScreensaverImage NOTIFY screensaverImageChanged)
 
 	/*!
-		\brief Sets or gets the type of screen saver in use
+		\brief Sets or gets the text of screensaver in use
 	*/
 	Q_PROPERTY(QString screensaverText READ getScreensaverText WRITE setScreensaverText NOTIFY screensaverTextChanged)
 
 	/*!
-		\brief Sets or gets the type of screen saver in use
+		\brief Sets or gets the type of screensaver in use
 	*/
 	Q_PROPERTY(ScreensaverType screensaverType READ getScreensaverType WRITE setScreensaverType NOTIFY screensaverTypeChanged)
 
@@ -93,7 +93,7 @@ class GuiSettings : public ObjectInterface
 	Q_PROPERTY(QString time READ getTime WRITE setTime NOTIFY timeChanged)
 
 	/*!
-		\brief Sets or gets the turn off time for the display.
+		\brief Sets or gets the time out for the screensaver.
 	*/
 	Q_PROPERTY(TimeChoice timeOut READ getTimeOut WRITE setTimeOut NOTIFY timeOutChanged)
 
