@@ -22,18 +22,15 @@ MenuElement {
         onItemObjectChanged: selectSource(itemObject !== undefined ? itemObject.type : -1)
 
         function selectSource(sourceType) {
-            Log.logDebug("SoundAmbient, sourceType: " + sourceType)
             switch (sourceType) {
             case SourceBase.Radio:
                 sourceLoader.sourceComponent = radioSource
-                Log.logDebug("Loading radioSource component, obj: " + itemObject)
                 break
             case SourceBase.Aux:
                 sourceLoader.sourceComponent = auxSource
-                Log.logDebug("Loading auxSource component, obj: " + itemObject)
                 break
             default:
-                Log.logDebug("Source type unknown, default to empty component")
+                Log.logDebug("Source type " + sourceType + " unknown, default to empty component")
                 sourceLoader.sourceComponent = emptySource
                 break
             }
@@ -70,18 +67,23 @@ MenuElement {
 
         MenuItem {
             name: qsTr("source")
-            description: "radio | " + sourceLoader.itemObject.rdsText
+            property variant sourceObject
+            description: "radio | " + sourceObject ? sourceObject.rdsText : ""
             hasChild: true
             onClicked: {
                 privateProps.currentIndex = 1
                 itemList.currentIndex = -1
-                console.log("radioSource, dataModel: " + element.dataModel)
                 element.loadElement("SourceSelection.qml", name, element.dataModel)
             }
             state: privateProps.currentIndex === 1 ? "selected" : ""
 
-            Component.onCompleted: sourceLoader.itemObject.startRdsUpdates()
-            Component.onDestruction: sourceLoader.itemObject.stopRdsUpdates()
+            Component.onCompleted: {
+                // this must not be a binding, it's used to stop rds updates
+                // when the source changes
+                sourceObject = sourceLoader.itemObject
+                sourceObject.startRdsUpdates()
+            }
+            Component.onDestruction: sourceObject.stopRdsUpdates()
         }
     }
 
@@ -95,7 +97,6 @@ MenuElement {
             onClicked: {
                 privateProps.currentIndex = 1
                 itemList.currentIndex = -1
-                console.log("emptySource, dataModel: " + element.dataModel)
                 element.loadElement("SourceSelection.qml", name, element.dataModel)
             }
             state: privateProps.currentIndex === 1 ? "selected" : ""
@@ -112,7 +113,6 @@ MenuElement {
             onClicked: {
                 privateProps.currentIndex = 1
                 itemList.currentIndex = -1
-                console.log("auxSource, dataModel: " + element.dataModel)
                 element.loadElement("SourceSelection.qml", name, element.dataModel)
             }
             state: privateProps.currentIndex === 1 ? "selected" : ""

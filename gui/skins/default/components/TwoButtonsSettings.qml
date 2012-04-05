@@ -21,8 +21,19 @@ Row {
         MouseArea {
             anchors.fill: parent
             onClicked: button.leftClicked()
+            onPressed: leftTimer.running = true
+            onReleased: leftTimer.running = false
+        }
+
+        Timer {
+            id: leftTimer
+            interval: 500
+            running: false
+            repeat: true
+            onTriggered: button.leftClicked()
         }
     }
+
     Image {
         source: "../images/common/btn_comando.png"
         width: 104
@@ -35,6 +46,16 @@ Row {
         MouseArea {
             anchors.fill: parent
             onClicked: button.rightClicked()
+            onPressed: rightTimer.running = true
+            onReleased: rightTimer.running = false
+        }
+
+        Timer {
+            id: rightTimer
+            interval: 500
+            running: false
+            repeat: true
+            onTriggered: button.rightClicked()
         }
     }
 }
