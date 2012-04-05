@@ -18,12 +18,12 @@ Item {
             loops: Animation.Infinite
             NumberAnimation {
                 to: global.mainWidth - image.width
-                duration: 2000
+                duration: 6000
                 easing.type: Easing.Linear
             }
             NumberAnimation {
                 to: 0
-                duration: 2000
+                duration: 6000
                 easing.type: Easing.Linear
             }
         }
@@ -33,12 +33,12 @@ Item {
             loops: Animation.Infinite
             NumberAnimation {
                 to: global.mainHeight - image.height
-                duration: 3000
+                duration: 9000
                 easing.type: Easing.OutBounce
             }
             NumberAnimation {
                 to: 0
-                duration: 500
+                duration: 1500
                 easing.type: Easing.Linear
             }
         }
