@@ -1,7 +1,5 @@
 MenuElement 1.0 MenuElement.qml
-ControlIPRadio 1.0 ControlIPRadio.qml
 MenuTitle 1.0 MenuTitle.qml
-ButtonFMStation 1.0 ButtonFMStation.qml
 Paginator 1.0 Paginator.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
 SlideAnimation 1.0 SlideAnimation.qml
@@ -22,12 +20,10 @@ KeyPad 1.0 KeyPad.qml
 PaginatorColumn 1.0 PaginatorColumn.qml
 AlarmPopup 1.0 AlarmPopup.qml
 ButtonLeftRight 1.0 ButtonLeftRight.qml
-ControlMediaPlayer 1.0 ControlMediaPlayer.qml
 ControlUpDown 1.0 ControlUpDown.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 ControlBalance 1.0 ControlBalance.qml
 PaginatorList 1.0 PaginatorList.qml
-ControlFMRadio 1.0 ControlFMRadio.qml
 ButtonMediaControl 1.0 ButtonMediaControl.qml
 ControlSlider 1.0 ControlSlider.qml
 ButtonBack 1.0 ButtonBack.qml

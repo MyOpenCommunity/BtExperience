@@ -5,13 +5,14 @@ Image {
     id: control
     width: 212
     height: 100
+    property string imagesPath: "../../images/"
     property string radioName: "Radio Cassadritta"
     property int radioFrequency: 10870
 
     signal nextTrack
     signal previousTrack
 
-    source: "../images/common/bg_UnaRegolazione.png"
+    source: imagesPath + "common/bg_UnaRegolazione.png"
 
     Row {
         anchors {
@@ -22,12 +23,12 @@ Image {
         }
 
         ButtonMediaControl {
-            insideImage: "../images/common/precedente.png"
+            insideImage: imagesPath + "common/precedente.png"
             onClicked: control.previousTrack()
         }
 
         ButtonMediaControl {
-            insideImage: "../images/common/successivo.png"
+            insideImage: imagesPath + "common/successivo.png"
             onClicked: control.nextTrack()
         }
     }

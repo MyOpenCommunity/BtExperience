@@ -2,7 +2,8 @@ import QtQuick 1.1
 
 Image {
     id: button
-    source: "../images/sound_diffusion/btn_memorizza_radio.png"
+    property string imagesPath: "../../images/"
+    source: imagesPath + "sound_diffusion/btn_memorizza_radio.png"
     width: 40
     height: 50
     property int stationNumber: 1
@@ -13,7 +14,7 @@ Image {
         id: savedStation
         anchors.top: parent.top
         anchors.horizontalCenter:  parent.horizontalCenter
-        source: "../images/common/off.png"
+        source: imagesPath + "common/off.png"
         visible: false
         width: 34
         height: 34
@@ -38,7 +39,7 @@ Image {
             PropertyChanges {
                 target: savedStation
                 visible: true
-                source: "../images/common/on.png"
+                source: imagesPath + "common/on.png"
             }
         },
         State {
@@ -46,7 +47,7 @@ Image {
             PropertyChanges {
                 target: savedStation
                 visible: true
-                source: "../images/common/off.png"
+                source: imagesPath + "common/off.png"
             }
         }
     ]

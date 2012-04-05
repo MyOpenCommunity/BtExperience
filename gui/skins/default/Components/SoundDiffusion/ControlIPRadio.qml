@@ -6,8 +6,9 @@ Image {
     width: 212
     height: 100
     property string radioName: "Radio 24"
+    property string imagesPath: "../../images/"
 
-    source: "../images/common/bg_UnaRegolazione.png"
+    source: imagesPath + "common/bg_UnaRegolazione.png"
 
     Row {
         anchors {
@@ -17,17 +18,17 @@ Image {
         }
 
         ButtonMediaControl {
-            insideImage: "../images/common/precedente.png"
+            insideImage: imagesPath + "common/precedente.png"
             onClicked: Log.logDebug("Prev clicked")
         }
 
         ButtonMediaControl {
-            insideImage: "../images/common/play.png"
+            insideImage: imagesPath + "common/play.png"
             onClicked: Log.logDebug("Play clicked")
         }
 
         ButtonMediaControl {
-            insideImage: "../images/common/successivo.png"
+            insideImage:imagesPath + "common/successivo.png"
             onClicked: Log.logDebug("Next clicked")
         }
     }
