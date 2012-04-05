@@ -217,7 +217,7 @@ MenuElement {
                     // We need the following trick because the model is not directly editable.
                     // See the comment on ObjectListModel::getObject
                     property variant itemObject: zoneModel.getObject(index)
-                    source: "../../images/common/btn_zona.png"
+                    source: imagesPath + "common/btn_zona.png"
                     Row {
                         anchors.top: parent.top
                         Image {
