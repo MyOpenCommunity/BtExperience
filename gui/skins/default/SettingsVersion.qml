@@ -17,12 +17,8 @@ MenuElement {
         filters: [{objectId: ObjectInterface.IdPlatformSettings}]
     }
 
-    // TODO investigate why dataModel is not working as expected
-    //dataModel: objectModel.getObject(0)
     QtObject {
         id: privateProps
-        // HACK dataModel is not working, so let's define a model property here
-        // when dataModel work again, change all references!
         property variant model: objectModel.getObject(0)
     }
 
