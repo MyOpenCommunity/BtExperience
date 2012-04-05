@@ -57,6 +57,8 @@ MenuElement {
             break
         }
         sourceObj.setActive(element.dataModel.area)
+
+        element.closeChild()
     }
 
     Component {
