@@ -17,13 +17,13 @@ MenuElement {
         model: ListModel {
             id: modelList
             Component.onCompleted: {
-                var l = [GuiSettings.Dst_enabled,
-                         GuiSettings.Dst_disabled,
+                var l = [true,
+                         false,
                         ]
                 for (var i = 0; i < l.length; i++)
                     append({
                                "type": l[i],
-                               "name": pageObject.names.get('DST', l[i])
+                               "name": pageObject.names.get('SUMMER_TIME', l[i])
                            })
             }
         }

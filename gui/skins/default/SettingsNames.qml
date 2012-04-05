@@ -41,16 +41,16 @@ QtObject {
         Script.container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Never] = qsTr("never") // not really used
 
         Script.container['AUTO_UPDATE'] = []
-        Script.container['AUTO_UPDATE'][GuiSettings.AutoUpdate_enabled] = qsTr("Enabled")
-        Script.container['AUTO_UPDATE'][GuiSettings.AutoUpdate_disabled] = qsTr("Disabled")
+        Script.container['AUTO_UPDATE'][true] = qsTr("Enabled")
+        Script.container['AUTO_UPDATE'][false] = qsTr("Disabled")
 
         Script.container['FORMAT'] = []
         Script.container['FORMAT'][GuiSettings.TimeFormat_12h] = qsTr("12h")
         Script.container['FORMAT'][GuiSettings.TimeFormat_24h] = qsTr("24h")
 
-        Script.container['DST'] = []
-        Script.container['DST'][GuiSettings.Dst_enabled] = qsTr("Enable")
-        Script.container['DST'][GuiSettings.Dst_disabled] = qsTr("Disable")
+        Script.container['SUMMER_TIME'] = []
+        Script.container['SUMMER_TIME'][true] = qsTr("Enable")
+        Script.container['SUMMER_TIME'][false] = qsTr("Disable")
 
         Script.container['LANGUAGE'] = []
         Script.container['LANGUAGE'][GuiSettings.Italian] = qsTr("Italian")

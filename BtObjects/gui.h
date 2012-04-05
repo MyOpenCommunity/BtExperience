@@ -24,7 +24,7 @@ class GuiSettings : public ObjectInterface
 	/*!
 		\brief Sets or gets if date&time must be auto updated or not.
 	*/
-	Q_PROPERTY(AutoUpdate autoUpdate READ getAutoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
+	Q_PROPERTY(bool autoUpdate READ getAutoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
 
 	/*!
 		\brief Sets or gets the currency.
@@ -39,7 +39,7 @@ class GuiSettings : public ObjectInterface
 	/*!
 		\brief Sets or gets if daylight saving time must be taken into account.
 	*/
-	Q_PROPERTY(DaylightSavingTime dst READ getDst WRITE setDst NOTIFY dstChanged)
+	Q_PROPERTY(bool summerTime READ getSummerTime WRITE setSummerTime NOTIFY summerTimeChanged)
 
 	/*!
 		\brief Sets or gets time format as 12h or 24h.
@@ -108,9 +108,7 @@ class GuiSettings : public ObjectInterface
 	*/
 	Q_PROPERTY(TimeChoice turnOffTime READ getTurnOffTime WRITE setTurnOffTime NOTIFY turnOffTimeChanged)
 
-	Q_ENUMS(AutoUpdate)
 	Q_ENUMS(Currency)
-	Q_ENUMS(DaylightSavingTime)
 	Q_ENUMS(Language)
 	Q_ENUMS(MeasurementSystem)
 	Q_ENUMS(NumberSeparators)
@@ -122,12 +120,6 @@ class GuiSettings : public ObjectInterface
 public:
 	GuiSettings();
 
-	enum AutoUpdate
-	{
-		AutoUpdate_disabled,
-		AutoUpdate_enabled
-	};
-
 	enum Currency
 	{
 		CHF,
@@ -135,12 +127,6 @@ public:
 		GBP,
 		JPY,
 		USD
-	};
-
-	enum DaylightSavingTime
-	{
-		Dst_disabled,
-		Dst_enabled
 	};
 
 	enum Language
@@ -209,14 +195,14 @@ public:
 
 	virtual QString getName() const { return QString(); }
 
-	AutoUpdate getAutoUpdate() const;
-	void setAutoUpdate(AutoUpdate v);
+	bool getAutoUpdate() const;
+	void setAutoUpdate(bool v);
 	Currency getCurrency() const;
 	void setCurrency(Currency c);
 	QString getDate() const;
 	void setDate(QString d);
-	DaylightSavingTime getDst() const;
-	void setDst(DaylightSavingTime d);
+	bool getSummerTime() const;
+	void setSummerTime(bool d);
 	TimeFormat getFormat() const;
 	void setFormat(TimeFormat f);
 	QString getKeyboardLayout() const;
@@ -248,7 +234,7 @@ signals:
 	void autoUpdateChanged();
 	void currencyChanged();
 	void dateChanged();
-	void dstChanged();
+	void summerTimeChanged();
 	void formatChanged();
 	void keyboardLayoutChanged();
 	void languageChanged();
@@ -264,10 +250,10 @@ signals:
 	void turnOffTimeChanged();
 
 protected:
-	AutoUpdate autoUpdate;
+	bool autoUpdate;
 	Currency currency;
 	QString date;
-	DaylightSavingTime dst;
+	bool summerTime;
 	QString keyboardLayout;
 	Language language;
 	MeasurementSystem measurementSystem;

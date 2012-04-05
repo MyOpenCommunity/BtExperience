@@ -9,10 +9,10 @@
 GuiSettings::GuiSettings()
 {
 	// TODO read values from somewhere or implement something valueReceived-like
-	autoUpdate = AutoUpdate_enabled;
+	autoUpdate = true;
 	currency = EUR;
 	date = QDate::currentDate().toString(QString("dd/MM/yyyy"));
-	dst = Dst_enabled;
+	summerTime = true;
 	keyboardLayout = "";
 	language = Italian;
 	measurementSystem = Metric;
@@ -28,12 +28,12 @@ GuiSettings::GuiSettings()
 	turnOffTime = Minutes_10;
 }
 
-GuiSettings::AutoUpdate GuiSettings::getAutoUpdate() const
+bool GuiSettings::getAutoUpdate() const
 {
 	return autoUpdate;
 }
 
-void GuiSettings::setAutoUpdate(AutoUpdate v)
+void GuiSettings::setAutoUpdate(bool v)
 {
 	// TODO save value somewhere
 	autoUpdate = v;
@@ -64,16 +64,16 @@ void GuiSettings::setDate(QString d)
 	emit dateChanged();
 }
 
-GuiSettings::DaylightSavingTime GuiSettings::getDst() const
+bool GuiSettings::getSummerTime() const
 {
-	return dst;
+	return summerTime;
 }
 
-void GuiSettings::setDst(DaylightSavingTime d)
+void GuiSettings::setSummerTime(bool d)
 {
 	// TODO save value somewhere
-	dst = d;
-	emit dstChanged();
+	summerTime = d;
+	emit summerTimeChanged();
 }
 
 GuiSettings::TimeFormat GuiSettings::getFormat() const
