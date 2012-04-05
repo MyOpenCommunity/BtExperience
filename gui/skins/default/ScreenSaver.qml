@@ -5,7 +5,7 @@ import QtQuick 1.1
 Rectangle {
     id: screensaver
 
-    property alias source: component.source
+    property string screensaverFile
 
     width: global.mainWidth
     height: global.mainHeight
@@ -27,18 +27,16 @@ Rectangle {
         }
     }
 
-    Timer {
-        interval: 1000;
-        running: true;
-        repeat: true;
-        onTriggered: screensaverMgmt()
-    }
-
-    function screensaverMgmt() {
-        // TODO manage activation time (now it is hardcoded!)
-        if (global.lastTimePress > 60)
-            screensaver.opacity = 0.8
-        else
-            screensaver.opacity = 0
-    }
+    states: [
+        State {
+            name: "SCREENSAVER_ON"
+            // TODO manage activation time (now it is hardcoded!)
+            when: global.lastTimePress > 60
+            PropertyChanges { target: screensaver; opacity: 0.8}
+            PropertyChanges {
+                target: component
+                source: screensaver.screensaverFile
+            }
+        }
+    ]
 }
