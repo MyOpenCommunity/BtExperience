@@ -24,7 +24,10 @@ MenuElement {
         anchors.bottom: parent.bottom
     }
 
-    Component.onCompleted: sourceSelected(element.dataModel.currentSource)
+    Component.onCompleted: {
+        if (element.dataModel.currentSource)
+            sourceSelected(element.dataModel.currentSource)
+    }
 
     onChildLoaded: {
         element.child.sourceSelected.connect(element.sourceSelected)
