@@ -7,6 +7,8 @@ Image {
     height: 50
     property int stationNumber: 1
 
+    signal stationSelected(int stationNumber)
+
     Image {
         id: savedStation
         anchors.top: parent.top
@@ -22,6 +24,12 @@ Image {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 5
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        onClicked: button.stationSelected(stationNumber)
     }
 
     states: [

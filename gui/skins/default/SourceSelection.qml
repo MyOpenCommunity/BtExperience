@@ -73,69 +73,37 @@ MenuElement {
                 height: 200
                 source: "images/sound_diffusion/bg_StazioniMemorizzate.png"
 
-                // TODO: must be linked with model and probably revised
-                Grid {
-                    columns: 5
-                    rows: 3
+                Row {
                     anchors {
                         horizontalCenter: parent.horizontalCenter
-                        bottom: parent.bottom
-                        bottomMargin: 5
+                        top: parent.top
+                        topMargin: 5
                     }
 
                     ButtonFMStation {
                         stationNumber: 1
-                        state: "saved"
+                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
+                        onStationSelected: objModel.currentStation = stationNumber
                     }
                     ButtonFMStation {
                         stationNumber: 2
-                        state: "saved"
+                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
+                        onStationSelected: objModel.currentStation = stationNumber
                     }
                     ButtonFMStation {
                         stationNumber: 3
-                        state: "saved"
+                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
+                        onStationSelected: objModel.currentStation = stationNumber
                     }
                     ButtonFMStation {
                         stationNumber: 4
-                        state: "playing"
+                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
+                        onStationSelected: objModel.currentStation = stationNumber
                     }
                     ButtonFMStation {
                         stationNumber: 5
-                        state: "saved"
-                    }
-
-                    ButtonFMStation {
-                        stationNumber: 6
-                        state: "saved"
-                    }
-                    ButtonFMStation {
-                        stationNumber: 7
-                        state: "saved"
-                    }
-                    ButtonFMStation {
-                        stationNumber: 8
-                    }
-                    ButtonFMStation {
-                        stationNumber: 9
-                    }
-                    ButtonFMStation {
-                        stationNumber: 10
-                    }
-
-                    ButtonFMStation {
-                        stationNumber: 11
-                    }
-                    ButtonFMStation {
-                        stationNumber: 12
-                    }
-                    ButtonFMStation {
-                        stationNumber: 13
-                    }
-                    ButtonFMStation {
-                        stationNumber: 14
-                    }
-                    ButtonFMStation {
-                        stationNumber: 15
+                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
+                        onStationSelected: objModel.currentStation = stationNumber
                     }
                 }
             }
