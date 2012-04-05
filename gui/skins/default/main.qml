@@ -16,7 +16,7 @@ Item {
 
     Loader {
         id: animationLoader
-        source: "FadeAnimation.qml"
+        source: "Components/FadeAnimation.qml"
     }
 
     Connections {

@@ -1,6 +1,8 @@
 import QtQuick 1.1
 import QtWebKit 1.0
 import "js/Stack.js" as Stack
+import Components 1.0
+import Components.Browser 1.0
 
 Page {
     ToolBar {

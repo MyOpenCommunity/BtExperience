@@ -2,11 +2,12 @@ import QtQuick 1.1
 import "js/datetime.js" as DateTime
 import Components 1.0
 
+
 SystemPage {
     id: antintrusion
     source: "images/antintrusion.jpg"
     text: qsTr("antintrusion")
-    rootElement: "AntintrusionSystem.qml"
+    rootElement: "Components/Antintrusion/AntintrusionSystem.qml"
     names: AntintrusionNames { }
 
     // KeyPad management and API

@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import "js/Stack.js" as Stack
 import BtObjects 1.0 // a temporary workaround to load immediately the BtObjects module
+import Components 1.0
 
 Page {
 id: mainarea
@@ -203,7 +204,7 @@ source: "images/home/home.jpg"
                   textFirst: false
                   source: "images/home/stanze.png"
                   text: qsTr("rooms")
-                  onClicked: Stack.openPage("Rooms/Rooms.qml")
+                  onClicked: Stack.openPage("Rooms.qml")
                   textLeftMargin: 70
               }
 
@@ -212,7 +213,7 @@ source: "images/home/home.jpg"
                   source: "images/home/sistemi.png"
                   text: qsTr("systems")
                   textLeftMargin: 30
-                  onClicked: Stack.openPage("Systems/Systems.qml")
+                  onClicked: Stack.openPage("Systems.qml")
               }
 
               ButtonHomePageLink {
