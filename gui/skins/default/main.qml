@@ -27,8 +27,11 @@ Item {
     Connections {
         target: global
         onLastTimePressChanged: {
-//            console.log("last time press: " + global.lastTimePress)
+            //            console.log("last time press: " + global.lastTimePress)
         }
     }
 
+    ScreenSaver {
+        source: "ScreenSaverBouncingImage.qml"
+    }
 }
