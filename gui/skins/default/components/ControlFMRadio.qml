@@ -6,7 +6,10 @@ Image {
     width: 212
     height: 100
     property string radioName: "Radio Cassadritta"
-    property string radioFrequency: "FM 108.7"
+    property int radioFrequency: 10870
+
+    signal nextTrack
+    signal previousTrack
 
     source: "../images/common/bg_UnaRegolazione.png"
 
@@ -20,12 +23,12 @@ Image {
 
         ButtonMediaControl {
             insideImage: "../images/common/precedente.png"
-            onClicked: Log.logDebug("Prev clicked")
+            onClicked: control.previousTrack()
         }
 
         ButtonMediaControl {
             insideImage: "../images/common/successivo.png"
-            onClicked: Log.logDebug("Next clicked")
+            onClicked: control.nextTrack()
         }
     }
 
@@ -40,8 +43,19 @@ Image {
         id: text2
         x: 15
         y: 62
-        text: control.radioFrequency
+        text: formatFrequency(control.radioFrequency)
         font.pointSize: 12
         color: "white"
+    }
+
+    function formatFrequency(freq) {
+        if (freq === -1)
+            return "FM --.-"
+        else
+        {
+            var s = "FM " + freq
+            // add a dot "." before the last two digits
+            return s.slice(0, s.length - 2) + "." + s.slice(s.length - 2)
+        }
     }
 }

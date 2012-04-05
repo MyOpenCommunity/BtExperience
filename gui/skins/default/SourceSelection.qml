@@ -65,7 +65,11 @@ MenuElement {
             property variant objModel: undefined
             ControlFMRadio {
                 radioName: "radio - " + objModel.rdsText
-                radioFrequency: "FM " + (objModel.currentFrequency / 100)
+                radioFrequency: objModel.currentFrequency
+
+                // TODO: assume we only want automatic frequency search
+                onNextTrack: objModel.searchUp()
+                onPreviousTrack: objModel.searchDown()
             }
 
             Image {
