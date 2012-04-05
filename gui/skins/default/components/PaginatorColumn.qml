@@ -3,7 +3,7 @@ import QtQuick 1.1
 Item {
     id: element
     width: 212
-    height: paginator.height + privateProps.currentPageSize
+    height: paginator.height * paginator.visible + privateProps.currentPageSize
 
     property int maxHeight: 300
 
