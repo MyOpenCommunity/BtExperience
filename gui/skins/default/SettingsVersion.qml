@@ -50,7 +50,6 @@ MenuElement {
             source: "images/common/bg_zone.png"
             anchors.bottom: parent.bottom
             Column {
-                spacing: 5
                 ControlTitleValue {
                     title: qsTr("firmware")
                     value: privateProps.model.firmware

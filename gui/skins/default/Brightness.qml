@@ -7,7 +7,7 @@ MenuElement {
     id: element
 
     width: 212
-    height: 164
+    height: paginator.height
 
     ObjectModel {
         id: objectModel
