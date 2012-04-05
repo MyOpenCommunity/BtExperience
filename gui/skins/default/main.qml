@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "Stack.js" as Stack
+import "js/Stack.js" as Stack
 
 
 Item {
@@ -16,7 +16,7 @@ Item {
 
     Loader {
         id: animationLoader
-        source: "FadeAnimation.qml"
+        source: "Components/FadeAnimation.qml"
     }
 
     Connections {

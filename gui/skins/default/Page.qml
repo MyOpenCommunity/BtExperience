@@ -1,5 +1,6 @@
 import QtQuick 1.1
-import "Stack.js" as Stack
+import Components 1.0
+import "js/Stack.js" as Stack
 
 Image {
     id: page

@@ -4,6 +4,6 @@ SystemPage {
     id: sounddiffusion
     source: "images/sound_diffusion.jpg"
     text: qsTr("sound system")
-    rootElement: "SoundDiffusionSystem.qml"
+    rootElement: "Components/SoundDiffusion/SoundDiffusionSystem.qml"
 }
 
