@@ -33,6 +33,19 @@ void GuiSettings::sendCommand(const QString &cmd)
 	system(qPrintable(cmd));
 }
 
+QString GuiSettings::getLanguageString() const
+{
+	switch(language)
+	{
+	case English:
+		return QString("en");
+	case Italian:
+		return QString("it");
+	default:
+		return QString("it");
+	}
+}
+
 int GuiSettings::getBrightness() const
 {
 	return brightness;
