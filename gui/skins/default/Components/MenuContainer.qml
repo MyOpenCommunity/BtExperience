@@ -2,7 +2,7 @@ import QtQuick 1.1
 import "MenuContainer.js" as Script
 
 // The MenuContainer components encapsulates some logic to show a gerarchic list
-// of MenuElement with different sizes and behaviour. The items are arranged
+// of MenuColumn with different sizes and behaviour. The items are arranged
 // horizontally inside the container until the sum of their width overtakes
 // the width of the container. In this case, the first element (or elements) are
 // hidden.

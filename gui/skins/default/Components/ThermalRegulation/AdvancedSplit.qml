@@ -2,7 +2,7 @@ import QtQuick 1.1
 import Components 1.0
 import "../../js/logging.js" as Log
 
-MenuElement {
+MenuColumn {
     id: element
     width: 212
     height: programItem.height + modalityItem.height + options.height

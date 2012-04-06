@@ -2,7 +2,7 @@ import QtQuick 1.1
 import "../../js/Stack.js" as Stack
 import Components 1.0
 
-MenuElement {
+MenuColumn {
     id: element
     height: 50 * itemList.count
     width: 212

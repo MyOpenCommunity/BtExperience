@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 import "../../js/datetime.js" as DateTime
 
-MenuElement {
+MenuColumn {
     id: element
     width: img.width;
     height: paginator.height

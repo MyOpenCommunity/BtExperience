@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 
-MenuElement {
+MenuColumn {
     width: 212
     height: 370
     property string imagesPath: "../../images/"

@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 
 
-MenuElement {
+MenuColumn {
     id: element
     height: 50 * itemList.count
     width: 212

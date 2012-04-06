@@ -2,7 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 
-MenuElement {
+MenuColumn {
     id: element
     height: buttonOnOff.height + volumeSlider.height + amplifierSettings.height
     width: 212

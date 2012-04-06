@@ -3,7 +3,7 @@ import BtObjects 1.0
 import "../../js/logging.js" as Log
 import Components 1.0
 
-MenuElement {
+MenuColumn {
     id: element
     height: itemList.height + sourceLoader.height
     width: 212
