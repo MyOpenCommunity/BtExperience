@@ -48,13 +48,6 @@ Item {
         onAnimationCompleted: Stack.changePageDone()
     }
 
-    Connections {
-        target: global
-        onLastTimePressChanged: {
-            //            console.log("last time press: " + global.lastTimePress)
-        }
-    }
-
     ScreenSaver {
         // TODO load the right screensaver depending on configuration
         screensaverFile: "ScreenSaverBouncingImage.qml"
