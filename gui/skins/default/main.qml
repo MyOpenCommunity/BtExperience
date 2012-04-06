@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import "js/Stack.js" as Stack
-
+import Components 1.0
 
 Item {
     id: container
@@ -8,6 +8,8 @@ Item {
     height: 600
     transform: Scale { origin.x: 0; origin.y: 0; xScale: global.mainWidth / 1024; yScale: global.mainHeight / 600 }
     property alias animation: animationLoader
+    property string animationType: "fade"
+
 
     Component.onCompleted: {
         Stack.container = container
@@ -16,7 +18,29 @@ Item {
 
     Loader {
         id: animationLoader
-        source: "Components/FadeAnimation.qml"
+        sourceComponent: {
+            switch (container.animationType) {
+            case "slide":
+                return slideAnimationComponent
+            case "fade":
+                return fadeAnimationComponent
+            default:
+                console.log("Warning: unknown animation type!")
+                return fadeAnimationComponent
+            }
+        }
+    }
+
+    Component {
+        id: fadeAnimationComponent
+        FadeAnimation {
+        }
+    }
+
+    Component {
+        id: slideAnimationComponent
+        SlideAnimation {
+        }
     }
 
     Connections {

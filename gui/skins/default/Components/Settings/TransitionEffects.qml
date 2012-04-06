@@ -19,7 +19,7 @@ MenuElement {
             hasChild: false
             selectOnClick: true
             onClicked: {
-                Stack.container.animation.source = model.componentFile
+                Stack.container.animationType = model.name
             }
         }
 
@@ -30,12 +30,10 @@ MenuElement {
         id: modelList
         ListElement {
             name: "fade"
-            componentFile: "../FadeAnimation.qml"
         }
 
         ListElement {
             name: "slide"
-            componentFile: "../SlideAnimation.qml"
         }
     }
 }
