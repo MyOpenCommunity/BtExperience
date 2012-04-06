@@ -31,7 +31,7 @@ Rectangle {
         State {
             name: "SCREENSAVER_ON"
             // TODO manage activation time (now it is hardcoded!)
-            when: global.lastTimePress > 3
+            when: global.lastTimePress > 60
             PropertyChanges { target: screensaver; opacity: 0.8}
             PropertyChanges {
                 target: component
