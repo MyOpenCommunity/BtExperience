@@ -7,7 +7,7 @@ Row {
     Image {
         id: imgOn
         source: "../images/common/btn_OKAnnulla.png"
-        width: 104
+        width: parent.width / 2
         height: 50
         property alias textColor: textOn.color
         Text {
@@ -25,7 +25,7 @@ Row {
     Image {
         id: imgOff
         source: "../images/common/btn_OKAnnullaS.png"
-        width: 104
+        width: parent.width / 2
         height: 50
 
         property alias textColor: textOff.color
