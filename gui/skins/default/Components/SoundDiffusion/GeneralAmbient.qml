@@ -16,7 +16,7 @@ MenuElement {
             hasChild: true
             description: "Radio | FM 108.7 - Radio Cassadritta"
             status: -1
-            onClicked: element.loadElement("Components/SoundDiffusion/SourceSelection.qml", qsTr("source"))
+            onClicked: element.loadElement("Components/SoundDiffusion/SourceControl.qml", qsTr("source"))
         }
 
         VolumeGeneral {
