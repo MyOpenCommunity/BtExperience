@@ -2,6 +2,7 @@ import QtQuick 1.1
 
 Row {
     id: button
+    width: 208
     property int status: 0
     signal clicked (bool newStatus)
     Image {
