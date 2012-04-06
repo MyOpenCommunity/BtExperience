@@ -30,12 +30,12 @@ MenuElement {
         id: modelList
         ListElement {
             name: "fade"
-            componentFile: "Components/FadeAnimation.qml"
+            componentFile: "../FadeAnimation.qml"
         }
 
         ListElement {
             name: "slide"
-            componentFile: "Components/SlideAnimation.qml"
+            componentFile: "../SlideAnimation.qml"
         }
     }
 }
