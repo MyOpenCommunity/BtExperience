@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 Row {
     id: button
-    property bool status: false
+    property int status: 0
     signal clicked (bool newStatus)
     Image {
         id: imgOn
@@ -43,11 +43,19 @@ Row {
         }
     }
     anchors.horizontalCenter: parent.horizontalCenter
-    states: State {
-        when: status == true
-        name: "on"
-        PropertyChanges { target: imgOn; source: "../images/common/btn_OKAnnullaS.png"; textColor: "#ffffff"; }
-        PropertyChanges { target: imgOff; source: "../images/common/btn_OKAnnulla.png"; textColor: "#000000"; }
-    }
+    states: [
+        State {
+            when: status === 1
+            name: "on"
+            PropertyChanges { target: imgOn; source: "../images/common/btn_OKAnnullaS.png"; textColor: "#ffffff"; }
+            PropertyChanges { target: imgOff; source: "../images/common/btn_OKAnnulla.png"; textColor: "#000000"; }
+        },
+        State {
+            when: status === -1
+            name: "disabled"
+            PropertyChanges { target: imgOn; source: "../images/common/btn_OKAnnulla.png"; textColor: "#000000"; }
+            PropertyChanges { target: imgOff; source: "../images/common/btn_OKAnnulla.png"; textColor: "#000000"; }
+        }
+    ]
 }
 
