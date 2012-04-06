@@ -151,7 +151,7 @@ MenuElement {
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps.currentElement = 1
-                    element.loadElement("SongBrowser.qml", "Browse")
+                    element.loadElement("Components/SoundDiffusion/SongBrowser.qml", "Browse")
                 }
             }
 
