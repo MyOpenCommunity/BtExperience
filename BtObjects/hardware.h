@@ -20,8 +20,25 @@ class HardwareSettings : public ObjectInterface
 
 	Q_OBJECT
 
-	Q_PROPERTY(int brightness READ getBrightness WRITE setBrightness NOTIFY brightnessChanged)
-	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
+	/*!
+		\brief Sets or gets if date&time must be auto updated or not.
+	*/
+	Q_PROPERTY(bool autoUpdate READ getAutoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
+
+	/*!
+		\brief Sets or gets the date.
+	*/
+	Q_PROPERTY(QString date READ getDate WRITE setDate NOTIFY dateChanged)
+
+	/*!
+		\brief Sets or gets if daylight saving time must be taken into account.
+	*/
+	Q_PROPERTY(bool summerTime READ getSummerTime WRITE setSummerTime NOTIFY summerTimeChanged)
+
+	/*!
+		\brief Sets or gets the time.
+	*/
+	Q_PROPERTY(QString time READ getTime WRITE setTime NOTIFY timeChanged)
 
 public:
 	HardwareSettings();
@@ -40,20 +57,26 @@ public:
 
 	virtual QString getName() const { return QString(); }
 
-	// brightness must be [1, 100]
-	int getBrightness() const;
-	void setBrightness(int b);
-	// contrast must be [1, 100]
-	int getContrast() const;
-	void setContrast(int c);
+	bool getAutoUpdate() const;
+	void setAutoUpdate(bool v);
+	QString getDate() const;
+	void setDate(QString d);
+	bool getSummerTime() const;
+	void setSummerTime(bool d);
+	QString getTime() const;
+	void setTime(QString t);
 
 signals:
-	void brightnessChanged();
-	void contrastChanged();
+	void autoUpdateChanged();
+	void dateChanged();
+	void summerTimeChanged();
+	void timeChanged();
 
 protected:
-	int brightness;
-	int contrast;
+	bool autoUpdate;
+	QString date;
+	bool summerTime;
+	QString time;
 
 private:
 	void sendCommand(const QString &cmd);

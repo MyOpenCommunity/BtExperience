@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import BtExperience 1.0
 import "logging.js" as Log
 
 
@@ -10,21 +11,10 @@ MenuElement {
     width: 212
     height: paginator.height
 
-    // object model to retrieve network data
-    ObjectModel {
-        id: objectModel
-        filters: [{objectId: ObjectInterface.IdGuiSettings}]
-    }
-    // TODO investigate why dataModel is not working as expected
-    //dataModel: objectModel.getObject(0)
-
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
         id: privateProps
         property int currentIndex: -1
-        // HACK dataModel is not working, so let's define a model property here
-        // when dataModel work again, change all references!
-        property variant model: objectModel.getObject(0)
         property int type: 0
     }
 
@@ -32,7 +22,7 @@ MenuElement {
 
     // retrieves actual configuration information and sets the right component
     Component.onCompleted: {
-        screenSaverTypesChanged(privateProps.model.screensaverType)
+        screenSaverTypesChanged(global.guiSettings.screensaverType)
     }
 
     // connects child signals to slots
@@ -85,7 +75,7 @@ MenuElement {
         MenuItem {
             id: typeItem
             name: qsTr("type")
-            description: pageObject.names.get('SCREEN_SAVER_TYPE', privateProps.model.screensaverType)
+            description: pageObject.names.get('SCREEN_SAVER_TYPE', global.guiSettings.screensaverType)
             hasChild: true
             state: privateProps.currentIndex === 2 ? "selected" : ""
             onClicked: {
@@ -108,14 +98,14 @@ MenuElement {
                 id: turnOffTime
                 description: qsTr("turn off display")
                 choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', currentIndex)
-                property int currentIndex: privateProps.model.turnOffTime
+                property int currentIndex: global.guiSettings.turnOffTime
                 onPlusClicked: if (currentIndex < 8) ++currentIndex
                 onMinusClicked: if (currentIndex > 0)--currentIndex
             }
             ButtonOkCancel {
                 onOkClicked: {
-                    privateProps.model.screensaverType = privateProps.type
-                    privateProps.model.turnOffTime = turnOffTime.currentIndex
+                    global.guiSettings.screensaverType = privateProps.type
+                    global.guiSettings.turnOffTime = turnOffTime.currentIndex
                 }
             }
         }
@@ -135,7 +125,7 @@ MenuElement {
                 }
                 Text {
                     id: screensaverImage
-                    text: privateProps.model.screensaverImage
+                    text: global.guiSettings.screensaverImage
                     anchors.fill: parent
                 }
             }
@@ -143,7 +133,7 @@ MenuElement {
                 id: screensaverTimeout
                 description: qsTr("screen saver time out")
                 choice: pageObject.names.get('SCREEN_SAVER_TIMEOUT', currentIndex)
-                property int currentIndex: privateProps.model.timeOut
+                property int currentIndex: global.guiSettings.timeOut
                 onPlusClicked: if (currentIndex < 7) ++currentIndex
                 onMinusClicked: if (currentIndex > 0)--currentIndex
             }
@@ -151,16 +141,16 @@ MenuElement {
                 id: turnOffTime
                 description: qsTr("turn off display")
                 choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', currentIndex)
-                property int currentIndex: privateProps.model.turnOffTime
+                property int currentIndex: global.guiSettings.turnOffTime
                 onPlusClicked: if (currentIndex < 8) ++currentIndex
                 onMinusClicked: if (currentIndex > 0)--currentIndex
             }
             ButtonOkCancel {
                 onOkClicked: {
-                    privateProps.model.screensaverType = privateProps.type
-                    privateProps.model.screensaverImage = screensaverImage.text
-                    privateProps.model.timeOut = screensaverTimeout.currentIndex
-                    privateProps.model.turnOffTime = turnOffTime.currentIndex
+                    global.guiSettings.screensaverType = privateProps.type
+                    global.guiSettings.screensaverImage = screensaverImage.text
+                    global.guiSettings.timeOut = screensaverTimeout.currentIndex
+                    global.guiSettings.turnOffTime = turnOffTime.currentIndex
                 }
             }
         }
@@ -183,7 +173,7 @@ MenuElement {
                 id: screensaverTimeout
                 description: qsTr("screen saver time out")
                 choice: pageObject.names.get('SCREEN_SAVER_TIMEOUT', currentIndex)
-                property int currentIndex: privateProps.model.timeOut
+                property int currentIndex: global.guiSettings.timeOut
                 onPlusClicked: if (currentIndex < 7) ++currentIndex
                 onMinusClicked: if (currentIndex > 0)--currentIndex
             }
@@ -191,16 +181,16 @@ MenuElement {
                 id: turnOffTime
                 description: qsTr("turn off display")
                 choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', currentIndex)
-                property int currentIndex: privateProps.model.turnOffTime
+                property int currentIndex: global.guiSettings.turnOffTime
                 onPlusClicked: if (currentIndex < 8) ++currentIndex
                 onMinusClicked: if (currentIndex > 0)--currentIndex
             }
             ButtonOkCancel {
                 onOkClicked: {
-                    privateProps.model.screensaverType = privateProps.type
-                    privateProps.model.screensaverText = screensaverText.text
-                    privateProps.model.timeOut = screensaverTimeout.currentIndex
-                    privateProps.model.turnOffTime = turnOffTime.currentIndex
+                    global.guiSettings.screensaverType = privateProps.type
+                    global.guiSettings.screensaverText = screensaverText.text
+                    global.guiSettings.timeOut = screensaverTimeout.currentIndex
+                    global.guiSettings.turnOffTime = turnOffTime.currentIndex
                 }
             }
         }
@@ -213,7 +203,7 @@ MenuElement {
                 id: screensaverTimeout
                 description: qsTr("screen saver time out")
                 choice: pageObject.names.get('SCREEN_SAVER_TIMEOUT', currentIndex)
-                property int currentIndex: privateProps.model.timeOut
+                property int currentIndex: global.guiSettings.timeOut
                 onPlusClicked: if (currentIndex < 7) ++currentIndex
                 onMinusClicked: if (currentIndex > 0)--currentIndex
             }
@@ -221,15 +211,15 @@ MenuElement {
                 id: turnOffTime
                 description: qsTr("turn off display")
                 choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', currentIndex)
-                property int currentIndex: privateProps.model.turnOffTime
+                property int currentIndex: global.guiSettings.turnOffTime
                 onPlusClicked: if (currentIndex < 8) ++currentIndex
                 onMinusClicked: if (currentIndex > 0)--currentIndex
             }
             ButtonOkCancel {
                 onOkClicked: {
-                    privateProps.model.screensaverType = privateProps.type
-                    privateProps.model.timeOut = screensaverTimeout.currentIndex
-                    privateProps.model.turnOffTime = turnOffTime.currentIndex
+                    global.guiSettings.screensaverType = privateProps.type
+                    global.guiSettings.timeOut = screensaverTimeout.currentIndex
+                    global.guiSettings.turnOffTime = turnOffTime.currentIndex
                 }
             }
         }

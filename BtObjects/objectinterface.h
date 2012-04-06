@@ -35,7 +35,6 @@ public:
 		IdPowerAmplifier,
 		IdSoundSource,
 		IdPlatformSettings,
-		IdGuiSettings,
 		IdMonoChannelSoundDiffusionSystem,
 		IdMonoChannelSoundAmbient,
 		IdMax // the last value + 1, used to check the ids requested from qml

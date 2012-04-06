@@ -13,7 +13,7 @@ MenuElement {
     // object model to retrieve network data
     ObjectModel {
         id: objectModel
-        filters: [{objectId: ObjectInterface.IdGuiSettings}]
+        filters: [{objectId: ObjectInterface.IdHardwareSettings}]
     }
     // TODO investigate why dataModel is not working as expected
     //dataModel: objectModel.getObject(0)
@@ -52,10 +52,10 @@ MenuElement {
     function timeChanged(value, auto, format) {
         privateProps.model.time = value;
         privateProps.model.autoUpdate = auto
-        privateProps.model.format = format
+        global.guiSettings.format = format
     }
     function timezoneChanged(value) {
-        privateProps.model.timezone = value;
+        global.guiSettings.timezone = value;
     }
     function daylightSavingTimeChanged(value) {
         privateProps.model.summerTime = value;
@@ -76,7 +76,7 @@ MenuElement {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                element.loadElement("", name)
+                element.loadElement("Date.qml", name)
             }
         }
 
@@ -98,7 +98,7 @@ MenuElement {
         MenuItem {
             id: timezoneItem
             name: qsTr("timezone")
-            description: pageObject.names.get('TIMEZONE', privateProps.model.timezone)
+            description: pageObject.names.get('TIMEZONE', global.guiSettings.timezone)
             hasChild: true
             state: privateProps.currentIndex === 3 ? "selected" : ""
             onClicked: {

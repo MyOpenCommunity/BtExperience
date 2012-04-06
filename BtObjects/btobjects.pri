@@ -1,7 +1,6 @@
 HEADERS += \
 	antintrusionsystem.h \
 	folderlistmodel.h \
-	gui.h \
 	hardware.h \
 	lightobjects.h \
 	mediaobjects.h \
@@ -33,7 +32,6 @@ HEADERS += \
 SOURCES += \
 	antintrusionsystem.cpp \
 	folderlistmodel.cpp \
-	gui.cpp \
 	hardware.cpp \
 	lightobjects.cpp \
 	mediaobjects.cpp \

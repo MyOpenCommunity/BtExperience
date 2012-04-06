@@ -5,7 +5,7 @@ MenuElement {
     id: element
     width: 212
     height: 100
-    signal daylightSavingTimeChanged(int config)
+    signal daylightSavingTimeChanged(bool config)
 
     ListView {
         id: view

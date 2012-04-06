@@ -1,13 +1,16 @@
 #include "hardware.h"
 
 #include <QDebug>
+#include <QDateTime>
 
 
 HardwareSettings::HardwareSettings()
 {
 	// TODO read values from somewhere or implement something valueReceived-like
-	brightness = 50;
-	contrast = 50;
+	autoUpdate = true;
+	date = QDateTime::currentDateTime().toString("dd/MM/yyyy");
+	summerTime = false;
+	time = QDateTime::currentDateTime().toString("hh:mm");
 }
 
 void HardwareSettings::sendCommand(const QString &cmd)
@@ -17,31 +20,50 @@ void HardwareSettings::sendCommand(const QString &cmd)
 	system(qPrintable(cmd));
 }
 
-int HardwareSettings::getBrightness() const
+bool HardwareSettings::getAutoUpdate() const
 {
-	return brightness;
+	return autoUpdate;
 }
 
-void HardwareSettings::setBrightness(int b)
+void HardwareSettings::setAutoUpdate(bool v)
 {
-	qDebug() << QString("HardwareSettings::setBrightness(%1)").arg(b);
-	// TODO: perform the proper conversion
-	sendCommand(QString("i2cset -y 1 0x4a 0xf0 0x") + QString::number(b, 16));
-	sendCommand(QString("i2cset -y 1 0x4a 0xf9 0x") + QString::number(b, 16));
 	// TODO save value somewhere
-	brightness = b;
-	emit brightnessChanged();
+	autoUpdate = v;
+	emit autoUpdateChanged();
 }
 
-int HardwareSettings::getContrast() const
+QString HardwareSettings::getDate() const
 {
-	return contrast;
+	return date;
 }
 
-void HardwareSettings::setContrast(int c)
+void HardwareSettings::setDate(QString d)
 {
-	qDebug() << QString("HardwareSettings::setContrast(%1)").arg(c);
 	// TODO save value somewhere
-	contrast = c;
-	emit contrastChanged();
+	date = d;
+	emit dateChanged();
+}
+
+bool HardwareSettings::getSummerTime() const
+{
+	return summerTime;
+}
+
+void HardwareSettings::setSummerTime(bool d)
+{
+	// TODO save value somewhere
+	summerTime = d;
+	emit summerTimeChanged();
+}
+
+QString HardwareSettings::getTime() const
+{
+	return time;
+}
+
+void HardwareSettings::setTime(QString t)
+{
+	// TODO save value somewhere
+	time = t;
+	emit timeChanged();
 }
