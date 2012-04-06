@@ -28,6 +28,7 @@
 #include "qmlapplicationviewer.h"
 #include "eventfilters.h"
 #include "globalproperties.h"
+#include "guisettings.h"
 
 
 // Start definitions required by libcommon
@@ -92,10 +93,6 @@ void setupOpenGL(QDeclarativeView *v)
 }
 #endif
 
-// TODO Copied&pasted from ts_3_5.x11, must be readapted.
-// The template path to find the language file.
-#define LANGUAGE_FILE_TMPL "%s/gui/linguist-ts/bt_experience_%s"
-
 
 #if defined(BT_MALIIT)
 // QGraphicsProxyWidget::paint() uses QWidget::render() which seems to render the masked
@@ -135,21 +132,32 @@ private:
 
 #endif
 
-void installTranslator(QApplication &a, QString language_suffix)
+// Sets a language on the GUI; the GUI must be restarted for changes to have effect
+void setLanguage(QString language)
 {
-	QString language_file;
-	language_file.sprintf(LANGUAGE_FILE_TMPL,
-						  QDir::currentPath().toAscii().constData(),
-						  language_suffix.toAscii().constData());
-	QTranslator *translator = new QTranslator();
-	if (translator->load(language_file))
+	// language must be in the form it, en, ...
+	static QTranslator *actual_translator = 0;
+	// removes actual translation
+	if (actual_translator)
 	{
-		a.installTranslator(translator);
+		QCoreApplication::instance()->removeTranslator(actual_translator);
+		actual_translator = 0;
 	}
+	// computes new translation file name
+	QString lf;
+	lf.sprintf("%s/gui/linguist-ts/bt_experience_%s",
+			   QDir::currentPath().toAscii().constData(),
+			   language.toAscii().constData());
+	// tries to install new translation
+	actual_translator = new QTranslator();
+	if (actual_translator->load(lf))
+		QCoreApplication::instance()->installTranslator(actual_translator);
 	else
-		qWarning() << "File " << language_file << " not found for language " << language_suffix;
+	{
+		actual_translator = 0;
+		qWarning() << "File " << lf << " not found for language " << language;
+	}
 }
-
 
 // Manage the boot (or reboot) of the gui part
 class BootManager : public QObject
@@ -173,6 +181,8 @@ public:
 
 	void boot()
 	{
+		setLanguage(global->getGuiSettings()->getLanguageString());
+
 		viewer = new QmlApplicationViewer;
 	#if USE_OPENGL
 		setupOpenGL(viewer);
@@ -235,10 +245,6 @@ private:
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
-
-	// TODO pass gui language; I hardcoded Italian for now
-	// pay attention to the fact that the translator MUST be installed before doing anything else
-	installTranslator(app, "it");
 
 	setupLogger("/var/tmp/BTicino.log");
 	VERBOSITY_LEVEL = 3;

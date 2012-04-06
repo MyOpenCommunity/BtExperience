@@ -190,6 +190,8 @@ public:
 	TimeChoice getTurnOffTime() const;
 	void setTurnOffTime(TimeChoice tc);
 
+	QString getLanguageString() const;
+
 signals:
 	void brightnessChanged();
 	void contrastChanged();
