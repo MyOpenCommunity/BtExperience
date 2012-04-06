@@ -24,9 +24,6 @@ MenuElement {
             name: model.name
             hasChild: false
             selectOnClick: true
-            onClicked: {
-                Stack.container.animation.source = model.componentFile
-            }
         }
 
         model: modelList
