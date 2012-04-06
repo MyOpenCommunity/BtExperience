@@ -4,6 +4,7 @@
 #include "objectinterface.h"
 
 #include <QObject>
+#include <QDateTime>
 
 
 /*!
@@ -28,7 +29,7 @@ class HardwareSettings : public ObjectInterface
 	/*!
 		\brief Sets or gets the date.
 	*/
-	Q_PROPERTY(QString date READ getDate WRITE setDate NOTIFY dateChanged)
+	Q_PROPERTY(QDate date READ getDate WRITE setDate NOTIFY dateChanged)
 
 	/*!
 		\brief Sets or gets if daylight saving time must be taken into account.
@@ -38,7 +39,7 @@ class HardwareSettings : public ObjectInterface
 	/*!
 		\brief Sets or gets the time.
 	*/
-	Q_PROPERTY(QString time READ getTime WRITE setTime NOTIFY timeChanged)
+	Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
 
 public:
 	HardwareSettings();
@@ -59,12 +60,12 @@ public:
 
 	bool getAutoUpdate() const;
 	void setAutoUpdate(bool v);
-	QString getDate() const;
-	void setDate(QString d);
+	QDate getDate() const;
+	void setDate(QDate d);
 	bool getSummerTime() const;
 	void setSummerTime(bool d);
-	QString getTime() const;
-	void setTime(QString t);
+	QTime getTime() const;
+	void setTime(QTime t);
 
 signals:
 	void autoUpdateChanged();
@@ -74,9 +75,9 @@ signals:
 
 protected:
 	bool autoUpdate;
-	QString date;
+	QDate date;
 	bool summerTime;
-	QString time;
+	QTime time;
 
 private:
 	void sendCommand(const QString &cmd);

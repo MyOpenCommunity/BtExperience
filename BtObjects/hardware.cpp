@@ -1,16 +1,15 @@
 #include "hardware.h"
 
 #include <QDebug>
-#include <QDateTime>
 
 
 HardwareSettings::HardwareSettings()
 {
 	// TODO read values from somewhere or implement something valueReceived-like
 	autoUpdate = true;
-	date = QDateTime::currentDateTime().toString("dd/MM/yyyy");
+	date = QDate::currentDate();
 	summerTime = false;
-	time = QDateTime::currentDateTime().toString("hh:mm");
+	time = QTime::currentTime();
 }
 
 void HardwareSettings::sendCommand(const QString &cmd)
@@ -32,12 +31,12 @@ void HardwareSettings::setAutoUpdate(bool v)
 	emit autoUpdateChanged();
 }
 
-QString HardwareSettings::getDate() const
+QDate HardwareSettings::getDate() const
 {
 	return date;
 }
 
-void HardwareSettings::setDate(QString d)
+void HardwareSettings::setDate(QDate d)
 {
 	// TODO save value somewhere
 	date = d;
@@ -56,12 +55,12 @@ void HardwareSettings::setSummerTime(bool d)
 	emit summerTimeChanged();
 }
 
-QString HardwareSettings::getTime() const
+QTime HardwareSettings::getTime() const
 {
 	return time;
 }
 
-void HardwareSettings::setTime(QString t)
+void HardwareSettings::setTime(QTime t)
 {
 	// TODO save value somewhere
 	time = t;
