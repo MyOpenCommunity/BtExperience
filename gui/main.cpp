@@ -181,8 +181,6 @@ public:
 
 	void boot()
 	{
-		// TODO pass gui language; I hardcoded Italian for now
-		// pay attention to the fact that the translator MUST be installed before doing anything else
 		setLanguage(global->getGuiSettings()->getLanguageString());
 
 		viewer = new QmlApplicationViewer;
