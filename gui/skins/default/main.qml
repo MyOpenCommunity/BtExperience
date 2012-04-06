@@ -7,8 +7,8 @@ Item {
     width: 1024
     height: 600
     transform: Scale { origin.x: 0; origin.y: 0; xScale: global.mainWidth / 1024; yScale: global.mainHeight / 600 }
-    property alias animation: animationLoader
-    property string animationType: "fade"
+    property alias animation: animationManager.animation
+    property alias animationType: animationManager.type
 
 
     Component.onCompleted: {
@@ -16,36 +16,8 @@ Item {
         Stack.openPage("HomePage.qml")
     }
 
-    Loader {
-        id: animationLoader
-        sourceComponent: {
-            switch (container.animationType) {
-            case "slide":
-                return slideAnimationComponent
-            case "fade":
-                return fadeAnimationComponent
-            default:
-                console.log("Warning: unknown animation type!")
-                return fadeAnimationComponent
-            }
-        }
-    }
-
-    Component {
-        id: fadeAnimationComponent
-        FadeAnimation {
-        }
-    }
-
-    Component {
-        id: slideAnimationComponent
-        SlideAnimation {
-        }
-    }
-
-    Connections {
-        target: animationLoader.item
-        onAnimationCompleted: Stack.changePageDone()
+    AnimationManager {
+        id: animationManager
     }
 
     ScreenSaver {
