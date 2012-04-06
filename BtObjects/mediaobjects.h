@@ -61,6 +61,11 @@ class SoundAmbient : public SoundAmbientBase
 	*/
 	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
 
+	/*!
+		\brief Previous sound diffusion source for the area
+	*/
+	Q_PROPERTY(QObject *previousSource READ getPreviousSource NOTIFY currentSourceChanged)
+
 	Q_PROPERTY(int area READ getArea CONSTANT)
 
 public:
@@ -78,6 +83,7 @@ public:
 	int getArea() const;
 
 	QObject *getCurrentSource() const;
+	QObject *getPreviousSource() const;
 
 	void connectSources(QList<SourceBase *> sources);
 	void connectAmplifiers(QList<Amplifier *> amplifiers);
@@ -92,7 +98,7 @@ private slots:
 
 private:
 	int area, amplifier_count, object_id;
-	SourceBase *current_source;
+	SourceBase *current_source, *previous_source;
 };
 
 

@@ -125,7 +125,7 @@ SoundAmbient::SoundAmbient(int _area, QString name, int _object_id) :
 	area = _area;
 	amplifier_count = 0;
 	object_id = _object_id;
-	current_source = NULL;
+	current_source = previous_source = NULL;
 }
 
 void SoundAmbient::connectSources(QList<SourceBase *> sources)
@@ -156,6 +156,11 @@ QObject *SoundAmbient::getCurrentSource() const
 	return current_source;
 }
 
+QObject *SoundAmbient::getPreviousSource() const
+{
+	return previous_source;
+}
+
 void SoundAmbient::updateActiveSource()
 {
 	SourceBase *source = static_cast<SourceBase *>(sender());
@@ -169,12 +174,14 @@ void SoundAmbient::updateActiveSource()
 	{
 		if (current_source != source)
 		{
+			previous_source = current_source;
 			current_source = source;
 			emit currentSourceChanged();
 		}
 	}
 	else if (source == current_source)
 	{
+		previous_source = current_source;
 		current_source = NULL;
 		emit currentSourceChanged();
 	}
