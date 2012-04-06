@@ -6,19 +6,20 @@ MenuElement {
     height: buttonOnOff.height + controlVolume.height
     width: 212
 
-    ButtonOnOff {
-        id: buttonOnOff
-        status: -1
-        width: parent.width
-        onClicked: element.dataModel.active = newStatus
-    }
-
-    ButtonMinusPlus {
+    VolumeGeneral {
         id: controlVolume
         width: parent.width
-        anchors.top: buttonOnOff.bottom
+        anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         onMinusClicked: element.dataModel.volumeDown()
         onPlusClicked: element.dataModel.volumeUp()
+    }
+
+    ButtonOnOff {
+        id: buttonOnOff
+        anchors.bottom: parent.bottom
+        status: -1
+        width: parent.width
+        onClicked: element.dataModel.active = newStatus
     }
 }
