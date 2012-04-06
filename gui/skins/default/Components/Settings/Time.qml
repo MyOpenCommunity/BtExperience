@@ -13,7 +13,7 @@ MenuElement {
     // object model to retrieve network data
     ObjectModel {
         id: objectModel
-        filters: [{objectId: ObjectInterface.IdGuiSettings}]
+        filters: [{objectId: ObjectInterface.IdHardwareSettings}]
     }
     // TODO investigate why dataModel is not working as expected
     //dataModel: objectModel.getObject(0)
@@ -49,13 +49,15 @@ MenuElement {
             choice: pageObject.names.get('AUTO_UPDATE', currentIndex)
             property bool currentIndex: privateProps.model.autoUpdate
             onPlusClicked: {
-                if (currentIndex < 1) {
-                    choice = pageObject.names.get('AUTO_UPDATE', ++currentIndex)
+                if (currentIndex == true) {
+                    currentIndex = false
+                    choice = pageObject.names.get('AUTO_UPDATE', currentIndex)
                 }
             }
             onMinusClicked: {
-                if (currentIndex >= 0) {
-                    choice = pageObject.names.get('AUTO_UPDATE', --currentIndex)
+                if (currentIndex == false) {
+                    currentIndex = true
+                    choice = pageObject.names.get('AUTO_UPDATE', currentIndex)
                 }
             }
         }
@@ -64,7 +66,7 @@ MenuElement {
             id: format
             description: qsTr("format")
             choice: pageObject.names.get('FORMAT', currentIndex)
-            property int currentIndex: privateProps.model.format
+            property int currentIndex: global.guiSettings.format
             onPlusClicked: {
                 if (currentIndex < 1) {
                     choice = pageObject.names.get('FORMAT', ++currentIndex)

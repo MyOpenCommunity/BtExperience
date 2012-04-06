@@ -8,20 +8,14 @@ MenuElement {
     id: element
 
     function alertOkClicked() {
+        textLanguageItem.description = pageObject.names.get('LANGUAGE', privateProps.language);
+        global.guiSettings.language = privateProps.language
         global.reboot()
     }
 
     // dimensions
     width: 212
     height: paginator.height
-
-    // object model to retrieve network data
-    ObjectModel {
-        id: objectModel
-        filters: [{objectId: ObjectInterface.IdGuiSettings}]
-    }
-    // TODO investigate why dataModel is not working as expected
-    //dataModel: objectModel.getObject(0)
 
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
@@ -34,9 +28,7 @@ MenuElement {
         //  4 -> unit system
         //  5 -> currency
         //  6 -> number separators
-        // HACK dataModel is not working, so let's define a model property here
-        // when dataModel work again, change all references!
-        property variant model: objectModel.getObject(0)
+        property int language: -1
     }
 
     onChildDestroyed: privateProps.currentIndex = -1
@@ -61,9 +53,8 @@ MenuElement {
         // TODO assign to a model property
         //privateProps.model.TextLanguage = value;
         // TODO remove when model is implemented
+        privateProps.language = value
         pageObject.showAlert(element, qsTr("L'azione selezionata produrra' un riavvio dell'interfaccia grafica. Continuare?"))
-
-        textLanguageItem.description = pageObject.names.get('LANGUAGE', value);
     }
     function keyboardLanguageChanged(value) {
         // TODO assign to a model property
@@ -106,7 +97,7 @@ MenuElement {
         MenuItem {
             id: textLanguageItem
             name: qsTr("text language")
-            description: pageObject.names.get('LANGUAGE', privateProps.model.language)
+            description: pageObject.names.get('LANGUAGE', global.guiSettings.language)
             hasChild: true
             state: privateProps.currentIndex === 1 ? "selected" : ""
             onClicked: {
@@ -136,7 +127,7 @@ MenuElement {
             onClicked: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
-                element.loadElement("", name)
+                element.loadElement("Temperature.qml", name)
             }
         }
         MenuItem {
@@ -148,7 +139,7 @@ MenuElement {
             onClicked: {
                 if (privateProps.currentIndex !== 4)
                     privateProps.currentIndex = 4
-                element.loadElement("", name)
+                element.loadElement("UnitSystem.qml", name)
             }
         }
         MenuItem {
@@ -160,7 +151,7 @@ MenuElement {
             onClicked: {
                 if (privateProps.currentIndex !== 5)
                     privateProps.currentIndex = 5
-                element.loadElement("", name)
+                element.loadElement("Currency.qml", name)
             }
         }
         MenuItem {
@@ -172,7 +163,7 @@ MenuElement {
             onClicked: {
                 if (privateProps.currentIndex !== 6)
                     privateProps.currentIndex = 6
-                element.loadElement("", name)
+                element.loadElement("NumberSeparator.qml", name)
             }
         }
     }

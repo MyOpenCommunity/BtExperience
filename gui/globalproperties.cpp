@@ -1,4 +1,5 @@
 #include "globalproperties.h"
+#include "guisettings.h"
 #include "inputcontextwrapper.h"
 
 #include <QTimer>
@@ -6,12 +7,15 @@
 #include <QScreen>
 #include <QPixmap>
 #include <QDeclarativeView>
+#include <QtDeclarative>
 
 
 GlobalProperties::GlobalProperties()
 {
 	wrapper = new InputContextWrapper(this);
 	main_widget = NULL;
+	qmlRegisterUncreatableType<GuiSettings>("BtExperience", 1, 0, "GuiSettings", "");
+	settings = new GuiSettings(this);
 
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -41,6 +45,11 @@ int GlobalProperties::getMainHeight() const
 #else
 	return MAIN_HEIGHT;
 #endif
+}
+
+GuiSettings *GlobalProperties::getGuiSettings() const
+{
+	return settings;
 }
 
 QObject *GlobalProperties::getInputWrapper() const

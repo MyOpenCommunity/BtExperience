@@ -1,45 +1,26 @@
-#ifndef GUI_H
-#define GUI_H
-
-#include "objectinterface.h"
+#ifndef GUISETTINGS_H
+#define GUISETTINGS_H
 
 #include <QObject>
 
-
-/*!
-	\ingroup Settings
-	\brief Manages GUI settings for application
-
-	Class to provide services to read and write settings independent from
-	hardware. Settings in this file don't need a device to be managed.
-
-	The object id is \a ObjectInterface::IdGui.
-*/
-class GuiSettings : public ObjectInterface
+class GuiSettings : public QObject
 {
-	friend class TestGuiSettings;
-
 	Q_OBJECT
 
 	/*!
-		\brief Sets or gets if date&time must be auto updated or not.
+		\brief Sets or gets the brightness level of the display.
 	*/
-	Q_PROPERTY(bool autoUpdate READ getAutoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
+	Q_PROPERTY(int brightness READ getBrightness WRITE setBrightness NOTIFY brightnessChanged)
+
+	/*!
+		\brief Sets or gets the contrast level of the display.
+	*/
+	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
 
 	/*!
 		\brief Sets or gets the currency.
 	*/
 	Q_PROPERTY(Currency currency READ getCurrency WRITE setCurrency NOTIFY currencyChanged)
-
-	/*!
-		\brief Sets or gets the date.
-	*/
-	Q_PROPERTY(QString date READ getDate WRITE setDate NOTIFY dateChanged)
-
-	/*!
-		\brief Sets or gets if daylight saving time must be taken into account.
-	*/
-	Q_PROPERTY(bool summerTime READ getSummerTime WRITE setSummerTime NOTIFY summerTimeChanged)
 
 	/*!
 		\brief Sets or gets time format as 12h or 24h.
@@ -88,11 +69,6 @@ class GuiSettings : public ObjectInterface
 	Q_PROPERTY(TemperatureUnit temperatureUnit READ getTemperatureUnit WRITE setTemperatureUnit NOTIFY temperatureUnitChanged)
 
 	/*!
-		\brief Sets or gets the time.
-	*/
-	Q_PROPERTY(QString time READ getTime WRITE setTime NOTIFY timeChanged)
-
-	/*!
 		\brief Sets or gets the time out for the screensaver.
 	*/
 	Q_PROPERTY(TimeChoice timeOut READ getTimeOut WRITE setTimeOut NOTIFY timeOutChanged)
@@ -118,7 +94,7 @@ class GuiSettings : public ObjectInterface
 	Q_ENUMS(TimeFormat)
 
 public:
-	GuiSettings();
+	explicit GuiSettings(QObject *parent = 0);
 
 	enum Currency
 	{
@@ -181,28 +157,14 @@ public:
 		TimeFormat_24h
 	};
 
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdGuiSettings;
-	}
-
-	virtual QString getObjectKey() const { return QString(); }
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Settings;
-	}
-
-	virtual QString getName() const { return QString(); }
-
-	bool getAutoUpdate() const;
-	void setAutoUpdate(bool v);
+	// brightness must be [1, 100]
+	int getBrightness() const;
+	void setBrightness(int b);
+	// contrast must be [1, 100]
+	int getContrast() const;
+	void setContrast(int c);
 	Currency getCurrency() const;
 	void setCurrency(Currency c);
-	QString getDate() const;
-	void setDate(QString d);
-	bool getSummerTime() const;
-	void setSummerTime(bool d);
 	TimeFormat getFormat() const;
 	void setFormat(TimeFormat f);
 	QString getKeyboardLayout() const;
@@ -221,8 +183,6 @@ public:
 	void setScreensaverType(ScreensaverType st);
 	TemperatureUnit getTemperatureUnit() const;
 	void setTemperatureUnit(TemperatureUnit u);
-	QString getTime() const;
-	void setTime(QString t);
 	TimeChoice getTimeOut() const;
 	void setTimeOut(TimeChoice tc);
 	int getTimezone() const;
@@ -231,10 +191,9 @@ public:
 	void setTurnOffTime(TimeChoice tc);
 
 signals:
-	void autoUpdateChanged();
+	void brightnessChanged();
+	void contrastChanged();
 	void currencyChanged();
-	void dateChanged();
-	void summerTimeChanged();
 	void formatChanged();
 	void keyboardLayoutChanged();
 	void languageChanged();
@@ -244,16 +203,14 @@ signals:
 	void screensaverTextChanged();
 	void screensaverTypeChanged();
 	void temperatureUnitChanged();
-	void timeChanged();
 	void timeOutChanged();
 	void timezoneChanged();
 	void turnOffTimeChanged();
 
 protected:
-	bool autoUpdate;
+	int brightness;
+	int contrast;
 	Currency currency;
-	QString date;
-	bool summerTime;
 	QString keyboardLayout;
 	Language language;
 	MeasurementSystem measurementSystem;
@@ -262,11 +219,14 @@ protected:
 	QString screensaverText;
 	ScreensaverType screensaverType;
 	TemperatureUnit temperatureUnit;
-	QString time;
 	TimeFormat timeFormat;
 	TimeChoice timeOut;
 	int timezone;
 	TimeChoice turnOffTime;
+
+private:
+	void sendCommand(const QString &cmd);
+
 };
 
-#endif // GUI_H
+#endif // GUISETTINGS_H

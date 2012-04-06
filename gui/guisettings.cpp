@@ -1,18 +1,17 @@
-#include "gui.h"
+#include "guisettings.h"
 
 #include <QDebug>
 #include <QDateTime>
 #include <QDate>
 #include <QTime>
 
-
-GuiSettings::GuiSettings()
+GuiSettings::GuiSettings(QObject *parent) :
+	QObject(parent)
 {
 	// TODO read values from somewhere or implement something valueReceived-like
-	autoUpdate = true;
+	brightness = 50;
+	contrast = 50;
 	currency = EUR;
-	date = QDate::currentDate().toString(QString("dd/MM/yyyy"));
-	summerTime = true;
 	keyboardLayout = "";
 	language = Italian;
 	measurementSystem = Metric;
@@ -21,23 +20,46 @@ GuiSettings::GuiSettings()
 	screensaverText = QString(tr("change text"));
 	screensaverType = None;
 	temperatureUnit = Celsius;
-	time = QTime::currentTime().toString((QString("hh:mm")));
 	timeFormat = TimeFormat_24h;
 	timeOut = Minutes_10;
 	timezone = 0;
 	turnOffTime = Minutes_10;
 }
 
-bool GuiSettings::getAutoUpdate() const
+void GuiSettings::sendCommand(const QString &cmd)
 {
-	return autoUpdate;
+	// TODO: add error check
+	qDebug() << QString("GuiSettings::sendCommand(%1)").arg(cmd);
+	system(qPrintable(cmd));
 }
 
-void GuiSettings::setAutoUpdate(bool v)
+int GuiSettings::getBrightness() const
 {
+	return brightness;
+}
+
+void GuiSettings::setBrightness(int b)
+{
+	qDebug() << QString("GuiSettings::setBrightness(%1)").arg(b);
+	// TODO: perform the proper conversion
+	sendCommand(QString("i2cset -y 1 0x4a 0xf0 0x") + QString::number(b, 16));
+	sendCommand(QString("i2cset -y 1 0x4a 0xf9 0x") + QString::number(b, 16));
 	// TODO save value somewhere
-	autoUpdate = v;
-	emit autoUpdateChanged();
+	brightness = b;
+	emit brightnessChanged();
+}
+
+int GuiSettings::getContrast() const
+{
+	return contrast;
+}
+
+void GuiSettings::setContrast(int c)
+{
+	qDebug() << QString("GuiSettings::setContrast(%1)").arg(c);
+	// TODO save value somewhere
+	contrast = c;
+	emit contrastChanged();
 }
 
 GuiSettings::Currency GuiSettings::getCurrency() const
@@ -50,30 +72,6 @@ void GuiSettings::setCurrency(Currency c)
 	// TODO save value somewhere
 	currency = c;
 	emit currencyChanged();
-}
-
-QString GuiSettings::getDate() const
-{
-	return date;
-}
-
-void GuiSettings::setDate(QString d)
-{
-	// TODO save value somewhere
-	date = d;
-	emit dateChanged();
-}
-
-bool GuiSettings::getSummerTime() const
-{
-	return summerTime;
-}
-
-void GuiSettings::setSummerTime(bool d)
-{
-	// TODO save value somewhere
-	summerTime = d;
-	emit summerTimeChanged();
 }
 
 GuiSettings::TimeFormat GuiSettings::getFormat() const
@@ -182,18 +180,6 @@ void GuiSettings::setTemperatureUnit(TemperatureUnit u)
 	// TODO save value somewhere
 	temperatureUnit = u;
 	emit temperatureUnitChanged();
-}
-
-QString GuiSettings::getTime() const
-{
-	return time;
-}
-
-void GuiSettings::setTime(QString t)
-{
-	// TODO save value somewhere
-	time = t;
-	emit timeChanged();
 }
 
 GuiSettings::TimeChoice GuiSettings::getTimeOut() const

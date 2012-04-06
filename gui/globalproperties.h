@@ -7,6 +7,7 @@
 #include <QImage>
 
 class QDeclarativeView;
+class GuiSettings;
 class InputContextWrapper;
 
 #define MAIN_WIDTH 1024
@@ -26,6 +27,8 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(int lastTimePress READ getLastTimePress NOTIFY lastTimePressChanged)
 	// The input context wrapper, used to manage the virtual keyboard
 	Q_PROPERTY(QObject *inputWrapper READ getInputWrapper CONSTANT)
+	// The object to manage the GUI settings
+	Q_PROPERTY(GuiSettings *guiSettings READ getGuiSettings CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
 
@@ -35,6 +38,7 @@ public:
 	int getMainHeight() const;
 	int getLastTimePress() const;
 	QObject *getInputWrapper() const;
+	GuiSettings *getGuiSettings() const;
 	QString getBasePath() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
@@ -56,6 +60,7 @@ private:
 	InputContextWrapper *wrapper;
 	QDeclarativeView *main_widget;
 	QDateTime last_press;
+	GuiSettings *settings;
 };
 
 

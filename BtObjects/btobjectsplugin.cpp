@@ -15,7 +15,6 @@
 #include "antintrusionsystem.h"
 #include "mediaobjects.h"
 #include "xml_functions.h"
-#include "gui.h"
 #include "hardware.h"
 #include "platform.h"
 #include "platform.h"
@@ -126,7 +125,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	}
 	// TODO put in the right implementation; for now, use this for testing the interface
 	objmodel << new PlatformSettings(new PlatformDevice);
-	objmodel << new GuiSettings();
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)
@@ -144,8 +142,6 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a ThermalControlledProbe instance");
 	qmlRegisterUncreatableType<PlatformSettings>(uri, 1, 0, "PlatformSettings",
 		"unable to create a PlatformSettings instance");
-	qmlRegisterUncreatableType<GuiSettings>(uri, 1, 0, "GuiSettings",
-		"unable to create a GuiSettings instance");
 	qmlRegisterUncreatableType<HardwareSettings>(uri, 1, 0, "HardwareSettings",
 		"unable to create a HardwareSettings instance");
 	qmlRegisterUncreatableType<AntintrusionAlarm>(uri, 1, 0, "AntintrusionAlarm",

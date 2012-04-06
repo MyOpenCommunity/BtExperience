@@ -68,6 +68,7 @@ SOURCES += \
     main.cpp \
     eventfilters.cpp \
     globalproperties.cpp \
+    guisettings.cpp \
     inputcontextwrapper.cpp
 
 DESTDIR = ..
@@ -75,6 +76,7 @@ DESTDIR = ..
 HEADERS += \
     eventfilters.h \
     globalproperties.h \
+    guisettings.h \
     inputcontextwrapper.h
 
 TRANSLATIONS += linguist-ts/bt_experience_it.ts
