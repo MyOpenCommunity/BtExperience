@@ -100,14 +100,17 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 	foreach (SoundAmbient *ambient, ambients)
 		ambient->connectAmplifiers(amplifiers);
 
+	// create special zone (general)
+	amplifiers << new Amplifier(0, QObject::tr("general"), AmplifierDevice::createDevice("0"),
+								ObjectInterface::IdSoundAmplifierGeneral);
+	objects << new SoundGeneralAmbient(QObject::tr("special zone"));
+
 	foreach (Amplifier *amplifier, amplifiers)
 		objects << amplifier;
 	foreach (SourceBase *source, sources)
 		objects << source;
 	foreach (SoundAmbient *ambient, ambients)
 		objects << ambient;
-
-	objects << new SoundGeneralAmbient("Generale");
 
 	return objects;
 }

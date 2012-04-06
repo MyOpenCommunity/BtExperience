@@ -74,7 +74,7 @@ MenuColumn {
             onClicked: {
                 privateProps.currentIndex = 1
                 itemList.currentIndex = -1
-                element.loadElement("Components/SoundDiffusion/SourceSelection.qml", name, element.dataModel)
+                element.loadElement("Components/SoundDiffusion/SourceControl.qml", name, element.dataModel)
             }
             state: privateProps.currentIndex === 1 ? "selected" : ""
 
@@ -98,7 +98,7 @@ MenuColumn {
             onClicked: {
                 privateProps.currentIndex = 1
                 itemList.currentIndex = -1
-                element.loadElement("Components/SoundDiffusion/SourceSelection.qml", name, element.dataModel)
+                element.loadElement("Components/SoundDiffusion/SourceControl.qml", name, element.dataModel)
             }
             state: privateProps.currentIndex === 1 ? "selected" : ""
         }
@@ -114,7 +114,7 @@ MenuColumn {
             onClicked: {
                 privateProps.currentIndex = 1
                 itemList.currentIndex = -1
-                element.loadElement("Components/SoundDiffusion/SourceSelection.qml", name, element.dataModel)
+                element.loadElement("Components/SoundDiffusion/SourceControl.qml", name, element.dataModel)
             }
             state: privateProps.currentIndex === 1 ? "selected" : ""
         }

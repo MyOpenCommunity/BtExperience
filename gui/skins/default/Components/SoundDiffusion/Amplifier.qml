@@ -11,6 +11,7 @@ MenuColumn {
 
     ButtonOnOff {
         id: buttonOnOff
+        width: element.width
         status: element.dataModel.active
         height: 50
         onClicked: element.dataModel.active = newStatus

@@ -8,7 +8,7 @@ MenuColumn {
     height: paginator.height
     property string imagesPath: "../../images/"
 
-    signal timeChanged(string value, int auto, int format)
+    signal timeChanged(variant value, int auto, int format)
 
     // object model to retrieve network data
     ObjectModel {

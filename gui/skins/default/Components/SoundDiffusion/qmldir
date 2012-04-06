@@ -1,5 +1,5 @@
 ControlIPRadio 1.0 ControlIPRadio.qml
-SourceSelection 1.0 SourceSelection.qml
+SourceControl 1.0 SourceControl.qml
 ButtonFMStation 1.0 ButtonFMStation.qml
 SoundDiffusionSystem 1.0 SoundDiffusionSystem.qml
 SoundAmbient 1.0 SoundAmbient.qml

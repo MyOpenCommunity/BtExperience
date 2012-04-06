@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
 
 MenuColumn {
     id: element
@@ -8,41 +9,32 @@ MenuColumn {
     property string imagesPath: "../../images/"
 
     Column {
+        id: column
         MenuItem {
             id: sourceItem
             name: "source"
             hasChild: true
             description: "Radio | FM 108.7 - Radio Cassadritta"
             status: -1
-            onClicked: element.loadElement("Components/SoundDiffusion/SourceSelection.qml", qsTr("source"))
+            onClicked: element.loadElement("Components/SoundDiffusion/SourceControl.qml", qsTr("source"))
         }
 
-        Image {
+        VolumeGeneral {
             id: volume
-            width: 212
-            height: 100
-            source: imagesPath + "common/bg_UnaRegolazione.png"
-
-            Text {
-                id: text1
-                y: 10
-                font.pointSize: 12
-                font.bold: true
-                color: "#444546"
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("volume")
-            }
-
-            ButtonMinusPlus {
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 5
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
+            onPlusClicked: objectModel.getObject(0).volumeUp()
+            onMinusClicked: objectModel.getObject(0).volumeDown()
         }
 
         ButtonOnOff {
             id: buttonOnOff
-            status: false
+            width: element.width
+            status: -1
+            onClicked: objectModel.getObject(0).active = newStatus
         }
+    }
+
+    ObjectModel {
+        id: objectModel
+        filters: [{objectId: ObjectInterface.IdSoundAmplifierGeneral, objectKey: "0"}]
     }
 }
