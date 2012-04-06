@@ -24,6 +24,11 @@ GlobalProperties::GlobalProperties()
 	secs_timer->start(1000);
 }
 
+QString GlobalProperties::getBasePath() const
+{
+	return QString("gui/skins/default/");
+}
+
 int GlobalProperties::getMainWidth() const
 {
 #ifdef Q_WS_QWS

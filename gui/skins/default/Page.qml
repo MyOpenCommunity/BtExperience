@@ -1,5 +1,6 @@
 import QtQuick 1.1
-import "Stack.js" as Stack
+import Components 1.0
+import "js/Stack.js" as Stack
 
 Image {
     id: page
@@ -40,28 +41,28 @@ Image {
     // The hooks called by the Stack javascript manager. See also PageAnimation
     // If a page want to use a different animation, reimplement this hooks.
     function pushInStart() {
-        var animation = Stack.container.animation.item
+        var animation = Stack.container.animation
         animation.page = page
         if (animation.pushIn)
             animation.pushIn.start()
     }
 
     function popInStart() {
-        var animation = Stack.container.animation.item
+        var animation = Stack.container.animation
         animation.page = page
         if (animation.popIn)
             animation.popIn.start()
     }
 
     function pushOutStart() {
-        var animation = Stack.container.animation.item
+        var animation = Stack.container.animation
         animation.page = page
         if (animation.pushOut)
             animation.pushOut.start()
     }
 
     function popOutStart() {
-        var animation = Stack.container.animation.item
+        var animation = Stack.container.animation
         animation.page = page
         if (animation.popOut)
             animation.popOut.start()

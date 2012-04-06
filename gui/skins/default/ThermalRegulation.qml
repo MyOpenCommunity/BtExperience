@@ -1,10 +1,10 @@
 import QtQuick 1.1
-import "Stack.js" as Stack
+import "js/Stack.js" as Stack
 
 SystemPage {
     source: "images/termoregolazione.jpg"
     text: qsTr("temperature control")
-    rootElement: "ThermalRegulationItems.qml"
+    rootElement: "Components/ThermalRegulation/ThermalRegulationItems.qml"
     names: ThermalNames { }
 }
 

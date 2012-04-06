@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "array.js" as Script
+import "js/array.js" as Script
 import BtObjects 1.0
 import BtExperience 1.0
 

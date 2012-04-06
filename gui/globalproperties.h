@@ -29,6 +29,8 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(QObject *inputWrapper READ getInputWrapper CONSTANT)
 	// The object to manage the GUI settings
 	Q_PROPERTY(GuiSettings *guiSettings READ getGuiSettings CONSTANT)
+	// The base path for the QML application. It is used for import path, for example.
+	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
 
 public:
 	GlobalProperties();
@@ -37,6 +39,7 @@ public:
 	int getLastTimePress() const;
 	QObject *getInputWrapper() const;
 	GuiSettings *getGuiSettings() const;
+	QString getBasePath() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE QImage takeScreenshot(QRect rect = QRect());

@@ -1,0 +1,15 @@
+ControlIPRadio 1.0 ControlIPRadio.qml
+SourceSelection 1.0 SourceSelection.qml
+ButtonFMStation 1.0 ButtonFMStation.qml
+SoundDiffusionSystem 1.0 SoundDiffusionSystem.qml
+SoundAmbient 1.0 SoundAmbient.qml
+Loudness 1.0 Loudness.qml
+ControlMediaPlayer 1.0 ControlMediaPlayer.qml
+AmplifierEqualizer 1.0 AmplifierEqualizer.qml
+AmplifierGeneral 1.0 AmplifierGeneral.qml
+PowerAmplifier 1.0 PowerAmplifier.qml
+ControlFMRadio 1.0 ControlFMRadio.qml
+AmplifierSettings 1.0 AmplifierSettings.qml
+GeneralAmbient 1.0 GeneralAmbient.qml
+Amplifier 1.0 Amplifier.qml
+SourceList 1.0 SourceList.qml

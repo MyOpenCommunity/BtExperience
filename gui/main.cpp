@@ -181,7 +181,8 @@ public:
 		viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
 
 		viewer->engine()->rootContext()->setContextProperty("global", global);
-		viewer->setMainQmlFile(QLatin1String("gui/skins/default/main.qml"));
+		viewer->engine()->addImportPath(global->getBasePath());
+		viewer->setMainQmlFile(QLatin1String(global->getBasePath().append("main.qml").toLatin1()));
 		global->setMainWidget(viewer);
 
 #if defined(BT_MALIIT)

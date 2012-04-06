@@ -1,5 +1,6 @@
 import QtQuick 1.1
-import "Stack.js" as Stack
+import "js/Stack.js" as Stack
+import Components 1.0
 
 Page {
     id: systems
@@ -21,7 +22,7 @@ Page {
                     target: "Antintrusion.qml"
                 }
 //                ListElement {
-//                    image: "images/scenari.jpg"
+//                    image: "../images/scenari.jpg"
 //                    name: "scenari"
 //                    target: ""
 //                }

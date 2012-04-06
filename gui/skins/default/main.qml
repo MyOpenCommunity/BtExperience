@@ -1,34 +1,23 @@
 import QtQuick 1.1
-import "Stack.js" as Stack
-
+import "js/Stack.js" as Stack
+import Components 1.0
 
 Item {
     id: container
     width: 1024
     height: 600
     transform: Scale { origin.x: 0; origin.y: 0; xScale: global.mainWidth / 1024; yScale: global.mainHeight / 600 }
-    property alias animation: animationLoader
+    property alias animation: animationManager.animation
+    property alias animationType: animationManager.type
+
 
     Component.onCompleted: {
         Stack.container = container
         Stack.openPage("HomePage.qml")
     }
 
-    Loader {
-        id: animationLoader
-        source: "FadeAnimation.qml"
-    }
-
-    Connections {
-        target: animationLoader.item
-        onAnimationCompleted: Stack.changePageDone()
-    }
-
-    Connections {
-        target: global
-        onLastTimePressChanged: {
-            //            console.log("last time press: " + global.lastTimePress)
-        }
+    AnimationManager {
+        id: animationManager
     }
 
     ScreenSaver {
