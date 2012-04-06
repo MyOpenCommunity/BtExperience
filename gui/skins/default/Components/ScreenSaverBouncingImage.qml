@@ -5,7 +5,7 @@ Item {
 
     Image {
         id: image
-        source: "images/bticino_logo.svg"
+        source: "../images/bticino_logo.svg"
         x: 0
         y: 0
         width: 236

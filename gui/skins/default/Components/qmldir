@@ -10,6 +10,7 @@ ButtonSystems 1.0 ButtonSystems.qml
 TwoButtonsSettings 1.0 TwoButtonsSettings.qml
 AnimatedLoader 1.0 AnimatedLoader.qml
 ControlChoices 1.0 ControlChoices.qml
+ScreenSaver 1.0 ScreenSaver.qml
 ObjectModel 1.0 ObjectModel.qml
 ButtonPagination 1.0 ButtonPagination.qml
 FadeAnimation 1.0 FadeAnimation.qml
@@ -35,4 +36,5 @@ ButtonCommand 1.0 ButtonCommand.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
 PageAnimation 1.0 PageAnimation.qml
+ScreenSaverBouncingImage 1.0 ScreenSaverBouncingImage.qml
 ToolBar 1.0 ToolBar.qml
