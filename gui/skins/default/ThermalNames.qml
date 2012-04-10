@@ -14,6 +14,10 @@ QtObject {
         Script.container['PROBE_STATUS'][ThermalControlledProbe.Manual] = qsTr("manual")
         Script.container['PROBE_STATUS'][ThermalControlledProbe.Off] = qsTr("off")
         Script.container['PROBE_STATUS'][ThermalControlledProbe.Unknown] = qsTr("--")
+
+        Script.container['BASIC_SPLIT'] = []
+        Script.container['BASIC_SPLIT'][true] = qsTr("Enable")
+        Script.container['BASIC_SPLIT'][false] = qsTr("Disable")
     }
 
     function get(context, id) {

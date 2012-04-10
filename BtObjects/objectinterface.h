@@ -37,6 +37,8 @@ public:
 		IdPlatformSettings,
 		IdMonoChannelSoundDiffusionSystem,
 		IdMonoChannelSoundAmbient,
+		IdSplitBasicScenario,
+		IdSplitAdvancedScenario,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 

@@ -20,6 +20,8 @@
 #include "platform.h"
 #include "platform_device.h"
 #include "folderlistmodel.h"
+#include "splitbasicscenario.h"
+#include "airconditioning_device.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
@@ -111,6 +113,13 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			break;
 		case ObjectInterface::IdMonoChannelSoundDiffusionSystem:
 			obj_list = createSoundDiffusionSystem(item, id);
+			break;
+		case ObjectInterface::IdSplitBasicScenario:
+			obj = new SplitBasicScenario(descr,
+										 where,
+										 bt_global::add_device_to_cache(
+											 new AirConditioningDevice(where)),
+										 getTextChild(item, "command"));
 			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
