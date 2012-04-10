@@ -12,7 +12,7 @@
 	\ingroup Air Conditioning
 	\brief A basic split scenario
 
-	A class to manage the list of basic scenarios linked to a particular split.
+	A class to manage a basic scenario.
 
 	The object id is \a ObjectInterface::IdSplitBasicScenario.
 */

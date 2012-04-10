@@ -7,6 +7,7 @@ HEADERS += \
 	objectlistmodel.h \
 	objectinterface.h \
 	platform.h \
+	splitadvancedscenario.h \
 	splitbasicscenario.h \
 	thermalobjects.h \
 	thermalprobes.h \
@@ -39,6 +40,7 @@ SOURCES += \
 	mediaobjects.cpp \
 	objectlistmodel.cpp \
 	platform.cpp \
+	splitadvancedscenario.cpp \
 	splitbasicscenario.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \

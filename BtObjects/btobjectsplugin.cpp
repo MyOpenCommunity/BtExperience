@@ -21,6 +21,7 @@
 #include "platform_device.h"
 #include "folderlistmodel.h"
 #include "splitbasicscenario.h"
+#include "splitadvancedscenario.h"
 #include "airconditioning_device.h"
 
 #include <QtDeclarative/qdeclarative.h>
@@ -121,6 +122,13 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 											 new AirConditioningDevice(where)),
 										 getTextChild(item, "command"));
 			break;
+		case ObjectInterface::IdSplitAdvancedScenario:
+			obj = new SplitAdvancedScenario(descr,
+											where,
+											bt_global::add_device_to_cache(
+												new AdvancedAirConditioningDevice(where)),
+											getTextChild(item, "command"));
+			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
@@ -159,6 +167,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create an FileObject instance");
 	qmlRegisterUncreatableType<SourceBase>(uri, 1, 0, "SourceBase",
 		"unable to create an SourceBase instance");
+	qmlRegisterUncreatableType<SplitAdvancedScenario>(uri, 1, 0, "SplitAdvancedScenario",
+		"unable to create an SplitAdvancedScenario instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

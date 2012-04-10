@@ -18,6 +18,27 @@ QtObject {
         Script.container['BASIC_SPLIT'] = []
         Script.container['BASIC_SPLIT'][true] = qsTr("Enable")
         Script.container['BASIC_SPLIT'][false] = qsTr("Disable")
+
+        Script.container['MODE'] = []
+        Script.container['MODE'][SplitAdvancedScenario.ModeOff] = qsTr("Off")
+        Script.container['MODE'][SplitAdvancedScenario.ModeWinter] = qsTr("Heating")
+        Script.container['MODE'][SplitAdvancedScenario.ModeSummer] = qsTr("Cooling")
+        Script.container['MODE'][SplitAdvancedScenario.ModeFan] = qsTr("Fan")
+        Script.container['MODE'][SplitAdvancedScenario.ModeDehumidification] = qsTr("Dry")
+        Script.container['MODE'][SplitAdvancedScenario.ModeAuto] = qsTr("Automatic")
+
+        Script.container['SPEED'] = []
+        Script.container['SPEED'][SplitAdvancedScenario.SpeedAuto] = qsTr("Automatic")
+        Script.container['SPEED'][SplitAdvancedScenario.SpeedMin] = qsTr("Low")
+        Script.container['SPEED'][SplitAdvancedScenario.SpeedMed] = qsTr("Medium")
+        Script.container['SPEED'][SplitAdvancedScenario.SpeedMax] = qsTr("High")
+        Script.container['SPEED'][SplitAdvancedScenario.SpeedSilent] = qsTr("Silent")
+        Script.container['SPEED'][SplitAdvancedScenario.SpeedInvalid] = qsTr("")
+
+        Script.container['SWING'] = []
+        Script.container['SWING'][SplitAdvancedScenario.SwingOff] = qsTr("Off")
+        Script.container['SWING'][SplitAdvancedScenario.SwingOn] = qsTr("On")
+        Script.container['SWING'][SplitAdvancedScenario.SwingInvalid] = qsTr("")
     }
 
     function get(context, id) {

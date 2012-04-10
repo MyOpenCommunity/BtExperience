@@ -41,6 +41,9 @@ MenuColumn {
 
     ObjectModel {
         id: objectModel
-        filters: [{objectId: ObjectInterface.IdSplitBasicScenario}]
+        filters: [
+            {objectId: ObjectInterface.IdSplitBasicScenario},
+            {objectId: ObjectInterface.IdSplitAdvancedScenario}
+        ]
     }
 }
