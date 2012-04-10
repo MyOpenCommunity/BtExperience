@@ -25,15 +25,6 @@ void SplitBasicScenario::valueReceived(const DeviceValues &values_list)
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
 	{
-//		if (it.key() == LightingDevice::DIM_DEVICE_ON)
-//		{
-//			if (it.value().toBool() != active)
-//			{
-//				active = it.value().toBool() == true;
-//				emit activeChanged();
-//				break;
-//			}
-//		}
 		++it;
 	}
 }
