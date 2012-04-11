@@ -21,6 +21,13 @@ class SoundAmbientBase : public ObjectInterface
 {
 	Q_OBJECT
 
+	/*!
+		\brief Current sound diffusion source for the area
+	*/
+	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
+
+	Q_PROPERTY(int area READ getArea CONSTANT)
+
 public:
 	virtual ObjectCategory getCategory() const
 	{
@@ -28,12 +35,21 @@ public:
 	}
 
 	virtual QString getName() const { return name; }
+	QObject *getCurrentSource() const;
+
+	int getArea() const;
+
+signals:
+	void currentSourceChanged();
 
 protected:
 	SoundAmbientBase(QString name);
+	void setCurrentSource(SourceBase *other);
+	int area;
 
 private:
 	QString name;
+	SourceBase *current_source;
 };
 
 
@@ -57,16 +73,9 @@ class SoundAmbient : public SoundAmbientBase
 	Q_PROPERTY(bool hasActiveAmplifier READ getHasActiveAmplifier NOTIFY activeAmplifierChanged)
 
 	/*!
-		\brief Current sound diffusion source for the area
-	*/
-	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
-
-	/*!
 		\brief Previous sound diffusion source for the area
 	*/
-	Q_PROPERTY(QObject *previousSource READ getPreviousSource NOTIFY currentSourceChanged)
-
-	Q_PROPERTY(int area READ getArea CONSTANT)
+	Q_PROPERTY(QObject *previousSource READ getPreviousSource NOTIFY previousSourceChanged)
 
 public:
 	SoundAmbient(int area, QString name, int object_id);
@@ -80,16 +89,13 @@ public:
 
 	bool getHasActiveAmplifier() const;
 
-	int getArea() const;
-
-	QObject *getCurrentSource() const;
 	QObject *getPreviousSource() const;
 
 	void connectSources(QList<SourceBase *> sources);
 	void connectAmplifiers(QList<Amplifier *> amplifiers);
 
 signals:
-	void currentSourceChanged();
+	void previousSourceChanged();
 	void activeAmplifierChanged();
 
 private slots:
@@ -97,8 +103,8 @@ private slots:
 	void updateActiveAmplifier();
 
 private:
-	int area, amplifier_count, object_id;
-	SourceBase *current_source, *previous_source;
+	int amplifier_count, object_id;
+	SourceBase *previous_source;
 };
 
 
@@ -121,6 +127,9 @@ public:
 	{
 		return ObjectInterface::IdMultiChannelGeneralAmbient;
 	}
+
+public slots:
+	void setSource(SourceBase *source);
 };
 
 
