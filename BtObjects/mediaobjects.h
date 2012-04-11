@@ -218,6 +218,7 @@ signals:
 	void activeChanged();
 	void activeAreasChanged();
 	void currentTrackChanged();
+	void sourceForGeneralAmbientChanged(SourceBase *);
 
 protected:
 	SourceBase(SourceDevice *d, QString name, SourceType t);
