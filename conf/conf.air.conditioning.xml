@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuratore>
+  <item>
+    <id>18</id>
+    <descr>Ac Basic 1</descr>
+    <where>11</where>
+    <command>4</command>
+  </item>
+  <item>
+    <id>19</id>
+    <descr>Ac Advanced 1</descr>
+    <where>12</where>
+    <command>4</command>
+  </item>
+</configuratore>  
+
