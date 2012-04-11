@@ -77,7 +77,7 @@ Item {
 
     MouseArea {
         // When the user press a MenuItem during the effect shown at the creation
-        // of the MenuElement container, the pressed item is not displayed at
+        // of the MenuColumn container, the pressed item is not displayed at
         // the same position of the normal one.
         // To prevent this weird graphical behaviour we block the events during
         // the effect.

@@ -4,7 +4,7 @@ import "../../js/datetime.js" as DateTime
 import Components 1.0
 
 
-MenuElement {
+MenuColumn {
     id: element
     width: 212
     height: seasonItem.height + modalityItem.height + itemLoader.height

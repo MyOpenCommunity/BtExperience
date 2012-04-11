@@ -45,7 +45,7 @@
 		  <item>
 			  <id>14</id> <!-- Sound diffusion source -->
 			  <name>Radio</name>
-			  <where>2</where>
+			  <where>1</where>
 			  <type>1</type>
 		  </item>
 		  <item>

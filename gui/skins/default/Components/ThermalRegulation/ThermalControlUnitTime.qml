@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 
-MenuElement {
+MenuColumn {
     id: element
     width: 212
     height: 220

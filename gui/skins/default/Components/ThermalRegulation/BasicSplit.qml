@@ -1,36 +1,36 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 
-MenuElement {
+MenuColumn {
     id: element
     width: 212
-    height: fakeModel.count * 50
-
-    onChildDestroyed: programList.currentIndex = -1
-
-    ListModel {
-        id: fakeModel
-        ListElement {
-            name: "comando 1"
-        }
-        ListElement {
-            name: "comando 2"
-        }
-        ListElement {
-            name: "off"
-        }
-    }
+    height: 100
+    signal basicSplitChanged(bool config)
 
     ListView {
-        id: programList
+        id: view
         anchors.fill: parent
-        interactive: false
-        model: fakeModel
-
         delegate: MenuItemDelegate {
-            itemObject: fakeModel.get(index)
-            hasChild: name !== "off"
-            onClicked: console.log("Clicked on program " + name)
+            name: model.name
+            onClicked: basicSplitChanged(model.type)
+        }
+        model: ListModel {
+            id: modelList
+            Component.onCompleted: {
+                var l = [true,
+                         false,
+                        ]
+                for (var i = 0; i < l.length; i++)
+                    append({
+                               "type": l[i],
+                               "name": pageObject.names.get('BASIC_SPLIT', l[i])
+                           })
+                if (dataModel.enable)
+                    view.currentIndex = 0
+                else
+                    view.currentIndex = 1
+            }
         }
     }
 }

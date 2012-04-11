@@ -24,7 +24,7 @@ Page {
 
     Component {
         id: itemComponent
-        MenuElement {
+        MenuColumn {
             property variant itemObject
             MenuItem {
                 name: itemObject.name

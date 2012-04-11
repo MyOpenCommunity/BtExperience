@@ -5,7 +5,7 @@ import "../../js/logging.js" as Log
 import Components 1.0
 
 
-MenuElement {
+MenuColumn {
     id: element
 
     // dimensions

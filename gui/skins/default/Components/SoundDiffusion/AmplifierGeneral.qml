@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 
-MenuElement {
+MenuColumn {
     id: element
     height: buttonOnOff.height + controlVolume.height
     width: 212

@@ -7,8 +7,11 @@ HEADERS += \
 	objectlistmodel.h \
 	objectinterface.h \
 	platform.h \
+	splitadvancedscenario.h \
+	splitbasicscenario.h \
 	thermalobjects.h \
 	thermalprobes.h \
+	devices/airconditioning_device.h \
 	devices/antintrusion_device.h \
 	devices/device.h \
 	devices/lighting_device.h \
@@ -37,9 +40,12 @@ SOURCES += \
 	mediaobjects.cpp \
 	objectlistmodel.cpp \
 	platform.cpp \
+	splitadvancedscenario.cpp \
+	splitbasicscenario.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \
 	generic_functions.cpp \
+	devices/airconditioning_device.cpp \
 	devices/antintrusion_device.cpp \
 	devices/device.cpp \
 	devices/lighting_device.cpp \

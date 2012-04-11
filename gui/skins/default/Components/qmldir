@@ -1,4 +1,4 @@
-MenuElement 1.0 MenuElement.qml
+MenuColumn 1.0 MenuColumn.qml
 MenuTitle 1.0 MenuTitle.qml
 Paginator 1.0 Paginator.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
