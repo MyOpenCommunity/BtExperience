@@ -20,9 +20,9 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
-            status: -1
-            hasChild: false
-            onClicked: console.log("Clicked on scenario: " + itemObject.name)
+            hasChild: true
+            onClicked:
+                system.loadElement(objectModel.getComponentFile(itemObject.objectId), itemObject.name, itemObject)
         }
 
         model: objectModel
