@@ -22,6 +22,8 @@ class NonControlledProbeDevice;
 */
 class SplitBasicScenario : public ObjectInterface
 {
+	friend class TestSplitScenarios;
+
 	Q_OBJECT
 
 	/*!

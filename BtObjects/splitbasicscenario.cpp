@@ -33,7 +33,12 @@ SplitBasicScenario::SplitBasicScenario(QString name,
 
 void SplitBasicScenario::valueReceived(const DeviceValues &values_list)
 {
-	temperature = values_list[NonControlledProbeDevice::DIM_TEMPERATURE].toInt();
+	int v = values_list[NonControlledProbeDevice::DIM_TEMPERATURE].toInt();
+	if (temperature == v)
+		// nothing to do
+		return;
+	temperature = v;
+	emit temperatureChanged();
 }
 
 void SplitBasicScenario::sendScenarioCommand()
@@ -63,8 +68,18 @@ int SplitBasicScenario::getSize() const
 
 void SplitBasicScenario::setProgram(QString program)
 {
-	Q_ASSERT_X(!program.isEmpty(), qPrintable(QString("SplitBasicScenario::setProgram").arg(program)), "program cannot be empty.");
-	Q_ASSERT_X(program_list.contains(program), qPrintable(QString("SplitBasicScenario::setProgram").arg(program)), "program must be known.");
+	if (program.isEmpty())
+	{
+		qWarning() << QString("program cannot be empty");
+		return;
+	}
+
+	if (!program_list.contains(program))
+	{
+		qWarning() << QString("Program (%1) not present in configured "
+							  "programs list").arg(program);
+		return;
+	}
 
 	if (actual_program == program)
 		// nothing to do

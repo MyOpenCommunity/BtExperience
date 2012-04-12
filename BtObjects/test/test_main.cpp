@@ -27,11 +27,13 @@
 #include <logger.h>
 
 #include "test_antintrusion_object.h"
+#include "test_filebrowser.h"
 #include "test_light_objects.h"
 #include "test_media_objects.h"
+#include "test_splitscenarios_object.h"
 #include "test_thermalprobes_object.h"
 #include "test_thermal_objects.h"
-#include "test_filebrowser.h"
+
 #include "main.h"
 
 logger *app_logger;
@@ -107,6 +109,9 @@ int main(int argc, char *argv[])
 
 	TestFileObject test_file_object;
 	test_list << &test_file_object;
+
+	TestSplitScenarios test_split_scenarios;
+	test_list << &test_split_scenarios;
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))
