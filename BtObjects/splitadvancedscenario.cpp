@@ -92,9 +92,14 @@ QStringList SplitAdvancedScenario::getPrograms() const
 	return result;
 }
 
+int SplitAdvancedScenario::getSize() const
+{
+	return program_list.size();
+}
+
 void SplitAdvancedScenario::setProgram(QString program)
 {
-	Q_ASSERT_X(!name.isEmpty(), qPrintable(QString("SplitAdvancedScenario::setProgram").arg(program)), "program cannot be empty.");
+	Q_ASSERT_X(!program.isEmpty(), qPrintable(QString("SplitAdvancedScenario::setProgram").arg(program)), "program cannot be empty.");
 
 	if (actual_program.name == program)
 		// nothing to do

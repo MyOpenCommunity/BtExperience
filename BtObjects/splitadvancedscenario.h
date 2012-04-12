@@ -116,6 +116,11 @@ class SplitAdvancedScenario : public ObjectInterface
 	*/
 	Q_PROPERTY(QStringList programs READ getPrograms CONSTANT)
 
+	/*!
+		\brief Gets the size of available programs
+	*/
+	Q_PROPERTY(int size READ getSize CONSTANT)
+
 public:
 	explicit SplitAdvancedScenario(QString name,
 								   QString key,
@@ -155,6 +160,7 @@ public:
 	void setSetPoint(int setPoint);
 	SplitProgram::Speed getSpeed() const;
 	void setSpeed(SplitProgram::Speed speed);
+	int getSize() const;
 
 	Q_INVOKABLE void ok();
 	Q_INVOKABLE void resetProgram();

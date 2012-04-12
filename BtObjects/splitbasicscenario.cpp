@@ -15,7 +15,14 @@ SplitBasicScenario::SplitBasicScenario(QString name,
 	this->command = command;
 	this->key = key;
 	this->name = name;
-	this->enabled = false;
+	// TODO read values from somewhere or implement something valueReceived-like
+	dev->setOffCommand(QString("18"));
+	program_list <<
+					"manual" <<
+					"command 1" <<
+					"command 2";
+	program_list << tr("off"); // off must always be present
+	actual_program = QString();
 }
 
 void SplitBasicScenario::sendScenarioCommand()
@@ -28,17 +35,38 @@ void SplitBasicScenario::sendOffCommand()
 	dev->turnOff();
 }
 
-bool SplitBasicScenario::isEnabled() const
+QString SplitBasicScenario::getProgram() const
 {
-	return enabled;
+	return actual_program;
 }
 
-void SplitBasicScenario::setEnabled(bool enable)
+QStringList SplitBasicScenario::getPrograms() const
 {
-	enabled = enable;
-	if (enabled)
-		sendScenarioCommand();
-	else
+	return program_list;
+}
+
+int SplitBasicScenario::getSize() const
+{
+	return program_list.size();
+}
+
+void SplitBasicScenario::setProgram(QString program)
+{
+	Q_ASSERT_X(!program.isEmpty(), qPrintable(QString("SplitBasicScenario::setProgram").arg(program)), "program cannot be empty.");
+	Q_ASSERT_X(program_list.contains(program), qPrintable(QString("SplitBasicScenario::setProgram").arg(program)), "program must be known.");
+
+	if (actual_program == program)
+		// nothing to do
+		return;
+
+	actual_program = program;
+	emit programChanged();
+}
+
+void SplitBasicScenario::ok()
+{
+	if(actual_program == tr("off"))
 		sendOffCommand();
-	emit enabledChanged();
+	else
+		sendScenarioCommand();
 }
