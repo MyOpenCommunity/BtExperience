@@ -26,6 +26,8 @@ Item {
     // The filename of the root element (without scroll, the first column)
     property string rootElement
 
+    property QtObject rootData: null
+
     // the page where the container is placed
     property variant pageObject: undefined
 
@@ -111,7 +113,7 @@ Item {
     }
 
     Component.onCompleted: {
-        Script.loadComponent(-1, mainContainer.rootElement, "", null)
+        Script.loadComponent(-1, mainContainer.rootElement, "", rootData)
     }
 }
 
