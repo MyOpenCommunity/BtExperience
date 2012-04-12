@@ -23,6 +23,7 @@
 #include "splitbasicscenario.h"
 #include "splitadvancedscenario.h"
 #include "airconditioning_device.h"
+#include "scenarioobjects.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
@@ -151,6 +152,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 											programs);
 			break;
 		}
+		case ObjectInterface::IdScenarioSystem:
+			obj_list = createScenarioSystem(item, id);
+			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
