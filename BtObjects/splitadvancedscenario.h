@@ -4,10 +4,13 @@
 
 #include "objectinterface.h"
 #include "airconditioning_device.h"
+#include "device.h" // DeviceValues
 
 #include <QObject>
 #include <QStringList>
 
+
+class NonControlledProbeDevice;
 
 /*!
 	\ingroup Air Conditioning
@@ -37,6 +40,10 @@ public:
 		ModeAuto = AdvancedAirConditioningDevice::MODE_AUTO
 	};
 
+	static Mode int2Mode(int v) {
+		return static_cast<Mode>(v);
+	}
+
 	enum Speed {
 		SpeedAuto = AdvancedAirConditioningDevice::VEL_AUTO,
 		SpeedMin = AdvancedAirConditioningDevice::VEL_MIN,
@@ -46,11 +53,19 @@ public:
 		SpeedInvalid = AdvancedAirConditioningDevice::VEL_INVALID
 	};
 
+	static Speed int2Speed(int v) {
+		return static_cast<Speed>(v);
+	}
+
 	enum Swing {
 		SwingOff = AdvancedAirConditioningDevice::SWING_OFF,
 		SwingOn = AdvancedAirConditioningDevice::SWING_ON,
 		SwingInvalid = AdvancedAirConditioningDevice::SWING_INVALID
 	};
+
+	static Swing int2Swing(int v) {
+		return static_cast<Swing>(v);
+	}
 
 	explicit SplitProgram(
 			QString name,
@@ -131,6 +146,8 @@ public:
 								   QString key,
 								   AdvancedAirConditioningDevice *d,
 								   QString command,
+								   NonControlledProbeDevice *d_probe,
+								   QList<SplitProgram *> programs,
 								   QObject *parent = 0);
 
 	virtual int getObjectId() const
@@ -183,13 +200,18 @@ public slots:
 	void sendScenarioCommand();
 	void sendOffCommand();
 
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
 private:
 	QString command;
 	AdvancedAirConditioningDevice *dev;
+	NonControlledProbeDevice *dev_probe;
 	QString key;
 	QString name;
 	SplitProgram actual_program; // name empty means custom programming
 	QList<SplitProgram *> program_list;
+	int temperature;
 };
 
 #endif // SPLITADVANCEDSCENARIO_H

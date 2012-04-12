@@ -98,9 +98,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdThermalControlledProbe:
 		{
 			ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?
-				ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
+						ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
 			obj = new ThermalControlledProbe(descr, where,
-				new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+											 new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
 			break;
 		}
 		case ObjectInterface::IdHardwareSettings:
@@ -116,19 +116,41 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = createSoundDiffusionSystem(item, id);
 			break;
 		case ObjectInterface::IdSplitBasicScenario:
+		{
+			QStringList programs;
+			foreach (const QDomNode &programs_node, getChildrenExact(item, "programs"))
+				foreach (const QDomNode &program_node, getChildrenExact(programs_node, "program"))
+					programs << program_node.toElement().text();
 			obj = new SplitBasicScenario(descr,
 										 where,
 										 bt_global::add_device_to_cache(
 											 new AirConditioningDevice(where)),
-										 getTextChild(item, "command"));
+										 getTextChild(item, "command"),
+										 getTextChild(item, "off_command"),
+										 new NonControlledProbeDevice(getTextChild(item, "where_probe"), NonControlledProbeDevice::INTERNAL),
+										 programs);
 			break;
+		}
 		case ObjectInterface::IdSplitAdvancedScenario:
+		{
+			QList<SplitProgram *> programs;
+			foreach (const QDomNode &programs_node, getChildrenExact(item, "programs"))
+				foreach (const QDomNode &program_node, getChildrenExact(programs_node, "program"))
+					programs << new SplitProgram(
+									getTextChild(program_node, "name"),
+									SplitProgram::int2Mode(getTextChild(program_node, "mode").toInt()),
+									getTextChild(program_node, "set_point").toInt(),
+									SplitProgram::int2Speed(getTextChild(program_node, "speed").toInt()),
+									SplitProgram::int2Swing(getTextChild(program_node, "swing").toInt()));
 			obj = new SplitAdvancedScenario(descr,
 											where,
 											bt_global::add_device_to_cache(
 												new AdvancedAirConditioningDevice(where)),
-											getTextChild(item, "command"));
+											getTextChild(item, "command"),
+											new NonControlledProbeDevice(getTextChild(item, "where_probe"), NonControlledProbeDevice::INTERNAL),
+											programs);
 			break;
+		}
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
@@ -151,22 +173,30 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterType<FilterListModel>(uri, 1, 0, "FilterListModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
-	qmlRegisterUncreatableType<ObjectInterface>(uri, 1, 0, "ObjectInterface",
-		"unable to create an ObjectInterface instance");
-	qmlRegisterUncreatableType<ThermalControlUnit99Zones>(uri, 1, 0, "ThermalControlUnit99Zones",
-		"unable to create a ThermalControlUnit99Zones instance");
-	qmlRegisterUncreatableType<ThermalControlledProbe>(uri, 1, 0, "ThermalControlledProbe",
-		"unable to create a ThermalControlledProbe instance");
-	qmlRegisterUncreatableType<PlatformSettings>(uri, 1, 0, "PlatformSettings",
-		"unable to create a PlatformSettings instance");
-	qmlRegisterUncreatableType<HardwareSettings>(uri, 1, 0, "HardwareSettings",
-		"unable to create a HardwareSettings instance");
-	qmlRegisterUncreatableType<AntintrusionAlarm>(uri, 1, 0, "AntintrusionAlarm",
-		"unable to create an AntintrusionAlarm instance");
-	qmlRegisterUncreatableType<FileObject>(uri, 1, 0, "FileObject",
-		"unable to create an FileObject instance");
-	qmlRegisterUncreatableType<SourceBase>(uri, 1, 0, "SourceBase",
-		"unable to create an SourceBase instance");
+	qmlRegisterUncreatableType<ObjectInterface>(
+				uri, 1, 0, "ObjectInterface",
+				"unable to create an ObjectInterface instance");
+	qmlRegisterUncreatableType<ThermalControlUnit99Zones>(
+				uri, 1, 0, "ThermalControlUnit99Zones",
+				"unable to create a ThermalControlUnit99Zones instance");
+	qmlRegisterUncreatableType<ThermalControlledProbe>(
+				uri, 1, 0, "ThermalControlledProbe",
+				"unable to create a ThermalControlledProbe instance");
+	qmlRegisterUncreatableType<PlatformSettings>(
+				uri, 1, 0, "PlatformSettings",
+				"unable to create a PlatformSettings instance");
+	qmlRegisterUncreatableType<HardwareSettings>(
+				uri, 1, 0, "HardwareSettings",
+				"unable to create a HardwareSettings instance");
+	qmlRegisterUncreatableType<AntintrusionAlarm>(
+				uri, 1, 0, "AntintrusionAlarm",
+				"unable to create an AntintrusionAlarm instance");
+	qmlRegisterUncreatableType<FileObject>(
+				uri, 1, 0, "FileObject",
+				"unable to create an FileObject instance");
+	qmlRegisterUncreatableType<SourceBase>(
+				uri, 1, 0, "SourceBase",
+				"unable to create an SourceBase instance");
 	qmlRegisterType<SplitProgram>(uri, 1, 0, "SplitProgram");
 }
 

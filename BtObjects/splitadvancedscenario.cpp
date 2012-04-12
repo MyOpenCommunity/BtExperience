@@ -1,4 +1,6 @@
 #include "splitadvancedscenario.h"
+#include "probe_device.h"
+#include "scaleconversion.h"
 
 #include <QDebug>
 
@@ -31,42 +33,31 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 											 QString key,
 											 AdvancedAirConditioningDevice *d,
 											 QString command,
+											 NonControlledProbeDevice *d_probe,
+											 QList<SplitProgram *> programs,
 											 QObject *parent) :
 	ObjectInterface(parent)
 {
 	dev = d;
+	dev_probe = d_probe;
+	connect(dev_probe, SIGNAL(valueReceived(DeviceValues)),
+			SLOT(valueReceived(DeviceValues)));
 
 	this->command = command;
 	this->key = key;
 	this->name = name;
-	// TODO read values from somewhere or implement something valueReceived-like
-	program_list <<
-					new SplitProgram(
-						"manual",
-						SplitProgram::ModeFan,
-						200,
-						SplitProgram::SpeedMin,
-						SplitProgram::SwingOff,
-						this) <<
-					new SplitProgram(
-						"command 1",
-						SplitProgram::ModeFan,
-						200,
-						SplitProgram::SpeedMed,
-						SplitProgram::SwingOff,
-						this) <<
-					new SplitProgram(
-						"command 2",
-						SplitProgram::ModeFan,
-						200,
-						SplitProgram::SpeedMax,
-						SplitProgram::SwingOn,
-						this);
+	program_list = programs;
 	actual_program.name = QString();
 	actual_program.mode = SplitProgram::ModeOff;
 	actual_program.swing = SplitProgram::SwingOff;
 	actual_program.temperature = 200;
 	actual_program.speed = SplitProgram::SpeedSilent;
+	temperature = 200;
+}
+
+void SplitAdvancedScenario::valueReceived(const DeviceValues &values_list)
+{
+	temperature = values_list[NonControlledProbeDevice::DIM_TEMPERATURE].toInt();
 }
 
 void SplitAdvancedScenario::resetProgram()
@@ -217,6 +208,5 @@ void SplitAdvancedScenario::sendOffCommand()
 
 int SplitAdvancedScenario::getTemperature() const
 {
-	// TODO return actual temperature as seen on the slave probe
-	return 200;
+	return bt2Celsius(temperature);
 }

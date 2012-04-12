@@ -3,11 +3,14 @@
 
 
 #include "objectinterface.h"
-#include "airconditioning_device.h"
+#include "device.h" // DeviceValues
 
 #include <QObject>
 #include <QStringList>
 
+
+class AirConditioningDevice;
+class NonControlledProbeDevice;
 
 /*!
 	\ingroup Air Conditioning
@@ -51,6 +54,9 @@ public:
 								QString key,
 								AirConditioningDevice *d,
 								QString command,
+								QString off_command,
+								NonControlledProbeDevice *d_probe,
+								QStringList programs,
 								QObject *parent = 0);
 
 	virtual int getObjectId() const
@@ -86,6 +92,9 @@ signals:
 	void programChanged();
 	void temperatureChanged();
 
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
 protected:
 	void sendScenarioCommand();
 	void sendOffCommand();
@@ -93,10 +102,12 @@ protected:
 private:
 	QString command;
 	AirConditioningDevice *dev;
+	NonControlledProbeDevice *dev_probe;
 	QString key;
 	QString name;
 	QString actual_program;
 	QStringList program_list;
+	int temperature;
 };
 
 #endif // SPLITBASICSCENARIO_H

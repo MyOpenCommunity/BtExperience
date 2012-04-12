@@ -1,4 +1,7 @@
 #include "splitbasicscenario.h"
+#include "airconditioning_device.h"
+#include "probe_device.h"
+#include "scaleconversion.h"
 
 #include <QDebug>
 
@@ -7,22 +10,30 @@ SplitBasicScenario::SplitBasicScenario(QString name,
 									   QString key,
 									   AirConditioningDevice *d,
 									   QString command,
+									   QString off_command,
+									   NonControlledProbeDevice *d_probe,
+									   QStringList programs,
 									   QObject *parent) :
 	ObjectInterface(parent)
 {
 	dev = d;
+	dev_probe = d_probe;
+	connect(dev_probe, SIGNAL(valueReceived(DeviceValues)),
+			SLOT(valueReceived(DeviceValues)));
 
 	this->command = command;
 	this->key = key;
 	this->name = name;
-	// TODO read values from somewhere or implement something valueReceived-like
-	dev->setOffCommand(QString("18"));
-	program_list <<
-					"manual" <<
-					"command 1" <<
-					"command 2";
+	dev->setOffCommand(off_command);
+	program_list = programs;
 	program_list << tr("off"); // off must always be present
 	actual_program = QString();
+	temperature = 200;
+}
+
+void SplitBasicScenario::valueReceived(const DeviceValues &values_list)
+{
+	temperature = values_list[NonControlledProbeDevice::DIM_TEMPERATURE].toInt();
 }
 
 void SplitBasicScenario::sendScenarioCommand()
@@ -73,6 +84,5 @@ void SplitBasicScenario::ok()
 
 int SplitBasicScenario::getTemperature() const
 {
-	// TODO return actual temperature as seen on the slave probe
-	return 200;
+	return bt2Celsius(temperature);
 }

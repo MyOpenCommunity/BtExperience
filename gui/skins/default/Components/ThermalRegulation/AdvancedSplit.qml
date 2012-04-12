@@ -85,7 +85,7 @@ MenuColumn {
             ControlMinusPlus {
                 id: temp
                 title: qsTr("temperature")
-                property int currentTemp: dataModel.setPoint
+                property int currentTemp: dataModel.setPoint / 10
                 text: currentTemp + " " + qsTr("°C")
                 onMinusClicked: {
                     dataModel.resetProgram()
@@ -137,7 +137,7 @@ MenuColumn {
                 onOkClicked: {
                     dataModel.speed = fancoilMode.currentIndex
                     dataModel.swing = swing.currentIndex
-                    dataModel.setPoint = temp.currentTemp
+                    dataModel.setPoint = temp.currentTemp * 10
                     dataModel.ok()
                     element.closeElement()
                 }

@@ -18,7 +18,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: modelData
             name: modelData
-            status: modelData === dataModel.program ? 1 : 0
+            status: -1
             onClicked: {
                 dataModel.program = modelData
                 modeChanged(dataModel.mode)

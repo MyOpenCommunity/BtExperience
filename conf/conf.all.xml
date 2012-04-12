@@ -211,12 +211,36 @@
     <descr>Ac Basic 1</descr>
     <where>11</where>
     <command>4</command>
+    <off_command>18</off_command>
+    <where_probe>6</where_probe>
+    <programs>
+        <program>manual</program>
+        <program>command 1</program>
+        <program>command 2</program>
+    </programs>
   </item>
   <item>
     <id>19</id>
     <descr>Ac Advanced 1</descr>
     <where>12</where>
     <command>4</command>
+    <where_probe>6</where_probe>
+    <programs>
+        <program>
+            <name>night</name>
+            <mode>4</mode>
+            <set_point>210</set_point>
+            <speed>1</speed>
+            <swing>0</swing>
+        </program>
+        <program>
+            <name>day</name>
+            <mode>5</mode>
+            <set_point>210</set_point>
+            <speed>0</speed>
+            <swing>0</swing>
+        </program>
+    </programs>
   </item>
 </configuratore>
 
