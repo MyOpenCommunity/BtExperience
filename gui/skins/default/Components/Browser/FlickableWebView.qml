@@ -56,6 +56,10 @@ Flickable {
     width: parent.width
     contentWidth: Math.max(parent.width,webView.width)
     contentHeight: Math.max(parent.height,webView.height)
+    anchors.top: headerSpace.bottom
+    anchors.bottom: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
     pressDelay: 200
 
     onWidthChanged : {
@@ -119,6 +123,7 @@ Flickable {
             // got to topleft
             flickable.contentX = 0
             flickable.contentY = 0
+            if (url !== null) { header.editUrl = url.toString(); }
         }
         onDoubleClick: {
                         if (!heuristicZoom(clickX,clickY,2.5)) {
