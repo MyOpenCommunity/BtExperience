@@ -39,9 +39,14 @@ void ObjectTester::checkSignals()
 {
 	foreach (QSignalSpy *spy, sl)
 	{
-		QCOMPARE(spy->count(), 1);
+		if (spy->count() != 1)
+		{
+			QString msg = QString("The signal %1 is emitted %2 times").arg(spy->signal().data()).arg(spy->count());
+			QFAIL(qPrintable(msg));
+		}
 		spy->clear();
 	}
+
 }
 
 void ObjectTester::checkNoSignals()
