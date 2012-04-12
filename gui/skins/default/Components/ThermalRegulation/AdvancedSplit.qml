@@ -16,19 +16,22 @@ MenuColumn {
     onChildDestroyed: privateProps.currentIndex = -1
 
     Component.onCompleted: {
-        modalityChanged(dataModel.mode)
+        modeChanged(dataModel.mode)
     }
 
     onChildLoaded: {
-        if (child.modalityChanged)
-            child.modalityChanged.connect(modalityChanged)
+        if (child.modeChanged)
+            child.modeChanged.connect(modeChanged)
     }
 
-    function modalityChanged(mode) {
-        if (mode === SplitAdvancedScenario.ModeFan)
+    function modeChanged(mode) {
+        if (dataModel.mode !== mode)
+            dataModel.resetProgram()
+        dataModel.mode = mode
+        if (mode === SplitProgram.ModeFan)
             options.setComponent(fancoil)
-        else if (mode === SplitAdvancedScenario.ModeOff
-                 || mode === SplitAdvancedScenario.ModeDehumidification)
+        else if (mode === SplitProgram.ModeOff
+                 || mode === SplitProgram.ModeDehumidification)
             options.setComponent(off)
         else
             options.setComponent(temperature)
@@ -42,14 +45,16 @@ MenuColumn {
         MenuItem {
             id: programItem
             name: qsTr("program")
-            description: qsTr("morning")
+            description: dataModel.program
             hasChild: true
             state: privateProps.currentIndex === 1 ? "selected" : ""
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                // TODO: this is just to load a page with programs...
-                element.loadElement("Components/ThermalRegulation/BasicSplit.qml", name)
+                element.loadElement(
+                            "Components/ThermalRegulation/ProgramListSplit.qml",
+                            name,
+                            dataModel)
             }
         }
 
@@ -62,7 +67,9 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                element.loadElement("Components/ThermalRegulation/AdvancedSplitModalities.qml", name)
+                element.loadElement("Components/ThermalRegulation/AdvancedSplitModalities.qml",
+                                    name,
+                                    dataModel)
             }
         }
 
@@ -73,30 +80,57 @@ MenuColumn {
 
     Component {
         id: temperature
+        // TODO how to manage temperatures formats?
         Column {
             ControlMinusPlus {
                 id: temp
                 title: qsTr("temperature")
                 property int currentTemp: dataModel.setPoint
                 text: currentTemp + " " + qsTr("°C")
-                onMinusClicked: --currentTemp
-                onPlusClicked: ++currentTemp
+                onMinusClicked: {
+                    dataModel.resetProgram()
+                    --currentTemp
+                }
+                onPlusClicked: {
+                    dataModel.resetProgram()
+                    ++currentTemp
+                }
             }
             ControlUpDown {
                 id: fancoilMode
                 title: qsTr("fancoil")
                 text: pageObject.names.get('SPEED', currentIndex)
                 property int currentIndex: dataModel.speed
-                onDownClicked: if (currentIndex > 0) --currentIndex
-                onUpClicked: if(currentIndex < 4) ++currentIndex
+                onDownClicked: {
+                    if (currentIndex > 0) {
+                        dataModel.resetProgram()
+                        --currentIndex
+                    }
+                }
+                onUpClicked: {
+                    if(currentIndex < 4) {
+                        dataModel.resetProgram()
+                        ++currentIndex
+                    }
+                }
             }
             ControlUpDown {
                 id: swing
                 title: qsTr("swing")
                 text: pageObject.names.get('SWING', currentIndex)
                 property int currentIndex: dataModel.swing
-                onDownClicked: if (currentIndex > 0) --currentIndex
-                onUpClicked: if (currentIndex < 1) ++currentIndex
+                onDownClicked: {
+                    if (currentIndex > 0) {
+                        dataModel.resetProgram()
+                        --currentIndex
+                    }
+                }
+                onUpClicked: {
+                    if(currentIndex < 1) {
+                        dataModel.resetProgram()
+                        ++currentIndex
+                    }
+                }
             }
             ButtonOkCancel {
                 onCancelClicked: element.closeElement()
@@ -104,6 +138,8 @@ MenuColumn {
                     dataModel.speed = fancoilMode.currentIndex
                     dataModel.swing = swing.currentIndex
                     dataModel.setPoint = temp.currentTemp
+                    dataModel.ok()
+                    element.closeElement()
                 }
             }
         }
@@ -118,22 +154,44 @@ MenuColumn {
                 title: qsTr("fancoil")
                 text: pageObject.names.get('SPEED', currentIndex)
                 property int currentIndex: dataModel.speed
-                onDownClicked: if (currentIndex > 0) --currentIndex
-                onUpClicked: if(currentIndex < 4) ++currentIndex
+                onDownClicked: {
+                    if (currentIndex > 0) {
+                        dataModel.resetProgram()
+                        --currentIndex
+                    }
+                }
+                onUpClicked: {
+                    if(currentIndex < 4) {
+                        dataModel.resetProgram()
+                        ++currentIndex
+                    }
+                }
             }
             ControlUpDown {
                 id: swing
                 title: qsTr("swing")
                 text: pageObject.names.get('SWING', currentIndex)
                 property int currentIndex: dataModel.swing
-                onDownClicked: if (currentIndex > 0) --currentIndex
-                onUpClicked: if (currentIndex < 1) ++currentIndex
+                onDownClicked: {
+                    if (currentIndex > 0) {
+                        dataModel.resetProgram()
+                        --currentIndex
+                    }
+                }
+                onUpClicked: {
+                    if(currentIndex < 1) {
+                        dataModel.resetProgram()
+                        ++currentIndex
+                    }
+                }
             }
             ButtonOkCancel {
                 onCancelClicked: element.closeElement()
                 onOkClicked: {
                     dataModel.speed = fancoilMode.currentIndex
                     dataModel.swing = swing.currentIndex
+                    dataModel.ok()
+                    element.closeElement()
                 }
             }
         }
@@ -143,6 +201,10 @@ MenuColumn {
         id: off
         ButtonOkCancel {
             onCancelClicked: element.closeElement()
+            onOkClicked: {
+                dataModel.ok()
+                element.closeElement()
+            }
         }
     }
 }

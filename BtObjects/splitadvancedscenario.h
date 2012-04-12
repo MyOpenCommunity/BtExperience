@@ -6,67 +6,28 @@
 #include "airconditioning_device.h"
 
 #include <QObject>
+#include <QStringList>
 
 
 /*!
 	\ingroup Air Conditioning
-	\brief An advanced split scenario
+	\brief A program associated to an advanced split scenario
 
-	A class to manage an advanced scenario.
+	A class to record data related to a program associated to a scenario.
 
-	The object id is \a ObjectInterface::IdSplitAdvancedScenario.
+	This class is based on \a AdvancedAirConditioningDevice::Status adding a
+	string property to hold the program name. Redfines some enums so they can
+	be exported to QML.
 */
-class SplitAdvancedScenario : public ObjectInterface
+class SplitProgram : public QObject
 {
 	Q_OBJECT
-
-	/*!
-		\brief Gets the scenario type (basic or advanced)
-	*/
-	Q_PROPERTY(QString advanced READ isAdvanced CONSTANT)
-
-	/*!
-		\brief Enables or disables the scenario
-	*/
-	Q_PROPERTY(bool enable READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
-
-	/*!
-		\brief Gets or sets the split mode
-	*/
-	Q_PROPERTY(Mode mode READ getMode WRITE setMode NOTIFY modeChanged)
-
-	/*!
-		\brief Gets the scenario name
-	*/
-	Q_PROPERTY(QString name READ getName CONSTANT)
-
-	/*!
-		\brief Gets or sets the split swing
-	*/
-	Q_PROPERTY(Swing swing READ getSwing WRITE setSwing NOTIFY swingChanged)
-
-	/*!
-		\brief Gets or sets the split temperature set point
-	*/
-	Q_PROPERTY(int setPoint READ getSetPoint WRITE setSetPoint NOTIFY setPointChanged)
-
-	/*!
-		\brief Gets or sets the split fan speed
-	*/
-	Q_PROPERTY(Speed speed READ getSpeed WRITE setSpeed NOTIFY speedChanged)
 
 	Q_ENUMS(Mode)
 	Q_ENUMS(Speed)
 	Q_ENUMS(Swing)
 
 public:
-	explicit SplitAdvancedScenario(QString name,
-								   QString key,
-								   AdvancedAirConditioningDevice *d,
-								   QString command,
-								   QObject *parent = 0);
-
-	// TODO I didn't find a better way... :(
 	enum Mode {
 		ModeOff = AdvancedAirConditioningDevice::MODE_OFF,
 		ModeWinter = AdvancedAirConditioningDevice::MODE_WINTER,
@@ -91,6 +52,77 @@ public:
 		SwingInvalid = AdvancedAirConditioningDevice::SWING_INVALID
 	};
 
+	explicit SplitProgram(
+			QString name,
+			Mode mode,
+			int temperature,
+			Speed speed,
+			Swing swing,
+			QObject *parent=0);
+
+	explicit SplitProgram(QObject *parent=0);
+
+	QString name;
+	Mode mode;
+	Speed speed;
+	Swing swing;
+	int temperature;
+};
+
+/*!
+	\ingroup Air Conditioning
+	\brief An advanced split scenario
+
+	A class to manage an advanced scenario.
+
+	The object id is \a ObjectInterface::IdSplitAdvancedScenario.
+*/
+class SplitAdvancedScenario : public ObjectInterface
+{
+	Q_OBJECT
+
+	/*!
+		\brief Gets or sets the split mode
+	*/
+	Q_PROPERTY(SplitProgram::Mode mode READ getMode WRITE setMode NOTIFY modeChanged)
+
+	/*!
+		\brief Gets the split name
+	*/
+	Q_PROPERTY(QString name READ getName CONSTANT)
+
+	/*!
+		\brief Gets or sets the split swing
+	*/
+	Q_PROPERTY(SplitProgram::Swing swing READ getSwing WRITE setSwing NOTIFY swingChanged)
+
+	/*!
+		\brief Gets or sets the split temperature set point
+	*/
+	Q_PROPERTY(int setPoint READ getSetPoint WRITE setSetPoint NOTIFY setPointChanged)
+
+	/*!
+		\brief Gets or sets the split fan speed
+	*/
+	Q_PROPERTY(SplitProgram::Speed speed READ getSpeed WRITE setSpeed NOTIFY speedChanged)
+
+	/*!
+		\brief Gets or sets the actual program
+	*/
+	Q_PROPERTY(QString program READ getProgram WRITE setProgram NOTIFY programChanged)
+
+	/*!
+		\brief Gets the list of available programs
+	*/
+	Q_PROPERTY(QStringList programs READ getPrograms CONSTANT)
+
+public:
+	explicit SplitAdvancedScenario(QString name,
+								   QString key,
+								   AdvancedAirConditioningDevice *d,
+								   QString command,
+								   QObject *parent = 0);
+
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdSplitAdvancedScenario;
@@ -112,42 +144,39 @@ public:
 		return name;
 	}
 
-	bool isAdvanced() const
-	{
-		return true;
-	}
-
-	bool isEnabled() const;
-	void setEnabled(bool enable);
-	Mode getMode() const;
-	void setMode(Mode mode);
-	Swing getSwing() const;
-	void setSwing(Swing swing);
+	SplitProgram::Mode getMode() const;
+	void setMode(SplitProgram::Mode mode);
+	QString getProgram() const;
+	void setProgram(QString program);
+	QStringList getPrograms() const;
+	SplitProgram::Swing getSwing() const;
+	void setSwing(SplitProgram::Swing swing);
 	int getSetPoint() const;
 	void setSetPoint(int setPoint);
-	Speed getSpeed() const;
-	void setSpeed(Speed speed);
+	SplitProgram::Speed getSpeed() const;
+	void setSpeed(SplitProgram::Speed speed);
+
+	Q_INVOKABLE void ok();
+	Q_INVOKABLE void resetProgram();
 
 signals:
-	void enabledChanged();
 	void modeChanged();
+	void programChanged();
 	void swingChanged();
 	void setPointChanged();
 	void speedChanged();
 
 public slots:
 	void sendScenarioCommand();
-
-protected slots:
-	virtual void valueReceived(const DeviceValues &values_list);
+	void sendOffCommand();
 
 private:
 	QString command;
 	AdvancedAirConditioningDevice *dev;
-	bool enabled;
 	QString key;
 	QString name;
-	AdvancedAirConditioningDevice::Status status;
+	SplitProgram actual_program; // name empty means custom programming
+	QList<SplitProgram *> program_list;
 };
 
 #endif // SPLITADVANCEDSCENARIO_H

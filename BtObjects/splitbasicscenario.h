@@ -21,11 +21,6 @@ class SplitBasicScenario : public ObjectInterface
 	Q_OBJECT
 
 	/*!
-		\brief Gets the scenario type (basic or advanced)
-	*/
-	Q_PROPERTY(QString advanced READ isAdvanced CONSTANT)
-
-	/*!
 		\brief Enables or disables the scenario
 	*/
 	Q_PROPERTY(bool enable READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
@@ -63,22 +58,15 @@ public:
 		return name;
 	}
 
-	bool isAdvanced() const
-	{
-		return false;
-	}
-
 	bool isEnabled() const;
 	void setEnabled(bool enable);
 
 signals:
 	void enabledChanged();
 
-public slots:
+protected:
 	void sendScenarioCommand();
-
-protected slots:
-	virtual void valueReceived(const DeviceValues &values_list);
+	void sendOffCommand();
 
 private:
 	QString command;

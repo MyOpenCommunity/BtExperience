@@ -167,8 +167,7 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create an FileObject instance");
 	qmlRegisterUncreatableType<SourceBase>(uri, 1, 0, "SourceBase",
 		"unable to create an SourceBase instance");
-	qmlRegisterUncreatableType<SplitAdvancedScenario>(uri, 1, 0, "SplitAdvancedScenario",
-		"unable to create an SplitAdvancedScenario instance");
+	qmlRegisterType<SplitProgram>(uri, 1, 0, "SplitProgram");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

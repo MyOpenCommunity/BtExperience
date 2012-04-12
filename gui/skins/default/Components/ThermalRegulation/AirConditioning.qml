@@ -9,15 +9,6 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
-    onChildLoaded: {
-        if (child.basicSplitChanged)
-            child.basicSplitChanged.connect(basicSplitChanged)
-    }
-
-    function basicSplitChanged(value) {
-        objectModel.getObject(paginator.currentIndex).enable = value
-    }
-
     PaginatorList {
         id: paginator
         width: parent.width
@@ -31,9 +22,10 @@ MenuColumn {
             //status: itemObject.active === true ? 1 : 0
             hasChild: true
             onClicked: {
-                element.loadElement(objectModel.getComponentFile(itemObject.objectId),
-                                    itemObject.name,
-                                    objectModel.getObject(model.index))
+                element.loadElement(
+                            objectModel.getComponentFile(itemObject.objectId),
+                            itemObject.name,
+                            objectModel.getObject(model.index))
             }
         }
         model: objectModel

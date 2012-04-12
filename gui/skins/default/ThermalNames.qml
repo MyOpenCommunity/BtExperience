@@ -15,30 +15,26 @@ QtObject {
         Script.container['PROBE_STATUS'][ThermalControlledProbe.Off] = qsTr("off")
         Script.container['PROBE_STATUS'][ThermalControlledProbe.Unknown] = qsTr("--")
 
-        Script.container['BASIC_SPLIT'] = []
-        Script.container['BASIC_SPLIT'][true] = qsTr("Enable")
-        Script.container['BASIC_SPLIT'][false] = qsTr("Disable")
-
         Script.container['MODE'] = []
-        Script.container['MODE'][SplitAdvancedScenario.ModeOff] = qsTr("Off")
-        Script.container['MODE'][SplitAdvancedScenario.ModeWinter] = qsTr("Heating")
-        Script.container['MODE'][SplitAdvancedScenario.ModeSummer] = qsTr("Cooling")
-        Script.container['MODE'][SplitAdvancedScenario.ModeFan] = qsTr("Fan")
-        Script.container['MODE'][SplitAdvancedScenario.ModeDehumidification] = qsTr("Dry")
-        Script.container['MODE'][SplitAdvancedScenario.ModeAuto] = qsTr("Automatic")
+        Script.container['MODE'][SplitProgram.ModeOff] = qsTr("Off")
+        Script.container['MODE'][SplitProgram.ModeWinter] = qsTr("Heating")
+        Script.container['MODE'][SplitProgram.ModeSummer] = qsTr("Cooling")
+        Script.container['MODE'][SplitProgram.ModeFan] = qsTr("Fan")
+        Script.container['MODE'][SplitProgram.ModeDehumidification] = qsTr("Dry")
+        Script.container['MODE'][SplitProgram.ModeAuto] = qsTr("Automatic")
 
         Script.container['SPEED'] = []
-        Script.container['SPEED'][SplitAdvancedScenario.SpeedAuto] = qsTr("Automatic")
-        Script.container['SPEED'][SplitAdvancedScenario.SpeedMin] = qsTr("Low")
-        Script.container['SPEED'][SplitAdvancedScenario.SpeedMed] = qsTr("Medium")
-        Script.container['SPEED'][SplitAdvancedScenario.SpeedMax] = qsTr("High")
-        Script.container['SPEED'][SplitAdvancedScenario.SpeedSilent] = qsTr("Silent")
-        Script.container['SPEED'][SplitAdvancedScenario.SpeedInvalid] = qsTr("")
+        Script.container['SPEED'][SplitProgram.SpeedAuto] = qsTr("Automatic")
+        Script.container['SPEED'][SplitProgram.SpeedMin] = qsTr("Low")
+        Script.container['SPEED'][SplitProgram.SpeedMed] = qsTr("Medium")
+        Script.container['SPEED'][SplitProgram.SpeedMax] = qsTr("High")
+        Script.container['SPEED'][SplitProgram.SpeedSilent] = qsTr("Silent")
+        Script.container['SPEED'][SplitProgram.SpeedInvalid] = qsTr("")
 
         Script.container['SWING'] = []
-        Script.container['SWING'][SplitAdvancedScenario.SwingOff] = qsTr("Off")
-        Script.container['SWING'][SplitAdvancedScenario.SwingOn] = qsTr("On")
-        Script.container['SWING'][SplitAdvancedScenario.SwingInvalid] = qsTr("")
+        Script.container['SWING'][SplitProgram.SwingOff] = qsTr("Off")
+        Script.container['SWING'][SplitProgram.SwingOn] = qsTr("On")
+        Script.container['SWING'][SplitProgram.SwingInvalid] = qsTr("")
     }
 
     function get(context, id) {

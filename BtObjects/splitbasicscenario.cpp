@@ -11,27 +11,21 @@ SplitBasicScenario::SplitBasicScenario(QString name,
 	ObjectInterface(parent)
 {
 	dev = d;
-	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
 	this->command = command;
 	this->key = key;
 	this->name = name;
-	// TODO read values from somewhere or implement something valueReceived-like
-	this->enabled = true;
-}
-
-void SplitBasicScenario::valueReceived(const DeviceValues &values_list)
-{
-	DeviceValues::const_iterator it = values_list.constBegin();
-	while (it != values_list.constEnd())
-	{
-		++it;
-	}
+	this->enabled = false;
 }
 
 void SplitBasicScenario::sendScenarioCommand()
 {
 	dev->activateScenario(command);
+}
+
+void SplitBasicScenario::sendOffCommand()
+{
+	dev->turnOff();
 }
 
 bool SplitBasicScenario::isEnabled() const
@@ -41,7 +35,10 @@ bool SplitBasicScenario::isEnabled() const
 
 void SplitBasicScenario::setEnabled(bool enable)
 {
-	// TODO save value somewhere
 	enabled = enable;
+	if (enabled)
+		sendScenarioCommand();
+	else
+		sendOffCommand();
 	emit enabledChanged();
 }
