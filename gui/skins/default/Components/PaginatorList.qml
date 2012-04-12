@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 Item {
     id: paginatorItem
-    height: internalList.height + bottomRow.height
+    height: internalList.height + bottomRow.height * paginator.visible
 
     // expose some ListView properties
     property alias footer: internalList.footer

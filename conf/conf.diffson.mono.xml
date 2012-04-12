@@ -4,7 +4,7 @@
     <id>7</id> <!-- Hardware settings -->
   </item>
   <item>
-	  <id>17</id> <!-- Monochannel sound diffusion system -->
+	  <id>16</id> <!-- Monochannel sound diffusion system -->
 	  <amplifiers>
 		  <item>
 			  <id>11</id> <!-- Amplifier -->
@@ -36,7 +36,7 @@
 	  </amplifiers>
 	  <ambients>
 		  <item>
-			  <id>18</id>
+			  <id>17</id>
 			  <name>Generale</name>
 			  <env>0</env>
 		  </item>

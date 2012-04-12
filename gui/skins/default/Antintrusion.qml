@@ -36,28 +36,7 @@ SystemPage {
         }
     }
 
-    // Alarm Popup management and API
-    Component {
-        id: alarmComponent
-        AlarmPopup {
-        }
-    }
-
-    function showAlarmPopup(type, zone, time) {
-        popupLoader.sourceComponent = alarmComponent
-        popupLoader.item.alarmDateTime = DateTime.format(time)["time"] + " - " + DateTime.format(time)["date"]
-        popupLoader.item.alarmLocation = antintrusion.names.get('ALARM_TYPE', type) + ": " + qsTr("zone %1 - %2").arg(zone.objectId).arg(zone.name)
-        popupLoader.item.ignoreClicked.connect(closeAlarmPopup)
-        popupLoader.item.alarmLogClicked.connect(closeAlarmAndShowLog)
-        antintrusion.state = "popup"
-    }
-
-    function closeAlarmPopup() {
-        closePopup()
-    }
-
-    function closeAlarmAndShowLog() {
-        closePopup()
+    function showLog() {
         antintrusion.rootObject.showAlarmLog()
     }
 }

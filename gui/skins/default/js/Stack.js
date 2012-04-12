@@ -44,6 +44,10 @@ function _openPage(filename) {
     return null
 }
 
+function currentPage() {
+    return stack[stack.length - 1]
+}
+
 function transitionAfterPush() {
     var out_index = stack.length - 2
     var in_index = stack.length - 1

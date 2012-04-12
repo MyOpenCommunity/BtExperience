@@ -5,7 +5,7 @@ import Components 1.0
 MenuColumn {
     id: element
     width: 212
-    height: sourceModel.count * 50
+    height: paginator.height
 
     signal sourceSelected(variant object)
 

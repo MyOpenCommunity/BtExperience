@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import "js/Stack.js" as Stack
+import "js/datetime.js" as DateTime
 
 Image {
     id: page
@@ -36,6 +37,33 @@ Image {
         id: alertComponent
         Alert {
         }
+    }
+
+    // Alarm Popup management and API
+    Component {
+        id: alarmComponent
+        AlarmPopup {
+        }
+    }
+
+    function showAlarmPopup(type, zone, time) {
+        popupLoader.sourceComponent = alarmComponent
+        popupLoader.item.alarmDateTime = DateTime.format(time)["time"] + " - " + DateTime.format(time)["date"]
+        popupLoader.item.alarmLocation = privateProps.antintrusionNames.get('ALARM_TYPE', type) + ": " + qsTr("zone %1 - %2").arg(zone.objectId).arg(zone.name)
+        popupLoader.item.ignoreClicked.connect(closePopup)
+        popupLoader.item.alarmLogClicked.connect(closeAlarmAndShowLog)
+        page.state = "popup"
+    }
+
+    function closeAlarmAndShowLog() {
+        closePopup()
+        Stack.openPage("Antintrusion.qml").showLog()
+    }
+
+    // needed to translate antintrusion names in popup
+    QtObject {
+        id: privateProps
+        property QtObject antintrusionNames: AntintrusionNames { }
     }
 
     // The hooks called by the Stack javascript manager. See also PageAnimation

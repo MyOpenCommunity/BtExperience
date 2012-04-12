@@ -101,9 +101,16 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		ambient->connectAmplifiers(amplifiers);
 
 	// create special zone (general)
-	amplifiers << new Amplifier(0, QObject::tr("general"), AmplifierDevice::createDevice("0"),
+	if (is_multichannel)
+	{
+		amplifiers << new Amplifier(0, QObject::tr("general"), AmplifierDevice::createDevice("0"),
 								ObjectInterface::IdSoundAmplifierGeneral);
-	objects << new SoundGeneralAmbient(QObject::tr("special zone"));
+		SoundGeneralAmbient *general = new SoundGeneralAmbient(QObject::tr("special zone"));
+		objects << general;
+
+		foreach(SourceBase *source, sources)
+			QObject::connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceBase *)), general, SLOT(setSource(SourceBase*)));
+	}
 
 	foreach (Amplifier *amplifier, amplifiers)
 		objects << amplifier;
@@ -119,6 +126,26 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 SoundAmbientBase::SoundAmbientBase(QString _name)
 {
 	name = _name;
+	current_source = 0;
+}
+
+QObject *SoundAmbientBase::getCurrentSource() const
+{
+	return current_source;
+}
+
+int SoundAmbientBase::getArea() const
+{
+	return area;
+}
+
+void SoundAmbientBase::setCurrentSource(SourceBase *other)
+{
+	if (current_source != other)
+	{
+		current_source = other;
+		emit currentSourceChanged();
+	}
 }
 
 
@@ -128,7 +155,7 @@ SoundAmbient::SoundAmbient(int _area, QString name, int _object_id) :
 	area = _area;
 	amplifier_count = 0;
 	object_id = _object_id;
-	current_source = previous_source = NULL;
+	previous_source = NULL;
 }
 
 void SoundAmbient::connectSources(QList<SourceBase *> sources)
@@ -149,16 +176,6 @@ bool SoundAmbient::getHasActiveAmplifier() const
 	return amplifier_count != 0;
 }
 
-int SoundAmbient::getArea() const
-{
-	return area;
-}
-
-QObject *SoundAmbient::getCurrentSource() const
-{
-	return current_source;
-}
-
 QObject *SoundAmbient::getPreviousSource() const
 {
 	return previous_source;
@@ -167,6 +184,8 @@ QObject *SoundAmbient::getPreviousSource() const
 void SoundAmbient::updateActiveSource()
 {
 	SourceBase *source = static_cast<SourceBase *>(sender());
+
+	SourceBase *current_source = static_cast<SourceBase *>(getCurrentSource());
 
 	// there are 3 cases
 	//
@@ -178,15 +197,13 @@ void SoundAmbient::updateActiveSource()
 		if (current_source != source)
 		{
 			previous_source = current_source;
-			current_source = source;
-			emit currentSourceChanged();
+			setCurrentSource(source);
 		}
 	}
 	else if (source == current_source)
 	{
 		previous_source = current_source;
-		current_source = NULL;
-		emit currentSourceChanged();
+		setCurrentSource(0);
 	}
 }
 
@@ -215,6 +232,12 @@ void SoundAmbient::updateActiveAmplifier()
 SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
 	SoundAmbientBase(name)
 {
+	area = 0;
+}
+
+void SoundGeneralAmbient::setSource(SourceBase * source)
+{
+	setCurrentSource(source);
 }
 
 
@@ -240,7 +263,12 @@ SourceBase::SourceType SourceBase::getType() const
 
 void SourceBase::setActive(int area)
 {
-	if (!isActiveInArea(area))
+	if (area == 0)
+	{
+		dev->turnOn(QString::number(area));
+		emit sourceForGeneralAmbientChanged(this);
+	}
+	else if (!isActiveInArea(area))
 		dev->turnOn(QString::number(area));
 }
 

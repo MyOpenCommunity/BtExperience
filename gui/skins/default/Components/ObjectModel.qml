@@ -19,6 +19,8 @@ FilterListModel {
             return "Components/SoundDiffusion/GeneralAmbient.qml"
         case ObjectInterface.IdMultiChannelSoundAmbient:
             return "Components/SoundDiffusion/SoundAmbient.qml"
+        case ObjectInterface.IdMonoChannelSoundAmbient:
+            return "Components/SoundDiffusion/SoundAmbient.qml"
         case ObjectInterface.IdSoundAmplifier:
             return "Components/SoundDiffusion/Amplifier.qml"
         case ObjectInterface.IdPowerAmplifier:
