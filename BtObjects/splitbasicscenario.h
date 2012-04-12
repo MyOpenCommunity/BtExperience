@@ -41,6 +41,11 @@ class SplitBasicScenario : public ObjectInterface
 	*/
 	Q_PROPERTY(int size READ getSize CONSTANT)
 
+	/*!
+		\brief Gets the temperature of the slave probe
+	*/
+	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
+
 public:
 	explicit SplitBasicScenario(QString name,
 								QString key,
@@ -73,11 +78,13 @@ public:
 	void setProgram(QString program);
 	QStringList getPrograms() const;
 	int getSize() const;
+	int getTemperature() const;
 
 	Q_INVOKABLE void ok();
 
 signals:
 	void programChanged();
+	void temperatureChanged();
 
 protected:
 	void sendScenarioCommand();

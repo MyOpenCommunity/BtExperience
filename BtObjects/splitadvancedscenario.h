@@ -121,6 +121,11 @@ class SplitAdvancedScenario : public ObjectInterface
 	*/
 	Q_PROPERTY(int size READ getSize CONSTANT)
 
+	/*!
+		\brief Gets the temperature of the slave probe
+	*/
+	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
+
 public:
 	explicit SplitAdvancedScenario(QString name,
 								   QString key,
@@ -161,6 +166,7 @@ public:
 	SplitProgram::Speed getSpeed() const;
 	void setSpeed(SplitProgram::Speed speed);
 	int getSize() const;
+	int getTemperature() const;
 
 	Q_INVOKABLE void ok();
 	Q_INVOKABLE void resetProgram();
@@ -171,6 +177,7 @@ signals:
 	void swingChanged();
 	void setPointChanged();
 	void speedChanged();
+	void temperatureChanged();
 
 public slots:
 	void sendScenarioCommand();

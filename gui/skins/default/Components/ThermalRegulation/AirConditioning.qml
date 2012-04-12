@@ -15,6 +15,8 @@ MenuColumn {
         listHeight: objectModel.size * 50
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
+            // TODO how to manage temps?
+            description: objectModel.getObject(index).temperature + "°C"
             hasChild: true
             onClicked: {
                 element.loadElement(

@@ -70,3 +70,9 @@ void SplitBasicScenario::ok()
 	else
 		sendScenarioCommand();
 }
+
+int SplitBasicScenario::getTemperature() const
+{
+	// TODO return actual temperature as seen on the slave probe
+	return 200;
+}

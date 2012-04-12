@@ -214,3 +214,9 @@ void SplitAdvancedScenario::sendOffCommand()
 {
 	dev->turnOff();
 }
+
+int SplitAdvancedScenario::getTemperature() const
+{
+	// TODO return actual temperature as seen on the slave probe
+	return 200;
+}
