@@ -1,44 +1,39 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
 
 MenuColumn {
     id: element
     width: 212
-    height: fakeModel.count * 50
+    height: 300
 
-    signal modalityChanged(string modality)
-
-    ListModel {
-        id: fakeModel
-        ListElement {
-            name: "auto"
-        }
-        ListElement {
-            name: "rinfresca"
-        }
-        ListElement {
-            name: "riscalda"
-        }
-        ListElement {
-            name: "deumidificatore"
-        }
-        ListElement {
-            name: "fancoil"
-        }
-        ListElement {
-            name: "off"
-        }
-    }
+    signal modeChanged(int mode)
 
     ListView {
-        id: modalityView
+        id: view
         anchors.fill: parent
-        model: fakeModel
         delegate: MenuItemDelegate {
-            itemObject: fakeModel.get(index)
-            hasChild: false
-            name: itemObject.name
-            onClicked: modalityChanged(itemObject.name)
+            name: model.name
+            onClicked: {
+                modeChanged(model.type)
+                element.closeElement()
+            }
+        }
+        model: ListModel {
+            id: modelList
+            Component.onCompleted: {
+                var l = [SplitProgram.ModeOff,
+                         SplitProgram.ModeWinter,
+                         SplitProgram.ModeSummer,
+                         SplitProgram.ModeFan,
+                         SplitProgram.ModeDehumidification,
+                         SplitProgram.ModeAuto]
+                for (var i = 0; i < l.length; i++)
+                    append({
+                               "type": l[i],
+                               "name": pageObject.names.get('MODE', l[i])
+                           })
+            }
         }
     }
 }

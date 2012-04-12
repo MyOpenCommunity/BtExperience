@@ -1,39 +1,38 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
 
 MenuColumn {
     id: element
     width: 212
-    height: fakeModel.count * 50
+    height: paginator.height
 
-    onChildDestroyed: ambientList.currentIndex = -1
-    Component.onCompleted: ambientList.currentIndex = -1
+    onChildDestroyed: paginator.currentIndex = -1
 
-    // TODO: fake model
-    ListModel {
-        id: fakeModel
-        ListElement {
-            name: "soggiorno"
-            advanced: true
+    PaginatorList {
+        id: paginator
+        width: parent.width
+        listHeight: objectModel.size * 50
+        delegate: MenuItemDelegate {
+            itemObject: objectModel.getObject(index)
+            // TODO how to manage temps?
+            description: objectModel.getObject(index).temperature + "°C"
+            hasChild: true
+            onClicked: {
+                element.loadElement(
+                            objectModel.getComponentFile(itemObject.objectId),
+                            itemObject.name,
+                            objectModel.getObject(model.index))
+            }
         }
-
-        ListElement {
-            name: "cucina"
-            advanced: false
-        }
+        model: objectModel
     }
 
-    ListView {
-        id: ambientList
-        anchors.fill: parent
-        model: fakeModel
-        interactive: false
-
-        delegate: MenuItemDelegate {
-            itemObject: fakeModel.get(index)
-
-            hasChild: true
-            onClicked: loadElement("Components/ThermalRegulation/" + (itemObject.advanced ? "AdvancedSplit.qml" : "BasicSplit.qml"), name)
-        }
+    ObjectModel {
+        id: objectModel
+        filters: [
+            {objectId: ObjectInterface.IdSplitBasicScenario},
+            {objectId: ObjectInterface.IdSplitAdvancedScenario}
+        ]
     }
 }

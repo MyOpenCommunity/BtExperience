@@ -24,19 +24,21 @@ public:
 		IdDimmer,
 		IdThermalControlUnit99,
 		IdThermalControlledProbe,
-		IdThermalControlUnit4,
+		IdThermalControlUnit4,                  // 5
 		IdAntintrusionSystem,
 		IdHardwareSettings,
 		IdMultiChannelSoundDiffusionSystem,
 		IdMultiChannelSoundAmbient,
-		IdMultiChannelGeneralAmbient,
+		IdMultiChannelGeneralAmbient,           // 10
 		IdSoundAmplifier,
 		IdSoundAmplifierGeneral,
 		IdPowerAmplifier,
 		IdSoundSource,
-		IdPlatformSettings,
+		IdPlatformSettings,                     // 15
 		IdMonoChannelSoundDiffusionSystem,
 		IdMonoChannelSoundAmbient,
+		IdSplitBasicScenario,
+		IdSplitAdvancedScenario,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 

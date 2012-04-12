@@ -19,12 +19,18 @@ FilterListModel {
             return "Components/SoundDiffusion/GeneralAmbient.qml"
         case ObjectInterface.IdMultiChannelSoundAmbient:
             return "Components/SoundDiffusion/SoundAmbient.qml"
+        case ObjectInterface.IdMonoChannelSoundAmbient:
+            return "Components/SoundDiffusion/SoundAmbient.qml"
         case ObjectInterface.IdSoundAmplifier:
             return "Components/SoundDiffusion/Amplifier.qml"
         case ObjectInterface.IdPowerAmplifier:
             return "Components/SoundDiffusion/PowerAmplifier.qml"
         case ObjectInterface.IdSoundAmplifierGeneral:
             return "Components/SoundDiffusion/AmplifierGeneral.qml"
+        case ObjectInterface.IdSplitBasicScenario:
+            return "Components/ThermalRegulation/BasicSplit.qml"
+        case ObjectInterface.IdSplitAdvancedScenario:
+            return "Components/ThermalRegulation/AdvancedSplit.qml"
         default:
             console.log("getComponentFile(): Unknown object id: " + objectId)
             return ""

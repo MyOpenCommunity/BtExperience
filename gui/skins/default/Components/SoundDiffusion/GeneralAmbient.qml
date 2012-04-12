@@ -8,15 +8,28 @@ MenuColumn {
     height: buttonOnOff.height + sourceItem.height + volume.height
     property string imagesPath: "../../images/"
 
+    QtObject {
+        id: privateProps
+        property int currentIndex: -1
+    }
+
+    onChildDestroyed: privateProps.currentIndex = -1
+
     Column {
         id: column
-        MenuItem {
+        SoundSourceItem {
             id: sourceItem
-            name: "source"
-            hasChild: true
-            description: "Radio | FM 108.7 - Radio Cassadritta"
-            status: -1
-            onClicked: element.loadElement("Components/SoundDiffusion/SourceControl.qml", qsTr("source"))
+            itemObject: element.dataModel.currentSource
+            selected: privateProps.currentIndex === 1
+
+            onItemClicked: {
+                privateProps.currentIndex = 1
+                element.loadElement("Components/SoundDiffusion/SourceControl.qml", qsTr("source"), element.dataModel)
+            }
+
+            Component.onCompleted: {
+                console.log("currentSource: " + itemObject + ", dataModel: " + element.dataModel)
+            }
         }
 
         VolumeGeneral {

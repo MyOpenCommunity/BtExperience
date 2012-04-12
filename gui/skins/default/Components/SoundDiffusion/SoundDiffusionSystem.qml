@@ -32,6 +32,8 @@ MenuColumn {
     ObjectModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdMultiChannelGeneralAmbient},
-            {objectId: ObjectInterface.IdMultiChannelSoundAmbient}]
+            {objectId: ObjectInterface.IdMultiChannelSoundAmbient},
+            {objectId: ObjectInterface.IdMonoChannelSoundAmbient},
+        ]
     }
 }
