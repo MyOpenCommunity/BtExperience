@@ -84,6 +84,29 @@ void TestSplitScenarios::cleanup()
 	delete dev_adv;
 }
 
+void TestSplitScenarios::testCreationWithNullProbe()
+{
+	QStringList programs_tmp;
+	SplitBasicScenario *obj_tmp = new SplitBasicScenario(
+				"TestSplitBasicScenarioTemp",
+				"22",
+				new AirConditioningDevice("23"),
+				"24",
+				"25",
+				0,
+				programs_tmp);
+	delete obj_tmp;
+	QList<SplitProgram *> split_programs_tmp;
+	SplitAdvancedScenario *obj_adv_tmp = new SplitAdvancedScenario(
+				"TestSplitAdvancedScenarioTemp",
+				"19",
+				new AdvancedAirConditioningDevice("20"),
+				"21",
+				0,
+				split_programs_tmp);
+	delete obj_adv_tmp;
+}
+
 void TestSplitScenarios::testReceiveTemperature()
 {
 	DeviceValues v;

@@ -46,6 +46,7 @@ private slots:
 	void testSendAdvancedCommand();
 	void testSendOffCommand();
 	void testSendAdvancedOffCommand();
+	void testCreationWithNullProbe();
 	void testSetProgram();
 	void testSetAdvancedProgram();
 	void testSetAdvancedProperties();

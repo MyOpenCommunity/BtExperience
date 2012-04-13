@@ -59,12 +59,21 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 
 void SplitAdvancedScenario::valueReceived(const DeviceValues &values_list)
 {
-	int v = values_list[NonControlledProbeDevice::DIM_TEMPERATURE].toInt();
-	if (temperature == v)
-		// nothing to do
-		return;
-	temperature = v;
-	emit temperatureChanged();
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		switch (it.key())
+		{
+		case NonControlledProbeDevice::DIM_TEMPERATURE:
+			if (it.value().toInt() != temperature)
+			{
+				temperature = it.value().toInt();
+				emit temperatureChanged();
+			}
+			break;
+		}
+		++it;
+	}
 }
 
 void SplitAdvancedScenario::resetProgram()
