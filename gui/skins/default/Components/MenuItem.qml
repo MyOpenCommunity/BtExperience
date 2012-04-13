@@ -21,14 +21,12 @@ Item {
 
     SvgImage {
         anchors.fill: parent
-        z: 0
         id: background
         source: "../images/common/menu_column_item_bg.svg";
     }
 
     Item {
         anchors.fill: parent
-        z: 1
 
         SvgImage {
             id: iconStatus
