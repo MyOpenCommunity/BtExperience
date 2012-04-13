@@ -37,7 +37,7 @@ Page {
         id: container
         x: 122 + backButton.width + containerLeftMargin
         y: 63
-        width: 893
+        width: 893 - backButton.width - containerLeftMargin
         height: 530
         rootElement: systemPage.rootElement
         pageObject: systemPage
