@@ -15,12 +15,9 @@ MenuColumn {
 
     onChildDestroyed: privateProps.currentIndex = -1
 
-    Component.onCompleted: options.setComponent(off)
-
-    PaginatorColumn {
+    Column {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
-        maxHeight: 500
 
         MenuItem {
             id: programItem
@@ -38,13 +35,6 @@ MenuColumn {
             }
         }
 
-        AnimatedLoader {
-            id: options
-        }
-    }
-
-    Component {
-        id: off
         ButtonOkCancel {
             onCancelClicked: element.closeElement()
             onOkClicked: {
