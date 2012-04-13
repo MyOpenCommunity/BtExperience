@@ -1,10 +1,10 @@
-MenuColumn 1.0 MenuColumn.qml
 MenuTitle 1.0 MenuTitle.qml
 Paginator 1.0 Paginator.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
 SlideAnimation 1.0 SlideAnimation.qml
 Text_12pt_bold 1.0 Text_12pt_bold.qml
 MenuItem 1.0 MenuItem.qml
+ControlCall 1.0 ControlCall.qml
 MenuContainer 1.0 MenuContainer.qml
 ButtonSystems 1.0 ButtonSystems.qml
 TwoButtonsSettings 1.0 TwoButtonsSettings.qml
@@ -12,6 +12,7 @@ AnimatedLoader 1.0 AnimatedLoader.qml
 ControlChoices 1.0 ControlChoices.qml
 ScreenSaver 1.0 ScreenSaver.qml
 ObjectModel 1.0 ObjectModel.qml
+MenuColumn 1.0 MenuColumn.qml
 ButtonPagination 1.0 ButtonPagination.qml
 FadeAnimation 1.0 FadeAnimation.qml
 ButtonMinusPlus 1.0 ButtonMinusPlus.qml
