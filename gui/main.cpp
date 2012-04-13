@@ -87,10 +87,8 @@ void setupOpenGL(QDeclarativeView *v)
 	QGLWidget *w = new QGLWidget(f);
 	v->setViewport(w);
 	v->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-	v->setRenderHint(QPainter::Antialiasing, true);
-	v->setRenderHint(QPainter::SmoothPixmapTransform, true);
-	v->setRenderHint(QPainter::HighQualityAntialiasing, true);
 	v->setRenderHint(QPainter::TextAntialiasing, true);
+	v->setRenderHint(QPainter::SmoothPixmapTransform, true);
 }
 #endif
 
