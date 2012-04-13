@@ -13,205 +13,193 @@ Item {
     signal exitClicked
 
     width: 1024
-    height: 50
+    height: toolbar_top.height + toolbar_bottom.height
 
-    Column {
-        id: bg
+    SvgImage {
+        id: toolbar_top
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
 
-        SvgImage {
-            source: imagesPath + "toolbar/toolbar_bg_top.svg"
-            width: parent.width
+        source: imagesPath + "toolbar/toolbar_bg_top.svg"
+        width: parent.width
+    }
 
-                Row {
-                    id: toolbarLeft
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
+    Row {
+        id: toolbarLeft
+        anchors.verticalCenter: toolbar_top.verticalCenter
+        anchors.left: toolbar_top.left
 
-                    Item {
-                        // TODO: the width and height should be calculated from the size of images.
-                        // However, the Row/Column calculate their size depending on the size of their
-                        // children. This is a kind of loop, so for the moment we hardcode the size of
-                        // the children.
-                        width: 58
-                        height: 50
+        Item {
+            width: 58
+            height: toolbar_top.height
 
-                        SvgImage {
-                            source: imagesPath + "toolbar/icon_home.svg"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
+            SvgImage {
+                source: imagesPath + "toolbar/icon_home.svg"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
 
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: toolbar.homeClicked()
-                            }
-                        }
-                    }
-
-                    SvgImage {
-                        source: imagesPath + "toolbar/toolbar_separator.svg"
-                    }
-
-                    Item {
-                        width: 56
-                        height: 50
-
-                        Text {
-                            id: temperature
-                            text: "19°C"
-                            font.pixelSize: toolbar.fontSize
-                            font.family: toolbar.fontFamily
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
-                    }
-
-                    SvgImage {
-                        source: imagesPath + "toolbar/toolbar_separator.svg"
-                    }
-
-                    Item {
-                        width: 113
-                        height: 50
-
-                        Text {
-                            id: date
-                            font.pixelSize: toolbar.fontSize
-                            font.family: toolbar.fontFamily
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            function setDate(d) {
-                                text = DateTime.format(d)["date"]
-                            }
-                        }
-                    }
-
-
-                    SvgImage {
-                        source: imagesPath + "toolbar/toolbar_separator.svg"
-                    }
-
-                    Item {
-                        width: 65
-                        height: 50
-
-                        Text {
-                            id: time
-                            text: DateTime.format()["time"]
-                            font.pixelSize: toolbar.fontSize
-                            font.family: toolbar.fontFamily
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            function setTime(d) {
-                                text = DateTime.format(d)["time"]
-                            }
-                        }
-                    }
-
-                    Timer {
-                        id: changeDateTime
-                        interval: 500
-                        repeat: true
-                        running: true
-                        triggeredOnStart: true
-                        onTriggered: { var d = new Date(); date.setDate(d); time.setTime(d) }
-                    }
-
-                    SvgImage {
-                        source: imagesPath + "toolbar/toolbar_separator.svg"
-                    }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: toolbar.homeClicked()
                 }
-
-
-                Item {
-                    anchors.left: toolbarLeft.right
-                    anchors.right: toolbarRight.left
-                    height: 50
-
-
-                    SvgImage {
-                        source: imagesPath + "toolbar/toolbar_logo_white.svg"
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-
-                Row {
-                    id: toolbarRight
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    SvgImage {
-                        source: imagesPath + "toolbar/toolbar_separator.svg"
-                    }
-
-                    Item {
-                        width: 60
-                        height: 50
-                        SvgImage {
-                            source: imagesPath + "toolbar/icon_alert.svg"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-
-                        }
-                    }
-
-                    SvgImage {
-                        source: imagesPath + "toolbar/toolbar_separator.svg"
-                    }
-
-                    Item {
-                        width: 60
-                        height: 50
-                        SvgImage {
-                            source: imagesPath + "toolbar/icon_antintrusion.svg"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-
-                        }
-                    }
-
-                    SvgImage {
-                        source: imagesPath + "toolbar/toolbar_separator.svg"
-                    }
-
-                    Item {
-                        width: 60
-                        height: 50
-                        SvgImage {
-                            source: imagesPath + "toolbar/icon_clock.svg"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-
-                        }
-                    }
-
-                    SvgImage {
-                        source: imagesPath + "toolbar/toolbar_separator.svg"
-                    }
-
-                    Item {
-                        width: 68
-                        height: 50
-                        SvgImage {
-                            source: imagesPath + "toolbar/icon_quit.svg"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-
-                        }
-                    }
-                }
+            }
         }
 
         SvgImage {
-            source: imagesPath + "toolbar/toolbar_bg_bottom.svg"
-            width: parent.width
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+        }
+
+        Item {
+            width: 56
+            height: toolbar_top.height
+
+            Text {
+                id: temperature
+                text: "19°C"
+                font.pixelSize: toolbar.fontSize
+                font.family: toolbar.fontFamily
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+        }
+
+        SvgImage {
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+        }
+
+        Item {
+            width: 113
+            height: toolbar_top.height
+
+            Text {
+                id: date
+                font.pixelSize: toolbar.fontSize
+                font.family: toolbar.fontFamily
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                function setDate(d) {
+                    text = DateTime.format(d)["date"]
+                }
+            }
+        }
+
+
+        SvgImage {
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+        }
+
+        Item {
+            width: 65
+            height: toolbar_top.height
+
+            Text {
+                id: time
+                text: DateTime.format()["time"]
+                font.pixelSize: toolbar.fontSize
+                font.family: toolbar.fontFamily
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                function setTime(d) {
+                    text = DateTime.format(d)["time"]
+                }
+            }
+        }
+
+        Timer {
+            id: changeDateTime
+            interval: 500
+            repeat: true
+            running: true
+            triggeredOnStart: true
+            onTriggered: { var d = new Date(); date.setDate(d); time.setTime(d) }
+        }
+
+        SvgImage {
+            source: imagesPath + "toolbar/toolbar_separator.svg"
         }
     }
 
+    SvgImage {
+        source: imagesPath + "toolbar/toolbar_logo_white.svg"
+        anchors.verticalCenter: toolbar_top.verticalCenter
+        anchors.horizontalCenter: toolbar_top.horizontalCenter
+    }
 
+    Row {
+        id: toolbarRight
+        anchors.right: toolbar_top.right
+        anchors.verticalCenter: toolbar_top.verticalCenter
 
+        SvgImage {
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+        }
+
+        Item {
+            width: height + 10
+            height: toolbar_top.height
+            SvgImage {
+                source: imagesPath + "toolbar/icon_alert.svg"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+            }
+        }
+
+        SvgImage {
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+        }
+
+        Item {
+            width: height + 10
+            height: toolbar_top.height
+            SvgImage {
+                source: imagesPath + "toolbar/icon_antintrusion.svg"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+            }
+        }
+
+        SvgImage {
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+        }
+
+        Item {
+            width: height + 10
+            height: toolbar_top.height
+            SvgImage {
+                source: imagesPath + "toolbar/icon_clock.svg"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+            }
+        }
+
+        SvgImage {
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+        }
+
+        Item {
+            width: height + 18
+            height: toolbar_top.height
+            SvgImage {
+                source: imagesPath + "toolbar/icon_quit.svg"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+            }
+        }
+    }
+
+    SvgImage {
+        id: toolbar_bottom
+        anchors.top: toolbar_top.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        source: imagesPath + "toolbar/toolbar_bg_bottom.svg"
+        width: parent.width
+    }
 
 }
