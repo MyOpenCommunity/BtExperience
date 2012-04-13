@@ -26,9 +26,11 @@
 #include <QObject>
 
 
-class SplitBasicScenario;
+class AdvancedAirConditioningDevice;
 class AirConditioningDevice;
 class NonControlledProbeDevice;
+class SplitAdvancedScenario;
+class SplitBasicScenario;
 
 
 class TestSplitScenarios : public TestBtObject
@@ -39,14 +41,21 @@ private slots:
 	void cleanup();
 
 	void testReceiveTemperature();
+	void testReceiveTemperature2();
 	void testSendCommand();
+	void testSendAdvancedCommand();
 	void testSendOffCommand();
+	void testSendAdvancedOffCommand();
 	void testSetProgram();
+	void testSetAdvancedProgram();
+	void testSetAdvancedProperties();
 
 private:
 	void compareClientCommand();
 
+	SplitAdvancedScenario *obj_adv;
 	SplitBasicScenario *obj;
+	AdvancedAirConditioningDevice *dev_adv;
 	AirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
 };

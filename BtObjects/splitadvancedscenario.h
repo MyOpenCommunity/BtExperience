@@ -94,6 +94,8 @@ public:
 */
 class SplitAdvancedScenario : public ObjectInterface
 {
+	friend class TestSplitScenarios;
+
 	Q_OBJECT
 
 	/*!

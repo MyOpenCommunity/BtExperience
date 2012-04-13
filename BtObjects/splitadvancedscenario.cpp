@@ -57,7 +57,12 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 
 void SplitAdvancedScenario::valueReceived(const DeviceValues &values_list)
 {
-	temperature = values_list[NonControlledProbeDevice::DIM_TEMPERATURE].toInt();
+	int v = values_list[NonControlledProbeDevice::DIM_TEMPERATURE].toInt();
+	if (temperature == v)
+		// nothing to do
+		return;
+	temperature = v;
+	emit temperatureChanged();
 }
 
 void SplitAdvancedScenario::resetProgram()
@@ -90,7 +95,11 @@ int SplitAdvancedScenario::getSize() const
 
 void SplitAdvancedScenario::setProgram(QString program)
 {
-	Q_ASSERT_X(!program.isEmpty(), qPrintable(QString("SplitAdvancedScenario::setProgram").arg(program)), "program cannot be empty.");
+	if (program.isEmpty())
+	{
+		qWarning() << QString("program cannot be empty");
+		return;
+	}
 
 	if (actual_program.name == program)
 		// nothing to do
