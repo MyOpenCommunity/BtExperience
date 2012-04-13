@@ -115,7 +115,7 @@ function _calculateFirstElement(starting_width) {
     var first_element = 0
     var items_width = starting_width
 
-    var max_width = mainContainer.width - (backButton.x + backButton.width + mainContainer.itemsLeftMargin)
+    var max_width = mainContainer.width - mainContainer.x
 
     for (var i = stackItems.length - 1; i >= 0; i--) {
         items_width += stackItems[i].width + mainContainer.itemsSpacing;
