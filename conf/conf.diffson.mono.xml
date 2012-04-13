@@ -22,7 +22,7 @@
 			  <id>13</id> <!-- Power amplifier -->
 			  <name>Amplificatore di potenza</name>
 			  <env>0</env>
-			  <where>21</where>
+			  <where>18</where>
 			  <preset>User preset 1</preset>
 			  <preset>User preset 2</preset>
 			  <preset>User preset 3</preset>
