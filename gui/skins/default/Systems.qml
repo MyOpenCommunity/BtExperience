@@ -59,6 +59,11 @@ Page {
                 name: "message"
                 target: ""
             }
+            ListElement {
+                image: "images/systems/videocitofonia.jpg"
+                name: "video door entry"
+                target: "VideoDoorEntry.qml"
+            }
         }
 
         Component {
