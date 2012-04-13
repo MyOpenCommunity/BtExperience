@@ -3,8 +3,8 @@ import QtQuick 1.1
 
 Item {
     id: menuItem
-    height: 50
-    width: 212
+    height: background.height
+    width: background.width
 
     property string name: ""
     property string description: ""
@@ -19,25 +19,23 @@ Item {
         return menuItem.status > -1
     }
 
-    Image {
+    SvgImage {
         anchors.fill: parent
         z: 0
         id: background
-        source: "../images/common/btn_menu.png";
+        source: "../images/common/menu_column_item_bg.svg";
     }
 
     Item {
         anchors.fill: parent
         z: 1
 
-        Image {
-            visible: statusVisible()
+        SvgImage {
             id: iconStatus
-            source: (statusVisible() ? (menuItem.status === 1 ? "../images/common/on.png" :"../images/common/off.png") : "");
+            source: (statusVisible() ? (menuItem.status === 1 ? "../images/common/menu_column_item_active_led.svg" :"../images/common/menu_column_item_inactive_led.svg") : "");
+            anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: parent.top
-            anchors.topMargin: 0
         }
 
         Text {
@@ -46,21 +44,21 @@ Item {
             font.family: semiBoldFont.name
             font.pixelSize: 14
             wrapMode: "WordWrap"
-            anchors.left: statusVisible() ? iconStatus.right : parent.left
-            anchors.leftMargin: statusVisible() ? 0 : 10
+            anchors.left: parent.left
+            anchors.leftMargin: 19
             anchors.top: parent.top
-            anchors.topMargin: 5
+            anchors.topMargin: 8
             anchors.right: arrowRight.left
         }
 
         Image {
             visible: menuItem.hasChild
             id: arrowRight
-            source: "../images/common/freccia_dx.png"
+            source: "../images/common/menu_column_item_arrow.svg"
             anchors.right: parent.right
-            anchors.rightMargin: 0
+            anchors.rightMargin: 6
             anchors.top: parent.top
-            anchors.topMargin: 0
+            anchors.topMargin: 12
         }
 
         Text {
@@ -72,54 +70,35 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 5
             anchors.top: text.bottom
-            anchors.left: statusVisible() ? iconStatus.right : parent.left
-            anchors.leftMargin: statusVisible() ? 0 : 10
+            anchors.left: text.left
             verticalAlignment: Text.AlignBottom
         }
     }
 
     MouseArea {
+        id: mousearea
         anchors.fill: parent
         onClicked: menuItem.clicked(menuItem)
         onPressed: menuItem.pressed(menuItem)
         onReleased: menuItem.released(menuItem)
     }
 
-    states: State {
-        name: "selected"
-        PropertyChanges { target: text; color: "#ffffff" }
-        PropertyChanges { target: textDescription; color: "#ffffff" }
-        PropertyChanges { target: arrowRight; source: "../images/common/freccia_dxS.png" }
-        PropertyChanges { target: background; source: "../images/common/btn_menuS.png" }
-    }
-
-
-    onPressed: {
-        var x = itemPressed.x
-        var y = itemPressed.y
-        var parent = itemPressed.parent
-        while (parent != itemHighlighed.parent) {
-            x += parent.x
-            y += parent.y
-            parent = parent.parent
+    states: [
+        State {
+            name: "selected"
+            PropertyChanges { target: text; color: "#ffffff" }
+            PropertyChanges { target: textDescription; color: "#ffffff" }
+            PropertyChanges { target: arrowRight; source: "../images/common/menu_column_item_arrow_white.svg" }
+            PropertyChanges { target: background; source: "../images/common/menu_column_item_bg_selected.svg" }
+        },
+        State {
+            name: "pressed"
+            when: mousearea.pressed
+            PropertyChanges { target: text; color: "#ffffff" }
+            PropertyChanges { target: textDescription; color: "#ffffff" }
+            PropertyChanges { target: arrowRight; source: "../images/common/menu_column_item_arrow_white.svg" }
+            PropertyChanges { target: background; source: "../images/common/menu_column_item_bg_pressed.svg" }
         }
-
-        // itemHighlighed is defined in MenuContainer.qml
-        itemHighlighed.source = "MenuItem.qml"
-        itemHighlighed.item.state = "selected"
-        itemHighlighed.item.name = itemPressed.name
-        itemHighlighed.item.description = itemPressed.description
-        itemHighlighed.item.hasChild = itemPressed.hasChild
-        itemHighlighed.item.width = menuItem.width + 10
-        itemHighlighed.item.height = menuItem.height + 4
-        itemHighlighed.item.status = itemPressed.status
-        itemHighlighed.item.x = x - 5
-        itemHighlighed.item.y = y - 2
-    }
-
-    onReleased: {
-        itemHighlighed.source = ""
-    }
-
+    ]
 }
 
