@@ -1,14 +1,11 @@
 #include "imagereader.h"
 
 #include <QImageReader>
-#include <QSize>
 #include <QDebug>
-#include <QFile>
-#include <QFileInfo>
-#include <QDir>
+#include <QUrl>
 
 
-QString ImageReader::images_path;
+QString ImageReader::base_path;
 
 ImageReader::ImageReader(QObject *parent) : QObject(parent)
 {
@@ -21,19 +18,21 @@ QString ImageReader::getFileName() const
 
 void ImageReader::setFileName(const QString &f)
 {
-	if (f == filename)
+	QString filepath = QUrl(f).toLocalFile();
+
+	if (filepath == filename)
 		return;
 
-	filename = f;
+	filename = filepath;
 	emit fileNameChanged();
 
-	QSize new_size = QImageReader(images_path + QDir::separator() + filename).size();
-	size = new_size;
+	QSize old_size = size;
+	size = QImageReader(filename).size();
 
-	if (size.width() != new_size.width())
+	if (size.width() != old_size.width())
 		emit widthChanged();
 
-	if (size.height() != new_size.height())
+	if (size.height() != old_size.height())
 		emit heightChanged();
 }
 
@@ -54,9 +53,9 @@ int ImageReader::getHeight() const
 }
 
 
-void ImageReader::setImagesPath(const QString &path)
+void ImageReader::setBasePath(const QString &path)
 {
-	images_path = path;
+	base_path = path;
 }
 
 

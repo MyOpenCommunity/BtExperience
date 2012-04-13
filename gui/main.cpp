@@ -284,7 +284,7 @@ int main(int argc, char *argv[])
 	app.installEventFilter(last_click);
 
 	GlobalProperties global;
-	ImageReader::setImagesPath(global.getBasePath() + QDir::separator() + "images");
+	ImageReader::setBasePath(global.getBasePath());
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
 	BootManager boot_manager(&global);
 	return app.exec();

@@ -23,6 +23,7 @@ PaginatorColumn 1.0 PaginatorColumn.qml
 AlarmPopup 1.0 AlarmPopup.qml
 ButtonLeftRight 1.0 ButtonLeftRight.qml
 ControlUpDown 1.0 ControlUpDown.qml
+SvgImage 1.0 SvgImage.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 ControlBalance 1.0 ControlBalance.qml
 PaginatorList 1.0 PaginatorList.qml

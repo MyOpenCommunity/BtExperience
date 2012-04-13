@@ -23,7 +23,7 @@ public:
 	int getWidth() const;
 	int getHeight() const;
 
-	static void setImagesPath(const QString &path);
+	static void setBasePath(const QString &path);
 
 signals:
 	void fileNameChanged();
@@ -33,7 +33,7 @@ signals:
 private:
 	QSize size;
 	QString filename;
-	static QString images_path;
+	static QString base_path;
 };
 
 
