@@ -22,23 +22,20 @@ Page {
         onClicked: Stack.popPage()
     }
 
+
     Component {
         id: itemComponent
-        MenuColumn {
-            property variant itemObject
-            MenuItem {
-                name: itemObject.name
-                status: itemObject.active === true ? 1 : 0
-                hasChild: true
-            }
+        MenuContainer {
+            width: 500
+            rootElement: "Components/RoomItem.qml"
         }
     }
 
     Component.onCompleted: {
-        var positions = [{'x': 100, 'y': 100}, {'x': 200, 'y': 400}, {'x': 400, 'y': 200}]
+        var positions = [{'x': 100, 'y': 100}, {'x': 200, 'y': 400}, {'x': 400, 'y': 200}, {'x': 400, 'y': 100}]
+
         for (var i = 0; i < objectList.size; ++i) {
-//            console.log('creating object: ' + objectList.getObject(i).name)
-            var object = itemComponent.createObject(page, {"itemObject": objectList.getObject(i), 'x': positions[i].x + (i * 10), 'y': positions[i].y})
+            var object = itemComponent.createObject(page, {"rootData": objectList.getObject(i), 'x': positions[i].x + (i * 10), 'y': positions[i].y})
         }
     }
 
@@ -46,7 +43,7 @@ Page {
     ObjectModel {
         id: objectList
         filters: [{objectId: ObjectInterface.IdLight, objectKey: "13"},
-                  {objectId: ObjectInterface.IdSoundSource}]
+                  {objectId: ObjectInterface.IdSoundAmplifier}]
     }
 
     // An ugly workaround: the ObjectModel and the underlying FilterListModel is not
