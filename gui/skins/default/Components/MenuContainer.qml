@@ -17,9 +17,6 @@ Item {
     width: 600
     height: 400
 
-    // The spacing between the buttons on the left and the first column
-    property int itemsLeftMargin: 20
-
     // the spacing between columns
     property int itemsSpacing: 0
 
@@ -39,23 +36,8 @@ Item {
 
     signal closed
 
-    Column {
-        id: buttonsColumn
-        width: backButton.width
-        spacing: 10
-        anchors.topMargin: 33
-        anchors.top: parent.top
-        anchors.leftMargin: 0
-        anchors.left: mainContainer.left
-
-        ButtonBack {
-            id: backButton
-            onClicked: Script.closeLastItem()
-        }
-
-        ButtonSystems {
-            onClicked: mainContainer.closed()
-        }
+    function closeLastColumn() {
+        Script.closeLastItem()
     }
 
     Constants {
@@ -65,8 +47,6 @@ Item {
 
     Item {
         id: clippingContainer
-        anchors.left: buttonsColumn.right
-        anchors.leftMargin: itemsLeftMargin
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         width: parent.width
