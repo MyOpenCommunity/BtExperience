@@ -29,6 +29,7 @@
 #include "eventfilters.h"
 #include "globalproperties.h"
 #include "guisettings.h"
+#include "imagereader.h"
 
 
 // Start definitions required by libcommon
@@ -277,12 +278,15 @@ int main(int argc, char *argv[])
 
 	qDebug() << "***** BtExperience start! *****";
 
+	qmlRegisterType<ImageReader>("BtExperience", 1, 0, "ImageReader");
+
 	LastClickTime *last_click = new LastClickTime;
 	// To receive all the events, even if there is some qml elements which manage
 	// their, we have to install the event filter in the QApplication
 	app.installEventFilter(last_click);
 
 	GlobalProperties global;
+	ImageReader::setImagesPath(global.getBasePath() + QDir::separator() + "images");
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
 	BootManager boot_manager(&global);
 	return app.exec();
