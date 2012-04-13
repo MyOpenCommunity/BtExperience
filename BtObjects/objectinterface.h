@@ -39,6 +39,8 @@ public:
 		IdMonoChannelSoundAmbient,
 		IdSplitBasicScenario,
 		IdSplitAdvancedScenario,
+		IdScenarioSystem,                       // 20
+		IdSimpleScenario,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
@@ -49,7 +51,8 @@ public:
 		ThermalRegulation,
 		Antintrusion,
 		Settings,
-		SoundDiffusion
+		SoundDiffusion,
+		Scenarios,
 	};
 
 	virtual int getObjectId() const = 0;

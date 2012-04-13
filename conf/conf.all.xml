@@ -242,5 +242,8 @@
         </program>
     </programs>
   </item>
+  <item>
+	  <id>20</id>    <!-- Scenario system -->
+  </item>
 </configuratore>
 

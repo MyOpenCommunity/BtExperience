@@ -32,7 +32,7 @@ Page {
             ListElement {
                 image: "images/systems/scenari.jpg"
                 name: "scenari"
-                target: ""
+                target: "Scenarios.qml"
             }
             ListElement {
                 image: "images/systems/termo.jpg"

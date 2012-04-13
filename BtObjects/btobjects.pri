@@ -7,6 +7,7 @@ HEADERS += \
 	objectlistmodel.h \
 	objectinterface.h \
 	platform.h \
+	scenarioobjects.h \
 	splitadvancedscenario.h \
 	splitbasicscenario.h \
 	thermalobjects.h \
@@ -19,6 +20,7 @@ HEADERS += \
 	devices/platform_device.h \
 	devices/probe_device.h \
 	devices/pulldevice.h \
+	devices/scenario_device.h \
 	devices/thermal_device.h \
 	ts/bttime.h \
 	ts/delayedslotcaller.h \
@@ -40,6 +42,7 @@ SOURCES += \
 	mediaobjects.cpp \
 	objectlistmodel.cpp \
 	platform.cpp \
+	scenarioobjects.cpp \
 	splitadvancedscenario.cpp \
 	splitbasicscenario.cpp \
 	thermalobjects.cpp \
@@ -53,6 +56,7 @@ SOURCES += \
 	devices/platform_device.cpp \
 	devices/probe_device.cpp \
 	devices/pulldevice.cpp \
+	devices/scenario_device.cpp \
 	devices/thermal_device.cpp \
 	ts/bttime.cpp \
 	ts/delayedslotcaller.cpp \
