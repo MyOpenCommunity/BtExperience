@@ -37,6 +37,21 @@
 QHash<GlobalField, QString> *bt_global::config;
 
 
+namespace {
+	NonControlledProbeDevice *createNonControlledProbeDevice(const QDomNode &item_node)
+	{
+		NonControlledProbeDevice *dev = 0;
+		QString where_probe = getTextChild(item_node, "where_probe");
+		if (where_probe != "000")
+		{
+			dev = new NonControlledProbeDevice(where_probe, NonControlledProbeDevice::INTERNAL,
+				getTextChild(item_node, "openserver_id_probe").toInt());
+			dev = bt_global::add_device_to_cache(dev);
+		}
+		return dev;
+	}
+}
+
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
 	QFile fh(CONF_FILE);
@@ -128,7 +143,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 											 new AirConditioningDevice(where)),
 										 getTextChild(item, "command"),
 										 getTextChild(item, "off_command"),
-										 new NonControlledProbeDevice(getTextChild(item, "where_probe"), NonControlledProbeDevice::INTERNAL),
+										 createNonControlledProbeDevice(item),
 										 programs);
 			break;
 		}
@@ -148,7 +163,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 											bt_global::add_device_to_cache(
 												new AdvancedAirConditioningDevice(where)),
 											getTextChild(item, "command"),
-											new NonControlledProbeDevice(getTextChild(item, "where_probe"), NonControlledProbeDevice::INTERNAL),
+											createNonControlledProbeDevice(item),
 											programs);
 			break;
 		}

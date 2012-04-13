@@ -18,8 +18,10 @@ SplitBasicScenario::SplitBasicScenario(QString name,
 {
 	dev = d;
 	dev_probe = d_probe;
-	connect(dev_probe, SIGNAL(valueReceived(DeviceValues)),
-			SLOT(valueReceived(DeviceValues)));
+	if (dev_probe) {
+		connect(dev_probe, SIGNAL(valueReceived(DeviceValues)),
+				SLOT(valueReceived(DeviceValues)));
+	}
 
 	this->command = command;
 	this->key = key;
