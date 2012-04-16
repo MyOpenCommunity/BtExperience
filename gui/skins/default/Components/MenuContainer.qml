@@ -6,8 +6,6 @@ import "MenuContainer.js" as Script
 // horizontally inside the container until the sum of their width overtakes
 // the width of the container. In this case, the first element (or elements) are
 // hidden.
-// Using the itemsLeftMargin you can control the spacing between the
-// back button and the root element.
 // Every item must emit the signal loadComponent to request the loading of a
 // child element, or the closeItem to close it and can optionally implement the
 // hooks onChildLoaded and onChildDestroyed.
