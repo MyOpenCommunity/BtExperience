@@ -33,9 +33,14 @@ Item {
     property variant currentObject: undefined
 
     signal closed
+    signal rootElementClicked
 
     function closeLastColumn() {
         Script.closeLastItem()
+    }
+
+    function closeAll() {
+        Script.closeItem(1)
     }
 
     Constants {
@@ -90,8 +95,17 @@ Item {
         }
     }
 
+    Behavior on x {
+        NumberAnimation { duration: 400 }
+    }
+
+    Behavior on y {
+        NumberAnimation { duration: 400 }
+    }
+
     Component.onCompleted: {
         Script.loadComponent(-1, mainContainer.rootElement, "", rootData)
+        mainContainer.rootObject.columnClicked.connect(rootElementClicked)
     }
 }
 

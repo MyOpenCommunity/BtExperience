@@ -30,6 +30,7 @@ Item {
     // itself.
     signal closeItem(int menuLevel)
     signal loadComponent(int menuLevel, string fileName, string title, variant dataModel)
+    signal columnClicked()
 
     // the page where the element is placed
     property variant pageObject: undefined
