@@ -8,6 +8,7 @@ ControlCall 1.0 ControlCall.qml
 MenuContainer 1.0 MenuContainer.qml
 ButtonSystems 1.0 ButtonSystems.qml
 TwoButtonsSettings 1.0 TwoButtonsSettings.qml
+RoomItem 1.0 RoomItem.qml
 AnimatedLoader 1.0 AnimatedLoader.qml
 ControlChoices 1.0 ControlChoices.qml
 ScreenSaver 1.0 ScreenSaver.qml
@@ -22,6 +23,7 @@ KeyPad 1.0 KeyPad.qml
 PaginatorColumn 1.0 PaginatorColumn.qml
 AlarmPopup 1.0 AlarmPopup.qml
 ButtonLeftRight 1.0 ButtonLeftRight.qml
+ButtonImageText 1.0 ButtonImageText.qml
 ControlUpDown 1.0 ControlUpDown.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 ControlBalance 1.0 ControlBalance.qml
@@ -37,5 +39,6 @@ ButtonCommand 1.0 ButtonCommand.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
 PageAnimation 1.0 PageAnimation.qml
+ControlSlider2 1.0 ControlSlider2.qml
 ScreenSaverBouncingImage 1.0 ScreenSaverBouncingImage.qml
 ToolBar 1.0 ToolBar.qml
