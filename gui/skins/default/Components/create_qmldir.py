@@ -13,6 +13,7 @@ def main():
 	
 	out = open('qmldir', 'w+')
 	out.write('\n'.join(data))
+	out.write('\n')
 	out.close()
 
 if __name__ == '__main__':
