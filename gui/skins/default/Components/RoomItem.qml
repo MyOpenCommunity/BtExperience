@@ -9,6 +9,7 @@ MenuColumn {
         status: dataModel.active === true ? 1 : 0
         hasChild: true
         onClicked: {
+            column.columnClicked()
             column.loadElement(modelList.getComponentFile(dataModel.objectId), "", dataModel)
         }
     }
