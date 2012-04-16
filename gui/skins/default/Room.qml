@@ -153,6 +153,13 @@ Page {
         }
     }
 
+    function closeCurrentMenu() {
+        privateProps.currentMenu.closeAll()
+        privateProps.currentMenu.state = ""
+        page.state = ""
+        privateProps.currentMenu = undefined
+    }
+
     Rectangle {
         id: darkRect
         anchors {
@@ -174,6 +181,31 @@ Page {
         Behavior on opacity {
             NumberAnimation { duration: 200 }
         }
+
+        Rectangle {
+            border.color: "white"
+            border.width: 2
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            width: 30
+            height: 30
+            radius: 30
+            color: parent.color
+
+            Text {
+                anchors.centerIn: parent
+                text: "X"
+                color: "white"
+                font.pointSize: 12
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: page.closeCurrentMenu()
+            }
+        }
     }
 
     MouseArea {
@@ -186,12 +218,7 @@ Page {
             bottom: roomView.top
         }
 
-        onClicked: {
-            privateProps.currentMenu.closeAll()
-            privateProps.currentMenu.state = ""
-            page.state = ""
-            privateProps.currentMenu = undefined
-        }
+        onClicked: page.closeCurrentMenu()
     }
 
     states: [
