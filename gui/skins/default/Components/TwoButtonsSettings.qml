@@ -12,7 +12,7 @@ Row {
     Image {
         source: "../images/common/btn_comando.png"
         width: parent.width / 2
-        height: 50
+        height: parent.height
         Image {
             source: button.leftImage
             anchors.horizontalCenter: parent.horizontalCenter
@@ -37,7 +37,7 @@ Row {
     Image {
         source: "../images/common/btn_comando.png"
         width: parent.width / 2
-        height: 50
+        height: parent.height
         Image {
             source: button.rightImage
             anchors.horizontalCenter: parent.horizontalCenter

@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import BtObjects 1.0
+import "../../js/Stack.js" as Stack
 
 MenuColumn {
     id: element
@@ -18,7 +19,13 @@ MenuColumn {
             hasChild: true
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                element.loadElement(clickedItem.componentFile, clickedItem.name, clickedItem)
+                if (clickedItem.componentFile)
+                    element.loadElement(
+                                clickedItem.componentFile,
+                                clickedItem.name,
+                                clickedItem)
+                else
+                    Stack.openPage(clickedItem.pageFile)
             }
         }
         model: ListModel {
@@ -29,6 +36,7 @@ MenuColumn {
             }
             ListElement {
                 name: "cucina"
+                pageFile: "VideoCamera.qml"
             }
             ListElement {
                 name: "camera"
