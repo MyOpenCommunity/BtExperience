@@ -25,22 +25,6 @@ Item {
     signal stopCallClicked
     signal muteClicked
 
-    function _minusClick() {
-        if (control.state == "Ring2")
-            return
-        control.minusClicked()
-    }
-    function _plusClick() {
-        if (control.state == "Ring2")
-            return
-        control.plusClicked()
-    }
-    function _downClick() {
-        if (control.state == "Ring2")
-            return
-        control.muteClicked()
-    }
-
     Column {
         Image {
             width: 212
@@ -146,8 +130,8 @@ Item {
             id: controlSlider
             description: control.sliderDescription
             percentage: control.percentage
-            onMinusClicked: _minusClick()
-            onPlusClicked: _plusClick()
+            onMinusClicked: control.minusClicked()
+            onPlusClicked: control.plusClicked()
         }
         Image {
             id: downButton
@@ -171,7 +155,7 @@ Item {
             MouseArea {
                 id: downButtonArea
                 anchors.fill: parent
-                onClicked: _downClick()
+                onClicked: control.muteClicked()
             }
         }
     }
@@ -187,6 +171,10 @@ Item {
             NumberAnimation { duration: constants.alertTransitionDuration }
         }
         z: 10
+
+        MouseArea {
+            anchors.fill: parent
+        }
     }
 
     Constants {
