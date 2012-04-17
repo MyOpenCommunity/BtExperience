@@ -75,6 +75,7 @@ int GlobalProperties::getLastTimePress() const
 void GlobalProperties::updateTime()
 {
 	last_press = QDateTime::currentDateTime();
+	emit lastTimePressChanged();
 }
 
 void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
