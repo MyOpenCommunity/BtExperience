@@ -7,16 +7,9 @@ Item {
     property string callImage: "../images/common/bg_codice_ok.png"
     property string name: "Start call"
     property string description: "External place 1"
-    property string leftText: "Replay"
     property int leftTextMargin: 25
-    property string leftImage: "../images/common/bg_DueRegolazioni.png"
-    property string rightText: "End Call"
     property int rightTextMargin: 25
-    property string rightImage: "../images/common/bg_DueRegolazioni.png"
-    property string sliderDescription: "Volume"
     property int percentage: 50
-    property string downText: "Mute"
-    property string downImage: "../images/common/bg_DueRegolazioni.png"
 
     signal minusClicked
     signal plusClicked
@@ -73,12 +66,13 @@ Item {
         }
         Row {
             id: buttons
+            width: control.width
             Image {
                 id: leftButton
-                source: control.leftImage
-                width: 106
+                source: "../images/common/bg_codice_ok.png"
+                width: parent.width / 2
                 height: 50
-                visible: control.leftImage == "" ? false : true
+                visible: false
                 Text {
                     color: "#ffffff"
                     anchors {
@@ -88,7 +82,7 @@ Item {
                     }
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    text: control.leftText
+                    text: qsTr("Answer")
                     font {
                         pointSize: 10
                         capitalization: Font.AllUppercase
@@ -101,10 +95,9 @@ Item {
             }
             Image {
                 id: rightButton
-                source: control.rightImage
-                width: leftButton.visible ? 106 : 212
+                source: "../images/common/bg_codice_errato.png"
+                width: leftButton.visible ? parent.width / 2 : parent.width
                 height: 50
-                visible: control.rightImage == "" ? false : true
                 Text {
                     color: "#ffffff"
                     anchors {
@@ -114,7 +107,7 @@ Item {
                     }
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    text: control.rightText
+                    text: qsTr("End Call")
                     font {
                         pointSize: 10
                         capitalization: Font.AllUppercase
@@ -128,17 +121,16 @@ Item {
         }
         ControlSlider {
             id: controlSlider
-            description: control.sliderDescription
+            description: qsTr("volume")
             percentage: control.percentage
             onMinusClicked: control.minusClicked()
             onPlusClicked: control.plusClicked()
         }
         Image {
             id: downButton
-            source: control.downImage
-            width: 212
+            source: "../images/common/btn_annulla.png"
+            width: control.width
             height: 50
-            visible: control.downImage == "" ? false : true
             Text {
                 anchors {
                     fill: parent
@@ -146,7 +138,7 @@ Item {
                 }
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                text: control.downText
+                text: qsTr("mute")
                 font {
                     pointSize: 12
                     capitalization: Font.AllUppercase
@@ -200,6 +192,15 @@ Item {
                 visible: false
             }
         },
+        State {
+            name: "incomingCall"
+
+            PropertyChanges {
+                target: leftButton
+                visible: true
+            }
+        },
+
         State {
             name: "Ring1"
 
