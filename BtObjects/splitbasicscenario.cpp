@@ -81,13 +81,15 @@ void SplitBasicScenario::setProgram(QString program)
 {
 	if (program.isEmpty())
 	{
-		qWarning() << QString("program cannot be empty");
+		qWarning() << QString("SplitBasicScenario::setProgram(): "
+							  "program cannot be empty");
 		return;
 	}
 
 	if (!program_list.contains(program))
 	{
-		qWarning() << QString("Program (%1) not present in configured "
+		qWarning() << QString("SplitBasicScenario::setProgram(%1): "
+							  "Program not present in configured "
 							  "programs list").arg(program);
 		return;
 	}

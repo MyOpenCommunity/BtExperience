@@ -108,7 +108,8 @@ void SplitAdvancedScenario::setProgram(QString program)
 {
 	if (program.isEmpty())
 	{
-		qWarning() << QString("program cannot be empty");
+		qWarning() << QString("SplitAdvancedScenario::setProgram(): "
+							  "program cannot be empty");
 		return;
 	}
 

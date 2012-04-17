@@ -164,7 +164,6 @@ public:
 
 	virtual ObjectCategory getCategory() const
 	{
-		// TODO Is thermal regulation right?
 		return ObjectInterface::ThermalRegulation;
 	}
 
