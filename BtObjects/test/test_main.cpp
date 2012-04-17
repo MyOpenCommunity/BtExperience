@@ -35,6 +35,7 @@
 #include "test_thermal_objects.h"
 #include "test_filebrowser.h"
 #include "test_scenario_objects.h"
+#include "test_videodoorentry_objects.h"
 #include "main.h"
 
 logger *app_logger;
@@ -116,6 +117,9 @@ int main(int argc, char *argv[])
 
 	TestScenarioModule test_scenario_module;
 	test_list << &test_scenario_module;
+
+	TestVideoDoorEntry test_videodoorentry;
+	test_list << &test_videodoorentry;
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))

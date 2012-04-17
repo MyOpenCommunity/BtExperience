@@ -17,7 +17,7 @@ class VideoDoorEntryDevice;
 */
 class CCTV : public ObjectInterface
 {
-	friend class TestCCTV;
+	friend class TestVideoDoorEntry;
 
 	Q_OBJECT
 

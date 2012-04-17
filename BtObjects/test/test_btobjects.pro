@@ -33,6 +33,7 @@ HEADERS += test_antintrusion_object.h \
 	test_splitscenarios_object.h \
 	test_thermal_objects.h \
 	test_thermalprobes_object.h \
+	test_videodoorentry_objects.h \
 	objecttester.h \
 	devices/test/openserver_mock.h \
 	ts/main.h \
@@ -48,6 +49,7 @@ SOURCES += test_main.cpp \
 	test_splitscenarios_object.cpp \
 	test_thermal_objects.cpp \
 	test_thermalprobes_object.cpp \
+	test_videodoorentry_objects.cpp \
 	objecttester.cpp \
 	devices/test/openserver_mock.cpp \
 	ts/definitions.cpp
