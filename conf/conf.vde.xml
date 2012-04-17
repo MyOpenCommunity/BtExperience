@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuratore>
+  <item>
+    <id>22</id>
+    <descr>giardino</descr>
+    <where>12</where>
+    <mode>0</mode>
+  </item>
+</configuratore>  
+
