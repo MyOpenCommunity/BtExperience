@@ -4,8 +4,8 @@ Item {
     id: control
     width: 212
 
-    property string callImage: "../images/common/bg_DueRegolazioni.png"
-    property string name: "Talk"
+    property string callImage: "../images/common/bg_codice_ok.png"
+    property string name: "Start call"
     property string description: "External place 1"
     property string leftText: "Replay"
     property int leftTextMargin: 25
@@ -22,8 +22,8 @@ Item {
     signal plusClicked
     signal controlClicked
     signal leftButtonClicked
-    signal rightButtonClicked
-    signal buttonDownClicked
+    signal stopCallClicked
+    signal muteClicked
 
     function _minusClick() {
         if (control.state == "Ring2")
@@ -38,7 +38,7 @@ Item {
     function _downClick() {
         if (control.state == "Ring2")
             return
-        control.buttonDownClicked()
+        control.muteClicked()
     }
 
     Column {
@@ -138,7 +138,7 @@ Item {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: control.rightButtonClicked()
+                    onClicked: control.stopCallClicked()
                 }
             }
         }
@@ -195,7 +195,7 @@ Item {
 
     states: [
         State {
-            name: "Command"
+            name: "command"
 
             PropertyChanges {
                 target: buttons
@@ -226,12 +226,35 @@ Item {
             }
         },
         State {
-            name: "Ring2"
+            name: "outgoingCall"
 
             PropertyChanges {
                 target: area
                 opacity: 0.75
             }
+        },
+        State {
+            name: "noAnswer"
+
+            PropertyChanges {
+                target: control
+                name: qsTr("No answer")
+                callImage: "../images/common/bg_codice_errato.png"
+            }
+            PropertyChanges {
+                target: area
+                opacity: 0.75
+            }
+            PropertyChanges {
+                target: noAnswerTimer
+                running: true
+            }
         }
     ]
+
+    Timer {
+        id: noAnswerTimer
+        interval: 1500
+        onTriggered: control.state = "command"
+    }
 }
