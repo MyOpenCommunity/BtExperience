@@ -43,10 +43,12 @@ ScenarioModule::Status ScenarioModule::getStatus()
 
 void ScenarioModule::startProgramming()
 {
+	dev->startProgramming(scenario_number);
 }
 
 void ScenarioModule::stopProgramming()
 {
+	dev->stopProgramming(scenario_number);
 }
 
 void ScenarioModule::valueReceived(const DeviceValues &values_list)
