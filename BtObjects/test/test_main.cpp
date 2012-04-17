@@ -33,7 +33,8 @@
 #include "test_splitscenarios_object.h"
 #include "test_thermalprobes_object.h"
 #include "test_thermal_objects.h"
-
+#include "test_filebrowser.h"
+#include "test_scenario_objects.h"
 #include "main.h"
 
 logger *app_logger;
@@ -112,6 +113,9 @@ int main(int argc, char *argv[])
 
 	TestSplitScenarios test_split_scenarios;
 	test_list << &test_split_scenarios;
+
+	TestScenarioModule test_scenario_module;
+	test_list << &test_scenario_module;
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))
