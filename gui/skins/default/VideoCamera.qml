@@ -7,8 +7,6 @@ SystemPage {
     id: page
 
     property string title: qsTr("TELECAMERA POSTO ESTERNO 1")
-    property int brightness: 50
-    property int contrast: 50
     property int volume: 50
     property string command1Text: qsTr("ATTIVA AUDIO")
     property string command2Text: qsTr("ACCENDI LUCE")
@@ -26,12 +24,9 @@ SystemPage {
     property string endCallImage: "images/common/bg_DueRegolazioni.png"
     property string endCallText: "END CALL"
     property int endCallMargin: 25
+    property QtObject camera: null
 
     signal nextCameraClicked
-    signal minusBrightnessClicked
-    signal plusBrightnessClicked
-    signal minusContrastClicked
-    signal plusContrastClicked
     signal command1Clicked
     signal command2Clicked
     signal command3Clicked
@@ -204,17 +199,17 @@ SystemPage {
                 ControlSlider2 {
                     visible: page.brightnessVisible
                     title: qsTr("BRIGHTNESS")
-                    value: page.brightness
-                    onPlusClicked: page.plusBrightnessClicked()
-                    onMinusClicked: page.minusBrightnessClicked()
+                    value: camera.brightness
+                    onPlusClicked: if (camera.brightness < 100) camera.brightness += 1
+                    onMinusClicked: if (camera.brightness > 00) camera.brightness -= 1
                 }
 
                 ControlSlider2 {
                     visible: page.contrastVisible
                     title: qsTr("CONTRAST")
-                    value: page.contrast
-                    onPlusClicked: page.plusContrastClicked()
-                    onMinusClicked: page.minusContrastClicked()
+                    value: camera.contrast
+                    onPlusClicked: if (camera.contrast < 100) camera.contrast += 1
+                    onMinusClicked: if (camera.contrast > 00) camera.contrast -= 1
                 }
             }
 

@@ -10,40 +10,22 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
+    ObjectModel {
+        id: modelList
+        filters: [{objectId: ObjectInterface.IdCCTV}]
+    }
+
     PaginatorList {
         id: paginator
         width: parent.width
         listHeight: 200
         delegate: MenuItemDelegate {
-            itemObject: model
-            hasChild: true
+            itemObject: modelList.getObject(index)
             onDelegateClicked: {
-                var clickedItem = modelList.get(index)
-                if (clickedItem.componentFile)
-                    element.loadElement(
-                                clickedItem.componentFile,
-                                clickedItem.name,
-                                clickedItem)
-                else
-                    Stack.openPage(clickedItem.pageFile)
+                var page = Stack.openPage("VideoCamera.qml")
+                page.camera = itemObject
             }
         }
-        model: ListModel {
-            id: modelList
-            ListElement {
-                name: "generale"
-                componentFile: "Components/VideoDoorEntry/Talk.qml"
-            }
-            ListElement {
-                name: "cucina"
-                pageFile: "VideoCamera.qml"
-            }
-            ListElement {
-                name: "camera"
-            }
-            ListElement {
-                name: "box"
-            }
-        }
+        model: modelList
     }
 }

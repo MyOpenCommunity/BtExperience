@@ -24,6 +24,8 @@
 #include "splitadvancedscenario.h"
 #include "airconditioning_device.h"
 #include "scenarioobjects.h"
+#include "vct.h"
+#include "videodoorentry_device.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
@@ -169,6 +171,12 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		}
 		case ObjectInterface::IdScenarioSystem:
 			obj_list = createScenarioSystem(item, id);
+			break;
+		case ObjectInterface::IdCCTV:
+			obj = new CCTV(descr,
+						   where,
+						   bt_global::add_device_to_cache(
+							   new VideoDoorEntryDevice(where, getTextChild(item, "mode"))));
 			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));

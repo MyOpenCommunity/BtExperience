@@ -12,6 +12,7 @@ HEADERS += \
 	splitbasicscenario.h \
 	thermalobjects.h \
 	thermalprobes.h \
+	vct.h \
 	devices/airconditioning_device.h \
 	devices/antintrusion_device.h \
 	devices/device.h \
@@ -22,6 +23,7 @@ HEADERS += \
 	devices/pulldevice.h \
 	devices/scenario_device.h \
 	devices/thermal_device.h \
+	devices/videodoorentry_device.h \
 	ts/bttime.h \
 	ts/delayedslotcaller.h \
 	ts/frame_classes.h \
@@ -47,6 +49,7 @@ SOURCES += \
 	splitbasicscenario.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \
+	vct.cpp \
 	generic_functions.cpp \
 	devices/airconditioning_device.cpp \
 	devices/antintrusion_device.cpp \
@@ -58,6 +61,7 @@ SOURCES += \
 	devices/pulldevice.cpp \
 	devices/scenario_device.cpp \
 	devices/thermal_device.cpp \
+	devices/videodoorentry_device.cpp \
 	ts/bttime.cpp \
 	ts/delayedslotcaller.cpp \
 	ts/openclient.cpp \
