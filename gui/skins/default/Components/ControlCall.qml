@@ -4,42 +4,19 @@ Item {
     id: control
     width: 212
 
-    property string callImage: "../images/common/bg_DueRegolazioni.png"
-    property string name: "Talk"
+    property string callImage: "../images/common/bg_codice_ok.png"
+    property string name: "Start call"
     property string description: "External place 1"
-    property string leftText: "Replay"
     property int leftTextMargin: 25
-    property string leftImage: "../images/common/bg_DueRegolazioni.png"
-    property string rightText: "End Call"
     property int rightTextMargin: 25
-    property string rightImage: "../images/common/bg_DueRegolazioni.png"
-    property string sliderDescription: "Volume"
     property int percentage: 50
-    property string downText: "Mute"
-    property string downImage: "../images/common/bg_DueRegolazioni.png"
 
     signal minusClicked
     signal plusClicked
     signal controlClicked
     signal leftButtonClicked
-    signal rightButtonClicked
-    signal buttonDownClicked
-
-    function _minusClick() {
-        if (control.state == "Ring2")
-            return
-        control.minusClicked()
-    }
-    function _plusClick() {
-        if (control.state == "Ring2")
-            return
-        control.plusClicked()
-    }
-    function _downClick() {
-        if (control.state == "Ring2")
-            return
-        control.buttonDownClicked()
-    }
+    signal stopCallClicked
+    signal muteClicked
 
     Column {
         Image {
@@ -89,12 +66,13 @@ Item {
         }
         Row {
             id: buttons
+            width: control.width
             Image {
                 id: leftButton
-                source: control.leftImage
-                width: 106
+                source: "../images/common/bg_codice_ok.png"
+                width: parent.width / 2
                 height: 50
-                visible: control.leftImage == "" ? false : true
+                visible: false
                 Text {
                     color: "#ffffff"
                     anchors {
@@ -104,7 +82,7 @@ Item {
                     }
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    text: control.leftText
+                    text: qsTr("Answer")
                     font {
                         pointSize: 10
                         capitalization: Font.AllUppercase
@@ -117,10 +95,9 @@ Item {
             }
             Image {
                 id: rightButton
-                source: control.rightImage
-                width: leftButton.visible ? 106 : 212
+                source: "../images/common/bg_codice_errato.png"
+                width: leftButton.visible ? parent.width / 2 : parent.width
                 height: 50
-                visible: control.rightImage == "" ? false : true
                 Text {
                     color: "#ffffff"
                     anchors {
@@ -130,7 +107,7 @@ Item {
                     }
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    text: control.rightText
+                    text: qsTr("End Call")
                     font {
                         pointSize: 10
                         capitalization: Font.AllUppercase
@@ -138,23 +115,22 @@ Item {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: control.rightButtonClicked()
+                    onClicked: control.stopCallClicked()
                 }
             }
         }
         ControlSlider {
             id: controlSlider
-            description: control.sliderDescription
+            description: qsTr("volume")
             percentage: control.percentage
-            onMinusClicked: _minusClick()
-            onPlusClicked: _plusClick()
+            onMinusClicked: control.minusClicked()
+            onPlusClicked: control.plusClicked()
         }
         Image {
             id: downButton
-            source: control.downImage
-            width: 212
+            source: "../images/common/btn_annulla.png"
+            width: control.width
             height: 50
-            visible: control.downImage == "" ? false : true
             Text {
                 anchors {
                     fill: parent
@@ -162,7 +138,7 @@ Item {
                 }
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                text: control.downText
+                text: qsTr("mute")
                 font {
                     pointSize: 12
                     capitalization: Font.AllUppercase
@@ -171,7 +147,7 @@ Item {
             MouseArea {
                 id: downButtonArea
                 anchors.fill: parent
-                onClicked: _downClick()
+                onClicked: control.muteClicked()
             }
         }
     }
@@ -187,6 +163,10 @@ Item {
             NumberAnimation { duration: constants.alertTransitionDuration }
         }
         z: 10
+
+        MouseArea {
+            anchors.fill: parent
+        }
     }
 
     Constants {
@@ -195,7 +175,7 @@ Item {
 
     states: [
         State {
-            name: "Command"
+            name: "command"
 
             PropertyChanges {
                 target: buttons
@@ -213,6 +193,15 @@ Item {
             }
         },
         State {
+            name: "incomingCall"
+
+            PropertyChanges {
+                target: leftButton
+                visible: true
+            }
+        },
+
+        State {
             name: "Ring1"
 
             PropertyChanges {
@@ -226,12 +215,35 @@ Item {
             }
         },
         State {
-            name: "Ring2"
+            name: "outgoingCall"
 
             PropertyChanges {
                 target: area
                 opacity: 0.75
             }
+        },
+        State {
+            name: "noAnswer"
+
+            PropertyChanges {
+                target: control
+                name: qsTr("No answer")
+                callImage: "../images/common/bg_codice_errato.png"
+            }
+            PropertyChanges {
+                target: area
+                opacity: 0.75
+            }
+            PropertyChanges {
+                target: noAnswerTimer
+                running: true
+            }
         }
     ]
+
+    Timer {
+        id: noAnswerTimer
+        interval: 1500
+        onTriggered: control.state = "command"
+    }
 }
