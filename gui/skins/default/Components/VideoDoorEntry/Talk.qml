@@ -12,16 +12,32 @@ MenuColumn {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 300
-        Component.onCompleted: controlCall.state = "Ring1"
+        Component.onCompleted: controlCall.state = "command"
         ControlCall {
             id: controlCall
             leftImage: ""
             onMinusClicked: console.log("minusClicked")
             onPlusClicked: console.log("plusClicked")
-            onControlClicked: console.log("controlClicked")
+            onControlClicked: {
+                controlCall.state = "outgoingCall"
+                console.log("controlClicked")
+                answerTimeout.start();
+            }
             onLeftButtonClicked: console.log("leftButtonClicked")
-            onRightButtonClicked: console.log("rightButtonClicked")
-            onButtonDownClicked: console.log("buttonDownClicked")
+            onStopCallClicked: {
+                // stop fake timer
+                answerTimeout.stop()
+                console.log("stopCall clicked")
+                controlCall.state = "command"
+                // TODO: send stop call frame
+            }
+            onMuteClicked: console.log("mute clicked")
         }
+    }
+
+    Timer {
+        id: answerTimeout
+        interval: 2000
+        onTriggered: controlCall.state = "noAnswer"
     }
 }
