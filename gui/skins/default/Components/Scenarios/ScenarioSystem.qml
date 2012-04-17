@@ -30,6 +30,9 @@ MenuColumn {
 
     ObjectModel {
         id: objectModel
-        filters: [{objectId: ObjectInterface.IdSimpleScenario}]
+        filters: [
+            {objectId: ObjectInterface.IdSimpleScenario},
+            {objectId: ObjectInterface.IdScenarioModule},
+        ]
     }
 }

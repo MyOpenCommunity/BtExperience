@@ -33,6 +33,8 @@ FilterListModel {
             return "Components/ThermalRegulation/AdvancedSplit.qml"
         case ObjectInterface.IdSimpleScenario:
             return "Components/Scenarios/SimpleScenario.qml"
+        case ObjectInterface.IdScenarioModule:
+            return "Components/Scenarios/SimpleScenario.qml"
         default:
             console.log("getComponentFile(): Unknown object id: " + objectId)
             return ""

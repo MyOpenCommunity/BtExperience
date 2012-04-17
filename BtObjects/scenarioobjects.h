@@ -2,6 +2,7 @@
 #define SCENARIOOBJECTS_H
 
 #include "objectinterface.h"
+#include "device.h" // DeviceValues
 
 class ScenarioDevice;
 class QDomNode;
@@ -39,10 +40,49 @@ public:
 public slots:
 	void activate();
 
-private:
+protected:
 	int scenario_number;
 	QString name;
 	ScenarioDevice *dev;
+};
+
+class ScenarioModule : public SimpleScenario
+{
+friend class TestScenarioModule;
+	Q_OBJECT
+
+	Q_PROPERTY(Status status READ getStatus NOTIFY statusChanged)
+
+public:
+	ScenarioModule(int scenario, QString _name, ScenarioDevice *d);
+
+	enum Status
+	{
+		Locked = 1,
+		Unlocked,
+		Editing
+	};
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdScenarioModule;
+	}
+
+	Status getStatus();
+
+public slots:
+	void startProgramming();
+	void stopProgramming();
+
+signals:
+	void statusChanged();
+
+private slots:
+	void valueReceived(const DeviceValues &values_list);
+
+private:
+	void changeStatus(Status new_status);
+	Status status;
 };
 
 #endif // SCENARIOOBJECTS_H

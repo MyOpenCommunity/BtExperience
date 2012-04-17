@@ -41,6 +41,7 @@ public:
 		IdSplitAdvancedScenario,
 		IdScenarioSystem,                       // 20
 		IdSimpleScenario,
+		IdScenarioModule,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
