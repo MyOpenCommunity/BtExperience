@@ -226,7 +226,7 @@ Page {
             name: "menuSelected"
             PropertyChanges {
                 target: darkRect
-                opacity: 0.8
+                opacity: 0.6
                 z: 9
             }
             PropertyChanges {
