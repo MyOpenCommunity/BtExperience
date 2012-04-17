@@ -8,8 +8,8 @@ Item {
         source: "../images/bticino_logo.svg"
         x: 0
         y: 0
-        width: 236
-        height: 76
+        width: 236 * bouncer.width / 1024
+        height: 76 * bouncer.height / 600
         sourceSize.width: 236
         sourceSize.height: 76
 
@@ -17,7 +17,7 @@ Item {
             running: true
             loops: Animation.Infinite
             NumberAnimation {
-                to: global.mainWidth - image.width
+                to: bouncer.width - image.width
                 duration: 6000
                 easing.type: Easing.Linear
             }
@@ -32,7 +32,7 @@ Item {
             running: true
             loops: Animation.Infinite
             NumberAnimation {
-                to: global.mainHeight - image.height
+                to: bouncer.height - image.height
                 duration: 9000
                 easing.type: Easing.OutBounce
             }

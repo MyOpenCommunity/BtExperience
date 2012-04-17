@@ -5,6 +5,8 @@
 #include <QDate>
 #include <QTime>
 
+#include <limits>
+
 GuiSettings::GuiSettings(QObject *parent) :
 	QObject(parent)
 {
@@ -205,6 +207,33 @@ void GuiSettings::setTimeOut(TimeChoice tc)
 	// TODO save value somewhere
 	timeOut = tc;
 	emit timeOutChanged();
+}
+
+int GuiSettings::getTimeOutInSeconds() const
+{
+	// converts the enum value to seconds
+	switch(timeOut)
+	{
+	case Seconds_15:
+		return 15;
+	case Seconds_30:
+		return 30;
+	case Minutes_1:
+		return 60;
+	case Minutes_2:
+		return 120;
+	case Minutes_5:
+		return 300;
+	case Minutes_10:
+		return 600;
+	case Minutes_30:
+		return 1800;
+	case Hours_1:
+		return 3600;
+	default:;
+	}
+	// Never and not recognized value are translated as "infinite"
+	return std::numeric_limits<int>::max();
 }
 
 int GuiSettings::getTimezone() const

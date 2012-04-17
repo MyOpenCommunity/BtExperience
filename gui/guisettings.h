@@ -74,6 +74,11 @@ class GuiSettings : public QObject
 	Q_PROPERTY(TimeChoice timeOut READ getTimeOut WRITE setTimeOut NOTIFY timeOutChanged)
 
 	/*!
+		\brief Gets the time out for the screensaver, but in seconds (for QML usage).
+	*/
+	Q_PROPERTY(int timeOutInSeconds READ getTimeOutInSeconds NOTIFY timeOutChanged)
+
+	/*!
 		\brief Sets or gets the timezone.
 	*/
 	Q_PROPERTY(int timezone READ getTimezone WRITE setTimezone NOTIFY timezoneChanged)
@@ -185,6 +190,7 @@ public:
 	void setTemperatureUnit(TemperatureUnit u);
 	TimeChoice getTimeOut() const;
 	void setTimeOut(TimeChoice tc);
+	int getTimeOutInSeconds() const;
 	int getTimezone() const;
 	void setTimezone(int z);
 	TimeChoice getTurnOffTime() const;

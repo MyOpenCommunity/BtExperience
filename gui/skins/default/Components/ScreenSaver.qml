@@ -6,9 +6,12 @@ Rectangle {
     id: screensaver
 
     property string screensaverFile
+    property int timeout: global.guiSettings.timeOutInSeconds
+    property int w: global.mainWidth
+    property int h: global.mainHeight
 
-    width: global.mainWidth
-    height: global.mainHeight
+    width: w
+    height: h
     z: 20
     color: "black"
     opacity: 0
@@ -30,8 +33,7 @@ Rectangle {
     states: [
         State {
             name: "SCREENSAVER_ON"
-            // TODO manage activation time (now it is hardcoded!)
-            when: global.lastTimePress > 60
+            when: global.lastTimePress > screensaver.timeout
             PropertyChanges { target: screensaver; opacity: 0.8}
             PropertyChanges {
                 target: component

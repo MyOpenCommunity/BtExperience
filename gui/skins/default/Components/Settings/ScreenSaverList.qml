@@ -60,7 +60,14 @@ MenuColumn {
         Image {
             width: 212
             height: 100
-            source: imagesPath + "common/bg_UnaRegolazione.png"
+            source: imagesPath + "scenari.jpg"
+            ScreenSaver {
+                // TODO load the right screensaver depending on configuration
+                screensaverFile: "ScreenSaverBouncingImage.qml"
+                timeout: 0
+                width: parent.width
+                height: parent.height
+            }
             Rectangle {
                 width: 200
                 height: 90
