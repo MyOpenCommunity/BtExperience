@@ -11,8 +11,11 @@ QList<ObjectInterface *> createScenarioSystem(const QDomNode &xml_node, int id)
 	Q_UNUSED(id);
 
 	QList<ObjectInterface *> objects;
-	objects << new SimpleScenario(3, "mattino", bt_global::add_device_to_cache(new ScenarioDevice("19")));
-	objects << new SimpleScenario(1, "sera", bt_global::add_device_to_cache(new ScenarioDevice("19")));
+	objects << new SimpleScenario(3, "mattino", bt_global::add_device_to_cache(new ScenarioDevice("39")));
+	objects << new SimpleScenario(1, "sera", bt_global::add_device_to_cache(new ScenarioDevice("39")));
+	objects << new ScenarioModule(1, "cinema", bt_global::add_device_to_cache(new ScenarioDevice("40")));
+	objects << new ScenarioModule(2, "in vacanza", bt_global::add_device_to_cache(new ScenarioDevice("40")));
+	objects << new ScenarioModule(2, "party", bt_global::add_device_to_cache(new ScenarioDevice("41")));
 	return objects;
 }
 
