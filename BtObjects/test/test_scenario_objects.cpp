@@ -192,6 +192,27 @@ void TestScenarioModule::testReceiveStop_data()
 		v << ScenarioModule::Editing << ScenarioModule::Editing << 0;
 }
 
+void TestScenarioModule::testActivateScenario()
+{
+	scen->activate();
+	dev->activateScenario(SCENARIO_NUMBER);
+	compareClientCommand();
+}
+
+void TestScenarioModule::testStartProgramming()
+{
+	scen->startProgramming();
+	dev->startProgramming(SCENARIO_NUMBER);
+	compareClientCommand();
+}
+
+void TestScenarioModule::testStopProgramming()
+{
+	scen->stopProgramming();
+	dev->stopProgramming(SCENARIO_NUMBER);
+	compareClientCommand();
+}
+
 void TestScenarioModule::checkMethod()
 {
 	QFETCH(DeviceValues, value);

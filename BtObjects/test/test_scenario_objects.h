@@ -44,6 +44,10 @@ private slots:
 	void testReceiveStop();
 	void testReceiveStop_data();
 
+	void testActivateScenario();
+	void testStartProgramming();
+	void testStopProgramming();
+
 private:
 	void checkMethod();
 	ScenarioModule *scen;
