@@ -6,5 +6,11 @@
     <where>12</where>
     <mode>0</mode>
   </item>
+  <item>
+    <id>23</id>
+    <descr>ingresso</descr>
+    <where>13</where>
+    <mode>1</mode>
+  </item>
 </configuratore>  
 
