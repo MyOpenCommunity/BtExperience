@@ -81,6 +81,7 @@ private slots:
 	void valueReceived(const DeviceValues &values_list);
 
 private:
+	void changeStatus(Status new_status);
 	Status status;
 };
 

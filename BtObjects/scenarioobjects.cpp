@@ -3,6 +3,7 @@
 #include "devices_cache.h"
 
 #include <QDomNode>
+#include <QDebug>
 
 QList<ObjectInterface *> createScenarioSystem(const QDomNode &xml_node, int id)
 {
@@ -50,6 +51,49 @@ void ScenarioModule::stopProgramming()
 
 void ScenarioModule::valueReceived(const DeviceValues &values_list)
 {
+	DeviceValues::const_iterator it;
+	for (it = values_list.constBegin(); it != values_list.constEnd(); ++it)
+	{
+		switch (it.key())
+		{
+		case ScenarioDevice::DIM_LOCK:
+		{
+			bool is_locked = it.value().toBool();
+			// TODO: this can be removed once we are sure about the behaviour
+			if (status == Editing)
+				qWarning() << "Got a LOCK frame in Editing status before a STOP frame; this is unexpected";
 
+			if (is_locked && status != Locked)
+				changeStatus(Locked);
+
+			if (!is_locked && status != Unlocked)
+				changeStatus(Unlocked);
+		}
+			break;
+		case ScenarioDevice::DIM_START:
+		{
+			Q_ASSERT_X(it.value().canConvert<ScenarioProgrammingStatus>(), "ScenarioModule::valueReceived",
+				"Cannot convert values in DIM_START");
+			ScenarioProgrammingStatus val = it.value().value<ScenarioProgrammingStatus>();
+			if (val.first)
+			{
+				int programming_scenario = val.second;
+				if (programming_scenario == scenario_number && status == Unlocked)
+					changeStatus(Editing);
+
+				if (programming_scenario != scenario_number && status == Unlocked)
+					changeStatus(Locked);
+			}
+		}
+			break;
+		}
+	}
+}
+
+void ScenarioModule::changeStatus(ScenarioModule::Status new_status)
+{
+	// Please notice: you need to check if new_status == status outside!
+	status = new_status;
+	emit statusChanged();
 }
 
