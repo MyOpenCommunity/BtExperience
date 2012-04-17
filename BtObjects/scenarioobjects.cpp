@@ -27,3 +27,29 @@ void SimpleScenario::activate()
 {
 	dev->activateScenario(scenario_number);
 }
+
+
+ScenarioModule::ScenarioModule(int scenario, QString _name, ScenarioDevice *d) :
+	SimpleScenario(scenario, _name, d)
+{
+	status = Locked;
+}
+
+ScenarioModule::Status ScenarioModule::getStatus()
+{
+	return status;
+}
+
+void ScenarioModule::startProgramming()
+{
+}
+
+void ScenarioModule::stopProgramming()
+{
+}
+
+void ScenarioModule::valueReceived(const DeviceValues &values_list)
+{
+
+}
+
