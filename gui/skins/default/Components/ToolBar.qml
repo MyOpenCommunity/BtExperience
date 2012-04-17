@@ -175,21 +175,6 @@ Item {
 
             }
         }
-
-        SvgImage {
-            source: imagesPath + "toolbar/toolbar_separator.svg"
-        }
-
-        Item {
-            width: height + 18
-            height: toolbar_top.height
-            SvgImage {
-                source: imagesPath + "toolbar/icon_quit.svg"
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-
-            }
-        }
     }
 
     SvgImage {
