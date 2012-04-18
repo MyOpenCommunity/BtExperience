@@ -48,7 +48,7 @@ Item {
     Loader {
         id: component
         anchors.fill: parent
-        z: screesaver.z + 1
+        z: screensaver.z + 1
     }
 
     states: [
