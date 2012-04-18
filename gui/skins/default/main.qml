@@ -22,6 +22,12 @@ Item {
 
     ScreenSaver {
         // TODO load the right screensaver depending on configuration
-        screensaverFile: "ScreenSaverBouncingImage.qml"
+        screensaverComponent: screensaver
+    }
+
+    Component {
+        id: screensaver
+        ScreenSaverBouncingImage {
+        }
     }
 }

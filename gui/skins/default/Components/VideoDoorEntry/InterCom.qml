@@ -16,6 +16,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: model
             hasChild: true
+            onDelegateClicked: element.loadElement("Components/VideoDoorEntry/Talk.qml", name)
         }
         model: ListModel {
             id: fakeModel

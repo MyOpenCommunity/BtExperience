@@ -5,7 +5,7 @@ import QtQuick 1.1
 Rectangle {
     id: screensaver
 
-    property string screensaverFile
+    property variant screensaverComponent
     property int timeout: global.guiSettings.timeOutInSeconds
     property int w: global.mainWidth
     property int h: global.mainHeight
@@ -32,12 +32,12 @@ Rectangle {
 
     states: [
         State {
-            name: "SCREENSAVER_ON"
+            name: "running"
             when: global.lastTimePress > screensaver.timeout
             PropertyChanges { target: screensaver; opacity: 0.8}
             PropertyChanges {
                 target: component
-                source: screensaver.screensaverFile
+                sourceComponent: screensaverComponent
             }
         }
     ]

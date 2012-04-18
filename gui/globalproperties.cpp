@@ -26,7 +26,17 @@ GlobalProperties::GlobalProperties()
 
 QString GlobalProperties::getBasePath() const
 {
-	return QString("gui/skins/default/");
+	QFileInfo path = qApp->applicationDirPath();
+
+#ifdef Q_WS_MAC
+	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
+#endif
+
+	// use canonicalFilePath to resolve symlinks, otherwise some files
+	// will be loaded with the symlinked path and some with the canonical
+	// path, and this confuses the code that handles ".pragma library"
+	return QFileInfo(QDir(path.absoluteFilePath()), "gui/skins/default/")
+		   .canonicalFilePath() + "/";
 }
 
 int GlobalProperties::getMainWidth() const
@@ -65,6 +75,7 @@ int GlobalProperties::getLastTimePress() const
 void GlobalProperties::updateTime()
 {
 	last_press = QDateTime::currentDateTime();
+	emit lastTimePressChanged();
 }
 
 void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
