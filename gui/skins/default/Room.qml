@@ -46,6 +46,19 @@ Page {
         model: roomModel
     }
 
+    MouseArea {
+        id: outerClickableArea
+        visible: false
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: toolbar.bottom
+            bottom: roomView.top
+        }
+
+        onClicked: page.closeCurrentMenu()
+    }
+
     RoomView {
         id: roomCustomView
         anchors {
@@ -131,19 +144,6 @@ Page {
         page.state = ""
         roomCustomView.state = ""
         privateProps.currentMenu = undefined
-    }
-
-    MouseArea {
-        id: outerClickableArea
-        visible: false
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: toolbar.bottom
-            bottom: roomView.top
-        }
-
-        onClicked: page.closeCurrentMenu()
     }
 
     states: [
