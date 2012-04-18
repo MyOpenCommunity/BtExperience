@@ -178,6 +178,12 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 						   bt_global::add_device_to_cache(
 							   new VideoDoorEntryDevice(where, getTextChild(item, "mode"))));
 			break;
+		case ObjectInterface::IdIntercom:
+			obj = new Intercom(descr,
+							   where,
+							   bt_global::add_device_to_cache(
+								   new VideoDoorEntryDevice(where, getTextChild(item, "mode"))));
+			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}

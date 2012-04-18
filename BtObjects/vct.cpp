@@ -66,3 +66,54 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		++it;
 	}
 }
+
+Intercom::Intercom(QString name,
+				   QString key,
+				   VideoDoorEntryDevice *d)
+{
+	dev = d;
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
+
+	this->key = key;
+	this->name = name;
+
+	// initial values
+	volume = 50;
+	mute = false;
+}
+
+int Intercom::getVolume() const
+{
+	return volume;
+}
+
+void Intercom::setVolume(int value)
+{
+	// TODO set value on device
+	volume = value;
+	emit volumeChanged();
+}
+
+bool Intercom::getMute() const
+{
+	return mute;
+}
+
+void Intercom::setMute(bool value)
+{
+	// TODO set value on device
+	mute = value;
+	emit muteChanged();
+}
+
+void Intercom::valueReceived(const DeviceValues &values_list)
+{
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		switch (it.key())
+		{
+		}
+		++it;
+	}
+}

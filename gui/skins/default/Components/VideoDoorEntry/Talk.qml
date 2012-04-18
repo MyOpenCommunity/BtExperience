@@ -12,7 +12,7 @@ MenuColumn {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 300
-        Component.onCompleted: controlCall.state = "incomingCall"
+        Component.onCompleted: controlCall.state = "command"
         ControlCall {
             id: controlCall
             onMinusClicked: console.log("minusClicked")

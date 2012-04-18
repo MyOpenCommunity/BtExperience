@@ -84,4 +84,74 @@ private:
 	VideoDoorEntryDevice *dev;
 };
 
+/*!
+	\ingroup VideoDoorEntry
+	\brief Class to manage an intercom call.
+
+	The object id is \a ObjectInterface::IdIntercom.
+*/
+class Intercom : public ObjectInterface
+{
+	friend class TestVideoDoorEntry;
+
+	Q_OBJECT
+
+	/*!
+		\brief Sets or gets the volume level for the call. Volume must be a
+		value between 0 and 100.
+	*/
+	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
+
+	/*!
+		\brief Mute or unmute an active intercom call.
+	*/
+	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
+
+public:
+	explicit Intercom(QString name,
+					  QString key,
+					  VideoDoorEntryDevice *d);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdIntercom;
+	}
+
+	virtual QString getObjectKey() const
+	{
+		return key;
+	}
+
+	virtual ObjectCategory getCategory() const
+	{
+		return ObjectInterface::VideoEntry;
+	}
+
+	virtual QString getName() const
+	{
+		return name;
+	}
+
+	int getVolume() const;
+	void setVolume(int value);
+	bool getMute() const;
+	void setMute(bool value);
+
+signals:
+	void volumeChanged();
+	void muteChanged();
+
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
+protected:
+	QString key;
+	QString name;
+	int volume;
+	bool mute;
+
+private:
+	VideoDoorEntryDevice *dev;
+};
+
 #endif // VCT_H

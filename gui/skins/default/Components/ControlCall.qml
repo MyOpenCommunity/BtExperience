@@ -202,7 +202,7 @@ Item {
         },
 
         State {
-            name: "Ring1"
+            name: "ringing"
 
             PropertyChanges {
                 target: controlSlider

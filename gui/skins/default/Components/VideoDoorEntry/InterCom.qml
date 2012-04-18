@@ -9,29 +9,23 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
+    ObjectModel {
+        id: modelList
+        filters: [{objectId: ObjectInterface.IdIntercom}]
+    }
+
     PaginatorList {
         id: paginator
         width: parent.width
-        listHeight: 200
+        listHeight: modelList.size * 50
         delegate: MenuItemDelegate {
-            itemObject: model
+            itemObject: modelList.getObject(index)
             hasChild: true
-            onDelegateClicked: element.loadElement("Components/VideoDoorEntry/Talk.qml", name)
+            onDelegateClicked: element.loadElement(
+                                   "Components/VideoDoorEntry/Talk.qml",
+                                   name,
+                                   itemObject)
         }
-        model: ListModel {
-            id: fakeModel
-            ListElement {
-                name: "generale"
-            }
-            ListElement {
-                name: "cucina"
-            }
-            ListElement {
-                name: "camera"
-            }
-            ListElement {
-                name: "box"
-            }
-        }
+        model: modelList
     }
 }
