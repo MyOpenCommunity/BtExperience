@@ -7,6 +7,7 @@ HEADERS += \
 	objectlistmodel.h \
 	objectinterface.h \
 	platform.h \
+	roomelement.h \
 	scenarioobjects.h \
 	splitadvancedscenario.h \
 	splitbasicscenario.h \
@@ -44,6 +45,7 @@ SOURCES += \
 	mediaobjects.cpp \
 	objectlistmodel.cpp \
 	platform.cpp \
+	roomelement.cpp \
 	scenarioobjects.cpp \
 	splitadvancedscenario.cpp \
 	splitbasicscenario.cpp \
