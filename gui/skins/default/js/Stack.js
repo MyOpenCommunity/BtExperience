@@ -14,13 +14,13 @@ var changing_page = false
 
 
 // Create a QML object from a given filename and push it on the stack
-function openPage(filename) {
+function openPage(filename, properties) {
     // now, Stack.js is in a js subdir so we have to trick the filename
-    return _openPage("../" + filename)
+    return _openPage("../" + filename, properties)
 }
 
 // Create a QML object from a given filename and push it on the stack
-function _openPage(filename) {
+function _openPage(filename, properties) {
     if (changing_page == true)
         return
 
@@ -33,7 +33,7 @@ function _openPage(filename) {
     // This should be fixed in the future:
     // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
     if (page_component.status == 1) {
-        var page = page_component.createObject(container)
+        var page = page_component.createObject(container, typeof properties !== 'undefined' ? properties : {})
         if (page === null)
             logError('Error on creating the object for the page: ' + filename)
 

@@ -3,7 +3,7 @@ import Components 1.0
 import "js/Stack.js" as Stack
 
 
-SystemPage {
+Page {
     id: page
 
     property QtObject camera: null
