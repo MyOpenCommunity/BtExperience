@@ -1,18 +1,13 @@
 import QtQuick 1.1
 
 
-
 Item {
     id: screensaver
 
     property variant screensaverComponent
-    property int w: global.mainWidth
-    property int h: global.mainHeight
     property bool timeoutActive: true
 
-    width: w
-    height: h
-    z: 20
+    anchors.fill: parent
 
     Connections {
         target: global
@@ -52,10 +47,8 @@ Item {
 
     Loader {
         id: component
-        z: 21
-        anchors {
-            fill: parent
-        }
+        anchors.fill: parent
+        z: screesaver.z + 1
     }
 
     states: [

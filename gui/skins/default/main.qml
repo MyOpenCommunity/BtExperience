@@ -1,6 +1,7 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
 import Components 1.0
+import "js/Stack.js" as Stack
+
 
 Item {
     id: container
@@ -20,13 +21,10 @@ Item {
         id: animationManager
     }
 
-    ScreenSaver {
-        // TODO load the right screensaver depending on configuration
-        screensaverComponent: screensaver
-    }
-
-    Component {
-        id: screensaver
-        ScreenSaverBouncingImage {}
+    EventManager {
+        anchors.fill: parent
+        // the EventManager must show some pages on top of everything else:
+        // let's make it very "high"
+        z: 1000
     }
 }
