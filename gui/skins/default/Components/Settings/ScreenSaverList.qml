@@ -62,8 +62,11 @@ MenuColumn {
             height: 100
             source: imagesPath + "scenari.jpg"
             ScreenSaver {
-                // TODO load the right screensaver depending on configuration
-                screensaverFile: "ScreenSaverBouncingImage.qml"
+                screensaverComponent: Component {
+                    ScreenSaverBouncingImage {
+
+                    }
+                }
                 timeout: 0
                 width: parent.width
                 height: parent.height
