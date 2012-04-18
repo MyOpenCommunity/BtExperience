@@ -6,14 +6,13 @@ import "js/Stack.js" as Stack
 SystemPage {
     id: page
 
+    property QtObject camera: null
+
     property string title: qsTr("TELECAMERA POSTO ESTERNO 1")
     property int volume: 50
-    property string command1Text: qsTr("ATTIVA AUDIO")
-    property string command2Text: qsTr("ACCENDI LUCE")
-    property string command3Text: qsTr("APRI CANCELLETTO")
-    property bool command1Visible: true
-    property bool command2Visible: true
-    property bool command3Visible: true
+    property bool commandAudioVisible: true
+    property bool commandStairLightVisible: true
+    property bool commandLockVisible: true
     property bool brightnessVisible: true
     property bool contrastVisible: true
     property bool volumeVisible: true
@@ -24,12 +23,8 @@ SystemPage {
     property string endCallImage: "images/common/bg_DueRegolazioni.png"
     property string endCallText: "END CALL"
     property int endCallMargin: 25
-    property QtObject camera: null
 
     signal nextCameraClicked
-    signal command1Clicked
-    signal command2Clicked
-    signal command3Clicked
     signal muteClicked
     signal minusVolumeClicked
     signal plusVolumeClicked
@@ -226,15 +221,17 @@ SystemPage {
 
                 Image {
                     source: "images/common/btn_comando.png"
-                    visible: page.command1Visible
+                    visible: page.commandAudioVisible
                     width: 145
                     height: 40
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: page.command1Clicked()
+                        onClicked: {
+                            console.log("Audio button clicked")
+                        }
                     }
                     Text {
-                        text: page.command1Text
+                        text: qsTr("ACTIVATE AUDIO")
                         font.pointSize: 10
                         anchors {
                             horizontalCenter: parent.horizontalCenter
@@ -245,15 +242,16 @@ SystemPage {
 
                 Image {
                     source: "images/common/btn_comando.png"
-                    visible: page.command2Visible
+                    visible: page.commandStairLightVisible
                     width: 145
                     height: 40
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: page.command2Clicked()
+                        onPressed: camera.onStairLightActivate()
+                        onReleased: camera.onStairLightRelease()
                     }
                     Text {
-                        text: page.command2Text
+                        text: qsTr("STAIRLIGHT")
                         font.pointSize: 10
                         anchors {
                             horizontalCenter: parent.horizontalCenter
@@ -264,15 +262,16 @@ SystemPage {
 
                 Image {
                     source: "images/common/btn_comando.png"
-                    visible: page.command3Visible
+                    visible: page.commandLockVisible
                     width: 145
                     height: 40
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: page.command3Clicked()
+                        onPressed: camera.openLock()
+                        onReleased: camera.releaseLock()
                     }
                     Text {
-                        text: page.command3Text
+                        text: qsTr("OPEN LOCK")
                         font.pointSize: 10
                         anchors {
                             horizontalCenter: parent.horizontalCenter

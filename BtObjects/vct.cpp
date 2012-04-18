@@ -11,6 +11,11 @@ CCTV::CCTV(QString name,
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
+	connect(this, SIGNAL(stairLightActivate()), dev, SLOT(stairLightActivate()));
+	connect(this, SIGNAL(stairLightRelease()), dev, SLOT(stairLightRelease()));
+	connect(this, SIGNAL(openLock()), dev, SLOT(openLock()));
+	connect(this, SIGNAL(releaseLock()), dev, SLOT(releaseLock()));
+
 	this->key = key;
 	this->name = name;
 

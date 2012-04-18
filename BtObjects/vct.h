@@ -66,6 +66,10 @@ public:
 signals:
 	void brightnessChanged();
 	void contrastChanged();
+	void openLock();
+	void releaseLock();
+	void stairLightActivate();
+	void stairLightRelease();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
