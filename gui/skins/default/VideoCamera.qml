@@ -86,6 +86,39 @@ Page {
                 y: 90
                 width: 735
                 height: 486
+                Image {
+                    id: moveUp
+                    x: 354
+                    y: 15
+                    width: 26
+                    height: 26
+                    source: "images/common/freccia_up.png"
+                }
+                Image {
+                    id: moveDown
+                    x: 354
+                    y: 445
+                    width: 26
+                    height: 26
+                    source: "images/common/freccia_dw.png"
+                }
+                Image {
+                    id: moveLeft
+                    x: 15
+                    y: 230
+                    width: 26
+                    height: 26
+                    source: "images/common/freccia_sx.png"
+                }
+                Image {
+                    id: moveRight
+                    x: 694
+                    y: 230
+                    width: 26
+                    height: 26
+                    source: "images/common/freccia_dx.png"
+                }
+
                 Rectangle {
                     color: "black"
                     opacity: 0.75
@@ -145,7 +178,7 @@ Page {
 
             Image {
                 id: next
-                source: "images/videocitofonia.jpg"
+                source: "images/common/successivo.png"
                 x: 796
                 y: 56
                 width: 28
