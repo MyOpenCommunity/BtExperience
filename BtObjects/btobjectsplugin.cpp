@@ -20,6 +20,7 @@
 #include "platform.h"
 #include "platform_device.h"
 #include "folderlistmodel.h"
+#include "roomelement.h"
 #include "splitbasicscenario.h"
 #include "splitadvancedscenario.h"
 #include "airconditioning_device.h"
@@ -34,6 +35,7 @@
 #include <QDomNode>
 
 #define CONF_FILE "conf.xml"
+#define LAYOUT_FILE "layout.xml"
 
 
 QHash<GlobalField, QString> *bt_global::config;
@@ -51,6 +53,37 @@ namespace {
 			dev = bt_global::add_device_to_cache(dev);
 		}
 		return dev;
+	}
+
+	QString getAttribute(const QDomNode &n, const QString &attr)
+	{
+		QDomNode attribute = n.attributes().namedItem(attr);
+		if (attribute.isNull())
+		{
+			qWarning() << "Attribute " << attr << " not present for node " << n.localName();
+			return QString();
+		}
+
+		if (!attribute.isAttr())
+		{
+			qWarning() << "Attribute" << attr << "is not a QDomAttr";
+			return QString();
+		}
+
+		return attribute.toAttr().value();
+	}
+
+	int getIntAttribute(const QDomNode &n, const QString &attr)
+	{
+		QString a = getAttribute(n, attr);
+		bool ok;
+		int val = a.toInt(&ok);
+		if (!ok)
+		{
+			qWarning() << "Error converting attribute " << attr << "of node " << n.localName() << " to int";
+			return -1;
+		}
+		return val;
 	}
 }
 
@@ -82,6 +115,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	FilterListModel::setGlobalSource(&objmodel);
 	createObjects(document);
+	parseConfig();
 	device::initDevices();
 }
 
@@ -197,6 +231,36 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	}
 	// TODO put in the right implementation; for now, use this for testing the interface
 	objmodel << new PlatformSettings(new PlatformDevice);
+}
+
+void BtObjectsPlugin::parseConfig()
+{
+	QFile fh(LAYOUT_FILE);
+	QDomDocument document;
+	if (!fh.exists() || !document.setContent(&fh))
+		qFatal("The layout file %s does not seem a valid xml configuration file", qPrintable(QFileInfo(fh).absoluteFilePath()));
+	foreach (const QDomNode &container, getChildren(document.documentElement(), "container"))
+	{
+		int container_id = getIntAttribute(container, "id");
+		if (container_id == 2)
+			parseRooms(container);
+	}
+}
+
+void BtObjectsPlugin::parseRooms(const QDomNode &container)
+{
+	foreach (const QDomNode &instance, getChildren(container, "ist"))
+	{
+		foreach (const QDomNode &link, getChildren(instance, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			int x = getIntAttribute(link, "x");
+			int y = getIntAttribute(link, "y");
+
+			// TODO: map uii to object...
+			objmodel << new RoomElement(objmodel.getObject(object_uii), x, y);
+		}
+	}
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)

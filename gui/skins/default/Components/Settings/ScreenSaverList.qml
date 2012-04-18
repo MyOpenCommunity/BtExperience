@@ -13,6 +13,10 @@ MenuColumn {
     height: paginator.height
     property string imagesPath: "../../images/"
 
+    function okClicked() {
+        closeElement()
+    }
+
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
         id: privateProps
@@ -114,6 +118,7 @@ MenuColumn {
                 onOkClicked: {
                     global.guiSettings.screensaverType = privateProps.type
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
+                    element.okClicked()
                 }
             }
         }
@@ -159,6 +164,8 @@ MenuColumn {
                     global.guiSettings.screensaverImage = screensaverImage.text
                     global.guiSettings.timeOut = screensaverTimeout.currentIndex
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
+                    element.okClicked()
+
                 }
             }
         }
@@ -199,6 +206,7 @@ MenuColumn {
                     global.guiSettings.screensaverText = screensaverText.text
                     global.guiSettings.timeOut = screensaverTimeout.currentIndex
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
+                    element.okClicked()
                 }
             }
         }
@@ -228,6 +236,7 @@ MenuColumn {
                     global.guiSettings.screensaverType = privateProps.type
                     global.guiSettings.timeOut = screensaverTimeout.currentIndex
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
+                    element.okClicked()
                 }
             }
         }

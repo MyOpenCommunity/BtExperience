@@ -43,7 +43,8 @@ public:
 		IdSimpleScenario,
 		IdScenarioModule,
 		IdCCTV,
-		IdIntercom,
+		IdRoom,
+		IdIntercom,                             // 25
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
