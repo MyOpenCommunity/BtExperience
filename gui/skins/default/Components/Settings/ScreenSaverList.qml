@@ -62,14 +62,10 @@ MenuColumn {
             height: 100
             source: imagesPath + "scenari.jpg"
             ScreenSaver {
-                screensaverComponent: Component {
-                    ScreenSaverBouncingImage {
-
-                    }
-                }
-                timeout: 0
+                screensaverComponent: Component { ScreenSaverBouncingImage {} }
                 width: parent.width
                 height: parent.height
+                timeoutActive: false
             }
             Rectangle {
                 width: 200

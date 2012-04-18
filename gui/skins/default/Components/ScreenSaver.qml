@@ -2,24 +2,52 @@ import QtQuick 1.1
 
 
 
-Rectangle {
+Item {
     id: screensaver
 
     property variant screensaverComponent
-    property int timeout: global.guiSettings.timeOutInSeconds
     property int w: global.mainWidth
     property int h: global.mainHeight
+    property bool timeoutActive: true
 
     width: w
     height: h
     z: 20
-    color: "black"
-    opacity: 0
+
+    Connections {
+        target: global
+        onLastTimePressChanged: {
+            // if state is already running skips
+            if (screensaver.state === "running")
+                return
+            // if timeoutActive is false, screensaver must run indefinitely
+            if (!timeoutActive) {
+                screensaver.state = "running"
+                return
+            }
+            // we are here if we are in default state and timeoutActive is true
+            // checks timeout and (eventually) sets state to running
+            if (global.lastTimePress > global.guiSettings.timeOutInSeconds)
+                screensaver.state = "running"
+        }
+    }
+
+    function acceptMouseEvent() {
+        // doesn't accept event if in default state
+        if (screensaver.state === "")
+            return false
+        // if timeoutActive is false doesn't accept event
+        if (!timeoutActive)
+            return false
+        // we are here if we are in running state and timeoutActive is true
+        // accepts event
+        return true
+    }
 
     MouseArea {
-        anchors {
-            fill: parent
-        }
+        anchors.fill: parent
+        onPressed: if (mouse.accepted = acceptMouseEvent()) screensaver.state = ""
+        onReleased: if (mouse.accepted = acceptMouseEvent()) screensaver.state = ""
     }
 
     Loader {
@@ -33,8 +61,6 @@ Rectangle {
     states: [
         State {
             name: "running"
-            when: global.lastTimePress > screensaver.timeout
-            PropertyChanges { target: screensaver; opacity: 0.8}
             PropertyChanges {
                 target: component
                 sourceComponent: screensaverComponent

@@ -1,7 +1,10 @@
 import QtQuick 1.1
 
-Item {
+Rectangle {
     id: bouncer
+
+    color: "black"
+    opacity: 0.8
 
     Image {
         id: image

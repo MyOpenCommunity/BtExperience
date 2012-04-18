@@ -27,7 +27,6 @@ Item {
 
     Component {
         id: screensaver
-        ScreenSaverBouncingImage {
-        }
+        ScreenSaverBouncingImage {}
     }
 }
