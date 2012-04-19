@@ -45,13 +45,6 @@ MenuColumn {
         onTriggered: privateProps.finalizeAction();
     }
 
-    Connections {
-        target: privateProps.model
-        onNewAlarm: {
-            pageObject.showAlarmPopup(alarm.type, alarm.zone, alarm.date_time);
-        }
-    }
-
     QtObject {
         id: privateProps
         property variant model: objectModel.getObject(0)
