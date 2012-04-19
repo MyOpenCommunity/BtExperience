@@ -208,7 +208,9 @@ public:
 		QGraphicsProxyWidget *wid = new KeyboardHost(im_widget);
 
 		viewer->scene()->addItem(wid);
-
+#if !USE_OPENGL
+		viewer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+#endif
 		wid->setFocusPolicy(Qt::NoFocus);
 		wid->setZValue(1200);
 #endif
