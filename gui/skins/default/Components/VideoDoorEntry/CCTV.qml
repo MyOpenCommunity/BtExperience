@@ -26,5 +26,7 @@ MenuColumn {
             }
         }
         model: modelList
+
+        onCurrentPageChanged: element.closeChild()
     }
 }

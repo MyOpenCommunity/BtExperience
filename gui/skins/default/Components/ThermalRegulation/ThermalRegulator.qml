@@ -4,16 +4,16 @@ import Components 1.0
 
 MenuColumn {
     id: element
-    height: 50 * itemList.count
+    height: itemList.height
     width: 212
 
     onChildDestroyed: itemList.currentIndex = -1
 
-    ListView {
+    PaginatorList {
         id: itemList
-        anchors.fill: parent
+        width: parent.width
+        listHeight: 50 * modelList.size
         currentIndex: -1
-        interactive: false
 
         delegate: MenuItemDelegate {
             function getDescription() {
@@ -45,7 +45,8 @@ MenuColumn {
             filters: [{objectId: ObjectInterface.IdThermalControlUnit99},
                       {objectId: ObjectInterface.IdThermalControlledProbe}]
         }
-    }
 
+        onCurrentPageChanged: element.closeChild()
+    }
 }
 

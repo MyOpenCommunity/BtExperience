@@ -32,5 +32,7 @@ MenuColumn {
                 name: "box"
             }
         }
+
+        onCurrentPageChanged: element.closeChild()
     }
 }

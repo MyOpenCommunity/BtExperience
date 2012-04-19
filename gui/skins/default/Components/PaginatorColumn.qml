@@ -6,6 +6,7 @@ Item {
     height: paginator.height * paginator.visible + privateProps.currentPageSize
 
     property int maxHeight: 300
+    signal currentPageChanged
 
     QtObject {
         id: privateProps
@@ -43,6 +44,9 @@ Item {
     Paginator {
         id: paginator
         y: privateProps.currentPageSize
-        onCurrentPageChanged: showPage(paginator.currentPage)
+        onCurrentPageChanged: {
+            showPage(paginator.currentPage)
+            element.currentPageChanged()
+        }
     }
 }
