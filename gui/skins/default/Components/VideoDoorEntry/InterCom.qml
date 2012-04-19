@@ -27,5 +27,7 @@ MenuColumn {
                                    itemObject)
         }
         model: modelList
+
+        onCurrentPageChanged: element.closeChild()
     }
 }

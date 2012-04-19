@@ -68,5 +68,7 @@ MenuColumn {
                 }
             }
         }
+
+        onCurrentPageChanged: amplifierSettings.closeChild()
     }
 }

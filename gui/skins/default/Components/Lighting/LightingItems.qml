@@ -29,6 +29,8 @@ MenuColumn {
             }
         }
         model: objectModel
+
+        onCurrentPageChanged: element.closeChild()
     }
 
     ObjectModel {
