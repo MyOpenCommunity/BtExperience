@@ -119,6 +119,9 @@ protected:
 	bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
 	bool removeRows(int row, int count, const QModelIndex &parent);
 
+private slots:
+	void resetCounter();
+
 private:
 	QVariantList input_categories;
 	QVariantList input_filters;

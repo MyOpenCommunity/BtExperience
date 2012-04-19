@@ -101,11 +101,14 @@ FilterListModel::FilterListModel()
 	setSourceModel(global_source);
 	min_range = -1;
 	max_range = -1;
-	counter = 0;
+	counter = -1;
+	connect(this, SIGNAL(modelAboutToBeReset()), SLOT(resetCounter()));
 }
 
 int FilterListModel::getSize() const
 {
+	if (counter == -1)
+		rowCount();
 	return counter;
 }
 
@@ -254,6 +257,11 @@ bool FilterListModel::removeRows(int row, int count, const QModelIndex &parent)
 	}
 	else
 		return false;
+}
+
+void FilterListModel::resetCounter()
+{
+	counter = -1;
 }
 
 ObjectInterface *FilterListModel::getObject(int row)
