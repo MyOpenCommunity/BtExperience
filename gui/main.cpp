@@ -200,7 +200,7 @@ public:
 		if (!im_widget)
 			qFatal("Maliit initialization failed");
 
-		im_widget->resize(global.getMainWidth(), global.getMainHeight());
+		im_widget->resize(global->getMainWidth(), global->getMainHeight());
 		im_widget->hide();
 
 		im_widget->setParent(NULL);
