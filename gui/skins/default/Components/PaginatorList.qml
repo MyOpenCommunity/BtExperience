@@ -14,9 +14,7 @@ Item {
     property alias buttonVisible: button.visible
     property alias currentIndex: internalList.currentIndex
 
-    property int maxHeight: 300
-    property int elementsOnPage: maxHeight / 50
-    // TODO: is it necessary to expose it?
+    property int elementsOnPage: 6
     property alias currentPage: paginator.currentPage
     property alias totalPages: paginator.totalPages
 
