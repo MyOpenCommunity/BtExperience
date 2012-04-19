@@ -10,19 +10,10 @@ Item {
 
     /************************************************************************
       *
-      * SCREENSAVER
+      * CALIBRATION
       *
       **********************************************************************/
-    ScreenSaver {
-        // TODO load the right screensaver depending on configuration
-        screensaverComponent: bouncingLogo
-        z: parent.z
-    }
-
-    Component {
-        id: bouncingLogo
-        ScreenSaverBouncingImage {}
-    }
+    // TODO
 
     /************************************************************************
       *
@@ -45,4 +36,28 @@ Item {
             Stack.currentPage().showAlarmPopup(alarm.type, alarm.zone, alarm.date_time)
         }
     }
+
+    /************************************************************************
+      *
+      * SCREENSAVER
+      *
+      **********************************************************************/
+    ScreenSaver {
+        id: screensaver
+        // TODO load the right screensaver depending on configuration
+        screensaverComponent: bouncingLogo
+        z: parent.z
+    }
+
+    Component {
+        id: bouncingLogo
+        ScreenSaverBouncingImage {}
+    }
+
+    /************************************************************************
+      *
+      * CALLS
+      *
+      **********************************************************************/
+    // TODO
 }

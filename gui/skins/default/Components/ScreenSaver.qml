@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "EventManager.js" as Script
 
 
 Item {
@@ -22,7 +23,7 @@ Item {
             }
             // we are here if we are in default state and timeoutActive is true
             // checks timeout and (eventually) sets state to running
-            if (global.lastTimePress > global.guiSettings.timeOutInSeconds)
+            if (Script.elapsed(global.lastTimePress, global.guiSettings.timeOutInSeconds))
                 screensaver.state = "running"
         }
     }
