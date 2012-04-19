@@ -232,25 +232,6 @@ source: "images/home/home.jpg"
               }
         }
     }
-
-    // Objects to show alarms in every page. Since the HomePage is always alive,
-    // we can connect here to signals from the model
-    ObjectModel {
-        id: antintrusionModel
-        categories: [ObjectInterface.Antintrusion]
-    }
-
-    QtObject {
-        id: privateProps
-        property variant model: antintrusionModel.getObject(0)
-    }
-
-    Connections {
-        target: privateProps.model
-        onNewAlarm: {
-            Stack.currentPage().showAlarmPopup(alarm.type, alarm.zone, alarm.date_time)
-        }
-    }
 }
 
 
