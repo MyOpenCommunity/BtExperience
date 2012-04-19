@@ -38,14 +38,6 @@ Page {
         filters: [{objectId: ObjectInterface.IdRoom}]
     }
 
-    // An ugly workaround: the ObjectModel and the underlying FilterListModel is not
-    // populated unless the model is used in a View item.
-    ListView {
-        visible: false
-        delegate: Item {}
-        model: roomModel
-    }
-
     MouseArea {
         id: outerClickableArea
         visible: false
