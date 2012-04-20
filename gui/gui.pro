@@ -1,3 +1,5 @@
+TARGET = BtExperience
+
 !mac {
     # Add more folders to ship with the application, here
     folder_01.source = skins/default
@@ -12,44 +14,7 @@ QML_IMPORT_PATH = ./skins/default
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
-# We use an empirical test to recognize the platform.
-defineTest(isArm) {
-    # In this case we are searching for the substring 'arm' in the QMAKE_CXX
-    # predefined variable, which usually contains the compiler name
-    TEST_QMAKE_CXX = $$find(QMAKE_CXX,arm)
-    !isEmpty(TEST_QMAKE_CXX) {
-        return(true)
-    }
-    # With Open Embedded builds, QMAKE_CXX is only a reference to the OE_QMAKE_CXX
-    # environment variable, so we cannot use the above test, but we have to extract
-    # the value from OE_QMAKE_CXX and test it.
-    OECXX = $$(OE_QMAKE_CXX)
-    TEST_OE_QMAKE_CXX = $$find(OECXX,arm)
-    !isEmpty(TEST_OE_QMAKE_CXX) {
-        return(true)
-    }
-    return (false)
-}
-
-
-!isArm() {
-    message(x86 architecture detected.)
-
-    TARGET = BtExperience.x86
-    OBJECTS_DIR = obj/x86
-    MOC_DIR = moc/x86
-
-    LIBS += -L./common_files/lib/x86 -lcommon -lexpat
-
-} else {
-    message(ARM architecture detected.)
-
-    TARGET = BtExperience.arm
-    OBJECTS_DIR = obj/arm
-    MOC_DIR = moc/arm
-
-    LIBS += -L./common_files -lcommon -lexpat
-}
+include(../config.pri)
 
 INCLUDEPATH += ./common_files
 LIBS += -lssl
