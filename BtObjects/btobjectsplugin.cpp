@@ -252,6 +252,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 {
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
+		QString room_name = getAttribute(instance, "descr");
 		foreach (const QDomNode &link, getChildren(instance, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
@@ -259,7 +260,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int y = getIntAttribute(link, "y");
 
 			// TODO: map uii to object...
-			objmodel << new RoomElement(objmodel.getObject(object_uii), x, y);
+			objmodel << new RoomElement(room_name, objmodel.getObject(object_uii), x, y);
 		}
 	}
 }
@@ -269,6 +270,7 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	// @uri BtObjects
 	qmlRegisterUncreatableType<ObjectListModel>(uri, 1, 0, "ObjectListModel", "");
 	qmlRegisterType<FilterListModel>(uri, 1, 0, "FilterListModel");
+	qmlRegisterType<RoomListModel>(uri, 1, 0, "RoomListModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
 	qmlRegisterUncreatableType<ObjectInterface>(

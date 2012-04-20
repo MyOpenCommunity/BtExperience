@@ -4,16 +4,16 @@
 #include "objectinterface.h"
 
 #include <QObject>
-#include <QVariantList>
+#include <QPoint>
 
 class RoomElement : public ObjectInterface
 {
 	Q_OBJECT
 	Q_PROPERTY(ObjectInterface *btObject READ getBtObject CONSTANT)
-	Q_PROPERTY(QVariantList position READ getPosition NOTIFY positionChanged)
+	Q_PROPERTY(QPoint position READ getPosition NOTIFY positionChanged)
 
 public:
-	RoomElement(ObjectInterface *obj, int _x, int _y);
+	RoomElement(QString _room_name, ObjectInterface *obj, int _x, int _y);
 
 	virtual int getObjectId() const
 	{
@@ -22,7 +22,7 @@ public:
 
 	virtual QString getObjectKey() const
 	{
-		return QString();
+		return room_name;
 	}
 
 	virtual ObjectCategory getCategory() const
@@ -36,12 +36,13 @@ public:
 	}
 
 	ObjectInterface *getBtObject() const;
-	QVariantList getPosition() const;
+	QPoint getPosition() const;
 
 signals:
 	void positionChanged();
 
 private:
+	QString room_name;
 	ObjectInterface *btObject;
 	int x, y;
 };
