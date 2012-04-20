@@ -321,8 +321,7 @@ QStringList RoomListModel::rooms()
 	for (int i = 0; i < global_source->getSize(); ++i)
 	{
 		ObjectInterface *obj = global_source->getObject(i);
-		if (obj->getObjectId() == ObjectInterface::IdRoom)
-			set << obj->getObjectKey();
+		set << obj->getObjectKey();
 	}
 
 	return set.toList();
@@ -341,7 +340,7 @@ bool RoomListModel::filterAcceptsRow(int source_row, const QModelIndex &source_p
 
 	QModelIndex idx = global_source->index(source_row, 0, source_parent);
 	ObjectInterface *obj = global_source->getObject(idx.row());
-	if (obj->getObjectId() == ObjectInterface::IdRoom && obj->getObjectKey() == room)
+	if (obj->getObjectKey() == room)
 		return true;
 
 	return false;

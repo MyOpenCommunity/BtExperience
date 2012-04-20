@@ -19,6 +19,7 @@ public:
 
 private:
 	ObjectListModel objmodel;
+	ObjectListModel room_model;
 
 	void createObjects(QDomDocument document);
 	void parseConfig();
