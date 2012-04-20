@@ -1,12 +1,5 @@
 TARGET = BtExperience
 
-!mac {
-    # Add more folders to ship with the application, here
-    folder_01.source = skins/default
-    folder_01.target = skins
-    DEPLOYMENTFOLDERS = folder_01
-}
-
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH = ./skins/default
 
@@ -19,6 +12,11 @@ include(../config.pri)
 INCLUDEPATH += ./common_files
 LIBS += -lssl
 
+!isArm():!mac {
+    # '\$\$' outputs $$ to the Makefile, make transforms $$ into a single $, then you need a backslash for the shell
+    LIBS += -Wl,-rpath=\\'\$\$'ORIGIN
+}
+
 maliit {
     CONFIG += link_pkgconfig
     PKGCONFIG += maliit-1.0
@@ -27,6 +25,25 @@ maliit {
 
 QT += opengl
 
+DESTDIR = ../bin/$${HARDWARE}
+
+isEmpty(PREFIX) {
+    target.path = ../dist/$${HARDWARE}
+} else {
+    target.path = $${PREFIX}
+}
+
+target.commands += mkdir -p $${target.path}/gui $${target.path}/BtObjects &&
+target.commands += cp -LR skins $${target.path}/gui/ &&
+target.commands += cp -L $${PWD}/../layout.xml $${target.path}/ &&
+target.commands += cp -L $${PWD}/../conf.xml $${target.path}/ &&
+target.commands += cp -L $${PWD}/../BtObjects/qmldir $${target.path}/BtObjects/ &&
+target.commands += cp -L $${DESTDIR}/$${TARGET} $${target.path}/ &&
+target.commands += cp -L $${PWD}/common_files/lib/x86/libcommon.so.0 $${target.path}/ &&
+target.commands += true
+# The target above is created and added to INSTALLS in qmlapplicationviewer.pri, so we don't re-add
+# it here
+# INSTALLS += target
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += \
@@ -36,8 +53,6 @@ SOURCES += \
     guisettings.cpp \
     imagereader.cpp \
     inputcontextwrapper.cpp
-
-DESTDIR = ..
 
 HEADERS += \
     eventfilters.h \
@@ -50,13 +65,28 @@ TRANSLATIONS += linguist-ts/bt_experience_it.ts
 
 mac {
     APP_DIR = $${DESTDIR}/$${TARGET}.app/Contents
+    CONFIG(debug, debug|release) {
+        DEBUG_SUFFIX = _debug
+    } else {
+        DEBUG_SUFFIX = _release
+    }
 
-    QMAKE_POST_LINK += ln -sf ../../../gui $${APP_DIR}/Resources/gui &&
-    QMAKE_POST_LINK += mkdir -p $${APP_DIR}/MacOS/BtObjects &&
-    QMAKE_POST_LINK += cp -L ../BtObjects/libbtobjects.dylib $${APP_DIR}/MacOS/BtObjects/ &&
-    QMAKE_POST_LINK += cp -L ../BtObjects/qmldir $${APP_DIR}/MacOS/BtObjects/ &&
+    QMAKE_POST_LINK += mkdir -p $${APP_DIR}/MacOS/BtObjects $${APP_DIR}/Resources/gui &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/skins $${APP_DIR}/Resources/gui/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../layout.xml $${APP_DIR}/MacOS/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${APP_DIR}/MacOS/ &&
+    QMAKE_POST_LINK += cp -L $${DESTDIR}/BtObjects/libbtobjects$${DEBUG_SUFFIX}.dylib $${APP_DIR}/MacOS/BtObjects/libbtobjects.dylib &&
+    QMAKE_POST_LINK += cp -L $${PWD}/../BtObjects/qmldir $${APP_DIR}/MacOS/BtObjects/ &&
     QMAKE_POST_LINK += cp -L common_files/lib/x86/libcommon.dylib.0 $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += install_name_tool -change libcommon.dylib.0 @executable_path/libcommon.dylib.0 $${APP_DIR}/MacOS/BtObjects/libbtobjects.dylib &&
-    QMAKE_POST_LINK += install_name_tool -change libcommon.dylib.0 @executable_path/libcommon.dylib.0 $${APP_DIR}/MacOS/BtExperience.x86 && 
+    QMAKE_POST_LINK += install_name_tool -change libcommon.dylib.0 @executable_path/libcommon.dylib.0 $${APP_DIR}/MacOS/$${TARGET} &&
+    QMAKE_POST_LINK += true
+} else {
+    QMAKE_POST_LINK += mkdir -p $${DESTDIR}/gui &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/skins $${DESTDIR}/gui/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../layout.xml $${DESTDIR}/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${DESTDIR}/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../BtObjects/qmldir $${DESTDIR}/BtObjects/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/lib/x86/libcommon.so.0 $${DESTDIR}/ &&
     QMAKE_POST_LINK += true
 }

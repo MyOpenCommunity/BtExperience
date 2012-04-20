@@ -13,12 +13,19 @@ DEPENDPATH += . devices ts
 
 TARGET = $$qtLibraryTarget($$TARGET)
 
+DESTDIR = ../bin/$${HARDWARE}/BtObjects
 
+isEmpty(PREFIX) {
+    target.path = ../dist/$${HARDWARE}/BtObjects
+} else {
+    target.path = $${PREFIX}/BtObjects/
+}
+
+INSTALLS += target
 
 # Input
 SOURCES += btobjectsplugin.cpp
 HEADERS += btobjectsplugin.h
-
 
 INCLUDEPATH += . ./ts ./devices
 

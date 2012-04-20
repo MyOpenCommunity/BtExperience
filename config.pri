@@ -20,7 +20,7 @@ defineTest(isArm) {
 !isArm() {
     message(x86 architecture detected.)
 
-    TARGET = $${TARGET}.x86
+    HARDWARE = x86
 
     OBJECTS_DIR = obj/x86
     MOC_DIR = moc/x86
@@ -29,9 +29,13 @@ defineTest(isArm) {
 } else {
     message(ARM architecture detected.)
 
-    TARGET = $${TARGET}.arm
+    HARDWARE = arm
+
     OBJECTS_DIR = obj/arm
     MOC_DIR = moc/arm
 
     LIBS += -L./common_files -lcommon -lexpat
 }
+
+#INSTALL_CMD = cp -LR
+INSTALL_CMD = ln -sf
