@@ -31,6 +31,8 @@
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
 #include <QFileInfo>
+#include <QDir>
+#include <QApplication>
 
 #include <QDomNode>
 
@@ -89,7 +91,7 @@ namespace {
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
-	QFile fh(CONF_FILE);
+	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath());
 	QDomDocument document;
 	if (!fh.exists() || !document.setContent(&fh))
 		qFatal("The config file %s does not seem a valid xml configuration file", qPrintable(QFileInfo(fh).absoluteFilePath()));
@@ -236,7 +238,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 void BtObjectsPlugin::parseConfig()
 {
-	QFile fh(LAYOUT_FILE);
+	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), LAYOUT_FILE).absoluteFilePath());
 	QDomDocument document;
 	if (!fh.exists() || !document.setContent(&fh))
 		qFatal("The layout file %s does not seem a valid xml configuration file", qPrintable(QFileInfo(fh).absoluteFilePath()));
