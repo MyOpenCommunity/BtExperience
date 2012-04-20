@@ -7,7 +7,7 @@ from os.path import splitext
 
 def main():
 	data = []
-	files = glob('*.qml')
+	files = sorted(glob('*.qml'))
 	for f in files:
 		data.append(splitext(f)[0] + ' 1.0 ' + f)
 	
