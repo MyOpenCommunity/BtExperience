@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import "js/Stack.js" as Stack
 import Components 1.0
+import BtObjects 1.0
 
 Page {
     id: mainarea
@@ -21,37 +22,24 @@ Page {
     }
 
     PathView {
-         ListModel {
-             id: roomsModel
-             ListElement {
-                 image: "images/rooms/studio.png"
-                 name: "studio"
-             }
-             ListElement {
-                 image: "images/rooms/box.png"
-                 name: "box"
-             }
-             ListElement {
-                 image: "images/rooms/cameretta.png"
-                 name: "camera ragazzi"
-             }
-             ListElement {
-                 image: "images/rooms/camera.png"
-                 name: "camera genitori"
-             }
-             ListElement {
-                 image: "images/rooms/bagno.png"
-                 name: "bagno zona giorno"
-             }
-             ListElement {
-                 image: "images/rooms/cucina.png"
-                 name: "cucina"
-             }
-             ListElement {
-                 image: "images/rooms/soggiorno.png"
-                 name: "soggiorno"
-             }
-         }
+        function selectRoomImage(room) {
+            if (room === "living room")
+                return "images/rooms/soggiorno.png"
+            else if (room === "bathroom")
+                return "images/rooms/bagno.png"
+            else if (room === "garage")
+                return "images/rooms/box.png"
+            else if (room === "bedroom")
+                return "images/rooms/camera.png"
+            else if (room === "kitchen")
+                return "images/rooms/cucina.png"
+            console.log("Unknown room, default to studio")
+            return "images/rooms/studio.png"
+        }
+
+        RoomListModel {
+            id: roomsModel
+        }
 
          Component {
              id: roomDelegate
@@ -68,12 +56,12 @@ Page {
                      anchors.top: parent.top
                      anchors.left: parent.left
                      anchors.right: parent.right
-                     source: image
+                     source: users.selectRoomImage(modelData)
                  }
 
                  Text {
                      id: textDelegate
-                     text: name
+                     text: modelData
                      font.family: regularFont.name
                      font.pixelSize: 22
                      anchors.top: imageDelegate.bottom
@@ -82,9 +70,6 @@ Page {
                      anchors.right: parent.right
                      horizontalAlignment: Text.AlignHCenter
                  }
-//                 Component.onCompleted: {
-//                     console.log('icon scale: ' + PathView.iconScale + ' x:' + itemDelegate.x)
-//                 }
 
                  MouseArea {
                      anchors.fill: parent
@@ -94,7 +79,7 @@ Page {
          }
 
          id: users
-         model: roomsModel
+         model: roomsModel.rooms()
          delegate: roomDelegate
 
          path:  Path {
@@ -114,7 +99,7 @@ Page {
              PathLine { x: 950; y: 250; }
          }
          width: 950
-         pathItemCount: 7
+         pathItemCount: count
          anchors.bottom: parent.bottom
          anchors.bottomMargin: 0
          anchors.top: toolbar.bottom

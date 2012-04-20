@@ -33,9 +33,9 @@ Page {
         privateProps.currentMenu = menuContainer
     }
 
-    ObjectModel {
+    RoomListModel {
         id: roomModel
-        filters: [{objectId: ObjectInterface.IdRoom}]
+        room: "living room"
     }
 
     MouseArea {
