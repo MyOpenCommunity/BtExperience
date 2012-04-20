@@ -31,9 +31,10 @@ Item {
         SvgImage {
             id: iconStatus
             source: (statusVisible() ? (menuItem.status === 1 ? "../images/common/menu_column_item_active_led.svg" :"../images/common/menu_column_item_inactive_led.svg") : "");
-            anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: 0
+            anchors.leftMargin: menuItem.width / 100 * 2
+            anchors.topMargin: menuItem.height / 100 * 18
+            anchors.top: parent.top
         }
 
         Text {
@@ -43,9 +44,9 @@ Item {
             font.pixelSize: 14
             wrapMode: "WordWrap"
             anchors.left: parent.left
-            anchors.leftMargin: 19
+            anchors.leftMargin: menuItem.width / 100 * 9
             anchors.top: parent.top
-            anchors.topMargin: 8
+            anchors.topMargin: menuItem.height / 100 * 16
             anchors.right: arrowRight.left
         }
 
@@ -54,9 +55,9 @@ Item {
             id: arrowRight
             source: "../images/common/menu_column_item_arrow.svg"
             anchors.right: parent.right
-            anchors.rightMargin: 6
+            anchors.rightMargin: menuItem.width / 100 * 3
             anchors.top: parent.top
-            anchors.topMargin: 12
+            anchors.topMargin: menuItem.height / 100 * 24
         }
 
         Text {
@@ -66,7 +67,7 @@ Item {
             wrapMode: Text.NoWrap
             font.pixelSize: 14
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 5
+            anchors.bottomMargin: menuItem.height / 100 * 10
             anchors.top: text.bottom
             anchors.left: text.left
             verticalAlignment: Text.AlignBottom
