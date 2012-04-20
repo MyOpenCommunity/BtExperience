@@ -126,6 +126,8 @@ MenuColumn {
             name: system.alarmLogTitle
             hasChild: true
             onClicked: showAlarmLog()
+            boxInfoState: "warning"
+            boxInfoText: "1"
 
             Rectangle {
                 id: registerDarkRect
