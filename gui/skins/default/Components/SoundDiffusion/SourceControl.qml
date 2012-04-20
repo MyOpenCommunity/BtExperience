@@ -4,7 +4,7 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: sourceSelect.height + itemLoader.height
     property string imagesPath: "../../images/"
@@ -18,7 +18,7 @@ MenuColumn {
         onClicked: {
             if (privateProps.currentElement !== 0)
                 privateProps.currentElement = 0
-            element.loadElement("Components/SoundDiffusion/SourceList.qml", qsTr("source change"))
+            column.loadElement("Components/SoundDiffusion/SourceList.qml", qsTr("source change"))
         }
     }
 
@@ -28,12 +28,12 @@ MenuColumn {
     }
 
     Component.onCompleted: {
-        if (element.dataModel.currentSource)
-            sourceSelected(element.dataModel.currentSource)
+        if (column.dataModel.currentSource)
+            sourceSelected(column.dataModel.currentSource)
     }
 
     onChildLoaded: {
-        element.child.sourceSelected.connect(element.sourceSelected)
+        column.child.sourceSelected.connect(column.sourceSelected)
     }
 
     onChildDestroyed: privateProps.currentElement = -1
@@ -59,9 +59,9 @@ MenuColumn {
             itemLoader.setComponent(mediaPlayer, properties)
             break
         }
-        sourceObj.setActive(element.dataModel.area)
+        sourceObj.setActive(column.dataModel.area)
 
-        element.closeChild()
+        column.closeChild()
     }
 
     Component {
@@ -151,7 +151,7 @@ MenuColumn {
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps.currentElement = 1
-                    element.loadElement("Components/SoundDiffusion/SongBrowser.qml", "Browse")
+                    column.loadElement("Components/SoundDiffusion/SongBrowser.qml", "Browse")
                 }
             }
 

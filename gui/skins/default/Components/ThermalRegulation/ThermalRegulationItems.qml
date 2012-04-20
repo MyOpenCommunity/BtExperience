@@ -2,7 +2,7 @@ import QtQuick 1.1
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     height: 150
     width: 212
 
@@ -21,7 +21,7 @@ MenuColumn {
             hasChild: true
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                element.loadElement(clickedItem.componentFile, clickedItem.name)
+                column.loadElement(clickedItem.componentFile, clickedItem.name)
             }
         }
 

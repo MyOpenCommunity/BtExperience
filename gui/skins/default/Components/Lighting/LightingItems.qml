@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: paginator.height
 
@@ -24,13 +24,13 @@ MenuColumn {
             status: itemObject.active === true ? 1 : 0
             hasChild: true
             onClicked: {
-                element.loadElement(objectModel.getComponentFile(itemObject.objectId), itemObject.name,
+                column.loadElement(objectModel.getComponentFile(itemObject.objectId), itemObject.name,
                                     objectModel.getObject(model.index))
             }
         }
         model: objectModel
 
-        onCurrentPageChanged: element.closeChild()
+        onCurrentPageChanged: column.closeChild()
     }
 
     ObjectModel {

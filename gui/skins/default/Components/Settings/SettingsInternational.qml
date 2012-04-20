@@ -5,7 +5,7 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
+    id: column
 
     function alertOkClicked() {
         textLanguageItem.description = pageObject.names.get('LANGUAGE', privateProps.language);
@@ -54,7 +54,7 @@ MenuColumn {
         //privateProps.model.TextLanguage = value;
         // TODO remove when model is implemented
         privateProps.language = value
-        pageObject.showAlert(element, qsTr("L'azione selezionata produrra' un riavvio dell'interfaccia grafica. Continuare?"))
+        pageObject.showAlert(column, qsTr("L'azione selezionata produrra' un riavvio dell'interfaccia grafica. Continuare?"))
     }
     function keyboardLanguageChanged(value) {
         // TODO assign to a model property
@@ -103,7 +103,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                element.loadElement("Components/Settings/TextLanguage.qml", name)
+                column.loadElement("Components/Settings/TextLanguage.qml", name)
             }
         }
         MenuItem {
@@ -115,7 +115,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                element.loadElement("Components/Settings/KeyboardLanguage.qml", name)
+                column.loadElement("Components/Settings/KeyboardLanguage.qml", name)
             }
         }
         MenuItem {
@@ -127,7 +127,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
-                element.loadElement("Temperature.qml", name)
+                column.loadElement("Temperature.qml", name)
             }
         }
         MenuItem {
@@ -139,7 +139,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 4)
                     privateProps.currentIndex = 4
-                element.loadElement("UnitSystem.qml", name)
+                column.loadElement("UnitSystem.qml", name)
             }
         }
         MenuItem {
@@ -151,7 +151,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 5)
                     privateProps.currentIndex = 5
-                element.loadElement("Currency.qml", name)
+                column.loadElement("Currency.qml", name)
             }
         }
         MenuItem {
@@ -163,7 +163,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 6)
                     privateProps.currentIndex = 6
-                element.loadElement("NumberSeparator.qml", name)
+                column.loadElement("NumberSeparator.qml", name)
             }
         }
     }

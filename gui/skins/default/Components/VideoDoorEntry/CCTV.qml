@@ -4,7 +4,7 @@ import BtObjects 1.0
 import "../../js/Stack.js" as Stack
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: paginator.height
 
@@ -27,6 +27,6 @@ MenuColumn {
         }
         model: modelList
 
-        onCurrentPageChanged: element.closeChild()
+        onCurrentPageChanged: column.closeChild()
     }
 }

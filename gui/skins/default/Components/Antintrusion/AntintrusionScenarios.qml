@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     height: 50 * itemList.count
     width: 212
 
@@ -32,14 +32,14 @@ MenuColumn {
 
             selectOnClick: false // we don't want to break the binding for currentIndex
             description: itemObject.description
-            onClicked: element.scenarioSelected(itemObject)
+            onClicked: column.scenarioSelected(itemObject)
         }
 
         model: scenariosModel
 
         ObjectModel {
             id: scenariosModel
-            source: element.dataModel
+            source: column.dataModel
         }
     }
 }

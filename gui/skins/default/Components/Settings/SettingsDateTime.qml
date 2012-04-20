@@ -5,7 +5,7 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
+    id: column
 
     // dimensions
     width: 212
@@ -77,7 +77,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                element.loadElement("Date.qml", name)
+                column.loadElement("Date.qml", name)
             }
         }
 
@@ -91,7 +91,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                element.loadElement("Components/Settings/Time.qml", name)
+                column.loadElement("Components/Settings/Time.qml", name)
             }
         }
 
@@ -105,7 +105,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
-                element.loadElement("Components/Settings/Timezone.qml", name)
+                column.loadElement("Components/Settings/Timezone.qml", name)
             }
         }
 
@@ -119,7 +119,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 4)
                     privateProps.currentIndex = 4
-                element.loadElement("Components/Settings/DaylightSavingTime.qml", name)
+                column.loadElement("Components/Settings/DaylightSavingTime.qml", name)
             }
         }
     }

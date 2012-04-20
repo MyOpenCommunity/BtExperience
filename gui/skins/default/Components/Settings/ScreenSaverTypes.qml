@@ -4,7 +4,7 @@ import BtExperience 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: 200
     signal screenSaverTypesChanged(int type)

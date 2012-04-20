@@ -4,7 +4,7 @@ import Components 1.0
 import "../../js/datetime.js" as DateTime
 
 MenuColumn {
-    id: element
+    id: column
     width: img.width;
     height: paginator.height
     property string imagesPath: "../../images/"
@@ -30,7 +30,7 @@ MenuColumn {
             delegate: Image {
                 id: itemBackground
                 property variant itemObject: modelList.getObject(index)
-                property bool active: element.animationRunning === false
+                property bool active: column.animationRunning === false
 
                 source: imagesPath + (index % 2 === 0 ? "common/bg_registro_riga1.png" : "common/bg_registro_riga2.png")
                 Row {
@@ -136,7 +136,7 @@ MenuColumn {
 
     ObjectModel {
         id: modelList
-        source: element.dataModel
+        source: column.dataModel
         range: paginator.computePageRange(paginator.currentPage, privateProps.elementsOnPage)
     }
 

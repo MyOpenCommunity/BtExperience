@@ -3,7 +3,7 @@ import Components 1.0
 import BtObjects 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: paginator.height
 
@@ -33,6 +33,6 @@ MenuColumn {
             }
         }
 
-        onCurrentPageChanged: element.closeChild()
+        onCurrentPageChanged: column.closeChild()
     }
 }

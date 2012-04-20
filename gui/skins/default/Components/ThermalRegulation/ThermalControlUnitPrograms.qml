@@ -4,7 +4,7 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
+    id: column
     height: 50 * itemList.count
     width: 212
 
@@ -16,13 +16,13 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: programModel.getObject(index)
-            onClicked: element.dataModel.programIndex = index
+            onClicked: column.dataModel.programIndex = index
         }
 
         model: programModel
         ObjectModel {
             id: programModel
-            source: element.dataModel.programs
+            source: column.dataModel.programs
         }
     }
 }

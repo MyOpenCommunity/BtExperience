@@ -5,7 +5,7 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
+    id: column
 
     // dimensions
     width: 212
@@ -85,7 +85,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                element.loadElement("Components/Settings/NetworkState.qml", name)
+                column.loadElement("Components/Settings/NetworkState.qml", name)
             }
         }
 
@@ -99,7 +99,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                element.loadElement("Components/Settings/IPConfigurations.qml", name)
+                column.loadElement("Components/Settings/IPConfigurations.qml", name)
             }
         }
         // configuration item: it may be a static list of textual informations

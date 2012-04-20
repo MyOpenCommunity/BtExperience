@@ -3,7 +3,7 @@ import "../../js/Stack.js" as Stack
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     height: 50 * itemList.count
     width: 212
 

@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     height: buttonOnOff.height + volumeSlider.height
     width: 212
 
@@ -11,18 +11,18 @@ MenuColumn {
 
     ButtonOnOff {
         id: buttonOnOff
-        width: element.width
-        status: element.dataModel.active
+        width: column.width
+        status: column.dataModel.active
         height: 50
-        onClicked: element.dataModel.active = newStatus
+        onClicked: column.dataModel.active = newStatus
     }
 
     ControlSlider {
         id: volumeSlider
         anchors.top: buttonOnOff.bottom
         description: qsTr("volume")
-        percentage: (element.dataModel.volume) * 100 / 31
-        onMinusClicked: element.dataModel.volumeDown()
-        onPlusClicked: element.dataModel.volumeUp()
+        percentage: (column.dataModel.volume) * 100 / 31
+        onMinusClicked: column.dataModel.volumeDown()
+        onPlusClicked: column.dataModel.volumeUp()
     }
 }

@@ -2,7 +2,7 @@ import QtQuick 1.1
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     height: 50 * itemList.count
     width: 212
 
@@ -22,7 +22,7 @@ MenuColumn {
 
             onClicked: {
                 if (model.componentFile !== "")
-                    element.loadElement(model.componentFile, model.name)
+                    column.loadElement(model.componentFile, model.name)
             }
         }
 

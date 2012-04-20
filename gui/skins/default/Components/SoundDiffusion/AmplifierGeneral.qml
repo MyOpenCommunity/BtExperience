@@ -2,7 +2,7 @@ import QtQuick 1.1
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     height: buttonOnOff.height + controlVolume.height
     width: 212
 
@@ -11,8 +11,8 @@ MenuColumn {
         width: parent.width
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        onMinusClicked: element.dataModel.volumeDown()
-        onPlusClicked: element.dataModel.volumeUp()
+        onMinusClicked: column.dataModel.volumeDown()
+        onPlusClicked: column.dataModel.volumeUp()
     }
 
     ButtonOnOff {
@@ -20,6 +20,6 @@ MenuColumn {
         anchors.bottom: parent.bottom
         status: -1
         width: parent.width
-        onClicked: element.dataModel.active = newStatus
+        onClicked: column.dataModel.active = newStatus
     }
 }

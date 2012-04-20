@@ -3,7 +3,7 @@ import Components 1.0
 import BtObjects 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: buttonOnOff.height + sourceItem.height + volume.height
     property string imagesPath: "../../images/"
@@ -19,16 +19,16 @@ MenuColumn {
         id: column
         SoundSourceItem {
             id: sourceItem
-            itemObject: element.dataModel.currentSource
+            itemObject: column.dataModel.currentSource
             selected: privateProps.currentIndex === 1
 
             onItemClicked: {
                 privateProps.currentIndex = 1
-                element.loadElement("Components/SoundDiffusion/SourceControl.qml", qsTr("source"), element.dataModel)
+                column.loadElement("Components/SoundDiffusion/SourceControl.qml", qsTr("source"), column.dataModel)
             }
 
             Component.onCompleted: {
-                console.log("currentSource: " + itemObject + ", dataModel: " + element.dataModel)
+                console.log("currentSource: " + itemObject + ", dataModel: " + column.dataModel)
             }
         }
 
@@ -40,7 +40,7 @@ MenuColumn {
 
         ButtonOnOff {
             id: buttonOnOff
-            width: element.width
+            width: column.width
             status: -1
             onClicked: objectModel.getObject(0).active = newStatus
         }

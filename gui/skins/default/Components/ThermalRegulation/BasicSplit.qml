@@ -4,7 +4,7 @@ import BtObjects 1.0
 import "../../js/logging.js" as Log
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: paginator.height
 
@@ -28,7 +28,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                element.loadElement(
+                column.loadElement(
                             "Components/ThermalRegulation/ProgramListSplit.qml",
                             name,
                             dataModel)
@@ -36,10 +36,10 @@ MenuColumn {
         }
 
         ButtonOkCancel {
-            onCancelClicked: element.closeElement()
+            onCancelClicked: column.closeElement()
             onOkClicked: {
                 dataModel.ok()
-                element.closeElement()
+                column.closeElement()
             }
         }
     }

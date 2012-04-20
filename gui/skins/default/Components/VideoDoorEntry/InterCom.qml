@@ -3,7 +3,7 @@ import Components 1.0
 import BtObjects 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: paginator.height
 
@@ -21,13 +21,13 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
             hasChild: true
-            onDelegateClicked: element.loadElement(
+            onDelegateClicked: column.loadElement(
                                    "Components/VideoDoorEntry/Talk.qml",
                                    name,
                                    itemObject)
         }
         model: modelList
 
-        onCurrentPageChanged: element.closeChild()
+        onCurrentPageChanged: column.closeChild()
     }
 }

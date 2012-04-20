@@ -5,7 +5,7 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
+    id: column
 
     // dimensions
     width: 212

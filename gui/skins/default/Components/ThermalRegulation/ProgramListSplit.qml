@@ -3,7 +3,7 @@ import Components 1.0
 import BtObjects 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: paginator.height
 
@@ -22,7 +22,7 @@ MenuColumn {
             onClicked: {
                 dataModel.program = modelData
                 modeChanged(dataModel.mode)
-                element.closeElement()
+                column.closeElement()
             }
         }
         model: dataModel.programs

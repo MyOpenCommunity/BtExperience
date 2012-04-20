@@ -1,22 +1,22 @@
 import QtQuick 1.1
 
 Item {
-    id: element
+    id: column
     // Public functions
 
     // load of a sub-element
     function loadElement(fileName, title, model) {
-        element.loadComponent(menuLevel, fileName, title, model)
+        column.loadComponent(menuLevel, fileName, title, model)
     }
 
     // Close the element itself and its children
     function closeElement() {
-        element.closeItem(menuLevel)
+        column.closeItem(menuLevel)
     }
 
     // Close the child's element (if present)
     function closeChild() {
-        element.closeItem(menuLevel + 1)
+        column.closeItem(menuLevel + 1)
     }
 
     Image {
@@ -56,12 +56,12 @@ Item {
     }
 
     Behavior on x {
-        enabled: element.enableAnimation
+        enabled: column.enableAnimation
         NumberAnimation { id: defaultanimation; duration: constants.elementTransitionDuration; easing.type: Easing.InSine }
     }
 
     Behavior on opacity {
-        enabled: element.enableAnimation
+        enabled: column.enableAnimation
         NumberAnimation { duration: constants.elementTransitionDuration; easing.type: Easing.InSine }
     }
 

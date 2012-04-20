@@ -6,7 +6,7 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
+    id: column
 
     // dimensions
     width: 212
@@ -93,7 +93,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                element.loadElement("Components/Settings/ScreenSaverTypes.qml", name)
+                column.loadElement("Components/Settings/ScreenSaverTypes.qml", name)
             }
         }
 
@@ -118,7 +118,7 @@ MenuColumn {
                 onOkClicked: {
                     global.guiSettings.screensaverType = privateProps.type
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
-                    element.okClicked()
+                    column.okClicked()
                 }
             }
         }
@@ -164,7 +164,7 @@ MenuColumn {
                     global.guiSettings.screensaverImage = screensaverImage.text
                     global.guiSettings.timeOut = screensaverTimeout.currentIndex
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
-                    element.okClicked()
+                    column.okClicked()
 
                 }
             }
@@ -206,7 +206,7 @@ MenuColumn {
                     global.guiSettings.screensaverText = screensaverText.text
                     global.guiSettings.timeOut = screensaverTimeout.currentIndex
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
-                    element.okClicked()
+                    column.okClicked()
                 }
             }
         }
@@ -236,7 +236,7 @@ MenuColumn {
                     global.guiSettings.screensaverType = privateProps.type
                     global.guiSettings.timeOut = screensaverTimeout.currentIndex
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
-                    element.okClicked()
+                    column.okClicked()
                 }
             }
         }
