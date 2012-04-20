@@ -114,6 +114,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameSender::setClients(clients);
 
 	FilterListModel::setGlobalSource(&objmodel);
+	RoomListModel::setGlobalSource(&objmodel);
 	createObjects(document);
 	parseConfig();
 	device::initDevices();

@@ -2,7 +2,6 @@
 #include "objectinterface.h"
 
 #include <QDebug>
-#include <QStringList>
 #include <QTimer>
 
 ObjectListModel *FilterListModel::global_source = 0;
@@ -281,4 +280,69 @@ void FilterListModel::clear()
 {
 	if (removeRows(0, counter, QModelIndex()))
 		emit sizeChanged();
+}
+
+
+ObjectListModel *RoomListModel::global_source = 0;
+
+void RoomListModel::setGlobalSource(ObjectListModel *source)
+{
+	global_source = source;
+}
+
+RoomListModel::RoomListModel()
+{
+	Q_ASSERT_X(global_source, "RoomListModel::RoomListModel", "global source model not set!");
+	setSourceModel(global_source);
+}
+
+int RoomListModel::getSize() const
+{
+	return rowCount();
+}
+
+QString RoomListModel::getRoom() const
+{
+	return room;
+}
+
+void RoomListModel::setRoom(QString room_name)
+{
+	if (room_name == room)
+		return;
+	room = room_name;
+	reset();
+	emit roomChanged();
+}
+
+QStringList RoomListModel::rooms()
+{
+	QSet<QString> set;
+	for (int i = 0; i < global_source->getSize(); ++i)
+	{
+		ObjectInterface *obj = global_source->getObject(i);
+		if (obj->getObjectId() == ObjectInterface::IdRoom)
+			set << obj->getObjectKey();
+	}
+
+	return set.toList();
+}
+
+ObjectInterface *RoomListModel::getObject(int row)
+{
+	QModelIndex idx = index(row, 0);
+	return global_source->getObject(mapToSource(idx).row());
+}
+
+bool RoomListModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+{
+	if (room.isEmpty())
+		return true;
+
+	QModelIndex idx = global_source->index(source_row, 0, source_parent);
+	ObjectInterface *obj = global_source->getObject(idx.row());
+	if (obj->getObjectId() == ObjectInterface::IdRoom && obj->getObjectKey() == room)
+		return true;
+
+	return false;
 }
