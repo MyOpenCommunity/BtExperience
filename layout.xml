@@ -31,12 +31,26 @@
 			<link uii="9" x="200" y="300" />
 			<link uii="8" x="200" y="400" />
 		</ist>
-		<!--
 		<ist uii="3" descr="bathroom">
 			<link uii="6" x="200" y="100" />
 			<link uii="5" x="200" y="300" />
 			<link uii="4" x="200" y="400" />
 		</ist>
-		-->
+
+		<ist uii="4" descr="garage">
+			<link uii="6" x="200" y="100" />
+			<link uii="5" x="200" y="300" />
+			<link uii="4" x="200" y="400" />
+		</ist>
+		<ist uii="5" descr="bedroom">
+			<link uii="6" x="200" y="100" />
+			<link uii="5" x="200" y="300" />
+			<link uii="4" x="200" y="400" />
+		</ist>
+		<ist uii="6" descr="kitchen">
+			<link uii="6" x="200" y="100" />
+			<link uii="5" x="200" y="300" />
+			<link uii="4" x="200" y="400" />
+		</ist>
 	</container>
 </layout>
