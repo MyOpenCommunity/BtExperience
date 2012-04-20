@@ -114,7 +114,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameSender::setClients(clients);
 
 	FilterListModel::setGlobalSource(&objmodel);
-	RoomListModel::setGlobalSource(&objmodel);
+	RoomListModel::setGlobalSource(&room_model);
 	createObjects(document);
 	parseConfig();
 	device::initDevices();
@@ -260,7 +260,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int y = getIntAttribute(link, "y");
 
 			// TODO: map uii to object...
-			objmodel << new RoomElement(room_name, objmodel.getObject(object_uii), x, y);
+			room_model << new RoomElement(room_name, objmodel.getObject(object_uii), x, y);
 		}
 	}
 }
