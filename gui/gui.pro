@@ -1,5 +1,10 @@
 TARGET = BtExperience
 
+# This is required for QtCreator to display the files in the project tree
+# the real deployment is performed below using plain copy commands
+folder_01.sources = skins/default
+DEPLOYMENT += folder_01
+
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH = ./skins/default
 
