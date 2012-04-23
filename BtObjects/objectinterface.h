@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QPair>
 
 
 class ObjectInterface : public QObject
@@ -79,6 +80,8 @@ public:
 signals:
 	void dataChanged();
 };
+
+typedef QPair<int, ObjectInterface *> ObjectPair;
 
 
 #endif // OBJECTINTERFACE_H
