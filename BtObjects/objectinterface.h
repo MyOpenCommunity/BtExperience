@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QPair>
 
 
 class ObjectInterface : public QObject
@@ -20,9 +21,7 @@ public:
 
 	enum ObjectId
 	{
-		IdLight = 1,
-		IdDimmer,
-		IdThermalControlUnit99,
+		IdThermalControlUnit99 = 3,
 		IdThermalControlledProbe,
 		IdThermalControlUnit4,                  // 5
 		IdAntintrusionSystem,
@@ -45,6 +44,11 @@ public:
 		IdCCTV,
 		IdRoom,
 		IdIntercom,                             // 25
+		IdLight = 2003,
+		IdDimmer = 2001,
+		IdDimmer100 = 2002,
+		IdLightGroup = 2004,
+		IdCommand = 2005,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
@@ -74,6 +78,8 @@ public:
 signals:
 	void dataChanged();
 };
+
+typedef QPair<int, ObjectInterface *> ObjectPair;
 
 
 #endif // OBJECTINTERFACE_H
