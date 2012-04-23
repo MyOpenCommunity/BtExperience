@@ -9,6 +9,7 @@
 #include <QByteArray>
 
 class ObjectInterface;
+typedef QPair<int, ObjectInterface *> ObjectPair;
 
 // The model that contains all the objects. Do not use this in Qml, use
 // the FilterListModel instead.
@@ -43,9 +44,12 @@ public:
 
 	// Append an item to the model. The model takes the ownership of the item
 	// and reparent it.
-	ObjectListModel &operator<<(ObjectInterface *item);
+	ObjectListModel &operator<<(ObjectPair pair);
+	void insertWithoutUii(ObjectInterface *obj);
 
 	ObjectInterface *getObject(int row) const;
+	// may return 0 if uii doesn't exist
+	ObjectInterface *getObjectByUii(int uii) const;
 	void remove(int index);
 
 	int getSize() const
@@ -57,10 +61,11 @@ private slots:
 	void handleItemChange();
 
 private:
+	void insertObject(ObjectInterface *obj, int uii);
 	QModelIndex indexFromItem(const ObjectInterface *item) const;
 
 	QList<ObjectInterface*> item_list;
-	QHash<int, QByteArray> names;
+	QHash<int, ObjectInterface *> items;
 };
 
 

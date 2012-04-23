@@ -21,7 +21,8 @@ private:
 	ObjectListModel objmodel;
 	ObjectListModel room_model;
 
-	void createObjects(QDomDocument document);
+//	void createObjects(QDomDocument document);
+	void createObjects2(QDomDocument document);
 	void parseConfig();
 	void parseRooms(const QDomNode &container);
 };

@@ -8,6 +8,10 @@
 
 class LightingDevice;
 class DimmerDevice;
+class QDomNode;
+
+QList<ObjectPair> parseDimmer(const QDomNode &obj);
+QList<ObjectPair> parseLight(const QDomNode &obj);
 
 
 /*!
