@@ -196,15 +196,15 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
 		if (obj)
-			objmodel << obj;
+			objmodel.insertWithoutUii(obj);
 		else if (!obj_list.isEmpty())
 		{
 			foreach (ObjectInterface *oi, obj_list)
-				objmodel << oi;
+				objmodel.insertWithoutUii(oi);
 		}
 	}
 	// TODO put in the right implementation; for now, use this for testing the interface
-	objmodel << new PlatformSettings(new PlatformDevice);
+	objmodel.insertWithoutUii(new PlatformSettings(new PlatformDevice));
 }
 
 void BtObjectsPlugin::parseConfig()
@@ -233,7 +233,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int y = getIntAttribute(link, "y");
 
 			// TODO: map uii to object...
-			room_model << new RoomElement(room_name, objmodel.getObject(object_uii), x, y);
+			room_model << ObjectPair(object_uii, new RoomElement(room_name, objmodel.getObject(object_uii), x, y));
 		}
 	}
 }

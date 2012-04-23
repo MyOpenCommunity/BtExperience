@@ -549,10 +549,10 @@ PowerAmplifier::PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, 
 	connect(this, SIGNAL(presetChanged()), this, SIGNAL(presetDescriptionChanged()));
 
 	for (int i = 0; i < standard_presets_size; ++i)
-		presets << new PowerAmplifierPreset(i, tr(standard_presets[i]));
+		presets.insertWithoutUii(new PowerAmplifierPreset(i, tr(standard_presets[i])));
 
 	for (int i = 0; i < _presets.size(); ++i)
-		presets << new PowerAmplifierPreset(i, _presets[i]);
+		presets.insertWithoutUii(new PowerAmplifierPreset(i, _presets[i]));
 }
 
 ObjectListModel *PowerAmplifier::getPresets() const
