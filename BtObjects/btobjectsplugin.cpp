@@ -56,6 +56,37 @@ namespace {
 		}
 		return dev;
 	}
+
+	QString getAttribute(const QDomNode &n, const QString &attr)
+	{
+		QDomNode attribute = n.attributes().namedItem(attr);
+		if (attribute.isNull())
+		{
+			qWarning() << "Attribute " << attr << " not present for node " << n.localName();
+			return QString();
+		}
+
+		if (!attribute.isAttr())
+		{
+			qWarning() << "Attribute" << attr << "is not a QDomAttr";
+			return QString();
+		}
+
+		return attribute.toAttr().value();
+	}
+
+	int getIntAttribute(const QDomNode &n, const QString &attr)
+	{
+		QString a = getAttribute(n, attr);
+		bool ok;
+		int val = a.toInt(&ok);
+		if (!ok)
+		{
+			qWarning() << "Error converting attribute " << attr << "of node " << n.localName() << " to int";
+			return -1;
+		}
+		return val;
+	}
 }
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
@@ -86,40 +117,11 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	FilterListModel::setGlobalSource(&objmodel);
 	RoomListModel::setGlobalSource(&room_model);
-//	createObjects(document);
-	createObjects2(document);
+	createObjects(document);
 	parseConfig();
 	device::initDevices();
 }
 
-void BtObjectsPlugin::createObjects2(QDomDocument document)
-{
-	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-	{
-		QList<ObjectPair> obj_list;
-		int id = getIntAttribute(xml_obj, "id");
-
-		qDebug() << "Found id " << id;
-		switch (id)
-		{
-		case ObjectInterface::IdLight:
-			obj_list = parseLight(xml_obj);
-			break;
-		case ObjectInterface::IdDimmer:
-			obj_list = parseDimmer(xml_obj);
-			break;
-		}
-
-		if (!obj_list.isEmpty())
-		{
-			foreach (ObjectPair p, obj_list)
-				objmodel << p;
-		}
-		qDebug() << "now objmodel.size()" << objmodel.getSize();
-	}
-}
-
-/*
 void BtObjectsPlugin::createObjects(QDomDocument document)
 {
 	foreach (const QDomNode &item, getChildren(document.documentElement(), "item"))
@@ -233,7 +235,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	// TODO put in the right implementation; for now, use this for testing the interface
 	objmodel << new PlatformSettings(new PlatformDevice);
 }
-*/
 
 void BtObjectsPlugin::parseConfig()
 {
@@ -261,7 +262,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int y = getIntAttribute(link, "y");
 
 			// TODO: map uii to object...
-			room_model << ObjectPair(object_uii, new RoomElement(room_name, objmodel.getObject(object_uii), x, y));
+			room_model << new RoomElement(room_name, objmodel.getObject(object_uii), x, y);
 		}
 	}
 }

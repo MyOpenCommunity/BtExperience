@@ -168,10 +168,10 @@ QDateTime AntintrusionAlarm::getDateTime()
 AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionZone*> _zones)
 {
 	foreach (AntintrusionScenario *s, _scenarios)
-		scenarios.insertWithoutUii(s);
+		scenarios << s;
 
 	foreach (AntintrusionZone *z, _zones)
-		zones.insertWithoutUii(z);
+		zones << z;
 
 	current_scenario = -1;
 	waiting_response = false;
@@ -312,7 +312,7 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 	}
 
 	AntintrusionAlarm *a = new AntintrusionAlarm(t, zone, QDateTime::currentDateTime());
-	alarms.insertWithoutUii(a);
+	alarms << a;
 	emit alarmsChanged();
 	emit newAlarm(a);
 }
