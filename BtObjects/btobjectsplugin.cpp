@@ -27,6 +27,7 @@
 #include "scenarioobjects.h"
 #include "vct.h"
 #include "videodoorentry_device.h"
+#include "energyload.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
@@ -269,6 +270,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 				uri, 1, 0, "SourceBase",
 				"unable to create an SourceBase instance");
 	qmlRegisterType<SplitProgram>(uri, 1, 0, "SplitProgram");
+	qmlRegisterUncreatableType<EnergyLoadDiagnostic>(
+				uri, 1, 0, "EnergyLoadDiagnostic",
+				"unable to create an EnergyLoadDiagnostic instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
