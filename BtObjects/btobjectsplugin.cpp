@@ -246,8 +246,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int x = getIntAttribute(link, "x");
 			int y = getIntAttribute(link, "y");
 
-			// TODO: map uii to object...
-			room_model << ObjectPair(object_uii, new RoomElement(room_name, objmodel.getObject(object_uii), x, y));
+			room_model << ObjectPair(object_uii, new RoomElement(room_name, objmodel.getObjectByUii(object_uii), x, y));
 		}
 	}
 }
