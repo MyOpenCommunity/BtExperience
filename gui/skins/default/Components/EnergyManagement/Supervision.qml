@@ -5,24 +5,16 @@ import Components 1.0
 MenuColumn {
     id: element
     width: 212
-    height: 150
+    height: listView.height + loadDiagnostic.height
 
     onChildDestroyed: {
         listView.currentIndex = -1
+        privateProps.currentIndex = -1
     }
 
-    ListView {
-        id: listView
-        interactive: false
-        currentIndex: -1
-        anchors.fill: parent
-        delegate: MenuItemDelegate {
-            name: model.name
-            description: model.description
-            status: model.status
-            hasChild: true
-        }
-        model: listModel
+    QtObject {
+        id: privateProps
+        property int currentIndex: -1
     }
 
     ListModel {
@@ -41,6 +33,38 @@ MenuColumn {
             name: "Stop and Go Btest"
             description: "aperto - sovratensione"
             status: 0
+        }
+    }
+
+    Column {
+        PaginatorList {
+            id: listView
+            currentIndex: -1
+            width: element.width
+            listHeight: listModel.count * 50
+            delegate: MenuItemDelegate {
+                name: model.name
+                description: model.description
+                status: model.status
+                hasChild: true
+                onDelegateClicked: {
+                    privateProps.currentIndex = -1
+                    element.loadElement("Components/EnergyManagement/StopAndGo.qml", name)
+                }
+            }
+            model: listModel
+        }
+
+        MenuItem {
+            id: loadDiagnostic
+            name: qsTr("load diagnostic")
+            state: privateProps.currentIndex === 1 ? "selected" : ""
+            hasChild: true
+            onClicked: {
+                listView.currentIndex = -1
+                privateProps.currentIndex = 1
+                element.loadElement("Components/EnergyManagement/LoadDiagnostic.qml", name)
+            }
         }
     }
 }

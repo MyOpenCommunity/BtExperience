@@ -21,7 +21,7 @@ MenuColumn {
         interactive: false
         currentIndex: -1
         anchors.fill: parent
-        delegate: MenuItem {
+        delegate: MenuItemDelegate {
             name: model.name
             hasChild: true
             onClicked: element.loadElement(model.component, model.name)
