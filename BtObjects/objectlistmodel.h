@@ -15,6 +15,7 @@ class ObjectInterface;
 class ObjectListModel : public QAbstractListModel
 {
 	Q_OBJECT
+	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
 
 public:
 	explicit ObjectListModel(QObject *parent = 0);
@@ -52,6 +53,9 @@ public:
 	{
 		return item_list.size();
 	}
+
+signals:
+	void sizeChanged();
 
 private slots:
 	void handleItemChange();

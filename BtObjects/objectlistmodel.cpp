@@ -31,6 +31,7 @@ bool ObjectListModel::removeRows(int row, int count, const QModelIndex &parent)
 			it->deleteLater();
 		}
 		endRemoveRows();
+		emit sizeChanged();
 		return true;
 	}
 	return false;
@@ -54,6 +55,7 @@ ObjectListModel &ObjectListModel::operator<<(ObjectInterface *item)
 	connect(item, SIGNAL(dataChanged()), SLOT(handleItemChange()));
 	item_list.append(item);
 	endInsertRows();
+	emit sizeChanged();
 	return *this;
 }
 
