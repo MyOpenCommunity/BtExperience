@@ -44,7 +44,9 @@ target.commands += cp -L $${PWD}/../layout.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../conf.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../BtObjects/qmldir $${target.path}/BtObjects/ &&
 target.commands += cp -L $${DESTDIR}/$${TARGET} $${target.path}/ &&
-target.commands += cp -L $${PWD}/common_files/lib/x86/libcommon.so.0 $${target.path}/ &&
+!isArm() {
+    target.commands += cp -L $${PWD}/common_files/lib/x86/libcommon.so.0 $${target.path}/ &&
+}
 target.commands += true
 # The target above is created and added to INSTALLS in qmlapplicationviewer.pri, so we don't re-add
 # it here
@@ -92,6 +94,8 @@ mac {
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../layout.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../BtObjects/qmldir $${DESTDIR}/BtObjects/ &&
-    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/lib/x86/libcommon.so.0 $${DESTDIR}/ &&
+    !isArm() {
+        QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/lib/x86/libcommon.so.0 $${DESTDIR}/ &&
+    }
     QMAKE_POST_LINK += true
 }
