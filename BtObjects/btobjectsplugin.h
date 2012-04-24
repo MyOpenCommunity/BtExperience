@@ -27,6 +27,7 @@ private:
 	void createObjects(QDomDocument document);
 	void parseConfig();
 	void parseRooms(const QDomNode &container);
+	void parseLightSystem(const QDomNode &container);
 };
 
 

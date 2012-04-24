@@ -232,6 +232,8 @@ void BtObjectsPlugin::parseConfig()
 		int container_id = getIntAttribute(container, "id");
 		if (container_id == 2)
 			parseRooms(container);
+		else if (container_id == 1) // lights
+			parseLightSystem(container);
 	}
 }
 
@@ -247,6 +249,20 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int y = getIntAttribute(link, "y");
 
 			room_model << ObjectPair(object_uii, new RoomElement(room_name, objmodel.getObjectByUii(object_uii), x, y));
+		}
+	}
+}
+
+void BtObjectsPlugin::parseLightSystem(const QDomNode &container)
+{
+	foreach (const QDomNode &ist, getChildren(container, "ist"))
+	{
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			Light *l = static_cast<Light *>(objmodel.getObjectByUii(object_uii));
+			if (l)
+				l->setCategory(ObjectInterface::Lighting);
 		}
 	}
 }
