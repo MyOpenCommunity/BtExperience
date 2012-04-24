@@ -26,6 +26,11 @@ Page {
             id: systemsModel
             ListElement {
                 image: "images/systems/carichi.jpg"
+                name: "energy management"
+                target: "EnergyManagement.qml"
+            }
+            ListElement {
+                image: "images/systems/carichi.jpg"
                 name: "antintrusion"
                 target: "Antintrusion.qml"
             }
