@@ -75,6 +75,7 @@ Light::Light(QString _name, QString _key, LightingDevice *d)
 
 	key = _key;
 	name = _name;
+	category = ObjectInterface::Unassigned;
 	active = false; // initial value
 	connect(this, SIGNAL(activeChanged()), this, SIGNAL(dataChanged()));
 }
@@ -101,6 +102,11 @@ void Light::setActive(bool st)
 		dev->turnOn();
 	else
 		dev->turnOff();
+}
+
+void Light::setCategory(ObjectInterface::ObjectCategory _category)
+{
+	category = _category;
 }
 
 void Light::valueReceived(const DeviceValues &values_list)
