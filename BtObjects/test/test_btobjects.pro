@@ -31,6 +31,7 @@ HEADERS += test_antintrusion_object.h \
 	test_light_objects.h \
 	test_media_objects.h \
 	test_scenario_objects.h \
+	test_stopandgo_objects.h \
 	test_splitscenarios_object.h \
 	test_thermal_objects.h \
 	test_thermalprobes_object.h \
@@ -48,6 +49,7 @@ SOURCES += test_main.cpp \
 	test_light_objects.cpp \
 	test_media_objects.cpp \
 	test_scenario_objects.cpp \
+	test_stopandgo_objects.cpp \
 	test_splitscenarios_object.cpp \
 	test_thermal_objects.cpp \
 	test_thermalprobes_object.cpp \

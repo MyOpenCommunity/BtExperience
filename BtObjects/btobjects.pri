@@ -10,6 +10,7 @@ HEADERS += \
 	platform.h \
 	roomelement.h \
 	scenarioobjects.h \
+	stopandgoobjects.h \
 	splitadvancedscenario.h \
 	splitbasicscenario.h \
 	thermalobjects.h \
@@ -26,6 +27,7 @@ HEADERS += \
 	devices/probe_device.h \
 	devices/pulldevice.h \
 	devices/scenario_device.h \
+	devices/stopandgo_device.h \
 	devices/thermal_device.h \
 	devices/videodoorentry_device.h \
 	ts/bttime.h \
@@ -51,6 +53,7 @@ SOURCES += \
 	platform.cpp \
 	roomelement.cpp \
 	scenarioobjects.cpp \
+	stopandgoobjects.cpp \
 	splitadvancedscenario.cpp \
 	splitbasicscenario.cpp \
 	thermalobjects.cpp \
@@ -68,6 +71,7 @@ SOURCES += \
 	devices/probe_device.cpp \
 	devices/pulldevice.cpp \
 	devices/scenario_device.cpp \
+	devices/stopandgo_device.cpp \
 	devices/thermal_device.cpp \
 	devices/videodoorentry_device.cpp \
 	ts/bttime.cpp \

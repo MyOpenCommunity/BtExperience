@@ -28,6 +28,7 @@
 #include "vct.h"
 #include "videodoorentry_device.h"
 #include "energyload.h"
+#include "stopandgoobjects.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
@@ -273,6 +274,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<EnergyLoadDiagnostic>(
 				uri, 1, 0, "EnergyLoadDiagnostic",
 				"unable to create an EnergyLoadDiagnostic instance");
+	qmlRegisterUncreatableType<StopAndGo>(
+				uri, 1, 0, "StopAndGo",
+				"unable to create an StopAndGo instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
