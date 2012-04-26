@@ -5,7 +5,7 @@ import Components 1.0
 Page {
     id: systemPage
     property string text
-    property string rootElement
+    property QtObject rootColumn
     property alias rootObject: container.rootObject
     property alias currentObject: container.currentObject
     property QtObject names: null
@@ -39,7 +39,7 @@ Page {
         y: 63
         width: 893 - backButton.width - containerLeftMargin
         height: 530
-        rootElement: systemPage.rootElement
+        rootColumn: systemPage.rootColumn
         pageObject: systemPage
         onClosed: Stack.popPage()
     }

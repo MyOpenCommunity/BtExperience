@@ -1,11 +1,32 @@
 import QtQuick 1.1
 import BtObjects 1.0
-import "../../js/datetime.js" as DateTime
 import Components 1.0
+import "../../js/datetime.js" as DateTime
 
 
 MenuColumn {
-    id: element
+    id: column
+
+    Component {
+        id: thermalControlUnitSeasons
+        ThermalControlUnitSeasons {}
+    }
+
+    Component {
+        id: thermalControlUnitModalities
+        ThermalControlUnitModalities {}
+    }
+
+    Component {
+        id: thermalControlUnitPrograms
+        ThermalControlUnitPrograms {}
+    }
+
+    Component {
+        id: thermalControlUnitScenarios
+        ThermalControlUnitScenarios {}
+    }
+
     width: 212
     height: seasonItem.height + modalityItem.height + itemLoader.height
 
@@ -16,7 +37,7 @@ MenuColumn {
     }
 
     function okClicked() {
-        closeElement()
+        closeColumn()
         if (privateProps.pendingSeason !== -1) {
             dataModel.season = privateProps.pendingSeason
             privateProps.pendingSeason = -1
@@ -24,11 +45,11 @@ MenuColumn {
     }
 
     function cancelClicked() {
-        pageObject.showAlert(element, qsTr("unsaved changes. continue?"))
+        pageObject.showAlert(column, qsTr("unsaved changes. continue?"))
     }
 
     function alertOkClicked() {
-        element.closeElement()
+        column.closeColumn()
     }
 
     onChildLoaded: {
@@ -113,7 +134,10 @@ MenuColumn {
             state: privateProps.currentElement === 1 ? "selected" : ""
 
             onClicked: {
-                element.loadElement("Components/ThermalRegulation/ThermalControlUnitSeasons.qml", seasonItem.name, element.dataModel)
+                column.loadColumn(
+                            thermalControlUnitSeasons,
+                            seasonItem.name,
+                            column.dataModel)
                 if (privateProps.currentElement !== 1)
                     privateProps.currentElement = 1
             }
@@ -127,7 +151,10 @@ MenuColumn {
             state: privateProps.currentElement === 2 ? "selected" : ""
 
             onClicked: {
-                element.loadElement("Components/ThermalRegulation/ThermalControlUnitModalities.qml", modalityItem.name, element.dataModel)
+                column.loadColumn(
+                            thermalControlUnitModalities,
+                            modalityItem.name,
+                            column.dataModel)
                 if (privateProps.currentElement !== 2)
                     privateProps.currentElement = 2
             }
@@ -150,7 +177,10 @@ MenuColumn {
                     hasChild: true
                     state: privateProps.currentElement === 3 ? "selected" : ""
                     onClicked: {
-                        element.loadElement("Components/ThermalRegulation/ThermalControlUnitPrograms.qml", qsTr("programs"), objModel)
+                        column.loadColumn(
+                                    thermalControlUnitPrograms,
+                                    qsTr("programs"),
+                                    objModel)
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
                     }
@@ -158,12 +188,12 @@ MenuColumn {
 
                 ButtonOkCancel {
                     onCancelClicked: {
-                        element.cancelClicked()
+                        column.cancelClicked()
                         objModel.reset()
                     }
 
                     onOkClicked: {
-                        element.okClicked()
+                        column.okClicked()
                         objModel.apply()
                     }
                 }
@@ -183,11 +213,11 @@ MenuColumn {
 
                 ButtonOkCancel {
                     onCancelClicked: {
-                        element.cancelClicked()
+                        column.cancelClicked()
                         objModel.reset()
                     }
                     onOkClicked: {
-                        element.okClicked()
+                        column.okClicked()
                         objModel.apply()
                     }
                 }
@@ -198,9 +228,9 @@ MenuColumn {
             id: offComponent
             ButtonOkCancel {
                 property variant objModel
-                onCancelClicked: element.cancelClicked() // Nothing to reset
+                onCancelClicked: column.cancelClicked() // Nothing to reset
                 onOkClicked: {
-                    element.okClicked()
+                    column.okClicked()
                     objModel.apply()
                 }
             }
@@ -210,9 +240,9 @@ MenuColumn {
             id: antifreezeComponent
             ButtonOkCancel {
                 property variant objModel
-                onCancelClicked: element.cancelClicked() // Nothing to reset
+                onCancelClicked: column.cancelClicked() // Nothing to reset
                 onOkClicked: {
-                    element.okClicked()
+                    column.okClicked()
                     objModel.apply()
                 }
             }
@@ -229,7 +259,10 @@ MenuColumn {
                     hasChild: true
                     state: privateProps.currentElement === 3 ? "selected" : ""
                     onClicked: {
-                        element.loadElement("Components/ThermalRegulation/ThermalControlUnitPrograms.qml", qsTr("programs"), objModel)
+                        column.loadColumn(
+                                    thermalControlUnitPrograms,
+                                    qsTr("programs"),
+                                    objModel)
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
                     }
@@ -237,11 +270,11 @@ MenuColumn {
 
                 ButtonOkCancel {
                     onCancelClicked: {
-                        element.cancelClicked()
+                        column.cancelClicked()
                         objModel.reset()
                     }
                     onOkClicked: {
-                        element.okClicked()
+                        column.okClicked()
                         objModel.apply()
                     }
                 }
@@ -265,7 +298,10 @@ MenuColumn {
                     hasChild: true
                     state: privateProps.currentElement === 3 ? "selected" : ""
                     onClicked: {
-                        element.loadElement("Components/ThermalRegulation/ThermalControlUnitPrograms.qml", qsTr("programs"), objModel)
+                        column.loadColumn(
+                                    thermalControlUnitPrograms,
+                                    qsTr("programs"),
+                                    objModel)
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
                     }
@@ -273,12 +309,12 @@ MenuColumn {
 
                 ButtonOkCancel {
                     onCancelClicked: {
-                        element.cancelClicked()
+                        column.cancelClicked()
                         objModel.reset()
                     }
 
                     onOkClicked: {
-                        element.okClicked()
+                        column.okClicked()
                         objModel.apply()
                     }
                 }
@@ -296,7 +332,10 @@ MenuColumn {
                     hasChild: true
                     state: privateProps.currentElement === 3 ? "selected" : ""
                     onClicked: {
-                        element.loadElement("Components/ThermalRegulation/ThermalControlUnitScenarios.qml", qsTr("scenarios"), objModel)
+                        column.loadColumn(
+                                    thermalControlUnitScenarios,
+                                    qsTr("scenarios"),
+                                    objModel)
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
                     }
@@ -304,11 +343,11 @@ MenuColumn {
 
                 ButtonOkCancel {
                     onCancelClicked: {
-                        element.cancelClicked()
+                        column.cancelClicked()
                         objModel.reset()
                     }
                     onOkClicked: {
-                        element.okClicked()
+                        column.okClicked()
                         objModel.apply()
                     }
                 }

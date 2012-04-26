@@ -18,8 +18,8 @@ Item {
     // the spacing between columns
     property int itemsSpacing: 0
 
-    // The filename of the root element (without scroll, the first column)
-    property string rootElement
+    // The root element (without scroll, the first column)
+    property QtObject rootColumn
 
     property QtObject rootData: null
 
@@ -33,7 +33,7 @@ Item {
     property variant currentObject: undefined
 
     signal closed
-    signal rootElementClicked
+    signal rootColumnClicked
 
     function closeLastColumn() {
         Script.closeLastItem()
@@ -104,8 +104,8 @@ Item {
     }
 
     Component.onCompleted: {
-        Script.loadComponent(-1, mainContainer.rootElement, "", rootData)
-        mainContainer.rootObject.columnClicked.connect(rootElementClicked)
+        Script.loadComponent(-1, mainContainer.rootColumn, "", rootData)
+        mainContainer.rootObject.columnClicked.connect(rootColumnClicked)
     }
 }
 

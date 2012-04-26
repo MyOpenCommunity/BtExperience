@@ -2,7 +2,7 @@ import QtQuick 1.1
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: paginator.height
 
@@ -15,7 +15,7 @@ MenuColumn {
             name: itemObject.name
             selectOnClick: true
             onDelegateClicked: {
-                element.dataModel.preset = index + objectModel.range[0]
+                column.dataModel.preset = index + objectModel.range[0]
             }
         }
 
@@ -24,7 +24,7 @@ MenuColumn {
 
     ObjectModel {
         id: objectModel
-        source: element.dataModel.presets
+        source: column.dataModel.presets
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }

@@ -4,7 +4,7 @@ import BtObjects 1.0
 import "../../js/logging.js" as Log
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: paginator.height
 

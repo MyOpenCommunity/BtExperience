@@ -2,8 +2,8 @@ import QtQuick 1.1
 import Components 1.0
 
 MenuColumn {
-    id: element
-    height: 50 * itemList.count
+    id: column
+    height: Math.max(1, 50 * itemList.count)
     width: 212
 
     onChildDestroyed: {
@@ -21,8 +21,8 @@ MenuColumn {
             hasChild: model.componentFile !== ""
 
             onClicked: {
-                if (model.componentFile !== "")
-                    element.loadElement(model.componentFile, model.name)
+                if (model.name !== "")
+                    column.loadColumn(model.comp, model.name)
             }
         }
 
@@ -31,29 +31,43 @@ MenuColumn {
 
     ListModel {
         id: modelList
-        ListElement {
-            name: "version"
-            componentFile: "Components/Settings/SettingsVersion.qml"
+        Component.onCompleted: {
+            modelList.append({"name": qsTr("Version"), "comp": settingsVersion})
+            modelList.append({"name": qsTr("Date & Time"), "comp": settingsDateTime})
+            modelList.append({"name": qsTr("Network"), "comp": settingsNetwork})
+            modelList.append({"name": qsTr("Display"), "comp": settingsDisplay})
+            modelList.append({"name": qsTr("International"), "comp": settingsInternational})
+            modelList.append({"name": qsTr("Password"), "comp": settingsPassword})
         }
-        ListElement {
-            name: "date & time"
-            componentFile: "Components/Settings/SettingsDateTime.qml"
-        }
-        ListElement {
-            name: "network"
-            componentFile: "Components/Settings/SettingsNetwork.qml"
-        }
-        ListElement {
-            name: "display"
-            componentFile: "Components/Settings/SettingsDisplay.qml"
-        }
-        ListElement {
-            name: "international"
-            componentFile: "Components/Settings/SettingsInternational.qml"
-        }
-        ListElement {
-            name: "password"
-            componentFile: "Components/Settings/SettingsPassword.qml"
-        }
+    }
+
+    Component {
+        id: settingsVersion
+        SettingsVersion {}
+    }
+
+    Component {
+        id: settingsDateTime
+        SettingsDateTime {}
+    }
+
+    Component {
+        id: settingsNetwork
+        SettingsNetwork {}
+    }
+
+    Component {
+        id: settingsDisplay
+        SettingsDisplay {}
+    }
+
+    Component {
+        id: settingsInternational
+        SettingsInternational {}
+    }
+
+    Component {
+        id: settingsPassword
+        SettingsPassword {}
     }
 }

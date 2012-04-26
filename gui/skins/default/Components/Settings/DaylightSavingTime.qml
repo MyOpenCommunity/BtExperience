@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: 100
     signal daylightSavingTimeChanged(bool config)

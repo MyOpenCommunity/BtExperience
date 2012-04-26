@@ -4,7 +4,7 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
+    id: column
     height: 100
     width: 212
     signal seasonSelected(int season)
@@ -27,7 +27,7 @@ MenuColumn {
             name: model.name
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                element.seasonSelected(clickedItem.type)
+                column.seasonSelected(clickedItem.type)
             }
         }
 

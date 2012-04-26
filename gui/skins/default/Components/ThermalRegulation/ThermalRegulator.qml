@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     height: itemList.height
     width: 212
 
@@ -33,8 +33,10 @@ MenuColumn {
             description: getDescription()
             hasChild: true
             onClicked: {
-                element.loadElement(modelList.getComponentFile(itemObject.objectId), itemObject.name,
-                                    modelList.getObject(model.index))
+                column.loadColumn(
+                            modelList.getComponent(itemObject.objectId),
+                            itemObject.name,
+                            modelList.getObject(model.index))
             }
         }
 
@@ -46,7 +48,7 @@ MenuColumn {
                       {objectId: ObjectInterface.IdThermalControlledProbe}]
         }
 
-        onCurrentPageChanged: element.closeChild()
+        onCurrentPageChanged: column.closeChild()
     }
 }
 

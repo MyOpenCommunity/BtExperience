@@ -3,8 +3,15 @@ import Components 1.0
 import BtObjects 1.0
 import "../../js/logging.js" as Log
 
+
 MenuColumn {
-    id: element
+    id: column
+
+    Component {
+        id: programListSplit
+        ProgramListSplit {}
+    }
+
     width: 212
     height: paginator.height
 
@@ -28,18 +35,18 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                element.loadElement(
-                            "Components/ThermalRegulation/ProgramListSplit.qml",
+                column.loadColumn(
+                            programListSplit,
                             name,
                             dataModel)
             }
         }
 
         ButtonOkCancel {
-            onCancelClicked: element.closeElement()
+            onCancelClicked: column.closeColumn()
             onOkClicked: {
                 dataModel.ok()
-                element.closeElement()
+                column.closeColumn()
             }
         }
     }

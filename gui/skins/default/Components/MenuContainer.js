@@ -5,9 +5,9 @@ Qt.include("../js/logging.js")
 var stackItems = []
 var stackTitles = []
 
-function loadComponent(menuLevel, fileName, title, dataModel) {
-
-    if (pendingOperations.length > 0) // we are during an operation
+function loadComponent(menuLevel, component, title, dataModel) {
+    // checks if an operation is in progress and exit in case
+    if (pendingOperations.length > 0)
         return
 
     // We need to pass the dataModel as a variant (because we use it in a signal),
@@ -16,21 +16,32 @@ function loadComponent(menuLevel, fileName, title, dataModel) {
     if (dataModel === undefined)
         dataModel = null
 
-    var itemObject = createComponent("../" + fileName, {"menuLevel": menuLevel + 1, "parent": elementsContainer,
-                                                "opacity": 0, "y": 33, "dataModel": dataModel,
-                                                "pageObject": pageObject})
-    var titleObject = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
-    if (itemObject && titleObject) {
-        _addItem(itemObject, titleObject)
-        itemObject.closeItem.connect(closeItem)
-        itemObject.loadComponent.connect(loadComponent)
+    // creates an object from the component
+    var obj = component.createObject(mainContainer, {
+                                         "menuLevel": menuLevel + 1,
+                                         "parent": elementsContainer,
+                                         "opacity": 0,
+                                         "y": 33,
+                                         "dataModel": dataModel,
+                                         "pageObject": pageObject
+                                     })
+
+    // creates title element
+    var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
+
+    if (obj && titleObj) {
+        _addItem(obj, titleObj)
+        obj.closeItem.connect(closeItem)
+        obj.loadComponent.connect(loadComponent)
+        return
     }
-    // Cleanup the memory in case of errors
-    else if (itemObject) {
-        itemObject.destroy()
+
+    // cleanups the memory in case of errors
+    if (obj) {
+        obj.destroy()
     }
-    else if (titleObject) {
-        titleObject.destroy()
+    if (titleObj) {
+        titleObj.destroy()
     }
 }
 

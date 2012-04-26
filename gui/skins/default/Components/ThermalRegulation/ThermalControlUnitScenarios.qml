@@ -4,8 +4,8 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
-    height: 50 * itemList.count
+    id: column
+    height: Math.max(1, 50 * itemList.count)
     width: 212
 
     ListView {
@@ -16,13 +16,13 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: scenarioModel.getObject(index)
-            onClicked: element.dataModel.scenarioIndex = index
+            onClicked: column.dataModel.scenarioIndex = index
         }
 
         model: scenarioModel
         ObjectModel {
             id: scenarioModel
-            source: element.dataModel.scenarios
+            source: column.dataModel.scenarios
         }
     }
 }

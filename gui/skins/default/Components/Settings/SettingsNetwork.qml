@@ -5,7 +5,17 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
+    id: column
+
+    Component {
+        id: networkState
+        NetworkState {}
+    }
+
+    Component {
+        id: ipConfigurations
+        IPConfigurations {}
+    }
 
     // dimensions
     width: 212
@@ -85,7 +95,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                element.loadElement("Components/Settings/NetworkState.qml", name)
+                column.loadColumn(networkState, name)
             }
         }
 
@@ -99,7 +109,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                element.loadElement("Components/Settings/IPConfigurations.qml", name)
+                column.loadColumn(ipConfigurations, name)
             }
         }
         // configuration item: it may be a static list of textual informations

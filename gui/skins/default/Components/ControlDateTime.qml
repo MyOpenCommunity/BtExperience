@@ -7,8 +7,8 @@ Image {
     height: 170
     source: "../images/common/dimmer_bg.png"
     property string text
-    property string date: DateTime.format(element.dataModel.date)["date"]
-    property string time: DateTime.format(element.dataModel.time)["time"]
+    property string date: DateTime.format(new Date())["date"]
+    property string time: DateTime.format(new Date())["time"]
 
 
     QtObject {
@@ -64,7 +64,6 @@ Image {
 
         onClicked: {
             if (!selected) {
-                //element.loadElement("ThermalControlUnitDate.qml", "data")
                 privateProps.current_element = 1
             }
         }
@@ -78,7 +77,6 @@ Image {
         selected: privateProps.current_element == 2
         onClicked: {
             if (!selected) {
-                //element.loadElement("ThermalControlUnitTime.qml", "ora")
                 privateProps.current_element = 2
             }
         }

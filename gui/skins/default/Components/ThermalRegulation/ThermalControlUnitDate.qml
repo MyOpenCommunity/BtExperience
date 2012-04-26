@@ -2,13 +2,13 @@ import QtQuick 1.1
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: 220
     property string imagesPath: "../../images/"
 
     function alertOkClicked() {
-        element.closeElement()
+        column.closeColumn()
     }
 
     Image {
@@ -142,11 +142,11 @@ MenuColumn {
         x: 0
         y: 170
         onCancelClicked: {
-            pageObject.showAlert(element, "Modifiche non salvate. Continuare?")
+            pageObject.showAlert(column, "Modifiche non salvate. Continuare?")
         }
 
         onOkClicked: {
-            element.closeElement()
+            column.closeColumn()
         }
     }
 }

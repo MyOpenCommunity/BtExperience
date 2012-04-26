@@ -2,9 +2,10 @@ import QtQuick 1.1
 import Components 1.0
 import "../../js/logging.js" as Log
 
+
 MenuColumn {
-    id: element
-    height: 150
+    id: column
+    height: Math.max(1, 50 * itemList.count)
     width: 212
 
     onChildDestroyed: {
@@ -22,28 +23,34 @@ MenuColumn {
             hasChild: true
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                element.loadElement(clickedItem.componentFile, clickedItem.name)
+                column.loadColumn(clickedItem.comp, clickedItem.name)
             }
         }
 
-        model: ListModel {
-            id: modelList
-            ListElement {
-                name: 'CCTV'
-                componentFile: "Components/VideoDoorEntry/CCTV.qml"
-            }
-            ListElement {
-                name: 'intercom'
-                componentFile: "Components/VideoDoorEntry/InterCom.qml"
-            }
-            ListElement {
-                name: 'pager'
-                componentFile: "Components/VideoDoorEntry/Pager.qml"
-            }
-        }
+        model: modelList
+    }
 
+    ListModel {
+        id: modelList
+        Component.onCompleted: {
+            modelList.append({"name": qsTr("CCTV"), "comp": cctv})
+            modelList.append({"name": qsTr("intercom"), "comp": intercom})
+            modelList.append({"name": qsTr("pager"), "comp": pager})
+        }
+    }
+
+    Component {
+        id: cctv
+        CCTV {}
+    }
+
+    Component {
+        id: intercom
+        InterCom {}
+    }
+
+    Component {
+        id: pager
+        Pager {}
     }
 }
-
-
-

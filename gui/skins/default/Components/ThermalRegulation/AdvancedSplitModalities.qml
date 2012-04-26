@@ -3,7 +3,7 @@ import Components 1.0
 import BtObjects 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: 300
 
@@ -16,7 +16,7 @@ MenuColumn {
             name: model.name
             onClicked: {
                 modeChanged(model.type)
-                element.closeElement()
+                column.closeColumn()
             }
         }
         model: ListModel {

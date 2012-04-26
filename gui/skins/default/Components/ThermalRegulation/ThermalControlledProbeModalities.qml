@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     height: 200
     width: 212
     signal modalitySelected(int modality)
@@ -26,7 +26,7 @@ MenuColumn {
             name: model.name
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                element.modalitySelected(clickedItem.type)
+                column.modalitySelected(clickedItem.type)
             }
         }
 

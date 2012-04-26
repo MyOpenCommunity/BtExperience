@@ -3,7 +3,13 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
+
+    Component {
+        id: thermalControlledProbeModalities
+        ThermalControlledProbeModalities {}
+    }
+
     width: 212
     height: fixedItem.height + itemLoader.height
     property string imagesPath: "../../images/"
@@ -14,17 +20,17 @@ MenuColumn {
     }
 
     function alertOkClicked() {
-        element.closeElement()
+        column.closeColumn()
     }
 
     function okClicked() {
         if (privateProps.pendingModality !== dataModel.probeStatus)
             dataModel.probeStatus = privateProps.pendingModality
-        closeElement();
+        closeColumn();
     }
 
     function cancelClicked() {
-        pageObject.showAlert(element, qsTr("unsaved changes. continue?"))
+        pageObject.showAlert(column, qsTr("unsaved changes. continue?"))
     }
 
     onChildDestroyed: {
@@ -89,7 +95,10 @@ MenuColumn {
             y: 51
 
             onClicked: {
-                element.loadElement("Components/ThermalRegulation/ThermalControlledProbeModalities.qml", modalityItem.name, dataModel)
+                column.loadColumn(
+                            thermalControlledProbeModalities,
+                            modalityItem.name,
+                            dataModel)
                 if (modalityItem.state == "")
                     modalityItem.state =  "selected"
             }
@@ -99,16 +108,16 @@ MenuColumn {
     Component {
         id: offComponent
         ButtonOkCancel {
-            onCancelClicked: element.cancelClicked();
-            onOkClicked: element.okClicked();
+            onCancelClicked: column.cancelClicked();
+            onOkClicked: column.okClicked();
         }
     }
 
     Component {
         id: antifreezeComponent
         ButtonOkCancel {
-            onCancelClicked: element.cancelClicked();
-            onOkClicked: element.okClicked();
+            onCancelClicked: column.cancelClicked();
+            onOkClicked: column.okClicked();
         }
     }
 
@@ -121,8 +130,8 @@ MenuColumn {
             }
 
             ButtonOkCancel {
-                onCancelClicked: element.cancelClicked();
-                onOkClicked: element.okClicked();
+                onCancelClicked: column.cancelClicked();
+                onOkClicked: column.okClicked();
             }
         }
     }
@@ -148,12 +157,12 @@ MenuColumn {
             ButtonOkCancel {
                 onCancelClicked: {
                     setpoint = dataModel.setpoint
-                    element.cancelClicked()
+                    column.cancelClicked()
 
                 }
                 onOkClicked: {
                     dataModel.setpoint = setpoint
-                    element.okClicked()
+                    column.okClicked()
                 }
             }
 

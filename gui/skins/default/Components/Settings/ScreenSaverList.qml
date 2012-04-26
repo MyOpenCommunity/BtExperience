@@ -1,20 +1,25 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import BtExperience 1.0
-import "../../js/logging.js" as Log
 import Components 1.0
+import "../../js/logging.js" as Log
 
 
 MenuColumn {
-    id: element
+    id: column
 
     // dimensions
     width: 212
     height: paginator.height
     property string imagesPath: "../../images/"
 
+    Component {
+        id: screenSaverTypes
+        ScreenSaverTypes {}
+    }
+
     function okClicked() {
-        closeElement()
+        closeColumn()
     }
 
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
@@ -93,7 +98,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                element.loadElement("Components/Settings/ScreenSaverTypes.qml", name)
+                column.loadColumn(screenSaverTypes, name)
             }
         }
 
@@ -118,7 +123,7 @@ MenuColumn {
                 onOkClicked: {
                     global.guiSettings.screensaverType = privateProps.type
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
-                    element.okClicked()
+                    column.okClicked()
                 }
             }
         }
@@ -164,7 +169,7 @@ MenuColumn {
                     global.guiSettings.screensaverImage = screensaverImage.text
                     global.guiSettings.timeOut = screensaverTimeout.currentIndex
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
-                    element.okClicked()
+                    column.okClicked()
 
                 }
             }
@@ -206,7 +211,7 @@ MenuColumn {
                     global.guiSettings.screensaverText = screensaverText.text
                     global.guiSettings.timeOut = screensaverTimeout.currentIndex
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
-                    element.okClicked()
+                    column.okClicked()
                 }
             }
         }
@@ -236,7 +241,7 @@ MenuColumn {
                     global.guiSettings.screensaverType = privateProps.type
                     global.guiSettings.timeOut = screensaverTimeout.currentIndex
                     global.guiSettings.turnOffTime = turnOffTime.currentIndex
-                    element.okClicked()
+                    column.okClicked()
                 }
             }
         }

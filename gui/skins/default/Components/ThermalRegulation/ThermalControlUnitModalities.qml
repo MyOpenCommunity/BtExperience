@@ -4,8 +4,8 @@ import Components 1.0
 
 
 MenuColumn {
-    id: element
-    height: 50 * itemList.count
+    id: column
+    height: Math.max(1, 50 * itemList.count)
     width: 212
 
     signal modalitySelected(variant obj)
@@ -17,9 +17,9 @@ MenuColumn {
         interactive: false
 
         function selectItem() {
-            if (element.dataModel.currentModality) {
+            if (column.dataModel.currentModality) {
                 for (var i = 0; i < itemList.count; i++) {
-                    if (modalitiesModel.getObject(i).objectId === element.dataModel.currentModality.objectId)
+                    if (modalitiesModel.getObject(i).objectId === column.dataModel.currentModality.objectId)
                         return i;
                 }
             }
@@ -28,13 +28,13 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: modalitiesModel.getObject(index)
-            onClicked: element.modalitySelected(itemObject)
+            onClicked: column.modalitySelected(itemObject)
         }
         model: modalitiesModel
 
         ObjectModel {
             id: modalitiesModel
-            source: element.dataModel.modalities
+            source: column.dataModel.modalities
         }
     }
 }

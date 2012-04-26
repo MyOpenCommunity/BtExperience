@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
+    id: column
     width: 212
     height: paginator.height
     signal timezoneChanged(int gmtOffset)
@@ -31,7 +31,7 @@ MenuColumn {
         }
         ButtonOkCancel {
             onOkClicked: {
-                element.timezoneChanged(tmz.currentIndex)
+                column.timezoneChanged(tmz.currentIndex)
             }
         }
     }

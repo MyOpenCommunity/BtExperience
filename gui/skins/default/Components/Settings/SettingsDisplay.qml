@@ -3,8 +3,8 @@ import QtQuick 1.0
 import Components 1.0
 
 MenuColumn {
-    id: element
-    height: 50 * itemList.count
+    id: column
+    height: Math.max(1, 50 * itemList.count)
     width: 212
 
     onChildDestroyed: {
@@ -22,8 +22,8 @@ MenuColumn {
             hasChild: model.componentFile !== ""
 
             onClicked: {
-                if (model.componentFile !== "")
-                    element.loadElement(model.componentFile, model.name)
+                if (model.name !== "")
+                    column.loadColumn(model.comp, model.name)
             }
         }
 
@@ -32,26 +32,37 @@ MenuColumn {
 
     ListModel {
         id: modelList
-        ListElement {
-            name: "Brightness/Contrast"
-            componentFile: "Components/Settings/Brightness.qml"
+        Component.onCompleted: {
+            modelList.append({"name": qsTr("Brightness"), "comp": brightness})
+            modelList.append({"name": qsTr("Screensaver List"), "comp": screenSaverList})
+            modelList.append({"name": qsTr("Transition effects"), "comp": transitionEffects})
+            modelList.append({"name": qsTr("Calibration"), "comp": calibration})
+            modelList.append({"name": qsTr("Clean"), "comp": clean})
         }
-        ListElement {
-            name: "screensaver"
-            componentFile: "Components/Settings/ScreenSaverList.qml"
-        }
-        ListElement {
-            name: "transition effects"
-            componentFile: "Components/Settings/TransitionEffects.qml"
-        }
-        ListElement {
-            name: "calibration"
-            componentFile: ""
-        }
-        ListElement {
-            name: "clean"
-            componentFile: ""
-        }
+    }
 
+    Component {
+        id: brightness
+        Brightness {}
+    }
+
+    Component {
+        id: screenSaverList
+        ScreenSaverList {}
+    }
+
+    Component {
+        id: transitionEffects
+        TransitionEffects {}
+    }
+
+    Component {
+        id: calibration
+        Item {}
+    }
+
+    Component {
+        id: clean
+        Item {}
     }
 }

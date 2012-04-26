@@ -3,10 +3,9 @@ import "../../js/Stack.js" as Stack
 import Components 1.0
 
 MenuColumn {
-    id: element
-    height: 50 * itemList.count
+    id: column
+    height: Math.max(1, 50 * itemList.count)
     width: 212
-
 
     ListView {
         id: itemList
