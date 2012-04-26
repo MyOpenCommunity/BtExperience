@@ -16,9 +16,12 @@ MenuColumn {
         currentIndex: -1
 
         delegate: MenuItemDelegate {
+            function isControlledProbe() {
+                return itemObject.objectId === ObjectInterface.IdThermalControlledProbe
+            }
+
             function getDescription() {
-                if (itemObject.objectId === ObjectInterface.IdThermalControlledProbe) {
-                    var descr = itemObject.temperature / 10 + qsTr("°C") + " ";
+                if (isControlledProbe()) {
                     if (itemObject.probeStatus === ThermalControlledProbe.Manual)
                         descr += itemObject.setpoint / 10 + qsTr("°C") + " ";
 
@@ -31,6 +34,8 @@ MenuColumn {
 
             itemObject: modelList.getObject(index)
             description: getDescription()
+            boxInfoState: isControlledProbe() ? "info" : ""
+            boxInfoText: isControlledProbe() ? itemObject.temperature / 10 + qsTr("°C") : ""
             hasChild: true
             onClicked: {
                 column.loadColumn(

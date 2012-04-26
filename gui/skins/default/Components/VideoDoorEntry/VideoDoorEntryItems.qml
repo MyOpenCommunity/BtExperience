@@ -23,7 +23,7 @@ MenuColumn {
             hasChild: true
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                column.loadColumn(clickedItem.comp, clickedItem.name)
+                column.loadColumn(clickedItem.component, clickedItem.name)
             }
         }
 
@@ -33,9 +33,9 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("CCTV"), "comp": cctv})
-            modelList.append({"name": qsTr("intercom"), "comp": intercom})
-            modelList.append({"name": qsTr("pager"), "comp": pager})
+            modelList.append({"name": qsTr("CCTV"), "component": cctv})
+            modelList.append({"name": qsTr("intercom"), "component": intercom})
+            modelList.append({"name": qsTr("pager"), "component": pager})
         }
     }
 

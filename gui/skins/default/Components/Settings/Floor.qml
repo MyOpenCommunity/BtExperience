@@ -21,7 +21,7 @@ MenuColumn {
             hasChild: model.componentFile !== ""
 
             onClicked: {
-                column.loadColumn(model.comp, model.name)
+                column.loadColumn(model.component, model.name)
             }
         }
 
@@ -31,8 +31,8 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Piano terra"), "comp": roomsItems})
-            modelList.append({"name": qsTr("Primo piano"), "comp": roomsItems})
+            modelList.append({"name": qsTr("Piano terra"), "component": roomsItems})
+            modelList.append({"name": qsTr("Primo piano"), "component": roomsItems})
         }
     }
 

@@ -24,7 +24,7 @@ MenuColumn {
 
             onClicked: {
                 if (model.name !== "")
-                    column.loadColumn(model.comp, model.name)
+                    column.loadColumn(model.component, model.name)
             }
         }
 
@@ -34,12 +34,12 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("General"), "comp": settingsGenerals})
-            modelList.append({"name": qsTr("Profiles"), "comp": profiles})
-            modelList.append({"name": qsTr("Rooms"), "comp": rooms})
-            modelList.append({"name": qsTr("Alarm Clock"), "comp": alarmClock})
-            modelList.append({"name": qsTr("Notifications"), "comp": notifications})
-            modelList.append({"name": qsTr("Multimedia"), "comp": multimedia})
+            modelList.append({"name": qsTr("General"), "component": settingsGenerals})
+            modelList.append({"name": qsTr("Profiles"), "component": profiles})
+            modelList.append({"name": qsTr("Rooms"), "component": rooms})
+            modelList.append({"name": qsTr("Alarm Clock"), "component": alarmClock})
+            modelList.append({"name": qsTr("Notifications"), "component": notifications})
+            modelList.append({"name": qsTr("Multimedia"), "component": multimedia})
         }
     }
 

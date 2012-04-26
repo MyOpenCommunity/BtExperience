@@ -23,7 +23,7 @@ MenuColumn {
 
             onClicked: {
                 if (model.name !== "")
-                    column.loadColumn(model.comp, model.name)
+                    column.loadColumn(model.component, model.name)
             }
         }
 
@@ -33,11 +33,11 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Brightness"), "comp": brightness})
-            modelList.append({"name": qsTr("Screensaver List"), "comp": screenSaverList})
-            modelList.append({"name": qsTr("Transition effects"), "comp": transitionEffects})
-            modelList.append({"name": qsTr("Calibration"), "comp": calibration})
-            modelList.append({"name": qsTr("Clean"), "comp": clean})
+            modelList.append({"name": qsTr("Brightness"), "component": brightness})
+            modelList.append({"name": qsTr("Screensaver List"), "component": screenSaverList})
+            modelList.append({"name": qsTr("Transition effects"), "component": transitionEffects})
+            modelList.append({"name": qsTr("Calibration"), "component": calibration})
+            modelList.append({"name": qsTr("Clean"), "component": clean})
         }
     }
 

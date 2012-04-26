@@ -7,12 +7,26 @@
 class LoadsDevice;
 
 
+/*!
+	\ingroup EnergyManagement
+	\brief Reads the electricity load status of a monitored object
+
+	The monitored object can be consuming a normal amount of power, an higher than
+	normal amount of power and a critical/fault status.
+
+	The object id is \a ObjectInterface::IdEnergyLoad, the object key is empty.
+*/
 class EnergyLoadDiagnostic : public ObjectInterface
 {
 	friend class TestEnergyLoadDiagnostic;
 
 	Q_OBJECT
+
+	/*!
+		\brief The ok/warning/critical status of the device
+	*/
 	Q_PROPERTY(LoadStatus status READ getStatus NOTIFY statusChanged)
+
 	Q_ENUMS(LoadStatus)
 
 public:

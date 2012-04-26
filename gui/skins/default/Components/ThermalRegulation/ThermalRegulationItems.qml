@@ -21,7 +21,7 @@ MenuColumn {
             hasChild: true
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                column.loadColumn(clickedItem.comp, clickedItem.name)
+                column.loadColumn(clickedItem.component, clickedItem.name)
             }
         }
 
@@ -32,12 +32,11 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Thermal Regulator"), "comp": thermalRegulator})
-            modelList.append({"name": qsTr("Air Conditioning"), "comp": airConditioning})
-            modelList.append({"name": qsTr("Sensors"), "comp": thermalProbe})
+            modelList.append({"name": qsTr("Thermal Regulator"), "component": thermalRegulator})
+            modelList.append({"name": qsTr("Air Conditioning"), "component": airConditioning})
+            modelList.append({"name": qsTr("Sensors"), "component": thermalProbe})
         }
     }
-
 
     Component {
         id: thermalRegulator

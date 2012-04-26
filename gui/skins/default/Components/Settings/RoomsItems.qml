@@ -22,7 +22,7 @@ MenuColumn {
 
             onClicked: {
                 if (model.name !== "")
-                    column.loadColumn(model.comp, model.name)
+                    column.loadColumn(model.component, model.name)
             }
         }
 
@@ -32,10 +32,10 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Add new room"), "comp": addRoom})
-            modelList.append({"name": qsTr("Kitchen"), "comp": modifyRoom})
-            modelList.append({"name": qsTr("Children Room"), "comp": modifyRoom})
-            modelList.append({"name": qsTr("Box"), "comp": modifyRoom})
+            modelList.append({"name": qsTr("Add new room"), "component": addRoom})
+            modelList.append({"name": qsTr("Kitchen"), "component": modifyRoom})
+            modelList.append({"name": qsTr("Children Room"), "component": modifyRoom})
+            modelList.append({"name": qsTr("Box"), "component": modifyRoom})
         }
     }
 
