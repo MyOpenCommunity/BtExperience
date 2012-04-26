@@ -23,16 +23,19 @@ MenuColumn {
             name: "Stop and Go"
             description: "chiuso"
             status: 1
+            component: "Components/EnergyManagement/StopAndGo.qml"
         }
         ListElement {
             name: "Stop and Go Plus"
             description: "chiuso"
             status: 1
+            component: "Components/EnergyManagement/StopAndGoPlus.qml"
         }
         ListElement {
             name: "Stop and Go Btest"
             description: "aperto - sovratensione"
             status: 0
+            component: "Components/EnergyManagement/StopAndGo.qml"
         }
     }
 
@@ -49,7 +52,7 @@ MenuColumn {
                 hasChild: true
                 onDelegateClicked: {
                     privateProps.currentIndex = -1
-                    element.loadElement("Components/EnergyManagement/StopAndGo.qml", name)
+                    element.loadElement(model.component, name)
                 }
             }
             model: listModel
