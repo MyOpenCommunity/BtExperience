@@ -35,7 +35,7 @@ MenuColumn {
             name: "Stop and Go Btest"
             description: "aperto - sovratensione"
             status: 0
-            component: "Components/EnergyManagement/StopAndGo.qml"
+            component: "Components/EnergyManagement/StopAndGoBtest.qml"
         }
     }
 
