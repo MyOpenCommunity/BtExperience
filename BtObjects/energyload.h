@@ -16,9 +16,9 @@ class LoadsDevice;
 
 	The object id is \a ObjectInterface::IdEnergyLoad, the object key is empty.
 */
-class EnergyLoadDiagnostic : public ObjectInterface
+class EnergyLoadManagement : public ObjectInterface
 {
-	friend class TestEnergyLoadDiagnostic;
+	friend class TestEnergyLoadManagement;
 
 	Q_OBJECT
 
@@ -38,7 +38,7 @@ public:
 		Critical
 	};
 
-	EnergyLoadDiagnostic(LoadsDevice *dev, QString name);
+	EnergyLoadManagement(LoadsDevice *dev, QString name);
 
 	virtual int getObjectId() const
 	{

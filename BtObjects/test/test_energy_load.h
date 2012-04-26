@@ -25,11 +25,11 @@
 
 #include <QObject>
 
-class EnergyLoadDiagnostic;
+class EnergyLoadManagement;
 class LoadsDevice;
 
 
-class TestEnergyLoadDiagnostic : public TestBtObject
+class TestEnergyLoadManagement : public TestBtObject
 {
 	Q_OBJECT
 
@@ -40,7 +40,7 @@ private slots:
 	void testReceiveStatus();
 
 private:
-	EnergyLoadDiagnostic *obj;
+	EnergyLoadManagement *obj;
 	LoadsDevice *dev;
 };
 

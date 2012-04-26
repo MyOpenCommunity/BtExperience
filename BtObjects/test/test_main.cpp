@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 	TestVideoDoorEntry test_videodoorentry;
 	test_list << &test_videodoorentry;
 
-	TestEnergyLoadDiagnostic test_energy_load;
+	TestEnergyLoadManagement test_energy_load;
 	test_list << &test_energy_load;
 
 	TestStopAndGo test_stopandgo;

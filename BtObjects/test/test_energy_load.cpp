@@ -27,22 +27,22 @@
 #include <QtTest>
 
 
-void TestEnergyLoadDiagnostic::init()
+void TestEnergyLoadManagement::init()
 {
 	LoadsDevice *d = new LoadsDevice("1");
 
-	obj = new EnergyLoadDiagnostic(d, "");
+	obj = new EnergyLoadManagement(d, "");
 	dev = new LoadsDevice("1", 1);
 }
 
-void TestEnergyLoadDiagnostic::cleanup()
+void TestEnergyLoadManagement::cleanup()
 {
 	delete obj->dev;
 	delete obj;
 	delete dev;
 }
 
-void TestEnergyLoadDiagnostic::testReceiveStatus()
+void TestEnergyLoadManagement::testReceiveStatus()
 {
 	DeviceValues v;
 	ObjectTester t(obj, SIGNAL(statusChanged()));
@@ -51,19 +51,19 @@ void TestEnergyLoadDiagnostic::testReceiveStatus()
 
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(obj->getStatus(), EnergyLoadDiagnostic::Critical);
+	QCOMPARE(obj->getStatus(), EnergyLoadManagement::Critical);
 
 	v[LoadsDevice::DIM_LOAD] = LoadsDevice::LOAD_WARNING;
 
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(obj->getStatus(), EnergyLoadDiagnostic::Warning);
+	QCOMPARE(obj->getStatus(), EnergyLoadManagement::Warning);
 
 	v[LoadsDevice::DIM_LOAD] = LoadsDevice::LOAD_OK;
 
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(obj->getStatus(), EnergyLoadDiagnostic::Ok);
+	QCOMPARE(obj->getStatus(), EnergyLoadManagement::Ok);
 
 	obj->valueReceived(v);
 	t.checkNoSignals();

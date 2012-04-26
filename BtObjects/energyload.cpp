@@ -4,24 +4,24 @@
 
 namespace
 {
-	EnergyLoadDiagnostic::LoadStatus mapLoad(int level)
+	EnergyLoadManagement::LoadStatus mapLoad(int level)
 	{
 		switch (level)
 		{
 		case LoadsDevice::LOAD_OK:
-			return EnergyLoadDiagnostic::Ok;
+			return EnergyLoadManagement::Ok;
 		case LoadsDevice::LOAD_WARNING:
-			return EnergyLoadDiagnostic::Warning;
+			return EnergyLoadManagement::Warning;
 		case LoadsDevice::LOAD_CRITICAL:
-			return EnergyLoadDiagnostic::Critical;
+			return EnergyLoadManagement::Critical;
 		default:
-			return EnergyLoadDiagnostic::Unknown;
+			return EnergyLoadManagement::Unknown;
 		}
 	}
 }
 
 
-EnergyLoadDiagnostic::EnergyLoadDiagnostic(LoadsDevice *_dev, QString _name)
+EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name)
 {
 	dev = _dev;
 	name = _name;
@@ -31,12 +31,12 @@ EnergyLoadDiagnostic::EnergyLoadDiagnostic(LoadsDevice *_dev, QString _name)
 		this, SLOT(valueReceived(DeviceValues)));
 }
 
-EnergyLoadDiagnostic::LoadStatus EnergyLoadDiagnostic::getStatus() const
+EnergyLoadManagement::LoadStatus EnergyLoadManagement::getStatus() const
 {
 	return status;
 }
 
-void EnergyLoadDiagnostic::valueReceived(const DeviceValues &values_list)
+void EnergyLoadManagement::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
