@@ -22,7 +22,7 @@ MenuColumn {
 
             onClicked: {
                 if (model.name !== "")
-                    column.loadColumn(model.comp, model.name)
+                    column.loadColumn(model.component, model.name)
             }
         }
 
@@ -32,12 +32,12 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Version"), "comp": settingsVersion})
-            modelList.append({"name": qsTr("Date & Time"), "comp": settingsDateTime})
-            modelList.append({"name": qsTr("Network"), "comp": settingsNetwork})
-            modelList.append({"name": qsTr("Display"), "comp": settingsDisplay})
-            modelList.append({"name": qsTr("International"), "comp": settingsInternational})
-            modelList.append({"name": qsTr("Password"), "comp": settingsPassword})
+            modelList.append({"name": qsTr("Version"), "component": settingsVersion})
+            modelList.append({"name": qsTr("Date & Time"), "component": settingsDateTime})
+            modelList.append({"name": qsTr("Network"), "component": settingsNetwork})
+            modelList.append({"name": qsTr("Display"), "component": settingsDisplay})
+            modelList.append({"name": qsTr("International"), "component": settingsInternational})
+            modelList.append({"name": qsTr("Password"), "component": settingsPassword})
         }
     }
 
