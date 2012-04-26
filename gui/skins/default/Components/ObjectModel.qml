@@ -1,41 +1,41 @@
 import QtQuick 1.1
 import BtObjects 1.0
-
+import Components.ThermalRegulation 1.0
 
 FilterListModel {
-    function getComponent(objectId) {
 
+    function getComponent(objectId) {
         switch (objectId) {
         case ObjectInterface.IdLight:
-            return Qt.createComponent("Components/Lighting/Light.qml")
+            return Qt.createComponent("Lighting/Light.qml")
         case ObjectInterface.IdDimmer:
-            return Qt.createComponent("Components/Lighting/Dimmer.qml")
+            return Qt.createComponent("Lighting/Dimmer.qml")
         case ObjectInterface.IdThermalControlUnit99:
-            return Qt.createComponent("Components/ThermalRegulation/ThermalControlUnit.qml")
+            return Qt.createComponent("ThermalRegulation/ThermalControlUnit.qml")
         case ObjectInterface.IdThermalControlledProbe:
-            return Qt.createComponent("Components/ThermalRegulation/ThermalControlledProbe.qml")
+            return Qt.createComponent("ThermalRegulation/ThermalControlledProbe.qml")
         case ObjectInterface.IdHardwareSettings:
             return Qt.createComponent("Brightness.qml")
         case ObjectInterface.IdMultiChannelGeneralAmbient:
-            return Qt.createComponent("Components/SoundDiffusion/GeneralAmbient.qml")
+            return Qt.createComponent("SoundDiffusion/GeneralAmbient.qml")
         case ObjectInterface.IdMultiChannelSoundAmbient:
-            return Qt.createComponent("Components/SoundDiffusion/SoundAmbient.qml")
+            return Qt.createComponent("SoundDiffusion/SoundAmbient.qml")
         case ObjectInterface.IdMonoChannelSoundAmbient:
-            return Qt.createComponent("Components/SoundDiffusion/SoundAmbient.qml")
+            return Qt.createComponent("SoundDiffusion/SoundAmbient.qml")
         case ObjectInterface.IdSoundAmplifier:
-            return Qt.createComponent("Components/SoundDiffusion/Amplifier.qml")
+            return Qt.createComponent("SoundDiffusion/Amplifier.qml")
         case ObjectInterface.IdPowerAmplifier:
-            return Qt.createComponent("Components/SoundDiffusion/PowerAmplifier.qml")
+            return Qt.createComponent("SoundDiffusion/PowerAmplifier.qml")
         case ObjectInterface.IdSoundAmplifierGeneral:
-            return Qt.createComponent("Components/SoundDiffusion/AmplifierGeneral.qml")
+            return Qt.createComponent("SoundDiffusion/AmplifierGeneral.qml")
         case ObjectInterface.IdSplitBasicScenario:
-            return Qt.createComponent("Components/ThermalRegulation/BasicSplit.qml")
+            return Qt.createComponent("ThermalRegulation/BasicSplit.qml")
         case ObjectInterface.IdSplitAdvancedScenario:
-            return Qt.createComponent("Components/ThermalRegulation/AdvancedSplit.qml")
+            return Qt.createComponent("ThermalRegulation/AdvancedSplit.qml")
         case ObjectInterface.IdSimpleScenario:
-            return Qt.createComponent("Components/Scenarios/SimpleScenario.qml")
+            return Qt.createComponent("Scenarios/SimpleScenario.qml")
         case ObjectInterface.IdScenarioModule:
-            return Qt.createComponent("Components/Scenarios/SimpleScenario.qml")
+            return Qt.createComponent("Scenarios/SimpleScenario.qml")
         default:
             console.log("getComponent(): Unknown object id: " + objectId)
             return ""
