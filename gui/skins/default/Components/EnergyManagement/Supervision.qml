@@ -12,6 +12,20 @@ MenuColumn {
         privateProps.currentIndex = -1
     }
 
+    Component.onCompleted: {
+        listModel.append({"name": "Stop and Go", "description": "chiuso",
+                             "status": 1,
+                             "component": stopAndGo})
+        listModel.append({"name": "Stop and Go Plus",
+                             "description": "chiuso",
+                             "status": 1,
+                             "component": stopAndGoPlus})
+        listModel.append({"name": "Stop and Go Btest",
+                             "description": "aperto - sovratensione",
+                             "status": 0,
+                             "component": stopAndGoBtest})
+    }
+
     QtObject {
         id: privateProps
         property int currentIndex: -1
@@ -19,24 +33,21 @@ MenuColumn {
 
     ListModel {
         id: listModel
-        ListElement {
-            name: "Stop and Go"
-            description: "chiuso"
-            status: 1
-            component: "Components/EnergyManagement/StopAndGo.qml"
-        }
-        ListElement {
-            name: "Stop and Go Plus"
-            description: "chiuso"
-            status: 1
-            component: "Components/EnergyManagement/StopAndGoPlus.qml"
-        }
-        ListElement {
-            name: "Stop and Go Btest"
-            description: "aperto - sovratensione"
-            status: 0
-            component: "Components/EnergyManagement/StopAndGoBtest.qml"
-        }
+    }
+
+    Component {
+        id: stopAndGo
+        StopAndGo {}
+    }
+
+    Component {
+        id: stopAndGoPlus
+        StopAndGoPlus {}
+    }
+
+    Component {
+        id: stopAndGoBtest
+        StopAndGoBtest {}
     }
 
     Column {
@@ -44,7 +55,7 @@ MenuColumn {
             id: listView
             currentIndex: -1
             width: element.width
-            listHeight: listModel.count * 50
+            listHeight: Math.max(1, 50 * listModel.count)
             delegate: MenuItemDelegate {
                 name: model.name
                 description: model.description
@@ -52,7 +63,7 @@ MenuColumn {
                 hasChild: true
                 onDelegateClicked: {
                     privateProps.currentIndex = -1
-                    element.loadElement(model.component, name)
+                    element.loadColumn(model.component, name)
                 }
             }
             model: listModel
@@ -66,7 +77,12 @@ MenuColumn {
             onClicked: {
                 listView.currentIndex = -1
                 privateProps.currentIndex = 1
-                element.loadElement("Components/EnergyManagement/LoadDiagnostic.qml", name)
+                element.loadColumn(component, name)
+            }
+
+            Component {
+                id: component
+                LoadDiagnostic{}
             }
         }
     }

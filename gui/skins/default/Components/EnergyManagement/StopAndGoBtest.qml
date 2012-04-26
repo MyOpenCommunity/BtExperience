@@ -28,7 +28,12 @@ MenuColumn {
             state: privateProps.currentIndex === 1 ? "selected" : ""
             onClicked: {
                 privateProps.currentIndex = 1
-                element.loadElement("Components/EnergyManagement/SelfTest.qml")
+                element.loadColumn(component)
+            }
+
+            Component {
+                id: component
+                SelfTest {}
             }
         }
 
