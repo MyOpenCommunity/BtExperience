@@ -36,6 +36,7 @@
 #include "test_filebrowser.h"
 #include "test_scenario_objects.h"
 #include "test_videodoorentry_objects.h"
+#include "test_energy_load.h"
 #include "main.h"
 
 logger *app_logger;
@@ -120,6 +121,9 @@ int main(int argc, char *argv[])
 
 	TestVideoDoorEntry test_videodoorentry;
 	test_list << &test_videodoorentry;
+
+	TestEnergyLoadDiagnostic test_energy_load;
+	test_list << &test_energy_load;
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))

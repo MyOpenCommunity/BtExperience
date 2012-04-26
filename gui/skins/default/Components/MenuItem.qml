@@ -6,8 +6,10 @@ Item {
     height: background.height
     width: background.width
 
-    property string name: ""
-    property string description: ""
+    property alias name: text.text
+    property alias description: textDescription.text
+    property alias boxInfoState: boxInfo.state
+    property alias boxInfoText: boxInfoText.text
     property int status: -1
     property bool hasChild: false
 
@@ -31,21 +33,23 @@ Item {
         SvgImage {
             id: iconStatus
             source: (statusVisible() ? (menuItem.status === 1 ? "../images/common/menu_column_item_active_led.svg" :"../images/common/menu_column_item_inactive_led.svg") : "");
-            anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: 0
+            anchors.leftMargin: menuItem.width / 100 * 2
+            anchors.topMargin: menuItem.height / 100 * 18
+            anchors.top: parent.top
         }
 
         Text {
             id: text
-            text: name
-            font.family: semiBoldFont.name
+            font.family: lightFont.name
             font.pixelSize: 14
+            color:  "#2d2d2d"
+            font.bold: true
             wrapMode: "WordWrap"
             anchors.left: parent.left
-            anchors.leftMargin: 19
+            anchors.leftMargin: menuItem.width / 100 * 9
             anchors.top: parent.top
-            anchors.topMargin: 8
+            anchors.topMargin: menuItem.height / 100 * 16
             anchors.right: arrowRight.left
         }
 
@@ -54,21 +58,62 @@ Item {
             id: arrowRight
             source: "../images/common/menu_column_item_arrow.svg"
             anchors.right: parent.right
-            anchors.rightMargin: 6
+            anchors.rightMargin: menuItem.width / 100 * 3
             anchors.top: parent.top
-            anchors.topMargin: 12
+            anchors.topMargin: menuItem.height / 100 * 24
+        }
+
+        Item {
+            id: boxInfo
+            visible: false
+            anchors.top: text.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: text.left
+            width: 45
+
+            Rectangle {
+                id: boxInfoRect
+                color: "#999"
+                radius: 4
+                height: 17
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Text {
+                    id: boxInfoText
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "white"
+                }
+            }
+
+            states: [
+                State {
+                    name: "info"
+                    PropertyChanges { target: boxInfoRect; color: "#999999" }
+                    PropertyChanges { target: boxInfo; visible: true }
+
+                },
+                State {
+                    name: "warning"
+                    PropertyChanges { target: boxInfoRect; color: "#ed1b35" }
+                    PropertyChanges { target: boxInfo; visible: true }
+                }
+            ]
         }
 
         Text {
             id: textDescription
-            text: description
-            font.family: lightFont.name
+            color: "#626262"
+            font.family: regularFont.name
             wrapMode: Text.NoWrap
             font.pixelSize: 14
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 5
+            anchors.bottomMargin: menuItem.height / 100 * 10
             anchors.top: text.bottom
-            anchors.left: text.left
+            anchors.left: boxInfo.visible ? boxInfo.right : text.left
+            anchors.leftMargin: boxInfo.visible ? 5 : 0
             verticalAlignment: Text.AlignBottom
         }
     }

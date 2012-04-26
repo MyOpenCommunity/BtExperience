@@ -1,8 +1,9 @@
 #include "roomelement.h"
 #include "objectinterface.h"
 
-RoomElement::RoomElement(ObjectInterface *obj, int _x, int _y)
+RoomElement::RoomElement(QString _room_name, ObjectInterface *obj, int _x, int _y)
 {
+	room_name = _room_name;
 	btObject = obj;
 	x = _x;
 	y = _y;
@@ -13,9 +14,7 @@ ObjectInterface *RoomElement::getBtObject() const
 	return btObject;
 }
 
-QVariantList RoomElement::getPosition() const
+QPoint RoomElement::getPosition() const
 {
-	QVariantList vl;
-	vl << x << y;
-	return vl;
+	return QPoint(x, y);
 }

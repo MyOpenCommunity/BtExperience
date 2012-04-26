@@ -45,6 +45,7 @@ public:
 		IdCCTV,
 		IdRoom,
 		IdIntercom,                             // 25
+		IdEnergyLoad,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
@@ -58,6 +59,7 @@ public:
 		SoundDiffusion,
 		Scenarios,
 		VideoEntry,
+		EnergyManagement
 	};
 
 	virtual int getObjectId() const = 0;

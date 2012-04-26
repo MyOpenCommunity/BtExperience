@@ -15,6 +15,13 @@ var changing_page = false
 
 // Create a QML object from a given filename and push it on the stack
 function openPage(filename, properties) {
+    // automatically set _pageName from component filename
+    var page_name = filename.split('.')[0]
+    if (properties === undefined)
+        properties = {}
+    if (properties['_pageName'] === undefined)
+        properties['_pageName'] = page_name
+
     // now, Stack.js is in a js subdir so we have to trick the filename
     return _openPage("../" + filename, properties)
 }

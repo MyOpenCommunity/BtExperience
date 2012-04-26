@@ -16,6 +16,10 @@ Image {
     property alias semiBoldFont: semiBoldFont
     property alias popupLoader: popupLoader
 
+    // Warning: this property is an internal detail, it's not part of the public
+    // interface
+    property string _pageName: ""
+
     FontLoader { id: lightFont; source: "MyriadPro-Light.otf" }
     FontLoader { id: regularFont; source: "MyriadPro-Regular.otf" }
     FontLoader { id: semiBoldFont; source: "MyriadPro-Semibold.otf" }
@@ -57,7 +61,10 @@ Image {
 
     function closeAlarmAndShowLog() {
         closePopup()
-        Stack.openPage("Antintrusion.qml").showLog()
+        var currentPage = Stack.currentPage()
+        if (currentPage._pageName !== "Antintrusion")
+            currentPage = Stack.openPage("Antintrusion.qml")
+        currentPage.showLog()
     }
 
     // needed to translate antintrusion names in popup

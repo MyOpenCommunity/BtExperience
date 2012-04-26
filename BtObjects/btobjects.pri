@@ -1,5 +1,6 @@
 HEADERS += \
 	antintrusionsystem.h \
+	energyload.h \
 	folderlistmodel.h \
 	hardware.h \
 	lightobjects.h \
@@ -17,7 +18,9 @@ HEADERS += \
 	devices/airconditioning_device.h \
 	devices/antintrusion_device.h \
 	devices/device.h \
+	devices/energy_device.h \
 	devices/lighting_device.h \
+	devices/loads_device.h \
 	devices/media_device.h \
 	devices/platform_device.h \
 	devices/probe_device.h \
@@ -39,6 +42,7 @@ HEADERS += \
 
 SOURCES += \
 	antintrusionsystem.cpp \
+	energyload.cpp \
 	folderlistmodel.cpp \
 	hardware.cpp \
 	lightobjects.cpp \
@@ -56,7 +60,9 @@ SOURCES += \
 	devices/airconditioning_device.cpp \
 	devices/antintrusion_device.cpp \
 	devices/device.cpp \
+	devices/energy_device.cpp \
 	devices/lighting_device.cpp \
+	devices/loads_device.cpp \
 	devices/media_device.cpp \
 	devices/platform_device.cpp \
 	devices/probe_device.cpp \

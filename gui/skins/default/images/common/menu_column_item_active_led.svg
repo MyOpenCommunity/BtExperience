@@ -1,33 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="10px" height="32px" viewBox="0 0 10 32" enable-background="new 0 0 10 32" xml:space="preserve">
-<g id="active_x5F_led">
-	<g>
-		<g>
-			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="16" x2="10" y2="16">
-				<stop  offset="0" style="stop-color:#CBFD00"/>
-				<stop  offset="0.3391" style="stop-color:#C8FB00"/>
-				<stop  offset="0.5703" style="stop-color:#BFF501"/>
-				<stop  offset="0.7694" style="stop-color:#B0EB01"/>
-				<stop  offset="0.9494" style="stop-color:#9BDC03"/>
-				<stop  offset="1" style="stop-color:#93D703"/>
-			</linearGradient>
-			<path fill="url(#SVGID_1_)" d="M0,0v32c5.777-2.022,10-8.416,10-16.001C10,8.419,5.777,2.022,0,0z"/>
-			<path fill="#93D703" d="M0.5,0.728c5.333,2.241,9,8.403,9,15.271c0,6.869-3.667,13.032-9,15.273V0.728 M0,0v32
-				c5.777-2.022,10-8.416,10-16.001C10,8.419,5.777,2.022,0,0L0,0z"/>
-		</g>
-	</g>
-	
-		<radialGradient id="led_1_" cx="-179.457" cy="16.5815" r="3.6925" gradientTransform="matrix(-1.2045 0 0 -2.718 -211.3359 60.5423)" gradientUnits="userSpaceOnUse">
-		<stop  offset="0" style="stop-color:#FFFF00"/>
-		<stop  offset="0.1572" style="stop-color:#F8FC00;stop-opacity:0.8428"/>
-		<stop  offset="0.3864" style="stop-color:#E5F501;stop-opacity:0.6136"/>
-		<stop  offset="0.6597" style="stop-color:#C5E902;stop-opacity:0.3403"/>
-		<stop  offset="0.9646" style="stop-color:#99D903;stop-opacity:0.0354"/>
-		<stop  offset="1" style="stop-color:#93D703;stop-opacity:0"/>
-	</radialGradient>
-	<ellipse id="led" fill="url(#led_1_)" cx="4.821" cy="15.475" rx="4.332" ry="10.241"/>
-</g>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="11px" height="11px" viewBox="0 0 11 11" enable-background="new 0 0 11 11" xml:space="preserve">
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="5.4536" y1="0.8564" x2="5.4536" y2="10.2974">
+	<stop  offset="0" style="stop-color:#C6D300"/>
+	<stop  offset="0.3563" style="stop-color:#C3D200"/>
+	<stop  offset="0.5992" style="stop-color:#BBCE00"/>
+	<stop  offset="0.8078" style="stop-color:#ACC90F"/>
+	<stop  offset="0.997" style="stop-color:#95C11E"/>
+	<stop  offset="1" style="stop-color:#95C11F"/>
+</linearGradient>
+<polygon fill="url(#SVGID_1_)" points="9.518,1.53 9.518,0.856 1.39,0.856 1.39,1.53 0.712,1.53 0.712,9.621 1.39,9.621 
+	1.39,10.297 9.518,10.297 9.518,9.621 10.195,9.621 10.195,1.53 "/>
+<rect id="highlight" x="1.571" y="0.785" fill="#FFFFFF" width="7.857" height="0.785"/>
+<path fill="#95C11F" d="M9.429,0.786v0.786h0.785v7.856H9.429v0.787H1.571V9.428H0.786V1.571h0.785V0.786H9.429 M10.214,0H0.786
+	v0.786H0v9.429h0.786V11h9.428v-0.785H11V0.786h-0.786V0L10.214,0z"/>
+<radialGradient id="led_1_" cx="-179.6084" cy="-2.5625" r="3.6195" gradientTransform="matrix(-1.2045 0 0 -1.1911 -211.3418 2.4428)" gradientUnits="userSpaceOnUse">
+	<stop  offset="0" style="stop-color:#F3E600"/>
+	<stop  offset="0.3925" style="stop-color:#CDD600;stop-opacity:0.6075"/>
+	<stop  offset="0.7932" style="stop-color:#A6C719;stop-opacity:0.2068"/>
+	<stop  offset="1" style="stop-color:#95C11F;stop-opacity:0"/>
+</radialGradient>
+<ellipse id="led_2_" fill="url(#led_1_)" cx="4.998" cy="5.496" rx="4.245" ry="4.4"/>
 </svg>

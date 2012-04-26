@@ -172,6 +172,10 @@ source: "images/home/home.jpg"
          anchors.leftMargin: 0
     }
 
+    RoomListModel {
+        id: roomModel
+    }
+
     Item {
          id: pages
          x: 620
@@ -204,7 +208,12 @@ source: "images/home/home.jpg"
                   textFirst: false
                   source: "images/home/stanze.png"
                   text: qsTr("rooms")
-                  onClicked: Stack.openPage("Rooms.qml")
+                  onClicked: {
+                      if (roomModel.rooms().length > 1)
+                          Stack.openPage("Rooms.qml")
+                      else
+                          Stack.openPage("Room.qml")
+                  }
                   textLeftMargin: 70
               }
 

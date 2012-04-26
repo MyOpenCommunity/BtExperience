@@ -132,10 +132,13 @@ MenuColumn {
     Column {
         id: antintrusionColumn
         MenuItem {
+            property int numberOfAlarms: privateProps.model.alarms.size
             state: privateProps.currentElement == 1 ? "selected" : ""
             name: column.alarmLogTitle
             hasChild: true
             onClicked: showAlarmLog()
+            boxInfoState: numberOfAlarms > 0 ? "warning" : ""
+            boxInfoText: numberOfAlarms
 
             Rectangle {
                 id: registerDarkRect

@@ -27,10 +27,13 @@
 #include "scenarioobjects.h"
 #include "vct.h"
 #include "videodoorentry_device.h"
+#include "energyload.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
 #include <QFileInfo>
+#include <QDir>
+#include <QApplication>
 
 #include <QDomNode>
 
@@ -54,42 +57,11 @@ namespace {
 		}
 		return dev;
 	}
-
-	QString getAttribute(const QDomNode &n, const QString &attr)
-	{
-		QDomNode attribute = n.attributes().namedItem(attr);
-		if (attribute.isNull())
-		{
-			qWarning() << "Attribute " << attr << " not present for node " << n.localName();
-			return QString();
-		}
-
-		if (!attribute.isAttr())
-		{
-			qWarning() << "Attribute" << attr << "is not a QDomAttr";
-			return QString();
-		}
-
-		return attribute.toAttr().value();
-	}
-
-	int getIntAttribute(const QDomNode &n, const QString &attr)
-	{
-		QString a = getAttribute(n, attr);
-		bool ok;
-		int val = a.toInt(&ok);
-		if (!ok)
-		{
-			qWarning() << "Error converting attribute " << attr << "of node " << n.localName() << " to int";
-			return -1;
-		}
-		return val;
-	}
 }
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
-	QFile fh(CONF_FILE);
+	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath());
 	QDomDocument document;
 	if (!fh.exists() || !document.setContent(&fh))
 		qFatal("The config file %s does not seem a valid xml configuration file", qPrintable(QFileInfo(fh).absoluteFilePath()));
@@ -114,6 +86,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameSender::setClients(clients);
 
 	FilterListModel::setGlobalSource(&objmodel);
+	RoomListModel::setGlobalSource(&room_model);
 	createObjects(document);
 	parseConfig();
 	device::initDevices();
@@ -235,7 +208,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 void BtObjectsPlugin::parseConfig()
 {
-	QFile fh(LAYOUT_FILE);
+	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), LAYOUT_FILE).absoluteFilePath());
 	QDomDocument document;
 	if (!fh.exists() || !document.setContent(&fh))
 		qFatal("The layout file %s does not seem a valid xml configuration file", qPrintable(QFileInfo(fh).absoluteFilePath()));
@@ -251,6 +224,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 {
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
+		QString room_name = getAttribute(instance, "descr");
 		foreach (const QDomNode &link, getChildren(instance, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
@@ -258,7 +232,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int y = getIntAttribute(link, "y");
 
 			// TODO: map uii to object...
-			objmodel << new RoomElement(objmodel.getObject(object_uii), x, y);
+			room_model << new RoomElement(room_name, objmodel.getObject(object_uii), x, y);
 		}
 	}
 }
@@ -268,6 +242,7 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	// @uri BtObjects
 	qmlRegisterUncreatableType<ObjectListModel>(uri, 1, 0, "ObjectListModel", "");
 	qmlRegisterType<FilterListModel>(uri, 1, 0, "FilterListModel");
+	qmlRegisterType<RoomListModel>(uri, 1, 0, "RoomListModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
 	qmlRegisterUncreatableType<ObjectInterface>(
@@ -295,6 +270,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 				uri, 1, 0, "SourceBase",
 				"unable to create an SourceBase instance");
 	qmlRegisterType<SplitProgram>(uri, 1, 0, "SplitProgram");
+	qmlRegisterUncreatableType<EnergyLoadDiagnostic>(
+				uri, 1, 0, "EnergyLoadDiagnostic",
+				"unable to create an EnergyLoadDiagnostic instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

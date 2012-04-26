@@ -16,7 +16,7 @@ MenuColumn {
         width: parent.width
         // TODO: is it ever possible to get the height of a MenuItemDelegate
         // without doing this??
-        listHeight: 50 * paginator.elementsOnPage
+        listHeight: objectModel.size * 50
 
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
