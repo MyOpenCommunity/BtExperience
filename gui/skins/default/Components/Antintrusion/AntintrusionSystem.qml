@@ -19,7 +19,7 @@ MenuColumn {
         AntintrusionScenarios {}
     }
 
-    ObjectModel {
+    FilterListModel {
         id: objectModel
         categories: [ObjectInterface.Antintrusion]
     }
@@ -249,7 +249,7 @@ MenuColumn {
                     }
                 }
 
-                ObjectModel {
+                FilterListModel {
                     id: zoneModel
                     source: privateProps.model.zones
                 }

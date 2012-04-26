@@ -23,13 +23,15 @@ MenuColumn {
             status: itemObject.hasActiveAmplifier === undefined ? -1 : itemObject.hasActiveAmplifier
             hasChild: true
             onClicked:
-                column.loadColumn(objectModel.getComponent(itemObject.objectId), itemObject.name, itemObject)
+                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
         }
 
         model: objectModel
     }
 
-    ObjectModel {
+    BtObjectsMapping { id: mapping }
+
+    FilterListModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdMultiChannelGeneralAmbient},
             {objectId: ObjectInterface.IdMultiChannelSoundAmbient},

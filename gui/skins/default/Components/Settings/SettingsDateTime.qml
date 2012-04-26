@@ -32,7 +32,7 @@ MenuColumn {
     }
 
     // object model to retrieve network data
-    ObjectModel {
+    FilterListModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdHardwareSettings}]
     }

@@ -19,7 +19,7 @@ MenuColumn {
             hasChild: true
             onClicked: {
                 column.loadColumn(
-                            objectModel.getComponent(itemObject.objectId),
+                            mapping.getComponent(itemObject.objectId),
                             itemObject.name,
                             objectModel.getObject(model.index))
             }
@@ -29,7 +29,9 @@ MenuColumn {
         onCurrentPageChanged: column.closeChild()
     }
 
-    ObjectModel {
+    BtObjectsMapping { id: mapping }
+
+    FilterListModel {
         id: objectModel
         filters: [
             {objectId: ObjectInterface.IdSplitBasicScenario},

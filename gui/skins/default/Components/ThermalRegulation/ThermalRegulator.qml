@@ -34,7 +34,7 @@ MenuColumn {
             hasChild: true
             onClicked: {
                 column.loadColumn(
-                            modelList.getComponent(itemObject.objectId),
+                            mapping.getComponent(itemObject.objectId),
                             itemObject.name,
                             modelList.getObject(model.index))
             }
@@ -42,13 +42,15 @@ MenuColumn {
 
         model: modelList
 
-        ObjectModel {
-            id: modelList
-            filters: [{objectId: ObjectInterface.IdThermalControlUnit99},
-                      {objectId: ObjectInterface.IdThermalControlledProbe}]
-        }
-
         onCurrentPageChanged: column.closeChild()
+    }
+
+    BtObjectsMapping { id: mapping }
+
+    FilterListModel {
+        id: modelList
+        filters: [{objectId: ObjectInterface.IdThermalControlUnit99},
+                  {objectId: ObjectInterface.IdThermalControlledProbe}]
     }
 }
 

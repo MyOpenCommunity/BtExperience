@@ -20,9 +20,10 @@ MenuColumn {
         }
 
         model: programModel
-        ObjectModel {
-            id: programModel
-            source: column.dataModel.programs
-        }
+    }
+
+    FilterListModel {
+        id: programModel
+        source: column.dataModel.programs
     }
 }

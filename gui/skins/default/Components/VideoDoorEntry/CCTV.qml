@@ -10,7 +10,7 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
-    ObjectModel {
+    FilterListModel {
         id: modelList
         filters: [{objectId: ObjectInterface.IdCCTV}]
     }

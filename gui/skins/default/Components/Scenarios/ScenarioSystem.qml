@@ -22,7 +22,7 @@ MenuColumn {
             hasChild: true
             onClicked:
                 column.loadColumn(
-                    objectModel.getComponent(itemObject.objectId),
+                    mapping.getComponent(itemObject.objectId),
                     itemObject.name,
                     itemObject)
         }
@@ -30,7 +30,9 @@ MenuColumn {
         model: objectModel
     }
 
-    ObjectModel {
+    BtObjectsMapping { id: mapping }
+
+    FilterListModel {
         id: objectModel
         filters: [
             {objectId: ObjectInterface.IdSimpleScenario},

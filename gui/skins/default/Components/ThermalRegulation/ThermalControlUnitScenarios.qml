@@ -20,9 +20,10 @@ MenuColumn {
         }
 
         model: scenarioModel
-        ObjectModel {
-            id: scenarioModel
-            source: column.dataModel.scenarios
-        }
+    }
+
+    FilterListModel {
+        id: scenarioModel
+        source: column.dataModel.scenarios
     }
 }

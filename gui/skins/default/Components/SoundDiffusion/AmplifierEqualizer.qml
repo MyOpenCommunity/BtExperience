@@ -1,5 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
+
 
 MenuColumn {
     id: column
@@ -22,7 +24,7 @@ MenuColumn {
         model: objectModel
     }
 
-    ObjectModel {
+    FilterListModel {
         id: objectModel
         source: column.dataModel.presets
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)

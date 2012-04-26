@@ -20,7 +20,7 @@ Item {
       * ANTINTRUSION ALARMS
       *
       **********************************************************************/
-    ObjectModel {
+    FilterListModel {
         id: antintrusionModel
         categories: [ObjectInterface.Antintrusion]
     }

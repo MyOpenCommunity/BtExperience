@@ -22,7 +22,7 @@ MenuColumn {
         }
     }
 
-    ObjectModel {
+    FilterListModel {
         id: sourceModel
         filters: [{objectId: ObjectInterface.IdSoundSource}]
     }

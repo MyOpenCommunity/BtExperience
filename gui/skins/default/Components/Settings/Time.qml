@@ -11,7 +11,7 @@ MenuColumn {
     signal timeChanged(variant value, int auto, int format)
 
     // object model to retrieve network data
-    ObjectModel {
+    FilterListModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdHardwareSettings}]
     }

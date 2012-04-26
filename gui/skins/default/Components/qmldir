@@ -2,6 +2,7 @@ AlarmPopup 1.0 AlarmPopup.qml
 Alert 1.0 Alert.qml
 AnimatedLoader 1.0 AnimatedLoader.qml
 AnimationManager 1.0 AnimationManager.qml
+BtObjectsMapping 1.0 BtObjectsMapping.qml
 ButtonBack 1.0 ButtonBack.qml
 ButtonCommand 1.0 ButtonCommand.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
@@ -30,7 +31,6 @@ MenuContainer 1.0 MenuContainer.qml
 MenuItem 1.0 MenuItem.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 MenuTitle 1.0 MenuTitle.qml
-ObjectModel 1.0 ObjectModel.qml
 PageAnimation 1.0 PageAnimation.qml
 Paginator 1.0 Paginator.qml
 PaginatorColumn 1.0 PaginatorColumn.qml

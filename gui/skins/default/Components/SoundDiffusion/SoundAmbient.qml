@@ -48,7 +48,7 @@ MenuColumn {
             hasChild: true
             onDelegateClicked: {
                 privateProps.currentIndex = -1
-                column.loadColumn(objectModel.getComponent(itemObject.objectId), itemObject.name, itemObject);
+                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject);
             }
         }
 
@@ -60,7 +60,9 @@ MenuColumn {
         property int currentIndex: -1
     }
 
-    ObjectModel {
+    BtObjectsMapping { id: mapping }
+
+    FilterListModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdSoundAmplifierGeneral, objectKey: column.dataModel.objectKey},
             {objectId: ObjectInterface.IdSoundAmplifier, objectKey: column.dataModel.objectKey},

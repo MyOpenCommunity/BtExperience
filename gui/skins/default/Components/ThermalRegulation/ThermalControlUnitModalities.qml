@@ -31,10 +31,10 @@ MenuColumn {
             onClicked: column.modalitySelected(itemObject)
         }
         model: modalitiesModel
+    }
 
-        ObjectModel {
-            id: modalitiesModel
-            source: column.dataModel.modalities
-        }
+    FilterListModel {
+        id: modalitiesModel
+        source: column.dataModel.modalities
     }
 }

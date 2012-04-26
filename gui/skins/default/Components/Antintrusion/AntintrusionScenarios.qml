@@ -36,10 +36,10 @@ MenuColumn {
         }
 
         model: scenariosModel
+    }
 
-        ObjectModel {
-            id: scenariosModel
-            source: column.dataModel
-        }
+    FilterListModel {
+        id: scenariosModel
+        source: column.dataModel
     }
 }
