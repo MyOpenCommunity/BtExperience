@@ -38,7 +38,6 @@ MenuColumn {
         }
     }
 
-
     Component {
         id: thermalRegulator
         ThermalRegulator {}
