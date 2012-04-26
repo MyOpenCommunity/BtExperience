@@ -5,12 +5,7 @@ import Components.Settings 1.0
 SystemPage {
     source: "images/illuminazione.jpg"
     text: qsTr("settings")
-    rootColumn: settingsItems
+    rootColumn: Component { SettingsItems {} }
     names: SettingsNames {}
-
-    Component {
-        id: settingsItems
-        SettingsItems {}
-    }
 }
 

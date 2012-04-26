@@ -6,11 +6,6 @@ SystemPage {
     id: sounddiffusion
     source: "images/sound_diffusion.jpg"
     text: qsTr("sound system")
-    rootColumn: soundDiffusionSystem
-
-    Component {
-        id: soundDiffusionSystem
-        SoundDiffusionSystem {}
-    }
+    rootColumn: Component { SoundDiffusionSystem {} }
 }
 

@@ -5,12 +5,7 @@ import Components.VideoDoorEntry 1.0
 SystemPage {
     source: "images/videocitofonia.jpg"
     text: qsTr("video door entry")
-    rootColumn: videoDoorEntryItems
+    rootColumn: Component { VideoDoorEntryItems {} }
     names: ThermalNames {}
-
-    Component {
-        id: videoDoorEntryItems
-        VideoDoorEntryItems {}
-    }
 }
 

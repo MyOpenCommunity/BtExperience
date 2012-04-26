@@ -8,13 +8,8 @@ SystemPage {
     id: antintrusion
     source: "images/antintrusion.jpg"
     text: qsTr("antintrusion")
-    rootColumn: antintrusionSystem
+    rootColumn: Component { AntintrusionSystem {} }
     names: AntintrusionNames { }
-
-    Component {
-        id: antintrusionSystem
-        AntintrusionSystem {}
-    }
 
     // KeyPad management and API
     function showKeyPad(title, errorMessage, okMessage) {
