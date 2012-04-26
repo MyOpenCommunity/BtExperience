@@ -18,7 +18,8 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             name: model.name
-            hasChild: model.componentFile !== ""
+            hasChild: model.component !== undefined
+                      && model.component !== null
 
             onClicked: {
                 column.loadColumn(model.component, model.name)
