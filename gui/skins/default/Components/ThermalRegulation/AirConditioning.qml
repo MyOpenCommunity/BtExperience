@@ -18,8 +18,8 @@ MenuColumn {
             description: objectModel.getObject(index).temperature / 10 + "°C"
             hasChild: true
             onClicked: {
-                column.loadElement(
-                            objectModel.getComponentFile(itemObject.objectId),
+                column.loadColumn(
+                            objectModel.getComponent(itemObject.objectId),
                             itemObject.name,
                             objectModel.getObject(model.index))
             }

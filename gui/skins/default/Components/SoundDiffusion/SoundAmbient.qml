@@ -5,6 +5,12 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
+    Component {
+        id: sourceControl
+        SourceControl {}
+    }
+
     height: itemList.height + sourceLoader.height
     width: 212
 
@@ -22,7 +28,10 @@ MenuColumn {
         onItemClicked: {
             privateProps.currentIndex = 1
             itemList.currentIndex = -1
-            column.loadElement("Components/SoundDiffusion/SourceControl.qml", qsTr("source"), column.dataModel)
+            column.loadColumn(
+                        sourceControl,
+                        qsTr("source"),
+                        column.dataModel)
         }
     }
 
@@ -39,7 +48,7 @@ MenuColumn {
             hasChild: true
             onDelegateClicked: {
                 privateProps.currentIndex = -1
-                column.loadElement(objectModel.getComponentFile(itemObject.objectId), itemObject.name, itemObject);
+                column.loadColumn(objectModel.getComponent(itemObject.objectId), itemObject.name, itemObject);
             }
         }
 

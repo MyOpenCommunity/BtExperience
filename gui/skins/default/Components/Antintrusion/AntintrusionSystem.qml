@@ -3,11 +3,21 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: system
+    id: column
     width: 212
     height: antintrusionColumn.height
     property string alarmLogTitle: qsTr("alarm log")
     property string imagesPath: "../../images/"
+
+    Component {
+        id: antintrusionAlarms
+        AntintrusionAlarms {}
+    }
+
+    Component {
+        id: antinstrusionScenarios
+        AntintrusionScenarios {}
+    }
 
     ObjectModel {
         id: objectModel
@@ -20,7 +30,7 @@ MenuColumn {
     }
 
     function showAlarmLog(name) {
-        system.loadElement("Components/Antintrusion/AntintrusionAlarms.qml", system.alarmLogTitle, privateProps.model.alarms)
+        column.loadColumn(antintrusionAlarms, column.alarmLogTitle, privateProps.model.alarms)
         if (privateProps.currentElement != 1) {
             privateProps.currentElement = 1
         }
@@ -123,7 +133,7 @@ MenuColumn {
         id: antintrusionColumn
         MenuItem {
             state: privateProps.currentElement == 1 ? "selected" : ""
-            name: system.alarmLogTitle
+            name: column.alarmLogTitle
             hasChild: true
             onClicked: showAlarmLog()
 
@@ -151,8 +161,8 @@ MenuColumn {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    var title = system.state === "" ? qsTr("enable system") : qsTr("disable system")
-                    var okMessage = system.state === "" ? qsTr("system enabled") : qsTr("system disabled")
+                    var title = column.state === "" ? qsTr("enable system") : qsTr("disable system")
+                    var okMessage = column.state === "" ? qsTr("system enabled") : qsTr("system disabled")
                     privateProps.toggleActivation(title, qsTr("wrong code"), okMessage)
                 }
             }
@@ -163,7 +173,7 @@ MenuColumn {
             name: qsTr("scenario")
             hasChild: true
             onClicked: {
-                system.loadElement("Components/Antintrusion/AntintrusionScenarios.qml", name, privateProps.model.scenarios)
+                column.loadColumn(antinstrusionScenarios, name, privateProps.model.scenarios)
                 if (privateProps.currentElement != 2)
                     privateProps.currentElement = 2
             }

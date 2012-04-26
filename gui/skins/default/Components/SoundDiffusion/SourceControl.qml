@@ -5,6 +5,17 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
+    Component {
+        id: sourceList
+        SourceList {}
+    }
+
+    Component {
+        id: songBrowser
+        SongBrowser {}
+    }
+
     width: 212
     height: sourceSelect.height + itemLoader.height
     property string imagesPath: "../../images/"
@@ -18,7 +29,7 @@ MenuColumn {
         onClicked: {
             if (privateProps.currentElement !== 0)
                 privateProps.currentElement = 0
-            column.loadElement("Components/SoundDiffusion/SourceList.qml", qsTr("source change"))
+            column.loadColumn(sourceList, qsTr("source change"))
         }
     }
 
@@ -151,7 +162,7 @@ MenuColumn {
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps.currentElement = 1
-                    column.loadElement("Components/SoundDiffusion/SongBrowser.qml", "Browse")
+                    column.loadColumn(songBrowser, "Browse")
                 }
             }
 

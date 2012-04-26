@@ -22,7 +22,7 @@ MenuColumn {
             onClicked: {
                 dataModel.program = modelData
                 modeChanged(dataModel.mode)
-                column.closeElement()
+                column.closeColumn()
             }
         }
         model: dataModel.programs

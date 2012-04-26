@@ -4,6 +4,12 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
+    Component {
+        id: amplifierSettings
+        AmplifierSettings {}
+    }
+
     height: buttonOnOff.height + volumeSlider.height + amplifierSettings.height
     width: 212
 
@@ -33,7 +39,10 @@ MenuColumn {
         hasChild: true
         onClicked: {
             state = "selected"
-            column.loadElement("Components/SoundDiffusion/AmplifierSettings.qml", qsTr("settings"), column.dataModel)
+            column.loadColumn(
+                        amplifierSettings,
+                        qsTr("settings"),
+                        column.dataModel)
         }
     }
 }

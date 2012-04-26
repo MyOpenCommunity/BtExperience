@@ -3,7 +3,7 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    height: 50 * itemList.count
+    height: Math.max(1, 50 * itemList.count)
     width: 212
 
     onChildDestroyed: {
@@ -21,8 +21,8 @@ MenuColumn {
             hasChild: model.componentFile !== ""
 
             onClicked: {
-                if (model.componentFile !== "")
-                    column.loadElement(model.componentFile, model.name)
+                if (model.name !== "")
+                    column.loadColumn(model.comp, model.name)
             }
         }
 
@@ -31,22 +31,21 @@ MenuColumn {
 
     ListModel {
         id: modelList
-        ListElement {
-            name: "Aggiungi nuova stanza"
-            componentFile: ""
+        Component.onCompleted: {
+            modelList.append({"name": qsTr("Add new room"), "comp": addRoom})
+            modelList.append({"name": qsTr("Kitchen"), "comp": modifyRoom})
+            modelList.append({"name": qsTr("Children Room"), "comp": modifyRoom})
+            modelList.append({"name": qsTr("Box"), "comp": modifyRoom})
         }
+    }
 
-        ListElement {
-            name: "Cucina"
-            componentFile: "Components/Settings/RoomModify.qml"
-        }
-        ListElement {
-            name: "Camera ragazzi"
-            componentFile: "Components/Settings/RoomModify.qml"
-        }
-        ListElement {
-            name: "box"
-            componentFile: "Components/Settings/RoomModify.qml"
-        }
+    Component {
+        id: addRoom
+        Item {}
+    }
+
+    Component {
+        id: modifyRoom
+        RoomModify {}
     }
 }

@@ -1,9 +1,11 @@
 import QtQuick 1.1
 import Components 1.0
+import Components.Settings 1.0
+
 
 MenuColumn {
     id: column
-    height: 50 * itemList.count
+    height: Math.max(1, 50 * itemList.count)
     width: 212
 
     onChildDestroyed: {
@@ -21,8 +23,8 @@ MenuColumn {
             hasChild: model.componentFile !== ""
 
             onClicked: {
-                if (model.componentFile !== "")
-                    column.loadElement(model.componentFile, model.name)
+                if (model.name !== "")
+                    column.loadColumn(model.comp, model.name)
             }
         }
 
@@ -31,29 +33,43 @@ MenuColumn {
 
     ListModel {
         id: modelList
-        ListElement {
-            name: "generals"
-            componentFile: "Components/Settings/SettingsGenerals.qml"
+        Component.onCompleted: {
+            modelList.append({"name": qsTr("General"), "comp": settingsGenerals})
+            modelList.append({"name": qsTr("Profiles"), "comp": profiles})
+            modelList.append({"name": qsTr("Rooms"), "comp": rooms})
+            modelList.append({"name": qsTr("Alarm Clock"), "comp": alarmClock})
+            modelList.append({"name": qsTr("Notifications"), "comp": notifications})
+            modelList.append({"name": qsTr("Multimedia"), "comp": multimedia})
         }
-        ListElement {
-            name: "profiles"
-            componentFile:""
-        }
-        ListElement {
-            name: "rooms"
-            componentFile:"Components/Settings/Floor.qml"
-        }
-        ListElement {
-            name: "alarm clock"
-            componentFile:""
-        }
-        ListElement {
-            name: "notifications"
-            componentFile:""
-        }
-        ListElement {
-            name: "multimedia"
-            componentFile:""
-        }
+    }
+
+    Component {
+        id: settingsGenerals
+        SettingsGenerals {}
+    }
+
+    Component {
+        id: profiles
+        Item {}
+    }
+
+    Component {
+        id: rooms
+        Floor {}
+    }
+
+    Component {
+        id: alarmClock
+        Item {}
+    }
+
+    Component {
+        id: notifications
+        Item {}
+    }
+
+    Component {
+        id: multimedia
+        Item {}
     }
 }

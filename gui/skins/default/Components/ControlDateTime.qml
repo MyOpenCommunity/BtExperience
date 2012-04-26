@@ -64,7 +64,6 @@ Image {
 
         onClicked: {
             if (!selected) {
-                //element.loadElement("ThermalControlUnitDate.qml", "data")
                 privateProps.current_element = 1
             }
         }
@@ -78,7 +77,6 @@ Image {
         selected: privateProps.current_element == 2
         onClicked: {
             if (!selected) {
-                //element.loadElement("ThermalControlUnitTime.qml", "ora")
                 privateProps.current_element = 2
             }
         }

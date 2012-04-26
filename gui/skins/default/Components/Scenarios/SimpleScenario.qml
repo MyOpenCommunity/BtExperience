@@ -9,7 +9,7 @@ MenuColumn {
         name: qsTr("activate")
         onClicked: {
             column.dataModel.activate()
-            column.closeElement();
+            column.closeColumn();
         }
     }
 }

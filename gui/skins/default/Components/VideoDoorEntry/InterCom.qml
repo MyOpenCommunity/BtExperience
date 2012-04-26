@@ -21,13 +21,15 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
             hasChild: true
-            onDelegateClicked: column.loadElement(
-                                   "Components/VideoDoorEntry/Talk.qml",
-                                   name,
-                                   itemObject)
+            onDelegateClicked: column.loadColumn(talk, name, itemObject)
         }
         model: modelList
 
         onCurrentPageChanged: column.closeChild()
+    }
+
+    Component {
+        id: talk
+        Talk {}
     }
 }

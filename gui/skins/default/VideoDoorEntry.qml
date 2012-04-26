@@ -1,10 +1,16 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
+import Components.VideoDoorEntry 1.0
+
 
 SystemPage {
     source: "images/videocitofonia.jpg"
     text: qsTr("video door entry")
-    rootElement: "Components/VideoDoorEntry/VideoDoorEntryItems.qml"
-    names: ThermalNames { }
+    rootColumn: videoDoorEntryItems
+    names: ThermalNames {}
+
+    Component {
+        id: videoDoorEntryItems
+        VideoDoorEntryItems {}
+    }
 }
 

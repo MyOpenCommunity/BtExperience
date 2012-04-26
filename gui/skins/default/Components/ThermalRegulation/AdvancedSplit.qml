@@ -5,6 +5,17 @@ import "../../js/logging.js" as Log
 
 MenuColumn {
     id: column
+
+    Component {
+        id: programListSplit
+        ProgramListSplit {}
+    }
+
+    Component {
+        id: advancedSplitModalities
+        AdvancedSplitModalities {}
+    }
+
     width: 212
     height: paginator.height
 
@@ -51,8 +62,8 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                column.loadElement(
-                            "Components/ThermalRegulation/ProgramListSplit.qml",
+                column.loadColumn(
+                            programListSplit,
                             name,
                             dataModel)
             }
@@ -67,9 +78,10 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                column.loadElement("Components/ThermalRegulation/AdvancedSplitModalities.qml",
-                                    name,
-                                    dataModel)
+                column.loadColumn(
+                            advancedSplitModalities,
+                            name,
+                            dataModel)
             }
         }
 
@@ -133,13 +145,13 @@ MenuColumn {
                 }
             }
             ButtonOkCancel {
-                onCancelClicked: column.closeElement()
+                onCancelClicked: column.closeColumn()
                 onOkClicked: {
                     dataModel.speed = fancoilMode.currentIndex
                     dataModel.swing = swing.currentIndex
                     dataModel.setPoint = temp.currentTemp * 10
                     dataModel.ok()
-                    column.closeElement()
+                    column.closeColumn()
                 }
             }
         }
@@ -186,12 +198,12 @@ MenuColumn {
                 }
             }
             ButtonOkCancel {
-                onCancelClicked: column.closeElement()
+                onCancelClicked: column.closeColumn()
                 onOkClicked: {
                     dataModel.speed = fancoilMode.currentIndex
                     dataModel.swing = swing.currentIndex
                     dataModel.ok()
-                    column.closeElement()
+                    column.closeColumn()
                 }
             }
         }
@@ -200,10 +212,10 @@ MenuColumn {
     Component {
         id: off
         ButtonOkCancel {
-            onCancelClicked: column.closeElement()
+            onCancelClicked: column.closeColumn()
             onOkClicked: {
                 dataModel.ok()
-                column.closeElement()
+                column.closeColumn()
             }
         }
     }

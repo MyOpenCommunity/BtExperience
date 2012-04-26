@@ -3,7 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: system
+    id: column
     width: 212
     height: itemList.height
 
@@ -23,7 +23,7 @@ MenuColumn {
             status: itemObject.hasActiveAmplifier === undefined ? -1 : itemObject.hasActiveAmplifier
             hasChild: true
             onClicked:
-                system.loadElement(objectModel.getComponentFile(itemObject.objectId), itemObject.name, itemObject)
+                column.loadColumn(objectModel.getComponent(itemObject.objectId), itemObject.name, itemObject)
         }
 
         model: objectModel

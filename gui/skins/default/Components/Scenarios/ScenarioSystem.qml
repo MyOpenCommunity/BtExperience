@@ -3,9 +3,9 @@ import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
-    id: system
+    id: column
     width: 212
-    height: itemList.height
+    height: Math.max(1, 50 * itemList.count)
 
     onChildDestroyed: {
         itemList.currentIndex = -1
@@ -13,7 +13,6 @@ MenuColumn {
 
     ListView {
         id: itemList
-        height: 50 * count
         anchors.fill: parent
         currentIndex: -1
         interactive: false
@@ -22,7 +21,10 @@ MenuColumn {
             itemObject: objectModel.getObject(index)
             hasChild: true
             onClicked:
-                system.loadElement(objectModel.getComponentFile(itemObject.objectId), itemObject.name, itemObject)
+                column.loadColumn(
+                    objectModel.getComponent(itemObject.objectId),
+                    itemObject.name,
+                    itemObject)
         }
 
         model: objectModel

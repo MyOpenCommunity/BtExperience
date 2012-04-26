@@ -33,8 +33,10 @@ MenuColumn {
             description: getDescription()
             hasChild: true
             onClicked: {
-                column.loadElement(modelList.getComponentFile(itemObject.objectId), itemObject.name,
-                                    modelList.getObject(model.index))
+                column.loadColumn(
+                            modelList.getComponent(itemObject.objectId),
+                            itemObject.name,
+                            modelList.getObject(model.index))
             }
         }
 

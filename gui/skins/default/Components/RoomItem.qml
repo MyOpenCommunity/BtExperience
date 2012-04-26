@@ -10,7 +10,10 @@ MenuColumn {
         hasChild: true
         onClicked: {
             column.columnClicked()
-            column.loadElement(modelList.getComponentFile(dataModel.objectId), "", dataModel)
+            column.loadColumn(
+                        modelList.getComponent(dataModel.objectId),
+                        "",
+                        dataModel)
         }
     }
 

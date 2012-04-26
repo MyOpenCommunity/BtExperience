@@ -5,12 +5,12 @@ Item {
     // Public functions
 
     // load of a sub-element
-    function loadElement(fileName, title, model) {
-        column.loadComponent(menuLevel, fileName, title, model)
+    function loadColumn(component, title, model) {
+        column.loadComponent(menuLevel, component, title, model)
     }
 
-    // Close the element itself and its children
-    function closeElement() {
+    // Close the column itself and its children
+    function closeColumn() {
         column.closeItem(menuLevel)
     }
 
@@ -29,8 +29,8 @@ Item {
     // The signals captured from the MenuContainer to create/close child or the element
     // itself.
     signal closeItem(int menuLevel)
-    signal loadComponent(int menuLevel, string fileName, string title, variant dataModel)
     signal columnClicked()
+    signal loadComponent(int menuLevel, variant component, string title, variant dataModel)
 
     // the page where the element is placed
     property variant pageObject: undefined

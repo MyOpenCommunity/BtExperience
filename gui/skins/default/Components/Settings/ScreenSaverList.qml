@@ -1,8 +1,8 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import BtExperience 1.0
-import "../../js/logging.js" as Log
 import Components 1.0
+import "../../js/logging.js" as Log
 
 
 MenuColumn {
@@ -13,8 +13,13 @@ MenuColumn {
     height: paginator.height
     property string imagesPath: "../../images/"
 
+    Component {
+        id: screenSaverTypes
+        ScreenSaverTypes {}
+    }
+
     function okClicked() {
-        closeElement()
+        closeColumn()
     }
 
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
@@ -93,7 +98,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                column.loadElement("Components/Settings/ScreenSaverTypes.qml", name)
+                column.loadColumn(screenSaverTypes, name)
             }
         }
 

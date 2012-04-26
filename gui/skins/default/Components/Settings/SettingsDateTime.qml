@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
-import "../../js/logging.js" as Log
 import Components 1.0
+import "../../js/logging.js" as Log
 
 
 MenuColumn {
@@ -10,6 +10,26 @@ MenuColumn {
     // dimensions
     width: 212
     height: paginator.height
+
+    Component {
+        id: dateComponent
+        Item {}
+    }
+
+    Component {
+        id: timeComponent
+        Time {}
+    }
+
+    Component {
+        id: timezone
+        Timezone {}
+    }
+
+    Component {
+        id: daylightSavingTime
+        DaylightSavingTime {}
+    }
 
     // object model to retrieve network data
     ObjectModel {
@@ -77,7 +97,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                column.loadElement("Date.qml", name)
+                column.loadColumn(dateComponent, name)
             }
         }
 
@@ -91,7 +111,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                column.loadElement("Components/Settings/Time.qml", name)
+                column.loadColumn(timeComponent, name)
             }
         }
 
@@ -105,7 +125,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
-                column.loadElement("Components/Settings/Timezone.qml", name)
+                column.loadColumn(timezone, name)
             }
         }
 
@@ -119,7 +139,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 4)
                     privateProps.currentIndex = 4
-                column.loadElement("Components/Settings/DaylightSavingTime.qml", name)
+                column.loadColumn(daylightSavingTime, name)
             }
         }
     }

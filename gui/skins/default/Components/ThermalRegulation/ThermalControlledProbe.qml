@@ -4,6 +4,12 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
+    Component {
+        id: thermalControlledProbeModalities
+        ThermalControlledProbeModalities {}
+    }
+
     width: 212
     height: fixedItem.height + itemLoader.height
     property string imagesPath: "../../images/"
@@ -14,13 +20,13 @@ MenuColumn {
     }
 
     function alertOkClicked() {
-        column.closeElement()
+        column.closeColumn()
     }
 
     function okClicked() {
         if (privateProps.pendingModality !== dataModel.probeStatus)
             dataModel.probeStatus = privateProps.pendingModality
-        closeElement();
+        closeColumn();
     }
 
     function cancelClicked() {
@@ -89,7 +95,10 @@ MenuColumn {
             y: 51
 
             onClicked: {
-                column.loadElement("Components/ThermalRegulation/ThermalControlledProbeModalities.qml", modalityItem.name, dataModel)
+                column.loadColumn(
+                            thermalControlledProbeModalities,
+                            modalityItem.name,
+                            dataModel)
                 if (modalityItem.state == "")
                     modalityItem.state =  "selected"
             }

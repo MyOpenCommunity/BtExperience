@@ -16,7 +16,7 @@ MenuColumn {
             name: model.name
             onClicked: {
                 modeChanged(model.type)
-                column.closeElement()
+                column.closeColumn()
             }
         }
         model: ListModel {

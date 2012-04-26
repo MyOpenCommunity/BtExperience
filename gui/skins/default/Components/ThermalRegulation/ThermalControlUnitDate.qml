@@ -8,7 +8,7 @@ MenuColumn {
     property string imagesPath: "../../images/"
 
     function alertOkClicked() {
-        column.closeElement()
+        column.closeColumn()
     }
 
     Image {
@@ -146,7 +146,7 @@ MenuColumn {
         }
 
         onOkClicked: {
-            column.closeElement()
+            column.closeColumn()
         }
     }
 }

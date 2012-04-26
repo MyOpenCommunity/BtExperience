@@ -10,12 +10,17 @@ Item {
     signal menuClosed
 
     Component {
+        id: roomItem
+        RoomItem {}
+    }
+
+    Component {
         id: itemComponent
         MenuContainer {
             id: container
             width: 500
-            rootElement: "Components/RoomItem.qml"
-            onRootElementClicked: {
+            rootColumn: roomItem
+            onRootColumnClicked: {
                 container.state = "selected"
                 roomView.state = "menuSelected"
                 menuSelected(container)

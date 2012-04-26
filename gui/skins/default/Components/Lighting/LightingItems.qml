@@ -24,8 +24,10 @@ MenuColumn {
             status: itemObject.active === true ? 1 : 0
             hasChild: true
             onClicked: {
-                column.loadElement(objectModel.getComponentFile(itemObject.objectId), itemObject.name,
-                                    objectModel.getObject(model.index))
+                column.loadColumn(
+                            objectModel.getComponent(itemObject.objectId),
+                            itemObject.name,
+                            objectModel.getObject(model.index))
             }
         }
         model: objectModel
