@@ -48,6 +48,7 @@ public:
 
 protected:
 	void compareClientCommand();
+	void compareClientRequest();
 	void flushCompressedFrames(device *dev);
 	void clearDeviceCache();
 
@@ -58,6 +59,7 @@ protected:
 	ClientReader *client_monitor;
 
 	ClientWriter *client_command_compare;
+	ClientWriter *client_request_compare;
 };
 
 

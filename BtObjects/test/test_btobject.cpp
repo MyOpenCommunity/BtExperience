@@ -62,7 +62,7 @@ void TestBtObject::initTestSystem()
 
 	ClientReader *mon2 = server_compare->connectMonitor();
 	client_command_compare = server_compare->connectCommand();
-	ClientWriter *req2 = server_compare->connectRequest();
+	client_request_compare = server_compare->connectRequest();
 
 	QHash<int, ClientReader*> monitors;
 	monitors[0] = client_monitor;
@@ -73,7 +73,7 @@ void TestBtObject::initTestSystem()
 	clients[0].command = client_command;
 	clients[1].command = client_command_compare;
 	clients[0].request = client_request;
-	clients[1].request = req2;
+	clients[1].request = client_request_compare;
 	FrameSender::setClients(clients);
 }
 
@@ -88,6 +88,13 @@ void TestBtObject::compareClientCommand()
 	client_command->flush();
 	client_command_compare->flush();
 	QCOMPARE(server->frameCommand(), server_compare->frameCommand());
+}
+
+void TestBtObject::compareClientRequest()
+{
+	client_request->flush();
+	client_request_compare->flush();
+	QCOMPARE(server->frameRequest(), server_compare->frameRequest());
 }
 
 void TestBtObject::flushCompressedFrames(device *dev)
