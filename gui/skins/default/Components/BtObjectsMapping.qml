@@ -1,119 +1,48 @@
 import QtQuick 1.1
 import BtObjects 1.0
 
-import Components.Lighting 1.0
-import Components.Scenarios 1.0
-import Components.Settings 1.0
-import Components.SoundDiffusion 1.0
-import Components.ThermalRegulation 1.0
-
 
 /**
-  * This module is needed because we cannot define Components inside a model.
-  * Here we define an Item and put all components in it. We have moved
-  * the getComponent function here, too. Now, it is possible to use
-  * FilterListModel directly. If you need the getComponent function you can
-  * instantiate this module and call the function on the instance of it.
+  * It was not possible to use Components.
+  * In case of circular imports, the createObject function hangs forever.
+  * Reverting to file names (at least for now).
+  * Another possibility is to use new <<Component>>() in Javascript code, but
+  * it is not clear if it is a bug or a feature, so we leave apart at the moment.
   */
-Item {
-
-    Component {
-        id: basicSplit
-        BasicSplit {}
-    }
-
-    Component {
-        id: light
-        Light {}
-    }
-
-    Component {
-        id: dimmer
-        Dimmer {}
-    }
-
-    Component {
-        id: thermalControlUnit
-        ThermalControlUnit {}
-    }
-
-    Component {
-        id: simpleScenario
-        SimpleScenario {}
-    }
-
-    Component {
-        id: advancedSplit
-        AdvancedSplit {}
-    }
-
-    Component {
-        id: amplifierGeneral
-        AmplifierGeneral {}
-    }
-
-    Component {
-        id: powerAmplifier
-        PowerAmplifier {}
-    }
-
-    Component {
-        id: amplifier
-        Amplifier {}
-    }
-
-    Component {
-        id: soundAmbient
-        SoundAmbient {}
-    }
-
-    Component {
-        id: generalAmbient
-        GeneralAmbient {}
-    }
-
-    Component {
-        id: thermalControlledProbe
-        ThermalControlledProbe {}
-    }
-
-    Component {
-        id: brightness
-        Brightness {}
-    }
-
+QtObject {
     function getComponent(objectId) {
+        console.log("getComponent("+objectId+")")
         switch (objectId) {
         case ObjectInterface.IdLight:
-            return light
+            return Qt.createComponent("Lighting/Light.qml")
         case ObjectInterface.IdDimmer:
-            return dimmer
+            return Qt.createComponent("Lighting/Dimmer.qml")
         case ObjectInterface.IdThermalControlUnit99:
-            return thermalControlUnit
+            return Qt.createComponent("ThermalRegulation/ThermalControlUnit.qml")
         case ObjectInterface.IdThermalControlledProbe:
-            return thermalControlledProbe
+            return Qt.createComponent("ThermalRegulation/ThermalControlledProbe.qml")
         case ObjectInterface.IdHardwareSettings:
-            return brightness
+            return Qt.createComponent("Settings/Brightness.qml")
         case ObjectInterface.IdMultiChannelGeneralAmbient:
-            return generalAmbient
+            return Qt.createComponent("SoundDiffusion/GeneralAmbient.qml")
         case ObjectInterface.IdMultiChannelSoundAmbient:
-            return soundAmbient
+            return Qt.createComponent("SoundDiffusion/SoundAmbient.qml")
         case ObjectInterface.IdMonoChannelSoundAmbient:
-            return soundAmbient
+            return Qt.createComponent("SoundDiffusion/SoundAmbient.qml")
         case ObjectInterface.IdSoundAmplifier:
-            return amplifier
+            return Qt.createComponent("SoundDiffusion/Amplifier.qml")
         case ObjectInterface.IdPowerAmplifier:
-            return powerAmplifier
+            return Qt.createComponent("SoundDiffusion/PowerAmplifier.qml")
         case ObjectInterface.IdSoundAmplifierGeneral:
-            return amplifierGeneral
+            return Qt.createComponent("SoundDiffusion/AmplifierGeneral.qml")
         case ObjectInterface.IdSplitBasicScenario:
-            return basicSplit
+            return Qt.createComponent("ThermalRegulation/BasicSplit.qml")
         case ObjectInterface.IdSplitAdvancedScenario:
-            return advancedSplit
+            return Qt.createComponent("ThermalRegulation/AdvancedSplit.qml")
         case ObjectInterface.IdSimpleScenario:
-            return simpleScenario
+            return Qt.createComponent("Scenarios/SimpleScenario.qml")
         case ObjectInterface.IdScenarioModule:
-            return simpleScenario
+            return Qt.createComponent("Scenarios/SimpleScenario.qml")
         default:
             console.log("getComponent(): Unknown object id: " + objectId)
             return ""
