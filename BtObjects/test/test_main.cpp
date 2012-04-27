@@ -126,6 +126,9 @@ int main(int argc, char *argv[])
 	TestEnergyLoadManagement test_energy_load;
 	test_list << &test_energy_load;
 
+	TestEnergyLoadManagementWithControlUnit test_energy_load_with_cu;
+	test_list << &test_energy_load_with_cu;
+
 	TestStopAndGo test_stopandgo;
 	test_list << &test_stopandgo;
 

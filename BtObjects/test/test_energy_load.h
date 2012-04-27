@@ -26,6 +26,7 @@
 #include <QObject>
 
 class EnergyLoadManagement;
+class EnergyLoadManagementWithControlUnit;
 class LoadsDevice;
 
 
@@ -33,14 +34,45 @@ class TestEnergyLoadManagement : public TestBtObject
 {
 	Q_OBJECT
 
+protected:
+	void initObjects(LoadsDevice *dev, EnergyLoadManagement *obj);
+
 private slots:
 	void init();
 	void cleanup();
 
-	void testReceiveStatus();
+	void testReceiveLoadStatus();
+	void testReceiveConsumption();
+	void testReceiveTotals();
+
+	void testRequestLoadStatus();
+	void testRequestTotals();
+	void testRequestConsumptionUpdateStartStop();
+
+	void testResetTotal();
 
 private:
 	EnergyLoadManagement *obj;
+	LoadsDevice *dev;
+};
+
+
+class TestEnergyLoadManagementWithControlUnit : public TestEnergyLoadManagement
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+
+	void testReceiveLoadEnabled();
+	void testReceiveLoadForced();
+
+	void testForceOn();
+	void testForceOnMinutes();
+	void testStopForcing();
+
+private:
+	EnergyLoadManagementWithControlUnit *obj;
 	LoadsDevice *dev;
 };
 
