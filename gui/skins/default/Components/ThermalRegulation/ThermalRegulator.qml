@@ -21,15 +21,14 @@ MenuColumn {
             }
 
             function getDescription() {
+                var descr = ""
                 if (isControlledProbe()) {
                     if (itemObject.probeStatus === ThermalControlledProbe.Manual)
                         descr += itemObject.setpoint / 10 + qsTr("°C") + " ";
 
                     descr += pageObject.names.get('PROBE_STATUS', itemObject.probeStatus);
-                    return descr;
                 }
-                else
-                    return ''
+                return descr
             }
 
             itemObject: modelList.getObject(index)
