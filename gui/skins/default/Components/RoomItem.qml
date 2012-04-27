@@ -20,9 +20,5 @@ MenuColumn {
     }
 
     BtObjectsMapping { id: mapping }
-
-    FilterListModel {
-        id: modelList
-    }
 }
 
