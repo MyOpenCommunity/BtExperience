@@ -22,7 +22,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
             onDelegateClicked: {
-                var page = Stack.openPage("VideoCamera.qml", {"camera": itemObject})
+                Stack.openPage("VideoCamera.qml", {"camera": itemObject})
             }
         }
         model: modelList
