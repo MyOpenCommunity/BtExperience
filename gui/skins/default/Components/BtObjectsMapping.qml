@@ -1,54 +1,47 @@
 import QtQuick 1.1
 import BtObjects 1.0
 
-import Components.Lighting 1.0
-import Components.Scenarios 1.0
-import Components.Settings 1.0
-import Components.SoundDiffusion 1.0
-import Components.ThermalRegulation 1.0
-
 
 /**
-  * Uses new Javascript operator to create components.
-  * It is not standard practice, so it may cease to work in future versions
-  * of Qt. In such a case it is possible to revert to file names.
-  * About new operator usage, we use the component object to instantiate
-  * some other objects later, but we don't use them for anything else.
-  * IMHO this is not standard practice, but it is not harmful either.
+  * It was not possible to use Components.
+  * In case of circular imports, the createObject function hangs forever.
+  * Reverting to file names (at least for now).
+  * Another possibility is to use new <<Component>>() in Javascript code, but
+  * it is not clear if it is a bug or a feature, so we leave apart at the moment.
   */
 QtObject {
     function getComponent(objectId) {
         switch (objectId) {
         case ObjectInterface.IdLight:
-            return new Light()
+            return Qt.createComponent("Lighting/Light.qml")
         case ObjectInterface.IdDimmer:
-            return new Dimmer()
+            return Qt.createComponent("Lighting/Dimmer.qml")
         case ObjectInterface.IdThermalControlUnit99:
-            return new ThermalControlUnit()
+            return Qt.createComponent("ThermalRegulation/ThermalControlUnit.qml")
         case ObjectInterface.IdThermalControlledProbe:
-            return new ThermalControlledProbe()
+            return Qt.createComponent("ThermalRegulation/ThermalControlledProbe.qml")
         case ObjectInterface.IdHardwareSettings:
-            return new Brightness()
+            return Qt.createComponent("Settings/Brightness.qml")
         case ObjectInterface.IdMultiChannelGeneralAmbient:
-            return new GeneralAmbient()
+            return Qt.createComponent("SoundDiffusion/GeneralAmbient.qml")
         case ObjectInterface.IdMultiChannelSoundAmbient:
-            return new SoundAmbient()
+            return Qt.createComponent("SoundDiffusion/SoundAmbient.qml")
         case ObjectInterface.IdMonoChannelSoundAmbient:
-            return new SoundAmbient()
+            return Qt.createComponent("SoundDiffusion/SoundAmbient.qml")
         case ObjectInterface.IdSoundAmplifier:
-            return new Amplifier()
+            return Qt.createComponent("SoundDiffusion/Amplifier.qml")
         case ObjectInterface.IdPowerAmplifier:
-            return new PowerAmplifier()
+            return Qt.createComponent("SoundDiffusion/PowerAmplifier.qml")
         case ObjectInterface.IdSoundAmplifierGeneral:
-            return new AmplifierGeneral()
+            return Qt.createComponent("SoundDiffusion/AmplifierGeneral.qml")
         case ObjectInterface.IdSplitBasicScenario:
-            return new BasicSplit()
+            return Qt.createComponent("ThermalRegulation/BasicSplit.qml")
         case ObjectInterface.IdSplitAdvancedScenario:
-            return new AdvancedSplit()
+            return Qt.createComponent("ThermalRegulation/AdvancedSplit.qml")
         case ObjectInterface.IdSimpleScenario:
-            return new SimpleScenario()
+            return Qt.createComponent("Scenarios/SimpleScenario.qml")
         case ObjectInterface.IdScenarioModule:
-            return new SimpleScenario()
+            return Qt.createComponent("Scenarios/SimpleScenario.qml")
         default:
             console.log("getComponent(): Unknown object id: " + objectId)
             return ""
