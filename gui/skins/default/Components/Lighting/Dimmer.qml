@@ -3,180 +3,32 @@ import Components 1.0
 
 MenuColumn {
     width: 212
-    height: 370
-    property string imagesPath: "../../images/"
+    height: column.height
 
-    Image {
-        source: imagesPath + "common/dimmer_bg.png"
-        anchors.fill: parent
+    Column {
+        id: column
+        width: parent.width
         ButtonOnOff {
             id: onOff
+            width: parent.width
             status: dataModel.active
             onClicked: dataModel.active = newStatus
         }
 
-        Text {
-            id: textDimmer
-            text: qsTr("light intensity")
-            color: "#444546"
-            wrapMode: "WordWrap"
-            font.pixelSize: 13
-            anchors.top: onOff.bottom
-            anchors.topMargin: 10
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
-
-        Text {
-            id: textPercentage
-            text: dataModel.percentage + "%"
-            font.bold: true
-            color: "#444546"
-            anchors.top: textDimmer.bottom
-            anchors.topMargin: 5
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
-
-        Image {
-            id: dimmerReg
-            source: imagesPath + "common/dimmer_reg_bg.png"
+        ControlSlider {
             width: 212
-            height: 50
-            anchors.top: textPercentage.bottom
-            anchors.topMargin: 10
-            anchors.horizontalCenter: parent.horizontalCenter
+            description: qsTr("light intensity")
+            percentage: 20
 
-            Image {
-                id: barPercentage
-                source: imagesPath + "common/dimmer_reg.png"
-                anchors.left: parent.left
-                width: parent.width / 100 * dataModel.percentage
-                height: 50
-                Behavior on width {
-                    NumberAnimation { duration: 100; }
-                }
-            }
+            // TODO: maybe we need an indication of percentage as a text also
+            // between the title and the slider bar
+            // Something like:
+            // text: dataModel.percentage + "%"
         }
 
-        ButtonMinusPlus {
-            id: dimmerMinusPlus
-            anchors.top: dimmerReg.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            onPlusClicked: dataModel.increaseLevel()
-            onMinusClicked: dataModel.decreaseLevel()
-        }
-
-        Image {
+        ControlTiming {
+            id: timing
             width: 212
-            height: 150
-            source: imagesPath + "common/off_temporizzato.png"
-            anchors.top: dimmerMinusPlus.bottom
-            anchors.topMargin: 7
-
-            Text {
-                id: timeText
-                anchors.top: parent.top
-                anchors.topMargin: 5
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("timed turn off")
-                font.pointSize: 11
-                color: "#444546"
-            }
-
-            Column {
-                id: firstColumn
-                anchors.top: timeText.bottom
-                anchors.topMargin: 8
-                anchors.left: parent.left
-                width: parent.width / 2
-                height: 131
-                spacing: 3
-
-                Text {
-                    width: parent.width
-                    text: qsTr("minutes")
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    width: parent.width
-                    text: "0"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    width: parent.width
-                    text: "1"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    color: "white"
-                    width: parent.width
-                    text: "2"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    width: parent.width
-                    text: "3"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    width: parent.width
-                    text: "4"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-            }
-
-            Column {
-                id: secondColumn
-                width: parent.width / 2
-                anchors.topMargin: 8
-                anchors.top: timeText.bottom
-                anchors.left: firstColumn.right
-                spacing: 3
-                Text {
-                    width: parent.width
-                    text: qsTr("seconds")
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    width: parent.width
-                    text: "26"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    width: parent.width
-                    text: "27"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    color: "white"
-                    width: parent.width
-                    text: "28"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    width: parent.width
-                    text: "29"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    width: parent.width
-                    text: "30"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-            }
         }
     }
 }
