@@ -6,6 +6,11 @@ import Components 1.0
 Page {
     id: page
     source: "images/imgsfondo_sfumato.png"
+    property variant names: translations
+
+    Names {
+        id: translations
+    }
 
     ToolBar {
         id: toolbar
@@ -61,6 +66,7 @@ Page {
             top: toolbar.bottom
             bottom: roomView.top
         }
+        pageObject: page
         model: roomModel
         onMenuSelected: page.menuSelected(container)
         onMenuClosed: page.closeCurrentMenu()

@@ -5,6 +5,7 @@ import Components 1.0
 Item {
     id: roomView
     property variant model: undefined
+    property variant pageObject: undefined
 
     signal menuSelected(variant container)
     signal menuClosed
@@ -44,12 +45,11 @@ Item {
     }
 
     Component.onCompleted: {
-        for (var i = 0; i < model.size; ++i)
-        {
+        for (var i = 0; i < model.size; ++i) {
             var obj = model.getObject(i);
             var y = obj.position.y
             var x = obj.position.x
-            var object = itemComponent.createObject(roomView, {"rootData": obj.btObject, 'x': x, 'y': y})
+            var object = itemComponent.createObject(roomView, {"rootData": obj.btObject, 'x': x, 'y': y, 'pageObject': pageObject})
         }
     }
 
