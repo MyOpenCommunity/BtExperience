@@ -33,7 +33,7 @@ MenuColumn {
     }
 
     MenuItem {
-        id: amplifierSettings
+        id: amplifierSettingsMenu
         anchors.top: volumeSlider.bottom
         name: qsTr("settings")
         hasChild: true

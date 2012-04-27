@@ -68,7 +68,7 @@ MenuColumn {
             }
 
             MenuItem {
-                id: loudness
+                id: loudnessMenu
                 name: qsTr("loud")
                 description: column.dataModel.loud ? qsTr("on") : qsTr("off")
                 hasChild: true
