@@ -1,7 +1,71 @@
 #include "lightobjects.h"
 #include "lighting_device.h"
+#include "xml_functions.h"
+#include "devices_cache.h"
 
 #include <QDebug>
+
+QList<ObjectPair> parseDimmer(const QDomNode &obj)
+{
+	QList<ObjectPair> obj_list;
+	// extract default values
+	QString def_descr = getAttribute(obj, "descr");
+	QString def_where = getAttribute(obj, "where");
+	QString def_pul = getAttribute(obj, "pul");
+	QString def_ft = getAttribute(obj, "ft");
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		int uii = getIntAttribute(ist, "uii");
+		QString descr = getAttribute(ist, "descr");
+		descr = descr.isEmpty() ? def_descr : descr;
+		QString where = getAttribute(ist, "where");
+		where = where.isEmpty() ? def_where : where;
+
+		// TODO: pul == "0" is PULL or NOT_PULL ?
+		QString pul_str = getAttribute(ist, "pul");
+		pul_str = pul_str.isEmpty() ? def_pul : pul_str;
+		PullMode pul = pul_str == "0" ? PULL : NOT_PULL;
+
+		// TODO: ft anyone?
+		QString ft = getAttribute(ist, "ft");
+
+		DimmerDevice *d = bt_global::add_device_to_cache(new DimmerDevice(where, pul));
+		obj_list << ObjectPair(uii, new Dimmer(descr, where, d));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseLight(const QDomNode &obj)
+{
+	QList<ObjectPair> obj_list;
+	// extract default values
+	QString def_descr = getAttribute(obj, "descr");
+	QString def_where = getAttribute(obj, "where");
+	QString def_pul = getAttribute(obj, "pul");
+	QString def_ftime = getAttribute(obj, "ftime");
+	QString def_ctime = getAttribute(obj, "ctime");
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		int uii = getIntAttribute(ist, "uii");
+		QString descr = getAttribute(ist, "descr");
+		descr = descr.isEmpty() ? def_descr : descr;
+		QString where = getAttribute(ist, "where");
+		where = where.isEmpty() ? def_where : where;
+
+		// TODO: pul == "0" is PULL or NOT_PULL ?
+		QString pul_str = getAttribute(ist, "pul");
+		pul_str = pul_str.isEmpty() ? def_pul : pul_str;
+		PullMode pul = pul_str == "0" ? PULL : NOT_PULL;
+
+		// TODO: ftime/ctime
+
+		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
+		obj_list << ObjectPair(uii, new Light(descr, where, d));
+	}
+	return obj_list;
+}
 
 
 Light::Light(QString _name, QString _key, LightingDevice *d)
@@ -11,6 +75,7 @@ Light::Light(QString _name, QString _key, LightingDevice *d)
 
 	key = _key;
 	name = _name;
+	category = ObjectInterface::Unassigned;
 	active = false; // initial value
 	connect(this, SIGNAL(activeChanged()), this, SIGNAL(dataChanged()));
 }
@@ -37,6 +102,11 @@ void Light::setActive(bool st)
 		dev->turnOn();
 	else
 		dev->turnOff();
+}
+
+void Light::setCategory(ObjectInterface::ObjectCategory _category)
+{
+	category = _category;
 }
 
 void Light::valueReceived(const DeviceValues &values_list)

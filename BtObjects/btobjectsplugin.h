@@ -21,9 +21,13 @@ private:
 	ObjectListModel objmodel;
 	ObjectListModel room_model;
 
+	// used to parse the made-up configuration we use for testing, remove after switching
+	// to the new configuration
+	void createObjectsFakeConfig(QDomDocument document);
 	void createObjects(QDomDocument document);
 	void parseConfig();
 	void parseRooms(const QDomNode &container);
+	void parseLightSystem(const QDomNode &container);
 };
 
 

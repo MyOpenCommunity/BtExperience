@@ -8,6 +8,10 @@
 
 class LightingDevice;
 class DimmerDevice;
+class QDomNode;
+
+QList<ObjectPair> parseDimmer(const QDomNode &obj);
+QList<ObjectPair> parseLight(const QDomNode &obj);
 
 
 /*!
@@ -41,12 +45,13 @@ public:
 
 	virtual ObjectCategory getCategory() const
 	{
-		return ObjectInterface::Lighting;
+		return category;
 	}
 
 	virtual QString getName() const;
 	virtual bool isActive() const;
 	virtual void setActive(bool st);
+	void setCategory(ObjectCategory _category);
 
 signals:
 	void activeChanged();
@@ -61,6 +66,7 @@ protected:
 
 private:
 	LightingDevice *dev;
+	ObjectCategory category;
 };
 
 

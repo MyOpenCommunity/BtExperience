@@ -27,6 +27,20 @@ bool ObjectListModel::removeRows(int row, int count, const QModelIndex &parent)
 		for (int i = 0; i < count; ++i)
 		{
 			QObject *it = item_list.takeAt(row);
+
+			// keep in sync hash with list
+			QMutableHashIterator<int, ObjectInterface *> iter(items);
+			while (iter.hasNext())
+			{
+				iter.next();
+				if (iter.value() == it)
+				{
+					iter.remove();
+					// we are removing only one item
+					break;
+				}
+			}
+
 			it->disconnect();
 			it->deleteLater();
 		}
@@ -42,20 +56,15 @@ void ObjectListModel::clear()
 	removeRows(0, item_list.size());
 }
 
-ObjectListModel &ObjectListModel::operator<<(ObjectInterface *item)
+ObjectListModel &ObjectListModel::operator<<(ObjectPair pair)
 {
-	// Objects extracted using a C++ method and passed to a Qml Component have
-	// a 'javascript ownership', but in that way the qml has the freedom to
-	// delete the object. To avoid that, we set the model as a parent.
-	// See http://doc.trolltech.com/4.7/qdeclarativeengine.html#ObjectOwnership-enum
-	// for details.
-	item->setParent(this);
+	insertObject(pair.second, pair.first);
+	return *this;
+}
 
-	beginInsertRows(QModelIndex(), rowCount(), rowCount());
-	connect(item, SIGNAL(dataChanged()), SLOT(handleItemChange()));
-	item_list.append(item);
-	endInsertRows();
-	emit sizeChanged();
+ObjectListModel &ObjectListModel::insertWithoutUii(ObjectInterface *obj)
+{
+	insertObject(obj, -1);
 	return *this;
 }
 
@@ -65,6 +74,23 @@ void ObjectListModel::handleItemChange()
 	QModelIndex index = indexFromItem(item);
 	if (index.isValid())
 		emit dataChanged(index, index);
+}
+
+void ObjectListModel::insertObject(ObjectInterface *obj, int uii)
+{
+	// Objects extracted using a C++ method and passed to a Qml Component have
+	// a 'javascript ownership', but in that way the qml has the freedom to
+	// delete the object. To avoid that, we set the model as a parent.
+	// See http://doc.trolltech.com/4.7/qdeclarativeengine.html#ObjectOwnership-enum
+	// for details.
+	obj->setParent(this);
+
+	beginInsertRows(QModelIndex(), rowCount(), rowCount());
+	connect(obj, SIGNAL(dataChanged()), SLOT(handleItemChange()));
+	item_list.append(obj);
+	if (uii != -1)
+		items[uii] = obj;
+	endInsertRows();
 }
 
 QModelIndex ObjectListModel::indexFromItem(const ObjectInterface *item) const
@@ -82,6 +108,11 @@ ObjectInterface *ObjectListModel::getObject(int row) const
 		return 0;
 
 	return item_list.at(row);
+}
+
+ObjectInterface *ObjectListModel::getObjectByUii(int uii) const
+{
+	return items[uii];
 }
 
 void ObjectListModel::remove(int index)

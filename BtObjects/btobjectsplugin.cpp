@@ -88,12 +88,38 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	FilterListModel::setGlobalSource(&objmodel);
 	RoomListModel::setGlobalSource(&room_model);
+	createObjectsFakeConfig(document);
 	createObjects(document);
 	parseConfig();
 	device::initDevices();
 }
 
 void BtObjectsPlugin::createObjects(QDomDocument document)
+{
+	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+	{
+		QList<ObjectPair> obj_list;
+		int id = getIntAttribute(xml_obj, "id");
+
+		switch (id)
+		{
+		case ObjectInterface::IdLight:
+			obj_list = parseLight(xml_obj);
+			break;
+		case ObjectInterface::IdDimmer:
+			obj_list = parseDimmer(xml_obj);
+			break;
+		}
+
+		if (!obj_list.isEmpty())
+		{
+			foreach (ObjectPair p, obj_list)
+				objmodel << p;
+		}
+	}
+}
+
+void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 {
 	foreach (const QDomNode &item, getChildren(document.documentElement(), "item"))
 	{
@@ -106,18 +132,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 		switch (id)
 		{
-		case ObjectInterface::IdLight:
-		{
-			PullMode p = getTextChild(item, "pul").toInt() == 1 ? PULL : NOT_PULL;
-			obj = new Light(descr, where, bt_global::add_device_to_cache(new LightingDevice(where, p)));
-			break;
-		}
-		case ObjectInterface::IdDimmer:
-		{
-			PullMode p = getTextChild(item, "pul").toInt() == 1 ? PULL : NOT_PULL;
-			obj = new Dimmer(descr, where, bt_global::add_device_to_cache(new DimmerDevice(where, p)));
-			break;
-		}
 		case ObjectInterface::IdThermalControlUnit99:
 			obj = new ThermalControlUnit99Zones(descr, "", bt_global::add_device_to_cache(new ThermalDevice99Zones("0")));
 			break;
@@ -196,15 +210,15 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
 		if (obj)
-			objmodel << obj;
+			objmodel.insertWithoutUii(obj);
 		else if (!obj_list.isEmpty())
 		{
 			foreach (ObjectInterface *oi, obj_list)
-				objmodel << oi;
+				objmodel.insertWithoutUii(oi);
 		}
 	}
 	// TODO put in the right implementation; for now, use this for testing the interface
-	objmodel << new PlatformSettings(new PlatformDevice);
+	objmodel.insertWithoutUii(new PlatformSettings(new PlatformDevice));
 }
 
 void BtObjectsPlugin::parseConfig()
@@ -218,6 +232,8 @@ void BtObjectsPlugin::parseConfig()
 		int container_id = getIntAttribute(container, "id");
 		if (container_id == 2)
 			parseRooms(container);
+		else if (container_id == 1) // lights
+			parseLightSystem(container);
 	}
 }
 
@@ -232,8 +248,21 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int x = getIntAttribute(link, "x");
 			int y = getIntAttribute(link, "y");
 
-			// TODO: map uii to object...
-			room_model << new RoomElement(room_name, objmodel.getObject(object_uii), x, y);
+			room_model << ObjectPair(object_uii, new RoomElement(room_name, objmodel.getObjectByUii(object_uii), x, y));
+		}
+	}
+}
+
+void BtObjectsPlugin::parseLightSystem(const QDomNode &container)
+{
+	foreach (const QDomNode &ist, getChildren(container, "ist"))
+	{
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			Light *l = static_cast<Light *>(objmodel.getObjectByUii(object_uii));
+			if (l)
+				l->setCategory(ObjectInterface::Lighting);
 		}
 	}
 }
