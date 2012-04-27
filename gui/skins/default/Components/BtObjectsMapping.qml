@@ -11,7 +11,6 @@ import BtObjects 1.0
   */
 QtObject {
     function getComponent(objectId) {
-        console.log("getComponent("+objectId+")")
         switch (objectId) {
         case ObjectInterface.IdLight:
             return Qt.createComponent("Lighting/Light.qml")
