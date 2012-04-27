@@ -47,7 +47,7 @@ function _openPage(filename, properties) {
         pushPage(page)
         return page
     }
-    logError('Error loading the page: ' + filename + ' error: ' + page_component.errorString() + ' status: ' + page_component.status)
+    logError('Error loading the page: ' + filename + ' error: ' + page_component.errorString() + ' status: ' + page_component.status + ' progress: ' + page_component.progress)
     changePageDone()
     return null
 }
