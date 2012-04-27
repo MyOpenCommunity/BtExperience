@@ -88,12 +88,38 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	FilterListModel::setGlobalSource(&objmodel);
 	RoomListModel::setGlobalSource(&room_model);
+	createObjectsFakeConfig(document);
 	createObjects(document);
 	parseConfig();
 	device::initDevices();
 }
 
 void BtObjectsPlugin::createObjects(QDomDocument document)
+{
+	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+	{
+		QList<ObjectPair> obj_list;
+		int id = getIntAttribute(xml_obj, "id");
+
+		switch (id)
+		{
+		case ObjectInterface::IdLight:
+			obj_list = parseLight(xml_obj);
+			break;
+		case ObjectInterface::IdDimmer:
+			obj_list = parseDimmer(xml_obj);
+			break;
+		}
+
+		if (!obj_list.isEmpty())
+		{
+			foreach (ObjectPair p, obj_list)
+				objmodel << p;
+		}
+	}
+}
+
+void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 {
 	foreach (const QDomNode &item, getChildren(document.documentElement(), "item"))
 	{
@@ -106,18 +132,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 		switch (id)
 		{
-		case ObjectInterface::IdLight:
-		{
-			PullMode p = getTextChild(item, "pul").toInt() == 1 ? PULL : NOT_PULL;
-			obj = new Light(descr, where, bt_global::add_device_to_cache(new LightingDevice(where, p)));
-			break;
-		}
-		case ObjectInterface::IdDimmer:
-		{
-			PullMode p = getTextChild(item, "pul").toInt() == 1 ? PULL : NOT_PULL;
-			obj = new Dimmer(descr, where, bt_global::add_device_to_cache(new DimmerDevice(where, p)));
-			break;
-		}
 		case ObjectInterface::IdThermalControlUnit99:
 			obj = new ThermalControlUnit99Zones(descr, "", bt_global::add_device_to_cache(new ThermalDevice99Zones("0")));
 			break;
