@@ -49,7 +49,6 @@ Item {
             var obj = model.getObject(i);
             var y = obj.position.y
             var x = obj.position.x
-            // TODO: pageObject, how to pass it around?
             var object = itemComponent.createObject(roomView, {"rootData": obj.btObject, 'x': x, 'y': y})
         }
     }

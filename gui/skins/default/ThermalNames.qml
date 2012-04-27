@@ -2,44 +2,47 @@ import QtQuick 1.1
 import "js/array.js" as Script
 import BtObjects 1.0
 
+
 QtObject {
-    function initNames() {
-        Script.container['SEASON'] = []
-        Script.container['SEASON'][ThermalControlUnit99Zones.Summer] = qsTr("summer")
-        Script.container['SEASON'][ThermalControlUnit99Zones.Winter] = qsTr("winter")
+    // internal function to load values into the container
+    function _init(container) {
+        container['SEASON'] = []
+        container['SEASON'][ThermalControlUnit99Zones.Summer] = qsTr("summer")
+        container['SEASON'][ThermalControlUnit99Zones.Winter] = qsTr("winter")
 
-        Script.container['PROBE_STATUS'] = []
-        Script.container['PROBE_STATUS'][ThermalControlledProbe.Auto] = qsTr("auto")
-        Script.container['PROBE_STATUS'][ThermalControlledProbe.Antifreeze] = qsTr("antifreeze")
-        Script.container['PROBE_STATUS'][ThermalControlledProbe.Manual] = qsTr("manual")
-        Script.container['PROBE_STATUS'][ThermalControlledProbe.Off] = qsTr("off")
-        Script.container['PROBE_STATUS'][ThermalControlledProbe.Unknown] = qsTr("--")
+        container['PROBE_STATUS'] = []
+        container['PROBE_STATUS'][ThermalControlledProbe.Auto] = qsTr("auto")
+        container['PROBE_STATUS'][ThermalControlledProbe.Antifreeze] = qsTr("antifreeze")
+        container['PROBE_STATUS'][ThermalControlledProbe.Manual] = qsTr("manual")
+        container['PROBE_STATUS'][ThermalControlledProbe.Off] = qsTr("off")
+        container['PROBE_STATUS'][ThermalControlledProbe.Unknown] = qsTr("--")
 
-        Script.container['MODE'] = []
-        Script.container['MODE'][SplitProgram.ModeOff] = qsTr("Off")
-        Script.container['MODE'][SplitProgram.ModeWinter] = qsTr("Heating")
-        Script.container['MODE'][SplitProgram.ModeSummer] = qsTr("Cooling")
-        Script.container['MODE'][SplitProgram.ModeFan] = qsTr("Fan")
-        Script.container['MODE'][SplitProgram.ModeDehumidification] = qsTr("Dry")
-        Script.container['MODE'][SplitProgram.ModeAuto] = qsTr("Automatic")
+        container['MODE'] = []
+        container['MODE'][SplitProgram.ModeOff] = qsTr("Off")
+        container['MODE'][SplitProgram.ModeWinter] = qsTr("Heating")
+        container['MODE'][SplitProgram.ModeSummer] = qsTr("Cooling")
+        container['MODE'][SplitProgram.ModeFan] = qsTr("Fan")
+        container['MODE'][SplitProgram.ModeDehumidification] = qsTr("Dry")
+        container['MODE'][SplitProgram.ModeAuto] = qsTr("Automatic")
 
-        Script.container['SPEED'] = []
-        Script.container['SPEED'][SplitProgram.SpeedAuto] = qsTr("Automatic")
-        Script.container['SPEED'][SplitProgram.SpeedMin] = qsTr("Low")
-        Script.container['SPEED'][SplitProgram.SpeedMed] = qsTr("Medium")
-        Script.container['SPEED'][SplitProgram.SpeedMax] = qsTr("High")
-        Script.container['SPEED'][SplitProgram.SpeedSilent] = qsTr("Silent")
-        Script.container['SPEED'][SplitProgram.SpeedInvalid] = qsTr("")
+        container['SPEED'] = []
+        container['SPEED'][SplitProgram.SpeedAuto] = qsTr("Automatic")
+        container['SPEED'][SplitProgram.SpeedMin] = qsTr("Low")
+        container['SPEED'][SplitProgram.SpeedMed] = qsTr("Medium")
+        container['SPEED'][SplitProgram.SpeedMax] = qsTr("High")
+        container['SPEED'][SplitProgram.SpeedSilent] = qsTr("Silent")
+        container['SPEED'][SplitProgram.SpeedInvalid] = qsTr("")
 
-        Script.container['SWING'] = []
-        Script.container['SWING'][SplitProgram.SwingOff] = qsTr("Off")
-        Script.container['SWING'][SplitProgram.SwingOn] = qsTr("On")
-        Script.container['SWING'][SplitProgram.SwingInvalid] = qsTr("")
+        container['SWING'] = []
+        container['SWING'][SplitProgram.SwingOff] = qsTr("Off")
+        container['SWING'][SplitProgram.SwingOn] = qsTr("On")
+        container['SWING'][SplitProgram.SwingInvalid] = qsTr("")
     }
 
+    // retrieves the requested value from the local array
     function get(context, id) {
         if (Script.container.length === 0)
-            initNames()
+            _init(Script.container)
 
         return Script.container[context][id]
     }
