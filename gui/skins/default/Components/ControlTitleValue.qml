@@ -13,31 +13,35 @@ Item {
 
     signal accepted
 
-    Image {
+    SvgImage {
         anchors.fill: parent
-        // TODO find a right background
-        source: "../images/common/bg_volume.png"
+        source: "../images/common/menu_column_item_bg.svg";
     }
 
     Text {
         text: control.title
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pixelSize: 16
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: control.top
         anchors.topMargin: 5
+        font.family: lightFont.name
+        font.pixelSize: 14
+        color:  "#2d2d2d"
+        font.bold: true
     }
 
     Text {
         text: control.value
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pixelSize: 16
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: control.bottom
         anchors.bottomMargin: 5
         visible: control.readOnly
+        font.family: regularFont.name
+        font.pixelSize: 14
+        color:  "#626262"
     }
 
     // TODO creation of a TextInput takes a long time; create it dinamically
@@ -45,11 +49,13 @@ Item {
     TextInput {
         text: control.value
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 16
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: control.bottom
         anchors.bottomMargin: 5
         visible: !control.readOnly
         onAccepted: { control.value = text; control.accepted() }
+        font.family: regularFont.name
+        font.pixelSize: 14
+        color:  "#626262"
     }
 }
