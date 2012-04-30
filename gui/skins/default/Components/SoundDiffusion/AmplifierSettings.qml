@@ -48,7 +48,7 @@ MenuColumn {
         Column {
             ControlBalance {
                 id: balance
-                percentage: column.dataModel.balance
+                balance: column.dataModel.balance
             }
 
             MenuItem {
