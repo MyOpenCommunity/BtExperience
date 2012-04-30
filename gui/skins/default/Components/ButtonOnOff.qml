@@ -2,14 +2,11 @@ import QtQuick 1.1
 
 Row {
     id: button
-    width: 208
     property int status: 0
     signal clicked (bool newStatus)
-    Image {
+    SvgImage {
         id: imgOn
-        source: "../images/common/btn_OKAnnulla.png"
-        width: parent.width / 2
-        height: 50
+        source: "../images/common/button_background.svg"
         property alias textColor: textOn.color
         Text {
             id: textOn
@@ -23,11 +20,9 @@ Row {
             onClicked: button.clicked(true)
         }
     }
-    Image {
+    SvgImage {
         id: imgOff
-        source: "../images/common/btn_OKAnnullaS.png"
-        width: parent.width / 2
-        height: 50
+        source: "../images/common/button_background_select.svg"
 
         property alias textColor: textOff.color
         Text {
@@ -48,14 +43,14 @@ Row {
         State {
             when: status === 1
             name: "on"
-            PropertyChanges { target: imgOn; source: "../images/common/btn_OKAnnullaS.png"; textColor: "#ffffff"; }
-            PropertyChanges { target: imgOff; source: "../images/common/btn_OKAnnulla.png"; textColor: "#000000"; }
+            PropertyChanges { target: imgOn; source: "../images/common/button_background_select.svg"; textColor: "#ffffff"; }
+            PropertyChanges { target: imgOff; source: "../images/common/button_background.svg"; textColor: "#000000"; }
         },
         State {
             when: status === -1
             name: "disabled"
-            PropertyChanges { target: imgOn; source: "../images/common/btn_OKAnnulla.png"; textColor: "#000000"; }
-            PropertyChanges { target: imgOff; source: "../images/common/btn_OKAnnulla.png"; textColor: "#000000"; }
+            PropertyChanges { target: imgOn; source: "../images/common/button_background.svg"; textColor: "#000000"; }
+            PropertyChanges { target: imgOff; source: "../images/common/button_background.svg"; textColor: "#000000"; }
         }
     ]
 }
