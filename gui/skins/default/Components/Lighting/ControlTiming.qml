@@ -31,7 +31,7 @@ Image {
             horizontalCenter: parent.horizontalCenter
         }
 
-        Image {
+        SvgImage {
             id: enabledImage
             source: enabledArea.pressed ? "../../images/common/button_background_press.svg" :
                                           "../../images/common/button_background.svg"
@@ -58,7 +58,7 @@ Image {
             }
         }
 
-        Image {
+        SvgImage {
             id: disabledImage
             source: disabledArea.pressed ? "../../images/common/button_background_press.svg" :
                                            "../../images/common/button_background.svg"
