@@ -163,12 +163,38 @@ MenuColumn {
         Component {
             id: holidayComponent
             Column {
+                id: holidayColumn
                 property variant objModel
 
+                Component {
+                    id: dateSelect
+                    DateSelect {
+
+                    }
+                }
+
                 ControlDateTime {
+                    id: dateTime
                     text: qsTr("valid until")
                     date: DateTime.format(objModel.date)["date"]
                     time: DateTime.format(objModel.date)["time"]
+
+                    function checkReset() {
+                        if (privateProps.currentElement !== -1)
+                            resetSelection()
+                    }
+
+                    Component.onCompleted: {
+                        column.childDestroyed.connect(resetSelection)
+                        privateProps.currentElementChanged.connect(checkReset)
+                    }
+
+                    onDateClicked: {
+                        column.loadColumn(dateSelect, qsTr("date"), objModel)
+                        privateProps.currentElement = -1
+                    }
+
+                    onTimeClicked: privateProps.currentElement = -1
                 }
 
                 MenuItem {
