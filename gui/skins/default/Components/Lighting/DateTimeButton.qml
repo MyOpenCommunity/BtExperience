@@ -1,5 +1,4 @@
 import QtQuick 1.1
-import Components 1.0
 
 Rectangle {
     id: button
@@ -10,7 +9,7 @@ Rectangle {
     signal buttonClicked
 
     Column{
-        SvgImage {
+        Image {
             id: btn
             source: mouseArea.pressed ? "../../images/common/date_button_press.svg" :
                                         "../../images/common/date_button_background.svg"
@@ -26,7 +25,7 @@ Rectangle {
             }
         }
 
-        SvgImage {
+        Image {
             source: "../../images/common/date_button_shadow.svg"
             visible: mouseArea.pressed === false
         }
