@@ -2,7 +2,7 @@ ControlUpDownReset 1.0 ControlUpDownReset.qml
 EnergyManagementSystem 1.0 EnergyManagementSystem.qml
 LoadDiagnostic 1.0 LoadDiagnostic.qml
 SelfTest 1.0 SelfTest.qml
-StopAndGo 1.0 StopAndGo.qml
 StopAndGoBtest 1.0 StopAndGoBtest.qml
+StopAndGoMenu 1.0 StopAndGoMenu.qml
 StopAndGoPlus 1.0 StopAndGoPlus.qml
 Supervision 1.0 Supervision.qml

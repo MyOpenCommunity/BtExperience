@@ -37,7 +37,7 @@ MenuColumn {
 
     Component {
         id: stopAndGo
-        StopAndGo {}
+        StopAndGoMenu {}
     }
 
     Component {
