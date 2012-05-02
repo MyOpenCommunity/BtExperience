@@ -12,7 +12,7 @@ QList<ObjectPair> parseDimmer(const QDomNode &obj)
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul");
-	QString def_ft = getAttribute(obj, "ft");
+	QString def_ftime = getAttribute(obj, "ftime");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -20,7 +20,7 @@ QList<ObjectPair> parseDimmer(const QDomNode &obj)
 		QString descr = getAttribute(ist, "descr", def_descr);
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
-		QString ftime = getAttribute(ist, "ftime", def_ft);
+		QString ftime = getAttribute(ist, "ftime", def_ftime);
 
 		DimmerDevice *d = bt_global::add_device_to_cache(new DimmerDevice(where, pul));
 		obj_list << ObjectPair(uii, new Dimmer(descr, where, d));
