@@ -5,6 +5,6 @@
 SCRIPT_PATH="$(dirname $(readlink -f $0))"
 
 # update translation files for qml sources
-lupdate "${SCRIPT_PATH}" -extensions qml -ts "${SCRIPT_PATH}"/linguist-ts/bt_experience_it.ts
+lupdate "${SCRIPT_PATH}" -extensions qml -ts "${SCRIPT_PATH}"/locale/bt_experience_it.ts
 
 echo "End of script"

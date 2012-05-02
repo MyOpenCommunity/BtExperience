@@ -5,6 +5,6 @@
 SCRIPT_PATH="$(dirname $(readlink -f $0))"
 
 # release translation files for qml sources
-lrelease "${SCRIPT_PATH}"/linguist-ts/*.ts
+lrelease "${SCRIPT_PATH}"/locale/*.ts
 
 echo "End of script"

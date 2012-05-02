@@ -144,7 +144,7 @@ void setLanguage(QString language)
 	}
 	// computes new translation file name
 	QString lf;
-	lf.sprintf("%s/gui/linguist-ts/bt_experience_%s",
+	lf.sprintf("%s/gui/locale/bt_experience_%s",
 			   QDir::currentPath().toAscii().constData(),
 			   language.toAscii().constData());
 	// tries to install new translation

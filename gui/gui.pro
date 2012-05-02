@@ -68,7 +68,7 @@ HEADERS += \
     imagereader.h \
     inputcontextwrapper.h
 
-TRANSLATIONS += linguist-ts/bt_experience_it.ts
+TRANSLATIONS += locale/bt_experience_it.ts
 
 mac {
     APP_DIR = $${DESTDIR}/$${TARGET}.app/Contents
