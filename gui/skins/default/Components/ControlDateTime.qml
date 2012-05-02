@@ -6,21 +6,14 @@ Image {
     width: 212
     height: 170
     source: "../images/common/dimmer_bg.png"
-    property string text: "valid until"
+    property string text
     property string date: DateTime.format(new Date())["date"]
     property string time: DateTime.format(new Date())["time"]
-
-    signal dateClicked
-    signal timeClicked
-
-    function resetSelection() {
-        privateProps.currentElement = -1
-    }
 
 
     QtObject {
         id: privateProps
-        property int currentElement: -1
+        property int current_element: -1
     }
 
     Text {
@@ -67,12 +60,11 @@ Image {
         y: 68
         width: 43
         height: 45
-        selected: privateProps.currentElement == 1
+        selected: privateProps.current_element == 1
 
         onClicked: {
             if (!selected) {
-                privateProps.currentElement = 1
-                control.dateClicked()
+                privateProps.current_element = 1
             }
         }
     }
@@ -82,11 +74,10 @@ Image {
         y: 113
         width: 43
         height: 45
-        selected: privateProps.currentElement == 2
+        selected: privateProps.current_element == 2
         onClicked: {
             if (!selected) {
-                privateProps.currentElement = 2
-                control.timeClicked()
+                privateProps.current_element = 2
             }
         }
     }
