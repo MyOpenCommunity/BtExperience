@@ -52,7 +52,5 @@ SvgImage {
     TwoButtonsSettingsLarge {
         anchors.top: image1.bottom
         anchors.topMargin: 10
-        leftText: "<"
-        rightText: ">"
     }
 }
