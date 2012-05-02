@@ -143,10 +143,15 @@ void setLanguage(QString language)
 		actual_translator = 0;
 	}
 	// computes new translation file name
-	QString lf;
-	lf.sprintf("%s/gui/locale/bt_experience_%s",
-			   QDir::currentPath().toAscii().constData(),
-			   language.toAscii().constData());
+	QFileInfo path = qApp->applicationDirPath();
+
+#ifdef Q_WS_MAC
+	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
+#endif
+
+	QString lf = QFileInfo(QDir(path.canonicalFilePath()),
+			       QString("gui/locale/bt_experience_%1").arg(language.toAscii().constData())).absoluteFilePath();
+
 	// tries to install new translation
 	actual_translator = new QTranslator();
 	if (actual_translator->load(lf))
