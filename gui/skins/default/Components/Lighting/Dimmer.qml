@@ -2,11 +2,12 @@ import QtQuick 1.1
 import Components 1.0
 
 MenuColumn {
-    width: column.width
+    width: 212
     height: column.height
 
     Column {
         id: column
+        width: parent.width
         ButtonOnOff {
             id: onOff
             width: parent.width
@@ -15,6 +16,7 @@ MenuColumn {
         }
 
         ControlSlider {
+            width: 212
             description: qsTr("light intensity")
             percentage: 20
 
@@ -26,6 +28,7 @@ MenuColumn {
 
         ControlTiming {
             id: timing
+            width: 212
         }
     }
 }
