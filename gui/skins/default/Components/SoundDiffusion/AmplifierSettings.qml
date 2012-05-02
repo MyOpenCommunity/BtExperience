@@ -30,26 +30,18 @@ MenuColumn {
         maxHeight: 400
 
         Column {
-            ControlBalance {
+            ControlSlider {
                 id: treble
                 description: qsTr("treble")
                 // TODO: wrong value (#13411)
-                balance: column.dataModel.treble
-                rightText: "+"
-                leftText: "-"
-                onRightClicked: column.dataModel.trebleUp()
-                onLeftClicked: column.dataModel.trebleDown()
+                percentage: column.dataModel.treble
             }
 
-            ControlBalance {
+            ControlSlider {
                 id: bass
                 description: qsTr("bass")
                 // TODO: this is the wrong value, see ticket #13411
-                balance: column.dataModel.bass
-                rightText: "+"
-                leftText: "-"
-                onRightClicked: column.dataModel.bassUp()
-                onLeftClicked: column.dataModel.bassDown()
+                percentage: column.dataModel.bass
             }
         }
 
@@ -57,8 +49,6 @@ MenuColumn {
             ControlBalance {
                 id: balance
                 balance: column.dataModel.balance
-                onRightClicked: column.dataModel.balanceRight()
-                onLeftClicked: column.dataModel.balanceLeft()
             }
 
             MenuItem {
@@ -83,6 +73,8 @@ MenuColumn {
                 description: column.dataModel.loud ? qsTr("on") : qsTr("off")
                 hasChild: true
                 state: privateProps.currentElement === 1 ? "selected" : ""
+                // TODO: a dirty trick to avoid creating another almost empty file.
+                // This must be linked to the model anyway.
                 onClicked: {
                     column.loadColumn(
                                 loudness,

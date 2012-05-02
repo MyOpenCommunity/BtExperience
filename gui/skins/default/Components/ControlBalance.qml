@@ -7,11 +7,6 @@ SvgImage {
     // valid range: -10/+10
     property int balance: 10
     property string description: "balance"
-    property alias rightText: buttonSettings.rightText
-    property alias leftText: buttonSettings.leftText
-
-    signal rightClicked
-    signal leftClicked
 
     Text {
         id: labelText
@@ -55,12 +50,9 @@ SvgImage {
     }
 
     TwoButtonsSettingsLarge {
-        id: buttonSettings
         anchors.top: image1.bottom
         anchors.topMargin: 10
         leftText: "<"
         rightText: ">"
-        onRightClicked: controlBalance.rightClicked()
-        onLeftClicked: controlBalance.leftClicked()
     }
 }
