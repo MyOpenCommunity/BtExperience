@@ -1,9 +1,8 @@
 import QtQuick 1.1
-import Components 1.0
 
 Image {
     id: control
-    source: "../../images/common/date_panel_background.svg"
+    source: "../../images/common/bg_DueRegolazioni.png"
     width: 265
     height: 188
     property alias title: title.text
@@ -18,23 +17,21 @@ Image {
     }
 
 
-    QtObject {
-        id: privateProps
-        property bool enabled: true
-    }
 
     Row {
-        id: disableRow
         anchors {
             top: title.bottom
             topMargin: 10
-            horizontalCenter: parent.horizontalCenter
+            left: parent.left
+            leftMargin: 10
+            right: parent.right
+            rightMargin: 10
         }
 
         Image {
-            id: enabledImage
-            source: enabledArea.pressed ? "../../images/common/button_background_press.svg" :
-                                          "../../images/common/button_background.svg"
+            source: "../../images/common/btn_annulla.png"
+            width: parent.width / 2
+            height: 24
 
             Text {
                 text: qsTr("enabled")
@@ -43,25 +40,15 @@ Image {
             }
 
             MouseArea {
-                id: enabledArea
                 anchors.fill: parent
-                onClicked: privateProps.enabled = true
-            }
-
-            states: State {
-                name: "selected"
-                when: privateProps.enabled === true
-                PropertyChanges {
-                    target: enabledImage
-                    source: "../../images/common/button_background_select.svg"
-                }
+                onClicked: control.state = ""
             }
         }
 
         Image {
-            id: disabledImage
-            source: disabledArea.pressed ? "../../images/common/button_background_press.svg" :
-                                           "../../images/common/button_background.svg"
+            source: "../../images/common/btn_annulla.png"
+            width: parent.width / 2
+            height: 24
 
             Text {
                 text: qsTr("disabled")
@@ -70,38 +57,70 @@ Image {
             }
 
             MouseArea {
-                id: disabledArea
                 anchors.fill: parent
-                onClicked: privateProps.enabled = false
-            }
-
-            states: State {
-                name: "selected"
-                when: privateProps.enabled === false
-                PropertyChanges {
-                    target: disabledImage
-                    source: "../../images/common/button_background_select.svg"
-                }
+                onClicked: control.state = "disabled"
             }
         }
     }
 
-    ControlPlusMinusDateTime {
-        id: timingButtons
-        anchors.top: disableRow.bottom
-        anchors.topMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
+    Row {
+        id: timingRow
+        width: control.width - 20 // margins
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: 10
+            horizontalCenter: parent.horizontalCenter
+        }
 
-        leftLabel: "hours"
-        centerLabel: "minutes"
-        rightLabel: "seconds"
+        TimeButtons {
+            id: timingHours
+            width: (control.width - 20) / 3
+            measureUnit: qsTr("hours")
+            onPlusClicked: console.log("hour plus clicked")
+            onMinusClicked: console.log("hour minus clicked")
+        }
+        TimeButtons {
+            width: (control.width - 20) / 3
+            measureUnit: qsTr("minutes")
+        }
+        TimeButtons {
+            width: (control.width - 20) / 3
+            measureUnit: qsTr("seconds")
+        }
     }
 
+    // the following two Texts put a colon ':' between the elements in timingRow
+    // we need a formula to compute the x because the element may be resized
+    Text {
+        anchors.verticalCenter: timingRow.verticalCenter
+        x: timingHours.x + timingHours.width + 7
+        text: ":"
+        color: "#5b5b5b"
+        font.pointSize: 18
+        font.bold: true
+    }
+
+    Text {
+        anchors.verticalCenter: timingRow.verticalCenter
+        x: timingHours.x + timingHours.width * 2 + 7
+        text: ":"
+        color: "#5b5b5b"
+        font.pointSize: 18
+        font.bold: true
+    }
 
     Rectangle {
         id:darkRect
         z: 1
-        anchors.fill: timingButtons
+        anchors {
+            top: timingRow.top
+            bottom: parent.bottom
+            bottomMargin: 10
+            right: parent.right
+            rightMargin: 10
+            left: parent.left
+            leftMargin: 10
+        }
 
         color: "grey"
         opacity: 0
@@ -114,7 +133,6 @@ Image {
     states: [
         State {
             name: "disabled"
-            when: privateProps.enabled === false
             PropertyChanges {
                 target: darkRect
                 opacity: 0.6
