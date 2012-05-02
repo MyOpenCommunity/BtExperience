@@ -8,8 +8,10 @@
 
 class LightingDevice;
 class DimmerDevice;
+class Dimmer100Device;
 class QDomNode;
 
+QList<ObjectPair> parseDimmer100(const QDomNode &obj);
 QList<ObjectPair> parseDimmer(const QDomNode &obj);
 QList<ObjectPair> parseLight(const QDomNode &obj);
 
@@ -82,7 +84,6 @@ private:
 class Dimmer : public Light
 {
 	friend class TestDimmer;
-	friend class TestDimmer100;
 
 	Q_OBJECT
 
@@ -127,6 +128,100 @@ private:
 	DimmerDevice *dev;
 };
 
+
+/*!
+	\ingroup Lighting
+	\brief Manages dimmer 100 actuators
+
+	The actuator allows setting the speed at which it turns on/off and offers 100 levels
+	instead of 10.
+
+	The object id is \a ObjectInterface::IdDimmer, the object key is the SCS where.
+*/
+class Dimmer100 : public Dimmer
+{
+	friend class TestDimmer100;
+
+	Q_OBJECT
+
+	/*!
+		\brief The speed at which the dimmer turns on (1-255)
+
+		\sa active
+	*/
+	Q_PROPERTY(int onSpeed READ getOnSpeed WRITE setOnSpeed NOTIFY onSpeedChanged)
+
+	/*!
+		\brief The speed at which the dimmer turns off (1-255)
+
+		\sa active
+	*/
+	Q_PROPERTY(int offSpeed READ getOffSpeed WRITE setOffSpeed NOTIFY offSpeedChanged)
+
+	/*!
+		\brief The speed at which the dimmer increases/decreases its level (1-255)
+
+		\sa increaseLevel100
+		\sa decreaseLevel100
+	*/
+	Q_PROPERTY(int stepSpeed READ getStepSpeed WRITE setStepSpeed NOTIFY stepSpeedChanged)
+
+	/*!
+		\brief The amount used to increase/decrease the dimmer level.
+
+		\sa increaseLevel100
+		\sa decreaseLevel100
+	*/
+	Q_PROPERTY(int stepAmount READ getStepAmount WRITE setStepAmount NOTIFY stepAmountChanged)
+
+public:
+	Dimmer100(QString name, QString key, Dimmer100Device *d, int onspeed, int offsspeed);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdDimmer100;
+	}
+
+	virtual void setActive(bool st);
+
+	void setOnSpeed(int speed);
+	int getOnSpeed() const;
+
+	void setOffSpeed(int speed);
+	int getOffSpeed() const;
+
+	void setStepSpeed(int speed);
+	int getStepSpeed() const;
+
+	void setStepAmount(int amount);
+	int getStepAmount() const;
+
+public slots:
+	/*!
+		\brief Increase dimmer level by \a stepAmount at speed \a stepSpeed.
+	*/
+	void increaseLevel100();
+
+	/*!
+		\brief Decrease dimmer level by \a stepAmount at speed \a stepSpeed.
+	*/
+	void decreaseLevel100();
+
+signals:
+	void onSpeedChanged();
+	void offSpeedChanged();
+	void stepSpeedChanged();
+	void stepAmountChanged();
+
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
+protected:
+	int on_speed, off_speed, step_speed, step_amount;
+
+private:
+	Dimmer100Device *dev;
+};
 
 #endif // LIGHTOBJECTS_H
 

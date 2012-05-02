@@ -122,13 +122,13 @@ void TestDimmer100::init()
 
 	Dimmer100Device *d = new Dimmer100Device("3", NOT_PULL);
 
-	obj = new Dimmer("", "", d);
+	obj = new Dimmer100("", "", d, 255, 255);
 	dev = new Dimmer100Device("3", NOT_PULL, 1);
 
 	initObjects(dev, obj);
 }
 
-void TestDimmer100::testReceiveLevel100()
+void TestDimmer100::testReceiveLevel()
 {
 	DeviceValues v;
 	v[LightingDevice::DIM_DEVICE_ON] = true;
@@ -142,9 +142,88 @@ void TestDimmer100::testReceiveLevel100()
 	tstatus.checkSignals();
 	tperc.checkSignals();
 	QCOMPARE(obj->isActive(), true);
-	QCOMPARE(obj->getPercentage(), 30);
+	QCOMPARE(obj->getPercentage(), 34);
 
 	obj->valueReceived(v);
 	tstatus.checkNoSignals();
 	tperc.checkNoSignals();
+}
+
+void TestDimmer100::testSetStatus()
+{
+	obj->setOnSpeed(47);
+	obj->setActive(true);
+	dev->turnOn(47);
+	compareClientCommand();
+
+	obj->setOffSpeed(48);
+	obj->setActive(false);
+	dev->turnOff(48);
+	compareClientCommand();
+}
+
+void TestDimmer100::testLevelUp100()
+{
+	obj->setStepAmount(17);
+	obj->setStepSpeed(127);
+	obj->decreaseLevel100();
+	dev->decreaseLevel100(17, 127);
+	compareClientCommand();
+}
+
+void TestDimmer100::testLevelDown100()
+{
+	obj->setStepAmount(16);
+	obj->setStepSpeed(126);
+	obj->decreaseLevel100();
+	dev->decreaseLevel100(16, 126);
+	compareClientCommand();
+}
+
+void TestDimmer100::testOnSpeed()
+{
+	ObjectTester t(obj, SIGNAL(onSpeedChanged()));
+
+	obj->setOnSpeed(7);
+	QCOMPARE(obj->getOnSpeed(), 7);
+	t.checkSignals();
+
+	obj->setOnSpeed(7);
+	t.checkNoSignals();
+}
+
+void TestDimmer100::testOffSpeed()
+{
+	ObjectTester t(obj, SIGNAL(offSpeedChanged()));
+
+	obj->setOffSpeed(7);
+	QCOMPARE(obj->getOffSpeed(), 7);
+	t.checkSignals();
+
+	obj->setOffSpeed(7);
+	t.checkNoSignals();
+}
+
+void TestDimmer100::testStepSpeed()
+{
+	ObjectTester t(obj, SIGNAL(stepSpeedChanged()));
+
+	obj->setStepSpeed(7);
+	QCOMPARE(obj->getStepSpeed(), 7);
+	t.checkSignals();
+
+	obj->setStepSpeed(7);
+	t.checkNoSignals();
+}
+
+void TestDimmer100::testStepAmount()
+{
+	ObjectTester t(obj, SIGNAL(stepAmountChanged()));
+
+	obj->setStepAmount(7);
+	QCOMPARE(obj->getStepAmount(), 7);
+	t.checkSignals();
+
+	obj->setStepAmount(7);
+	t.checkNoSignals();
 }
