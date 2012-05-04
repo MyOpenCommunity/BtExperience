@@ -21,6 +21,18 @@ Item {
         return menuItem.status > -1
     }
 
+    function iconStatusImage() {
+        if (!statusVisible())
+            return ""
+        var base = "../images/common/"
+        if (menuItem.status === 0)
+            return base + "menu_column_item_inactive_led.svg"
+        else if (menuItem.status === 1)
+            return base + "menu_column_item_active_led.svg"
+        else if (menuItem.status === 2)
+            return base + "menu_column_item_warning_led.svg" // TODO warning image is missing
+    }
+
     SvgImage {
         anchors.fill: parent
         id: background
@@ -32,7 +44,7 @@ Item {
 
         SvgImage {
             id: iconStatus
-            source: (statusVisible() ? (menuItem.status === 1 ? "../images/common/menu_column_item_active_led.svg" :"../images/common/menu_column_item_inactive_led.svg") : "");
+            source: iconStatusImage()
             anchors.left: parent.left
             anchors.leftMargin: menuItem.width / 100 * 2
             anchors.topMargin: menuItem.height / 100 * 18

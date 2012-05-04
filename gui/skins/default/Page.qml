@@ -50,6 +50,12 @@ Image {
         }
     }
 
+    function installPopup(sourceComponent) {
+        popupLoader.sourceComponent = sourceComponent
+        popupLoader.item.closePopup.connect(closePopup)
+        page.state = "popup"
+    }
+
     function showAlarmPopup(type, zone, time) {
         popupLoader.sourceComponent = alarmComponent
         popupLoader.item.alarmDateTime = DateTime.format(time)["time"] + " - " + DateTime.format(time)["date"]

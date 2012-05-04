@@ -15,6 +15,7 @@ ButtonOnOff 1.0 ButtonOnOff.qml
 ButtonPagination 1.0 ButtonPagination.qml
 ButtonSystems 1.0 ButtonSystems.qml
 Constants 1.0 Constants.qml
+Control3LinesButton 1.0 Control3LinesButton.qml
 ControlBalance 1.0 ControlBalance.qml
 ControlCall 1.0 ControlCall.qml
 ControlChoices 1.0 ControlChoices.qml
