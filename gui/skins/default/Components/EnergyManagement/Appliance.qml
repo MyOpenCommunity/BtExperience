@@ -13,7 +13,7 @@ MenuColumn {
         ControlUpDown {
             id: enabler
             title: qsTr("control")
-            text: qsTr("disabled")
+            text: qsTr("disable")
         }
         ButtonOkCancel {
             onOkClicked: {

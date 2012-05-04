@@ -27,7 +27,7 @@ MenuColumn {
                         top: parent.top
                         topMargin: 10
                         left: parent.left
-                        leftMargin: 15
+                        leftMargin: 10
                     }
                     font.pixelSize: 13
                 }
@@ -38,7 +38,7 @@ MenuColumn {
                     anchors {
                         top: title.bottom
                         left: parent.left
-                        leftMargin: 15
+                        leftMargin: 10
                     }
                     font.pixelSize: 13
                 }

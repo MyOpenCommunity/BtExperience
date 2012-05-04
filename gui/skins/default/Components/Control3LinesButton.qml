@@ -24,7 +24,7 @@ Image {
             top: control.top
             topMargin: 10
             left: control.left
-            leftMargin: 10
+            leftMargin: 5
         }
     }
 
@@ -39,7 +39,7 @@ Image {
             top: line1.bottom
             topMargin: 5
             left: control.left
-            leftMargin: 10
+            leftMargin: 5
         }
         wrapMode: Text.WordWrap
     }
@@ -56,22 +56,22 @@ Image {
             top: line2.bottom
             topMargin: 5
             left: control.left
-            leftMargin: 10
+            leftMargin: 5
         }
         wrapMode: Text.WordWrap
     }
 
     Image {
         id: button
-        width: 75
+        width: 68
         source: "../images/common/btn_comando.png"
         anchors {
             top: control.top
             bottom: control.bottom
             right: control.right
-            topMargin: 10
-            bottomMargin: 10
-            rightMargin: 5
+            topMargin: 15
+            bottomMargin: 15
+            rightMargin: 2
         }
 
         Text {
