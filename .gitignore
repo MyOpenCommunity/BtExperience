@@ -8,6 +8,7 @@ obj/
 BtObjects/libbtobjects.*.so
 BtObjects/libbtobjects.*.dylib
 BtObjects/test/test
+gui/locale/*.qm
 common_files
 devices
 conf.xml

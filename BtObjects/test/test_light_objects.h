@@ -27,6 +27,8 @@ class Light;
 class LightingDevice;
 class Dimmer;
 class DimmerDevice;
+class Dimmer100;
+class Dimmer100Device;
 
 
 class TestLight : public TestBtObject
@@ -40,7 +42,7 @@ private slots:
 	void init();
 	void cleanup();
 
-	void testSetStatus();
+	virtual void testSetStatus();
 	void testReceiveStatus();
 
 private:
@@ -62,7 +64,7 @@ private slots:
 	void testLevelUp();
 	void testLevelDown();
 
-	void testReceiveLevel();
+	virtual void testReceiveLevel();
 
 private:
 	Dimmer *obj;
@@ -77,11 +79,20 @@ class TestDimmer100 : public TestDimmer
 private slots:
 	void init();
 
-	void testReceiveLevel100();
+	void testLevelUp100();
+	void testLevelDown100();
+
+	void testOnSpeed();
+	void testOffSpeed();
+	void testStepSpeed();
+	void testStepAmount();
 
 private:
-	Dimmer *obj;
-	DimmerDevice *dev;
+	virtual void testSetStatus();
+	virtual void testReceiveLevel();
+
+	Dimmer100 *obj;
+	Dimmer100Device *dev;
 };
 
 #endif // TEST_LIGHT_OBJECT_H

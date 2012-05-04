@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuratore>
-	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ft="0" >
+	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="0" >
 		<ist uii="1" descr="lamp downstair" where="11#4#01" />
 		<ist uii="2" descr="lamp upstair"  where="12" pul="1" />
-		<ist uii="3" descr="lamp on the table"  where="22" ft="1" />
+		<ist uii="3" descr="lamp on the table"  where="22" ftime="1" />
 	</obj>
 	<obj cid="2002" id="2002" descr="Dimmer 100" where="11" pul="0" ftime="0" ctime="00:00:00" sstart="0"  sstop="0">
 		<ist uii="4" descr="abat jour" where="21#4#01" ftime="1" />

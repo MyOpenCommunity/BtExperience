@@ -38,8 +38,10 @@ isEmpty(PREFIX) {
     target.path = $${PREFIX}
 }
 
-target.commands += mkdir -p $${target.path}/gui $${target.path}/BtObjects &&
+target.commands += mkdir -p $${target.path}/gui $${target.path}/gui/locale $${target.path}/BtObjects &&
 target.commands += cp -LR skins $${target.path}/gui/ &&
+# the ls check below is to account for the case when there are no .qm files
+target.commands += (if ls locale/*.qm 2>/dev/null; then cp -LR locale/*.qm $${target.path}/gui/locale; else true; fi) &&
 target.commands += cp -L $${PWD}/../layout.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../conf.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../BtObjects/qmldir $${target.path}/BtObjects/ &&
@@ -68,7 +70,7 @@ HEADERS += \
     imagereader.h \
     inputcontextwrapper.h
 
-TRANSLATIONS += linguist-ts/bt_experience_it.ts
+TRANSLATIONS += locale/bt_experience_it.ts
 
 mac {
     APP_DIR = $${DESTDIR}/$${TARGET}.app/Contents
@@ -80,6 +82,7 @@ mac {
 
     QMAKE_POST_LINK += mkdir -p $${APP_DIR}/MacOS/BtObjects $${APP_DIR}/Resources/gui &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/skins $${APP_DIR}/Resources/gui/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/locale $${APP_DIR}/Resources/gui/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../layout.xml $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += cp -L $${DESTDIR}/BtObjects/libbtobjects$${DEBUG_SUFFIX}.dylib $${APP_DIR}/MacOS/BtObjects/libbtobjects.dylib &&
@@ -91,6 +94,7 @@ mac {
 } else {
     QMAKE_POST_LINK += mkdir -p $${DESTDIR}/gui &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/skins $${DESTDIR}/gui/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/locale $${DESTDIR}/gui/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../layout.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../BtObjects/qmldir $${DESTDIR}/BtObjects/ &&

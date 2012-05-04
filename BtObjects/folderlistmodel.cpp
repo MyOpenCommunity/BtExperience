@@ -283,6 +283,8 @@ void FolderListModel::setRange(QVariantList range)
 
 int FolderListModel::rowCount(const QModelIndex &parent) const
 {
+	Q_UNUSED(parent);
+
 	if (min_range != -1 && max_range != -1)
 		return qMin(max_range, getSize()) - min_range;
 
@@ -384,6 +386,8 @@ void PagedFolderListModel::setRange(QVariantList range)
 
 void PagedFolderListModel::setRootPath(QVariantList path)
 {
+	Q_UNUSED(path);
+
 	// do nothing, not supported for UPnP
 }
 
@@ -394,6 +398,8 @@ QVariantList PagedFolderListModel::getRootPath() const
 
 int PagedFolderListModel::rowCount(const QModelIndex &parent) const
 {
+	Q_UNUSED(parent);
+
 	if (min_range != -1 && max_range != -1)
 		return qMin(max_range, getSize()) - min_range;
 
