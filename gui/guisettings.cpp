@@ -23,7 +23,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 	screensaverType = None;
 	temperatureUnit = Celsius;
 	timeFormat = TimeFormat_24h;
-	timeOut = Minutes_10;
+	timeOut = Minutes_1;
 	timezone = 0;
 	turnOffTime = Minutes_10;
 }
