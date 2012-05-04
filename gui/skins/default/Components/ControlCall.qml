@@ -28,7 +28,7 @@ Item {
                     Text {
                         id: textName
                         height: control.description == "" ? 50 : 25
-                        width: 162
+                        width: control.callImage == "" ? 212 : 162
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         text: control.name
@@ -41,7 +41,7 @@ Item {
                         id: textDescription
                         height: 25
                         color: "#ffffff"
-                        width: 162
+                        width: control.callImage == "" ? 212 : 162
                         visible: control.description == "" ? false : true
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter

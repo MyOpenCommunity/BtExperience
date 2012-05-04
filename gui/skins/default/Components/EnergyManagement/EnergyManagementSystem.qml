@@ -14,7 +14,7 @@ MenuColumn {
     Component.onCompleted: {
         listModel.append({"name": qsTr("systems supervision"), "component": supervision})
         listModel.append({"name": qsTr("consumption/production display"), "component": supervision})
-        listModel.append({"name": qsTr("load management"), "component": supervision})
+        listModel.append({"name": qsTr("load management"), "component": loadManagement})
     }
 
     ListView {
@@ -37,6 +37,12 @@ MenuColumn {
     Component {
         id: supervision
         Supervision {
+        }
+    }
+
+    Component {
+        id: loadManagement
+        LoadManagement {
         }
     }
 }
