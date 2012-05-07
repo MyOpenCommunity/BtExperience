@@ -5,6 +5,7 @@
 #include "device.h" // DeviceValues
 
 #include <QObject>
+#include <QProcess>
 
 class VideoDoorEntryDevice;
 
@@ -63,6 +64,9 @@ public:
 	int getContrast() const;
 	void setContrast(int value);
 
+	Q_INVOKABLE void answerCall();
+	Q_INVOKABLE void endCall();
+
 signals:
 	void brightnessChanged();
 	void contrastChanged();
@@ -70,6 +74,11 @@ signals:
 	void releaseLock();
 	void stairLightActivate();
 	void stairLightRelease();
+	void incomingCall();
+	void callEndRequested();
+//	void stopVideoRequested();
+	void videoIsStopped();
+	void videoIsRunning();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -81,6 +90,9 @@ protected:
 	int contrast;
 
 private:
+	void startVideo();
+	void stopVideo();
+	QProcess video_grabber;
 	VideoDoorEntryDevice *dev;
 };
 

@@ -3,6 +3,9 @@
 
 #include <QDebug>
 
+QString video_grabber_path = "/usr/share/ti/linux-driver-examples/video/saUserPtrLoopback";
+QString video_grabber_args = "-i 0 -s 2";
+
 
 CCTV::CCTV(QString name,
 		   QString key,
@@ -15,6 +18,9 @@ CCTV::CCTV(QString name,
 	connect(this, SIGNAL(stairLightRelease()), dev, SLOT(stairLightRelease()));
 	connect(this, SIGNAL(openLock()), dev, SLOT(openLock()));
 	connect(this, SIGNAL(releaseLock()), dev, SLOT(releaseLock()));
+
+	connect(&video_grabber, SIGNAL(finished(int,QProcess::ExitStatus)), SIGNAL(videoIsStopped()));
+	connect(&video_grabber, SIGNAL(started), SIGNAL(videoIsRunning()));
 
 	this->key = key;
 	this->name = name;
@@ -48,6 +54,17 @@ void CCTV::setContrast(int value)
 	emit contrastChanged();
 }
 
+void CCTV::answerCall()
+{
+	dev->answerCall();
+}
+
+void CCTV::endCall()
+{
+	dev->endCall();
+	stopVideo();
+}
+
 void CCTV::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.constBegin();
@@ -55,17 +72,50 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 	{
 		switch (it.key())
 		{
-//		case VideoDoorEntryDevice::DIM_IP:
-//			if (it.value().toString() != address)
-//			{
-//				address = it.value().toString();
-//				emit addressChanged();
-//			}
-//			break;
+		case VideoDoorEntryDevice::VCT_CALL:
+			qDebug() << "Received VCT_CALL";
+			// TODO: many many other things...but this should be enough for now.
+			emit incomingCall();
+			startVideo();
+			break;
+		case VideoDoorEntryDevice::END_OF_CALL:
+			qDebug() << "Received END_OF_CALL";
+			emit callEndRequested();
+			stopVideo();
+			break;
+		case VideoDoorEntryDevice::STOP_VIDEO:
+			qDebug() << "Received STOP_VIDEO";
+			stopVideo();
+//			emit stopVideoRequested();
+			break;
+		default:
+			qDebug() << "CCTV::valueReceived, unhandled value" << it.key() << *it;
+			break;
 		}
 		++it;
 	}
 }
+
+void CCTV::startVideo()
+{
+	qDebug() << "CCTV::startVideo";
+	if (video_grabber.state() == QProcess::NotRunning)
+	{
+		qDebug() << "Starting grabber with args: " << (video_grabber_path + " " + video_grabber_args);
+		video_grabber.start(video_grabber_path + " " + video_grabber_args);
+	}
+}
+
+void CCTV::stopVideo()
+{
+	qDebug() << "CCTV::stopVideo";
+	if (video_grabber.state() != QProcess::NotRunning)
+	{
+		qDebug() << "terminate grabber";
+		video_grabber.terminate();
+	}
+}
+
 
 Intercom::Intercom(QString name,
 				   QString key,
