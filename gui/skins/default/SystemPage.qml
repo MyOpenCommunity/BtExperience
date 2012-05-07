@@ -33,24 +33,32 @@ Page {
     // The spacing between the buttons on the left and the MenuContainer
     property int containerLeftMargin: 20
 
-    MenuContainer {
-        id: container
+    Pannable {
+        id: pannable
         x: 122 + backButton.width + containerLeftMargin
         y: 63
         width: 893 - backButton.width - containerLeftMargin
         height: 530
-        rootColumn: systemPage.rootColumn
-        pageObject: systemPage
-        onClosed: Stack.popPage()
+
+        MenuContainer {
+            x: 0
+            y: parent.childOffset
+            width: parent.width
+            height: parent.height
+            id: container
+            rootColumn: systemPage.rootColumn
+            pageObject: systemPage
+            onClosed: Stack.popPage()
+        }
     }
 
     Column {
         id: buttonsColumn
         width: backButton.width
         spacing: 10
-        anchors.topMargin: container.y + 33
+        anchors.topMargin: pannable.y + 33
         anchors.top: parent.top
-        anchors.leftMargin: container.x - backButton.width - containerLeftMargin
+        anchors.leftMargin: pannable.x - backButton.width - containerLeftMargin
         anchors.left: parent.left
 
         ButtonBack {
