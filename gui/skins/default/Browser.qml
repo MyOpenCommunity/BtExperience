@@ -16,13 +16,8 @@ Page {
         anchors.top: parent.top
     }
 
-    FlickableWebView {
-        id: webView
-        x: 0
-        y: 151
-        clip: true
-        url: webBrowser.urlString
-        onProgressChanged: header.urlChanged = false
+    Pannable {
+        id: webViewContaineer
         anchors.top: header.bottom
         anchors.bottom: parent.bottom
         width: parent.width
@@ -31,6 +26,17 @@ Page {
         anchors.bottomMargin: -3
         anchors.leftMargin: 0
         anchors.topMargin: 0
+
+        FlickableWebView {
+            id: webView
+            clip: true
+            url: webBrowser.urlString
+            onProgressChanged: header.urlChanged = false
+            x: 0
+            y: parent.childOffset
+            width: parent.width
+            height: parent.height
+        }
     }
 
     Item {
