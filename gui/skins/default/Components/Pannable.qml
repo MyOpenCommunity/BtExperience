@@ -9,7 +9,7 @@ Item {
     // bind this property to the .y property of the Flickable child
     property real childOffset: 0.0
     property bool keyboardVisible: false
-    property Flickable contentItem: children[0]
+    property Item contentItem: children[0]
 
     id: container
     clip: true
@@ -66,16 +66,19 @@ Item {
             return
         }
 
-        // if the input field is partially outside the screen, move it into view;
-        // this is not rolled back when the keyboard is hidden
-        if (this.focusRect.top < 0)
-            delta = this.focusRect.top;
-        else if (this.focusRect.bottom > height)
-            delta = this.focusRect.bottom - height
+        // handle Flickable content with the input field partially scrolled outside the screen
+        if (contentItem.contentY !== undefined) {
+            // if the input field is partially outside the screen, move it into view;
+            // this is not rolled back when the keyboard is hidden
+            if (this.focusRect.top < 0)
+                delta = this.focusRect.top;
+            else if (this.focusRect.bottom > height)
+                delta = this.focusRect.bottom - height
 
-        contentItem.contentY += delta
-        this.focusRect.top -= delta
-        this.focusRect.bottom -= delta
+            contentItem.contentY += delta
+            this.focusRect.top -= delta
+            this.focusRect.bottom -= delta
+        }
 
         // if the input field is covered by the keyboard, move the entire widget
         // upwards se the input field is visible
