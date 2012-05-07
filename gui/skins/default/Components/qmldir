@@ -32,6 +32,7 @@ MenuContainer 1.0 MenuContainer.qml
 MenuItem 1.0 MenuItem.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 MenuTitle 1.0 MenuTitle.qml
+Pannable 1.0 Pannable.qml
 PageAnimation 1.0 PageAnimation.qml
 Paginator 1.0 Paginator.qml
 PaginatorColumn 1.0 PaginatorColumn.qml
