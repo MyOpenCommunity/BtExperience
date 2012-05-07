@@ -4,13 +4,13 @@ import "js/Stack.js" as Stack
 
 
 Page {
-    id: page
+    id: videoCamera
 
     property QtObject camera: null
 
     property string title: qsTr("TELECAMERA POSTO ESTERNO 1")
     property int volume: 50
-    property bool commandAudioVisible: true
+    property bool commandAnswerVisible: true
     property bool commandStairLightVisible: true
     property bool commandLockVisible: true
     property bool brightnessVisible: true
@@ -31,6 +31,21 @@ Page {
     signal replayClicked
     signal endCallClicked
 
+    function callEndRequested() {
+        camera.videoIsStopped.connect(Stack.popPage)
+    }
+
+    Component.onCompleted: {
+        camera.callEndRequested.connect(callEndRequested)
+    }
+
+    function endCall(callback) {
+        // TODO: possible race condition on videoIsStopped? I think it's possible
+        // to pop two pages if timings are right...
+        camera.videoIsStopped.connect(callback)
+        camera.endCall()
+    }
+
     Image {
         source: "images/videocitofonia.jpg"
         anchors.fill: parent
@@ -44,7 +59,7 @@ Page {
                 id: toolbar
                 fontFamily: semiBoldFont.name
                 fontSize: 17
-                onHomeClicked: Stack.backToHome()
+                onHomeClicked: endCall(Stack.backToHome)
             }
 
             Column {
@@ -60,18 +75,19 @@ Page {
 
                 ButtonBack {
                     id: backButton
-                    onClicked: Stack.popPage()
+                    onClicked: endCall(Stack.popPage)
                 }
 
-                ButtonSystems {
-                    // 1 is systems page
-                    onClicked: Stack.showPreviousPage(1)
-                }
+                // TODO: reenable it after May demo! :)
+//                ButtonSystems {
+//                    // 1 is systems page
+//                    onClicked: Stack.showPreviousPage(1)
+//                }
             }
 
             Text {
                 id: title
-                text: page.title
+                text: videoCamera.title
                 color: "white"
                 x: 90
                 y: 65
@@ -84,96 +100,8 @@ Page {
                 source: "images/videocitofonia.jpg"
                 x: 90
                 y: 90
-                width: 735
-                height: 486
-                Image {
-                    id: moveUp
-                    x: 354
-                    y: 15
-                    width: 26
-                    height: 26
-                    source: "images/common/freccia_up.png"
-                }
-                Image {
-                    id: moveDown
-                    x: 354
-                    y: 445
-                    width: 26
-                    height: 26
-                    source: "images/common/freccia_dw.png"
-                }
-                Image {
-                    id: moveLeft
-                    x: 15
-                    y: 230
-                    width: 26
-                    height: 26
-                    source: "images/common/freccia_sx.png"
-                }
-                Image {
-                    id: moveRight
-                    x: 694
-                    y: 230
-                    width: 26
-                    height: 26
-                    source: "images/common/freccia_dx.png"
-                }
-
-                Rectangle {
-                    color: "black"
-                    opacity: 0.75
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        bottom: parent.bottom
-                        bottomMargin: 56
-                    }
-                    width: 566
-                    height: 46
-                    Text {
-                        text: page.description1
-                        color: "white"
-                        anchors {
-                            top: parent.top
-                            left: parent.left
-                            topMargin: 5
-                            leftMargin: 5
-                        }
-                    }
-                    Text {
-                        text: page.title
-                        color: "white"
-                        anchors {
-                            bottom: parent.bottom
-                            left: parent.left
-                            bottomMargin: 5
-                            leftMargin: 5
-                        }
-                    }
-                    Row {
-                        anchors {
-                            right: parent.right
-                            verticalCenter: parent.verticalCenter
-                        }
-                        ButtonImageText {
-                            id: leftButton
-                            width: 105
-                            height: 46
-                            source: page.replayImage
-                            text: page.replayText
-                            textMargin: page.replayMargin
-                            onClicked: page.replayClicked()
-                        }
-                        ButtonImageText {
-                            id: rightButton
-                            width: leftButton.visible ? 105 : 210
-                            height: 46
-                            source: page.endCallImage
-                            text: page.endCallText
-                            textMargin: page.endCallMargin
-                            onClicked: page.endCallClicked()
-                        }
-                    }
-                }
+                width: 640
+                height: 480
             }
 
             Image {
@@ -185,7 +113,7 @@ Page {
                 height: 28
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: page.nextCameraClicked()
+                    onClicked: videoCamera.nextCameraClicked()
                 }
             }
 
@@ -201,11 +129,11 @@ Page {
                 }
 
                 ControlSlider2 {
-                    visible: page.volumeVisible
+                    visible: videoCamera.volumeVisible
                     title: qsTr("VOLUME")
-                    value: page.volume
-                    onPlusClicked: page.plusVolumeClicked()
-                    onMinusClicked: page.minusVolumeClicked()
+                    value: videoCamera.volume
+                    onPlusClicked: videoCamera.plusVolumeClicked()
+                    onMinusClicked: videoCamera.minusVolumeClicked()
                 }
                 Image {
                     source: "images/common/btn_comando.png"
@@ -213,7 +141,7 @@ Page {
                     height: 40
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: page.muteClicked()
+                        onClicked: videoCamera.muteClicked()
                     }
                     Text {
                         text: qsTr("MUTE")
@@ -225,7 +153,7 @@ Page {
                 }
 
                 ControlSlider2 {
-                    visible: page.brightnessVisible
+                    visible: videoCamera.brightnessVisible
                     title: qsTr("BRIGHTNESS")
                     value: camera.brightness
                     onPlusClicked: if (camera.brightness < 100) camera.brightness += 1
@@ -233,7 +161,7 @@ Page {
                 }
 
                 ControlSlider2 {
-                    visible: page.contrastVisible
+                    visible: videoCamera.contrastVisible
                     title: qsTr("CONTRAST")
                     value: camera.contrast
                     onPlusClicked: if (camera.contrast < 100) camera.contrast += 1
@@ -254,28 +182,7 @@ Page {
 
                 Image {
                     source: "images/common/btn_comando.png"
-                    visible: page.commandAudioVisible
-                    width: 145
-                    height: 40
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            console.log("Audio button clicked")
-                        }
-                    }
-                    Text {
-                        text: qsTr("ACTIVATE AUDIO")
-                        font.pointSize: 10
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
-                    }
-                }
-
-                Image {
-                    source: "images/common/btn_comando.png"
-                    visible: page.commandStairLightVisible
+                    visible: videoCamera.commandStairLightVisible
                     width: 145
                     height: 40
                     MouseArea {
@@ -295,7 +202,7 @@ Page {
 
                 Image {
                     source: "images/common/btn_comando.png"
-                    visible: page.commandLockVisible
+                    visible: videoCamera.commandLockVisible
                     width: 145
                     height: 40
                     MouseArea {
@@ -305,6 +212,28 @@ Page {
                     }
                     Text {
                         text: qsTr("OPEN LOCK")
+                        font.pointSize: 10
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                        }
+                    }
+                }
+
+                Image {
+                    source: "images/common/btn_comando.png"
+                    visible: videoCamera.commandAnswerVisible
+                    width: 145
+                    height: 40
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            console.log("Audio button clicked")
+                            videoCamera.camera.answerCall()
+                        }
+                    }
+                    Text {
+                        text: qsTr("ANSWER CALL")
                         font.pointSize: 10
                         anchors {
                             horizontalCenter: parent.horizontalCenter

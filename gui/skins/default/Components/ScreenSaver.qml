@@ -7,8 +7,13 @@ Item {
 
     property variant screensaverComponent
     property bool timeoutActive: true
+    property bool isEnabled: true
 
     anchors.fill: parent
+
+    function stopScreensaver() {
+        screensaver.state = ""
+    }
 
     Connections {
         target: global
@@ -23,7 +28,7 @@ Item {
             }
             // we are here if we are in default state and timeoutActive is true
             // checks timeout and (eventually) sets state to running
-            if (Script.elapsed(global.lastTimePress, global.guiSettings.timeOutInSeconds))
+            if (Script.elapsed(global.lastTimePress, global.guiSettings.timeOutInSeconds) && isEnabled)
                 screensaver.state = "running"
         }
     }

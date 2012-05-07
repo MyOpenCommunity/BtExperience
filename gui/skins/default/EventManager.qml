@@ -59,5 +59,26 @@ Item {
       * CALLS
       *
       **********************************************************************/
-    // TODO
+    function vctIncomingCall(vctObject) {
+        console.log("EventManager::vctIncomingCall")
+        screensaver.stopScreensaver()
+        screensaver.isEnabled = false
+        Stack.openPage("VideoCamera.qml", {"camera": vctObject})
+    }
+
+    function enableScreensaver() {
+        screensaver.isEnabled = true
+    }
+
+    // TODO: maybe it's possible to avoid to have a second FilterListModel in this
+    // file?
+    FilterListModel {
+        id: vctModel
+        filters: [{objectId: ObjectInterface.IdCCTV}]
+        Component.onCompleted: {
+            var obj = vctModel.getObject(0)
+            obj.incomingCall.connect(function() { return vctIncomingCall(obj); })
+            obj.videoIsStopped.connect(enableScreensaver)
+        }
+    }
 }
