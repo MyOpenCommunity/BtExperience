@@ -14,6 +14,7 @@ MenuColumn {
         width: parent.width
         listHeight: objectModel.size * 50
         delegate: MenuItemDelegate {
+            editable: true
             itemObject: objectModel.getObject(index)
             description: objectModel.getObject(index).temperature / 10 + "°C"
             hasChild: true

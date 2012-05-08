@@ -14,6 +14,7 @@ MenuColumn {
         width: parent.width
         listHeight: 200
         delegate: MenuItemDelegate {
+            editable: true
             itemObject: model
             hasChild: true
         }

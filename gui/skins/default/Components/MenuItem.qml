@@ -6,6 +6,7 @@ Item {
     height: background.height
     width: background.width
 
+    property bool editable: false
     property alias name: text.text
     property alias description: textDescription.text
     property alias boxInfoState: boxInfo.state
@@ -16,6 +17,16 @@ Item {
     signal clicked(variant itemClicked)
     signal pressed(variant itemPressed)
     signal released(variant itemReleased)
+    signal editRequested
+
+    onEditRequested: {
+        if (!text.activeFocus) {
+            text.forceActiveFocus()
+            text.openSoftwareInputPanel();
+        } else {
+            text.focus = false;
+        }
+    }
 
     function statusVisible() {
         return menuItem.status > -1
@@ -39,6 +50,7 @@ Item {
         source: "../images/common/menu_column_item_bg.svg";
     }
 
+
     Item {
         anchors.fill: parent
 
@@ -51,13 +63,13 @@ Item {
             anchors.top: parent.top
         }
 
-        Text {
+        TextInput {
             id: text
+            activeFocusOnPress: false
             font.family: lightFont.name
             font.pixelSize: 14
             color:  "#2d2d2d"
             font.bold: true
-            wrapMode: "WordWrap"
             anchors.left: parent.left
             anchors.leftMargin: menuItem.width / 100 * 9
             anchors.top: parent.top
@@ -133,6 +145,10 @@ Item {
     MouseArea {
         id: mousearea
         anchors.fill: parent
+        onPressAndHold: {
+            if (menuItem.editable)
+                menuItem.editRequested()
+        }
         onClicked: menuItem.clicked(menuItem)
         onPressed: menuItem.pressed(menuItem)
         onReleased: menuItem.released(menuItem)

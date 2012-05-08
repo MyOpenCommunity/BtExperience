@@ -19,6 +19,7 @@ MenuColumn {
         interactive: false
 
         delegate: MenuItemDelegate {
+            editable: true
             itemObject: objectModel.getObject(index)
             status: itemObject.hasActiveAmplifier === undefined ? -1 : itemObject.hasActiveAmplifier
             hasChild: true
