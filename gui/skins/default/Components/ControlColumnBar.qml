@@ -7,24 +7,32 @@ Item {
     width: 212
     height: 200
 
-    property int actual: 180
+    // percentage of critical level where warning (yellow band) starts
+    property real perc_warning: 0.8
+    // value of critical level (red band)
+    property int level_critical: 100
+    // actual value to be rendered
+    property int level_actual: 50
+    // percentage of critical level that control must graphically span
+    property real perc_graphic: 1.1
 
-    // assumes reference >= level2 >= level1, but doesn't check
-    property int level1: 50
-    property int level2: 100
-    property real reference: 200.0 // the value that corresponds to 100%
-    property real ratio: height / Math.max(actual, reference)
+    // helper property to know max graphically represented value
+    property real max_graph_level: Math.max(level_critical * perc_graphic, level_actual)
+    // value of critical level (calculated from percentage, but can be rebinded)
+    property int level_warning: level_critical * perc_warning
 
     Rectangle {
+        // a gray rectangle for the column
         id: bg
-        anchors {
-            fill: parent
-        }
+        anchors.fill: parent
         color: "gray"
         Rectangle {
-            id: threshold1
+            // the ok band (the green one)
+            // it must stretch till the warning level
+            // it must resize to fit the max graphical level
+            id: band_ok
             color: "green"
-            height: (actual < level1 ? actual : level1) * ratio
+            height: (level_actual < level_warning ? level_actual : level_warning) * parent.height / max_graph_level
             anchors {
                 bottom: parent.bottom
                 left: parent.left
@@ -32,56 +40,52 @@ Item {
             }
         }
         Rectangle {
-            id: threshold2
+            // the warning band (the yellow one)
+            // it appears if actual level is above the set threshold
+            // it must stretch till the critical level
+            // it must resize to fit the max graphical level
+            id: band_warning
             color: "yellow"
-            height: (actual < level2 ? (actual > level1 ? actual - level1 : 0) : level2 - level1) * ratio
+            height: (level_actual < level_critical ? (level_actual > level_warning ? level_actual - level_warning : 0) : level_critical - level_warning) * parent.height / max_graph_level
             anchors {
-                bottom: threshold1.top
+                bottom: band_ok.top
                 left: parent.left
                 right: parent.right
             }
         }
         Rectangle {
-            id: threshold3
+            // the critical band (the red one)
+            // it must stretch to fit the max graphical level
+            // it appears if actual level is above the critical threshold
+            id: band_critical
             color: "red"
-            height: (actual > level2 ? actual - level2 : 0) * ratio
+            height: (level_actual > level_critical ? level_actual - level_critical : 0) * parent.height / max_graph_level
             anchors {
-                bottom: threshold2.top
+                bottom: band_warning.top
                 left: parent.left
                 right: parent.right
             }
         }
         Rectangle {
+            // the critical value is rendered with a bar
             id: level
             color: "blue"
-            height: actual < parent.height ? 2 : 0
-            y: parent.y + parent.height - level2 * ratio
+            height: 2
             anchors {
                 left: parent.left
                 right: parent.right
+                bottom: parent.bottom
+                bottomMargin: level_critical * parent.height / max_graph_level
             }
         }
         Item {
-            x: parent.x
-            y: parent.y + (actual * ratio < 20 ? parent.height - actual * ratio - 15 : parent.height - actual * ratio + 1)
-            width: parent.width
-            height: 15
-            Text {
-                text: actual
-                color: "black"
-                anchors {
-                    fill: parent
-                    centerIn: parent
-                }
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
-        }
-        Item {
-            y: parent.y + parent.height - 15
+            // the zero label on the lower left corner of the column
             width: 40
             height: 20
-            anchors.right: parent.left
+            anchors {
+                right: parent.left
+                bottom: parent.bottom
+            }
             Rectangle {
                 color: "gray"
                 opacity: 1
@@ -105,10 +109,14 @@ Item {
             }
         }
         Item {
-            y: parent.y + parent.height - level2 * ratio
+            // the critical value label on the left side of the column
             width: 40
             height: 20
-            anchors.right: parent.left
+            anchors {
+                right: parent.left
+                bottom: parent.bottom
+                bottomMargin: level_critical * parent.height / max_graph_level
+            }
             Rectangle {
                 color: "gray"
                 opacity: 1
@@ -119,7 +127,7 @@ Item {
                     margins: 2
                 }
                 Text {
-                    text: level2
+                    text: level_critical
                     color: "white"
                     anchors {
                         fill: parent

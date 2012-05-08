@@ -5,19 +5,19 @@ import Components 1.0
 Item {
     id: element
 
-    property int actual: 40
-
-    // assumes level2 >= level1, but doesn't check
-    property int level1: 50
-    property int level2: 100
-    property int reference: height
-    property string title: "kWh"
+    property string title: "40 kWh"
     property string description: "electricity"
     property string footer: "Month (day 21/30)"
     property string source: "../../images/common/svg_bolt.zip"
 
+    // properties to be passed to the ControlColumnBar component
+    property real perc_warning: 0.8
+    property int level_critical: 100
+    property int level_actual: 40
+
 
     Rectangle {
+        // the graphical button on top of the bar
         id: button
         height: 90
         color: "white"
@@ -48,9 +48,13 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
+        MouseArea {
+            anchors.fill: parent
+        }
     }
 
     Item {
+        // the title on top of the bar (below the graphical button)
         id: title
         height: 30
         anchors {
@@ -59,6 +63,7 @@ Item {
             right: button.right
         }
         Rectangle {
+            // a rectangle used to make text more readable
             color: "gray"
             opacity: 1
             radius: 4
@@ -90,13 +95,13 @@ Item {
             left: title.left
             right: title.right
         }
-        actual: element.actual
-        level1: element.level1
-        level2: element.level2
-        reference: element.reference
+        perc_warning: element.perc_warning
+        level_critical: element.level_critical
+        level_actual: element.level_actual
     }
 
     Item {
+        // a text below the bar
         id: footer
         height: 30
         anchors {

@@ -75,12 +75,10 @@ Page {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     width: 150
-                    height: 300
-                    actual: 135
-                    level1: 100
-                    level2: 150
-                    reference: 200
-                    title: qsTr("kWh")
+                    level_actual: 135
+                    perc_warning: 0.8
+                    level_critical: 150
+                    title: level_actual + " " + qsTr("kWh")
                     description: qsTr("electricity")
                     footer: qsTr("Month (day 21/30)")
                     source: "../../images/common/svg_bolt.svg"
@@ -91,11 +89,10 @@ Page {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     width: 150
-                    actual: 18
-                    level1: 125
-                    level2: 250
-                    reference: 300
-                    title: qsTr("liters")
+                    level_actual: 18
+                    perc_warning: 0.8
+                    level_critical: 250
+                    title: level_actual + " " + qsTr("liters")
                     description: qsTr("water")
                     footer: qsTr("Month (day 21/30)")
                     source: "../../images/common/svg_water.svg"
@@ -106,11 +103,10 @@ Page {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     width: 150
-                    actual: 60
-                    level1: 20
-                    level2: 35
-                    reference: 40
-                    title: qsTr("liters")
+                    level_actual: 60
+                    perc_warning: 0.8
+                    level_critical: 35
+                    title: level_actual + " " + qsTr("liters")
                     description: qsTr("heating")
                     footer: qsTr("Month (day 21/30)")
                     source: "../../images/common/svg_temp.svg"
