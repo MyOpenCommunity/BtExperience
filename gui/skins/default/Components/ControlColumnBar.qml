@@ -7,11 +7,13 @@ Item {
     width: 212
     height: 200
 
-    property int level: 135
+    property int actual: 180
 
+    // assumes reference >= level2 >= level1, but doesn't check
     property int level1: 50
     property int level2: 100
-    property int level3: 150
+    property real reference: 200.0 // the value that corresponds to 100%
+    property real ratio: height / Math.max(actual, reference)
 
     Rectangle {
         id: bg
@@ -22,39 +24,111 @@ Item {
         Rectangle {
             id: threshold1
             color: "green"
-            width: parent.width
-            height: level1
+            height: (actual < level1 ? actual : level1) * ratio
             anchors {
                 bottom: parent.bottom
+                left: parent.left
+                right: parent.right
             }
         }
         Rectangle {
             id: threshold2
             color: "yellow"
-            width: parent.width
-            height: level2 - level1
+            height: (actual < level2 ? (actual > level1 ? actual - level1 : 0) : level2 - level1) * ratio
             anchors {
                 bottom: threshold1.top
+                left: parent.left
+                right: parent.right
             }
         }
         Rectangle {
             id: threshold3
             color: "red"
-            width: parent.width
-            height: level3 - level2
+            height: (actual > level2 ? actual - level2 : 0) * ratio
             anchors {
                 bottom: threshold2.top
+                left: parent.left
+                right: parent.right
             }
         }
         Rectangle {
             id: level
-            color: "black"
-            width: parent.width
-            height: 2
-            y: parent.height - level
+            color: "blue"
+            height: actual < parent.height ? 2 : 0
+            y: parent.y + parent.height - level2 * ratio
             anchors {
                 left: parent.left
                 right: parent.right
+            }
+        }
+        Item {
+            x: parent.x
+            y: parent.y + (actual * ratio < 20 ? parent.height - actual * ratio - 15 : parent.height - actual * ratio + 1)
+            width: parent.width
+            height: 15
+            Text {
+                text: actual
+                color: "black"
+                anchors {
+                    fill: parent
+                    centerIn: parent
+                }
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+        Item {
+            y: parent.y + parent.height - 15
+            width: 40
+            height: 20
+            anchors.right: parent.left
+            Rectangle {
+                color: "gray"
+                opacity: 1
+                radius: 4
+                anchors {
+                    fill: parent
+                    centerIn: parent
+                    margins: 2
+                }
+                Text {
+                    text: "0"
+                    color: "white"
+                    anchors {
+                        fill: parent
+                        centerIn: parent
+                        bottomMargin: 2
+                    }
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+        }
+        Item {
+            y: parent.y + parent.height - level2 * ratio
+            width: 40
+            height: 20
+            anchors.right: parent.left
+            Rectangle {
+                color: "gray"
+                opacity: 1
+                radius: 4
+                anchors {
+                    fill: parent
+                    centerIn: parent
+                    margins: 2
+                }
+                Text {
+                    text: level2
+                    color: "white"
+                    anchors {
+                        fill: parent
+                        centerIn: parent
+                        bottomMargin: 2
+                    }
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
             }
         }
     }
