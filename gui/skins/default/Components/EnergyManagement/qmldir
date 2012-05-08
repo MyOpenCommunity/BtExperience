@@ -3,10 +3,13 @@ ApplianceLoad 1.0 ApplianceLoad.qml
 ApplianceLoadOff 1.0 ApplianceLoadOff.qml
 ControlUpDownReset 1.0 ControlUpDownReset.qml
 DisableLoadPopup 1.0 DisableLoadPopup.qml
+EnergyDataOverview 1.0 EnergyDataOverview.qml
+EnergyDataOverviewColumn 1.0 EnergyDataOverviewColumn.qml
 EnergyManagementSystem 1.0 EnergyManagementSystem.qml
 LoadDetail 1.0 LoadDetail.qml
 LoadDiagnostic 1.0 LoadDiagnostic.qml
 LoadManagement 1.0 LoadManagement.qml
+OverviewBar 1.0 OverviewBar.qml
 SelfTest 1.0 SelfTest.qml
 StopAndGoBtest 1.0 StopAndGoBtest.qml
 StopAndGoMenu 1.0 StopAndGoMenu.qml
