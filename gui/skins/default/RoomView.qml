@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import "RoomView.js" as Script
 
 // Implementation of custom room view
 Item {
@@ -44,13 +45,38 @@ Item {
         }
     }
 
-    Component.onCompleted: {
+    Connections {
+        target: model
+        onRoomChanged: {
+            // TODO: maybe we can optimize performance by setting opacity to 0
+            // for items that we don't want to show, thus avoiding a whole
+            // createObject()/destroy() cycle each time
+            // Anyway, this needs a more complex management and performance gains
+            // must be measurable.
+            roomView.state = ""
+            clearObjects()
+            createObjects()
+        }
+    }
+
+    function clearObjects() {
+        var len = Script.obj_array.length
+        for (var i = 0; i < len; ++i)
+            Script.obj_array.pop().destroy()
+    }
+
+    function createObjects() {
         for (var i = 0; i < model.size; ++i) {
             var obj = model.getObject(i);
             var y = obj.position.y
             var x = obj.position.x
             var object = itemComponent.createObject(roomView, {"rootData": obj.btObject, 'x': x, 'y': y, 'pageObject': pageObject})
+            Script.obj_array.push(object)
         }
+    }
+
+    Component.onCompleted: {
+        createObjects()
     }
 
     Rectangle {
