@@ -57,60 +57,84 @@ Page {
 
             Text {
                 id: title
-                text: qsTr("Consumption Management")
+                text: qsTr("Electricity")
                 color: "white"
                 anchors.left: parent.left
                 font.family: semiBoldFont.name
                 font.pixelSize: 36
             }
 
-            Item {
+            Row {
                 id: energyCategories
                 anchors.left: parent.left
                 anchors.right: parent.right
+                spacing: 50
                 height: 345
 
-                EnergyDataOverviewColumn {
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: 150
+                EnergyDataElectricityColumn {
+                    width: 100
                     level_actual: 135
-                    perc_warning: 0.8
                     level_critical: 150
+                    perc_warning: 0.8
                     title: level_actual + " " + qsTr("kWh")
-                    description: qsTr("electricity")
-                    footer: qsTr("Month (day 21/30)")
+                    description: "overall"
+                    footer: qsTr("day 21/30")
                     source: "../../images/common/svg_bolt.svg"
-                    onClicked: Stack.openPage("Components/EnergyManagement/EnergyDataElectricity.qml")
+                    note_header: "consumption"
+                    note_footer: 45 + " " + qsTr("W")
+                    critical_bar_visible: true
                 }
 
-                EnergyDataOverviewColumn {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: 150
-                    level_actual: 18
+                EnergyDataElectricityColumn {
+                    width: 100
+                    level_actual: 83
+                    level_critical: 150
                     perc_warning: 0.8
-                    level_critical: 250
-                    title: level_actual + " " + qsTr("liters")
-                    description: qsTr("water")
-                    footer: qsTr("Month (day 21/30)")
-                    source: "../../images/common/svg_water.svg"
+                    title: level_actual + " " + qsTr("kWh")
+                    description: "lights"
+                    footer: qsTr("day 21/30")
+                    source: "../../images/common/svg_bolt.svg"
+                    note_header: "consumption"
+                    note_footer: 15 + " " + qsTr("W")
                 }
 
-                EnergyDataOverviewColumn {
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: 150
-                    level_actual: 60
+                EnergyDataElectricityColumn {
+                    width: 100
+                    level_actual: 25
+                    level_critical: 150
                     perc_warning: 0.8
-                    level_critical: 35
-                    title: level_actual + " " + qsTr("liters")
-                    description: qsTr("heating")
-                    footer: qsTr("Month (day 21/30)")
-                    source: "../../images/common/svg_temp.svg"
+                    title: level_actual + " " + qsTr("kWh")
+                    description: "appliances"
+                    footer: qsTr("day 21/30")
+                    source: "../../images/common/svg_bolt.svg"
+                    note_header: "consumption"
+                    note_footer: 10 + " " + qsTr("W")
+                }
+
+                EnergyDataElectricityColumn {
+                    width: 100
+                    level_actual: 7
+                    level_critical: 150
+                    perc_warning: 0.8
+                    title: level_actual + " " + qsTr("kWh")
+                    description: "office"
+                    footer: qsTr("day 21/30")
+                    source: "../../images/common/svg_bolt.svg"
+                    note_header: "consumption"
+                    note_footer: 8 + " " + qsTr("W")
+                }
+
+                EnergyDataElectricityColumn {
+                    width: 100
+                    level_actual: 20
+                    level_critical: 150
+                    perc_warning: 0.8
+                    title: level_actual + " " + qsTr("kWh")
+                    description: "garden"
+                    footer: qsTr("day 21/30")
+                    source: "../../images/common/svg_bolt.svg"
+                    note_header: "consumption"
+                    note_footer: 6 + " " + qsTr("W")
                 }
             }
 

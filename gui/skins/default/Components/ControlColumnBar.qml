@@ -15,6 +15,8 @@ Item {
     property int level_actual: 50
     // percentage of critical level that control must graphically span
     property real perc_graphic: 1.1
+    // critical value bar is visible?
+    property bool critical_bar_visible: true
 
     // helper property to know max graphically represented value
     property real max_graph_level: Math.max(level_critical * perc_graphic, level_actual)
@@ -70,7 +72,7 @@ Item {
             // the critical value is rendered with a bar
             id: level
             color: "blue"
-            height: 2
+            height: critical_bar_visible ? 2 : 0
             anchors {
                 left: parent.left
                 right: parent.right

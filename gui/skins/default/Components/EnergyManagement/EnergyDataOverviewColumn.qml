@@ -14,12 +14,14 @@ Item {
     property real perc_warning: 0.8
     property int level_critical: 100
     property int level_actual: 40
+    property bool critical_bar_visible: true
 
+    signal clicked
 
     Rectangle {
         // the graphical button on top of the bar
         id: button
-        height: 90
+        height: 0.25 * parent.height
         color: "white"
         anchors {
             top: element.top
@@ -28,8 +30,8 @@ Item {
         }
         SvgImage {
             source: element.source
-            width: 40
-            height: 40
+            width: 0.5 * parent.height
+            height: 0.5 * parent.height
             anchors {
                 top: parent.top
                 topMargin: 10
@@ -50,13 +52,14 @@ Item {
         }
         MouseArea {
             anchors.fill: parent
+            onClicked: element.clicked()
         }
     }
 
     Item {
         // the title on top of the bar (below the graphical button)
         id: title
-        height: 30
+        height: parent.height / 12
         anchors {
             top: button.bottom
             left: button.left
@@ -67,7 +70,7 @@ Item {
             color: "gray"
             opacity: 1
             radius: 4
-            height: 20
+            height: parent.height * 2 / 3
             anchors {
                 top: parent.top
                 topMargin: 5
@@ -89,7 +92,7 @@ Item {
 
     ControlColumnBar {
         id: graph
-        height: 200
+        height: parent.height * 7 / 12
         anchors {
             top: title.bottom
             left: title.left
@@ -98,12 +101,13 @@ Item {
         perc_warning: element.perc_warning
         level_critical: element.level_critical
         level_actual: element.level_actual
+        critical_bar_visible: element.critical_bar_visible
     }
 
     Item {
         // a text below the bar
         id: footer
-        height: 30
+        height: parent.height / 12
         anchors {
             top: graph.bottom
             left: graph.left
@@ -113,7 +117,7 @@ Item {
             color: "gray"
             opacity: 1
             radius: 4
-            height: 20
+            height: parent.height * 2 / 3
             anchors {
                 top: parent.top
                 topMargin: 5
