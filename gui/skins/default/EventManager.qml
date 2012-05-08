@@ -78,7 +78,7 @@ Item {
         Component.onCompleted: {
             var obj = vctModel.getObject(0)
             obj.incomingCall.connect(function() { return vctIncomingCall(obj); })
-            obj.videoIsStopped.connect(enableScreensaver)
+            obj.callEnded.connect(enableScreensaver)
         }
     }
 }

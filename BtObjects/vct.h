@@ -3,11 +3,55 @@
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
+#include "objectlistmodel.h"
 
 #include <QObject>
 #include <QProcess>
 
 class VideoDoorEntryDevice;
+class QDomNode;
+
+ObjectInterface *parseCCTV(const QDomNode &n);
+
+
+class ExternalPlace : public ObjectInterface
+{
+	Q_OBJECT
+
+	Q_PROPERTY(QString where READ getWhere() CONSTANT)
+
+public:
+	ExternalPlace(const QString &_name, const QString &_where);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::Unassigned;
+	}
+
+	virtual QString getObjectKey() const
+	{
+		return QString();
+	}
+
+	virtual ObjectCategory getCategory() const
+	{
+		return ObjectInterface::Unassigned;
+	}
+
+	virtual QString getName() const
+	{
+		return name;
+	}
+
+	QString getWhere() const
+	{
+		return where;
+	}
+
+private:
+	QString name;
+	QString where;
+};
 
 
 /*!
@@ -34,10 +78,10 @@ class CCTV : public ObjectInterface
 	*/
 	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
 
+	Q_PROPERTY(ObjectListModel *externalPlaces READ getExternalPlaces CONSTANT)
+
 public:
-	explicit CCTV(QString name,
-				  QString key,
-				  VideoDoorEntryDevice *d);
+	explicit CCTV(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
 	virtual int getObjectId() const
 	{
@@ -46,7 +90,7 @@ public:
 
 	virtual QString getObjectKey() const
 	{
-		return key;
+		return QString();
 	}
 
 	virtual ObjectCategory getCategory() const
@@ -56,16 +100,20 @@ public:
 
 	virtual QString getName() const
 	{
-		return name;
+		return "CCTV";
 	}
 
 	int getBrightness() const;
 	void setBrightness(int value);
 	int getContrast() const;
 	void setContrast(int value);
+	ObjectListModel *getExternalPlaces() const;
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
+
+public slots:
+	void cameraOn(QString where);
 
 signals:
 	void brightnessChanged();
@@ -75,17 +123,13 @@ signals:
 	void stairLightActivate();
 	void stairLightRelease();
 	void incomingCall();
-	void callEndRequested();
-//	void stopVideoRequested();
-	void videoIsStopped();
-	void videoIsRunning();
+	void callEnded();
+
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
-	QString key;
-	QString name;
 	int brightness;
 	int contrast;
 
@@ -94,6 +138,7 @@ private:
 	void stopVideo();
 	QProcess video_grabber;
 	VideoDoorEntryDevice *dev;
+	ObjectListModel external_places;
 };
 
 /*!

@@ -1,15 +1,34 @@
 #include "vct.h"
 #include "videodoorentry_device.h"
+#include "xml_functions.h"
+#include "devices_cache.h"
 
 #include <QDebug>
 
 QString video_grabber_path = "/usr/share/ti/linux-driver-examples/video/saUserPtrLoopback";
 QString video_grabber_args = "-i 0 -s 2";
 
+ObjectInterface *parseCCTV(const QDomNode &n)
+{
+	QString where = getTextChild(n, "where");
+	QList<ExternalPlace *> list;
+	foreach (const QDomNode &obj, getChildren(n, "obj"))
+	{
+		list.append(new ExternalPlace(getTextChild(obj, "descr"), getTextChild(obj, "where")));
+	}
 
-CCTV::CCTV(QString name,
-		   QString key,
-		   VideoDoorEntryDevice *d)
+	return new CCTV(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice("11", "0")));
+}
+
+
+ExternalPlace::ExternalPlace(const QString &_name, const QString &_where)
+{
+	name = _name;
+	where = _where;
+}
+
+
+CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 {
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
@@ -19,15 +38,12 @@ CCTV::CCTV(QString name,
 	connect(this, SIGNAL(openLock()), dev, SLOT(openLock()));
 	connect(this, SIGNAL(releaseLock()), dev, SLOT(releaseLock()));
 
-	connect(&video_grabber, SIGNAL(finished(int,QProcess::ExitStatus)), SIGNAL(videoIsStopped()));
-	connect(&video_grabber, SIGNAL(started), SIGNAL(videoIsRunning()));
-
-	this->key = key;
-	this->name = name;
-
 	// initial values
 	brightness = 50;
 	contrast = 50;
+
+	foreach (ExternalPlace *ep, list)
+		external_places.insertWithoutUii(ep);
 }
 
 int CCTV::getBrightness() const
@@ -54,6 +70,12 @@ void CCTV::setContrast(int value)
 	emit contrastChanged();
 }
 
+ObjectListModel *CCTV::getExternalPlaces() const
+{
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ObjectListModel*>(&external_places);
+}
+
 void CCTV::answerCall()
 {
 	dev->answerCall();
@@ -63,6 +85,12 @@ void CCTV::endCall()
 {
 	dev->endCall();
 	stopVideo();
+	emit callEnded();
+}
+
+void CCTV::cameraOn(QString where)
+{
+	dev->cameraOn(where);
 }
 
 void CCTV::valueReceived(const DeviceValues &values_list)
@@ -73,20 +101,23 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		switch (it.key())
 		{
 		case VideoDoorEntryDevice::VCT_CALL:
-			qDebug() << "Received VCT_CALL";
+		case VideoDoorEntryDevice::AUTO_VCT_CALL:
+			qDebug() << "Received VCT_(AUTO)_CALL";
 			// TODO: many many other things...but this should be enough for now.
 			emit incomingCall();
 			startVideo();
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received END_OF_CALL";
-			emit callEndRequested();
 			stopVideo();
+			emit callEnded();
 			break;
 		case VideoDoorEntryDevice::STOP_VIDEO:
 			qDebug() << "Received STOP_VIDEO";
 			stopVideo();
-//			emit stopVideoRequested();
+			break;
+		case VideoDoorEntryDevice::CALLER_ADDRESS:
+			qDebug() << "Received CALLER_ADDRESS: " << *it;
 			break;
 		default:
 			qDebug() << "CCTV::valueReceived, unhandled value" << it.key() << *it;
@@ -167,3 +198,4 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 		++it;
 	}
 }
+

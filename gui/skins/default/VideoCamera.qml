@@ -31,19 +31,14 @@ Page {
     signal replayClicked
     signal endCallClicked
 
-    function callEndRequested() {
-        camera.videoIsStopped.connect(Stack.popPage)
-    }
-
     Component.onCompleted: {
-        camera.callEndRequested.connect(callEndRequested)
+        camera.callEnded.connect(Stack.popPage)
     }
 
     function endCall(callback) {
-        // TODO: possible race condition on videoIsStopped? I think it's possible
-        // to pop two pages if timings are right...
-        camera.videoIsStopped.connect(callback)
+        camera.callEnded.disconnect(Stack.popPage)
         camera.endCall()
+        callback()
     }
 
     Image {
@@ -59,7 +54,9 @@ Page {
                 id: toolbar
                 fontFamily: semiBoldFont.name
                 fontSize: 17
-                onHomeClicked: endCall(Stack.backToHome)
+                onHomeClicked: {
+                    endCall(Stack.backToHome)
+                }
             }
 
             Column {

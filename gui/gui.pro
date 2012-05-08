@@ -33,20 +33,24 @@ QT += opengl
 DESTDIR = ../bin/$${HARDWARE}
 
 isEmpty(PREFIX) {
-    target.path = ../dist/$${HARDWARE}
+    target.path = $${OUT_PWD}/../dist/$${HARDWARE}
 } else {
     target.path = $${PREFIX}
 }
 
 target.commands += mkdir -p $${target.path}/gui $${target.path}/gui/locale $${target.path}/BtObjects &&
-target.commands += cp -LR skins $${target.path}/gui/ &&
+target.commands += cp -LR $${PWD}/skins $${target.path}/gui/ &&
 # the ls check below is to account for the case when there are no .qm files
-target.commands += (if ls locale/*.qm 2>/dev/null; then cp -LR locale/*.qm $${target.path}/gui/locale; else true; fi) &&
+target.commands += (if ls $${PWD}/locale/*.qm 2>/dev/null; then cp -LR $${PWD}/locale/*.qm $${target.path}/gui/locale; else true; fi) &&
 target.commands += cp -L $${PWD}/../layout.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../conf.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../BtObjects/qmldir $${target.path}/BtObjects/ &&
 target.commands += cp -L $${DESTDIR}/$${TARGET} $${target.path}/ &&
-target.commands += cp -L $${PWD}/common_files/lib/x86/libcommon.so.0 $${target.path}/ &&
+isArm() {
+    target.commands += cp -L $${PWD}/common_files/libcommon.so.0 $${target.path}/ &&
+} else {
+    target.commands += cp -L $${PWD}/common_files/lib/x86/libcommon.so.0 $${target.path}/ &&
+}
 target.commands += true
 # The target above is created and added to INSTALLS in qmlapplicationviewer.pri, so we don't re-add
 # it here
@@ -85,7 +89,7 @@ mac {
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += cp -L $${DESTDIR}/BtObjects/libbtobjects$${DEBUG_SUFFIX}.dylib $${APP_DIR}/MacOS/BtObjects/libbtobjects.dylib &&
     QMAKE_POST_LINK += cp -L $${PWD}/../BtObjects/qmldir $${APP_DIR}/MacOS/BtObjects/ &&
-    QMAKE_POST_LINK += cp -L common_files/lib/x86/libcommon.dylib.0 $${APP_DIR}/MacOS/ &&
+    QMAKE_POST_LINK += cp -L $${PWD}/common_files/lib/x86/libcommon.dylib.0 $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += install_name_tool -change libcommon.dylib.0 @executable_path/libcommon.dylib.0 $${APP_DIR}/MacOS/BtObjects/libbtobjects.dylib &&
     QMAKE_POST_LINK += install_name_tool -change libcommon.dylib.0 @executable_path/libcommon.dylib.0 $${APP_DIR}/MacOS/$${TARGET} &&
     QMAKE_POST_LINK += true
@@ -96,6 +100,11 @@ mac {
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../layout.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../BtObjects/qmldir $${DESTDIR}/BtObjects/ &&
-    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/lib/x86/libcommon.so.0 $${DESTDIR}/ &&
+
+    isArm() {
+        QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/libcommon.so.0 $${DESTDIR}/ &&
+    } else {
+        QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/lib/x86/libcommon.so.0 $${DESTDIR}/ &&
+    }
     QMAKE_POST_LINK += true
 }

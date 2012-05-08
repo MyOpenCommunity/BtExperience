@@ -11,21 +11,27 @@ MenuColumn {
     onChildDestroyed: paginator.currentIndex = -1
 
     FilterListModel {
-        id: modelList
+        id: cctvModel
         filters: [{objectId: ObjectInterface.IdCCTV}]
     }
 
     PaginatorList {
         id: paginator
         width: parent.width
-        listHeight: modelList.size * 50
+        listHeight: model.size * 50
         delegate: MenuItemDelegate {
-            itemObject: modelList.getObject(index)
+            itemObject: extPlaceModel.getObject(index)
+            selectOnClick: false
             onDelegateClicked: {
-                Stack.openPage("VideoCamera.qml", {"camera": itemObject})
+                cctvModel.getObject(0).cameraOn(itemObject.where)
             }
         }
-        model: modelList
+        FilterListModel {
+            id: extPlaceModel
+            source: cctvModel.getObject(0).externalPlaces
+        }
+
+        model: extPlaceModel
 
         onCurrentPageChanged: column.closeChild()
     }
