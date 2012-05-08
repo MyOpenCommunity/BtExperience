@@ -17,7 +17,7 @@ include(../config.pri)
 INCLUDEPATH += ./common_files
 LIBS += -lssl
 
-!isArm():!mac {
+!mac {
     # '\$\$' outputs $$ to the Makefile, make transforms $$ into a single $, then you need a backslash for the shell
     LIBS += -Wl,-rpath=\\'\$\$'ORIGIN
 }
@@ -46,9 +46,7 @@ target.commands += cp -L $${PWD}/../layout.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../conf.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../BtObjects/qmldir $${target.path}/BtObjects/ &&
 target.commands += cp -L $${DESTDIR}/$${TARGET} $${target.path}/ &&
-!isArm() {
-    target.commands += cp -L $${PWD}/common_files/lib/x86/libcommon.so.0 $${target.path}/ &&
-}
+target.commands += cp -L $${PWD}/common_files/lib/x86/libcommon.so.0 $${target.path}/ &&
 target.commands += true
 # The target above is created and added to INSTALLS in qmlapplicationviewer.pri, so we don't re-add
 # it here
@@ -98,8 +96,6 @@ mac {
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../layout.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../BtObjects/qmldir $${DESTDIR}/BtObjects/ &&
-    !isArm() {
-        QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/lib/x86/libcommon.so.0 $${DESTDIR}/ &&
-    }
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/lib/x86/libcommon.so.0 $${DESTDIR}/ &&
     QMAKE_POST_LINK += true
 }
