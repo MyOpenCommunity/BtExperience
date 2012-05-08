@@ -198,16 +198,14 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			obj_list = createScenarioSystem(item, id);
 			break;
 		case ObjectInterface::IdCCTV:
-			obj = new CCTV(descr,
-						   where,
-						   bt_global::add_device_to_cache(
-							   new VideoDoorEntryDevice(where, getTextChild(item, "mode"))));
+			obj = parseCCTV(item);
 			break;
 		case ObjectInterface::IdIntercom:
-			obj = new Intercom(descr,
-							   where,
-							   bt_global::add_device_to_cache(
-								   new VideoDoorEntryDevice(where, getTextChild(item, "mode"))));
+			qDebug() << "Skipping intercom for now...";
+//			obj = new Intercom(descr,
+//							   where,
+//							   bt_global::add_device_to_cache(
+//								   new VideoDoorEntryDevice(where, getTextChild(item, "mode"))));
 			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
