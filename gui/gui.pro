@@ -33,7 +33,7 @@ QT += opengl
 DESTDIR = ../bin/$${HARDWARE}
 
 isEmpty(PREFIX) {
-    target.path = ../dist/$${HARDWARE}
+    target.path = $${OUT_PWD}/../dist/$${HARDWARE}
 } else {
     target.path = $${PREFIX}
 }

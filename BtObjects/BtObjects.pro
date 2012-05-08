@@ -16,7 +16,7 @@ TARGET = $$qtLibraryTarget($$TARGET)
 DESTDIR = ../bin/$${HARDWARE}/BtObjects
 
 isEmpty(PREFIX) {
-    target.path = ../dist/$${HARDWARE}/BtObjects
+    target.path = $${OUT_PWD}/../dist/$${HARDWARE}/BtObjects
 } else {
     target.path = $${PREFIX}/BtObjects/
 }
