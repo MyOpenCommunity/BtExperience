@@ -8,9 +8,18 @@ Item {
     property variant model: undefined
     property variant pageObject: undefined
 
-    signal menuSelected(variant container)
+    signal menuOpened
     signal menuClosed
 
+    function closeMenu() {
+        privateProps.currentMenu.closeAll()
+        privateProps.currentMenu.state = ""
+        roomView.state = ""
+        privateProps.currentMenu = undefined
+    }
+
+
+    /* private implementation */
     Component {
         id: roomItem
         RoomItem {}
@@ -25,7 +34,8 @@ Item {
             onRootColumnClicked: {
                 container.state = "selected"
                 roomView.state = "menuSelected"
-                menuSelected(container)
+                privateProps.currentMenu = container
+                menuOpened()
             }
 
             states: [
@@ -48,6 +58,11 @@ Item {
                 NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
             }
         }
+    }
+
+    QtObject {
+        id: privateProps
+        property variant currentMenu: undefined
     }
 
     Connections {
@@ -120,7 +135,10 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: menuClosed()
+                onClicked: {
+                    roomView.closeMenu()
+                    menuClosed()
+                }
             }
         }
     }

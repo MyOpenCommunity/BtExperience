@@ -29,16 +29,6 @@ Page {
         onClicked: Stack.popPage()
     }
 
-    QtObject {
-        id: privateProps
-        property variant currentMenu: undefined
-    }
-
-    function menuSelected(menuContainer) {
-        page.state = "menuSelected"
-        privateProps.currentMenu = menuContainer
-    }
-
     RoomListModel {
         id: roomModel
         room: roomName
@@ -70,8 +60,8 @@ Page {
         }
         pageObject: page
         model: roomModel
-        onMenuSelected: page.menuSelected(container)
-        onMenuClosed: page.closeCurrentMenu()
+        onMenuOpened: page.state = "menuSelected"
+        onMenuClosed: page.state = ""
     }
 
     ListView {
@@ -127,11 +117,8 @@ Page {
     }
 
     function closeCurrentMenu() {
-        privateProps.currentMenu.closeAll()
-        privateProps.currentMenu.state = ""
         page.state = ""
-        roomCustomView.state = ""
-        privateProps.currentMenu = undefined
+        roomCustomView.closeMenu()
     }
 
     states: [
