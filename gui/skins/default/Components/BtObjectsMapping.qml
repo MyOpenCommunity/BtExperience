@@ -16,6 +16,8 @@ QtObject {
             return Qt.createComponent("Lighting/Light.qml")
         case ObjectInterface.IdDimmer:
             return Qt.createComponent("Lighting/Dimmer.qml")
+        case ObjectInterface.IdDimmer100:
+            return Qt.createComponent("Lighting/Dimmer.qml")
         case ObjectInterface.IdThermalControlUnit99:
             return Qt.createComponent("ThermalRegulation/ThermalControlUnit.qml")
         case ObjectInterface.IdThermalControlledProbe:

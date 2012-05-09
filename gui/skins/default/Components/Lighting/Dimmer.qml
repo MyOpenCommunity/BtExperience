@@ -18,7 +18,7 @@ MenuColumn {
         ControlSlider {
             width: 212
             description: qsTr("light intensity")
-            percentage: 20
+            percentage: dataModel.percentage
 
             // TODO: maybe we need an indication of percentage as a text also
             // between the title and the slider bar
