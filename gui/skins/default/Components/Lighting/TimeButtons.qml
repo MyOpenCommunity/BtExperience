@@ -7,6 +7,7 @@ Image {
     height: 100
 
     property alias measureUnit: units.text
+    property int value: 5
 
     signal plusClicked
     signal minusClicked
@@ -26,7 +27,7 @@ Image {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: timeButtons.plusClicked()
+                onClicked: plusClicked()
             }
         }
 
@@ -35,7 +36,7 @@ Image {
             height: timeButtons.height - plusButton.height * 2
             Text {
                 id: numberText
-                text: "30"
+                text: timeButtons.value
                 color: "#5b5b5b"
                 font.pointSize: 18
                 font.bold: true
@@ -52,6 +53,7 @@ Image {
         }
 
         Image {
+            id: minusButton
             source: "../../images/common/btn_annulla.png"
             width: parent.width
             height: 24
@@ -63,7 +65,7 @@ Image {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: timeButtons.minusClicked()
+                onClicked: minusClicked()
             }
         }
     }

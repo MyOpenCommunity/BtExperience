@@ -12,7 +12,7 @@ MenuColumn {
             id: onOff
             width: parent.width
             status: dataModel.active
-            onClicked: dataModel.active = newStatus
+            onClicked: timing.isEnabled ? dataModel.setActiveWithTiming() : dataModel.active = newStatus
         }
 
         ControlSlider {
@@ -29,6 +29,7 @@ MenuColumn {
         ControlTiming {
             id: timing
             width: 212
+            itemObject: dataModel
         }
     }
 }
