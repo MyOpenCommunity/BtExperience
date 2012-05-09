@@ -112,6 +112,11 @@ QString Light::getName() const
 	return name;
 }
 
+void Light::setName(const QString &n)
+{
+	name = n;
+}
+
 bool Light::isActive() const
 {
 	return active;

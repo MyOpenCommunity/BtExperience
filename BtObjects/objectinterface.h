@@ -10,7 +10,7 @@ class ObjectInterface : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(int objectId READ getObjectId CONSTANT)
-	Q_PROPERTY(QString name READ getName CONSTANT)
+	Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
 	Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
 	Q_ENUMS(ObjectId)
 	Q_ENUMS(ObjectCategory)
@@ -81,8 +81,15 @@ public:
 	// the name of the object
 	virtual QString getName() const = 0;
 
+	virtual void setName(const QString &n)
+	{
+		Q_UNUSED(n)
+		qWarning("WARNING: ObjectInterface::setName called on object %s", metaObject()->className());
+	}
+
 signals:
 	void dataChanged();
+	void nameChanged();
 };
 
 typedef QPair<int, ObjectInterface *> ObjectPair;

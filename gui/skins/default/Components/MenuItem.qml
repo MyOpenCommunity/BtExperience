@@ -7,7 +7,7 @@ Item {
     width: background.width
 
     property bool editable: false
-    property alias name: text.text
+    property alias name: label.text
     property alias description: textDescription.text
     property alias boxInfoState: boxInfo.state
     property alias boxInfoText: boxInfoText.text
@@ -17,15 +17,11 @@ Item {
     signal clicked(variant itemClicked)
     signal pressed(variant itemPressed)
     signal released(variant itemReleased)
-    signal editRequested
+    signal editCompleted()
 
-    onEditRequested: {
-        if (!text.activeFocus) {
-            text.forceActiveFocus()
-            text.openSoftwareInputPanel();
-        } else {
-            text.focus = false;
-        }
+    QtObject {
+        id: privateProps
+        property string currentText: ""
     }
 
     function statusVisible() {
@@ -64,7 +60,15 @@ Item {
         }
 
         TextInput {
-            id: text
+
+            onActiveFocusChanged: {
+                if (!activeFocus) { // edit done
+                    if (label.text !== privateProps.currentText)
+                        menuItem.editCompleted()
+                }
+            }
+
+            id: label
             activeFocusOnPress: false
             font.family: lightFont.name
             font.pixelSize: 14
@@ -90,9 +94,9 @@ Item {
         Item {
             id: boxInfo
             visible: false
-            anchors.top: text.bottom
+            anchors.top: label.bottom
             anchors.bottom: parent.bottom
-            anchors.left: text.left
+            anchors.left: label.left
             width: 45
 
             Rectangle {
@@ -135,8 +139,8 @@ Item {
             font.pixelSize: 14
             anchors.bottom: parent.bottom
             anchors.bottomMargin: menuItem.height / 100 * 10
-            anchors.top: text.bottom
-            anchors.left: boxInfo.visible ? boxInfo.right : text.left
+            anchors.top: label.bottom
+            anchors.left: boxInfo.visible ? boxInfo.right : label.left
             anchors.leftMargin: boxInfo.visible ? 5 : 0
             verticalAlignment: Text.AlignBottom
         }
@@ -146,8 +150,11 @@ Item {
         id: mousearea
         anchors.fill: parent
         onPressAndHold: {
-            if (menuItem.editable)
-                menuItem.editRequested()
+            privateProps.currentText = label.text
+            if (menuItem.editable) {
+                label.forceActiveFocus()
+                label.openSoftwareInputPanel()
+            }
         }
         onClicked: menuItem.clicked(menuItem)
         onPressed: menuItem.pressed(menuItem)
@@ -157,7 +164,7 @@ Item {
     states: [
         State {
             name: "selected"
-            PropertyChanges { target: text; color: "#ffffff" }
+            PropertyChanges { target: label; color: "#ffffff" }
             PropertyChanges { target: textDescription; color: "#ffffff" }
             PropertyChanges { target: arrowRight; source: "../images/common/menu_column_item_arrow_white.svg" }
             PropertyChanges { target: background; source: "../images/common/menu_column_item_bg_selected.svg" }
@@ -165,7 +172,7 @@ Item {
         State {
             name: "pressed"
             when: mousearea.pressed
-            PropertyChanges { target: text; color: "#ffffff" }
+            PropertyChanges { target: label; color: "#ffffff" }
             PropertyChanges { target: textDescription; color: "#ffffff" }
             PropertyChanges { target: arrowRight; source: "../images/common/menu_column_item_arrow_white.svg" }
             PropertyChanges { target: background; source: "../images/common/menu_column_item_bg_pressed.svg" }

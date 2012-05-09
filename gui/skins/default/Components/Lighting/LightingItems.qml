@@ -17,8 +17,9 @@ MenuColumn {
         listHeight: objectModel.size > elementsOnPage ? elementsOnPage * 50 : objectModel.size * 50
 
         delegate: MenuItemDelegate {
-            editable: true
             itemObject: objectModel.getObject(index)
+            editable: true
+            onEditCompleted: itemObject.name = name
 
             status: itemObject.active === true ? 1 : 0
             hasChild: true

@@ -55,6 +55,7 @@ public:
 	}
 
 	virtual QString getName() const;
+	virtual void setName(const QString &n);
 	virtual bool isActive() const;
 	virtual void setActive(bool st);
 	void setCategory(ObjectCategory _category);
