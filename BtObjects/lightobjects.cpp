@@ -150,7 +150,7 @@ void Light::valueReceived(const DeviceValues &values_list)
 Dimmer::Dimmer(QString name, QString key, DimmerDevice *d) : Light(name, key, d)
 {
 	dev = d;
-	percentage = 50; // initial value
+	percentage = 0; // initial value
 	connect(this, SIGNAL(percentageChanged()), this, SIGNAL(dataChanged()));
 }
 
