@@ -146,7 +146,7 @@ Page {
                     width: 100
                     height: parent.height
                     Text {
-                        text: qsTr("daily")
+                        text: qsTr("day")
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -156,7 +156,7 @@ Page {
                     width: 100
                     height: parent.height
                     Text {
-                        text: qsTr("montly")
+                        text: qsTr("month")
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
                     }

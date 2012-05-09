@@ -1,8 +1,12 @@
 Appliance 1.0 Appliance.qml
 ApplianceLoad 1.0 ApplianceLoad.qml
 ApplianceLoadOff 1.0 ApplianceLoadOff.qml
+ConsumptionBox 1.0 ConsumptionBox.qml
 ControlUpDownReset 1.0 ControlUpDownReset.qml
 DisableLoadPopup 1.0 DisableLoadPopup.qml
+EnergyDataElectricity 1.0 EnergyDataElectricity.qml
+EnergyDataElectricityColumn 1.0 EnergyDataElectricityColumn.qml
+EnergyDataElectricityYear 1.0 EnergyDataElectricityYear.qml
 EnergyDataOverview 1.0 EnergyDataOverview.qml
 EnergyDataOverviewColumn 1.0 EnergyDataOverviewColumn.qml
 EnergyManagementSystem 1.0 EnergyManagementSystem.qml
@@ -10,8 +14,10 @@ LoadDetail 1.0 LoadDetail.qml
 LoadDiagnostic 1.0 LoadDiagnostic.qml
 LoadManagement 1.0 LoadManagement.qml
 OverviewBar 1.0 OverviewBar.qml
+PeriodItem 1.0 PeriodItem.qml
 SelfTest 1.0 SelfTest.qml
 StopAndGoBtest 1.0 StopAndGoBtest.qml
 StopAndGoMenu 1.0 StopAndGoMenu.qml
 StopAndGoPlus 1.0 StopAndGoPlus.qml
 Supervision 1.0 Supervision.qml
+TimeValueItem 1.0 TimeValueItem.qml

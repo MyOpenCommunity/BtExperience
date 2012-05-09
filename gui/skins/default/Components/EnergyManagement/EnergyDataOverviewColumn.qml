@@ -8,7 +8,7 @@ Item {
     property string title: "40 kWh"
     property string description: "electricity"
     property string footer: "Month (day 21/30)"
-    property string source: "../../images/common/svg_bolt.zip"
+    property string source: "../../images/common/svg_bolt.svg"
 
     // properties to be passed to the ControlColumnBar component
     property real perc_warning: 0.8
