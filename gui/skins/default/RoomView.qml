@@ -12,10 +12,13 @@ Item {
     signal menuClosed
 
     function closeMenu() {
-        privateProps.currentMenu.closeAll()
-        privateProps.currentMenu.state = ""
-        roomView.state = ""
-        privateProps.currentMenu = undefined
+        if (privateProps.currentMenu !== undefined)
+        {
+            privateProps.currentMenu.closeAll()
+            privateProps.currentMenu.state = ""
+            roomView.state = ""
+            privateProps.currentMenu = undefined
+        }
     }
 
 
@@ -53,11 +56,36 @@ Item {
                 }
             ]
 
-            transitions: Transition {
-                reversible: true
-                NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
-            }
+            transitions: [
+                Transition {
+                    from: ""
+                    to: "selected"
+                    NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
+                },
+                Transition {
+                    from: "selected"
+                    to: ""
+                    SequentialAnimation {
+                        NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
+                        ScriptAction {
+                            script: closingTransitionChanged()
+                        }
+                    }
+                }
+            ]
         }
+    }
+
+    function closingTransitionChanged() {
+        if (Script.modelChanged === true) {
+            updateView()
+        }
+    }
+
+    function updateView() {
+        clearObjects()
+        createObjects()
+        Script.modelChanged = false
     }
 
     QtObject {
@@ -73,9 +101,13 @@ Item {
             // createObject()/destroy() cycle each time
             // Anyway, this needs a more complex management and performance gains
             // must be measurable.
-            roomView.state = ""
-            clearObjects()
-            createObjects()
+            if (privateProps.currentMenu === undefined) {
+                updateView()
+            }
+            else {
+                closeMenu()
+                Script.modelChanged = true
+            }
         }
     }
 
