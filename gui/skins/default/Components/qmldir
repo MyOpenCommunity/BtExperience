@@ -20,6 +20,7 @@ ControlBalance 1.0 ControlBalance.qml
 ControlCall 1.0 ControlCall.qml
 ControlChoices 1.0 ControlChoices.qml
 ControlColumnBar 1.0 ControlColumnBar.qml
+ControlColumnValue 1.0 ControlColumnValue.qml
 ControlDateTime 1.0 ControlDateTime.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
 ControlSlider 1.0 ControlSlider.qml
@@ -33,11 +34,11 @@ MenuContainer 1.0 MenuContainer.qml
 MenuItem 1.0 MenuItem.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 MenuTitle 1.0 MenuTitle.qml
-Pannable 1.0 Pannable.qml
 PageAnimation 1.0 PageAnimation.qml
 Paginator 1.0 Paginator.qml
 PaginatorColumn 1.0 PaginatorColumn.qml
 PaginatorList 1.0 PaginatorList.qml
+Pannable 1.0 Pannable.qml
 RoomItem 1.0 RoomItem.qml
 ScreenSaver 1.0 ScreenSaver.qml
 ScreenSaverBouncingImage 1.0 ScreenSaverBouncingImage.qml

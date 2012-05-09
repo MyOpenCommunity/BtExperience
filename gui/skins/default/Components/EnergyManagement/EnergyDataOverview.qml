@@ -83,6 +83,10 @@ Page {
                     footer: qsTr("Month (day 21/30)")
                     source: "../../images/common/svg_bolt.svg"
                     onClicked: Stack.openPage("Components/EnergyManagement/EnergyDataElectricity.qml")
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: Stack.openPage("Components/EnergyManagement/EnergyDataElectricityYear.qml")
+                    }
                 }
 
                 EnergyDataOverviewColumn {
