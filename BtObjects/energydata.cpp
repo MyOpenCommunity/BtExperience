@@ -2,6 +2,8 @@
 #include "energy_device.h"
 #include "devices_cache.h"
 
+#include <stdlib.h> // rand
+
 
 QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 {
