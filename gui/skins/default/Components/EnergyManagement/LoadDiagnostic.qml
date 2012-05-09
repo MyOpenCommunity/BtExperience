@@ -17,6 +17,7 @@ MenuColumn {
         elementsOnPage: 8
         listHeight: elementsOnPage * 50
         delegate: MenuItemDelegate {
+            editable: true
             name: model.name
             status: model.status
             description: model.description

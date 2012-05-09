@@ -1,5 +1,6 @@
 HEADERS += \
 	antintrusionsystem.h \
+	energydata.h \
 	energyload.h \
 	folderlistmodel.h \
 	hardware.h \
@@ -44,6 +45,7 @@ HEADERS += \
 
 SOURCES += \
 	antintrusionsystem.cpp \
+	energydata.cpp \
 	energyload.cpp \
 	folderlistmodel.cpp \
 	hardware.cpp \

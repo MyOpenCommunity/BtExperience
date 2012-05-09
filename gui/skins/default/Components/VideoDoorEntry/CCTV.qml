@@ -22,6 +22,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: extPlaceModel.getObject(index)
             selectOnClick: false
+            editable: true
             onDelegateClicked: {
                 cctvModel.getObject(0).cameraOn(itemObject.where)
             }

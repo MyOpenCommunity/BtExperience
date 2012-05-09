@@ -29,6 +29,7 @@
 #include "videodoorentry_device.h"
 #include "energyload.h"
 #include "stopandgoobjects.h"
+#include "energydata.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
@@ -197,6 +198,9 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		case ObjectInterface::IdScenarioSystem:
 			obj_list = createScenarioSystem(item, id);
 			break;
+		case ObjectInterface::IdEnergyData:
+			obj_list = createEnergyData(item, id);
+			break;
 		case ObjectInterface::IdCCTV:
 			obj = parseCCTV(item);
 			break;
@@ -307,6 +311,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<StopAndGo>(
 				uri, 1, 0, "StopAndGo",
 				"unable to create an StopAndGo instance");
+	qmlRegisterUncreatableType<EnergyData>(
+				uri, 1, 0, "EnergyData",
+				"unable to create an EnergyData instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

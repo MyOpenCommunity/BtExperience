@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import "RoomView.js" as Script
 
 // Implementation of custom room view
 Item {
@@ -7,9 +8,21 @@ Item {
     property variant model: undefined
     property variant pageObject: undefined
 
-    signal menuSelected(variant container)
+    signal menuOpened
     signal menuClosed
 
+    function closeMenu() {
+        if (privateProps.currentMenu !== undefined)
+        {
+            privateProps.currentMenu.closeAll()
+            privateProps.currentMenu.state = ""
+            roomView.state = ""
+            privateProps.currentMenu = undefined
+        }
+    }
+
+
+    /* private implementation */
     Component {
         id: roomItem
         RoomItem {}
@@ -24,7 +37,8 @@ Item {
             onRootColumnClicked: {
                 container.state = "selected"
                 roomView.state = "menuSelected"
-                menuSelected(container)
+                privateProps.currentMenu = container
+                menuOpened()
             }
 
             states: [
@@ -41,16 +55,80 @@ Item {
                     }
                 }
             ]
+
+            transitions: [
+                Transition {
+                    from: ""
+                    to: "selected"
+                    NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
+                },
+                Transition {
+                    from: "selected"
+                    to: ""
+                    SequentialAnimation {
+                        NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
+                        ScriptAction {
+                            script: closingTransitionChanged()
+                        }
+                    }
+                }
+            ]
         }
     }
 
-    Component.onCompleted: {
+    function closingTransitionChanged() {
+        if (Script.modelChanged === true) {
+            updateView()
+        }
+    }
+
+    function updateView() {
+        clearObjects()
+        createObjects()
+        Script.modelChanged = false
+    }
+
+    QtObject {
+        id: privateProps
+        property variant currentMenu: undefined
+    }
+
+    Connections {
+        target: model
+        onRoomChanged: {
+            // TODO: maybe we can optimize performance by setting opacity to 0
+            // for items that we don't want to show, thus avoiding a whole
+            // createObject()/destroy() cycle each time
+            // Anyway, this needs a more complex management and performance gains
+            // must be measurable.
+            if (privateProps.currentMenu === undefined) {
+                updateView()
+            }
+            else {
+                closeMenu()
+                Script.modelChanged = true
+            }
+        }
+    }
+
+    function clearObjects() {
+        var len = Script.obj_array.length
+        for (var i = 0; i < len; ++i)
+            Script.obj_array.pop().destroy()
+    }
+
+    function createObjects() {
         for (var i = 0; i < model.size; ++i) {
             var obj = model.getObject(i);
             var y = obj.position.y
             var x = obj.position.x
             var object = itemComponent.createObject(roomView, {"rootData": obj.btObject, 'x': x, 'y': y, 'pageObject': pageObject})
+            Script.obj_array.push(object)
         }
+    }
+
+    Component.onCompleted: {
+        createObjects()
     }
 
     Rectangle {
@@ -89,7 +167,10 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: menuClosed()
+                onClicked: {
+                    roomView.closeMenu()
+                    menuClosed()
+                }
             }
         }
     }

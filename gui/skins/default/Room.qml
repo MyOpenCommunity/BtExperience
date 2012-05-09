@@ -7,6 +7,7 @@ Page {
     id: page
     source: "images/imgsfondo_sfumato.png"
     property variant names: translations
+    property string roomName
 
     Names {
         id: translations
@@ -28,19 +29,10 @@ Page {
         onClicked: Stack.popPage()
     }
 
-    QtObject {
-        id: privateProps
-        property variant currentMenu: undefined
-    }
-
-    function menuSelected(menuContainer) {
-        page.state = "menuSelected"
-        privateProps.currentMenu = menuContainer
-    }
-
     RoomListModel {
         id: roomModel
-        room: "living room"
+        room: roomName
+        onRoomChanged: page.state = ""
     }
 
     MouseArea {
@@ -68,8 +60,8 @@ Page {
         }
         pageObject: page
         model: roomModel
-        onMenuSelected: page.menuSelected(container)
-        onMenuClosed: page.closeCurrentMenu()
+        onMenuOpened: page.state = "menuSelected"
+        onMenuClosed: page.state = ""
     }
 
     ListView {
@@ -79,69 +71,54 @@ Page {
         width: parent.width
         height: 110
 
+        function selectRoomImage(room) {
+            if (room === "living room")
+                return "images/rooms/soggiorno.png"
+            else if (room === "bathroom")
+                return "images/rooms/bagno.png"
+            else if (room === "garage")
+                return "images/rooms/box.png"
+            else if (room === "bedroom")
+                return "images/rooms/camera.png"
+            else if (room === "kitchen")
+                return "images/rooms/cucina.png"
+            console.log("Unknown room, default to studio")
+            return "images/rooms/studio.png"
+        }
+
+        // TODO: this is needed because the model is a simple stringlist;
+        // to be fixed with a proper model.
+        property int currentIndex: -1
+
         orientation: ListView.Horizontal
         delegate: Image {
-            source: model.selected ? "images/common/stanzaS.png" : "images/common/stanza.png"
+            id: listDelegate
+            source: ListView.view.currentIndex === index ? "images/common/stanzaS.png" : "images/common/stanza.png"
             Image {
-                source: model.image
+                source: listDelegate.ListView.view.selectRoomImage(modelData)
                 fillMode: Image.PreserveAspectCrop
                 clip: true
-                width: parent.width - (model.selected ? 30 : 20)
-                height: parent.height - (model.selected ? 30 : 20)
+                width: parent.width - (listDelegate.ListView.view.currentIndex === index ? 30 : 20)
+                height: parent.height - (listDelegate.ListView.view.currentIndex === index ? 30 : 20)
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("Clicked on room: " + modelData)
+                        roomModel.room = modelData
+                        listDelegate.ListView.view.currentIndex = index
+                    }
+                }
             }
         }
 
-        model: roomsModel
-
-        ListModel {
-            id: roomsModel
-
-            ListElement {
-                image: "images/rooms/studio.png"
-                name: "studio"
-                selected: false
-            }
-            ListElement {
-                image: "images/rooms/box.png"
-                name: "box"
-                selected: false
-            }
-            ListElement {
-                image: "images/rooms/cameretta.png"
-                name: "camera ragazzi"
-                selected: true
-            }
-            ListElement {
-                image: "images/rooms/camera.png"
-                name: "camera genitori"
-                selected: false
-            }
-            ListElement {
-                image: "images/rooms/bagno.png"
-                name: "bagno zona giorno"
-                selected: false
-            }
-            ListElement {
-                image: "images/rooms/cucina.png"
-                name: "cucina"
-                selected: false
-            }
-            ListElement {
-                image: "images/rooms/soggiorno.png"
-                name: "soggiorno"
-                selected: false
-            }
-        }
+        model: roomModel.rooms()
     }
 
     function closeCurrentMenu() {
-        privateProps.currentMenu.closeAll()
-        privateProps.currentMenu.state = ""
         page.state = ""
-        roomCustomView.state = ""
-        privateProps.currentMenu = undefined
+        roomCustomView.closeMenu()
     }
 
     states: [

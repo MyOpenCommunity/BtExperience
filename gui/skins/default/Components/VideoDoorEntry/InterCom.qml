@@ -19,6 +19,7 @@ MenuColumn {
         width: parent.width
         listHeight: modelList.size * 50
         delegate: MenuItemDelegate {
+            editable: true
             itemObject: modelList.getObject(index)
             hasChild: true
             onDelegateClicked: column.loadColumn(talk, name, itemObject)

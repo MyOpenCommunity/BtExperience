@@ -18,6 +18,7 @@ MenuColumn {
         interactive: false
 
         delegate: MenuItemDelegate {
+            editable: true
             itemObject: objectModel.getObject(index)
             hasChild: true
             onClicked:

@@ -73,7 +73,7 @@ Page {
 
                  MouseArea {
                      anchors.fill: parent
-                     onClicked: Stack.openPage("Room.qml")
+                     onClicked: Stack.openPage("Room.qml", {'roomName': modelData})
                  }
              }
          }

@@ -42,6 +42,7 @@ MenuColumn {
         interactive: false
 
         delegate: MenuItemDelegate {
+            editable: true
             itemObject: objectModel.getObject(index)
 
             status: itemObject.active

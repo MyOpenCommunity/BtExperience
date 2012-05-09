@@ -25,7 +25,7 @@ defineTest(isArm) {
     OBJECTS_DIR = obj/x86
     MOC_DIR = moc/x86
 
-    LIBS += -L$${PWD}/common_files/lib/x86 -lcommon -lexpat
+    LIBS += -L$${_PRO_FILE_PWD_}/common_files/lib/x86 -lcommon -lexpat
 } else {
     message(ARM architecture detected.)
 
@@ -34,7 +34,7 @@ defineTest(isArm) {
     OBJECTS_DIR = obj/arm
     MOC_DIR = moc/arm
 
-    LIBS += -L$${PWD}/common_files -lcommon -lexpat
+    LIBS += -L$${_PRO_FILE_PWD_}/common_files -lcommon -lexpat
 }
 
 #INSTALL_CMD = cp -LR
