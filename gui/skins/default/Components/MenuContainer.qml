@@ -95,14 +95,6 @@ Item {
         }
     }
 
-    Behavior on x {
-        NumberAnimation { duration: 400 }
-    }
-
-    Behavior on y {
-        NumberAnimation { duration: 400 }
-    }
-
     Component.onCompleted: {
         Script.loadComponent(-1, mainContainer.rootColumn, "", rootData)
         mainContainer.rootObject.columnClicked.connect(rootColumnClicked)

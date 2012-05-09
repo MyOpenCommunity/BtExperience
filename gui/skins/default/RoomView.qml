@@ -42,6 +42,11 @@ Item {
                     }
                 }
             ]
+
+            transitions: Transition {
+                reversible: true
+                NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
+            }
         }
     }
 
