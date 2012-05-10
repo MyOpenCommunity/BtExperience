@@ -7,6 +7,8 @@ import "../../js/Stack.js" as Stack
 Page {
     id: page
 
+    property variant modelObject
+
     Image {
         id: bg
         source: "../../images/scenari.jpg"
@@ -149,6 +151,10 @@ Page {
                         text: qsTr("day")
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: console.log("obj: "+page.modelObject)
                     }
                 }
                 Rectangle {

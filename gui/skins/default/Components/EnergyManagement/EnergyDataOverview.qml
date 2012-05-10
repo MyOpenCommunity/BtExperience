@@ -112,32 +112,20 @@ Page {
                             else if (t === EnergyData.Water)
                                 return "../../images/common/svg_water.svg"
                             // TODO add images
-        //                    else if (t === EnergyData.Gas)
-        //                        return "../../images/common/svg_gas.svg"
-        //                    else if (t === EnergyData.HotWater)
-        //                        return "../../images/common/svg_hot_water.svg"
+                            //                    else if (t === EnergyData.Gas)
+                            //                        return "../../images/common/svg_gas.svg"
+                            //                    else if (t === EnergyData.HotWater)
+                            //                        return "../../images/common/svg_hot_water.svg"
                             else if (t === EnergyData.Heat)
                                 return "../../images/common/svg_temp.svg"
-//                            else if (t === EnergyData.???)
-//                                return "../../images/common/svg_???.svg"
+                            //                            else if (t === EnergyData.???)
+                            //                                return "../../images/common/svg_???.svg"
                             return "../../images/common/svg_bolt.svg"
                         }
 
-                        function openLinkedPage(t) {
-                            if (t === EnergyData.Electricity)
-                                Stack.openPage("Components/EnergyManagement/EnergyDataElectricity.qml")
-                            else if (t === EnergyData.Water)
-                                return "../../images/common/svg_water.svg"
-                            // TODO add images
-        //                    else if (t === EnergyData.Gas)
-        //                        return "../../images/common/svg_gas.svg"
-        //                    else if (t === EnergyData.HotWater)
-        //                        return "../../images/common/svg_hot_water.svg"
-                            else if (t === EnergyData.Heat)
-                                return "../../images/common/svg_temp.svg"
-//                            else if (t === EnergyData.???)
-//                                return "../../images/common/svg_???.svg"
-                            return "../../images/common/svg_bolt.svg"
+                        function openLinkedPage(obj) {
+                            var page = Stack.openPage("Components/EnergyManagement/EnergyDataDetail.qml")
+                            page.modelObject = obj
                         }
 
                         height: 345
@@ -150,7 +138,7 @@ Page {
                         description: translations.get("ENERGY_TYPE", obj.energyType)
                         footer: qsTr("Month (day 21/30)") // TODO ???
                         source: getSymbol(obj.energyType)
-                        onClicked: openLinkedPage(obj.energyType)
+                        onClicked: openLinkedPage(obj)
                     }
                 }
             }
