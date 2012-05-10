@@ -48,7 +48,7 @@ public:
 		IdStopAndGo,
 		IdStopAndGoPlus,
 		IdStopAndGoBTest,
-		IdEnergyData,
+		IdEnergyData,                           // 30
 		IdLight = 2003,
 		IdDimmer = 2001,
 		IdDimmer100 = 2002,

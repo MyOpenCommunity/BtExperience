@@ -108,7 +108,7 @@ public:
 		Data is requested asynchronously, hence the returned object might receive graph
 		data at some later time.
 	*/
-	Q_INVOKABLE EnergyGraph *getGraph(GraphType type, QDate date);
+	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date);
 
 	/*!
 		\brief Returns an object holding the value for the specified measure/time
@@ -116,7 +116,7 @@ public:
 		Data is requested asynchronously, hence the returned object might receive the value
 		at some later time.
 	*/
-	Q_INVOKABLE EnergyItem *getValue(ValueType type, QDate date);
+	Q_INVOKABLE QObject *getValue(ValueType type, QDate date);
 
 	EnergyType getEnergyType() const;
 

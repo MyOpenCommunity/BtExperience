@@ -4,6 +4,8 @@
 
 #include <stdlib.h> // rand
 
+#include <QDebug> // qDebug
+
 
 QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 {
@@ -28,7 +30,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name)
 	dev = _dev;
 }
 
-EnergyGraph *EnergyData::getGraph(GraphType type, QDate date)
+QObject *EnergyData::getGraph(GraphType type, QDate date)
 {
 	QVariantMap values;
 	QDate actual_date = normalizeDate(type, date);
@@ -59,7 +61,7 @@ EnergyGraph *EnergyData::getGraph(GraphType type, QDate date)
 	return graph;
 }
 
-EnergyItem *EnergyData::getValue(ValueType type, QDate date)
+QObject *EnergyData::getValue(ValueType type, QDate date)
 {
 	QVariant val = QVariant(0);
 	QDate actual_date = normalizeDate(type, date);
@@ -70,7 +72,7 @@ EnergyItem *EnergyData::getValue(ValueType type, QDate date)
 
 	EnergyItem *value = new EnergyItem(this, type, actual_date, val);
 
-	return value;
+    return value;
 }
 
 EnergyData::EnergyType EnergyData::getEnergyType() const

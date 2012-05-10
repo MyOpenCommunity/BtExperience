@@ -6,9 +6,12 @@ Rectangle {
 
     property string label: "€"
 
+    signal clicked
+
     color: "light grey"
     width: 100
     height: parent.height
+
     Text {
         id: txtLabel
         text: label
@@ -16,7 +19,14 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
     }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: bg.clicked()
+    }
+
     states: [
+
         State {
             name: "selected"
 
@@ -30,6 +40,7 @@ Rectangle {
                 color: "white"
             }
         },
+
         State {
             name: "legend"
 

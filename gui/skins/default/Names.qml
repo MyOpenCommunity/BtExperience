@@ -7,6 +7,10 @@ Item {
         id: antintrusionNames
     }
 
+    EnergyManagementNames {
+        id: energyManagementNames
+    }
+
     SettingsNames {
         id: settingsNames
     }
@@ -22,6 +26,7 @@ Item {
     // internal function to load values into the container
     function _init(container) {
         antintrusionNames._init(container)
+        energyManagementNames._init(container)
         settingsNames._init(container)
         thermalNames._init(container)
         videoDoorEntryNames._init(container)

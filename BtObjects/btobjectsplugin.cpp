@@ -54,7 +54,7 @@ namespace {
 		if (where_probe != "000")
 		{
 			dev = new NonControlledProbeDevice(where_probe, NonControlledProbeDevice::INTERNAL,
-				getTextChild(item_node, "openserver_id_probe").toInt());
+											   getTextChild(item_node, "openserver_id_probe").toInt());
 			dev = bt_global::add_device_to_cache(dev);
 		}
 		return dev;
@@ -206,10 +206,10 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			break;
 		case ObjectInterface::IdIntercom:
 			qDebug() << "Skipping intercom for now...";
-//			obj = new Intercom(descr,
-//							   where,
-//							   bt_global::add_device_to_cache(
-//								   new VideoDoorEntryDevice(where, getTextChild(item, "mode"))));
+			//			obj = new Intercom(descr,
+			//							   where,
+			//							   bt_global::add_device_to_cache(
+			//								   new VideoDoorEntryDevice(where, getTextChild(item, "mode"))));
 			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));

@@ -2,26 +2,11 @@ import QtQuick 1.1
 import Components 1.0
 import "../.." // to import Page
 import "../../js/Stack.js" as Stack
+import "../../js/RowColumnHelpers.js" as Helper
 
 
 Page {
     id: page
-
-    function _updateRowChildren(row, spacing) {
-        for(var i = 0; i < children.length; i++) {
-            var child = children[i];
-            var availableWidth = row.width - (children.length - 1) * spacing
-            child.width = availableWidth / children.length
-        }
-    }
-
-    function _updateColumnChildren(column, spacing) {
-        for(var i = 0; i < children.length; i++) {
-            var child = children[i];
-            var availableHeight = column.height - (children.length - 1) * spacing
-            child.height = availableHeight / children.length
-        }
-    }
 
     Image {
         id: bg
@@ -141,9 +126,9 @@ Page {
                     right: parent.right
                 }
 
-                onChildrenChanged: _updateColumnChildren(sidebar, spacing)
-                onVisibleChanged: _updateColumnChildren(sidebar, spacing)
-                onHeightChanged: _updateColumnChildren(sidebar, spacing)
+                onChildrenChanged: Helper.updateColumnChildren(sidebar)
+                onVisibleChanged: Helper.updateColumnChildren(sidebar)
+                onHeightChanged: Helper.updateColumnChildren(sidebar)
 
                 PeriodItem {
                     width: parent.width * 9 / 10
@@ -233,9 +218,9 @@ Page {
             Row {
                 id: timeValue
 
-                onChildrenChanged: _updateRowChildren(timeValue, spacing)
-                onVisibleChanged: _updateRowChildren(timeValue, spacing)
-                onWidthChanged: _updateRowChildren(timeValue, spacing)
+                onChildrenChanged: Helper.updateRowChildren(timeValue)
+                onVisibleChanged: Helper.updateRowChildren(timeValue)
+                onWidthChanged: Helper.updateRowChildren(timeValue)
 
                 anchors {
                     horizontalCenter: bgGraph.horizontalCenter
@@ -281,9 +266,9 @@ Page {
             Row {
                 id: graph
 
-                onChildrenChanged: _updateRowChildren(graph, spacing)
-                onVisibleChanged: _updateRowChildren(graph, spacing)
-                onWidthChanged: _updateRowChildren(graph, spacing)
+                onChildrenChanged: Helper.updateRowChildren(graph)
+                onVisibleChanged: Helper.updateRowChildren(graph)
+                onWidthChanged: Helper.updateRowChildren(graph)
 
                 anchors {
                     horizontalCenter: bgGraph.horizontalCenter

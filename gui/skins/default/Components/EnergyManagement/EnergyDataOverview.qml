@@ -1,15 +1,27 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
+
 import "../.." // to import Page
 import "../../js/Stack.js" as Stack
+import "../../js/RowColumnHelpers.js" as Helper
 
 
 Page {
     id: page
 
+    Names {
+        id: translations
+    }
+
+    FilterListModel {
+        id: modelEnergy
+        filters: [{objectId: ObjectInterface.IdEnergyData}]
+    }
+
     Image {
         id: bg
-        source: "../../images/scenari.jpg"
+        source: "../../images/scenari.jpg" // TODO mettere lo sfondo giusto
         anchors.fill: parent
 
         ToolBar {
@@ -17,12 +29,14 @@ Page {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
+            // TODO mettere le seguenti voci direttamente dentro ToolBar?
             fontFamily: semiBoldFont.name
             fontSize: 17
             onHomeClicked: Stack.backToHome()
         }
 
         Column {
+            // TODO se la toolbar laterale è la stessa ovunque perché non creare un componente?
             id: buttonsColumn
             width: backButton.width
             spacing: 10
@@ -45,6 +59,7 @@ Page {
         }
 
         Column {
+            id: panel
             spacing: 40
             anchors.left: parent.left
             anchors.leftMargin: 195
@@ -57,98 +72,127 @@ Page {
 
             Text {
                 id: title
-                text: qsTr("Consumption Management")
+                text: translations.get("ENERGY_TYPE", "Consumption Management")
                 color: "white"
                 anchors.left: parent.left
                 font.family: semiBoldFont.name
                 font.pixelSize: 36
             }
 
-            Item {
+            Row {
                 id: energyCategories
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 345
 
-                EnergyDataOverviewColumn {
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: 150
-                    level_actual: 135
-                    perc_warning: 0.8
-                    level_critical: 150
-                    title: level_actual + " " + qsTr("kWh")
-                    description: qsTr("electricity")
-                    footer: qsTr("Month (day 21/30)")
-                    source: "../../images/common/svg_bolt.svg"
-                    onClicked: Stack.openPage("Components/EnergyManagement/EnergyDataElectricity.qml")
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: Stack.openPage("Components/EnergyManagement/EnergyDataElectricityYear.qml")
+                property int valueType: EnergyData.CumulativeMonthValue
+
+                anchors {
+                    horizontalCenter: panel.horizontalCenter
+                    horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
+                }
+                spacing: 80
+                width: panel.width
+
+                onChildrenChanged: Helper.updateRowChildren(energyCategories)
+                onVisibleChanged: Helper.updateRowChildren(energyCategories)
+                onWidthChanged: Helper.updateRowChildren(energyCategories)
+
+                Repeater {
+                    objectName: "repeater" // to skip inside Helper
+                    model: modelEnergy
+                    delegate: energyCategoriesDelegate
+                }
+
+                Component {
+                    id: energyCategoriesDelegate
+
+                    EnergyDataOverviewColumn {
+
+                        function getSymbol(t) {
+                            if (t === EnergyData.Electricity)
+                                return "../../images/common/svg_bolt.svg"
+                            else if (t === EnergyData.Water)
+                                return "../../images/common/svg_water.svg"
+                            // TODO add images
+        //                    else if (t === EnergyData.Gas)
+        //                        return "../../images/common/svg_gas.svg"
+        //                    else if (t === EnergyData.HotWater)
+        //                        return "../../images/common/svg_hot_water.svg"
+                            else if (t === EnergyData.Heat)
+                                return "../../images/common/svg_temp.svg"
+//                            else if (t === EnergyData.???)
+//                                return "../../images/common/svg_???.svg"
+                            return "../../images/common/svg_bolt.svg"
+                        }
+
+                        function openLinkedPage(t) {
+                            if (t === EnergyData.Electricity)
+                                Stack.openPage("Components/EnergyManagement/EnergyDataElectricity.qml")
+                            else if (t === EnergyData.Water)
+                                return "../../images/common/svg_water.svg"
+                            // TODO add images
+        //                    else if (t === EnergyData.Gas)
+        //                        return "../../images/common/svg_gas.svg"
+        //                    else if (t === EnergyData.HotWater)
+        //                        return "../../images/common/svg_hot_water.svg"
+                            else if (t === EnergyData.Heat)
+                                return "../../images/common/svg_temp.svg"
+//                            else if (t === EnergyData.???)
+//                                return "../../images/common/svg_???.svg"
+                            return "../../images/common/svg_bolt.svg"
+                        }
+
+                        height: 345
+                        property variant obj: modelEnergy.getObject(index)
+                        property variant v: obj.getValue(energyCategories.valueType, new Date())
+                        level_actual: v.isValid ? v.value : 0 // TODO manage invalid values
+                        perc_warning: 0.8
+                        level_critical: 90 // TODO it must come from somewhere
+                        title: level_actual + " " + translations.get("ENERGY_UNIT", obj.energyType)
+                        description: translations.get("ENERGY_TYPE", obj.energyType)
+                        footer: qsTr("Month (day 21/30)") // TODO ???
+                        source: getSymbol(obj.energyType)
+                        onClicked: openLinkedPage(obj.energyType)
                     }
-                }
-
-                EnergyDataOverviewColumn {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: 150
-                    level_actual: 18
-                    perc_warning: 0.8
-                    level_critical: 250
-                    title: level_actual + " " + qsTr("liters")
-                    description: qsTr("water")
-                    footer: qsTr("Month (day 21/30)")
-                    source: "../../images/common/svg_water.svg"
-                }
-
-                EnergyDataOverviewColumn {
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: 150
-                    level_actual: 60
-                    perc_warning: 0.8
-                    level_critical: 35
-                    title: level_actual + " " + qsTr("liters")
-                    description: qsTr("heating")
-                    footer: qsTr("Month (day 21/30)")
-                    source: "../../images/common/svg_temp.svg"
                 }
             }
 
             Row {
-                anchors.horizontalCenter: energyCategories.horizontalCenter
+                anchors.horizontalCenter: panel.horizontalCenter
+                anchors.horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
                 height: 30
-                Rectangle {
-                    color: "light grey"
-                    width: 100
-                    height: parent.height
-                    Text {
-                        text: qsTr("daily")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
+                width: 300
+                spacing: 1
+
+                TimeValueItem {
+                    id: selDay
+                    label: qsTr("day")
+                    onClicked: {
+                        selDay.state = "selected"
+                        selMonth.state = ""
+                        selYear.state = ""
+                        energyCategories.valueType = EnergyData.CumulativeDayValue
                     }
                 }
-                Rectangle {
-                    color: "dark grey"
-                    width: 100
-                    height: parent.height
-                    Text {
-                        text: qsTr("montly")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
+
+                TimeValueItem {
+                    id: selMonth
+                    label: qsTr("month")
+                    state: "selected"
+                    onClicked: {
+                        selDay.state = ""
+                        selMonth.state = "selected"
+                        selYear.state = ""
+                        energyCategories.valueType = EnergyData.CumulativeMonthValue
                     }
                 }
-                Rectangle {
-                    color: "light grey"
-                    width: 100
-                    height: parent.height
-                    Text {
-                        text: qsTr("year")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
+
+                TimeValueItem {
+                    id: selYear
+                    label: qsTr("year")
+                    onClicked: {
+                        selDay.state = ""
+                        selMonth.state = ""
+                        selYear.state = "selected"
+                        energyCategories.valueType = EnergyData.CumulativeYearValue
                     }
                 }
 
