@@ -59,6 +59,58 @@ void TestLight::testReceiveStatus()
 	t.checkNoSignals();
 }
 
+void TestLight::testSetTiming()
+{
+	obj->hours = 15;
+	obj->minutes = 0;
+	obj->seconds = 3;
+	obj->setActiveWithTiming();
+	dev->variableTiming(15, 0, 3);
+	compareClientCommand();
+}
+
+void TestLight::testSetHours()
+{
+	const int value = 1;
+	obj->hours = value;
+	obj->setHours(-1);
+	QCOMPARE(obj->hours, value);
+	obj->setHours(256);
+	QCOMPARE(obj->hours, value);
+	obj->setHours(255);
+	QCOMPARE(obj->hours, 255);
+	obj->setHours(0);
+	QCOMPARE(obj->hours, 0);
+}
+
+void TestLight::testSetMinutes()
+{
+	const int value = 1;
+	obj->minutes = value;
+	obj->setMinutes(-1);
+	QCOMPARE(obj->minutes, value);
+	obj->setMinutes(60);
+	QCOMPARE(obj->minutes, value);
+	obj->setMinutes(59);
+	QCOMPARE(obj->minutes, 59);
+	obj->setMinutes(0);
+	QCOMPARE(obj->minutes, 0);
+}
+
+void TestLight::testSetSeconds()
+{
+	const int value = 1;
+	obj->seconds = value;
+	obj->setSeconds(-1);
+	QCOMPARE(obj->seconds, value);
+	obj->setSeconds(60);
+	QCOMPARE(obj->seconds, value);
+	obj->setSeconds(59);
+	QCOMPARE(obj->seconds, 59);
+	obj->setSeconds(0);
+	QCOMPARE(obj->seconds, 0);
+}
+
 
 void TestDimmer::initObjects(DimmerDevice *_dev, Dimmer *_obj)
 {
