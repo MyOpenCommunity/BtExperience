@@ -23,6 +23,7 @@ Item {
 
     EventManager {
         anchors.fill: parent
+        transform: Scale { origin.x: 0; origin.y: 0; xScale: 1.0 / container.transform.xScale; yScale: 1.0 / container.transform.yScale }
         // the EventManager must show some pages on top of everything else:
         // let's make it very "high"
         z: 1000
