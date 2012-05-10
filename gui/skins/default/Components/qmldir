@@ -42,6 +42,7 @@ Pannable 1.0 Pannable.qml
 RoomItem 1.0 RoomItem.qml
 ScreenSaver 1.0 ScreenSaver.qml
 ScreenSaverBouncingImage 1.0 ScreenSaverBouncingImage.qml
+ScreenSaverRectangles 1.0 ScreenSaverRectangles.qml
 SlideAnimation 1.0 SlideAnimation.qml
 SvgImage 1.0 SvgImage.qml
 Text_12pt_bold 1.0 Text_12pt_bold.qml
