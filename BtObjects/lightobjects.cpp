@@ -96,6 +96,10 @@ Light::Light(QString _name, QString _key, LightingDevice *d)
 	category = ObjectInterface::Unassigned;
 	active = false; // initial value
 	connect(this, SIGNAL(activeChanged()), this, SIGNAL(dataChanged()));
+
+	hours = 0;
+	minutes = 0;
+	seconds = 0;
 }
 
 QString Light::getObjectKey() const
@@ -127,6 +131,53 @@ void Light::setCategory(ObjectInterface::ObjectCategory _category)
 	category = _category;
 }
 
+void Light::setHours(int h)
+{
+	if (h != hours && h >= 0 && h <= 255)
+	{
+		hours = h;
+		emit hoursChanged();
+	}
+}
+
+int Light::getHours()
+{
+	return hours;
+}
+
+void Light::setMinutes(int m)
+{
+	if (m != minutes && m >= 0 && m <= 59)
+	{
+		minutes = m;
+		emit minutesChanged();
+	}
+}
+
+int Light::getMinutes()
+{
+	return minutes;
+}
+
+void Light::setSeconds(int s)
+{
+	if (s != seconds && s >= 0 && s <= 59)
+	{
+		seconds = s;
+		emit secondsChanged();
+	}
+}
+
+int Light::getSeconds()
+{
+	return seconds;
+}
+
+void Light::setActiveWithTiming()
+{
+	dev->variableTiming(hours, minutes, seconds);
+}
+
 void Light::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.constBegin();
@@ -150,7 +201,7 @@ void Light::valueReceived(const DeviceValues &values_list)
 Dimmer::Dimmer(QString name, QString key, DimmerDevice *d) : Light(name, key, d)
 {
 	dev = d;
-	percentage = 50; // initial value
+	percentage = 0; // initial value
 	connect(this, SIGNAL(percentageChanged()), this, SIGNAL(dataChanged()));
 }
 

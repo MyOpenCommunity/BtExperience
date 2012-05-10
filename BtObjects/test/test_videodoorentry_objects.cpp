@@ -33,8 +33,10 @@
 
 void TestVideoDoorEntry::init()
 {
-	dev = new VideoDoorEntryDevice("11", "1", 1);
-	obj = new CCTV("portone", "12", new VideoDoorEntryDevice("13", "1"));
+	dev = new VideoDoorEntryDevice("11", "0", 1);
+	QList<ExternalPlace *> l;
+	l << new ExternalPlace("portone", "21");
+	obj = new CCTV(l, new VideoDoorEntryDevice("11", "0"));
 
 }
 

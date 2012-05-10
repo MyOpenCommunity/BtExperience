@@ -44,6 +44,10 @@ private slots:
 
 	virtual void testSetStatus();
 	void testReceiveStatus();
+	void testSetTiming();
+	void testSetHours();
+	void testSetMinutes();
+	void testSetSeconds();
 
 private:
 	Light *obj;

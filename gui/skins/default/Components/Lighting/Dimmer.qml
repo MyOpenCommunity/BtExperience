@@ -12,13 +12,13 @@ MenuColumn {
             id: onOff
             width: parent.width
             status: dataModel.active
-            onClicked: dataModel.active = newStatus
+            onClicked: timing.isEnabled ? dataModel.setActiveWithTiming() : dataModel.active = newStatus
         }
 
         ControlSlider {
             width: 212
             description: qsTr("light intensity")
-            percentage: 20
+            percentage: dataModel.percentage
 
             // TODO: maybe we need an indication of percentage as a text also
             // between the title and the slider bar
@@ -29,6 +29,7 @@ MenuColumn {
         ControlTiming {
             id: timing
             width: 212
+            itemObject: dataModel
         }
     }
 }

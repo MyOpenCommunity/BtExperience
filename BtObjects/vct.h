@@ -25,7 +25,7 @@ public:
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::Unassigned;
+		return -1;
 	}
 
 	virtual QString getObjectKey() const

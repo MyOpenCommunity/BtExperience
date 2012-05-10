@@ -6,6 +6,8 @@ Image {
     width: 265
     height: 188
     property alias title: title.text
+    property variant itemObject: undefined
+    property bool isEnabled: control.state === "disabled" ? false : true
 
     Text {
         id: title
@@ -75,17 +77,26 @@ Image {
         TimeButtons {
             id: timingHours
             width: (control.width - 20) / 3
+            value: itemObject.hours
             measureUnit: qsTr("hours")
-            onPlusClicked: console.log("hour plus clicked")
-            onMinusClicked: console.log("hour minus clicked")
+            onPlusClicked: itemObject.hours += 1
+            onMinusClicked: itemObject.hours -= 1
         }
         TimeButtons {
+            id: timingMinutes
             width: (control.width - 20) / 3
+            value: itemObject.minutes
             measureUnit: qsTr("minutes")
+            onPlusClicked: itemObject.minutes += 1
+            onMinusClicked: itemObject.minutes -= 1
         }
         TimeButtons {
+            id: timingSeconds
             width: (control.width - 20) / 3
+            value: itemObject.seconds
             measureUnit: qsTr("seconds")
+            onPlusClicked: itemObject.seconds += 1
+            onMinusClicked: itemObject.seconds -= 1
         }
     }
 

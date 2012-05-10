@@ -14,9 +14,7 @@ MenuColumn {
     PaginatorList {
         id: paginator
         width: parent.width
-        // TODO: is it ever possible to get the height of a MenuItemDelegate
-        // without doing this??
-        listHeight: objectModel.size * 50
+        listHeight: objectModel.size > elementsOnPage ? elementsOnPage * 50 : objectModel.size * 50
 
         delegate: MenuItemDelegate {
             editable: true

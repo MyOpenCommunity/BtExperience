@@ -35,6 +35,10 @@ class Light : public ObjectInterface
 	*/
 	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
 
+	Q_PROPERTY(int hours READ getHours WRITE setHours NOTIFY hoursChanged)
+	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
+	Q_PROPERTY(int seconds READ getSeconds WRITE setSeconds NOTIFY secondsChanged)
+
 public:
 	Light(QString name, QString key, LightingDevice *d);
 
@@ -54,9 +58,19 @@ public:
 	virtual bool isActive() const;
 	virtual void setActive(bool st);
 	void setCategory(ObjectCategory _category);
+	void setHours(int h);
+	int getHours();
+	void setMinutes(int m);
+	int getMinutes();
+	void setSeconds(int s);
+	int getSeconds();
+	Q_INVOKABLE void setActiveWithTiming();
 
 signals:
 	void activeChanged();
+	void hoursChanged();
+	void minutesChanged();
+	void secondsChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -67,6 +81,7 @@ protected:
 	bool active;
 
 private:
+	int hours, minutes, seconds;
 	LightingDevice *dev;
 	ObjectCategory category;
 };
