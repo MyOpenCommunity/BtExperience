@@ -2,9 +2,29 @@ import QtQuick 1.1
 
 Rectangle {
     id: bouncer
+    width: 100
+    height: 50
 
     color: "black"
     opacity: 0.8
+
+    Rectangle {
+        id: line
+        y: 0
+        width: bouncer.width
+        height: 5
+        color: "white"
+        z: -1
+
+        SequentialAnimation on y {
+            running: true
+            loops: Animation.Infinite
+            NumberAnimation { target: line; property: "y"; to: bouncer.height - line.height; duration: 15000; easing.type: Easing.Linear }
+            PropertyAction { target: line; property: "color"; value: "black"}
+            NumberAnimation { target: line; property: "y"; to: 0; duration: 15000; easing.type: Easing.Linear }
+            PropertyAction { target: line; property: "color"; value: "white"}
+        }
+    }
 
     Image {
         id: image
@@ -21,12 +41,12 @@ Rectangle {
             loops: Animation.Infinite
             NumberAnimation {
                 to: bouncer.width - image.width
-                duration: 6000
+                duration: 15000
                 easing.type: Easing.Linear
             }
             NumberAnimation {
                 to: 0
-                duration: 6000
+                duration: 10000
                 easing.type: Easing.Linear
             }
         }
@@ -37,11 +57,11 @@ Rectangle {
             NumberAnimation {
                 to: bouncer.height - image.height
                 duration: 9000
-                easing.type: Easing.OutBounce
+                easing.type: Easing.Linear
             }
             NumberAnimation {
                 to: 0
-                duration: 1500
+                duration: 5000
                 easing.type: Easing.Linear
             }
         }
