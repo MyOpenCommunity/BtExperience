@@ -1,7 +1,10 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
+
 import "../.." // to import Page
 import "../../js/Stack.js" as Stack
+import "../../js/RowColumnHelpers.js" as Helper
 
 
 Page {
@@ -9,9 +12,13 @@ Page {
 
     property variant modelObject
 
+    Names {
+        id: translations
+    }
+
     Image {
         id: bg
-        source: "../../images/scenari.jpg"
+        source: "../../images/scenari.jpg" // TODO mettere lo sfondo giusto
         anchors.fill: parent
 
         ToolBar {
@@ -19,12 +26,14 @@ Page {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
+            // TODO mettere le seguenti voci direttamente dentro ToolBar?
             fontFamily: semiBoldFont.name
             fontSize: 17
             onHomeClicked: Stack.backToHome()
         }
 
         Column {
+            // TODO se la toolbar laterale è la stessa ovunque perché non creare un componente?
             id: buttonsColumn
             width: backButton.width
             spacing: 10
@@ -47,6 +56,7 @@ Page {
         }
 
         Column {
+            id: panel
             spacing: 40
             anchors.left: parent.left
             anchors.leftMargin: 195
@@ -57,13 +67,9 @@ Page {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 30
 
-            Text {
-                id: title
-                text: qsTr("Electricity")
-                color: "white"
+            EnergyDataTitle {
+                title: translations.get("ENERGY_TYPE", modelObject.energyType)
                 anchors.left: parent.left
-                font.family: semiBoldFont.name
-                font.pixelSize: 36
             }
 
             Row {

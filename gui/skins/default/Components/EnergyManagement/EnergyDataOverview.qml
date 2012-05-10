@@ -70,13 +70,9 @@ Page {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 30
 
-            Text {
-                id: title
-                text: translations.get("ENERGY_TYPE", "Consumption Management")
-                color: "white"
+            EnergyDataTitle {
+                title: translations.get("ENERGY_TYPE", "Consumption Management")
                 anchors.left: parent.left
-                font.family: semiBoldFont.name
-                font.pixelSize: 36
             }
 
             Row {
