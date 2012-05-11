@@ -45,12 +45,12 @@ QObject *EnergyData::getGraph(GraphType type, QDate date)
 	case CumulativeDayGraph:
 		count = 24;
 		for(int i = 0; i < count; ++i)
-			keys << QString(i);
+			keys << QString::number(i);
 		break;
 	case CumulativeMonthGraph:
 		count = date.daysInMonth();
 		for(int i = 0; i < count; ++i)
-			keys << QString(i + 1);
+			keys << QString::number(i + 1);
 		break;
 	case CumulativeYearGraph:
 		count = 12;
