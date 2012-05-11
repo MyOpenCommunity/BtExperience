@@ -8,9 +8,16 @@ import "../../js/RowColumnHelpers.js" as Helper
 Page {
     id: page
 
+    property variant modelObject
+    property int valueType
+
+    Names {
+        id: translations
+    }
+
     Image {
         id: bg
-        source: "../../images/scenari.jpg"
+        source: "../../images/scenari.jpg" // TODO mettere lo sfondo giusto
         anchors.fill: parent
 
         ToolBar {
