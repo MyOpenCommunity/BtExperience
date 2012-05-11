@@ -1,5 +1,7 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
+
 import "../.." // to import Page
 import "../../js/Stack.js" as Stack
 import "../../js/RowColumnHelpers.js" as Helper
@@ -9,7 +11,7 @@ Page {
     id: page
 
     property variant modelObject
-    property int valueType
+    property int graphType
 
     Names {
         id: translations
@@ -92,22 +94,17 @@ Page {
                     left: imgTitle.right
                     leftMargin: 10
                 }
-                Text {
-                    text: qsTr("Overall")
-                    color: "white"
+
+                EnergyDataTitle {
+                    title: translations.get("ENERGY_TYPE", page.modelObject.energyType)
                     anchors {
                         fill: parent
                         centerIn: parent
                     }
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font {
-                        family: semiBoldFont.name
-                        pixelSize: 36
-                    }
                 }
             }
-
         }
 
         Rectangle {
@@ -242,16 +239,37 @@ Page {
                 }
 
                 TimeValueItem {
+                    id: selDay
                     label: qsTr("day")
+                    onClicked: {
+                        selDay.state = "selected"
+                        selMonth.state = ""
+                        selYear.state = ""
+                        page.graphType = EnergyData.CumulativeDayGraph
+                    }
                 }
 
                 TimeValueItem {
+                    id: selMonth
                     label: qsTr("month")
-                    state: "selected"
+                    onClicked: {
+                        selDay.state = ""
+                        selMonth.state = "selected"
+                        selYear.state = ""
+                        page.graphType = EnergyData.CumulativeMonthGraph
+                    }
                 }
 
                 TimeValueItem {
+                    id: selYear
                     label: qsTr("year")
+                    state: "selected"
+                    onClicked: {
+                        selDay.state = ""
+                        selMonth.state = ""
+                        selYear.state = "selected"
+                        page.graphType = EnergyData.CumulativeYearGraph
+                    }
                 }
 
                 TimeValueItem {
@@ -260,12 +278,22 @@ Page {
                 }
 
                 TimeValueItem {
+                    id: selEnergy
                     label: qsTr("kWh")
                     state: "selected"
+                    onClicked: {
+                        selEnergy.state = "selected"
+                        selCurrency.state = ""
+                    }
                 }
 
                 TimeValueItem {
+                    id: selCurrency
                     label: qsTr("€")
+                    onClicked: {
+                        selEnergy.state = ""
+                        selCurrency.state = "selected"
+                    }
                 }
 
             }
@@ -277,6 +305,8 @@ Page {
                 onVisibleChanged: Helper.updateRowChildren(graph)
                 onWidthChanged: Helper.updateRowChildren(graph)
 
+                property bool valid: page.modelObject.getGraph(page.graphType, new Date()).isValid
+
                 anchors {
                     horizontalCenter: bgGraph.horizontalCenter
                     top: timeValue.bottom
@@ -284,125 +314,25 @@ Page {
                     bottom: parent.bottom
                     bottomMargin: 10
                 }
+                width: bgGraph.width
 
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 200
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 80
-                    label: qsTr("january")
+                Repeater {
+                    objectName: "repeater" // to skip inside Helper
+                    model: page.modelObject.getGraph(page.graphType, new Date()).graph
+                    delegate: graphDelegate
                 }
 
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 160
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 80
-                    label: qsTr("february")
-                }
+                Component {
+                    id: graphDelegate
 
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 75
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 120
-                    label: qsTr("march")
-                }
-
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 200
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 80
-                    label: qsTr("april")
-                }
-
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 160
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 80
-                    label: qsTr("may")
-                }
-
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 75
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 120
-                    label: qsTr("june")
-                }
-
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 200
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 80
-                    label: qsTr("july")
-                }
-
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 160
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 80
-                    label: qsTr("august")
-                }
-
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 75
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 120
-                    label: qsTr("september")
-                }
-
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 200
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 80
-                    label: qsTr("october")
-                }
-
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 160
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 80
-                    label: qsTr("november")
-                }
-
-                ControlColumnValue {
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    level_actual: 75
-                    max_graph_level: 200
-                    level_red: 100
-                    lateral_bar_value: 120
-                    label: qsTr("december")
+                    ControlColumnValue {
+                        height: 345
+                        level_actual: graph.valid ? model.modelData.value : 0 // TODO gestione dati invalidi
+                        max_graph_level: 100 // TODO come si calcola?
+                        level_red: 90 // TODO come si calcola?
+                        lateral_bar_value: 80 // TODO da dove si recupera?
+                        label: graph.valid ? model.modelData.label : "---"
+                    }
                 }
             }
         }

@@ -121,7 +121,7 @@ Page {
                         }
 
                         function openLinkedPage(obj) {
-                            Stack.openPage("Components/EnergyManagement/EnergyDataGraph.qml", {"modelObject": obj,"valueType": page.valueType})
+                            Stack.openPage("Components/EnergyManagement/EnergyDataGraph.qml", {"modelObject": obj,"graphType": EnergyData.CumulativeYearGraph})
                         }
 
                         height: 345

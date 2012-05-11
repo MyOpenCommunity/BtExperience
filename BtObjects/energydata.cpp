@@ -32,7 +32,8 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name)
 
 QObject *EnergyData::getGraph(GraphType type, QDate date)
 {
-	QVariantMap values;
+	QList<QObject*> values;
+	QStringList keys;
 	QDate actual_date = normalizeDate(type, date);
 
 #if TEST_ENERGY_DATA
@@ -43,17 +44,25 @@ QObject *EnergyData::getGraph(GraphType type, QDate date)
 	case DailyAverageGraph:
 	case CumulativeDayGraph:
 		count = 24;
+		for(int i = 0; i < count; ++i)
+			keys << QString(i);
 		break;
 	case CumulativeMonthGraph:
 		count = date.daysInMonth();
+		for(int i = 0; i < count; ++i)
+			keys << QString(i + 1);
 		break;
 	case CumulativeYearGraph:
 		count = 12;
+		keys << tr("January") << tr("February") << tr("March")
+			 << tr("April") << tr("May") << tr("June")
+			 << tr("July") << tr("August") << tr("September")
+			 << tr("October") << tr("November") << tr("December");
 		break;
 	}
 
 	for (int i = 0; i < count; ++i)
-		values[QString::number(i + i)] = rand() % 100;
+		values.append(new EnergyGraphBar(keys[i], QVariant(rand() % 100)));
 #endif
 
 	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
@@ -144,11 +153,13 @@ QDate EnergyData::normalizeDate(ValueType type, QDate date)
 
 void EnergyData::graphDestroyed(QObject *obj)
 {
+	Q_UNUSED(obj);
 	// TODO
 }
 
 void EnergyData::itemDestroyed(QObject *obj)
 {
+	Q_UNUSED(obj);
 	// TODO
 }
 
@@ -187,7 +198,7 @@ bool EnergyItem::isValid() const
 }
 
 
-EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QVariantMap _graph)
+EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph)
 {
 	data = _data;
 	type = _type;
@@ -195,7 +206,7 @@ EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _
 	graph = _graph;
 }
 
-QVariantMap EnergyGraph::getGraph() const
+QList<QObject*> EnergyGraph::getGraph() const
 {
 	return graph;
 }

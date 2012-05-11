@@ -183,6 +183,27 @@ private:
 	QVariant value;
 };
 
+class EnergyGraphBar : public QObject
+{
+	Q_OBJECT
+
+	Q_PROPERTY(QString label READ getLabel CONSTANT)
+	Q_PROPERTY(QVariant value READ getValue CONSTANT)
+
+public:
+	EnergyGraphBar(QString label, QVariant value)
+	{
+		this->label = label;
+		this->value = value;
+	}
+
+	QString getLabel() const { return label; }
+	QVariant getValue() const { return value; }
+
+private:
+	QString label;
+	QVariant value;
+};
 
 /*!
 	\brief Encapsulates a consumption graph (set of consumption values)
@@ -192,14 +213,14 @@ class EnergyGraph : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(EnergyData::GraphType graphType READ getGraphType CONSTANT)
-	Q_PROPERTY(QVariantMap graph READ getGraph NOTIFY graphChanged)
+	Q_PROPERTY(QList<QObject*> graph READ getGraph NOTIFY graphChanged)
 	Q_PROPERTY(QDate date READ getDate CONSTANT)
 	Q_PROPERTY(bool isValid READ isValid NOTIFY validChanged)
 
 public:
-	EnergyGraph(EnergyData *data, EnergyData::GraphType type, QDate date, QVariantMap graph);
+	EnergyGraph(EnergyData *data, EnergyData::GraphType type, QDate date, QList<QObject*> graph);
 
-	QVariantMap getGraph() const;
+	QList<QObject*> getGraph() const;
 
 	EnergyData::GraphType getGraphType() const;
 
@@ -218,7 +239,7 @@ private:
 	EnergyData *data;
 	EnergyData::GraphType type;
 	QDate date;
-	QVariantMap graph;
+	QList<QObject*> graph;
 };
 
 QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id);
