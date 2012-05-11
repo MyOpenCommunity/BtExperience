@@ -44,14 +44,7 @@ Item {
       **********************************************************************/
     ScreenSaver {
         id: screensaver
-        // TODO load the right screensaver depending on configuration
-        screensaverComponent: bouncingLogo
         z: parent.z
-    }
-
-    Component {
-        id: bouncingLogo
-        ScreenSaverBouncingImage {}
     }
 
     /************************************************************************

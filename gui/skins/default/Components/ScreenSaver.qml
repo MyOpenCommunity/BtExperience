@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtExperience 1.0
 import "EventManager.js" as Script
 
 
@@ -30,6 +31,21 @@ Item {
             // checks timeout and (eventually) sets state to running
             if (Script.elapsed(global.lastTimePress, global.guiSettings.timeOutInSeconds) && isEnabled)
                 screensaver.state = "running"
+        }
+    }
+
+    Connections {
+        target: global.guiSettings
+        onScreensaverTypeChanged: {
+            switch (global.guiSettings.screensaverType)
+            {
+            case GuiSettings.Rectangles:
+                screensaverComponent = flashyRectangles
+                break
+            default:
+                screensaverComponent = bouncingLogo
+                break
+            }
         }
     }
 
@@ -66,4 +82,14 @@ Item {
             }
         }
     ]
+
+    Component {
+        id: bouncingLogo
+        ScreenSaverBouncingImage {}
+    }
+
+    Component {
+        id: flashyRectangles
+        ScreenSaverRectangles {}
+    }
 }
