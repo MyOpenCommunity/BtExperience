@@ -77,8 +77,7 @@ MenuColumn {
                 timeoutActive: false
             }
             Rectangle {
-                width: 200
-                height: 90
+                anchors.fill: parent
                 color: "#88333333"
                 anchors.centerIn: parent
                 Text {
