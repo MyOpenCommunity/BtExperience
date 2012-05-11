@@ -1,7 +1,8 @@
 import QtQuick 1.1
 
-Rectangle {
+Image {
     id: alarmAlert
+    source: "../images/home/alert.png"
     width: 300
     height: 150
     property string alarmDateTime: "20:15 - 21/01/2012"
@@ -9,7 +10,6 @@ Rectangle {
 
     signal ignoreClicked
     signal alarmLogClicked
-
 
     Text {
         id: tagline
@@ -43,15 +43,14 @@ Rectangle {
         width: parent.width
         anchors.bottom: parent.bottom
 
-        Rectangle {
-            id: rectangle1
+        Image {
+            source: "../images/common/btn_OKAnnulla.png"
             width: parent.width / 2; height: 30
-            color: "lightgreen"
 
             Text {
                 wrapMode: Text.WordWrap
                 text: qsTr("alarm log")
-                anchors.fill: parent
+                anchors.centerIn: parent
             }
 
             MouseArea {
@@ -62,12 +61,12 @@ Rectangle {
             }
         }
 
-        Rectangle {
+        Image {
+            source: "../images/common/btn_OKAnnulla.png"
             width: parent.width / 2; height: 30
-            color: "lightgreen"
 
             Text {
-                anchors.fill: parent
+                anchors.centerIn: parent
                 text: qsTr("ignore")
             }
 
