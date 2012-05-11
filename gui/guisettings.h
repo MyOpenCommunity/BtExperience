@@ -134,7 +134,8 @@ public:
 		None,
 		DateTime,
 		Text,
-		Image
+		Image,
+		Rectangles
 	};
 
 	enum TemperatureUnit

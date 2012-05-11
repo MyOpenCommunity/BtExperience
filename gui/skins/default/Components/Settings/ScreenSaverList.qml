@@ -42,8 +42,19 @@ MenuColumn {
             child.screenSaverTypesChanged.connect(screenSaverTypesChanged)
     }
 
+    Component {
+        id: bouncingLogo
+        ScreenSaverBouncingImage {}
+    }
+
+    Component {
+        id: flashyRectangles
+        ScreenSaverRectangles {}
+    }
+
     // slot to manage the change of IP configuration type
     function screenSaverTypesChanged(type) {
+        var screensaver = bouncingLogo
         if (type === GuiSettings.None)
             screenSaverLoader.setComponent(noneItem)
         else if (type === GuiSettings.DateTime)
@@ -52,11 +63,17 @@ MenuColumn {
             screenSaverLoader.setComponent(textItem)
         else if (type === GuiSettings.Image)
             screenSaverLoader.setComponent(imageItem)
+        else if (type === GuiSettings.Rectangles)
+        {
+            screensaver = flashyRectangles
+            screenSaverLoader.setComponent(rectanglesItem)
+        }
         else
         {
             Log.logWarning("Unrecognized screen saver type " + type)
             return
         }
+        preview.setPreview(screensaver)
         typeItem.description = pageObject.names.get('SCREEN_SAVER_TYPE', type)
         privateProps.type = type
     }
@@ -67,11 +84,12 @@ MenuColumn {
         maxHeight: 450
 
         Image {
+            id: preview
             width: 212
             height: 100
             source: imagesPath + "scenari.jpg"
             ScreenSaver {
-                screensaverComponent: Component { ScreenSaverBouncingImage {} }
+                id: screensaverPreview
                 width: parent.width
                 height: parent.height
                 timeoutActive: false
@@ -84,6 +102,10 @@ MenuColumn {
                     text: qsTr("preview")
                     anchors.centerIn: parent
                 }
+            }
+
+            function setPreview(screensaver) {
+                screensaverPreview.screensaverComponent = screensaver
             }
         }
 
@@ -134,7 +156,7 @@ MenuColumn {
             Image {
                 width: 212
                 height: 50
-                source: imagesPath + "common/btn_menu.png"
+                source: imagesPath + "common/menu_column_item_bg.svg"
                 Text {
                     // TODO implementation of browsing/setting of an image
                     text: qsTr("Browse")
@@ -181,7 +203,7 @@ MenuColumn {
             Image {
                 width: 212
                 height: 50
-                source: imagesPath + "common/btn_menu.png"
+                source: imagesPath + "common/menu_column_item_bg.svg"
                 Text {
                     id: screensaverText
                     text: qsTr("Change text")
@@ -218,6 +240,36 @@ MenuColumn {
 
     Component {
         id: dateTimeItem
+        Column {
+            ControlChoices {
+                id: screensaverTimeout
+                description: qsTr("screen saver time out")
+                choice: pageObject.names.get('SCREEN_SAVER_TIMEOUT', currentIndex)
+                property int currentIndex: global.guiSettings.timeOut
+                onPlusClicked: if (currentIndex < 7) ++currentIndex
+                onMinusClicked: if (currentIndex > 0)--currentIndex
+            }
+            ControlChoices {
+                id: turnOffTime
+                description: qsTr("turn off display")
+                choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', currentIndex)
+                property int currentIndex: global.guiSettings.turnOffTime
+                onPlusClicked: if (currentIndex < 8) ++currentIndex
+                onMinusClicked: if (currentIndex > 0)--currentIndex
+            }
+            ButtonOkCancel {
+                onOkClicked: {
+                    global.guiSettings.screensaverType = privateProps.type
+                    global.guiSettings.timeOut = screensaverTimeout.currentIndex
+                    global.guiSettings.turnOffTime = turnOffTime.currentIndex
+                    column.okClicked()
+                }
+            }
+        }
+    }
+
+    Component {
+        id: rectanglesItem
         Column {
             ControlChoices {
                 id: screensaverTimeout
