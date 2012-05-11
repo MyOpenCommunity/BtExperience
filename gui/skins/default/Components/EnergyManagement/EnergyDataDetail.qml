@@ -10,13 +10,11 @@ import "../../js/RowColumnHelpers.js" as Helper
 Page {
     id: page
 
+    property variant modelObject
+    property int valueType
+
     Names {
         id: translations
-    }
-
-    FilterListModel {
-        id: modelEnergy
-        filters: [{objectId: ObjectInterface.IdEnergyData}]
     }
 
     Image {
@@ -71,14 +69,12 @@ Page {
             anchors.bottomMargin: 30
 
             EnergyDataTitle {
-                title: translations.get("ENERGY_TYPE", "Consumption Management")
+                title: translations.get("ENERGY_TYPE", page.modelObject.energyType)
                 anchors.left: parent.left
             }
 
             Row {
-                id: energyCategories
-
-                property int valueType: EnergyData.CumulativeMonthValue
+                id: energyDetails
 
                 anchors {
                     horizontalCenter: panel.horizontalCenter
@@ -87,20 +83,25 @@ Page {
                 spacing: 80
                 width: panel.width
 
-                onChildrenChanged: Helper.updateRowChildren(energyCategories)
-                onVisibleChanged: Helper.updateRowChildren(energyCategories)
-                onWidthChanged: Helper.updateRowChildren(energyCategories)
+                onChildrenChanged: Helper.updateRowChildren(energyDetails)
+                onVisibleChanged: Helper.updateRowChildren(energyDetails)
+                onWidthChanged: Helper.updateRowChildren(energyDetails)
 
                 Repeater {
                     objectName: "repeater" // to skip inside Helper
-                    model: modelEnergy
-                    delegate: energyCategoriesDelegate
+                    // TODO come recupero le linee? nota: il modello deve
+                    // comprendere anche il generale!
+                    model: FilterListModel {
+                        id: modelEnergy
+                        filters: [{objectId: ObjectInterface.IdEnergyData}]
+                    }
+                    delegate: energyDetailsDelegate
                 }
 
                 Component {
-                    id: energyCategoriesDelegate
+                    id: energyDetailsDelegate
 
-                    EnergyDataOverviewColumn {
+                    EnergyDataDetailColumn {
 
                         function getSymbol(t) {
                             if (t === EnergyData.Electricity)
@@ -120,19 +121,24 @@ Page {
                         }
 
                         function openLinkedPage(obj) {
-                            Stack.openPage("Components/EnergyManagement/EnergyDataDetail.qml", {"modelObject": obj,"valueType": energyCategories.valueType})
+                            Stack.openPage("Components/EnergyManagement/EnergyDataGraph.qml", {"modelObject": obj,"valueType": page.valueType})
                         }
 
                         height: 345
+                        // TODO recuperare il generale e le linee
                         property variant obj: modelEnergy.getObject(index)
-                        property variant v: obj.getValue(energyCategories.valueType, new Date())
+                        property variant v: obj.getValue(page.valueType, new Date())
+                        property variant i: obj.getValue(EnergyData.CurrentVAlue, new Date())
                         level_actual: v.isValid ? v.value : 0 // TODO manage invalid values
                         perc_warning: 0.8
                         level_critical: 90 // TODO it must come from somewhere
                         title: level_actual + " " + translations.get("ENERGY_UNIT", obj.energyType)
-                        description: translations.get("ENERGY_TYPE", obj.energyType)
-                        footer: qsTr("Month (day 21/30)") // TODO ???
                         source: getSymbol(obj.energyType)
+                        footer: qsTr("Month (day 21/30)") // TODO ???
+                        description: translations.get("ENERGY_TYPE", obj.energyType) // TODO implementare
+                        note_header: "consumption"
+                        note_footer: (i.isValid ? i.value : 0) + " " + translations.get("ENERGY_UNIT", obj.energyType)
+                        critical_bar_visible: index === 0 ? true : false // TODO assumes the total is first column
                         onClicked: openLinkedPage(obj)
                     }
                 }
@@ -154,7 +160,7 @@ Page {
                         selDay.state = "selected"
                         selMonth.state = ""
                         selYear.state = ""
-                        energyCategories.valueType = EnergyData.CumulativeDayValue
+                        page.valueType = EnergyData.CumulativeDayValue
                     }
                 }
 
@@ -166,7 +172,7 @@ Page {
                         selDay.state = ""
                         selMonth.state = "selected"
                         selYear.state = ""
-                        energyCategories.valueType = EnergyData.CumulativeMonthValue
+                        page.valueType = EnergyData.CumulativeMonthValue
                     }
                 }
 
@@ -177,11 +183,12 @@ Page {
                         selDay.state = ""
                         selMonth.state = ""
                         selYear.state = "selected"
-                        energyCategories.valueType = EnergyData.CumulativeYearValue
+                        page.valueType = EnergyData.CumulativeYearValue
                     }
                 }
 
             }
+
 
         }
     }

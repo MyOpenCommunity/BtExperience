@@ -41,13 +41,20 @@ function _openPage(filename, properties) {
     // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
     if (page_component.status == 1) {
         var page = page_component.createObject(container, typeof properties !== 'undefined' ? properties : {})
-        if (page === null)
+        if (page === null) {
             logError('Error on creating the object for the page: ' + filename)
+            logError('Properties:')
+            for(var k in properties)
+                logError('    ' + k + ": " + properties[k])
+        }
 
         pushPage(page)
         return page
     }
     logError('Error loading the page: ' + filename + ' error: ' + page_component.errorString() + ' status: ' + page_component.status + ' progress: ' + page_component.progress)
+    logError('Properties:')
+    for(var k2 in properties)
+        logError('    ' + k2 + ": " + properties[k2])
     changePageDone()
     return null
 }
