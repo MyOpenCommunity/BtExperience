@@ -119,7 +119,7 @@ Page {
 
             Column {
                 id: sidebar
-                spacing: 30
+                spacing: 20
                 anchors {
                     verticalCenter: parent.verticalCenter
                     left: parent.left

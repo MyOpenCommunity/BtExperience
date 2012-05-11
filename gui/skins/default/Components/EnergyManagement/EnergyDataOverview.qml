@@ -120,8 +120,7 @@ Page {
                         }
 
                         function openLinkedPage(obj) {
-                            var page = Stack.openPage("Components/EnergyManagement/EnergyDataDetail.qml")
-                            page.modelObject = obj
+                            Stack.openPage("Components/EnergyManagement/EnergyDataDetail.qml", {"modelObject": obj,"valueType": energyCategories.valueType})
                         }
 
                         height: 345
@@ -140,8 +139,10 @@ Page {
             }
 
             Row {
-                anchors.horizontalCenter: panel.horizontalCenter
-                anchors.horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
+                anchors {
+                    horizontalCenter: panel.horizontalCenter
+                    horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
+                }
                 height: 30
                 width: 300
                 spacing: 1

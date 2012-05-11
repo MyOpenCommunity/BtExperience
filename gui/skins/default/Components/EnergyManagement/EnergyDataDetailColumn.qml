@@ -5,19 +5,22 @@ import QtQuick 1.1
 Column {
     id: element
 
+    width: 150
+    height: 350
+
     property int level_actual: 135
     property int level_critical: 150
     property real perc_warning: 0.8
     property string title: "title"
     property string description: "descr"
     property string footer: "footer"
-    property string source: ""
+    property string source: "../../images/common/svg_bolt.svg"
     property string note_header: "note header"
     property string note_footer: "note footer"
     property bool critical_bar_visible: false
 
-    anchors.top: parent.top
-    anchors.bottom: parent.bottom
+    signal clicked
+
     EnergyDataOverviewColumn {
         anchors.left: parent.left
         anchors.right: parent.right
@@ -30,7 +33,9 @@ Column {
         footer: element.footer
         source: element.source
         critical_bar_visible: element.critical_bar_visible
+        onClicked: element.clicked()
     }
+
     Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
