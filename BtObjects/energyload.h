@@ -128,19 +128,9 @@ public:
 		return ObjectInterface::IdEnergyLoad;
 	}
 
-	virtual QString getObjectKey() const
-	{
-		return QString();
-	}
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::EnergyManagement;
-	}
-
-	virtual QString getName() const
-	{
-		return name;
 	}
 
 	LoadStatus getLoadStatus() const;
@@ -191,7 +181,6 @@ protected:
 	LoadsDevice *dev;
 
 private:
-	QString name;
 	LoadStatus status;
 	int consumption;
 	QList<EnergyLoadTotal *> period_totals;

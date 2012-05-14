@@ -102,19 +102,9 @@ public:
 		return ObjectInterface::IdPlatformSettings;
 	}
 
-	virtual QString getObjectKey() const
-	{
-		return QString();
-	}
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Settings;
-	}
-
-	virtual QString getName() const
-	{
-		return QString();
 	}
 
 	QString getAddress() const;

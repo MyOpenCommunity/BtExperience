@@ -104,11 +104,6 @@ class SplitAdvancedScenario : public ObjectInterface
 	Q_PROPERTY(SplitProgram::Mode mode READ getMode WRITE setMode NOTIFY modeChanged)
 
 	/*!
-		\brief Gets the split name
-	*/
-	Q_PROPERTY(QString name READ getName CONSTANT)
-
-	/*!
 		\brief Gets or sets the split swing
 	*/
 	Q_PROPERTY(SplitProgram::Swing swing READ getSwing WRITE setSwing NOTIFY swingChanged)
@@ -167,11 +162,6 @@ public:
 		return ObjectInterface::ThermalRegulation;
 	}
 
-	virtual QString getName() const
-	{
-		return name;
-	}
-
 	SplitProgram::Mode getMode() const;
 	void setMode(SplitProgram::Mode mode);
 	QString getProgram() const;
@@ -209,7 +199,6 @@ private:
 	AdvancedAirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
 	QString key;
-	QString name;
 	SplitProgram actual_program; // name empty means custom programming
 	QList<SplitProgram *> program_list;
 	int temperature;

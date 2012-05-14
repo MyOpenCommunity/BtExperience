@@ -49,14 +49,10 @@ public:
 		return ObjectInterface::IdHardwareSettings;
 	}
 
-	virtual QString getObjectKey() const { return QString(); }
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Settings;
 	}
-
-	virtual QString getName() const { return QString(); }
 
 	bool getAutoUpdate() const;
 	void setAutoUpdate(bool v);

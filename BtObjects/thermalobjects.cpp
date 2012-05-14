@@ -43,11 +43,6 @@ QString ThermalControlUnit::getObjectKey() const
 	return key;
 }
 
-QString ThermalControlUnit::getName() const
-{
-	return name;
-}
-
 ThermalControlUnit::SeasonType ThermalControlUnit::getSeason() const
 {
 	return season;
@@ -186,16 +181,6 @@ ThermalControlUnitObject::ThermalControlUnitObject(QString _name, ThermalDevice 
 {
 	dev = _dev;
 	name = _name;
-}
-
-QString ThermalControlUnitObject::getObjectKey() const
-{
-	return QString();
-}
-
-QString ThermalControlUnitObject::getName() const
-{
-	return name;
 }
 
 void ThermalControlUnitObject::reset()

@@ -54,8 +54,6 @@ public:
 		return category;
 	}
 
-	virtual QString getName() const;
-	virtual void setName(const QString &n);
 	virtual bool isActive() const;
 	virtual void setActive(bool st);
 	void setCategory(ObjectCategory _category);
@@ -77,7 +75,6 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
-	QString name;
 	QString key;
 	bool active;
 

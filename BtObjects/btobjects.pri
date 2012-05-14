@@ -6,8 +6,8 @@ HEADERS += \
 	hardware.h \
 	lightobjects.h \
 	mediaobjects.h \
+        objectinterface.h \
 	objectlistmodel.h \
-	objectinterface.h \
 	platform.h \
 	roomelement.h \
 	scenarioobjects.h \
@@ -41,7 +41,7 @@ HEADERS += \
 	ts/xml_functions.h \
 	ts/xmldevice.h \
 	ts/xmlclient.h \
-	ts/scaleconversion.h
+        ts/scaleconversion.h
 
 SOURCES += \
 	antintrusionsystem.cpp \
@@ -51,6 +51,7 @@ SOURCES += \
 	hardware.cpp \
 	lightobjects.cpp \
 	mediaobjects.cpp \
+        objectinterface.cpp \
 	objectlistmodel.cpp \
 	platform.cpp \
 	roomelement.cpp \

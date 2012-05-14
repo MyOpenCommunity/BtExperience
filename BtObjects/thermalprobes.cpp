@@ -22,11 +22,6 @@ QString ThermalControlledProbe::getObjectKey() const
 	return key;
 }
 
-QString ThermalControlledProbe::getName() const
-{
-	return name;
-}
-
 ThermalControlledProbe::ProbeStatus ThermalControlledProbe::getProbeStatus() const
 {
 	return probe_status;

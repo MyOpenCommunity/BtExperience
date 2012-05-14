@@ -78,8 +78,6 @@ public:
 		return ObjectInterface::ThermalRegulation;
 	}
 
-	virtual QString getName() const;
-
 	ProbeStatus getProbeStatus() const;
 	void setProbeStatus(ProbeStatus st);
 
@@ -101,7 +99,6 @@ private slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
-	QString name;
 	QString key;
 	ProbeStatus probe_status;
 	FancoilSpeed fancoil_speed;

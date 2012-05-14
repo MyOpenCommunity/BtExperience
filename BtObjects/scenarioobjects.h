@@ -22,16 +22,6 @@ public:
 		return ObjectInterface::IdSimpleScenario;
 	}
 
-	virtual QString getName() const
-	{
-		return name;
-	}
-
-	virtual QString getObjectKey() const
-	{
-		return QString();
-	}
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Scenarios;
@@ -42,9 +32,9 @@ public slots:
 
 protected:
 	int scenario_number;
-	QString name;
 	ScenarioDevice *dev;
 };
+
 
 class ScenarioModule : public SimpleScenario
 {

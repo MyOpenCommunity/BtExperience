@@ -95,11 +95,6 @@ public:
 		return ObjectInterface::EnergyManagement;
 	}
 
-	virtual QString getName() const
-	{
-		return name;
-	}
-
 	/*!
 		\brief Returns an object holding graph data for the specified measure/time
 
@@ -145,7 +140,6 @@ private:
 	EnergyDevice *dev;
 	QList<EnergyGraph *> graphCache;
 	QList<EnergyItem *> valueCache;
-	QString name;
 	bool general;
 };
 

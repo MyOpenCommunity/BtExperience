@@ -37,11 +37,6 @@ class SplitBasicScenario : public ObjectInterface
 	Q_PROPERTY(QStringList programs READ getPrograms CONSTANT)
 
 	/*!
-		\brief Gets the scenario name
-	*/
-	Q_PROPERTY(QString name READ getName CONSTANT)
-
-	/*!
 		\brief Gets the number of available programs (off is considered in the count)
 	*/
 	Q_PROPERTY(int size READ getSize CONSTANT)
@@ -76,11 +71,6 @@ public:
 		return ObjectInterface::ThermalRegulation;
 	}
 
-	virtual QString getName() const
-	{
-		return name;
-	}
-
 	QString getProgram() const;
 	void setProgram(QString program);
 	QStringList getPrograms() const;
@@ -105,7 +95,6 @@ private:
 	AirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
 	QString key;
-	QString name;
 	QString actual_program;
 	QStringList program_list;
 	int temperature;

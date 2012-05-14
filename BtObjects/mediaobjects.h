@@ -34,7 +34,6 @@ public:
 		return ObjectInterface::SoundDiffusion;
 	}
 
-	virtual QString getName() const { return name; }
 	QObject *getCurrentSource() const;
 
 	int getArea() const;
@@ -48,7 +47,6 @@ protected:
 	int area;
 
 private:
-	QString name;
 	SourceBase *current_source;
 };
 
@@ -121,8 +119,6 @@ class SoundGeneralAmbient : public SoundAmbientBase
 public:
 	SoundGeneralAmbient(QString name);
 
-	virtual QString getObjectKey() const { return QString(); }
-
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdMultiChannelGeneralAmbient;
@@ -170,19 +166,16 @@ class SourceBase : public ObjectInterface
 
 public:
 
-	enum SourceType {
+	enum SourceType
+	{
 		Radio = 1,
 		Aux,
 	};
-
-	virtual QString getObjectKey() const { return QString(); }
 
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::SoundDiffusion;
 	}
-
-	virtual QString getName() const { return name; }
 
 	virtual int getObjectId() const
 	{
@@ -227,7 +220,6 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
-	QString name;
 	SourceDevice *dev;
 	int track;
 	SourceType type;
@@ -379,13 +371,6 @@ public:
 		return ObjectInterface::SoundDiffusion;
 	}
 
-	virtual QString getName() const { return name; }
-
-	virtual int getObjectId() const
-	{
-		return object_id;
-	}
-
 	bool isActive() const;
 	void setActive(bool active);
 
@@ -406,7 +391,6 @@ protected slots:
 
 private:
 	AmplifierDevice *dev;
-	QString name;
 	int object_id, area;
 	bool active;
 	int volume;
@@ -426,8 +410,6 @@ public:
 	PowerAmplifierPreset(int number, const QString &name);
 
 	virtual int getObjectId() const { return preset_number; }
-
-	virtual QString getObjectKey() const { return QString(); }
 
 	virtual ObjectCategory getCategory() const { return SoundDiffusion; }
 

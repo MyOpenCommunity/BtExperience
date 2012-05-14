@@ -16,7 +16,6 @@ class FileObject : public ObjectInterface
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QString name READ getName NOTIFY loadingComplete)
 	Q_PROPERTY(QVariantList path READ getPath CONSTANT)
 	Q_PROPERTY(FileType fileType READ getFileType NOTIFY loadingComplete)
 	Q_PROPERTY(QVariantMap metadata READ getMetadata NOTIFY loadingComplete)
@@ -35,10 +34,6 @@ public:
 		Video     = 0x08, /*!< Video filetype */
 		Image     = 0x10, /*!< Image filetype */
 	};
-
-	virtual int getObjectId() const { return -1; }
-
-	virtual QString getObjectKey() const { return QString(); }
 
 	virtual ObjectCategory getCategory() const { return Unassigned; }
 

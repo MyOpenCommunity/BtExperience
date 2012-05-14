@@ -63,19 +63,9 @@ public:
 		return ObjectInterface::IdStopAndGo;
 	}
 
-	virtual QString getObjectKey() const
-	{
-		return QString();
-	}
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::EnergyManagement;
-	}
-
-	virtual QString getName() const
-	{
-		return name;
 	}
 
 	Status getStatus() const;
@@ -92,7 +82,6 @@ protected slots:
 
 private:
 	StopAndGoDevice *dev;
-	QString name;
 	Status status;
 	bool auto_reset;
 };

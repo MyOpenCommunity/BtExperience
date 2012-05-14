@@ -85,6 +85,7 @@ bool FileObject::isLoading() const
 
 void FileObject::setFileInfo(const EntryInfo &_entry, QVariantList _path)
 {
+	QString old_name = entry.name;
 	entry = _entry;
 	path = _path << _entry.name;
 	loading = false;
@@ -92,6 +93,8 @@ void FileObject::setFileInfo(const EntryInfo &_entry, QVariantList _path)
 	// we could use a more fine-grained signal, but there is little point in optimizing,
 	// since it's only emitted once per object
 	emit loadingComplete();
+	if (old_name != entry.name)
+		emit nameChanged();
 }
 
 

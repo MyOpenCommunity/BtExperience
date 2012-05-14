@@ -30,14 +30,10 @@ public:
 		return zone_number;
 	}
 
-	virtual QString getObjectKey() const { return QString(); }
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Antintrusion;
 	}
-
-	virtual QString getName() const { return name; }
 
 	bool getPartialization() const;
 	void setPartialization(bool p, bool request_partialization = true);
@@ -48,7 +44,6 @@ signals:
 
 private:
 	int zone_number;
-	QString name;
 	bool partialized;
 };
 
@@ -62,19 +57,10 @@ public:
 	Q_PROPERTY(bool selected READ isSelected NOTIFY selectionChanged)
 	Q_PROPERTY(QString description READ getDescription CONSTANT)
 
-	virtual int getObjectId() const
-	{
-		return -1;
-	}
-
-	virtual QString getObjectKey() const { return QString(); }
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Antintrusion;
 	}
-
-	virtual QString getName() const { return name; }
 
 	// return the description of the scenario, used by the omonymous role
 	Q_INVOKABLE QString getDescription() const;
@@ -92,7 +78,6 @@ private slots:
 	void verifySelection(bool notify = true);
 
 private:
-	QString name;
 	QList<int> scenario_zones;
 	QList<AntintrusionZone*> zones;
 	bool selected;
@@ -118,19 +103,10 @@ public:
 	};
 	AntintrusionAlarm(AlarmType type, const AntintrusionZone *zone, QDateTime time);
 
-	virtual int getObjectId() const
-	{
-		return -1;
-	}
-
-	virtual QString getObjectKey() const { return QString(); }
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Antintrusion;
 	}
-
-	virtual QString getName() const { return QString(); }
 
 	AlarmType getType();
 	ObjectInterface *getZone();
@@ -162,19 +138,14 @@ public:
 		return ObjectInterface::IdAntintrusionSystem;
 	}
 
-	virtual QString getObjectKey() const { return QString(); }
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Antintrusion;
 	}
 
-	virtual QString getName() const { return QString(); }
-
 	ObjectListModel *getZones() const;
 	ObjectListModel *getScenarios() const;
 	ObjectListModel *getAlarms() const;
-
 
 	Q_INVOKABLE void requestPartialization(const QString &password);
 	Q_INVOKABLE void toggleActivation(const QString &password);

@@ -107,16 +107,6 @@ QString Light::getObjectKey() const
 	return key;
 }
 
-QString Light::getName() const
-{
-	return name;
-}
-
-void Light::setName(const QString &n)
-{
-	name = n;
-}
-
 bool Light::isActive() const
 {
 	return active;

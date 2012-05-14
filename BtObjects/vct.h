@@ -23,24 +23,9 @@ class ExternalPlace : public ObjectInterface
 public:
 	ExternalPlace(const QString &_name, const QString &_where);
 
-	virtual int getObjectId() const
-	{
-		return -1;
-	}
-
-	virtual QString getObjectKey() const
-	{
-		return QString();
-	}
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Unassigned;
-	}
-
-	virtual QString getName() const
-	{
-		return name;
 	}
 
 	QString getWhere() const
@@ -49,7 +34,6 @@ public:
 	}
 
 private:
-	QString name;
 	QString where;
 };
 
@@ -88,19 +72,9 @@ public:
 		return ObjectInterface::IdCCTV;
 	}
 
-	virtual QString getObjectKey() const
-	{
-		return QString();
-	}
-
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::VideoEntry;
-	}
-
-	virtual QString getName() const
-	{
-		return "CCTV";
 	}
 
 	int getBrightness() const;
@@ -140,6 +114,7 @@ private:
 	VideoDoorEntryDevice *dev;
 	ObjectListModel external_places;
 };
+
 
 /*!
 	\ingroup VideoDoorEntry
@@ -184,11 +159,6 @@ public:
 		return ObjectInterface::VideoEntry;
 	}
 
-	virtual QString getName() const
-	{
-		return name;
-	}
-
 	int getVolume() const;
 	void setVolume(int value);
 	bool getMute() const;
@@ -203,7 +173,6 @@ protected slots:
 
 protected:
 	QString key;
-	QString name;
 	int volume;
 	bool mute;
 

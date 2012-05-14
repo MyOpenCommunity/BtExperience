@@ -70,26 +70,24 @@ public:
 		EnergyManagement
 	};
 
-	virtual int getObjectId() const = 0;
+	virtual int getObjectId() const;
 
 	// an unique key to identify an object from the others with the same id.
-	virtual QString getObjectKey() const = 0;
+	virtual QString getObjectKey() const;
+
+	// the name of the object
+	virtual QString getName() const;
+	virtual void setName(const QString &n);
 
 	// the category (ex: lighting, automation, etc..)
 	virtual ObjectCategory getCategory() const = 0;
 
-	// the name of the object
-	virtual QString getName() const = 0;
-
-	virtual void setName(const QString &n)
-	{
-		Q_UNUSED(n)
-		qWarning("WARNING: ObjectInterface::setName called on object %s", metaObject()->className());
-	}
-
 signals:
 	void dataChanged();
 	void nameChanged();
+
+protected:
+	QString name;
 };
 
 typedef QPair<int, ObjectInterface *> ObjectPair;
