@@ -11,6 +11,7 @@ class EnergyGraph;
 class EnergyItem;
 class QDomNode;
 
+// TODO scrivere test quando rimuoveremo l'implementazione random
 #define TEST_ENERGY_DATA 1
 
 
@@ -33,6 +34,9 @@ class EnergyData : public ObjectInterface
 
 	/// The type of energy measured by this object
 	Q_PROPERTY(EnergyType energyType READ getEnergyType CONSTANT)
+
+	/// Is this a general or line counter?
+	Q_PROPERTY(bool general READ isGeneral WRITE setGeneral NOTIFY generalChanged)
 
 	Q_ENUMS(GraphType ValueType EnergyType)
 
@@ -80,17 +84,11 @@ public:
 		Heat
 	};
 
-	EnergyData(EnergyDevice *dev, QString name);
+	EnergyData(EnergyDevice *dev, QString name, bool general);
 
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdEnergyData;
-	}
+	virtual int getObjectId() const;
 
-	virtual QString getObjectKey() const
-	{
-		return QString();
-	}
+	virtual QString getObjectKey() const;
 
 	virtual ObjectCategory getCategory() const
 	{
@@ -119,6 +117,8 @@ public:
 	Q_INVOKABLE QObject *getValue(ValueType type, QDate date);
 
 	EnergyType getEnergyType() const;
+	bool isGeneral() const;
+	void setGeneral(bool value);
 
 public slots:
 	/*!
@@ -130,6 +130,9 @@ public slots:
 		\brief Stop automatic updates for the current consumption value
 	*/
 	void requestCurrentUpdateStop();
+
+signals:
+	void generalChanged();
 
 private slots:
 	void graphDestroyed(QObject *obj);
@@ -143,6 +146,7 @@ private:
 	QList<EnergyGraph *> graphCache;
 	QList<EnergyItem *> valueCache;
 	QString name;
+	bool general;
 };
 
 

@@ -15,8 +15,8 @@ Page {
     }
 
     FilterListModel {
-        id: modelEnergy
-        filters: [{objectId: ObjectInterface.IdEnergyData}]
+        id: energiesCounters
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "general"}]
     }
 
     Image {
@@ -92,8 +92,9 @@ Page {
                 onWidthChanged: Helper.updateRowChildren(energyCategories)
 
                 Repeater {
+                    id: repeaterElement
                     objectName: "repeater" // to skip inside Helper
-                    model: modelEnergy
+                    model: energiesCounters
                     delegate: energyCategoriesDelegate
                 }
 
@@ -119,12 +120,28 @@ Page {
                             return "../../images/common/svg_bolt.svg"
                         }
 
+                        function getKeyString(t) {
+                            if (t === EnergyData.Electricity)
+                                return "Electricity"
+                            else if (t === EnergyData.Water)
+                                return "Water"
+                            else if (t === EnergyData.Gas)
+                                return "Gas"
+                            else if (t === EnergyData.HotWater)
+                                return "HotWater"
+                            else if (t === EnergyData.Heat)
+                                return "Heat"
+                            //                            else if (t === EnergyData.???)
+                            //                                return "???"
+                            return "Electricity"
+                        }
+
                         function openLinkedPage(obj) {
-                            Stack.openPage("Components/EnergyManagement/EnergyDataDetail.qml", {"modelObject": obj,"valueType": energyCategories.valueType})
+                            Stack.openPage("Components/EnergyManagement/EnergyDataDetail.qml", {"modelObject": obj,"valueType": energyCategories.valueType, "keyString": getKeyString(obj.energyType)})
                         }
 
                         height: 345
-                        property variant obj: modelEnergy.getObject(index)
+                        property variant obj: repeaterElement.model.getObject(index)
                         property variant v: obj.getValue(energyCategories.valueType, new Date())
                         level_actual: v.isValid ? v.value : 0 // TODO manage invalid values
                         perc_warning: 0.8

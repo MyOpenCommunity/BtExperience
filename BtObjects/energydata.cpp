@@ -15,19 +15,30 @@ QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 	QList<ObjectInterface *> objects;
 
 	EnergyDevice *de = bt_global::add_device_to_cache(new EnergyDevice("77", 1));
+	EnergyDevice *de2 = bt_global::add_device_to_cache(new EnergyDevice("79", 1));
+	EnergyDevice *de3 = bt_global::add_device_to_cache(new EnergyDevice("80", 1));
+	EnergyDevice *de4 = bt_global::add_device_to_cache(new EnergyDevice("81", 1));
+	EnergyDevice *de5 = bt_global::add_device_to_cache(new EnergyDevice("82", 1));
+
 	EnergyDevice *dw = bt_global::add_device_to_cache(new EnergyDevice("78", 2));
 
-	objects << new EnergyData(de, "Electricity");
-	objects << new EnergyData(dw, "Water");
+	objects << new EnergyData(de, "Electricity", true);
+	objects << new EnergyData(de2, "Lights", false);
+	objects << new EnergyData(de3, "Appliances", false);
+	objects << new EnergyData(de4, "Office", false);
+	objects << new EnergyData(de5, "Garden", false);
+
+	objects << new EnergyData(dw, "Water", true);
 
 	return objects;
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool general)
 {
 	name = _name;
 	dev = _dev;
+	this->general = general;
 }
 
 QObject *EnergyData::getGraph(GraphType type, QDate date)
@@ -82,6 +93,42 @@ QObject *EnergyData::getValue(ValueType type, QDate date)
 	EnergyItem *value = new EnergyItem(this, type, actual_date, val);
 
     return value;
+}
+
+int EnergyData::getObjectId() const
+{
+	return IdEnergyData;
+}
+
+QString EnergyData::getObjectKey() const
+{
+	QStringList result;
+
+	switch (dev->getEnergyType())
+	{
+	case 1:
+		result << "Electricity";
+		break;
+	case 2:
+		result << "Water";
+		break;
+	case 3:
+		result << "Gas";
+		break;
+	case 4:
+		result << "HotWater";
+		break;
+	case 5:
+		result << "Heat";
+		break;
+	}
+
+	if(isGeneral())
+		result << "general";
+	else
+		result << "line";
+
+	return result.join(",");
 }
 
 EnergyData::EnergyType EnergyData::getEnergyType() const
@@ -163,6 +210,18 @@ void EnergyData::itemDestroyed(QObject *obj)
 	// TODO
 }
 
+bool EnergyData::isGeneral() const
+{
+	return general;
+}
+
+void EnergyData::setGeneral(bool value)
+{
+	if (general == value)
+		return;
+	general = value;
+	emit generalChanged();
+}
 
 EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value)
 {

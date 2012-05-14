@@ -265,7 +265,7 @@ bool FilterListModel::filterAcceptsRow(int source_row, const QModelIndex &source
 	else if (filters.contains(obj->getObjectId()))
 	{
 		QString key = filters[obj->getObjectId()];
-		if (key.isEmpty() || key == obj->getObjectKey())
+		if (key.isEmpty() || keyMatches(key, obj))
 			match_conditions = true;
 	}
 
@@ -294,6 +294,16 @@ bool FilterListModel::removeRows(int row, int count, const QModelIndex &parent)
 void FilterListModel::resetCounter()
 {
 	counter = -1;
+}
+
+bool FilterListModel::keyMatches(QString key, ObjectInterface *obj) const
+{
+	QStringList keyList = key.split(",");
+	QStringList objList = obj->getObjectKey().split(",");
+	foreach (QString k, keyList)
+		if (!objList.contains(k))
+			return false;
+	return true;
 }
 
 ObjectInterface *FilterListModel::getObject(int row)

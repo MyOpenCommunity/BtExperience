@@ -129,6 +129,8 @@ private slots:
 	void resetCounter();
 
 private:
+	bool keyMatches(QString key, ObjectInterface *obj) const;
+
 	QVariantList input_categories;
 	QVariantList input_filters;
 
