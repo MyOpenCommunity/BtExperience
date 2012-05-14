@@ -4,7 +4,7 @@ import QtQuick 1.1
 Rectangle {
     id: bg
 
-    property string label: "€"
+    property string label: "euro"
 
     signal clicked
 

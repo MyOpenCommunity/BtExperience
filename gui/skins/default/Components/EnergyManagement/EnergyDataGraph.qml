@@ -289,7 +289,7 @@ Page {
 
                 TimeValueItem {
                     id: selCurrency
-                    label: qsTr("€")
+                    label: qsTr("euro")
                     onClicked: {
                         selEnergy.state = ""
                         selCurrency.state = "selected"
