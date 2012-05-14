@@ -32,7 +32,7 @@ public:
 
 	virtual QString getName() const
 	{
-		return btObject->getName();
+		return bt_object->getName();
 	}
 
 	ObjectInterface *getBtObject() const;
@@ -43,7 +43,7 @@ signals:
 
 private:
 	QString room_name;
-	ObjectInterface *btObject;
+	ObjectInterface *bt_object;
 	int x, y;
 };
 

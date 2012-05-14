@@ -4,14 +4,14 @@
 RoomElement::RoomElement(QString _room_name, ObjectInterface *obj, int _x, int _y)
 {
 	room_name = _room_name;
-	btObject = obj;
+	bt_object = obj;
 	x = _x;
 	y = _y;
 }
 
 ObjectInterface *RoomElement::getBtObject() const
 {
-	return btObject;
+	return bt_object;
 }
 
 QPoint RoomElement::getPosition() const

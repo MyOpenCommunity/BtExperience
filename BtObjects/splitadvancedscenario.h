@@ -31,7 +31,8 @@ class SplitProgram : public QObject
 	Q_ENUMS(Swing)
 
 public:
-	enum Mode {
+	enum Mode
+	{
 		ModeOff = AdvancedAirConditioningDevice::MODE_OFF,
 		ModeWinter = AdvancedAirConditioningDevice::MODE_WINTER,
 		ModeSummer = AdvancedAirConditioningDevice::MODE_SUMMER,
@@ -40,11 +41,13 @@ public:
 		ModeAuto = AdvancedAirConditioningDevice::MODE_AUTO
 	};
 
-	static Mode int2Mode(int v) {
+	static Mode int2Mode(int v)
+	{
 		return static_cast<Mode>(v);
 	}
 
-	enum Speed {
+	enum Speed
+	{
 		SpeedAuto = AdvancedAirConditioningDevice::VEL_AUTO,
 		SpeedMin = AdvancedAirConditioningDevice::VEL_MIN,
 		SpeedMed = AdvancedAirConditioningDevice::VEL_MED,
@@ -53,17 +56,20 @@ public:
 		SpeedInvalid = AdvancedAirConditioningDevice::VEL_INVALID
 	};
 
-	static Speed int2Speed(int v) {
+	static Speed int2Speed(int v)
+	{
 		return static_cast<Speed>(v);
 	}
 
-	enum Swing {
+	enum Swing
+	{
 		SwingOff = AdvancedAirConditioningDevice::SWING_OFF,
 		SwingOn = AdvancedAirConditioningDevice::SWING_ON,
 		SwingInvalid = AdvancedAirConditioningDevice::SWING_INVALID
 	};
 
-	static Swing int2Swing(int v) {
+	static Swing int2Swing(int v)
+	{
 		return static_cast<Swing>(v);
 	}
 

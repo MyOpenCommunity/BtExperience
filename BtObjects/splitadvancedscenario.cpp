@@ -29,6 +29,7 @@ SplitProgram::SplitProgram(
 	this->temperature = temperature;
 }
 
+
 SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 											 QString key,
 											 AdvancedAirConditioningDevice *d,
@@ -40,7 +41,8 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 {
 	dev = d;
 	dev_probe = d_probe;
-	if (dev_probe) {
+	if (dev_probe)
+	{
 		connect(dev_probe, SIGNAL(valueReceived(DeviceValues)),
 				SLOT(valueReceived(DeviceValues)));
 	}
@@ -119,7 +121,8 @@ void SplitAdvancedScenario::setProgram(QString program)
 
 	// looks for the program in the program list
 	int p = program_list.size() - 1;
-	for (; p >= 0; --p) {
+	for (; p >= 0; --p)
+	{
 		if (program == program_list.at(p)->name)
 			break;
 	}
@@ -134,7 +137,8 @@ void SplitAdvancedScenario::setProgram(QString program)
 	}
 
 	// sets the choosen program
-	if (actual_program.name != program_list.at(p)->name) {
+	if (actual_program.name != program_list.at(p)->name)
+	{
 		actual_program.name = program_list.at(p)->name;
 		emit programChanged();
 	}
