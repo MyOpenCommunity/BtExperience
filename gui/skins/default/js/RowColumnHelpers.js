@@ -1,5 +1,8 @@
 // some helper functions for Row&Column items
 
+var max_width = 150
+var max_height = 300
+
 // expands all items contained in the Row to occupy all available space
 function updateRowChildren(row) {
     var l = row.children.length
@@ -14,7 +17,7 @@ function updateRowChildren(row) {
     for(var j = 0; j < l; ++j) {
         if (row.children[j].objectName === 'repeater')
             continue
-        row.children[j].width = (t - (c - 1) * s) / c
+        row.children[j].width = Math.min((t - (c - 1) * s) / c, max_width)
     }
 }
 
@@ -32,6 +35,6 @@ function updateColumnChildren(col) {
     for(var j = 0; j < l; ++j) {
         if (col.children[j].objectName === 'repeater')
             continue
-        col.children[j].height = (t - (c - 1) * s) / c
+        col.children[j].height = Math.min((t - (c - 1) * s) / c, max_height)
     }
 }

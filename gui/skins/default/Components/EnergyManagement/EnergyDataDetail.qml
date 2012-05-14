@@ -12,6 +12,7 @@ Page {
 
     property variant modelObject
     property int valueType
+    property string keyString
 
     Names {
         id: translations
@@ -93,7 +94,7 @@ Page {
                     // comprendere anche il generale!
                     model: FilterListModel {
                         id: modelEnergy
-                        filters: [{objectId: ObjectInterface.IdEnergyData}]
+                        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: page.keyString}]
                     }
                     delegate: energyDetailsDelegate
                 }
