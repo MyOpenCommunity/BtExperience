@@ -61,6 +61,7 @@ Page {
 
             Column {
                 id: buttonsColumn
+                x: 20
                 width: backButton.width
                 spacing: 10
                 anchors {
@@ -86,19 +87,10 @@ Page {
                 id: title
                 text: videoCamera.title
                 color: "white"
-                x: 90
+                x: 103
                 y: 65
                 font.family: semiBoldFont.name
                 font.pixelSize: 18
-            }
-
-            Image {
-                id: video
-                source: "images/videocitofonia.jpg"
-                x: 90
-                y: 90
-                width: 640
-                height: 480
             }
 
             Image {
@@ -116,13 +108,14 @@ Page {
 
             Column {
                 id: propertyColumn
+                x: 590
                 width: 145
                 spacing: 10
                 anchors {
                     top: toolbar.bottom
                     right: parent.right
                     topMargin: 20
-                    rightMargin: 20
+                    rightMargin: 65
                 }
 
                 ControlSlider2 {
@@ -168,13 +161,15 @@ Page {
 
             Column {
                 id: commandColumn
+                x: 590
+                y: 434
                 width: 145
                 spacing: 10
                 anchors {
                     bottom: parent.bottom
                     right: parent.right
-                    bottomMargin: 34
-                    rightMargin: 20
+                    bottomMargin: 26
+                    rightMargin: 65
                 }
 
                 Image {
@@ -239,6 +234,25 @@ Page {
                     }
                 }
             }
+        }
+    }
+
+    Rectangle {
+        id: bg_video
+        color: "red"
+
+        Image {
+            id: video
+            source: "images/videocitofonia_rossa.png"
+            x: 112
+            y: 96
+            width: 640
+            height: 480
+            visible: true
+            opacity: 1
+            fillMode: Image.Stretch
+            clip: false
+            smooth: false
         }
     }
 }
