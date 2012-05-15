@@ -145,8 +145,8 @@ MenuColumn {
             ControlMinusPlus {
                 title: qsTr("temperature set")
                 text: setpoint / 10 + qsTr("°C")
-                onPlusClicked: setpoint += 1
-                onMinusClicked: setpoint -= 1
+                onPlusClicked: setpoint += 5
+                onMinusClicked: setpoint -= 5
             }
 
             ControlUpDown {
