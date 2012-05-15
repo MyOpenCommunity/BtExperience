@@ -34,11 +34,12 @@ QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool general)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool general, int tariff)
 {
 	name = _name;
 	dev = _dev;
 	this->general = general;
+	this->tariff = tariff;
 }
 
 QObject *EnergyData::getGraph(GraphType type, QDate date)
@@ -56,7 +57,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date)
 	case CumulativeDayGraph:
 		count = 24;
 		for(int i = 0; i < count; ++i)
-			keys << QString::number(i);
+			keys << QString("%1-%2").arg(i).arg(i + 1);
 		break;
 	case CumulativeMonthGraph:
 		count = date.daysInMonth();
@@ -73,7 +74,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date)
 	}
 
 	for (int i = 0; i < count; ++i)
-		values.append(new EnergyGraphBar(keys[i], QVariant(rand() % 100)));
+		values.append(new EnergyGraphBar(i, keys[i], QVariant(rand() % 100)));
 #endif
 
 	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
@@ -92,7 +93,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date)
 
 	EnergyItem *value = new EnergyItem(this, type, actual_date, val);
 
-    return value;
+	return value;
 }
 
 int EnergyData::getObjectId() const
@@ -221,6 +222,19 @@ void EnergyData::setGeneral(bool value)
 		return;
 	general = value;
 	emit generalChanged();
+}
+
+int EnergyData::getTariff() const
+{
+	return tariff;
+}
+
+void EnergyData::setTariff(int tariff)
+{
+	if (tariff == this->tariff)
+		return;
+	this->tariff = tariff;
+	emit tariffChanged();
 }
 
 EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value)

@@ -4,13 +4,16 @@ import QtQuick 1.1
 Rectangle {
     id: bg
 
-    property string label: "€"
+    property string label: "euro"
 
     signal clicked
 
     color: "light grey"
     width: 100
     height: parent.height
+
+    radius: 4
+    anchors.margins: 1
 
     Text {
         id: txtLabel

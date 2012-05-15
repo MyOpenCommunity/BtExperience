@@ -4,11 +4,12 @@ var max_width = 150
 var max_height = 300
 
 // expands all items contained in the Row to occupy all available space
-function updateRowChildren(row) {
+function updateRowChildren(row, expand) {
     var l = row.children.length
     var c = l // real count of elements (repeaters skipped)
     var t = row.width
     var s = row.spacing
+    var e = typeof expand !== 'undefined' ? expand : false
 
     for(var i = 0; i < l; ++i)
         if (row.children[i].objectName === 'repeater')
@@ -17,16 +18,18 @@ function updateRowChildren(row) {
     for(var j = 0; j < l; ++j) {
         if (row.children[j].objectName === 'repeater')
             continue
-        row.children[j].width = Math.min((t - (c - 1) * s) / c, max_width)
+        var m = (t - (c - 1) * s) / c
+        row.children[j].width = e ? m : Math.min(m, max_width)
     }
 }
 
 // expands all items contained in the Column to occupy all available space
-function updateColumnChildren(col) {
+function updateColumnChildren(col, expand) {
     var l = col.children.length
     var c = l // real count of elements (repeaters skipped)
     var t = col.height
     var s = col.spacing
+    var e = typeof expand !== 'undefined' ? expand : false
 
     for(var i = 0; i < l; ++i)
         if (col.children[i].objectName === 'repeater')
@@ -35,6 +38,7 @@ function updateColumnChildren(col) {
     for(var j = 0; j < l; ++j) {
         if (col.children[j].objectName === 'repeater')
             continue
-        col.children[j].height = Math.min((t - (c - 1) * s) / c, max_height)
+        var m = (t - (c - 1) * s) / c
+        col.children[j].height = e ? m : Math.min(m, max_height)
     }
 }

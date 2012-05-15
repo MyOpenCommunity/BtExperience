@@ -38,6 +38,9 @@ class EnergyData : public ObjectInterface
 	/// Is this a general or line counter?
 	Q_PROPERTY(bool general READ isGeneral WRITE setGeneral NOTIFY generalChanged)
 
+	/// tariff code (0 means values are in kWh, 1+ are in currency)
+	Q_PROPERTY(int tariff READ getTariff WRITE setTariff NOTIFY tariffChanged)
+
 	Q_ENUMS(GraphType ValueType EnergyType)
 
 public:
@@ -84,7 +87,7 @@ public:
 		Heat
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, bool general);
+	EnergyData(EnergyDevice *dev, QString name, bool general, int tariff=0);
 
 	virtual int getObjectId() const;
 
@@ -114,6 +117,8 @@ public:
 	EnergyType getEnergyType() const;
 	bool isGeneral() const;
 	void setGeneral(bool value);
+	int getTariff() const;
+	void setTariff(int tariff);
 
 public slots:
 	/*!
@@ -128,6 +133,7 @@ public slots:
 
 signals:
 	void generalChanged();
+	void tariffChanged();
 
 private slots:
 	void graphDestroyed(QObject *obj);
@@ -141,6 +147,7 @@ private:
 	QList<EnergyGraph *> graphCache;
 	QList<EnergyItem *> valueCache;
 	bool general;
+	int tariff;
 };
 
 
@@ -185,20 +192,24 @@ class EnergyGraphBar : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QVariant index READ getIndex CONSTANT)
 	Q_PROPERTY(QString label READ getLabel CONSTANT)
 	Q_PROPERTY(QVariant value READ getValue CONSTANT)
 
 public:
-	EnergyGraphBar(QString label, QVariant value)
+	EnergyGraphBar(QVariant index, QString label, QVariant value)
 	{
+		this->index = index;
 		this->label = label;
 		this->value = value;
 	}
 
+	QVariant getIndex() const { return index; }
 	QString getLabel() const { return label; }
 	QVariant getValue() const { return value; }
 
 private:
+	QVariant index;
 	QString label;
 	QVariant value;
 };
