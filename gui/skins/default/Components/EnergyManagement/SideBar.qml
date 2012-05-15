@@ -141,7 +141,7 @@ Rectangle {
 
         ConsumptionBox {
             id: cumulativeConsumption
-            state: "cumYear"
+            state: getCumulativeState()
             width: parent.width * 9 / 10
             anchors.horizontalCenter: parent.horizontalCenter
             // TODO implementare (il valore recuperato è corretto?)
@@ -149,11 +149,20 @@ Rectangle {
             // TODO da dove si recupera il valore max?
             maxValue: 120
             unit: "kWh"
+
+            function getCumulativeState() {
+                if (pageRef.graphType === EnergyData.CumulativeDayGraph)
+                    return "cumDay"
+                else if (pageRef.graphType === EnergyData.CumulativeMonthGraph)
+                    return "cumMonth"
+                else if (pageRef.graphType === EnergyData.CumulativeYearGraph)
+                    return "cumYear"
+            }
         }
 
         ConsumptionBox {
             id: averageConsumption
-            state: "avgYear"
+            state: getAverageState()
             width: parent.width * 9 / 10
             anchors.horizontalCenter: parent.horizontalCenter
             // TODO implementare (come si recupera il valore medio sul periodo?)
@@ -161,6 +170,15 @@ Rectangle {
             // TODO da dove si recupera il valore max?
             maxValue: 120
             unit: "kWh"
+
+            function getAverageState() {
+                if (pageRef.graphType === EnergyData.CumulativeDayGraph)
+                    return "avgDay"
+                else if (pageRef.graphType === EnergyData.CumulativeMonthGraph)
+                    return "avgMonth"
+                else if (pageRef.graphType === EnergyData.CumulativeYearGraph)
+                    return "avgYear"
+            }
         }
     }
 }

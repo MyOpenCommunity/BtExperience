@@ -115,82 +115,16 @@ Page {
                 bottomMargin: 10
             }
 
-            Row {
+            ControlBar {
                 id: timeValue
 
-                onChildrenChanged: Helper.updateRowChildren(timeValue)
-                onVisibleChanged: Helper.updateRowChildren(timeValue)
-                onWidthChanged: Helper.updateRowChildren(timeValue)
-
+                pageRef: page
                 anchors {
                     horizontalCenter: bgGraph.horizontalCenter
                     top: parent.top
                     topMargin: 10
                 }
                 height: 30
-
-                TimeValueItem {
-                    label: qsTr("time")
-                    state: "legend"
-                }
-
-                TimeValueItem {
-                    id: selDay
-                    label: qsTr("day")
-                    onClicked: {
-                        selDay.state = "selected"
-                        selMonth.state = ""
-                        selYear.state = ""
-                        page.graphType = EnergyData.CumulativeDayGraph
-                        cumulativeConsumption.state = "cumDay"
-                        averageConsumption.state = "avgDay"
-                    }
-                }
-
-                TimeValueItem {
-                    id: selMonth
-                    label: qsTr("month")
-                    onClicked: {
-                        selDay.state = ""
-                        selMonth.state = "selected"
-                        selYear.state = ""
-                        page.graphType = EnergyData.CumulativeMonthGraph
-                        cumulativeConsumption.state = "cumMonth"
-                        averageConsumption.state = "avgMonth"
-                    }
-                }
-
-                TimeValueItem {
-                    id: selYear
-                    label: qsTr("year")
-                    state: "selected"
-                    onClicked: {
-                        selDay.state = ""
-                        selMonth.state = ""
-                        selYear.state = "selected"
-                        page.graphType = EnergyData.CumulativeYearGraph
-                        cumulativeConsumption.state = "cumYear"
-                        averageConsumption.state = "avgYear"
-                    }
-                }
-
-                TimeValueItem {
-                    label: qsTr("")
-                    state: "legend"
-                }
-
-                TimeValueItem {
-                    id: selUnit
-                    label: page.modelObject.tariff === 0 ? qsTr("euro") : qsTr("kWh")
-                    onClicked: page.modelObject.tariff = (page.modelObject.tariff + 1) % 2 // TODO rivedere
-                }
-
-                TimeValueItem {
-                    id: selGraph
-                    label: page.graphVisible ? qsTr("sheet") : qsTr("graph")
-                    onClicked: page.graphVisible = !page.graphVisible
-                }
-
             }
 
             Row {
