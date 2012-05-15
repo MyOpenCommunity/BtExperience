@@ -1,8 +1,10 @@
 import QtQuick 1.1
+import "js/Stack.js" as Stack
 
 Item {
     id: favoriteItem
     property alias imageSource: icon.source
+    property string address: "http://www.corriere.it"
 
     property int additionalWidth: 10
     width: column.width + 10
@@ -11,7 +13,7 @@ Item {
     Column {
         id: column
 
-        spacing: 20
+        spacing: 10
         Rectangle {
             id: highlight
             width: icon.width + favoriteItem.additionalWidth
@@ -40,22 +42,101 @@ Item {
             }
         }
 
-        Text {
+//        Text {
+//            id: label
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            text: "Testo molto molto molto lungo"
+//            horizontalAlignment: Text.AlignHCenter
+//            width: icon.width
+//            wrapMode: Text.Wrap
+//            maximumLineCount: 2
+//            elide: Text.ElideRight
+//        }
+
+        TextInput {
             id: label
+            onActiveFocusChanged: {
+                console.log("Edit completed")
+            }
+
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Testo molto molto molto lungo"
             horizontalAlignment: Text.AlignHCenter
             width: icon.width
-            wrapMode: Text.Wrap
-            maximumLineCount: 2
-            elide: Text.ElideRight
+
+            activeFocusOnPress: false
+        }
+    }
+
+    Column {
+        id: editColumn
+        opacity: 0
+        anchors.left: column.right
+
+        Rectangle {
+            color: "#6d6c6c"
+            width: 48
+            height: 48
+            Image {
+                source: "images/icon_text.png"
+                anchors.fill: parent
+                anchors.margins: 10
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    label.forceActiveFocus()
+                    label.openSoftwareInputPanel()
+                }
+            }
+        }
+
+        Rectangle {
+            color: "#6d6c6c"
+            width: 48
+            height: 48
+            Image {
+                source: "images/icon_pencil.png"
+                anchors.fill: parent
+                anchors.margins: 10
+            }
+        }
+
+        Rectangle {
+            color: "#6d6c6c"
+            width: 48
+            height: 48
+            Image {
+                source: "images/icon_move.png"
+                anchors.fill: parent
+                anchors.margins: 10
+            }
+        }
+
+        Rectangle {
+            color: "#6d6c6c"
+            width: 48
+            height: 48
+            Image {
+                source: "images/icon_trash.png"
+                anchors.fill: parent
+                anchors.margins: 10
+            }
+        }
+
+        Behavior on opacity {
+            NumberAnimation { target: editColumn; property: "opacity"; duration: 200;}
         }
     }
 
     MouseArea {
         anchors.fill: parent
         onPressAndHold: parent.state = "selected"
-        onClicked: parent.state = ""
+        onClicked: {
+            Stack.openPage("Browser.qml", {'urlString': address})
+        }
+        // TODO: just for debugging purposes
+        onPressed: parent.state = ""
     }
 
     states: State {
@@ -64,6 +145,13 @@ Item {
             target: column
             anchors.margins: 0
         }
-        PropertyChanges { target: favoriteItem; additionalWidth: 20}
+        PropertyChanges {
+            target: favoriteItem
+            additionalWidth: 20
+        }
+        PropertyChanges {
+            target: editColumn
+            opacity: 1
+        }
     }
 }
