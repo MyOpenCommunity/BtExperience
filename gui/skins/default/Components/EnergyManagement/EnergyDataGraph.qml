@@ -13,11 +13,12 @@ Page {
     property variant modelObject
     property int graphType
     property bool graphVisible: true
-    property bool validGraph: modelObject.getGraph(page.graphType, new Date()).isValid
-    property variant modelGraph: modelObject.getGraph(page.graphType, new Date()).graph
-    property variant instantValue: modelObject.getValue(dummy(graphType), new Date())
-    property variant cumulativeValue: modelObject.getValue(getValueType(graphType), new Date()).value
+    property bool validGraph: modelObject.getGraph(page.graphType, timepoint).isValid
+    property variant modelGraph: modelObject.getGraph(page.graphType, timepoint).graph
+    property variant instantValue: modelObject.getValue(dummy(graphType), timepoint)
+    property variant cumulativeValue: modelObject.getValue(getValueType(graphType), timepoint).value
     property variant averageValue: cumulativeValue / 10 // TODO come si calcola?
+    property date timepoint: new Date()
 
     function dummy(d) {
         // TODO receive instant values from object when they arrive
@@ -31,6 +32,60 @@ Page {
             return EnergyData.CumulativeMonthValue
         else if (g === EnergyData.CumulativeYearGraph)
             return EnergyData.CumulativeYearValue
+    }
+
+    function getTimepoint(d) {
+        if (page.graphType === EnergyData.CumulativeDayGraph)
+            return Qt.formatDateTime(page.timepoint, "dd/MM/yyyy")
+        else if (page.graphType === EnergyData.CumulativeMonthGraph)
+            return Qt.formatDateTime(page.timepoint, "MM/yyyy")
+        else if (page.graphType === EnergyData.CumulativeYearGraph)
+            return Qt.formatDateTime(page.timepoint, "yyyy")
+    }
+
+    function getTimeInterval(d) {
+        if (page.graphType === EnergyData.CumulativeDayGraph)
+            return "day"
+        else if (page.graphType === EnergyData.CumulativeMonthGraph)
+            return "month"
+        else if (page.graphType === EnergyData.CumulativeYearGraph)
+            return "year"
+    }
+
+    function plusTimepoint() {
+        if (page.graphType === EnergyData.CumulativeDayGraph) {
+            var d = new Date(page.timepoint)
+            d.setDate(d.getDate() + 1)
+            page.timepoint = new Date(d)
+        }
+        else if (page.graphType === EnergyData.CumulativeMonthGraph) {
+            var m = new Date(page.timepoint)
+            m.setMonth(m.getMonth() + 1)
+            page.timepoint = new Date(m)
+        }
+        else if (page.graphType === EnergyData.CumulativeYearGraph) {
+            var y = new Date(page.timepoint)
+            y.setFullYear(y.getFullYear() + 1)
+            page.timepoint = new Date(y)
+        }
+    }
+
+    function minusTimepoint() {
+        if (page.graphType === EnergyData.CumulativeDayGraph) {
+            var d = new Date(page.timepoint)
+            d.setDate(d.getDate() - 1)
+            page.timepoint = new Date(d)
+        }
+        else if (page.graphType === EnergyData.CumulativeMonthGraph) {
+            var m = new Date(page.timepoint)
+            m.setMonth(m.getMonth() - 1)
+            page.timepoint = new Date(m)
+        }
+        else if (page.graphType === EnergyData.CumulativeYearGraph) {
+            var y = new Date(page.timepoint)
+            y.setFullYear(y.getFullYear() - 1)
+            page.timepoint = new Date(y)
+        }
     }
 
     Names {
@@ -158,7 +213,10 @@ Page {
                     width: parent.width * 9 / 10
                     height: 60
                     anchors.horizontalCenter: parent.horizontalCenter
-                    state: "year"
+                    timepoint: getTimepoint(page.timepoint)
+                    state: getTimeInterval(page.timepoint)
+                    onMinusClicked: minusTimepoint()
+                    onPlusClicked: plusTimepoint()
                 }
 
                 Rectangle {
