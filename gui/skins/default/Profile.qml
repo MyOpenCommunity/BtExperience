@@ -47,7 +47,7 @@ Page {
 
         Rectangle {
             id: profileRect
-            width: 200
+            width: 212
             height: 100
             color: "grey"
             anchors.right: parent.right
@@ -69,6 +69,82 @@ Page {
                 font.pixelSize: 16
                 text: profilePage.profile
             }
+        }
+
+        Text {
+            id: headerNote
+            anchors.top: profileRect.bottom
+            anchors.topMargin: 30
+            anchors.left: profileRect.left
+            text: qsTr("note")
+            font.capitalization: Font.AllUppercase
+            font.bold: true
+            font.pixelSize: 16
+        }
+
+        SvgImage {
+            id: addNote
+            source: "images/common/menu_column_item_bg.svg";
+            anchors.right: parent.right
+            anchors.top: headerNote.bottom
+
+            Text {
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                anchors.top: parent.top
+                anchors.topMargin: 5
+                font.pixelSize: 16
+                text: qsTr("aggiungi nota")
+            }
+
+            Image {
+                source: "images/common/piu.png"
+                anchors.right: parent.right
+                anchors.top: parent.top
+            }
+        }
+
+        PaginatorList {
+            anchors.top: addNote.bottom
+            anchors.topMargin: 10
+            anchors.left: addNote.left
+
+            id: paginator
+            width: addNote.width
+            elementsOnPage: 4
+            listHeight: model.count > elementsOnPage ? elementsOnPage * 50 : model.count * 50
+
+            delegate: SvgImage {
+                source: "images/common/menu_column_item_bg.svg";
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 5
+                    anchors.right: parent.right
+                    anchors.rightMargin: 5
+                    anchors.top: parent.top
+                    anchors.topMargin: 5
+                    font.pixelSize: 16
+                    text: model.text
+                }
+            }
+
+            model: ListModel {
+                ListElement {
+                    text: "bla bla bla, nota"
+                }
+                ListElement {
+                    text: "bla bla bla, nota2"
+                }
+                ListElement {
+                    text: "bla bla bla, nota3"
+                }
+                ListElement {
+                    text: "bla bla bla, nota4"
+                }
+
+            }
+
         }
     }
 
