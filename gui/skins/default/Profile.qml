@@ -144,8 +144,26 @@ Page {
                 }
 
             }
+        }
+        FavoriteItem {
+            x: 200
+            y: 50
+            onRequestEdit: profilePage.showEditBox(favorite)
+        }
 
+        FavoriteItem {
+            x: 300
+            y: 250
+            onRequestEdit: profilePage.showEditBox(favorite)
         }
     }
 
+    function showEditBox(favorite) {
+        installPopup(popup)
+    }
+
+    Component {
+        id: popup
+        FavoriteEditPopup { }
+    }
 }

@@ -4,7 +4,10 @@ import "js/Stack.js" as Stack
 Item {
     id: favoriteItem
     property alias imageSource: icon.source
+    property alias text: label.text
     property string address: "http://www.corriere.it"
+
+    signal requestEdit(variant favorite)
 
     property int additionalWidth: 10
     width: column.width + 10
@@ -100,6 +103,14 @@ Item {
                 anchors.fill: parent
                 anchors.margins: 10
             }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    console.log("Clicked on edit icon")
+                    favoriteItem.requestEdit(favoriteItem)
+                }
+            }
         }
 
         Rectangle {
@@ -127,13 +138,6 @@ Item {
         }
         // TODO: just for debugging purposes
         onPressed: parent.state = ""
-
-        drag.target: parent
-        drag.axis: Drag.XandYAxis
-        drag.minimumX: 0
-        drag.maximumX: 600
-        drag.minimumY: 0
-        drag.maximumY: 600
     }
 
     states: State {
