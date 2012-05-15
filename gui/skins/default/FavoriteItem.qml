@@ -107,17 +107,6 @@ Item {
             width: 48
             height: 48
             Image {
-                source: "images/icon_move.png"
-                anchors.fill: parent
-                anchors.margins: 10
-            }
-        }
-
-        Rectangle {
-            color: "#6d6c6c"
-            width: 48
-            height: 48
-            Image {
                 source: "images/icon_trash.png"
                 anchors.fill: parent
                 anchors.margins: 10
@@ -130,6 +119,7 @@ Item {
     }
 
     MouseArea {
+        id: mouseArea
         anchors.fill: parent
         onPressAndHold: parent.state = "selected"
         onClicked: {
@@ -137,6 +127,13 @@ Item {
         }
         // TODO: just for debugging purposes
         onPressed: parent.state = ""
+
+        drag.target: parent
+        drag.axis: Drag.XandYAxis
+        drag.minimumX: 0
+        drag.maximumX: 600
+        drag.minimumY: 0
+        drag.maximumY: 600
     }
 
     states: State {
