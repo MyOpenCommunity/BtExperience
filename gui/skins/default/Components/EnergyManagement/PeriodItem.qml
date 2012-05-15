@@ -7,7 +7,6 @@ Item {
     width: 180
     height: 60
 
-    // timepoint label
     property string timepoint: "2011"
 
     signal plusClicked
