@@ -18,21 +18,26 @@ Item {
     Image {
         id: background
         width: 300
-        height: 200
+        height: 250
         source: "images/common/bg_tastiera_codice.png"
     }
 
 
     Text {
         id: header
-        text: qsTr("Edit favorite item:")
+        text: qsTr("Edit favorite item")
+        anchors.top:parent.top
+        anchors.topMargin: 10
         anchors.horizontalCenter: background.horizontalCenter
     }
 
     Text {
         id: addressText
         text: qsTr("Address:")
+        anchors.left: parent.left
+        anchors.leftMargin: 10
         anchors.top: header.bottom
+        anchors.topMargin: 10
     }
 
     Item {
@@ -78,6 +83,8 @@ Item {
         text: qsTr("Favorite label:")
         anchors.top: addressRow.bottom
         anchors.topMargin: 15
+        anchors.left: parent.left
+        anchors.leftMargin: 10
     }
 
     Rectangle {
