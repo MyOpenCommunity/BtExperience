@@ -160,6 +160,7 @@ Page {
 
     function showEditBox(favorite) {
         installPopup(popup)
+        popupLoader.item.favoriteItem = favorite
     }
 
     Component {

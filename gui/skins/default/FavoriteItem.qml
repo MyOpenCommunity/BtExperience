@@ -5,7 +5,7 @@ Item {
     id: favoriteItem
     property alias imageSource: icon.source
     property alias text: label.text
-    property string address: "http://www.corriere.it"
+    property string address: "www.corriere.it"
 
     signal requestEdit(variant favorite)
 
@@ -134,7 +134,7 @@ Item {
         anchors.fill: parent
         onPressAndHold: parent.state = "selected"
         onClicked: {
-            Stack.openPage("Browser.qml", {'urlString': address})
+            Stack.openPage("Browser.qml", {'urlString': "http://" + address})
         }
         // TODO: just for debugging purposes
         onPressed: parent.state = ""

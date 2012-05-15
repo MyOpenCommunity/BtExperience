@@ -3,8 +3,17 @@ import QtQuick 1.1
 Item {
     width: background.width
     height: background.height
+    property variant favoriteItem: undefined
 
     signal closePopup
+
+    onFavoriteItemChanged: {
+        if (favoriteItem !== undefined)
+        {
+            addressInput.text = favoriteItem.address
+            descriptionInput.text = favoriteItem.text
+        }
+    }
 
     Image {
         id: background
@@ -114,6 +123,8 @@ Item {
                 anchors.fill: parent
                 onClicked: {
                     console.log("Confirm editing")
+                    favoriteItem.text = descriptionInput.text
+                    favoriteItem.address = addressInput.text
                     closePopup()
                 }
             }
