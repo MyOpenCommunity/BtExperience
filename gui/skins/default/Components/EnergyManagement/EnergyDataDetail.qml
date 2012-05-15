@@ -125,11 +125,20 @@ Page {
                             Stack.openPage("Components/EnergyManagement/EnergyDataGraph.qml", {"modelObject": obj,"graphType": EnergyData.CumulativeYearGraph})
                         }
 
+                        function dummy(d) {
+                            // this function is useful only to bind i to page.valueType
+                            // in this way the value is updated every time the
+                            // page.valueType is updated
+                            // TODO this function must receive updates from object
+                            // when they arrive
+                            return EnergyData.CurrentValue
+                        }
+
                         height: 345
                         // TODO recuperare il generale e le linee
                         property variant obj: modelEnergy.getObject(index)
                         property variant v: obj.getValue(page.valueType, new Date())
-                        property variant i: obj.getValue(EnergyData.CurrentVAlue, new Date())
+                        property variant i: obj.getValue(dummy(page.valueType), new Date())
                         level_actual: v.isValid ? v.value : 0 // TODO manage invalid values
                         perc_warning: 0.8
                         level_critical: 90 // TODO it must come from somewhere

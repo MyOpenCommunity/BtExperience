@@ -12,6 +12,9 @@ Rectangle {
     width: 100
     height: parent.height
 
+    radius: 4
+    anchors.margins: 1
+
     Text {
         id: txtLabel
         text: label

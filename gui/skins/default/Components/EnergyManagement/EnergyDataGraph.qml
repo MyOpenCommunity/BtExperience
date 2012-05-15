@@ -12,6 +12,26 @@ Page {
 
     property variant modelObject
     property int graphType
+    property bool graphVisible: true
+    property bool validGraph: modelObject.getGraph(page.graphType, new Date()).isValid
+    property variant modelGraph: modelObject.getGraph(page.graphType, new Date()).graph
+    property variant instantValue: modelObject.getValue(dummy(graphType), new Date())
+    property variant cumulativeValue: modelObject.getValue(getValueType(graphType), new Date()).value
+    property variant averageValue: cumulativeValue / 10 // TODO come si calcola?
+
+    function dummy(d) {
+        // TODO receive instant values from object when they arrive
+        return EnergyData.CurrentValue
+    }
+
+    function getValueType(g) {
+        if (g === EnergyData.CumulativeDayGraph)
+            return EnergyData.CumulativeDayValue
+        else if (g === EnergyData.CumulativeMonthGraph)
+            return EnergyData.CumulativeMonthValue
+        else if (g === EnergyData.CumulativeYearGraph)
+            return EnergyData.CumulativeYearValue
+    }
 
     Names {
         id: translations
@@ -171,7 +191,7 @@ Page {
                         }
 
                         Text {
-                            text: qsTr("45 Wh")
+                            text: (instantValue.isValid ? instantValue.value : 0) + " " + qsTr("Wh")
                             color: "black"
                             anchors {
                                 fill: parent
@@ -185,20 +205,26 @@ Page {
                 }
 
                 ConsumptionBox {
+                    id: cumulativeConsumption
                     state: "cumYear"
                     width: parent.width * 9 / 10
                     anchors.horizontalCenter: parent.horizontalCenter
-                    value: 2540
-                    maxValue: 3000
+                    // TODO implementare (il valore recuperato è corretto?)
+                    value: page.cumulativeValue
+                    // TODO da dove si recupera il valore max?
+                    maxValue: 120
                     unit: "kWh"
                 }
 
                 ConsumptionBox {
+                    id: averageConsumption
                     state: "avgYear"
                     width: parent.width * 9 / 10
                     anchors.horizontalCenter: parent.horizontalCenter
-                    value: 1865
-                    maxValue: 3000
+                    // TODO implementare (come si recupera il valore medio sul periodo?)
+                    value: page.averageValue
+                    // TODO da dove si recupera il valore max?
+                    maxValue: 120
                     unit: "kWh"
                 }
             }
@@ -246,6 +272,8 @@ Page {
                         selMonth.state = ""
                         selYear.state = ""
                         page.graphType = EnergyData.CumulativeDayGraph
+                        cumulativeConsumption.state = "cumDay"
+                        averageConsumption.state = "avgDay"
                     }
                 }
 
@@ -257,6 +285,8 @@ Page {
                         selMonth.state = "selected"
                         selYear.state = ""
                         page.graphType = EnergyData.CumulativeMonthGraph
+                        cumulativeConsumption.state = "cumMonth"
+                        averageConsumption.state = "avgMonth"
                     }
                 }
 
@@ -269,43 +299,37 @@ Page {
                         selMonth.state = ""
                         selYear.state = "selected"
                         page.graphType = EnergyData.CumulativeYearGraph
+                        cumulativeConsumption.state = "cumYear"
+                        averageConsumption.state = "avgYear"
                     }
                 }
 
                 TimeValueItem {
-                    label: qsTr("value")
+                    label: qsTr("")
                     state: "legend"
                 }
 
                 TimeValueItem {
-                    id: selEnergy
-                    label: qsTr("kWh")
-                    state: "selected"
-                    onClicked: {
-                        selEnergy.state = "selected"
-                        selCurrency.state = ""
-                    }
+                    id: selUnit
+                    label: page.modelObject.tariff === 0 ? qsTr("euro") : qsTr("kWh")
+                    onClicked: page.modelObject.tariff = (page.modelObject.tariff + 1) % 2
                 }
 
                 TimeValueItem {
-                    id: selCurrency
-                    label: qsTr("euro")
-                    onClicked: {
-                        selEnergy.state = ""
-                        selCurrency.state = "selected"
-                    }
+                    id: selGraph
+                    label: page.graphVisible ? qsTr("sheet") : qsTr("graph")
+                    onClicked: page.graphVisible = !page.graphVisible
                 }
 
             }
 
             Row {
                 id: graph
+                visible: page.graphVisible
 
                 onChildrenChanged: Helper.updateRowChildren(graph)
                 onVisibleChanged: Helper.updateRowChildren(graph)
                 onWidthChanged: Helper.updateRowChildren(graph)
-
-                property bool valid: page.modelObject.getGraph(page.graphType, new Date()).isValid
 
                 anchors {
                     horizontalCenter: bgGraph.horizontalCenter
@@ -314,11 +338,11 @@ Page {
                     bottom: parent.bottom
                     bottomMargin: 10
                 }
-                width: bgGraph.width
+                width: bgGraph.width * 0.98
 
                 Repeater {
                     objectName: "repeater" // to skip inside Helper
-                    model: page.modelObject.getGraph(page.graphType, new Date()).graph
+                    model: page.modelGraph
                     delegate: graphDelegate
                 }
 
@@ -327,11 +351,67 @@ Page {
 
                     ControlColumnValue {
                         height: 345
-                        level_actual: graph.valid ? model.modelData.value : 0 // TODO gestione dati invalidi
+                        level_actual: page.validGraph ? model.modelData.value : 0 // TODO gestione dati invalidi
                         max_graph_level: 100 // TODO come si calcola?
                         level_red: 90 // TODO come si calcola?
                         lateral_bar_value: 80 // TODO da dove si recupera?
-                        label: graph.valid ? model.modelData.label : "---"
+                        label: page.validGraph ? model.modelData.label : "---"
+                    }
+                }
+            }
+
+            Grid {
+                id: sheet
+                visible: !page.graphVisible
+
+                anchors {
+                    horizontalCenter: bgGraph.horizontalCenter
+                    top: timeValue.bottom
+                    topMargin: 10
+                    bottom: parent.bottom
+                    bottomMargin: 20
+                }
+                width: bgGraph.width
+                columns: 2
+                flow: Grid.TopToBottom
+
+                Repeater {
+                    objectName: "repeater" // to skip inside Helper
+                    model: page.modelGraph
+                    delegate: sheetDelegate
+                }
+
+                Component {
+                    id: sheetDelegate
+
+                    Rectangle {
+                        color: "transparent"
+                        width: bgGraph.width / 2
+                        height: 20
+
+                        TimeValueItem {
+                            id: sheetLabel
+                            label: page.validGraph ? model.modelData.label : "---"
+                            color: model.modelData.index % 2 === 0 ? "gainsboro" : "silver"
+                            width: parent.width / 2 * 0.9
+                            anchors {
+                                left: parent.left
+                                leftMargin: parent.width / 2 * 0.1
+                                top: parent.top
+                                bottom: parent.bottom
+                            }
+                        }
+
+                        TimeValueItem {
+                            label: page.validGraph ? model.modelData.value : 0 // TODO gestione dati invalidi
+                            color: model.modelData.index % 2 === 0 ? "gainsboro" : "silver"
+                            width: parent.width / 2 * 0.9
+                            anchors {
+                                left: sheetLabel.right
+                                top: parent.top
+                                bottom: parent.bottom
+                            }
+                        }
                     }
                 }
             }
