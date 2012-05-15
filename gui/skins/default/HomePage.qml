@@ -149,6 +149,10 @@ source: "images/home/home.jpg"
 //                 Component.onCompleted: {
 //                     console.log('icon scale: ' + PathView.iconScale + ' x:' + itemDelegate.x)
 //                 }
+                 MouseArea {
+                     anchors.fill: parent
+                     onClicked: Stack.openPage('Profile.qml', {'profile': name})
+                 }
              }
          }
 
