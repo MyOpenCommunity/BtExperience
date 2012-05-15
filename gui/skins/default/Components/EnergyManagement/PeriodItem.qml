@@ -10,6 +10,9 @@ Item {
     // timepoint label
     property string timepoint: "2011"
 
+    signal plusClicked
+    signal minusClicked
+
     Rectangle {
         id: period
 
@@ -43,7 +46,7 @@ Item {
         }
 
         Text {
-            text: "2011"
+            text: element.timepoint
             font.pointSize: 14
             color: "black"
             anchors {
@@ -81,6 +84,10 @@ Item {
             }
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            MouseArea {
+                anchors.fill: parent
+                onClicked: element.minusClicked()
+            }
         }
     }
 
@@ -108,6 +115,10 @@ Item {
             }
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            MouseArea {
+                anchors.fill: parent
+                onClicked: element.plusClicked()
+            }
         }
     }
 
