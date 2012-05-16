@@ -122,8 +122,8 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            Rectangle {
-                color: "light gray"
+            Image {
+                source: "../../images/common/bg_paginazione.png"
                 height: 40
                 anchors {
                     left: parent.left

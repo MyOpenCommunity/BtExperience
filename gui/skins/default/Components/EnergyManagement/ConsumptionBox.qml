@@ -63,17 +63,16 @@ Item {
             color: "white"
             anchors {
                 fill: parent
-                leftMargin: (barGreen.width - rectRemaining.width) < paintedWidth ? 0 : (barGreen.width - rectRemaining.width - paintedWidth)
+                leftMargin: (consumptionBg.width - rectRemaining.width) < paintedWidth ? 0 : (consumptionBg.width - rectRemaining.width - paintedWidth)
             }
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
         }
     }
 
-    Rectangle {
-        id: barGreen
-
-        color: "green"
+    Image {
+        id: consumptionBg
+        source: "../../images/common/bg_volume.png"
         height: 30
         anchors {
             top: value.bottom
@@ -84,16 +83,16 @@ Item {
             rightMargin: 2
         }
 
-        Rectangle {
-            id: rectRemaining
-            color: "light gray"
-            width: barGreen.width * (1.0 - element.value / element.maxValue)
+        Image {
+            source: "../../images/common/dimmer_reg.png"
+            width: consumptionBg.width * (element.value / element.maxValue)
             anchors {
                 top: parent.top
                 bottom: parent.bottom
-                right: parent.right
+                left: parent.left
             }
         }
+
     }
 
     Rectangle {
@@ -102,7 +101,7 @@ Item {
         color: "transparent"
         height: 15
         anchors {
-            top: barGreen.bottom
+            top: consumptionBg.bottom
             topMargin: 1
             left: parent.left
             leftMargin: 2
