@@ -132,7 +132,7 @@ Rectangle {
                 }
 
                 Text {
-                    text: (bg.value.isValid ? bg.value.value : 0) + " " + qsTr("Wh")
+                    text: bg.value.isValid ? bg.value.value + " " + qsTr("Wh") : "---"
                     color: "black"
                     anchors {
                         fill: parent

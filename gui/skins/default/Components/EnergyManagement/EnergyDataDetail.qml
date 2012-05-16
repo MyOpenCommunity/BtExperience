@@ -160,7 +160,7 @@ Page {
                         property variant obj: modelEnergy.getObject(index)
                         property variant v: obj.getValue(page.valueType, new Date())
                         property variant i: obj.getValue(dummy(page.valueType), new Date())
-                        level_actual: v.isValid ? v.value : 0 // TODO manage invalid values
+                        level_actual: v.isValid ? v.value : 0
                         perc_warning: 0.8
                         level_critical: 90 // TODO it must come from somewhere
                         title: level_actual + " " + translations.get("ENERGY_UNIT", obj.energyType)
@@ -168,7 +168,7 @@ Page {
                         footer: qsTr("Month (day 21/30)") // TODO ???
                         description: translations.get("ENERGY_TYPE", obj.energyType) // TODO implementare
                         note_header: "consumption"
-                        note_footer: (i.isValid ? i.value : 0) + " " + translations.get("ENERGY_UNIT", obj.energyType)
+                        note_footer: (i.isValid ? i.value + " " + translations.get("ENERGY_UNIT", obj.energyType) : "---")
                         critical_bar_visible: index === 0 ? true : false // TODO assumes the total is first column
                         onClicked: openLinkedPage(obj)
                     }

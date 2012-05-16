@@ -185,7 +185,7 @@ Page {
 
                     ControlColumnValue {
                         height: 345
-                        level_actual: page.validGraph ? model.modelData.value : 0 // TODO gestione dati invalidi
+                        level_actual: page.validGraph ? model.modelData.value : 0
                         max_graph_level: 100 // TODO come si calcola?
                         level_red: 90 // TODO come si calcola?
                         lateral_bar_value: 80 // TODO da dove si recupera?
@@ -237,7 +237,7 @@ Page {
                         }
 
                         TimeValueItem {
-                            label: page.validGraph ? model.modelData.value : 0 // TODO gestione dati invalidi
+                            label: page.validGraph ? model.modelData.value : "---"
                             color: model.modelData.index % 2 === 0 ? "gainsboro" : "silver"
                             width: parent.width / 2 * 0.9
                             anchors {

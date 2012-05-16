@@ -143,7 +143,7 @@ Page {
                         height: 345
                         property variant obj: repeaterElement.model.getObject(index)
                         property variant v: obj.getValue(energyCategories.valueType, new Date())
-                        level_actual: v.isValid ? v.value : 0 // TODO manage invalid values
+                        level_actual: v.isValid ? v.value : 0
                         perc_warning: 0.8
                         level_critical: 90 // TODO it must come from somewhere
                         title: level_actual + " " + translations.get("ENERGY_UNIT", obj.energyType)
