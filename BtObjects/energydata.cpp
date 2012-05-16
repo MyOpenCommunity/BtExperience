@@ -6,6 +6,10 @@
 
 #include <QDebug> // qDebug
 
+#if TEST_ENERGY_DATA
+#include <QTimer>
+#endif //TEST_ENERGY_DATA
+
 
 QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 {
@@ -34,16 +38,17 @@ QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool general, int tariff)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool general)
 {
 	name = _name;
 	dev = _dev;
 	this->general = general;
-	this->tariff = tariff;
 }
 
-QObject *EnergyData::getGraph(GraphType type, QDate date)
+QObject *EnergyData::getGraph(GraphType type, QDate date, bool inCurrency)
 {
+	Q_UNUSED(inCurrency);
+
 	QList<QObject*> values;
 	QStringList keys;
 	QDate actual_date = normalizeDate(type, date);
@@ -82,8 +87,10 @@ QObject *EnergyData::getGraph(GraphType type, QDate date)
 	return graph;
 }
 
-QObject *EnergyData::getValue(ValueType type, QDate date)
+QObject *EnergyData::getValue(ValueType type, QDate date, bool inCurrency)
 {
+	Q_UNUSED(inCurrency);
+
 	QVariant val = QVariant(0);
 	QDate actual_date = normalizeDate(type, date);
 
@@ -216,33 +223,22 @@ bool EnergyData::isGeneral() const
 	return general;
 }
 
-void EnergyData::setGeneral(bool value)
-{
-	if (general == value)
-		return;
-	general = value;
-	emit generalChanged();
-}
-
-int EnergyData::getTariff() const
-{
-	return tariff;
-}
-
-void EnergyData::setTariff(int tariff)
-{
-	if (tariff == this->tariff)
-		return;
-	this->tariff = tariff;
-	emit tariffChanged();
-}
-
 EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value)
 {
 	data = _data;
 	type = _type;
 	date = _date;
 	value = _value;
+
+#if TEST_ENERGY_DATA
+	if (type == EnergyData::CurrentValue)
+	{
+		timer = new QTimer(this);
+		timer->setInterval(1000);
+		connect(timer, SIGNAL(timeout()), SLOT(timerEvent()));
+		timer->start();
+	}
+#endif //TEST_ENERGY_DATA
 }
 
 QVariant EnergyItem::getValue() const
@@ -270,6 +266,13 @@ bool EnergyItem::isValid() const
 	return value.isValid();
 }
 
+void EnergyItem::setValue(QVariant value)
+{
+	if(this->value == value)
+		return;
+	this->value = value;
+	emit valueChanged();
+}
 
 EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph)
 {
@@ -302,4 +305,10 @@ void EnergyGraph::requestUpdate()
 bool EnergyGraph::isValid() const
 {
 	return !graph.isEmpty();
+}
+
+void EnergyItem::timerEvent()
+{
+	value = QVariant(rand() % 100);
+	emit valueChanged();
 }

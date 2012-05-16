@@ -13,10 +13,11 @@ Page {
     property variant modelObject
     property int graphType
     property bool graphVisible: true
-    property bool validGraph: modelObject.getGraph(page.graphType, timepoint).isValid
-    property variant modelGraph: modelObject.getGraph(page.graphType, timepoint).graph
-    property variant instantValue: modelObject.getValue(EnergyData.CurrentValue, timepoint)
-    property variant cumulativeValue: modelObject.getValue(getValueType(graphType), timepoint).value
+    property bool inCurrency: false
+    property bool validGraph: modelObject.getGraph(page.graphType, timepoint, inCurrency).isValid
+    property variant modelGraph: modelObject.getGraph(page.graphType, timepoint, inCurrency).graph
+    property variant instantValue: modelObject.getValue(EnergyData.CurrentValue, timepoint, inCurrency)
+    property variant cumulativeValue: modelObject.getValue(getValueType(graphType), timepoint, inCurrency).value
     property variant averageValue: cumulativeValue / 10 // TODO come si calcola?
     property date timepoint: new Date()
 
@@ -27,6 +28,24 @@ Page {
             return EnergyData.CumulativeMonthValue
         else if (g === EnergyData.CumulativeYearGraph)
             return EnergyData.CumulativeYearValue
+    }
+
+    Component.onCompleted: {
+        // at page load completion we start all update requests
+        modelObject.requestCurrentUpdateStart()
+    }
+
+    onVisibleChanged: {
+        // when visibility changes, we modify all update requests
+        // note that on destruction our Stack.js code makes the page
+        // invisible, so we must not stop updates on destruction otherwise
+        // we get errors while navigating back and forth a page
+        if (visible) {
+            modelObject.requestCurrentUpdateStart()
+        }
+        else {
+            modelObject.requestCurrentUpdateStop()
+        }
     }
 
     Names {
@@ -69,7 +88,6 @@ Page {
                 onClicked: Stack.showPreviousPage(1)
             }
         }
-
 
         TitleBar {
             id: bgTitle
