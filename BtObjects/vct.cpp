@@ -44,6 +44,9 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 
 	foreach (ExternalPlace *ep, list)
 		external_places.insertWithoutUii(ep);
+
+	video_grabber.setStandardOutputFile("/dev/null");
+	video_grabber.setStandardErrorFile("/dev/null");
 }
 
 int CCTV::getBrightness() const
