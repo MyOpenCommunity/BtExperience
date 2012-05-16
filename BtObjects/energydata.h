@@ -31,6 +31,12 @@ class QDomNode;
 	- Gas (dm3, liter)
 	- Hot water (calories)
 	- Heating/cooling (calories)
+
+	This object gives access to multiple scalar values (current consumption, averages, cumulative values)
+	and graphs (average and cumulative).
+
+	Each value is returned as either a \c EnergyItem or \c EnergyGraph.  The value is requested asynchronously,
+	hence the returned value will typically be invalid and become valid only some time later.
 */
 class EnergyData : public ObjectInterface
 {
@@ -151,9 +157,34 @@ class EnergyItem : public QObject
 {
 	Q_OBJECT
 
+	/*!
+		\brief The kind of value contained in this object (current, cumulative, average)
+	*/
 	Q_PROPERTY(EnergyData::ValueType valueType READ getValueType CONSTANT)
+
+	/*!
+		\brief The value for the measure
+
+		Since the value is requested asynchronously, the value might be invalid when the
+		\c EnergyItem object is returned.  Once the value becomes valid, it stays valid.
+
+		\sa isValid
+	*/
 	Q_PROPERTY(QVariant value READ getValue WRITE setValue NOTIFY valueChanged)
+
+	/*!
+		\brief The date this value refers to
+
+		For monthly values, the day is normalized to 1, for yearly dates,
+		both month and day are normalized to 1.
+	*/
 	Q_PROPERTY(QDate date READ getDate CONSTANT)
+
+	/*!
+		\brief Whether the value returned by \c value is valid
+
+		\sa value
+	*/
 	Q_PROPERTY(bool isValid READ isValid NOTIFY validChanged)
 
 public:
@@ -168,6 +199,12 @@ public:
 	bool isValid() const;
 
 public slots:
+	/*!
+		\brief Can be used to force a value update for the device
+
+		It should never be needed (cache/request logic is handled transparently
+		by \c EnergyData).
+	*/
 	void requestUpdate();
 	void setValue(QVariant value);
 
@@ -189,12 +226,32 @@ private:
 #endif //TEST_ENERGY_DATA
 };
 
+
+/*!
+	\brief Object for a column composing the energy graph
+*/
 class EnergyGraphBar : public QObject
 {
 	Q_OBJECT
 
+	/*!
+		\brief Numeric, 0-based index of the bar in the graph
+	*/
 	Q_PROPERTY(QVariant index READ getIndex CONSTANT)
+
+	/*!
+		\brief Descriptive label for the bar
+	*/
 	Q_PROPERTY(QString label READ getLabel CONSTANT)
+
+	/*!
+		\brief The value for the bar
+
+		Since the value is requested asynchronously, the value might be invalid when the
+		\c EnergyItem object is returned.  Once the value becomes valid, it stays valid.
+
+		\sa EnergyGraph::isValid
+	*/
 	Q_PROPERTY(QVariant value READ getValue CONSTANT)
 
 public:
@@ -215,6 +272,7 @@ private:
 	QVariant value;
 };
 
+
 /*!
 	\brief Encapsulates a consumption graph (set of consumption values)
 */
@@ -222,9 +280,34 @@ class EnergyGraph : public QObject
 {
 	Q_OBJECT
 
+	/*!
+		\brief The kind of graph contained in this object (cumulative, average)
+	*/
 	Q_PROPERTY(EnergyData::GraphType graphType READ getGraphType CONSTANT)
+
+	/*!
+		\brief List of bars composing the graph
+
+		Since the value is requested asynchronously, the value might be invalid when the
+		\c EnergyItem object is returned.  Once the value becomes valid, it stays valid.
+
+		\sa isValid
+	*/
 	Q_PROPERTY(QList<QObject*> graph READ getGraph NOTIFY graphChanged)
+
+	/*!
+		\brief The date this value refers to
+
+		For monthly values, the day is normalized to 1, for yearly dates,
+		both month and day are normalized to 1.
+	*/
 	Q_PROPERTY(QDate date READ getDate CONSTANT)
+
+	/*!
+		\brief Whether the bars returned by \c graph contain valid values
+
+		\sa graph
+	*/
 	Q_PROPERTY(bool isValid READ isValid NOTIFY validChanged)
 
 public:
@@ -239,6 +322,12 @@ public:
 	bool isValid() const;
 
 public slots:
+	/*!
+		\brief Can be used to force a graph update for the device
+
+		It should never be needed (cache/request logic is handled transparently
+		by \c EnergyData).
+	*/
 	void requestUpdate();
 
 signals:
