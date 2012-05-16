@@ -371,6 +371,11 @@ public:
 		return ObjectInterface::SoundDiffusion;
 	}
 
+	virtual int getObjectId() const
+	{
+		return object_id;
+	}
+
 	bool isActive() const;
 	void setActive(bool active);
 
