@@ -59,8 +59,8 @@ Row {
 
     TimeValueItem {
         id: selUnit
-        label: pageRef.modelObject.tariff === 0 ? qsTr("euro") : qsTr("kWh")
-        onClicked: pageRef.modelObject.tariff = (pageRef.modelObject.tariff + 1) % 2 // TODO rivedere
+        label: pageRef.inCurrency ? qsTr("kWh") : qsTr("euro")
+        onClicked: pageRef.inCurrency = !pageRef.inCurrency
     }
 
     TimeValueItem {
