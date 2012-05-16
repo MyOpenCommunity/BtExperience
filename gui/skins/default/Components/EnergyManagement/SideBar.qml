@@ -7,7 +7,13 @@ import "../../js/RowColumnHelpers.js" as Helper
 Rectangle {
     id: bg
 
-    property variant pageRef
+    property variant avgValue
+    property variant cumValue
+    property int graphType
+    property variant value
+    property date timepoint
+
+    signal timepointChanged(variant dt)
 
     color: "gray"
     width: 200
@@ -36,62 +42,62 @@ Rectangle {
             onPlusClicked: plusTimepoint()
 
             function getTimepoint() {
-                if (pageRef.graphType === EnergyData.CumulativeDayGraph)
-                    return Qt.formatDateTime(pageRef.timepoint, "dd/MM/yyyy")
-                else if (pageRef.graphType === EnergyData.CumulativeMonthGraph)
-                    return Qt.formatDateTime(pageRef.timepoint, "MM/yyyy")
-                else if (pageRef.graphType === EnergyData.CumulativeYearGraph)
-                    return Qt.formatDateTime(pageRef.timepoint, "yyyy")
+                if (bg.graphType === EnergyData.CumulativeDayGraph)
+                    return Qt.formatDateTime(bg.timepoint, "dd/MM/yyyy")
+                else if (bg.graphType === EnergyData.CumulativeMonthGraph)
+                    return Qt.formatDateTime(bg.timepoint, "MM/yyyy")
+                else if (bg.graphType === EnergyData.CumulativeYearGraph)
+                    return Qt.formatDateTime(bg.timepoint, "yyyy")
             }
 
             function getTimeInterval() {
-                if (pageRef.graphType === EnergyData.CumulativeDayGraph)
+                if (bg.graphType === EnergyData.CumulativeDayGraph)
                     return "day"
-                else if (pageRef.graphType === EnergyData.CumulativeMonthGraph)
+                else if (bg.graphType === EnergyData.CumulativeMonthGraph)
                     return "month"
-                else if (pageRef.graphType === EnergyData.CumulativeYearGraph)
+                else if (bg.graphType === EnergyData.CumulativeYearGraph)
                     return "year"
             }
 
             function plusTimepoint() {
-                if (pageRef.graphType === EnergyData.CumulativeDayGraph) {
-                    var d = new Date(pageRef.timepoint)
+                if (bg.graphType === EnergyData.CumulativeDayGraph) {
+                    var d = new Date(bg.timepoint)
                     d.setDate(d.getDate() + 1)
                     if (d > new Date())
                         return
-                    pageRef.timepoint = new Date(d)
+                    bg.timepointChanged(new Date(d))
                 }
-                else if (pageRef.graphType === EnergyData.CumulativeMonthGraph) {
-                    var m = new Date(pageRef.timepoint)
+                else if (bg.graphType === EnergyData.CumulativeMonthGraph) {
+                    var m = new Date(bg.timepoint)
                     m.setMonth(m.getMonth() + 1)
                     if (m > new Date())
                         return
-                    pageRef.timepoint = new Date(m)
+                    bg.timepointChanged(new Date(m))
                 }
-                else if (pageRef.graphType === EnergyData.CumulativeYearGraph) {
-                    var y = new Date(pageRef.timepoint)
+                else if (bg.graphType === EnergyData.CumulativeYearGraph) {
+                    var y = new Date(bg.timepoint)
                     y.setFullYear(y.getFullYear() + 1)
                     if (y > new Date())
                         return
-                    pageRef.timepoint = new Date(y)
+                    bg.timepointChanged(new Date(y))
                 }
             }
 
             function minusTimepoint() {
-                if (pageRef.graphType === EnergyData.CumulativeDayGraph) {
-                    var d = new Date(pageRef.timepoint)
+                if (bg.graphType === EnergyData.CumulativeDayGraph) {
+                    var d = new Date(bg.timepoint)
                     d.setDate(d.getDate() - 1)
-                    pageRef.timepoint = new Date(d)
+                    bg.timepointChanged(new Date(d))
                 }
-                else if (pageRef.graphType === EnergyData.CumulativeMonthGraph) {
-                    var m = new Date(pageRef.timepoint)
+                else if (bg.graphType === EnergyData.CumulativeMonthGraph) {
+                    var m = new Date(bg.timepoint)
                     m.setMonth(m.getMonth() - 1)
-                    pageRef.timepoint = new Date(m)
+                    bg.timepointChanged(new Date(m))
                 }
-                else if (pageRef.graphType === EnergyData.CumulativeYearGraph) {
-                    var y = new Date(pageRef.timepoint)
+                else if (bg.graphType === EnergyData.CumulativeYearGraph) {
+                    var y = new Date(bg.timepoint)
                     y.setFullYear(y.getFullYear() - 1)
-                    pageRef.timepoint = new Date(y)
+                    bg.timepointChanged(new Date(y))
                 }
             }
         }
@@ -126,7 +132,7 @@ Rectangle {
                 }
 
                 Text {
-                    text: (instantValue.isValid ? instantValue.value : 0) + " " + qsTr("Wh")
+                    text: (bg.value.isValid ? bg.value.value : 0) + " " + qsTr("Wh")
                     color: "black"
                     anchors {
                         fill: parent
@@ -145,17 +151,17 @@ Rectangle {
             width: parent.width * 9 / 10
             anchors.horizontalCenter: parent.horizontalCenter
             // TODO implementare (il valore recuperato è corretto?)
-            value: pageRef.cumulativeValue
+            value: bg.cumValue
             // TODO da dove si recupera il valore max?
             maxValue: 120
             unit: "kWh"
 
             function getCumulativeState() {
-                if (pageRef.graphType === EnergyData.CumulativeDayGraph)
+                if (bg.graphType === EnergyData.CumulativeDayGraph)
                     return "cumDay"
-                else if (pageRef.graphType === EnergyData.CumulativeMonthGraph)
+                else if (bg.graphType === EnergyData.CumulativeMonthGraph)
                     return "cumMonth"
-                else if (pageRef.graphType === EnergyData.CumulativeYearGraph)
+                else if (bg.graphType === EnergyData.CumulativeYearGraph)
                     return "cumYear"
             }
         }
@@ -166,17 +172,17 @@ Rectangle {
             width: parent.width * 9 / 10
             anchors.horizontalCenter: parent.horizontalCenter
             // TODO implementare (come si recupera il valore medio sul periodo?)
-            value: pageRef.averageValue
+            value: bg.avgValue
             // TODO da dove si recupera il valore max?
             maxValue: 120
             unit: "kWh"
 
             function getAverageState() {
-                if (pageRef.graphType === EnergyData.CumulativeDayGraph)
+                if (bg.graphType === EnergyData.CumulativeDayGraph)
                     return "avgDay"
-                else if (pageRef.graphType === EnergyData.CumulativeMonthGraph)
+                else if (bg.graphType === EnergyData.CumulativeMonthGraph)
                     return "avgMonth"
-                else if (pageRef.graphType === EnergyData.CumulativeYearGraph)
+                else if (bg.graphType === EnergyData.CumulativeYearGraph)
                     return "avgYear"
             }
         }

@@ -106,7 +106,13 @@ Page {
         SideBar {
             id: bgSideBar
 
-            pageRef: page
+            avgValue: page.averageValue
+            cumValue: page.cumulativeValue
+            graphType: page.graphType
+            value: page.instantValue
+            timepoint: page.timepoint
+
+            onTimepointChanged: page.timepoint = dt
 
             anchors {
                 top: bgTitle.bottom
@@ -136,7 +142,13 @@ Page {
             ControlBar {
                 id: timeValue
 
-                pageRef: page
+                inCurrency: page.inCurrency
+                graphVisible: page.graphVisible
+
+                onGraphVisibleChanged: page.graphVisible = visibility
+                onInCurrencyChanged: page.inCurrency = value
+                onGraphTypeChanged: page.graphType = value
+
                 anchors {
                     horizontalCenter: bgGraph.horizontalCenter
                     top: parent.top
