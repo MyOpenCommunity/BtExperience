@@ -20,7 +20,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 	numberSeparators = Dot_Comma;
 	screensaverImage = QString("");
 	screensaverText = QString(tr("change text"));
-	screensaverType = None;
+	screensaverType = Image;
 	temperatureUnit = Celsius;
 	timeFormat = TimeFormat_24h;
 	timeOut = Minutes_1;
