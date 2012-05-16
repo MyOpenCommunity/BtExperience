@@ -6,6 +6,11 @@
 #include <QApplication>
 
 
+InputMethodEventFilter::InputMethodEventFilter()
+{
+	prevFocusWidget = 0;
+}
+
 bool InputMethodEventFilter::eventFilter(QObject *obj, QEvent *event)
 {
 	QInputContext *ic = qApp->inputContext();

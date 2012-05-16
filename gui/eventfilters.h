@@ -12,6 +12,9 @@ class QWidget;
 // - https://bugs.webkit.org/show_bug.cgi?id=60161
 class InputMethodEventFilter : public QObject
 {
+public:
+	InputMethodEventFilter();
+
 protected:
 	bool eventFilter(QObject *obj, QEvent *event);
 
