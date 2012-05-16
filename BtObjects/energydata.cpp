@@ -266,14 +266,6 @@ bool EnergyItem::isValid() const
 	return value.isValid();
 }
 
-void EnergyItem::setValue(QVariant value)
-{
-	if(this->value == value)
-		return;
-	this->value = value;
-	emit valueChanged();
-}
-
 EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph)
 {
 	data = _data;

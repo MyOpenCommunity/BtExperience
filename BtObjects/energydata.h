@@ -170,7 +170,7 @@ class EnergyItem : public QObject
 
 		\sa isValid
 	*/
-	Q_PROPERTY(QVariant value READ getValue WRITE setValue NOTIFY valueChanged)
+	Q_PROPERTY(QVariant value READ getValue NOTIFY valueChanged)
 
 	/*!
 		\brief The date this value refers to
@@ -206,7 +206,6 @@ public slots:
 		by \c EnergyData).
 	*/
 	void requestUpdate();
-	void setValue(QVariant value);
 
 signals:
 	void valueChanged();
