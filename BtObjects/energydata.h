@@ -14,6 +14,10 @@ class QDomNode;
 // TODO scrivere test quando rimuoveremo l'implementazione random
 #define TEST_ENERGY_DATA 1
 
+#if TEST_ENERGY_DATA
+	class QTimer;
+#endif //TEST_ENERGY_DATA
+
 
 /*!
 	\ingroup EnergyManagement
@@ -36,10 +40,7 @@ class EnergyData : public ObjectInterface
 	Q_PROPERTY(EnergyType energyType READ getEnergyType CONSTANT)
 
 	/// Is this a general or line counter?
-	Q_PROPERTY(bool general READ isGeneral WRITE setGeneral NOTIFY generalChanged)
-
-	/// tariff code (0 means values are in kWh, 1+ are in currency)
-	Q_PROPERTY(int tariff READ getTariff WRITE setTariff NOTIFY tariffChanged)
+	Q_PROPERTY(bool general READ isGeneral CONSTANT)
 
 	Q_ENUMS(GraphType ValueType EnergyType)
 
@@ -87,7 +88,7 @@ public:
 		Heat
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, bool general, int tariff=0);
+	EnergyData(EnergyDevice *dev, QString name, bool general);
 
 	virtual int getObjectId() const;
 
@@ -109,7 +110,7 @@ public:
 		Data is requested asynchronously, hence the returned object might receive graph
 		data at some later time.
 	*/
-	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date);
+	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, bool inCurrency=false);
 
 	/*!
 		\brief Returns an object holding the value for the specified measure/time
@@ -117,13 +118,10 @@ public:
 		Data is requested asynchronously, hence the returned object might receive the value
 		at some later time.
 	*/
-	Q_INVOKABLE QObject *getValue(ValueType type, QDate date);
+	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, bool inCurrency=false);
 
 	EnergyType getEnergyType() const;
 	bool isGeneral() const;
-	void setGeneral(bool value);
-	int getTariff() const;
-	void setTariff(int tariff);
 
 public slots:
 	/*!
@@ -135,10 +133,6 @@ public slots:
 		\brief Stop automatic updates for the current consumption value
 	*/
 	void requestCurrentUpdateStop();
-
-signals:
-	void generalChanged();
-	void tariffChanged();
 
 private slots:
 	void graphDestroyed(QObject *obj);
@@ -153,7 +147,6 @@ private:
 	QList<EnergyItem *> valueCache;
 	QString name;
 	bool general;
-	int tariff;
 };
 
 
@@ -165,7 +158,7 @@ class EnergyItem : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(EnergyData::ValueType valueType READ getValueType CONSTANT)
-	Q_PROPERTY(QVariant value READ getValue NOTIFY valueChanged)
+	Q_PROPERTY(QVariant value READ getValue WRITE setValue NOTIFY valueChanged)
 	Q_PROPERTY(QDate date READ getDate CONSTANT)
 	Q_PROPERTY(bool isValid READ isValid NOTIFY validChanged)
 
@@ -182,6 +175,7 @@ public:
 
 public slots:
 	void requestUpdate();
+	void setValue(QVariant value);
 
 signals:
 	void valueChanged();
@@ -192,6 +186,13 @@ private:
 	EnergyData::ValueType type;
 	QDate date;
 	QVariant value;
+
+#if TEST_ENERGY_DATA
+private slots:
+	void timerEvent();
+private:
+	QTimer *timer;
+#endif //TEST_ENERGY_DATA
 };
 
 class EnergyGraphBar : public QObject

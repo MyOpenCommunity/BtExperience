@@ -18,6 +18,27 @@ Page {
         id: translations
     }
 
+    Component.onCompleted: {
+        for(var i = 0; i < modelEnergy.size; ++i) {
+            // at page load completion we start all update requests
+            modelEnergy.getObject(i).requestCurrentUpdateStart()
+        }
+    }
+
+    onVisibleChanged: {
+        // when visibility changes, we modify all update requests
+        // note that on destruction our Stack.js code makes the page
+        // invisible, so we must not stop updates on destruction otherwise
+        // we get errors while navigating back and forth a page
+        for(var i = 0; i < modelEnergy.size; ++i)
+            if (visible) {
+                modelEnergy.getObject(i).requestCurrentUpdateStart()
+            }
+            else {
+                modelEnergy.getObject(i).requestCurrentUpdateStop()
+            }
+    }
+
     Image {
         id: bg
         source: "../../images/scenari.jpg" // TODO mettere lo sfondo giusto
