@@ -142,7 +142,13 @@ Page {
             ControlBar {
                 id: timeValue
 
-                pageRef: page
+                inCurrency: page.inCurrency
+                graphVisible: page.graphVisible
+
+                onGraphVisibleChanged: page.graphVisible = visibility
+                onInCurrencyChanged: page.inCurrency = value
+                onGraphTypeChanged: page.graphType = value
+
                 anchors {
                     horizontalCenter: bgGraph.horizontalCenter
                     top: parent.top

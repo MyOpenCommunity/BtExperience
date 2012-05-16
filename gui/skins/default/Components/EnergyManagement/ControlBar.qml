@@ -5,9 +5,14 @@ import "../../js/RowColumnHelpers.js" as Helper
 
 
 Row {
-    id: timeValue
+    id: bg
 
-    property variant pageRef
+    property bool inCurrency
+    property bool graphVisible
+
+    signal graphVisibleChanged(bool visibility)
+    signal inCurrencyChanged(bool value)
+    signal graphTypeChanged(int value)
 
     onChildrenChanged: Helper.updateRowChildren(timeValue)
     onVisibleChanged: Helper.updateRowChildren(timeValue)
@@ -25,7 +30,7 @@ Row {
             selDay.state = "selected"
             selMonth.state = ""
             selYear.state = ""
-            pageRef.graphType = EnergyData.CumulativeDayGraph
+            bg.graphTypeChanged(EnergyData.CumulativeDayGraph)
         }
     }
 
@@ -36,7 +41,7 @@ Row {
             selDay.state = ""
             selMonth.state = "selected"
             selYear.state = ""
-            pageRef.graphType = EnergyData.CumulativeMonthGraph
+            bg.graphTypeChanged(EnergyData.CumulativeMonthGraph)
         }
     }
 
@@ -48,7 +53,7 @@ Row {
             selDay.state = ""
             selMonth.state = ""
             selYear.state = "selected"
-            pageRef.graphType = EnergyData.CumulativeYearGraph
+            bg.graphTypeChanged(EnergyData.CumulativeYearGraph)
         }
     }
 
@@ -59,13 +64,13 @@ Row {
 
     TimeValueItem {
         id: selUnit
-        label: pageRef.inCurrency ? qsTr("kWh") : qsTr("euro")
-        onClicked: pageRef.inCurrency = !pageRef.inCurrency
+        label: bg.inCurrency ? qsTr("kWh") : qsTr("euro")
+        onClicked: bg.inCurrencyChanged(!bg.inCurrency)
     }
 
     TimeValueItem {
         id: selGraph
-        label: pageRef.graphVisible ? qsTr("sheet") : qsTr("graph")
-        onClicked: pageRef.graphVisible = !pageRef.graphVisible
+        label: bg.graphVisible ? qsTr("sheet") : qsTr("graph")
+        onClicked: bg.graphVisibleChanged(!bg.graphVisible)
     }
 }
