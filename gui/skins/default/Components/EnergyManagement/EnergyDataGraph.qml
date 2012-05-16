@@ -106,7 +106,13 @@ Page {
         SideBar {
             id: bgSideBar
 
-            pageRef: page
+            avgValue: page.averageValue
+            cumValue: page.cumulativeValue
+            graphType: page.graphType
+            value: page.instantValue
+            timepoint: page.timepoint
+
+            onTimepointChanged: page.timepoint = dt
 
             anchors {
                 top: bgTitle.bottom
