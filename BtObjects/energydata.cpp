@@ -234,7 +234,7 @@ EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _da
 	if (type == EnergyData::CurrentValue)
 	{
 		timer = new QTimer(this);
-		timer->setInterval(1000);
+		timer->setInterval(5000);
 		connect(timer, SIGNAL(timeout()), SLOT(timerEvent()));
 		timer->start();
 	}
