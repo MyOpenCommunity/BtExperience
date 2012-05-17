@@ -252,7 +252,7 @@ public:
 
 	bool isValid() const;
 
-	void setValue(qint64 value);
+	void setValue(QVariant value);
 
 public slots:
 	/*!

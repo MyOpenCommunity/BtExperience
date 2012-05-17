@@ -377,9 +377,9 @@ void EnergyItem::timerEvent()
 }
 #endif
 
-void EnergyItem::setValue(qint64 val)
+void EnergyItem::setValue(QVariant val)
 {
-	if (value.isValid() && value.toLongLong() == val)
+	if (value == val)
 		return;
 
 	bool valid = isValid();
