@@ -42,8 +42,9 @@ Item {
                 width: parent.width * 2 / 3
                 anchors {
                     bottom: parent.bottom
-                    left: parent.left
-                    leftMargin: 1
+                    //left: parent.left
+                    //leftMargin: 1
+                    horizontalCenter: parent.horizontalCenter
                 }
             }
 
@@ -55,8 +56,9 @@ Item {
                 width: parent.width * 2 / 3
                 anchors {
                     bottom: bandGree.top
-                    left: parent.left
-                    leftMargin: 1
+                    //left: parent.left
+                    //leftMargin: 1
+                    horizontalCenter: parent.horizontalCenter
                 }
             }
 
@@ -68,23 +70,26 @@ Item {
                 width: parent.width * 2 / 3
                 anchors {
                     bottom: bandYellow.top
-                    left: parent.left
-                    leftMargin: 1
+                    //left: parent.left
+                    //leftMargin: 1
+                    horizontalCenter: parent.horizontalCenter
                 }
             }
 
-            Rectangle {
-                // the side band
-                id: bandSide
-                color: "light gray"
-                height: lateralBarValue * parent.height / maxGraphLevel
-                width: parent.width * 1 / 5
-                anchors {
-                    bottom: parent.bottom
-                    left: bandRed.right
-                    leftMargin: 1
-                }
-            }
+            // TODO: previous year consumption, should be visible only in
+            // year visualization. Disabled for demo.
+//            Rectangle {
+//                // the side band
+//                id: bandSide
+//                color: "light gray"
+//                height: lateralBarValue * parent.height / maxGraphLevel
+//                width: parent.width * 1 / 5
+//                anchors {
+//                    bottom: parent.bottom
+//                    left: bandRed.right
+//                    leftMargin: 1
+//                }
+//            }
         }
 
         Rectangle {
