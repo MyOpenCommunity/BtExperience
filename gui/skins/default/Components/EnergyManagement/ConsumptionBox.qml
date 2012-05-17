@@ -63,7 +63,7 @@ Item {
             color: "white"
             anchors {
                 fill: parent
-                leftMargin: (consumptionBg.width - rectRemaining.width) < paintedWidth ? 0 : (consumptionBg.width - rectRemaining.width - paintedWidth)
+                leftMargin: levelBar.width < txtValue.paintedWidth ? 0 : levelBar.width - txtValue.paintedWidth
             }
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
@@ -84,6 +84,7 @@ Item {
         }
 
         Image {
+            id: levelBar
             source: "../../images/common/dimmer_reg.png"
             width: consumptionBg.width * (element.value / element.maxValue)
             anchors {
