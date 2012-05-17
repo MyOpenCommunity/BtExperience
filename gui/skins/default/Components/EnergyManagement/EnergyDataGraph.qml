@@ -195,7 +195,20 @@ Page {
                         maxGraphLevel: 100 // TODO come si calcola?
                         levelRed: 90 // TODO come si calcola?
                         lateralBarValue: 80 // TODO da dove si recupera?
-                        label: page.validGraph ? model.modelData.label : "---"
+                        function formatLabel() {
+                            if (page.validGraph)
+                            {
+                                if (page.graphType === EnergyData.CumulativeDayGraph)
+                                    // label is "21-21", strip the "-22" part
+                                    return model.modelData.label.split("-")[0]
+                                else
+                                    return model.modelData.label
+                            }
+                            else
+                                return "---"
+                        }
+
+                        label: formatLabel()
                     }
                 }
             }
