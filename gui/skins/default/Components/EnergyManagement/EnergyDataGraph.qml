@@ -191,10 +191,10 @@ Page {
 
                     ControlColumnValue {
                         height: 345
-                        level_actual: page.validGraph ? model.modelData.value : 0
-                        max_graph_level: 100 // TODO come si calcola?
-                        level_red: 90 // TODO come si calcola?
-                        lateral_bar_value: 80 // TODO da dove si recupera?
+                        levelActual: page.validGraph ? model.modelData.value : 0
+                        maxGraphLevel: 100 // TODO come si calcola?
+                        levelRed: 90 // TODO come si calcola?
+                        lateralBarValue: 80 // TODO da dove si recupera?
                         label: page.validGraph ? model.modelData.label : "---"
                     }
                 }

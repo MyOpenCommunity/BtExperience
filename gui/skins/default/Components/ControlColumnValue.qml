@@ -10,18 +10,18 @@ Item {
     // bottom label
     property string label: "january"
     // percentage of critical level where warning (yellow band) starts
-    property real perc_yellow: 0.8
+    property real percYellow: 0.8
     // value of critical level (red band)
-    property int level_red: 100
+    property int levelRed: 100
     // actual value to be rendered
-    property int level_actual: 50
+    property int levelActual: 50
     // critical value bar is visible?
-    property int lateral_bar_value: 90
+    property int lateralBarValue: 90
     // max representable value
-    property int max_graph_level: 200
+    property int maxGraphLevel: 200
 
     // helpers
-    property int level_yellow: level_red * perc_yellow
+    property int levelYellow: levelRed * percYellow
 
     Column {
         anchors.fill: parent
@@ -36,9 +36,9 @@ Item {
 
             Rectangle {
                 // the green band
-                id: band_green
+                id: bandGree
                 color: "green"
-                height: (level_actual < level_yellow ? level_actual : level_yellow) * parent.height / max_graph_level
+                height: (levelActual < levelYellow ? levelActual : levelYellow) * parent.height / maxGraphLevel
                 width: parent.width * 2 / 3
                 anchors {
                     bottom: parent.bottom
@@ -49,12 +49,12 @@ Item {
 
             Rectangle {
                 // the yellow band
-                id: band_yellow
+                id: bandYellow
                 color: "yellow"
-                height: (level_actual < level_red ? (level_actual > level_yellow ? level_actual - level_yellow : 0) : level_red - level_yellow) * parent.height / max_graph_level
+                height: (levelActual < levelRed ? (levelActual > levelYellow ? levelActual - levelYellow : 0) : levelRed - levelYellow) * parent.height / maxGraphLevel
                 width: parent.width * 2 / 3
                 anchors {
-                    bottom: band_green.top
+                    bottom: bandGree.top
                     left: parent.left
                     leftMargin: 1
                 }
@@ -62,12 +62,12 @@ Item {
 
             Rectangle {
                 // the red band
-                id: band_red
+                id: bandRed
                 color: "red"
-                height: (level_actual > level_red ? level_actual - level_red : 0) * parent.height / max_graph_level
+                height: (levelActual > levelRed ? levelActual - levelRed : 0) * parent.height / maxGraphLevel
                 width: parent.width * 2 / 3
                 anchors {
-                    bottom: band_yellow.top
+                    bottom: bandYellow.top
                     left: parent.left
                     leftMargin: 1
                 }
@@ -75,13 +75,13 @@ Item {
 
             Rectangle {
                 // the side band
-                id: band_side
+                id: bandSide
                 color: "light gray"
-                height: lateral_bar_value * parent.height / max_graph_level
+                height: lateralBarValue * parent.height / maxGraphLevel
                 width: parent.width * 1 / 5
                 anchors {
                     bottom: parent.bottom
-                    left: band_red.right
+                    left: bandRed.right
                     leftMargin: 1
                 }
             }
