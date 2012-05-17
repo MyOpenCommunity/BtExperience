@@ -118,6 +118,17 @@ Item {
             width: 48
             height: 48
             Image {
+                source: "images/icon_move.png"
+                anchors.fill: parent
+                anchors.margins: 10
+            }
+        }
+
+        Rectangle {
+            color: "#6d6c6c"
+            width: 48
+            height: 48
+            Image {
                 source: "images/icon_trash.png"
                 anchors.fill: parent
                 anchors.margins: 10
