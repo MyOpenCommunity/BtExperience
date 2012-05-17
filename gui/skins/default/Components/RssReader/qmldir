@@ -1,0 +1,5 @@
+BusyIndicator 1.0 BusyIndicator.qml
+CategoryDelegate 1.0 CategoryDelegate.qml
+NewsDelegate 1.0 NewsDelegate.qml
+RssFeeds 1.0 RssFeeds.qml
+ScrollBar 1.0 ScrollBar.qml
