@@ -5,6 +5,7 @@
 #include "device.h" // DeviceValues
 
 #include <QDate>
+#include <QCache>
 
 class EnergyDevice;
 class EnergyGraph;
@@ -12,11 +13,49 @@ class EnergyItem;
 class QDomNode;
 
 // TODO scrivere test quando rimuoveremo l'implementazione random
+#ifndef TEST_ENERGY_DATA
 #define TEST_ENERGY_DATA 1
+#endif
 
 #if TEST_ENERGY_DATA
 	class QTimer;
 #endif //TEST_ENERGY_DATA
+
+
+struct CacheKey
+{
+	CacheKey(int _type, const QDate &_date, bool _is_currency = false)
+	{
+		type = _type;
+		date = _date;
+		is_currency = _is_currency;
+	}
+
+	int type;
+	QDate date;
+	bool is_currency;
+};
+
+inline bool operator==(const CacheKey &first, const CacheKey &second)
+{
+	return first.type == second.type && first.date == second.date && first.is_currency == second.is_currency;
+}
+
+inline bool operator!=(const CacheKey &first, const CacheKey &second)
+{
+	return first.type != second.type || first.date != second.date || first.is_currency != second.is_currency;
+}
+
+inline uint qHash(const QDate &date)
+{
+	// TODO qHash(uint) returns the integer value; find a better hash for dates
+	return qHash((date.year() << 0) | (date.month() << 12) | (date.day() << 17));
+}
+
+inline uint qHash(const CacheKey &key)
+{
+	return qHash(key.type) ^ qHash(key.date) ^ uint(key.is_currency);
+}
 
 
 /*!
@@ -40,6 +79,10 @@ class QDomNode;
 */
 class EnergyData : public ObjectInterface
 {
+	friend class TestEnergyData;
+	friend class TestEnergyItem;
+	friend class TestEnergyGraph;
+
 	Q_OBJECT
 
 	/// The type of energy measured by this object
@@ -95,6 +138,7 @@ public:
 	};
 
 	EnergyData(EnergyDevice *dev, QString name, bool general);
+	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
 
@@ -111,7 +155,7 @@ public:
 		Data is requested asynchronously, hence the returned object might receive graph
 		data at some later time.
 	*/
-	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, bool inCurrency=false);
+	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, bool in_currency = false);
 
 	/*!
 		\brief Returns an object holding the value for the specified measure/time
@@ -119,7 +163,7 @@ public:
 		Data is requested asynchronously, hence the returned object might receive the value
 		at some later time.
 	*/
-	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, bool inCurrency=false);
+	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, bool in_currency = false);
 
 	EnergyType getEnergyType() const;
 	bool isGeneral() const;
@@ -143,9 +187,15 @@ private:
 	QDate normalizeDate(GraphType type, QDate date);
 	QDate normalizeDate(ValueType type, QDate date);
 
+	void cacheValueData(ValueType type, QDate date, qint64 value);
+	void cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph);
+
+	QList<QObject *> createGraph(GraphType type, const QVector<qint64> &values);
+
 	EnergyDevice *dev;
-	QList<EnergyGraph *> graphCache;
-	QList<EnergyItem *> valueCache;
+	QHash<CacheKey, EnergyGraph *> graphCache;
+	QHash<CacheKey, EnergyItem *> itemCache;
+	QCache<CacheKey, QVector<qint64> > valueCache;
 	bool general;
 };
 
@@ -155,6 +205,10 @@ private:
 */
 class EnergyItem : public QObject
 {
+	friend class TestEnergyData;
+	friend class TestEnergyItem;
+	friend class TestEnergyGraph;
+
 	Q_OBJECT
 
 	/*!
@@ -198,6 +252,8 @@ public:
 
 	bool isValid() const;
 
+	void setValue(qint64 value);
+
 public slots:
 	/*!
 		\brief Can be used to force a value update for the device
@@ -231,6 +287,10 @@ private:
 */
 class EnergyGraphBar : public QObject
 {
+	friend class TestEnergyData;
+	friend class TestEnergyItem;
+	friend class TestEnergyGraph;
+
 	Q_OBJECT
 
 	/*!
@@ -320,6 +380,8 @@ public:
 
 	bool isValid() const;
 
+	void setGraph(QList<QObject*> graph);
+
 public slots:
 	/*!
 		\brief Can be used to force a graph update for the device
@@ -334,6 +396,8 @@ signals:
 	void validChanged();
 
 private:
+	static bool graphEqual(QList<QObject*> first, QList<QObject*> second);
+
 	EnergyData *data;
 	EnergyData::GraphType type;
 	QDate date;

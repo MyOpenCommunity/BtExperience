@@ -3,6 +3,7 @@ OBJECTS_DIR = obj
 MOC_DIR = moc
 
 DEFINES += QT_QWS_EBX BT_EMBEDDED BTWEB QT_NO_DEBUG_OUTPUT DEBUG
+DEFINES += TEST_ENERGY_DATA=0
 
 INCLUDEPATH+= . .. ../.. ../../../common_files ../../../stackopen
 INCLUDEPATH+= ../../../stackopen/common_develer/lib
@@ -26,6 +27,7 @@ DEPENDPATH = ../.. ..
 
 HEADERS += test_antintrusion_object.h \
 	test_btobject.h \
+	test_energy_data.h \
 	test_energy_load.h \
 	test_filebrowser.h \
 	test_light_objects.h \
@@ -44,6 +46,7 @@ HEADERS += test_antintrusion_object.h \
 SOURCES += test_main.cpp \
 	test_antintrusion_object.cpp \
 	test_btobject.cpp \
+	test_energy_data.cpp \
 	test_energy_load.cpp \
 	test_filebrowser.cpp \
 	test_light_objects.cpp \

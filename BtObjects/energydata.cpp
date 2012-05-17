@@ -5,10 +5,30 @@
 #include <stdlib.h> // rand
 
 #include <QDebug> // qDebug
+#include <QVector>
 
 #if TEST_ENERGY_DATA
 #include <QTimer>
 #endif //TEST_ENERGY_DATA
+
+
+namespace
+{
+	template<class K, class V>
+	void removeValue(QHash<K, V> &map, const V &value)
+	{
+		typedef typename QHash<K, V>::iterator iter;
+
+		for (iter it = map.begin(), end = map.end(); it != end; ++it)
+		{
+			if (it.value() == value)
+			{
+				map.erase(it);
+				break;
+			}
+		}
+	}
+}
 
 
 QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
@@ -38,22 +58,43 @@ QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool general)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general)
 {
 	name = _name;
 	dev = _dev;
-	this->general = general;
+	general = _general;
+	valueCache.setMaxCost(2000);
 }
 
-QObject *EnergyData::getGraph(GraphType type, QDate date, bool inCurrency)
+EnergyData::~EnergyData()
 {
-	Q_UNUSED(inCurrency);
+}
 
+QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
+{
 	QList<QObject*> values;
-	QStringList keys;
 	QDate actual_date = normalizeDate(type, date);
+	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
+
+	if (EnergyGraph *graph = graphCache.value(key))
+		// TODO re-request if date includes today
+		return graph;
+
+	QVector<qint64> *cached = valueCache.object(value_key);
+	if (cached)
+		values = createGraph(type, *cached);
+
+	// TODO add in_currency to EnergyGraph
+
+	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
+
+	// TODO re-request if data not in cache or old
+
+	graphCache[key] = graph;
+	connect(graph, SIGNAL(destroyed(QObject*)), this, SLOT(graphDestroyed(QObject*)));
 
 #if TEST_ENERGY_DATA
+	QMap<int, unsigned int> graph_values;
 	int count = 0;
 
 	switch (type)
@@ -61,44 +102,50 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool inCurrency)
 	case DailyAverageGraph:
 	case CumulativeDayGraph:
 		count = 24;
-		for(int i = 0; i < count; ++i)
-			keys << QString("%1-%2").arg(i).arg(i + 1);
 		break;
 	case CumulativeMonthGraph:
 		count = date.daysInMonth();
-		for(int i = 0; i < count; ++i)
-			keys << QString::number(i + 1);
 		break;
 	case CumulativeYearGraph:
 		count = 12;
-		keys << tr("January") << tr("February") << tr("March")
-			 << tr("April") << tr("May") << tr("June")
-			 << tr("July") << tr("August") << tr("September")
-			 << tr("October") << tr("November") << tr("December");
 		break;
 	}
 
 	for (int i = 0; i < count; ++i)
-		values.append(new EnergyGraphBar(i, keys[i], QVariant(rand() % 100)));
-#endif
+		graph_values[i + 1] = rand() % 100;
 
-	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
+	cacheGraphData(type, actual_date, graph_values);
+#endif
 
 	return graph;
 }
 
-QObject *EnergyData::getValue(ValueType type, QDate date, bool inCurrency)
+QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 {
-	Q_UNUSED(inCurrency);
-
-	QVariant val = QVariant(0);
+	QVariant val;
 	QDate actual_date = normalizeDate(type, date);
+	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
 
-#if TEST_ENERGY_DATA
-	val = QVariant(rand() % 100);
-#endif
+	if (EnergyItem *item = itemCache.value(key))
+		// TODO re-request if date includes today
+		return item;
+
+	QVector<qint64> *cached = valueCache.object(value_key);
+	if (cached)
+		val = (*cached)[0];
+
+	// TODO add in_currency to EnergyItem
 
 	EnergyItem *value = new EnergyItem(this, type, actual_date, val);
+
+	// TODO re-request if data not in cache or old
+
+	itemCache[key] = value;
+	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
+
+#if TEST_ENERGY_DATA
+	cacheValueData(type, actual_date, rand() % 100);
+#endif
 
 	return value;
 }
@@ -206,16 +253,73 @@ QDate EnergyData::normalizeDate(ValueType type, QDate date)
 	return QDate();
 }
 
+void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
+{
+	// TODO clean up unused cache entries after some time (maybe triggered by object deletion)
+	valueCache.insert(CacheKey(type, date), new QVector<qint64>(1, value), 1);
+
+	if (EnergyItem *item = itemCache.value(CacheKey(type, date, false)))
+		item->setValue(value);
+	if (EnergyItem *item = itemCache.value(CacheKey(type, date, true)))
+		item->setValue(value);
+}
+
+void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph)
+{
+	// TODO clean up unused cache entries after some time (maybe triggered by object deletion)
+	QVector<qint64> *values = new QVector<qint64>(graph.size());
+
+	valueCache.insert(CacheKey(type, date), values, graph.size());
+
+	for (int i = 0; i < graph.size(); ++i)
+		(*values)[i] = graph[i + 1];
+
+	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, false)))
+		graph->setGraph(createGraph(type, *values));
+	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, true)))
+		graph->setGraph(createGraph(type, *values));
+}
+
+QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<qint64> &values)
+{
+	QList<QObject *> bars;
+	QList<QString> keys;
+
+	switch (type)
+	{
+	case DailyAverageGraph:
+	case CumulativeDayGraph:
+		for(int i = 0; i < values.count(); ++i)
+			keys << QString("%1-%2").arg(i).arg(i + 1);
+		break;
+	case CumulativeMonthGraph:
+		for(int i = 0; i < values.count(); ++i)
+			keys << QString::number(i + 1);
+		break;
+	case CumulativeYearGraph:
+		keys << tr("January") << tr("February") << tr("March")
+			 << tr("April") << tr("May") << tr("June")
+			 << tr("July") << tr("August") << tr("September")
+			 << tr("October") << tr("November") << tr("December");
+		break;
+	}
+
+	for (int i = 0; i < values.count(); ++i)
+		bars.append(new EnergyGraphBar(i, keys[i], values[i]));
+
+	return bars;
+}
+
 void EnergyData::graphDestroyed(QObject *obj)
 {
-	Q_UNUSED(obj);
-	// TODO
+	// can't use qobject_cast/dynamic_cast on a destroyed object
+	removeValue(graphCache, static_cast<EnergyGraph *>(obj));
 }
 
 void EnergyData::itemDestroyed(QObject *obj)
 {
-	Q_UNUSED(obj);
-	// TODO
+	// can't use qobject_cast/dynamic_cast on a destroyed object
+	removeValue(itemCache, static_cast<EnergyItem *>(obj));
 }
 
 bool EnergyData::isGeneral() const
@@ -266,12 +370,33 @@ bool EnergyItem::isValid() const
 	return value.isValid();
 }
 
+#if TEST_ENERGY_DATA
+void EnergyItem::timerEvent()
+{
+	setValue(rand() % 100);
+}
+#endif
+
+void EnergyItem::setValue(qint64 val)
+{
+	if (value.isValid() && value.toLongLong() == val)
+		return;
+
+	bool valid = isValid();
+
+	value = val;
+
+	if (!valid)
+		emit validChanged();
+	emit valueChanged();
+}
+
 EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph)
 {
 	data = _data;
 	type = _type;
 	date = _date;
-	graph = _graph;
+	setGraph(_graph);
 }
 
 QList<QObject*> EnergyGraph::getGraph() const
@@ -299,8 +424,35 @@ bool EnergyGraph::isValid() const
 	return !graph.isEmpty();
 }
 
-void EnergyItem::timerEvent()
+bool EnergyGraph::graphEqual(QList<QObject*> first, QList<QObject*> second)
 {
-	value = QVariant(rand() % 100);
-	emit valueChanged();
+	if (first.count() != second.count())
+		return false;
+
+	for (int i = 0; i < first.count(); ++i)
+	{
+		EnergyGraphBar *fb = qobject_cast<EnergyGraphBar*>(first[i]);
+		EnergyGraphBar *sb = qobject_cast<EnergyGraphBar*>(second[i]);
+
+		if (fb->getValue() != sb->getValue())
+			return false;
+	}
+
+	return true;
+}
+
+void EnergyGraph::setGraph(QList<QObject *> _graph)
+{
+	if (graphEqual(graph, _graph))
+		return;
+
+	bool valid = isValid();
+
+	graph = _graph;
+	foreach (QObject *bar, graph)
+		bar->setParent(this);
+
+	if (!valid && isValid())
+		emit validChanged();
+	emit graphChanged();
 }

@@ -38,6 +38,7 @@
 #include "test_videodoorentry_objects.h"
 #include "test_energy_load.h"
 #include "test_stopandgo_objects.h"
+#include "test_energy_data.h"
 #include "main.h"
 
 logger *app_logger;
@@ -137,6 +138,15 @@ int main(int argc, char *argv[])
 
 	TestStopAndGoBTest test_stopandgo_btest;
 	test_list << &test_stopandgo_btest;
+
+	TestEnergyItem test_energy_item;
+	test_list << &test_energy_item;
+
+	TestEnergyGraph test_energy_graph;
+	test_list << &test_energy_graph;
+
+	TestEnergyData test_energy_data;
+	test_list << &test_energy_data;
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))
