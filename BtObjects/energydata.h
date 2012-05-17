@@ -10,6 +10,7 @@
 class EnergyDevice;
 class EnergyGraph;
 class EnergyItem;
+class EnergyRate;
 class QDomNode;
 
 // TODO scrivere test quando rimuoveremo l'implementazione random
@@ -91,6 +92,9 @@ class EnergyData : public ObjectInterface
 	/// Is this a general or line counter?
 	Q_PROPERTY(bool general READ isGeneral CONSTANT)
 
+	/// Energy to currency conversion rate
+	Q_PROPERTY(EnergyRate *rate READ getRate CONSTANT)
+
 	Q_ENUMS(GraphType ValueType EnergyType)
 
 public:
@@ -137,7 +141,7 @@ public:
 		Heat
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, bool general);
+	EnergyData(EnergyDevice *dev, QString name, bool general, EnergyRate *rate);
 	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
@@ -154,6 +158,9 @@ public:
 
 		Data is requested asynchronously, hence the returned object might receive graph
 		data at some later time.
+
+		If this energy device does not have an associated tariff, passing \c true as in_currency
+		returns NULL.
 	*/
 	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, bool in_currency = false);
 
@@ -162,11 +169,15 @@ public:
 
 		Data is requested asynchronously, hence the returned object might receive the value
 		at some later time.
+
+		If this energy device does not have an associated tariff, passing \c true as in_currency
+		returns NULL.
 	*/
 	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, bool in_currency = false);
 
 	EnergyType getEnergyType() const;
 	bool isGeneral() const;
+	EnergyRate *getRate() const;
 
 public slots:
 	/*!
@@ -182,6 +193,7 @@ public slots:
 private slots:
 	void graphDestroyed(QObject *obj);
 	void itemDestroyed(QObject *obj);
+	void rateChanged();
 
 private:
 	QDate normalizeDate(GraphType type, QDate date);
@@ -190,9 +202,10 @@ private:
 	void cacheValueData(ValueType type, QDate date, qint64 value);
 	void cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph);
 
-	QList<QObject *> createGraph(GraphType type, const QVector<qint64> &values);
+	QList<QObject *> createGraph(GraphType type, const QVector<qint64> &values, double conversion = 1.0);
 
 	EnergyDevice *dev;
+	EnergyRate *rate;
 	QHash<CacheKey, EnergyGraph *> graphCache;
 	QHash<CacheKey, EnergyItem *> itemCache;
 	QCache<CacheKey, QVector<qint64> > valueCache;

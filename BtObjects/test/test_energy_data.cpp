@@ -1,4 +1,5 @@
 #include "test_energy_data.h"
+#include "energyrate.h"
 #include "energy_device.h"
 
 #include "objecttester.h"
@@ -9,9 +10,12 @@
 void TestEnergyData::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
+	EnergyRate *rate = new EnergyRate(0.25);
 
-	obj = new EnergyData(d, "", false);
+	obj = new EnergyData(d, "", false, rate);
 	dev = new EnergyDevice("1", 1, 1);
+
+	rate->setParent(obj);
 }
 
 void TestEnergyData::cleanup()
@@ -115,35 +119,52 @@ void TestEnergyData::testGraphCache()
 void TestEnergyData::testUpdateItemValue()
 {
 	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), false);
-	ObjectTester t(o1, SIGNAL(valueChanged()));
+	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), true);
+	ObjectTester t1(o1, SIGNAL(valueChanged()));
+	ObjectTester t2(o1, SIGNAL(valueChanged()));
 
 	obj->cacheValueData(EnergyData::MonthlyAverage, QDate(2012, 05, 1), 1236);
-	t.checkNoSignals();
+	t1.checkNoSignals();
+	t2.checkNoSignals();
 
 	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 04, 1), 1235);
-	t.checkNoSignals();
+	t1.checkNoSignals();
+	t2.checkNoSignals();
 
 	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 05, 1), 1234);
-	t.checkSignals();
+	t1.checkSignals();
+	t2.checkSignals();
+
 	QCOMPARE(o1->getValue(), QVariant(1234));
+	QCOMPARE(o2->getValue(), QVariant(308.5));
 }
 
 void TestEnergyData::testUpdateGraphValue()
 {
 	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), false);
-	ObjectTester t(o1, SIGNAL(graphChanged()));
+	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), true);
+	ObjectTester t1(o1, SIGNAL(graphChanged()));
+	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
 	obj->cacheGraphData(EnergyData::CumulativeDayGraph, QDate(2012, 05, 1), graphValues(3, 10));
-	t.checkNoSignals();
+	t1.checkNoSignals();
+	t2.checkNoSignals();
 
 	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 04, 1), graphValues(3, 9));
-	t.checkNoSignals();
+	t1.checkNoSignals();
+	t2.checkNoSignals();
 
 	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 1), graphValues(3, 8));
-	t.checkSignals();
+	t1.checkSignals();
+	t2.checkSignals();
+
 	QCOMPARE(o1->getGraph().size(), 3);
 	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(8));
 	QCOMPARE(getBar(o1, 2)->getValue(), QVariant(10));
+
+	QCOMPARE(o2->getGraph().size(), 3);
+	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(2));
+	QCOMPARE(getBar(o2, 2)->getValue(), QVariant(2.5));
 }
 
 void TestEnergyData::testCachedValue()
@@ -153,8 +174,10 @@ void TestEnergyData::testCachedValue()
 	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 05, 1), 1234);
 
 	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), false);
+	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), true);
 
 	QCOMPARE(o1->getValue(), QVariant(1234));
+	QCOMPARE(o2->getValue(), QVariant(308.5));
 }
 
 void TestEnergyData::testCachedGraph()
@@ -164,17 +187,22 @@ void TestEnergyData::testCachedGraph()
 	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 1), graphValues(3, 8));
 
 	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), false);
+	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), true);
 
 	QCOMPARE(o1->getGraph().size(), 3);
 	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(8));
 	QCOMPARE(getBar(o1, 2)->getValue(), QVariant(10));
+
+	QCOMPARE(o2->getGraph().size(), 3);
+	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(2));
+	QCOMPARE(getBar(o2, 2)->getValue(), QVariant(2.5));
 }
 
 void TestEnergyItem::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
-	obj = new EnergyData(d, "", false);
+	obj = new EnergyData(d, "", false, 0);
 }
 
 void TestEnergyItem::cleanup()
@@ -211,7 +239,7 @@ void TestEnergyGraph::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
-	obj = new EnergyData(d, "", false);
+	obj = new EnergyData(d, "", false, 0);
 }
 
 void TestEnergyGraph::cleanup()

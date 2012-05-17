@@ -1,4 +1,5 @@
 #include "energydata.h"
+#include "energyrate.h"
 #include "energy_device.h"
 #include "devices_cache.h"
 
@@ -46,23 +47,26 @@ QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 
 	EnergyDevice *dw = bt_global::add_device_to_cache(new EnergyDevice("78", 2));
 
-	objects << new EnergyData(de, "Electricity", true);
-	objects << new EnergyData(de2, "Lights", false);
-	objects << new EnergyData(de3, "Appliances", false);
-	objects << new EnergyData(de4, "Office", false);
-	objects << new EnergyData(de5, "Garden", false);
+	EnergyRate *r1 = new EnergyRate(0.2);
 
-	objects << new EnergyData(dw, "Water", true);
+	objects << new EnergyData(de, "Electricity", true, r1);
+	objects << new EnergyData(de2, "Lights", false, r1);
+	objects << new EnergyData(de3, "Appliances", false, r1);
+	objects << new EnergyData(de4, "Office", false, r1);
+	objects << new EnergyData(de5, "Garden", false, r1);
+
+	objects << new EnergyData(dw, "Water", true, r1);
 
 	return objects;
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general, EnergyRate *_rate)
 {
 	name = _name;
 	dev = _dev;
 	general = _general;
+	rate = _rate;
 	valueCache.setMaxCost(2000);
 
 #if TEST_ENERGY_DATA
@@ -70,6 +74,9 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general)
 	automatic_updates->setInterval(5000);
 	connect(automatic_updates, SIGNAL(timeout()), this, SLOT(testAutomaticUpdates()));
 #endif
+
+	if (rate)
+		connect(rate, SIGNAL(rateChanged()), this, SLOT(rateChanged()));
 }
 
 EnergyData::~EnergyData()
@@ -78,6 +85,9 @@ EnergyData::~EnergyData()
 
 QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 {
+	if (in_currency && !rate)
+		return 0;
+
 	QList<QObject*> values;
 	QDate actual_date = normalizeDate(type, date);
 	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
@@ -88,7 +98,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 
 	QVector<qint64> *cached = valueCache.object(value_key);
 	if (cached)
-		values = createGraph(type, *cached);
+		values = createGraph(type, *cached, in_currency ? rate->getRate() : 1.0);
 
 	// TODO add in_currency to EnergyGraph
 
@@ -128,6 +138,9 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 
 QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 {
+	if (in_currency && !rate)
+		return 0;
+
 	QVariant val;
 	QDate actual_date = normalizeDate(type, date);
 	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
@@ -138,7 +151,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 
 	QVector<qint64> *cached = valueCache.object(value_key);
 	if (cached)
-		val = (*cached)[0];
+		val = in_currency ? (*cached)[0] * rate->getRate() : (*cached)[0];
 
 	// TODO add in_currency to EnergyItem
 
@@ -273,7 +286,7 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 	if (EnergyItem *item = itemCache.value(CacheKey(type, date, false)))
 		item->setValue(value);
 	if (EnergyItem *item = itemCache.value(CacheKey(type, date, true)))
-		item->setValue(value);
+		item->setValue(value * rate->getRate());
 }
 
 void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph)
@@ -289,10 +302,10 @@ void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned i
 	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, false)))
 		graph->setGraph(createGraph(type, *values));
 	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, true)))
-		graph->setGraph(createGraph(type, *values));
+		graph->setGraph(createGraph(type, *values, rate->getRate()));
 }
 
-QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<qint64> &values)
+QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<qint64> &values, double conversion)
 {
 	QList<QObject *> bars;
 	QList<QString> keys;
@@ -317,7 +330,7 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<qint64> &
 	}
 
 	for (int i = 0; i < values.count(); ++i)
-		bars.append(new EnergyGraphBar(i, keys[i], values[i]));
+		bars.append(new EnergyGraphBar(i, keys[i], values[i] * conversion));
 
 	return bars;
 }
@@ -334,6 +347,11 @@ void EnergyData::itemDestroyed(QObject *obj)
 	removeValue(itemCache, static_cast<EnergyItem *>(obj));
 }
 
+void EnergyData::rateChanged()
+{
+	// TODO update rates in cached objects
+}
+
 bool EnergyData::isGeneral() const
 {
 	return general;
@@ -345,6 +363,11 @@ void EnergyData::testAutomaticUpdates()
 	cacheValueData(EnergyData::CurrentValue, QDate(), rand() % 100);
 }
 #endif
+
+EnergyRate *EnergyData::getRate() const
+{
+	return rate;
+}
 
 EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value)
 {
