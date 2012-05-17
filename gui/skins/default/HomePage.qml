@@ -202,6 +202,10 @@ source: "images/home/home.jpg"
          anchors.top: toolbar.bottom
          anchors.topMargin: 0
 
+         SvgImage {
+             source: "images/home/menu.svg"
+             anchors.fill: column1
+         }
     Grid {
           id: column1
           x: 92
@@ -219,7 +223,8 @@ source: "images/home/home.jpg"
 
               ButtonHomePageLink {
                   textFirst: false
-                  source: "images/home/stanze.png"
+                  source: "images/home/stanze.svg"
+                  sourcePressed: "images/home/stanze_p.svg"
                   text: qsTr("rooms")
                   onClicked: {
                       if (roomModel.rooms().length > 1)
@@ -232,14 +237,16 @@ source: "images/home/home.jpg"
 
               ButtonHomePageLink {
                   textFirst: false
-                  source: "images/home/sistemi.png"
+                  source: "images/home/sistemi.svg"
+                  sourcePressed: "images/home/sistemi_p.svg"
                   text: qsTr("systems")
                   textLeftMargin: 30
                   onClicked: Stack.openPage("Systems.qml")
               }
 
               ButtonHomePageLink {
-                  source: "images/home/opzioni.png"
+                  source: "images/home/opzioni.svg"
+                  sourcePressed: "images/home/opzioni_p.svg"
                   textLeftMargin: 70
                   text: qsTr("options")
                   onClicked: Stack.openPage("Settings.qml")
@@ -247,12 +254,16 @@ source: "images/home/home.jpg"
 
 
               ButtonHomePageLink {
-                  source: "images/home/multimedia.png"
+                  source: "images/home/multimedia.svg"
+                  sourcePressed: "images/home/multimedia_p.svg"
                   text: qsTr("multimedia")
                   textLeftMargin: 18
                   onClicked: Stack.openPage("Browser.qml")
               }
+
+
         }
+
     }
 }
 
