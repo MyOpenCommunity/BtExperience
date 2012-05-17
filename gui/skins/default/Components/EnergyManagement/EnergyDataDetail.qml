@@ -82,11 +82,11 @@ Page {
             id: panel
             spacing: 40
             anchors.left: parent.left
-            anchors.leftMargin: 195
+            anchors.leftMargin: 120
             anchors.top: toolbar.bottom
             anchors.topMargin: 10
             anchors.right: parent.right
-            anchors.rightMargin: 150
+            anchors.rightMargin: 80
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 30
 
