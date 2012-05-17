@@ -197,6 +197,13 @@ private:
 	QHash<CacheKey, EnergyItem *> itemCache;
 	QCache<CacheKey, QVector<qint64> > valueCache;
 	bool general;
+
+#if TEST_ENERGY_DATA
+private slots:
+	void testAutomaticUpdates();
+private:
+	QTimer *automatic_updates;
+#endif //TEST_ENERGY_DATA
 };
 
 
@@ -272,13 +279,6 @@ private:
 	EnergyData::ValueType type;
 	QDate date;
 	QVariant value;
-
-#if TEST_ENERGY_DATA
-private slots:
-	void timerEvent();
-private:
-	QTimer *timer;
-#endif //TEST_ENERGY_DATA
 };
 
 

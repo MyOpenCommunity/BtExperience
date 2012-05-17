@@ -64,6 +64,12 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general)
 	dev = _dev;
 	general = _general;
 	valueCache.setMaxCost(2000);
+
+#if TEST_ENERGY_DATA
+	automatic_updates = new QTimer(this);
+	automatic_updates->setInterval(5000);
+	connect(automatic_updates, SIGNAL(timeout()), this, SLOT(testAutomaticUpdates()));
+#endif
 }
 
 EnergyData::~EnergyData()
@@ -209,11 +215,17 @@ EnergyData::EnergyType EnergyData::getEnergyType() const
 
 void EnergyData::requestCurrentUpdateStart()
 {
+#if TEST_ENERGY_DATA
+	automatic_updates->start();
+#endif
 	// TODO
 }
 
 void EnergyData::requestCurrentUpdateStop()
 {
+#if TEST_ENERGY_DATA
+	automatic_updates->stop();
+#endif
 	// TODO
 }
 
@@ -327,22 +339,19 @@ bool EnergyData::isGeneral() const
 	return general;
 }
 
+#if TEST_ENERGY_DATA
+void EnergyData::testAutomaticUpdates()
+{
+	cacheValueData(EnergyData::CurrentValue, QDate(), rand() % 100);
+}
+#endif
+
 EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value)
 {
 	data = _data;
 	type = _type;
 	date = _date;
 	value = _value;
-
-#if TEST_ENERGY_DATA
-	if (type == EnergyData::CurrentValue)
-	{
-		timer = new QTimer(this);
-		timer->setInterval(5000);
-		connect(timer, SIGNAL(timeout()), SLOT(timerEvent()));
-		timer->start();
-	}
-#endif //TEST_ENERGY_DATA
 }
 
 QVariant EnergyItem::getValue() const
@@ -369,13 +378,6 @@ bool EnergyItem::isValid() const
 {
 	return value.isValid();
 }
-
-#if TEST_ENERGY_DATA
-void EnergyItem::timerEvent()
-{
-	setValue(rand() % 100);
-}
-#endif
 
 void EnergyItem::setValue(QVariant val)
 {
