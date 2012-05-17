@@ -4,8 +4,9 @@ import BtObjects 1.0
 import "../../js/RowColumnHelpers.js" as Helper
 
 
-Rectangle {
+Item {
     id: bg
+    width: 200
 
     property variant avgValue
     property variant cumValue
@@ -15,9 +16,12 @@ Rectangle {
 
     signal timepointChanged(variant dt)
 
-    color: "gray"
-    width: 200
-    radius: 4
+    Rectangle {
+        color: "gray"
+        anchors.fill: parent
+        radius: 4
+        opacity: 0.5
+    }
 
     Column {
         id: sidebar
@@ -122,8 +126,8 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            Rectangle {
-                color: "light gray"
+            Image {
+                source: "../../images/common/bg_paginazione.png"
                 height: 40
                 anchors {
                     left: parent.left

@@ -2,15 +2,19 @@ import QtQuick 1.1
 import Components 1.0
 
 
-Rectangle {
+Image {
     id: bg
+    height: 90
 
     property string source
     property string title
 
-    color: "gray"
-    height: 90
-    radius: 4
+    Rectangle {
+        anchors.fill: parent
+        color: "gray"
+        radius: 4
+        opacity: 0.5
+    }
 
     SvgImage {
         id: imgTitle

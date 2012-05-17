@@ -131,16 +131,16 @@ Page {
 
             model: ListModel {
                 ListElement {
-                    text: "bla bla bla, nota"
+                    text: "Prendere il pane"
                 }
                 ListElement {
-                    text: "bla bla bla, nota2"
+                    text: "23 Giugno dottore"
                 }
                 ListElement {
-                    text: "bla bla bla, nota3"
+                    text: "1 Luglio compleanno di Luca"
                 }
                 ListElement {
-                    text: "bla bla bla, nota4"
+                    text: "pagare spese condominiali"
                 }
 
             }

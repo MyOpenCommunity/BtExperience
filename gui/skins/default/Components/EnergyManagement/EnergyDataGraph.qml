@@ -124,10 +124,9 @@ Page {
             }
         }
 
-        Rectangle {
+        Item {
             id: bgGraph
-            color: "gray"
-            radius: 4
+
             anchors {
                 top: bgTitle.bottom
                 topMargin: 10
@@ -137,6 +136,13 @@ Page {
                 rightMargin: 10
                 bottom: parent.bottom
                 bottomMargin: 10
+            }
+
+            Rectangle {
+                anchors.fill: parent
+                color: "gray"
+                radius: 4
+                opacity: 0.5
             }
 
             ControlBar {

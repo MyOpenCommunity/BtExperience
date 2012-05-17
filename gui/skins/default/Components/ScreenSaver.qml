@@ -16,6 +16,10 @@ Item {
         screensaver.state = ""
     }
 
+    Component.onCompleted: {
+        screensaverComponent = selectScreensaver()
+    }
+
     Connections {
         target: global
         onLastTimePressChanged: {
@@ -34,18 +38,20 @@ Item {
         }
     }
 
+    function selectScreensaver() {
+        switch (global.guiSettings.screensaverType)
+        {
+        case GuiSettings.Rectangles:
+            return flashyRectangles
+        default:
+            return bouncingLogo
+        }
+    }
+
     Connections {
         target: global.guiSettings
         onScreensaverTypeChanged: {
-            switch (global.guiSettings.screensaverType)
-            {
-            case GuiSettings.Rectangles:
-                screensaverComponent = flashyRectangles
-                break
-            default:
-                screensaverComponent = bouncingLogo
-                break
-            }
+            screensaverComponent = selectScreensaver()
         }
     }
 

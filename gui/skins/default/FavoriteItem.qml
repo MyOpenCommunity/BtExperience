@@ -63,7 +63,7 @@ Item {
             }
 
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Testo molto molto molto lungo"
+            text: "Corriere.it - Il sito web del Corriere della Sera"
             horizontalAlignment: Text.AlignHCenter
             width: icon.width
 
