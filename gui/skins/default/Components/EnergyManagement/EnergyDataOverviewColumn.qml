@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
 
 
 Item {
@@ -7,7 +8,7 @@ Item {
 
     property string title: "40 kWh"
     property string description: "electricity"
-    property string footer: "Month (day 21/30)"
+    property int valueType: EnergyData.CumulativeMonthGraph
     property string source: "../../images/common/svg_bolt.svg"
 
     // properties to be passed to the ControlColumnBar component
@@ -104,6 +105,32 @@ Item {
         critical_bar_visible: element.critical_bar_visible
     }
 
+
+    function daysInMonth(month,year)
+    {
+       return new Date(year, month, 0).getDate();
+    }
+
+    function formatFooter(date) {
+        var footer = ""
+        switch (valueType)
+        {
+        case EnergyData.CumulativeDayValue:
+            footer += qsTr("hour ")
+            footer += Qt.formatDateTime(date, "h/24")
+            break;
+        case EnergyData.CumulativeMonthValue:
+            footer += qsTr("day ")
+            footer += Qt.formatDateTime(date, "d/") + daysInMonth(date.getFullYear(), date.getMonth())
+            break;
+        case EnergyData.CumulativeYearValue:
+            footer += qsTr("month ")
+            footer += Qt.formatDateTime(date, "M/12")
+            break;
+        }
+        return footer
+    }
+
     Item {
         // a text below the bar
         id: footer
@@ -125,7 +152,7 @@ Item {
                 right: parent.right
             }
             Text {
-                text: element.footer
+                text: formatFooter(new Date())
                 color: "white"
                 anchors {
                     fill: parent

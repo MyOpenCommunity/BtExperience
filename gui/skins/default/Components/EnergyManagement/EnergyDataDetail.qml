@@ -165,7 +165,7 @@ Page {
                         level_critical: 90 // TODO it must come from somewhere
                         title: level_actual + " " + translations.get("ENERGY_UNIT", obj.energyType)
                         source: getSymbol(obj.energyType)
-                        footer: qsTr("Month (day 21/30)") // TODO ???
+                        valueType: page.valueType
                         description: translations.get("ENERGY_TYPE", obj.energyType) // TODO implementare
                         note_header: "consumption"
                         note_footer: (i.isValid ? i.value + " " + translations.get("ENERGY_UNIT", obj.energyType) : "---")

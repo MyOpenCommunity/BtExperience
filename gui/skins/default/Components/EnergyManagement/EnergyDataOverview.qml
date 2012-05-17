@@ -148,7 +148,7 @@ Page {
                         level_critical: 90 // TODO it must come from somewhere
                         title: level_actual + " " + translations.get("ENERGY_UNIT", obj.energyType)
                         description: translations.get("ENERGY_TYPE", obj.energyType)
-                        footer: qsTr("Month (day 21/30)") // TODO ???
+                        valueType: energyCategories.valueType
                         source: getSymbol(obj.energyType)
                         onClicked: openLinkedPage(obj)
                     }
