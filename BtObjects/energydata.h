@@ -202,13 +202,13 @@ private:
 	void cacheValueData(ValueType type, QDate date, qint64 value);
 	void cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph);
 
-	QList<QObject *> createGraph(GraphType type, const QVector<qint64> &values, double conversion = 1.0);
+	QList<QObject *> createGraph(GraphType type, const QVector<double> &values, double conversion = 1.0);
 
 	EnergyDevice *dev;
 	EnergyRate *rate;
 	QHash<CacheKey, EnergyGraph *> graphCache;
 	QHash<CacheKey, EnergyItem *> itemCache;
-	QCache<CacheKey, QVector<qint64> > valueCache;
+	QCache<CacheKey, QVector<double> > valueCache;
 	bool general;
 
 #if TEST_ENERGY_DATA

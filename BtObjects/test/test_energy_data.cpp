@@ -45,7 +45,7 @@ QMap<int, unsigned int> TestEnergyData::graphValues(int size, int start)
 	QMap<int, unsigned int> res;
 
 	for (int i = 0; i < size; ++i)
-		res[i + 1] = start + i;
+		res[i + 1] = start + i * 100;
 
 	return res;
 }
@@ -123,15 +123,15 @@ void TestEnergyData::testUpdateItemValue()
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o1, SIGNAL(valueChanged()));
 
-	obj->cacheValueData(EnergyData::MonthlyAverage, QDate(2012, 05, 1), 1236);
+	obj->cacheValueData(EnergyData::MonthlyAverage, QDate(2012, 05, 1), 1236000);
 	t1.checkNoSignals();
 	t2.checkNoSignals();
 
-	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 04, 1), 1235);
+	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 04, 1), 1235000);
 	t1.checkNoSignals();
 	t2.checkNoSignals();
 
-	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 05, 1), 1234);
+	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 05, 1), 1234000);
 	t1.checkSignals();
 	t2.checkSignals();
 
@@ -146,56 +146,56 @@ void TestEnergyData::testUpdateGraphValue()
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
-	obj->cacheGraphData(EnergyData::CumulativeDayGraph, QDate(2012, 05, 1), graphValues(3, 10));
+	obj->cacheGraphData(EnergyData::CumulativeDayGraph, QDate(2012, 05, 1), graphValues(3, 10000));
 	t1.checkNoSignals();
 	t2.checkNoSignals();
 
-	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 04, 1), graphValues(3, 9));
+	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 04, 1), graphValues(3, 9000));
 	t1.checkNoSignals();
 	t2.checkNoSignals();
 
-	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 1), graphValues(3, 8));
+	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 1), graphValues(3, 8000));
 	t1.checkSignals();
 	t2.checkSignals();
 
 	QCOMPARE(o1->getGraph().size(), 3);
-	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(8));
-	QCOMPARE(getBar(o1, 2)->getValue(), QVariant(10));
+	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(8.0));
+	QCOMPARE(getBar(o1, 2)->getValue(), QVariant(8.2));
 
 	QCOMPARE(o2->getGraph().size(), 3);
 	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(2));
-	QCOMPARE(getBar(o2, 2)->getValue(), QVariant(2.5));
+	QCOMPARE(getBar(o2, 2)->getValue(), QVariant(2.05));
 }
 
 void TestEnergyData::testCachedValue()
 {
-	obj->cacheValueData(EnergyData::MonthlyAverage, QDate(2012, 05, 1), 1236);
-	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 04, 1), 1235);
-	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 05, 1), 1234);
+	obj->cacheValueData(EnergyData::MonthlyAverage, QDate(2012, 05, 1), 1236000);
+	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 04, 1), 1235000);
+	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 05, 1), 1234000);
 
 	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), false);
 	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), true);
 
-	QCOMPARE(o1->getValue(), QVariant(1234));
+	QCOMPARE(o1->getValue(), QVariant(1234.0));
 	QCOMPARE(o2->getValue(), QVariant(308.5));
 }
 
 void TestEnergyData::testCachedGraph()
 {
-	obj->cacheGraphData(EnergyData::CumulativeDayGraph, QDate(2012, 05, 1), graphValues(3, 10));
-	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 04, 1), graphValues(3, 9));
-	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 1), graphValues(3, 8));
+	obj->cacheGraphData(EnergyData::CumulativeDayGraph, QDate(2012, 05, 1), graphValues(3, 10000));
+	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 04, 1), graphValues(3, 9000));
+	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 1), graphValues(3, 8000));
 
 	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), false);
 	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), true);
 
 	QCOMPARE(o1->getGraph().size(), 3);
-	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(8));
-	QCOMPARE(getBar(o1, 2)->getValue(), QVariant(10));
+	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(8.0));
+	QCOMPARE(getBar(o1, 2)->getValue(), QVariant(8.2));
 
 	QCOMPARE(o2->getGraph().size(), 3);
 	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(2));
-	QCOMPARE(getBar(o2, 2)->getValue(), QVariant(2.5));
+	QCOMPARE(getBar(o2, 2)->getValue(), QVariant(2.05));
 }
 
 void TestEnergyItem::init()

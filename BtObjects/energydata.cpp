@@ -96,7 +96,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 		// TODO re-request if date includes today
 		return graph;
 
-	QVector<qint64> *cached = valueCache.object(value_key);
+	QVector<double> *cached = valueCache.object(value_key);
 	if (cached)
 		values = createGraph(type, *cached, in_currency ? rate->getRate() : 1.0);
 
@@ -149,7 +149,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 		// TODO re-request if date includes today
 		return item;
 
-	QVector<qint64> *cached = valueCache.object(value_key);
+	QVector<double> *cached = valueCache.object(value_key);
 	if (cached)
 		val = in_currency ? (*cached)[0] * rate->getRate() : (*cached)[0];
 
@@ -281,23 +281,29 @@ QDate EnergyData::normalizeDate(ValueType type, QDate date)
 void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 {
 	// TODO clean up unused cache entries after some time (maybe triggered by object deletion)
-	valueCache.insert(CacheKey(type, date), new QVector<qint64>(1, value), 1);
+	// for electricity, the device returns values in watts, but the GUI always displays kilowatts,
+	// so it's easier to do the conversion here
+	double conversion = getEnergyType() == Electricity ? 1000.0 : 1.0;
+	valueCache.insert(CacheKey(type, date), new QVector<double>(1, value / conversion), 1);
 
 	if (EnergyItem *item = itemCache.value(CacheKey(type, date, false)))
-		item->setValue(value);
+		item->setValue(value / conversion);
 	if (EnergyItem *item = itemCache.value(CacheKey(type, date, true)))
-		item->setValue(value * rate->getRate());
+		item->setValue(value / conversion * rate->getRate());
 }
 
 void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph)
 {
 	// TODO clean up unused cache entries after some time (maybe triggered by object deletion)
-	QVector<qint64> *values = new QVector<qint64>(graph.size());
+	// for electricity, the device returns values in watts, but the GUI always displays kilowatts,
+	// so it's easier to do the conversion here
+	double conversion = getEnergyType() == Electricity ? 1000.0 : 1.0;
+	QVector<double> *values = new QVector<double>(graph.size());
 
 	valueCache.insert(CacheKey(type, date), values, graph.size());
 
 	for (int i = 0; i < graph.size(); ++i)
-		(*values)[i] = graph[i + 1];
+		(*values)[i] = graph[i + 1] / conversion;
 
 	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, false)))
 		graph->setGraph(createGraph(type, *values));
@@ -305,7 +311,7 @@ void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned i
 		graph->setGraph(createGraph(type, *values, rate->getRate()));
 }
 
-QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<qint64> &values, double conversion)
+QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &values, double conversion)
 {
 	QList<QObject *> bars;
 	QList<QString> keys;
