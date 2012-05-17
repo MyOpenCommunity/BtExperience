@@ -83,9 +83,9 @@ Item {
             rightMargin: 2
         }
 
-        Image {
+        Rectangle {
             id: levelBar
-            source: "../../images/common/dimmer_reg.png"
+            color: "green"
             width: consumptionBg.width * (element.value / element.maxValue)
             anchors {
                 top: parent.top
@@ -103,7 +103,7 @@ Item {
         height: 15
         anchors {
             top: consumptionBg.bottom
-            topMargin: 1
+            topMargin: 4
             left: parent.left
             leftMargin: 2
             right: parent.right
