@@ -156,6 +156,12 @@ Page {
             y: 250
             onRequestEdit: profilePage.showEditBox(favorite)
         }
+
+        RssItem {
+            x: 400
+            y: 100
+            onRequestEdit: profilePage.showEditBox(favorite)
+        }
     }
 
     function showEditBox(favorite) {
