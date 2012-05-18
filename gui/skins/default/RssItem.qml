@@ -9,4 +9,5 @@ QuickLink {
     page: "RssPage.qml"
     bgImage: "images/profiles/news.png"
     text: "news - Corriere della Sera"
+    address: "http://www.corriere.it"
 }

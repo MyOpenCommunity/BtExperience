@@ -162,6 +162,12 @@ Page {
             y: 100
             onRequestEdit: profilePage.showEditBox(favorite)
         }
+
+        AutoStartLink {
+            x: 500
+            y: 300
+            onRequestEdit: profilePage.showEditBox(favorite)
+        }
     }
 
     function showEditBox(favorite) {

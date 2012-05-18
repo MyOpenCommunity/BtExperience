@@ -14,6 +14,7 @@ Item {
     property int additionalWidth: 10
 
     signal requestEdit(variant favorite)
+    signal clicked()
 
     width: column.width + 10
     height: column.height + 10
@@ -139,7 +140,9 @@ Item {
         anchors.fill: parent
         onPressAndHold: parent.state = "selected"
         onClicked: {
-            Stack.openPage(page, {'urlString': "http://" + address})
+            if (page !== "")
+                Stack.openPage(page, {'urlString': address})
+            bgQuick.clicked()
         }
         // TODO: just for debugging purposes
         onPressed: parent.state = ""

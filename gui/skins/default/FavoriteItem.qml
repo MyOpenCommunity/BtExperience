@@ -9,4 +9,5 @@ QuickLink {
     page: "Browser.qml"
     bgImage: "images/profiles/web.png"
     text: "Corriere.it - Il sito web del Corriere della Sera"
+    address: "http://www.corriere.it"
 }
