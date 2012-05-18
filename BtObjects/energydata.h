@@ -26,7 +26,7 @@ class QDomNode;
 	Allows reading current energy consumption, and records hourly/daily/monthly totals and graphs.
 
 	Energy types are:
-	- Electricity (watt)
+	- Electricity (kilowatt)
 	- Water (liter)
 	- Gas (dm3, liter)
 	- Hot water (calories)
