@@ -54,14 +54,14 @@ Item {
         Text {
             id: titleText
             text: title; width: parent.width; wrapMode: Text.WordWrap
-            font { bold: true; family: "Helvetica"; pointSize: 16 }
+            font { bold: true; pointSize: 16 }
             textFormat: Text.RichText
         }
 
         Text {
             id: descriptionText
             width: parent.width; text: description
-            wrapMode: Text.WordWrap; font.family: "Helvetica"
+            wrapMode: Text.WordWrap
             textFormat: Text.RichText
         }
     }
