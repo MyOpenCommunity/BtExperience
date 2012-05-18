@@ -38,25 +38,47 @@ Page {
     }
 
     ListView {
+        id: favourites
+        model: favouritesModel
+        delegate: favouritesDelegate
+        orientation: ListView.Horizontal
+        height: 130
+        width: 170 * 6
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+
         ListModel {
             id: favouritesModel
             ListElement {
                 type: "camera"
+                address: ""
+                name: "Cancelletto"
             }
             ListElement {
                 type: "web"
+                address: "http://www.corriere.it"
+                name: "Corriere della Sera"
             }
             ListElement {
                 type: "web"
+                address: "http://www.gazzetta.it"
+                name: "Gazzetta dello sport"
             }
             ListElement {
                 type: "web"
+                address: "http://www.repubblica.it"
+                name: "Repubblica"
             }
             ListElement {
                 type: "web"
+                address: "http://www.style.it"
+                name: "Style.it"
             }
             ListElement {
                 type: "rss"
+                address: "http://www.corriere.it"
+                name: "news - Corriere della Sera"
             }
         }
 
@@ -64,29 +86,23 @@ Page {
             id: favouritesDelegate
 
             Item {
+                id: favouriteItem
                 width: 170
                 height: 130
-
                 Loader {
+                    id: favouriteItemLoader
                     sourceComponent: bestDelegate(type)
-                    anchors.centerIn: shadow
+                    anchors.centerIn: favouriteItem
                     z: 1
                     Component.onCompleted: {
                         item.editable = false
                     }
-                }
-
-                Rectangle {
-                    id: shadow
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#214045" }
-                        GradientStop { position: 1.0; color: "#8ca8b4" }
+                    onLoaded: {
+                        item.text = model.name
+                        item.address = model.address
                     }
-
-                    anchors.fill: parent
-                    anchors.margins: 3
-                    opacity: 0.5
                 }
+
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -99,17 +115,7 @@ Page {
             }
         }
 
-        id: favourites
-        model: favouritesModel
-        delegate: favouritesDelegate
-        orientation: ListView.Horizontal
-        height: 138
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+
     }
 
     PathView {
