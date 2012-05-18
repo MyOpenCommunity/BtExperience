@@ -314,7 +314,7 @@ QDate EnergyData::normalizeDate(ValueType type, QDate date)
 	case MonthlyAverageValue:
 		return QDate(date.year(), date.month(), 1);
 	case CumulativeYearValue:
-		return QDate();
+		return QDate(date.year(), 1, 1);
 	}
 
 	Q_ASSERT_X(0, "EnergyData::normalizeDate", "Invalid value for ValueType");
@@ -382,10 +382,19 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 	if (old_value == month_value || !checkYearGraphDataIsValid(actual_date, *values))
 		return;
 
+	double cumulative_value = 0.0;
+
+	for (int i = 0; i < values->count(); ++i)
+		cumulative_value += (*values)[i];
+
 	if (EnergyGraph *graph = graphCache.value(CacheKey(CumulativeYearGraph, actual_date, false)))
 		graph->setGraph(createGraph(CumulativeYearGraph, *values));
 	if (EnergyGraph *graph = graphCache.value(CacheKey(CumulativeYearGraph, actual_date, true)))
 		graph->setGraph(createGraph(CumulativeYearGraph, *values, rate->getRate()));
+	if (EnergyItem *value = itemCache.value(CacheKey(CumulativeYearValue, actual_date, false)))
+		value->setValue(cumulative_value);
+	if (EnergyItem *value = itemCache.value(CacheKey(CumulativeYearValue, actual_date, true)))
+		value->setValue(cumulative_value * rate->getRate());
 }
 
 bool EnergyData::checkYearGraphDataIsValid(QDate date, const QVector<double> &values)
@@ -443,7 +452,7 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 		case EnergyDevice::DIM_CURRENT:
 		case EnergyDevice::DIM_CUMULATIVE_DAY:
 		case EnergyDevice::DIM_CUMULATIVE_MONTH:
-		case EnergyDevice::DIM_CUMULATIVE_YEAR:
+		// DIM_CUMULATIVE_YEAR uses the same (wrong) time span used by DIM_CUMULATIVE_YEAR_GRAPH
 		case EnergyDevice::DIM_MONTLY_AVERAGE:
 		{
 			EnergyValue value = it.value().value<EnergyValue>();

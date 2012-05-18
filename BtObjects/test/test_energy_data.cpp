@@ -329,20 +329,49 @@ void TestEnergyData::testReceiveCumulativeMonthValue()
 
 void TestEnergyData::testReceiveCumulativeYearValue()
 {
-	EnergyItem *o1 = getValue(EnergyData::CumulativeYearValue, QDate(2012, 5, 18), false);
-	EnergyItem *o2 = getValue(EnergyData::CumulativeYearValue, QDate(2012, 5, 18), true);
+	EnergyItem *o1 = getValue(EnergyData::CumulativeYearValue, QDate(2011, 5, 18), false);
+	EnergyItem *o2 = getValue(EnergyData::CumulativeYearValue, QDate(2011, 5, 18), true);
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
-	// TODO current frames only handle last 12 months, not solar year, so date is irrelevant
+	for (int i = 0; i < 12; ++i)
+	{
+		t1.checkNoSignals();
+		t2.checkNoSignals();
 
-	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_YEAR, QDate::currentDate(), 1234000));
+		obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, QDate(2011, i + 1, 17),
+						    1234000 + i * 100));
+	}
 
 	t1.checkSignals();
 	t2.checkSignals();
 
-	QCOMPARE(o1->getValue(), QVariant(1234.0));
-	QCOMPARE(o2->getValue(), QVariant(308.5));
+	QCOMPARE(o1->getValue(), QVariant(14814.6));
+	QCOMPARE(o2->getValue(), QVariant(3703.65));
+
+	// different year: no updates
+
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, QDate(2012, 1, 17), 200000));
+
+	t1.checkNoSignals();
+	t2.checkNoSignals();
+
+	// no value change: no updates
+
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, QDate(2011, 1, 17), 1234000));
+
+	t1.checkNoSignals();
+	t2.checkNoSignals();
+
+	// different value: update
+
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, QDate(2011, 1, 17), 1239000));
+
+	t1.checkSignals();
+	t2.checkSignals();
+
+	QCOMPARE(o1->getValue(), QVariant(14819.6));
+	QCOMPARE(o2->getValue(), QVariant(3704.9));
 }
 
 void TestEnergyData::testReceiveMonthlyAverage()
