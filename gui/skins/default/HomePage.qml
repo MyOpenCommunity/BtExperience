@@ -104,8 +104,6 @@ Page {
                 }
             }
         }
-
-
     }
 
     PathView {
@@ -225,7 +223,6 @@ Page {
         onMovementEnded: currentPressed = -1
     }
 
-
     RoomListModel {
         id: roomModel
     }
@@ -295,16 +292,13 @@ Page {
                 onClicked: Stack.openPage("Settings.qml")
             }
 
-
             ButtonHomePageLink {
                 source: "images/home/multimedia.svg"
                 sourcePressed: "images/home/multimedia_p.svg"
                 text: qsTr("multimedia")
                 onClicked: Stack.openPage("Browser.qml")
             }
-
         }
-
     }
 }
 
