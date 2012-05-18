@@ -196,7 +196,7 @@ QDate EnergyData::normalizeDate(ValueType type, QDate date)
 	case CumulativeDayValue:
 		return date;
 	case CumulativeMonthValue:
-	case MonthlyAverage:
+	case MonthlyAverageValue:
 		return QDate(date.year(), date.month(), 1);
 	case CumulativeYearValue:
 		return QDate();

@@ -76,7 +76,7 @@ public:
 		/// Total consumption over the last year (current month and the previous 11 months).
 		CumulativeYearValue,
 		/// Average consumption value for the days in a month.
-		MonthlyAverage
+		MonthlyAverageValue
 	};
 
 	/// Type of energy measured by this device
