@@ -112,10 +112,11 @@ Item {
     }
 
     Row {
-        spacing: 20
+        spacing: 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: 10
 
         Image {
             id: buttonOk

@@ -112,8 +112,6 @@ Page {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    // TODO implementare con tastiera ecc...
-                    // onClicked: global.noteListModel.append("dottore ore 18.00")
                     onClicked: pannableChild.addNote()
                 }
             }
@@ -128,8 +126,10 @@ Page {
                 elementsOnPage: 4
                 listHeight: model.count > elementsOnPage ? elementsOnPage * 50 : model.count * 50
 
-                delegate: SvgImage {
-                    source: "images/common/menu_column_item_bg.svg"
+                delegate: Rectangle {
+                    color: index % 2 !== 0 ? "light gray" : "gray"
+                    width: 212
+                    height: 50
                     property variant obj: global.noteListModel.getObject(index)
 
                     Text {
@@ -142,11 +142,21 @@ Page {
                         font.pixelSize: 16
                         wrapMode: Text.WordWrap
                         text: obj.text
+                    }
+                    Image {
+                        anchors.right: parent.right
+                        anchors.rightMargin: 5
+                        anchors.top: parent.top
+                        anchors.topMargin: 5
+                        source: "images/profiles/icon_x.png"
+                        width: 20
+                        height: 20
                         MouseArea {
                             anchors.fill: parent
                             onClicked: global.noteListModel.remove(index)
                         }
                     }
+
                 }
 
                 model: global.noteListModel
@@ -243,7 +253,7 @@ Page {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    console.log("Confirm editing")
+                                    global.noteListModel.append(textEdit.text)
                                     closePopup()
                                 }
                             }
@@ -261,7 +271,6 @@ Page {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    console.log("Discard editing")
                                     closePopup()
                                 }
                             }
@@ -271,9 +280,6 @@ Page {
                 }
             }
         }
-
-
-
     }
 
 
