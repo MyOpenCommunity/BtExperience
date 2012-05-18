@@ -102,16 +102,6 @@ Page {
                         item.address = model.address
                     }
                 }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        if (index === 0)
-                            Stack.openPage("Browser.qml", {'urlString': "http://www.corriere.it"})
-                        else if (index === 4)
-                            Stack.openPage("Browser.qml", {'urlString': "http://www.style.it/"})
-                    }
-                }
             }
         }
 
