@@ -194,6 +194,7 @@ private slots:
 	void graphDestroyed(QObject *obj);
 	void itemDestroyed(QObject *obj);
 	void rateChanged();
+	void valueReceived(const DeviceValues &values_list);
 
 private:
 	QDate normalizeDate(GraphType type, QDate date);

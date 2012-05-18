@@ -29,6 +29,44 @@ namespace
 			}
 		}
 	}
+
+	EnergyData::ValueType mapDimensionToItemType(int dimension)
+	{
+		switch (dimension)
+		{
+		case EnergyDevice::DIM_CURRENT:
+			return EnergyData::CurrentValue;
+		case EnergyDevice::DIM_CUMULATIVE_DAY:
+			return EnergyData::CumulativeDayValue;
+		case EnergyDevice::DIM_CUMULATIVE_MONTH:
+			return EnergyData::CumulativeMonthValue;
+		case EnergyDevice::DIM_CUMULATIVE_YEAR:
+			return EnergyData::CumulativeYearValue;
+		case EnergyDevice::DIM_MONTLY_AVERAGE:
+			return EnergyData::MonthlyAverageValue;
+		default:
+			Q_ASSERT_X(0, "mapDimensionToItemType", "invalid dimension");
+			return static_cast<EnergyData::ValueType>(-1);
+		}
+	}
+
+	EnergyData::GraphType mapDimensionToGraphType(int dimension)
+	{
+		switch (dimension)
+		{
+		case EnergyDevice::DIM_CUMULATIVE_MONTH_GRAPH:
+			return EnergyData::CumulativeMonthGraph;
+		case EnergyDevice::DIM_CUMULATIVE_YEAR_GRAPH:
+			return EnergyData::CumulativeYearGraph;
+		case EnergyDevice::DIM_DAILY_AVERAGE_GRAPH:
+			return EnergyData::DailyAverageGraph;
+		case EnergyDevice::DIM_DAY_GRAPH:
+			return EnergyData::CumulativeDayGraph;
+		default:
+			Q_ASSERT_X(0, "mapDimensionToGraphType", "invalid dimension");
+			return static_cast<EnergyData::GraphType>(-1);
+		}
+	}
 }
 
 
@@ -74,6 +112,8 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general, EnergyR
 	automatic_updates->setInterval(5000);
 	connect(automatic_updates, SIGNAL(timeout()), this, SLOT(testAutomaticUpdates()));
 #endif
+
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 
 	if (rate)
 		connect(rate, SIGNAL(rateChanged()), this, SLOT(rateChanged()));
@@ -339,6 +379,44 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 		bars.append(new EnergyGraphBar(i, keys[i], values[i] * conversion));
 
 	return bars;
+}
+
+void EnergyData::valueReceived(const DeviceValues &values_list)
+{
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		switch (it.key())
+		{
+		case EnergyDevice::DIM_CURRENT:
+		case EnergyDevice::DIM_CUMULATIVE_DAY:
+		case EnergyDevice::DIM_CUMULATIVE_MONTH:
+		case EnergyDevice::DIM_CUMULATIVE_YEAR:
+		case EnergyDevice::DIM_MONTLY_AVERAGE:
+		{
+			EnergyValue value = it.value().value<EnergyValue>();
+			ValueType type = mapDimensionToItemType(it.key());
+
+			cacheValueData(type, normalizeDate(type, value.first), value.second);
+		}
+			break;
+		case EnergyDevice::DIM_CUMULATIVE_MONTH_GRAPH:
+		case EnergyDevice::DIM_DAILY_AVERAGE_GRAPH:
+		case EnergyDevice::DIM_DAY_GRAPH:
+		// DIM_CUMULATIVE_YEAR_GRAPH is composed in the device by multiple
+		// DIM_CUMULATIVE_MONTH values, and it has the wrong time span (last 12
+		// months instead of starting from January), so we do not use it and use
+		// DIM_CUMULATIVE_MONTH values
+		{
+			GraphData data = it.value().value<GraphData>();
+			GraphType type = mapDimensionToGraphType(it.key());
+
+			cacheGraphData(type, normalizeDate(type, data.date), data.graph);
+		}
+			break;
+		}
+		++it;
+	}
 }
 
 void EnergyData::graphDestroyed(QObject *obj)

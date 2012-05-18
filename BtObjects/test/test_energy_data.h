@@ -47,11 +47,23 @@ private slots:
 	void testCachedValue();
 	void testCachedGraph();
 
+	void testReceiveCurrentValue();
+	void testReceiveCumulativeDayValue();
+	void testReceiveCumulativeMonthValue();
+	void testReceiveCumulativeYearValue();
+	void testReceiveMonthlyAverage();
+
+	void testReceiveDailyAverageGraph();
+	void testReceiveCumulativeDayGraph();
+	void testReceiveCumulativeMonthGraph();
+
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, bool in_currency = false);
 	EnergyGraph *getGraph(EnergyData::GraphType type, QDate date, bool in_currency = false);
 	EnergyGraphBar *getBar(EnergyGraph *graph, int index);
 	QMap<int, unsigned int> graphValues(int size, int start);
+	DeviceValues makeDeviceValues(int dimension, QDate date, qint64 value);
+	DeviceValues makeDeviceValues(int dimension, QDate date, QMap<int, unsigned int> values);
 
 	EnergyData *obj;
 	EnergyDevice *dev;
