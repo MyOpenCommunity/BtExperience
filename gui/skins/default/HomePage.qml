@@ -17,7 +17,7 @@ Page {
 
     Component {
         id: cameraDelegate
-        AutoStartLink {}
+        CameraLink {}
     }
 
     Component {

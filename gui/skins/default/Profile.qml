@@ -181,7 +181,7 @@ Page {
                 onRequestEdit: pannableChild.showEditBox(favorite)
             }
 
-            AutoStartLink {
+            CameraLink {
                 x: 500
                 y: 300
                 onRequestEdit: pannableChild.showEditBox(favorite)
