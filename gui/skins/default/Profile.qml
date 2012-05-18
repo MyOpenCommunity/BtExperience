@@ -36,147 +36,245 @@ Page {
         anchors.right: parent.right
         anchors.rightMargin: parent.width / 100 * 3
 
+        Item {
+            id: pannableChild
+            x: 0
+            y: parent.childOffset
+            width: parent.width
+            height: parent.height
 
-        Text {
-            id: headerProfileRect
-            anchors.top: parent.top
-            anchors.left: profileRect.left
-            text: qsTr("profile")
-            font.capitalization: Font.AllUppercase
-            font.bold: true
-            font.pixelSize: 16
-        }
+            Text {
+                id: headerProfileRect
+                anchors.top: parent.top
+                anchors.left: profileRect.left
+                text: qsTr("profile")
+                font.capitalization: Font.AllUppercase
+                font.bold: true
+                font.pixelSize: 16
+            }
 
-        Rectangle {
-            id: profileRect
-            width: 212
-            height: 100
-            color: "grey"
-            anchors.right: parent.right
-            anchors.top: headerProfileRect.bottom
+            Rectangle {
+                id: profileRect
+                width: 212
+                height: 100
+                color: "grey"
+                anchors.right: parent.right
+                anchors.top: headerProfileRect.bottom
 
-            Image {
-                id: imageProfile
-                width: 100
-                height: parent.height
-                source: "images/home/card_1.png"
+                Image {
+                    id: imageProfile
+                    width: 100
+                    height: parent.height
+                    source: "images/home/card_1.png"
+                }
+
+                Text {
+                    anchors.left: imageProfile.right
+                    anchors.right: parent.right
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: 10
+                    font.pixelSize: 16
+                    text: profilePage.profile
+                }
             }
 
             Text {
-                anchors.left: imageProfile.right
-                anchors.right: parent.right
-                horizontalAlignment: Text.AlignHCenter
-                anchors.top: parent.top
-                anchors.topMargin: 10
+                id: headerNote
+                anchors.top: profileRect.bottom
+                anchors.topMargin: 30
+                anchors.left: profileRect.left
+                text: qsTr("note")
+                font.capitalization: Font.AllUppercase
+                font.bold: true
                 font.pixelSize: 16
-                text: profilePage.profile
-            }
-        }
-
-        Text {
-            id: headerNote
-            anchors.top: profileRect.bottom
-            anchors.topMargin: 30
-            anchors.left: profileRect.left
-            text: qsTr("note")
-            font.capitalization: Font.AllUppercase
-            font.bold: true
-            font.pixelSize: 16
-        }
-
-        SvgImage {
-            id: addNote
-            source: "images/common/menu_column_item_bg.svg";
-            anchors.right: parent.right
-            anchors.top: headerNote.bottom
-
-            Text {
-                anchors.left: parent.left
-                anchors.leftMargin: 5
-                anchors.top: parent.top
-                anchors.topMargin: 5
-                font.pixelSize: 16
-                text: qsTr("aggiungi nota")
             }
 
-            Image {
-                source: "images/common/piu.png"
+            SvgImage {
+                id: addNote
+                source: "images/common/menu_column_item_bg.svg";
                 anchors.right: parent.right
-                anchors.top: parent.top
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                // TODO implementare con tastiera ecc...
-                onClicked: global.noteListModel.append("dottore ore 18.00")
-            }
-        }
-
-        PaginatorList {
-            anchors.top: addNote.bottom
-            anchors.topMargin: 10
-            anchors.left: addNote.left
-
-            id: paginator
-            width: addNote.width
-            elementsOnPage: 4
-            listHeight: model.count > elementsOnPage ? elementsOnPage * 50 : model.count * 50
-
-            delegate: SvgImage {
-                source: "images/common/menu_column_item_bg.svg"
-                property variant obj: global.noteListModel.getObject(index)
+                anchors.top: headerNote.bottom
 
                 Text {
                     anchors.left: parent.left
                     anchors.leftMargin: 5
-                    anchors.right: parent.right
-                    anchors.rightMargin: 5
                     anchors.top: parent.top
                     anchors.topMargin: 5
                     font.pixelSize: 16
-                    wrapMode: Text.WordWrap
-                    text: obj.text
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: global.noteListModel.remove(index)
-                    }
+                    text: qsTr("aggiungi nota")
+                }
+
+                Image {
+                    source: "images/common/piu.png"
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    // TODO implementare con tastiera ecc...
+                    // onClicked: global.noteListModel.append("dottore ore 18.00")
+                    onClicked: pannableChild.addNote()
                 }
             }
 
-            model: global.noteListModel
-        }
-        FavoriteItem {
-            x: 200
-            y: 50
-            onRequestEdit: profilePage.showEditBox(favorite)
+            PaginatorList {
+                anchors.top: addNote.bottom
+                anchors.topMargin: 10
+                anchors.left: addNote.left
+
+                id: paginator
+                width: addNote.width
+                elementsOnPage: 4
+                listHeight: model.count > elementsOnPage ? elementsOnPage * 50 : model.count * 50
+
+                delegate: SvgImage {
+                    source: "images/common/menu_column_item_bg.svg"
+                    property variant obj: global.noteListModel.getObject(index)
+
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 5
+                        anchors.right: parent.right
+                        anchors.rightMargin: 5
+                        anchors.top: parent.top
+                        anchors.topMargin: 5
+                        font.pixelSize: 16
+                        wrapMode: Text.WordWrap
+                        text: obj.text
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: global.noteListModel.remove(index)
+                        }
+                    }
+                }
+
+                model: global.noteListModel
+            }
+            FavoriteItem {
+                x: 200
+                y: 50
+                onRequestEdit: pannableChild.showEditBox(favorite)
+            }
+
+            FavoriteItem {
+                x: 300
+                y: 250
+                onRequestEdit: pannableChild.showEditBox(favorite)
+            }
+
+            RssItem {
+                x: 400
+                y: 100
+                onRequestEdit: pannableChild.showEditBox(favorite)
+            }
+
+            AutoStartLink {
+                x: 500
+                y: 300
+                onRequestEdit: pannableChild.showEditBox(favorite)
+            }
+
+            function showEditBox(favorite) {
+                installPopup(popup)
+                popupLoader.item.favoriteItem = favorite
+            }
+
+            Component {
+                id: popup
+                FavoriteEditPopup { }
+            }
+
+
+            function addNote() {
+                installPopup(popupAddNote)
+            }
+
+            Component {
+                id: popupAddNote
+                Rectangle {
+
+                    signal closePopup
+                    width: 300
+                    height: 200
+                    color: "light gray"
+                    Text {
+                        text: qsTr("Nota")
+                        anchors.left: parent.left
+                        anchors.leftMargin: 10
+                        anchors.top: parent.top
+                    }
+
+                    Rectangle {
+                        color: "white"
+                        anchors {
+                            top: parent.top
+                            topMargin: 20
+                            bottom: buttonsRow.top
+                            bottomMargin: 10
+                            left: parent.left
+                            leftMargin: 10
+                            right: parent.right
+                            rightMargin: 10
+                        }
+                        TextEdit {
+                            id: textEdit
+                            anchors.fill: parent
+                            text: ""
+                        }
+                    }
+                    Row {
+                        id: buttonsRow
+                        spacing: 0
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 10
+                        anchors.right: parent.right
+                        anchors.rightMargin: 10
+
+                        Image {
+                            id: buttonOk
+                            source: "images/common/btn_OKAnnulla.png"
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: qsTr("ok")
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    console.log("Confirm editing")
+                                    closePopup()
+                                }
+                            }
+                        }
+
+                        Image {
+                            id: buttonCancel
+                            source: "images/common/btn_OKAnnulla.png"
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: qsTr("cancel")
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    console.log("Discard editing")
+                                    closePopup()
+                                }
+                            }
+                        }
+                    }
+                    Component.onCompleted: textEdit.forceActiveFocus()
+                }
+            }
         }
 
-        FavoriteItem {
-            x: 300
-            y: 250
-            onRequestEdit: profilePage.showEditBox(favorite)
-        }
 
-        RssItem {
-            x: 400
-            y: 100
-            onRequestEdit: profilePage.showEditBox(favorite)
-        }
 
-        AutoStartLink {
-            x: 500
-            y: 300
-            onRequestEdit: profilePage.showEditBox(favorite)
-        }
     }
 
-    function showEditBox(favorite) {
-        installPopup(popup)
-        popupLoader.item.favoriteItem = favorite
-    }
 
-    Component {
-        id: popup
-        FavoriteEditPopup { }
-    }
 }
