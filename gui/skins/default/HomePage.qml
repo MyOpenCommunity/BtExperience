@@ -72,7 +72,7 @@ Page {
                     anchors.centerIn: shadow
                     z: 1
                     Component.onCompleted: {
-                        item.enabled = false
+                        item.editable = false
                     }
                 }
 
