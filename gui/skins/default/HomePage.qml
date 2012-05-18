@@ -47,6 +47,7 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
+        interactive: false
 
         ListModel {
             id: favouritesModel
@@ -58,17 +59,17 @@ Page {
             ListElement {
                 type: "web"
                 address: "http://www.corriere.it"
-                name: "Corriere della Sera"
+                name: "Corriere.it"
             }
             ListElement {
                 type: "web"
                 address: "http://www.gazzetta.it"
-                name: "Gazzetta dello sport"
+                name: "Gazzetta.it"
             }
             ListElement {
                 type: "web"
                 address: "http://www.repubblica.it"
-                name: "Repubblica"
+                name: "Repubblica.it"
             }
             ListElement {
                 type: "web"
@@ -78,7 +79,7 @@ Page {
             ListElement {
                 type: "rss"
                 address: "http://www.corriere.it"
-                name: "news - Corriere della Sera"
+                name: "News Corriere.it"
             }
         }
 
