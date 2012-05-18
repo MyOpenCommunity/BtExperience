@@ -60,7 +60,7 @@ Page {
             anchors {
                 top: toolbar.bottom
                 left: parent.left
-                topMargin: 36
+                topMargin: 31
                 leftMargin: 2
             }
 
