@@ -63,14 +63,16 @@ SOURCES += \
     globalproperties.cpp \
     guisettings.cpp \
     imagereader.cpp \
-    inputcontextwrapper.cpp
+    inputcontextwrapper.cpp \
+    notelistmodel.cpp
 
 HEADERS += \
     eventfilters.h \
     globalproperties.h \
     guisettings.h \
     imagereader.h \
-    inputcontextwrapper.h
+    inputcontextwrapper.h \
+    notelistmodel.h
 
 TRANSLATIONS += locale/bt_experience_it.ts
 

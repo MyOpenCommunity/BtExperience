@@ -102,6 +102,12 @@ Page {
                 anchors.right: parent.right
                 anchors.top: parent.top
             }
+
+            MouseArea {
+                anchors.fill: parent
+                // TODO implementare con tastiera ecc...
+                onClicked: global.noteListModel.append("dottore ore 18.00")
+            }
         }
 
         PaginatorList {
@@ -115,7 +121,8 @@ Page {
             listHeight: model.count > elementsOnPage ? elementsOnPage * 50 : model.count * 50
 
             delegate: SvgImage {
-                source: "images/common/menu_column_item_bg.svg";
+                source: "images/common/menu_column_item_bg.svg"
+                property variant obj: global.noteListModel.getObject(index)
 
                 Text {
                     anchors.left: parent.left
@@ -125,25 +132,16 @@ Page {
                     anchors.top: parent.top
                     anchors.topMargin: 5
                     font.pixelSize: 16
-                    text: model.text
+                    wrapMode: Text.WordWrap
+                    text: obj.text
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: global.noteListModel.remove(index)
+                    }
                 }
             }
 
-            model: ListModel {
-                ListElement {
-                    text: "Prendere il pane"
-                }
-                ListElement {
-                    text: "23 Giugno dottore"
-                }
-                ListElement {
-                    text: "1 Luglio compleanno di Luca"
-                }
-                ListElement {
-                    text: "pagare spese condominiali"
-                }
-
-            }
+            model: global.noteListModel
         }
         FavoriteItem {
             x: 200
