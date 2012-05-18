@@ -147,12 +147,10 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                 }
 
-                Rectangle {
+                SvgImage {
                     id: rectPressed
-                    color: "black"
-                    opacity: 0.5
+                    source: "images/common/profilo_p.svg"
                     visible: false
-                    radius: 10
                     anchors {
                         centerIn: imageDelegate
                         fill: imageDelegate
