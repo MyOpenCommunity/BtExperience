@@ -43,6 +43,7 @@ private slots:
 
 	void testUpdateItemValue();
 	void testUpdateGraphValue();
+	void testUpdateYearGraphValue();
 
 	void testCachedValue();
 	void testCachedGraph();
@@ -56,6 +57,7 @@ private slots:
 	void testReceiveDailyAverageGraph();
 	void testReceiveCumulativeDayGraph();
 	void testReceiveCumulativeMonthGraph();
+	void testReceiveCumulativeYearGraph();
 
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, bool in_currency = false);

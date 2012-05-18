@@ -202,6 +202,9 @@ private:
 
 	void cacheValueData(ValueType type, QDate date, qint64 value);
 	void cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph);
+	void cacheYearGraphData(QDate date, double month_value);
+
+	bool checkYearGraphDataIsValid(QDate date, const QVector<double> &values);
 
 	QList<QObject *> createGraph(GraphType type, const QVector<double> &values, double conversion = 1.0);
 

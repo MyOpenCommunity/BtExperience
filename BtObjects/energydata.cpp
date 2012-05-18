@@ -12,6 +12,8 @@
 #include <QTimer>
 #endif //TEST_ENERGY_DATA
 
+#define INVALID_VALUE -1
+
 
 namespace
 {
@@ -137,7 +139,8 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 		return graph;
 
 	QVector<double> *cached = valueCache.object(value_key);
-	if (cached)
+	// for cumulative year graph we might have some valid values received as part of navigating month graphs
+	if (cached && (type != CumulativeYearGraph || checkYearGraphDataIsValid(date, *cached)))
 		values = createGraph(type, *cached, in_currency ? rate->getRate() : 1.0);
 
 	// TODO add in_currency to EnergyGraph
@@ -292,7 +295,7 @@ QDate EnergyData::normalizeDate(GraphType type, QDate date)
 	case CumulativeMonthGraph:
 		return QDate(date.year(), date.month(), 1);
 	case CumulativeYearGraph:
-		return QDate();
+		return QDate(date.year(), 1, 1);
 	}
 
 	Q_ASSERT_X(0, "EnergyData::normalizeDate", "Invalid value for GraphType");
@@ -330,6 +333,10 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 		item->setValue(value / conversion);
 	if (EnergyItem *item = itemCache.value(CacheKey(type, date, true)))
 		item->setValue(value / conversion * rate->getRate());
+
+	// see comment in valueReceived()
+	if (type == CumulativeMonthValue)
+		cacheYearGraphData(date, value / conversion);
 }
 
 void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph)
@@ -349,6 +356,51 @@ void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned i
 		graph->setGraph(createGraph(type, *values));
 	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, true)))
 		graph->setGraph(createGraph(type, *values, rate->getRate()));
+}
+
+void EnergyData::cacheYearGraphData(QDate date, double month_value)
+{
+	QDate actual_date = QDate(date.year(), 1, 1);
+	CacheKey key(CumulativeYearGraph, actual_date);
+	QVector<double> *values = valueCache.object(key);
+	int index = date.month() - 1;
+
+	if (!values)
+	{
+		values = new QVector<double>();
+		values->reserve(12);
+		valueCache.insert(key, values, 12);
+	}
+
+	while (values->size() <= index)
+		values->append(INVALID_VALUE);
+
+	double old_value = (*values)[index];
+
+	(*values)[index] = month_value;
+
+	if (old_value == month_value || !checkYearGraphDataIsValid(actual_date, *values))
+		return;
+
+	if (EnergyGraph *graph = graphCache.value(CacheKey(CumulativeYearGraph, actual_date, false)))
+		graph->setGraph(createGraph(CumulativeYearGraph, *values));
+	if (EnergyGraph *graph = graphCache.value(CacheKey(CumulativeYearGraph, actual_date, true)))
+		graph->setGraph(createGraph(CumulativeYearGraph, *values, rate->getRate()));
+}
+
+bool EnergyData::checkYearGraphDataIsValid(QDate date, const QVector<double> &values)
+{
+	QDate today = QDate::currentDate();
+	int count = date.year() == today.year() ? today.month() : 12;
+
+	if (values.size() < count)
+		return false;
+
+	for (int i = 0; i < count; ++i)
+		if (values[i] == INVALID_VALUE)
+			return false;
+
+	return true;
 }
 
 QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &values, double conversion)
