@@ -177,7 +177,7 @@ Page {
                 MouseArea {
                     anchors.fill: parent
 
-                    onClicked: Stack.openPage('Profile.qml', {'profile': name})
+                    onClicked: Stack.openPage('Profile.qml', {'profile': name, 'sourceImage': image})
                     onPressed: itemDelegate.PathView.view.currentPressed = index
                     onReleased: itemDelegate.PathView.view.currentPressed = -1
                 }

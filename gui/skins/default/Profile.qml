@@ -6,6 +6,7 @@ Page {
     id: profilePage
     source: 'images/profiles.jpg'
     property string profile
+    property url sourceImage
 
     ToolBar {
         id: toolbar
@@ -65,7 +66,8 @@ Page {
                     id: imageProfile
                     width: 100
                     height: parent.height
-                    source: "images/home/card_1.png"
+                    source: profilePage.sourceImage
+                    fillMode: Image.PreserveAspectFit
                 }
 
                 Text {
