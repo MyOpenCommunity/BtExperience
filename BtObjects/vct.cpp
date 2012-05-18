@@ -41,6 +41,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	// initial values
 	brightness = 50;
 	contrast = 50;
+	call_stopped = false;
 
 	foreach (ExternalPlace *ep, list)
 		external_places.insertWithoutUii(ep);
@@ -87,6 +88,7 @@ void CCTV::answerCall()
 void CCTV::endCall()
 {
 	dev->endCall();
+	call_stopped = false;
 	stopVideo();
 	emit callEnded();
 }
@@ -107,16 +109,25 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::AUTO_VCT_CALL:
 			qDebug() << "Received VCT_(AUTO)_CALL";
 			// TODO: many many other things...but this should be enough for now.
-			emit incomingCall();
-			startVideo();
+			if (call_stopped && it.key() == VideoDoorEntryDevice::VCT_CALL)
+			{
+				resumeVideo();
+			}
+			else
+			{
+				emit incomingCall();
+				startVideo();
+			}
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received END_OF_CALL";
+			call_stopped = false;
 			stopVideo();
 			emit callEnded();
 			break;
 		case VideoDoorEntryDevice::STOP_VIDEO:
 			qDebug() << "Received STOP_VIDEO";
+			call_stopped = true;
 			stopVideo();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
@@ -148,6 +159,13 @@ void CCTV::stopVideo()
 		qDebug() << "terminate grabber";
 		video_grabber.terminate();
 	}
+}
+
+void CCTV::resumeVideo()
+{
+	qDebug() << "CCTV::resumeVideo()";
+	call_stopped = false;
+	startVideo();
 }
 
 
