@@ -67,26 +67,17 @@ Page {
             onHomeClicked: Stack.backToHome()
         }
 
-        Column {
+        NavigationBar {
             id: buttonsColumn
-            width: backButton.width
-            spacing: 10
             anchors {
                 top: toolbar.bottom
                 left: parent.left
-                topMargin: 35
-                leftMargin: 20
+                topMargin: 36
+                leftMargin: 2
             }
 
-            ButtonBack {
-                id: backButton
-                onClicked: Stack.popPage()
-            }
-
-            ButtonSystems {
-                // 1 is systems page
-                onClicked: Stack.showPreviousPage(1)
-            }
+            onBackClicked: Stack.popPage()
+            onSystemsClicked: Stack.showPreviousPage(1)
         }
 
         TitleBar {

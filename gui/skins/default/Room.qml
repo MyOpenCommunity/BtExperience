@@ -20,13 +20,15 @@ Page {
         onHomeClicked: Stack.backToHome()
     }
 
-    ButtonSystems {
+    NavigationBar {
         id: systemsButton
+        backButton: false
         anchors.left: parent.left
-        anchors.leftMargin: 20
+        anchors.leftMargin: 2
         anchors.top: toolbar.bottom
         anchors.topMargin: 30
-        onClicked: Stack.popPage()
+
+        onSystemsClicked: Stack.popPage()
     }
 
     RoomListModel {

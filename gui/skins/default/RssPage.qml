@@ -14,13 +14,15 @@ Page {
     }
 
 
-    ButtonBack {
+    NavigationBar {
         id: backButton
-        onClicked: Stack.popPage()
+        systemsButton: false
         anchors.topMargin: parent.height / 100 * 5
         anchors.top: toolbar.bottom
-        anchors.leftMargin: parent.width / 100 * 5
+        anchors.leftMargin: 2
         anchors.left: parent.left
+
+        onBackClicked: Stack.popPage()
     }
 
     Item {

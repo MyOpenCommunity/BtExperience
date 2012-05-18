@@ -17,27 +17,30 @@ Page {
         onHomeClicked: Stack.backToHome()
     }
 
-    Text {
-        id: mainText
-        color: "#ffffff"
-        text: systemPage.text
-        transformOrigin: Item.BottomLeft
-        rotation: 270
-        font.pixelSize: 54
-//        font.pixelSize: 60
-//        font.family: lightFont.name
-        y: width + 20  // width and height are reversed because the text is rotated.
-        x: height + 20
-    }
+    // TODO: this is the text which is on the left. Now we have navigation
+    // buttons over there, so I'm removing it.
+    // What should we do about it?
+//    Text {
+//        id: mainText
+//        color: "#ffffff"
+//        text: systemPage.text
+//        transformOrigin: Item.BottomLeft
+//        rotation: 270
+//        font.pixelSize: 54
+////        font.pixelSize: 60
+////        font.family: lightFont.name
+//        y: width + 20  // width and height are reversed because the text is rotated.
+//        x: height + 20
+//    }
 
     // The spacing between the buttons on the left and the MenuContainer
-    property int containerLeftMargin: 20
+    property int containerLeftMargin: 0
 
     Pannable {
         id: pannable
-        x: 122 + backButton.width + containerLeftMargin
+        x: 122 + buttonsColumn.width + containerLeftMargin
         y: 63
-        width: 893 - backButton.width - containerLeftMargin
+        width: 893 - buttonsColumn.width - containerLeftMargin
         height: 530
 
         MenuContainer {
@@ -52,23 +55,15 @@ Page {
         }
     }
 
-    Column {
+    NavigationBar {
         id: buttonsColumn
-        width: backButton.width
-        spacing: 10
         anchors.topMargin: pannable.y + 33
         anchors.top: parent.top
-        anchors.leftMargin: pannable.x - backButton.width - containerLeftMargin
+        anchors.leftMargin: 2
         anchors.left: parent.left
 
-        ButtonBack {
-            id: backButton
-            onClicked: container.closeLastColumn()
-        }
-
-        ButtonSystems {
-            onClicked: container.closed()
-        }
+        onBackClicked: container.closeLastColumn()
+        onSystemsClicked: container.closed()
     }
 }
 

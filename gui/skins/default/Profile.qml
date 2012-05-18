@@ -15,20 +15,22 @@ Page {
     }
 
 
-    ButtonBack {
-        id: backButton
-        onClicked: Stack.popPage()
+    NavigationBar {
+        id: navbar
+        systemsButton: false
         anchors.topMargin: parent.height / 100 * 5
         anchors.top: toolbar.bottom
-        anchors.leftMargin: parent.width / 100 * 5
+        anchors.leftMargin: 2
         anchors.left: parent.left
+
+        onBackClicked: Stack.popPage()
     }
 
     Pannable {
         id: pannable
-        anchors.left: backButton.right
+        anchors.left: navbar.right
         anchors.leftMargin: parent.width / 100 * 1
-        anchors.top: backButton.top
+        anchors.top: navbar.top
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 100 * 5
         anchors.right: parent.right
