@@ -204,20 +204,25 @@ source: "images/home/home.jpg"
 
          SvgImage {
              source: "images/home/menu.svg"
-             anchors.fill: column1
+             anchors.top: parent.top
+             anchors.topMargin: 10
+             anchors.bottom: parent.bottom
+             anchors.bottomMargin: -30
+             anchors.right: parent.right
+             anchors.rightMargin: 30
          }
     Grid {
           id: column1
-          x: 92
-          y: 22
+          x: -288
+          y: 70
           spacing: 0
           columns: 2
           anchors.top: parent.top
-          anchors.topMargin: 22
+          anchors.topMargin: 70
           anchors.bottom: parent.bottom
-          anchors.bottomMargin: 48
+          anchors.bottomMargin: 0
           anchors.right: parent.right
-          anchors.rightMargin: 24
+          anchors.rightMargin: 0
           width: 288
           height: 328
 
@@ -232,7 +237,6 @@ source: "images/home/home.jpg"
                       else
                           Stack.openPage("Room.qml")
                   }
-                  textLeftMargin: 70
               }
 
               ButtonHomePageLink {
@@ -240,14 +244,12 @@ source: "images/home/home.jpg"
                   source: "images/home/sistemi.svg"
                   sourcePressed: "images/home/sistemi_p.svg"
                   text: qsTr("systems")
-                  textLeftMargin: 30
                   onClicked: Stack.openPage("Systems.qml")
               }
 
               ButtonHomePageLink {
                   source: "images/home/opzioni.svg"
                   sourcePressed: "images/home/opzioni_p.svg"
-                  textLeftMargin: 70
                   text: qsTr("options")
                   onClicked: Stack.openPage("Settings.qml")
               }
@@ -257,7 +259,6 @@ source: "images/home/home.jpg"
                   source: "images/home/multimedia.svg"
                   sourcePressed: "images/home/multimedia_p.svg"
                   text: qsTr("multimedia")
-                  textLeftMargin: 18
                   onClicked: Stack.openPage("Browser.qml")
               }
 

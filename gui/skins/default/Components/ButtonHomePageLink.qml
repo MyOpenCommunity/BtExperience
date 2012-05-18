@@ -19,13 +19,14 @@ SvgImage {
         id: text
         color: "#000000"
         text: parent.text
+        horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 13
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.textFirst ? parent.top : undefined
-        anchors.topMargin: parent.textFirst ? 30 : 0
+        anchors.topMargin: parent.textFirst ? 20 : 0
 
         anchors.bottom: parent.textFirst ? undefined : parent.bottom
-        anchors.bottomMargin: parent.textFirst ? 0 : 30
+        anchors.bottomMargin: parent.textFirst ? 0 : 20
         anchors.left: parent.left
         anchors.leftMargin: textLeftMargin
     }
