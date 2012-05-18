@@ -8,7 +8,7 @@ QuickLink {
     id: favoriteItem
 
     page: ""
-    bgImage: "images/profiles/news.png"
+    bgImage: "images/profiles/webcam.png"
     text: "Camera #0"
 
     onClicked: {

@@ -7,6 +7,29 @@ Page {
     id: mainarea
     source: "images/home/home.jpg"
 
+    function bestDelegate(t) {
+        if (t === "camera")
+            return cameraDelegate
+        if (t === "web")
+            return webDelegate
+        return rssDelegate
+    }
+
+    Component {
+        id: cameraDelegate
+        AutoStartLink {}
+    }
+
+    Component {
+        id: webDelegate
+        FavoriteItem {}
+    }
+
+    Component {
+        id: rssDelegate
+        RssItem {}
+    }
+
     ToolBar {
         id: toolbar
         onExitClicked: console.log("exit")
@@ -18,39 +41,41 @@ Page {
         ListModel {
             id: favouritesModel
             ListElement {
-                thumb: "images/home/fav1.png"
+                type: "camera"
             }
             ListElement {
-                thumb: "images/home/fav2.png"
+                type: "web"
             }
             ListElement {
-                thumb: "images/home/fav3.png"
+                type: "web"
             }
             ListElement {
-                thumb: "images/home/fav4.png"
+                type: "web"
             }
             ListElement {
-                thumb: "images/home/fav5.png"
+                type: "web"
             }
             ListElement {
-                thumb: "images/home/fav6.png"
+                type: "rss"
             }
         }
 
         Component {
             id: favouritesDelegate
+
             Item {
                 width: 170
                 height: 130
-                Image {
-                    id: favouritesImage
-                    source: thumb
-                    width: 150
-                    height: 100
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
+
+                Loader {
+                    sourceComponent: bestDelegate(type)
+                    anchors.centerIn: shadow
                     z: 1
+                    Component.onCompleted: {
+                        item.enabled = false
+                    }
                 }
+
                 Rectangle {
                     id: shadow
                     gradient: Gradient {
@@ -58,12 +83,9 @@ Page {
                         GradientStop { position: 1.0; color: "#8ca8b4" }
                     }
 
+                    anchors.fill: parent
+                    anchors.margins: 3
                     opacity: 0.5
-                    width: favouritesImage.width + 10
-                    height: favouritesImage.height
-                    x: favouritesImage.x
-                    y: favouritesImage.y
-                    transform: Translate { y: -5; x: -5 }
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -78,12 +100,9 @@ Page {
         }
 
         id: favourites
-        x: 0
         model: favouritesModel
         delegate: favouritesDelegate
         orientation: ListView.Horizontal
-        y: 372
-        width: 1024
         height: 138
         anchors.right: parent.right
         anchors.rightMargin: 0
