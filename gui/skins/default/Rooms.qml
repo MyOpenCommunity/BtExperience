@@ -41,71 +41,71 @@ Page {
             id: roomsModel
         }
 
-         Component {
-             id: roomDelegate
-             Item {
-                 id: itemDelegate
-                 width: imageDelegate.sourceSize.width
-                 height: imageDelegate.sourceSize.height + textDelegate.height
+        Component {
+            id: roomDelegate
+            Item {
+                id: itemDelegate
+                width: imageDelegate.sourceSize.width
+                height: imageDelegate.sourceSize.height + textDelegate.height
 
-                 z: PathView.z
-                 scale: PathView.iconScale + 0.1
+                z: PathView.z
+                scale: PathView.iconScale + 0.1
 
-                 Image {
-                     id: imageDelegate
-                     anchors.top: parent.top
-                     anchors.left: parent.left
-                     anchors.right: parent.right
-                     source: users.selectRoomImage(modelData)
-                 }
+                Image {
+                    id: imageDelegate
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    source: users.selectRoomImage(modelData)
+                }
 
-                 Text {
-                     id: textDelegate
-                     text: modelData
-                     font.family: regularFont.name
-                     font.pixelSize: 22
-                     anchors.top: imageDelegate.bottom
-                     anchors.topMargin: 10
-                     anchors.left: parent.left
-                     anchors.right: parent.right
-                     horizontalAlignment: Text.AlignHCenter
-                 }
+                Text {
+                    id: textDelegate
+                    text: modelData
+                    font.family: regularFont.name
+                    font.pixelSize: 22
+                    anchors.top: imageDelegate.bottom
+                    anchors.topMargin: 10
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    horizontalAlignment: Text.AlignHCenter
+                }
 
-                 MouseArea {
-                     anchors.fill: parent
-                     onClicked: Stack.openPage("Room.qml", {'roomName': modelData})
-                 }
-             }
-         }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Stack.openPage("Room.qml", {'roomName': modelData})
+                }
+            }
+        }
 
-         id: users
-         model: roomsModel.rooms()
-         delegate: roomDelegate
+        id: users
+        model: roomsModel.rooms()
+        delegate: roomDelegate
 
-         path:  Path {
-             startX: 100; startY: 250
-             PathAttribute { name: "iconScale"; value: 0.4 }
-             PathAttribute { name: "z"; value: 0.1 }
-             PathLine { x: 210; y: 250; }
-             PathAttribute { name: "iconScale"; value: 0.6 }
-             PathLine { x: 420; y: 240; }
-             PathAttribute { name: "iconScale"; value: 1.0 }
-             PathAttribute { name: "z"; value: 1.0 }
-             PathLine { x: 600; y: 253; }
-             PathAttribute { name: "iconScale"; value: 0.8 }
-             PathLine { x: 800; y: 242; }
-             PathAttribute { name: "z"; value: 0.1 }
-             PathAttribute { name: "iconScale"; value: 0.45 }
-             PathLine { x: 950; y: 250; }
-         }
-         width: 950
-         pathItemCount: count
-         anchors.bottom: parent.bottom
-         anchors.bottomMargin: 0
-         anchors.top: toolbar.bottom
-         anchors.topMargin: 0
-         anchors.left: parent.left
-         anchors.leftMargin: 0
+        path:  Path {
+            startX: 100; startY: 250
+            PathAttribute { name: "iconScale"; value: 0.4 }
+            PathAttribute { name: "z"; value: 0.1 }
+            PathLine { x: 210; y: 250; }
+            PathAttribute { name: "iconScale"; value: 0.6 }
+            PathLine { x: 420; y: 240; }
+            PathAttribute { name: "iconScale"; value: 1.0 }
+            PathAttribute { name: "z"; value: 1.0 }
+            PathLine { x: 600; y: 253; }
+            PathAttribute { name: "iconScale"; value: 0.8 }
+            PathLine { x: 800; y: 242; }
+            PathAttribute { name: "z"; value: 0.1 }
+            PathAttribute { name: "iconScale"; value: 0.45 }
+            PathLine { x: 950; y: 250; }
+        }
+        width: 950
+        pathItemCount: count
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.top: toolbar.bottom
+        anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
     }
 
     ListView {
