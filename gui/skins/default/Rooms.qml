@@ -71,14 +71,41 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                 }
 
+                Rectangle {
+                    id: rectPressed
+                    color: "black"
+                    opacity: 0.5
+                    visible: false
+                    radius: 10
+                    anchors {
+                        centerIn: imageDelegate
+                        fill: imageDelegate
+                        margins: 20
+                    }
+                    width: imageDelegate.width
+                    height: imageDelegate.height
+                }
+
                 MouseArea {
                     anchors.fill: parent
+
                     onClicked: Stack.openPage("Room.qml", {'roomName': modelData})
+                    onPressed: itemDelegate.PathView.view.currentPressed = index
+                    onReleased: itemDelegate.PathView.view.currentPressed = -1
+                }
+
+                states: State {
+                    when: itemDelegate.PathView.view.currentPressed === index
+                    PropertyChanges {
+                        target: rectPressed
+                        visible: true
+                    }
                 }
             }
         }
 
         id: users
+        property int currentPressed: -1
         model: roomsModel.rooms()
         delegate: roomDelegate
 
@@ -106,6 +133,8 @@ Page {
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
+        onFlickStarted: currentPressed = -1
+        onMovementEnded: currentPressed = -1
     }
 
     ListView {
