@@ -110,6 +110,8 @@ protected:
 private:
 	void startVideo();
 	void stopVideo();
+	void resumeVideo();
+	bool call_stopped;
 	QProcess video_grabber;
 	VideoDoorEntryDevice *dev;
 	ObjectListModel external_places;

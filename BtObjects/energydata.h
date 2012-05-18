@@ -26,7 +26,7 @@ class QDomNode;
 	Allows reading current energy consumption, and records hourly/daily/monthly totals and graphs.
 
 	Energy types are:
-	- Electricity (watt)
+	- Electricity (kilowatt)
 	- Water (liter)
 	- Gas (dm3, liter)
 	- Hot water (calories)
@@ -76,7 +76,7 @@ public:
 		/// Total consumption over the last year (current month and the previous 11 months).
 		CumulativeYearValue,
 		/// Average consumption value for the days in a month.
-		MonthlyAverage
+		MonthlyAverageValue
 	};
 
 	/// Type of energy measured by this device

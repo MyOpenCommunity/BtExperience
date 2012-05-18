@@ -17,6 +17,7 @@ Item {
 
     SvgImage {
         id: toolbar_top
+        height: 55
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
@@ -31,7 +32,7 @@ Item {
         anchors.left: toolbar_top.left
 
         Item {
-            width: 58
+            width: 100
             height: toolbar_top.height
 
             SvgImage {
@@ -48,6 +49,7 @@ Item {
 
         SvgImage {
             source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
         }
 
         Item {
@@ -66,6 +68,7 @@ Item {
 
         SvgImage {
             source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
         }
 
         Item {
@@ -87,6 +90,7 @@ Item {
 
         SvgImage {
             source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
         }
 
         Item {
@@ -117,6 +121,7 @@ Item {
 
         SvgImage {
             source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
         }
     }
 
@@ -133,11 +138,12 @@ Item {
 
         SvgImage {
             source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
         }
 
         Item {
-            width: height + 10
-            height: toolbar_top.height
+            width: height
+            height: toolbar_top.height + 10
             SvgImage {
                 source: imagesPath + "toolbar/icon_alert.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -148,11 +154,12 @@ Item {
 
         SvgImage {
             source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
         }
 
         Item {
-            width: height + 10
-            height: toolbar_top.height
+            width: height
+            height: toolbar_top.height + 10
             SvgImage {
                 source: imagesPath + "toolbar/icon_antintrusion.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -163,11 +170,12 @@ Item {
 
         SvgImage {
             source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
         }
 
         Item {
-            width: height + 10
-            height: toolbar_top.height
+            width: height
+            height: toolbar_top.height + 10
             SvgImage {
                 source: imagesPath + "toolbar/icon_clock.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -186,5 +194,4 @@ Item {
         source: imagesPath + "toolbar/toolbar_bg_bottom.svg"
         width: parent.width
     }
-
 }
