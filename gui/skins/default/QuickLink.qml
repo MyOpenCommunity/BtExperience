@@ -59,6 +59,14 @@ Item {
                 id: icon
                 anchors.centerIn: parent
                 source: bgImage
+
+                Rectangle {
+                    id: bgQuickPressed
+                    color: "black"
+                    opacity: 0.5
+                    visible: false
+                    anchors.fill: parent
+                }
             }
         }
 
@@ -188,18 +196,6 @@ Item {
         Behavior on opacity {
             NumberAnimation { target: editColumn; property: "opacity"; duration: 200;}
         }
-    }
-
-    SvgImage {
-        id: bgQuickPressed
-        source: "images/common/profilo_p.svg"
-        visible: false
-        anchors {
-            centerIn: column
-            fill: column
-        }
-        width: column.width
-        height: column.height
     }
 
     MouseArea {
