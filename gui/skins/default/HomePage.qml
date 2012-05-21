@@ -298,7 +298,7 @@ Page {
                 source: "images/home/multimedia.svg"
                 sourcePressed: "images/home/multimedia_p.svg"
                 text: qsTr("multimedia")
-                onClicked: Stack.openPage("Browser.qml")
+                onClicked: Stack.openPage("Multimedia.qml")
             }
         }
     }
