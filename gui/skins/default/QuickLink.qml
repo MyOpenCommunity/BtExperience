@@ -13,11 +13,19 @@ Item {
 
     property int additionalWidth: 10
 
+    signal selected(variant favorite)
+    signal unselected(variant favorite)
     signal requestEdit(variant favorite)
     signal clicked()
+    signal editCompleted()
 
     width: column.width + 10
     height: column.height + 10
+
+    QtObject {
+        id: privateProps
+        property string currentText: ""
+    }
 
     Column {
         id: column
@@ -53,28 +61,43 @@ Item {
 
         TextInput {
             id: label
-            onActiveFocusChanged: {
-                console.log("Edit completed")
-            }
 
+            color: "white"
             anchors.horizontalCenter: parent.horizontalCenter
             text: title
             horizontalAlignment: Text.AlignHCenter
             width: icon.width
 
             activeFocusOnPress: false
+            onActiveFocusChanged: {
+                if (!activeFocus) { // edit done
+                    if (label.text !== privateProps.currentText)
+                        bgQuick.editCompleted()
+                }
+            }
         }
     }
 
     Column {
         id: editColumn
+
         opacity: 0
         anchors.left: column.right
+        anchors.leftMargin: 1
 
         Rectangle {
-            color: "#6d6c6c"
             width: 48
             height: 48
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.00;
+                    color: "#b7b7b7";
+                }
+                GradientStop {
+                    position: 1.00;
+                    color: "#ffffff";
+                }
+            }
             Image {
                 source: "images/icon_text.png"
                 anchors.fill: parent
@@ -90,9 +113,18 @@ Item {
         }
 
         Rectangle {
-            color: "#6d6c6c"
             width: 48
             height: 48
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.00;
+                    color: "#b7b7b7";
+                }
+                GradientStop {
+                    position: 1.00;
+                    color: "#ffffff";
+                }
+            }
             Image {
                 source: "images/icon_pencil.png"
                 anchors.fill: parent
@@ -109,9 +141,18 @@ Item {
         }
 
         Rectangle {
-            color: "#6d6c6c"
             width: 48
             height: 48
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.00;
+                    color: "#b7b7b7";
+                }
+                GradientStop {
+                    position: 1.00;
+                    color: "#ffffff";
+                }
+            }
             Image {
                 source: "images/icon_move.png"
                 anchors.fill: parent
@@ -120,9 +161,18 @@ Item {
         }
 
         Rectangle {
-            color: "#6d6c6c"
             width: 48
             height: 48
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.00;
+                    color: "#b7b7b7";
+                }
+                GradientStop {
+                    position: 1.00;
+                    color: "#ffffff";
+                }
+            }
             Image {
                 source: "images/icon_trash.png"
                 anchors.fill: parent
@@ -138,29 +188,51 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onPressAndHold: parent.state = "selected"
+        onPressAndHold: {
+            privateProps.currentText = label.text
+            if (bgQuick.editable) {
+                label.forceActiveFocus()
+                label.openSoftwareInputPanel()
+            }
+            parent.state = "selected"
+        }
         onClicked: {
             if (page !== "")
                 Stack.openPage(page, {'urlString': address})
             bgQuick.clicked()
         }
-        // TODO: just for debugging purposes
-        onPressed: parent.state = ""
+        onPressed: bgQuick.unselected(bgQuick)
     }
 
-    states: State {
-        name: "selected"
-        PropertyChanges {
-            target: column
-            anchors.margins: editable ? 0 : column.margins
+    states: [
+        State {
+            name: ""
+            StateChangeScript {
+                script: bgQuick.unselected(bgQuick)
+            }
+        },
+        State {
+            name: "selected"
+            PropertyChanges {
+                target: column
+                anchors.margins: editable ? 0 : column.margins
+            }
+            PropertyChanges {
+                target: bgQuick
+                additionalWidth: editable ? 20 : bgQuick.additionalWidth
+            }
+            PropertyChanges {
+                target: editColumn
+                opacity: editable ? 1 : editColumn.opacity
+            }
+            PropertyChanges {
+                target: highlight
+                radius: editable ? 0 : highlight.radius
+            }
+            StateChangeScript {
+                // execute selected script when not editable?
+                script: editable ? bgQuick.selected(bgQuick) : ""
+            }
         }
-        PropertyChanges {
-            target: bgQuick
-            additionalWidth: editable ? 20 : bgQuick.additionalWidth
-        }
-        PropertyChanges {
-            target: editColumn
-            opacity: editable ? 1 : editColumn.opacity
-        }
-    }
+    ]
 }
