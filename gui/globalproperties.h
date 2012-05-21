@@ -5,10 +5,22 @@
 #include <QDateTime>
 #include <QRect>
 #include <QImage>
+#include <QHash>
 
 class QDeclarativeView;
 class GuiSettings;
 class InputContextWrapper;
+
+#ifdef BT_MALIIT
+#include <QSharedPointer>
+
+namespace Maliit
+{
+	class SettingsManager;
+	class PluginSettings;
+	class SettingsEntry;
+}
+#endif
 
 #define MAIN_WIDTH 1024
 #define MAIN_HEIGHT 600
@@ -31,9 +43,11 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(GuiSettings *guiSettings READ getGuiSettings CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
+	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout CONSTANT)
 
 public:
 	GlobalProperties();
+	~GlobalProperties();
 	int getMainWidth() const;
 	int getMainHeight() const;
 	int getLastTimePress() const;
@@ -49,6 +63,9 @@ public:
 		emit requestReboot();
 	}
 
+	QString getKeyboardLayout() const;
+	void setKeyboardLayout(QString layout);
+
 public slots:
 	void updateTime();
 
@@ -56,11 +73,21 @@ signals:
 	void lastTimePressChanged();
 	void requestReboot();
 
+private slots:
+#ifdef BT_MALIIT
+	void pluginSettingsReceived(const QList<QSharedPointer<Maliit::PluginSettings> > &settings);
+#endif
+
 private:
 	InputContextWrapper *wrapper;
 	QDeclarativeView *main_widget;
 	QDateTime last_press;
 	GuiSettings *settings;
+#ifdef BT_MALIIT
+	Maliit::SettingsManager *maliit_settings;
+	QSharedPointer<Maliit::SettingsEntry> keyboard_layout;
+	QHash<QString, QString> language_map;
+#endif
 };
 
 
