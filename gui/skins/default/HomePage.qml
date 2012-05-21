@@ -101,6 +101,7 @@ Page {
                     onLoaded: {
                         item.text = model.name
                         item.address = model.address
+                        item.color = "black"
                     }
                 }
             }

@@ -61,6 +61,7 @@ Page {
                         bgPannable.visible = false
                         bgPannable.actualFavorite.z = 0
                         bgPannable.actualFavorite.state = ""
+                        // TODO gestire il focus?
                         bgPannable.actualFavorite = undefined
                     }
                 }

@@ -6,6 +6,7 @@ Item {
 
     property alias imageSource: icon.source
     property alias text: label.text
+    property alias color: label.color
     property string address: "www.corriere.it"
     property string page: "Browser.qml"
     property string bgImage: "images/profiles/web.png"
@@ -14,7 +15,6 @@ Item {
     property int additionalWidth: 10
 
     signal selected(variant favorite)
-    signal unselected(variant favorite)
     signal requestEdit(variant favorite)
     signal clicked()
     signal editCompleted()
@@ -71,8 +71,10 @@ Item {
             activeFocusOnPress: false
             onActiveFocusChanged: {
                 if (!activeFocus) { // edit done
-                    if (label.text !== privateProps.currentText)
+                    if (label.text !== privateProps.currentText) {
                         bgQuick.editCompleted()
+                        label.text = privateProps.currentText
+                    }
                 }
             }
         }
@@ -108,6 +110,7 @@ Item {
                 onClicked: {
                     label.forceActiveFocus()
                     label.openSoftwareInputPanel()
+                    privateProps.currentText = label.text
                 }
             }
         }
@@ -134,7 +137,6 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    console.log("Clicked on edit icon")
                     bgQuick.requestEdit(bgQuick)
                 }
             }
@@ -188,29 +190,15 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onPressAndHold: {
-            privateProps.currentText = label.text
-            if (bgQuick.editable) {
-                label.forceActiveFocus()
-                label.openSoftwareInputPanel()
-            }
-            parent.state = "selected"
-        }
+        onPressAndHold: parent.state = "selected"
         onClicked: {
             if (page !== "")
                 Stack.openPage(page, {'urlString': address})
             bgQuick.clicked()
         }
-        onPressed: bgQuick.unselected(bgQuick)
     }
 
     states: [
-        State {
-            name: ""
-            StateChangeScript {
-                script: bgQuick.unselected(bgQuick)
-            }
-        },
         State {
             name: "selected"
             PropertyChanges {
@@ -224,10 +212,6 @@ Item {
             PropertyChanges {
                 target: editColumn
                 opacity: editable ? 1 : editColumn.opacity
-            }
-            PropertyChanges {
-                target: highlight
-                radius: editable ? 0 : highlight.radius
             }
             StateChangeScript {
                 // execute selected script when not editable?
