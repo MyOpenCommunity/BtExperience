@@ -1,5 +1,8 @@
 import QtQuick 1.1
+import Components 1.0
+
 import "js/Stack.js" as Stack
+
 
 Item {
     id: bgQuick
@@ -187,10 +190,24 @@ Item {
         }
     }
 
+    SvgImage {
+        id: bgQuickPressed
+        source: "images/common/profilo_p.svg"
+        visible: false
+        anchors {
+            centerIn: column
+            fill: column
+        }
+        width: column.width
+        height: column.height
+    }
+
     MouseArea {
         id: mouseArea
         anchors.fill: parent
         onPressAndHold: parent.state = "selected"
+        onPressed: bgQuickPressed.visible = true
+        onReleased: bgQuickPressed.visible = false
         onClicked: {
             if (page !== "")
                 Stack.openPage(page, {'urlString': address})
