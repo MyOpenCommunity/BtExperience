@@ -4,6 +4,8 @@ Item {
     id: control
     width: 212
 
+    property variant callManager: null
+
     property string callImage: "../images/common/bg_codice_ok.png"
     property string name: "Start call"
     property string description: "External place 1"

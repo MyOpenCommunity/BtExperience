@@ -12,6 +12,7 @@ class VideoDoorEntryDevice;
 class QDomNode;
 
 ObjectInterface *parseCCTV(const QDomNode &n);
+ObjectInterface *parseIntercom(const QDomNode &n);
 
 
 class ExternalPlace : public ObjectInterface
@@ -141,10 +142,10 @@ class Intercom : public ObjectInterface
 	*/
 	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
 
+	Q_PROPERTY(ObjectListModel *externalPlaces READ getExternalPlaces CONSTANT)
+
 public:
-	explicit Intercom(QString name,
-					  QString key,
-					  VideoDoorEntryDevice *d);
+	explicit Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
 	virtual int getObjectId() const
 	{
@@ -165,6 +166,7 @@ public:
 	void setVolume(int value);
 	bool getMute() const;
 	void setMute(bool value);
+	ObjectListModel *getExternalPlaces() const;
 
 signals:
 	void volumeChanged();
@@ -180,6 +182,7 @@ protected:
 
 private:
 	VideoDoorEntryDevice *dev;
+	ObjectListModel external_places;
 };
 
 #endif // VCT_H

@@ -20,6 +20,18 @@ ObjectInterface *parseCCTV(const QDomNode &n)
 	return new CCTV(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice("11", "0")));
 }
 
+ObjectInterface *parseIntercom(const QDomNode &n)
+{
+	// TODO add parse code
+	Q_UNUSED(n);
+
+	QList<ExternalPlace *> list;
+	list.append(new ExternalPlace("Portone", "14"));
+	list.append(new ExternalPlace("Garage", "14#2"));
+
+	return new Intercom(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice("11", "0")));
+}
+
 
 ExternalPlace::ExternalPlace(const QString &_name, const QString &_where)
 {
@@ -169,15 +181,10 @@ void CCTV::resumeVideo()
 }
 
 
-Intercom::Intercom(QString name,
-				   QString key,
-				   VideoDoorEntryDevice *d)
+Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d)
 {
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
-
-	this->key = key;
-	this->name = name;
 
 	// initial values
 	volume = 50;

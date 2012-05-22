@@ -205,11 +205,7 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			obj = parseCCTV(item);
 			break;
 		case ObjectInterface::IdIntercom:
-			qDebug() << "Skipping intercom for now...";
-			//			obj = new Intercom(descr,
-			//							   where,
-			//							   bt_global::add_device_to_cache(
-			//								   new VideoDoorEntryDevice(where, getTextChild(item, "mode"))));
+			obj = parseIntercom(item);
 			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
