@@ -162,6 +162,9 @@ public:
 		return ObjectInterface::VideoEntry;
 	}
 
+	Q_INVOKABLE void answerCall();
+	Q_INVOKABLE void endCall();
+
 	int getVolume() const;
 	void setVolume(int value);
 	bool getMute() const;
@@ -171,6 +174,8 @@ public:
 signals:
 	void volumeChanged();
 	void muteChanged();
+	void incomingCall();
+	void callEnded();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);

@@ -59,6 +59,30 @@ Item {
         Stack.openPage("VideoCamera.qml", {"camera": vctObject})
     }
 
+    function intercomIncomingCall(obj) {
+        screensaver.stopScreensaver()
+        screensaver.isEnabled = false
+        Stack.currentPage().installPopup(callPopup)
+        Stack.currentPage().popupLoader.item.callManager = obj
+        Stack.currentPage().popupLoader.item.state = "incomingCall"
+    }
+
+    Component {
+        id: callPopup
+        ControlCall {
+            signal closePopup
+            onStopCallClicked: {
+                callManager.endCall()
+                closePopup()
+            }
+            onStartCallClicked: {
+                console.log("onStartCallClicked")
+                callManager.answerCall()
+                state = "outgoingCall"
+            }
+        }
+    }
+
     function enableScreensaver() {
         screensaver.isEnabled = true
     }
@@ -67,11 +91,27 @@ Item {
     // file?
     FilterListModel {
         id: vctModel
-        filters: [{objectId: ObjectInterface.IdCCTV}]
+        filters: [
+            {objectId: ObjectInterface.IdCCTV},
+            {objectId: ObjectInterface.IdIntercom}
+        ]
         Component.onCompleted: {
-            var obj = vctModel.getObject(0)
-            obj.incomingCall.connect(function() { return vctIncomingCall(obj); })
-            obj.callEnded.connect(enableScreensaver)
+            for (var i = 0; i < vctModel.size; ++i) {
+                var obj = vctModel.getObject(i)
+                switch (obj.objectId) {
+                case ObjectInterface.IdCCTV:
+                    obj.incomingCall.connect(function() { return vctIncomingCall(obj); })
+                    obj.callEnded.connect(enableScreensaver)
+                    break
+                case ObjectInterface.IdIntercom:
+                    obj.incomingCall.connect(function() { return intercomIncomingCall(obj); })
+                    obj.callEnded.connect(enableScreensaver)
+                    break
+                case ObjectInterface.Antintrusion:
+                    // .......TODO
+                    break
+                }
+            }
         }
     }
 }

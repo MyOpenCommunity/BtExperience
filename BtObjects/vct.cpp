@@ -189,6 +189,20 @@ Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d)
 	// initial values
 	volume = 50;
 	mute = false;
+
+	foreach (ExternalPlace *ep, l)
+		external_places.insertWithoutUii(ep);
+}
+
+void Intercom::answerCall()
+{
+	dev->answerCall();
+}
+
+void Intercom::endCall()
+{
+	dev->endCall();
+	emit callEnded();
 }
 
 int Intercom::getVolume() const
@@ -222,6 +236,25 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 	{
 		switch (it.key())
 		{
+		case VideoDoorEntryDevice::INTERCOM_CALL:
+			qDebug() << "Received VideoDoorEntryDevice::INTERCOM_CALL";
+			// TODO: many many other things...but this should be enough for now.
+			emit incomingCall();
+			break;
+		case VideoDoorEntryDevice::END_OF_CALL:
+			qDebug() << "Received VideoDoorEntryDevice::END_OF_CALL";
+			emit callEnded();
+			break;
+		case VideoDoorEntryDevice::CALLER_ADDRESS:
+			qDebug() << "Received VideoDoorEntryDevice::CALLER_ADDRESS: " << *it;
+			break;
+		case VideoDoorEntryDevice::RINGTONE:
+			// TODO gestire la suoneria?
+			qDebug() << "Received VideoDoorEntryDevice::RINGTONE";
+			break;
+		default:
+			qDebug() << "Intercom::valueReceived, unhandled value" << it.key() << *it;
+			break;
 		}
 		++it;
 	}
