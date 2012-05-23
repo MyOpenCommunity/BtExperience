@@ -297,7 +297,7 @@ void EnergyData::requestCurrentUpdateStart()
 #if TEST_ENERGY_DATA
 	automatic_updates->start();
 #endif
-	// TODO
+	dev->requestCurrentUpdateStart();
 }
 
 void EnergyData::requestCurrentUpdateStop()
@@ -305,7 +305,7 @@ void EnergyData::requestCurrentUpdateStop()
 #if TEST_ENERGY_DATA
 	automatic_updates->stop();
 #endif
-	// TODO
+	dev->requestCurrentUpdateStop();
 }
 
 void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
@@ -427,6 +427,67 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 		bars.append(new EnergyGraphBar(i, keys[i], values[i] * conversion));
 
 	return bars;
+}
+
+void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
+{
+	CacheKey key(type, normalizeDate(type, date));
+
+	switch (type)
+	{
+	case DailyAverageGraph:
+		dev->requestDailyAverageGraph(key.date);
+		break;
+	case CumulativeDayGraph:
+		dev->requestCumulativeDayGraph(key.date);
+		break;
+	case CumulativeMonthGraph:
+		dev->requestCumulativeMonthGraph(key.date);
+		break;
+	case CumulativeYearGraph:
+		// see comment in valueReceived()
+		requestCumulativeYear(key.date, force);
+		break;
+	}
+}
+
+void EnergyData::requestUpdate(ValueType type, QDate date, bool force)
+{
+	CacheKey key(type, normalizeDate(type, date));
+
+	switch (type)
+	{
+	case CurrentValue:
+		dev->requestCurrent();
+		break;
+	case CumulativeDayValue:
+		dev->requestCumulativeDay(key.date);
+		break;
+	case CumulativeMonthValue:
+		dev->requestCumulativeMonth(key.date);
+		break;
+	case CumulativeYearValue:
+		// see comment in valueReceived()
+		requestCumulativeYear(key.date, force);
+		break;
+	case MonthlyAverageValue:
+		dev->requestMontlyAverage(key.date);
+		break;
+	}
+}
+
+void EnergyData::requestCumulativeYear(QDate date, bool force)
+{
+	QDate today = QDate::currentDate();
+	int count;
+
+	if (date.year() == today.year())
+		count = today.month();
+	else
+		count = 12;
+
+	for (int i = 0; i < count; ++i)
+		requestUpdate(CumulativeMonthValue, QDate(date.year(), i + 1, 1), force);
 }
 
 void EnergyData::valueReceived(const DeviceValues &values_list)

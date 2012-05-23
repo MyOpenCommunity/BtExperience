@@ -59,6 +59,19 @@ private slots:
 	void testReceiveCumulativeMonthGraph();
 	void testReceiveCumulativeYearGraph();
 
+	void testRequestCurrentUpdateStartStop();
+
+	void testRequestCurrentValue();
+	void testRequestCumulativeDayValue();
+	void testRequestCumulativeMonthValue();
+	void testRequestCumulativeYearValue();
+	void testRequestMonthlyAverage();
+
+	void testRequestDailyAverageGraph();
+	void testRequestCumulativeDayGraph();
+	void testRequestCumulativeMonthGraph();
+	void testRequestCumulativeYearGraph();
+
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, bool in_currency = false);
 	EnergyGraph *getGraph(EnergyData::GraphType type, QDate date, bool in_currency = false);

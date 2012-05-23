@@ -23,6 +23,8 @@ void TestEnergyData::cleanup()
 	delete obj->dev;
 	delete obj;
 	delete dev;
+
+	clearAllClients();
 }
 
 EnergyItem *TestEnergyData::getValue(EnergyData::ValueType type, QDate date, bool in_currency)
@@ -537,6 +539,88 @@ void TestEnergyData::testReceiveCumulativeYearGraph()
 
 	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(1239.0));
 	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(309.75));
+}
+
+void TestEnergyData::testRequestCurrentUpdateStartStop()
+{
+	obj->requestCurrentUpdateStart();
+	dev->requestCurrentUpdateStart();
+	compareClientCommand();
+
+	obj->requestCurrentUpdateStop();
+	dev->requestCurrentUpdateStop();
+	obj->dev->flushCurrentUpdateStop();
+	dev->flushCurrentUpdateStop();
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestCurrentValue()
+{
+	obj->requestUpdate(EnergyData::CurrentValue, QDate());
+	dev->requestCurrent();
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestCumulativeDayValue()
+{
+	obj->requestUpdate(EnergyData::CumulativeDayValue, QDate(2012, 5, 17));
+	dev->requestCumulativeDay(QDate(2012, 5, 17));
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestCumulativeMonthValue()
+{
+	obj->requestUpdate(EnergyData::CumulativeMonthValue, QDate(2012, 4, 17));
+	dev->requestCumulativeMonth(QDate(2012, 4, 17));
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestCumulativeYearValue()
+{
+	int year = QDate::currentDate().year() - 1;
+
+	obj->requestUpdate(EnergyData::CumulativeYearValue, QDate(year, 5, 17));
+	for (int i = 0; i < 12; ++i)
+		dev->requestCumulativeMonth(QDate(year, i + 1, 1));
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestMonthlyAverage()
+{
+	obj->requestUpdate(EnergyData::MonthlyAverageValue, QDate(2012, 4, 17));
+	dev->requestMontlyAverage(QDate(2012, 4, 17));
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestDailyAverageGraph()
+{
+	obj->requestUpdate(EnergyData::DailyAverageGraph, QDate(2012, 4, 17));
+	dev->requestDailyAverageGraph(QDate(2012, 4, 17));
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestCumulativeDayGraph()
+{
+	obj->requestUpdate(EnergyData::CumulativeDayGraph, QDate(2012, 4, 17));
+	dev->requestCumulativeDayGraph(QDate(2012, 4, 17));
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestCumulativeMonthGraph()
+{
+	obj->requestUpdate(EnergyData::CumulativeMonthGraph, QDate(2012, 4, 17));
+	dev->requestCumulativeMonthGraph(QDate(2012, 4, 17));
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestCumulativeYearGraph()
+{
+	int year = QDate::currentDate().year() - 1;
+
+	obj->requestUpdate(EnergyData::CumulativeYearGraph, QDate(year, 5, 17));
+	for (int i = 0; i < 12; ++i)
+		dev->requestCumulativeMonth(QDate(year, i + 1, 1));
+	compareClientCommand();
 }
 
 void TestEnergyItem::init()

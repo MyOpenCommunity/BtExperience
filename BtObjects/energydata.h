@@ -204,6 +204,11 @@ private:
 
 	QList<QObject *> createGraph(GraphType type, const QVector<double> &values, double conversion = 1.0);
 
+	void requestUpdate(GraphType type, QDate date, bool force = false);
+	void requestUpdate(ValueType type, QDate date, bool force = false);
+
+	void requestCumulativeYear(QDate date, bool force);
+
 	EnergyDevice *dev;
 	EnergyRate *rate;
 	QHash<CacheKey, EnergyGraph *> graphCache;
