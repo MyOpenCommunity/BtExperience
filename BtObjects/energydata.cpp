@@ -70,6 +70,42 @@ namespace
 			return static_cast<EnergyData::GraphType>(-1);
 		}
 	}
+
+	QDate normalizeDate(EnergyData::ValueType type, QDate date)
+	{
+		switch (type)
+		{
+		case EnergyData::CurrentValue:
+			return QDate::currentDate();
+		case EnergyData::CumulativeDayValue:
+			return date;
+		case EnergyData::CumulativeMonthValue:
+		case EnergyData::MonthlyAverageValue:
+			return QDate(date.year(), date.month(), 1);
+		case EnergyData::CumulativeYearValue:
+			return QDate(date.year(), 1, 1);
+		}
+
+		Q_ASSERT_X(0, "EnergyData::normalizeDate", "Invalid value for ValueType");
+		return QDate();
+	}
+
+	QDate normalizeDate(EnergyData::GraphType type, QDate date)
+	{
+		switch (type)
+		{
+		case EnergyData::DailyAverageGraph:
+		case EnergyData::CumulativeDayGraph:
+			return date;
+		case EnergyData::CumulativeMonthGraph:
+			return QDate(date.year(), date.month(), 1);
+		case EnergyData::CumulativeYearGraph:
+			return QDate(date.year(), 1, 1);
+		}
+
+		Q_ASSERT_X(0, "EnergyData::normalizeDate", "Invalid value for GraphType");
+		return QDate();
+	}
 }
 
 
@@ -270,42 +306,6 @@ void EnergyData::requestCurrentUpdateStop()
 	automatic_updates->stop();
 #endif
 	// TODO
-}
-
-QDate EnergyData::normalizeDate(GraphType type, QDate date)
-{
-	switch (type)
-	{
-	case DailyAverageGraph:
-	case CumulativeDayGraph:
-		return date;
-	case CumulativeMonthGraph:
-		return QDate(date.year(), date.month(), 1);
-	case CumulativeYearGraph:
-		return QDate(date.year(), 1, 1);
-	}
-
-	Q_ASSERT_X(0, "EnergyData::normalizeDate", "Invalid value for GraphType");
-	return QDate();
-}
-
-QDate EnergyData::normalizeDate(ValueType type, QDate date)
-{
-	switch (type)
-	{
-	case CurrentValue:
-		return QDate::currentDate();
-	case CumulativeDayValue:
-		return date;
-	case CumulativeMonthValue:
-	case MonthlyAverageValue:
-		return QDate(date.year(), date.month(), 1);
-	case CumulativeYearValue:
-		return QDate(date.year(), 1, 1);
-	}
-
-	Q_ASSERT_X(0, "EnergyData::normalizeDate", "Invalid value for ValueType");
-	return QDate();
 }
 
 void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)

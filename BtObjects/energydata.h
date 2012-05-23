@@ -196,9 +196,6 @@ private slots:
 	void valueReceived(const DeviceValues &values_list);
 
 private:
-	QDate normalizeDate(GraphType type, QDate date);
-	QDate normalizeDate(ValueType type, QDate date);
-
 	void cacheValueData(ValueType type, QDate date, qint64 value);
 	void cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph);
 	void cacheYearGraphData(QDate date, double month_value);
