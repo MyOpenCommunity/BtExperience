@@ -19,8 +19,36 @@
 #define CURRENT_VALUE_EXPIRATION_MSECS 60000
 
 
+/*
+	EnergyData tries to reduce the amount of requests performed by the object, it does so by:
+	- not issuing duplicate requests when one is already pending
+	- keeping a cache of recently-received data (uses a QCache with max cost 2000, each value has cost 1)
+	  - if a cached value includes the value for today, it is requeried at most every 60 seconds
+	  - if a cached value does not include today's values, it is never requeried
+
+	EnergyGraph and EnergyItem are created on-demand, and cached until QML deletes them; the
+	cache key is <type, date, is_currency>.
+
+	Request flow:
+	- the user calls getValue(type, date, is_currency)
+	- if an EnergyItem for the triplet is already in cache, it's returned
+	    - if the time interval for the data includes today, and the last request for this
+	      time interval was more than 60 seconds ago, the object requests again the data to the device
+	- a new EnergyItem is allocated and added to the item cache
+	- if there is cached data for the given <type, date> pair, it is used to fill the value for
+	  the EnergyItem
+	    - if the time interval for the data includes today, and the last request for this
+	      time interval was more than 60 seconds ago, the object requests again the data to the device
+
+	- when the object makes a request to the device, it adds a pair <timestamp, false> to the
+	  request map
+	- when the device response arrives
+	    - for time intervals that include today, the pair is replaced with <timestamp, true>
+	    - for other time intervals, the pair is deleted from the map
+*/
 namespace
 {
+	// remove the given value from an hash
 	template<class K, class V>
 	void removeValue(QHash<K, V> &map, const V &value)
 	{
@@ -74,6 +102,10 @@ namespace
 		}
 	}
 
+	// normalize the date according to type:
+	// - for daily values simply returns the date
+	// - for monthly values sets the day to 1
+	// - for yearly values seths day and month to 1
 	QDate normalizeDate(EnergyData::ValueType type, QDate date)
 	{
 		switch (type)
@@ -93,6 +125,7 @@ namespace
 		return QDate();
 	}
 
+	// see comment for function above
 	QDate normalizeDate(EnergyData::GraphType type, QDate date)
 	{
 		switch (type)
@@ -110,6 +143,7 @@ namespace
 		return QDate();
 	}
 
+	// retuns true is the time interval for the value includes today
 	bool dateContainsToday(EnergyData::ValueType type, QDate date)
 	{
 		return date == normalizeDate(type, QDate::currentDate());
@@ -190,6 +224,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 
 	if (EnergyGraph *graph = graphCache.value(key))
 	{
+		// re-request for cached timespans that include today's value
 		if (dateContainsToday(type, actual_date))
 			requestUpdate(type, actual_date);
 
@@ -208,7 +243,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 	graphCache[key] = graph;
 	connect(graph, SIGNAL(destroyed(QObject*)), this, SLOT(graphDestroyed(QObject*)));
 
-	// re-request for cached timespan that include today's value
+	// re-request for cached timespans that include today's value
 	if (!cached || dateContainsToday(type, actual_date))
 		requestUpdate(type, actual_date);
 
@@ -233,6 +268,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 
 	if (EnergyItem *item = itemCache.value(key))
 	{
+		// re-request for cached timespans that include today's value
 		if (dateContainsToday(type, actual_date))
 			requestUpdate(type, actual_date);
 
@@ -250,7 +286,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 	itemCache[key] = value;
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
 
-	// re-request for cached timespan that include today's value
+	// re-request for cached timespans that include today's value
 	if (!cached || dateContainsToday(type, actual_date))
 		requestUpdate(type, actual_date);
 
@@ -345,6 +381,7 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 	double conversion = getEnergyType() == Electricity ? 1000.0 : 1.0;
 	valueCache.insert(CacheKey(type, date), new QVector<double>(1, value / conversion), 1);
 
+	// update values in returned EnergyItem objects
 	if (EnergyItem *item = itemCache.value(CacheKey(type, date, false)))
 		item->setValue(value / conversion);
 	if (EnergyItem *item = itemCache.value(CacheKey(type, date, true)))
@@ -368,6 +405,7 @@ void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned i
 	for (int i = 0; i < graph.size(); ++i)
 		(*values)[i] = graph[i + 1] / conversion;
 
+	// update values in returned EnergyGraph objects
 	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, false)))
 		graph->setGraph(createGraph(type, *values));
 	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, true)))
@@ -381,6 +419,7 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 	QVector<double> *values = valueCache.object(key);
 	int index = date.month() - 1;
 
+	// add new value to the cache
 	if (!values)
 	{
 		values = new QVector<double>();
@@ -395,6 +434,8 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 
 	(*values)[index] = month_value;
 
+	// if the new value is different from the old one and we have all the data for the
+	// year, update EnergyGraph/EnergyItem objects
 	if (old_value == month_value || !checkYearGraphDataIsValid(actual_date, *values))
 		return;
 
@@ -403,10 +444,12 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 	for (int i = 0; i < values->count(); ++i)
 		cumulative_value += (*values)[i];
 
+	// update year graph objects
 	if (EnergyGraph *graph = graphCache.value(CacheKey(CumulativeYearGraph, actual_date, false)))
 		graph->setGraph(createGraph(CumulativeYearGraph, *values));
 	if (EnergyGraph *graph = graphCache.value(CacheKey(CumulativeYearGraph, actual_date, true)))
 		graph->setGraph(createGraph(CumulativeYearGraph, *values, rate->getRate()));
+	// update cumulative year value objects
 	if (EnergyItem *value = itemCache.value(CacheKey(CumulativeYearValue, actual_date, false)))
 		value->setValue(cumulative_value);
 	if (EnergyItem *value = itemCache.value(CacheKey(CumulativeYearValue, actual_date, true)))
@@ -465,12 +508,15 @@ void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
 
 	if (!force && requests.contains(key))
 	{
+		// there is a pending request for this value
 		if (!requests[key].second)
 			return;
 
+		// there is a cached response and the timespan does not include today
 		if (!dateContainsToday(type, key.date) && valueCache.contains(key))
 			return;
 
+		// the timespan includes today but there was a request less than 60 seconds ago
 		if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS)
 			return;
 	}
@@ -503,12 +549,15 @@ void EnergyData::requestUpdate(ValueType type, QDate date, bool force)
 
 	if (!force && requests.contains(key))
 	{
+		// there is a pending request for this value
 		if (!requests[key].second)
 			return;
 
+		// there is a cached response and the timespan does not include today
 		if (!dateContainsToday(type, key.date) && valueCache.contains(key))
 			return;
 
+		// the timespan includes today but there was a request less than 60 seconds ago
 		if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS)
 			return;
 	}

@@ -193,32 +193,49 @@ public slots:
 	void requestCurrentUpdateStop();
 
 private slots:
+	// remove destroyed objects from graphCache/itemChache
 	void graphDestroyed(QObject *obj);
 	void itemDestroyed(QObject *obj);
+
+	// conversione rate changed
 	void rateChanged();
+
 	void valueReceived(const DeviceValues &values_list);
 
 private:
+	// add a value/graph to the cache, updating EnergyItem/EnergyGraph objects
 	void cacheValueData(ValueType type, QDate date, qint64 value);
 	void cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph);
+
+	// called when receiving a cumulative month value, constructs cumulative
+	// year value and graph
 	void cacheYearGraphData(QDate date, double month_value);
 
+	// check whether the cache entry for a cumulative year graph contains valid
+	// values for the year
 	bool checkYearGraphDataIsValid(QDate date, const QVector<double> &values);
 
+	// create EnergyGraphbar objects for a graph
 	QList<QObject *> createGraph(GraphType type, const QVector<double> &values, double conversion = 1.0);
 
+	// request an update for the specified value/graph; takes into account pending requests
+	// and avoids requesting again cached data
 	void requestUpdate(GraphType type, QDate date, bool force = false);
 	void requestUpdate(ValueType type, QDate date, bool force = false);
 
+	// requests the cumulative month value for all months in the year
 	void requestCumulativeYear(QDate date, bool force);
 
 	typedef QPair<quint64, bool> RequestStatus;
 
 	EnergyDevice *dev;
 	EnergyRate *rate;
+	// cache for objects returned to QML
 	QHash<CacheKey, EnergyGraph *> graphCache;
 	QHash<CacheKey, EnergyItem *> itemCache;
+	// cached values received from the device
 	QCache<CacheKey, QVector<double> > valueCache;
+	// pending requests (all values) and completed requests (for timespans including today)
 	QHash<CacheKey, RequestStatus> requests;
 	bool general;
 
