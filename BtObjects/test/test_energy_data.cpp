@@ -104,16 +104,16 @@ void TestEnergyData::testItemGC()
 
 	// sanity check
 	QVERIFY(o1 != o2);
-	QCOMPARE(obj->itemCache.count(), 2);
+	QCOMPARE(obj->item_cache.count(), 2);
 
 	delete o1;
-	QCOMPARE(obj->itemCache.count(), 1);
+	QCOMPARE(obj->item_cache.count(), 1);
 
 	EnergyItem *o3 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17));
 
 	// can't check o3 != o1, because the runtime could reuse the freed memory
 	QVERIFY(o2 != o3);
-	QCOMPARE(obj->itemCache.count(), 2);
+	QCOMPARE(obj->item_cache.count(), 2);
 }
 
 void TestEnergyData::testGraphGC()
@@ -123,16 +123,16 @@ void TestEnergyData::testGraphGC()
 
 	// sanity check
 	QVERIFY(o1 != o2);
-	QCOMPARE(obj->graphCache.count(), 2);
+	QCOMPARE(obj->graph_cache.count(), 2);
 
 	delete o1;
-	QCOMPARE(obj->graphCache.count(), 1);
+	QCOMPARE(obj->graph_cache.count(), 1);
 
 	EnergyGraph *o3 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17));
 
 	// can't check o3 != o1, because the runtime could reuse the freed memory
 	QVERIFY(o3 != o2);
-	QCOMPARE(obj->graphCache.count(), 2);
+	QCOMPARE(obj->graph_cache.count(), 2);
 }
 
 void TestEnergyData::testItemCache()
@@ -218,11 +218,11 @@ void TestEnergyData::testUpdateYearGraphValue()
 {
 	CacheKey key(EnergyData::CumulativeYearGraph, QDate(2011, 1, 1));
 
-	QVERIFY(!obj->valueCache.object(key));
+	QVERIFY(!obj->value_cache.object(key));
 
 	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2011, 5, 1), 10000);
 
-	QVector<double> *values = obj->valueCache.object(key);
+	QVector<double> *values = obj->value_cache.object(key);
 
 	QVERIFY(values);
 	QCOMPARE(values->size(), 5);

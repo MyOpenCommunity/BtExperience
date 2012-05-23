@@ -231,10 +231,10 @@ private:
 	EnergyDevice *dev;
 	EnergyRate *rate;
 	// cache for objects returned to QML
-	QHash<CacheKey, EnergyGraph *> graphCache;
-	QHash<CacheKey, EnergyItem *> itemCache;
+	QHash<CacheKey, EnergyGraph *> graph_cache;
+	QHash<CacheKey, EnergyItem *> item_cache;
 	// cached values received from the device
-	QCache<CacheKey, QVector<double> > valueCache;
+	QCache<CacheKey, QVector<double> > value_cache;
 	// pending requests (all values) and completed requests (for timespans including today)
 	QHash<CacheKey, RequestStatus> requests;
 	bool general;

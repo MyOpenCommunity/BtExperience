@@ -191,7 +191,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general, EnergyR
 	dev = _dev;
 	general = _general;
 	rate = _rate;
-	valueCache.setMaxCost(2000);
+	value_cache.setMaxCost(2000);
 
 #if TEST_ENERGY_DATA
 	automatic_updates = new QTimer(this);
@@ -207,9 +207,9 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general, EnergyR
 
 EnergyData::~EnergyData()
 {
-	foreach (EnergyItem *value, itemCache.values())
+	foreach (EnergyItem *value, item_cache.values())
 		delete value;
-	foreach (EnergyGraph *graph, graphCache.values())
+	foreach (EnergyGraph *graph, graph_cache.values())
 		delete graph;
 }
 
@@ -222,7 +222,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 	QDate actual_date = normalizeDate(type, date);
 	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
 
-	if (EnergyGraph *graph = graphCache.value(key))
+	if (EnergyGraph *graph = graph_cache.value(key))
 	{
 		// re-request for cached timespans that include today's value
 		if (dateContainsToday(type, actual_date))
@@ -231,7 +231,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 		return graph;
 	}
 
-	QVector<double> *cached = valueCache.object(value_key);
+	QVector<double> *cached = value_cache.object(value_key);
 	// for cumulative year graph we might have some valid values received as part of navigating month graphs
 	if (cached && (type != CumulativeYearGraph || checkYearGraphDataIsValid(date, *cached)))
 		values = createGraph(type, *cached, in_currency ? rate->getRate() : 1.0);
@@ -240,7 +240,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 
 	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
 
-	graphCache[key] = graph;
+	graph_cache[key] = graph;
 	connect(graph, SIGNAL(destroyed(QObject*)), this, SLOT(graphDestroyed(QObject*)));
 
 	// re-request for cached timespans that include today's value
@@ -266,7 +266,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 	QDate actual_date = normalizeDate(type, date);
 	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
 
-	if (EnergyItem *item = itemCache.value(key))
+	if (EnergyItem *item = item_cache.value(key))
 	{
 		// re-request for cached timespans that include today's value
 		if (dateContainsToday(type, actual_date))
@@ -275,7 +275,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 		return item;
 	}
 
-	QVector<double> *cached = valueCache.object(value_key);
+	QVector<double> *cached = value_cache.object(value_key);
 	if (cached)
 		val = in_currency ? (*cached)[0] * rate->getRate() : (*cached)[0];
 
@@ -283,7 +283,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 
 	EnergyItem *value = new EnergyItem(this, type, actual_date, val);
 
-	itemCache[key] = value;
+	item_cache[key] = value;
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
 
 	// re-request for cached timespans that include today's value
@@ -379,12 +379,12 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 	// for electricity, the device returns values in watts, but the GUI always displays kilowatts,
 	// so it's easier to do the conversion here
 	double conversion = getEnergyType() == Electricity ? 1000.0 : 1.0;
-	valueCache.insert(CacheKey(type, date), new QVector<double>(1, value / conversion), 1);
+	value_cache.insert(CacheKey(type, date), new QVector<double>(1, value / conversion), 1);
 
 	// update values in returned EnergyItem objects
-	if (EnergyItem *item = itemCache.value(CacheKey(type, date, false)))
+	if (EnergyItem *item = item_cache.value(CacheKey(type, date, false)))
 		item->setValue(value / conversion);
-	if (EnergyItem *item = itemCache.value(CacheKey(type, date, true)))
+	if (EnergyItem *item = item_cache.value(CacheKey(type, date, true)))
 		item->setValue(value / conversion * rate->getRate());
 
 	// see comment in valueReceived()
@@ -400,15 +400,15 @@ void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned i
 	double conversion = getEnergyType() == Electricity ? 1000.0 : 1.0;
 	QVector<double> *values = new QVector<double>(graph.size());
 
-	valueCache.insert(CacheKey(type, date), values, graph.size());
+	value_cache.insert(CacheKey(type, date), values, graph.size());
 
 	for (int i = 0; i < graph.size(); ++i)
 		(*values)[i] = graph[i + 1] / conversion;
 
 	// update values in returned EnergyGraph objects
-	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, false)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(type, date, false)))
 		graph->setGraph(createGraph(type, *values));
-	if (EnergyGraph *graph = graphCache.value(CacheKey(type, date, true)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(type, date, true)))
 		graph->setGraph(createGraph(type, *values, rate->getRate()));
 }
 
@@ -416,7 +416,7 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 {
 	QDate actual_date = QDate(date.year(), 1, 1);
 	CacheKey key(CumulativeYearGraph, actual_date);
-	QVector<double> *values = valueCache.object(key);
+	QVector<double> *values = value_cache.object(key);
 	int index = date.month() - 1;
 
 	// add new value to the cache
@@ -424,7 +424,7 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 	{
 		values = new QVector<double>();
 		values->reserve(12);
-		valueCache.insert(key, values, 12);
+		value_cache.insert(key, values, 12);
 	}
 
 	while (values->size() <= index)
@@ -445,14 +445,14 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 		cumulative_value += (*values)[i];
 
 	// update year graph objects
-	if (EnergyGraph *graph = graphCache.value(CacheKey(CumulativeYearGraph, actual_date, false)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeYearGraph, actual_date, false)))
 		graph->setGraph(createGraph(CumulativeYearGraph, *values));
-	if (EnergyGraph *graph = graphCache.value(CacheKey(CumulativeYearGraph, actual_date, true)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeYearGraph, actual_date, true)))
 		graph->setGraph(createGraph(CumulativeYearGraph, *values, rate->getRate()));
 	// update cumulative year value objects
-	if (EnergyItem *value = itemCache.value(CacheKey(CumulativeYearValue, actual_date, false)))
+	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeYearValue, actual_date, false)))
 		value->setValue(cumulative_value);
-	if (EnergyItem *value = itemCache.value(CacheKey(CumulativeYearValue, actual_date, true)))
+	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeYearValue, actual_date, true)))
 		value->setValue(cumulative_value * rate->getRate());
 }
 
@@ -513,7 +513,7 @@ void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
 			return;
 
 		// there is a cached response and the timespan does not include today
-		if (!dateContainsToday(type, key.date) && valueCache.contains(key))
+		if (!dateContainsToday(type, key.date) && value_cache.contains(key))
 			return;
 
 		// the timespan includes today but there was a request less than 60 seconds ago
@@ -554,7 +554,7 @@ void EnergyData::requestUpdate(ValueType type, QDate date, bool force)
 			return;
 
 		// there is a cached response and the timespan does not include today
-		if (!dateContainsToday(type, key.date) && valueCache.contains(key))
+		if (!dateContainsToday(type, key.date) && value_cache.contains(key))
 			return;
 
 		// the timespan includes today but there was a request less than 60 seconds ago
@@ -653,13 +653,13 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 void EnergyData::graphDestroyed(QObject *obj)
 {
 	// can't use qobject_cast/dynamic_cast on a destroyed object
-	removeValue(graphCache, static_cast<EnergyGraph *>(obj));
+	removeValue(graph_cache, static_cast<EnergyGraph *>(obj));
 }
 
 void EnergyData::itemDestroyed(QObject *obj)
 {
 	// can't use qobject_cast/dynamic_cast on a destroyed object
-	removeValue(itemCache, static_cast<EnergyItem *>(obj));
+	removeValue(item_cache, static_cast<EnergyItem *>(obj));
 }
 
 void EnergyData::rateChanged()
