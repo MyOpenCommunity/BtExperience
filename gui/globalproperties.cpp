@@ -154,6 +154,9 @@ void GlobalProperties::pluginSettingsReceived(const QList<QSharedPointer<Maliit:
 			else if (entry->key() == "/maliit/onscreen/active")
 			{
 				keyboard_layout = entry;
+
+				connect(keyboard_layout.data(), SIGNAL(valueChanged()),
+					this, SIGNAL(keyboardLayoutChanged()));
 			}
 		}
 	}

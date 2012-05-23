@@ -43,7 +43,7 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(GuiSettings *guiSettings READ getGuiSettings CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
-	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout CONSTANT)
+	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout NOTIFY keyboardLayoutChanged)
 
 public:
 	GlobalProperties();
@@ -72,6 +72,7 @@ public slots:
 signals:
 	void lastTimePressChanged();
 	void requestReboot();
+	void keyboardLayoutChanged();
 
 private slots:
 #ifdef BT_MALIIT
