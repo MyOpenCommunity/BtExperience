@@ -5,7 +5,7 @@ Qt.include("../js/logging.js")
 var stackItems = []
 var stackTitles = []
 
-function loadComponent(menuLevel, component, title, dataModel) {
+function loadComponent(menuLevel, component, title, dataModel, properties) {
     // checks if an operation is in progress and exit in case
     if (pendingOperations.length > 0)
         return
@@ -16,15 +16,15 @@ function loadComponent(menuLevel, component, title, dataModel) {
     if (dataModel === undefined)
         dataModel = null
 
+    properties = typeof properties !== 'undefined' ? properties : {}
+    properties["menuLevel"] = menuLevel + 1
+    properties["parent"] = elementsContainer
+    properties["opacity"] = 0
+    properties["y"] = 33
+    properties["dataModel"] = dataModel
+    properties["pageObject"] = pageObject
     // creates an object from the component
-    var obj = component.createObject(mainContainer, {
-                                         "menuLevel": menuLevel + 1,
-                                         "parent": elementsContainer,
-                                         "opacity": 0,
-                                         "y": 33,
-                                         "dataModel": dataModel,
-                                         "pageObject": pageObject
-                                     })
+    var obj = component.createObject(mainContainer, properties)
 
     // creates title element
     var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})

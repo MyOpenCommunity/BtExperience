@@ -8,35 +8,15 @@ MenuColumn {
     width: 212
     height: paginator.height
 
+    property alias where: controlCall.where
+
     PaginatorColumn {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 300
-        Component.onCompleted: controlCall.state = "command"
         ControlCall {
             id: controlCall
-            onMinusClicked: console.log("minusClicked")
-            onPlusClicked: console.log("plusClicked")
-            onStartCallClicked: {
-                controlCall.state = "outgoingCall"
-                console.log("controlClicked")
-                answerTimeout.start();
-            }
-            onLeftButtonClicked: console.log("leftButtonClicked")
-            onStopCallClicked: {
-                // stop fake timer
-                answerTimeout.stop()
-                console.log("stopCall clicked")
-                controlCall.state = "command"
-                // TODO: send stop call frame
-            }
-            onMuteClicked: console.log("mute clicked")
+            dataObject: dataModel
         }
-    }
-
-    Timer {
-        id: answerTimeout
-        interval: 2000
-        onTriggered: controlCall.state = "noAnswer"
     }
 }

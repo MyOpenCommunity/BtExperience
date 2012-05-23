@@ -3,20 +3,37 @@ import QtQuick 1.1
 Rectangle {
     id: control
 
-    property variant callManager: undefined
+    property variant dataObject: undefined
 
     signal closePopup
 
-    property string description: qsTr("Chiamata in arrivo da")
+    property string description: qsTr("Inizia chiamata")
     property string headerImage: "../images/common/incoming_call.svg"
-    property string place: "Soggiorno"
+    property string place: dataObject.talker
+    property string where // used only to make calls
+
+    property int index: 0
 
     width: 212
-    height: 300
+    height: 50
 
-    onCallManagerChanged: {
-        if(callManager !== undefined)
-            control.callManager.callEnded.connect(closePopup)
+    onDataObjectChanged: {
+        if(dataObject !== undefined) {
+            dataObject.callAnswered.connect(callAnswered)
+            dataObject.callEnded.connect(callEnding)
+        }
+    }
+
+    function callAnswered() {
+        control.state = "speaking"
+    }
+
+    function callEnding() {
+        control.state = ""
+        // it is useful to call closePopup as the very last function: this
+        // object is destroyed very shortly after the call returns and doing
+        // stuff may lead to random crashes
+        closePopup()
     }
 
     Image {
@@ -72,12 +89,22 @@ Rectangle {
             source: control.headerImage
             visible: control.headerImage == "" ? false : true
         }
+
+        MouseArea {
+            id: areaHeader
+            anchors.fill: parent
+            onClicked: {
+                state = "calling"
+                dataObject.startCall(where)
+            }
+        }
     }
 
     Image {
         id: buttons
 
         height: 50
+        visible: false
         source: "../images/common/bg_DueRegolazioni.png"
         anchors {
             top: header.bottom
@@ -131,8 +158,8 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (callManager !== undefined)
-                        callManager.answerCall()
+                    if (dataObject !== undefined)
+                        dataObject.answerCall()
                     control.state = "speaking"
                 }
             }
@@ -184,8 +211,8 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (callManager !== undefined)
-                        callManager.endCall()
+                    if (dataObject !== undefined)
+                        dataObject.endCall()
                     closePopup()
                 }
             }
@@ -194,6 +221,7 @@ Rectangle {
 
     ControlSlider {
         id: volume
+        visible: false
 
         source: "../images/common/bg_DueRegolazioni.png"
         anchors {
@@ -207,6 +235,7 @@ Rectangle {
 
     Image {
         id: mute
+        visible: false
 
         source: "../images/common/btn_annulla.png"
         anchors {
@@ -240,6 +269,7 @@ Rectangle {
             right: parent.right
         }
         color: "black"
+        visible: false
         opacity: 0.7
         z: 10
 
@@ -259,12 +289,112 @@ Rectangle {
     states: [
         State {
             name: "ringing"
+
+            PropertyChanges {
+                target: inhibitArea
+                visible: true
+            }
+
+            PropertyChanges {
+                target: mute
+                visible: true
+            }
+
+            PropertyChanges {
+                target: volume
+                visible: true
+            }
+
+            PropertyChanges {
+                target: buttons
+                visible: true
+            }
+
+            PropertyChanges {
+                target: control
+                height: 300
+                description: qsTr("Chiamata in arrivo da")
+            }
+
+            PropertyChanges {
+                target: areaHeader
+                visible: false
+            }
         },
+
+        State {
+            name: "calling"
+
+            PropertyChanges {
+                target: inhibitArea
+                visible: true
+            }
+
+            PropertyChanges {
+                target: mute
+                visible: true
+            }
+
+            PropertyChanges {
+                target: volume
+                visible: true
+            }
+
+            PropertyChanges {
+                target: buttons
+                visible: true
+            }
+
+            PropertyChanges {
+                target: control
+                height: 300
+                description: qsTr("Chiamata verso")
+            }
+
+            PropertyChanges {
+                target: areaHeader
+                visible: false
+            }
+
+            PropertyChanges {
+                target: answer
+                width: 0
+            }
+        },
+
         State {
             name: "speaking"
-            PropertyChanges { target: answer; width: 0 }
-            PropertyChanges { target: inhibitArea; visible: false }
-            PropertyChanges { target: control; description: qsTr("Chiamata in corso con") }
+
+            PropertyChanges {
+                target: answer
+                width: 0
+            }
+
+            PropertyChanges {
+                target: buttons
+                visible: true
+            }
+
+            PropertyChanges {
+                target: volume
+                visible: true
+            }
+
+            PropertyChanges {
+                target: mute
+                visible: true
+            }
+
+            PropertyChanges {
+                target: control
+                height: 300
+                description: qsTr("Chiamata in corso con")
+            }
+
+            PropertyChanges {
+                target: areaHeader
+                visible: false
+            }
         }
     ]
 }

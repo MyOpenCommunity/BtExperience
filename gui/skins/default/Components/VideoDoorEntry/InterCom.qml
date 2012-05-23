@@ -18,13 +18,23 @@ MenuColumn {
         id: paginator
         width: parent.width
         listHeight: modelList.size * 50
+
         delegate: MenuItemDelegate {
             editable: true
-            itemObject: modelList.getObject(index)
+            itemObject: extPlaceModel.getObject(index)
+            selectOnClick: false
             hasChild: true
-            onDelegateClicked: column.loadColumn(talk, name, itemObject)
+            onDelegateClicked: {
+                column.loadColumn(talk, itemObject.name, modelList.getObject(0), {"where": itemObject.where})
+            }
         }
-        model: modelList
+
+        FilterListModel {
+            id: extPlaceModel
+            source: modelList.getObject(0).externalPlaces
+        }
+
+        model: extPlaceModel
 
         onCurrentPageChanged: column.closeChild()
     }

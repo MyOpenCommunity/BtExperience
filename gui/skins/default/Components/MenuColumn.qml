@@ -5,8 +5,8 @@ Item {
     // Public functions
 
     // load of a sub-element
-    function loadColumn(component, title, model) {
-        column.loadComponent(menuLevel, component, title, model)
+    function loadColumn(component, title, model, properties) {
+        column.loadComponent(menuLevel, component, title, model, properties)
     }
 
     // Close the column itself and its children
@@ -30,7 +30,7 @@ Item {
     // itself.
     signal closeItem(int menuLevel)
     signal columnClicked()
-    signal loadComponent(int menuLevel, variant component, string title, variant dataModel)
+    signal loadComponent(int menuLevel, variant component, string title, variant dataModel, variant properties)
 
     // the page where the element is placed
     property variant pageObject: undefined

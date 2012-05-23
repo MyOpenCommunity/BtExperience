@@ -190,8 +190,9 @@ Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d)
 	volume = 50;
 	mute = false;
 
-	foreach (ExternalPlace *ep, l)
+	foreach (ExternalPlace *ep, l) {
 		external_places.insertWithoutUii(ep);
+	}
 }
 
 void Intercom::answerCall()
@@ -202,7 +203,15 @@ void Intercom::answerCall()
 void Intercom::endCall()
 {
 	dev->endCall();
+	talker = "";
+	emit talkerChanged();
 	emit callEnded();
+}
+
+void Intercom::startCall(QString where)
+{
+	dev->internalIntercomCall(where);
+	setTalkerFromWhere(where);
 }
 
 int Intercom::getVolume() const
@@ -229,6 +238,17 @@ void Intercom::setMute(bool value)
 	emit muteChanged();
 }
 
+ObjectListModel *Intercom::getExternalPlaces() const
+{
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ObjectListModel*>(&external_places);
+}
+
+QString Intercom::getTalker() const
+{
+	return talker;
+}
+
 void Intercom::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.constBegin();
@@ -243,10 +263,17 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::END_OF_CALL";
+			talker = "";
 			emit callEnded();
+			emit talkerChanged();
+			break;
+		case VideoDoorEntryDevice::ANSWER_CALL:
+			qDebug() << "Received VideoDoorEntryDevice::ANSWER_CALL: " << *it;
+			emit callAnswered();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
 			qDebug() << "Received VideoDoorEntryDevice::CALLER_ADDRESS: " << *it;
+			setTalkerFromWhere(it.value().toString());
 			break;
 		case VideoDoorEntryDevice::RINGTONE:
 			// TODO gestire la suoneria?
@@ -257,6 +284,28 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			break;
 		}
 		++it;
+	}
+}
+
+void Intercom::setTalkerFromWhere(QString where)
+{
+	// helper function used in startCall and valueReceived to set the talker where
+	// depending on if we are making or receiving a call we have to set the
+	// talker where's field in 2 different ways, so this function refactor
+	// common code for both cases
+	// note: the where passed as CALLER_ADDRESS may be a boolean, it doesn't
+	// matter, in that case, the where is set in startCall and we never enter
+	// the if
+	for(int i = 0; i < external_places.getSize(); ++i)
+	{
+		ObjectInterface *obj = external_places.getObject(i);
+		ExternalPlace *ep = static_cast<ExternalPlace *>(obj);
+		if (ep->where == where)
+		{
+			talker = ep->name;
+			emit talkerChanged();
+			break;
+		}
 	}
 }
 

@@ -63,13 +63,18 @@ Item {
         screensaver.stopScreensaver()
         screensaver.isEnabled = false
         Stack.currentPage().installPopup(callPopup)
-        Stack.currentPage().popupLoader.item.callManager = obj
+        Stack.currentPage().popupLoader.item.dataObject = obj
         Stack.currentPage().popupLoader.item.state = "ringing"
     }
 
     Component {
         id: callPopup
-        ControlCall {}
+        ControlCall {
+            // it is useful to call enableScreensaver here because attaching
+            // it to callEnded signal may lead to unpredictable behavior in
+            // some cases (see comment inside callEnding function in ControlCall.qml)
+            onClosePopup: enableScreensaver()
+        }
     }
 
     function enableScreensaver() {
@@ -94,7 +99,6 @@ Item {
                     break
                 case ObjectInterface.IdIntercom:
                     obj.incomingCall.connect(function() { return intercomIncomingCall(obj); })
-                    obj.callEnded.connect(enableScreensaver)
                     break
                 case ObjectInterface.Antintrusion:
                     // .......TODO

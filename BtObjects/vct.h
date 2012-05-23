@@ -17,6 +17,8 @@ ObjectInterface *parseIntercom(const QDomNode &n);
 
 class ExternalPlace : public ObjectInterface
 {
+	friend class Intercom; // to access the where field
+
 	Q_OBJECT
 
 	Q_PROPERTY(QString where READ getWhere() CONSTANT)
@@ -144,6 +146,11 @@ class Intercom : public ObjectInterface
 
 	Q_PROPERTY(ObjectListModel *externalPlaces READ getExternalPlaces CONSTANT)
 
+	/*!
+		\brief Retrieves a description for the device on the other side of the call.
+	*/
+	Q_PROPERTY(QString talker READ getTalker NOTIFY talkerChanged)
+
 public:
 	explicit Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
@@ -164,18 +171,22 @@ public:
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
+	Q_INVOKABLE void startCall(QString where);
 
 	int getVolume() const;
 	void setVolume(int value);
 	bool getMute() const;
 	void setMute(bool value);
 	ObjectListModel *getExternalPlaces() const;
+	QString getTalker() const;
 
 signals:
 	void volumeChanged();
 	void muteChanged();
 	void incomingCall();
 	void callEnded();
+	void talkerChanged();
+	void callAnswered();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -186,8 +197,11 @@ protected:
 	bool mute;
 
 private:
+	void setTalkerFromWhere(QString where);
+
 	VideoDoorEntryDevice *dev;
 	ObjectListModel external_places;
+	QString talker;
 };
 
 #endif // VCT_H
