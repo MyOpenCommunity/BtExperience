@@ -79,6 +79,9 @@ inline uint qHash(const CacheKey &key)
 */
 class EnergyData : public ObjectInterface
 {
+	friend class EnergyGraph;
+	friend class EnergyItem;
+
 	friend class TestEnergyData;
 	friend class TestEnergyItem;
 	friend class TestEnergyGraph;

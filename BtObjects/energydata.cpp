@@ -621,7 +621,7 @@ QDate EnergyItem::getDate() const
 
 void EnergyItem::requestUpdate()
 {
-	// TODO
+	data->requestUpdate(type, date, true);
 }
 
 bool EnergyItem::isValid() const
@@ -668,7 +668,7 @@ QDate EnergyGraph::getDate() const
 
 void EnergyGraph::requestUpdate()
 {
-	// TODO
+	data->requestUpdate(type, date, true);
 }
 
 bool EnergyGraph::isValid() const

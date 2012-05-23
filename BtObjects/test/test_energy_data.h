@@ -96,9 +96,11 @@ private slots:
 	void cleanup();
 
 	void testSetValue();
+	void testRequestUpdate();
 
 private:
 	EnergyData *obj;
+	EnergyDevice *dev;
 };
 
 
@@ -111,9 +113,11 @@ private slots:
 	void cleanup();
 
 	void testSetGraph();
+	void testRequestUpdate();
 
 private:
 	EnergyData *obj;
+	EnergyDevice *dev;
 };
 
 #endif

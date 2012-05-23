@@ -628,12 +628,14 @@ void TestEnergyItem::init()
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
 	obj = new EnergyData(d, "", false, 0);
+	dev = new EnergyDevice("1", 1, 1);
 }
 
 void TestEnergyItem::cleanup()
 {
 	delete obj->dev;
 	delete obj;
+	delete dev;
 }
 
 void TestEnergyItem::testSetValue()
@@ -660,17 +662,28 @@ void TestEnergyItem::testSetValue()
 	QCOMPARE(item.isValid(), true);
 }
 
+void TestEnergyItem::testRequestUpdate()
+{
+	EnergyItem item(obj, EnergyData::MonthlyAverageValue, QDate(2012, 05, 16), QVariant());
+
+	item.requestUpdate();
+	dev->requestMontlyAverage(QDate(2012, 05, 16));
+	compareClientCommand();
+}
+
 void TestEnergyGraph::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
 	obj = new EnergyData(d, "", false, 0);
+	dev = new EnergyDevice("1", 1, 1);
 }
 
 void TestEnergyGraph::cleanup()
 {
 	delete obj->dev;
 	delete obj;
+	delete dev;
 }
 
 void TestEnergyGraph::testSetGraph()
@@ -699,4 +712,13 @@ void TestEnergyGraph::testSetGraph()
 	tvalid.checkNoSignals();
 	tvalue.checkNoSignals();
 	QCOMPARE(graph.isValid(), true);
+}
+
+void TestEnergyGraph::testRequestUpdate()
+{
+	EnergyGraph graph(obj, EnergyData::DailyAverageGraph, QDate(2012, 05, 16), QList<QObject *>());
+
+	graph.requestUpdate();
+	dev->requestDailyAverageGraph(QDate(2012, 05, 16));
+	compareClientCommand();
 }
