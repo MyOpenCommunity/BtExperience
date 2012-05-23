@@ -64,23 +64,12 @@ Item {
         screensaver.isEnabled = false
         Stack.currentPage().installPopup(callPopup)
         Stack.currentPage().popupLoader.item.callManager = obj
-        Stack.currentPage().popupLoader.item.state = "incomingCall"
+        Stack.currentPage().popupLoader.item.state = "ringing"
     }
 
     Component {
         id: callPopup
-        ControlCall {
-            signal closePopup
-            onStopCallClicked: {
-                callManager.endCall()
-                closePopup()
-            }
-            onStartCallClicked: {
-                console.log("onStartCallClicked")
-                callManager.answerCall()
-                state = "outgoingCall"
-            }
-        }
+        ControlCall {}
     }
 
     function enableScreensaver() {

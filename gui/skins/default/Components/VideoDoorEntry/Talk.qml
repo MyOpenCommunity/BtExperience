@@ -17,7 +17,7 @@ MenuColumn {
             id: controlCall
             onMinusClicked: console.log("minusClicked")
             onPlusClicked: console.log("plusClicked")
-            onControlClicked: {
+            onStartCallClicked: {
                 controlCall.state = "outgoingCall"
                 console.log("controlClicked")
                 answerTimeout.start();
