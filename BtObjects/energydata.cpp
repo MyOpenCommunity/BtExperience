@@ -160,6 +160,10 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general, EnergyR
 
 EnergyData::~EnergyData()
 {
+	foreach (EnergyItem *value, itemCache.values())
+		delete value;
+	foreach (EnergyGraph *graph, graphCache.values())
+		delete graph;
 }
 
 QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
