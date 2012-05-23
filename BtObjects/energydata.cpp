@@ -10,6 +10,7 @@
 
 #if TEST_ENERGY_DATA
 #include <QTimer>
+#include "delayedslotcaller.h"
 #endif //TEST_ENERGY_DATA
 
 #define INVALID_VALUE -1
@@ -153,27 +154,10 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 	connect(graph, SIGNAL(destroyed(QObject*)), this, SLOT(graphDestroyed(QObject*)));
 
 #if TEST_ENERGY_DATA
-	QMap<int, unsigned int> graph_values;
-	int count = 0;
-
-	switch (type)
-	{
-	case DailyAverageGraph:
-	case CumulativeDayGraph:
-		count = 24;
-		break;
-	case CumulativeMonthGraph:
-		count = date.daysInMonth();
-		break;
-	case CumulativeYearGraph:
-		count = 12;
-		break;
-	}
-
-	for (int i = 0; i < count; ++i)
-		graph_values[i + 1] = rand() % 100;
-
-	cacheGraphData(type, actual_date, graph_values);
+	DelayedSlotCaller * caller = new DelayedSlotCaller;
+	caller->setSlot(this, SLOT(testGraphData(EnergyData::GraphType,QDate)), 500);
+	caller->addArgument(type);
+	caller->addArgument(date);
 #endif
 
 	return graph;
@@ -206,7 +190,10 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
 
 #if TEST_ENERGY_DATA
-	cacheValueData(type, actual_date, rand() % 100);
+	DelayedSlotCaller * caller = new DelayedSlotCaller;
+	caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 500);
+	caller->addArgument(type);
+	caller->addArgument(date);
 #endif
 
 	return value;
@@ -503,6 +490,36 @@ bool EnergyData::isGeneral() const
 }
 
 #if TEST_ENERGY_DATA
+void EnergyData::testValueData(ValueType type, QDate date)
+{
+	cacheValueData(type, date, rand() % 100);
+}
+
+void EnergyData::testGraphData(GraphType type, QDate date)
+{
+	QMap<int, unsigned int> graph_values;
+	int count = 0;
+
+	switch (type)
+	{
+	case DailyAverageGraph:
+	case CumulativeDayGraph:
+		count = 24;
+		break;
+	case CumulativeMonthGraph:
+		count = date.daysInMonth();
+		break;
+	case CumulativeYearGraph:
+		count = 12;
+		break;
+	}
+
+	for (int i = 0; i < count; ++i)
+		graph_values[i + 1] = rand() % 100;
+
+	cacheGraphData(type, date, graph_values);
+}
+
 void EnergyData::testAutomaticUpdates()
 {
 	cacheValueData(EnergyData::CurrentValue, QDate(), rand() % 100);

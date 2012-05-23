@@ -13,7 +13,6 @@ class EnergyItem;
 class EnergyRate;
 class QDomNode;
 
-// TODO scrivere test quando rimuoveremo l'implementazione random
 #ifndef TEST_ENERGY_DATA
 #define TEST_ENERGY_DATA 1
 #endif
@@ -217,6 +216,8 @@ private:
 
 #if TEST_ENERGY_DATA
 private slots:
+	void testValueData(EnergyData::ValueType type, QDate date);
+	void testGraphData(EnergyData::GraphType type, QDate date);
 	void testAutomaticUpdates();
 private:
 	QTimer *automatic_updates;
@@ -422,5 +423,8 @@ private:
 };
 
 QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id);
+
+Q_DECLARE_METATYPE(EnergyData::ValueType)
+Q_DECLARE_METATYPE(EnergyData::GraphType)
 
 #endif
