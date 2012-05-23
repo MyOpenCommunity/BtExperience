@@ -104,7 +104,7 @@ public:
 	enum GraphType
 	{
 		/// Average consumption for each hour in a day (computed over a month)
-		DailyAverageGraph,
+		DailyAverageGraph = 1,
 		/// Consumption for each hour in a day
 		CumulativeDayGraph,
 		/// Total consumption for each day in a month
@@ -117,7 +117,7 @@ public:
 	enum ValueType
 	{
 		/// Current consumption
-		CurrentValue,
+		CurrentValue = 6,
 		/// Total consumption over a day.
 		CumulativeDayValue,
 		/// Total consumption over a month.
