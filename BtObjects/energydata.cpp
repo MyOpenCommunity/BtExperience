@@ -15,6 +15,9 @@
 
 #define INVALID_VALUE -1
 
+// the number of seconds the cached value for consumptions including today is considered valid
+#define CURRENT_VALUE_EXPIRATION_MSECS 60000
+
 
 namespace
 {
@@ -106,6 +109,16 @@ namespace
 		Q_ASSERT_X(0, "EnergyData::normalizeDate", "Invalid value for GraphType");
 		return QDate();
 	}
+
+	bool dateContainsToday(EnergyData::ValueType type, QDate date)
+	{
+		return date == normalizeDate(type, QDate::currentDate());
+	}
+
+	bool dateContainsToday(EnergyData::GraphType type, QDate date)
+	{
+		return date == normalizeDate(type, QDate::currentDate());
+	}
 }
 
 
@@ -176,8 +189,12 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
 
 	if (EnergyGraph *graph = graphCache.value(key))
-		// TODO re-request if date includes today
+	{
+		if (dateContainsToday(type, actual_date))
+			requestUpdate(type, actual_date);
+
 		return graph;
+	}
 
 	QVector<double> *cached = valueCache.object(value_key);
 	// for cumulative year graph we might have some valid values received as part of navigating month graphs
@@ -188,10 +205,12 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 
 	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
 
-	// TODO re-request if data not in cache or old
-
 	graphCache[key] = graph;
 	connect(graph, SIGNAL(destroyed(QObject*)), this, SLOT(graphDestroyed(QObject*)));
+
+	// re-request for cached timespan that include today's value
+	if (!cached || dateContainsToday(type, actual_date))
+		requestUpdate(type, actual_date);
 
 #if TEST_ENERGY_DATA
 	DelayedSlotCaller * caller = new DelayedSlotCaller;
@@ -213,8 +232,12 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
 
 	if (EnergyItem *item = itemCache.value(key))
-		// TODO re-request if date includes today
+	{
+		if (dateContainsToday(type, actual_date))
+			requestUpdate(type, actual_date);
+
 		return item;
+	}
 
 	QVector<double> *cached = valueCache.object(value_key);
 	if (cached)
@@ -224,10 +247,12 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 
 	EnergyItem *value = new EnergyItem(this, type, actual_date, val);
 
-	// TODO re-request if data not in cache or old
-
 	itemCache[key] = value;
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
+
+	// re-request for cached timespan that include today's value
+	if (!cached || dateContainsToday(type, actual_date))
+		requestUpdate(type, actual_date);
 
 #if TEST_ENERGY_DATA
 	DelayedSlotCaller * caller = new DelayedSlotCaller;
@@ -436,6 +461,22 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
 {
 	CacheKey key(type, normalizeDate(type, date));
+	quint64 msec_now = QDateTime::currentMSecsSinceEpoch();
+
+	if (!force && requests.contains(key))
+	{
+		if (!requests[key].second)
+			return;
+
+		if (!dateContainsToday(type, key.date) && valueCache.contains(key))
+			return;
+
+		if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS)
+			return;
+	}
+
+	if (type != CumulativeYearGraph)
+		requests[key] = qMakePair(msec_now, false);
 
 	switch (type)
 	{
@@ -458,6 +499,22 @@ void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
 void EnergyData::requestUpdate(ValueType type, QDate date, bool force)
 {
 	CacheKey key(type, normalizeDate(type, date));
+	quint64 msec_now = QDateTime::currentMSecsSinceEpoch();
+
+	if (!force && requests.contains(key))
+	{
+		if (!requests[key].second)
+			return;
+
+		if (!dateContainsToday(type, key.date) && valueCache.contains(key))
+			return;
+
+		if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS)
+			return;
+	}
+
+	if (type != CumulativeYearValue)
+		requests[key] = qMakePair(msec_now, false);
 
 	switch (type)
 	{
@@ -509,8 +566,14 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 		{
 			EnergyValue value = it.value().value<EnergyValue>();
 			ValueType type = mapDimensionToItemType(it.key());
+			QDate date = normalizeDate(type, value.first);
 
-			cacheValueData(type, normalizeDate(type, value.first), value.second);
+			if (!dateContainsToday(type, date))
+				requests.remove(CacheKey(type, date));
+			else
+				requests[CacheKey(type, date)].second = true;
+
+			cacheValueData(type, date, value.second);
 		}
 			break;
 		case EnergyDevice::DIM_CUMULATIVE_MONTH_GRAPH:
@@ -523,8 +586,14 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 		{
 			GraphData data = it.value().value<GraphData>();
 			GraphType type = mapDimensionToGraphType(it.key());
+			QDate date = normalizeDate(type, data.date);
 
-			cacheGraphData(type, normalizeDate(type, data.date), data.graph);
+			if (!dateContainsToday(type, date))
+				requests.remove(CacheKey(type, date));
+			else
+				requests[CacheKey(type, date)].second = true;
+
+			cacheGraphData(type, date, data.graph);
 		}
 			break;
 		}

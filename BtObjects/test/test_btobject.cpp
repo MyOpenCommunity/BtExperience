@@ -95,18 +95,18 @@ void TestBtObject::clearAllClients()
 	server_compare->frameRequest(10);
 }
 
-void TestBtObject::compareClientCommand()
+void TestBtObject::compareClientCommand(int timeout)
 {
 	client_command->flush();
 	client_command_compare->flush();
-	QCOMPARE(server->frameCommand(), server_compare->frameCommand());
+	QCOMPARE(server->frameCommand(timeout), server_compare->frameCommand(timeout));
 }
 
-void TestBtObject::compareClientRequest()
+void TestBtObject::compareClientRequest(int timeout)
 {
 	client_request->flush();
 	client_request_compare->flush();
-	QCOMPARE(server->frameRequest(), server_compare->frameRequest());
+	QCOMPARE(server->frameRequest(timeout), server_compare->frameRequest(timeout));
 }
 
 void TestBtObject::flushCompressedFrames(device *dev)

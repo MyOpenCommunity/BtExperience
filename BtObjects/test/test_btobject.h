@@ -47,8 +47,8 @@ public:
 	virtual ~TestBtObject();
 
 protected:
-	void compareClientCommand();
-	void compareClientRequest();
+	void compareClientCommand(int timeout = 0);
+	void compareClientRequest(int timeout = 0);
 	void flushCompressedFrames(device *dev);
 	void clearDeviceCache();
 	void clearAllClients();

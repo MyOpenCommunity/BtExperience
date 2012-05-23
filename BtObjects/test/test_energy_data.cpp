@@ -623,6 +623,182 @@ void TestEnergyData::testRequestCumulativeYearGraph()
 	compareClientCommand();
 }
 
+void TestEnergyData::testDuplicateValueRequests()
+{
+	QDate date(2012, 5, 17);
+	CacheKey key(EnergyData::CumulativeDayValue, date);
+
+	EnergyItem *value = getValue(EnergyData::CumulativeDayValue, date);
+
+	// values not in cache: update requested and added to request list
+	QVERIFY(obj->requests.contains(key));
+	QCOMPARE(obj->requests[key].second, false);
+
+	dev->requestCumulativeDay(date);
+	compareClientCommand();
+
+	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, true);
+
+	// request pending, does not send another request to the device
+	compareClientCommand(500);
+
+	// receives value, clears request from request list
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_DAY, date, 1239000));
+
+	QVERIFY(!obj->requests.contains(key));
+
+	QCOMPARE(value->getValue(), QVariant(1239.0));
+	QCOMPARE(currency->getValue(), QVariant(309.75));
+}
+
+void TestEnergyData::testDuplicateValueRequests2()
+{
+	QDate date(2012, 5, 17);
+	CacheKey key(EnergyData::CumulativeDayValue, date);
+
+	EnergyItem *value = getValue(EnergyData::CumulativeDayValue, date);
+
+	// values not in cache: update requested and added to request list
+	QVERIFY(obj->requests.contains(key));
+	QCOMPARE(obj->requests[key].second, false);
+
+	dev->requestCumulativeDay(date);
+	compareClientCommand();
+
+	// receives value, clears request from request list
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_DAY, date, 1239000));
+
+	QVERIFY(!obj->requests.contains(key));
+	QCOMPARE(value->getValue(), QVariant(1239.0));
+
+	// value cached, does not send another request to the device
+	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, true);
+
+	compareClientCommand(500);
+
+	QCOMPARE(currency->getValue(), QVariant(309.75));
+}
+
+void TestEnergyData::testDuplicateValueRequests3()
+{
+	QDate date = QDate::currentDate();
+	CacheKey key(EnergyData::CumulativeDayValue, date);
+
+	EnergyItem *value = getValue(EnergyData::CumulativeDayValue, date);
+
+	// values not in cache: update requested and added to request list
+	QVERIFY(obj->requests.contains(key));
+	QCOMPARE(obj->requests[key].second, false);
+
+	dev->requestCumulativeDay(date);
+	compareClientCommand();
+
+	// receives value, keeps request in request list
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_DAY, date, 1239000));
+
+	QVERIFY(obj->requests.contains(key));
+	QCOMPARE(obj->requests[key].second, true);
+	QCOMPARE(value->getValue(), QVariant(1239.0));
+
+	// old request including today, re-requests the value
+	obj->requests[key].first -= 100000;
+
+	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, true);
+
+	dev->requestCumulativeDay(date);
+	compareClientCommand();
+
+	QCOMPARE(currency->getValue(), QVariant(309.75));
+}
+
+void TestEnergyData::testDuplicateGraphRequests()
+{
+	QDate date(2012, 5, 17);
+	CacheKey key(EnergyData::CumulativeDayGraph, date);
+
+	EnergyGraph *graph = getGraph(EnergyData::CumulativeDayGraph, date);
+
+	// values not in cache: update requested and added to request list
+	QVERIFY(obj->requests.contains(key));
+	QCOMPARE(obj->requests[key].second, false);
+
+	dev->requestCumulativeDayGraph(date);
+	compareClientCommand();
+
+	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, true);
+
+	// request pending, does not send another request to the device
+	compareClientCommand(500);
+
+	// receives value, clears request from request list
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_DAY_GRAPH, date, graphValues(24, 1000)));
+
+	QVERIFY(!obj->requests.contains(key));
+
+	QCOMPARE(getBar(graph, 2)->getValue(), QVariant(1.2));
+	QCOMPARE(getBar(currency, 2)->getValue(), QVariant(0.3));
+}
+
+void TestEnergyData::testDuplicateGraphRequests2()
+{
+	QDate date(2012, 5, 17);
+	CacheKey key(EnergyData::CumulativeDayGraph, date);
+
+	EnergyGraph *graph = getGraph(EnergyData::CumulativeDayGraph, date);
+
+	// values not in cache: update requested and added to request list
+	QVERIFY(obj->requests.contains(key));
+	QCOMPARE(obj->requests[key].second, false);
+
+	dev->requestCumulativeDayGraph(date);
+	compareClientCommand();
+
+	// receives value, clears request from request list
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_DAY_GRAPH, date, graphValues(24, 1000)));
+
+	QVERIFY(!obj->requests.contains(key));
+	QCOMPARE(getBar(graph, 2)->getValue(), QVariant(1.2));
+
+	// value cached, does not send another request to the device
+	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, true);
+
+	compareClientCommand(500);
+
+	QCOMPARE(getBar(currency, 2)->getValue(), QVariant(0.3));
+}
+
+void TestEnergyData::testDuplicateGraphRequests3()
+{
+	QDate date = QDate::currentDate();
+	CacheKey key(EnergyData::CumulativeDayGraph, date);
+
+	EnergyGraph *graph = getGraph(EnergyData::CumulativeDayGraph, date);
+
+	// values not in cache: update requested and added to request list
+	QVERIFY(obj->requests.contains(key));
+	QCOMPARE(obj->requests[key].second, false);
+
+	dev->requestCumulativeDayGraph(date);
+	compareClientCommand();
+
+	// receives value, keeps request in request list
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_DAY_GRAPH, date, graphValues(24, 1000)));
+
+	QVERIFY(obj->requests.contains(key));
+	QCOMPARE(obj->requests[key].second, true);
+	QCOMPARE(getBar(graph, 2)->getValue(), QVariant(1.2));
+
+	// old request including today, re-requests the value
+	obj->requests[key].first -= 100000;
+
+	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, true);
+
+	dev->requestCumulativeDayGraph(date);
+	compareClientCommand();
+
+	QCOMPARE(getBar(currency, 2)->getValue(), QVariant(0.3));
+}
+
 void TestEnergyItem::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);

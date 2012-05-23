@@ -212,11 +212,14 @@ private:
 
 	void requestCumulativeYear(QDate date, bool force);
 
+	typedef QPair<quint64, bool> RequestStatus;
+
 	EnergyDevice *dev;
 	EnergyRate *rate;
 	QHash<CacheKey, EnergyGraph *> graphCache;
 	QHash<CacheKey, EnergyItem *> itemCache;
 	QCache<CacheKey, QVector<double> > valueCache;
+	QHash<CacheKey, RequestStatus> requests;
 	bool general;
 
 #if TEST_ENERGY_DATA

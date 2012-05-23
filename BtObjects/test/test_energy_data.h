@@ -72,6 +72,14 @@ private slots:
 	void testRequestCumulativeMonthGraph();
 	void testRequestCumulativeYearGraph();
 
+	void testDuplicateValueRequests();
+	void testDuplicateValueRequests2();
+	void testDuplicateValueRequests3();
+
+	void testDuplicateGraphRequests();
+	void testDuplicateGraphRequests2();
+	void testDuplicateGraphRequests3();
+
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, bool in_currency = false);
 	EnergyGraph *getGraph(EnergyData::GraphType type, QDate date, bool in_currency = false);
