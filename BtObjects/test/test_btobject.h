@@ -51,6 +51,7 @@ protected:
 	void compareClientRequest();
 	void flushCompressedFrames(device *dev);
 	void clearDeviceCache();
+	void clearAllClients();
 
 	OpenServerMock *server;
 	OpenServerMock *server_compare;

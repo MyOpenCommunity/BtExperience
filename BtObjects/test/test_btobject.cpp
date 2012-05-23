@@ -83,6 +83,18 @@ TestBtObject::~TestBtObject()
 	delete server_compare;
 }
 
+void TestBtObject::clearAllClients()
+{
+	client_command->flush();
+	client_request->flush();
+	client_command_compare->flush();
+	client_request_compare->flush();
+	server->frameCommand(10);
+	server->frameRequest(10);
+	server_compare->frameCommand(10);
+	server_compare->frameRequest(10);
+}
+
 void TestBtObject::compareClientCommand()
 {
 	client_command->flush();
