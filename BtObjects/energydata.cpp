@@ -511,6 +511,7 @@ void EnergyData::requestUpdate(int type, QDate date, bool force)
 		caller->addArgument(type);
 		caller->addArgument(key.date);
 	}
+		break;
 	case DailyAverageGraph:
 	case CumulativeDayGraph:
 	case CumulativeMonthGraph:
@@ -520,6 +521,7 @@ void EnergyData::requestUpdate(int type, QDate date, bool force)
 		caller->addArgument(type);
 		caller->addArgument(key.date);
 	}
+		break;
 	}
 #endif
 
