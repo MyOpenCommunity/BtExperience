@@ -17,6 +17,7 @@
 
 // the number of seconds the cached value for consumptions including today is considered valid
 #define CURRENT_VALUE_EXPIRATION_MSECS 60000
+#define VALUE_CACHE_MAX_COST 2000
 
 
 /*
@@ -191,7 +192,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general, EnergyR
 	dev = _dev;
 	general = _general;
 	rate = _rate;
-	value_cache.setMaxCost(2000);
+	value_cache.setMaxCost(VALUE_CACHE_MAX_COST);
 
 #if TEST_ENERGY_DATA
 	automatic_updates = new QTimer(this);
