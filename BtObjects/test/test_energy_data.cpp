@@ -168,7 +168,7 @@ void TestEnergyData::testUpdateItemValue()
 	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), false);
 	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), true);
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
-	ObjectTester t2(o1, SIGNAL(valueChanged()));
+	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
 	obj->cacheValueData(EnergyData::MonthlyAverageValue, QDate(2012, 05, 1), 1236000);
 	t1.checkNoSignals();
