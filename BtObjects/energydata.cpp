@@ -251,7 +251,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 	DelayedSlotCaller * caller = new DelayedSlotCaller;
 	caller->setSlot(this, SLOT(testGraphData(EnergyData::GraphType,QDate)), 500);
 	caller->addArgument(type);
-	caller->addArgument(date);
+	caller->addArgument(actual_date);
 #endif
 
 	return graph;
@@ -294,7 +294,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 	DelayedSlotCaller * caller = new DelayedSlotCaller;
 	caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 500);
 	caller->addArgument(type);
-	caller->addArgument(date);
+	caller->addArgument(actual_date);
 #endif
 
 	return value;
