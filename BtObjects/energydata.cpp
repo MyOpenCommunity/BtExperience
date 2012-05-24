@@ -107,18 +107,22 @@ namespace
 	// - for daily values simply returns the date
 	// - for monthly values sets the day to 1
 	// - for yearly values seths day and month to 1
-	QDate normalizeDate(EnergyData::ValueType type, QDate date)
+	QDate normalizeDate(int type, QDate date)
 	{
 		switch (type)
 		{
 		case EnergyData::CurrentValue:
 			return QDate::currentDate();
+		case EnergyData::DailyAverageGraph:
 		case EnergyData::CumulativeDayValue:
+		case EnergyData::CumulativeDayGraph:
 			return date;
-		case EnergyData::CumulativeMonthValue:
 		case EnergyData::MonthlyAverageValue:
+		case EnergyData::CumulativeMonthValue:
+		case EnergyData::CumulativeMonthGraph:
 			return QDate(date.year(), date.month(), 1);
 		case EnergyData::CumulativeYearValue:
+		case EnergyData::CumulativeYearGraph:
 			return QDate(date.year(), 1, 1);
 		}
 
@@ -126,31 +130,8 @@ namespace
 		return QDate();
 	}
 
-	// see comment for function above
-	QDate normalizeDate(EnergyData::GraphType type, QDate date)
-	{
-		switch (type)
-		{
-		case EnergyData::DailyAverageGraph:
-		case EnergyData::CumulativeDayGraph:
-			return date;
-		case EnergyData::CumulativeMonthGraph:
-			return QDate(date.year(), date.month(), 1);
-		case EnergyData::CumulativeYearGraph:
-			return QDate(date.year(), 1, 1);
-		}
-
-		Q_ASSERT_X(0, "EnergyData::normalizeDate", "Invalid value for GraphType");
-		return QDate();
-	}
-
 	// retuns true is the time interval for the value includes today
-	bool dateContainsToday(EnergyData::ValueType type, QDate date)
-	{
-		return date == normalizeDate(type, QDate::currentDate());
-	}
-
-	bool dateContainsToday(EnergyData::GraphType type, QDate date)
+	bool dateContainsToday(int type, QDate date)
 	{
 		return date == normalizeDate(type, QDate::currentDate());
 	}
@@ -491,12 +472,12 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 	return bars;
 }
 
-void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
+void EnergyData::requestUpdate(int type, QDate date, bool force)
 {
 	CacheKey key(type, normalizeDate(type, date));
 	quint64 msec_now = QDateTime::currentMSecsSinceEpoch();
 
-	if (type != CumulativeYearGraph && !force)
+	if (type != CumulativeYearGraph && type != CumulativeYearValue && !force)
 	{
 		// there is a cached response and the timespan does not include today
 		if (!dateContainsToday(type, key.date) && value_cache.contains(key))
@@ -514,16 +495,31 @@ void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
 		}
 	}
 
-	if (type != CumulativeYearGraph)
+	if (type != CumulativeYearGraph && type != CumulativeYearValue)
 		requests[key] = qMakePair(msec_now, false);
 
 #if TEST_ENERGY_DATA
-	if (type != CumulativeYearGraph)
+	switch (type)
+	{
+	case CurrentValue:
+	case CumulativeDayValue:
+	case CumulativeMonthValue:
+	case MonthlyAverageValue:
+	{
+		DelayedSlotCaller * caller = new DelayedSlotCaller;
+		caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 500);
+		caller->addArgument(type);
+		caller->addArgument(key.date);
+	}
+	case DailyAverageGraph:
+	case CumulativeDayGraph:
+	case CumulativeMonthGraph:
 	{
 		DelayedSlotCaller * caller = new DelayedSlotCaller;
 		caller->setSlot(this, SLOT(testGraphData(EnergyData::GraphType,QDate)), 500);
 		caller->addArgument(type);
 		caller->addArgument(key.date);
+	}
 	}
 #endif
 
@@ -542,47 +538,6 @@ void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
 		// see comment in valueReceived()
 		requestCumulativeYear(key.date, force);
 		break;
-	}
-}
-
-void EnergyData::requestUpdate(ValueType type, QDate date, bool force)
-{
-	CacheKey key(type, normalizeDate(type, date));
-	quint64 msec_now = QDateTime::currentMSecsSinceEpoch();
-
-	if (type != CumulativeYearValue && !force)
-	{
-		// there is a cached response and the timespan does not include today
-		if (!dateContainsToday(type, key.date) && value_cache.contains(key))
-			return;
-
-		if (requests.contains(key))
-		{
-			// there is a pending request for this value
-			if (!requests[key].second)
-				return;
-
-			// the timespan includes today but there was a request less than 60 seconds ago
-			if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS && value_cache.contains(key))
-				return;
-		}
-	}
-
-	if (type != CumulativeYearValue)
-		requests[key] = qMakePair(msec_now, false);
-
-#if TEST_ENERGY_DATA
-	if (type != CumulativeYearValue)
-	{
-		DelayedSlotCaller * caller = new DelayedSlotCaller;
-		caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 500);
-		caller->addArgument(type);
-		caller->addArgument(key.date);
-	}
-#endif
-
-	switch (type)
-	{
 	case CurrentValue:
 		dev->requestCurrent();
 		break;

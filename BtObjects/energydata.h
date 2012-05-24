@@ -220,8 +220,7 @@ private:
 
 	// request an update for the specified value/graph; takes into account pending requests
 	// and avoids requesting again cached data
-	void requestUpdate(GraphType type, QDate date, bool force = false);
-	void requestUpdate(ValueType type, QDate date, bool force = false);
+	void requestUpdate(int type, QDate date, bool force = false);
 
 	// requests the cumulative month value for all months in the year
 	void requestCumulativeYear(QDate date, bool force);
