@@ -673,9 +673,17 @@ bool EnergyData::isGeneral() const
 }
 
 #if TEST_ENERGY_DATA
+namespace
+{
+	int valueRange(EnergyData::EnergyType type)
+	{
+		return type == EnergyData::Electricity ? 3000 : 100;
+	}
+}
+
 void EnergyData::testValueData(ValueType type, QDate date)
 {
-	cacheValueData(type, date, rand() % 100);
+	cacheValueData(type, date, rand() % valueRange(getEnergyType()));
 }
 
 void EnergyData::testGraphData(GraphType type, QDate date)
@@ -698,14 +706,14 @@ void EnergyData::testGraphData(GraphType type, QDate date)
 	}
 
 	for (int i = 0; i < count; ++i)
-		graph_values[i + 1] = rand() % 100;
+		graph_values[i + 1] = rand() % valueRange(getEnergyType());
 
 	cacheGraphData(type, date, graph_values);
 }
 
 void EnergyData::testAutomaticUpdates()
 {
-	cacheValueData(EnergyData::CurrentValue, QDate(), rand() % 100);
+	cacheValueData(EnergyData::CurrentValue, QDate(), rand() % valueRange(getEnergyType()));
 }
 #endif
 
