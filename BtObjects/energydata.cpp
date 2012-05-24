@@ -440,10 +440,13 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 	if (old_value == month_value || !checkYearGraphDataIsValid(actual_date, *values))
 		return;
 
+	// compute cumulative year value and insert it into the cache
 	double cumulative_value = 0.0;
 
 	for (int i = 0; i < values->count(); ++i)
 		cumulative_value += (*values)[i];
+
+	value_cache.insert(CacheKey(CumulativeYearValue, actual_date), new QVector<double>(1, cumulative_value), 1);
 
 	// update year graph objects
 	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeYearGraph, actual_date, false)))
@@ -597,8 +600,14 @@ void EnergyData::requestCumulativeYear(QDate date, bool force)
 	else
 		count = 12;
 
+	// request updates for past months not in cache
 	for (int i = 0; i < count; ++i)
-		requestUpdate(CumulativeMonthValue, QDate(date.year(), i + 1, 1), force);
+	{
+		QDate month(date.year(), i + 1, 1);
+
+		if (!value_cache.contains(CacheKey(CumulativeMonthValue, month)) || i == count - 1)
+			requestUpdate(CumulativeMonthValue, month, force);
+	}
 }
 
 void EnergyData::valueReceived(const DeviceValues &values_list)

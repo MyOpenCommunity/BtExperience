@@ -711,6 +711,45 @@ void TestEnergyData::testDuplicateValueRequests3()
 	QCOMPARE(currency->getValue(), QVariant(309.75));
 }
 
+void TestEnergyData::testDuplicateValueRequests4()
+{
+	QDate date = QDate::currentDate();
+	CacheKey key(EnergyData::CumulativeYearValue, QDate(date.year(), 1, 1));
+	CacheKey month_key(EnergyData::CumulativeMonthValue, QDate(date.year(), date.month(), 1));
+
+	EnergyItem *value = getValue(EnergyData::CumulativeYearValue, date);
+
+	// values not in cache: update requested and added to request list
+	QVERIFY(!obj->requests.contains(key));
+
+	for (int i = 0; i < date.month(); ++i)
+		dev->requestCumulativeMonth(QDate(date.year(), i + 1, 1));
+	compareClientCommand();
+
+	QVERIFY(!obj->requests.contains(key));
+	for (int i = 0; i < date.month(); ++i)
+		QVERIFY(obj->requests.contains(CacheKey(EnergyData::CumulativeMonthValue, QDate(date.year(), i + 1, 1))));
+
+	// receives value, keeps only request for current month in request list
+	for (int i = 0; i < date.month(); ++i)
+		obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, QDate(date.year(), i + 1, 1), 1239000));
+
+	QVERIFY(obj->requests.contains(month_key));
+	QCOMPARE(obj->requests[month_key].second, true);
+
+	QCOMPARE(value->getValue(), QVariant(1239.0 * date.month()));
+
+	// old request including today, re-requests the value for current month only
+	obj->requests[month_key].first -= 100000;
+
+	EnergyItem *currency = getValue(EnergyData::CumulativeYearValue, date, true);
+
+	dev->requestCumulativeMonth(date);
+	compareClientCommand();
+
+	QCOMPARE(currency->getValue(), QVariant(309.75 * date.month()));
+}
+
 void TestEnergyData::testDuplicateGraphRequests()
 {
 	QDate date(2012, 5, 17);
@@ -797,6 +836,46 @@ void TestEnergyData::testDuplicateGraphRequests3()
 	compareClientCommand();
 
 	QCOMPARE(getBar(currency, 2)->getValue(), QVariant(0.3));
+}
+
+
+void TestEnergyData::testDuplicateGraphRequests4()
+{
+	QDate date = QDate::currentDate();
+	CacheKey key(EnergyData::CumulativeYearGraph, QDate(date.year(), 1, 1));
+	CacheKey month_key(EnergyData::CumulativeMonthValue, QDate(date.year(), date.month(), 1));
+
+	EnergyGraph *graph = getGraph(EnergyData::CumulativeYearGraph, date);
+
+	// values not in cache: update requested and added to request list
+	QVERIFY(!obj->requests.contains(key));
+
+	for (int i = 0; i < date.month(); ++i)
+		dev->requestCumulativeMonth(QDate(date.year(), i + 1, 1));
+	compareClientCommand();
+
+	QVERIFY(!obj->requests.contains(key));
+	for (int i = 0; i < date.month(); ++i)
+		QVERIFY(obj->requests.contains(CacheKey(EnergyData::CumulativeMonthValue, QDate(date.year(), i + 1, 1))));
+
+	// receives value, keeps only request for current month in request list
+	for (int i = 0; i < date.month(); ++i)
+		obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, QDate(date.year(), i + 1, 1), 1239000));
+
+	QVERIFY(obj->requests.contains(month_key));
+	QCOMPARE(obj->requests[month_key].second, true);
+
+	QCOMPARE(getBar(graph, 0)->getValue(), QVariant(1239.0));
+
+	// old request including today, re-requests the value for current month only
+	obj->requests[month_key].first -= 100000;
+
+	EnergyGraph *currency = getGraph(EnergyData::CumulativeYearGraph, date, true);
+
+	dev->requestCumulativeMonth(date);
+	compareClientCommand();
+
+	QCOMPARE(getBar(currency, 0)->getValue(), QVariant(309.75));
 }
 
 void TestEnergyItem::init()

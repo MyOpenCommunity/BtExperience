@@ -75,10 +75,12 @@ private slots:
 	void testDuplicateValueRequests();
 	void testDuplicateValueRequests2();
 	void testDuplicateValueRequests3();
+	void testDuplicateValueRequests4();
 
 	void testDuplicateGraphRequests();
 	void testDuplicateGraphRequests2();
 	void testDuplicateGraphRequests3();
+	void testDuplicateGraphRequests4();
 
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, bool in_currency = false);
