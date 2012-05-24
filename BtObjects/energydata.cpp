@@ -496,19 +496,22 @@ void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
 	CacheKey key(type, normalizeDate(type, date));
 	quint64 msec_now = QDateTime::currentMSecsSinceEpoch();
 
-	if (!force && requests.contains(key))
+	if (type != CumulativeYearGraph && !force)
 	{
-		// there is a pending request for this value
-		if (!requests[key].second)
-			return;
-
 		// there is a cached response and the timespan does not include today
 		if (!dateContainsToday(type, key.date) && value_cache.contains(key))
 			return;
 
-		// the timespan includes today but there was a request less than 60 seconds ago
-		if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS)
-			return;
+		if (requests.contains(key))
+		{
+			// there is a pending request for this value
+			if (!requests[key].second)
+				return;
+
+			// the timespan includes today but there was a request less than 60 seconds ago
+			if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS && value_cache.contains(key))
+				return;
+		}
 	}
 
 	if (type != CumulativeYearGraph)
@@ -547,19 +550,22 @@ void EnergyData::requestUpdate(ValueType type, QDate date, bool force)
 	CacheKey key(type, normalizeDate(type, date));
 	quint64 msec_now = QDateTime::currentMSecsSinceEpoch();
 
-	if (!force && requests.contains(key))
+	if (type != CumulativeYearValue && !force)
 	{
-		// there is a pending request for this value
-		if (!requests[key].second)
-			return;
-
 		// there is a cached response and the timespan does not include today
 		if (!dateContainsToday(type, key.date) && value_cache.contains(key))
 			return;
 
-		// the timespan includes today but there was a request less than 60 seconds ago
-		if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS)
-			return;
+		if (requests.contains(key))
+		{
+			// there is a pending request for this value
+			if (!requests[key].second)
+				return;
+
+			// the timespan includes today but there was a request less than 60 seconds ago
+			if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS && value_cache.contains(key))
+				return;
+		}
 	}
 
 	if (type != CumulativeYearValue)

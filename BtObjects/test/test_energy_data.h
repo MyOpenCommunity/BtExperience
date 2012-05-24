@@ -72,15 +72,23 @@ private slots:
 	void testRequestCumulativeMonthGraph();
 	void testRequestCumulativeYearGraph();
 
+	// does not re-send a request when one is already pending
 	void testDuplicateValueRequests();
+	// does not re-send a request when the values are already cached
 	void testDuplicateValueRequests2();
+	// re-send the request if the time span includes today and the request is old
 	void testDuplicateValueRequests3();
+	// for year values, only re-sends the request for the month including today
 	void testDuplicateValueRequests4();
+	// re-send the request if the value is not in cache
+	void testDuplicateValueRequests5();
 
+	// same as above but for graphs
 	void testDuplicateGraphRequests();
 	void testDuplicateGraphRequests2();
 	void testDuplicateGraphRequests3();
 	void testDuplicateGraphRequests4();
+	void testDuplicateGraphRequests5();
 
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, bool in_currency = false);
