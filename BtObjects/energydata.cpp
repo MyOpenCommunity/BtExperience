@@ -248,13 +248,6 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 	if (!cached || dateContainsToday(type, actual_date))
 		requestUpdate(type, actual_date);
 
-#if TEST_ENERGY_DATA
-	DelayedSlotCaller * caller = new DelayedSlotCaller;
-	caller->setSlot(this, SLOT(testGraphData(EnergyData::GraphType,QDate)), 500);
-	caller->addArgument(type);
-	caller->addArgument(actual_date);
-#endif
-
 	return graph;
 }
 
@@ -290,13 +283,6 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 	// re-request for cached timespans that include today's value
 	if (!cached || dateContainsToday(type, actual_date))
 		requestUpdate(type, actual_date);
-
-#if TEST_ENERGY_DATA
-	DelayedSlotCaller * caller = new DelayedSlotCaller;
-	caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 500);
-	caller->addArgument(type);
-	caller->addArgument(actual_date);
-#endif
 
 	return value;
 }
@@ -528,6 +514,16 @@ void EnergyData::requestUpdate(GraphType type, QDate date, bool force)
 	if (type != CumulativeYearGraph)
 		requests[key] = qMakePair(msec_now, false);
 
+#if TEST_ENERGY_DATA
+	if (type != CumulativeYearGraph)
+	{
+		DelayedSlotCaller * caller = new DelayedSlotCaller;
+		caller->setSlot(this, SLOT(testGraphData(EnergyData::GraphType,QDate)), 500);
+		caller->addArgument(type);
+		caller->addArgument(key.date);
+	}
+#endif
+
 	switch (type)
 	{
 	case DailyAverageGraph:
@@ -568,6 +564,16 @@ void EnergyData::requestUpdate(ValueType type, QDate date, bool force)
 
 	if (type != CumulativeYearValue)
 		requests[key] = qMakePair(msec_now, false);
+
+#if TEST_ENERGY_DATA
+	if (type != CumulativeYearValue)
+	{
+		DelayedSlotCaller * caller = new DelayedSlotCaller;
+		caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 500);
+		caller->addArgument(type);
+		caller->addArgument(key.date);
+	}
+#endif
 
 	switch (type)
 	{
@@ -693,6 +699,12 @@ namespace
 
 void EnergyData::testValueData(ValueType type, QDate date)
 {
+	// mirrors the logic in valueReceived()
+	if (!dateContainsToday(type, date))
+		requests.remove(CacheKey(type, date));
+	else
+		requests[CacheKey(type, date)].second = true;
+
 	cacheValueData(type, date, rand() % valueRange(getEnergyType()));
 }
 
@@ -717,6 +729,12 @@ void EnergyData::testGraphData(GraphType type, QDate date)
 
 	for (int i = 0; i < count; ++i)
 		graph_values[i + 1] = rand() % valueRange(getEnergyType());
+
+	// mirrors the logic in valueReceived()
+	if (!dateContainsToday(type, date))
+		requests.remove(CacheKey(type, date));
+	else
+		requests[CacheKey(type, date)].second = true;
 
 	cacheGraphData(type, date, graph_values);
 }
