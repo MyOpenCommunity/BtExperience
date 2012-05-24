@@ -17,7 +17,12 @@
 
 // the number of seconds the cached value for consumptions including today is considered valid
 #define CURRENT_VALUE_EXPIRATION_MSECS 60000
+// maximum cost for the cache
 #define VALUE_CACHE_MAX_COST 2000
+// trim the cache to this size...
+#define VALUE_CACHE_TRIM_COST 31
+// ...after this inactivity timeout
+#define CACHE_TRIM_INTERVAL_MSEC 300 * 1000 // 5 min
 
 
 /*
@@ -175,10 +180,17 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general, EnergyR
 	rate = _rate;
 	value_cache.setMaxCost(VALUE_CACHE_MAX_COST);
 
+	trim_cache.setSingleShot(true);
+	trim_cache.setInterval(CACHE_TRIM_INTERVAL_MSEC);
+	connect(&trim_cache, SIGNAL(timeout()), this, SLOT(trimCache()));
+
+	trim_cache.setSingleShot(true);
+	trim_cache.setInterval(CACHE_TRIM_INTERVAL_MSEC);
+	connect(&trim_cache, SIGNAL(timeout()), this, SLOT(trimCache()));
+
 #if TEST_ENERGY_DATA
-	automatic_updates = new QTimer(this);
-	automatic_updates->setInterval(5000);
-	connect(automatic_updates, SIGNAL(timeout()), this, SLOT(testAutomaticUpdates()));
+	automatic_updates.setInterval(5000);
+	connect(&automatic_updates, SIGNAL(timeout()), this, SLOT(testAutomaticUpdates()));
 #endif
 
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
@@ -196,6 +208,9 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 {
 	if (in_currency && !rate)
 		return 0;
+
+	// (re)start trim cache timeout
+	trim_cache.start();
 
 	QList<QObject*> values;
 	QDate actual_date = normalizeDate(type, date);
@@ -231,6 +246,9 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 {
 	if (in_currency && !rate)
 		return 0;
+
+	// (re)start trim cache timeout
+	trim_cache.start();
 
 	QVariant val;
 	QDate actual_date = normalizeDate(type, date);
@@ -321,7 +339,7 @@ EnergyData::EnergyType EnergyData::getEnergyType() const
 void EnergyData::requestCurrentUpdateStart()
 {
 #if TEST_ENERGY_DATA
-	automatic_updates->start();
+	automatic_updates.start();
 #endif
 	dev->requestCurrentUpdateStart();
 }
@@ -329,14 +347,13 @@ void EnergyData::requestCurrentUpdateStart()
 void EnergyData::requestCurrentUpdateStop()
 {
 #if TEST_ENERGY_DATA
-	automatic_updates->stop();
+	automatic_updates.stop();
 #endif
 	dev->requestCurrentUpdateStop();
 }
 
 void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 {
-	// TODO clean up unused cache entries after some time (maybe triggered by object deletion)
 	// for electricity, the device returns values in watts, but the GUI always displays kilowatts,
 	// so it's easier to do the conversion here
 	double conversion = getEnergyType() == Electricity ? 1000.0 : 1.0;
@@ -355,7 +372,6 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 
 void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph)
 {
-	// TODO clean up unused cache entries after some time (maybe triggered by object deletion)
 	// for electricity, the device returns values in watts, but the GUI always displays kilowatts,
 	// so it's easier to do the conversion here
 	double conversion = getEnergyType() == Electricity ? 1000.0 : 1.0;
@@ -499,9 +515,9 @@ void EnergyData::requestUpdate(int type, QDate date, bool force)
 	case CumulativeMonthValue:
 	case MonthlyAverageValue:
 	{
-		DelayedSlotCaller * caller = new DelayedSlotCaller;
+		DelayedSlotCaller *caller = new DelayedSlotCaller;
 		caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 500);
-		caller->addArgument(type);
+		caller->addArgument(static_cast<ValueType>(type));
 		caller->addArgument(key.date);
 	}
 		break;
@@ -509,9 +525,9 @@ void EnergyData::requestUpdate(int type, QDate date, bool force)
 	case CumulativeDayGraph:
 	case CumulativeMonthGraph:
 	{
-		DelayedSlotCaller * caller = new DelayedSlotCaller;
+		DelayedSlotCaller *caller = new DelayedSlotCaller;
 		caller->setSlot(this, SLOT(testGraphData(EnergyData::GraphType,QDate)), 500);
-		caller->addArgument(type);
+		caller->addArgument(static_cast<GraphType>(type));
 		caller->addArgument(key.date);
 	}
 		break;
@@ -620,6 +636,13 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 		}
 		++it;
 	}
+}
+
+void EnergyData::trimCache()
+{
+	// reduce cache size to VALUE_CACHE_TRIM_COST to delete some objects
+	value_cache.setMaxCost(VALUE_CACHE_TRIM_COST);
+	value_cache.setMaxCost(VALUE_CACHE_MAX_COST);
 }
 
 void EnergyData::graphDestroyed(QObject *obj)

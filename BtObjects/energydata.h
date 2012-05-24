@@ -6,6 +6,7 @@
 
 #include <QDate>
 #include <QCache>
+#include <QTimer>
 
 class EnergyDevice;
 class EnergyGraph;
@@ -16,10 +17,6 @@ class QDomNode;
 #ifndef TEST_ENERGY_DATA
 #define TEST_ENERGY_DATA 1
 #endif
-
-#if TEST_ENERGY_DATA
-	class QTimer;
-#endif //TEST_ENERGY_DATA
 
 
 struct CacheKey
@@ -199,6 +196,8 @@ private slots:
 
 	void valueReceived(const DeviceValues &values_list);
 
+	void trimCache();
+
 private:
 	// add a value/graph to the cache, updating EnergyItem/EnergyGraph objects
 	void cacheValueData(ValueType type, QDate date, qint64 value);
@@ -233,6 +232,7 @@ private:
 	QCache<CacheKey, QVector<double> > value_cache;
 	// pending requests (all values) and completed requests (for timespans including today)
 	QHash<CacheKey, RequestStatus> requests;
+	QTimer trim_cache;
 	bool general;
 
 #if TEST_ENERGY_DATA
@@ -241,7 +241,7 @@ private slots:
 	void testGraphData(EnergyData::GraphType type, QDate date);
 	void testAutomaticUpdates();
 private:
-	QTimer *automatic_updates;
+	QTimer automatic_updates;
 #endif //TEST_ENERGY_DATA
 };
 
