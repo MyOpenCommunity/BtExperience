@@ -114,6 +114,7 @@ private slots:
 	void cleanup();
 
 	void testSetValue();
+	void testRateChanged();
 	void testRequestUpdate();
 
 private:
@@ -131,6 +132,7 @@ private slots:
 	void cleanup();
 
 	void testSetGraph();
+	void testRateChanged();
 	void testRequestUpdate();
 
 private:

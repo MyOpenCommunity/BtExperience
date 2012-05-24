@@ -197,9 +197,6 @@ private slots:
 	void graphDestroyed(QObject *obj);
 	void itemDestroyed(QObject *obj);
 
-	// conversione rate changed
-	void rateChanged();
-
 	void valueReceived(const DeviceValues &values_list);
 
 private:
@@ -216,7 +213,7 @@ private:
 	bool checkYearGraphDataIsValid(QDate date, const QVector<double> &values);
 
 	// create EnergyGraphbar objects for a graph
-	QList<QObject *> createGraph(GraphType type, const QVector<double> &values, double conversion = 1.0);
+	QList<QObject *> createGraph(GraphType type, const QVector<double> &values, EnergyRate *rate = 0);
 
 	// request an update for the specified value/graph; takes into account pending requests
 	// and avoids requesting again cached data
@@ -291,7 +288,7 @@ class EnergyItem : public QObject
 	Q_PROPERTY(bool isValid READ isValid NOTIFY validChanged)
 
 public:
-	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value);
+	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value, EnergyRate *rate = 0);
 
 	QVariant getValue() const;
 
@@ -321,6 +318,7 @@ private:
 	EnergyData::ValueType type;
 	QDate date;
 	QVariant value;
+	EnergyRate *rate;
 };
 
 
@@ -353,24 +351,23 @@ class EnergyGraphBar : public QObject
 
 		\sa EnergyGraph::isValid
 	*/
-	Q_PROPERTY(QVariant value READ getValue CONSTANT)
+	Q_PROPERTY(QVariant value READ getValue NOTIFY valueChanged)
 
 public:
-	EnergyGraphBar(QVariant index, QString label, QVariant value)
-	{
-		this->index = index;
-		this->label = label;
-		this->value = value;
-	}
+	EnergyGraphBar(QVariant index, QString label, QVariant value, EnergyRate *rate = 0);
 
-	QVariant getIndex() const { return index; }
-	QString getLabel() const { return label; }
-	QVariant getValue() const { return value; }
+	QVariant getIndex() const;
+	QString getLabel() const;
+	QVariant getValue() const;
+
+signals:
+	void valueChanged();
 
 private:
 	QVariant index;
 	QString label;
 	QVariant value;
+	EnergyRate *rate;
 };
 
 

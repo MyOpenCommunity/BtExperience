@@ -182,9 +182,6 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general, EnergyR
 #endif
 
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
-
-	if (rate)
-		connect(rate, SIGNAL(rateChanged()), this, SLOT(rateChanged()));
 }
 
 EnergyData::~EnergyData()
@@ -216,9 +213,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 	QVector<double> *cached = value_cache.object(value_key);
 	// for cumulative year graph we might have some valid values received as part of navigating month graphs
 	if (cached && (type != CumulativeYearGraph || checkYearGraphDataIsValid(date, *cached)))
-		values = createGraph(type, *cached, in_currency ? rate->getRate() : 1.0);
-
-	// TODO add in_currency to EnergyGraph
+		values = createGraph(type, *cached, in_currency ? rate : 0);
 
 	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
 
@@ -252,11 +247,9 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 
 	QVector<double> *cached = value_cache.object(value_key);
 	if (cached)
-		val = in_currency ? (*cached)[0] * rate->getRate() : (*cached)[0];
+		val = (*cached)[0];
 
-	// TODO add in_currency to EnergyItem
-
-	EnergyItem *value = new EnergyItem(this, type, actual_date, val);
+	EnergyItem *value = new EnergyItem(this, type, actual_date, val, in_currency ? rate : 0);
 
 	item_cache[key] = value;
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
@@ -353,7 +346,7 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 	if (EnergyItem *item = item_cache.value(CacheKey(type, date, false)))
 		item->setValue(value / conversion);
 	if (EnergyItem *item = item_cache.value(CacheKey(type, date, true)))
-		item->setValue(value / conversion * rate->getRate());
+		item->setValue(value / conversion);
 
 	// see comment in valueReceived()
 	if (type == CumulativeMonthValue)
@@ -377,7 +370,7 @@ void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned i
 	if (EnergyGraph *graph = graph_cache.value(CacheKey(type, date, false)))
 		graph->setGraph(createGraph(type, *values));
 	if (EnergyGraph *graph = graph_cache.value(CacheKey(type, date, true)))
-		graph->setGraph(createGraph(type, *values, rate->getRate()));
+		graph->setGraph(createGraph(type, *values, rate));
 }
 
 void EnergyData::cacheYearGraphData(QDate date, double month_value)
@@ -419,12 +412,12 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeYearGraph, actual_date, false)))
 		graph->setGraph(createGraph(CumulativeYearGraph, *values));
 	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeYearGraph, actual_date, true)))
-		graph->setGraph(createGraph(CumulativeYearGraph, *values, rate->getRate()));
+		graph->setGraph(createGraph(CumulativeYearGraph, *values, rate));
 	// update cumulative year value objects
 	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeYearValue, actual_date, false)))
 		value->setValue(cumulative_value);
 	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeYearValue, actual_date, true)))
-		value->setValue(cumulative_value * rate->getRate());
+		value->setValue(cumulative_value);
 }
 
 bool EnergyData::checkYearGraphDataIsValid(QDate date, const QVector<double> &values)
@@ -442,7 +435,7 @@ bool EnergyData::checkYearGraphDataIsValid(QDate date, const QVector<double> &va
 	return true;
 }
 
-QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &values, double conversion)
+QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &values, EnergyRate *rate)
 {
 	QList<QObject *> bars;
 	QList<QString> keys;
@@ -467,7 +460,7 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 	}
 
 	for (int i = 0; i < values.count(); ++i)
-		bars.append(new EnergyGraphBar(i, keys[i], values[i] * conversion));
+		bars.append(new EnergyGraphBar(i, keys[i], values[i], rate));
 
 	return bars;
 }
@@ -641,11 +634,6 @@ void EnergyData::itemDestroyed(QObject *obj)
 	removeValue(item_cache, static_cast<EnergyItem *>(obj));
 }
 
-void EnergyData::rateChanged()
-{
-	// TODO update rates in cached objects
-}
-
 bool EnergyData::isGeneral() const
 {
 	return general;
@@ -713,17 +701,24 @@ EnergyRate *EnergyData::getRate() const
 	return rate;
 }
 
-EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value)
+EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value, EnergyRate *_rate)
 {
 	data = _data;
 	type = _type;
 	date = _date;
 	value = _value;
+	rate = _rate;
+
+	if (rate)
+		connect(rate, SIGNAL(rateChanged()), this, SIGNAL(valueChanged()));
 }
 
 QVariant EnergyItem::getValue() const
 {
-	return value;
+	if (!value.isValid() || !rate)
+		return value;
+	else
+		return value.toDouble() * rate->getRate();
 }
 
 EnergyData::ValueType EnergyItem::getValueType() const
@@ -758,6 +753,35 @@ void EnergyItem::setValue(QVariant val)
 	if (!valid)
 		emit validChanged();
 	emit valueChanged();
+}
+
+EnergyGraphBar::EnergyGraphBar(QVariant _index, QString _label, QVariant _value, EnergyRate *_rate)
+{
+	index = _index;
+	label = _label;
+	value = _value;
+	rate = _rate;
+
+	if (rate)
+		connect(rate, SIGNAL(rateChanged()), this, SIGNAL(valueChanged()));
+}
+
+QVariant EnergyGraphBar::getIndex() const
+{
+	return index;
+}
+
+QString EnergyGraphBar::getLabel() const
+{
+	return label;
+}
+
+QVariant EnergyGraphBar::getValue() const
+{
+	if (!value.isValid() || !rate)
+		return value;
+	else
+		return value.toDouble() * rate->getRate();
 }
 
 EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph)

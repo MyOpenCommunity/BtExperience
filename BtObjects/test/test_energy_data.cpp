@@ -980,6 +980,19 @@ void TestEnergyItem::testSetValue()
 	QCOMPARE(item.isValid(), true);
 }
 
+void TestEnergyItem::testRateChanged()
+{
+	EnergyRate rate(0.5);
+	EnergyItem item(obj, EnergyData::CurrentValue, QDate(2012, 05, 16), QVariant(4), &rate);
+	ObjectTester t(&item, SIGNAL(valueChanged()));
+
+	QCOMPARE(item.getValue(), QVariant(2));
+
+	rate.setRate(0.75);
+	t.checkSignals();
+	QCOMPARE(item.getValue(), QVariant(3));
+}
+
 void TestEnergyItem::testRequestUpdate()
 {
 	EnergyItem item(obj, EnergyData::MonthlyAverageValue, QDate(2012, 05, 16), QVariant());
@@ -1030,6 +1043,19 @@ void TestEnergyGraph::testSetGraph()
 	tvalid.checkNoSignals();
 	tvalue.checkNoSignals();
 	QCOMPARE(graph.isValid(), true);
+}
+
+void TestEnergyGraph::testRateChanged()
+{
+	EnergyRate rate(0.5);
+	EnergyGraphBar bar(QVariant(), "", QVariant(4), &rate);
+	ObjectTester t(&bar, SIGNAL(valueChanged()));
+
+	QCOMPARE(bar.getValue(), QVariant(2));
+
+	rate.setRate(0.75);
+	t.checkSignals();
+	QCOMPARE(bar.getValue(), QVariant(3));
 }
 
 void TestEnergyGraph::testRequestUpdate()
