@@ -204,9 +204,9 @@ EnergyData::~EnergyData()
 		delete graph;
 }
 
-QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
+QObject *EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
 {
-	if (in_currency && !rate)
+	if (measure == Currency && !rate)
 		return 0;
 
 	// (re)start trim cache timeout
@@ -214,7 +214,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 
 	QList<QObject*> values;
 	QDate actual_date = normalizeDate(type, date);
-	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
+	CacheKey key(type, actual_date, measure), value_key(type, actual_date);
 
 	if (EnergyGraph *graph = graph_cache.value(key))
 	{
@@ -228,7 +228,7 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 	QVector<double> *cached = value_cache.object(value_key);
 	// for cumulative year graph we might have some valid values received as part of navigating month graphs
 	if (cached && (type != CumulativeYearGraph || checkYearGraphDataIsValid(date, *cached)))
-		values = createGraph(type, *cached, in_currency ? rate : 0);
+		values = createGraph(type, *cached, measure == Currency ? rate : 0);
 
 	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
 
@@ -242,9 +242,9 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, bool in_currency)
 	return graph;
 }
 
-QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
+QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 {
-	if (in_currency && !rate)
+	if (measure == Currency && !rate)
 		return 0;
 
 	// (re)start trim cache timeout
@@ -252,7 +252,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 
 	QVariant val;
 	QDate actual_date = normalizeDate(type, date);
-	CacheKey key(type, actual_date, in_currency), value_key(type, actual_date);
+	CacheKey key(type, actual_date, measure), value_key(type, actual_date);
 
 	if (EnergyItem *item = item_cache.value(key))
 	{
@@ -267,7 +267,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, bool in_currency)
 	if (cached)
 		val = (*cached)[0];
 
-	EnergyItem *value = new EnergyItem(this, type, actual_date, val, in_currency ? rate : 0);
+	EnergyItem *value = new EnergyItem(this, type, actual_date, val, measure == Currency ? rate : 0);
 
 	item_cache[key] = value;
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));

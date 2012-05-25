@@ -27,14 +27,14 @@ void TestEnergyData::cleanup()
 	clearAllClients();
 }
 
-EnergyItem *TestEnergyData::getValue(EnergyData::ValueType type, QDate date, bool in_currency)
+EnergyItem *TestEnergyData::getValue(EnergyData::ValueType type, QDate date, EnergyData::MeasureType measure)
 {
-	return qobject_cast<EnergyItem *>(obj->getValue(type, date, in_currency));
+	return qobject_cast<EnergyItem *>(obj->getValue(type, date, measure));
 }
 
-EnergyGraph *TestEnergyData::getGraph(EnergyData::GraphType type, QDate date, bool in_currency)
+EnergyGraph *TestEnergyData::getGraph(EnergyData::GraphType type, QDate date, EnergyData::MeasureType measure)
 {
-	return qobject_cast<EnergyGraph *>(obj->getGraph(type, date, in_currency));
+	return qobject_cast<EnergyGraph *>(obj->getGraph(type, date, measure));
 }
 
 EnergyGraphBar *TestEnergyData::getBar(EnergyGraph *graph, int index)
@@ -137,10 +137,10 @@ void TestEnergyData::testGraphGC()
 
 void TestEnergyData::testItemCache()
 {
-	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), false);
-	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 14), false);
-	EnergyItem *o3 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 13), true);
-	EnergyItem *o4 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 04, 13), false);
+	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), EnergyData::Consumption);
+	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 14), EnergyData::Consumption);
+	EnergyItem *o3 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 13), EnergyData::Currency);
+	EnergyItem *o4 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 04, 13), EnergyData::Consumption);
 
 	// check the cache takes into account date and in_currency
 	QVERIFY(o1 == o2);
@@ -151,10 +151,10 @@ void TestEnergyData::testItemCache()
 
 void TestEnergyData::testGraphCache()
 {
-	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), false);
-	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 14), false);
-	EnergyGraph *o3 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 13), true);
-	EnergyGraph *o4 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 04, 13), false);
+	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), EnergyData::Consumption);
+	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 14), EnergyData::Consumption);
+	EnergyGraph *o3 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 13), EnergyData::Currency);
+	EnergyGraph *o4 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 04, 13), EnergyData::Consumption);
 
 	// check the cache takes into account date and in_currency
 	QVERIFY(o1 == o2);
@@ -165,8 +165,8 @@ void TestEnergyData::testGraphCache()
 
 void TestEnergyData::testUpdateItemValue()
 {
-	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), false);
-	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), true);
+	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), EnergyData::Consumption);
+	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
@@ -188,8 +188,8 @@ void TestEnergyData::testUpdateItemValue()
 
 void TestEnergyData::testUpdateGraphValue()
 {
-	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), false);
-	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), true);
+	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), EnergyData::Consumption);
+	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
@@ -242,8 +242,8 @@ void TestEnergyData::testCachedValue()
 	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 04, 1), 1235000);
 	obj->cacheValueData(EnergyData::CumulativeMonthValue, QDate(2012, 05, 1), 1234000);
 
-	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), false);
-	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), true);
+	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), EnergyData::Consumption);
+	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17), EnergyData::Currency);
 
 	QCOMPARE(o1->getValue(), QVariant(1234.0));
 	QCOMPARE(o2->getValue(), QVariant(308.5));
@@ -255,8 +255,8 @@ void TestEnergyData::testCachedGraph()
 	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 04, 1), graphValues(3, 9000));
 	obj->cacheGraphData(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 1), graphValues(3, 8000));
 
-	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), false);
-	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), true);
+	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), EnergyData::Consumption);
+	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17), EnergyData::Currency);
 
 	QCOMPARE(o1->getGraph().size(), 3);
 	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(8.0));
@@ -269,8 +269,8 @@ void TestEnergyData::testCachedGraph()
 
 void TestEnergyData::testReceiveCurrentValue()
 {
-	EnergyItem *o1 = getValue(EnergyData::CurrentValue, QDate(), false);
-	EnergyItem *o2 = getValue(EnergyData::CurrentValue, QDate(), true);
+	EnergyItem *o1 = getValue(EnergyData::CurrentValue, QDate(), EnergyData::Consumption);
+	EnergyItem *o2 = getValue(EnergyData::CurrentValue, QDate(), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
@@ -285,8 +285,8 @@ void TestEnergyData::testReceiveCurrentValue()
 
 void TestEnergyData::testReceiveCumulativeDayValue()
 {
-	EnergyItem *o1 = getValue(EnergyData::CumulativeDayValue, QDate(2012, 5, 18), false);
-	EnergyItem *o2 = getValue(EnergyData::CumulativeDayValue, QDate(2012, 5, 18), true);
+	EnergyItem *o1 = getValue(EnergyData::CumulativeDayValue, QDate(2012, 5, 18), EnergyData::Consumption);
+	EnergyItem *o2 = getValue(EnergyData::CumulativeDayValue, QDate(2012, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
@@ -308,8 +308,8 @@ void TestEnergyData::testReceiveCumulativeDayValue()
 
 void TestEnergyData::testReceiveCumulativeMonthValue()
 {
-	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 5, 18), false);
-	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 5, 18), true);
+	EnergyItem *o1 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 5, 18), EnergyData::Consumption);
+	EnergyItem *o2 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
@@ -331,8 +331,8 @@ void TestEnergyData::testReceiveCumulativeMonthValue()
 
 void TestEnergyData::testReceiveCumulativeYearValue()
 {
-	EnergyItem *o1 = getValue(EnergyData::CumulativeYearValue, QDate(2011, 5, 18), false);
-	EnergyItem *o2 = getValue(EnergyData::CumulativeYearValue, QDate(2011, 5, 18), true);
+	EnergyItem *o1 = getValue(EnergyData::CumulativeYearValue, QDate(2011, 5, 18), EnergyData::Consumption);
+	EnergyItem *o2 = getValue(EnergyData::CumulativeYearValue, QDate(2011, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
@@ -378,8 +378,8 @@ void TestEnergyData::testReceiveCumulativeYearValue()
 
 void TestEnergyData::testReceiveMonthlyAverage()
 {
-	EnergyItem *o1 = getValue(EnergyData::MonthlyAverageValue, QDate(2012, 5, 18), false);
-	EnergyItem *o2 = getValue(EnergyData::MonthlyAverageValue, QDate(2012, 5, 18), true);
+	EnergyItem *o1 = getValue(EnergyData::MonthlyAverageValue, QDate(2012, 5, 18), EnergyData::Consumption);
+	EnergyItem *o2 = getValue(EnergyData::MonthlyAverageValue, QDate(2012, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
@@ -401,8 +401,8 @@ void TestEnergyData::testReceiveMonthlyAverage()
 
 void TestEnergyData::testReceiveDailyAverageGraph()
 {
-	EnergyGraph *o1 = getGraph(EnergyData::DailyAverageGraph, QDate(2011, 5, 18), false);
-	EnergyGraph *o2 = getGraph(EnergyData::DailyAverageGraph, QDate(2011, 5, 18), true);
+	EnergyGraph *o1 = getGraph(EnergyData::DailyAverageGraph, QDate(2011, 5, 18), EnergyData::Consumption);
+	EnergyGraph *o2 = getGraph(EnergyData::DailyAverageGraph, QDate(2011, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
@@ -431,8 +431,8 @@ void TestEnergyData::testReceiveDailyAverageGraph()
 
 void TestEnergyData::testReceiveCumulativeDayGraph()
 {
-	EnergyGraph *o1 = getGraph(EnergyData::CumulativeDayGraph, QDate(2011, 5, 18), false);
-	EnergyGraph *o2 = getGraph(EnergyData::CumulativeDayGraph, QDate(2011, 5, 18), true);
+	EnergyGraph *o1 = getGraph(EnergyData::CumulativeDayGraph, QDate(2011, 5, 18), EnergyData::Consumption);
+	EnergyGraph *o2 = getGraph(EnergyData::CumulativeDayGraph, QDate(2011, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
@@ -461,8 +461,8 @@ void TestEnergyData::testReceiveCumulativeDayGraph()
 
 void TestEnergyData::testReceiveCumulativeMonthGraph()
 {
-	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2011, 5, 18), false);
-	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2011, 5, 18), true);
+	EnergyGraph *o1 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2011, 5, 18), EnergyData::Consumption);
+	EnergyGraph *o2 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2011, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
@@ -491,8 +491,8 @@ void TestEnergyData::testReceiveCumulativeMonthGraph()
 
 void TestEnergyData::testReceiveCumulativeYearGraph()
 {
-	EnergyGraph *o1 = getGraph(EnergyData::CumulativeYearGraph, QDate(2011, 5, 18), false);
-	EnergyGraph *o2 = getGraph(EnergyData::CumulativeYearGraph, QDate(2011, 5, 18), true);
+	EnergyGraph *o1 = getGraph(EnergyData::CumulativeYearGraph, QDate(2011, 5, 18), EnergyData::Consumption);
+	EnergyGraph *o2 = getGraph(EnergyData::CumulativeYearGraph, QDate(2011, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
@@ -637,7 +637,7 @@ void TestEnergyData::testDuplicateValueRequests()
 	dev->requestCumulativeDay(date);
 	compareClientCommand();
 
-	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, true);
+	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, EnergyData::Currency);
 
 	// request pending, does not send another request to the device
 	compareClientCommand(500);
@@ -672,7 +672,7 @@ void TestEnergyData::testDuplicateValueRequests2()
 	QCOMPARE(value->getValue(), QVariant(1239.0));
 
 	// value cached, does not send another request to the device
-	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, true);
+	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, EnergyData::Currency);
 
 	compareClientCommand(500);
 
@@ -703,7 +703,7 @@ void TestEnergyData::testDuplicateValueRequests3()
 	// old request including today, re-requests the value
 	obj->requests[key].first -= 100000;
 
-	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, true);
+	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, EnergyData::Currency);
 
 	dev->requestCumulativeDay(date);
 	compareClientCommand();
@@ -742,7 +742,7 @@ void TestEnergyData::testDuplicateValueRequests4()
 	// old request including today, re-requests the value for current month only
 	obj->requests[month_key].first -= 100000;
 
-	EnergyItem *currency = getValue(EnergyData::CumulativeYearValue, date, true);
+	EnergyItem *currency = getValue(EnergyData::CumulativeYearValue, date, EnergyData::Currency);
 
 	dev->requestCumulativeMonth(date);
 	compareClientCommand();
@@ -774,7 +774,7 @@ void TestEnergyData::testDuplicateValueRequests5()
 	// value removed from cache, re-request
 	obj->value_cache.clear();
 
-	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, true);
+	EnergyItem *currency = getValue(EnergyData::CumulativeDayValue, date, EnergyData::Currency);
 
 	dev->requestCumulativeDay(date);
 	compareClientCommand();
@@ -796,7 +796,7 @@ void TestEnergyData::testDuplicateGraphRequests()
 	dev->requestCumulativeDayGraph(date);
 	compareClientCommand();
 
-	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, true);
+	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, EnergyData::Currency);
 
 	// request pending, does not send another request to the device
 	compareClientCommand(500);
@@ -831,7 +831,7 @@ void TestEnergyData::testDuplicateGraphRequests2()
 	QCOMPARE(getBar(graph, 2)->getValue(), QVariant(1.2));
 
 	// value cached, does not send another request to the device
-	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, true);
+	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, EnergyData::Currency);
 
 	compareClientCommand(500);
 
@@ -862,7 +862,7 @@ void TestEnergyData::testDuplicateGraphRequests3()
 	// old request including today, re-requests the value
 	obj->requests[key].first -= 100000;
 
-	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, true);
+	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, EnergyData::Currency);
 
 	dev->requestCumulativeDayGraph(date);
 	compareClientCommand();
@@ -901,7 +901,7 @@ void TestEnergyData::testDuplicateGraphRequests4()
 	// old request including today, re-requests the value for current month only
 	obj->requests[month_key].first -= 100000;
 
-	EnergyGraph *currency = getGraph(EnergyData::CumulativeYearGraph, date, true);
+	EnergyGraph *currency = getGraph(EnergyData::CumulativeYearGraph, date, EnergyData::Currency);
 
 	dev->requestCumulativeMonth(date);
 	compareClientCommand();
@@ -933,7 +933,7 @@ void TestEnergyData::testDuplicateGraphRequests5()
 	// value removed from cache, re-request
 	obj->value_cache.clear();
 
-	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, true);
+	EnergyGraph *currency = getGraph(EnergyData::CumulativeDayGraph, date, EnergyData::Currency);
 
 	dev->requestCumulativeDayGraph(date);
 	compareClientCommand();

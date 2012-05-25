@@ -14,10 +14,10 @@ Page {
     property int graphType
     property bool graphVisible: true
     property bool inCurrency: false
-    property bool validGraph: modelObject.getGraph(page.graphType, timepoint, inCurrency).isValid
-    property variant modelGraph: modelObject.getGraph(page.graphType, timepoint, inCurrency).graph
-    property variant instantValue: modelObject.getValue(EnergyData.CurrentValue, timepoint, inCurrency)
-    property variant cumulativeValue: modelObject.getValue(getValueType(graphType), timepoint, inCurrency).value
+    property bool validGraph: modelObject.getGraph(page.graphType, timepoint, inCurrency ? EnergyData.Currency : EnergyData.Consumption).isValid
+    property variant modelGraph: modelObject.getGraph(page.graphType, timepoint, inCurrency ? EnergyData.Currency : EnergyData.Consumption).graph
+    property variant instantValue: modelObject.getValue(EnergyData.CurrentValue, timepoint, inCurrency ? EnergyData.Currency : EnergyData.Consumption)
+    property variant cumulativeValue: modelObject.getValue(getValueType(graphType), timepoint, inCurrency ? EnergyData.Currency : EnergyData.Consumption).value
     property variant averageValue: cumulativeValue / 10 // TODO come si calcola?
     property date timepoint: new Date()
 
