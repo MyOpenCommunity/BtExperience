@@ -23,24 +23,31 @@
 
 #include "test_btobject.h"
 
-#include <QObject>
-
 
 class CCTV;
+class Intercom;
 class VideoDoorEntryDevice;
 
 
 class TestVideoDoorEntry : public TestBtObject
 {
-Q_OBJECT
+	Q_OBJECT
+
 private slots:
 	void init();
 	void cleanup();
 
-private:
-	void compareClientCommand();
+	void testIncomingCallNoAnswer();
+	void testIncomingCallTerminatedByTalker();
+	void testIncomingCallTerminatedByTouch();
+	void testOutgoingCallTerminatedByTalker();
 
-	CCTV *obj;
+protected:
+	void compareClientCommand(int timeout = 0);
+
+private:
+	CCTV *cctv;
+	Intercom *intercom;
 	VideoDoorEntryDevice *dev;
 };
 
