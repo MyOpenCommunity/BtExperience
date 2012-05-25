@@ -481,12 +481,12 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 	return bars;
 }
 
-void EnergyData::requestUpdate(int type, QDate date, bool force)
+void EnergyData::requestUpdate(int type, QDate date, RequestOptions options)
 {
 	CacheKey key(type, normalizeDate(type, date));
 	quint64 msec_now = QDateTime::currentMSecsSinceEpoch();
 
-	if (type != CumulativeYearGraph && type != CumulativeYearValue && !force)
+	if (type != CumulativeYearGraph && type != CumulativeYearValue && options != Force)
 	{
 		// there is a cached response and the timespan does not include today
 		if (!dateContainsToday(type, key.date) && value_cache.contains(key))
@@ -497,17 +497,17 @@ void EnergyData::requestUpdate(int type, QDate date, bool force)
 			bool timed_out = msec_now - requests[key].first > CURRENT_VALUE_EXPIRATION_MSECS;
 
 			// there is a pending request for this value (with timeout check just in case)
-			if (!requests[key].second && !timed_out)
+			if (requests[key].second == Pending && !timed_out)
 				return;
 
 			// the timespan includes today but there was a request less than 60 seconds ago
-			if (requests[key].second && value_cache.contains(key) && !timed_out)
+			if (requests[key].second == Complete && value_cache.contains(key) && !timed_out)
 				return;
 		}
 	}
 
 	if (type != CumulativeYearGraph && type != CumulativeYearValue)
-		requests[key] = qMakePair(msec_now, false);
+		requests[key] = qMakePair(msec_now, Pending);
 
 #if TEST_ENERGY_DATA
 	switch (type)
@@ -549,7 +549,7 @@ void EnergyData::requestUpdate(int type, QDate date, bool force)
 		break;
 	case CumulativeYearGraph:
 		// see comment in valueReceived()
-		requestCumulativeYear(key.date, force);
+		requestCumulativeYear(key.date, options);
 		break;
 	case CurrentValue:
 		dev->requestCurrent();
@@ -562,7 +562,7 @@ void EnergyData::requestUpdate(int type, QDate date, bool force)
 		break;
 	case CumulativeYearValue:
 		// see comment in valueReceived()
-		requestCumulativeYear(key.date, force);
+		requestCumulativeYear(key.date, options);
 		break;
 	case MonthlyAverageValue:
 		dev->requestMontlyAverage(key.date);
@@ -570,7 +570,7 @@ void EnergyData::requestUpdate(int type, QDate date, bool force)
 	}
 }
 
-void EnergyData::requestCumulativeYear(QDate date, bool force)
+void EnergyData::requestCumulativeYear(QDate date, RequestOptions options)
 {
 	QDate today = QDate::currentDate();
 	int count;
@@ -586,7 +586,7 @@ void EnergyData::requestCumulativeYear(QDate date, bool force)
 		QDate month(date.year(), i + 1, 1);
 
 		if (!value_cache.contains(CacheKey(CumulativeMonthValue, month)) || i == count - 1)
-			requestUpdate(CumulativeMonthValue, month, force);
+			requestUpdate(CumulativeMonthValue, month, options);
 	}
 }
 
@@ -610,7 +610,7 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 			if (!dateContainsToday(type, date))
 				requests.remove(CacheKey(type, date));
 			else
-				requests[CacheKey(type, date)].second = true;
+				requests[CacheKey(type, date)].second = Complete;
 
 			cacheValueData(type, date, value.second);
 		}
@@ -630,7 +630,7 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 			if (!dateContainsToday(type, date))
 				requests.remove(CacheKey(type, date));
 			else
-				requests[CacheKey(type, date)].second = true;
+				requests[CacheKey(type, date)].second = Complete;
 
 			cacheGraphData(type, date, data.graph);
 		}
@@ -679,7 +679,7 @@ void EnergyData::testValueData(ValueType type, QDate date)
 	if (!dateContainsToday(type, date))
 		requests.remove(CacheKey(type, date));
 	else
-		requests[CacheKey(type, date)].second = true;
+		requests[CacheKey(type, date)].second = Complete;
 
 	cacheValueData(type, date, rand() % valueRange(getEnergyType()));
 }
@@ -710,7 +710,7 @@ void EnergyData::testGraphData(GraphType type, QDate date)
 	if (!dateContainsToday(type, date))
 		requests.remove(CacheKey(type, date));
 	else
-		requests[CacheKey(type, date)].second = true;
+		requests[CacheKey(type, date)].second = Complete;
 
 	cacheGraphData(type, date, graph_values);
 }
@@ -758,7 +758,7 @@ QDate EnergyItem::getDate() const
 
 void EnergyItem::requestUpdate()
 {
-	data->requestUpdate(type, date, true);
+	data->requestUpdate(type, date, EnergyData::Force);
 }
 
 bool EnergyItem::isValid() const
@@ -834,7 +834,7 @@ QDate EnergyGraph::getDate() const
 
 void EnergyGraph::requestUpdate()
 {
-	data->requestUpdate(type, date, true);
+	data->requestUpdate(type, date, EnergyData::Force);
 }
 
 bool EnergyGraph::isValid() const
