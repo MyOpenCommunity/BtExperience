@@ -17,28 +17,6 @@ Item {
 
     /************************************************************************
       *
-      * ANTINTRUSION ALARMS
-      *
-      **********************************************************************/
-    FilterListModel {
-        id: antintrusionModel
-        categories: [ObjectInterface.Antintrusion]
-    }
-
-    QtObject {
-        id: privateProps
-        property variant model: antintrusionModel.getObject(0)
-    }
-
-    Connections {
-        target: privateProps.model
-        onNewAlarm: {
-            Stack.currentPage().showAlarmPopup(alarm.type, alarm.zone, alarm.date_time)
-        }
-    }
-
-    /************************************************************************
-      *
       * SCREENSAVER
       *
       **********************************************************************/
@@ -81,17 +59,16 @@ Item {
         screensaver.isEnabled = true
     }
 
-    // TODO: maybe it's possible to avoid to have a second FilterListModel in this
-    // file?
     FilterListModel {
-        id: vctModel
+        id: listModel
         filters: [
             {objectId: ObjectInterface.IdCCTV},
-            {objectId: ObjectInterface.IdIntercom}
+            {objectId: ObjectInterface.IdIntercom},
+            {objectId: ObjectInterface.IdAntintrusionSystem}
         ]
         Component.onCompleted: {
-            for (var i = 0; i < vctModel.size; ++i) {
-                var obj = vctModel.getObject(i)
+            for (var i = 0; i < listModel.size; ++i) {
+                var obj = listModel.getObject(i)
                 switch (obj.objectId) {
                 case ObjectInterface.IdCCTV:
                     obj.incomingCall.connect(function() { return vctIncomingCall(obj); })
@@ -100,11 +77,19 @@ Item {
                 case ObjectInterface.IdIntercom:
                     obj.incomingCall.connect(function() { return intercomIncomingCall(obj); })
                     break
-                case ObjectInterface.Antintrusion:
-                    // .......TODO
+                case ObjectInterface.IdAntintrusionSystem:
+                    antintrusionConnection.target = obj
                     break
                 }
             }
+        }
+    }
+
+    Connections {
+        id: antintrusionConnection
+        target: null
+        onNewAlarm: {
+            Stack.currentPage().showAlarmPopup(alarm.type, alarm.zone, alarm.date_time)
         }
     }
 }
