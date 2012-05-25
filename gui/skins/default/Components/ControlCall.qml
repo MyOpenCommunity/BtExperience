@@ -7,7 +7,7 @@ Rectangle {
 
     signal closePopup
 
-    property string description: qsTr("Inizia chiamata")
+    property string description: qsTr("Start call")
     property string headerImage: "../images/common/incoming_call.svg"
     property string place: dataObject.talker
     property string where // used only to make calls
@@ -313,7 +313,7 @@ Rectangle {
             PropertyChanges {
                 target: control
                 height: 300
-                description: qsTr("Chiamata in arrivo da")
+                description: qsTr("Incoming Call From")
             }
 
             PropertyChanges {
@@ -348,7 +348,7 @@ Rectangle {
             PropertyChanges {
                 target: control
                 height: 300
-                description: qsTr("Chiamata verso")
+                description: qsTr("Call To")
             }
 
             PropertyChanges {
@@ -388,7 +388,7 @@ Rectangle {
             PropertyChanges {
                 target: control
                 height: 300
-                description: qsTr("Chiamata in corso con")
+                description: qsTr("Call With")
             }
 
             PropertyChanges {

@@ -127,7 +127,7 @@ Page {
                     anchors.top: parent.top
                     anchors.topMargin: 5
                     font.pixelSize: 16
-                    text: qsTr("aggiungi nota")
+                    text: qsTr("Add Note")
                 }
 
                 Image {
@@ -245,7 +245,7 @@ Page {
                     height: 200
                     color: "light gray"
                     Text {
-                        text: qsTr("Nota")
+                        text: qsTr("Note")
                         anchors.left: parent.left
                         anchors.leftMargin: 10
                         anchors.top: parent.top

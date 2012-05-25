@@ -8,7 +8,7 @@ Page {
 
     property QtObject camera: null
 
-    property string title: qsTr("TELECAMERA POSTO ESTERNO 1")
+    property string title: qsTr("CAMERA EXTERNAL PLACE #1")
     property int volume: 50
     property bool commandAnswerVisible: true
     property bool commandStairLightVisible: true

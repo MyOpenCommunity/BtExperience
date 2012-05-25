@@ -84,7 +84,7 @@ MenuColumn {
         //privateProps.model.TextLanguage = value;
         // TODO remove when model is implemented
         privateProps.language = value
-        pageObject.showAlert(column, qsTr("L'azione selezionata produrra' un riavvio dell'interfaccia grafica. Continuare?"))
+        pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
     }
     function keyboardLanguageChanged(value) {
         // TODO assign to a model property

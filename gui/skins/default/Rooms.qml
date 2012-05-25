@@ -14,7 +14,7 @@ Page {
         fontSize: 17
     }
     Text {
-        text: qsTr("stanze")
+        text: qsTr("Rooms")
         font.pixelSize: 50
         anchors.top: toolbar.bottom
         anchors.left: parent.left

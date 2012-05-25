@@ -32,8 +32,8 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Piano terra"), "component": roomsItems})
-            modelList.append({"name": qsTr("Primo piano"), "component": roomsItems})
+            modelList.append({"name": qsTr("Ground Floor"), "component": roomsItems})
+            modelList.append({"name": qsTr("First Floor"), "component": roomsItems})
         }
     }
 
