@@ -91,8 +91,8 @@ private slots:
 	void testDuplicateGraphRequests5();
 
 private:
-	EnergyItem *getValue(EnergyData::ValueType type, QDate date, bool in_currency = false);
-	EnergyGraph *getGraph(EnergyData::GraphType type, QDate date, bool in_currency = false);
+	EnergyItem *getValue(EnergyData::ValueType type, QDate date, EnergyData::MeasureType measure = EnergyData::Consumption);
+	EnergyGraph *getGraph(EnergyData::GraphType type, QDate date, EnergyData::MeasureType measure = EnergyData::Consumption);
 	EnergyGraphBar *getBar(EnergyGraph *graph, int index);
 	QMap<int, unsigned int> graphValues(int size, int start);
 	DeviceValues makeDeviceValues(int dimension, QDate date, qint64 value);

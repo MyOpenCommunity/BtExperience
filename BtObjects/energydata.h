@@ -94,7 +94,7 @@ class EnergyData : public ObjectInterface
 	/// Energy to currency conversion rate
 	Q_PROPERTY(EnergyRate *rate READ getRate CONSTANT)
 
-	Q_ENUMS(GraphType ValueType EnergyType)
+	Q_ENUMS(GraphType ValueType EnergyType MeasureType)
 
 public:
 	/// Type of graph data
@@ -140,6 +140,15 @@ public:
 		Heat
 	};
 
+	/// Type of measure in graph/value
+	enum MeasureType
+	{
+		/// Consumption (electricity, water, ...)
+		Consumption = 0,
+		/// Expense/gain (currency)
+		Currency    = 1
+	};
+
 	EnergyData(EnergyDevice *dev, QString name, bool general, EnergyRate *rate);
 	virtual ~EnergyData();
 
@@ -161,7 +170,7 @@ public:
 		If this energy device does not have an associated tariff, passing \c true as in_currency
 		returns NULL.
 	*/
-	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, bool in_currency = false);
+	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, MeasureType measure = Consumption);
 
 	/*!
 		\brief Returns an object holding the value for the specified measure/time
@@ -172,7 +181,7 @@ public:
 		If this energy device does not have an associated tariff, passing \c true as in_currency
 		returns NULL.
 	*/
-	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, bool in_currency = false);
+	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, MeasureType measure = Consumption);
 
 	EnergyType getEnergyType() const;
 	bool isGeneral() const;
