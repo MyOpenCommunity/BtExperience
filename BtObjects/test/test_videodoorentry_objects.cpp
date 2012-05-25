@@ -146,9 +146,9 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
 	dev->endCall();
 	QCOMPARE(QString(""), intercom->getTalker());
 
-//	t.checkSignalCount(SIGNAL(incomingCall()), 1);
-//	t.checkSignalCount(SIGNAL(callEnded()), 1);
-//	t.checkSignalCount(SIGNAL(talkerChanged()), 2);
+	t.checkSignalCount(SIGNAL(incomingCall()), 1);
+	t.checkSignalCount(SIGNAL(callEnded()), 1);
+	t.checkSignalCount(SIGNAL(talkerChanged()), 2);
 
 	compareClientCommand();
 }
@@ -176,9 +176,9 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 	intercom->valueReceived(v);
 	QCOMPARE(QString(""), intercom->getTalker());
 
-//	t.checkSignalCount(SIGNAL(callEnded()), 1);
-//	t.checkSignalCount(SIGNAL(talkerChanged(), 2);
-//	t.checkSignalCount(SIGNAL(callAnswered()), 1);
+	t.checkSignalCount(SIGNAL(callEnded()), 1);
+	t.checkSignalCount(SIGNAL(talkerChanged()), 2);
+	t.checkSignalCount(SIGNAL(callAnswered()), 1);
 
 	compareClientCommand();
 }

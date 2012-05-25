@@ -28,7 +28,8 @@ void ObjectTester::checkSignalCount(const char *sig, int sig_count)
 	QSignalSpy *spy;
 	foreach(spy, sl)
 	{
-		if (QMetaObject::normalizedSignature(sig) == spy->signal())
+		QByteArray ba = QMetaObject::normalizedSignature(sig);
+		if (ba.right(ba.size() - 1) == spy->signal())
 			break;
 	}
 
