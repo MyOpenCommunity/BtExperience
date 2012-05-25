@@ -199,6 +199,18 @@ private slots:
 	void trimCache();
 
 private:
+	enum RequestOptions
+	{
+		None   = 0,
+		Force  = 1
+	};
+
+	enum RequestStatus
+	{
+		Pending  = 0,
+		Complete = 1
+	};
+
 	// add a value/graph to the cache, updating EnergyItem/EnergyGraph objects
 	void cacheValueData(ValueType type, QDate date, qint64 value);
 	void cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph);
@@ -216,12 +228,12 @@ private:
 
 	// request an update for the specified value/graph; takes into account pending requests
 	// and avoids requesting again cached data
-	void requestUpdate(int type, QDate date, bool force = false);
+	void requestUpdate(int type, QDate date, RequestOptions options = None);
 
 	// requests the cumulative month value for all months in the year
-	void requestCumulativeYear(QDate date, bool force);
+	void requestCumulativeYear(QDate date, RequestOptions options);
 
-	typedef QPair<quint64, bool> RequestStatus;
+	typedef QPair<quint64, RequestStatus> RequestInfo;
 
 	EnergyDevice *dev;
 	EnergyRate *rate;
@@ -231,7 +243,7 @@ private:
 	// cached values received from the device
 	QCache<CacheKey, QVector<double> > value_cache;
 	// pending requests (all values) and completed requests (for timespans including today)
-	QHash<CacheKey, RequestStatus> requests;
+	QHash<CacheKey, RequestInfo> requests;
 	QTimer trim_cache;
 	bool general;
 
