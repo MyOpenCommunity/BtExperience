@@ -494,12 +494,14 @@ void EnergyData::requestUpdate(int type, QDate date, bool force)
 
 		if (requests.contains(key))
 		{
-			// there is a pending request for this value
-			if (!requests[key].second)
+			bool timed_out = msec_now - requests[key].first > CURRENT_VALUE_EXPIRATION_MSECS;
+
+			// there is a pending request for this value (with timeout check just in case)
+			if (!requests[key].second && !timed_out)
 				return;
 
 			// the timespan includes today but there was a request less than 60 seconds ago
-			if (msec_now - requests[key].first < CURRENT_VALUE_EXPIRATION_MSECS && value_cache.contains(key))
+			if (requests[key].second && value_cache.contains(key) && !timed_out)
 				return;
 		}
 	}
