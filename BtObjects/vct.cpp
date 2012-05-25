@@ -70,6 +70,8 @@ int CCTV::getBrightness() const
 void CCTV::setBrightness(int value)
 {
 	// TODO set value on device
+	if (brightness == value)
+		return;
 	brightness = value;
 	emit brightnessChanged();
 }
@@ -82,6 +84,8 @@ int CCTV::getContrast() const
 void CCTV::setContrast(int value)
 {
 	// TODO set value on device
+	if (contrast == value)
+		return;
 	contrast = value;
 	emit contrastChanged();
 }
@@ -222,6 +226,8 @@ int Intercom::getVolume() const
 void Intercom::setVolume(int value)
 {
 	// TODO set value on device
+	if (volume == value)
+		return;
 	volume = value;
 	emit volumeChanged();
 }
@@ -234,6 +240,8 @@ bool Intercom::getMute() const
 void Intercom::setMute(bool value)
 {
 	// TODO set value on device
+	if (mute == value)
+		return;
 	mute = value;
 	emit muteChanged();
 }
