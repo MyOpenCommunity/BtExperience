@@ -149,7 +149,8 @@ Page {
         }
     }
 
-    RoomListModel {
+    MediaModel {
+        source: myHomeModels.rooms
         id: roomModel
     }
 
@@ -186,7 +187,7 @@ Page {
                 sourcePressed: "images/home/stanze_p.svg"
                 text: qsTr("rooms")
                 onClicked: {
-                    if (roomModel.rooms().length > 1)
+                    if (roomModel.size > 1)
                         Stack.openPage("Rooms.qml")
                     else
                         Stack.openPage("Room.qml")

@@ -22,8 +22,7 @@ public:
 
 private:
 	ObjectDataModel objmodel;
-	ObjectDataModel room_model;
-	MediaDataModel floor_model, object_link_model;
+	MediaDataModel room_model, floor_model, object_link_model;
 	GlobalModels global_models;
 	UiiMapper uii_map;
 
@@ -33,6 +32,7 @@ private:
 	void createObjects(QDomDocument document);
 	void parseConfig();
 	void parseRooms(const QDomNode &container);
+	void parseFloors(const QDomNode &container);
 	void parseLightSystem(const QDomNode &container);
 };
 

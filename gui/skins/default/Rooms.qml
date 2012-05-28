@@ -6,6 +6,7 @@ import BtObjects 1.0
 Page {
     id: mainarea
     source: "images/home/home.jpg"
+    property int floorId
 
     ToolBar {
         id: toolbar
@@ -31,16 +32,19 @@ Page {
             bottom: floorView.top
         }
 
-        RoomListModel {
+        MediaModel {
+            source: myHomeModels.rooms
             id: roomsModel
+            containers: [floorId]
         }
 
-        model: roomsModel.rooms()
+        model: roomsModel
         delegate: PagerDelegate {
-            source: users.selectRoomImage(modelData)
-            label: modelData
+            source: users.selectRoomImage(itemObject.description)
+            property variant itemObject: roomsModel.getObject(index)
+            label: itemObject.description
 
-            onClicked: Stack.openPage("Room.qml", {'roomName': modelData})
+            onClicked: Stack.openPage("Room.qml", {'roomName': itemObject.description, 'roomId': itemObject.id, 'floorId': mainarea.floorId})
         }
 
         function selectRoomImage(room) {
@@ -65,29 +69,34 @@ Page {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         height: 100
-        width: 140 * floorModel.count
+        width: 140 * floorsModel.size
         delegate: Image {
-            source: model.selected === true ? "images/common/pianoS.png" : "images/common/piano.png"
+            property variant itemObject: floorsModel.getObject(index)
+
+            source: index === floorView.currentIndex ? "images/common/pianoS.png" : "images/common/piano.png"
             Text {
-                text: model.name
+                text: itemObject.description
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                color: model.selected === true ? "white" : "black"
+                color: index === floorView.currentIndex === true ? "white" : "black"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: floorView.currentIndex = index
             }
         }
 
-        model: floorModel
-        ListModel {
-            id: floorModel
-            ListElement {
-                name: "piano terra"
-                selected: true
-            }
-            ListElement {
-                name: "mansarda"
-                selected: false
-            }
+        onCurrentIndexChanged: {
+             mainarea.floorId = floorsModel.getObject(currentIndex).id
         }
+
+        MediaModel {
+            source: myHomeModels.floors
+            id: floorsModel
+        }
+
+        model: floorsModel
     }
 
 }
