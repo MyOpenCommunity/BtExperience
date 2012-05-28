@@ -25,7 +25,13 @@ Page {
         id: users
         property int currentPressed: -1
         model: roomsModel.rooms()
-        delegate: roomDelegate
+        delegate: PagerDelegate {
+            source: users.selectRoomImage(modelData)
+            label: modelData
+
+            onClicked: Stack.openPage("Room.qml", {'roomName': modelData})
+        }
+
         orientation: ListView.Horizontal
         spacing: 2
         clip: true
@@ -56,80 +62,6 @@ Page {
 
         RoomListModel {
             id: roomsModel
-        }
-
-        Component {
-            id: roomDelegate
-            Item {
-                id: itemDelegate
-                width: delegateBackground.width
-                height: delegateBackground.height + delegateShadow.height
-
-                Rectangle {
-                    id: textDelegate
-                    width: 175
-                    height: 20
-                    color: Qt.rgba(230, 230, 230)
-                    opacity: 0.5
-                    Text {
-                        text: modelData
-                        font.family: regularFont.name
-                        font.pixelSize: 15
-                        anchors.fill: parent
-                        horizontalAlignment: Text.AlignHCenter
-                    }
-                }
-
-                Rectangle {
-                    id: delegateBackground
-                    width: 175
-                    height: 244
-                    anchors.top: textDelegate.bottom
-                    color: Qt.rgba(230, 230, 230)
-                    opacity: 0.5
-                }
-
-                Image {
-                    id: imageDelegate
-                    width: 169
-                    height: 238
-                    anchors { bottom: delegateBackground.bottom; bottomMargin: 5 }
-                    source: users.selectRoomImage(modelData)
-                }
-
-                SvgImage {
-                    id: delegateShadow
-                    source: "images/home/pager_shadow.svg"
-                    anchors {
-                        top: delegateBackground.bottom
-                        topMargin: 5
-                        horizontalCenter: delegateBackground.horizontalCenter
-                    }
-                }
-
-                SvgImage {
-                    id: rectPressed
-                    source: "images/common/profilo_p.svg"
-                    visible: false
-                    anchors.fill: imageDelegate
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onClicked: Stack.openPage("Room.qml", {'roomName': modelData})
-                    onPressed: itemDelegate.ListView.view.currentPressed = index
-                    onReleased: itemDelegate.ListView.view.currentPressed = -1
-                }
-
-                states: State {
-                    when: itemDelegate.ListView.view.currentPressed === index
-                    PropertyChanges {
-                        target: rectPressed
-                        visible: true
-                    }
-                }
-            }
         }
     }
 
