@@ -24,31 +24,42 @@
 		</ist>
 	</container>
 	<container id="2" > <!-- rooms -->
-		<ist uii="2" descr="living room">
+		<ist uii="102" descr="living room">
 			<link uii="1" x="0" y="0"/>
 			<!-- x,y can be absolute (pixel) or percentual -->
 			<link uii="2" x="200" y="100" />
 			<link uii="3" x="300" y="300" />
 		</ist>
-		<ist uii="3" descr="bathroom">
+		<ist uii="103" descr="bathroom">
 			<link uii="12" x="200" y="100" />
 			<link uii="7" x="200" y="300" />
 		</ist>
 
-		<ist uii="4" descr="garage">
+		<ist uii="104" descr="garage">
 			<link uii="4" x="50" y="100" />
 			<link uii="5" x="200" y="300" />
 			<link uii="6" x="350" y="80" />
 		</ist>
-		<ist uii="5" descr="bedroom">
+		<ist uii="105" descr="bedroom">
 			<link uii="6" x="20" y="10" />
 			<link uii="5" x="200" y="300" />
 			<link uii="12" x="400" y="125" />
 		</ist>
-		<ist uii="6" descr="kitchen">
+		<ist uii="106" descr="kitchen">
 			<link uii="12" x="500" y="60" />
 			<link uii="5" x="450" y="300" />
 			<link uii="4" x="200" y="350" />
+		</ist>
+	</container>
+	<container id="3" descr="floor" img="floor.png"> <!-- floor -->
+		<ist uii="17" descr="ground" >
+			<link uii="102" />
+			<link uii="103" />
+			<link uii="104" />
+			<link uii="106" />
+		</ist>
+		<ist uii="18" descr="first floor" img="first.png" >
+			<link uii="105" />
 		</ist>
 	</container>
 </layout>
