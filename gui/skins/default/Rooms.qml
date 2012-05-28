@@ -28,7 +28,7 @@ Page {
             right: parent.right
             left: parent.left
             top: pageTitle.bottom
-            bottom: parent.bottom
+            bottom: floorView.top
         }
 
         RoomListModel {
@@ -60,6 +60,7 @@ Page {
     }
 
     ListView {
+        id: floorView
         orientation: ListView.Horizontal
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
