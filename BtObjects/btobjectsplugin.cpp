@@ -30,6 +30,7 @@
 #include "energyload.h"
 #include "stopandgoobjects.h"
 #include "energydata.h"
+#include "container.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QFile>
@@ -285,6 +286,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<ItemInterface>(
 				uri, 1, 0, "ItemInterface",
 				"unable to create an ItemInterface instance");
+	qmlRegisterUncreatableType<Container>(
+				uri, 1, 0, "Container",
+				"unable to create an Container instance");
 	qmlRegisterUncreatableType<ObjectInterface>(
 				uri, 1, 0, "ObjectInterface",
 				"unable to create an ObjectInterface instance");

@@ -1,5 +1,6 @@
 HEADERS += \
 	antintrusionsystem.h \
+	container.h \
 	energydata.h \
 	energyload.h \
 	energyrate.h \
@@ -49,6 +50,7 @@ HEADERS += \
 
 SOURCES += \
 	antintrusionsystem.cpp \
+	container.cpp \
 	energydata.cpp \
 	energyload.cpp \
 	energyrate.cpp \
