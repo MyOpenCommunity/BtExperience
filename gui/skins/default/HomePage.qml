@@ -231,16 +231,9 @@ Page {
 
     Item {
         id: pages
-        x: 620
-        y: 65
         anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: users.right
-        anchors.leftMargin: 0
         anchors.bottom: favourites.top
-        anchors.bottomMargin: 0
         anchors.top: toolbar.bottom
-        anchors.topMargin: 0
 
         SvgImage {
             source: "images/home/menu.svg"
@@ -253,16 +246,12 @@ Page {
         }
         Grid {
             id: column1
-            x: -288
-            y: 70
             spacing: 0
             columns: 2
             anchors.top: parent.top
             anchors.topMargin: 70
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 0
             width: 288
             height: 328
 
