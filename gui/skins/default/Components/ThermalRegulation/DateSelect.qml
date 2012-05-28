@@ -1,5 +1,4 @@
 import QtQuick 1.1
-import BtObjects 1.0
 import Components.Lighting 1.0
 import Components 1.0
 
@@ -8,7 +7,7 @@ MenuColumn {
     height: background.height
     width: background.width
 
-    Image {
+    SvgImage {
         id: background
         source: "../../images/common/date_panel_background.svg"
 

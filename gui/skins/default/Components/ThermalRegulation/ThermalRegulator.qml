@@ -31,7 +31,6 @@ MenuColumn {
                 return descr
             }
 
-            editable: true
             itemObject: modelList.getObject(index)
             description: getDescription()
             boxInfoState: isControlledProbe() ? "info" : ""

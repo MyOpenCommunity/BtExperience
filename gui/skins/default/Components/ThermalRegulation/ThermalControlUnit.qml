@@ -55,7 +55,7 @@ MenuColumn {
     onChildLoaded: {
         if (child.modalitySelected)
             child.modalitySelected.connect(modalitySelected)
-        else if (child.seasonSelected)
+        if (child.seasonSelected)
             child.seasonSelected.connect(seasonSelected)
     }
 
@@ -81,7 +81,6 @@ MenuColumn {
     Component.onCompleted: {
         if (dataModel.currentModality)
             modalitySelected(dataModel.currentModality)
-
         seasonItem.description = pageObject.names.get('SEASON', dataModel.season)
     }
 
@@ -169,7 +168,6 @@ MenuColumn {
                 Component {
                     id: dateSelect
                     DateSelect {
-
                     }
                 }
 
