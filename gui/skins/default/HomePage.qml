@@ -158,9 +158,25 @@ Page {
                 height: delegateBackground.height + delegateShadow.height
 
                 Rectangle {
+                    id: textDelegate
+                    width: 175
+                    height: 20
+                    color: Qt.rgba(230, 230, 230)
+                    opacity: 0.5
+                    Text {
+                        text: name
+                        font.family: regularFont.name
+                        font.pixelSize: 15
+                        anchors.fill: parent
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+                }
+
+                Rectangle {
                     id: delegateBackground
                     width: 175
                     height: 244
+                    anchors.top: textDelegate.bottom
                     color: Qt.rgba(230, 230, 230)
                     opacity: 0.5
                 }
@@ -171,18 +187,6 @@ Page {
                     height: 238
                     anchors { bottom: delegateBackground.bottom; bottomMargin: 5 }
                     source: image
-                }
-
-                Text {
-                    id: textDelegate
-                    text: name
-                    font.family: regularFont.name
-                    font.pointSize: 15
-                    anchors.top: delegateBackground.top
-                    anchors.left: delegateBackground.left
-                    anchors.right: delegateBackground.right
-                    horizontalAlignment: Text.AlignHCenter
-                    opacity: 0.75
                 }
 
                 SvgImage {
