@@ -30,11 +30,11 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 
 	// The objects list should contain only one item per id
 	// TODO: fix the the timed programs
-	modalities.insertWithoutUii(new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, &programs, dev));
-	modalities.insertWithoutUii(new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, &programs, dev));
-	modalities.insertWithoutUii(new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdWorking, &programs, dev));
-	modalities.insertWithoutUii(new ThermalControlUnitAntifreeze("Antigelo", dev));
-	modalities.insertWithoutUii(new ThermalControlUnitManual("Manuale", dev));
+	modalities.insertWithoutUii(new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &programs, dev));
+	modalities.insertWithoutUii(new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdHoliday, &programs, dev));
+	modalities.insertWithoutUii(new ThermalControlUnitTimedProgram("Working", ThermalControlUnit::IdWorking, &programs, dev));
+	modalities.insertWithoutUii(new ThermalControlUnitAntifreeze("Antifreeze", dev));
+	modalities.insertWithoutUii(new ThermalControlUnitManual("Manual", dev));
 	modalities.insertWithoutUii(new ThermalControlUnitOff("Off", dev));
 }
 
@@ -155,7 +155,7 @@ ThermalControlUnit4Zones::ThermalControlUnit4Zones(QString _name, QString _key, 
 	ThermalControlUnit(_name, _key, d)
 {
 	dev = d;
-	modalities.insertWithoutUii(new ThermalControlUnitTimedManual("Manuale temporizzato", d));
+	modalities.insertWithoutUii(new ThermalControlUnitTimedManual("Timed Manual", d));
 }
 
 
@@ -166,7 +166,7 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 	scenarios.insertWithoutUii(new ThermalRegulationProgram(1, QString("S1")));
 	scenarios.insertWithoutUii(new ThermalRegulationProgram(3, QString("S3")));
 	scenarios.insertWithoutUii(new ThermalRegulationProgram(5, QString("S5")));
-	modalities.insertWithoutUii(new ThermalControlUnitScenario("Scenari", &scenarios, dev));
+	modalities.insertWithoutUii(new ThermalControlUnitScenario("Scenarios", &scenarios, dev));
 }
 
 ObjectDataModel *ThermalControlUnit99Zones::getScenarios() const
