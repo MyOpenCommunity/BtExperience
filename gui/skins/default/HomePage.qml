@@ -234,6 +234,7 @@ Page {
         anchors.right: parent.right
         anchors.bottom: favourites.top
         anchors.top: toolbar.bottom
+        width: 288
 
         SvgImage {
             source: "images/home/menu.svg"
