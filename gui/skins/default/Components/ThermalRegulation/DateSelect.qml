@@ -4,6 +4,9 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
+    property alias twoFields: dateTime.twoFields
+
     height: background.height
     width: background.width
 
@@ -13,7 +16,7 @@ MenuColumn {
 
         Text {
             id: label
-            text: qsTr("date")
+            text: twoFields ? qsTr("time") : qsTr("date")
             anchors.top: parent.top
             anchors.topMargin: 10
             anchors.left: parent.left
@@ -28,8 +31,8 @@ MenuColumn {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: label.bottom
             anchors.topMargin: 10
-            leftLabel: qsTr("day")
-            centerLabel: qsTr("month")
+            leftLabel: twoFields ? qsTr("hour") : qsTr("day")
+            centerLabel: twoFields ? qsTr("minute") : qsTr("month")
             rightLabel: qsTr("year")
             separator: "/"
         }

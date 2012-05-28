@@ -6,7 +6,7 @@ Image {
     width: 212
     height: 170
     source: "../images/common/dimmer_bg.png"
-    property string text: "valid until"
+    property string text: qsTr("valid until")
     property string date: DateTime.format(new Date())["date"]
     property string time: DateTime.format(new Date())["time"]
 

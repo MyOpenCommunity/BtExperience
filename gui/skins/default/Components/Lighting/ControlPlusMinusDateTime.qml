@@ -3,6 +3,7 @@ import Components 1.0
 
 Column {
     id: control
+
     property int leftColumnValue: 2
     property int centerColumnValue: 3
     property int rightColumnValue: 8
@@ -10,33 +11,76 @@ Column {
     property string centerLabel: "very center"
     property string rightLabel: "sh"
     property string separator: ":"
+    property bool twoFields: false // if true right disappears
 
 
     function leftPlusClicked() {
+        if(control.twoFields) {
+            // hour
+            if(leftColumnValue >= 23)
+                return
+        }
+        else {
+            // day
+            // TODO not all months have 31 days...
+            if(leftColumnValue >= 31)
+                return
+        }
         leftColumnValue += 1
     }
 
     function centerPlusClicked() {
+        if(control.twoFields) {
+            // min
+            if(centerColumnValue >= 59)
+                return
+        }
+        else {
+            // month
+            if(centerColumnValue >= 12)
+                return
+        }
         centerColumnValue += 1
     }
 
     function rightPlusClicked() {
-        rightColumnValue +=1
+        if(rightColumnValue >= 99)
+            rightColumnValue = -1
+        rightColumnValue += 1
     }
 
     function leftMinusClicked() {
-        if (leftColumnValue > 0)
-            leftColumnValue -= 1
+        if(control.twoFields) {
+            // hour
+            if(leftColumnValue <= 0)
+                return
+        }
+        else {
+            // day
+            if(leftColumnValue <= 1)
+                return
+        }
+        leftColumnValue -= 1
     }
 
     function centerMinusClicked() {
-        if (centerColumnValue > 0)
-            centerColumnValue -= 1
+        if(control.twoFields) {
+            // minutes
+            if(centerColumnValue <= 0)
+                return
+        }
+        else {
+            // month
+            if(centerColumnValue <= 1)
+                return
+        }
+        centerColumnValue -= 1
     }
 
     function rightMinusClicked() {
-        if (rightColumnValue > 0)
-            rightColumnValue -= 1
+        if(rightColumnValue <= 0)
+            rightColumnValue = 100
+        rightColumnValue -= 1
     }
 
     function formatNumberLength(num, length) {
@@ -49,6 +93,8 @@ Column {
 
 
     Row {
+        id: buttons
+
         z: 1
         DateTimeButton {
             text: "+"
@@ -63,11 +109,13 @@ Column {
         DateTimeButton {
             text: "+"
             onButtonClicked: rightPlusClicked()
+            visible: !twoFields
         }
     }
 
     SvgImage {
         source: "../../images/common/date_panel_inner_background.svg"
+        width: buttons.width
 
         Text {
             id: leftText
@@ -118,6 +166,7 @@ Column {
             text: control.separator
             font.bold: true
             font.pointSize: 18
+            visible: !twoFields
         }
 
         Text {
@@ -127,12 +176,14 @@ Column {
             color: "#5b5b5b"
             font.pointSize: 18
             font.bold: true
+            visible: !twoFields
         }
         Text {
             y: 30
             text: control.rightLabel
             anchors.horizontalCenter: rightText.horizontalCenter
             color: "#5b5b5b"
+            visible: !twoFields
         }
     }
 
@@ -151,6 +202,7 @@ Column {
         DateTimeButton {
             text: "-"
             onButtonClicked: rightMinusClicked()
+            visible: !twoFields
         }
     }
 }
