@@ -39,9 +39,15 @@
 #include "test_energy_load.h"
 #include "test_stopandgo_objects.h"
 #include "test_energy_data.h"
+#include "test_media_models.h"
+#include "test_myhome_models.h"
 #include "main.h"
 
 logger *app_logger;
+
+#define ADD_TEST(klass) \
+	klass test##klass##instance; \
+	test_list << &test##klass##instance
 
 
 int main(int argc, char *argv[])
@@ -147,6 +153,9 @@ int main(int argc, char *argv[])
 
 	TestEnergyData test_energy_data;
 	test_list << &test_energy_data;
+
+	ADD_TEST(TestMediaModel);
+	ADD_TEST(TestObjectModel);
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))

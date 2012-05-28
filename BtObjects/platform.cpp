@@ -24,7 +24,6 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 	serial_number = unknown;
 	software = unknown;
 	subnet = unknown;
-	connect(this, SIGNAL(addressChanged()), this, SIGNAL(dataChanged()));
 }
 
 QString PlatformSettings::getAddress() const

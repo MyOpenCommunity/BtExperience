@@ -23,7 +23,7 @@
 
 #include "test_btobject.h"
 #include "thermal_device.h"
-#include "objectlistmodel.h"
+#include "objectmodel.h"
 
 #include <QObject>
 
@@ -106,8 +106,8 @@ protected:
 	void initObjects(ThermalDevice *dev, ThermalControlUnitObject *obj);
 	void cleanup();
 
-	ObjectListModel test_programs;
-	ObjectListModel test_scenarios;
+	ObjectDataModel test_programs;
+	ObjectDataModel test_scenarios;
 
 private slots:
 	// this is virtual so it's called only once in derived classes

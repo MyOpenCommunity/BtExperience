@@ -3,7 +3,7 @@
 
 #include <QtDeclarative/QDeclarativeExtensionPlugin>
 
-#include "objectlistmodel.h"
+#include "objectmodel.h"
 
 class QDomDocument;
 class QDomNode;
@@ -18,8 +18,8 @@ public:
 	void registerTypes(const char *uri);
 
 private:
-	ObjectListModel objmodel;
-	ObjectListModel room_model;
+	ObjectDataModel objmodel;
+	ObjectDataModel room_model;
 
 	// used to parse the made-up configuration we use for testing, remove after switching
 	// to the new configuration

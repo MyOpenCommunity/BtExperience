@@ -5,10 +5,12 @@ HEADERS += \
 	energyrate.h \
 	folderlistmodel.h \
 	hardware.h \
+	iteminterface.h \
 	lightobjects.h \
+	mediamodel.h \
 	mediaobjects.h \
-        objectinterface.h \
-	objectlistmodel.h \
+	objectinterface.h \
+	objectmodel.h \
 	platform.h \
 	roomelement.h \
 	scenarioobjects.h \
@@ -17,6 +19,7 @@ HEADERS += \
 	splitbasicscenario.h \
 	thermalobjects.h \
 	thermalprobes.h \
+	uiimapper.h \
 	vct.h \
 	devices/airconditioning_device.h \
 	devices/antintrusion_device.h \
@@ -51,10 +54,12 @@ SOURCES += \
 	energyrate.cpp \
 	folderlistmodel.cpp \
 	hardware.cpp \
+	iteminterface.cpp \
 	lightobjects.cpp \
+	mediamodel.cpp \
 	mediaobjects.cpp \
-        objectinterface.cpp \
-	objectlistmodel.cpp \
+	objectinterface.cpp \
+	objectmodel.cpp \
 	platform.cpp \
 	roomelement.cpp \
 	scenarioobjects.cpp \
@@ -63,6 +68,7 @@ SOURCES += \
 	splitbasicscenario.cpp \
 	thermalobjects.cpp \
 	thermalprobes.cpp \
+	uiimapper.cpp \
 	vct.cpp \
 	generic_functions.cpp \
 	devices/airconditioning_device.cpp \
@@ -90,4 +96,3 @@ SOURCES += \
 	ts/xmlclient.cpp \
 	ts/frame_classes.cpp \
 	ts/scaleconversion.cpp
-

@@ -1,7 +1,7 @@
 #include "thermalobjects.h"
 #include "thermal_device.h"
 #include "scaleconversion.h" // bt2Celsius
-#include "objectlistmodel.h"
+#include "objectmodel.h"
 
 #include <QDebug>
 
@@ -56,18 +56,18 @@ void ThermalControlUnit::setSeason(SeasonType s)
 		dev->setWinter();
 }
 
-ObjectListModel *ThermalControlUnit::getPrograms() const
+ObjectDataModel *ThermalControlUnit::getPrograms() const
 {
 	// TODO: we remove the const because it produces an error when we export the
 	// type to the qml engine. Find a solution.
-	return const_cast<ObjectListModel*>(&programs);
+	return const_cast<ObjectDataModel*>(&programs);
 }
 
-ObjectListModel *ThermalControlUnit::getModalities() const
+ObjectDataModel *ThermalControlUnit::getModalities() const
 {
 	// TODO: we remove the const because it produces an error when we export the
 	// type to the qml engine. Find a solution.
-	return const_cast<ObjectListModel*>(&modalities);
+	return const_cast<ObjectDataModel*>(&modalities);
 }
 
 QObject* ThermalControlUnit::getCurrentModality() const
@@ -169,11 +169,11 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 	modalities.insertWithoutUii(new ThermalControlUnitScenario("Scenari", &scenarios, dev));
 }
 
-ObjectListModel *ThermalControlUnit99Zones::getScenarios() const
+ObjectDataModel *ThermalControlUnit99Zones::getScenarios() const
 {
 	// TODO: we remove the const because it produces an error when we export the
 	// type to the qml engine. Find a solution.
-	return const_cast<ObjectListModel*>(&scenarios);
+	return const_cast<ObjectDataModel*>(&scenarios);
 }
 
 
@@ -189,7 +189,7 @@ void ThermalControlUnitObject::reset()
 }
 
 
-ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_id, const ObjectListModel *_programs, ThermalDevice *dev) :
+ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_id, const ObjectDataModel *_programs, ThermalDevice *dev) :
 	ThermalControlUnitObject(name, dev)
 {
 	object_id = _object_id;
@@ -223,11 +223,11 @@ QString ThermalControlUnitProgram::getProgramDescription() const
 	return programs->getObject(to_apply[PROGRAM_INDEX].toInt())->getName();
 }
 
-ObjectListModel *ThermalControlUnitProgram::getPrograms() const
+ObjectDataModel *ThermalControlUnitProgram::getPrograms() const
 {
 	// TODO: we remove the const because it produces an error when we export the
 	// type to the qml engine. Find a solution.
-	return const_cast<ObjectListModel *>(programs);
+	return const_cast<ObjectDataModel *>(programs);
 }
 
 void ThermalControlUnitProgram::apply()
@@ -256,7 +256,7 @@ void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 }
 
 
-ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ObjectListModel *programs, ThermalDevice *dev) :
+ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ObjectDataModel *programs, ThermalDevice *dev) :
 	ThermalControlUnitProgram(name, _object_id, programs, dev)
 {
 	current[DATE] = QDate::currentDate();
@@ -402,7 +402,7 @@ void ThermalControlUnitAntifreeze::apply()
 }
 
 
-ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, const ObjectListModel *_programs, ThermalDevice99Zones *_dev) :
+ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, const ObjectDataModel *_programs, ThermalDevice99Zones *_dev) :
 	ThermalControlUnitObject(name, _dev)
 {
 	dev = _dev;
@@ -426,11 +426,11 @@ void ThermalControlUnitScenario::setScenarioIndex(int index)
 	emit scenarioChanged();
 }
 
-ObjectListModel *ThermalControlUnitScenario::getScenarios() const
+ObjectDataModel *ThermalControlUnitScenario::getScenarios() const
 {
 	// TODO: we remove the const because it produces an error when we export the
 	// type to the qml engine. Find a solution.
-	return const_cast<ObjectListModel*>(scenarios);
+	return const_cast<ObjectDataModel*>(scenarios);
 }
 
 int ThermalControlUnitScenario::getScenarioId() const

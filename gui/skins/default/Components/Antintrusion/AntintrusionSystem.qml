@@ -221,7 +221,7 @@ MenuColumn {
 
                 delegate: Image {
                     // We need the following trick because the model is not directly editable.
-                    // See the comment on ObjectListModel::getObject
+                    // See the comment on MediaModel::getObject
                     property variant itemObject: zoneModel.getObject(index)
                     source: imagesPath + "common/btn_zona.png"
                     Row {

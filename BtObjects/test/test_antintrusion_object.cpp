@@ -233,7 +233,7 @@ void TestAntintrusionSystem::testAlarmOnNotConfiguredZone()
 void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
 {
 	AlarmZoneList actual;
-	ObjectListModel *alarms = obj->getAlarms();
+	ObjectDataModel *alarms = obj->getAlarms();
 	for (int i = 0; i < alarms->getSize(); ++i)
 	{
 		AntintrusionAlarm *a = static_cast<AntintrusionAlarm *>(alarms->getObject(i));
