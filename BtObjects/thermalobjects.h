@@ -112,7 +112,7 @@ public:
 		IdManual,
 		IdTimedManual,
 		IdWeeklyPrograms,
-		IdVacation,
+		IdWorking,
 		IdScenarios
 	};
 
@@ -328,14 +328,14 @@ private:
 
 /*!
 	\ingroup ThermalRegulation
-	\brief Switch to holiday or vacation mode.
+	\brief Switch to holiday or working mode.
 
-	The object id is either ThermalControlUnit::IdHoliday or ThermalControlUnit::IdVacation
+	The object id is either ThermalControlUnit::IdHoliday or ThermalControlUnit::IdWorking
 
 	In holiday mode, run the given program until the specified date/time, then switch to the
 	specified weekly program.
 
-	In vacation mode, go to antifreeze mode until the specified date/time, then switch to the specified program.
+	In working mode, go to antifreeze mode until the specified date/time, then switch to the specified program.
 */
 class ThermalControlUnitTimedProgram : public ThermalControlUnitProgram
 {

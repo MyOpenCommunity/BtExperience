@@ -32,7 +32,7 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	// TODO: fix the the timed programs
 	modalities.insertWithoutUii(new ThermalControlUnitProgram("Settimanale", ThermalControlUnit::IdWeeklyPrograms, &programs, dev));
 	modalities.insertWithoutUii(new ThermalControlUnitTimedProgram("Festivi", ThermalControlUnit::IdHoliday, &programs, dev));
-	modalities.insertWithoutUii(new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdVacation, &programs, dev));
+	modalities.insertWithoutUii(new ThermalControlUnitTimedProgram("Vacanze", ThermalControlUnit::IdWorking, &programs, dev));
 	modalities.insertWithoutUii(new ThermalControlUnitAntifreeze("Antigelo", dev));
 	modalities.insertWithoutUii(new ThermalControlUnitManual("Manuale", dev));
 	modalities.insertWithoutUii(new ThermalControlUnitOff("Off", dev));
@@ -116,7 +116,7 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 				id = ThermalControlUnit::IdTimedManual;
 				break;
 			case ThermalDevice::ST_WEEKEND:
-				id = ThermalControlUnit::IdVacation;
+				id = ThermalControlUnit::IdWorking;
 				break;
 			case ThermalDevice::ST_PROGRAM:
 				id = ThermalControlUnit::IdWeeklyPrograms;

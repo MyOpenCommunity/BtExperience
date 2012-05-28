@@ -114,7 +114,7 @@ void TestThermalControlUnit::testModalityProgram()
 
 void TestThermalControlUnit::testModalityVacation()
 {
-	testChangeModality<ThermalControlUnitTimedProgram>(ThermalDevice::ST_WEEKEND, ThermalControlUnit::IdVacation);
+	testChangeModality<ThermalControlUnitTimedProgram>(ThermalDevice::ST_WEEKEND, ThermalControlUnit::IdWorking);
 }
 
 void TestThermalControlUnit::testModalityHoliday()
@@ -423,7 +423,7 @@ void TestThermalControlUnitTimedProgram::testSetTime()
 
 void TestThermalControlUnitVacation::init()
 {
-	initProgram(ThermalControlUnit::IdVacation);
+	initProgram(ThermalControlUnit::IdWorking);
 }
 
 void TestThermalControlUnitVacation::testApply()

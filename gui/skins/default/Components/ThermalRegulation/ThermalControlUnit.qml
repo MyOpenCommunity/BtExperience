@@ -109,8 +109,8 @@ MenuColumn {
         case ThermalControlUnit99Zones.IdWeeklyPrograms:
             itemLoader.setComponent(programsComponent, properties)
             break
-        case ThermalControlUnit99Zones.IdVacation:
-            itemLoader.setComponent(vacationComponent, properties)
+        case ThermalControlUnit99Zones.IdWorking:
+            itemLoader.setComponent(workingComponent, properties)
             break
         case ThermalControlUnit99Zones.IdScenarios:
             itemLoader.setComponent(scenarioComponent, properties)
@@ -306,7 +306,7 @@ MenuColumn {
         }
 
         Component {
-            id: vacationComponent
+            id: workingComponent
             Column {
                 property variant objModel
 
