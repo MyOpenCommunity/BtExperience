@@ -33,6 +33,8 @@
 #include "container.h"
 
 #include <QtDeclarative/qdeclarative.h>
+#include <QtDeclarative/QDeclarativeEngine>
+#include <QtDeclarative/QDeclarativeContext>
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
@@ -87,6 +89,11 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	FrameReceiver::setClientsMonitor(monitors);
 	FrameSender::setClients(clients);
+
+	global_models.setParent(this);
+	global_models.setFloors(&floor_model);
+	global_models.setRooms(&room_model);
+	global_models.setObjectLinks(&object_link_model);
 
 	ObjectModel::setGlobalSource(&objmodel);
 	RoomListModel::setGlobalSource(&room_model);
@@ -271,6 +278,13 @@ void BtObjectsPlugin::parseLightSystem(const QDomNode &container)
 				l->setCategory(ObjectInterface::Lighting);
 		}
 	}
+}
+
+void BtObjectsPlugin::initializeEngine(QDeclarativeEngine *engine, const char *uri)
+{
+	Q_UNUSED(uri);
+
+	engine->rootContext()->setContextProperty("myHomeModels", &global_models);
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)

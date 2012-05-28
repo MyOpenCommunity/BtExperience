@@ -4,6 +4,7 @@
 #include <QtDeclarative/QDeclarativeExtensionPlugin>
 
 #include "objectmodel.h"
+#include "globalmodels.h"
 #include "uiimapper.h"
 
 class QDomDocument;
@@ -16,11 +17,14 @@ class BtObjectsPlugin : public QDeclarativeExtensionPlugin
 public:
 	BtObjectsPlugin(QObject *parent = 0);
 
+	void initializeEngine(QDeclarativeEngine *engine, const char *uri);
 	void registerTypes(const char *uri);
 
 private:
 	ObjectDataModel objmodel;
 	ObjectDataModel room_model;
+	MediaDataModel floor_model, object_link_model;
+	GlobalModels global_models;
 	UiiMapper uii_map;
 
 	// used to parse the made-up configuration we use for testing, remove after switching

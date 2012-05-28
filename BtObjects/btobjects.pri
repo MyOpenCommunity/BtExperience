@@ -5,6 +5,7 @@ HEADERS += \
 	energyload.h \
 	energyrate.h \
 	folderlistmodel.h \
+	globalmodels.h \
 	hardware.h \
 	iteminterface.h \
 	lightobjects.h \
@@ -55,6 +56,7 @@ SOURCES += \
 	energyload.cpp \
 	energyrate.cpp \
 	folderlistmodel.cpp \
+	globalmodels.cpp \
 	hardware.cpp \
 	iteminterface.cpp \
 	lightobjects.cpp \
