@@ -108,30 +108,7 @@ Page {
         }
     }
 
-    ListView {
-        id: users
-        property int currentPressed: -1
-        model: usersModel
-        delegate: PagerDelegate {
-            source: image
-            label: name
-
-            onClicked: Stack.openPage('Profile.qml', {'profile': name, 'sourceImage': image})
-        }
-
-        orientation: ListView.Horizontal
-        spacing: 2
-        clip: true
-        height: 300
-
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            right: pages.left
-        }
-        onFlickStarted: currentPressed = -1
-        onMovementEnded: currentPressed = -1
-
+    CardView {
         ListModel {
             id: usersModel
 //            ListElement {
@@ -154,6 +131,21 @@ Page {
                 image: "images/home/card_5.png"
                 name: "papà"
             }
+        }
+
+        id: users
+        model: usersModel
+        delegate: PagerDelegate {
+            source: image
+            label: name
+
+            onClicked: Stack.openPage('Profile.qml', {'profile': name, 'sourceImage': image})
+        }
+        anchors {
+            top: toolbar.bottom
+            bottom: favourites.top
+            left: parent.left
+            right: pages.left
         }
     }
 

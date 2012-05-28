@@ -14,6 +14,7 @@ Page {
         fontSize: 17
     }
     Text {
+        id: pageTitle
         text: qsTr("Rooms")
         font.pixelSize: 50
         anchors.top: toolbar.bottom
@@ -21,9 +22,19 @@ Page {
         anchors.leftMargin: 20
     }
 
-    ListView {
+    CardView {
         id: users
-        property int currentPressed: -1
+        anchors {
+            right: parent.right
+            left: parent.left
+            top: pageTitle.bottom
+            bottom: parent.bottom
+        }
+
+        RoomListModel {
+            id: roomsModel
+        }
+
         model: roomsModel.rooms()
         delegate: PagerDelegate {
             source: users.selectRoomImage(modelData)
@@ -31,19 +42,6 @@ Page {
 
             onClicked: Stack.openPage("Room.qml", {'roomName': modelData})
         }
-
-        orientation: ListView.Horizontal
-        spacing: 2
-        clip: true
-        height: 300
-
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            right: parent.right
-        }
-        onFlickStarted: currentPressed = -1
-        onMovementEnded: currentPressed = -1
 
         function selectRoomImage(room) {
             if (room === "living room")
@@ -58,10 +56,6 @@ Page {
                 return "images/rooms/cucina.png"
             console.log("Unknown room, default to studio")
             return "images/rooms/studio.png"
-        }
-
-        RoomListModel {
-            id: roomsModel
         }
     }
 
