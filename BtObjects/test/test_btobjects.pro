@@ -31,7 +31,9 @@ HEADERS += test_antintrusion_object.h \
 	test_energy_load.h \
 	test_filebrowser.h \
 	test_light_objects.h \
+	test_media_models.h \
 	test_media_objects.h \
+	test_myhome_models.h \
 	test_scenario_objects.h \
 	test_stopandgo_objects.h \
 	test_splitscenarios_object.h \
@@ -50,7 +52,9 @@ SOURCES += test_main.cpp \
 	test_energy_load.cpp \
 	test_filebrowser.cpp \
 	test_light_objects.cpp \
+	test_media_models.cpp \
 	test_media_objects.cpp \
+	test_myhome_models.cpp \
 	test_scenario_objects.cpp \
 	test_stopandgo_objects.cpp \
 	test_splitscenarios_object.cpp \

@@ -95,7 +95,6 @@ Light::Light(QString _name, QString _key, LightingDevice *d)
 	name = _name;
 	category = ObjectInterface::Unassigned;
 	active = false; // initial value
-	connect(this, SIGNAL(activeChanged()), this, SIGNAL(dataChanged()));
 
 	hours = 0;
 	minutes = 0;
@@ -197,7 +196,6 @@ Dimmer::Dimmer(QString name, QString key, DimmerDevice *d) : Light(name, key, d)
 {
 	dev = d;
 	percentage = 0; // initial value
-	connect(this, SIGNAL(percentageChanged()), this, SIGNAL(dataChanged()));
 }
 
 int Dimmer::getPercentage() const

@@ -1,6 +1,6 @@
 #include "antintrusionsystem.h"
 #include "antintrusion_device.h"
-#include "objectlistmodel.h"
+#include "objectmodel.h"
 
 #include "xml_functions.h"
 
@@ -181,22 +181,22 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
-ObjectListModel *AntintrusionSystem::getScenarios() const
+ObjectDataModel *AntintrusionSystem::getScenarios() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
-	return const_cast<ObjectListModel*>(&scenarios);
+	return const_cast<ObjectDataModel*>(&scenarios);
 }
 
-ObjectListModel *AntintrusionSystem::getAlarms() const
+ObjectDataModel *AntintrusionSystem::getAlarms() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
-	return const_cast<ObjectListModel*>(&alarms);
+	return const_cast<ObjectDataModel*>(&alarms);
 }
 
-ObjectListModel *AntintrusionSystem::getZones() const
+ObjectDataModel *AntintrusionSystem::getZones() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
-	return const_cast<ObjectListModel*>(&zones);
+	return const_cast<ObjectDataModel*>(&zones);
 }
 
 void AntintrusionSystem::valueReceived(const DeviceValues &values_list)

@@ -2,7 +2,7 @@
 #define MEDIAOBJECTS_H
 
 #include "objectinterface.h"
-#include "objectlistmodel.h"
+#include "objectmodel.h"
 #include "device.h" // DeviceValues
 
 class QDomNode;
@@ -474,12 +474,12 @@ class PowerAmplifier : public Amplifier
 		Returns a list of \a PowerAmplifierPreset objects; the first 10
 		are fixed presets, the last 10 are user-defined
 	*/
-	Q_PROPERTY(ObjectListModel *presets READ getPresets CONSTANT)
+	Q_PROPERTY(ObjectDataModel *presets READ getPresets CONSTANT)
 
 public:
 	PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, QList<QString> custom_presets);
 
-	ObjectListModel *getPresets() const;
+	ObjectDataModel *getPresets() const;
 
 	int getBass() const;
 	int getTreble() const;
@@ -546,7 +546,7 @@ private  slots:
 
 private:
 	PowerAmplifierDevice *dev;
-	ObjectListModel presets;
+	ObjectDataModel presets;
 	int bass, treble, balance, preset;
 	bool loud;
 

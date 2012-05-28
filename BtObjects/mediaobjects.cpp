@@ -555,11 +555,11 @@ PowerAmplifier::PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, 
 		presets.insertWithoutUii(new PowerAmplifierPreset(i, _presets[i]));
 }
 
-ObjectListModel *PowerAmplifier::getPresets() const
+ObjectDataModel *PowerAmplifier::getPresets() const
 {
 	// TODO: we remove the const because it produces an error when we export the
 	// type to the qml engine. Find a solution.
-	return const_cast<ObjectListModel*>(&presets);
+	return const_cast<ObjectDataModel*>(&presets);
 }
 
 int PowerAmplifier::getBass() const

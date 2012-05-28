@@ -2,7 +2,7 @@
 #define THERMALOBJECTS_H
 
 #include "objectinterface.h"
-#include "objectlistmodel.h"
+#include "objectmodel.h"
 #include "device.h" // DeviceValues
 
 #include <QObject>
@@ -17,7 +17,7 @@
 class ThermalDevice;
 class ThermalDevice4Zones;
 class ThermalDevice99Zones;
-class ObjectListModel;
+class ObjectDataModel;
 class ThermalControlUnitObject;
 
 typedef QHash<int, QVariant> ThermalRegulationState;
@@ -82,12 +82,12 @@ class ThermalControlUnit : public ObjectInterface
 		\see ThermalControlUnitScenario
 
 	*/
-	Q_PROPERTY(ObjectListModel *modalities READ getModalities NOTIFY modalitiesChanged)
+	Q_PROPERTY(ObjectDataModel *modalities READ getModalities NOTIFY modalitiesChanged)
 
 	/*!
 		\brief The list of \a ThermalRegulationProgram configured for the control unit
 	*/
-	Q_PROPERTY(ObjectListModel *programs READ getPrograms NOTIFY programsChanged)
+	Q_PROPERTY(ObjectDataModel *programs READ getPrograms NOTIFY programsChanged)
 
 	/*!
 		\brief A \a ThermalControlUnitObject subclass representing the current modality
@@ -134,8 +134,8 @@ public:
 	SeasonType getSeason() const;
 	void setSeason(SeasonType s);
 
-	ObjectListModel *getModalities() const;
-	ObjectListModel *getPrograms() const;
+	ObjectDataModel *getModalities() const;
+	ObjectDataModel *getPrograms() const;
 
 	QObject* getCurrentModality() const;
 
@@ -149,13 +149,13 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
-	ObjectListModel modalities;
+	ObjectDataModel modalities;
 
 private:
 	QString key;
 	int temperature;
 	SeasonType season;
-	ObjectListModel programs;
+	ObjectDataModel programs;
 	ThermalDevice *dev;
 	int current_modality;
 };
@@ -206,11 +206,11 @@ public:
 		return ObjectInterface::IdThermalControlUnit99;
 	}
 
-	ObjectListModel *getScenarios() const;
+	ObjectDataModel *getScenarios() const;
 
 private:
 	ThermalDevice99Zones *dev;
-	ObjectListModel scenarios;
+	ObjectDataModel scenarios;
 };
 
 
@@ -294,10 +294,10 @@ class ThermalControlUnitProgram : public ThermalControlUnitObject
 	/*!
 		\brief The list of \a ThermalRegulationProgram configured for the control unit
 	*/
-	Q_PROPERTY(ObjectListModel *programs READ getPrograms CONSTANT)
+	Q_PROPERTY(ObjectDataModel *programs READ getPrograms CONSTANT)
 
 public:
-	ThermalControlUnitProgram(QString name, int object_id, const ObjectListModel *_programs, ThermalDevice *dev);
+	ThermalControlUnitProgram(QString name, int object_id, const ObjectDataModel *_programs, ThermalDevice *dev);
 
 	virtual int getObjectId() const
 	{
@@ -309,7 +309,7 @@ public:
 
 	int getProgramId() const;
 	QString getProgramDescription() const;
-	ObjectListModel *getPrograms() const;
+	ObjectDataModel *getPrograms() const;
 
 public slots:
 	virtual void apply();
@@ -321,7 +321,7 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
-	const ObjectListModel *programs;
+	const ObjectDataModel *programs;
 	int object_id;
 };
 
@@ -352,7 +352,7 @@ class ThermalControlUnitTimedProgram : public ThermalControlUnitProgram
 	Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
 
 public:
-	ThermalControlUnitTimedProgram(QString name, int object_id, ObjectListModel *programs, ThermalDevice *dev);
+	ThermalControlUnitTimedProgram(QString name, int object_id, ObjectDataModel *programs, ThermalDevice *dev);
 
 	QDate getDate() const;
 	void setDate(QDate date);
@@ -519,10 +519,10 @@ class ThermalControlUnitScenario : public ThermalControlUnitObject
 	/*!
 		\brief The list of \a ThermalRegulationProgram configured for the control unit
 	*/
-	Q_PROPERTY(ObjectListModel *scenarios READ getScenarios CONSTANT)
+	Q_PROPERTY(ObjectDataModel *scenarios READ getScenarios CONSTANT)
 
 public:
-	ThermalControlUnitScenario(QString name, const ObjectListModel *scenarios, ThermalDevice99Zones *dev);
+	ThermalControlUnitScenario(QString name, const ObjectDataModel *scenarios, ThermalDevice99Zones *dev);
 
 	virtual int getObjectId() const
 	{
@@ -532,7 +532,7 @@ public:
 	int getScenarioIndex() const;
 	void setScenarioIndex(int index);
 
-	ObjectListModel *getScenarios() const;
+	ObjectDataModel *getScenarios() const;
 
 	QString getScenarioDescription() const;
 
@@ -549,7 +549,7 @@ private:
 	int getScenarioId() const;
 
 	ThermalDevice99Zones *dev;
-	const ObjectListModel *scenarios;
+	const ObjectDataModel *scenarios;
 };
 
 #endif // THERMALOBJECTS_H

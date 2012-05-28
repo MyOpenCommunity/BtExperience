@@ -3,7 +3,7 @@
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
-#include "objectlistmodel.h"
+#include "objectmodel.h"
 
 #include <QObject>
 #include <QProcess>
@@ -65,7 +65,7 @@ class CCTV : public ObjectInterface
 	*/
 	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
 
-	Q_PROPERTY(ObjectListModel *externalPlaces READ getExternalPlaces CONSTANT)
+	Q_PROPERTY(ObjectDataModel *externalPlaces READ getExternalPlaces CONSTANT)
 
 public:
 	explicit CCTV(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
@@ -84,7 +84,7 @@ public:
 	void setBrightness(int value);
 	int getContrast() const;
 	void setContrast(int value);
-	ObjectListModel *getExternalPlaces() const;
+	ObjectDataModel *getExternalPlaces() const;
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
@@ -117,7 +117,7 @@ private:
 	bool call_stopped;
 	QProcess video_grabber;
 	VideoDoorEntryDevice *dev;
-	ObjectListModel external_places;
+	ObjectDataModel external_places;
 };
 
 
@@ -144,7 +144,7 @@ class Intercom : public ObjectInterface
 	*/
 	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
 
-	Q_PROPERTY(ObjectListModel *externalPlaces READ getExternalPlaces CONSTANT)
+	Q_PROPERTY(ObjectDataModel *externalPlaces READ getExternalPlaces CONSTANT)
 
 	/*!
 		\brief Retrieves a description for the device on the other side of the call.
@@ -177,7 +177,7 @@ public:
 	void setVolume(int value);
 	bool getMute() const;
 	void setMute(bool value);
-	ObjectListModel *getExternalPlaces() const;
+	ObjectDataModel *getExternalPlaces() const;
 	QString getTalker() const;
 
 signals:
@@ -200,7 +200,7 @@ private:
 	void setTalkerFromWhere(QString where);
 
 	VideoDoorEntryDevice *dev;
-	ObjectListModel external_places;
+	ObjectDataModel external_places;
 	QString talker;
 };
 

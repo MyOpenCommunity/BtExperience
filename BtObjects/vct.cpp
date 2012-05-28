@@ -90,10 +90,10 @@ void CCTV::setContrast(int value)
 	emit contrastChanged();
 }
 
-ObjectListModel *CCTV::getExternalPlaces() const
+ObjectDataModel *CCTV::getExternalPlaces() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
-	return const_cast<ObjectListModel*>(&external_places);
+	return const_cast<ObjectDataModel*>(&external_places);
 }
 
 void CCTV::answerCall()
@@ -246,10 +246,10 @@ void Intercom::setMute(bool value)
 	emit muteChanged();
 }
 
-ObjectListModel *Intercom::getExternalPlaces() const
+ObjectDataModel *Intercom::getExternalPlaces() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
-	return const_cast<ObjectListModel*>(&external_places);
+	return const_cast<ObjectDataModel*>(&external_places);
 }
 
 QString Intercom::getTalker() const

@@ -1,12 +1,13 @@
 #ifndef OBJECTINTERFACE_H
 #define OBJECTINTERFACE_H
 
-#include <QObject>
+#include "iteminterface.h"
+
 #include <QString>
 #include <QPair>
 
 
-class ObjectInterface : public QObject
+class ObjectInterface : public ItemInterface
 {
 	Q_OBJECT
 	Q_PROPERTY(int objectId READ getObjectId CONSTANT)
@@ -16,8 +17,7 @@ class ObjectInterface : public QObject
 	Q_ENUMS(ObjectCategory)
 
 public:
-	ObjectInterface(QObject *parent = 0) : QObject(parent) {}
-	virtual ~ObjectInterface() {}
+	ObjectInterface(QObject *parent = 0) : ItemInterface(parent) {}
 
 	enum ObjectId
 	{
@@ -83,7 +83,6 @@ public:
 	virtual ObjectCategory getCategory() const = 0;
 
 signals:
-	void dataChanged();
 	void nameChanged();
 
 protected:

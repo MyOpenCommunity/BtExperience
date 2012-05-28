@@ -8,7 +8,7 @@
 #include "thermal_device.h"
 #include "probe_device.h"
 #include "antintrusion_device.h"
-#include "objectlistmodel.h"
+#include "objectmodel.h"
 #include "lightobjects.h"
 #include "thermalobjects.h"
 #include "thermalprobes.h"
@@ -87,7 +87,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameReceiver::setClientsMonitor(monitors);
 	FrameSender::setClients(clients);
 
-	FilterListModel::setGlobalSource(&objmodel);
+	ObjectModel::setGlobalSource(&objmodel);
 	RoomListModel::setGlobalSource(&room_model);
 	createObjectsFakeConfig(document);
 	createObjects(document);
@@ -271,11 +271,14 @@ void BtObjectsPlugin::parseLightSystem(const QDomNode &container)
 void BtObjectsPlugin::registerTypes(const char *uri)
 {
 	// @uri BtObjects
-	qmlRegisterUncreatableType<ObjectListModel>(uri, 1, 0, "ObjectListModel", "");
-	qmlRegisterType<FilterListModel>(uri, 1, 0, "FilterListModel");
+	qmlRegisterUncreatableType<ObjectDataModel>(uri, 1, 0, "ObjectListModel", "");
+	qmlRegisterType<ObjectModel>(uri, 1, 0, "FilterListModel");
 	qmlRegisterType<RoomListModel>(uri, 1, 0, "RoomListModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
+	qmlRegisterUncreatableType<ItemInterface>(
+				uri, 1, 0, "ItemInterface",
+				"unable to create an ItemInterface instance");
 	qmlRegisterUncreatableType<ObjectInterface>(
 				uri, 1, 0, "ObjectInterface",
 				"unable to create an ObjectInterface instance");

@@ -67,7 +67,7 @@ private:
 		range: [0, 6] // obtain range from paginator
 	}
 
-	The interface is similar \a FilterListModel, but it only implements a range filter
+	The interface is similar \a ObjectModel, but it only implements a range filter
 	for pagination.
 
 	The objects returned by \a getObject() are \a FileObject instances.
@@ -121,7 +121,7 @@ public:
 	TreeBrowserListModelBase(TreeBrowser *browser, QObject *parent = 0);
 	~TreeBrowserListModelBase();
 
-	// see comment in ObjectListModel
+	// see comment in MediaModel
 	virtual QVariant data(const QModelIndex &index, int role) const
 	{
 		Q_UNUSED(index)

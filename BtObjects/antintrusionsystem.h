@@ -2,7 +2,7 @@
 #define ANTINTRUSIONSYSTEM_H
 
 #include "objectinterface.h"
-#include "objectlistmodel.h"
+#include "objectmodel.h"
 #include "device.h" // DeviceValues
 
 #include <QString>
@@ -11,7 +11,7 @@
 
 class AntintrusionSystem;
 class AntintrusionDevice;
-class ObjectListModel;
+class ObjectDataModel;
 class QDomNode;
 
 
@@ -124,9 +124,9 @@ class AntintrusionSystem : public ObjectInterface
 friend class TestAntintrusionSystem;
 
 	Q_OBJECT
-	Q_PROPERTY(ObjectListModel *zones READ getZones CONSTANT)
-	Q_PROPERTY(ObjectListModel *scenarios READ getScenarios CONSTANT)
-	Q_PROPERTY(ObjectListModel *alarms READ getAlarms NOTIFY alarmsChanged)
+	Q_PROPERTY(ObjectDataModel *zones READ getZones CONSTANT)
+	Q_PROPERTY(ObjectDataModel *scenarios READ getScenarios CONSTANT)
+	Q_PROPERTY(ObjectDataModel *alarms READ getAlarms NOTIFY alarmsChanged)
 	Q_PROPERTY(bool status READ getStatus NOTIFY statusChanged)
 	Q_PROPERTY(QObject *currentScenario READ getCurrentScenario NOTIFY currentScenarioChanged)
 
@@ -143,9 +143,9 @@ public:
 		return ObjectInterface::Antintrusion;
 	}
 
-	ObjectListModel *getZones() const;
-	ObjectListModel *getScenarios() const;
-	ObjectListModel *getAlarms() const;
+	ObjectDataModel *getZones() const;
+	ObjectDataModel *getScenarios() const;
+	ObjectDataModel *getAlarms() const;
 
 	Q_INVOKABLE void requestPartialization(const QString &password);
 	Q_INVOKABLE void toggleActivation(const QString &password);
@@ -177,9 +177,9 @@ private:
 	void removeAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
 	bool isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
 	AntintrusionDevice *dev;
-	ObjectListModel zones;
-	ObjectListModel scenarios;
-	ObjectListModel alarms;
+	ObjectDataModel zones;
+	ObjectDataModel scenarios;
+	ObjectDataModel alarms;
 	bool status;
 	bool initialized;
 	bool waiting_response;
