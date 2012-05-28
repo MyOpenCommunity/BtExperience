@@ -118,7 +118,10 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		if (!obj_list.isEmpty())
 		{
 			foreach (ObjectPair p, obj_list)
-				objmodel << p;
+			{
+				uii_map.insert(p.first, p.second);
+				objmodel.insertWithoutUii(p.second);
+			}
 		}
 	}
 }
@@ -248,8 +251,9 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int object_uii = getIntAttribute(link, "uii");
 			int x = getIntAttribute(link, "x");
 			int y = getIntAttribute(link, "y");
+			RoomElement *item = new RoomElement(room_name, uii_map.value<ObjectInterface>(object_uii), x, y);
 
-			room_model << ObjectPair(object_uii, new RoomElement(room_name, objmodel.getObjectByUii(object_uii), x, y));
+			room_model.insertWithoutUii(item);
 		}
 	}
 }
@@ -261,7 +265,7 @@ void BtObjectsPlugin::parseLightSystem(const QDomNode &container)
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
-			Light *l = static_cast<Light *>(objmodel.getObjectByUii(object_uii));
+			Light *l = uii_map.value<Light>(object_uii);
 			if (l)
 				l->setCategory(ObjectInterface::Lighting);
 		}

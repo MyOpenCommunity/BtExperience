@@ -4,6 +4,7 @@
 #include <QtDeclarative/QDeclarativeExtensionPlugin>
 
 #include "objectmodel.h"
+#include "uiimapper.h"
 
 class QDomDocument;
 class QDomNode;
@@ -20,6 +21,7 @@ public:
 private:
 	ObjectDataModel objmodel;
 	ObjectDataModel room_model;
+	UiiMapper uii_map;
 
 	// used to parse the made-up configuration we use for testing, remove after switching
 	// to the new configuration
