@@ -108,13 +108,30 @@ Page {
         }
     }
 
-    PathView {
+    ListView {
+        id: users
+        property int currentPressed: -1
+        model: usersModel
+        delegate: usersDelegate
+        orientation: ListView.Horizontal
+        spacing: 2
+        clip: true
+        height: 300
+
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            right: pages.left
+        }
+        onFlickStarted: currentPressed = -1
+        onMovementEnded: currentPressed = -1
+
         ListModel {
             id: usersModel
-            ListElement {
-                image: "images/home/card_1.png"
-                name: "famiglia"
-            }
+//            ListElement {
+//                image: "images/home/card_1.png"
+//                name: "famiglia"
+//            }
             ListElement {
                 image: "images/home/card_2.png"
                 name: "mattia"
@@ -137,17 +154,22 @@ Page {
             id: usersDelegate
             Item {
                 id: itemDelegate
-                width: imageDelegate.sourceSize.width
-                height: imageDelegate.sourceSize.height + textDelegate.height
+                width: delegateBackground.width
+                height: delegateBackground.height + delegateShadow.height
 
-                z: PathView.z
-                scale: PathView.iconScale + 0.1
+                Rectangle {
+                    id: delegateBackground
+                    width: 175
+                    height: 244
+                    color: Qt.rgba(230, 230, 230)
+                    opacity: 0.5
+                }
 
                 Image {
                     id: imageDelegate
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    width: 169
+                    height: 238
+                    anchors { bottom: delegateBackground.bottom; bottomMargin: 5 }
                     source: image
                 }
 
@@ -155,11 +177,22 @@ Page {
                     id: textDelegate
                     text: name
                     font.family: regularFont.name
-                    font.pixelSize: 22
-                    anchors.top: imageDelegate.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    font.pointSize: 15
+                    anchors.top: delegateBackground.top
+                    anchors.left: delegateBackground.left
+                    anchors.right: delegateBackground.right
                     horizontalAlignment: Text.AlignHCenter
+                    opacity: 0.75
+                }
+
+                SvgImage {
+                    id: delegateShadow
+                    source: "images/home/pager_shadow.svg"
+                    anchors {
+                        top: delegateBackground.bottom
+                        topMargin: 5
+                        horizontalCenter: delegateBackground.horizontalCenter
+                    }
                 }
 
                 SvgImage {
@@ -167,24 +200,23 @@ Page {
                     source: "images/common/profilo_p.svg"
                     visible: false
                     anchors {
-                        centerIn: imageDelegate
                         fill: imageDelegate
-                        margins: 20
+                        // FIXME: currently, profile images have a transparent
+                        // border around them, so we need the margins here
+                        margins: 15
                     }
-                    width: imageDelegate.width
-                    height: imageDelegate.height
                 }
 
                 MouseArea {
                     anchors.fill: parent
 
                     onClicked: Stack.openPage('Profile.qml', {'profile': name, 'sourceImage': image})
-                    onPressed: itemDelegate.PathView.view.currentPressed = index
-                    onReleased: itemDelegate.PathView.view.currentPressed = -1
+                    onPressed: itemDelegate.ListView.view.currentPressed = index
+                    onReleased: itemDelegate.ListView.view.currentPressed = -1
                 }
 
                 states: State {
-                    when: itemDelegate.PathView.view.currentPressed === index
+                    when: itemDelegate.ListView.view.currentPressed === index
                     PropertyChanges {
                         target: rectPressed
                         visible: true
@@ -192,37 +224,6 @@ Page {
                 }
             }
         }
-
-        id: users
-        property int currentPressed: -1
-        model: usersModel
-        delegate: usersDelegate
-
-        path:  Path {
-            startX: 100; startY: 250
-            PathAttribute { name: "iconScale"; value: 0.4 }
-            PathAttribute { name: "z"; value: 0.1 }
-            PathLine { x: 160; y: 250; }
-            PathAttribute { name: "iconScale"; value: 0.5 }
-            PathLine { x: 310; y: 210; }
-            PathAttribute { name: "iconScale"; value: 1.0 }
-            PathAttribute { name: "z"; value: 1.0 }
-            PathLine { x: 420; y: 243; }
-            PathAttribute { name: "iconScale"; value: 0.6 }
-            PathLine { x: 560; y: 252; }
-            PathAttribute { name: "iconScale"; value: 0.35 }
-            PathLine { x: 630; y: 250; }
-        }
-        width: 620
-        pathItemCount: 5
-        anchors.bottom: favourites.top
-        anchors.bottomMargin: 0
-        anchors.top: toolbar.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        onFlickStarted: currentPressed = -1
-        onMovementEnded: currentPressed = -1
     }
 
     RoomListModel {
