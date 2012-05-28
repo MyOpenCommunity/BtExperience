@@ -40,7 +40,11 @@ Item {
         id: imageDelegate
         width: 169
         height: 238
-        anchors { bottom: delegateBackground.bottom; bottomMargin: 5 }
+        anchors {
+            bottom: delegateBackground.bottom
+            bottomMargin: 5
+            horizontalCenter: delegateBackground.horizontalCenter
+        }
         source: users.selectRoomImage(modelData)
     }
 
