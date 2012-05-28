@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+
 import "../../js/datetime.js" as DateTime
 
 
@@ -178,21 +179,21 @@ MenuColumn {
                     time: DateTime.format(objModel.date)["time"]
 
                     function checkReset() {
-                        if (privateProps.currentElement !== -1)
+                        if (column.privateProps.currentElement !== -1)
                             resetSelection()
                     }
 
                     Component.onCompleted: {
                         column.childDestroyed.connect(resetSelection)
-                        privateProps.currentElementChanged.connect(checkReset)
+                        column.privateProps.currentElementChanged.connect(checkReset)
                     }
 
                     onDateClicked: {
                         column.loadColumn(dateSelect, qsTr("date"), objModel)
-                        privateProps.currentElement = -1
+                        column.privateProps.currentElement = -1
                     }
 
-                    onTimeClicked: privateProps.currentElement = -1
+                    onTimeClicked: column.privateProps.currentElement = -1
                 }
 
                 MenuItem {
@@ -310,10 +311,34 @@ MenuColumn {
             Column {
                 property variant objModel
 
+                Component {
+                    id: dateSelectWorking
+                    DateSelect {
+                    }
+                }
+
                 ControlDateTime {
+                    id: dateTimeWorking
                     text: qsTr("valid until")
                     date: DateTime.format(objModel.date)["date"]
                     time: DateTime.format(objModel.date)["time"]
+
+                    function checkReset() {
+                        if (column.privateProps.currentElement !== -1)
+                            resetSelection()
+                    }
+
+                    Component.onCompleted: {
+                        column.childDestroyed.connect(resetSelection)
+                        column.privateProps.currentElementChanged.connect(checkReset)
+                    }
+
+                    onDateClicked: {
+                        column.loadColumn(dateSelectWorking, qsTr("date"), objModel)
+                        column.privateProps.currentElement = -1
+                    }
+
+                    onTimeClicked: column.privateProps.currentElement = -1
                 }
 
                 MenuItem {
