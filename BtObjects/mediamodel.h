@@ -66,6 +66,7 @@ class MediaModel : public QSortFilterProxyModel
 {
 	Q_OBJECT
 	Q_PROPERTY(QVariantList range READ getRange WRITE setRange NOTIFY rangeChanged)
+	Q_PROPERTY(QVariantList containers READ getContainers WRITE setContainers NOTIFY containersChanged)
 	Q_PROPERTY(MediaDataModel* source READ getSource WRITE setSource NOTIFY sourceChanged)
 	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
 
