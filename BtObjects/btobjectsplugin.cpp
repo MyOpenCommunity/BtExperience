@@ -254,12 +254,14 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 {
 	room_model.setParent(this);
 
+	int room_id = getIntAttribute(container, "id");
+
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
 		QString room_name = getAttribute(instance, "descr");
 		QString room_img = getAttribute(instance, "img");
 		int room_uii = getIntAttribute(instance, "uii");
-		Container *room = new Container(room_uii, room_img, room_name);
+		Container *room = new Container(room_id, room_uii, room_img, room_name);
 
 		room_model << room;
 		uii_map.insert(room_uii, room);
@@ -282,12 +284,14 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 {
 	floor_model.setParent(this);
 
+	int floor_id = getIntAttribute(container, "id");
+
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
 		QString floor_name = getAttribute(instance, "descr");
 		QString floor_img = getAttribute(instance, "img");
 		int floor_uii = getIntAttribute(instance, "uii");
-		Container *floor = new Container(floor_uii, floor_img, floor_name);
+		Container *floor = new Container(floor_id, floor_uii, floor_img, floor_name);
 
 		floor_model << floor;
 		uii_map.insert(floor_uii, floor);

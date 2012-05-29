@@ -8,8 +8,8 @@ Page {
     source: "images/imgsfondo_sfumato.png"
     property variant names: translations
     property string roomName
-    property int roomId
-    property int floorId
+    property int roomUii
+    property int floorUii
 
     Names {
         id: translations
@@ -36,14 +36,14 @@ Page {
     MediaModel {
         source: myHomeModels.objectLinks
         id: roomModel
-        containers: [roomId]
+        containers: [roomUii]
         onContainersChanged: page.state = ""
     }
 
     MediaModel {
         source: myHomeModels.rooms
         id: roomsModel
-        containers: [floorId]
+        containers: [floorUii]
     }
 
     MouseArea {
@@ -121,7 +121,7 @@ Page {
         }
 
         onCurrentIndexChanged: {
-            page.roomId = roomsModel.getObject(currentIndex).id
+            page.roomUii = roomsModel.getObject(currentIndex).uii
         }
 
         currentIndex: findCurrentIndex()
@@ -135,7 +135,7 @@ Page {
 
     function findCurrentIndex() {
         for (var i = 0; i < roomsModel.count; ++i)
-            if (roomsModel.getObject(i).id == roomId)
+            if (roomsModel.getObject(i).uii == roomUii)
                     return i;
 
         return 0;
