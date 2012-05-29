@@ -42,8 +42,10 @@ Item {
 
             id: view
             orientation: ListView.Horizontal
+            interactive: false
             spacing: 2
             height: 300
+
             // Compute width to center the ListView delegates
             // TODO: the current formula is temporary workaround, it must be
             // removed once all the models expose a count property
