@@ -94,6 +94,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	global_models.setFloors(&floor_model);
 	global_models.setRooms(&room_model);
 	global_models.setObjectLinks(&object_link_model);
+	global_models.setMyHomeObjects(&objmodel);
 
 	ObjectModel::setGlobalSource(&objmodel);
 	createObjectsFakeConfig(document);

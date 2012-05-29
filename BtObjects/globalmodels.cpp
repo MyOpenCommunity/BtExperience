@@ -36,3 +36,13 @@ MediaDataModel *GlobalModels::getObjectLinks() const
 {
 	return object_links;
 }
+
+void GlobalModels::setMyHomeObjects(ObjectDataModel *_my_home_objects)
+{
+	my_home_objects = _my_home_objects;
+}
+
+ObjectDataModel *GlobalModels::getMyHomeObjects() const
+{
+	return my_home_objects;
+}
