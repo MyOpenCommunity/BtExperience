@@ -132,7 +132,7 @@ MenuColumn {
     Column {
         id: antintrusionColumn
         MenuItem {
-            property int numberOfAlarms: privateProps.model.alarms.size
+            property int numberOfAlarms: privateProps.model.alarms.count
             state: privateProps.currentElement == 1 ? "selected" : ""
             name: column.alarmLogTitle
             hasChild: true
@@ -214,7 +214,7 @@ MenuColumn {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: zoneText.bottom
                 width: cellWidth * 2
-                height: 200 // (cellHeight * zoneModel.size / 2) // Why it does not work???
+                height: 200 // (cellHeight * zoneModel.count / 2) // Why it does not work???
                 interactive: false
                 cellWidth: 102
                 cellHeight: 50

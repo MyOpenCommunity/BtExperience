@@ -134,7 +134,7 @@ Page {
     }
 
     function findCurrentIndex() {
-        for (var i = 0; i < roomsModel.size; ++i)
+        for (var i = 0; i < roomsModel.count; ++i)
             if (roomsModel.getObject(i).id == roomId)
                     return i;
 

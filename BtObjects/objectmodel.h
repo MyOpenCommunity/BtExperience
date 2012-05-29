@@ -90,21 +90,21 @@ private:
 class RoomListModel : public QSortFilterProxyModel
 {
 	Q_OBJECT
-	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	Q_PROPERTY(QString room READ getRoom WRITE setRoom NOTIFY roomChanged)
 
 public:
 	RoomListModel();
 	static void setGlobalSource(ObjectDataModel *source);
 
-	int getSize() const;
+	int getCount() const;
 	QString getRoom() const;
 	void setRoom(QString room_name);
 	Q_INVOKABLE QStringList rooms();
 	Q_INVOKABLE ObjectInterface *getObject(int row);
 
 signals:
-	void sizeChanged();
+	void countChanged();
 	void roomChanged();
 
 protected:

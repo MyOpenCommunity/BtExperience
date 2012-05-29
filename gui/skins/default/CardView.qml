@@ -27,12 +27,8 @@ Item {
             // QML property name
             var count = model.count
             if ( count === undefined) {
-                // our model property name
-                count = model.size
-                if (count === undefined) {
-                    // stringlist name (effectively a JS array)
-                    count = model.length
-                }
+                // stringlist name (effectively a JS array)
+                count = model.length
             }
             return count
         }

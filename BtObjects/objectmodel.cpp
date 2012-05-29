@@ -165,7 +165,7 @@ RoomListModel::RoomListModel()
 	setSourceModel(global_source);
 }
 
-int RoomListModel::getSize() const
+int RoomListModel::getCount() const
 {
 	return rowCount();
 }
@@ -187,7 +187,7 @@ void RoomListModel::setRoom(QString room_name)
 QStringList RoomListModel::rooms()
 {
 	QSet<QString> set;
-	for (int i = 0; i < global_source->getSize(); ++i)
+	for (int i = 0; i < global_source->getCount(); ++i)
 	{
 		ObjectInterface *obj = global_source->getObject(i);
 		set << obj->getObjectKey();

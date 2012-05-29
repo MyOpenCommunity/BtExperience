@@ -9,7 +9,7 @@ class ItemInterface;
 class MediaDataModel : public QAbstractListModel
 {
 	Q_OBJECT
-	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
 public:
 	MediaDataModel(QObject *parent = 0);
@@ -42,7 +42,7 @@ public:
 
 	ItemInterface *getObject(int row) const;
 
-	int getSize() const
+	int getCount() const
 	{
 		return item_list.size();
 	}
@@ -50,7 +50,7 @@ public:
 	void remove(int index);
 
 signals:
-	void sizeChanged();
+	void countChanged();
 
 protected:
 	void insertObject(ItemInterface *obj);
@@ -68,7 +68,7 @@ class MediaModel : public QSortFilterProxyModel
 	Q_PROPERTY(QVariantList range READ getRange WRITE setRange NOTIFY rangeChanged)
 	Q_PROPERTY(QVariantList containers READ getContainers WRITE setContainers NOTIFY containersChanged)
 	Q_PROPERTY(MediaDataModel* source READ getSource WRITE setSource NOTIFY sourceChanged)
-	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
 public:
 	MediaModel();
@@ -85,7 +85,7 @@ public:
 	QVariantList getContainers() const;
 	void setContainers(QVariantList containers);
 
-	int getSize() const;
+	int getCount() const;
 
 	void setSource(MediaDataModel *s);
 	MediaDataModel *getSource() const;
@@ -93,7 +93,7 @@ public:
 signals:
 	void rangeChanged();
 	void sourceChanged();
-	void sizeChanged();
+	void countChanged();
 	void containersChanged();
 
 protected:

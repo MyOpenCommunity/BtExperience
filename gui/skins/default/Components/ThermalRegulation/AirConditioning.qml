@@ -12,7 +12,7 @@ MenuColumn {
     PaginatorList {
         id: paginator
         width: parent.width
-        listHeight: objectModel.size * 50
+        listHeight: objectModel.count * 50
         delegate: MenuItemDelegate {
             editable: true
             itemObject: objectModel.getObject(index)

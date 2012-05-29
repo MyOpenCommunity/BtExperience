@@ -115,7 +115,7 @@ class TreeBrowserListModelBase : public QAbstractListModel
 	/*!
 		\brief Gets total number of items in the model
 	*/
-	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
 public:
 	TreeBrowserListModelBase(TreeBrowser *browser, QObject *parent = 0);
@@ -146,7 +146,7 @@ public:
 	QVariantList getRange() const;
 	virtual void setRange(QVariantList range);
 
-	virtual int getSize() const = 0;
+	virtual int getCount() const = 0;
 
 public slots:
 	/*!
@@ -174,7 +174,7 @@ signals:
 	void filterChanged();
 	void loadingChanged();
 	void rangeChanged();
-	void sizeChanged();
+	void countChanged();
 
 	// error conditions
 	void directoryChangeError();
@@ -211,7 +211,7 @@ public:
 
 	virtual ObjectInterface *getObject(int row);
 	virtual int rowCount(const QModelIndex &parent) const;
-	virtual int getSize() const;
+	virtual int getCount() const;
 
 	void setRange(QVariantList range);
 
@@ -235,7 +235,7 @@ public:
 
 	virtual ObjectInterface *getObject(int row);
 	virtual int rowCount(const QModelIndex &parent) const;
-	virtual int getSize() const;
+	virtual int getCount() const;
 
 	virtual void setRange(QVariantList range);
 	virtual void setRootPath(QVariantList path);

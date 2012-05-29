@@ -137,7 +137,7 @@ class SplitAdvancedScenario : public ObjectInterface
 	/*!
 		\brief Gets the size of available programs
 	*/
-	Q_PROPERTY(int size READ getSize CONSTANT)
+	Q_PROPERTY(int count READ getCount CONSTANT)
 
 	/*!
 		\brief Gets the temperature of the slave probe
@@ -179,7 +179,7 @@ public:
 	void setSetPoint(int setPoint);
 	SplitProgram::Speed getSpeed() const;
 	void setSpeed(SplitProgram::Speed speed);
-	int getSize() const;
+	int getCount() const;
 	int getTemperature() const;
 
 	Q_INVOKABLE void ok();

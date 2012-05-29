@@ -187,7 +187,7 @@ Page {
                 sourcePressed: "images/home/stanze_p.svg"
                 text: qsTr("rooms")
                 onClicked: {
-                    if (roomModel.size > 1)
+                    if (roomModel.count > 1)
                         Stack.openPage("Rooms.qml")
                     else
                         Stack.openPage("Room.qml")

@@ -48,7 +48,7 @@ Item {
 
         Paginator {
             id: paginator
-            totalPages: computePagesFromModelSize(internalList.model.size, elementsOnPage)
+            totalPages: computePagesFromModelSize(internalList.model.count, elementsOnPage)
         }
 
         Image {

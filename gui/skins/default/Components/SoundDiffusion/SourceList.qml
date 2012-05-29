@@ -11,7 +11,7 @@ MenuColumn {
 
     PaginatorList {
         id: paginator
-        listHeight: sourceModel.size * 50
+        listHeight: sourceModel.count * 50
         elementsOnPage: 8
         model: sourceModel
         delegate: MenuItem {

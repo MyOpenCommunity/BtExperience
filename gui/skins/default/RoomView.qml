@@ -118,7 +118,7 @@ Item {
     }
 
     function createObjects() {
-        for (var i = 0; i < model.size; ++i) {
+        for (var i = 0; i < model.count; ++i) {
             var obj = model.getObject(i);
             var y = obj.position.y
             var x = obj.position.x

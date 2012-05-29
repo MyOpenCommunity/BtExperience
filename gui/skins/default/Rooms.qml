@@ -69,7 +69,7 @@ Page {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         height: 100
-        width: 140 * floorsModel.size
+        width: 140 * floorsModel.count
         delegate: Image {
             property variant itemObject: floorsModel.getObject(index)
 
