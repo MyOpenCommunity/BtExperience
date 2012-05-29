@@ -4,9 +4,10 @@ import Components 1.0
 Item {
     id: control
 
-    property int leftColumnValue: 1
-    property int centerColumnValue: 1
-    property int rightColumnValue: 13
+    property variant itemObject: undefined
+    property int leftColumnValue: itemObject === undefined ? 1 : itemObject.hours
+    property int centerColumnValue: itemObject === undefined ? 1 : itemObject.minutes
+    property int rightColumnValue: itemObject === undefined ? 13 : itemObject.seconds
     property string separator: ":"
     property bool twoFields: false // if true right disappears
     property int mode: 0 // 0 - hms, 1 - dmy
@@ -22,6 +23,10 @@ Item {
         property int textBottomMargin: 1
         property int separatorOffset: -3
     }
+
+    onLeftColumnValueChanged: itemObject.hours = leftColumnValue
+    onCenterColumnValueChanged: itemObject.minutes = centerColumnValue
+    onRightColumnValueChanged: itemObject.seconds = rightColumnValue
 
     function leftPlusClicked() {
         if(control.mode === 0) {

@@ -5,6 +5,7 @@ SvgImage {
     id: control
 
     property variant itemObject: undefined
+    property alias isEnabled: privateProps.enabled
 
     source: "../../images/common/panel_time.svg"
 
@@ -41,9 +42,7 @@ SvgImage {
         anchors.topMargin: 9
         anchors.horizontalCenter: parent.horizontalCenter
         enabled: privateProps.enabled
-        leftColumnValue: itemObject.hours
-        centerColumnValue: itemObject.minutes
-        rightColumnValue: itemObject.seconds
+        itemObject: control.itemObject
     }
 }
 
