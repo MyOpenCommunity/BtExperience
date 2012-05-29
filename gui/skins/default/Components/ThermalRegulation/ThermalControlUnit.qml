@@ -337,11 +337,14 @@ MenuColumn {
                     }
 
                     onDateClicked: {
-                        column.loadColumn(dateSelectWorking, qsTr("date"), objModel)
+                        column.loadColumn(dateSelectWorking, qsTr("date"), objModel, {"twoFields": false})
                         column.privateProps.currentElement = -1
                     }
 
-                    onTimeClicked: column.privateProps.currentElement = -1
+                    onTimeClicked: {
+                        column.loadColumn(dateSelectWorking, qsTr("time"), objModel, {"twoFields": true})
+                        column.privateProps.currentElement = -1
+                    }
                 }
 
                 MenuItem {
