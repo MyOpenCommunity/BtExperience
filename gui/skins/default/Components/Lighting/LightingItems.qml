@@ -22,6 +22,21 @@ MenuColumn {
 
             status: itemObject.active === true ? 1 : 0
             hasChild: true
+            boxInfoState: {
+                if(itemObject.objectId === ObjectInterface.IdLight)
+                    return ""
+                // Dimmer10 and Dimmer100
+                return "info"
+            }
+            boxInfoText: {
+                if(itemObject.objectId === ObjectInterface.IdLight)
+                    return ""
+                // Dimmer10 and Dimmer100
+                if(itemObject.active)
+                    return itemObject.percentage + "%"
+                return "-"
+            }
+
             onClicked: {
                 column.loadColumn(
                             mapping.getComponent(itemObject.objectId),

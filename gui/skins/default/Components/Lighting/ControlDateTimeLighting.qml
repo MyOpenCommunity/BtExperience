@@ -24,9 +24,21 @@ Item {
         property int separatorOffset: -3
     }
 
-    onLeftColumnValueChanged: itemObject.hours = leftColumnValue
-    onCenterColumnValueChanged: itemObject.minutes = centerColumnValue
-    onRightColumnValueChanged: itemObject.seconds = rightColumnValue
+    onLeftColumnValueChanged: {
+        if(itemObject === undefined)
+            return // nothing to do
+        itemObject.hours = leftColumnValue
+    }
+    onCenterColumnValueChanged: {
+        if(itemObject === undefined)
+            return // nothing to do
+        itemObject.minutes = centerColumnValue
+    }
+    onRightColumnValueChanged: {
+        if(itemObject === undefined)
+            return // nothing to do
+        itemObject.seconds = rightColumnValue
+    }
 
     function leftPlusClicked() {
         if(control.mode === 0) {
