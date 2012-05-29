@@ -310,12 +310,21 @@ void BtObjectsPlugin::parseLightSystem(const QDomNode &container)
 {
 	foreach (const QDomNode &ist, getChildren(container, "ist"))
 	{
+		int system_uii = getIntAttribute(ist, "uii");
+
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
 			Light *l = uii_map.value<Light>(object_uii);
-			if (l)
-				l->setCategory(ObjectInterface::Lighting);
+
+			if (!l)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in link";
+				continue;
+			}
+
+			l->setCategory(ObjectInterface::Lighting);
+			l->setContainerId(system_uii);
 		}
 	}
 }
