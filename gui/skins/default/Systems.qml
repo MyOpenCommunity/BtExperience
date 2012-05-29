@@ -14,6 +14,7 @@ Page {
     }
 
     Text {
+        id: pageTitle
         text: qsTr("Systems")
         font.pixelSize: 50
         anchors.top: toolbar.bottom
@@ -21,7 +22,7 @@ Page {
         anchors.leftMargin: 20
     }
 
-    PathView {
+    CardView {
         ListModel {
             id: systemsModel
             ListElement {
@@ -71,101 +72,23 @@ Page {
             }
         }
 
-        Component {
-            id: systemsDelegate
-            Item {
-                id: itemDelegate
-                width: imageDelegate.sourceSize.width
-                height: imageDelegate.sourceSize.height + textDelegate.height
+        anchors {
+            top: pageTitle.bottom
+            right: parent.right
+            left: parent.left
+            bottom: parent.bottom
+        }
 
-                z: PathView.z
-                scale: PathView.iconScale + 0.1
+        delegate: PagerDelegate {
+            source: image
+            label: name
 
-                Image {
-                    id: imageDelegate
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    source: image
-                }
-
-                Text {
-                    id: textDelegate
-                    text: name
-                    anchors.leftMargin: 0
-                    verticalAlignment: Text.AlignTop
-                    font.family: regularFont.name
-                    font.pixelSize: 22
-                    anchors.top: imageDelegate.bottom
-                    anchors.topMargin: 10
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                SvgImage {
-                    id: rectPressed
-                    source: "images/common/profilo_p.svg"
-                    visible: false
-                    anchors {
-                        centerIn: imageDelegate
-                        fill: imageDelegate
-                    }
-                    width: imageDelegate.width
-                    height: imageDelegate.height
-                }
-
-                MouseArea {
-                    anchors.fill:  parent
-
-                    onClicked: {
-                        if (target !== "")
-                            Stack.openPage(target)
-                    }
-                    onPressed: itemDelegate.PathView.view.currentPressed = index
-                    onReleased: itemDelegate.PathView.view.currentPressed = -1
-                }
-
-                states: State {
-                    when: itemDelegate.PathView.view.currentPressed === index
-                    PropertyChanges {
-                        target: rectPressed
-                        visible: true
-                    }
-                }
+            onClicked: {
+                if (target !== "")
+                    Stack.openPage(target)
             }
         }
 
-        id: users
-        property int currentPressed: -1
         model: systemsModel
-        delegate: systemsDelegate
-
-        path:  Path {
-            startX: 100; startY: 250
-            PathAttribute { name: "iconScale"; value: 0.4 }
-            PathAttribute { name: "z"; value: 0.1 }
-            PathLine { x: 210; y: 250; }
-            PathAttribute { name: "iconScale"; value: 0.6 }
-            PathLine { x: 420; y: 240; }
-            PathAttribute { name: "iconScale"; value: 1.0 }
-            PathAttribute { name: "z"; value: 1.0 }
-            PathLine { x: 600; y: 253; }
-            PathAttribute { name: "iconScale"; value: 0.8 }
-            PathLine { x: 800; y: 242; }
-            PathAttribute { name: "z"; value: 0.1 }
-            PathAttribute { name: "iconScale"; value: 0.45 }
-            PathLine { x: 950; y: 250; }
-        }
-        width: 620
-        pathItemCount:7
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.top: toolbar.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        onFlickStarted: currentPressed = -1
-        onMovementEnded: currentPressed = -1
     }
 }
