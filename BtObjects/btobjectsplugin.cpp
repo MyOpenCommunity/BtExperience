@@ -91,6 +91,11 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameSender::setClients(clients);
 
 	global_models.setParent(this);
+	room_model.setParent(this);
+	floor_model.setParent(this);
+	object_link_model.setParent(this);
+	objmodel.setParent(this);
+
 	global_models.setFloors(&floor_model);
 	global_models.setRooms(&room_model);
 	global_models.setObjectLinks(&object_link_model);
@@ -253,8 +258,6 @@ void BtObjectsPlugin::parseConfig()
 
 void BtObjectsPlugin::parseRooms(const QDomNode &container)
 {
-	room_model.setParent(this);
-
 	int room_id = getIntAttribute(container, "id");
 
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
@@ -283,8 +286,6 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 
 void BtObjectsPlugin::parseFloors(const QDomNode &container)
 {
-	floor_model.setParent(this);
-
 	int floor_id = getIntAttribute(container, "id");
 
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
