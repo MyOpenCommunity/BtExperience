@@ -69,6 +69,15 @@ Item {
             rightMargin: 2
             verticalCenter: parent.verticalCenter
         }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                var newPos = Math.min(view.currentIndex + 5, listViewSpace.modelCount() - 1)
+                view.positionViewAtIndex(newPos, ListView.Beginning)
+                view.currentIndex = newPos
+            }
+        }
     }
 
     Image {
@@ -78,6 +87,15 @@ Item {
             left: parent.left
             leftMargin: 2
             verticalCenter: parent.verticalCenter
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                var newPos = Math.max(view.currentIndex - 5, 0)
+                view.positionViewAtIndex(newPos, ListView.End)
+                view.currentIndex = newPos
+            }
         }
     }
 
