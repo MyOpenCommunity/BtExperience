@@ -366,7 +366,6 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<MediaDataModel>(uri, 1, 0, "MediaDataModel", "");
 	qmlRegisterType<MediaModel>(uri, 1, 0, "MediaModel");
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "FilterListModel");
-	qmlRegisterType<RoomListModel>(uri, 1, 0, "RoomListModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
 	qmlRegisterUncreatableType<ItemInterface>(
