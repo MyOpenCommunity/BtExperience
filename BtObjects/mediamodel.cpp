@@ -98,6 +98,11 @@ int MediaModel::getCount() const
 	return counter;
 }
 
+int MediaModel::getRangeCount() const
+{
+	return rowCount();
+}
+
 void MediaModel::setSource(MediaDataModel *s)
 {
 	setSourceModel(s);
