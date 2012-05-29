@@ -20,7 +20,7 @@
 #include "platform.h"
 #include "platform_device.h"
 #include "folderlistmodel.h"
-#include "roomelement.h"
+#include "objectlink.h"
 #include "splitbasicscenario.h"
 #include "splitadvancedscenario.h"
 #include "airconditioning_device.h"
@@ -286,7 +286,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int object_uii = getIntAttribute(link, "uii");
 			int x = getIntAttribute(link, "x");
 			int y = getIntAttribute(link, "y");
-			RoomElement *item = new RoomElement(room_name, uii_map.value<ObjectInterface>(object_uii), x, y);
+			ObjectLink *item = new ObjectLink(uii_map.value<ObjectInterface>(object_uii), x, y);
 
 			item->setContainerId(room_uii);
 
