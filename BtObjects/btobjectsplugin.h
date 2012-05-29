@@ -33,7 +33,7 @@ private:
 	void parseConfig();
 	void parseRooms(const QDomNode &container);
 	void parseFloors(const QDomNode &container);
-	void parseLightSystem(const QDomNode &container);
+	void parseSystem(const QDomNode &container);
 };
 
 

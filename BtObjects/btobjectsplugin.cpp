@@ -249,12 +249,19 @@ void BtObjectsPlugin::parseConfig()
 	foreach (const QDomNode &container, getChildren(document.documentElement(), "container"))
 	{
 		int container_id = getIntAttribute(container, "id");
-		if (container_id == 2)
+
+		switch (container_id)
+		{
+		case Container::IdRooms:
 			parseRooms(container);
-		else if (container_id == 3)
+			break;
+		case Container::IdFloors:
 			parseFloors(container);
-		else if (container_id == 1) // lights
-			parseLightSystem(container);
+			break;
+		case Container::IdLights:
+			parseSystem(container);
+			break;
+		}
 	}
 }
 
@@ -310,25 +317,31 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 	}
 }
 
-void BtObjectsPlugin::parseLightSystem(const QDomNode &container)
+void BtObjectsPlugin::parseSystem(const QDomNode &container)
 {
+	int system_id = getIntAttribute(container, "id");
+
 	foreach (const QDomNode &ist, getChildren(container, "ist"))
 	{
+		QString system_name = getAttribute(ist, "descr");
+		QString system_img = getAttribute(ist, "img");
 		int system_uii = getIntAttribute(ist, "uii");
+		Container *system = new Container(system_id, system_uii, system_img, system_name);
+
+		systems_model << system;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
-			Light *l = uii_map.value<Light>(object_uii);
+			ObjectInterface *o = uii_map.value<ObjectInterface>(object_uii);
 
-			if (!l)
+			if (!o)
 			{
 				qWarning() << "Invalid uii" << object_uii << "in link";
 				continue;
 			}
 
-			l->setCategory(ObjectInterface::Lighting);
-			l->setContainerId(system_uii);
+			o->setContainerId(system_uii);
 		}
 	}
 }
