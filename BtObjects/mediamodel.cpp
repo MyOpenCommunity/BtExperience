@@ -35,7 +35,7 @@ bool MediaDataModel::removeRows(int row, int count, const QModelIndex &parent)
 			it->deleteLater();
 		}
 		endRemoveRows();
-		emit sizeChanged();
+		emit countChanged();
 		return true;
 	}
 	return false;
@@ -91,11 +91,16 @@ MediaModel::MediaModel()
 	connect(this, SIGNAL(modelAboutToBeReset()), SLOT(resetCounter()));
 }
 
-int MediaModel::getSize() const
+int MediaModel::getCount() const
 {
 	if (counter == -1)
 		rowCount();
 	return counter;
+}
+
+int MediaModel::getRangeCount() const
+{
+	return rowCount();
 }
 
 void MediaModel::setSource(MediaDataModel *s)
@@ -160,8 +165,8 @@ bool MediaModel::filterAcceptsRow(int source_row, const QModelIndex &source_pare
 {
 	if (source_row == 0) // restart from the beginning
 		counter = 0;
-	if (source_row == getSource()->getSize() - 1)
-		QTimer::singleShot(0, const_cast<MediaModel *>(this), SIGNAL(sizeChanged()));
+	if (source_row == getSource()->getCount() - 1)
+		QTimer::singleShot(0, const_cast<MediaModel *>(this), SIGNAL(countChanged()));
 
 	QModelIndex idx = getSource()->index(source_row, 0, source_parent);
 
@@ -223,5 +228,5 @@ void MediaModel::remove(int index)
 void MediaModel::clear()
 {
 	if (removeRows(0, counter, QModelIndex()))
-		emit sizeChanged();
+		emit countChanged();
 }

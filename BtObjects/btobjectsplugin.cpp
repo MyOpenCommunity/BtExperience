@@ -20,7 +20,7 @@
 #include "platform.h"
 #include "platform_device.h"
 #include "folderlistmodel.h"
-#include "roomelement.h"
+#include "objectlink.h"
 #include "splitbasicscenario.h"
 #include "splitadvancedscenario.h"
 #include "airconditioning_device.h"
@@ -91,9 +91,17 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameSender::setClients(clients);
 
 	global_models.setParent(this);
+	room_model.setParent(this);
+	floor_model.setParent(this);
+	object_link_model.setParent(this);
+	systems_model.setParent(this);
+	objmodel.setParent(this);
+
 	global_models.setFloors(&floor_model);
 	global_models.setRooms(&room_model);
 	global_models.setObjectLinks(&object_link_model);
+	global_models.setSystems(&systems_model);
+	global_models.setMyHomeObjects(&objmodel);
 
 	ObjectModel::setGlobalSource(&objmodel);
 	createObjectsFakeConfig(document);
@@ -241,25 +249,34 @@ void BtObjectsPlugin::parseConfig()
 	foreach (const QDomNode &container, getChildren(document.documentElement(), "container"))
 	{
 		int container_id = getIntAttribute(container, "id");
-		if (container_id == 2)
+
+		switch (container_id)
+		{
+		case Container::IdRooms:
 			parseRooms(container);
-		else if (container_id == 3)
+			break;
+		case Container::IdFloors:
 			parseFloors(container);
-		else if (container_id == 1) // lights
-			parseLightSystem(container);
+			break;
+		case Container::IdLights:
+			parseSystem(container);
+			break;
+		}
 	}
 }
 
 void BtObjectsPlugin::parseRooms(const QDomNode &container)
 {
-	room_model.setParent(this);
+	int room_id = getIntAttribute(container, "id");
+	QString def_room_name = getAttribute(container, "descr");
+	QString def_room_img = getAttribute(container, "img");
 
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
-		QString room_name = getAttribute(instance, "descr");
-		QString room_img = getAttribute(instance, "img");
+		QString room_name = getAttribute(instance, "descr", def_room_name);
+		QString room_img = getAttribute(instance, "img", def_room_img);
 		int room_uii = getIntAttribute(instance, "uii");
-		Container *room = new Container(room_uii, room_img, room_name);
+		Container *room = new Container(room_id, room_uii, room_img, room_name);
 
 		room_model << room;
 		uii_map.insert(room_uii, room);
@@ -269,7 +286,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int object_uii = getIntAttribute(link, "uii");
 			int x = getIntAttribute(link, "x");
 			int y = getIntAttribute(link, "y");
-			RoomElement *item = new RoomElement(room_name, uii_map.value<ObjectInterface>(object_uii), x, y);
+			ObjectLink *item = new ObjectLink(uii_map.value<ObjectInterface>(object_uii), x, y);
 
 			item->setContainerId(room_uii);
 
@@ -280,14 +297,16 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 
 void BtObjectsPlugin::parseFloors(const QDomNode &container)
 {
-	floor_model.setParent(this);
+	QString def_floor_name = getAttribute(container, "descr");
+	QString def_floor_img = getAttribute(container, "img");
+	int floor_id = getIntAttribute(container, "id");
 
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
-		QString floor_name = getAttribute(instance, "descr");
-		QString floor_img = getAttribute(instance, "img");
+		QString floor_name = getAttribute(instance, "descr", def_floor_name);
+		QString floor_img = getAttribute(instance, "img", def_floor_img);
 		int floor_uii = getIntAttribute(instance, "uii");
-		Container *floor = new Container(floor_uii, floor_img, floor_name);
+		Container *floor = new Container(floor_id, floor_uii, floor_img, floor_name);
 
 		floor_model << floor;
 		uii_map.insert(floor_uii, floor);
@@ -302,16 +321,33 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 	}
 }
 
-void BtObjectsPlugin::parseLightSystem(const QDomNode &container)
+void BtObjectsPlugin::parseSystem(const QDomNode &container)
 {
+	QString def_system_name = getAttribute(container, "descr");
+	QString def_system_img = getAttribute(container, "img");
+	int system_id = getIntAttribute(container, "id");
+
 	foreach (const QDomNode &ist, getChildren(container, "ist"))
 	{
+		QString system_name = getAttribute(ist, "descr", def_system_name);
+		QString system_img = getAttribute(ist, "img", def_system_img);
+		int system_uii = getIntAttribute(ist, "uii");
+		Container *system = new Container(system_id, system_uii, system_img, system_name);
+
+		systems_model << system;
+
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
-			Light *l = uii_map.value<Light>(object_uii);
-			if (l)
-				l->setCategory(ObjectInterface::Lighting);
+			ObjectInterface *o = uii_map.value<ObjectInterface>(object_uii);
+
+			if (!o)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in link";
+				continue;
+			}
+
+			o->setContainerId(system_uii);
 		}
 	}
 }
@@ -330,7 +366,6 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<MediaDataModel>(uri, 1, 0, "MediaDataModel", "");
 	qmlRegisterType<MediaModel>(uri, 1, 0, "MediaModel");
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "FilterListModel");
-	qmlRegisterType<RoomListModel>(uri, 1, 0, "RoomListModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
 	qmlRegisterUncreatableType<ItemInterface>(

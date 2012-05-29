@@ -14,7 +14,7 @@ MenuColumn {
     PaginatorList {
         id: paginator
         width: parent.width
-        listHeight: objectModel.size > elementsOnPage ? elementsOnPage * 50 : objectModel.size * 50
+        listHeight: objectModel.count > elementsOnPage ? elementsOnPage * 50 : objectModel.count * 50
 
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
@@ -38,7 +38,8 @@ MenuColumn {
 
     FilterListModel {
         id: objectModel
-        categories: [ObjectInterface.Lighting]
+        source: myHomeModels.myHomeObjects
+        containers: [Container.IdLights]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }

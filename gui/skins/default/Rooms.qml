@@ -6,7 +6,7 @@ import BtObjects 1.0
 Page {
     id: mainarea
     source: "images/home/home.jpg"
-    property int floorId
+    property int floorUii
 
     ToolBar {
         id: toolbar
@@ -35,7 +35,7 @@ Page {
         MediaModel {
             source: myHomeModels.rooms
             id: roomsModel
-            containers: [floorId]
+            containers: [floorUii]
         }
 
         model: roomsModel
@@ -44,7 +44,7 @@ Page {
             property variant itemObject: roomsModel.getObject(index)
             label: itemObject.description
 
-            onClicked: Stack.openPage("Room.qml", {'roomName': itemObject.description, 'roomId': itemObject.id, 'floorId': mainarea.floorId})
+            onClicked: Stack.openPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
         }
 
         function selectRoomImage(room) {
@@ -69,7 +69,7 @@ Page {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         height: 100
-        width: 140 * floorsModel.size
+        width: 140 * floorsModel.count
         delegate: Image {
             property variant itemObject: floorsModel.getObject(index)
 
@@ -88,7 +88,7 @@ Page {
         }
 
         onCurrentIndexChanged: {
-             mainarea.floorId = floorsModel.getObject(currentIndex).id
+             mainarea.floorUii = floorsModel.getObject(currentIndex).uii
         }
 
         MediaModel {

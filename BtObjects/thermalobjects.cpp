@@ -133,7 +133,7 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 				continue;
 			}
 
-			for (int i = 0; i < modalities.getSize(); ++i)
+			for (int i = 0; i < modalities.getCount(); ++i)
 			{
 				if (modalities.getObject(i)->getObjectId() == id)
 				{
@@ -419,7 +419,7 @@ int ThermalControlUnitScenario::getScenarioIndex() const
 
 void ThermalControlUnitScenario::setScenarioIndex(int index)
 {
-	if (to_apply[SCENARIO_INDEX].toInt() == index || index < 0 || index >= scenarios->getSize())
+	if (to_apply[SCENARIO_INDEX].toInt() == index || index < 0 || index >= scenarios->getCount())
 		return;
 
 	to_apply[SCENARIO_INDEX] = index;
@@ -454,7 +454,7 @@ void ThermalControlUnitScenario::valueReceived(const DeviceValues &values_list)
 	if (values_list.contains(ThermalDevice99Zones::DIM_SCENARIO))
 	{
 		int val = values_list[ThermalDevice99Zones::DIM_SCENARIO].toInt();
-		for (int i = 0; i < scenarios->getSize(); ++i)
+		for (int i = 0; i < scenarios->getCount(); ++i)
 		{
 			if (scenarios->getObject(i)->getObjectId() == val)
 			{

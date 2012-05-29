@@ -246,7 +246,7 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 
 		case AntintrusionDevice::DIM_ZONE_INSERTED:
 		case AntintrusionDevice::DIM_ZONE_PARTIALIZED:
-			for (int i = 0; i < zones.getSize(); ++i)
+			for (int i = 0; i < zones.getCount(); ++i)
 			{
 				AntintrusionZone *z = static_cast<AntintrusionZone*>(zones.getObject(i));
 				if (z->getObjectId() == it.value().toInt())
@@ -295,7 +295,7 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 	}
 
 	AntintrusionZone *zone = 0;
-	for (int i = 0; i < zones.getSize(); ++i)
+	for (int i = 0; i < zones.getCount(); ++i)
 	{
 		ObjectInterface *z = zones.getObject(i);
 		if (z->getObjectId() == zone_num)
@@ -319,7 +319,7 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 
 void AntintrusionSystem::removeAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 {
-	for (int i = 0; i < alarms.getSize(); ++i)
+	for (int i = 0; i < alarms.getCount(); ++i)
 	{
 		AntintrusionAlarm *alarm = static_cast<AntintrusionAlarm *>(alarms.getObject(i));
 		AntintrusionZone *z = static_cast<AntintrusionZone *>(alarm->getZone());
@@ -336,7 +336,7 @@ void AntintrusionSystem::removeAlarm(AntintrusionAlarm::AlarmType t, int zone_nu
 
 bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 {
-	for (int i = 0; i < alarms.getSize(); ++i)
+	for (int i = 0; i < alarms.getCount(); ++i)
 	{
 		AntintrusionAlarm *alarm = static_cast<AntintrusionAlarm *>(alarms.getObject(i));
 		AntintrusionZone *z = static_cast<AntintrusionZone *>(alarm->getZone());
@@ -361,7 +361,7 @@ void AntintrusionSystem::toggleActivation(const QString &password)
 
 QObject *AntintrusionSystem::getCurrentScenario() const
 {
-	for (int i = 0; i < scenarios.getSize(); ++i)
+	for (int i = 0; i < scenarios.getCount(); ++i)
 	{
 		AntintrusionScenario* s = static_cast<AntintrusionScenario*>(scenarios.getObject(i));
 		if (s->isSelected())

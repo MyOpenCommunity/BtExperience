@@ -39,7 +39,7 @@ class SplitBasicScenario : public ObjectInterface
 	/*!
 		\brief Gets the number of available programs (off is considered in the count)
 	*/
-	Q_PROPERTY(int size READ getSize CONSTANT)
+	Q_PROPERTY(int count READ getCount CONSTANT)
 
 	/*!
 		\brief Gets the temperature of the slave probe
@@ -74,7 +74,7 @@ public:
 	QString getProgram() const;
 	void setProgram(QString program);
 	QStringList getPrograms() const;
-	int getSize() const;
+	int getCount() const;
 	int getTemperature() const;
 
 	Q_INVOKABLE void ok();

@@ -289,27 +289,27 @@ int FolderListModel::rowCount(const QModelIndex &parent) const
 	Q_UNUSED(parent);
 
 	if (min_range != -1 && max_range != -1)
-		return qMin(max_range, getSize()) - min_range;
+		return qMin(max_range, getCount()) - min_range;
 
 	return item_list.size();
 }
 
-int FolderListModel::getSize() const
+int FolderListModel::getCount() const
 {
 	return item_list.size();
 }
 
 void FolderListModel::gotFileList(EntryInfoList list)
 {
-	int size = getSize();
+	int size = getCount();
 
 	clearList(item_list);
 
 	foreach (const EntryInfo &entry, list)
 		item_list.append(new FileObject(entry, getCurrentPath(), this));
 
-	if (size != getSize())
-		emit sizeChanged();
+	if (size != getCount())
+		emit countChanged();
 	reset();
 
 	setLoading(false);
@@ -404,12 +404,12 @@ int PagedFolderListModel::rowCount(const QModelIndex &parent) const
 	Q_UNUSED(parent);
 
 	if (min_range != -1 && max_range != -1)
-		return qMin(max_range, getSize()) - min_range;
+		return qMin(max_range, getCount()) - min_range;
 
-	return getSize();
+	return getCount();
 }
 
-int PagedFolderListModel::getSize() const
+int PagedFolderListModel::getCount() const
 {
 	return item_count;
 }
@@ -442,7 +442,7 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 	{
 		item_count = browser->getNumElements();
 
-		emit sizeChanged();
+		emit countChanged();
 
 		reset();
 	}
@@ -458,7 +458,7 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 	}
 
 	// if we need more entries, request them, otherwise signal completion
-	if (current_index < qMin(max_range, getSize()))
+	if (current_index < qMin(max_range, getCount()))
 		browser->getNextFileList();
 	else
 		setLoading(false);

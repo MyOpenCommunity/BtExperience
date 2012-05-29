@@ -27,6 +27,16 @@ MediaDataModel *GlobalModels::getRooms() const
 	return rooms;
 }
 
+void GlobalModels::setSystems(MediaDataModel *_systems)
+{
+	systems = _systems;
+}
+
+MediaDataModel *GlobalModels::getSystems() const
+{
+	return systems;
+}
+
 void GlobalModels::setObjectLinks(MediaDataModel *_object_links)
 {
 	object_links = _object_links;
@@ -35,4 +45,14 @@ void GlobalModels::setObjectLinks(MediaDataModel *_object_links)
 MediaDataModel *GlobalModels::getObjectLinks() const
 {
 	return object_links;
+}
+
+void GlobalModels::setMyHomeObjects(ObjectDataModel *_my_home_objects)
+{
+	my_home_objects = _my_home_objects;
+}
+
+ObjectDataModel *GlobalModels::getMyHomeObjects() const
+{
+	return my_home_objects;
 }

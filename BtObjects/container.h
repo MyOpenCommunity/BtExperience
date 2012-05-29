@@ -10,11 +10,22 @@ class Container : public ItemInterface
 	Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
 	Q_PROPERTY(QString image READ getImage WRITE setImage NOTIFY imageChanged)
 	Q_PROPERTY(int id READ getId CONSTANT)
+	Q_PROPERTY(int uii READ getUii CONSTANT)
+	Q_ENUMS(ContainerId)
 
 public:
-	Container(int id, QString image, QString description);
+	enum ContainerId
+	{
+		IdLights = 1,
+		IdRooms,
+		IdFloors
+	};
+
+	Container(int id, int uii, QString image, QString description);
 
 	int getId() const;
+
+	int getUii() const;
 
 	void setImage(QString image);
 	QString getImage() const;
@@ -28,7 +39,7 @@ signals:
 
 private:
 	QString description, image;
-	int id;
+	int id, uii;
 };
 
 #endif // CONTAINER_H

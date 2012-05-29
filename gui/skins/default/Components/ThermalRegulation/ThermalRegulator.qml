@@ -12,7 +12,7 @@ MenuColumn {
     PaginatorList {
         id: itemList
         width: parent.width
-        listHeight: 50 * modelList.size
+        listHeight: 50 * modelList.count
         currentIndex: -1
 
         delegate: MenuItemDelegate {

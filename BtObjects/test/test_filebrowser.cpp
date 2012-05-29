@@ -453,7 +453,7 @@ void TestTreeBrowserListModelBase::testListItems()
 	setRangeAndWait(obj, QVariantList() << 0 << 8);
 
 	t.checkSignals();
-	QCOMPARE(obj->getSize(), 26);
+	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 8);
 
 	file = qobject_cast<FileObject *>(obj->getObject(6));
@@ -466,7 +466,7 @@ void TestTreeBrowserListModelBase::testListItems()
 	enterDirectoryAndWait(obj, "b", isAsync());
 
 	t.checkSignals();
-	QCOMPARE(obj->getSize(), 26);
+	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 8);
 
 	file = qobject_cast<FileObject *>(obj->getObject(6));
@@ -489,7 +489,7 @@ void TestTreeBrowserListModelBase::testRange()
 	setRangeAndWait(obj, QVariantList() << 4 << 8);
 
 	t.checkSignals();
-	QCOMPARE(obj->getSize(), 26);
+	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 4);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(),
 		obj->getRootPath() << "c" << "e");
@@ -497,7 +497,7 @@ void TestTreeBrowserListModelBase::testRange()
 	setRangeAndWait(obj, QVariantList() << 8 << 12);
 
 	t.checkSignals();
-	QCOMPARE(obj->getSize(), 26);
+	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 4);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(),
 		 obj->getRootPath() << "c" << "i");
@@ -505,7 +505,7 @@ void TestTreeBrowserListModelBase::testRange()
 	setRangeAndWait(obj, QVariantList() << 24 << 28);
 
 	t.checkSignals();
-	QCOMPARE(obj->getSize(), 26);
+	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 2);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(),
 		 obj->getRootPath() << "c" << "y");

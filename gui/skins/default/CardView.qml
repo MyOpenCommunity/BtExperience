@@ -26,13 +26,9 @@ Item {
         function modelCount() {
             // QML property name
             var count = model.count
-            if ( count === undefined) {
+            if (count === undefined) {
                 // our model property name
                 count = model.size
-                if (count === undefined) {
-                    // stringlist name (effectively a JS array)
-                    count = model.length
-                }
             }
             return count
         }
@@ -42,8 +38,10 @@ Item {
 
             id: view
             orientation: ListView.Horizontal
+            interactive: false
             spacing: 2
             height: 300
+
             // Compute width to center the ListView delegates
             // TODO: the current formula is temporary workaround, it must be
             // removed once all the models expose a count property
@@ -69,6 +67,15 @@ Item {
             rightMargin: 2
             verticalCenter: parent.verticalCenter
         }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                var newPos = Math.min(view.currentIndex + 5, listViewSpace.modelCount() - 1)
+                view.positionViewAtIndex(newPos, ListView.Beginning)
+                view.currentIndex = newPos
+            }
+        }
     }
 
     Image {
@@ -78,6 +85,15 @@ Item {
             left: parent.left
             leftMargin: 2
             verticalCenter: parent.verticalCenter
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                var newPos = Math.max(view.currentIndex - 5, 0)
+                view.positionViewAtIndex(newPos, ListView.End)
+                view.currentIndex = newPos
+            }
         }
     }
 

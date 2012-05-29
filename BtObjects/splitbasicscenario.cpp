@@ -73,7 +73,7 @@ QStringList SplitBasicScenario::getPrograms() const
 	return program_list;
 }
 
-int SplitBasicScenario::getSize() const
+int SplitBasicScenario::getCount() const
 {
 	return program_list.size();
 }

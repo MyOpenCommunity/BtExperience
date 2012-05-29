@@ -186,11 +186,11 @@ void TestThermalControlUnitObject::initObjects(ThermalDevice *_dev, ThermalContr
 {
 	dev = _dev;
 	obj = _obj;
-	if (!test_programs.getSize())
+	if (!test_programs.getCount())
 		test_programs.insertWithoutUii(new ThermalRegulationProgram(1, QString("P1")))
 			     .insertWithoutUii(new ThermalRegulationProgram(3, QString("P3")))
 			     .insertWithoutUii(new ThermalRegulationProgram(5, QString("P5")));
-	if (!test_scenarios.getSize())
+	if (!test_scenarios.getCount())
 		test_scenarios.insertWithoutUii(new ThermalRegulationProgram(1, QString("S1")))
 			      .insertWithoutUii(new ThermalRegulationProgram(3, QString("S3")))
 			      .insertWithoutUii(new ThermalRegulationProgram(5, QString("S5")));

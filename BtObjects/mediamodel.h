@@ -9,7 +9,7 @@ class ItemInterface;
 class MediaDataModel : public QAbstractListModel
 {
 	Q_OBJECT
-	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
 public:
 	MediaDataModel(QObject *parent = 0);
@@ -42,7 +42,7 @@ public:
 
 	ItemInterface *getObject(int row) const;
 
-	int getSize() const
+	int getCount() const
 	{
 		return item_list.size();
 	}
@@ -50,7 +50,7 @@ public:
 	void remove(int index);
 
 signals:
-	void sizeChanged();
+	void countChanged();
 
 protected:
 	void insertObject(ItemInterface *obj);
@@ -65,16 +65,62 @@ private:
 class MediaModel : public QSortFilterProxyModel
 {
 	Q_OBJECT
+
+	/*!
+		\brief Limit returned elements to the specified range
+
+		The range is applied after filtering (can be used for paging through elements).
+
+		Valid ranges are:
+		- [-1, -1]: no range set
+		- [min, -1]: elements starting from min up to the end of the source model
+		- [min, max]: elements from min (inclusive), to max (exclusive)
+	*/
 	Q_PROPERTY(QVariantList range READ getRange WRITE setRange NOTIFY rangeChanged)
+
+	/*!
+		\brief List of containers to select
+	*/
 	Q_PROPERTY(QVariantList containers READ getContainers WRITE setContainers NOTIFY containersChanged)
+
+	/*!
+		\brief Source model
+	*/
 	Q_PROPERTY(MediaDataModel* source READ getSource WRITE setSource NOTIFY sourceChanged)
-	Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
+
+	/*!
+		\brief The number of filtered rows without taking range into account
+
+		When a range is	not set, this number is equal to \c rangeCount.
+	*/
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
+
+	/*!
+		\brief The number of filtered rows taking range into account
+
+		Only elements with indices from 0 to rangeCount can be accessed; when a range is
+		not set, this number is equal to \c count.
+	*/
+	Q_PROPERTY(int rangeCount READ getRangeCount NOTIFY countChanged)
 
 public:
 	MediaModel();
 
+	/*!
+		\brief Returns the specified item
+
+		Row must be in the range [0 .. rangeCount - 1]
+	*/
 	Q_INVOKABLE ItemInterface *getObject(int row);
+
+	/*!
+		\brief Deletes the specified element in this model from the source model
+	*/
 	Q_INVOKABLE void remove(int index);
+
+	/*!
+		\brief Deletes all elements in this model from the source model
+	*/
 	Q_INVOKABLE void clear();
 
 	// The range argument is a QVariantList in order to set them from qml. The real
@@ -85,7 +131,8 @@ public:
 	QVariantList getContainers() const;
 	void setContainers(QVariantList containers);
 
-	int getSize() const;
+	int getCount() const;
+	int getRangeCount() const;
 
 	void setSource(MediaDataModel *s);
 	MediaDataModel *getSource() const;
@@ -93,7 +140,7 @@ public:
 signals:
 	void rangeChanged();
 	void sourceChanged();
-	void sizeChanged();
+	void countChanged();
 	void containersChanged();
 
 protected:

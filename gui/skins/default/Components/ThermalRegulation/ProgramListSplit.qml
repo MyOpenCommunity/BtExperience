@@ -14,7 +14,7 @@ MenuColumn {
     PaginatorList {
         id: paginator
         width: parent.width
-        listHeight: dataModel.size * 50
+        listHeight: dataModel.count * 50
         delegate: MenuItemDelegate {
             itemObject: modelData
             name: modelData

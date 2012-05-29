@@ -14,7 +14,7 @@ HEADERS += \
 	objectinterface.h \
 	objectmodel.h \
 	platform.h \
-	roomelement.h \
+	objectlink.h \
 	scenarioobjects.h \
 	stopandgoobjects.h \
 	splitadvancedscenario.h \
@@ -65,7 +65,7 @@ SOURCES += \
 	objectinterface.cpp \
 	objectmodel.cpp \
 	platform.cpp \
-	roomelement.cpp \
+	objectlink.cpp \
 	scenarioobjects.cpp \
 	stopandgoobjects.cpp \
 	splitadvancedscenario.cpp \

@@ -52,7 +52,7 @@ Item {
             {objectId: ObjectInterface.IdAntintrusionSystem}
         ]
         Component.onCompleted: {
-            for (var i = 0; i < listModel.size; ++i) {
+            for (var i = 0; i < listModel.count; ++i) {
                 var obj = listModel.getObject(i)
                 switch (obj.objectId) {
                 case ObjectInterface.IdCCTV:

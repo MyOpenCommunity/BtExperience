@@ -183,7 +183,7 @@ void TestAntintrusionSystem::testNoDoubleAlarms()
 	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 6;
 	obj->valueReceived(v);
 	obj->valueReceived(v);
-	QCOMPARE(obj->getAlarms()->getSize(), 1);
+	QCOMPARE(obj->getAlarms()->getCount(), 1);
 }
 
 void TestAntintrusionSystem::testResetTechnicalAlarm()
@@ -199,7 +199,7 @@ void TestAntintrusionSystem::testResetTechnicalAlarm()
 	v[AntintrusionDevice::DIM_RESET_TECHNICAL_ALARM] = 5;
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(obj->getAlarms()->getSize(), 0);
+	QCOMPARE(obj->getAlarms()->getCount(), 0);
 }
 
 void TestAntintrusionSystem::testClearAlarmsOnInsert()
@@ -216,7 +216,7 @@ void TestAntintrusionSystem::testClearAlarmsOnInsert()
 	v[AntintrusionDevice::DIM_SYSTEM_INSERTED] = true;
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(obj->getAlarms()->getSize(), 0);
+	QCOMPARE(obj->getAlarms()->getCount(), 0);
 }
 
 void TestAntintrusionSystem::testAlarmOnNotConfiguredZone()
@@ -234,7 +234,7 @@ void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
 {
 	AlarmZoneList actual;
 	ObjectDataModel *alarms = obj->getAlarms();
-	for (int i = 0; i < alarms->getSize(); ++i)
+	for (int i = 0; i < alarms->getCount(); ++i)
 	{
 		AntintrusionAlarm *a = static_cast<AntintrusionAlarm *>(alarms->getObject(i));
 		AntintrusionZone *z = static_cast<AntintrusionZone *>(a->getZone());

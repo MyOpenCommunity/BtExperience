@@ -101,7 +101,7 @@ QStringList SplitAdvancedScenario::getPrograms() const
 	return result;
 }
 
-int SplitAdvancedScenario::getSize() const
+int SplitAdvancedScenario::getCount() const
 {
 	return program_list.size();
 }

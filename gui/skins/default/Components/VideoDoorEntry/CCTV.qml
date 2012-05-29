@@ -18,7 +18,7 @@ MenuColumn {
     PaginatorList {
         id: paginator
         width: parent.width
-        listHeight: model.size * 50
+        listHeight: model.count * 50
         delegate: MenuItemDelegate {
             itemObject: extPlaceModel.getObject(index)
             selectOnClick: false

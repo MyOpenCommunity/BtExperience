@@ -47,7 +47,7 @@ void TestMediaModel::cleanup()
 
 void TestMediaModel::testInsert()
 {
-	ObjectTester ts(obj, SIGNAL(sizeChanged()));
+	ObjectTester ts(obj, SIGNAL(countChanged()));
 
 	(*src) << items[0];
 	// TODO ts.checkSignals();
@@ -55,7 +55,7 @@ void TestMediaModel::testInsert()
 	(*src) << items[1];
 	// TODO ts.checkSignals();
 
-	QCOMPARE(obj->getSize(), 2);
+	QCOMPARE(obj->getCount(), 2);
 	QCOMPARE(obj->rowCount(), 2);
 	QCOMPARE(src->getObject(0), items[0]);
 	QCOMPARE(src->getObject(1), items[1]);
@@ -63,7 +63,7 @@ void TestMediaModel::testInsert()
 	(*src) << items[2];
 	// TODO ts.checkSignals();
 
-	QCOMPARE(obj->getSize(), 3);
+	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
 
 	for (int i = 0; i < 3; ++i)
@@ -77,21 +77,21 @@ void TestMediaModel::testRemove()
 	(*src) << items[0];
 	(*src) << items[1];
 	(*src) << items[2];
-	qApp->processEvents(); // flush pending sizeChanged()
+	qApp->processEvents(); // flush pending countChanged()
 
-	ObjectTester ts(obj, SIGNAL(sizeChanged()));
+	ObjectTester ts(obj, SIGNAL(countChanged()));
 
-	QCOMPARE(obj->getSize(), 3);
+	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
 
 	src->removeRows(1, 0);
 	ts.checkNoSignals();
-	QCOMPARE(obj->getSize(), 3);
+	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
 
 	obj->remove(1);
 
-	QCOMPARE(obj->getSize(), 2);
+	QCOMPARE(obj->getCount(), 2);
 	QCOMPARE(obj->rowCount(), 2);
 
 	qApp->processEvents();
@@ -105,16 +105,16 @@ void TestMediaModel::testFilterContainer()
 {
 	foreach (ItemInterface *i, items)
 		(*src) << i;
-	qApp->processEvents(); // flush pending sizeChanged()
+	qApp->processEvents(); // flush pending countChanged()
 
-	ObjectTester ts(obj, SIGNAL(sizeChanged()));
+	ObjectTester ts(obj, SIGNAL(countChanged()));
 
-	QCOMPARE(obj->getSize(), 5);
+	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 5);
 
 	obj->setContainers(QVariantList() << 3);
 
-	QCOMPARE(obj->getSize(), 3);
+	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
 
 	qApp->processEvents();
@@ -126,7 +126,7 @@ void TestMediaModel::testFilterContainer()
 
 	obj->setContainers(QVariantList() << 1);
 
-	QCOMPARE(obj->getSize(), 2);
+	QCOMPARE(obj->getCount(), 2);
 	QCOMPARE(obj->rowCount(), 2);
 
 	qApp->processEvents();
@@ -140,27 +140,27 @@ void TestMediaModel::testFilterRange()
 {
 	foreach (ItemInterface *i, items)
 		(*src) << i;
-	qApp->processEvents(); // flush pending sizeChanged()
+	qApp->processEvents(); // flush pending countChanged()
 
-	ObjectTester ts(obj, SIGNAL(sizeChanged()));
+	ObjectTester ts(obj, SIGNAL(countChanged()));
 
-	QCOMPARE(obj->getSize(), 5);
+	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 5);
 
 	obj->setRange(QVariantList() << 2 << 4);
 
-	QCOMPARE(obj->getSize(), 5);
+	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 2);
 
 	qApp->processEvents();
-	ts.checkSignals(); // TODO should not emit sizeChanged()
+	ts.checkSignals(); // TODO should not emit countChanged()
 
 	QCOMPARE(obj->getObject(0), items[2]);
 	QCOMPARE(obj->getObject(1), items[3]);
 
 	obj->setRange(QVariantList() << 2 << -1);
 
-	QCOMPARE(obj->getSize(), 5);
+	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 3);
 
 	qApp->processEvents();

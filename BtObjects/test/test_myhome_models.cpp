@@ -56,11 +56,11 @@ void TestObjectModel::testFilterObjectId()
 	src->insertWithoutUii(light3);
 	src->insertWithoutUii(amplifier1);
 	src->insertWithoutUii(amplifier2);
-	qApp->processEvents(); // flush pending sizeChanged()
+	qApp->processEvents(); // flush pending countChanged()
 
-	ObjectTester ts(obj, SIGNAL(sizeChanged()));
+	ObjectTester ts(obj, SIGNAL(countChanged()));
 
-	QCOMPARE(obj->getSize(), 5);
+	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 5);
 
 	QVariantMap filters;
@@ -68,7 +68,7 @@ void TestObjectModel::testFilterObjectId()
 	filters["objectId"] = ObjectInterface::IdLight;
 	obj->setFilters(QVariantList() << filters);
 
-	QCOMPARE(obj->getSize(), 3);
+	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
 
 	qApp->processEvents();
@@ -81,7 +81,7 @@ void TestObjectModel::testFilterObjectId()
 	filters["objectId"] = ObjectInterface::IdSoundAmplifier;
 	obj->setFilters(QVariantList() << filters);
 
-	QCOMPARE(obj->getSize(), 2);
+	QCOMPARE(obj->getCount(), 2);
 	QCOMPARE(obj->rowCount(), 2);
 
 	qApp->processEvents();
@@ -98,11 +98,11 @@ void TestObjectModel::testFilterObjectKey()
 	src->insertWithoutUii(light3);
 	src->insertWithoutUii(amplifier1);
 	src->insertWithoutUii(amplifier2);
-	qApp->processEvents(); // flush pending sizeChanged()
+	qApp->processEvents(); // flush pending countChanged()
 
-	ObjectTester ts(obj, SIGNAL(sizeChanged()));
+	ObjectTester ts(obj, SIGNAL(countChanged()));
 
-	QCOMPARE(obj->getSize(), 5);
+	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 5);
 
 	QVariantMap filters;
@@ -111,7 +111,7 @@ void TestObjectModel::testFilterObjectKey()
 	filters["objectKey"] = "2";
 	obj->setFilters(QVariantList() << filters);
 
-	QCOMPARE(obj->getSize(), 1);
+	QCOMPARE(obj->getCount(), 1);
 	QCOMPARE(obj->rowCount(), 1);
 
 	qApp->processEvents();
@@ -123,11 +123,11 @@ void TestObjectModel::testFilterObjectKey()
 	filters["objectKey"] = "3";
 	obj->setFilters(QVariantList() << filters);
 
-	QCOMPARE(obj->getSize(), 1);
+	QCOMPARE(obj->getCount(), 1);
 	QCOMPARE(obj->rowCount(), 1);
 
 	qApp->processEvents();
-	ts.checkSignals();  // TODO should not emit sizeChanged()
+	ts.checkSignals();  // TODO should not emit countChanged()
 
 	QCOMPARE(obj->getObject(0), amplifier2);
 }
@@ -139,16 +139,16 @@ void TestObjectModel::testComplexFilter()
 	src->insertWithoutUii(light3);
 	src->insertWithoutUii(amplifier1);
 	src->insertWithoutUii(amplifier2);
-	qApp->processEvents(); // flush pending sizeChanged()
+	qApp->processEvents(); // flush pending countChanged()
 
-	ObjectTester ts(obj, SIGNAL(sizeChanged()));
+	ObjectTester ts(obj, SIGNAL(countChanged()));
 
 	QVariantMap filters;
 
 	filters["objectId"] = ObjectInterface::IdLight;
 	obj->setFilters(QVariantList() << filters);
 
-	QCOMPARE(obj->getSize(), 3);
+	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
 
 	qApp->processEvents();
@@ -156,7 +156,7 @@ void TestObjectModel::testComplexFilter()
 
 	obj->setRange(QVariantList() << 1 << 4);
 
-	QCOMPARE(obj->getSize(), 3);
+	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 2);
 
 	qApp->processEvents();
