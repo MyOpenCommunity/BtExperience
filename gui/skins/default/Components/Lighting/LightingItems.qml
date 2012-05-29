@@ -38,7 +38,8 @@ MenuColumn {
 
     FilterListModel {
         id: objectModel
-        categories: [ObjectInterface.Lighting]
+        source: myHomeModels.myHomeObjects
+        containers: [Container.IdLights]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }
