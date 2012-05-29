@@ -94,11 +94,13 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	room_model.setParent(this);
 	floor_model.setParent(this);
 	object_link_model.setParent(this);
+	systems_model.setParent(this);
 	objmodel.setParent(this);
 
 	global_models.setFloors(&floor_model);
 	global_models.setRooms(&room_model);
 	global_models.setObjectLinks(&object_link_model);
+	global_models.setSystems(&systems_model);
 	global_models.setMyHomeObjects(&objmodel);
 
 	ObjectModel::setGlobalSource(&objmodel);
