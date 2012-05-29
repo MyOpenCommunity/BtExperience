@@ -96,6 +96,9 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTalker()
 
 	// answering
 	intercom->answerCall();
+	dev->answerCall();
+
+	compareClientCommand();
 
 	// talker address arrives
 	v.clear();
@@ -135,6 +138,8 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
 	intercom->answerCall();
 	dev->answerCall();
 
+	compareClientCommand();
+
 	// talker address arrives
 	v[VideoDoorEntryDevice::CALLER_ADDRESS] = "21#2";
 	intercom->valueReceived(v);
@@ -166,6 +171,8 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 	dev->internalIntercomCall("21");
 	QCOMPARE(QString("portone"), intercom->getTalker());
 
+	compareClientCommand();
+
 	// talker answers
 	v[VideoDoorEntryDevice::ANSWER_CALL] = QString("21");
 	intercom->valueReceived(v);
@@ -179,6 +186,4 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 	t.checkSignalCount(SIGNAL(callEnded()), 1);
 	t.checkSignalCount(SIGNAL(talkerChanged()), 2);
 	t.checkSignalCount(SIGNAL(callAnswered()), 1);
-
-	compareClientCommand();
 }
