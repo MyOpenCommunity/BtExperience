@@ -108,13 +108,13 @@ Page {
         }
     }
 
-    PathView {
+    CardView {
         ListModel {
             id: usersModel
-            ListElement {
-                image: "images/home/card_1.png"
-                name: "famiglia"
-            }
+//            ListElement {
+//                image: "images/home/card_1.png"
+//                name: "famiglia"
+//            }
             ListElement {
                 image: "images/home/card_2.png"
                 name: "mattia"
@@ -133,114 +133,33 @@ Page {
             }
         }
 
-        Component {
-            id: usersDelegate
-            Item {
-                id: itemDelegate
-                width: imageDelegate.sourceSize.width
-                height: imageDelegate.sourceSize.height + textDelegate.height
-
-                z: PathView.z
-                scale: PathView.iconScale + 0.1
-
-                Image {
-                    id: imageDelegate
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    source: image
-                }
-
-                Text {
-                    id: textDelegate
-                    text: name
-                    font.family: regularFont.name
-                    font.pixelSize: 22
-                    anchors.top: imageDelegate.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                SvgImage {
-                    id: rectPressed
-                    source: "images/common/profilo_p.svg"
-                    visible: false
-                    anchors {
-                        centerIn: imageDelegate
-                        fill: imageDelegate
-                        margins: 20
-                    }
-                    width: imageDelegate.width
-                    height: imageDelegate.height
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onClicked: Stack.openPage('Profile.qml', {'profile': name, 'sourceImage': image})
-                    onPressed: itemDelegate.PathView.view.currentPressed = index
-                    onReleased: itemDelegate.PathView.view.currentPressed = -1
-                }
-
-                states: State {
-                    when: itemDelegate.PathView.view.currentPressed === index
-                    PropertyChanges {
-                        target: rectPressed
-                        visible: true
-                    }
-                }
-            }
-        }
-
         id: users
-        property int currentPressed: -1
         model: usersModel
-        delegate: usersDelegate
+        delegate: PagerDelegate {
+            source: image
+            label: name
 
-        path:  Path {
-            startX: 100; startY: 250
-            PathAttribute { name: "iconScale"; value: 0.4 }
-            PathAttribute { name: "z"; value: 0.1 }
-            PathLine { x: 160; y: 250; }
-            PathAttribute { name: "iconScale"; value: 0.5 }
-            PathLine { x: 310; y: 210; }
-            PathAttribute { name: "iconScale"; value: 1.0 }
-            PathAttribute { name: "z"; value: 1.0 }
-            PathLine { x: 420; y: 243; }
-            PathAttribute { name: "iconScale"; value: 0.6 }
-            PathLine { x: 560; y: 252; }
-            PathAttribute { name: "iconScale"; value: 0.35 }
-            PathLine { x: 630; y: 250; }
+            onClicked: Stack.openPage('Profile.qml', {'profile': name, 'sourceImage': image})
         }
-        width: 620
-        pathItemCount: 5
-        anchors.bottom: favourites.top
-        anchors.bottomMargin: 0
-        anchors.top: toolbar.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        onFlickStarted: currentPressed = -1
-        onMovementEnded: currentPressed = -1
+        anchors {
+            top: toolbar.bottom
+            bottom: favourites.top
+            left: parent.left
+            right: pages.left
+        }
     }
 
-    RoomListModel {
+    MediaModel {
+        source: myHomeModels.rooms
         id: roomModel
     }
 
     Item {
         id: pages
-        x: 620
-        y: 65
         anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: users.right
-        anchors.leftMargin: 0
         anchors.bottom: favourites.top
-        anchors.bottomMargin: 0
         anchors.top: toolbar.bottom
-        anchors.topMargin: 0
+        width: 288
 
         SvgImage {
             source: "images/home/menu.svg"
@@ -253,16 +172,12 @@ Page {
         }
         Grid {
             id: column1
-            x: -288
-            y: 70
             spacing: 0
             columns: 2
             anchors.top: parent.top
             anchors.topMargin: 70
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 0
             width: 288
             height: 328
 
@@ -272,7 +187,7 @@ Page {
                 sourcePressed: "images/home/stanze_p.svg"
                 text: qsTr("rooms")
                 onClicked: {
-                    if (roomModel.rooms().length > 1)
+                    if (roomModel.size > 1)
                         Stack.openPage("Rooms.qml")
                     else
                         Stack.openPage("Room.qml")

@@ -1,9 +1,11 @@
 HEADERS += \
 	antintrusionsystem.h \
+	container.h \
 	energydata.h \
 	energyload.h \
 	energyrate.h \
 	folderlistmodel.h \
+	globalmodels.h \
 	hardware.h \
 	iteminterface.h \
 	lightobjects.h \
@@ -49,10 +51,12 @@ HEADERS += \
 
 SOURCES += \
 	antintrusionsystem.cpp \
+	container.cpp \
 	energydata.cpp \
 	energyload.cpp \
 	energyrate.cpp \
 	folderlistmodel.cpp \
+	globalmodels.cpp \
 	hardware.cpp \
 	iteminterface.cpp \
 	lightobjects.cpp \

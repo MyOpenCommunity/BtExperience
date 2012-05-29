@@ -8,6 +8,8 @@ Page {
     source: "images/imgsfondo_sfumato.png"
     property variant names: translations
     property string roomName
+    property int roomId
+    property int floorId
 
     Names {
         id: translations
@@ -31,10 +33,17 @@ Page {
         onSystemsClicked: Stack.popPage()
     }
 
-    RoomListModel {
+    MediaModel {
+        source: myHomeModels.objectLinks
         id: roomModel
-        room: roomName
-        onRoomChanged: page.state = ""
+        containers: [roomId]
+        onContainersChanged: page.state = ""
+    }
+
+    MediaModel {
+        source: myHomeModels.rooms
+        id: roomsModel
+        containers: [floorId]
     }
 
     MouseArea {
@@ -88,39 +97,48 @@ Page {
             return "images/rooms/studio.png"
         }
 
-        // TODO: this is needed because the model is a simple stringlist;
-        // to be fixed with a proper model.
-        property int currentIndex: -1
-
         orientation: ListView.Horizontal
         delegate: Image {
+            property variant itemObject: roomsModel.getObject(index)
             id: listDelegate
-            source: ListView.view.currentIndex === index ? "images/common/stanzaS.png" : "images/common/stanza.png"
+            source: roomView.currentIndex === index ? "images/common/stanzaS.png" : "images/common/stanza.png"
             Image {
-                source: listDelegate.ListView.view.selectRoomImage(modelData)
+                source: roomView.selectRoomImage(listDelegate.itemObject.description)
                 fillMode: Image.PreserveAspectCrop
                 clip: true
-                width: parent.width - (listDelegate.ListView.view.currentIndex === index ? 30 : 20)
-                height: parent.height - (listDelegate.ListView.view.currentIndex === index ? 30 : 20)
+                width: parent.width - (roomView.currentIndex === index ? 30 : 20)
+                height: parent.height - (roomView.currentIndex === index ? 30 : 20)
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        console.log("Clicked on room: " + modelData)
-                        roomModel.room = modelData
-                        listDelegate.ListView.view.currentIndex = index
+                        console.log("Clicked on room: " + listDelegate.itemObject.description)
+                        roomView.currentIndex = index
                     }
                 }
             }
         }
 
-        model: roomModel.rooms()
+        onCurrentIndexChanged: {
+            page.roomId = roomsModel.getObject(currentIndex).id
+        }
+
+        currentIndex: findCurrentIndex()
+        model: roomsModel
     }
 
     function closeCurrentMenu() {
         page.state = ""
         roomCustomView.closeMenu()
+    }
+
+    function findCurrentIndex() {
+        for (var i = 0; i < roomsModel.size; ++i)
+            if (roomsModel.getObject(i).id == roomId)
+                    return i;
+
+        return 0;
     }
 
     states: [

@@ -30,8 +30,11 @@
 #include "energyload.h"
 #include "stopandgoobjects.h"
 #include "energydata.h"
+#include "container.h"
 
 #include <QtDeclarative/qdeclarative.h>
+#include <QtDeclarative/QDeclarativeEngine>
+#include <QtDeclarative/QDeclarativeContext>
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
@@ -87,8 +90,12 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameReceiver::setClientsMonitor(monitors);
 	FrameSender::setClients(clients);
 
+	global_models.setParent(this);
+	global_models.setFloors(&floor_model);
+	global_models.setRooms(&room_model);
+	global_models.setObjectLinks(&object_link_model);
+
 	ObjectModel::setGlobalSource(&objmodel);
-	RoomListModel::setGlobalSource(&room_model);
 	createObjectsFakeConfig(document);
 	createObjects(document);
 	parseConfig();
@@ -118,7 +125,10 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		if (!obj_list.isEmpty())
 		{
 			foreach (ObjectPair p, obj_list)
-				objmodel << p;
+			{
+				uii_map.insert(p.first, p.second);
+				objmodel.insertWithoutUii(p.second);
+			}
 		}
 	}
 }
@@ -233,6 +243,8 @@ void BtObjectsPlugin::parseConfig()
 		int container_id = getIntAttribute(container, "id");
 		if (container_id == 2)
 			parseRooms(container);
+		else if (container_id == 3)
+			parseFloors(container);
 		else if (container_id == 1) // lights
 			parseLightSystem(container);
 	}
@@ -240,16 +252,52 @@ void BtObjectsPlugin::parseConfig()
 
 void BtObjectsPlugin::parseRooms(const QDomNode &container)
 {
+	room_model.setParent(this);
+
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
 		QString room_name = getAttribute(instance, "descr");
+		QString room_img = getAttribute(instance, "img");
+		int room_uii = getIntAttribute(instance, "uii");
+		Container *room = new Container(room_uii, room_img, room_name);
+
+		room_model << room;
+		uii_map.insert(room_uii, room);
+
 		foreach (const QDomNode &link, getChildren(instance, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
 			int x = getIntAttribute(link, "x");
 			int y = getIntAttribute(link, "y");
+			RoomElement *item = new RoomElement(room_name, uii_map.value<ObjectInterface>(object_uii), x, y);
 
-			room_model << ObjectPair(object_uii, new RoomElement(room_name, objmodel.getObjectByUii(object_uii), x, y));
+			item->setContainerId(room_uii);
+
+			object_link_model << item;
+		}
+	}
+}
+
+void BtObjectsPlugin::parseFloors(const QDomNode &container)
+{
+	floor_model.setParent(this);
+
+	foreach (const QDomNode &instance, getChildren(container, "ist"))
+	{
+		QString floor_name = getAttribute(instance, "descr");
+		QString floor_img = getAttribute(instance, "img");
+		int floor_uii = getIntAttribute(instance, "uii");
+		Container *floor = new Container(floor_uii, floor_img, floor_name);
+
+		floor_model << floor;
+		uii_map.insert(floor_uii, floor);
+
+		foreach (const QDomNode &link, getChildren(instance, "link"))
+		{
+			int room_uii = getIntAttribute(link, "uii");
+			Container *room = uii_map.value<Container>(room_uii);
+
+			room->setContainerId(floor_uii);
 		}
 	}
 }
@@ -261,11 +309,18 @@ void BtObjectsPlugin::parseLightSystem(const QDomNode &container)
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
-			Light *l = static_cast<Light *>(objmodel.getObjectByUii(object_uii));
+			Light *l = uii_map.value<Light>(object_uii);
 			if (l)
 				l->setCategory(ObjectInterface::Lighting);
 		}
 	}
+}
+
+void BtObjectsPlugin::initializeEngine(QDeclarativeEngine *engine, const char *uri)
+{
+	Q_UNUSED(uri);
+
+	engine->rootContext()->setContextProperty("myHomeModels", &global_models);
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)
@@ -273,7 +328,7 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	// @uri BtObjects
 	qmlRegisterUncreatableType<ObjectDataModel>(uri, 1, 0, "ObjectListModel", "");
 	qmlRegisterUncreatableType<MediaDataModel>(uri, 1, 0, "MediaDataModel", "");
-	qmlRegisterUncreatableType<MediaModel>(uri, 1, 0, "MediaModel", "");
+	qmlRegisterType<MediaModel>(uri, 1, 0, "MediaModel");
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "FilterListModel");
 	qmlRegisterType<RoomListModel>(uri, 1, 0, "RoomListModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
@@ -281,6 +336,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<ItemInterface>(
 				uri, 1, 0, "ItemInterface",
 				"unable to create an ItemInterface instance");
+	qmlRegisterUncreatableType<Container>(
+				uri, 1, 0, "Container",
+				"unable to create an Container instance");
 	qmlRegisterUncreatableType<ObjectInterface>(
 				uri, 1, 0, "ObjectInterface",
 				"unable to create an ObjectInterface instance");
