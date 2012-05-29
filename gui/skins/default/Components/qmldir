@@ -24,12 +24,14 @@ ControlColumnBar 1.0 ControlColumnBar.qml
 ControlColumnValue 1.0 ControlColumnValue.qml
 ControlDateTime 1.0 ControlDateTime.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
+ControlOnOff 1.0 ControlOnOff.qml
 ControlSlider 1.0 ControlSlider.qml
 ControlSlider2 1.0 ControlSlider2.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
 ControlUpDown 1.0 ControlUpDown.qml
 FadeAnimation 1.0 FadeAnimation.qml
 KeyPad 1.0 KeyPad.qml
+LargeButton 1.0 LargeButton.qml
 MenuColumn 1.0 MenuColumn.qml
 MenuContainer 1.0 MenuContainer.qml
 MenuItem 1.0 MenuItem.qml
@@ -45,7 +47,9 @@ ScreenSaver 1.0 ScreenSaver.qml
 ScreenSaverBouncingImage 1.0 ScreenSaverBouncingImage.qml
 ScreenSaverRectangles 1.0 ScreenSaverRectangles.qml
 SlideAnimation 1.0 SlideAnimation.qml
+SmallButton 1.0 SmallButton.qml
 SvgImage 1.0 SvgImage.qml
 Text_12pt_bold 1.0 Text_12pt_bold.qml
 ToolBar 1.0 ToolBar.qml
 TwoButtonsSettings 1.0 TwoButtonsSettings.qml
+TwoButtonsSettingsLarge 1.0 TwoButtonsSettingsLarge.qml

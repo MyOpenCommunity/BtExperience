@@ -1,50 +1,70 @@
 import QtQuick 1.1
 
-Image {
+SvgImage {
     id: buttonSlider
-    source: "../images/common/bg_DueRegolazioni.png"
-    width: 212
-    height: 150
-    property int percentage: 85
+
+    property int percentage: 70
     property string description: qsTr("volume")
 
     signal plusClicked
     signal minusClicked
 
-    Text_12pt_bold {
+    source: "../images/common/panel_dimmer.svg"
+
+    Text {
         id: label
-        x: 85
-        y: 15
+        anchors.top: parent.top
+        anchors.topMargin: 5
+        anchors.left: parent.left
+        anchors.leftMargin: 7
+        font.pointSize: 10.5
+        color: "#444546"
         text: buttonSlider.description
-        anchors.horizontalCenterOffset: 0
-        anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    Image {
-        id: image2
-        x: 5
-        y: 43
-        width: 202
-        height: 49
-        anchors.horizontalCenter: parent.horizontalCenter
-        source: "../images/common/bg_volume.png"
+    Text {
+        id: percentageLabel
+        text: percentage + " %"
+        anchors.top: parent.top
+        anchors.topMargin: 5
+        anchors.right: parent.right
+        anchors.rightMargin: 15
+        font.pointSize: 10.5
+        color: "#444546"
+    }
 
-        Image {
-            id: barPercentage
-            source: "../images/common/dimmer_reg.png"
+    SvgImage {
+        id: image2
+        anchors.top: label.bottom
+        anchors.topMargin: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+        source: "../images/common/bar_dimmer_bg.svg"
+
+        Rectangle {
+            height: parent.height + 2
+            width: parent.width * (buttonSlider.percentage < 10 ? 10 : buttonSlider.percentage) / 100 + 4
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: 1
-            width: parent.width * buttonSlider.percentage / 100 - 1
-            height: parent.height - 2
+            anchors.leftMargin: -2
+            radius: 100
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.0
+                    color: "#b1b3b4"
+                }
+                GradientStop {
+                    position: 1.0
+                    color: "#7a797b"
+                }
+            }
         }
     }
 
-    ButtonMinusPlus {
-        id: buttons
-        anchors.bottom: parent.bottom
+    TwoButtonsSettingsLarge {
+        anchors.top: image2.bottom
+        anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
-        onPlusClicked: buttonSlider.plusClicked()
-        onMinusClicked: buttonSlider.minusClicked()
+        onLeftClicked: minusClicked()
+        onRightClicked: plusClicked()
     }
 }
