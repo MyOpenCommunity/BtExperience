@@ -268,11 +268,13 @@ void BtObjectsPlugin::parseConfig()
 void BtObjectsPlugin::parseRooms(const QDomNode &container)
 {
 	int room_id = getIntAttribute(container, "id");
+	QString def_room_name = getAttribute(container, "descr");
+	QString def_room_img = getAttribute(container, "img");
 
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
-		QString room_name = getAttribute(instance, "descr");
-		QString room_img = getAttribute(instance, "img");
+		QString room_name = getAttribute(instance, "descr", def_room_name);
+		QString room_img = getAttribute(instance, "img", def_room_img);
 		int room_uii = getIntAttribute(instance, "uii");
 		Container *room = new Container(room_id, room_uii, room_img, room_name);
 
@@ -295,12 +297,14 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 
 void BtObjectsPlugin::parseFloors(const QDomNode &container)
 {
+	QString def_floor_name = getAttribute(container, "descr");
+	QString def_floor_img = getAttribute(container, "img");
 	int floor_id = getIntAttribute(container, "id");
 
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
-		QString floor_name = getAttribute(instance, "descr");
-		QString floor_img = getAttribute(instance, "img");
+		QString floor_name = getAttribute(instance, "descr", def_floor_name);
+		QString floor_img = getAttribute(instance, "img", def_floor_img);
 		int floor_uii = getIntAttribute(instance, "uii");
 		Container *floor = new Container(floor_id, floor_uii, floor_img, floor_name);
 
@@ -319,12 +323,14 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 
 void BtObjectsPlugin::parseSystem(const QDomNode &container)
 {
+	QString def_system_name = getAttribute(container, "descr");
+	QString def_system_img = getAttribute(container, "img");
 	int system_id = getIntAttribute(container, "id");
 
 	foreach (const QDomNode &ist, getChildren(container, "ist"))
 	{
-		QString system_name = getAttribute(ist, "descr");
-		QString system_img = getAttribute(ist, "img");
+		QString system_name = getAttribute(ist, "descr", def_system_name);
+		QString system_img = getAttribute(ist, "img", def_system_img);
 		int system_uii = getIntAttribute(ist, "uii");
 		Container *system = new Container(system_id, system_uii, system_img, system_name);
 
