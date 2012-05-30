@@ -144,7 +144,7 @@ MenuColumn {
             id: fixedItem
             anchors.top: parent.top
             width: parent.width
-            height: 50
+            height: visible ? 50 : 0
             visible: (zones === 4)
             source: "../../images/common/bg_UnaRegolazione.png"
 
