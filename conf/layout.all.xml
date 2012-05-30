@@ -50,13 +50,13 @@
 		</ist>
 	</container>
 	<container id="3" descr="floor" img="floor.png"> <!-- floor -->
-		<ist uii="17" descr="ground" >
+		<ist uii="201" descr="ground" >
 			<link uii="102" />
 			<link uii="103" />
 			<link uii="104" />
 			<link uii="106" />
 		</ist>
-		<ist uii="18" descr="first floor" img="first.png" >
+		<ist uii="202" descr="first floor" img="first.png" >
 			<link uii="105" />
 		</ist>
 	</container>
