@@ -14,17 +14,17 @@
 		<ist uii="7" descr="Bedroom light" where="14" ftime="3" />
 		<ist uii="12" descr="Lampada scrivania di Gianni" where="13" ftime="3" />
 	</obj>
+	<obj cid="2005" id="2005" descr="Light" where="0">
+		<ist uii="9" descr="room 1" where="1" />
+		<ist uii="10" descr="room 2" where="2" />
+		<ist uii="11" descr="general" />
+	</obj>
 	<obj cid="2004" id="2004" descr="light set">
 		<ist uii="8" descr="all downstair">
 			<link uii="1" />
 			<link uii="6" />
 			<link uii="9" />
 		</ist>
-	</obj>
-	<obj cid="2005" id="2005" descr="Light" where="0">
-		<ist uii="9" descr="room 1" where="1" />
-		<ist uii="10" descr="room 2" where="2" />
-		<ist uii="11" descr="general" />
 	</obj>
 </configuratore>
 
