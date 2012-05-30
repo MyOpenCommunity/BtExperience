@@ -8,14 +8,17 @@ import "../../js/datetime.js" as DateTime
 MenuColumn {
     id: column
 
-    property int zones: 99
+    property int zones: 99 // 99 - 99 zones, 4 - 4 zones central unit
 
     FilterListModel {
         id: centralProbe
         // NOTE in case the central is 4 zones we must retrieve the temperature
-        // from the associated probe
+        // from the associated probe; we don't know if the probe is with or
+        // without fancoil; we look for both cases: one will return the probe,
+        // the other will not return anything
         filters: [
-            {objectId: ObjectInterface.IdThermalControlledProbe, objectKey: column.dataModel.objectKey}
+            {objectId: ObjectInterface.IdThermalControlledProbe, objectKey: column.dataModel.objectKey},
+            {objectId: ObjectInterface.IdThermalControlledProbeFancoil, objectKey: column.dataModel.objectKey}
         ]
     }
 
@@ -145,6 +148,8 @@ MenuColumn {
             anchors.top: parent.top
             width: parent.width
             height: visible ? 50 : 0
+            // 4 zones central units are zones themselves: we must show the
+            // temperature of the linked probe in such cases
             visible: (zones === 4)
             source: "../../images/common/bg_UnaRegolazione.png"
 
@@ -354,6 +359,7 @@ MenuColumn {
                     id: dateTimeTimed
                     text: qsTr("valid until")
                     time: DateTime.format(objModel.date)["time"]
+                    // in timed mode we can set only the end time, no date setting
                     dateVisible: false
 
                     function checkReset() {

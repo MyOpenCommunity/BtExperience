@@ -5,7 +5,7 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    property int zones: 99
+    property int zones: 99 // 99 - 99 zones, 4 - 4 zones central unit
 
     Component {
         id: thermalControlledProbeModalities
@@ -28,7 +28,7 @@ MenuColumn {
     function okClicked() {
         if (privateProps.pendingModality !== dataModel.probeStatus)
             dataModel.probeStatus = privateProps.pendingModality
-        closeColumn();
+        closeColumn()
     }
 
     function cancelClicked() {
@@ -95,6 +95,7 @@ MenuColumn {
         name: qsTr("modes")
         anchors.top: fixedItem.bottom
         height: visible ? 50 : 0
+        // we can change mode on 99 zones central units, so make mode menu visible
         visible: (zones === 99)
 
         onClicked: {
@@ -134,6 +135,8 @@ MenuColumn {
             ControlUpDown {
                 title: qsTr("fan coil speed")
                 text: qsTr("high")
+                // fancoil panel is visible only for fancoil probes
+                visible: (column.dataModel.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
             }
 
             ButtonOkCancel {
@@ -159,6 +162,8 @@ MenuColumn {
             ControlUpDown {
                 title: qsTr("fan coil speed")
                 text: qsTr("high")
+                // fancoil panel is visible only for fancoil probes
+                visible: (column.dataModel.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
             }
 
             ButtonOkCancel {

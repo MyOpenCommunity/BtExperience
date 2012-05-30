@@ -63,7 +63,8 @@ MenuColumn {
         filters: [
             {objectId: ObjectInterface.IdThermalControlUnit99},
             {objectId: ObjectInterface.IdThermalControlUnit4},
-            {objectId: ObjectInterface.IdThermalControlledProbe}
+            {objectId: ObjectInterface.IdThermalControlledProbe},
+            {objectId: ObjectInterface.IdThermalControlledProbeFancoil}
         ]
     }
 }
