@@ -286,7 +286,15 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int object_uii = getIntAttribute(link, "uii");
 			int x = getIntAttribute(link, "x");
 			int y = getIntAttribute(link, "y");
-			ObjectLink *item = new ObjectLink(uii_map.value<ObjectInterface>(object_uii), x, y);
+			ObjectInterface *o = uii_map.value<ObjectInterface>(object_uii);
+
+			if (!o)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in room";
+				continue;
+			}
+
+			ObjectLink *item = new ObjectLink(o, x, y);
 
 			item->setContainerId(room_uii);
 
@@ -316,6 +324,12 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 			int room_uii = getIntAttribute(link, "uii");
 			Container *room = uii_map.value<Container>(room_uii);
 
+			if (!room)
+			{
+				qWarning() << "Invalid uii" << room_uii << "in floor";
+				continue;
+			}
+
 			room->setContainerId(floor_uii);
 		}
 	}
@@ -343,7 +357,7 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 
 			if (!o)
 			{
-				qWarning() << "Invalid uii" << object_uii << "in link";
+				qWarning() << "Invalid uii" << object_uii << "in system";
 				continue;
 			}
 
