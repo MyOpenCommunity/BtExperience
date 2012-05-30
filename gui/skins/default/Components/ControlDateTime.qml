@@ -4,11 +4,12 @@ import "../js/datetime.js" as DateTime
 Image {
     id: control
     width: 212
-    height: 170
+    height: dateVisible ? 170 : 125
     source: "../images/common/dimmer_bg.png"
     property string text: qsTr("valid until")
     property string date: DateTime.format(new Date())["date"]
     property string time: DateTime.format(new Date())["time"]
+    property bool dateVisible: true
 
     signal dateClicked
     signal timeClicked
@@ -35,12 +36,13 @@ Image {
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
         font.pixelSize: 16
+        visible: dateVisible
     }
 
     Text {
         id: text2
         x: 22
-        y: 113
+        y: dateVisible ? 113 : 68
         width: 79
         height: 19
         color: "#ffffff"
@@ -68,6 +70,7 @@ Image {
         width: 43
         height: 45
         selected: privateProps.currentElement == 1
+        visible: dateVisible
 
         onClicked: {
             if (!selected) {
@@ -79,7 +82,7 @@ Image {
 
     ButtonCommand {
         x: 159
-        y: 113
+        y: dateVisible ? 113 : 68
         width: 43
         height: 45
         selected: privateProps.currentElement == 2

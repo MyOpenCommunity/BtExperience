@@ -5,6 +5,8 @@ import Components 1.0
 MenuColumn {
     id: column
 
+    property int zones: 99
+
     Component {
         id: thermalControlledProbeModalities
         ThermalControlledProbeModalities {}

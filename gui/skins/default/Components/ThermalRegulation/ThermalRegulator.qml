@@ -37,10 +37,14 @@ MenuColumn {
             boxInfoText: isControlledProbe() ? itemObject.temperature / 10 + qsTr("°C") : ""
             hasChild: true
             onClicked: {
+                var z = 99
+                if(modelList.getObject(0).objectId === ObjectInterface.IdThermalControlUnit4)
+                    z = 4
                 column.loadColumn(
                             mapping.getComponent(itemObject.objectId),
                             itemObject.name,
-                            modelList.getObject(model.index))
+                            modelList.getObject(model.index),
+                            {"zones": z})
             }
         }
 
@@ -53,8 +57,14 @@ MenuColumn {
 
     FilterListModel {
         id: modelList
-        filters: [{objectId: ObjectInterface.IdThermalControlUnit99},
-                  {objectId: ObjectInterface.IdThermalControlledProbe}]
+        // NOTE we can have only one ControlUnit; filters are defined to have
+        // the ControlUnit as first element of the model, so we can investigate
+        // it to know if we are in the case of 99 zones or 4 zones.
+        filters: [
+            {objectId: ObjectInterface.IdThermalControlUnit99},
+            {objectId: ObjectInterface.IdThermalControlUnit4},
+            {objectId: ObjectInterface.IdThermalControlledProbe}
+        ]
     }
 }
 

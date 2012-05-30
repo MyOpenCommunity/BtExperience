@@ -157,6 +157,9 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		case ObjectInterface::IdThermalControlUnit99:
 			obj = new ThermalControlUnit99Zones(descr, "", bt_global::add_device_to_cache(new ThermalDevice99Zones("0")));
 			break;
+		case ObjectInterface::IdThermalControlUnit4:
+			obj = new ThermalControlUnit4Zones(descr, "", bt_global::add_device_to_cache(new ThermalDevice4Zones("0")));
+			break;
 		case ObjectInterface::IdThermalControlledProbe:
 		{
 			ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?

@@ -8,6 +8,8 @@ import "../../js/datetime.js" as DateTime
 MenuColumn {
     id: column
 
+    property int zones: 99
+
     Component {
         id: thermalControlUnitSeasons
         ThermalControlUnitSeasons {}
@@ -115,6 +117,9 @@ MenuColumn {
             break
         case ThermalControlUnit99Zones.IdScenarios:
             itemLoader.setComponent(scenarioComponent, properties)
+            break
+        case ThermalControlUnit99Zones.IdTimedManual:
+            itemLoader.setComponent(timedComponent, properties)
             break
         }
     }
@@ -294,6 +299,59 @@ MenuColumn {
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
                     }
+                }
+
+                ButtonOkCancel {
+                    onCancelClicked: {
+                        column.cancelClicked()
+                        objModel.reset()
+                    }
+                    onOkClicked: {
+                        column.okClicked()
+                        objModel.apply()
+                    }
+                }
+            }
+        }
+
+        Component {
+            id: timedComponent
+            Column {
+                property variant objModel
+
+                Component {
+                    id: dateSelectTimed
+                    DateSelect {
+                    }
+                }
+
+                ControlDateTime {
+                    id: dateTimeTimed
+                    text: qsTr("valid until")
+                    time: DateTime.format(objModel.date)["time"]
+                    dateVisible: false
+
+                    function checkReset() {
+                        if (column.privateProps.currentElement !== -1)
+                            resetSelection()
+                    }
+
+                    Component.onCompleted: {
+                        column.childDestroyed.connect(resetSelection)
+                        column.privateProps.currentElementChanged.connect(checkReset)
+                    }
+
+                    onTimeClicked: {
+                        column.loadColumn(dateSelectTimed, qsTr("time"), objModel, {"twoFields": true})
+                        column.privateProps.currentElement = -1
+                    }
+                }
+
+                ControlMinusPlus {
+                    title: qsTr("temperature set")
+                    text: objModel.temperature / 10 + "°C"
+                    onMinusClicked: objModel.temperature -= 5
+                    onPlusClicked: objModel.temperature += 5
                 }
 
                 ButtonOkCancel {
