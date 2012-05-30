@@ -10,6 +10,7 @@ Page {
         if (systemsModel.count === 1) {
             return {"page": systemsModel.get(0).target, "properties": {}}
         }
+        return {"page": "", "properties": {}}
     }
 
     ToolBar {
