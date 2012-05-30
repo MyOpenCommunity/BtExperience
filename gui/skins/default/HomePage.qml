@@ -143,8 +143,10 @@ Page {
         }
         anchors {
             top: toolbar.bottom
+            topMargin: 50
             bottom: favourites.top
             left: parent.left
+            leftMargin: 10
             right: pages.left
         }
     }
