@@ -6,6 +6,12 @@ Page {
     id: systems
     source: "images/bg2.jpg"
 
+    function pageSkip() {
+        if (systemsModel.count === 1) {
+            return {"page": systemsModel.get(0).target, "properties": {}}
+        }
+    }
+
     ToolBar {
         id: toolbar
         fontFamily: semiBoldFont.name

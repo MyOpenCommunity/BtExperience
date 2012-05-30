@@ -22,8 +22,12 @@ function openPage(filename, properties) {
     if (properties['_pageName'] === undefined)
         properties['_pageName'] = page_name
 
-    // now, Stack.js is in a js subdir so we have to trick the filename
-    return _openPage("../" + filename, properties)
+    return _openPage(filename, properties)
+}
+
+function _deletePages(list) {
+    for (var i = 0; i < list.length; ++i)
+        list[i].destroy()
 }
 
 // Create a QML object from a given filename and push it on the stack
@@ -34,29 +38,41 @@ function _openPage(filename, properties) {
     if (stack.length > 0)
         changing_page = true
 
-    var page_component = Qt.createComponent(filename)
-    // The component status (like the Component.Ready that has 1 as value) is not currently
-    // available on js files that uses .pragma library declaration.
-    // This should be fixed in the future:
-    // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
-    if (page_component.status == 1) {
-        var page = page_component.createObject(container, typeof properties !== 'undefined' ? properties : {})
-        if (page === null) {
-            logError('Error on creating the object for the page: ' + filename)
-            logError('Properties:')
-            for(var k in properties)
-                logError('    ' + k + ": " + properties[k])
-        }
+    var page = undefined
+    var deletingPages = []
+    while (filename !== "")
+    {
+        // now, Stack.js is in a js subdir so we have to trick the filename
+        var page_component = Qt.createComponent("../" + filename)
+        // The component status (like the Component.Ready that has 1 as value) is not currently
+        // available on js files that uses .pragma library declaration.
+        // This should be fixed in the future:
+        // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
+        if (page_component.status === 1) {
+            page = page_component.createObject(container, typeof properties !== 'undefined' ? properties : {})
+            if (page === null) {
+                logError('Error on creating the object for the page: ' + filename)
+                logError('Properties:')
+                for(var k in properties)
+                    logError('    ' + k + ": " + properties[k])
+                changePageDone()
+                _deletePages(deletingPages)
+                return null
+            }
 
-        pushPage(page)
-        return page
+            var ret = page.pageSkip()
+            filename = ret["page"]
+            // remember to destroy all the pages we have created in the meanwhile
+            if (filename !== "") {
+                deletingPages.push(page)
+            }
+            properties = ret["properties"]
+        }
     }
-    logError('Error loading the page: ' + filename + ' error: ' + page_component.errorString() + ' status: ' + page_component.status + ' progress: ' + page_component.progress)
-    logError('Properties:')
-    for(var k2 in properties)
-        logError('    ' + k2 + ": " + properties[k2])
-    changePageDone()
-    return null
+
+    pushPage(page)
+    _deletePages(deletingPages)
+    return page
 }
 
 function currentPage() {
