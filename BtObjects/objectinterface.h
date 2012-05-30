@@ -49,6 +49,10 @@ public:
 		IdStopAndGoPlus,
 		IdStopAndGoBTest,
 		IdEnergyData,                           // 30
+		// used internally
+		IdDimmerGroup = 100,
+		IdDimmer100Group = 101,
+		// from configuration file
 		IdLight = 2003,
 		IdDimmer = 2001,
 		IdDimmer100 = 2002,

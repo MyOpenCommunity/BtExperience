@@ -2,6 +2,7 @@
 #include "lighting_device.h"
 #include "xml_functions.h"
 #include "devices_cache.h"
+#include "uiimapper.h"
 
 #include <QDebug>
 
@@ -9,6 +10,43 @@
 #define DIMMER100_STEP 5
 #define DIMMER100_SPEED 255
 
+
+namespace
+{
+	int findDumberObject(int first, int second)
+	{
+		if (first == ObjectInterface::IdLight || second == ObjectInterface::IdLight)
+			return ObjectInterface::IdLight;
+		if (first == ObjectInterface::IdLightCommand || second == ObjectInterface::IdLightCommand)
+			return ObjectInterface::IdLight;
+		if (first == ObjectInterface::IdDimmer || second == ObjectInterface::IdDimmer)
+			return ObjectInterface::IdDimmer;
+		if (first == ObjectInterface::IdDimmer100 || second == ObjectInterface::IdDimmer100)
+			return ObjectInterface::IdDimmer100;
+
+		Q_ASSERT_X(false, "findDumberObject", "Invalid light types in light group");
+
+		return -1;
+	}
+
+	template<class Tr, class Ts>
+	QList<Tr> convertQObjectList(QList<Ts> list)
+	{
+		QList<Tr> res;
+
+		foreach (Ts i, list)
+		{
+			Tr r = qobject_cast<Tr>(i);
+
+			Q_ASSERT_X(r, "convertQObjectList", "Invalid object type");
+
+			if (r)
+				res.append(r);
+		}
+
+		return res;
+	}
+}
 
 QList<ObjectPair> parseDimmer100(const QDomNode &obj)
 {
@@ -100,6 +138,50 @@ QList<ObjectPair> parseLightCommand(const QDomNode &obj)
 
 		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, PULL));
 		obj_list << ObjectPair(uii, new Light(descr, where, d));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
+{
+	QList<ObjectPair> obj_list;
+	// extract default values
+	QString def_descr = getAttribute(obj, "descr");
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		int uii = getIntAttribute(ist, "uii");
+		QString descr = getAttribute(ist, "descr", def_descr);
+		QList<ObjectInterface *> items;
+		int dumber_type = ObjectInterface::IdDimmer100;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			ObjectInterface *item = uii_map.value<ObjectInterface>(object_uii);
+
+			if (!item)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in light set";
+				continue;
+			}
+
+			items.append(item);
+			dumber_type = findDumberObject(dumber_type, item->getObjectId());
+		}
+
+		switch (dumber_type)
+		{
+		case ObjectInterface::IdLight:
+			obj_list << ObjectPair(uii, new LightGroup(descr, convertQObjectList<Light *>(items)));
+			break;
+		case ObjectInterface::IdDimmer:
+			obj_list << ObjectPair(uii, new DimmerGroup(descr, convertQObjectList<Dimmer *>(items)));
+			break;
+		case ObjectInterface::IdDimmer100:
+			obj_list << ObjectPair(uii, new Dimmer100Group(descr, convertQObjectList<Dimmer100 *>(items)));
+			break;
+		}
 	}
 	return obj_list;
 }
@@ -211,6 +293,19 @@ void Light::valueReceived(const DeviceValues &values_list)
 }
 
 
+LightGroup::LightGroup(QString _name, QList<Light *> d)
+{
+	name = _name;
+	objects = d;
+}
+
+void LightGroup::setActive(bool status)
+{
+	foreach (Light *l, objects)
+		l->setActive(status);
+}
+
+
 Dimmer::Dimmer(QString name, QString key, DimmerDevice *d) : Light(name, key, d)
 {
 	dev = d;
@@ -249,6 +344,24 @@ void Dimmer::valueReceived(const DeviceValues &values_list)
 		}
 		++it;
 	}
+}
+
+
+DimmerGroup::DimmerGroup(QString name, QList<Dimmer *> d) : LightGroup(name, convertQObjectList<Light *>(d))
+{
+	objects = d;
+}
+
+void DimmerGroup::increaseLevel()
+{
+	foreach (Dimmer *d, objects)
+		d->increaseLevel();
+}
+
+void DimmerGroup::decreaseLevel()
+{
+	foreach (Dimmer *d, objects)
+		d->decreaseLevel();
 }
 
 
@@ -355,4 +468,22 @@ void Dimmer100::valueReceived(const DeviceValues &values_list)
 		}
 		++it;
 	}
+}
+
+
+Dimmer100Group::Dimmer100Group(QString name, QList<Dimmer100 *> d) : DimmerGroup(name, convertQObjectList<Dimmer *>(d))
+{
+	objects = d;
+}
+
+void Dimmer100Group::increaseLevel100()
+{
+	foreach (Dimmer100 *d, objects)
+		d->increaseLevel100();
+}
+
+void Dimmer100Group::decreaseLevel100()
+{
+	foreach (Dimmer100 *d, objects)
+		d->decreaseLevel100();
 }
