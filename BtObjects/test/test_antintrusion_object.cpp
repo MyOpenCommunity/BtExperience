@@ -66,11 +66,8 @@ void TestAntintrusionSystem::init()
 
 	QList<AntintrusionZone *> zones;
 	for (int i = 0; i < zone_list.length(); ++i)
-	{
-		AntintrusionZone *z = new AntintrusionZone(zone_list.at(i).first, zone_list.at(i).second);
-		QObject::connect(z, SIGNAL(requestPartialization(int,bool)), d, SLOT(partializeZone(int,bool)));
-		zones << z;
-	}
+		zones << new AntintrusionZone(zone_list.at(i).first, zone_list.at(i).second);
+
 	QList<AntintrusionScenario *> scenarios;
 	scenarios << new AntintrusionScenario("notte", splitZones("1.3.5"), zones) <<
 		new AntintrusionScenario("inverno", splitZones("1.2.3"), zones) <<
@@ -78,6 +75,8 @@ void TestAntintrusionSystem::init()
 
 	obj = new AntintrusionSystem(d, scenarios, zones);
 	dev = new AntintrusionDevice(1);
+	foreach (AntintrusionZone *z, zones)
+		dev->partializeZone(z->getNumber(), z->getPartialization());
 }
 
 void TestAntintrusionSystem::cleanup()

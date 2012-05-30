@@ -78,19 +78,7 @@ QList<ObjectPair> parseAntintrusionScenario(const QDomNode &obj, const UiiMapper
 AntintrusionSystem *createAntintrusionSystem(QList<AntintrusionZone *> zones, QList<AntintrusionScenario *> scenarios)
 {
 	AntintrusionDevice *dev = bt_global::add_device_to_cache(new AntintrusionDevice);
-
-	foreach (AntintrusionZone *zone, zones)
-	{
-		dev->partializeZone(zone->getNumber(), zone->getPartialization()); // initialization
-		QObject::connect(zone, SIGNAL(requestPartialization(int,bool)), dev, SLOT(partializeZone(int,bool)));
-	}
-
 	AntintrusionSystem *system = new AntintrusionSystem(dev, scenarios, zones);
-
-	// we need to connect each scenario to antitrusion system object, which
-	// cannot be done above
-	foreach (AntintrusionScenario *s, scenarios)
-		QObject::connect(s, SIGNAL(selectionChanged()), system, SIGNAL(currentScenarioChanged()));
 
 	return system;
 }
@@ -202,10 +190,17 @@ QDateTime AntintrusionAlarm::getDateTime()
 AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionZone*> _zones)
 {
 	foreach (AntintrusionScenario *s, _scenarios)
+	{
 		scenarios.insertWithoutUii(s);
+		connect(s, SIGNAL(selectionChanged()), this, SIGNAL(currentScenarioChanged()));
+	}
 
 	foreach (AntintrusionZone *z, _zones)
+	{
 		zones.insertWithoutUii(z);
+		d->partializeZone(z->getNumber(), z->getPartialization()); // initialization
+		connect(z, SIGNAL(requestPartialization(int,bool)), d, SLOT(partializeZone(int,bool)));
+	}
 
 	current_scenario = -1;
 	waiting_response = false;
