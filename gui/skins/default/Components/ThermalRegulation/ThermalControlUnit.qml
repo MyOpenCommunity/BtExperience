@@ -10,6 +10,15 @@ MenuColumn {
 
     property int zones: 99
 
+    FilterListModel {
+        id: centralProbe
+        // NOTE in case the central is 4 zones we must retrieve the temperature
+        // from the associated probe
+        filters: [
+            {objectId: ObjectInterface.IdThermalControlledProbe, objectKey: column.dataModel.objectKey}
+        ]
+    }
+
     Component {
         id: thermalControlUnitSeasons
         ThermalControlUnitSeasons {}
@@ -131,10 +140,26 @@ MenuColumn {
         height: 326
         anchors.fill: parent
 
+        Image {
+            id: fixedItem
+            anchors.top: parent.top
+            width: parent.width
+            height: 50
+            visible: (zones === 4)
+            source: "../../images/common/bg_UnaRegolazione.png"
+
+            Text {
+                id: textTemperature
+                anchors.centerIn: parent
+                text: centralProbe.getObject(0).temperature  / 10 + qsTr("°C")
+                font.pixelSize: 24
+            }
+        }
+
         MenuItem {
             id: seasonItem
             hasChild: true
-            anchors.top: parent.top
+            anchors.top: fixedItem.bottom
             name: qsTr("season")
             state: privateProps.currentElement === 1 ? "selected" : ""
 
