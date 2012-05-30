@@ -12,15 +12,13 @@
 	<container id="1" descr="lights"> <!-- lights system container -->
 		<ist uii="1">
 			<link uii="12" />
-			<link uii="4" />
 			<link uii="1" />
 			<link uii="2" />
 			<link uii="7" />
 			<link uii="5" />
 			<link uii="6" />
-			<link uii="10" />
-			<link uii="9" />
-			<!-- uii 3, 8 not inserted. Only in the archive but not visualized -->
+			<link uii="8" />
+			<!-- uii 3, 4 not inserted. Only in the archive but not visualized -->
 		</ist>
 	</container>
 	<container id="2" > <!-- rooms -->
