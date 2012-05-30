@@ -357,7 +357,7 @@ MenuColumn {
 
                 ControlDateTime {
                     id: dateTimeTimed
-                    text: qsTr("valid until")
+                    text: qsTr("duration")
                     time: DateTime.format(objModel.date)["time"]
                     // in timed mode we can set only the end time, no date setting
                     dateVisible: false
