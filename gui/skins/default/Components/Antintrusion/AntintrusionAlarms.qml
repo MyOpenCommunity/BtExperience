@@ -54,7 +54,7 @@ MenuColumn {
                         Text {
                             width: 125
                             color: "white"
-                            text: itemObject !== undefined ? itemObject.zone.objectId + "\n" + itemObject.zone.name : ""
+                            text: itemObject !== undefined ? itemObject.zone.number + "\n" + itemObject.zone.name : ""
                             wrapMode: Text.WordWrap
                             font.pointSize: 12
                         }

@@ -230,7 +230,7 @@ MenuColumn {
                             source: imagesPath + (itemObject.partialization ? "common/off.png" : "common/on.png")
                         }
                         Text {
-                            text: itemObject.objectId
+                            text: itemObject.number
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }

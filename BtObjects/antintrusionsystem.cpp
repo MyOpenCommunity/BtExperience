@@ -74,6 +74,11 @@ AntintrusionZone::AntintrusionZone(int id, QString _name)
 	partialized = true;
 }
 
+int AntintrusionZone::getNumber() const
+{
+	return zone_number;
+}
+
 bool AntintrusionZone::getPartialization() const
 {
 	return partialized;
@@ -115,7 +120,7 @@ void AntintrusionScenario::verifySelection(bool notify)
 	QList<int> selected_zones;
 	foreach (AntintrusionZone *z, zones)
 		if (!z->getPartialization())
-			selected_zones.append(z->getObjectId());
+			selected_zones.append(z->getNumber());
 
 	bool s = (scenario_zones == selected_zones);
 	if (notify && selected != s)
@@ -136,7 +141,7 @@ void AntintrusionScenario::apply()
 {
 	foreach (AntintrusionZone *z, zones)
 	{
-		bool inserted = scenario_zones.contains(z->getObjectId());
+		bool inserted = scenario_zones.contains(z->getNumber());
 		z->setPartialization(!inserted);
 	}
 }
@@ -249,7 +254,7 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 			for (int i = 0; i < zones.getCount(); ++i)
 			{
 				AntintrusionZone *z = static_cast<AntintrusionZone*>(zones.getObject(i));
-				if (z->getObjectId() == it.value().toInt())
+				if (z->getNumber() == it.value().toInt())
 					z->setPartialization(it.key() == AntintrusionDevice::DIM_ZONE_PARTIALIZED, false);
 			}
 			break;
@@ -297,10 +302,10 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 	AntintrusionZone *zone = 0;
 	for (int i = 0; i < zones.getCount(); ++i)
 	{
-		ObjectInterface *z = zones.getObject(i);
-		if (z->getObjectId() == zone_num)
+		AntintrusionZone *z = static_cast<AntintrusionZone *>(zones.getObject(i));
+		if (z->getNumber() == zone_num)
 		{
-			zone = static_cast<AntintrusionZone *>(z);
+			zone = z;
 			break;
 		}
 	}
@@ -324,7 +329,7 @@ void AntintrusionSystem::removeAlarm(AntintrusionAlarm::AlarmType t, int zone_nu
 		AntintrusionAlarm *alarm = static_cast<AntintrusionAlarm *>(alarms.getObject(i));
 		AntintrusionZone *z = static_cast<AntintrusionZone *>(alarm->getZone());
 
-		if (alarm->getType() == t && z->getObjectId() == zone_num)
+		if (alarm->getType() == t && z->getNumber() == zone_num)
 		{
 			alarms.removeRow(i);
 			emit alarmsChanged();
@@ -340,7 +345,7 @@ bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zo
 	{
 		AntintrusionAlarm *alarm = static_cast<AntintrusionAlarm *>(alarms.getObject(i));
 		AntintrusionZone *z = static_cast<AntintrusionZone *>(alarm->getZone());
-		if (t == alarm->getType() && z->getObjectId() == zone_num)
+		if (t == alarm->getType() && z->getNumber() == zone_num)
 			return true;
 	}
 	return false;

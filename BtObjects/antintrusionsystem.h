@@ -22,18 +22,22 @@ class AntintrusionZone : public ObjectInterface
 {
 	Q_OBJECT
 	Q_PROPERTY(bool partialization READ getPartialization WRITE setPartialization NOTIFY partializationChanged)
+	Q_PROPERTY(int number READ getNumber CONSTANT)
 
 public:
 	AntintrusionZone(int id, QString name);
+
 	virtual int getObjectId() const
 	{
-		return zone_number;
+		return ObjectInterface::IdAntintrusionZone;
 	}
 
 	virtual ObjectCategory getCategory() const
 	{
 		return ObjectInterface::Antintrusion;
 	}
+
+	int getNumber() const;
 
 	bool getPartialization() const;
 	void setPartialization(bool p, bool request_partialization = true);

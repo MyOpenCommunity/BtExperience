@@ -238,7 +238,7 @@ void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
 	{
 		AntintrusionAlarm *a = static_cast<AntintrusionAlarm *>(alarms->getObject(i));
 		AntintrusionZone *z = static_cast<AntintrusionZone *>(a->getZone());
-		actual << qMakePair(a->getType(), z->getObjectId());
+		actual << qMakePair(a->getType(), z->getNumber());
 	}
 
 	QCOMPARE(actual, expected);

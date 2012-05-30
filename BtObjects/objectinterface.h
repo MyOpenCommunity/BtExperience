@@ -54,11 +54,16 @@ public:
 		IdDimmerGroup = 100,
 		IdDimmer100Group = 101,
 		// from configuration file
+		// lights
 		IdLight = 2003,
 		IdDimmer = 2001,
 		IdDimmer100 = 2002,
 		IdLightGroup = 2004,
 		IdLightCommand = 2005,
+		// antintrusion
+		IdAntintrusionZone = 13001,
+		IdAntintrusionScenario = 13010,
+		IdAntintrusionAux = 13101,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
