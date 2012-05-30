@@ -80,8 +80,8 @@ void ObjectModel::setCategories(QVariantList cat)
 	foreach (const QVariant &v, cat)
 		categories << v.toInt();
 
+	reset(); // see comment at the top of MediaModel
 	emit categoriesChanged();
-	reset(); // I'd like to use invalidateFilter(), but it doesn't work
 }
 
 QVariantList ObjectModel::getFilters() const
@@ -108,8 +108,8 @@ void ObjectModel::setFilters(QVariantList f)
 		}
 		filters[id] = m.contains("objectKey") ? m["objectKey"].toString() : QString();
 	}
+	reset(); // see comment at the top of MediaModel
 	emit filtersChanged();
-	reset();
 }
 
 bool ObjectModel::acceptsRow(int source_row) const

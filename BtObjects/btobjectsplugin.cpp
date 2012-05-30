@@ -128,6 +128,12 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdDimmer100:
 			obj_list = parseDimmer100(xml_obj);
 			break;
+		case ObjectInterface::IdLightGroup:
+			obj_list = parseLightGroup(xml_obj, uii_map);
+			break;
+		case ObjectInterface::IdLightCommand:
+			obj_list = parseLightCommand(xml_obj);
+			break;
 		}
 
 		if (!obj_list.isEmpty())
@@ -164,8 +170,7 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		{
 			ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?
 						ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
-			obj = new ThermalControlledProbe(descr, where,
-											 new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+			obj = new ThermalControlledProbe(descr, where, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
 			break;
 		}
 		case ObjectInterface::IdHardwareSettings:
@@ -289,7 +294,15 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			int object_uii = getIntAttribute(link, "uii");
 			int x = getIntAttribute(link, "x");
 			int y = getIntAttribute(link, "y");
-			ObjectLink *item = new ObjectLink(uii_map.value<ObjectInterface>(object_uii), x, y);
+			ObjectInterface *o = uii_map.value<ObjectInterface>(object_uii);
+
+			if (!o)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in room";
+				continue;
+			}
+
+			ObjectLink *item = new ObjectLink(o, x, y);
 
 			item->setContainerId(room_uii);
 
@@ -319,6 +332,12 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 			int room_uii = getIntAttribute(link, "uii");
 			Container *room = uii_map.value<Container>(room_uii);
 
+			if (!room)
+			{
+				qWarning() << "Invalid uii" << room_uii << "in floor";
+				continue;
+			}
+
 			room->setContainerId(floor_uii);
 		}
 	}
@@ -346,7 +365,7 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 
 			if (!o)
 			{
-				qWarning() << "Invalid uii" << object_uii << "in link";
+				qWarning() << "Invalid uii" << object_uii << "in system";
 				continue;
 			}
 
@@ -386,6 +405,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<ThermalControlledProbe>(
 				uri, 1, 0, "ThermalControlledProbe",
 				"unable to create a ThermalControlledProbe instance");
+	qmlRegisterUncreatableType<ThermalControlledProbeFancoil>(
+				uri, 1, 0, "ThermalControlledProbeFancoil",
+				"unable to create a ThermalControlledProbeFancoil instance");
 	qmlRegisterUncreatableType<PlatformSettings>(
 				uri, 1, 0, "PlatformSettings",
 				"unable to create a PlatformSettings instance");

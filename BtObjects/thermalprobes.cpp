@@ -10,7 +10,6 @@ ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, Cont
 	name = _name;
 	key = _key;
 	probe_status = Unknown;
-	fancoil_speed = FancoilAuto;
 	temperature = 0;
 	setpoint = 0;
 	dev = d;
@@ -51,18 +50,6 @@ void ThermalControlledProbe::setProbeStatus(ProbeStatus st)
 	}
 }
 
-
-void ThermalControlledProbe::setFancoil(FancoilSpeed s)
-{
-	dev->setFancoilSpeed(static_cast<int>(s));
-}
-
-ThermalControlledProbe::FancoilSpeed ThermalControlledProbe::getFancoil() const
-{
-	return fancoil_speed;
-}
-
-
 int ThermalControlledProbe::getSetpoint() const
 {
 	return bt2Celsius(setpoint);
@@ -93,14 +80,6 @@ void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
 				emit probeStatusChanged();
 			}
 		}
-		else if (it.key() == ControlledProbeDevice::DIM_FANCOIL_STATUS)
-		{
-			if (fancoil_speed != it.value().toInt())
-			{
-				fancoil_speed = static_cast<FancoilSpeed>(it.value().toInt());
-				emit fancoilChanged();
-			}
-		}
 		else if (it.key() == ControlledProbeDevice::DIM_SETPOINT)
 		{
 			if (setpoint != it.value().toInt())
@@ -123,3 +102,38 @@ void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
 }
 
 
+ThermalControlledProbeFancoil::ThermalControlledProbeFancoil(QString _name, QString _key, ControlledProbeDevice *d) :
+	ThermalControlledProbe(_name, _key, d)
+{
+	fancoil_speed = FancoilAuto;
+}
+
+void ThermalControlledProbeFancoil::setFancoil(FancoilSpeed s)
+{
+	dev->setFancoilSpeed(static_cast<int>(s));
+}
+
+ThermalControlledProbeFancoil::FancoilSpeed ThermalControlledProbeFancoil::getFancoil() const
+{
+	return fancoil_speed;
+}
+
+void ThermalControlledProbeFancoil::valueReceived(const DeviceValues &values_list)
+{
+	ThermalControlledProbe::valueReceived(values_list);
+
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		if (it.key() == ControlledProbeDevice::DIM_FANCOIL_STATUS)
+		{
+			if (fancoil_speed != it.value().toInt())
+			{
+				fancoil_speed = static_cast<FancoilSpeed>(it.value().toInt());
+				emit fancoilChanged();
+			}
+		}
+
+		++it;
+	}
+}

@@ -95,7 +95,7 @@ Item {
 
     Connections {
         target: model
-        onContainersChanged: {
+        onModelReset: {
             // TODO: maybe we can optimize performance by setting opacity to 0
             // for items that we don't want to show, thus avoiding a whole
             // createObject()/destroy() cycle each time

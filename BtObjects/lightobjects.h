@@ -10,10 +10,13 @@ class LightingDevice;
 class DimmerDevice;
 class Dimmer100Device;
 class QDomNode;
+class UiiMapper;
 
 QList<ObjectPair> parseDimmer100(const QDomNode &obj);
 QList<ObjectPair> parseDimmer(const QDomNode &obj);
 QList<ObjectPair> parseLight(const QDomNode &obj);
+QList<ObjectPair> parseLightCommand(const QDomNode &obj);
+QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map);
 
 
 /*!
@@ -85,6 +88,42 @@ private:
 };
 
 
+
+/*!
+	\ingroup Lighting
+	\brief Manages light actuator groups
+
+	Can also be used to control dimmer 10 and dimmer 100 actuators.
+
+	The object id is \a ObjectInterface::IdLightGroup
+*/
+class LightGroup : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	LightGroup(QString name, QList<Light *> d);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdLightGroup;
+	}
+
+	virtual ObjectCategory getCategory() const
+	{
+		return Unassigned;
+	}
+
+	/*!
+		\brief Turn on light group
+	*/
+	Q_INVOKABLE void setActive(bool status);
+
+private:
+	QList<Light *> objects;
+};
+
+
 /*!
 	\ingroup Lighting
 	\brief Manages dimmer 10 and dimmer 100 actuators
@@ -139,6 +178,43 @@ protected:
 
 private:
 	DimmerDevice *dev;
+};
+
+
+/*!
+	\ingroup Lighting
+	\brief Manages dimmer 10 and dimmer 100 groups
+
+	The object id is \a ObjectInterface::IdDimmerGroup
+
+	\sa Dimmer
+	\sa Dimmer100
+*/
+class DimmerGroup : public LightGroup
+{
+	Q_OBJECT
+
+public:
+	DimmerGroup(QString name, QList<Dimmer *> d);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdDimmerGroup;
+	}
+
+public slots:
+	/*!
+		\brief Increase dimmer group level by about 10%
+	*/
+	void increaseLevel();
+
+	/*!
+		\brief Decrease dimmer group level by about 10%
+	*/
+	void decreaseLevel();
+
+private:
+	QList<Dimmer *> objects;
 };
 
 
@@ -234,6 +310,47 @@ protected:
 
 private:
 	Dimmer100Device *dev;
+};
+
+
+/*!
+	\ingroup Lighting
+	\brief Manages dimmer 100 groups
+
+	The object id is \a ObjectInterface::IdDimmer100Group
+
+	\sa Dimmer
+	\sa Dimmer100
+*/
+class Dimmer100Group : public DimmerGroup
+{
+	Q_OBJECT
+
+public:
+	Dimmer100Group(QString name, QList<Dimmer100 *> d);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdDimmer100Group;
+	}
+
+public slots:
+	/*!
+		\brief Increase dimmer group level.
+
+		Amount and speed are the one specified by the linked dimmer objects
+	*/
+	void increaseLevel100();
+
+	/*!
+		\brief Decrease dimmer group level.
+
+		Amount and speed are the one specified by the linked dimmer objects
+	*/
+	void decreaseLevel100();
+
+private:
+	QList<Dimmer100 *> objects;
 };
 
 #endif // LIGHTOBJECTS_H

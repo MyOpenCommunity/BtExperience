@@ -83,6 +83,20 @@ void MediaDataModel::remove(int index)
 }
 
 
+/*
+	Summary: always call reset() after changing filters, and do so before emitting the
+		 <filter>Changed() signal.
+
+	After each filter change here or in a subclass, we must call reset() on the model
+	and not invalidateFilter().
+
+	This happens because QSortFilterProxyModel expects to be able to call filterAcceptsRow()
+	in any order, but our implementation requires a linear scan from index 0 to size - 1 in order
+	to handle range selection.
+
+	Calling reset() before <filter>Changed() is not a strict requirement, but it makes behaviour
+	less surprising for users that want to do something in an on<filter>Changed QML handler.
+*/
 MediaModel::MediaModel()
 {
 	min_range = -1;
@@ -142,8 +156,8 @@ void MediaModel::setRange(QVariantList range)
 	min_range = min;
 	max_range = max;
 
+	reset(); // see comment at the top
 	emit rangeChanged();
-	reset(); // I'd like to use invalidateFilter(), but it doesn't work
 }
 
 QVariantList MediaModel::getContainers() const
@@ -157,8 +171,8 @@ void MediaModel::setContainers(QVariantList _containers)
 		return;
 
 	containers = _containers;
+	reset(); // see comment at the top
 	emit containersChanged();
-	reset();
 }
 
 bool MediaModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
