@@ -12,29 +12,30 @@
 class AntintrusionSystem;
 class AntintrusionDevice;
 class AntintrusionZone;
+class AntintrusionAlarmSource;
 class AntintrusionScenario;
 class ObjectDataModel;
 class QDomNode;
 
 
 QList<ObjectPair> parseAntintrusionZone(const QDomNode &obj);
+QList<ObjectPair> parseAntintrusionAux(const QDomNode &obj);
 QList<ObjectPair> parseAntintrusionScenario(const QDomNode &obj, const UiiMapper &uii_map, QList<AntintrusionZone *> zones);
 
-AntintrusionSystem *createAntintrusionSystem(QList<AntintrusionZone *> zones, QList<AntintrusionScenario *> scenarios);
+AntintrusionSystem *createAntintrusionSystem(QList<AntintrusionZone *> zones, QList<AntintrusionAlarmSource *> aux, QList<AntintrusionScenario *> scenarios);
 
 
-class AntintrusionZone : public ObjectInterface
+class AntintrusionAlarmSource : public ObjectInterface
 {
 	Q_OBJECT
-	Q_PROPERTY(bool partialization READ getPartialization WRITE setPartialization NOTIFY partializationChanged)
 	Q_PROPERTY(int number READ getNumber CONSTANT)
 
 public:
-	AntintrusionZone(int id, QString name);
+	AntintrusionAlarmSource(int number, QString name);
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdAntintrusionZone;
+		return ObjectInterface::IdAntintrusionAux;
 	}
 
 	virtual ObjectCategory getCategory() const
@@ -44,6 +45,24 @@ public:
 
 	int getNumber() const;
 
+private:
+	int number;
+};
+
+
+class AntintrusionZone : public AntintrusionAlarmSource
+{
+	Q_OBJECT
+	Q_PROPERTY(bool partialization READ getPartialization WRITE setPartialization NOTIFY partializationChanged)
+
+public:
+	AntintrusionZone(int id, QString name);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdAntintrusionZone;
+	}
+
 	bool getPartialization() const;
 	void setPartialization(bool p, bool request_partialization = true);
 
@@ -52,7 +71,6 @@ signals:
 	void requestPartialization(int zone_number, bool partialize);
 
 private:
-	int zone_number;
 	bool partialized;
 };
 
@@ -97,7 +115,8 @@ class AntintrusionAlarm : public ObjectInterface
 {
 	Q_OBJECT
 	Q_PROPERTY(AlarmType type READ getType CONSTANT)
-	Q_PROPERTY(ObjectInterface *zone READ getZone CONSTANT)
+	Q_PROPERTY(int number READ getNumber CONSTANT)
+	Q_PROPERTY(ObjectInterface *source READ getSource CONSTANT)
 	Q_PROPERTY(QDateTime date_time READ getDateTime CONSTANT)
 	Q_ENUMS(AlarmType)
 
@@ -111,7 +130,7 @@ public:
 		Technical,
 	};
 
-	AntintrusionAlarm(AlarmType type, const AntintrusionZone *zone, QDateTime time);
+	AntintrusionAlarm(AlarmType type, const AntintrusionAlarmSource *source, QDateTime time);
 
 	virtual ObjectCategory getCategory() const
 	{
@@ -119,11 +138,14 @@ public:
 	}
 
 	AlarmType getType();
-	ObjectInterface *getZone();
+	ObjectInterface *getSource();
 	QDateTime getDateTime();
 
+	int getNumber() const;
+	virtual QString getName() const;
+
 private:
-	const AntintrusionZone *zone;
+	const AntintrusionAlarmSource *source;
 	AlarmType type;
 	QDateTime date_time;
 };
@@ -141,7 +163,7 @@ friend class TestAntintrusionSystem;
 	Q_PROPERTY(QObject *currentScenario READ getCurrentScenario NOTIFY currentScenarioChanged)
 
 public:
-	AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionZone*> _zones);
+	AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionAlarmSource *> _aux, QList<AntintrusionZone*> _zones);
 
 	virtual int getObjectId() const
 	{
@@ -188,6 +210,7 @@ private:
 	bool isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
 	AntintrusionDevice *dev;
 	ObjectDataModel zones;
+	ObjectDataModel aux;
 	ObjectDataModel scenarios;
 	ObjectDataModel alarms;
 	bool status;

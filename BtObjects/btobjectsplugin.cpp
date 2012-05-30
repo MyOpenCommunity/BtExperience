@@ -127,6 +127,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 void BtObjectsPlugin::createObjects(QDomDocument document)
 {
 	QList<AntintrusionZone *> antintrusion_zones;
+	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
@@ -155,6 +156,10 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseAntintrusionZone(xml_obj);
 			antintrusion_zones = convertObjectPairList<AntintrusionZone *>(obj_list);
 			break;
+		case ObjectInterface::IdAntintrusionAux:
+			obj_list = parseAntintrusionAux(xml_obj);
+			antintrusion_aux = convertObjectPairList<AntintrusionAlarmSource *>(obj_list);
+			break;
 		case ObjectInterface::IdAntintrusionScenario:
 			obj_list = parseAntintrusionScenario(xml_obj, uii_map, antintrusion_zones);
 			antintrusion_scenarios = convertObjectPairList<AntintrusionScenario *>(obj_list);
@@ -172,7 +177,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	}
 
 	if (antintrusion_zones.size())
-		objmodel.insertWithoutUii(createAntintrusionSystem(antintrusion_zones, antintrusion_scenarios));
+		objmodel.insertWithoutUii(createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios));
 }
 
 void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)

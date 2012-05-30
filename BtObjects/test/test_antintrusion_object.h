@@ -40,12 +40,13 @@ private slots:
 	void testPasswordFail();
 	void testIntrusionAlarm();
 	void testTamperingAlarm();
-	void testTechincalAlarm();
+	void testTechnicalAlarm();
 	void testAntipanicAlarm();
 	void testNoDoubleAlarms();
 	void testResetTechnicalAlarm();
 	void testClearAlarmsOnInsert();
 	void testAlarmOnNotConfiguredZone();
+	void testTechnicalAlarmOnNotConfiguredZone();
 
 private:
 	void checkAlarmedZones(AlarmZoneList l);
