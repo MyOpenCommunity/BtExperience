@@ -5,7 +5,6 @@
 #include "devices_cache.h"
 #include "thermal_device.h"
 #include "probe_device.h"
-#include "antintrusion_device.h"
 #include "objectmodel.h"
 #include "lightobjects.h"
 #include "thermalobjects.h"
@@ -44,7 +43,8 @@
 QHash<GlobalField, QString> *bt_global::config;
 
 
-namespace {
+namespace
+{
 	NonControlledProbeDevice *createNonControlledProbeDevice(const QDomNode &item_node)
 	{
 		NonControlledProbeDevice *dev = 0;
@@ -57,7 +57,26 @@ namespace {
 		}
 		return dev;
 	}
+
+	template<class Tr>
+	QList<Tr> convertObjectPairList(QList<ObjectPair> pairs)
+	{
+		QList<Tr> res;
+
+		foreach (const ObjectPair &pair, pairs)
+		{
+			Tr r = qobject_cast<Tr>(pair.second);
+
+			Q_ASSERT_X(r, "convertObjectPairList", "Invalid object type");
+
+			if (r)
+				res.append(r);
+		}
+
+		return res;
+	}
 }
+
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
@@ -107,6 +126,9 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 void BtObjectsPlugin::createObjects(QDomDocument document)
 {
+	QList<AntintrusionZone *> antintrusion_zones;
+	QList<AntintrusionScenario *> antintrusion_scenarios;
+
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
 		QList<ObjectPair> obj_list;
@@ -129,6 +151,14 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdLightCommand:
 			obj_list = parseLightCommand(xml_obj);
 			break;
+		case ObjectInterface::IdAntintrusionZone:
+			obj_list = parseAntintrusionZone(xml_obj);
+			antintrusion_zones = convertObjectPairList<AntintrusionZone *>(obj_list);
+			break;
+		case ObjectInterface::IdAntintrusionScenario:
+			obj_list = parseAntintrusionScenario(xml_obj, uii_map, antintrusion_zones);
+			antintrusion_scenarios = convertObjectPairList<AntintrusionScenario *>(obj_list);
+			break;
 		}
 
 		if (!obj_list.isEmpty())
@@ -140,6 +170,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			}
 		}
 	}
+
+	if (antintrusion_zones.size())
+		objmodel.insertWithoutUii(createAntintrusionSystem(antintrusion_zones, antintrusion_scenarios));
 }
 
 void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
@@ -170,9 +203,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		}
 		case ObjectInterface::IdHardwareSettings:
 			obj = new HardwareSettings;
-			break;
-		case ObjectInterface::IdAntintrusionSystem:
-			obj = createAntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice), item);
 			break;
 		case ObjectInterface::IdMultiChannelSoundDiffusionSystem:
 			obj_list = createSoundDiffusionSystem(item, id);

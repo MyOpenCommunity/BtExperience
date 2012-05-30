@@ -11,11 +11,16 @@
 
 class AntintrusionSystem;
 class AntintrusionDevice;
+class AntintrusionZone;
+class AntintrusionScenario;
 class ObjectDataModel;
 class QDomNode;
 
 
-AntintrusionSystem *createAntintrusionSystem(AntintrusionDevice *dev, const QDomNode &xml_node);
+QList<ObjectPair> parseAntintrusionZone(const QDomNode &obj);
+QList<ObjectPair> parseAntintrusionScenario(const QDomNode &obj, const UiiMapper &uii_map, QList<AntintrusionZone *> zones);
+
+AntintrusionSystem *createAntintrusionSystem(QList<AntintrusionZone *> zones, QList<AntintrusionScenario *> scenarios);
 
 
 class AntintrusionZone : public ObjectInterface
@@ -55,11 +60,11 @@ private:
 class AntintrusionScenario : public ObjectInterface
 {
 	Q_OBJECT
+	Q_PROPERTY(bool selected READ isSelected NOTIFY selectionChanged)
+	Q_PROPERTY(QString description READ getDescription CONSTANT)
 
 public:
 	AntintrusionScenario(QString name, QList<int> scenario_zones, QList<AntintrusionZone*> zones);
-	Q_PROPERTY(bool selected READ isSelected NOTIFY selectionChanged)
-	Q_PROPERTY(QString description READ getDescription CONSTANT)
 
 	virtual ObjectCategory getCategory() const
 	{
@@ -105,6 +110,7 @@ public:
 		Tamper,
 		Technical,
 	};
+
 	AntintrusionAlarm(AlarmType type, const AntintrusionZone *zone, QDateTime time);
 
 	virtual ObjectCategory getCategory() const

@@ -1,5 +1,6 @@
 #include "antintrusionsystem.h"
 #include "antintrusion_device.h"
+#include "devices_cache.h"
 #include "objectmodel.h"
 
 #include "xml_functions.h"
@@ -10,50 +11,78 @@
 #define CODE_TIMEOUT_SECS 10
 
 
-AntintrusionSystem *createAntintrusionSystem(AntintrusionDevice *dev, const QDomNode &xml_node)
+QList<ObjectPair> parseAntintrusionZone(const QDomNode &obj)
 {
-	QList<QPair<int, QString> > zone_list;
-	foreach (const QDomNode &zone, getChildren(getChildWithName(xml_node, "zones"), "zone"))
+	QList<ObjectPair> obj_list;
+	// extract default values
+	QString def_descr = getAttribute(obj, "descr");
+	QString def_where = getAttribute(obj, "where");
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
-		QString name = getTextChild(zone, "name");
-		QString s = getTextChild(zone, "num");
-		bool ok;
-		int z = s.toInt(&ok);
-		if (!ok)
+		int uii = getIntAttribute(ist, "uii");
+		QString descr = getAttribute(ist, "descr", def_descr);
+		QString where = getAttribute(ist, "where", def_where);
+
+		if (!where.length() == 2 && !where.startsWith('#'))
 		{
-			qWarning() << "Invalid zone number" << s << "for zone" << name;
+			qWarning("Invalid where in antintrusion zone");
 			continue;
 		}
-		zone_list << qMakePair(z, name);
-	}
 
-	QList<AntintrusionZone *> zones;
-	for (int i = 0; i < zone_list.length(); ++i)
-	{
-		AntintrusionZone *z = new AntintrusionZone(zone_list.at(i).first, zone_list.at(i).second);
-		dev->partializeZone(zone_list.at(i).first, z->getPartialization()); // initialization
-		QObject::connect(z, SIGNAL(requestPartialization(int,bool)), dev, SLOT(partializeZone(int,bool)));
-		zones << z;
-	}
+		bool ok;
+		int zone = where.mid(1).toInt(&ok);
 
-	QList<AntintrusionScenario *> scenarios;
-	foreach (const QDomNode &scenario, getChildren(getChildWithName(xml_node, "scenarios"), "scenario"))
-	{
-		QString name = getTextChild(scenario, "name");
-		QList<int> scenario_zones;
-		foreach (QString s, getTextChild(scenario, "zones").split(","))
+		if (!ok)
 		{
-			bool ok;
-			int z = s.toInt(&ok);
-			if (!ok)
-			{
-				qWarning() << "Invalid zone" << z << "for the scenario:" << name;
-				continue;
-			}
-			scenario_zones << z;
+			qWarning("Invalid where in antintrusion zone");
+			continue;
 		}
 
-		scenarios << new AntintrusionScenario(name, scenario_zones, zones);
+		obj_list << ObjectPair(uii, new AntintrusionZone(zone, descr));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseAntintrusionScenario(const QDomNode &obj, const UiiMapper &uii_map, QList<AntintrusionZone *> zones)
+{
+	QList<ObjectPair> obj_list;
+	// extract default values
+	QString def_descr = getAttribute(obj, "descr");
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		int uii = getIntAttribute(ist, "uii");
+		QString descr = getAttribute(ist, "descr", def_descr);
+		QList<int> zone_ids;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			AntintrusionZone *zone = uii_map.value<AntintrusionZone>(object_uii);
+
+			if (!zone)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in antintrusion zone set";
+				continue;
+			}
+
+			zone_ids.append(zone->getNumber());
+		}
+
+		obj_list << ObjectPair(uii, new AntintrusionScenario(descr, zone_ids, zones));
+	}
+	return obj_list;
+}
+
+AntintrusionSystem *createAntintrusionSystem(QList<AntintrusionZone *> zones, QList<AntintrusionScenario *> scenarios)
+{
+	AntintrusionDevice *dev = bt_global::add_device_to_cache(new AntintrusionDevice);
+
+	foreach (AntintrusionZone *zone, zones)
+	{
+		dev->partializeZone(zone->getNumber(), zone->getPartialization()); // initialization
+		QObject::connect(zone, SIGNAL(requestPartialization(int,bool)), dev, SLOT(partializeZone(int,bool)));
 	}
 
 	AntintrusionSystem *system = new AntintrusionSystem(dev, scenarios, zones);

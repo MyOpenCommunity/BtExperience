@@ -21,7 +21,8 @@ MenuColumn {
 
     FilterListModel {
         id: objectModel
-        categories: [ObjectInterface.Antintrusion]
+        source: myHomeModels.myHomeObjects
+        filters: [{objectId: ObjectInterface.IdAntintrusionSystem}]
     }
 
     Connections {
