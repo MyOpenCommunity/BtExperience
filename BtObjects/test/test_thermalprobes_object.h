@@ -40,21 +40,39 @@ private slots:
 
 	void testSetSetPoint();
 	void testSetProbeStatus();
-	void testSetFancoilSpeed();
 
 	void testReceiveTemperature();
 	void testReceiveSetPoint();
 	void testReceiveStatus();
+
+protected:
+	void compareClientCommand();
+	void initObjects(ControlledProbeDevice *dev, ThermalControlledProbeFancoil *obj);
+
+private:
+	void testReceiveStatus(ControlledProbeDevice::ProbeStatus device_status,
+			       ThermalControlledProbe::ProbeStatus object_status);
+
+	ThermalControlledProbe *obj;
+	ControlledProbeDevice *dev;
+};
+
+
+class TestThermalProbesFancoil : public TestThermalProbes
+{
+Q_OBJECT
+private slots:
+	void init();
+
+	void testSetFancoilSpeed();
+
 	void testReceiveFancoilSpeed();
 
 private:
-	void compareClientCommand();
-	void testReceiveStatus(ControlledProbeDevice::ProbeStatus device_status,
-			       ThermalControlledProbe::ProbeStatus object_status);
 	void testReceiveFancoilSpeed(int device_speed,
-				     ThermalControlledProbe::FancoilSpeed object_speed);
+				     ThermalControlledProbeFancoil::FancoilSpeed object_speed);
 
-	ThermalControlledProbe *obj;
+	ThermalControlledProbeFancoil *obj;
 	ControlledProbeDevice *dev;
 };
 

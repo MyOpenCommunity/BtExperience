@@ -49,6 +49,7 @@ public:
 		IdStopAndGoPlus,
 		IdStopAndGoBTest,
 		IdEnergyData,                           // 30
+		IdThermalControlledProbeFancoil,
 		// used internally
 		IdDimmerGroup = 100,
 		IdDimmer100Group = 101,

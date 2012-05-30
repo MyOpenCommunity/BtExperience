@@ -37,13 +37,7 @@ class ThermalControlledProbe : public ObjectInterface
 	*/
 	Q_PROPERTY(int setpoint READ getSetpoint WRITE setSetpoint NOTIFY setpointChanged)
 
-	/*!
-		\brief Sets or gets the fancoil status (only for probes associated with a fancoil)
-	*/
-	Q_PROPERTY(FancoilSpeed fancoil READ getFancoil WRITE setFancoil NOTIFY fancoilChanged)
-
 	Q_ENUMS(ProbeStatus)
-	Q_ENUMS(FancoilSpeed)
 
 public:
 	enum ProbeStatus
@@ -55,14 +49,6 @@ public:
 		Antifreeze  /*!< Antifreeze mode. */
 	};
 
-	enum FancoilSpeed
-	{
-		// these values are the same of the ControlledProbeDevice
-		FancoilMin = 1,  /*!< Minimum speed */
-		FancoilMed,      /*!< Medium speed */
-		FancoilMax,      /*!< Maximum speed */
-		FancoilAuto      /*!< Automatic speed */
-	};
 
 	ThermalControlledProbe(QString name, QString key, ControlledProbeDevice *d);
 
@@ -86,27 +72,73 @@ public:
 	int getSetpoint() const;
 	void setSetpoint(int sp);
 
-	FancoilSpeed getFancoil() const;
-	void setFancoil(FancoilSpeed s);
-
 signals:
 	void probeStatusChanged();
 	void temperatureChanged();
 	void setpointChanged();
-	void fancoilChanged();
 
-private slots:
+protected:
+	ControlledProbeDevice *dev;
+
+protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
 	QString key;
 	ProbeStatus probe_status;
-	FancoilSpeed fancoil_speed;
 	int setpoint;
 	int temperature;
-	ControlledProbeDevice *dev;
 };
 
+
+/*!
+	\ingroup ThermalRegulation
+	\brief Manages thermal regulation controlled probes with fancoil
+
+	The object id is \a ObjectInterface::IdThermalControlledProbeFancoil, the object key is the SCS where.
+*/
+class ThermalControlledProbeFancoil : public ThermalControlledProbe
+{
+	friend class TestThermalProbesFancoil;
+
+	Q_OBJECT
+
+	/*!
+		\brief Sets or gets the fancoil status (only for probes associated with a fancoil)
+	*/
+	Q_PROPERTY(FancoilSpeed fancoil READ getFancoil WRITE setFancoil NOTIFY fancoilChanged)
+
+	Q_ENUMS(FancoilSpeed)
+
+public:
+	enum FancoilSpeed
+	{
+		// these values are the same of the ControlledProbeDevice
+		FancoilMin = 1,  /*!< Minimum speed */
+		FancoilMed,      /*!< Medium speed */
+		FancoilMax,      /*!< Maximum speed */
+		FancoilAuto      /*!< Automatic speed */
+	};
+
+	ThermalControlledProbeFancoil(QString name, QString key, ControlledProbeDevice *d);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdThermalControlledProbeFancoil;
+	}
+
+	FancoilSpeed getFancoil() const;
+	void setFancoil(FancoilSpeed s);
+
+signals:
+	void fancoilChanged();
+
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
+private:
+	FancoilSpeed fancoil_speed;
+};
 
 #endif // THERMALPROBES_H
 

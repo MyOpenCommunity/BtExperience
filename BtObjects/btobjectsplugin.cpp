@@ -167,8 +167,7 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		{
 			ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?
 						ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
-			obj = new ThermalControlledProbe(descr, where,
-											 new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+			obj = new ThermalControlledProbe(descr, where, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
 			break;
 		}
 		case ObjectInterface::IdHardwareSettings:
@@ -403,6 +402,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<ThermalControlledProbe>(
 				uri, 1, 0, "ThermalControlledProbe",
 				"unable to create a ThermalControlledProbe instance");
+	qmlRegisterUncreatableType<ThermalControlledProbeFancoil>(
+				uri, 1, 0, "ThermalControlledProbeFancoil",
+				"unable to create a ThermalControlledProbeFancoil instance");
 	qmlRegisterUncreatableType<PlatformSettings>(
 				uri, 1, 0, "PlatformSettings",
 				"unable to create a PlatformSettings instance");

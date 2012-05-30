@@ -76,8 +76,8 @@ int main(int argc, char *argv[])
 	TestSoundAmbient test_sound_ambient;
 	test_list << &test_sound_ambient;
 
-	TestThermalProbes test_thermal_probes;
-	test_list << &test_thermal_probes;
+	ADD_TEST(TestThermalProbes);
+	ADD_TEST(TestThermalProbesFancoil);
 
 	TestThermalControlUnit4Zones test_thermal_control_unit_4z;
 	test_list << &test_thermal_control_unit_4z;

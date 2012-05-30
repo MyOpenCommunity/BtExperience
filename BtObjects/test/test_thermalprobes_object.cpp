@@ -29,12 +29,18 @@
 #include <QPair>
 
 
+void TestThermalProbes::initObjects(ControlledProbeDevice *_dev, ThermalControlledProbeFancoil *_obj)
+{
+	obj = _obj;
+	dev = _dev;
+}
+
 void TestThermalProbes::init()
 {
-	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL);
+	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL);
 
 	obj = new ThermalControlledProbe("", "", d);
-	dev = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL, 1);
+	dev = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL, 1);
 }
 
 void TestThermalProbes::cleanup()
@@ -85,25 +91,6 @@ void TestThermalProbes::testSetProbeStatus()
 	compareClientCommand();
 
 	// TODO check frame not sent if same state
-}
-
-void TestThermalProbes::testSetFancoilSpeed()
-{
-	obj->setFancoil(ThermalControlledProbe::FancoilMin);
-	dev->setFancoilSpeed(1);
-	compareClientCommand();
-
-	obj->setFancoil(ThermalControlledProbe::FancoilMed);
-	dev->setFancoilSpeed(2);
-	compareClientCommand();
-
-	obj->setFancoil(ThermalControlledProbe::FancoilMax);
-	dev->setFancoilSpeed(3);
-	compareClientCommand();
-
-	obj->setFancoil(ThermalControlledProbe::FancoilAuto);
-	dev->setFancoilSpeed(4);
-	compareClientCommand();
 }
 
 void TestThermalProbes::testReceiveTemperature()
@@ -158,7 +145,37 @@ void TestThermalProbes::testReceiveStatus()
 	testReceiveStatus(ControlledProbeDevice::ST_AUTO, ThermalControlledProbe::Auto);
 }
 
-void TestThermalProbes::testReceiveFancoilSpeed(int device_speed, ThermalControlledProbe::FancoilSpeed object_speed)
+
+void TestThermalProbesFancoil::init()
+{
+	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL);
+
+	obj = new ThermalControlledProbeFancoil("", "", d);
+	dev = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL, 1);
+
+	initObjects(dev, obj);
+}
+
+void TestThermalProbesFancoil::testSetFancoilSpeed()
+{
+	obj->setFancoil(ThermalControlledProbeFancoil::FancoilMin);
+	dev->setFancoilSpeed(1);
+	compareClientCommand();
+
+	obj->setFancoil(ThermalControlledProbeFancoil::FancoilMed);
+	dev->setFancoilSpeed(2);
+	compareClientCommand();
+
+	obj->setFancoil(ThermalControlledProbeFancoil::FancoilMax);
+	dev->setFancoilSpeed(3);
+	compareClientCommand();
+
+	obj->setFancoil(ThermalControlledProbeFancoil::FancoilAuto);
+	dev->setFancoilSpeed(4);
+	compareClientCommand();
+}
+
+void TestThermalProbesFancoil::testReceiveFancoilSpeed(int device_speed, ThermalControlledProbeFancoil::FancoilSpeed object_speed)
 {
 	DeviceValues v;
 	v[ControlledProbeDevice::DIM_FANCOIL_STATUS] = device_speed;
@@ -172,10 +189,10 @@ void TestThermalProbes::testReceiveFancoilSpeed(int device_speed, ThermalControl
 	t.checkNoSignals();
 }
 
-void TestThermalProbes::testReceiveFancoilSpeed()
+void TestThermalProbesFancoil::testReceiveFancoilSpeed()
 {
-	testReceiveFancoilSpeed(1, ThermalControlledProbe::FancoilMin);
-	testReceiveFancoilSpeed(2, ThermalControlledProbe::FancoilMed);
-	testReceiveFancoilSpeed(3, ThermalControlledProbe::FancoilMax);
-	testReceiveFancoilSpeed(4, ThermalControlledProbe::FancoilAuto);
+	testReceiveFancoilSpeed(1, ThermalControlledProbeFancoil::FancoilMin);
+	testReceiveFancoilSpeed(2, ThermalControlledProbeFancoil::FancoilMed);
+	testReceiveFancoilSpeed(3, ThermalControlledProbeFancoil::FancoilMax);
+	testReceiveFancoilSpeed(4, ThermalControlledProbeFancoil::FancoilAuto);
 }
