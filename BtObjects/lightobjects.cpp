@@ -85,6 +85,25 @@ QList<ObjectPair> parseLight(const QDomNode &obj)
 	return obj_list;
 }
 
+QList<ObjectPair> parseLightCommand(const QDomNode &obj)
+{
+	QList<ObjectPair> obj_list;
+	// extract default values
+	QString def_descr = getAttribute(obj, "descr");
+	QString def_where = getAttribute(obj, "where");
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		int uii = getIntAttribute(ist, "uii");
+		QString descr = getAttribute(ist, "descr", def_descr);
+		QString where = getAttribute(ist, "where", def_where);
+
+		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, PULL));
+		obj_list << ObjectPair(uii, new Light(descr, where, d));
+	}
+	return obj_list;
+}
+
 
 Light::Light(QString _name, QString _key, LightingDevice *d)
 {

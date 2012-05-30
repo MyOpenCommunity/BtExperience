@@ -14,6 +14,7 @@ class QDomNode;
 QList<ObjectPair> parseDimmer100(const QDomNode &obj);
 QList<ObjectPair> parseDimmer(const QDomNode &obj);
 QList<ObjectPair> parseLight(const QDomNode &obj);
+QList<ObjectPair> parseLightCommand(const QDomNode &obj);
 
 
 /*!

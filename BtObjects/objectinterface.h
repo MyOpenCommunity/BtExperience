@@ -53,7 +53,7 @@ public:
 		IdDimmer = 2001,
 		IdDimmer100 = 2002,
 		IdLightGroup = 2004,
-		IdCommand = 2005,
+		IdLightCommand = 2005,
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 

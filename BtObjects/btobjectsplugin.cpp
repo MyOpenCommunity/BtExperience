@@ -128,6 +128,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdDimmer100:
 			obj_list = parseDimmer100(xml_obj);
 			break;
+		case ObjectInterface::IdLightCommand:
+			obj_list = parseLightCommand(xml_obj);
+			break;
 		}
 
 		if (!obj_list.isEmpty())
