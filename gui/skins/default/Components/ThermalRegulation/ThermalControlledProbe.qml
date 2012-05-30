@@ -36,7 +36,7 @@ MenuColumn {
     }
 
     onChildDestroyed: {
-        modalityItem.state = "";
+        modalityItem.state = ""
     }
 
     onChildLoaded: {
@@ -78,33 +78,38 @@ MenuColumn {
         id: fixedItem
         anchors.top: parent.top
         width: parent.width
-        height: 100
+        height: 50
         source: imagesPath + "common/dimmer_bg.png"
 
         Text {
             id: textTemperature
-            x: 18
-            y: 13
+            anchors.centerIn: parent
             text: dataModel.temperature  / 10 + qsTr("°C")
             font.pixelSize: 24
         }
+    }
 
-        MenuItem {
-            id: modalityItem
-            hasChild: true
-            name: qsTr("modes")
-            x: 0
-            y: 51
+    MenuItem {
+        id: modalityItem
+        hasChild: true
+        name: qsTr("modes")
+        anchors.top: fixedItem.bottom
+        height: visible ? 50 : 0
+        visible: (zones === 99)
 
-            onClicked: {
-                column.loadColumn(
-                            thermalControlledProbeModalities,
-                            modalityItem.name,
-                            dataModel)
-                if (modalityItem.state == "")
-                    modalityItem.state =  "selected"
-            }
+        onClicked: {
+            column.loadColumn(
+                        thermalControlledProbeModalities,
+                        modalityItem.name,
+                        dataModel)
+            if (modalityItem.state == "")
+                modalityItem.state =  "selected"
         }
+    }
+
+    AnimatedLoader {
+        id: itemLoader
+        anchors.top: modalityItem.bottom
     }
 
     Component {
@@ -178,11 +183,6 @@ MenuColumn {
                 }
             }
         }
-    }
-
-    AnimatedLoader {
-        id: itemLoader
-        anchors.top: fixedItem.bottom
     }
 }
 
