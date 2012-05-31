@@ -19,6 +19,26 @@ QList<ObjectPair> parseLightCommand(const QDomNode &obj);
 QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map);
 
 
+// internal class, used in light groups, not useful to the GUI
+class LightCommand : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	LightCommand(LightingDevice *d);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdLight;
+	}
+
+	virtual void setActive(bool st);
+
+protected:
+	LightingDevice *dev;
+};
+
+
 /*!
 	\ingroup Lighting
 	\brief Manages light actuators
@@ -27,7 +47,7 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 
 	The object id is \a ObjectInterface::IdLight, the key is the SCS where.
 */
-class Light : public ObjectInterface
+class Light : public LightCommand
 {
 	friend class TestLight;
 
@@ -58,7 +78,6 @@ public:
 	}
 
 	virtual bool isActive() const;
-	virtual void setActive(bool st);
 	void setCategory(ObjectCategory _category);
 	void setHours(int h);
 	int getHours();
@@ -83,7 +102,6 @@ protected:
 
 private:
 	int hours, minutes, seconds;
-	LightingDevice *dev;
 	ObjectCategory category;
 };
 
@@ -102,7 +120,7 @@ class LightGroup : public ObjectInterface
 	Q_OBJECT
 
 public:
-	LightGroup(QString name, QList<Light *> d);
+	LightGroup(QString name, QList<LightCommand *> d);
 
 	virtual int getObjectId() const
 	{
@@ -120,7 +138,7 @@ public:
 	Q_INVOKABLE void setActive(bool status);
 
 private:
-	QList<Light *> objects;
+	QList<LightCommand *> objects;
 };
 
 
