@@ -1,4 +1,5 @@
 #include "globalmodels.h"
+#include "note.h"
 
 
 GlobalModels::GlobalModels()
@@ -55,4 +56,19 @@ void GlobalModels::setMyHomeObjects(ObjectDataModel *_my_home_objects)
 ObjectDataModel *GlobalModels::getMyHomeObjects() const
 {
 	return my_home_objects;
+}
+
+void GlobalModels::setNotes(MediaDataModel *_notes)
+{
+	notes = _notes;
+}
+
+MediaDataModel *GlobalModels::getNotes() const
+{
+	return notes;
+}
+
+Note *GlobalModels::createNote(int profile_id, QString text)
+{
+	return new Note(profile_id, text);
 }

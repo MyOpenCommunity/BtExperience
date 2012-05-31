@@ -15,6 +15,11 @@ MediaDataModel &MediaDataModel::operator<<(ItemInterface *item)
 	return *this;
 }
 
+void MediaDataModel::append(ItemInterface *item)
+{
+	insertObject(item);
+}
+
 int MediaDataModel::rowCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent);
@@ -243,4 +248,9 @@ void MediaModel::clear()
 {
 	if (removeRows(0, counter, QModelIndex()))
 		emit countChanged();
+}
+
+void MediaModel::append(ItemInterface *obj)
+{
+	getSource()->append(obj);
 }

@@ -64,7 +64,6 @@ SOURCES += \
     guisettings.cpp \
     imagereader.cpp \
     inputcontextwrapper.cpp \
-    notelistmodel.cpp
 
 HEADERS += \
     eventfilters.h \
@@ -72,7 +71,6 @@ HEADERS += \
     guisettings.h \
     imagereader.h \
     inputcontextwrapper.h \
-    notelistmodel.h
 
 TRANSLATIONS += locale/bt_experience_it.ts
 

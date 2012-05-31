@@ -1,7 +1,6 @@
 #include "globalproperties.h"
 #include "guisettings.h"
 #include "inputcontextwrapper.h"
-#include "notelistmodel.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -17,10 +16,6 @@ GlobalProperties::GlobalProperties()
 	main_widget = NULL;
 	qmlRegisterUncreatableType<GuiSettings>("BtExperience", 1, 0, "GuiSettings", "");
 	settings = new GuiSettings(this);
-
-	// TODO we need a better implementation for this
-	qmlRegisterUncreatableType<NoteListModel>("BtExperience", 1, 0, "NoteListModel", "");
-	noteListModel = new NoteListModel(this);
 
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -65,12 +60,6 @@ int GlobalProperties::getMainHeight() const
 GuiSettings *GlobalProperties::getGuiSettings() const
 {
 	return settings;
-}
-
-// TODO waiting for better implementation
-NoteListModel *GlobalProperties::getNoteListModel() const
-{
-	return noteListModel;
 }
 
 QObject *GlobalProperties::getInputWrapper() const

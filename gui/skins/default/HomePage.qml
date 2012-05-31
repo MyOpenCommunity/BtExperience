@@ -114,22 +114,27 @@ Page {
             ListElement {
                 image: "images/home/card_1.png"
                 name: "famiglia"
+                profile: 1
             }
             ListElement {
                 image: "images/home/card_2.png"
                 name: "mattia"
+                profile: 2
             }
             ListElement {
                 image: "images/home/card_3.png"
                 name: "camilla"
+                profile: 3
             }
             ListElement {
                 image: "images/home/card_4.png"
                 name: "mamma"
+                profile: 4
             }
             ListElement {
                 image: "images/home/card_5.png"
                 name: "papà"
+                profile: 5
             }
         }
 
@@ -139,7 +144,7 @@ Page {
             source: image
             label: name
 
-            onClicked: Stack.openPage('Profile.qml', {'profile': name, 'sourceImage': image})
+            onClicked: Stack.openPage('Profile.qml', {'profile': name, 'sourceImage': image, 'profileUii': profile})
         }
         anchors {
             top: toolbar.bottom

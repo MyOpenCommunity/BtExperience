@@ -48,6 +48,7 @@ public:
 	}
 
 	void remove(int index);
+	void append(ItemInterface *obj);
 
 signals:
 	void countChanged();
@@ -117,6 +118,8 @@ public:
 		\brief Deletes the specified element in this model from the source model
 	*/
 	Q_INVOKABLE void remove(int index);
+
+	Q_INVOKABLE void append(ItemInterface *obj);
 
 	/*!
 		\brief Deletes all elements in this model from the source model

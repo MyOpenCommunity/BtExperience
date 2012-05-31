@@ -11,6 +11,7 @@ HEADERS += \
 	lightobjects.h \
 	mediamodel.h \
 	mediaobjects.h \
+	note.h \
 	objectinterface.h \
 	objectmodel.h \
 	platform.h \
@@ -62,6 +63,7 @@ SOURCES += \
 	lightobjects.cpp \
 	mediamodel.cpp \
 	mediaobjects.cpp \
+	note.cpp \
 	objectinterface.cpp \
 	objectmodel.cpp \
 	platform.cpp \

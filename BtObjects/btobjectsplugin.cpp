@@ -25,6 +25,7 @@
 #include "stopandgoobjects.h"
 #include "energydata.h"
 #include "container.h"
+#include "note.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QtDeclarative/QDeclarativeEngine>
@@ -110,12 +111,14 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	object_link_model.setParent(this);
 	systems_model.setParent(this);
 	objmodel.setParent(this);
+	note_model.setParent(this);
 
 	global_models.setFloors(&floor_model);
 	global_models.setRooms(&room_model);
 	global_models.setObjectLinks(&object_link_model);
 	global_models.setSystems(&systems_model);
 	global_models.setMyHomeObjects(&objmodel);
+	global_models.setNotes(&note_model);
 
 	ObjectModel::setGlobalSource(&objmodel);
 	createObjectsFakeConfig(document);
@@ -301,6 +304,18 @@ void BtObjectsPlugin::parseConfig()
 			break;
 		}
 	}
+
+	// TODO parse note list file
+	note_model << new Note(3, "portare fuori la spazzatura");
+	note_model << new Note(3, "giocare con le bambole");
+	note_model << new Note(2, "dentista 18/05/2012 ore 14:45");
+	note_model << new Note(4, "appunt. Sig. Mario Monti 18/05/2012 ore 17.00");
+	note_model << new Note(5, "pagare spese condominiali");
+	note_model << new Note(5, "fare cose");
+	note_model << new Note(5, "parlare con persone");
+	note_model << new Note(5, "scrivere e-mail");
+	note_model << new Note(5, "partecipare a riunioni");
+	note_model << new Note(1, "pagare l'affitto");
 }
 
 void BtObjectsPlugin::parseRooms(const QDomNode &container)
@@ -429,6 +444,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<Container>(
 				uri, 1, 0, "Container",
 				"unable to create an Container instance");
+	qmlRegisterUncreatableType<Note>(
+				uri, 1, 0, "Note",
+				"unable to create a Note instance");
 	qmlRegisterUncreatableType<ObjectInterface>(
 				uri, 1, 0, "ObjectInterface",
 				"unable to create an ObjectInterface instance");

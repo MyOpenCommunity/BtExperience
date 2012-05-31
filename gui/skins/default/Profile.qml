@@ -1,11 +1,13 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
 import "js/Stack.js" as Stack
 
 Page {
     id: profilePage
     source: 'images/profiles.jpg'
     property string profile
+    property int profileUii
     property url sourceImage
 
     ToolBar {
@@ -155,7 +157,7 @@ Page {
                     color: index % 2 !== 0 ? "light gray" : "gray"
                     width: 212
                     height: 50
-                    property variant obj: global.noteListModel.getObject(index)
+                    property variant obj: userNotes.getObject(index)
 
                     Text {
                         anchors.left: parent.left
@@ -178,13 +180,19 @@ Page {
                         height: 20
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: global.noteListModel.remove(index)
+                            onClicked: userNotes.remove(index)
                         }
                     }
-
                 }
 
-                model: global.noteListModel
+                model: userNotes
+            }
+
+            MediaModel {
+                id: userNotes
+                source: myHomeModels.notes
+                containers: [profileUii]
+                range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
             }
 
             FavoriteItem {
@@ -289,7 +297,7 @@ Page {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    global.noteListModel.append(textEdit.text)
+                                    userNotes.append(myHomeModels.createNote(profileUii, textEdit.text))
                                     closePopup()
                                 }
                             }
