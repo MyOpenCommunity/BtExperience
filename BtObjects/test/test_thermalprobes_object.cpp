@@ -136,6 +136,25 @@ void TestThermalProbes::testReceiveStatus(ControlledProbeDevice::ProbeStatus dev
 	t.checkNoSignals();
 }
 
+void TestThermalProbes::testReceiveLocalStatus(ControlledProbeDevice::ProbeStatus device_status,
+					       ThermalControlledProbe::ProbeStatus object_status,
+					       bool changed)
+{
+	DeviceValues v;
+	v[ControlledProbeDevice::DIM_LOCAL_STATUS] = device_status;
+
+	ObjectTester t(obj, SIGNAL(probeStatusChanged()));
+	obj->valueReceived(v);
+	if (changed)
+		t.checkSignals();
+	else
+		t.checkNoSignals();
+	QCOMPARE(object_status, obj->getProbeStatus());
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
 void TestThermalProbes::testReceiveStatus()
 {
 	testReceiveStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off);
@@ -143,6 +162,51 @@ void TestThermalProbes::testReceiveStatus()
 	testReceiveStatus(ControlledProbeDevice::ST_MANUAL, ThermalControlledProbe::Manual);
 	testReceiveStatus(ControlledProbeDevice::ST_PROTECTION, ThermalControlledProbe::Antifreeze);
 	testReceiveStatus(ControlledProbeDevice::ST_AUTO, ThermalControlledProbe::Auto);
+}
+
+void TestThermalProbes::testReceiveLocalStatus()
+{
+	testReceiveStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off, false);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_NORMAL, ThermalControlledProbe::Off, false);
+
+	testReceiveStatus(ControlledProbeDevice::ST_MANUAL, ThermalControlledProbe::Manual);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off, true);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_PROTECTION, ThermalControlledProbe::Antifreeze, true);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_NORMAL, ThermalControlledProbe::Manual, true);
+
+	testReceiveStatus(ControlledProbeDevice::ST_PROTECTION, ThermalControlledProbe::Antifreeze);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off, true);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_PROTECTION, ThermalControlledProbe::Antifreeze, true);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_NORMAL, ThermalControlledProbe::Antifreeze, false);
+
+	testReceiveStatus(ControlledProbeDevice::ST_AUTO, ThermalControlledProbe::Auto);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off, true);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_PROTECTION, ThermalControlledProbe::Antifreeze, true);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_NORMAL, ThermalControlledProbe::Auto, true);
+}
+
+void TestThermalProbes::testReceiveLocalOffset()
+{
+	DeviceValues v;
+	v[ControlledProbeDevice::DIM_LOCAL_STATUS] = ControlledProbeDevice::ST_NORMAL;
+	v[ControlledProbeDevice::DIM_OFFSET] = 2;
+
+	ObjectTester t(obj, SIGNAL(localOffsetChanged()));
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getLocalOffset(), 2);
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+
+	v.clear();
+	v[ControlledProbeDevice::DIM_LOCAL_STATUS] = ControlledProbeDevice::ST_OFF;
+	v[ControlledProbeDevice::DIM_OFFSET] = 3;
+
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getLocalOffset(), 0);
 }
 
 

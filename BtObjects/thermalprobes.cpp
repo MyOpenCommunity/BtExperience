@@ -9,8 +9,9 @@ ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, Cont
 {
 	name = _name;
 	key = _key;
-	probe_status = Unknown;
-	temperature = 0;
+	plant_status = Unknown;
+	local_status = Normal;
+	temperature = local_offset = 0;
 	setpoint = 0;
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
@@ -23,14 +24,16 @@ QString ThermalControlledProbe::getObjectKey() const
 
 ThermalControlledProbe::ProbeStatus ThermalControlledProbe::getProbeStatus() const
 {
-	return probe_status;
+	return local_status == Normal ? plant_status : local_status;
+}
+
+ThermalControlledProbe::ProbeStatus ThermalControlledProbe::getLocalProbeStatus() const
+{
+	return local_status;
 }
 
 void ThermalControlledProbe::setProbeStatus(ProbeStatus st)
 {
-	if (st == probe_status)
-		return;
-
 	switch (st)
 	{
 	case Manual:
@@ -61,6 +64,11 @@ void ThermalControlledProbe::setSetpoint(int sp)
 		dev->setManual(celsius2Bt(sp));
 }
 
+int ThermalControlledProbe::getLocalOffset() const
+{
+	return bt2Celsius(local_offset);
+}
+
 int ThermalControlledProbe::getTemperature() const
 {
 	return bt2Celsius(temperature);
@@ -68,17 +76,37 @@ int ThermalControlledProbe::getTemperature() const
 
 void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
 {
+	ProbeStatus old_status = getProbeStatus();
+
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
 	{
 		if (it.key() == ControlledProbeDevice::DIM_STATUS)
 		{
 			qDebug() << "ThermalControlledProbe status changed: " << it.value().toInt();
-			if (probe_status != it.value().toInt())
+			if (plant_status != it.value().toInt())
 			{
-				probe_status = static_cast<ProbeStatus>(it.value().toInt());
-				emit probeStatusChanged();
+				plant_status = static_cast<ProbeStatus>(it.value().toInt());
 			}
+		}
+		else if (it.key() == ControlledProbeDevice::DIM_LOCAL_STATUS)
+		{
+			qDebug() << "ThermalControlledProbe local status changed: " << it.value().toInt();
+			int old_offset = local_offset;
+
+			if (it.value().toInt() == Normal)
+				local_offset = values_list[ControlledProbeDevice::DIM_OFFSET].toInt();
+			else
+				local_offset = 0;
+
+			if (local_status != it.value().toInt())
+			{
+				local_status = static_cast<ProbeStatus>(it.value().toInt());
+				emit localProbeStatusChanged();
+			}
+
+			if (old_offset != local_offset)
+				emit localOffsetChanged();
 		}
 		else if (it.key() == ControlledProbeDevice::DIM_SETPOINT)
 		{
@@ -99,6 +127,9 @@ void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
 
 		++it;
 	}
+
+	if (old_status != getProbeStatus())
+		emit probeStatusChanged();
 }
 
 
