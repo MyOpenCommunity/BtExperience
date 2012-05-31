@@ -74,7 +74,7 @@ QList<ObjectPair> parseAntintrusionAux(const QDomNode &obj)
 		QString where = getAttribute(ist, "where", def_where);
 
 		bool ok;
-		int number = where.mid(1).toInt(&ok);
+		int number = where.toInt(&ok);
 
 		if (!ok)
 		{
