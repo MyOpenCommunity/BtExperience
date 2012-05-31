@@ -28,6 +28,16 @@
 			<link uii="6" />
 			<link uii="9" />
 		</ist>
+		<ist uii="13" descr="all dimmer">
+			<link uii="1" />
+			<link uii="2" />
+			<link uii="6" />
+		</ist>
+		<ist uii="14" descr="all dimmer100">
+			<link uii="4" />
+			<link uii="5" />
+			<link uii="6" />
+		</ist>
 	</obj>
   <item>
     <id>3</id> <!-- Thermal Control unit 99zones -->
