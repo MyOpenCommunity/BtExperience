@@ -111,10 +111,10 @@ Page {
     CardView {
         ListModel {
             id: usersModel
-//            ListElement {
-//                image: "images/home/card_1.png"
-//                name: "famiglia"
-//            }
+            ListElement {
+                image: "images/home/card_1.png"
+                name: "famiglia"
+            }
             ListElement {
                 image: "images/home/card_2.png"
                 name: "mattia"

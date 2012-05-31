@@ -13,7 +13,17 @@ Item {
         }
         else {
             viewLoader.sourceComponent = listView
-            if (listViewSpace.modelCount() * 180 < cardView.width)
+            var count = model.count
+            // compute the number of visible elements
+            var numDelegates = Math.floor(cardView.width / privateProps.largeDelegateWidth)
+            // take delegate spacing into account (spacing is only between delegates)
+            var spacingWidth = (numDelegates - 1) * privateProps.delegateSpacing
+            if (cardView.width - numDelegates * privateProps.largeDelegateWidth > spacingWidth)
+                privateProps.visibleElements = numDelegates
+            else
+                privateProps.visibleElements = numDelegates - 1
+
+            if (count <= privateProps.visibleElements)
                 cardView.state = "hiddenArrows"
         }
     }
@@ -22,6 +32,7 @@ Item {
         id: privateProps
         property int largeDelegateWidth: 175
         property int delegateSpacing: 10
+        property int visibleElements: 1
     }
 
     Component {
@@ -33,15 +44,10 @@ Item {
             interactive: false
             spacing: privateProps.delegateSpacing
             height: 300
-
-            // Compute width to center the ListView delegates
-            // TODO: the current formula is temporary workaround, it must be
-            // removed once all the models expose a count property
+            // Compute width to center the list view
             width: {
-                var count = listViewSpace.modelCount()
-                return count * privateProps.largeDelegateWidth > listViewSpace.width ?
-                            (count - 1) * privateProps.largeDelegateWidth + (count - 2) * privateProps.delegateSpacing:
-                            count * privateProps.largeDelegateWidth + (count - 1) * privateProps.delegateSpacing
+                var min = Math.min(privateProps.visibleElements, model.count)
+                return min * privateProps.largeDelegateWidth + (min - 1) * privateProps.delegateSpacing
             }
 
             clip: true
@@ -50,6 +56,12 @@ Item {
 
             onFlickStarted: currentPressed = -1
             onMovementEnded: currentPressed = -1
+
+            // Needed to leave empty space at the end of the list if there are
+            // not enough elements when calling positionViewAtIndex()
+            preferredHighlightBegin: 0
+            preferredHighlightEnd: privateProps.largeDelegateWidth
+            highlightRangeMode: ListView.StrictlyEnforceRange
         }
     }
 
@@ -112,9 +124,11 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                var newPos = Math.min(view.currentIndex + 5, listViewSpace.modelCount() - 1)
-                view.positionViewAtIndex(newPos, ListView.Beginning)
-                view.currentIndex = newPos
+                var newPos = viewLoader.item.currentIndex + privateProps.visibleElements
+                if (newPos <= model.count - 1) {
+                    viewLoader.item.positionViewAtIndex(newPos, ListView.Beginning)
+                    viewLoader.item.currentIndex = newPos
+                }
             }
         }
     }
@@ -131,9 +145,15 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                var newPos = Math.max(view.currentIndex - 5, 0)
-                view.positionViewAtIndex(newPos, ListView.End)
-                view.currentIndex = newPos
+                var newPos = viewLoader.item.currentIndex - privateProps.visibleElements
+                if (newPos > 0) {
+                    viewLoader.item.positionViewAtIndex(newPos, ListView.Beginning)
+                    viewLoader.item.currentIndex = newPos
+                }
+                else {
+                    viewLoader.item.positionViewAtIndex(0, ListView.Beginning)
+                    viewLoader.item.currentIndex = 0
+                }
             }
         }
     }
