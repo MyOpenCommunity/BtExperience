@@ -31,21 +31,19 @@
 			<link uii="1002" />
 			<link uii="1004" />
 		</ist>
-		<ist uii="1019" descr="notte">
+		<ist uii="1020" descr="notte">
 			<link uii="1001" />
 			<link uii="1002" />
 			<link uii="1003" />
 			<link uii="1005" />
 			<link uii="1006" />
-			<link uii="1007" />
 			<link uii="1008" />
 		</ist>
-		<ist uii="1019" descr="vacanze">
+		<ist uii="1021" descr="vacanze">
 			<link uii="1001" />
 			<link uii="1002" />
 			<link uii="1003" />
 			<link uii="1005" />
-			<link uii="1007" />
 			<link uii="1008" />
 		</ist>
 	</obj>
