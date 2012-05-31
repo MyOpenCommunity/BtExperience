@@ -226,8 +226,8 @@ void TestAntintrusionSystem::testClearAlarmsOnInsert()
 	// init: not inserted and 1 alarm pending
 	obj->initialized = true;
 	obj->status = false;
-	obj->alarms.insertWithoutUii(new AntintrusionAlarm(AntintrusionAlarm::Intrusion,
-		static_cast<const AntintrusionZone *>(obj->zones.getObject(0)), 1, QDateTime::currentDateTime()));
+	obj->alarms << new AntintrusionAlarm(AntintrusionAlarm::Intrusion,
+		static_cast<const AntintrusionZone *>(obj->zones.getObject(0)), 1, QDateTime::currentDateTime());
 
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 

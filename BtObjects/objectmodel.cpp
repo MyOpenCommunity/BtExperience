@@ -11,34 +11,15 @@ ObjectDataModel::ObjectDataModel(QObject *parent) : MediaDataModel(parent)
 {
 }
 
-ObjectDataModel &ObjectDataModel::operator<<(ObjectPair pair)
+ObjectDataModel &ObjectDataModel::operator<<(ObjectInterface *obj)
 {
-	insertObject(pair.second, pair.first);
+	insertObject(obj);
 	return *this;
-}
-
-ObjectDataModel &ObjectDataModel::insertWithoutUii(ObjectInterface *obj)
-{
-	insertObject(obj, -1);
-	return *this;
-}
-
-void ObjectDataModel::insertObject(ObjectInterface *obj, int uii)
-{
-	if (uii != -1)
-		uii_mapper.insert(uii, obj);
-
-	MediaDataModel::insertObject(obj);
 }
 
 ObjectInterface *ObjectDataModel::getObject(int row) const
 {
-	return qobject_cast<ObjectInterface *>(MediaDataModel::getObject(row));
-}
-
-ObjectInterface *ObjectDataModel::getObjectByUii(int uii) const
-{
-	return uii_mapper.value<ObjectInterface>(uii);
+	return static_cast<ObjectInterface *>(MediaDataModel::getObject(row));
 }
 
 

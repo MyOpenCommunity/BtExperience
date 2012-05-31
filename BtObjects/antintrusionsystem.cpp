@@ -251,19 +251,19 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 {
 	foreach (AntintrusionScenario *s, _scenarios)
 	{
-		scenarios.insertWithoutUii(s);
+		scenarios << s;
 		connect(s, SIGNAL(selectionChanged()), this, SIGNAL(currentScenarioChanged()));
 	}
 
 	foreach (AntintrusionZone *z, _zones)
 	{
-		zones.insertWithoutUii(z);
+		zones << z;
 		d->partializeZone(z->getNumber(), z->getPartialization()); // initialization
 		connect(z, SIGNAL(requestPartialization(int,bool)), d, SLOT(partializeZone(int,bool)));
 	}
 
 	foreach (AntintrusionAlarmSource *a, _aux)
-		aux.insertWithoutUii(a);
+		aux << a;
 
 	current_scenario = -1;
 	waiting_response = false;
@@ -430,7 +430,7 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 	}
 
 	AntintrusionAlarm *a = new AntintrusionAlarm(t, source, zone_num, QDateTime::currentDateTime());
-	alarms.insertWithoutUii(a);
+	alarms << a;
 	emit alarmsChanged();
 	emit newAlarm(a);
 }

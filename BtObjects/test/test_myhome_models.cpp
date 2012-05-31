@@ -51,11 +51,11 @@ void TestObjectModel::cleanup()
 
 void TestObjectModel::testFilterObjectId()
 {
-	src->insertWithoutUii(light1);
-	src->insertWithoutUii(light2);
-	src->insertWithoutUii(light3);
-	src->insertWithoutUii(amplifier1);
-	src->insertWithoutUii(amplifier2);
+	*src << light1;
+	*src << light2;
+	*src << light3;
+	*src << amplifier1;
+	*src << amplifier2;
 	qApp->processEvents(); // flush pending countChanged()
 
 	ObjectTester ts(obj, SIGNAL(countChanged()));
@@ -93,11 +93,11 @@ void TestObjectModel::testFilterObjectId()
 
 void TestObjectModel::testFilterObjectKey()
 {
-	src->insertWithoutUii(light1);
-	src->insertWithoutUii(light2);
-	src->insertWithoutUii(light3);
-	src->insertWithoutUii(amplifier1);
-	src->insertWithoutUii(amplifier2);
+	*src << light1;
+	*src << light2;
+	*src << light3;
+	*src << amplifier1;
+	*src << amplifier2;
 	qApp->processEvents(); // flush pending countChanged()
 
 	ObjectTester ts(obj, SIGNAL(countChanged()));
@@ -134,11 +134,11 @@ void TestObjectModel::testFilterObjectKey()
 
 void TestObjectModel::testComplexFilter()
 {
-	src->insertWithoutUii(light1);
-	src->insertWithoutUii(light2);
-	src->insertWithoutUii(light3);
-	src->insertWithoutUii(amplifier1);
-	src->insertWithoutUii(amplifier2);
+	*src << light1;
+	*src << light2;
+	*src << light3;
+	*src << amplifier1;
+	*src << amplifier2;
 	qApp->processEvents(); // flush pending countChanged()
 
 	ObjectTester ts(obj, SIGNAL(countChanged()));

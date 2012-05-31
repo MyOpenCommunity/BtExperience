@@ -171,13 +171,13 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			foreach (ObjectPair p, obj_list)
 			{
 				uii_map.insert(p.first, p.second);
-				objmodel.insertWithoutUii(p.second);
+				objmodel << p.second;
 			}
 		}
 	}
 
 	if (antintrusion_zones.size())
-		objmodel.insertWithoutUii(createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios));
+		objmodel << createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios);
 }
 
 void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
@@ -267,15 +267,15 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
 		if (obj)
-			objmodel.insertWithoutUii(obj);
+			objmodel << obj;
 		else if (!obj_list.isEmpty())
 		{
 			foreach (ObjectInterface *oi, obj_list)
-				objmodel.insertWithoutUii(oi);
+				objmodel << oi;
 		}
 	}
 	// TODO put in the right implementation; for now, use this for testing the interface
-	objmodel.insertWithoutUii(new PlatformSettings(new PlatformDevice));
+	objmodel << new PlatformSettings(new PlatformDevice);
 }
 
 void BtObjectsPlugin::parseConfig()

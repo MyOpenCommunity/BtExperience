@@ -26,18 +26,9 @@ public:
 
 	// Append an item to the model. The model takes the ownership of the item
 	// and reparent it.
-	ObjectDataModel &operator<<(ObjectPair pair);
-	ObjectDataModel &insertWithoutUii(ObjectInterface *obj);
+	ObjectDataModel &operator<<(ObjectInterface *obj);
 
 	ObjectInterface *getObject(int row) const;
-	// may return 0 if uii doesn't exist
-	ObjectInterface *getObjectByUii(int uii) const;
-
-protected:
-	void insertObject(ObjectInterface *obj, int uii);
-
-private:
-	UiiMapper uii_mapper;
 };
 
 

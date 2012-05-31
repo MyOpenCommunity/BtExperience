@@ -23,19 +23,19 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 	season = Summer;
-	programs.insertWithoutUii(new ThermalRegulationProgram(1, QString("P1")));
-	programs.insertWithoutUii(new ThermalRegulationProgram(3, QString("P3")));
-	programs.insertWithoutUii(new ThermalRegulationProgram(5, QString("P5")));
+	programs << new ThermalRegulationProgram(1, QString("P1"));
+	programs << new ThermalRegulationProgram(3, QString("P3"));
+	programs << new ThermalRegulationProgram(5, QString("P5"));
 	current_modality = -1;
 
 	// The objects list should contain only one item per id
 	// TODO: fix the the timed programs
-	modalities.insertWithoutUii(new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &programs, dev));
-	modalities.insertWithoutUii(new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdHoliday, &programs, dev));
-	modalities.insertWithoutUii(new ThermalControlUnitTimedProgram("Working", ThermalControlUnit::IdWorking, &programs, dev));
-	modalities.insertWithoutUii(new ThermalControlUnitAntifreeze("Antifreeze", dev));
-	modalities.insertWithoutUii(new ThermalControlUnitManual("Manual", dev));
-	modalities.insertWithoutUii(new ThermalControlUnitOff("Off", dev));
+	modalities << new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdHoliday, &programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Working", ThermalControlUnit::IdWorking, &programs, dev);
+	modalities << new ThermalControlUnitAntifreeze("Antifreeze", dev);
+	modalities << new ThermalControlUnitManual("Manual", dev);
+	modalities << new ThermalControlUnitOff("Off", dev);
 }
 
 QString ThermalControlUnit::getObjectKey() const
@@ -155,7 +155,7 @@ ThermalControlUnit4Zones::ThermalControlUnit4Zones(QString _name, QString _key, 
 	ThermalControlUnit(_name, _key, d)
 {
 	dev = d;
-	modalities.insertWithoutUii(new ThermalControlUnitTimedManual("Timed Manual", d));
+	modalities << new ThermalControlUnitTimedManual("Timed Manual", d);
 }
 
 
@@ -163,10 +163,10 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 	ThermalControlUnit(_name, _key, d)
 {
 	dev = d;
-	scenarios.insertWithoutUii(new ThermalRegulationProgram(1, QString("S1")));
-	scenarios.insertWithoutUii(new ThermalRegulationProgram(3, QString("S3")));
-	scenarios.insertWithoutUii(new ThermalRegulationProgram(5, QString("S5")));
-	modalities.insertWithoutUii(new ThermalControlUnitScenario("Scenarios", &scenarios, dev));
+	scenarios << new ThermalRegulationProgram(1, QString("S1"));
+	scenarios << new ThermalRegulationProgram(3, QString("S3"));
+	scenarios << new ThermalRegulationProgram(5, QString("S5"));
+	modalities << new ThermalControlUnitScenario("Scenarios", &scenarios, dev);
 }
 
 ObjectDataModel *ThermalControlUnit99Zones::getScenarios() const
