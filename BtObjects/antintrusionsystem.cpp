@@ -107,6 +107,7 @@ QList<ObjectPair> parseAntintrusionScenario(const QDomNode &obj, const UiiMapper
 			if (!zone)
 			{
 				qWarning() << "Invalid uii" << object_uii << "in antintrusion zone set";
+				Q_ASSERT_X(false, "parseAntintrusionScenario", "Invalid uii");
 				continue;
 			}
 

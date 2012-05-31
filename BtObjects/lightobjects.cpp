@@ -163,6 +163,7 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 			if (!item)
 			{
 				qWarning() << "Invalid uii" << object_uii << "in light set";
+				Q_ASSERT_X(false, "parseLightGroup", "Invalid uii");
 				continue;
 			}
 

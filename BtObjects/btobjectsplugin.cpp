@@ -329,6 +329,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			if (!o)
 			{
 				qWarning() << "Invalid uii" << object_uii << "in room";
+				Q_ASSERT_X(false, "parseRooms", "Invalid uii");
 				continue;
 			}
 
@@ -365,6 +366,7 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 			if (!room)
 			{
 				qWarning() << "Invalid uii" << room_uii << "in floor";
+				Q_ASSERT_X(false, "parseFloors", "Invalid uii");
 				continue;
 			}
 
@@ -396,6 +398,7 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 			if (!o)
 			{
 				qWarning() << "Invalid uii" << object_uii << "in system";
+				Q_ASSERT_X(false, "parseSystem", "Invalid uii");
 				continue;
 			}
 
