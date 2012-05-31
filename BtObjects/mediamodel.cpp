@@ -219,6 +219,7 @@ bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 	if (QSortFilterProxyModel::removeRows(row, count, parent))
 	{
 		counter -= count;
+		invalidate();
 		return true;
 	}
 	else
@@ -240,7 +241,6 @@ ItemInterface *MediaModel::getObject(int row)
 void MediaModel::remove(int index)
 {
 	removeRow(index);
-	invalidate();
 }
 
 void MediaModel::clear()
