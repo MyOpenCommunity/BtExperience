@@ -11,7 +11,6 @@ Item {
         var numDelegates = Math.floor(widthExcludingArrows / privateProps.largeDelegateWidth)
         // take delegate spacing into account (spacing is only between delegates)
         var spacingWidth = (numDelegates - 1) * privateProps.delegateSpacing
-        console.log("widthExcludingArrows, numDelegates, spacingWidth: " + widthExcludingArrows + ","+ numDelegates + ","+ spacingWidth)
         if (widthExcludingArrows - numDelegates * privateProps.largeDelegateWidth > spacingWidth)
             privateProps.visibleElements = numDelegates
         else
@@ -38,16 +37,6 @@ Item {
             leftMargin: 2
             right: nextArrow.left
             rightMargin: 2
-        }
-
-        function modelCount() {
-            // QML property name
-            var count = model.count
-            if (count === undefined) {
-                // our model property name
-                count = model.size
-            }
-            return count
         }
 
         ListView {
@@ -131,12 +120,10 @@ Item {
         PropertyChanges {
             target: nextArrow
             visible: false
-            width: 0
         }
         PropertyChanges {
             target: prevArrow
             visible: false
-            width: 0
         }
     }
 }

@@ -6,26 +6,21 @@ Item {
     property Component delegate: undefined
 
     Component.onCompleted: {
-        console.log("Enter")
         var numRows = 3
         var elementColumns = Math.ceil(model.count / numRows)
 
         // compute the number of visible elements
         var widthExcludingArrows = cardView.width - (prevArrow.width + 20) * 2
-        console.log("PING")
         var numColumns = Math.min(elementColumns, Math.floor(widthExcludingArrows / privateProps.delegateWidth))
         // take delegate spacing into account (spacing is only between delegates)
         var spacingWidth = (numColumns - 1) * privateProps.horizontalSpacing
-        console.log("widthExcludingArrows, numDelegates, spacingWidth: " + widthExcludingArrows + ","+ numColumns + ","+ spacingWidth)
         if (widthExcludingArrows - numColumns * privateProps.delegateWidth > spacingWidth)
             privateProps.visibleColumns = numColumns
         else
             privateProps.visibleColumns = numColumns - 1
 
-        console.log("visibleColumns: " + privateProps.visibleColumns)
         if (Math.ceil(model.count / numRows) <= privateProps.visibleColumns)
             cardView.state = "hiddenArrows"
-        console.log("PONG")
     }
 
     QtObject {
@@ -44,16 +39,6 @@ Item {
             leftMargin: 2
             right: nextArrow.left
             rightMargin: 2
-        }
-
-        function modelCount() {
-            // QML property name
-            var count = model.count
-            if (count === undefined) {
-                // our model property name
-                count = model.size
-            }
-            return count
         }
 
         GridView {
@@ -119,7 +104,6 @@ Item {
             anchors.fill: parent
             onClicked: {
                 var newPos = gridView.currentIndex - privateProps.visibleColumns * 3
-                console.log("newPos, model.count: " + newPos +","+model.count)
                 if (newPos > 0) {
                     gridView.positionViewAtIndex(newPos, GridView.Beginning)
                     gridView.currentIndex = newPos
@@ -137,12 +121,10 @@ Item {
         PropertyChanges {
             target: nextArrow
             visible: false
-            width: 0
         }
         PropertyChanges {
             target: prevArrow
             visible: false
-            width: 0
         }
     }
 }

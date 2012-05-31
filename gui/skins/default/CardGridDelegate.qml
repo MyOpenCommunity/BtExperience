@@ -51,6 +51,7 @@ Item {
 
     SvgImage {
         id: delegateShadow
+        // TODO: change with pager_grid_shadow
         source: "images/home/pager_shadow.svg"
         anchors {
             top: delegateBackground.bottom
