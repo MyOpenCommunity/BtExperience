@@ -2,14 +2,75 @@ import QtQuick 1.1
 
 Item {
     id: cardView
-    property alias model: view.model
-    property alias delegate: view.delegate
+    property variant model: undefined
+    property Component delegate: undefined
 
     Component.onCompleted: {
-//        console.log("cardView.width: " + width)
-//        console.log("real size: " + listViewSpace.modelCount() * 180)
-        if (listViewSpace.modelCount() * 180 < cardView.width)
-            cardView.state = "hiddenArrows"
+        if (listViewSpace.modelCount() >= 7) {
+            viewLoader.sourceComponent = gridView
+            if (listViewSpace.modelCount() / 2 * 180 < cardView.width)
+                cardView.state = "hiddenArrows"
+        }
+        else {
+            viewLoader.sourceComponent = listView
+            if (listViewSpace.modelCount() * 180 < cardView.width)
+                cardView.state = "hiddenArrows"
+        }
+    }
+
+    QtObject {
+        id: privateProps
+        property int largeDelegateWidth: 175
+        property int delegateSpacing: 10
+    }
+
+    Component {
+        id: listView
+        ListView {
+            property int currentPressed: -1
+
+            orientation: ListView.Horizontal
+            interactive: false
+            spacing: privateProps.delegateSpacing
+            height: 300
+
+            // Compute width to center the ListView delegates
+            // TODO: the current formula is temporary workaround, it must be
+            // removed once all the models expose a count property
+            width: {
+                var count = listViewSpace.modelCount()
+                return count * privateProps.largeDelegateWidth > listViewSpace.width ?
+                            (count - 1) * privateProps.largeDelegateWidth + (count - 2) * privateProps.delegateSpacing:
+                            count * privateProps.largeDelegateWidth + (count - 1) * privateProps.delegateSpacing
+            }
+
+            clip: true
+            model: cardView.model
+            delegate: cardView.delegate
+
+            onFlickStarted: currentPressed = -1
+            onMovementEnded: currentPressed = -1
+        }
+    }
+
+    Component {
+        id: gridView
+        GridView {
+            property int currentPressed: -1
+
+            model: cardView.model
+            delegate: cardView.delegate
+            flow: GridView.TopToBottom
+
+            // 4 columns and 2 rows
+            height: 300 * 2
+            width: listViewSpace.width
+            cellHeight: 300
+            cellWidth: 180
+
+            onFlickStarted: currentPressed = -1
+            onMovementEnded: currentPressed = -1
+        }
     }
 
     Item {
@@ -33,29 +94,9 @@ Item {
             return count
         }
 
-        ListView {
-            property int currentPressed: -1
-
-            id: view
-            orientation: ListView.Horizontal
-            interactive: false
-            spacing: 2
-            height: 300
-
-            // Compute width to center the ListView delegates
-            // TODO: the current formula is temporary workaround, it must be
-            // removed once all the models expose a count property
-            width: {
-                var count = listViewSpace.modelCount()
-                return count * 180 > listViewSpace.width ? listViewSpace.width : count * 180
-            }
-
-            clip: true
+        Loader {
+            id: viewLoader
             anchors.centerIn: parent
-            model: model
-
-            onFlickStarted: currentPressed = -1
-            onMovementEnded: currentPressed = -1
         }
     }
 
@@ -64,7 +105,7 @@ Item {
         source: "images/common/pager_arrow_next.svg"
         anchors {
             right: parent.right
-            rightMargin: 2
+            rightMargin: 20
             verticalCenter: parent.verticalCenter
         }
 
@@ -83,7 +124,7 @@ Item {
         source: "images/common/pager_arrow_previous.svg"
         anchors {
             left: parent.left
-            leftMargin: 2
+            leftMargin: 20
             verticalCenter: parent.verticalCenter
         }
 

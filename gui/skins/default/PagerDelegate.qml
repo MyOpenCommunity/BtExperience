@@ -4,6 +4,7 @@ import Components 1.0
 Item {
     property alias source: imageDelegate.source
     property alias label: labelText.text
+    property variant view: ListView.view === null ? GridView.view : ListView.view
 
     signal clicked
 
@@ -69,12 +70,12 @@ Item {
         anchors.fill: parent
 
         onClicked: itemDelegate.clicked()
-        onPressed: itemDelegate.ListView.view.currentPressed = index
-        onReleased: itemDelegate.ListView.view.currentPressed = -1
+        onPressed: view.currentPressed = index
+        onReleased: view.currentPressed = -1
     }
 
     states: State {
-        when: itemDelegate.ListView.view.currentPressed === index
+        when: view.currentPressed === index
         PropertyChanges {
             target: rectPressed
             visible: true
