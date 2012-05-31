@@ -449,7 +449,7 @@ void AntintrusionSystem::removeAlarm(AntintrusionAlarm::AlarmType t, int zone_nu
 			return;
 		}
 	}
-	qWarning() << "Zone" << zone_num << "is not configured";
+	qWarning() << "No active technical alarm for source" << zone_num;
 }
 
 bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num)

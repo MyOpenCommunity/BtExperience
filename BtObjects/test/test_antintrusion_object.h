@@ -26,7 +26,32 @@
 
 #include <QObject>
 
-typedef QList<QPair<AntintrusionAlarm::AlarmType, int> > AlarmZoneList;
+struct AlarmInfo
+{
+	AntintrusionAlarm::AlarmType type;
+	int number;
+	QString name;
+
+	AlarmInfo(AntintrusionAlarm::AlarmType _type, int _number, QString _name)
+	{
+		type = _type;
+		number = _number;
+		name = _name;
+	}
+};
+
+inline bool operator==(const AlarmInfo &first, const AlarmInfo &second)
+{
+	return first.type == second.type && first.number == second.number && first.name == second.name;
+}
+
+inline bool operator!=(const AlarmInfo &first, const AlarmInfo &second)
+{
+	return !(first == second);
+}
+
+
+typedef QList<AlarmInfo> AlarmZoneList;
 
 class TestAntintrusionSystem : public TestBtObject
 {
