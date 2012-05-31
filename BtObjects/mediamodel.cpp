@@ -216,8 +216,7 @@ bool MediaModel::acceptsRow(int source_row) const
 
 bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-	// TODO: probably we need to also map the row?
-	if (getSource()->removeRows(row, count, mapToSource(parent)))
+	if (QSortFilterProxyModel::removeRows(row, count, parent))
 	{
 		counter -= count;
 		return true;
