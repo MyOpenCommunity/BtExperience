@@ -88,13 +88,31 @@ Page {
             left: buttonsColumn.right
             bottom: parent.bottom
         }
-        sourceComponent: cardList
+        sourceComponent: systemsModel.count > 7 ? cardGrid : cardList
     }
 
     Component {
         id: cardList
         CardView {
             delegate: PagerDelegate {
+                source: image
+                label: name
+
+                onClicked: {
+                    if (target !== "")
+                        Stack.openPage(target)
+                }
+            }
+
+            model: systemsModel
+        }
+    }
+
+    Component {
+        id: cardGrid
+
+        CardGridView {
+            delegate: CardGridDelegate {
                 source: image
                 label: name
 
