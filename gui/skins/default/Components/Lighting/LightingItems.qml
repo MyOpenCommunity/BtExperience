@@ -20,16 +20,28 @@ MenuColumn {
             itemObject: objectModel.getObject(index)
             editable: true
 
-            status: itemObject.active === true ? 1 : 0
+            status: {
+                if (itemObject.objectId === ObjectInterface.IdLightGroup ||
+                        itemObject.objectId === ObjectInterface.IdDimmerGroup ||
+                        itemObject.objectId === ObjectInterface.IdDimmer100Group)
+                    return -1
+                return itemObject.active === true ? 1 : 0
+            }
             hasChild: true
             boxInfoState: {
-                if(itemObject.objectId === ObjectInterface.IdLight)
+                if(itemObject.objectId === ObjectInterface.IdLight ||
+                        itemObject.objectId === ObjectInterface.IdLightGroup ||
+                        itemObject.objectId === ObjectInterface.IdDimmerGroup ||
+                        itemObject.objectId === ObjectInterface.IdDimmer100Group)
                     return ""
                 // Dimmer10 and Dimmer100
                 return "info"
             }
             boxInfoText: {
-                if(itemObject.objectId === ObjectInterface.IdLight)
+                if(itemObject.objectId === ObjectInterface.IdLight ||
+                        itemObject.objectId === ObjectInterface.IdLightGroup ||
+                        itemObject.objectId === ObjectInterface.IdDimmerGroup ||
+                        itemObject.objectId === ObjectInterface.IdDimmer100Group)
                     return ""
                 // Dimmer10 and Dimmer100
                 if(itemObject.active)
