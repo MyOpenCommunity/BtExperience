@@ -1,0 +1,63 @@
+﻿<!-- layout -->
+
+<!-- The layout defines containers -->
+<!-- A container is a section of the graphic that can shows objects of archive and: -->
+<!-- it has a politic of showing objects (fixed position, free position) -->
+<!-- it could have limitation in objects ID (e.g. only objs with id 200x -->
+<!-- More instances of containers can be on the devices but some can be limtated to one (e.g. systems) -->
+<!-- All instances of a container with the same ID share this behaviours -->
+<!-- The list of link to the instances of archive is an ordered list -->
+
+<layout>
+	<container id="1" descr="lights"> <!-- lights system container -->
+		<ist uii="1">
+			<link uii="12" />
+			<link uii="1" />
+			<link uii="2" />
+			<link uii="7" />
+			<link uii="5" />
+			<link uii="6" />
+			<link uii="8" />
+			<!-- uii 3, 4 not inserted. Only in the archive but not visualized -->
+		</ist>
+	</container>
+	<container id="2" > <!-- rooms -->
+		<ist uii="102" descr="living room">
+			<link uii="1" x="0" y="0"/>
+			<!-- x,y can be absolute (pixel) or percentual -->
+			<link uii="2" x="200" y="100" />
+			<link uii="3" x="300" y="300" />
+		</ist>
+		<ist uii="103" descr="bathroom">
+			<link uii="12" x="200" y="100" />
+			<link uii="7" x="200" y="300" />
+		</ist>
+
+		<ist uii="104" descr="garage">
+			<link uii="4" x="50" y="100" />
+			<link uii="5" x="200" y="300" />
+			<link uii="6" x="350" y="80" />
+		</ist>
+		<ist uii="105" descr="bedroom">
+			<link uii="6" x="20" y="10" />
+			<link uii="5" x="200" y="300" />
+			<link uii="12" x="400" y="125" />
+		</ist>
+		<ist uii="106" descr="kitchen">
+			<link uii="12" x="500" y="60" />
+			<link uii="5" x="450" y="300" />
+			<link uii="4" x="200" y="350" />
+		</ist>
+	</container>
+	<container id="3" descr="floor" img="floor.png"> <!-- floor -->
+		<ist uii="201" descr="ground" >
+			<link uii="102" />
+			<link uii="103" />
+			<link uii="104" />
+			<link uii="106" />
+		</ist>
+		<ist uii="202" descr="first floor" img="first.png" >
+			<link uii="105" />
+		</ist>
+	</container>
+</layout>
