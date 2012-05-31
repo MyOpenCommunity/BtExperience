@@ -7,7 +7,7 @@ Item {
 
     Component.onCompleted: {
         // compute the number of visible elements
-        var widthExcludingArrows = cardView.width - (prevArrow.width + 20) * 2
+        var widthExcludingArrows = cardView.width - prevArrow.width * 2
         var numDelegates = Math.floor(widthExcludingArrows / privateProps.largeDelegateWidth)
         // take delegate spacing into account (spacing is only between delegates)
         var spacingWidth = (numDelegates - 1) * privateProps.delegateSpacing
@@ -74,7 +74,6 @@ Item {
         source: "images/common/pager_arrow_next.svg"
         anchors {
             right: parent.right
-            rightMargin: 20
             verticalCenter: parent.verticalCenter
         }
 
@@ -95,7 +94,6 @@ Item {
         source: "images/common/pager_arrow_previous.svg"
         anchors {
             left: parent.left
-            leftMargin: 20
             verticalCenter: parent.verticalCenter
         }
 
