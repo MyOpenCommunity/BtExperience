@@ -213,10 +213,11 @@ void AntintrusionScenario::apply()
 }
 
 
-AntintrusionAlarm::AntintrusionAlarm(AlarmType _type, const AntintrusionAlarmSource *_source, QDateTime time)
+AntintrusionAlarm::AntintrusionAlarm(AlarmType _type, const AntintrusionAlarmSource *_source, int _number, QDateTime time)
 {
 	type = _type;
 	source = _source;
+	number = _number;
 	date_time = time;
 }
 
@@ -237,12 +238,12 @@ QDateTime AntintrusionAlarm::getDateTime()
 
 int AntintrusionAlarm::getNumber() const
 {
-	return source->getNumber();
+	return source ? source->getNumber() : number;
 }
 
 QString AntintrusionAlarm::getName() const
 {
-	return source->getName();
+	return source ? source->getName() : "";
 }
 
 
@@ -385,19 +386,50 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 		return;
 	}
 
+	bool requires_source = true;
 	AntintrusionAlarmSource *source = 0;
-	if (t == AntintrusionAlarm::Technical)
-		source = findAlarmSource(aux, zone_num);
-	else
-		source = findAlarmSource(zones, zone_num);
 
-	if (!source)
+	switch (t)
+	{
+	case AntintrusionAlarm::Intrusion:
+		source = findAlarmSource(zones, zone_num);
+		requires_source = true;
+		break;
+	case AntintrusionAlarm::Antipanic:
+		if (zone_num != 9)
+		{
+			qWarning() << "Invalid zone" << zone_num << "for antipanic alarm";
+			return;
+		}
+
+		source = findAlarmSource(zones, zone_num);
+		requires_source = false;
+		break;
+	case AntintrusionAlarm::Tamper:
+		if (zone_num <= 8)
+		{
+			source = findAlarmSource(zones, zone_num);
+			requires_source = true;
+		}
+		else
+		{
+			source = 0;
+			requires_source = false;
+		}
+		break;
+	case AntintrusionAlarm::Technical:
+		source = findAlarmSource(aux, zone_num);
+		requires_source = true;
+		break;
+	}
+
+	if (!source && requires_source)
 	{
 		qWarning() << "Alarm source" << zone_num << "not configured, ignoring event";
 		return;
 	}
 
-	AntintrusionAlarm *a = new AntintrusionAlarm(t, source, QDateTime::currentDateTime());
+	AntintrusionAlarm *a = new AntintrusionAlarm(t, source, zone_num, QDateTime::currentDateTime());
 	alarms.insertWithoutUii(a);
 	emit alarmsChanged();
 	emit newAlarm(a);

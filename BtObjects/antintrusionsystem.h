@@ -130,7 +130,7 @@ public:
 		Technical,
 	};
 
-	AntintrusionAlarm(AlarmType type, const AntintrusionAlarmSource *source, QDateTime time);
+	AntintrusionAlarm(AlarmType type, const AntintrusionAlarmSource *source, int number, QDateTime time);
 
 	virtual ObjectCategory getCategory() const
 	{
@@ -147,6 +147,7 @@ public:
 private:
 	const AntintrusionAlarmSource *source;
 	AlarmType type;
+	int number;
 	QDateTime date_time;
 };
 

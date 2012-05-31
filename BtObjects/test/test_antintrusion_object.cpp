@@ -150,12 +150,17 @@ void TestAntintrusionSystem::testIntrusionAlarm()
 void TestAntintrusionSystem::testTamperingAlarm()
 {
 	DeviceValues v;
-	v[AntintrusionDevice::DIM_TAMPER_ALARM] = 1;
+	v[AntintrusionDevice::DIM_TAMPER_ALARM] = 12;
 
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
-	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Tamper, 1));
+	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Tamper, 12));
+
+	v[AntintrusionDevice::DIM_TAMPER_ALARM] = 2;
+	obj->valueReceived(v);
+	t.checkSignals();
+	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Tamper, 12) << qMakePair(AntintrusionAlarm::Tamper, 2));
 }
 
 void TestAntintrusionSystem::testTechnicalAlarm()
@@ -172,18 +177,24 @@ void TestAntintrusionSystem::testTechnicalAlarm()
 void TestAntintrusionSystem::testAntipanicAlarm()
 {
 	DeviceValues v;
-	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 6;
+	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 9;
 
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
-	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Antipanic, 6));
+	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Antipanic, 9));
+
+	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 2;
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Antipanic, 9));
 }
 
 void TestAntintrusionSystem::testNoDoubleAlarms()
 {
 	DeviceValues v;
-	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 6;
+	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 9;
 	obj->valueReceived(v);
 	obj->valueReceived(v);
 	QCOMPARE(obj->getAlarms()->getCount(), 1);
@@ -204,6 +215,10 @@ void TestAntintrusionSystem::testResetTechnicalAlarm()
 	obj->valueReceived(v);
 	t.checkSignals();
 	QCOMPARE(obj->getAlarms()->getCount(), 0);
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+	QCOMPARE(obj->getAlarms()->getCount(), 0);
 }
 
 void TestAntintrusionSystem::testClearAlarmsOnInsert()
@@ -212,7 +227,7 @@ void TestAntintrusionSystem::testClearAlarmsOnInsert()
 	obj->initialized = true;
 	obj->status = false;
 	obj->alarms.insertWithoutUii(new AntintrusionAlarm(AntintrusionAlarm::Intrusion,
-		static_cast<const AntintrusionZone *>(obj->zones.getObject(0)), QDateTime::currentDateTime()));
+		static_cast<const AntintrusionZone *>(obj->zones.getObject(0)), 1, QDateTime::currentDateTime()));
 
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 
