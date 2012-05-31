@@ -20,14 +20,17 @@ Page {
         onHomeClicked: Stack.backToHome()
     }
 
-    Text {
-        id: pageTitle
-        text: qsTr("Systems")
-        font.pixelSize: 50
+    NavigationBar {
+        id: buttonsColumn
+        anchors.topMargin: 50
         anchors.top: toolbar.bottom
+        anchors.leftMargin: 2
         anchors.left: parent.left
-        anchors.leftMargin: 20
+        systemsButton: false
+
+        onBackClicked: Stack.popPage()
     }
+
     ListModel {
         id: systemsModel
         ListElement {
@@ -80,9 +83,9 @@ Page {
     Loader {
         id: viewLoader
         anchors {
-            top: pageTitle.bottom
+            top: toolbar.bottom
             right: parent.right
-            left: parent.left
+            left: buttonsColumn.right
             bottom: parent.bottom
         }
         sourceComponent: cardList
