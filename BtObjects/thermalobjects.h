@@ -1,6 +1,10 @@
 #ifndef THERMALOBJECTS_H
 #define THERMALOBJECTS_H
 
+/*!
+	\defgroup ThermalRegulation Thermal regulation
+*/
+
 #include "objectinterface.h"
 #include "objectmodel.h"
 #include "device.h" // DeviceValues

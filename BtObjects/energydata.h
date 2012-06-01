@@ -1,6 +1,10 @@
 #ifndef ENERGYDATA_H
 #define ENERGYDATA_H
 
+/*!
+	\defgroup EnergyDataSystem Energy data
+*/
+
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
 
@@ -17,7 +21,6 @@ class QDomNode;
 #ifndef TEST_ENERGY_DATA
 #define TEST_ENERGY_DATA 1
 #endif
-
 
 struct CacheKey
 {
@@ -56,7 +59,7 @@ inline uint qHash(const CacheKey &key)
 
 
 /*!
-	\ingroup EnergyManagement
+	\ingroup EnergyDataSystem
 	\brief Reads energy consumption data for a monitored object (current and historic data)
 
 	Allows reading current energy consumption, and records hourly/daily/monthly totals and graphs.
@@ -268,6 +271,7 @@ private:
 
 
 /*!
+	\ingroup EnergyDataSystem
 	\brief Encapsulates a scalar consumption value
 */
 class EnergyItem : public QObject
@@ -344,6 +348,7 @@ private:
 
 
 /*!
+	\ingroup EnergyDataSystem
 	\brief Object for a column composing the energy graph
 */
 class EnergyGraphBar : public QObject
@@ -393,6 +398,7 @@ private:
 
 
 /*!
+	\ingroup EnergyDataSystem
 	\brief Encapsulates a consumption graph (set of consumption values)
 */
 class EnergyGraph : public QObject

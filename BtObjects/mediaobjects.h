@@ -1,6 +1,10 @@
 #ifndef MEDIAOBJECTS_H
 #define MEDIAOBJECTS_H
 
+/*!
+	\defgroup SoundDiffusion Sound diffusion
+*/
+
 #include "objectinterface.h"
 #include "objectmodel.h"
 #include "device.h" // DeviceValues
@@ -228,6 +232,7 @@ private:
 
 
 /*!
+	\ingroup SoundDiffusion
 	\brief Manages an AUX source
 
 	Can be used to control an aux adapter (for ananlogic sound input) or another
@@ -243,6 +248,7 @@ public:
 
 
 /*!
+	\ingroup SoundDiffusion
 	\brief Manages an RDS radio device
 */
 class SourceRadio : public SourceBase
@@ -403,6 +409,7 @@ private:
 
 
 /*!
+	\ingroup SoundDiffusion
 	\brief container for a power amplifier preset
 
 	The preset number is in the object id, the preset name in the object name.

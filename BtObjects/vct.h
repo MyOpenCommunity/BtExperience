@@ -1,6 +1,10 @@
 #ifndef VCT_H
 #define VCT_H
 
+/*!
+	\defgroup VideoDoorEntry
+*/
+
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
 #include "objectmodel.h"
@@ -15,6 +19,10 @@ ObjectInterface *parseCCTV(const QDomNode &n);
 ObjectInterface *parseIntercom(const QDomNode &n);
 
 
+/*!
+	\ingroup VideoDoorEntry
+	\brief Contains address and description for a single external place
+*/
 class ExternalPlace : public ObjectInterface
 {
 	friend class Intercom; // to access the where field

@@ -1,6 +1,11 @@
 #ifndef ENERGYLOAD_H
 #define ENERGYLOAD_H
 
+/*!
+	\defgroup LoadManagement Load management
+	\defgroup LoadDiagnostic Load diagnostic
+*/
+
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
 
@@ -10,6 +15,7 @@ class LoadsDevice;
 
 
 /*!
+	\ingroup LoadManagement
 	\brief Total amount and last reset date/time for a consumption counter
 
 	Exposes two read-only properties with the total consumption since last
@@ -49,7 +55,8 @@ private:
 
 
 /*!
-	\ingroup EnergyManagement
+	\ingroup LoadManagement
+	\ingroup LoadDiagnostic
 	\brief Reads the electricity load status of a monitored object
 
 	The monitored object can be consuming a normal amount of power, an higher than
@@ -188,7 +195,7 @@ private:
 
 
 /*!
-	\ingroup EnergyManagement
+	\ingroup LoadManagement
 	\brief Additional properties/methods for actuators with control unit
 
 	Actuators with a control unit can be disabled by the control unit in case

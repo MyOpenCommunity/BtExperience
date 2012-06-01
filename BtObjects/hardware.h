@@ -1,6 +1,10 @@
 #ifndef HARDWARE_H
 #define HARDWARE_H
 
+/*!
+	\defgroup Settings Settings
+*/
+
 #include "objectinterface.h"
 
 #include <QObject>

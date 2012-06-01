@@ -1,6 +1,10 @@
 #ifndef SCENARIOOBJECTS_H
 #define SCENARIOOBJECTS_H
 
+/*!
+	\defgroup Scenarios Scenarios
+*/
+
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
 

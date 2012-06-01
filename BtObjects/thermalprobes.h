@@ -1,6 +1,10 @@
 #ifndef THERMALPROBES_H
 #define THERMALPROBES_H
 
+/*!
+	\defgroup ThermalRegulation Thermal regulation
+*/
+
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
 

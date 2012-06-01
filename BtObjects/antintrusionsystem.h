@@ -1,13 +1,16 @@
 #ifndef ANTINTRUSIONSYSTEM_H
 #define ANTINTRUSIONSYSTEM_H
 
+/*!
+	\defgroup Antintrusion Anti-intrusion system
+*/
+
 #include "objectinterface.h"
 #include "objectmodel.h"
 #include "device.h" // DeviceValues
 
 #include <QString>
 #include <QDateTime>
-
 
 class AntintrusionSystem;
 class AntintrusionDevice;
@@ -26,6 +29,7 @@ AntintrusionSystem *createAntintrusionSystem(QList<AntintrusionZone *> zones, QL
 
 
 /*!
+	\ingroup Antintrusion
 	\brief The source for an alarm (either a zone or an aux input)
 
 	The \c name property holds the zone/aux description (if any)
@@ -62,6 +66,7 @@ private:
 
 
 /*!
+	\ingroup Antintrusion
 	\brief An antintrusion zone
 
 	In addition to the properties for a generic alarm source, antintrusion zones can be
@@ -100,6 +105,7 @@ private:
 
 
 /*!
+	\ingroup Antintrusion
 	\brief A set of antintrusion zones that can be enabled together
 */
 class AntintrusionScenario : public ObjectInterface
@@ -157,6 +163,7 @@ private:
 
 
 /*!
+	\ingroup Antintrusion
 	\brief A single antintrusion alarm
 */
 class AntintrusionAlarm : public ObjectInterface
@@ -234,6 +241,7 @@ private:
 
 
 /*!
+	\ingroup Antintrusion
 	\brief Antintrusion control unit object
 */
 class AntintrusionSystem : public ObjectInterface
