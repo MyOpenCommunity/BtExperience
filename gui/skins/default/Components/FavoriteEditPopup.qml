@@ -19,7 +19,7 @@ Item {
         id: background
         width: 300
         height: 250
-        source: "images/common/bg_tastiera_codice.png"
+        source: "../images/common/bg_tastiera_codice.png"
     }
 
 
@@ -120,7 +120,7 @@ Item {
 
         Image {
             id: buttonOk
-            source: "images/common/btn_OKAnnulla.png"
+            source: "../images/common/btn_OKAnnulla.png"
 
             Text {
                 anchors.centerIn: parent
@@ -140,7 +140,7 @@ Item {
 
         Image {
             id: buttonCancel
-            source: "images/common/btn_OKAnnulla.png"
+            source: "../images/common/btn_OKAnnulla.png"
 
             Text {
                 anchors.centerIn: parent

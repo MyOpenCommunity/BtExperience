@@ -35,6 +35,7 @@ ControlSlider2 1.0 ControlSlider2.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
 ControlUpDown 1.0 ControlUpDown.qml
 FadeAnimation 1.0 FadeAnimation.qml
+FavoriteEditPopup 1.0 FavoriteEditPopup.qml
 FavoriteItem 1.0 FavoriteItem.qml
 KeyPad 1.0 KeyPad.qml
 LargeButton 1.0 LargeButton.qml
@@ -48,6 +49,7 @@ Paginator 1.0 Paginator.qml
 PaginatorColumn 1.0 PaginatorColumn.qml
 PaginatorList 1.0 PaginatorList.qml
 Pannable 1.0 Pannable.qml
+ProfileView 1.0 ProfileView.qml
 QuickLink 1.0 QuickLink.qml
 RoomItem 1.0 RoomItem.qml
 RssItem 1.0 RssItem.qml
