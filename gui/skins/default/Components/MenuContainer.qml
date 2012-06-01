@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "MenuContainer.js" as Script
+import "../js/MenuContainer.js" as Script
 
 // The MenuContainer components encapsulates some logic to show a gerarchic list
 // of MenuColumn with different sizes and behaviour. The items are arranged

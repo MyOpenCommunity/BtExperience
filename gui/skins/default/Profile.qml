@@ -16,12 +16,15 @@ Page {
     }
 
 
+    Constants {
+        id: constants
+    }
+
     NavigationBar {
         id: navbar
         systemsButton: false
-        anchors.topMargin: parent.height / 100 * 5
+        anchors.topMargin: constants.navbarTopMargin
         anchors.top: toolbar.bottom
-        anchors.leftMargin: 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
 

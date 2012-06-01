@@ -13,13 +13,16 @@ Page {
         onHomeClicked: Stack.backToHome()
     }
 
+    Constants {
+        id: constants
+    }
+
     NavigationBar {
         id: systemsButton
         systemsButton: false
         anchors.left: parent.left
-        anchors.leftMargin: 2
         anchors.top: toolbar.bottom
-        anchors.topMargin: 30
+        anchors.topMargin: constants.navbarTopMargin
         anchors.bottom: parent.bottom
 
         onBackClicked: Stack.popPage()

@@ -74,7 +74,6 @@ Page {
             top: toolbar.bottom
             left: parent.left
             topMargin: constants.navbarTopMargin
-            leftMargin: 2
             bottom: parent.bottom
         }
 
@@ -86,7 +85,7 @@ Page {
     TitleBar {
         id: bgTitle
 
-        source: "images/common/svg_bolt.svg"
+        source: "../../images/common/svg_bolt.svg"
         title: translations.get("ENERGY_TYPE", page.modelObject.energyType)
         anchors {
             left: buttonsColumn.right

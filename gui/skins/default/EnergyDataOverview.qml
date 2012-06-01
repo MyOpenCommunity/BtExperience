@@ -41,7 +41,6 @@ Page {
             top: toolbar.bottom
             left: parent.left
             topMargin: constants.navbarTopMargin
-            leftMargin: 2
             bottom: parent.bottom
         }
 
