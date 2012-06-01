@@ -9,7 +9,6 @@ QuickLink {
 
     page: ""
     bgImage: "images/profiles/webcam.png"
-    text: "Camera #0"
 
     onClicked: {
         cctvModel.getObject(0).cameraOn(address)
