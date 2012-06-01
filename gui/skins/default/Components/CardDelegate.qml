@@ -51,7 +51,7 @@ Item {
 
     SvgImage {
         id: delegateShadow
-        source: "images/home/pager_shadow.svg"
+        source: "../images/home/pager_shadow.svg"
         anchors {
             top: delegateBackground.bottom
             topMargin: 5
@@ -61,7 +61,7 @@ Item {
 
     SvgImage {
         id: rectPressed
-        source: "images/common/profilo_p.svg"
+        source: "../images/common/profilo_p.svg"
         visible: false
         anchors.fill: imageDelegate
     }

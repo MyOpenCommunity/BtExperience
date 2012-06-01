@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "CardView.js" as Script
+import "../js/CardView.js" as Script
 
 Item {
     id: cardView
@@ -63,7 +63,7 @@ Item {
 
     Image {
         id: nextArrow
-        source: "images/common/pager_arrow_next.svg"
+        source: "../images/common/pager_arrow_next.svg"
         anchors {
             right: parent.right
             verticalCenter: parent.verticalCenter
@@ -83,7 +83,7 @@ Item {
 
     Image {
         id: prevArrow
-        source: "images/common/pager_arrow_previous.svg"
+        source: "../images/common/pager_arrow_previous.svg"
         anchors {
             left: parent.left
             verticalCenter: parent.verticalCenter

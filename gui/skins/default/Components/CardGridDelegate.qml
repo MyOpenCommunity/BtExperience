@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
-import "CardView.js" as Script
+import "../js/CardView.js" as Script
 
 Item {
     property alias source: imageDelegate.source
@@ -49,7 +49,7 @@ Item {
 
     SvgImage {
         id: delegateShadow
-        source: "images/common/pager_grid_shadow.svg"
+        source: "../images/common/pager_grid_shadow.svg"
         // this is not necessarily needed, but you must remember to change it
         // if the image ever changes size, so I'm leaving it here as a bookmark
         height: Script._gridShadowHeight
@@ -61,7 +61,7 @@ Item {
 
     SvgImage {
         id: rectPressed
-        source: "images/common/profilo_p.svg"
+        source: "../images/common/profilo_p.svg"
         visible: false
         anchors.fill: imageDelegate
     }
