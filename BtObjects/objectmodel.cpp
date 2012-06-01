@@ -45,26 +45,6 @@ ObjectDataModel *ObjectModel::getSource() const
 	return qobject_cast<ObjectDataModel *>(MediaModel::getSource());
 }
 
-QVariantList ObjectModel::getCategories() const
-{
-	return input_categories;
-}
-
-void ObjectModel::setCategories(QVariantList cat)
-{
-	if (cat == input_categories)
-		return;
-
-	input_categories = cat;
-	categories.clear();
-
-	foreach (const QVariant &v, cat)
-		categories << v.toInt();
-
-	reset(); // see comment at the top of MediaModel
-	emit categoriesChanged();
-}
-
 QVariantList ObjectModel::getFilters() const
 {
 	return input_filters;
@@ -101,16 +81,14 @@ bool ObjectModel::acceptsRow(int source_row) const
 		return false;
 
 	// No category or filter means all the items
-	if (categories.isEmpty() && filters.isEmpty())
+	if (filters.isEmpty())
 		return true;
 
 	ObjectInterface *obj = getSource()->getObject(source_row);
 
 	match_conditions = false;
 
-	if (categories.isEmpty() && filters.isEmpty()) // no conditions, we keep all the items
-		match_conditions = true;
-	else if (categories.contains(obj->getCategory()))
+	if (filters.isEmpty()) // no conditions, we keep all the items
 		match_conditions = true;
 	else if (filters.contains(obj->getObjectId()))
 	{

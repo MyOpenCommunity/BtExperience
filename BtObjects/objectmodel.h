@@ -37,17 +37,11 @@ public:
 class ObjectModel : public MediaModel
 {
 	Q_OBJECT
-	Q_PROPERTY(QVariantList categories READ getCategories WRITE setCategories NOTIFY categoriesChanged)
 	Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
 
 public:
 	ObjectModel();
 	static void setGlobalSource(ObjectDataModel *model);
-
-	// The categories argument is a QVariantList in order to set them from qml. The real
-	// type expected is a list of ObjectInterface::ObjectCategory
-	QVariantList getCategories() const;
-	void setCategories(QVariantList cat);
 
 	// The filters argument is a QVariantList in order to set them from qml. The real
 	// type expected is a list of javascript objects represented with a map that
@@ -60,7 +54,6 @@ public:
 	ObjectDataModel *getSource() const;
 
 signals:
-	void categoriesChanged();
 	void filtersChanged();
 
 protected:
@@ -69,10 +62,8 @@ protected:
 private:
 	bool keyMatches(QString key, ObjectInterface *obj) const;
 
-	QVariantList input_categories;
 	QVariantList input_filters;
 
-	QList<int> categories;
 	QHash<int, QString> filters;
 	static ObjectDataModel *global_source;
 };
