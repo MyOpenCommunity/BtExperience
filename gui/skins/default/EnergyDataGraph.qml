@@ -1,15 +1,15 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import Components.EnergyManagement 1.0
 
-import "../.." // to import Page
-import "../../js/Stack.js" as Stack
-import "../../js/RowColumnHelpers.js" as Helper
+import "js/Stack.js" as Stack
+import "js/RowColumnHelpers.js" as Helper
 
 
 Page {
     id: page
-    source: "../../images/scenari.jpg" // TODO mettere lo sfondo giusto
+    source: "images/scenari.jpg" // TODO mettere lo sfondo giusto
 
     property variant modelObject
     property int graphType
@@ -86,7 +86,7 @@ Page {
     TitleBar {
         id: bgTitle
 
-        source: "../../images/common/svg_bolt.svg"
+        source: "images/common/svg_bolt.svg"
         title: translations.get("ENERGY_TYPE", page.modelObject.energyType)
         anchors {
             left: buttonsColumn.right

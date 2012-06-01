@@ -27,10 +27,10 @@ MenuColumn {
             name: model.name
             hasChild: true
             onClicked: {
-                if (model.name == qsTr("consumption/production") ) {
+                if (model.name === qsTr("consumption/production") ) {
                     listView.currentIndex = -1
                     element.closeChild()
-                    Stack.openPage("Components/EnergyManagement/EnergyDataOverview.qml")
+                    Stack.openPage("EnergyDataOverview.qml")
                 }
                 else
                     element.loadColumn(model.component, model.name)
