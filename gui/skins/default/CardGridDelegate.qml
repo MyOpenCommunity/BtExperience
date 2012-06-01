@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import "CardView.js" as Script
 
 Item {
     property alias source: imageDelegate.source
@@ -14,8 +15,8 @@ Item {
 
     Rectangle {
         id: delegateBackground
-        width: 140
-        height: 140
+        width: Script.gridDelegateWidth
+        height: Script._gridCardHeight
         color: Qt.rgba(230, 230, 230)
         opacity: 0.5
         border.color: "black"
@@ -24,14 +25,14 @@ Item {
 
     Image {
         id: imageDelegate
-        width: 140
-        height: 140
+        width: Script.gridDelegateWidth
+        height: Script._gridCardHeight
         anchors.centerIn: delegateBackground
         source: users.selectRoomImage(modelData)
 
         Rectangle {
             id: textDelegate
-            width: 140
+            width: parent.width
             height: 16
             color: "white"
             anchors.top: parent.top
@@ -46,11 +47,12 @@ Item {
         }
     }
 
-
-
     SvgImage {
         id: delegateShadow
         source: "images/common/pager_grid_shadow.svg"
+        // this is not necessarily needed, but you must remember to change it
+        // if the image ever changes size, so I'm leaving it here as a bookmark
+        height: Script._gridShadowHeight
         anchors {
             top: delegateBackground.bottom
             horizontalCenter: delegateBackground.horizontalCenter

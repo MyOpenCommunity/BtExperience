@@ -16,7 +16,6 @@ Item {
 
     QtObject {
         id: privateProps
-        property int largeDelegateWidth: 175
         property int delegateSpacing: 10
         property int visibleElements: 1
     }
@@ -43,7 +42,7 @@ Item {
             // Compute width to center the list view
             width: {
                 var min = Math.min(privateProps.visibleElements, model.count)
-                return min * privateProps.largeDelegateWidth + (min - 1) * privateProps.delegateSpacing
+                return min * Script.listDelegateWidth + (min - 1) * privateProps.delegateSpacing
             }
             anchors.centerIn: parent
 
@@ -57,7 +56,7 @@ Item {
             // Needed to leave empty space at the end of the list if there are
             // not enough elements when calling positionViewAtIndex()
             preferredHighlightBegin: 0
-            preferredHighlightEnd: privateProps.largeDelegateWidth
+            preferredHighlightEnd: Script.listDelegateWidth
             highlightRangeMode: ListView.StrictlyEnforceRange
         }
     }

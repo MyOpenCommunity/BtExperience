@@ -17,8 +17,8 @@ Item {
 
     QtObject {
         id: privateProps
-        property int delegateWidth: 140
         property int horizontalSpacing: 40
+        property int verticalSpacing: 7
         property int visibleColumns: 1
         property int rows: 2
     }
@@ -43,10 +43,10 @@ Item {
             flow: GridView.TopToBottom
 
             // 4 columns and 2 rows
-            cellHeight: 140 + 22 + 7
-            cellWidth: 180
+            cellHeight: Script.gridDelegateHeight + privateProps.verticalSpacing
+            cellWidth: Script.gridDelegateWidth + privateProps.horizontalSpacing
             height: cellHeight * privateProps.rows
-            width: privateProps.visibleColumns * privateProps.delegateWidth +
+            width: privateProps.visibleColumns * Script.gridDelegateWidth +
                    (privateProps.visibleColumns - 1) * privateProps.horizontalSpacing
             anchors.centerIn: parent
 
@@ -58,7 +58,7 @@ Item {
             // Needed to leave empty space at the end of the list if there are
             // not enough elements when calling positionViewAtIndex()
             preferredHighlightBegin: 0
-            preferredHighlightEnd: privateProps.delegateWidth
+            preferredHighlightEnd: Script.gridDelegateWidth
             highlightRangeMode: GridView.StrictlyEnforceRange
         }
     }

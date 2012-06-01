@@ -4,8 +4,9 @@
 // These values are defined here since are needed in the delegates, other values
 // (eg. spacing between delegates) are defined in the Views
 
-// image + shadow below
-var gridDelegateHeight = 140 + 22
+var _gridCardHeight = 160
+var _gridShadowHeight = 22
+var gridDelegateHeight = _gridCardHeight + _gridShadowHeight
 var gridDelegateWidth = 140
 var listDelegateWidth = 175
 
