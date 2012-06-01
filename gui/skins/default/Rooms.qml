@@ -41,7 +41,7 @@ Page {
         }
 
         model: roomsModel
-        delegate: PagerDelegate {
+        delegate: CardDelegate {
             source: users.selectRoomImage(itemObject.description)
             property variant itemObject: roomsModel.getObject(index)
             label: itemObject.description

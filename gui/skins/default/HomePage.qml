@@ -116,7 +116,7 @@ Page {
 
         id: users
         model: usersModel
-        delegate: PagerDelegate {
+        delegate: CardDelegate {
             property variant itemObject: usersModel.getObject(index)
 
             source: itemObject.image

@@ -102,7 +102,7 @@ Page {
     Component {
         id: cardList
         CardView {
-            delegate: PagerDelegate {
+            delegate: CardDelegate {
                 source: image
                 label: name
 
