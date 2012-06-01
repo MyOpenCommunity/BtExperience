@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "CardView.js" as Script
 
 Item {
     id: cardView
@@ -6,19 +7,11 @@ Item {
     property Component delegate: undefined
 
     Component.onCompleted: {
-        // compute the number of visible elements
         var widthExcludingArrows = cardView.width - prevArrow.width * 2
-        var numDelegates = Math.floor(widthExcludingArrows / privateProps.largeDelegateWidth)
-        // take delegate spacing into account (spacing is only between delegates)
-        var spacingWidth = (numDelegates - 1) * privateProps.delegateSpacing
-        if (widthExcludingArrows - numDelegates * privateProps.largeDelegateWidth > spacingWidth)
-            privateProps.visibleElements = numDelegates
-        else
-            privateProps.visibleElements = numDelegates - 1
-
+        privateProps.visibleElements = Script.visibleColumns(widthExcludingArrows,
+                Script.listDelegateWidth, privateProps.delegateSpacing, 1, model.count)
         if (model.count <= privateProps.visibleElements)
             cardView.state = "hiddenArrows"
-
     }
 
     QtObject {
