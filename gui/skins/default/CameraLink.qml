@@ -12,16 +12,11 @@ QuickLink {
     text: "Camera #0"
 
     onClicked: {
-        cctvModel.getObject(0).cameraOn(extPlaceModel.getObject(0).where)
+        cctvModel.getObject(0).cameraOn(address)
     }
 
     FilterListModel {
         id: cctvModel
         filters: [{objectId: ObjectInterface.IdCCTV}]
-    }
-
-    FilterListModel {
-        id: extPlaceModel
-        source: cctvModel.getObject(0).externalPlaces
     }
 }
