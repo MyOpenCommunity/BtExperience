@@ -6,8 +6,7 @@ Item {
     property Component delegate: undefined
 
     Component.onCompleted: {
-        var numRows = 3
-        var elementColumns = Math.ceil(model.count / numRows)
+        var elementColumns = Math.ceil(model.count / privateProps.rows)
 
         // compute the number of visible elements
         var widthExcludingArrows = cardView.width - prevArrow.width * 2
@@ -19,7 +18,7 @@ Item {
         else
             privateProps.visibleColumns = numColumns - 1
 
-        if (Math.ceil(model.count / numRows) <= privateProps.visibleColumns)
+        if (Math.ceil(model.count / privateProps.rows) <= privateProps.visibleColumns)
             cardView.state = "hiddenArrows"
     }
 
@@ -28,6 +27,7 @@ Item {
         property int delegateWidth: 140
         property int horizontalSpacing: 40
         property int visibleColumns: 1
+        property int rows: 2
     }
 
     Item {
@@ -52,7 +52,7 @@ Item {
             // 4 columns and 2 rows
             cellHeight: 140 + 22 + 7
             cellWidth: 180
-            height: cellHeight * 3
+            height: cellHeight * privateProps.rows
             width: privateProps.visibleColumns * privateProps.delegateWidth +
                    (privateProps.visibleColumns - 1) * privateProps.horizontalSpacing
             anchors.centerIn: parent
@@ -81,7 +81,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                var newPos = gridView.currentIndex + privateProps.visibleColumns * 3
+                var newPos = gridView.currentIndex + privateProps.visibleColumns * privateProps.rows
                 if (newPos <= model.count - 1) {
                     gridView.positionViewAtIndex(newPos, GridView.Beginning)
                     gridView.currentIndex = newPos
@@ -101,7 +101,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                var newPos = gridView.currentIndex - privateProps.visibleColumns * 3
+                var newPos = gridView.currentIndex - privateProps.visibleColumns * privateProps.rows
                 if (newPos > 0) {
                     gridView.positionViewAtIndex(newPos, GridView.Beginning)
                     gridView.currentIndex = newPos
