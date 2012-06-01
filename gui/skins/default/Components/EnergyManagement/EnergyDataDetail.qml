@@ -41,174 +41,171 @@ Page {
     }
 
 
-        anchors.fill: parent
+    anchors.fill: parent
 
-        ToolBar {
-            id: toolbar
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            // TODO mettere le seguenti voci direttamente dentro ToolBar?
-            fontFamily: semiBoldFont.name
-            fontSize: 17
-            onHomeClicked: Stack.backToHome()
+    ToolBar {
+        id: toolbar
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        // TODO mettere le seguenti voci direttamente dentro ToolBar?
+        fontFamily: semiBoldFont.name
+        fontSize: 17
+        onHomeClicked: Stack.backToHome()
+    }
+
+    NavigationBar {
+        id: buttonsColumn
+        anchors {
+            top: toolbar.bottom
+            left: parent.left
+            topMargin: 31
+            leftMargin: 2
         }
 
-        NavigationBar {
-            id: buttonsColumn
+        onBackClicked: Stack.popPage()
+        onSystemsClicked: Stack.showPreviousPage(1)
+    }
+
+    Column {
+        id: panel
+        spacing: 40
+        anchors.left: parent.left
+        anchors.leftMargin: 120
+        anchors.top: toolbar.bottom
+        anchors.topMargin: 10
+        anchors.right: parent.right
+        anchors.rightMargin: 80
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30
+
+        EnergyDataTitle {
+            title: translations.get("ENERGY_TYPE", page.modelObject.energyType)
+            anchors.left: parent.left
+        }
+
+        Row {
+            id: energyDetails
+
             anchors {
-                top: toolbar.bottom
-                left: parent.left
-                topMargin: 31
-                leftMargin: 2
+                horizontalCenter: panel.horizontalCenter
+                horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
+            }
+            spacing: 80
+            width: panel.width
+
+            onChildrenChanged: Helper.updateRowChildren(energyDetails)
+            onVisibleChanged: Helper.updateRowChildren(energyDetails)
+            onWidthChanged: Helper.updateRowChildren(energyDetails)
+
+            Repeater {
+                objectName: "repeater" // to skip inside Helper
+                // TODO come recupero le linee? nota: il modello deve
+                // comprendere anche il generale!
+                model: FilterListModel {
+                    id: modelEnergy
+                    filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: page.keyString}]
+                }
+                delegate: energyDetailsDelegate
             }
 
-            onBackClicked: Stack.popPage()
-            onSystemsClicked: Stack.showPreviousPage(1)
+            Component {
+                id: energyDetailsDelegate
+
+                EnergyDataDetailColumn {
+
+                    function getSymbol(t) {
+                        if (t === EnergyData.Electricity)
+                            return "../../images/common/svg_bolt.svg"
+                        else if (t === EnergyData.Water)
+                            return "../../images/common/svg_water.svg"
+                        // TODO add images
+                        //                    else if (t === EnergyData.Gas)
+                        //                        return "../../images/common/svg_gas.svg"
+                        //                    else if (t === EnergyData.HotWater)
+                        //                        return "../../images/common/svg_hot_water.svg"
+                        else if (t === EnergyData.Heat)
+                            return "../../images/common/svg_temp.svg"
+                        //                            else if (t === EnergyData.???)
+                        //                                return "../../images/common/svg_???.svg"
+                        return "../../images/common/svg_bolt.svg"
+                    }
+
+                    function openLinkedPage(obj) {
+                        Stack.openPage("Components/EnergyManagement/EnergyDataGraph.qml", {"modelObject": obj,"graphType": EnergyData.CumulativeYearGraph})
+                    }
+
+                    function dummy(d) {
+                        // this function is useful only to bind i to page.valueType
+                        // in this way the value is updated every time the
+                        // page.valueType is updated
+                        // TODO this function must receive updates from object
+                        // when they arrive
+                        return EnergyData.CurrentValue
+                    }
+
+                    height: 345
+                    // TODO recuperare il generale e le linee
+                    property variant obj: modelEnergy.getObject(index)
+                    property variant v: obj.getValue(page.valueType, new Date())
+                    property variant i: obj.getValue(dummy(page.valueType), new Date())
+                    level_actual: v.isValid ? v.value : 0
+                    perc_warning: 0.8
+                    level_critical: 90 // TODO it must come from somewhere
+                    title: level_actual + " " + translations.get("ENERGY_UNIT", obj.energyType)
+                    source: getSymbol(obj.energyType)
+                    valueType: page.valueType
+                    description: translations.get("ENERGY_TYPE", obj.energyType) // TODO implementare
+                    note_header: "consumption"
+                    note_footer: (i.isValid ? i.value + " " + translations.get("ENERGY_UNIT", obj.energyType) : "---")
+                    critical_bar_visible: index === 0 ? true : false // TODO assumes the total is first column
+                    onClicked: openLinkedPage(obj)
+                }
+            }
         }
 
-        Column {
-            id: panel
-            spacing: 40
-            anchors.left: parent.left
-            anchors.leftMargin: 120
-            anchors.top: toolbar.bottom
-            anchors.topMargin: 10
-            anchors.right: parent.right
-            anchors.rightMargin: 80
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 30
-
-            EnergyDataTitle {
-                title: translations.get("ENERGY_TYPE", page.modelObject.energyType)
-                anchors.left: parent.left
+        Row {
+            anchors {
+                horizontalCenter: panel.horizontalCenter
+                horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
             }
+            height: 30
+            width: 300
+            spacing: 1
 
-            Row {
-                id: energyDetails
-
-                anchors {
-                    horizontalCenter: panel.horizontalCenter
-                    horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
-                }
-                spacing: 80
-                width: panel.width
-
-                onChildrenChanged: Helper.updateRowChildren(energyDetails)
-                onVisibleChanged: Helper.updateRowChildren(energyDetails)
-                onWidthChanged: Helper.updateRowChildren(energyDetails)
-
-                Repeater {
-                    objectName: "repeater" // to skip inside Helper
-                    // TODO come recupero le linee? nota: il modello deve
-                    // comprendere anche il generale!
-                    model: FilterListModel {
-                        id: modelEnergy
-                        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: page.keyString}]
-                    }
-                    delegate: energyDetailsDelegate
-                }
-
-                Component {
-                    id: energyDetailsDelegate
-
-                    EnergyDataDetailColumn {
-
-                        function getSymbol(t) {
-                            if (t === EnergyData.Electricity)
-                                return "../../images/common/svg_bolt.svg"
-                            else if (t === EnergyData.Water)
-                                return "../../images/common/svg_water.svg"
-                            // TODO add images
-                            //                    else if (t === EnergyData.Gas)
-                            //                        return "../../images/common/svg_gas.svg"
-                            //                    else if (t === EnergyData.HotWater)
-                            //                        return "../../images/common/svg_hot_water.svg"
-                            else if (t === EnergyData.Heat)
-                                return "../../images/common/svg_temp.svg"
-                            //                            else if (t === EnergyData.???)
-                            //                                return "../../images/common/svg_???.svg"
-                            return "../../images/common/svg_bolt.svg"
-                        }
-
-                        function openLinkedPage(obj) {
-                            Stack.openPage("Components/EnergyManagement/EnergyDataGraph.qml", {"modelObject": obj,"graphType": EnergyData.CumulativeYearGraph})
-                        }
-
-                        function dummy(d) {
-                            // this function is useful only to bind i to page.valueType
-                            // in this way the value is updated every time the
-                            // page.valueType is updated
-                            // TODO this function must receive updates from object
-                            // when they arrive
-                            return EnergyData.CurrentValue
-                        }
-
-                        height: 345
-                        // TODO recuperare il generale e le linee
-                        property variant obj: modelEnergy.getObject(index)
-                        property variant v: obj.getValue(page.valueType, new Date())
-                        property variant i: obj.getValue(dummy(page.valueType), new Date())
-                        level_actual: v.isValid ? v.value : 0
-                        perc_warning: 0.8
-                        level_critical: 90 // TODO it must come from somewhere
-                        title: level_actual + " " + translations.get("ENERGY_UNIT", obj.energyType)
-                        source: getSymbol(obj.energyType)
-                        valueType: page.valueType
-                        description: translations.get("ENERGY_TYPE", obj.energyType) // TODO implementare
-                        note_header: "consumption"
-                        note_footer: (i.isValid ? i.value + " " + translations.get("ENERGY_UNIT", obj.energyType) : "---")
-                        critical_bar_visible: index === 0 ? true : false // TODO assumes the total is first column
-                        onClicked: openLinkedPage(obj)
-                    }
+            TimeValueItem {
+                id: selDay
+                label: qsTr("day")
+                onClicked: {
+                    selDay.state = "selected"
+                    selMonth.state = ""
+                    selYear.state = ""
+                    page.valueType = EnergyData.CumulativeDayValue
                 }
             }
 
-            Row {
-                anchors {
-                    horizontalCenter: panel.horizontalCenter
-                    horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
+            TimeValueItem {
+                id: selMonth
+                label: qsTr("month")
+                state: "selected"
+                onClicked: {
+                    selDay.state = ""
+                    selMonth.state = "selected"
+                    selYear.state = ""
+                    page.valueType = EnergyData.CumulativeMonthValue
                 }
-                height: 30
-                width: 300
-                spacing: 1
-
-                TimeValueItem {
-                    id: selDay
-                    label: qsTr("day")
-                    onClicked: {
-                        selDay.state = "selected"
-                        selMonth.state = ""
-                        selYear.state = ""
-                        page.valueType = EnergyData.CumulativeDayValue
-                    }
-                }
-
-                TimeValueItem {
-                    id: selMonth
-                    label: qsTr("month")
-                    state: "selected"
-                    onClicked: {
-                        selDay.state = ""
-                        selMonth.state = "selected"
-                        selYear.state = ""
-                        page.valueType = EnergyData.CumulativeMonthValue
-                    }
-                }
-
-                TimeValueItem {
-                    id: selYear
-                    label: qsTr("year")
-                    onClicked: {
-                        selDay.state = ""
-                        selMonth.state = ""
-                        selYear.state = "selected"
-                        page.valueType = EnergyData.CumulativeYearValue
-                    }
-                }
-
             }
 
-
+            TimeValueItem {
+                id: selYear
+                label: qsTr("year")
+                onClicked: {
+                    selDay.state = ""
+                    selMonth.state = ""
+                    selYear.state = "selected"
+                    page.valueType = EnergyData.CumulativeYearValue
+                }
+            }
+        }
     }
 }
