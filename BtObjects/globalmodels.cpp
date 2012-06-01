@@ -82,3 +82,13 @@ MediaDataModel *GlobalModels::getProfiles() const
 {
 	return profiles;
 }
+
+void GlobalModels::setMediaLinks(MediaDataModel *_media_links)
+{
+	media_links = _media_links;
+}
+
+MediaDataModel *GlobalModels::getMediaLinks() const
+{
+	return media_links;
+}

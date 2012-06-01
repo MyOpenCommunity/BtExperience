@@ -44,27 +44,10 @@ Page {
             width: parent.width
             height: parent.height
 
-            Rectangle {
-                id: bgPannable
-
-                property variant actualFavorite: undefined
-
-                visible: false
-                color: "black"
-                opacity: 0.5
-                radius: 20
+            ProfileView {
+                model: mediaLinks
+                container: pannableChild
                 anchors.fill: parent
-                z: 1
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        bgPannable.visible = false
-                        bgPannable.actualFavorite.z = 0
-                        bgPannable.actualFavorite.state = ""
-                        // TODO gestire il focus?
-                        bgPannable.actualFavorite = undefined
-                    }
-                }
             }
 
             Text {
@@ -193,38 +176,10 @@ Page {
                 range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
             }
 
-            FavoriteItem {
-                x: 200
-                y: 50
-                onRequestEdit: pannableChild.showEditBox(favorite)
-                onSelected: pannableChild.bringOver(favorite)
-            }
-
-            FavoriteItem {
-                x: 300
-                y: 250
-                onRequestEdit: pannableChild.showEditBox(favorite)
-                onSelected: pannableChild.bringOver(favorite)
-            }
-
-            RssItem {
-                x: 400
-                y: 100
-                onRequestEdit: pannableChild.showEditBox(favorite)
-                onSelected: pannableChild.bringOver(favorite)
-            }
-
-            CameraLink {
-                x: 500
-                y: 220
-                onRequestEdit: pannableChild.showEditBox(favorite)
-                onSelected: pannableChild.bringOver(favorite)
-            }
-
-            function bringOver(favorite) {
-                favorite.z = bgPannable.z + 1
-                bgPannable.visible = true
-                bgPannable.actualFavorite = favorite
+            MediaModel {
+                id: mediaLinks
+                source: myHomeModels.mediaLinks
+                containers: [profile.uii]
             }
 
             function showEditBox(favorite) {
