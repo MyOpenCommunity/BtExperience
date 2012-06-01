@@ -72,3 +72,13 @@ Note *GlobalModels::createNote(int profile_id, QString text)
 {
 	return new Note(profile_id, text);
 }
+
+void GlobalModels::setProfiles(MediaDataModel *_profiles)
+{
+	profiles = _profiles;
+}
+
+MediaDataModel *GlobalModels::getProfiles() const
+{
+	return profiles;
+}

@@ -112,6 +112,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	systems_model.setParent(this);
 	objmodel.setParent(this);
 	note_model.setParent(this);
+	profile_model.setParent(this);
 
 	global_models.setFloors(&floor_model);
 	global_models.setRooms(&room_model);
@@ -119,6 +120,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	global_models.setSystems(&systems_model);
 	global_models.setMyHomeObjects(&objmodel);
 	global_models.setNotes(&note_model);
+	global_models.setProfiles(&profile_model);
 
 	ObjectModel::setGlobalSource(&objmodel);
 	createObjectsFakeConfig(document);
@@ -306,16 +308,23 @@ void BtObjectsPlugin::parseConfig()
 	}
 
 	// TODO parse note list file
-	note_model << new Note(3, "portare fuori la spazzatura");
-	note_model << new Note(3, "giocare con le bambole");
-	note_model << new Note(2, "dentista 18/05/2012 ore 14:45");
-	note_model << new Note(4, "appunt. Sig. Mario Monti 18/05/2012 ore 17.00");
-	note_model << new Note(5, "pagare spese condominiali");
-	note_model << new Note(5, "fare cose");
-	note_model << new Note(5, "parlare con persone");
-	note_model << new Note(5, "scrivere e-mail");
-	note_model << new Note(5, "partecipare a riunioni");
-	note_model << new Note(1, "pagare l'affitto");
+	note_model << new Note(903, "portare fuori la spazzatura");
+	note_model << new Note(903, "giocare con le bambole");
+	note_model << new Note(902, "dentista 18/05/2012 ore 14:45");
+	note_model << new Note(904, "appunt. Sig. Mario Monti 18/05/2012 ore 17.00");
+	note_model << new Note(905, "pagare spese condominiali");
+	note_model << new Note(905, "fare cose");
+	note_model << new Note(905, "parlare con persone");
+	note_model << new Note(905, "scrivere e-mail");
+	note_model << new Note(905, "partecipare a riunioni");
+	note_model << new Note(901, "pagare l'affitto");
+
+	// TODO parse profile list file
+	profile_model << new Container(1, 901, "images/home/card_1.png", "famiglia");
+	profile_model << new Container(1, 902, "images/home/card_2.png", "mattia");
+	profile_model << new Container(1, 903, "images/home/card_3.png", "camilla");
+	profile_model << new Container(1, 904, "images/home/card_4.png", "mamma");
+	profile_model << new Container(1, 905, "images/home/card_5.png", QString::fromUtf8("papà"));
 }
 
 void BtObjectsPlugin::parseRooms(const QDomNode &container)

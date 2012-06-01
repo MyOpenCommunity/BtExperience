@@ -6,9 +6,7 @@ import "js/Stack.js" as Stack
 Page {
     id: profilePage
     source: 'images/profiles.jpg'
-    property string profile
-    property int profileUii
-    property url sourceImage
+    property variant profile
 
     ToolBar {
         id: toolbar
@@ -91,7 +89,7 @@ Page {
                     id: imageProfile
                     width: 100
                     height: parent.height
-                    source: profilePage.sourceImage
+                    source: profilePage.profile.image
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -102,7 +100,7 @@ Page {
                     anchors.top: parent.top
                     anchors.topMargin: 10
                     font.pixelSize: 16
-                    text: profilePage.profile
+                    text: profilePage.profile.description
                 }
             }
 
@@ -191,7 +189,7 @@ Page {
             MediaModel {
                 id: userNotes
                 source: myHomeModels.notes
-                containers: [profileUii]
+                containers: [profile.uii]
                 range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
             }
 
@@ -297,7 +295,7 @@ Page {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    userNotes.append(myHomeModels.createNote(profileUii, textEdit.text))
+                                    userNotes.append(myHomeModels.createNote(profile.uii, textEdit.text))
                                     closePopup()
                                 }
                             }

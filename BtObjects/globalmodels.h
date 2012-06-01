@@ -17,6 +17,7 @@ class GlobalModels : public QObject
 	Q_PROPERTY(MediaDataModel *objectLinks READ getObjectLinks CONSTANT)
 	Q_PROPERTY(ObjectDataModel *myHomeObjects READ getMyHomeObjects CONSTANT)
 	Q_PROPERTY(MediaDataModel *notes READ getNotes CONSTANT)
+	Q_PROPERTY(MediaDataModel *profiles READ getProfiles CONSTANT)
 
 public:
 	GlobalModels();
@@ -41,6 +42,9 @@ public:
 
 	Q_INVOKABLE Note *createNote(int profile_id, QString text);
 
+	void setProfiles(MediaDataModel *profiles);
+	MediaDataModel *getProfiles() const;
+
 private:
 	MediaDataModel *floors;
 	MediaDataModel *rooms;
@@ -48,6 +52,7 @@ private:
 	MediaDataModel *systems;
 	ObjectDataModel *my_home_objects;
 	MediaDataModel *notes;
+	MediaDataModel *profiles;
 };
 
 #endif // GLOBALMODELS_H
