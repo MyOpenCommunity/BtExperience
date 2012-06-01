@@ -61,10 +61,12 @@ Page {
             left: parent.left
             topMargin: 31
             leftMargin: 2
+            bottom: parent.bottom
         }
 
         onBackClicked: Stack.popPage()
         onSystemsClicked: Stack.showPreviousPage(1)
+        text: translations.get("ENERGY_TYPE", page.modelObject.energyType)
     }
 
     Column {
@@ -73,16 +75,11 @@ Page {
         anchors.left: parent.left
         anchors.leftMargin: 120
         anchors.top: toolbar.bottom
-        anchors.topMargin: 10
+        anchors.topMargin: parent.height / 100 * 15
         anchors.right: parent.right
         anchors.rightMargin: 80
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-
-        EnergyDataTitle {
-            title: translations.get("ENERGY_TYPE", page.modelObject.energyType)
-            anchors.left: parent.left
-        }
+        anchors.bottomMargin: parent.height / 100 * 5
 
         Row {
             id: energyDetails

@@ -38,10 +38,12 @@ Page {
             left: parent.left
             topMargin: 31
             leftMargin: 2
+            bottom: parent.bottom
         }
 
         onBackClicked: Stack.popPage()
         onSystemsClicked: Stack.showPreviousPage(1)
+        text: translations.get("ENERGY_TYPE", "Consumption Management")
     }
 
     Column {
@@ -50,16 +52,11 @@ Page {
         anchors.left: parent.left
         anchors.leftMargin: 195
         anchors.top: toolbar.bottom
-        anchors.topMargin: 10
+        anchors.topMargin: parent.height / 100 * 15
         anchors.right: parent.right
         anchors.rightMargin: 150
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-
-        EnergyDataTitle {
-            title: translations.get("ENERGY_TYPE", "Consumption Management")
-            anchors.left: parent.left
-        }
+        anchors.bottomMargin: parent.height / 100 * 5
 
         Row {
             id: energyCategories

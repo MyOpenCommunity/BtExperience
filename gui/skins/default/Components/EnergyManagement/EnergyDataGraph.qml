@@ -71,10 +71,12 @@ Page {
             left: parent.left
             topMargin: 31
             leftMargin: 2
+            bottom: parent.bottom
         }
 
         onBackClicked: Stack.popPage()
         onSystemsClicked: Stack.showPreviousPage(1)
+        text: translations.get("ENERGY_TYPE", page.modelObject.energyType)
     }
 
     TitleBar {

@@ -17,22 +17,6 @@ Page {
         onHomeClicked: Stack.backToHome()
     }
 
-    // TODO: this is the text which is on the left. Now we have navigation
-    // buttons over there, so I'm removing it.
-    // What should we do about it?
-//    Text {
-//        id: mainText
-//        color: "#ffffff"
-//        text: systemPage.text
-//        transformOrigin: Item.BottomLeft
-//        rotation: 270
-//        font.pixelSize: 54
-////        font.pixelSize: 60
-////        font.family: lightFont.name
-//        y: width + 20  // width and height are reversed because the text is rotated.
-//        x: height + 20
-//    }
-
     // The spacing between the buttons on the left and the MenuContainer
     property int containerLeftMargin: 0
 
@@ -61,6 +45,8 @@ Page {
         anchors.top: parent.top
         anchors.leftMargin: 2
         anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        text: systemPage.text
 
         onBackClicked: container.closeLastColumn()
         onSystemsClicked: container.closed()

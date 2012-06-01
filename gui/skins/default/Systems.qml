@@ -26,7 +26,9 @@ Page {
         anchors.top: toolbar.bottom
         anchors.leftMargin: 2
         anchors.left: parent.left
+        anchors.bottom: parent.bottom
         systemsButton: false
+        text: qsTr("systems")
 
         onBackClicked: Stack.popPage()
     }
