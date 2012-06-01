@@ -1,11 +1,4 @@
 /**
-  * A module containing the logic for EventManager.
-  */
-
-Qt.include("../js/logging.js")
-
-
-/**
   * Logic for screensaver timeout management.
   *
   * For screensaver timeout there are two possible scenarios:

@@ -34,6 +34,7 @@ ControlSlider 1.0 ControlSlider.qml
 ControlSlider2 1.0 ControlSlider2.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
 ControlUpDown 1.0 ControlUpDown.qml
+EventManager 1.0 EventManager.qml
 FadeAnimation 1.0 FadeAnimation.qml
 FavoriteEditPopup 1.0 FavoriteEditPopup.qml
 FavoriteItem 1.0 FavoriteItem.qml
@@ -44,6 +45,7 @@ MenuContainer 1.0 MenuContainer.qml
 MenuItem 1.0 MenuItem.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 MenuTitle 1.0 MenuTitle.qml
+NavigationBar 1.0 NavigationBar.qml
 PageAnimation 1.0 PageAnimation.qml
 Paginator 1.0 Paginator.qml
 PaginatorColumn 1.0 PaginatorColumn.qml
