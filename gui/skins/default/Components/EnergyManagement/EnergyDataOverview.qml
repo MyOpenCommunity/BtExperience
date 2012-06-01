@@ -9,6 +9,7 @@ import "../../js/RowColumnHelpers.js" as Helper
 
 Page {
     id: page
+    source: "../../images/scenari.jpg" // TODO mettere lo sfondo giusto
 
     Names {
         id: translations
@@ -18,11 +19,6 @@ Page {
         id: energiesCounters
         filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "general"}]
     }
-
-    Image {
-        id: bg
-        source: "../../images/scenari.jpg" // TODO mettere lo sfondo giusto
-        anchors.fill: parent
 
         ToolBar {
             id: toolbar
@@ -191,5 +187,4 @@ Page {
             }
 
         }
-    }
 }

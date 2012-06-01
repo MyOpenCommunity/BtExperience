@@ -9,6 +9,7 @@ import "../../js/RowColumnHelpers.js" as Helper
 
 Page {
     id: page
+    source: "../../images/scenari.jpg" // TODO mettere lo sfondo giusto
 
     property variant modelObject
     property int valueType
@@ -39,9 +40,7 @@ Page {
             }
     }
 
-    Image {
-        id: bg
-        source: "../../images/scenari.jpg" // TODO mettere lo sfondo giusto
+
         anchors.fill: parent
 
         ToolBar {
@@ -211,6 +210,5 @@ Page {
             }
 
 
-        }
     }
 }
