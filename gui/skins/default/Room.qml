@@ -29,8 +29,10 @@ Page {
         anchors.leftMargin: 2
         anchors.top: toolbar.bottom
         anchors.topMargin: 30
+        anchors.bottom: parent.bottom
 
         onSystemsClicked: Stack.popPage()
+        text: roomName
     }
 
     MediaModel {
@@ -78,8 +80,8 @@ Page {
     ListView {
         id: roomView
         anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        width: parent.width
+        anchors.left: systemsButton.right
+        anchors.right: parent.right
         height: 110
 
         function selectRoomImage(room) {
@@ -115,6 +117,7 @@ Page {
                     onClicked: {
                         console.log("Clicked on room: " + listDelegate.itemObject.description)
                         roomView.currentIndex = index
+                        roomName = listDelegate.itemObject.description
                     }
                 }
             }

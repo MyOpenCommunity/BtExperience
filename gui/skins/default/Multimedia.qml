@@ -20,8 +20,10 @@ Page {
         anchors.leftMargin: 2
         anchors.top: toolbar.bottom
         anchors.topMargin: 30
+        anchors.bottom: parent.bottom
 
         onBackClicked: Stack.popPage()
+        text: qsTr("multimedia")
     }
 
     Image {
