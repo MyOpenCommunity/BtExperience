@@ -31,5 +31,7 @@ INCLUDEPATH += . ./ts ./devices
 
 include(btobjects.pri)
 
-OTHER_FILES = qmldir
+OTHER_FILES += \
+	qmldir \
+	BtObjects.dox \
 
