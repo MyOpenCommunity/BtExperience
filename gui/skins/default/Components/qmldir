@@ -52,6 +52,7 @@ Pannable 1.0 Pannable.qml
 ProfileView 1.0 ProfileView.qml
 QuickLink 1.0 QuickLink.qml
 RoomItem 1.0 RoomItem.qml
+RoomView 1.0 RoomView.qml
 RssItem 1.0 RssItem.qml
 ScreenSaver 1.0 ScreenSaver.qml
 ScreenSaverBouncingImage 1.0 ScreenSaverBouncingImage.qml
