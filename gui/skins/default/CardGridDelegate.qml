@@ -16,7 +16,6 @@ Item {
         id: delegateBackground
         width: 140
         height: 140
-        anchors.top: textDelegate.bottom
         color: Qt.rgba(230, 230, 230)
         opacity: 0.5
         border.color: "black"
