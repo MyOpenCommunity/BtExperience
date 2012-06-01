@@ -32,6 +32,21 @@ Item {
             Script.obj_array.pop().destroy()
     }
 
+    Component {
+        id: favouriteItemComponent
+        FavoriteItem { }
+    }
+
+    Component {
+        id: cameraItemComponent
+        RssItem { }
+    }
+
+    Component {
+        id: rssItemComponent
+        CameraLink { }
+    }
+
     function createObjects() {
         for (var i = 0; i < model.count; ++i) {
             var obj = model.getObject(i);
@@ -39,17 +54,20 @@ Item {
             var x = obj.position.x
             var text = obj.name
             var address = obj.address
-            var component_name;
 
-            if (obj.type == MediaLink.Web) {
-                component_name = 'FavoriteItem.qml'
-            } else if (obj.type == MediaLink.Rss) {
-                component_name = 'RssItem.qml'
-            } else if (obj.type == MediaLink.Camera) {
-                component_name = 'CameraLink.qml'
+            var component;
+            switch (obj.type) {
+            case MediaLink.Web:
+                component = favouriteItemComponent
+                break
+            case MediaLink.Rss:
+                component = rssItemComponent
+                break
+            case MediaLink.Camera:
+                component = cameraItemComponent
+                break
             }
 
-            var component = Qt.createComponent(component_name)
             var instance = component.createObject(profileView, {'x': x, 'y': y, 'text': text, 'address': address})
 
             instance.requestEdit.connect(function (instance) {
