@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 
-import "js/Stack.js" as Stack
+import "../js/Stack.js" as Stack
 
 
 Item {
@@ -12,7 +12,6 @@ Item {
     property alias color: label.color
     property string address: "www.corriere.it"
     property string page: "Browser.qml"
-    property string bgImage: "images/profiles/web.png"
     property bool editable: true
 
     property int additionalWidth: 10
@@ -58,7 +57,6 @@ Item {
             Image {
                 id: icon
                 anchors.centerIn: parent
-                source: bgImage
 
                 Rectangle {
                     id: bgQuickPressed
@@ -112,7 +110,7 @@ Item {
                 }
             }
             Image {
-                source: "images/icon_text.png"
+                source: "../images/icon_text.png"
                 anchors.fill: parent
                 anchors.margins: 10
             }
@@ -140,7 +138,7 @@ Item {
                 }
             }
             Image {
-                source: "images/icon_pencil.png"
+                source: "../images/icon_pencil.png"
                 anchors.fill: parent
                 anchors.margins: 10
             }
@@ -167,7 +165,7 @@ Item {
                 }
             }
             Image {
-                source: "images/icon_move.png"
+                source: "../images/icon_move.png"
                 anchors.fill: parent
                 anchors.margins: 10
             }
@@ -187,7 +185,7 @@ Item {
                 }
             }
             Image {
-                source: "images/icon_trash.png"
+                source: "../images/icon_trash.png"
                 anchors.fill: parent
                 anchors.margins: 10
             }
