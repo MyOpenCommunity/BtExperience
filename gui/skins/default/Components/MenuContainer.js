@@ -16,18 +16,19 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     if (dataModel === undefined)
         dataModel = null
 
+    // creates title element
+    var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
+
     properties = typeof properties !== 'undefined' ? properties : {}
     properties["menuLevel"] = menuLevel + 1
     properties["parent"] = elementsContainer
     properties["opacity"] = 0
-    properties["y"] = 33
+    properties["y"] = titleObj.height
     properties["dataModel"] = dataModel
     properties["pageObject"] = pageObject
     // creates an object from the component
     var obj = component.createObject(mainContainer, properties)
 
-    // creates title element
-    var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
 
     if (obj && titleObj) {
         _addItem(obj, titleObj)
@@ -113,9 +114,9 @@ function processOperations() {
 
     if (op['id'] == OP_OPEN)
         _openItem()
-    else if (op['id'] == OP_CLOSE)
+    else if (op['id'] === OP_CLOSE)
         _closeItem()
-    else if (op['id'] == OP_UPDATE_UI)
+    else if (op['id'] === OP_UPDATE_UI)
         _updateView();
 }
 
@@ -257,7 +258,7 @@ function hideLine(item, direction) {
 
 function showLine(item, direction) {
     line.enableAnimation = false
-    line.y = item.y - 4
+    line.y = item.y - (line.height + 2) // 2 is a little space
     line.width = 0
     if (direction === RIGHT_TO_LEFT)
         line.x = item.x + item.width
