@@ -1,6 +1,7 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
 import Components 1.0
+
+import "js/Stack.js" as Stack
 
 Page {
     id: systemPage
@@ -22,10 +23,11 @@ Page {
 
     Pannable {
         id: pannable
-        x: 122 + buttonsColumn.width + containerLeftMargin
-        y: 63
-        width: 893 - buttonsColumn.width - containerLeftMargin
-        height: 530
+        anchors.left: navbar.right
+        anchors.leftMargin: parent.width / 100 * 1
+        anchors.top: toolbar.bottom
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
 
         MenuContainer {
             x: 0
@@ -39,13 +41,18 @@ Page {
         }
     }
 
+    Constants {
+        id: constants
+    }
+
     NavigationBar {
-        id: buttonsColumn
-        anchors.topMargin: pannable.y + 33
-        anchors.top: parent.top
+        id: navbar
+        anchors.topMargin: constants.navbarTopMargin
+        anchors.top: toolbar.bottom
         anchors.leftMargin: 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
+
         text: systemPage.text
 
         onBackClicked: container.closeLastColumn()

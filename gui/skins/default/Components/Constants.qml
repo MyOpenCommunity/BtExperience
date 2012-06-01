@@ -7,4 +7,6 @@ QtObject {
     property int lineTransitionDuration: elementTransitionDuration / 2
     // time needed to show an alert popup (termo, antintrusion ...)
     property int alertTransitionDuration: 200
+
+    property int navbarTopMargin: 33
 }

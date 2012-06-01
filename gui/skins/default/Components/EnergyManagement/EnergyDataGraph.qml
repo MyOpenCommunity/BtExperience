@@ -64,12 +64,16 @@ Page {
         onHomeClicked: Stack.backToHome()
     }
 
+    Constants {
+        id: constants
+    }
+
     NavigationBar {
         id: buttonsColumn
         anchors {
             top: toolbar.bottom
             left: parent.left
-            topMargin: 31
+            topMargin: constants.navbarTopMargin
             leftMargin: 2
             bottom: parent.bottom
         }
