@@ -32,11 +32,52 @@ public:
 };
 
 
-// A view around the data contained in a ObjectDataModel. It contains some
-// functions to make it easy to use this model from qml
+/*!
+	\ingroup Core
+	\brief Provides a view over a model containing ObjectInterface instances
+
+	This model implements three filter criteria in addition to the ones in MediaModel:
+	- objectId
+	- object key
+
+	for example:
+
+	\verbatim
+	ObjectModel {
+	     id: thermal
+	     source: myHomeModels.myHomeObjects
+	     filters: [
+		 {objectId:  ObjectInterface.IdThermalControlledProbe,
+		  objectKey: "1"},
+		 {objectId:  ObjectInterface.IdThermalControlledProbeFancoil}
+	     ]
+	}
+	\endverbatim
+
+	selects all the objects with:
+	- category ObjectInterface::ThermalRegulation and
+	    - objectId ObjectInterface::IdThermalControlledProbe and key "1" or
+	    - objectId ObjectInterface::IdThermalControlledProbeFancoil
+
+	\sa ObjectInterface::ObjectCategory
+	\sa ObjectInterface::ObjectId
+*/
 class ObjectModel : public MediaModel
 {
 	Q_OBJECT
+
+	/*!
+		\brief A list of filter criteria
+
+		Each item is a dictionary with keys:
+		- objectId (ObjectInterface::ObjectId, required)
+		- objectKey (comma-separated string, optional)
+
+		The object is selected if its \a ObjectInterface::objectId matches and each susbstring in the
+		key is contained in the \a ObjectInterface::objectKey
+
+		An empty list matches all objects.
+	*/
 	Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
 
 public:

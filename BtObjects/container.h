@@ -4,13 +4,40 @@
 #include "iteminterface.h"
 
 
+/*!
+	\ingroup Core
+	\brief A generic container for ItemInterface%s
+
+	The #uii property can be used as a filter criterium for MediaModel.
+*/
 class Container : public ItemInterface
 {
 	Q_OBJECT
+
+	/*!
+		\brief Container description
+	*/
 	Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
+
+	/*!
+		\brief Descriptive image
+	*/
 	Q_PROPERTY(QString image READ getImage WRITE setImage NOTIFY imageChanged)
+
+	/*!
+		\brief Numeric identifier for the container type
+
+		Matches the \c id attribute defined in \c layout.xml
+	*/
 	Q_PROPERTY(int id READ getId CONSTANT)
+
+	/*!
+		\brief Unique identifier for this container instance.
+
+		Can be used as a filter criterium for MediaModel.
+	*/
 	Q_PROPERTY(int uii READ getUii CONSTANT)
+
 	Q_ENUMS(ContainerId)
 
 public:

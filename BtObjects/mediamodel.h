@@ -6,6 +6,15 @@
 class ItemInterface;
 
 
+/*!
+	\ingroup Core
+	\brief Contains instances of items derived from ItemInterface
+
+	This model contains instances of various items read from configuration or
+	created dynamically from the UI.
+
+	It should only be used as the source model of a \a MediaModel.
+*/
 class MediaDataModel : public QAbstractListModel
 {
 	Q_OBJECT
@@ -63,6 +72,55 @@ private:
 };
 
 
+/*!
+	\ingroup Core
+	\brief Provides a view over a \a MediaDataModel.
+
+	This object can be used to filter the source model using
+	- a set of container ids
+	- a range (for pagination)
+
+	for example
+
+	\verbatim
+	MediaModel {
+	    id: userNotes
+	    source: myHomeModels.notes
+	    containers: [currentProfile.uii]
+	    range: [(currentPage - 1) * elementsOnPage, currentPage * elementsOnPage]
+	}
+	\endverbatim
+
+	The objects in the container can be accessed using the getObject() method, for example
+
+	\verbatim
+	ListView {
+	    model: mediaModel
+
+	    delegate: Image {
+		property variant itemObject: mediaModel.getObject(index)
+
+		id: listDelegate
+
+		Image {
+		    source: listDelegate.itemObject.image
+
+		    // ...
+		}
+
+		// ...
+	    }
+
+	    // ...
+	}
+	\endverbatim
+
+	When using a built-in QML view (e.g. ListView) the item list will be updated
+	automatically whenever the model/filter changes.
+
+	When accessing the model directly (for example to implement a custom view),
+	connect the update code to the the modelReset() signal.
+*/
 class MediaModel : public QSortFilterProxyModel
 {
 	Q_OBJECT
@@ -92,7 +150,7 @@ class MediaModel : public QSortFilterProxyModel
 	/*!
 		\brief The number of filtered rows without taking range into account
 
-		When a range is	not set, this number is equal to \c rangeCount.
+		When a range is	not set, this number is equal to #rangeCount.
 	*/
 	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
@@ -100,7 +158,7 @@ class MediaModel : public QSortFilterProxyModel
 		\brief The number of filtered rows taking range into account
 
 		Only elements with indices from 0 to rangeCount can be accessed; when a range is
-		not set, this number is equal to \c count.
+		not set, this number is equal to #count.
 	*/
 	Q_PROPERTY(int rangeCount READ getRangeCount NOTIFY countChanged)
 
@@ -110,7 +168,7 @@ public:
 	/*!
 		\brief Returns the specified item
 
-		Row must be in the range [0 .. rangeCount - 1]
+		Row must be in the range <tt>[0 .. rangeCount - 1]</tt>
 	*/
 	Q_INVOKABLE ItemInterface *getObject(int row);
 

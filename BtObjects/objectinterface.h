@@ -7,18 +7,46 @@
 #include <QPair>
 
 
+/*!
+	\ingroup Core
+	\brief The base class for all objects that interface with BTicino actuators
+
+	Adds some common properties used for filtering and implements a default
+	property for the object description.
+*/
 class ObjectInterface : public ItemInterface
 {
 	Q_OBJECT
+
+	/*!
+		\brief A numeric identifier for the object type.
+
+		Most of the identifiers map directly to the \c id attribute
+		in the \c archive.xml configuration file, other are used
+		internally.
+	*/
 	Q_PROPERTY(int objectId READ getObjectId CONSTANT)
+
+	/*!
+		\brief A descriptive name for the object
+	*/
 	Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
+
+	/*!
+		\brief A comma-separated string used for filtering
+
+		\sa ObjectModel
+		\sa ObjectModel::filters
+	*/
 	Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
+
 	Q_ENUMS(ObjectId)
 	Q_ENUMS(ObjectCategory)
 
 public:
 	ObjectInterface(QObject *parent = 0) : ItemInterface(parent) {}
 
+	/// Numeric identifier for object type
 	enum ObjectId
 	{
 		IdThermalControlUnit99 = 3,
@@ -49,35 +77,36 @@ public:
 		IdStopAndGoPlus,
 		IdStopAndGoBTest,
 		IdEnergyData,                           // 30
-		IdThermalControlledProbeFancoil,
+		IdThermalControlledProbeFancoil, //!< Thermal controlled probe with fancoil
 		// used internally
-		IdDimmerGroup = 100,
-		IdDimmer100Group = 101,
+		IdDimmerGroup = 100, //!< Group of lights containing only dimmer objects
+		IdDimmer100Group = 101, //!< group of lights containing only 100-level dimmer objects
 		// from configuration file
 		// lights
-		IdLight = 2003,
-		IdDimmer = 2001,
-		IdDimmer100 = 2002,
-		IdLightGroup = 2004,
-		IdLightCommand = 2005,
+		IdLight = 2003, //!< A simple light actuator
+		IdDimmer = 2001, //!< 10-level dimmer
+		IdDimmer100 = 2002, //!< 100-level dimmer
+		IdLightGroup = 2004, //!< A set of lights
+		IdLightCommand = 2005, //!< Command to control the lights for an environment or all the lights
 		// antintrusion
-		IdAntintrusionZone = 13001,
-		IdAntintrusionScenario = 13010,
-		IdAntintrusionAux = 13101,
+		IdAntintrusionZone = 13001, //!< A signe anti-intrusion zone
+		IdAntintrusionScenario = 13010, //!< Set of anti-intrusion zones
+		IdAntintrusionAux = 13101, //!< Auxiliary alarm channel (for technical alarms)
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
+	/// Numeric identifier for object category
 	enum ObjectCategory
 	{
-		Unassigned = -1,
-		Lighting = 1,
-		ThermalRegulation,
-		Antintrusion,
-		Settings,
-		SoundDiffusion,
-		Scenarios,
-		VideoEntry,
-		EnergyManagement
+		Unassigned = -1, //!< Object does not belong to any category
+		Lighting = 1, //!< Lighting system
+		ThermalRegulation, //!< Thermal regulation and air conditioning
+		Antintrusion, //!< Anti-intrusion system
+		Settings, //!< Settings
+		SoundDiffusion, //!< Sound diffusion
+		Scenarios, //!< Scenarios (simple, scheduled and advanced)
+		VideoEntry, //!< Video door entry and telecontrol
+		EnergyManagement //!< Energy management
 	};
 
 	virtual int getObjectId() const;

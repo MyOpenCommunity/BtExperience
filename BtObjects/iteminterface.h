@@ -4,10 +4,17 @@
 #include <QObject>
 
 
+/*!
+	\ingroup Core
+	\brief Base class for items in MediaDataModel and MediaModel
+*/
 class ItemInterface : public QObject
 {
 	Q_OBJECT
 
+	/*!
+		\brief The id of a container object (defaults to -1), used for filtering
+	*/
 	Q_PROPERTY(int containerId READ getContainerId NOTIFY containerChanged)
 
 public:
