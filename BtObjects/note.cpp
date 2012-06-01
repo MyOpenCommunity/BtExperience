@@ -26,15 +26,6 @@ QString Note::getText() const
 	return text;
 }
 
-void Note::setCreated(QDateTime arg)
-{
-	if (created != arg)
-	{
-		created = arg;
-		emit createdChanged(arg);
-	}
-}
-
 QDateTime Note::getCreated() const
 {
 	return created;

@@ -18,7 +18,7 @@ class Note : public ItemInterface
 	/*!
 		\brief The datetime when the note was created
 	*/
-	Q_PROPERTY(QDateTime created READ getCreated WRITE setCreated NOTIFY createdChanged)
+	Q_PROPERTY(QDateTime created READ getCreated CONSTANT)
 
 	/*!
 		\brief The datetime when the note was last updated
@@ -34,12 +34,10 @@ public:
 
 public slots:
 	void setText(QString text);
-	void setCreated(QDateTime creation_time);
 	void setUpdated(QDateTime update_time);
 
 signals:
 	void textChanged(QString text);
-	void createdChanged(QDateTime creation_time);
 	void updateChanged(QDateTime update_time);
 
 private:
