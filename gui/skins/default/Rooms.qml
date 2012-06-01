@@ -27,7 +27,9 @@ Page {
         id: users
         anchors {
             right: parent.right
+            rightMargin: 30
             left: parent.left
+            leftMargin: 30
             top: pageTitle.bottom
             bottom: floorView.top
         }

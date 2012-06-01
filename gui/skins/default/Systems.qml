@@ -85,7 +85,9 @@ Page {
         anchors {
             top: toolbar.bottom
             right: parent.right
+            rightMargin: 30
             left: buttonsColumn.right
+            leftMargin: 30
             bottom: parent.bottom
         }
         sourceComponent: systemsModel.count > 7 ? cardGrid : cardList
