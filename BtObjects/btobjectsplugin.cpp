@@ -480,6 +480,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<ThermalControlUnit99Zones>(
 				uri, 1, 0, "ThermalControlUnit99Zones",
 				"unable to create a ThermalControlUnit99Zones instance");
+	qmlRegisterUncreatableType<ThermalControlUnit>(
+				uri, 1, 0, "ThermalControlUnit",
+				"unable to create a ThermalControlUnit instance");
 	qmlRegisterUncreatableType<ThermalControlledProbe>(
 				uri, 1, 0, "ThermalControlledProbe",
 				"unable to create a ThermalControlledProbe instance");
