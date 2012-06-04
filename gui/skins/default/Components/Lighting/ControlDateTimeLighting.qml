@@ -133,10 +133,15 @@ Item {
         return r;
     }
 
+    MouseArea {
+        anchors.fill: parent
+        z: 10 // to be upper of smallbuttons
+        visible: !control.enabled
+    }
+
     SmallButton {
         id: buttonLeftPlus
         z: 1
-        inputAllowed: control.enabled
         anchors {
             top: parent.top
             left: parent.left
@@ -148,22 +153,11 @@ Item {
         }
 
         onButtonClicked: leftPlusClicked()
-        onButtonPressed: leftPlusTimer.running = true
-        onButtonReleased: leftPlusTimer.running = false
-
-        Timer {
-            id: leftPlusTimer
-            interval: 500
-            running: false
-            repeat: true
-            onTriggered: leftPlusClicked()
-        }
     }
 
     SmallButton {
         id: buttonCenterPlus
         z: 1
-        inputAllowed: control.enabled
         anchors {
             top: parent.top
             left: buttonLeftPlus.right
@@ -175,22 +169,11 @@ Item {
         }
 
         onButtonClicked: centerPlusClicked()
-        onButtonPressed: centerPlusTimer.running = true
-        onButtonReleased: centerPlusTimer.running = false
-
-        Timer {
-            id: centerPlusTimer
-            interval: 500
-            running: false
-            repeat: true
-            onTriggered: centerPlusClicked()
-        }
     }
 
     SmallButton {
         id: buttonRightPlus
         z: 1
-        inputAllowed: control.enabled
         anchors {
             top: parent.top
             left: buttonCenterPlus.right
@@ -203,16 +186,6 @@ Item {
         }
 
         onButtonClicked: rightPlusClicked()
-        onButtonPressed: rightPlusTimer.running = true
-        onButtonReleased: rightPlusTimer.running = false
-
-        Timer {
-            id: rightPlusTimer
-            interval: 500
-            running: false
-            repeat: true
-            onTriggered: rightPlusClicked()
-        }
     }
 
     SvgImage {
@@ -229,7 +202,6 @@ Item {
     SmallButton {
         id: buttonLeftMinus
         z: 1
-        inputAllowed: control.enabled
         anchors {
             top: bg.bottom
             left: parent.left
@@ -241,22 +213,11 @@ Item {
         }
 
         onButtonClicked: leftMinusClicked()
-        onButtonPressed: leftMinusTimer.running = true
-        onButtonReleased: leftMinusTimer.running = false
-
-        Timer {
-            id: leftMinusTimer
-            interval: 500
-            running: false
-            repeat: true
-            onTriggered: leftMinusClicked()
-        }
     }
 
     SmallButton {
         id: buttonCenterMinus
         z: 1
-        inputAllowed: control.enabled
         anchors {
             top: bg.bottom
             left: buttonLeftMinus.right
@@ -268,22 +229,11 @@ Item {
         }
 
         onButtonClicked: centerMinusClicked()
-        onButtonPressed: centerMinusTimer.running = true
-        onButtonReleased: centerMinusTimer.running = false
-
-        Timer {
-            id: centerMinusTimer
-            interval: 500
-            running: false
-            repeat: true
-            onTriggered: centerMinusClicked()
-        }
     }
 
     SmallButton {
         id: buttonRightMinus
         z: 1
-        inputAllowed: control.enabled
         anchors {
             top: bg.bottom
             left: buttonCenterMinus.right
@@ -296,16 +246,6 @@ Item {
         }
 
         onButtonClicked: rightMinusClicked()
-        onButtonPressed: rightMinusTimer.running = true
-        onButtonReleased: rightMinusTimer.running = false
-
-        Timer {
-            id: rightMinusTimer
-            interval: 500
-            running: false
-            repeat: true
-            onTriggered: rightMinusClicked()
-        }
     }
 
     Text {

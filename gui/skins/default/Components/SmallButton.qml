@@ -4,11 +4,7 @@ import Components 1.0
 Rectangle {
     id: button
 
-    property bool inputAllowed: true
-
     signal buttonClicked
-    signal buttonPressed
-    signal buttonReleased
 
     width: btn.width
     height: btn.height
@@ -22,10 +18,9 @@ Rectangle {
             MouseArea {
                 id: mouseArea
                 anchors.fill: parent
-                visible: inputAllowed
                 onClicked: buttonClicked()
-                onPressed: buttonPressed()
-                onReleased: buttonReleased()
+                onPressed: clickTimer.running = true
+                onReleased: clickTimer.running = false
             }
         }
 
@@ -33,6 +28,14 @@ Rectangle {
             source: "../images/common/shadow_button_1-3.svg"
             visible: mouseArea.pressed === false
         }
+    }
+
+    Timer {
+        id: clickTimer
+        interval: 500
+        running: false
+        repeat: true
+        onTriggered: buttonClicked()
     }
 }
 
