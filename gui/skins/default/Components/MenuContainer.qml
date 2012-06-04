@@ -48,6 +48,14 @@ Item {
     }
 
 
+    // This property is explicitly set to false whenever any operation on columns
+    // is requested. This way we filter all inputs on clippingContainer until
+    // all pending operations are completed. This avoids the 'double click' bug
+    // on different elements in the first column
+    //
+    // Consider it an implementation detail
+    property bool interactive: true
+
     Item {
         id: clippingContainer
         anchors.top: parent.top
@@ -92,6 +100,12 @@ Item {
                     PropertyAnimation { duration: constants.lineTransitionDuration }
                 }
             }
+        }
+
+        MouseArea {
+            id: interactivityArea
+            anchors.fill: parent
+            visible: !interactive
         }
     }
 

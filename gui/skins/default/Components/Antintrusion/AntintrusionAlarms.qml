@@ -30,7 +30,6 @@ MenuColumn {
             delegate: Image {
                 id: itemBackground
                 property variant itemObject: modelList.getObject(index)
-                property bool active: column.animationRunning === false
 
                 source: imagesPath + (index % 2 === 0 ? "common/bg_registro_riga1.png" : "common/bg_registro_riga2.png")
                 Row {

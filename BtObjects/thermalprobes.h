@@ -75,8 +75,8 @@ public:
 
 	enum CentralType
 	{
-		CENTRAL_99ZONES = 0, /*!< Probe associated to a 99-zone central. */
-		CENTRAL_4ZONES = 1,  /*!< Probe associated to a 4-zone central. */
+		CentralUnit99Zones = 0, /*!< Probe associated to a 99-zone central. */
+		CentralUnit4Zones = 1,  /*!< Probe associated to a 4-zone central. */
 	};
 
 	ThermalControlledProbe(QString name, QString key, CentralType centralType, ControlledProbeDevice *d);
@@ -120,7 +120,7 @@ private:
 	ProbeStatus plant_status, local_status;
 	int setpoint;
 	int temperature, local_offset;
-	CentralType centralType;
+	CentralType central_type;
 };
 
 
