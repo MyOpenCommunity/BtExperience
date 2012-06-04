@@ -75,13 +75,7 @@ public:
 
 	virtual QString getObjectKey() const;
 
-	virtual ObjectCategory getCategory() const
-	{
-		return category;
-	}
-
 	virtual bool isActive() const;
-	void setCategory(ObjectCategory _category);
 	void setHours(int h);
 	int getHours();
 	void setMinutes(int m);
@@ -105,7 +99,6 @@ protected:
 
 private:
 	int hours, minutes, seconds;
-	ObjectCategory category;
 };
 
 
@@ -127,11 +120,6 @@ public:
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdLightGroup;
-	}
-
-	virtual ObjectCategory getCategory() const
-	{
-		return Unassigned;
 	}
 
 	/*!

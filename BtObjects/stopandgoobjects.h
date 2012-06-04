@@ -67,11 +67,6 @@ public:
 		return ObjectInterface::IdStopAndGo;
 	}
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::EnergyManagement;
-	}
-
 	Status getStatus() const;
 
 	bool getAutoReset() const;

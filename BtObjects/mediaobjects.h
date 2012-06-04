@@ -33,11 +33,6 @@ class SoundAmbientBase : public ObjectInterface
 	Q_PROPERTY(int area READ getArea CONSTANT)
 
 public:
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::SoundDiffusion;
-	}
-
 	QObject *getCurrentSource() const;
 
 	int getArea() const;
@@ -175,11 +170,6 @@ public:
 		Radio = 1,
 		Aux,
 	};
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::SoundDiffusion;
-	}
 
 	virtual int getObjectId() const
 	{
@@ -372,11 +362,6 @@ public:
 
 	virtual QString getObjectKey() const { return QString::number(area); }
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::SoundDiffusion;
-	}
-
 	virtual int getObjectId() const
 	{
 		return object_id;
@@ -422,8 +407,6 @@ public:
 	PowerAmplifierPreset(int number, const QString &name);
 
 	virtual int getObjectId() const { return preset_number; }
-
-	virtual ObjectCategory getCategory() const { return SoundDiffusion; }
 
 	virtual QString getName() const { return preset_name; }
 

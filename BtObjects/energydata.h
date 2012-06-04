@@ -159,11 +159,6 @@ public:
 
 	virtual QString getObjectKey() const;
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::EnergyManagement;
-	}
-
 	/*!
 		\brief Returns an object holding graph data for the specified measure/time
 

@@ -53,11 +53,6 @@ public:
 		return ObjectInterface::IdHardwareSettings;
 	}
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Settings;
-	}
-
 	bool getAutoUpdate() const;
 	void setAutoUpdate(bool v);
 	QDate getDate() const;

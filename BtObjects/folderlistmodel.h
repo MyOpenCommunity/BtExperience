@@ -35,8 +35,6 @@ public:
 		Image     = 0x10, /*!< Image filetype */
 	};
 
-	virtual ObjectCategory getCategory() const { return Unassigned; }
-
 	virtual QString getName() const;
 
 	QVariantList getPath() const;

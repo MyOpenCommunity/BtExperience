@@ -26,11 +26,6 @@ public:
 		return ObjectInterface::IdSimpleScenario;
 	}
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Scenarios;
-	}
-
 public slots:
 	void activate();
 

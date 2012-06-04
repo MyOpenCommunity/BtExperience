@@ -77,11 +77,6 @@ public:
 
 	virtual QString getObjectKey() const;
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::ThermalRegulation;
-	}
-
 	ProbeStatus getProbeStatus() const;
 	void setProbeStatus(ProbeStatus st);
 

@@ -34,11 +34,6 @@ class ExternalPlace : public ObjectInterface
 public:
 	ExternalPlace(const QString &_name, const QString &_where);
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Unassigned;
-	}
-
 	QString getWhere() const
 	{
 		return where;
@@ -81,11 +76,6 @@ public:
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdCCTV;
-	}
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::VideoEntry;
 	}
 
 	int getBrightness() const;
@@ -170,11 +160,6 @@ public:
 	virtual QString getObjectKey() const
 	{
 		return key;
-	}
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::VideoEntry;
 	}
 
 	Q_INVOKABLE void answerCall();

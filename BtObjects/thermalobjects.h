@@ -40,8 +40,6 @@ public:
 	ThermalRegulationProgram(int number, const QString &name);
 	virtual int getObjectId() const { return program_number; }
 
-	virtual ObjectCategory getCategory() const { return ThermalRegulation; }
-
 	virtual QString getName() const { return program_name; }
 
 private:
@@ -129,11 +127,6 @@ public:
 	ThermalControlUnit(QString name, QString key, ThermalDevice *d);
 
 	virtual QString getObjectKey() const;
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::ThermalRegulation;
-	}
 
 	SeasonType getSeason() const;
 	void setSeason(SeasonType s);
@@ -245,11 +238,6 @@ class ThermalControlUnitObject : public ObjectInterface
 
 public:
 	ThermalControlUnitObject(QString name, ThermalDevice *dev);
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::ThermalRegulation;
-	}
 
 public slots:
 	/*!

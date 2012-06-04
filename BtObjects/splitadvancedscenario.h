@@ -167,11 +167,6 @@ public:
 		return key;
 	}
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::ThermalRegulation;
-	}
-
 	SplitProgram::Mode getMode() const;
 	void setMode(SplitProgram::Mode mode);
 	QString getProgram() const;

@@ -53,11 +53,6 @@ public:
 		return ObjectInterface::IdAntintrusionAux;
 	}
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Antintrusion;
-	}
-
 	int getNumber() const;
 
 private:
@@ -129,11 +124,6 @@ class AntintrusionScenario : public ObjectInterface
 
 public:
 	AntintrusionScenario(QString name, QList<int> scenario_zones, QList<AntintrusionZone*> zones);
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Antintrusion;
-	}
 
 	// return the description of the scenario, used by the omonymous role
 	Q_INVOKABLE QString getDescription() const;
@@ -220,11 +210,6 @@ public:
 
 	AntintrusionAlarm(AlarmType type, const AntintrusionAlarmSource *source, int number, QDateTime time);
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Antintrusion;
-	}
-
 	AlarmType getType();
 	ObjectInterface *getSource();
 	QDateTime getDateTime();
@@ -271,11 +256,6 @@ public:
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdAntintrusionSystem;
-	}
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Antintrusion;
 	}
 
 	ObjectDataModel *getZones() const;

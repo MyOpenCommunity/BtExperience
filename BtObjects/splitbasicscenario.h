@@ -70,11 +70,6 @@ public:
 		return key;
 	}
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::ThermalRegulation;
-	}
-
 	QString getProgram() const;
 	void setProgram(QString program);
 	QStringList getPrograms() const;

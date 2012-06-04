@@ -209,7 +209,6 @@ Light::Light(QString _name, QString _key, LightingDevice *d) : LightCommand(d)
 
 	key = _key;
 	name = _name;
-	category = ObjectInterface::Unassigned;
 	active = false; // initial value
 
 	hours = 0;
@@ -225,11 +224,6 @@ QString Light::getObjectKey() const
 bool Light::isActive() const
 {
 	return active;
-}
-
-void Light::setCategory(ObjectInterface::ObjectCategory _category)
-{
-	category = _category;
 }
 
 void Light::setHours(int h)

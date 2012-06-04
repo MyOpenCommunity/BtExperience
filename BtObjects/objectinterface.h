@@ -41,7 +41,6 @@ class ObjectInterface : public ItemInterface
 	Q_PROPERTY(QString objectKey READ getObjectKey CONSTANT)
 
 	Q_ENUMS(ObjectId)
-	Q_ENUMS(ObjectCategory)
 
 public:
 	ObjectInterface(QObject *parent = 0) : ItemInterface(parent) {}
@@ -95,20 +94,6 @@ public:
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
-	/// Numeric identifier for object category
-	enum ObjectCategory
-	{
-		Unassigned = -1, //!< Object does not belong to any category
-		Lighting = 1, //!< Lighting system
-		ThermalRegulation, //!< Thermal regulation and air conditioning
-		Antintrusion, //!< Anti-intrusion system
-		Settings, //!< Settings
-		SoundDiffusion, //!< Sound diffusion
-		Scenarios, //!< Scenarios (simple, scheduled and advanced)
-		VideoEntry, //!< Video door entry and telecontrol
-		EnergyManagement //!< Energy management
-	};
-
 	virtual int getObjectId() const;
 
 	// an unique key to identify an object from the others with the same id.
@@ -117,9 +102,6 @@ public:
 	// the name of the object
 	virtual QString getName() const;
 	virtual void setName(const QString &n);
-
-	// the category (ex: lighting, automation, etc..)
-	virtual ObjectCategory getCategory() const = 0;
 
 signals:
 	void nameChanged();

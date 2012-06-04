@@ -55,11 +55,9 @@ public:
 	\endverbatim
 
 	selects all the objects with:
-	- category ObjectInterface::ThermalRegulation and
-	    - objectId ObjectInterface::IdThermalControlledProbe and key "1" or
-	    - objectId ObjectInterface::IdThermalControlledProbeFancoil
+	- objectId ObjectInterface::IdThermalControlledProbe and key "1" or
+	- objectId ObjectInterface::IdThermalControlledProbeFancoil
 
-	\sa ObjectInterface::ObjectCategory
 	\sa ObjectInterface::ObjectId
 */
 class ObjectModel : public MediaModel

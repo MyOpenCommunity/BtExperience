@@ -80,7 +80,7 @@ bool ObjectModel::acceptsRow(int source_row) const
 	if (!match_conditions)
 		return false;
 
-	// No category or filter means all the items
+	// No filter means all the items
 	if (filters.isEmpty())
 		return true;
 

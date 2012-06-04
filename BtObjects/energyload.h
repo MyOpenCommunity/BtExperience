@@ -135,11 +135,6 @@ public:
 		return ObjectInterface::IdEnergyLoad;
 	}
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::EnergyManagement;
-	}
-
 	LoadStatus getLoadStatus() const;
 
 	int getConsumption() const;
