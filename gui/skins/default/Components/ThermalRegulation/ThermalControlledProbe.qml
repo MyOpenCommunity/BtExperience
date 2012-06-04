@@ -5,7 +5,7 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    property int is99zones: (dataModel.centralType === ThermalControlledProbe.CENTRAL_99ZONES)
+    property int is99zones: (dataModel.centralType === ThermalControlledProbe.CentralUnit99Zones)
 
     Component {
         id: thermalControlledProbeModalities
@@ -149,9 +149,7 @@ MenuColumn {
 
             ControlUpDown {
                 title: qsTr("fan coil speed")
-                text: isFancoil() ?
-                          pageObject.names.get('FANCOIL_SPEED', rootAutoComponent.speed) :
-                          qsTr("high")
+                text: pageObject.names.get('FANCOIL_SPEED', rootAutoComponent.speed)
                 // fancoil panel is visible only for fancoil probes
                 visible: isFancoil()
                 onDownClicked: {
@@ -195,9 +193,7 @@ MenuColumn {
 
             ControlUpDown {
                 title: qsTr("fan coil speed")
-                text: isFancoil() ?
-                          pageObject.names.get('FANCOIL_SPEED', rootManualComponent.speed) :
-                          qsTr("high")
+                text: pageObject.names.get('FANCOIL_SPEED', rootManualComponent.speed)
                 // fancoil panel is visible only for fancoil probes
                 visible: isFancoil()
                 onDownClicked: {
