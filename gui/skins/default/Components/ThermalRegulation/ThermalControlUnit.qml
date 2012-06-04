@@ -8,7 +8,7 @@ import "../../js/datetime.js" as DateTime
 MenuColumn {
     id: column
 
-    property int zones: 99 // 99 - 99 zones, 4 - 4 zones central unit
+    property int is99zones: (dataModel.objectId === ObjectInterface.IdThermalControlUnit99)
 
     FilterListModel {
         id: centralProbe
@@ -150,7 +150,7 @@ MenuColumn {
             height: visible ? 50 : 0
             // 4 zones central units are zones themselves: we must show the
             // temperature of the linked probe in such cases
-            visible: (zones === 4)
+            visible: (!is99zones)
             source: "../../images/common/bg_UnaRegolazione.png"
 
             Text {

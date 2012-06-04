@@ -5,7 +5,7 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    property int zones: 99 // 99 - 99 zones, 4 - 4 zones central unit
+    property int is99zones: (dataModel.centralType === ThermalControlledProbe.CENTRAL_99ZONES)
 
     Component {
         id: thermalControlledProbeModalities
@@ -103,7 +103,7 @@ MenuColumn {
         anchors.top: fixedItem.bottom
         height: visible ? 50 : 0
         // we can change mode on 99 zones central units, so make mode menu visible
-        visible: (zones === 99)
+        visible: is99zones
 
         onClicked: {
             column.loadColumn(

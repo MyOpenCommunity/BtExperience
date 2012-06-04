@@ -38,14 +38,7 @@ MenuColumn {
             boxInfoText: isControlledProbe() ? itemObject.temperature / 10 + qsTr("°C") : ""
             hasChild: true
             onClicked: {
-                var z = 99
-                if(modelList.getObject(0).objectId === ObjectInterface.IdThermalControlUnit4)
-                    z = 4
-                column.loadColumn(
-                            mapping.getComponent(itemObject.objectId),
-                            itemObject.name,
-                            modelList.getObject(model.index),
-                            {"zones": z})
+                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
             }
         }
 

@@ -212,9 +212,9 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?
 						ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
 			if(fancoil == ControlledProbeDevice::NORMAL)
-				obj = new ThermalControlledProbe(descr, where, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CENTRAL_4ZONES, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
 			else
-				obj = new ThermalControlledProbeFancoil(descr, where, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CENTRAL_4ZONES, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
 			break;
 		}
 		case ObjectInterface::IdHardwareSettings:

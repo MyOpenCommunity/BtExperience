@@ -55,7 +55,12 @@ class ThermalControlledProbe : public ObjectInterface
 	*/
 	Q_PROPERTY(int localOffset READ getLocalOffset NOTIFY localOffsetChanged)
 
-	Q_ENUMS(ProbeStatus)
+	/*!
+		\brief Gets the central unit type (99 zones or 4 zones) associated to this probe
+	*/
+	Q_PROPERTY(CentralType centralType READ getCentralType CONSTANT)
+
+	Q_ENUMS(ProbeStatus CentralType)
 
 public:
 	enum ProbeStatus
@@ -68,7 +73,13 @@ public:
 		Antifreeze  /*!< Antifreeze mode. */
 	};
 
-	ThermalControlledProbe(QString name, QString key, ControlledProbeDevice *d);
+	enum CentralType
+	{
+		CENTRAL_99ZONES = 0, /*!< Probe associated to a 99-zone central. */
+		CENTRAL_4ZONES = 1,  /*!< Probe associated to a 4-zone central. */
+	};
+
+	ThermalControlledProbe(QString name, QString key, CentralType centralType, ControlledProbeDevice *d);
 
 	virtual int getObjectId() const
 	{
@@ -89,6 +100,8 @@ public:
 
 	int getLocalOffset() const;
 
+	CentralType getCentralType() const;
+
 signals:
 	void probeStatusChanged();
 	void temperatureChanged();
@@ -107,6 +120,7 @@ private:
 	ProbeStatus plant_status, local_status;
 	int setpoint;
 	int temperature, local_offset;
+	CentralType centralType;
 };
 
 
@@ -139,7 +153,7 @@ public:
 		FancoilAuto      /*!< Automatic speed */
 	};
 
-	ThermalControlledProbeFancoil(QString name, QString key, ControlledProbeDevice *d);
+	ThermalControlledProbeFancoil(QString name, QString key, CentralType centralType, ControlledProbeDevice *d);
 
 	virtual int getObjectId() const
 	{

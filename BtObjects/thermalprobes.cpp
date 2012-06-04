@@ -5,7 +5,7 @@
 #include <QDebug>
 
 
-ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, ControlledProbeDevice *d)
+ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, ThermalControlledProbe::CentralType centralType, ControlledProbeDevice *d)
 {
 	name = _name;
 	key = _key;
@@ -13,6 +13,7 @@ ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, Cont
 	local_status = Normal;
 	temperature = local_offset = 0;
 	setpoint = 0;
+	this->centralType = centralType;
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
@@ -67,6 +68,11 @@ void ThermalControlledProbe::setSetpoint(int sp)
 int ThermalControlledProbe::getLocalOffset() const
 {
 	return bt2Celsius(local_offset);
+}
+
+ThermalControlledProbe::CentralType ThermalControlledProbe::getCentralType() const
+{
+	return centralType;
 }
 
 int ThermalControlledProbe::getTemperature() const
@@ -133,8 +139,8 @@ void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
 }
 
 
-ThermalControlledProbeFancoil::ThermalControlledProbeFancoil(QString _name, QString _key, ControlledProbeDevice *d) :
-	ThermalControlledProbe(_name, _key, d)
+ThermalControlledProbeFancoil::ThermalControlledProbeFancoil(QString _name, QString _key, ThermalControlledProbe::CentralType centralType, ControlledProbeDevice *d) :
+	ThermalControlledProbe(_name, _key, centralType, d)
 {
 	fancoil_speed = FancoilAuto;
 }
