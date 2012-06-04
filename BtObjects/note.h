@@ -6,6 +6,9 @@
 #include <QDateTime>
 
 
+/*!
+	\brief An user-created note
+*/
 class Note : public ItemInterface
 {
 	Q_OBJECT

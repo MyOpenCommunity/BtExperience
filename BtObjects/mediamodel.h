@@ -177,6 +177,12 @@ public:
 	*/
 	Q_INVOKABLE void remove(int index);
 
+	/*!
+		\brief Append an object to the source model
+
+		Note that if the appended object does not satisfy the filter criteria,
+		it will not be included in this model.
+	*/
 	Q_INVOKABLE void append(ItemInterface *obj);
 
 	/*!

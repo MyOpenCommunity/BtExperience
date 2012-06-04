@@ -123,6 +123,15 @@ public:
 	void setNotes(MediaDataModel *notes);
 	MediaDataModel *getNotes() const;
 
+	/*!
+		\brief Create a new note instance
+
+		Example (QML):
+
+		\verbatim
+		userNotes.append(myHomeModels.createNote(profile.uii, textEdit.text))
+		\endverbatim
+	*/
 	Q_INVOKABLE Note *createNote(int profile_id, QString text);
 
 	void setProfiles(MediaDataModel *profiles);
