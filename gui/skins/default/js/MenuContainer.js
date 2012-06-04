@@ -59,6 +59,8 @@ function closeLastItem() {
     if (pendingOperations.length > 0) // we are during an operation
         return
 
+    mainContainer.interactive = false
+
     debugMsg("closeLastItem")
     if (stackItems.length > 1) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
@@ -66,7 +68,13 @@ function closeLastItem() {
         processOperations();
     }
     else
+    {
+        // this shouldn't be necessary at all right now, since the closed() will
+        // trigger object destruction, but I don't want to have surprises if
+        // we change the semantics later on
+        mainContainer.interactive = true
         mainContainer.closed()
+    }
 }
 
 function closeItem(menuLevel) {
@@ -77,6 +85,8 @@ function closeItem(menuLevel) {
         debugMsg("closeItem: nothing to do")
         return
     }
+
+    mainContainer.interactive = false
 
     debugMsg("closeItem level to close: " + menuLevel)
     for (var i = stackItems.length - 1; i >= menuLevel; i--) {
@@ -89,6 +99,7 @@ function closeItem(menuLevel) {
 
 
 function _addItem(item, title) {
+    mainContainer.interactive = false
     debugMsg("_addItem level: " + item.menuLevel)
     for (var i = stackItems.length - 1; i >= item.menuLevel; i--) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': false})
@@ -104,7 +115,10 @@ function processOperations() {
     debugMsg('processOperations -> operations pending: ' + pendingOperations.length)
 
     if (pendingOperations.length  === 0)
+    {
+        mainContainer.interactive = true
         return
+    }
 
     var op = pendingOperations[0]
 
