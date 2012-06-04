@@ -39,7 +39,7 @@ void TestThermalProbes::init()
 {
 	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL);
 
-	obj = new ThermalControlledProbe("", "", d);
+	obj = new ThermalControlledProbe("", "", ThermalControlledProbe::CentralUnit99Zones, d);
 	dev = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL, 1);
 }
 
@@ -214,7 +214,7 @@ void TestThermalProbesFancoil::init()
 {
 	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL);
 
-	obj = new ThermalControlledProbeFancoil("", "", d);
+	obj = new ThermalControlledProbeFancoil("", "", ThermalControlledProbe::CentralUnit99Zones, d);
 	dev = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL, 1);
 
 	initObjects(dev, obj);
