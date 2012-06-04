@@ -17,7 +17,8 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             function isControlledProbe() {
-                return itemObject.objectId === ObjectInterface.IdThermalControlledProbe
+                return (itemObject.objectId === ObjectInterface.IdThermalControlledProbe
+                        || itemObject.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
             }
 
             function getDescription() {

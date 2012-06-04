@@ -21,13 +21,19 @@ MenuColumn {
         property int pendingModality: -1
     }
 
+    function isFancoil() {
+        return (column.dataModel.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
+    }
+
     function alertOkClicked() {
         column.closeColumn()
     }
 
     function okClicked() {
-        if (privateProps.pendingModality !== dataModel.probeStatus)
+        if (privateProps.pendingModality !== dataModel.probeStatus) {
             dataModel.probeStatus = privateProps.pendingModality
+            privateProps.pendingModality = -1
+        }
         closeColumn()
     }
 
@@ -37,6 +43,7 @@ MenuColumn {
 
     onChildDestroyed: {
         modalityItem.state = ""
+        privateProps.pendingModality = -1
     }
 
     onChildLoaded: {
@@ -116,32 +123,58 @@ MenuColumn {
     Component {
         id: offComponent
         ButtonOkCancel {
-            onCancelClicked: column.cancelClicked();
-            onOkClicked: column.okClicked();
+            onCancelClicked: column.cancelClicked()
+            onOkClicked: column.okClicked()
         }
     }
 
     Component {
         id: antifreezeComponent
         ButtonOkCancel {
-            onCancelClicked: column.cancelClicked();
-            onOkClicked: column.okClicked();
+            onCancelClicked: column.cancelClicked()
+            onOkClicked: column.okClicked()
         }
     }
 
     Component {
         id: autoComponent
         Column {
+            id: rootAutoComponent
+            property int speed
+
+            Component.onCompleted: {
+                // we want an assignment, not a binding
+                rootAutoComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
+            }
+
             ControlUpDown {
                 title: qsTr("fan coil speed")
-                text: qsTr("high")
+                text: isFancoil() ?
+                          pageObject.names.get('FANCOIL_SPEED', rootAutoComponent.speed) :
+                          qsTr("high")
                 // fancoil panel is visible only for fancoil probes
-                visible: (column.dataModel.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
+                visible: isFancoil()
+                onDownClicked: {
+                    if(rootAutoComponent.speed <= 1)
+                        return
+                    rootAutoComponent.speed -= 1
+                }
+                onUpClicked: {
+                    if(rootAutoComponent.speed >= 4)
+                        return
+                    rootAutoComponent.speed += 1
+                }
             }
 
             ButtonOkCancel {
-                onCancelClicked: column.cancelClicked();
-                onOkClicked: column.okClicked();
+                onCancelClicked: {
+                    rootAutoComponent.speed = column.dataModel.fancoil
+                    column.cancelClicked()
+                }
+                onOkClicked: {
+                    column.dataModel.fancoil = rootAutoComponent.speed
+                    column.okClicked()
+                }
             }
         }
     }
@@ -151,6 +184,7 @@ MenuColumn {
         Column {
             id: rootManualComponent
             property int setpoint
+            property int speed
 
             ControlMinusPlus {
                 title: qsTr("temperature set")
@@ -161,18 +195,31 @@ MenuColumn {
 
             ControlUpDown {
                 title: qsTr("fan coil speed")
-                text: qsTr("high")
+                text: isFancoil() ?
+                          pageObject.names.get('FANCOIL_SPEED', rootManualComponent.speed) :
+                          qsTr("high")
                 // fancoil panel is visible only for fancoil probes
-                visible: (column.dataModel.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
+                visible: isFancoil()
+                onDownClicked: {
+                    if(rootManualComponent.speed <= 1)
+                        return
+                    rootManualComponent.speed -= 1
+                }
+                onUpClicked: {
+                    if(rootManualComponent.speed >= 4)
+                        return
+                    rootManualComponent.speed += 1
+                }
             }
 
             ButtonOkCancel {
                 onCancelClicked: {
                     setpoint = dataModel.setpoint
+                    rootManualComponent.speed = column.dataModel.fancoil
                     column.cancelClicked()
-
                 }
                 onOkClicked: {
+                    column.dataModel.fancoil = rootManualComponent.speed
                     dataModel.setpoint = setpoint
                     column.okClicked()
                 }
@@ -180,6 +227,7 @@ MenuColumn {
 
             Component.onCompleted: {
                 rootManualComponent.setpoint = dataModel.setpoint // we want an assignment, not a binding
+                rootManualComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
             }
             Connections {
                 target: dataModel
