@@ -14,7 +14,8 @@ MenuColumn {
 
         width: 212
         height: 37
-        Image {
+
+        SvgImage {
             id: imgOn
 
             source: areaOn.pressed ? "../../images/common/button_1-2_p.svg" :
@@ -45,7 +46,7 @@ MenuColumn {
             }
         }
 
-        Image {
+        SvgImage {
             anchors {
                 left: imgOn.left
                 top: imgOn.bottom
@@ -55,7 +56,7 @@ MenuColumn {
             visible: (areaOn.pressed === false)
         }
 
-        Image {
+        SvgImage {
             id: imgOff
 
             source: areaOff.pressed ? "../../images/common/button_1-2_p.svg" :
@@ -86,7 +87,7 @@ MenuColumn {
             }
         }
 
-        Image {
+        SvgImage {
             anchors {
                 left: imgOff.left
                 top: imgOff.bottom

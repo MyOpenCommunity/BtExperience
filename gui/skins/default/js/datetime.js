@@ -11,3 +11,7 @@ function format(dateTime) {
     // returns a dict with date and time formatted
     return {"time": Qt.formatDateTime(dt, "hh:mm"), "date": Qt.formatDateTime(dt, "dd/MM/yyyy")}
 }
+
+function daysInMonth(month,year) {
+    return new Date(year, month, 0).getDate()
+}

@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import "../../js/datetime.js" as DateTime
 
 Item {
     id: control
@@ -48,8 +49,7 @@ Item {
         }
         else {
             // day
-            // TODO not all months have 31 days...
-            if(leftColumnValue >= 31)
+            if(leftColumnValue >= DateTime.daysInMonth(centerColumnValue,"20"+rightColumnValue))
                 return
         }
         leftColumnValue += 1
