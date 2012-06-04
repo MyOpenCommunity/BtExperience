@@ -11,34 +11,15 @@ ObjectDataModel::ObjectDataModel(QObject *parent) : MediaDataModel(parent)
 {
 }
 
-ObjectDataModel &ObjectDataModel::operator<<(ObjectPair pair)
+ObjectDataModel &ObjectDataModel::operator<<(ObjectInterface *obj)
 {
-	insertObject(pair.second, pair.first);
+	insertObject(obj);
 	return *this;
-}
-
-ObjectDataModel &ObjectDataModel::insertWithoutUii(ObjectInterface *obj)
-{
-	insertObject(obj, -1);
-	return *this;
-}
-
-void ObjectDataModel::insertObject(ObjectInterface *obj, int uii)
-{
-	if (uii != -1)
-		uii_mapper.insert(uii, obj);
-
-	MediaDataModel::insertObject(obj);
 }
 
 ObjectInterface *ObjectDataModel::getObject(int row) const
 {
-	return qobject_cast<ObjectInterface *>(MediaDataModel::getObject(row));
-}
-
-ObjectInterface *ObjectDataModel::getObjectByUii(int uii) const
-{
-	return uii_mapper.value<ObjectInterface>(uii);
+	return static_cast<ObjectInterface *>(MediaDataModel::getObject(row));
 }
 
 
@@ -62,26 +43,6 @@ ObjectDataModel *ObjectModel::getSource() const
 {
 
 	return qobject_cast<ObjectDataModel *>(MediaModel::getSource());
-}
-
-QVariantList ObjectModel::getCategories() const
-{
-	return input_categories;
-}
-
-void ObjectModel::setCategories(QVariantList cat)
-{
-	if (cat == input_categories)
-		return;
-
-	input_categories = cat;
-	categories.clear();
-
-	foreach (const QVariant &v, cat)
-		categories << v.toInt();
-
-	reset(); // see comment at the top of MediaModel
-	emit categoriesChanged();
 }
 
 QVariantList ObjectModel::getFilters() const
@@ -119,17 +80,15 @@ bool ObjectModel::acceptsRow(int source_row) const
 	if (!match_conditions)
 		return false;
 
-	// No category or filter means all the items
-	if (categories.isEmpty() && filters.isEmpty())
+	// No filter means all the items
+	if (filters.isEmpty())
 		return true;
 
 	ObjectInterface *obj = getSource()->getObject(source_row);
 
 	match_conditions = false;
 
-	if (categories.isEmpty() && filters.isEmpty()) // no conditions, we keep all the items
-		match_conditions = true;
-	else if (categories.contains(obj->getCategory()))
+	if (filters.isEmpty()) // no conditions, we keep all the items
 		match_conditions = true;
 	else if (filters.contains(obj->getObjectId()))
 	{

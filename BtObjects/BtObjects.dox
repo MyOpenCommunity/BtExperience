@@ -1,0 +1,112 @@
+
+/*!
+	\defgroup Core Core objects
+*/
+
+/*!
+	\mainpage
+
+	The BtObjects QML plugin contains non-graphics components to help interfacing
+	with MyHome SCS system.
+
+	\section overview-usage Basic usage
+
+	\verbatim
+	import QtQuick 1.1
+	import BtObjects 1.0
+
+	ListView {
+	    model: rooms
+
+	    MediaModel {
+		id: rooms
+		source: myHomeModels.rooms
+		container
+	    }
+
+	    delegate: Image {
+		property variant itemObject: mediaModel.getObject(index)
+
+		id: listDelegate
+
+		Image {
+		    source: listDelegate.itemObject.image
+
+		    // ...
+		}
+
+		// ...
+	    }
+
+	    // ...
+	}
+	\endverbatim
+
+	Importing the BtObjects model exports many types used to interface with MyHome systems
+	and defines a single global object (\c myHomeModels of type GlobalModels) containing
+	the objects parsed from \c archive.xml and \c layout.xml configuration files.
+
+	\section overview-models Model structure
+
+	When \c BtObjects is loaded, it parses the XML configuration files and puts the objects into
+	multiple models.
+
+	To access the contained objects from QML, define a filtered model (MediaModel or ObjectModel)
+	and use one of the global models as the source:
+
+	\verbatim
+	MediaModel {
+	    source: myHomeModels.rooms
+	    id: roomsModel
+	    containers: [floorUii]
+	}
+	\endverbatim
+
+	defines a model containing all the rooms for a given floor, while
+
+	\verbatim
+	ObjectModel {
+	    id: objectModel
+	    source: myHomeModels.myHomeObjects
+	    containers: [Container.IdLights]
+	}
+	\endverbatim
+
+	defines a model containing all the lights defined in the lighting container.
+
+	When required, #MediaModel::count and #MediaModel::range can be used to implement paging, for example:
+
+	\verbatim
+	// currentPage can go from 0 to Math.ceil(userNotes.count / elementsOnPage)
+	MediaModel {
+	    id: userNotes
+	    source: myHomeModels.notes
+	    range: [(currentPage - 1) * elementsOnPage, currentPage * elementsOnPage]
+	}
+	\endverbatim
+
+	Most models are organized in a container hierarchy (for example, floors contains rooms,
+	and rooms contain MyHome object links); #Container.uii can be used to filter a model
+	for the contained objects.
+
+	\section overview-subsystems Subsystems
+
+	- \ref Antintrusion
+	- \ref Automation
+	- \ref Lighting
+	- Energy management
+		- \ref EnergyDataSystem
+		- Supervision
+			- \ref StopAndGo
+			- \ref LoadDiagnostic
+		- \ref LoadManagement
+	- \ref SoundDiffusion
+	- \ref VideoDoorEntry
+	- \ref Scenarios
+	- \ref ThermalRegulation
+		- \ref AirConditioning
+	- \ref Multimedia
+	- \ref Core
+	- \ref Settings
+
+*/

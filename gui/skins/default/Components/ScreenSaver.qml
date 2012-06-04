@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import BtExperience 1.0
-import "EventManager.js" as Script
+import "../js/ScreenSaver.js" as Script
 
 
 Item {

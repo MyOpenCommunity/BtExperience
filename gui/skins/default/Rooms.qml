@@ -27,7 +27,9 @@ Page {
         id: users
         anchors {
             right: parent.right
+            rightMargin: 30
             left: parent.left
+            leftMargin: 30
             top: pageTitle.bottom
             bottom: floorView.top
         }
@@ -39,7 +41,7 @@ Page {
         }
 
         model: roomsModel
-        delegate: PagerDelegate {
+        delegate: CardDelegate {
             source: users.selectRoomImage(itemObject.description)
             property variant itemObject: roomsModel.getObject(index)
             label: itemObject.description

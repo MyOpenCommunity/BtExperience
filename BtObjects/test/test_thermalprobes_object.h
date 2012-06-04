@@ -44,6 +44,8 @@ private slots:
 	void testReceiveTemperature();
 	void testReceiveSetPoint();
 	void testReceiveStatus();
+	void testReceiveLocalStatus();
+	void testReceiveLocalOffset();
 
 protected:
 	void compareClientCommand();
@@ -52,6 +54,9 @@ protected:
 private:
 	void testReceiveStatus(ControlledProbeDevice::ProbeStatus device_status,
 			       ThermalControlledProbe::ProbeStatus object_status);
+	void testReceiveLocalStatus(ControlledProbeDevice::ProbeStatus device_status,
+				    ThermalControlledProbe::ProbeStatus object_status,
+				    bool changed);
 
 	ThermalControlledProbe *obj;
 	ControlledProbeDevice *dev;

@@ -26,37 +26,61 @@ public:
 
 	// Append an item to the model. The model takes the ownership of the item
 	// and reparent it.
-	ObjectDataModel &operator<<(ObjectPair pair);
-	ObjectDataModel &insertWithoutUii(ObjectInterface *obj);
+	ObjectDataModel &operator<<(ObjectInterface *obj);
 
 	ObjectInterface *getObject(int row) const;
-	// may return 0 if uii doesn't exist
-	ObjectInterface *getObjectByUii(int uii) const;
-
-protected:
-	void insertObject(ObjectInterface *obj, int uii);
-
-private:
-	UiiMapper uii_mapper;
 };
 
 
-// A view around the data contained in a ObjectDataModel. It contains some
-// functions to make it easy to use this model from qml
+/*!
+	\ingroup Core
+	\brief Provides a view over a model containing ObjectInterface instances
+
+	This model implements three filter criteria in addition to the ones in MediaModel:
+	- objectId
+	- object key
+
+	for example:
+
+	\verbatim
+	ObjectModel {
+	     id: thermal
+	     source: myHomeModels.myHomeObjects
+	     filters: [
+		 {objectId:  ObjectInterface.IdThermalControlledProbe,
+		  objectKey: "1"},
+		 {objectId:  ObjectInterface.IdThermalControlledProbeFancoil}
+	     ]
+	}
+	\endverbatim
+
+	selects all the objects with:
+	- objectId ObjectInterface::IdThermalControlledProbe and key "1" or
+	- objectId ObjectInterface::IdThermalControlledProbeFancoil
+
+	\sa ObjectInterface::ObjectId
+*/
 class ObjectModel : public MediaModel
 {
 	Q_OBJECT
-	Q_PROPERTY(QVariantList categories READ getCategories WRITE setCategories NOTIFY categoriesChanged)
+
+	/*!
+		\brief A list of filter criteria
+
+		Each item is a dictionary with keys:
+		- objectId (ObjectInterface::ObjectId, required)
+		- objectKey (comma-separated string, optional)
+
+		The object is selected if its \a ObjectInterface::objectId matches and each susbstring in the
+		key is contained in the \a ObjectInterface::objectKey
+
+		An empty list matches all objects.
+	*/
 	Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
 
 public:
 	ObjectModel();
 	static void setGlobalSource(ObjectDataModel *model);
-
-	// The categories argument is a QVariantList in order to set them from qml. The real
-	// type expected is a list of ObjectInterface::ObjectCategory
-	QVariantList getCategories() const;
-	void setCategories(QVariantList cat);
 
 	// The filters argument is a QVariantList in order to set them from qml. The real
 	// type expected is a list of javascript objects represented with a map that
@@ -69,7 +93,6 @@ public:
 	ObjectDataModel *getSource() const;
 
 signals:
-	void categoriesChanged();
 	void filtersChanged();
 
 protected:
@@ -78,10 +101,8 @@ protected:
 private:
 	bool keyMatches(QString key, ObjectInterface *obj) const;
 
-	QVariantList input_categories;
 	QVariantList input_filters;
 
-	QList<int> categories;
 	QHash<int, QString> filters;
 	static ObjectDataModel *global_source;
 };

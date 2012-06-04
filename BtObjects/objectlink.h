@@ -8,10 +8,22 @@
 class ObjectInterface;
 
 
+/*!
+	\ingroup Core
+	\brief Link to a MyHome object, for use in a room
+*/
 class ObjectLink : public ItemInterface
 {
 	Q_OBJECT
+
+	/*!
+		\brief The MyHome object instance
+	*/
 	Q_PROPERTY(ObjectInterface *btObject READ getBtObject CONSTANT)
+
+	/*!
+		\brief Absolute position for screen display
+	*/
 	Q_PROPERTY(QPoint position READ getPosition NOTIFY positionChanged)
 
 public:

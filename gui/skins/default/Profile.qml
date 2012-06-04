@@ -1,12 +1,12 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
 import "js/Stack.js" as Stack
 
 Page {
     id: profilePage
     source: 'images/profiles.jpg'
-    property string profile
-    property url sourceImage
+    property variant profile
 
     ToolBar {
         id: toolbar
@@ -16,15 +16,20 @@ Page {
     }
 
 
+    Constants {
+        id: constants
+    }
+
     NavigationBar {
         id: navbar
         systemsButton: false
-        anchors.topMargin: parent.height / 100 * 5
+        anchors.topMargin: constants.navbarTopMargin
         anchors.top: toolbar.bottom
-        anchors.leftMargin: 2
         anchors.left: parent.left
+        anchors.bottom: parent.bottom
 
         onBackClicked: Stack.popPage()
+        text: profile.description
     }
 
     Pannable {
@@ -44,27 +49,10 @@ Page {
             width: parent.width
             height: parent.height
 
-            Rectangle {
-                id: bgPannable
-
-                property variant actualFavorite: undefined
-
-                visible: false
-                color: "black"
-                opacity: 0.5
-                radius: 20
+            ProfileView {
+                model: mediaLinks
+                container: pannableChild
                 anchors.fill: parent
-                z: 1
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        bgPannable.visible = false
-                        bgPannable.actualFavorite.z = 0
-                        bgPannable.actualFavorite.state = ""
-                        // TODO gestire il focus?
-                        bgPannable.actualFavorite = undefined
-                    }
-                }
             }
 
             Text {
@@ -89,7 +77,7 @@ Page {
                     id: imageProfile
                     width: 100
                     height: parent.height
-                    source: profilePage.sourceImage
+                    source: profilePage.profile.image
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -100,7 +88,7 @@ Page {
                     anchors.top: parent.top
                     anchors.topMargin: 10
                     font.pixelSize: 16
-                    text: profilePage.profile
+                    text: profilePage.profile.description
                 }
             }
 
@@ -155,7 +143,7 @@ Page {
                     color: index % 2 !== 0 ? "light gray" : "gray"
                     width: 212
                     height: 50
-                    property variant obj: global.noteListModel.getObject(index)
+                    property variant obj: userNotes.getObject(index)
 
                     Text {
                         anchors.left: parent.left
@@ -178,47 +166,25 @@ Page {
                         height: 20
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: global.noteListModel.remove(index)
+                            onClicked: userNotes.remove(index)
                         }
                     }
-
                 }
 
-                model: global.noteListModel
+                model: userNotes
             }
 
-            FavoriteItem {
-                x: 200
-                y: 50
-                onRequestEdit: pannableChild.showEditBox(favorite)
-                onSelected: pannableChild.bringOver(favorite)
+            MediaModel {
+                id: userNotes
+                source: myHomeModels.notes
+                containers: [profile.uii]
+                range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
             }
 
-            FavoriteItem {
-                x: 300
-                y: 250
-                onRequestEdit: pannableChild.showEditBox(favorite)
-                onSelected: pannableChild.bringOver(favorite)
-            }
-
-            RssItem {
-                x: 400
-                y: 100
-                onRequestEdit: pannableChild.showEditBox(favorite)
-                onSelected: pannableChild.bringOver(favorite)
-            }
-
-            CameraLink {
-                x: 500
-                y: 220
-                onRequestEdit: pannableChild.showEditBox(favorite)
-                onSelected: pannableChild.bringOver(favorite)
-            }
-
-            function bringOver(favorite) {
-                favorite.z = bgPannable.z + 1
-                bgPannable.visible = true
-                bgPannable.actualFavorite = favorite
+            MediaModel {
+                id: mediaLinks
+                source: myHomeModels.mediaLinks
+                containers: [profile.uii]
             }
 
             function showEditBox(favorite) {
@@ -289,7 +255,7 @@ Page {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    global.noteListModel.append(textEdit.text)
+                                    userNotes.append(myHomeModels.createNote(profile.uii, textEdit.text))
                                     closePopup()
                                 }
                             }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuratore>
+	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="0" >
+		<ist uii="1" descr="lamp downstair" where="11#4#01" />
+		<ist uii="2" descr="lamp upstair"  where="12" pul="1" />
+		<ist uii="3" descr="lamp on the table"  where="22" ftime="1" />
+	</obj>
+	<obj cid="2002" id="2002" descr="Dimmer 100" where="11" pul="0" ftime="0" ctime="00:00:00" sstart="0"  sstop="0">
+		<ist uii="4" descr="abat jour" where="21#4#01" ftime="1" />
+		<ist uii="5" descr="applique"  where="21" pul="1" ct="00:01:21" />
+		<ist uii="6" descr="applique downstair"  where="21" pul="1" sstart="102" sstop="12" />
+	</obj>
+	<obj cid="2003" id="2003" descr="Light" where="11" pul="0" ftime="0" ctime="00:00:00">
+		<ist uii="7" descr="Bedroom light" where="14" ftime="3" />
+		<ist uii="12" descr="Lampada scrivania di Gianni" where="13" ftime="3" />
+	</obj>
+	<obj cid="2005" id="2005" descr="Light" where="0">
+		<ist uii="9" descr="room 1" where="1" />
+		<ist uii="10" descr="room 2" where="2" />
+		<ist uii="11" descr="general" />
+	</obj>
+	<obj cid="2004" id="2004" descr="light set">
+		<ist uii="8" descr="all downstair">
+			<link uii="1" />
+			<link uii="6" />
+			<link uii="9" />
+		</ist>
+		<ist uii="13" descr="all dimmer">
+			<link uii="1" />
+			<link uii="2" />
+			<link uii="6" />
+		</ist>
+		<ist uii="14" descr="all dimmer100">
+			<link uii="4" />
+			<link uii="5" />
+			<link uii="6" />
+		</ist>
+	</obj>
+</configuratore>
+

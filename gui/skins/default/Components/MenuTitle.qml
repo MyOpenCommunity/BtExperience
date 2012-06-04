@@ -3,7 +3,7 @@ import QtQuick 1.1
 Text {
     id: title
     width: 212
-    height: 33
+    height: constants.navbarTopMargin // guarantees a proper alignment with the back button
     color: "#ffffff"
     verticalAlignment: Text.AlignVCenter
     font.pixelSize: 15

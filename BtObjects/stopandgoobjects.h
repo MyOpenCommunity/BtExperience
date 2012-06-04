@@ -1,6 +1,10 @@
 #ifndef STOPANDGO_OBJECTS_H
 #define STOPANDGO_OBJECTS_H
 
+/*!
+	\defgroup StopAndGo Stop and go
+*/
+
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
 
@@ -10,7 +14,7 @@ class StopAndGoBTestDevice;
 
 
 /*!
-	\ingroup EnergyManagement
+	\ingroup StopAndGo
 	\brief Controls the status of the Stop & Go (circuit breaker) device
 
 	Allows reading the status of the circuit breaker and enable/disable its automatic
@@ -63,11 +67,6 @@ public:
 		return ObjectInterface::IdStopAndGo;
 	}
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::EnergyManagement;
-	}
-
 	Status getStatus() const;
 
 	bool getAutoReset() const;
@@ -88,7 +87,7 @@ private:
 
 
 /*!
-	\ingroup EnergyManagement
+	\ingroup StopAndGo
 	\brief Controls the status of the Stop & Go Plus (circuit breaker) device
 
 	Allows forcing the circuit breaker to closed in presence of an excessive load that
@@ -145,7 +144,7 @@ private:
 
 
 /*!
-	\ingroup EnergyManagement
+	\ingroup StopAndGo
 	\brief Controls the status of the Stop & Go BTest (circuit breaker) device
 
 	Allows enabling the automatic self-test functionality of the circuit breaker.

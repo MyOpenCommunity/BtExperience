@@ -1,6 +1,9 @@
 #ifndef SPLITADVANCEDSCENARIO_H
 #define SPLITADVANCEDSCENARIO_H
 
+/*!
+	\defgroup AirConditioning Air conditioning
+*/
 
 #include "objectinterface.h"
 #include "airconditioning_device.h"
@@ -9,11 +12,11 @@
 #include <QObject>
 #include <QStringList>
 
-
 class NonControlledProbeDevice;
 
+
 /*!
-	\ingroup Air Conditioning
+	\ingroup AirConditioning
 	\brief A program associated to an advanced split scenario
 
 	A class to record data related to a program associated to a scenario.
@@ -90,8 +93,9 @@ public:
 	int temperature;
 };
 
+
 /*!
-	\ingroup Air Conditioning
+	\ingroup AirConditioning
 	\brief An advanced split scenario
 
 	A class to manage an advanced scenario.
@@ -161,11 +165,6 @@ public:
 	virtual QString getObjectKey() const
 	{
 		return key;
-	}
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::ThermalRegulation;
 	}
 
 	SplitProgram::Mode getMode() const;

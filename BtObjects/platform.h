@@ -102,11 +102,6 @@ public:
 		return ObjectInterface::IdPlatformSettings;
 	}
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Settings;
-	}
-
 	QString getAddress() const;
 	void setAddress(QString a);
 	QString getDns() const;

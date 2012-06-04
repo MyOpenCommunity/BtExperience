@@ -56,7 +56,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	call_stopped = false;
 
 	foreach (ExternalPlace *ep, list)
-		external_places.insertWithoutUii(ep);
+		external_places << ep;
 
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
@@ -195,7 +195,7 @@ Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d)
 	mute = false;
 
 	foreach (ExternalPlace *ep, l) {
-		external_places.insertWithoutUii(ep);
+		external_places << ep;
 	}
 }
 

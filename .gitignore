@@ -1,14 +1,15 @@
 # misc
 *.pro.user
 # build
-BtExperience.*
 Makefile
 moc/
 obj/
-BtObjects/libbtobjects.*.so
-BtObjects/libbtobjects.*.dylib
-BtObjects/test/test
-gui/locale/*.qm
-conf.xml
-bin
-dist
+/BtObjects/libbtobjects.*.so
+/BtObjects/libbtobjects.*.dylib
+/BtObjects/test/test
+/gui/locale/*.qm
+/conf.xml
+/layout.xml
+/bin/
+/dist/
+/doc/

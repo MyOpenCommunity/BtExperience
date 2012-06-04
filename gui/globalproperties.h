@@ -9,7 +9,6 @@
 class QDeclarativeView;
 class GuiSettings;
 class InputContextWrapper;
-class NoteListModel;
 
 #define MAIN_WIDTH 1024
 #define MAIN_HEIGHT 600
@@ -33,9 +32,6 @@ class GlobalProperties : public QObject
 	// The base path for the QML application. It is used for import path, for example.
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
 
-	// TODO waiting for better implementation
-	Q_PROPERTY(NoteListModel *noteListModel READ getNoteListModel CONSTANT)
-
 public:
 	GlobalProperties();
 	int getMainWidth() const;
@@ -44,9 +40,6 @@ public:
 	QObject *getInputWrapper() const;
 	GuiSettings *getGuiSettings() const;
 	QString getBasePath() const;
-
-	// TODO waiting for better implementation
-	NoteListModel *getNoteListModel() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE QImage takeScreenshot(QRect rect = QRect());
@@ -68,9 +61,6 @@ private:
 	QDeclarativeView *main_widget;
 	QDateTime last_press;
 	GuiSettings *settings;
-
-	// TODO waiting for better implementation
-	NoteListModel *noteListModel;
 };
 
 

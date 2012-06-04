@@ -1,6 +1,10 @@
 #ifndef HARDWARE_H
 #define HARDWARE_H
 
+/*!
+	\defgroup Settings Settings
+*/
+
 #include "objectinterface.h"
 
 #include <QObject>
@@ -47,11 +51,6 @@ public:
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdHardwareSettings;
-	}
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Settings;
 	}
 
 	bool getAutoUpdate() const;

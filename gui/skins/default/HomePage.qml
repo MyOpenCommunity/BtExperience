@@ -109,37 +109,20 @@ Page {
     }
 
     CardView {
-        ListModel {
+        FilterListModel {
             id: usersModel
-//            ListElement {
-//                image: "images/home/card_1.png"
-//                name: "famiglia"
-//            }
-            ListElement {
-                image: "images/home/card_2.png"
-                name: "mattia"
-            }
-            ListElement {
-                image: "images/home/card_3.png"
-                name: "camilla"
-            }
-            ListElement {
-                image: "images/home/card_4.png"
-                name: "mamma"
-            }
-            ListElement {
-                image: "images/home/card_5.png"
-                name: "papà"
-            }
+            source: myHomeModels.profiles
         }
 
         id: users
         model: usersModel
-        delegate: PagerDelegate {
-            source: image
-            label: name
+        delegate: CardDelegate {
+            property variant itemObject: usersModel.getObject(index)
 
-            onClicked: Stack.openPage('Profile.qml', {'profile': name, 'sourceImage': image})
+            source: itemObject.image
+            label: itemObject.description
+
+            onClicked: Stack.openPage('Profile.qml', {'profile': itemObject})
         }
         anchors {
             top: toolbar.bottom

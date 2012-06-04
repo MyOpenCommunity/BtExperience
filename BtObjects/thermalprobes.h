@@ -1,6 +1,10 @@
 #ifndef THERMALPROBES_H
 #define THERMALPROBES_H
 
+/*!
+	\defgroup ThermalRegulation Thermal regulation
+*/
+
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
 
@@ -28,6 +32,15 @@ class ThermalControlledProbe : public ObjectInterface
 	Q_PROPERTY(ProbeStatus probeStatus READ getProbeStatus WRITE setProbeStatus NOTIFY probeStatusChanged)
 
 	/*!
+		\brief Gets the local status of the probe
+
+		- Off forces the probe to off regardless of the status of the control unit
+		- Antifreeze forces the probe to antifreeze regardless of the status of the control unit
+		- Normal follows the status of the control unit
+	*/
+	Q_PROPERTY(ProbeStatus localProbeStatus READ getLocalProbeStatus NOTIFY localProbeStatusChanged)
+
+	/*!
 		\brief Gets the temperature measured by the probe
 	*/
 	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
@@ -37,18 +50,23 @@ class ThermalControlledProbe : public ObjectInterface
 	*/
 	Q_PROPERTY(int setpoint READ getSetpoint WRITE setSetpoint NOTIFY setpointChanged)
 
+	/*!
+		\brief Gets the local offset temperature applied to set point value
+	*/
+	Q_PROPERTY(int localOffset READ getLocalOffset NOTIFY localOffsetChanged)
+
 	Q_ENUMS(ProbeStatus)
 
 public:
 	enum ProbeStatus
 	{
 		Unknown,    /*!< No state received yet (only during initialization). */
+		Normal = Unknown, /*!< Probe status controlled by central unit (only returned by local probe status). */
 		Manual,     /*!< Manual mode. */
 		Auto,       /*!< Automatic mode. */
 		Off,        /*!< Zone off. */
 		Antifreeze  /*!< Antifreeze mode. */
 	};
-
 
 	ThermalControlledProbe(QString name, QString key, ControlledProbeDevice *d);
 
@@ -59,23 +77,24 @@ public:
 
 	virtual QString getObjectKey() const;
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::ThermalRegulation;
-	}
-
 	ProbeStatus getProbeStatus() const;
 	void setProbeStatus(ProbeStatus st);
+
+	ProbeStatus getLocalProbeStatus() const;
 
 	int getTemperature() const;
 
 	int getSetpoint() const;
 	void setSetpoint(int sp);
 
+	int getLocalOffset() const;
+
 signals:
 	void probeStatusChanged();
 	void temperatureChanged();
 	void setpointChanged();
+	void localOffsetChanged();
+	void localProbeStatusChanged();
 
 protected:
 	ControlledProbeDevice *dev;
@@ -85,9 +104,9 @@ protected slots:
 
 private:
 	QString key;
-	ProbeStatus probe_status;
+	ProbeStatus plant_status, local_status;
 	int setpoint;
-	int temperature;
+	int temperature, local_offset;
 };
 
 

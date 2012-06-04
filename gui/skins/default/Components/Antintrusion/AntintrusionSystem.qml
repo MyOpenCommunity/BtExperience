@@ -21,7 +21,8 @@ MenuColumn {
 
     FilterListModel {
         id: objectModel
-        categories: [ObjectInterface.Antintrusion]
+        source: myHomeModels.myHomeObjects
+        filters: [{objectId: ObjectInterface.IdAntintrusionSystem}]
     }
 
     Connections {
@@ -230,7 +231,7 @@ MenuColumn {
                             source: imagesPath + (itemObject.partialization ? "common/off.png" : "common/on.png")
                         }
                         Text {
-                            text: itemObject.objectId
+                            text: itemObject.number
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }

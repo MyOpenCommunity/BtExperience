@@ -1,6 +1,10 @@
 #ifndef VCT_H
 #define VCT_H
 
+/*!
+	\defgroup VideoDoorEntry
+*/
+
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
 #include "objectmodel.h"
@@ -15,6 +19,10 @@ ObjectInterface *parseCCTV(const QDomNode &n);
 ObjectInterface *parseIntercom(const QDomNode &n);
 
 
+/*!
+	\ingroup VideoDoorEntry
+	\brief Contains address and description for a single external place
+*/
 class ExternalPlace : public ObjectInterface
 {
 	friend class Intercom; // to access the where field
@@ -25,11 +33,6 @@ class ExternalPlace : public ObjectInterface
 
 public:
 	ExternalPlace(const QString &_name, const QString &_where);
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::Unassigned;
-	}
 
 	QString getWhere() const
 	{
@@ -73,11 +76,6 @@ public:
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdCCTV;
-	}
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::VideoEntry;
 	}
 
 	int getBrightness() const;
@@ -162,11 +160,6 @@ public:
 	virtual QString getObjectKey() const
 	{
 		return key;
-	}
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::VideoEntry;
 	}
 
 	Q_INVOKABLE void answerCall();

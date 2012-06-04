@@ -1,5 +1,6 @@
 #include "antintrusionsystem.h"
 #include "antintrusion_device.h"
+#include "devices_cache.h"
 #include "objectmodel.h"
 
 #include "xml_functions.h"
@@ -9,68 +10,138 @@
 
 #define CODE_TIMEOUT_SECS 10
 
-
-AntintrusionSystem *createAntintrusionSystem(AntintrusionDevice *dev, const QDomNode &xml_node)
+namespace
 {
-	QList<QPair<int, QString> > zone_list;
-	foreach (const QDomNode &zone, getChildren(getChildWithName(xml_node, "zones"), "zone"))
+	AntintrusionAlarmSource *findAlarmSource(const ObjectDataModel &sources, int number)
 	{
-		QString name = getTextChild(zone, "name");
-		QString s = getTextChild(zone, "num");
-		bool ok;
-		int z = s.toInt(&ok);
-		if (!ok)
+		for (int i = 0; i < sources.getCount(); ++i)
 		{
-			qWarning() << "Invalid zone number" << s << "for zone" << name;
+			AntintrusionAlarmSource *s = static_cast<AntintrusionAlarmSource *>(sources.getObject(i));
+
+			if (s->getNumber() == number)
+				return s;
+		}
+
+		return 0;
+	}
+}
+
+
+QList<ObjectPair> parseAntintrusionZone(const QDomNode &obj)
+{
+	QList<ObjectPair> obj_list;
+	// extract default values
+	QString def_descr = getAttribute(obj, "descr");
+	QString def_where = getAttribute(obj, "where");
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		int uii = getIntAttribute(ist, "uii");
+		QString descr = getAttribute(ist, "descr", def_descr);
+		QString where = getAttribute(ist, "where", def_where);
+
+		if (!where.length() == 2 && !where.startsWith('#'))
+		{
+			qWarning("Invalid where in antintrusion zone");
 			continue;
 		}
-		zone_list << qMakePair(z, name);
-	}
 
-	QList<AntintrusionZone *> zones;
-	for (int i = 0; i < zone_list.length(); ++i)
-	{
-		AntintrusionZone *z = new AntintrusionZone(zone_list.at(i).first, zone_list.at(i).second);
-		dev->partializeZone(zone_list.at(i).first, z->getPartialization()); // initialization
-		QObject::connect(z, SIGNAL(requestPartialization(int,bool)), dev, SLOT(partializeZone(int,bool)));
-		zones << z;
-	}
+		bool ok;
+		int zone = where.mid(1).toInt(&ok);
 
-	QList<AntintrusionScenario *> scenarios;
-	foreach (const QDomNode &scenario, getChildren(getChildWithName(xml_node, "scenarios"), "scenario"))
-	{
-		QString name = getTextChild(scenario, "name");
-		QList<int> scenario_zones;
-		foreach (QString s, getTextChild(scenario, "zones").split(","))
+		if (!ok)
 		{
-			bool ok;
-			int z = s.toInt(&ok);
-			if (!ok)
-			{
-				qWarning() << "Invalid zone" << z << "for the scenario:" << name;
-				continue;
-			}
-			scenario_zones << z;
+			qWarning("Invalid where in antintrusion zone");
+			continue;
 		}
 
-		scenarios << new AntintrusionScenario(name, scenario_zones, zones);
+		obj_list << ObjectPair(uii, new AntintrusionZone(zone, descr));
 	}
+	return obj_list;
+}
 
-	AntintrusionSystem *system = new AntintrusionSystem(dev, scenarios, zones);
+QList<ObjectPair> parseAntintrusionAux(const QDomNode &obj)
+{
+	QList<ObjectPair> obj_list;
+	// extract default values
+	QString def_descr = getAttribute(obj, "descr");
+	QString def_where = getAttribute(obj, "where");
 
-	// we need to connect each scenario to antitrusion system object, which
-	// cannot be done above
-	foreach (AntintrusionScenario *s, scenarios)
-		QObject::connect(s, SIGNAL(selectionChanged()), system, SIGNAL(currentScenarioChanged()));
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		int uii = getIntAttribute(ist, "uii");
+		QString descr = getAttribute(ist, "descr", def_descr);
+		QString where = getAttribute(ist, "where", def_where);
+
+		bool ok;
+		int number = where.toInt(&ok);
+
+		if (!ok)
+		{
+			qWarning("Invalid number in antintrusion aux");
+			continue;
+		}
+
+		obj_list << ObjectPair(uii, new AntintrusionAlarmSource(number, descr));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseAntintrusionScenario(const QDomNode &obj, const UiiMapper &uii_map, QList<AntintrusionZone *> zones)
+{
+	QList<ObjectPair> obj_list;
+	// extract default values
+	QString def_descr = getAttribute(obj, "descr");
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		int uii = getIntAttribute(ist, "uii");
+		QString descr = getAttribute(ist, "descr", def_descr);
+		QList<int> zone_ids;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			AntintrusionZone *zone = uii_map.value<AntintrusionZone>(object_uii);
+
+			if (!zone)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in antintrusion zone set";
+				Q_ASSERT_X(false, "parseAntintrusionScenario", "Invalid uii");
+				continue;
+			}
+
+			zone_ids.append(zone->getNumber());
+		}
+
+		obj_list << ObjectPair(uii, new AntintrusionScenario(descr, zone_ids, zones));
+	}
+	return obj_list;
+}
+
+AntintrusionSystem *createAntintrusionSystem(QList<AntintrusionZone *> zones, QList<AntintrusionAlarmSource *> aux, QList<AntintrusionScenario *> scenarios)
+{
+	AntintrusionDevice *dev = bt_global::add_device_to_cache(new AntintrusionDevice);
+	AntintrusionSystem *system = new AntintrusionSystem(dev, scenarios, aux, zones);
 
 	return system;
 }
 
 
-AntintrusionZone::AntintrusionZone(int id, QString _name)
+AntintrusionAlarmSource::AntintrusionAlarmSource(int _number, QString _name)
 {
-	zone_number = id;
 	name = _name;
+	number = _number;
+}
+
+int AntintrusionAlarmSource::getNumber() const
+{
+	return number;
+}
+
+
+AntintrusionZone::AntintrusionZone(int id, QString _name) : AntintrusionAlarmSource(id, _name)
+{
 	partialized = true;
 }
 
@@ -86,7 +157,7 @@ void AntintrusionZone::setPartialization(bool p, bool request_partialization)
 		partialized = p;
 		emit partializationChanged();
 		if (request_partialization)
-			emit requestPartialization(zone_number, p);
+			emit requestPartialization(getNumber(), p);
 	}
 }
 
@@ -115,7 +186,7 @@ void AntintrusionScenario::verifySelection(bool notify)
 	QList<int> selected_zones;
 	foreach (AntintrusionZone *z, zones)
 		if (!z->getPartialization())
-			selected_zones.append(z->getObjectId());
+			selected_zones.append(z->getNumber());
 
 	bool s = (scenario_zones == selected_zones);
 	if (notify && selected != s)
@@ -136,16 +207,17 @@ void AntintrusionScenario::apply()
 {
 	foreach (AntintrusionZone *z, zones)
 	{
-		bool inserted = scenario_zones.contains(z->getObjectId());
+		bool inserted = scenario_zones.contains(z->getNumber());
 		z->setPartialization(!inserted);
 	}
 }
 
 
-AntintrusionAlarm::AntintrusionAlarm(AlarmType _type, const AntintrusionZone *_zone, QDateTime time)
+AntintrusionAlarm::AntintrusionAlarm(AlarmType _type, const AntintrusionAlarmSource *_source, int _number, QDateTime time)
 {
 	type = _type;
-	zone = _zone;
+	source = _source;
+	number = _number;
 	date_time = time;
 }
 
@@ -154,9 +226,9 @@ AntintrusionAlarm::AlarmType AntintrusionAlarm::getType()
 	return type;
 }
 
-ObjectInterface *AntintrusionAlarm::getZone()
+ObjectInterface *AntintrusionAlarm::getSource()
 {
-	return const_cast<AntintrusionZone *>(zone);
+	return const_cast<AntintrusionAlarmSource *>(source);
 }
 
 QDateTime AntintrusionAlarm::getDateTime()
@@ -164,14 +236,34 @@ QDateTime AntintrusionAlarm::getDateTime()
 	return date_time;
 }
 
+int AntintrusionAlarm::getNumber() const
+{
+	return source ? source->getNumber() : number;
+}
 
-AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionZone*> _zones)
+QString AntintrusionAlarm::getName() const
+{
+	return source ? source->getName() : "";
+}
+
+
+AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionAlarmSource *> _aux, QList<AntintrusionZone*> _zones)
 {
 	foreach (AntintrusionScenario *s, _scenarios)
-		scenarios.insertWithoutUii(s);
+	{
+		scenarios << s;
+		connect(s, SIGNAL(selectionChanged()), this, SIGNAL(currentScenarioChanged()));
+	}
 
 	foreach (AntintrusionZone *z, _zones)
-		zones.insertWithoutUii(z);
+	{
+		zones << z;
+		d->partializeZone(z->getNumber(), z->getPartialization()); // initialization
+		connect(z, SIGNAL(requestPartialization(int,bool)), d, SLOT(partializeZone(int,bool)));
+	}
+
+	foreach (AntintrusionAlarmSource *a, _aux)
+		aux << a;
 
 	current_scenario = -1;
 	waiting_response = false;
@@ -249,7 +341,7 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 			for (int i = 0; i < zones.getCount(); ++i)
 			{
 				AntintrusionZone *z = static_cast<AntintrusionZone*>(zones.getObject(i));
-				if (z->getObjectId() == it.value().toInt())
+				if (z->getNumber() == it.value().toInt())
 					z->setPartialization(it.key() == AntintrusionDevice::DIM_ZONE_PARTIALIZED, false);
 			}
 			break;
@@ -294,25 +386,51 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 		return;
 	}
 
-	AntintrusionZone *zone = 0;
-	for (int i = 0; i < zones.getCount(); ++i)
+	bool requires_source = true;
+	AntintrusionAlarmSource *source = 0;
+
+	switch (t)
 	{
-		ObjectInterface *z = zones.getObject(i);
-		if (z->getObjectId() == zone_num)
+	case AntintrusionAlarm::Intrusion:
+		source = findAlarmSource(zones, zone_num);
+		requires_source = true;
+		break;
+	case AntintrusionAlarm::Antipanic:
+		if (zone_num != 9)
 		{
-			zone = static_cast<AntintrusionZone *>(z);
-			break;
+			qWarning() << "Invalid zone" << zone_num << "for antipanic alarm";
+			return;
 		}
+
+		source = findAlarmSource(zones, zone_num);
+		requires_source = false;
+		break;
+	case AntintrusionAlarm::Tamper:
+		if (zone_num <= 8)
+		{
+			source = findAlarmSource(zones, zone_num);
+			requires_source = true;
+		}
+		else
+		{
+			source = 0;
+			requires_source = false;
+		}
+		break;
+	case AntintrusionAlarm::Technical:
+		source = findAlarmSource(aux, zone_num);
+		requires_source = true;
+		break;
 	}
 
-	if (!zone)
+	if (!source && requires_source)
 	{
-		qWarning() << "Zone" << zone_num << "not configured, ignoring event";
+		qWarning() << "Alarm source" << zone_num << "not configured, ignoring event";
 		return;
 	}
 
-	AntintrusionAlarm *a = new AntintrusionAlarm(t, zone, QDateTime::currentDateTime());
-	alarms.insertWithoutUii(a);
+	AntintrusionAlarm *a = new AntintrusionAlarm(t, source, zone_num, QDateTime::currentDateTime());
+	alarms << a;
 	emit alarmsChanged();
 	emit newAlarm(a);
 }
@@ -322,16 +440,16 @@ void AntintrusionSystem::removeAlarm(AntintrusionAlarm::AlarmType t, int zone_nu
 	for (int i = 0; i < alarms.getCount(); ++i)
 	{
 		AntintrusionAlarm *alarm = static_cast<AntintrusionAlarm *>(alarms.getObject(i));
-		AntintrusionZone *z = static_cast<AntintrusionZone *>(alarm->getZone());
+		int number = alarm->getNumber();
 
-		if (alarm->getType() == t && z->getObjectId() == zone_num)
+		if (alarm->getType() == t && number == zone_num)
 		{
 			alarms.removeRow(i);
 			emit alarmsChanged();
 			return;
 		}
 	}
-	qWarning() << "Zone" << zone_num << "is not configured";
+	qWarning() << "No active technical alarm for source" << zone_num;
 }
 
 bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
@@ -339,8 +457,7 @@ bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zo
 	for (int i = 0; i < alarms.getCount(); ++i)
 	{
 		AntintrusionAlarm *alarm = static_cast<AntintrusionAlarm *>(alarms.getObject(i));
-		AntintrusionZone *z = static_cast<AntintrusionZone *>(alarm->getZone());
-		if (t == alarm->getType() && z->getObjectId() == zone_num)
+		if (t == alarm->getType() && alarm->getNumber() == zone_num)
 			return true;
 	}
 	return false;

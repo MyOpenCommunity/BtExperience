@@ -1,6 +1,9 @@
 #ifndef SPLITBASICSCENARIO_H
 #define SPLITBASICSCENARIO_H
 
+/*!
+	\defgroup AirConditioning Air conditioning
+*/
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
@@ -12,8 +15,9 @@
 class AirConditioningDevice;
 class NonControlledProbeDevice;
 
+
 /*!
-	\ingroup Air Conditioning
+	\ingroup AirConditioning
 	\brief A basic split scenario
 
 	A class to manage a basic scenario.
@@ -64,11 +68,6 @@ public:
 	virtual QString getObjectKey() const
 	{
 		return key;
-	}
-
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::ThermalRegulation;
 	}
 
 	QString getProgram() const;

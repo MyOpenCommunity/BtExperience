@@ -163,6 +163,7 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 			if (!item)
 			{
 				qWarning() << "Invalid uii" << object_uii << "in light set";
+				Q_ASSERT_X(false, "parseLightGroup", "Invalid uii");
 				continue;
 			}
 
@@ -173,7 +174,7 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 		switch (dumber_type)
 		{
 		case ObjectInterface::IdLight:
-			obj_list << ObjectPair(uii, new LightGroup(descr, convertQObjectList<Light *>(items)));
+			obj_list << ObjectPair(uii, new LightGroup(descr, convertQObjectList<LightCommand *>(items)));
 			break;
 		case ObjectInterface::IdDimmer:
 			obj_list << ObjectPair(uii, new DimmerGroup(descr, convertQObjectList<Dimmer *>(items)));
@@ -187,14 +188,27 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 }
 
 
-Light::Light(QString _name, QString _key, LightingDevice *d)
+LightCommand::LightCommand(LightingDevice *d)
 {
 	dev = d;
+}
+
+void LightCommand::setActive(bool st)
+{
+	qDebug() << "LightCommand::setActive";
+	if (st)
+		dev->turnOn();
+	else
+		dev->turnOff();
+}
+
+
+Light::Light(QString _name, QString _key, LightingDevice *d) : LightCommand(d)
+{
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
 	key = _key;
 	name = _name;
-	category = ObjectInterface::Unassigned;
 	active = false; // initial value
 
 	hours = 0;
@@ -210,20 +224,6 @@ QString Light::getObjectKey() const
 bool Light::isActive() const
 {
 	return active;
-}
-
-void Light::setActive(bool st)
-{
-	qDebug() << "Light::setActive";
-	if (st)
-		dev->turnOn();
-	else
-		dev->turnOff();
-}
-
-void Light::setCategory(ObjectInterface::ObjectCategory _category)
-{
-	category = _category;
 }
 
 void Light::setHours(int h)
@@ -293,7 +293,7 @@ void Light::valueReceived(const DeviceValues &values_list)
 }
 
 
-LightGroup::LightGroup(QString _name, QList<Light *> d)
+LightGroup::LightGroup(QString _name, QList<LightCommand *> d)
 {
 	name = _name;
 	objects = d;
@@ -301,7 +301,7 @@ LightGroup::LightGroup(QString _name, QList<Light *> d)
 
 void LightGroup::setActive(bool status)
 {
-	foreach (Light *l, objects)
+	foreach (LightCommand *l, objects)
 		l->setActive(status);
 }
 
@@ -347,7 +347,7 @@ void Dimmer::valueReceived(const DeviceValues &values_list)
 }
 
 
-DimmerGroup::DimmerGroup(QString name, QList<Dimmer *> d) : LightGroup(name, convertQObjectList<Light *>(d))
+DimmerGroup::DimmerGroup(QString name, QList<Dimmer *> d) : LightGroup(name, convertQObjectList<LightCommand *>(d))
 {
 	objects = d;
 }

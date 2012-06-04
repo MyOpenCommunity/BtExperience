@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuratore>
+  <item>
+    <id>7</id> <!-- Hardware settings -->
+  </item>
+	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="0" >
+		<ist uii="1" descr="lamp downstair" where="11#4#01" />
+		<ist uii="2" descr="lamp upstair"  where="12" pul="1" />
+		<ist uii="3" descr="lamp on the table"  where="22" ftime="1" />
+	</obj>
+	<obj cid="2002" id="2002" descr="Dimmer 100" where="11" pul="0" ftime="0" ctime="00:00:00" sstart="0"  sstop="0">
+		<ist uii="4" descr="abat jour" where="21#4#01" ftime="1" />
+		<ist uii="5" descr="applique"  where="21" pul="1" ct="00:01:21" />
+		<ist uii="6" descr="applique downstair"  where="21" pul="1" sstart="102" sstop="12" />
+	</obj>
+	<obj cid="2003" id="2003" descr="Light" where="11" pul="0" ftime="0" ctime="00:00:00">
+		<ist uii="7" descr="Bedroom light" where="14" ftime="3" />
+		<ist uii="12" descr="Lampada scrivania di Gianni" where="13" ftime="3" />
+	</obj>
+	<obj cid="2005" id="2005" descr="Light" where="0">
+		<ist uii="9" descr="room 1" where="1" />
+		<ist uii="10" descr="room 2" where="2" />
+		<ist uii="11" descr="general" />
+	</obj>
+	<obj cid="2004" id="2004" descr="light set">
+		<ist uii="8" descr="all downstair">
+			<link uii="1" />
+			<link uii="6" />
+			<link uii="9" />
+		</ist>
+		<ist uii="13" descr="all dimmer">
+			<link uii="1" />
+			<link uii="2" />
+			<link uii="6" />
+		</ist>
+		<ist uii="14" descr="all dimmer100">
+			<link uii="4" />
+			<link uii="5" />
+			<link uii="6" />
+		</ist>
+	</obj>
+  <item>
+    <id>3</id> <!-- Thermal Control unit 99zones -->
+    <itemID>8</itemID>
+    <descr>unità centrale</descr>
+  </item>
+  <item>
+    <id>4</id> <!-- Thermal Controlled probe -->
+    <itemID>9</itemID>
+    <descr>zona giorno</descr>
+    <where>5</where>
+    <fancoil>1</fancoil>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>10</itemID>
+    <descr>zona notte</descr>
+    <where>2</where>
+    <fancoil>0</fancoil>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>11</itemID>
+    <descr>zona taverna</descr>
+    <where>3</where>
+    <fancoil>0</fancoil>
+  </item>
+  <item>
+    <id>4</id>
+    <itemID>12</itemID>
+    <descr>zona studio</descr>
+    <where>4</where>
+    <fancoil>0</fancoil>
+  </item>
+	<!-- Antintrusion system -->
+	<obj cid="13001" id="13001" descr="Zone" where="#1" mon="0" >
+		<ist uii="1001" descr="ingresso" where="#1" />
+		<ist uii="1002" cid="13002" descr="taverna" where="#2" mon="1" />
+		<ist uii="1003" cid="13006" descr="cucina" where="#6" />
+		<ist uii="1004" cid="13008" descr="cameretta" where="#8" />
+		<ist uii="1005" cid="13003" descr="mansarda" where="#3" />
+		<ist uii="1006" cid="13005" descr="soggiorno" where="#5" />
+		<ist uii="1010" cid="13004" descr="box/cantina" where="#4" />
+		<ist uii="1008" cid="13007" descr="camera" where="#7" />
+	</obj>
+	<obj cid="13101" id="13101" descr="aux" where="1" >
+		<ist uii="1009" descr="Gas" where="1" />
+		<ist uii="1011" descr="Freezer" where="2" />
+		<ist uii="1013" descr="Flood" where="3" />
+		<ist uii="1012" descr="Emergency call" where="4" />
+		<ist uii="1014" descr="Generic" where="5" />
+		<ist uii="1015" descr="Generic" where="6" />
+		<ist uii="1016" descr="Generic" where="7" />
+		<ist uii="1018" descr="Fire" where="8" />
+		<ist uii="1017" descr="Telerescue" where="9" />
+	</obj>
+	<obj cid="13010" id="13010" descr="set of zones">
+		<ist uii="1019" descr="giorno">
+			<link uii="1001" />
+			<link uii="1002" />
+			<link uii="1004" />
+		</ist>
+		<ist uii="1020" descr="notte">
+			<link uii="1001" />
+			<link uii="1002" />
+			<link uii="1003" />
+			<link uii="1005" />
+			<link uii="1006" />
+			<link uii="1008" />
+		</ist>
+		<ist uii="1021" descr="vacanze">
+			<link uii="1001" />
+			<link uii="1002" />
+			<link uii="1003" />
+			<link uii="1005" />
+			<link uii="1008" />
+		</ist>
+	</obj>
+  <item>
+	  <id>8</id> <!-- Sound diffusion system -->
+	  <amplifiers>
+		  <item>
+			  <id>11</id> <!-- Amplifier -->
+			  <name>Amplificatore 2</name>
+			  <env>2</env>
+			  <where>22</where>
+		  </item>
+		  <item>
+			  <id>11</id> <!-- Amplifier -->
+			  <name>Amplificatore 3</name>
+			  <env>2</env>
+			  <where>23</where>
+		  </item>
+		  <item>
+			  <id>13</id> <!-- Power amplifier -->
+			  <name>Amplificatore di potenza</name>
+			  <env>2</env>
+			  <where>21</where>
+			  <preset>User preset 1</preset>
+			  <preset>User preset 2</preset>
+			  <preset>User preset 3</preset>
+		  </item>
+		  <item>
+			  <id>12</id> <!-- General ambient -->
+			  <name>Generale</name>
+			  <env>2</env>
+			  <where>#2</where>
+		  </item>
+		  <item>
+			  <id>11</id>
+			  <name>Amplificatore 2</name>
+			  <env>3</env>
+			  <where>32</where>
+		  </item>
+		  <item>
+			  <id>12</id>
+			  <name>Generale</name>
+			  <env>3</env>
+			  <where>#3</where>
+		  </item>
+	  </amplifiers>
+	  <ambients>
+		  <item>
+			  <id>9</id> <!-- Sound diffusion ambient -->
+			  <name>Cucina</name>
+			  <env>2</env>
+		  </item>
+		  <item>
+			  <id>9</id>
+			  <name>Salotto</name>
+			  <env>3</env>
+		  </item>
+	  </ambients>
+	  <sources>
+		  <item>
+			  <id>14</id> <!-- Sound diffusion source -->
+			  <name>Radio</name>
+			  <where>1</where>
+			  <type>1</type>
+		  </item>
+		  <item>
+			  <id>14</id>
+			  <name>Touch</name>
+			  <where>4</where>
+			  <type>2</type>
+		  </item>
+	  </sources>
+  </item>
+  <item>
+    <id>18</id>
+    <descr>Ac Basic 1</descr>
+    <where>11</where>
+    <command>4</command>
+    <off_command>18</off_command>
+    <where_probe>6</where_probe>
+    <programs>
+        <program>manual</program>
+        <program>command 1</program>
+        <program>command 2</program>
+    </programs>
+  </item>
+  <item>
+    <id>19</id>
+    <descr>Ac Advanced 1</descr>
+    <where>12</where>
+    <command>4</command>
+    <where_probe>6</where_probe>
+    <programs>
+        <program>
+            <name>night</name>
+            <mode>4</mode>
+            <set_point>210</set_point>
+            <speed>1</speed>
+            <swing>0</swing>
+        </program>
+        <program>
+            <name>day</name>
+            <mode>5</mode>
+            <set_point>210</set_point>
+            <speed>0</speed>
+            <swing>0</swing>
+        </program>
+    </programs>
+  </item>
+  <item>
+	  <id>20</id>    <!-- Scenario system -->
+  </item>
+  <item>
+    <id>23</id>
+    <!-- taken from old configuration files, dev + address = 1 + 1 = 11 -->
+    <where>11</where>
+    <obj>
+	    <descr>monoblocco</descr>
+	    <where>21</where> 
+    </obj>
+    <obj>
+	    <descr>camera bikini</descr>
+	    <where>20</where>
+    </obj>
+  </item>
+  <item>
+    <id>25</id>
+    <descr>ingresso</descr>
+    <where>14</where>
+    <mode>0</mode>
+  </item>
+  <!-- completely fake energy data object -->
+  <item>
+	  <id>30</id>
+  </item>
+</configuratore>

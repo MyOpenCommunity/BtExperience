@@ -46,8 +46,8 @@ namespace QTest
 		QByteArray ba = "AlarmZoneList(";
 		for (int i = 0; i < l.length(); ++i)
 		{
-			QPair<AntintrusionAlarm::AlarmType, int> al = l[i];
-			ba += "(" + QByteArray::number(al.first) + "," + QByteArray::number(al.second) + "),";
+			AlarmInfo al = l[i];
+			ba += "(" + QByteArray::number(al.type) + "," + QByteArray::number(al.number) +  "," + al.name.toAscii() + "),";
 		}
 		ba = ba.left(ba.length() - 1) + ")";
 		return qstrdup(ba.data());
@@ -66,18 +66,21 @@ void TestAntintrusionSystem::init()
 
 	QList<AntintrusionZone *> zones;
 	for (int i = 0; i < zone_list.length(); ++i)
-	{
-		AntintrusionZone *z = new AntintrusionZone(zone_list.at(i).first, zone_list.at(i).second);
-		QObject::connect(z, SIGNAL(requestPartialization(int,bool)), d, SLOT(partializeZone(int,bool)));
-		zones << z;
-	}
+		zones << new AntintrusionZone(zone_list.at(i).first, zone_list.at(i).second);
+
 	QList<AntintrusionScenario *> scenarios;
 	scenarios << new AntintrusionScenario("notte", splitZones("1.3.5"), zones) <<
 		new AntintrusionScenario("inverno", splitZones("1.2.3"), zones) <<
 		new AntintrusionScenario("estate", splitZones("4.5.7"), zones);
 
-	obj = new AntintrusionSystem(d, scenarios, zones);
+	QList<AntintrusionAlarmSource *> aux;
+	aux << new AntintrusionAlarmSource(5, "fire") <<
+		new AntintrusionAlarmSource(12, "freezer");
+
+	obj = new AntintrusionSystem(d, scenarios, aux, zones);
 	dev = new AntintrusionDevice(1);
+	foreach (AntintrusionZone *z, zones)
+		dev->partializeZone(z->getNumber(), z->getPartialization());
 }
 
 void TestAntintrusionSystem::cleanup()
@@ -141,46 +144,57 @@ void TestAntintrusionSystem::testIntrusionAlarm()
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
-	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Intrusion, 2));
+	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Intrusion, 2, "cucina"));
 }
 
 void TestAntintrusionSystem::testTamperingAlarm()
 {
 	DeviceValues v;
-	v[AntintrusionDevice::DIM_TAMPER_ALARM] = 1;
+	v[AntintrusionDevice::DIM_TAMPER_ALARM] = 12;
 
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
-	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Tamper, 1));
+	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Tamper, 12, ""));
+
+	v[AntintrusionDevice::DIM_TAMPER_ALARM] = 2;
+	obj->valueReceived(v);
+	t.checkSignals();
+	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Tamper, 12, "") << AlarmInfo(AntintrusionAlarm::Tamper, 2, "cucina"));
 }
 
-void TestAntintrusionSystem::testTechincalAlarm()
+void TestAntintrusionSystem::testTechnicalAlarm()
 {
 	DeviceValues v;
-	v[AntintrusionDevice::DIM_TECHNICAL_ALARM] = 5;
+	v[AntintrusionDevice::DIM_TECHNICAL_ALARM] = 12;
 
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
-	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Technical, 5));
+	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Technical, 12, "freezer"));
 }
 
 void TestAntintrusionSystem::testAntipanicAlarm()
 {
 	DeviceValues v;
-	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 6;
+	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 9;
 
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
-	checkAlarmedZones(AlarmZoneList() << qMakePair(AntintrusionAlarm::Antipanic, 6));
+	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Antipanic, 9, ""));
+
+	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 2;
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Antipanic, 9, ""));
 }
 
 void TestAntintrusionSystem::testNoDoubleAlarms()
 {
 	DeviceValues v;
-	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 6;
+	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 9;
 	obj->valueReceived(v);
 	obj->valueReceived(v);
 	QCOMPARE(obj->getAlarms()->getCount(), 1);
@@ -191,14 +205,19 @@ void TestAntintrusionSystem::testResetTechnicalAlarm()
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 
 	DeviceValues v;
-	v[AntintrusionDevice::DIM_TECHNICAL_ALARM] = 5;
+	v[AntintrusionDevice::DIM_TECHNICAL_ALARM] = 12;
 	obj->valueReceived(v);
 	t.checkSignals();
+	QCOMPARE(obj->getAlarms()->getCount(), 1);
 
 	v.clear();
-	v[AntintrusionDevice::DIM_RESET_TECHNICAL_ALARM] = 5;
+	v[AntintrusionDevice::DIM_RESET_TECHNICAL_ALARM] = 12;
 	obj->valueReceived(v);
 	t.checkSignals();
+	QCOMPARE(obj->getAlarms()->getCount(), 0);
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
 	QCOMPARE(obj->getAlarms()->getCount(), 0);
 }
 
@@ -207,8 +226,8 @@ void TestAntintrusionSystem::testClearAlarmsOnInsert()
 	// init: not inserted and 1 alarm pending
 	obj->initialized = true;
 	obj->status = false;
-	obj->alarms.insertWithoutUii(new AntintrusionAlarm(AntintrusionAlarm::Intrusion,
-		static_cast<const AntintrusionZone *>(obj->zones.getObject(0)), QDateTime::currentDateTime()));
+	obj->alarms << new AntintrusionAlarm(AntintrusionAlarm::Intrusion,
+		static_cast<const AntintrusionZone *>(obj->zones.getObject(0)), 1, QDateTime::currentDateTime());
 
 	ObjectTester t(obj, SIGNAL(alarmsChanged()));
 
@@ -228,6 +247,19 @@ void TestAntintrusionSystem::testAlarmOnNotConfiguredZone()
 	v[AntintrusionDevice::DIM_INTRUSION_ALARM] = 8;
 	obj->valueReceived(v);
 	t.checkSignalCount(sig, 0);
+	QCOMPARE(obj->getAlarms()->getCount(), 0);
+}
+
+void TestAntintrusionSystem::testTechnicalAlarmOnNotConfiguredZone()
+{
+	const char *sig = SIGNAL(alarmsChanged());
+
+	ObjectTester t(obj, sig);
+	DeviceValues v;
+	v[AntintrusionDevice::DIM_TECHNICAL_ALARM] = 13;
+	obj->valueReceived(v);
+	t.checkSignalCount(sig, 0);
+	QCOMPARE(obj->getAlarms()->getCount(), 0);
 }
 
 void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
@@ -237,8 +269,7 @@ void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
 	for (int i = 0; i < alarms->getCount(); ++i)
 	{
 		AntintrusionAlarm *a = static_cast<AntintrusionAlarm *>(alarms->getObject(i));
-		AntintrusionZone *z = static_cast<AntintrusionZone *>(a->getZone());
-		actual << qMakePair(a->getType(), z->getObjectId());
+		actual << AlarmInfo(a->getType(), a->getNumber(), a->getName());
 	}
 
 	QCOMPARE(actual, expected);

@@ -15,6 +15,11 @@ MediaDataModel &MediaDataModel::operator<<(ItemInterface *item)
 	return *this;
 }
 
+void MediaDataModel::append(ItemInterface *item)
+{
+	insertObject(item);
+}
+
 int MediaDataModel::rowCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent);
@@ -211,10 +216,10 @@ bool MediaModel::acceptsRow(int source_row) const
 
 bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-	// TODO: probably we need to also map the row?
-	if (getSource()->removeRows(row, count, mapToSource(parent)))
+	if (QSortFilterProxyModel::removeRows(row, count, parent))
 	{
 		counter -= count;
+		invalidate();
 		return true;
 	}
 	else
@@ -236,11 +241,15 @@ ItemInterface *MediaModel::getObject(int row)
 void MediaModel::remove(int index)
 {
 	removeRow(index);
-	invalidate();
 }
 
 void MediaModel::clear()
 {
 	if (removeRows(0, counter, QModelIndex()))
 		emit countChanged();
+}
+
+void MediaModel::append(ItemInterface *obj)
+{
+	getSource()->append(obj);
 }

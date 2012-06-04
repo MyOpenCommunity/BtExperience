@@ -9,8 +9,10 @@ HEADERS += \
 	hardware.h \
 	iteminterface.h \
 	lightobjects.h \
+	medialink.h \
 	mediamodel.h \
 	mediaobjects.h \
+	note.h \
 	objectinterface.h \
 	objectmodel.h \
 	platform.h \
@@ -60,8 +62,10 @@ SOURCES += \
 	hardware.cpp \
 	iteminterface.cpp \
 	lightobjects.cpp \
+	medialink.cpp \
 	mediamodel.cpp \
 	mediaobjects.cpp \
+	note.cpp \
 	objectinterface.cpp \
 	objectmodel.cpp \
 	platform.cpp \

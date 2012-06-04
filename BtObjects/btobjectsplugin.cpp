@@ -1,13 +1,10 @@
 #include "btobjectsplugin.h"
 #include "openclient.h"
-#include "frame_classes.h"
 #include "main.h"
 #include "device.h"
 #include "devices_cache.h"
-#include "lighting_device.h"
 #include "thermal_device.h"
 #include "probe_device.h"
-#include "antintrusion_device.h"
 #include "objectmodel.h"
 #include "lightobjects.h"
 #include "thermalobjects.h"
@@ -17,20 +14,19 @@
 #include "xml_functions.h"
 #include "hardware.h"
 #include "platform.h"
-#include "platform.h"
 #include "platform_device.h"
 #include "folderlistmodel.h"
 #include "objectlink.h"
 #include "splitbasicscenario.h"
 #include "splitadvancedscenario.h"
-#include "airconditioning_device.h"
 #include "scenarioobjects.h"
 #include "vct.h"
-#include "videodoorentry_device.h"
 #include "energyload.h"
 #include "stopandgoobjects.h"
 #include "energydata.h"
 #include "container.h"
+#include "medialink.h"
+#include "note.h"
 
 #include <QtDeclarative/qdeclarative.h>
 #include <QtDeclarative/QDeclarativeEngine>
@@ -49,7 +45,8 @@
 QHash<GlobalField, QString> *bt_global::config;
 
 
-namespace {
+namespace
+{
 	NonControlledProbeDevice *createNonControlledProbeDevice(const QDomNode &item_node)
 	{
 		NonControlledProbeDevice *dev = 0;
@@ -62,7 +59,26 @@ namespace {
 		}
 		return dev;
 	}
+
+	template<class Tr>
+	QList<Tr> convertObjectPairList(QList<ObjectPair> pairs)
+	{
+		QList<Tr> res;
+
+		foreach (const ObjectPair &pair, pairs)
+		{
+			Tr r = qobject_cast<Tr>(pair.second);
+
+			Q_ASSERT_X(r, "convertObjectPairList", "Invalid object type");
+
+			if (r)
+				res.append(r);
+		}
+
+		return res;
+	}
 }
+
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
@@ -96,12 +112,18 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	object_link_model.setParent(this);
 	systems_model.setParent(this);
 	objmodel.setParent(this);
+	note_model.setParent(this);
+	profile_model.setParent(this);
+	media_link_model.setParent(this);
 
 	global_models.setFloors(&floor_model);
 	global_models.setRooms(&room_model);
 	global_models.setObjectLinks(&object_link_model);
 	global_models.setSystems(&systems_model);
 	global_models.setMyHomeObjects(&objmodel);
+	global_models.setNotes(&note_model);
+	global_models.setProfiles(&profile_model);
+	global_models.setMediaLinks(&media_link_model);
 
 	ObjectModel::setGlobalSource(&objmodel);
 	createObjectsFakeConfig(document);
@@ -112,6 +134,10 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 void BtObjectsPlugin::createObjects(QDomDocument document)
 {
+	QList<AntintrusionZone *> antintrusion_zones;
+	QList<AntintrusionAlarmSource *> antintrusion_aux;
+	QList<AntintrusionScenario *> antintrusion_scenarios;
+
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
 		QList<ObjectPair> obj_list;
@@ -134,6 +160,18 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdLightCommand:
 			obj_list = parseLightCommand(xml_obj);
 			break;
+		case ObjectInterface::IdAntintrusionZone:
+			obj_list = parseAntintrusionZone(xml_obj);
+			antintrusion_zones = convertObjectPairList<AntintrusionZone *>(obj_list);
+			break;
+		case ObjectInterface::IdAntintrusionAux:
+			obj_list = parseAntintrusionAux(xml_obj);
+			antintrusion_aux = convertObjectPairList<AntintrusionAlarmSource *>(obj_list);
+			break;
+		case ObjectInterface::IdAntintrusionScenario:
+			obj_list = parseAntintrusionScenario(xml_obj, uii_map, antintrusion_zones);
+			antintrusion_scenarios = convertObjectPairList<AntintrusionScenario *>(obj_list);
+			break;
 		}
 
 		if (!obj_list.isEmpty())
@@ -141,10 +179,13 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			foreach (ObjectPair p, obj_list)
 			{
 				uii_map.insert(p.first, p.second);
-				objmodel.insertWithoutUii(p.second);
+				objmodel << p.second;
 			}
 		}
 	}
+
+	if (antintrusion_zones.size())
+		objmodel << createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios);
 }
 
 void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
@@ -178,9 +219,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		}
 		case ObjectInterface::IdHardwareSettings:
 			obj = new HardwareSettings;
-			break;
-		case ObjectInterface::IdAntintrusionSystem:
-			obj = createAntintrusionSystem(bt_global::add_device_to_cache(new AntintrusionDevice), item);
 			break;
 		case ObjectInterface::IdMultiChannelSoundDiffusionSystem:
 			obj_list = createSoundDiffusionSystem(item, id);
@@ -240,15 +278,15 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
 		if (obj)
-			objmodel.insertWithoutUii(obj);
+			objmodel << obj;
 		else if (!obj_list.isEmpty())
 		{
 			foreach (ObjectInterface *oi, obj_list)
-				objmodel.insertWithoutUii(oi);
+				objmodel << oi;
 		}
 	}
 	// TODO put in the right implementation; for now, use this for testing the interface
-	objmodel.insertWithoutUii(new PlatformSettings(new PlatformDevice));
+	objmodel << new PlatformSettings(new PlatformDevice);
 }
 
 void BtObjectsPlugin::parseConfig()
@@ -274,6 +312,34 @@ void BtObjectsPlugin::parseConfig()
 			break;
 		}
 	}
+
+	// TODO parse note list file
+	note_model << new Note(903, "portare fuori la spazzatura");
+	note_model << new Note(903, "giocare con le bambole");
+	note_model << new Note(902, "dentista 18/05/2012 ore 14:45");
+	note_model << new Note(904, "appunt. Sig. Mario Monti 18/05/2012 ore 17.00");
+	note_model << new Note(905, "pagare spese condominiali");
+	note_model << new Note(905, "fare cose");
+	note_model << new Note(905, "parlare con persone");
+	note_model << new Note(905, "scrivere e-mail");
+	note_model << new Note(905, "partecipare a riunioni");
+	note_model << new Note(901, "pagare l'affitto");
+
+	// TODO parse profile list file
+	profile_model << new Container(1, 901, "images/home/card_1.png", "famiglia");
+	profile_model << new Container(1, 902, "images/home/card_2.png", "mattia");
+	profile_model << new Container(1, 903, "images/home/card_3.png", "camilla");
+	profile_model << new Container(1, 904, "images/home/card_4.png", "mamma");
+	profile_model << new Container(1, 905, "images/home/card_5.png", QString::fromUtf8("papà"));
+
+	media_link_model << new MediaLink(901, MediaLink::Rss, "news - Corriere della Sera", "http://www.corriere.it", QPoint(400, 100));
+	media_link_model << new MediaLink(901, MediaLink::Camera, "camera #0", "7", QPoint(500, 220));
+	media_link_model << new MediaLink(901, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(200, 50));
+	media_link_model << new MediaLink(901, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(300, 250));
+	media_link_model << new MediaLink(902, MediaLink::Web, "Repubblica.it - Il sito web di Repubblica", "http://www.repubblica.it", QPoint(300, 250));
+	media_link_model << new MediaLink(903, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(200, 50));
+	media_link_model << new MediaLink(904, MediaLink::Rss, "news - Corriere della Sera", "http://www.corriere.it", QPoint(400, 100));
+	media_link_model << new MediaLink(905, MediaLink::Camera, "camera #0", "7", QPoint(500, 220));
 }
 
 void BtObjectsPlugin::parseRooms(const QDomNode &container)
@@ -302,6 +368,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 			if (!o)
 			{
 				qWarning() << "Invalid uii" << object_uii << "in room";
+				Q_ASSERT_X(false, "parseRooms", "Invalid uii");
 				continue;
 			}
 
@@ -338,6 +405,7 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 			if (!room)
 			{
 				qWarning() << "Invalid uii" << room_uii << "in floor";
+				Q_ASSERT_X(false, "parseFloors", "Invalid uii");
 				continue;
 			}
 
@@ -369,6 +437,7 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 			if (!o)
 			{
 				qWarning() << "Invalid uii" << object_uii << "in system";
+				Q_ASSERT_X(false, "parseSystem", "Invalid uii");
 				continue;
 			}
 
@@ -399,6 +468,12 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<Container>(
 				uri, 1, 0, "Container",
 				"unable to create an Container instance");
+	qmlRegisterUncreatableType<Note>(
+				uri, 1, 0, "Note",
+				"unable to create a Note instance");
+	qmlRegisterUncreatableType<MediaLink>(
+				uri, 1, 0, "MediaLink",
+				"unable to create a MediaLink instance");
 	qmlRegisterUncreatableType<ObjectInterface>(
 				uri, 1, 0, "ObjectInterface",
 				"unable to create an ObjectInterface instance");

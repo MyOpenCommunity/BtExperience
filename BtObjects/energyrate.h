@@ -17,11 +17,6 @@ public:
 	void setRate(double rate);
 	double getRate() const;
 
-	virtual ObjectCategory getCategory() const
-	{
-		return ObjectInterface::EnergyManagement;
-	}
-
 signals:
 	void rateChanged();
 
