@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "../../js/Stack.js" as Stack
+import "../../js/MainContainer.js" as Container
 import Components 1.0
 
 MenuColumn {
@@ -18,7 +18,7 @@ MenuColumn {
             hasChild: false
             selectOnClick: true
             onClicked: {
-                Stack.container.animationType = model.name
+                Container.mainContainer.animationType = model.name
             }
         }
 

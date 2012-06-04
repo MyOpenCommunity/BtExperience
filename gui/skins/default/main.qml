@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import "js/MainContainer.js" as Container
 import "js/Stack.js" as Stack
 
 
@@ -13,7 +14,12 @@ Item {
 
 
     Component.onCompleted: {
-        Stack.container = container
+        Container.mainContainer = container
+        // We need to update the reference in Stack because it includes MainContainer
+        // but it doesn't get the updates to it. Seems like that Qt.include()
+        // in a JS file operates a literal inclusion, not a real variable
+        // sharing
+        Stack.mainContainer = container
         Stack.openPage("HomePage.qml")
     }
 

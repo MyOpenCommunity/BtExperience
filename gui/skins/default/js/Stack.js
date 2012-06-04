@@ -3,10 +3,9 @@
 
 .pragma library
 Qt.include("logging.js")
+Qt.include("MainContainer.js")
 
 var stack = []
-
-var container = null
 
 var current_index = -1
 
@@ -49,7 +48,7 @@ function _openPage(filename, properties) {
         // This should be fixed in the future:
         // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
         if (page_component.status === 1) {
-            page = page_component.createObject(container, typeof properties !== 'undefined' ? properties : {})
+            page = page_component.createObject(mainContainer, typeof properties !== 'undefined' ? properties : {})
             if (page === null) {
                 logError('Error on creating the object for the page: ' + filename)
                 logError('Properties:')
