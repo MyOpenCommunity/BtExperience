@@ -109,28 +109,28 @@ MenuColumn {
         var properties = {'objModel': obj}
 
         switch (obj.objectId) {
-        case ThermalControlUnit99Zones.IdHoliday:
+        case ThermalControlUnit.IdHoliday:
             itemLoader.setComponent(holidayComponent, properties)
             break
-        case ThermalControlUnit99Zones.IdOff:
+        case ThermalControlUnit.IdOff:
             itemLoader.setComponent(offComponent, properties)
             break
-        case ThermalControlUnit99Zones.IdManual:
+        case ThermalControlUnit.IdManual:
             itemLoader.setComponent(manualComponent, properties)
             break
-        case ThermalControlUnit99Zones.IdAntifreeze:
+        case ThermalControlUnit.IdAntifreeze:
             itemLoader.setComponent(antifreezeComponent, properties)
             break
-        case ThermalControlUnit99Zones.IdWeeklyPrograms:
+        case ThermalControlUnit.IdWeeklyPrograms:
             itemLoader.setComponent(programsComponent, properties)
             break
-        case ThermalControlUnit99Zones.IdWorking:
+        case ThermalControlUnit.IdWorking:
             itemLoader.setComponent(workingComponent, properties)
             break
-        case ThermalControlUnit99Zones.IdScenarios:
+        case ThermalControlUnit.IdScenarios:
             itemLoader.setComponent(scenarioComponent, properties)
             break
-        case ThermalControlUnit99Zones.IdTimedManual:
+        case ThermalControlUnit.IdTimedManual:
             itemLoader.setComponent(timedComponent, properties)
             break
         }

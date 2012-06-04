@@ -34,8 +34,8 @@ MenuColumn {
         model: ListModel {
             id: modelList
             Component.onCompleted: {
-                var l = [ThermalControlUnit99Zones.Summer,
-                         ThermalControlUnit99Zones.Winter]
+                var l = [ThermalControlUnit.Summer,
+                         ThermalControlUnit.Winter]
                 for (var i = 0; i < l.length; i++)
                     append({"type": l[i], "name": pageObject.names.get('SEASON', l[i])})
             }

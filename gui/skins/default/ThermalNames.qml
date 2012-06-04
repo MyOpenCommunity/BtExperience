@@ -7,8 +7,8 @@ QtObject {
     // internal function to load values into the container
     function _init(container) {
         container['SEASON'] = []
-        container['SEASON'][ThermalControlUnit99Zones.Summer] = qsTr("summer")
-        container['SEASON'][ThermalControlUnit99Zones.Winter] = qsTr("winter")
+        container['SEASON'][ThermalControlUnit.Summer] = qsTr("summer")
+        container['SEASON'][ThermalControlUnit.Winter] = qsTr("winter")
 
         container['PROBE_STATUS'] = []
         container['PROBE_STATUS'][ThermalControlledProbe.Auto] = qsTr("auto")
