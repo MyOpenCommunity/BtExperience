@@ -11,6 +11,8 @@ Item {
     transform: Scale { origin.x: 0; origin.y: 0; xScale: global.mainWidth / 1024; yScale: global.mainHeight / 600 }
     property alias animation: animationManager.animation
     property alias animationType: animationManager.type
+    property alias ubuntuLight: ubuntuLightLoader
+    property alias ubuntuMedium: ubuntuMediumLoader
 
 
     Component.onCompleted: {
@@ -21,6 +23,16 @@ Item {
         // sharing
         Stack.mainContainer = container
         Stack.openPage("HomePage.qml")
+    }
+
+    FontLoader {
+        id: ubuntuLightLoader
+        source: "Ubuntu-L.ttf"
+    }
+
+    FontLoader {
+        id: ubuntuMediumLoader
+        source: "Ubuntu-M.ttf"
     }
 
     AnimationManager {

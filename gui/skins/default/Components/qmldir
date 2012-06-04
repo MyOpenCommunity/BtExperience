@@ -66,3 +66,5 @@ Text_12pt_bold 1.0 Text_12pt_bold.qml
 ToolBar 1.0 ToolBar.qml
 TwoButtonsSettings 1.0 TwoButtonsSettings.qml
 TwoButtonsSettingsLarge 1.0 TwoButtonsSettingsLarge.qml
+UbuntuLightText 1.0 UbuntuLightText.qml
+UbuntuMediumText 1.0 UbuntuMediumText.qml
