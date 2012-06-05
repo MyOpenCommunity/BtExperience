@@ -55,7 +55,7 @@ Page {
                 anchors.fill: parent
             }
 
-            Text {
+            UbuntuLightText {
                 id: headerProfileRect
                 anchors.top: parent.top
                 anchors.left: profileRect.left
@@ -81,7 +81,7 @@ Page {
                     fillMode: Image.PreserveAspectFit
                 }
 
-                Text {
+                UbuntuLightText {
                     anchors.left: imageProfile.right
                     anchors.right: parent.right
                     horizontalAlignment: Text.AlignHCenter
@@ -92,7 +92,7 @@ Page {
                 }
             }
 
-            Text {
+            UbuntuLightText {
                 id: headerNote
                 anchors.top: profileRect.bottom
                 anchors.topMargin: 30
@@ -109,7 +109,7 @@ Page {
                 anchors.right: parent.right
                 anchors.top: headerNote.bottom
 
-                Text {
+                UbuntuLightText {
                     anchors.left: parent.left
                     anchors.leftMargin: 5
                     anchors.top: parent.top
@@ -145,7 +145,7 @@ Page {
                     height: 50
                     property variant obj: userNotes.getObject(index)
 
-                    Text {
+                    UbuntuLightText {
                         anchors.left: parent.left
                         anchors.leftMargin: 5
                         anchors.right: parent.right
@@ -210,7 +210,7 @@ Page {
                     width: 300
                     height: 200
                     color: "light gray"
-                    Text {
+                    UbuntuLightText {
                         text: qsTr("Note")
                         anchors.left: parent.left
                         anchors.leftMargin: 10
@@ -247,7 +247,7 @@ Page {
                             id: buttonOk
                             source: "images/common/btn_OKAnnulla.png"
 
-                            Text {
+                            UbuntuLightText {
                                 anchors.centerIn: parent
                                 text: qsTr("ok")
                             }
@@ -265,7 +265,7 @@ Page {
                             id: buttonCancel
                             source: "images/common/btn_OKAnnulla.png"
 
-                            Text {
+                            UbuntuLightText {
                                 anchors.centerIn: parent
                                 text: qsTr("cancel")
                             }
