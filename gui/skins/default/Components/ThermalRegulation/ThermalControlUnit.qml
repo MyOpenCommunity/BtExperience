@@ -214,23 +214,23 @@ MenuColumn {
                     time: DateTime.format(objModel.date)["time"]
 
                     function checkReset() {
-                        if (column.privateProps.currentElement !== -1)
+                        if (privateProps.currentElement !== -1)
                             resetSelection()
                     }
 
                     Component.onCompleted: {
                         column.childDestroyed.connect(resetSelection)
-                        column.privateProps.currentElementChanged.connect(checkReset)
+                        privateProps.currentElementChanged.connect(checkReset)
                     }
 
                     onDateClicked: {
                         column.loadColumn(dateSelect, qsTr("date"), objModel, {"twoFields": false})
-                        column.privateProps.currentElement = -1
+                        privateProps.currentElement = -1
                     }
 
                     onTimeClicked: {
                         column.loadColumn(dateSelect, qsTr("time"), objModel, {"twoFields": true})
-                        column.privateProps.currentElement = -1
+                        privateProps.currentElement = -1
                     }
                 }
 
@@ -363,18 +363,18 @@ MenuColumn {
                     dateVisible: false
 
                     function checkReset() {
-                        if (column.privateProps.currentElement !== -1)
+                        if (privateProps.currentElement !== -1)
                             resetSelection()
                     }
 
                     Component.onCompleted: {
                         column.childDestroyed.connect(resetSelection)
-                        column.privateProps.currentElementChanged.connect(checkReset)
+                        privateProps.currentElementChanged.connect(checkReset)
                     }
 
                     onTimeClicked: {
                         column.loadColumn(dateSelectTimed, qsTr("time"), objModel, {"twoFields": true})
-                        column.privateProps.currentElement = -1
+                        privateProps.currentElement = -1
                     }
                 }
 
@@ -416,23 +416,23 @@ MenuColumn {
                     time: DateTime.format(objModel.date)["time"]
 
                     function checkReset() {
-                        if (column.privateProps.currentElement !== -1)
+                        if (privateProps.currentElement !== -1)
                             resetSelection()
                     }
 
                     Component.onCompleted: {
                         column.childDestroyed.connect(resetSelection)
-                        column.privateProps.currentElementChanged.connect(checkReset)
+                        privateProps.currentElementChanged.connect(checkReset)
                     }
 
                     onDateClicked: {
                         column.loadColumn(dateSelectWorking, qsTr("date"), objModel, {"twoFields": false})
-                        column.privateProps.currentElement = -1
+                        privateProps.currentElement = -1
                     }
 
                     onTimeClicked: {
                         column.loadColumn(dateSelectWorking, qsTr("time"), objModel, {"twoFields": true})
-                        column.privateProps.currentElement = -1
+                        privateProps.currentElement = -1
                     }
                 }
 
