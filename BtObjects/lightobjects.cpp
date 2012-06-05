@@ -58,7 +58,7 @@ QList<ObjectPair> parseDimmer100(const QDomNode &obj)
 	int def_pul = getIntAttribute(obj, "pul");
 	int def_sstart = getIntAttribute(obj, "sstart");
 	int def_sstop = getIntAttribute(obj, "sstop");
-	QString def_ctime = getAttribute(obj, "ctime");
+	QTime def_ctime = getTimeAttribute(obj, "ctime");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -68,7 +68,7 @@ QList<ObjectPair> parseDimmer100(const QDomNode &obj)
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
 		int sstart = getIntAttribute(obj, "sstart", def_sstart);
 		int sstop = getIntAttribute(obj, "sstop", def_sstop);
-		QString ctime = getAttribute(ist, "ctime", def_ctime);
+		QTime ctime = getTimeAttribute(ist, "ctime", def_ctime);
 
 		Dimmer100Device *d = bt_global::add_device_to_cache(new Dimmer100Device(where, pul));
 		obj_list << ObjectPair(uii, new Dimmer100(descr, where, ctime, d, sstart, sstop));
@@ -83,7 +83,7 @@ QList<ObjectPair> parseDimmer(const QDomNode &obj)
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul");
-	QString def_ctime = getAttribute(obj, "ctime");
+	QTime def_ctime = getTimeAttribute(obj, "ctime");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -91,7 +91,7 @@ QList<ObjectPair> parseDimmer(const QDomNode &obj)
 		QString descr = getAttribute(ist, "descr", def_descr);
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
-		QString ctime = getAttribute(ist, "ctime", def_ctime);
+		QTime ctime = getTimeAttribute(ist, "ctime", def_ctime);
 
 		DimmerDevice *d = bt_global::add_device_to_cache(new DimmerDevice(where, pul));
 		obj_list << ObjectPair(uii, new Dimmer(descr, where, ctime, d));
@@ -106,7 +106,7 @@ QList<ObjectPair> parseLight(const QDomNode &obj)
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul");
-	QString def_ctime = getAttribute(obj, "ctime");
+	QTime def_ctime = getTimeAttribute(obj, "ctime");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -114,7 +114,7 @@ QList<ObjectPair> parseLight(const QDomNode &obj)
 		QString descr = getAttribute(ist, "descr", def_descr);
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
-		QString ctime = getAttribute(ist, "ctime", def_ctime);
+		QTime ctime = getTimeAttribute(ist, "ctime", def_ctime);
 
 		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
 		obj_list << ObjectPair(uii, new Light(descr, where, ctime, d));
@@ -200,39 +200,16 @@ void LightCommand::setActive(bool st)
 }
 
 
-Light::Light(QString _name, QString _key, QString ctime, LightingDevice *d) : LightCommand(d)
+Light::Light(QString _name, QString _key, QTime ctime, LightingDevice *d) : LightCommand(d)
 {
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
 	key = _key;
 	name = _name;
 	active = false; // initial value
-
-	QStringList hms = ctime.split(":");
-	bool ok;
-	// I explicitly set the base to 10 to avoid numbers like 08 to be interpreted
-	// as octal numbers (leading to parsing errors)
-	if (hms.length() == 0)
-	{
-		qWarning() << "ctime not in right format";
-		hours = 0;
-	}
-	else
-		hours = hms[0].toInt(&ok, 10);
-	if (hms.length() <= 1)
-	{
-		qWarning() << "ctime not in right format, minutes missing";
-		minutes = 0;
-	}
-	else
-		minutes = hms[1].toInt(&ok, 10);
-	if (hms.length() <= 2)
-	{
-		qWarning() << "ctime not in right format, seconds missing";
-		seconds = 0;
-	}
-	else
-		seconds = hms[2].toInt(&ok, 10);
+	hours = ctime.hour();
+	minutes = ctime.minute();
+	seconds = ctime.second();
 }
 
 QString Light::getObjectKey() const
@@ -325,7 +302,7 @@ void LightGroup::setActive(bool status)
 }
 
 
-Dimmer::Dimmer(QString name, QString key, QString ctime, DimmerDevice *d) : Light(name, key, ctime, d)
+Dimmer::Dimmer(QString name, QString key, QTime ctime, DimmerDevice *d) : Light(name, key, ctime, d)
 {
 	dev = d;
 	percentage = 0; // initial value
@@ -384,7 +361,7 @@ void DimmerGroup::decreaseLevel()
 }
 
 
-Dimmer100::Dimmer100(QString name, QString key, QString ctime, Dimmer100Device *d, int onspeed, int offspeed) :
+Dimmer100::Dimmer100(QString name, QString key, QTime ctime, Dimmer100Device *d, int onspeed, int offspeed) :
 	Dimmer(name, key, ctime, d)
 {
 	dev = d;

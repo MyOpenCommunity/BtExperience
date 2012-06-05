@@ -66,7 +66,7 @@ class Light : public LightCommand
 	Q_PROPERTY(int seconds READ getSeconds WRITE setSeconds NOTIFY secondsChanged)
 
 public:
-	Light(QString name, QString key, QString ctime, LightingDevice *d);
+	Light(QString name, QString key, QTime ctime, LightingDevice *d);
 
 	virtual int getObjectId() const
 	{
@@ -155,7 +155,7 @@ class Dimmer : public Light
 	Q_PROPERTY(int percentage READ getPercentage NOTIFY percentageChanged)
 
 public:
-	Dimmer(QString name, QString key, QString ctime, DimmerDevice *d);
+	Dimmer(QString name, QString key, QTime ctime, DimmerDevice *d);
 
 	virtual int getObjectId() const
 	{
@@ -272,7 +272,7 @@ class Dimmer100 : public Dimmer
 	Q_PROPERTY(int stepAmount READ getStepAmount WRITE setStepAmount NOTIFY stepAmountChanged)
 
 public:
-	Dimmer100(QString name, QString key, QString ctime, Dimmer100Device *d, int onspeed, int offsspeed);
+	Dimmer100(QString name, QString key, QTime ctime, Dimmer100Device *d, int onspeed, int offsspeed);
 
 	virtual int getObjectId() const
 	{
