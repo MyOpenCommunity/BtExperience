@@ -58,9 +58,7 @@ QList<ObjectPair> parseDimmer100(const QDomNode &obj)
 	int def_pul = getIntAttribute(obj, "pul");
 	int def_sstart = getIntAttribute(obj, "sstart");
 	int def_sstop = getIntAttribute(obj, "sstop");
-	QString def_ctime = getAttribute(obj, "ctime", "00:00:00");
-	// TODO ftime not used for now, waiting for specs
-	QString def_ftime = getAttribute(obj, "ftime", "0");
+	QString def_ctime = getAttribute(obj, "ctime");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -71,8 +69,6 @@ QList<ObjectPair> parseDimmer100(const QDomNode &obj)
 		int sstart = getIntAttribute(obj, "sstart", def_sstart);
 		int sstop = getIntAttribute(obj, "sstop", def_sstop);
 		QString ctime = getAttribute(ist, "ctime", def_ctime);
-		// TODO ftime not used for now, waiting for specs
-		QString ftime = getAttribute(ist, "ftime", def_ftime);
 
 		Dimmer100Device *d = bt_global::add_device_to_cache(new Dimmer100Device(where, pul));
 		obj_list << ObjectPair(uii, new Dimmer100(descr, where, ctime, d, sstart, sstop));
@@ -87,9 +83,7 @@ QList<ObjectPair> parseDimmer(const QDomNode &obj)
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul");
-	QString def_ctime = getAttribute(obj, "ctime", "00:00:00");
-	// TODO ftime not used for now, waiting for specs
-	QString def_ftime = getAttribute(obj, "ftime", "0");
+	QString def_ctime = getAttribute(obj, "ctime");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -98,8 +92,6 @@ QList<ObjectPair> parseDimmer(const QDomNode &obj)
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
 		QString ctime = getAttribute(ist, "ctime", def_ctime);
-		// TODO ftime not used for now, waiting for specs
-		QString ftime = getAttribute(ist, "ftime", def_ftime);
 
 		DimmerDevice *d = bt_global::add_device_to_cache(new DimmerDevice(where, pul));
 		obj_list << ObjectPair(uii, new Dimmer(descr, where, ctime, d));
@@ -114,9 +106,7 @@ QList<ObjectPair> parseLight(const QDomNode &obj)
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul");
-	QString def_ctime = getAttribute(obj, "ctime", "00:00:00");
-	// TODO ftime not used for now, waiting for specs
-	QString def_ftime = getAttribute(obj, "ftime", "0");
+	QString def_ctime = getAttribute(obj, "ctime");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -125,8 +115,6 @@ QList<ObjectPair> parseLight(const QDomNode &obj)
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
 		QString ctime = getAttribute(ist, "ctime", def_ctime);
-		// TODO ftime not used for now, waiting for specs
-		QString ftime = getAttribute(ist, "ftime", def_ftime);
 
 		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
 		obj_list << ObjectPair(uii, new Light(descr, where, ctime, d));
@@ -138,17 +126,15 @@ QList<ObjectPair> parseLightCommand(const QDomNode &obj)
 {
 	QList<ObjectPair> obj_list;
 	// extract default values
-	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
 		int uii = getIntAttribute(ist, "uii");
-		QString descr = getAttribute(ist, "descr", def_descr);
 		QString where = getAttribute(ist, "where", def_where);
 
 		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, PULL));
-		obj_list << ObjectPair(uii, new Light(descr, where, "00:00:00", d));
+		obj_list << ObjectPair(uii, new LightCommand(d));
 	}
 	return obj_list;
 }
@@ -226,9 +212,27 @@ Light::Light(QString _name, QString _key, QString ctime, LightingDevice *d) : Li
 	bool ok;
 	// I explicitly set the base to 10 to avoid numbers like 08 to be interpreted
 	// as octal numbers (leading to parsing errors)
-	hours = hms[0].toInt(&ok, 10);
-	minutes = hms[1].toInt(&ok, 10);
-	seconds = hms[2].toInt(&ok, 10);
+	if (hms.length() == 0)
+	{
+		qWarning() << "ctime not in right format";
+		hours = 0;
+	}
+	else
+		hours = hms[0].toInt(&ok, 10);
+	if (hms.length() <= 1)
+	{
+		qWarning() << "ctime not in right format, minutes missing";
+		minutes = 0;
+	}
+	else
+		minutes = hms[1].toInt(&ok, 10);
+	if (hms.length() <= 2)
+	{
+		qWarning() << "ctime not in right format, seconds missing";
+		seconds = 0;
+	}
+	else
+		seconds = hms[2].toInt(&ok, 10);
 }
 
 QString Light::getObjectKey() const
