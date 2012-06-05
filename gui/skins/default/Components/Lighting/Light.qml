@@ -3,13 +3,24 @@ import Components 1.0
 
 MenuColumn {
     width: 212
-    height: 39
+    height: column.height
 
-    ControlOnOff {
-        id: onOff
+    Column {
+        id: column
+
         width: parent.width
-        status: dataModel.active
-        onClicked: dataModel.active = newStatus
+
+        ControlOnOff {
+            id: onOff
+            width: parent.width
+            status: dataModel.active
+            onClicked: timing.isEnabled ? dataModel.setActiveWithTiming() : dataModel.active = newStatus
+        }
+
+        ControlTiming {
+            id: timing
+            width: parent.width
+            itemObject: dataModel
+        }
     }
 }
-
