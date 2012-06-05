@@ -66,8 +66,8 @@ QList<ObjectPair> parseDimmer100(const QDomNode &obj)
 		QString descr = getAttribute(ist, "descr", def_descr);
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
-		int sstart = getIntAttribute(obj, "sstart", def_sstart);
-		int sstop = getIntAttribute(obj, "sstop", def_sstop);
+		int sstart = getIntAttribute(ist, "sstart", def_sstart);
+		int sstop = getIntAttribute(ist, "sstop", def_sstop);
 		QTime ctime = getTimeAttribute(ist, "ctime", def_ctime);
 
 		Dimmer100Device *d = bt_global::add_device_to_cache(new Dimmer100Device(where, pul));
