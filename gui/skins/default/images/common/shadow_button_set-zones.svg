@@ -11,17 +11,17 @@
 	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
 ]>
 <svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="99px" height="4px"
-	 viewBox="-461.5 300.5 99 4" enable-background="new -461.5 300.5 99 4" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="198px" height="4px"
+	 viewBox="0 0 198 4" enable-background="new 0 0 198 4" xml:space="preserve">
 <metadata>
 	<sfw  xmlns="&ns_sfw;">
 		<slices></slices>
-		<sliceSourceBounds  height="4" width="99" y="-2" x="-49" bottomLeftOrigin="true"></sliceSourceBounds>
+		<sliceSourceBounds  height="4" width="198" y="298.5" x="412.5" bottomLeftOrigin="true"></sliceSourceBounds>
 	</sfw>
 </metadata>
-<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-759.9995" y1="-908.5005" x2="-759.9995" y2="-912.5005" gradientTransform="matrix(1 0 0 -1 348 -608)">
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-16.9995" y1="-1" x2="-16.9995" y2="-5.0005" gradientTransform="matrix(1 0 0 -1 116 -1)">
 	<stop  offset="0" style="stop-color:#000000"/>
 	<stop  offset="1" style="stop-color:#000000;stop-opacity:0"/>
 </linearGradient>
-<rect x="-461.5" y="300.5" opacity="0.5" fill="url(#SVGID_1_)" enable-background="new    " width="99" height="4"/>
+<rect opacity="0.5" fill="url(#SVGID_1_)" enable-background="new    " width="198" height="4"/>
 </svg>
