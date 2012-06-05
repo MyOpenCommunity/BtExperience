@@ -2,7 +2,7 @@
 #define VCT_H
 
 /*!
-	\defgroup VideoDoorEntry
+	\defgroup VideoDoorEntry Video door entry
 */
 
 #include "objectinterface.h"
