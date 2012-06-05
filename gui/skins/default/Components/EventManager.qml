@@ -8,8 +8,6 @@ Item {
     id: eventManager
     anchors.fill: parent
 
-    // TODO CALIBRATION
-
     ScreenSaver {
         id: screensaver
         z: parent.z
