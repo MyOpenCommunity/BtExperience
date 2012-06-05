@@ -3,7 +3,24 @@
 
 /*!
 	\defgroup LoadManagement Load management
+
+	Load management allows displaying and managing energy loads.
+
+	All load management actuators allow reading current electricity consumption for the
+	energy load attached to the actuator.  In addition, some actuators can be controlled
+	by a central unit that disable the load according to total energy consumption and
+	priority, or they can provide cumulative consumption measures over a period.
+
+	Use #EnergyLoadManagement to access electricity consumption (either current or cumulative)
+	and #EnergyLoadManagementWithControlUnit to enable/disable individual loads controlled by
+	the central control unit.
+
 	\defgroup LoadDiagnostic Load diagnostic
+
+	Load diagnostic (part of the supervision subsystem) allows accessing electricity
+	consumption status of each device (normal consumption, higher than normal, critial level).
+	This information can be accessed using #EnergyLoadManagement::loadStatus; status
+	updates are requested by calling the #EnergyLoadManagement::requestLoadStatus() slot.
 */
 
 #include "objectinterface.h"
@@ -60,7 +77,7 @@ private:
 	\brief Reads the electricity load status of a monitored object
 
 	The monitored object can be consuming a normal amount of power, an higher than
-	normal amount of power and a critical/fault status.
+	normal amount of power or br in a critical/fault status.
 
 	Additionally, the object could have consumption meters to read current and cumulative
 	consumption.
@@ -93,7 +110,8 @@ class EnergyLoadManagement : public ObjectInterface
 	/*!
 		\brief Information about period totals and reset time.
 
-		Returns a 2-element array where each element is a \a EnergyLoadTotal instance.
+		Returns a 2-element array where each element is a \a EnergyLoadTotal instance,
+		call #requestTotals() to request a status update.
 
 		\sa hasConsumptionMeters
 	*/
@@ -120,11 +138,16 @@ class EnergyLoadManagement : public ObjectInterface
 	Q_ENUMS(LoadStatus)
 
 public:
+	/// High-level status, for load diagnostic
 	enum LoadStatus
 	{
+		/// No status received yet
 		Unknown = 0,
+		/// Normal consumption
 		Ok = 1,
+		/// High consumption
 		Warning,
+		/// Consumption value is very hight, indicative of a malfunction
 		Critical
 	};
 
@@ -194,7 +217,18 @@ private:
 	\brief Additional properties/methods for actuators with control unit
 
 	Actuators with a control unit can be disabled by the control unit in case
-	of excessive load and force-enabled by the user
+	of excessive load and force-enabled by the user.
+
+	The typical use is:
+	- #loadEnabled = \c true, #loadForced = \c false
+	  load is working and controlled by the control unit; calling #forceOn(int)
+	  will stop the control unit from managing the load
+	- #loadEnabled = \c true, #loadForced = \c true
+	  load is working but not controlled by the control unit; after a maximum of 4
+	  hours, the load is put again under control unit control
+	- #loadEnabled = \c false (#loadForced not relevant, will always be \c false)
+	  load has been disabled by the control unit, can be re-enabled for 4 hours by
+	  calling #forceOn()
 */
 class EnergyLoadManagementWithControlUnit : public EnergyLoadManagement
 {
