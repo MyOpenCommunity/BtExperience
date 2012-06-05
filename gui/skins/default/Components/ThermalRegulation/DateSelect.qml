@@ -23,9 +23,6 @@ MenuColumn {
             anchors.leftMargin: 15
         }
 
-        // TODO:
-        // * set upper limits on date;
-        // * extract current date and set it as starting point
         ControlPlusMinusDateTime {
             id: dateTime
             anchors.horizontalCenter: parent.horizontalCenter
