@@ -3,6 +3,26 @@
 
 /*!
 	\defgroup Antintrusion Anti-intrusion system
+
+	In addition to monitoring intrusions, this system provides an anti-panic alarm
+	and technical alarms throught an auxiliary input channel (for example for fire or flooding).
+
+	There are up to 8 zones that can be monitored for intrusion and up to 16 auxiliary inputs for
+	technical alarms.
+
+	The user can partialize (disable) individual zones or activate a scenario (a predefined set
+	of zones that will be enabled, partializing the rest).
+
+	Every change to system status is protected by a password.
+
+	The #AntintrusionSystem class is the single entry point for the whole system.
+
+	After changing partialization state, either using #AntintrusionZone::partialization or
+	#AntintrusionScenario::apply(), call #AntintrusionSystem::requestPartialization() or
+	#AntintrusionSystem::toggleActivation() to apply the new state.
+
+	Notification of new alarms goes through #AntintrusionSystem::newAlarm() amd the list of currently-active
+	alarms can be retrieved using #AntintrusionSystem::alarms.
 */
 
 #include "objectinterface.h"
@@ -75,7 +95,8 @@ class AntintrusionZone : public AntintrusionAlarmSource
 		\brief When a zone is partialized the system does not report alarms for this zone
 
 		After setting desired zone status on all antintrusion zones, call
-		\a requestPartialization() or \a toggleActivation() to transmit the setting to the control unit.
+		#AntintrusionSystem::requestPartialization() or #AntintrusionSystem::toggleActivation()
+		to transmit the setting to the control unit.
 	*/
 	Q_PROPERTY(bool partialization READ getPartialization WRITE setPartialization NOTIFY partializationChanged)
 
@@ -113,9 +134,9 @@ class AntintrusionScenario : public ObjectInterface
 		This property becomes \c true when all the zones in this scenario are active
 		(not partialized).
 
-		Note that this reflects the zone status in the program, and is not synchronized
-		with the control unit unless \a requestPartialization() or \a toggleActivation()
-		is called.
+		%Note that this reflects the zone status in the program, and is not synchronized
+		with the control unit unless #AntintrusionSystem::requestPartialization() or
+		#AntintrusionSystem::toggleActivation() is called.
 	*/
 	Q_PROPERTY(bool selected READ isSelected NOTIFY selectionChanged)
 
@@ -131,8 +152,8 @@ public:
 	/*!
 		\brief Applies the scenario
 
-		After applying the scenario, call \a requestPartialization() or
-		\a toggleActivation() to transmit the setting to the control unit.
+		After applying the scenario, call #AntintrusionSystem::requestPartialization() or
+		#AntintrusionSystem::toggleActivation() to transmit the setting to the control unit.
 	*/
 	Q_INVOKABLE void apply();
 
@@ -155,6 +176,9 @@ private:
 /*!
 	\ingroup Antintrusion
 	\brief A single antintrusion alarm
+
+	Provides access to the alarm #type, the zone #number the alarm has been reported in
+	and a description of the zone, if available.
 */
 class AntintrusionAlarm : public ObjectInterface
 {
@@ -170,23 +194,23 @@ class AntintrusionAlarm : public ObjectInterface
 	/*!
 		\brief Alarm source id
 
-		For alarms coming from a normal antintrusion zone (\c Intrusion, some \c Tampering alarms)
+		For alarms coming from a normal antintrusion zone (#Intrusion, some #Tamper alarms)
 		this is the antintrusion zone number (1-8) and \c name is set to the zone name.
 
-		For alarms coming from an auxiliary input (\c Technical) this is the input id (1-16)
+		For alarms coming from an auxiliary input (#Technical) this is the input id (1-16)
 		and \c name is set to the description of the input.
 
-		For alarms coming from a special zone (\c Tampering) this is the special zone number
+		For alarms coming from a special zone (#Tamper) this is the special zone number
 		(9-16) and \c name is empty.
 
-		For \c Antipanic alarms, this is the fixed value 9 and \c name is empty.
+		For #Antipanic alarms, this is the fixed value 9 and \c name is empty.
 	*/
 	Q_PROPERTY(int number READ getNumber CONSTANT)
 
 	/*!
 		\brief The source of the alarm
 
-		Only set for \c Technical, \c Intrusion and \c Tamper alarms coming from a normal
+		Only set for #Technical, #Intrusion and #Tamper alarms coming from a normal
 		antintrusion zone (1-8).
 	*/
 	Q_PROPERTY(ObjectInterface *source READ getSource CONSTANT)
@@ -199,13 +223,18 @@ class AntintrusionAlarm : public ObjectInterface
 	Q_ENUMS(AlarmType)
 
 public:
+	/// Alarm type
 	// Defined the same as AntintrusionDevice for convenience
 	enum AlarmType
 	{
+		/// Anti-panic alarm
 		Antipanic,
+		/// Intrusion alarm
 		Intrusion,
+		/// Tampering
 		Tamper,
-		Technical,
+		/// Technical alarm (from auxiliary input channel)
+		Technical
 	};
 
 	AntintrusionAlarm(AlarmType type, const AntintrusionAlarmSource *source, int number, QDateTime time);
@@ -228,6 +257,9 @@ private:
 /*!
 	\ingroup Antintrusion
 	\brief Antintrusion control unit object
+
+	Access global system configuration (list of zones and scenarios) and global system status (list of alarms,
+	active/inactive system).
 */
 class AntintrusionSystem : public ObjectInterface
 {
@@ -286,6 +318,10 @@ public:
 
 signals:
 	void alarmsChanged();
+
+	/*!
+		\brief Send when receiving a new alarm
+	*/
 	void newAlarm(AntintrusionAlarm *alarm);
 
 	void statusChanged();
