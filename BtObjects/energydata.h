@@ -165,7 +165,7 @@ public:
 		Data is requested asynchronously, hence the returned object might receive graph
 		data at some later time.
 
-		If this energy device does not have an associated tariff, passing \c true as in_currency
+		If this energy device does not have an associated tariff, passing \c Currency as measure
 		returns NULL.
 	*/
 	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, MeasureType measure = Consumption);
@@ -176,7 +176,7 @@ public:
 		Data is requested asynchronously, hence the returned object might receive the value
 		at some later time.
 
-		If this energy device does not have an associated tariff, passing \c true as in_currency
+		If this energy device does not have an associated tariff, passing \c Currency as measure
 		returns NULL.
 	*/
 	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, MeasureType measure = Consumption);

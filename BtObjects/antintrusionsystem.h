@@ -17,12 +17,12 @@
 
 	The #AntintrusionSystem class is the single entry point for the whole system.
 
-	After changing partialization state, either using #AntintrusionZone::partialization or
-	#AntintrusionScenario::apply(), call #AntintrusionSystem::requestPartialization() or
-	#AntintrusionSystem::toggleActivation() to apply the new state.
+	After changing partialization state, either using AntintrusionZone::partialization or
+	AntintrusionScenario::apply(), call AntintrusionSystem::requestPartialization() or
+	AntintrusionSystem::toggleActivation() to apply the new state.
 
-	Notification of new alarms goes through #AntintrusionSystem::newAlarm() amd the list of currently-active
-	alarms can be retrieved using #AntintrusionSystem::alarms.
+	Notification of new alarms goes through AntintrusionSystem::newAlarm() and the list of currently-active
+	alarms can be retrieved using AntintrusionSystem::alarms.
 */
 
 #include "objectinterface.h"
