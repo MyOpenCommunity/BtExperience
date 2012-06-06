@@ -32,7 +32,7 @@ SvgImage {
         anchors.horizontalCenter: parent.horizontalCenter
         onText: qsTr("ENABLED")
         offText: qsTr("DISABLED")
-        status: privateProps.enabled
+        active: privateProps.enabled
         onClicked: privateProps.enabled = newStatus
     }
 

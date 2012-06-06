@@ -15,7 +15,7 @@ MenuColumn {
             id: onOff
             width: parent.width
             active: dataModel.active
-            onClicked: timing.isEnabled ? dataModel.setActiveWithTiming() : dataModel.active = newStatus
+            onClicked: (timing.isEnabled && newStatus === true) ? dataModel.setActiveWithTiming() : dataModel.active = newStatus
         }
 
         ControlTiming {
