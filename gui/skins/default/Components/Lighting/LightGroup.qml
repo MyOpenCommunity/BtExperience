@@ -3,98 +3,32 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: 39
 
-    Item {
-        id: control
+    SvgImage {
+        source: "../../images/common/panel_on-off.svg"
 
-        property int marginLeftRight: 7
-        property int marginTopBottom: 5
+        Row {
+            anchors.centerIn: parent // in this way we need no margins
 
-        width: 212
-        height: 37
-
-        SvgImage {
-            id: imgOn
-
-            source: areaOn.pressed ? "../../images/common/button_1-2_p.svg" :
-                                     "../../images/common/button_1-2.svg"
-            width: (parent.width - 2 * control.marginLeftRight) / 2
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                left: parent.left
-                topMargin: control.marginTopBottom
-                bottomMargin: control.marginTopBottom
-                leftMargin: control.marginLeftRight
-            }
-
-            Text {
-                id: textOn
-
+            ButtonThreeStates {
+                defaultImage: "../images/common/button_1-2.svg"
+                pressedImage: "../images/common/button_1-2_p.svg"
+                selectedImage: "../images/common/button_1-2_s.svg"
+                shadowImage: "../images/common/shadow_button_1-2.svg"
                 text: qsTr("ON")
-                color: "black"
-                font.pixelSize: 11
-                anchors.centerIn: parent
+                onClicked: dataModel.setActive(true)
+                status: 0
             }
 
-            MouseArea {
-                id: areaOn
-                anchors.fill: parent
-                onClicked: column.dataModel.setActive(true)
-            }
-        }
-
-        SvgImage {
-            anchors {
-                left: imgOn.left
-                top: imgOn.bottom
-                right: imgOn.right
-            }
-            source: "../../images/common/shadow_button_1-2.svg"
-            visible: (areaOn.pressed === false)
-        }
-
-        SvgImage {
-            id: imgOff
-
-            source: areaOff.pressed ? "../../images/common/button_1-2_p.svg" :
-                                      "../../images/common/button_1-2.svg"
-            width: (parent.width - 2 * control.marginLeftRight) / 2
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                right: parent.right
-                topMargin: control.marginTopBottom
-                bottomMargin: control.marginTopBottom
-                rightMargin: control.marginLeftRight
-            }
-
-            Text {
-                id: textOff
-
+            ButtonThreeStates {
+                defaultImage: "../images/common/button_1-2.svg"
+                pressedImage: "../images/common/button_1-2_p.svg"
+                selectedImage: "../images/common/button_1-2_s.svg"
+                shadowImage: "../images/common/shadow_button_1-2.svg"
                 text: qsTr("OFF")
-                color: "black"
-                font.pixelSize: 11
-                anchors.centerIn: parent
+                onClicked: dataModel.setActive(false)
+                status: 0
             }
-
-            MouseArea {
-                id: areaOff
-                anchors.fill: parent
-                onClicked: column.dataModel.setActive(false)
-            }
-        }
-
-        SvgImage {
-            anchors {
-                left: imgOff.left
-                top: imgOff.bottom
-                right: imgOff.right
-            }
-            source: "../../images/common/shadow_button_1-2.svg"
-            visible: (areaOff.pressed === false)
         }
     }
 }
