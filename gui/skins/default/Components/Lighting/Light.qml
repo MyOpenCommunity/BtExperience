@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 
+
 MenuColumn {
     width: 212
     height: 39
@@ -8,7 +9,7 @@ MenuColumn {
     ControlOnOff {
         id: onOff
         width: parent.width
-        status: dataModel.active
+        active: dataModel.active
         onClicked: dataModel.active = newStatus
     }
 }
