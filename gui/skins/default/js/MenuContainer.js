@@ -65,7 +65,7 @@ function closeLastItem() {
     if (stackItems.length > 1) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
         pendingOperations.push({'id': OP_UPDATE_UI})
-        processOperations();
+        processOperations()
     }
     else
     {
@@ -94,7 +94,7 @@ function closeItem(menuLevel) {
     }
 
     pendingOperations.push({'id': OP_UPDATE_UI})
-    processOperations();
+    processOperations()
 }
 
 
@@ -114,8 +114,7 @@ function processOperations() {
 
     debugMsg('processOperations -> operations pending: ' + pendingOperations.length)
 
-    if (pendingOperations.length  === 0)
-    {
+    if (pendingOperations.length  === 0) {
         mainContainer.interactive = true
         return
     }
@@ -126,12 +125,12 @@ function processOperations() {
     for (var i = 0; i < stackItems.length; i++)
         stackItems[i].z = 1 - i * 0.01
 
-    if (op['id'] == OP_OPEN)
+    if (op['id'] === OP_OPEN)
         _openItem()
     else if (op['id'] === OP_CLOSE)
         _closeItem()
     else if (op['id'] === OP_UPDATE_UI)
-        _updateView();
+        _updateView()
 }
 
 var verticalOffset = 10
@@ -144,13 +143,13 @@ function _calculateFirstElement(starting_width) {
     var max_width = mainContainer.width
 
     for (var i = stackItems.length - 1; i >= 0; i--) {
-        items_width += stackItems[i].width + mainContainer.itemsSpacing;
+        items_width += stackItems[i].width + mainContainer.itemsSpacing
         if (items_width > max_width) {
             first_element = i + 1
-            break;
+            break
         }
     }
-    return first_element;
+    return first_element
 }
 
 function _updateView() {
@@ -166,7 +165,7 @@ function _updateView() {
     }
     debugMsg('starting x: ' + starting_x)
 
-    if (elementsContainer.x == -starting_x) {
+    if (elementsContainer.x === -starting_x) {
         pendingOperations.shift()
         processOperations()
         return
@@ -256,7 +255,7 @@ function _doOpenItem() {
 
     mainContainer.currentObject = item
     pendingOperations.shift()
-    processOperations();
+    processOperations()
 }
 
 var RIGHT_TO_LEFT = 1
@@ -317,12 +316,12 @@ function _doCloseItem() {
     var last_item = stackItems[stackItems.length -1]
     last_item.child = null
     if (pendingOperations[0]['notifyChildDestroyed'])
-        last_item.childDestroyed();
+        last_item.childDestroyed()
 
     mainContainer.currentObject = last_item
     showLine(last_item, LEFT_TO_RIGHT)
     pendingOperations.shift()
-    processOperations();
+    processOperations()
 }
 
 
@@ -330,7 +329,7 @@ function _doCloseItem() {
 function createComponent(fileName, initData) {
     var component = Qt.createComponent(fileName)
     var object = null
-    if (component.status == Component.Ready) {
+    if (component.status === Component.Ready) {
         object = component.createObject(mainContainer, initData)
         if (object === null)
             logError('Error on creating the object for the component: ' + fileName)
