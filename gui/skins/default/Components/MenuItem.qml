@@ -13,6 +13,7 @@ Item {
     property alias boxInfoText: boxInfoText.text
     property int status: -1
     property bool hasChild: false
+    property alias backgroundImage: background.source
 
     signal clicked(variant itemClicked)
     signal pressed(variant itemPressed)

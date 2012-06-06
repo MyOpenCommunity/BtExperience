@@ -133,6 +133,31 @@ MenuColumn {
     Column {
         id: antintrusionColumn
         MenuItem {
+            id: systemItem
+
+            backgroundImage: "../../images/common/panel_switch.svg"
+            name: qsTr("system")
+            description: qsTr("disabled")
+            hasChild: false
+
+            MouseArea {
+                anchors.fill: parent
+            }
+
+            AntintrusionSwitch {
+                id: systemIcon
+                anchors.right: parent.right
+                anchors.rightMargin: width / 100 * 10
+                anchors.verticalCenter: parent.verticalCenter
+                status: 1
+                onClicked: {
+                    var title = column.state === "" ? qsTr("enable system") : qsTr("disable system")
+                    var okMessage = column.state === "" ? qsTr("system enabled") : qsTr("system disabled")
+                    privateProps.toggleActivation(title, qsTr("wrong code"), okMessage)
+                }
+            }
+        }
+        MenuItem {
             property int numberOfAlarms: privateProps.model.alarms.count
             state: privateProps.currentElement == 1 ? "selected" : ""
             name: column.alarmLogTitle
@@ -152,26 +177,6 @@ MenuColumn {
             }
         }
         MenuItem {
-            id: systemItem
-            name: qsTr("system disabled")
-            hasChild: false
-            Image {
-                id: systemIcon
-                anchors.right: parent.right
-                anchors.rightMargin: 20
-                anchors.verticalCenter: parent.verticalCenter
-                source: imagesPath + "common/ico_sistema_disattivato.png"
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    var title = column.state === "" ? qsTr("enable system") : qsTr("disable system")
-                    var okMessage = column.state === "" ? qsTr("system enabled") : qsTr("system disabled")
-                    privateProps.toggleActivation(title, qsTr("wrong code"), okMessage)
-                }
-            }
-        }
-        MenuItem {
             id: scenarioItem
             state: privateProps.currentElement == 2 ? "selected" : ""
             name: qsTr("scenario")
@@ -183,8 +188,8 @@ MenuColumn {
             }
         }
 
-        Image {
-            source: imagesPath + "common/bg_zone.png"
+        SvgImage {
+            source: "../../images/common/panel_zones.svg"
             height: zoneText.height + zoneView.height + spacingItem.height
 
             Rectangle {
@@ -199,14 +204,14 @@ MenuColumn {
 
             Text {
                 id: zoneText
-                height: 50
+                height: 28
                 text: qsTr("zone")
                 font.pixelSize: 14
-                anchors.horizontalCenter: parent.horizontalCenter
                 verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
+                horizontalAlignment: Text.AlignLeft
                 anchors.top: parent.top
-                anchors.bottom: zoneView.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: zoneView.width
             }
 
             GridView {
@@ -217,37 +222,41 @@ MenuColumn {
                 width: cellWidth * 2
                 height: 200 // (cellHeight * zoneModel.count / 2) // Why it does not work???
                 interactive: false
-                cellWidth: 102
-                cellHeight: 50
+                cellWidth: 99
+                cellHeight: 47
 
-                delegate: Image {
+                delegate: ButtonThreeStates {
+                    id: zoneButton
                     // We need the following trick because the model is not directly editable.
                     // See the comment on MediaModel::getObject
                     property variant itemObject: zoneModel.getObject(index)
-                    source: imagesPath + "common/btn_zona.png"
-                    Row {
-                        anchors.top: parent.top
-                        Image {
-                            source: imagesPath + (itemObject.partialization ? "common/off.png" : "common/on.png")
-                        }
-                        Text {
-                            text: itemObject.number
-                            anchors.verticalCenter: parent.verticalCenter
+
+                    LedZone {
+                        id: led
+                        text: itemObject.number
+                        status: itemObject.partialization ? 0 : 1
+                        anchors {
+                            top: parent.top
+                            left: parent.left
+                            topMargin: parent.height / 100 * 14
+                            leftMargin: parent.width / 100 * 5
                         }
                     }
 
-                    Text {
-                        text: itemObject.name
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 5
-                        anchors.left: parent.left
-                        anchors.leftMargin: 10
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: itemObject.partialization = !itemObject.partialization
-                    }
+                    textAnchors.centerIn: null
+                    textAnchors.top: zoneButton.top
+                    textAnchors.topMargin: parent.height / 100 * 3
+                    textAnchors.left: zoneButton.left
+                    textAnchors.leftMargin: parent.width / 100 * 10
+                    font.pixelSize: 11
+                    horizontalAlignment: Text.AlignLeft
+                    defaultImage: "../images/common/button_zones.svg"
+                    pressedImage: "../images/common/button_zones_press.svg"
+                    selectedImage: "../images/common/button_zones_select.svg"
+                    shadowImage: "../images/common/shadow_button_zones.svg"
+                    text: itemObject.name
+                    onClicked: itemObject.partialization = !itemObject.partialization
+                    status: itemObject.partialization ? 0 : 1
                 }
 
                 FilterListModel {
@@ -257,26 +266,20 @@ MenuColumn {
                 model: zoneModel
 
             }
-            Item {
-                id: spacingItem
-                height: 5
-                anchors.top: zoneView.bottom
-            }
-        }
 
-        Image {
-            source: imagesPath + "common/btn_imposta_zone.png"
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
+            ButtonThreeStates {
+                defaultImage: "../images/common/button_set-zones.svg"
+                pressedImage: "../images/common/button_set-zones_press.svg"
+                selectedImage: "../images/common/button_set-zones_select.svg"
+                shadowImage: "../images/common/shadow_button_set-zones.svg"
                 text: qsTr("modify zones")
                 font.capitalization: Font.AllUppercase
                 font.pixelSize: 15
-            }
-
-            MouseArea {
-                anchors.fill: parent
                 onClicked: privateProps.partialize()
+                status: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: parent.height / 100 * 3
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
     }
@@ -285,7 +288,7 @@ MenuColumn {
             name: "systemActive"
             when: privateProps.model.status === true
             PropertyChanges { target: systemItem; name: qsTr("system enabled") }
-            PropertyChanges { target: systemIcon; source: imagesPath + "common/ico_sistema_attivato.png" }
+            PropertyChanges { target: systemIcon; status: 0 }
             PropertyChanges { target: zoneDarkRect; visible: true }
             PropertyChanges { target: registerDarkRect; visible: true }
         }

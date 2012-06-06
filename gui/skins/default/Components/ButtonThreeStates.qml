@@ -9,7 +9,12 @@ SvgImage {
     property string pressedImage: ""
     property string selectedImage: ""
     property string shadowImage: ""
+
     property alias text: label.text
+    property alias font: label.font
+    property alias textAnchors: label.anchors
+    property alias horizontalAlignment: label.horizontalAlignment
+
     property bool enabled: true
     property int status: 0 // 0 - up, 1 - down
 
