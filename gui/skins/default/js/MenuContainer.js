@@ -123,7 +123,7 @@ function processOperations() {
 
     var op = pendingOperations[0]
 
-    // Per far apparire il nuovo item da sotto (e farlo scomparire nello stesso modo)
+    // To show the new item from behind (and to hide in the same way)
     for (var i = 0; i < stackObjects.length; i++)
         stackObjects[i]['item'].z = 1 - i * 0.01
 
