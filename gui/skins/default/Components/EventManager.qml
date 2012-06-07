@@ -42,13 +42,6 @@ Item {
         screensaver.isEnabled = true
     }
 
-    property variant vct: null
-    Timer {
-        id: vctTest
-        interval: 4000
-        onTriggered: vctIncomingCall(vct)
-    }
-
     FilterListModel {
         id: listModel
         filters: [
@@ -63,8 +56,6 @@ Item {
                 case ObjectInterface.IdCCTV:
                     obj.incomingCall.connect(function() { return vctIncomingCall(obj); })
                     obj.callEnded.connect(enableScreensaver)
-                    vct = obj
-                    vctTest.start()
                     break
                 case ObjectInterface.IdIntercom:
                     obj.incomingCall.connect(function() { return intercomIncomingCall(obj); })
