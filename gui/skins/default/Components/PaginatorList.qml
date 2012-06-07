@@ -51,7 +51,8 @@ Item {
     Item {
         id: bottomRow
         height: button.height / 100 * 150
-        width: parent.width
+        anchors.left: internalList.left
+        anchors.right: internalList.right
         anchors.bottom: internalList.bottom
 
         Paginator {
@@ -88,7 +89,11 @@ Item {
             // this way, we avoid to use magic numbers (bottom-up approach).
             // See MenuContainer docs to know why we need to set the width
             // Items that may go into a MenuColumn.
-            width = internalList.children[0].children[0].width
+            var numChildren = internalList.children[0].children.length
+            var maxWidth = 0
+            for (var i = 0; i < numChildren; i++)
+                maxWidth = Math.max(maxWidth, internalList.children[0].children[i].width)
+            width = maxWidth
         }
     }
 }
