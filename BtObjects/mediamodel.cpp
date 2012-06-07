@@ -106,13 +106,13 @@ MediaModel::MediaModel()
 {
 	min_range = -1;
 	max_range = -1;
-	counter = -1;
+	counter = 0;
 	connect(this, SIGNAL(modelAboutToBeReset()), SLOT(resetCounter()));
 }
 
 int MediaModel::getCount() const
 {
-	if (counter == -1)
+	if (counter == 0)
 		rowCount();
 	return counter;
 }
@@ -228,7 +228,7 @@ bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 
 void MediaModel::resetCounter()
 {
-	counter = -1;
+	counter = 0;
 }
 
 ItemInterface *MediaModel::getObject(int row)
