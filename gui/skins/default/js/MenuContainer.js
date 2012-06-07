@@ -26,9 +26,12 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     properties["y"] = titleObj.height
     properties["dataModel"] = dataModel
     properties["pageObject"] = pageObject
-    // creates an object from the component
-    var obj = component.createObject(mainContainer, properties)
 
+    // creates an object from the component
+    // Here we assume that width for the given MenuColumn is set correctly to
+    // the width of the children (which are assumed to be all the same width).
+    // Unfortunately, we can't use childrenRect because that includes shadows.
+    var obj = component.createObject(mainContainer, properties)
 
     if (obj && titleObj) {
         _addItem(obj, titleObj)

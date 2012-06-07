@@ -4,7 +4,7 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
+    width: paginator.width
     height: paginator.height
 
     onChildDestroyed: {
@@ -13,7 +13,7 @@ MenuColumn {
 
     PaginatorList {
         id: paginator
-        width: parent.width
+
         listHeight: objectModel.count > elementsOnPage ? elementsOnPage * 50 : objectModel.count * 50
 
         delegate: MenuItemDelegate {
