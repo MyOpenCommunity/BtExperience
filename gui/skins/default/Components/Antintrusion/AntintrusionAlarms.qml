@@ -6,7 +6,7 @@ import "../../js/datetime.js" as DateTime
 MenuColumn {
     id: column
 
-    width: img.width;
+    width: img.width
     height: paginator.height
 
     SvgImage {
@@ -101,6 +101,15 @@ MenuColumn {
             footer: listFooter
 
             model: modelList
+        }
+
+        Text {
+            id: noAlarmText
+            z: 1
+            anchors.centerIn: parent
+            text: qsTr("No Alarm Present")
+            font.pointSize: 18
+            visible: modelList.count === 0
         }
     }
 
