@@ -33,10 +33,6 @@ Page {
         }
     }
 
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: navbar
         anchors.topMargin: constants.navbarTopMargin

@@ -13,10 +13,6 @@ Page {
         return {"page": "", "properties": {}}
     }
 
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: buttonsColumn
         anchors.topMargin: constants.navbarTopMargin

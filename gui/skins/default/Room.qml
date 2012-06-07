@@ -15,10 +15,6 @@ Page {
         id: translations
     }
 
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: systemsButton
         backButton: false

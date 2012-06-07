@@ -53,10 +53,6 @@ Page {
         id: translations
     }
 
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: buttonsColumn
         anchors {

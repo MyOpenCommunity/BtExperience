@@ -20,10 +20,6 @@ Page {
         filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "general"}]
     }
 
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: buttonsColumn
         anchors {

@@ -6,10 +6,6 @@ import "js/Stack.js" as Stack
 Page {
     id: rssPage
 
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: backButton
         systemsButton: false

@@ -6,10 +6,6 @@ Page {
     id: multimedia
     source: "images/multimedia.jpg"
 
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: systemsButton
         systemsButton: false

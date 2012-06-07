@@ -43,10 +43,6 @@ Page {
 
     anchors.fill: parent
 
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: buttonsColumn
         anchors {

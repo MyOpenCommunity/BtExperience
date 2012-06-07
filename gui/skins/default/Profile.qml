@@ -8,11 +8,6 @@ Page {
     source: 'images/profiles.jpg'
     property variant profile
 
-
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: navbar
         systemsButton: false
