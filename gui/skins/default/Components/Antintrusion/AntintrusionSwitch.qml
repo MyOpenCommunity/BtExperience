@@ -25,7 +25,6 @@ SvgImage {
 
         source: "../../images/common/button_switch_red.svg"
 
-        visible: true
         anchors.left: parent.left
 
         SvgImage {
@@ -60,7 +59,6 @@ SvgImage {
         id: unlockedArrow
         source: "../../images/common/symbol_double-arrow.svg"
         anchors.centerIn: unlocked
-        visible: true
     }
 
     states: [

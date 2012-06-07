@@ -51,24 +51,19 @@ Item {
             totalPages: computePagesFromModelSize(internalList.model.count, elementsOnPage)
         }
 
-        Image {
+        ButtonThreeStates {
             id: button
-            source: "../images/common/btn_OKAnnulla.png"
             height: paginator.height
             visible: false
             width: parent.width - paginator.width * paginator.visible
-
-            Text {
-                text: qsTr("remove all")
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: 12
-                anchors.centerIn: parent
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: paginatorItem.buttonClicked()
-            }
+            defaultImage: "../images/common/button_delete_all.svg"
+            pressedImage: "../images/common/button_delete_all_press.svg"
+            shadowImage: "../images/common/shadow_button_delete_all.svg"
+            text: qsTr("remove all")
+            font.capitalization: Font.AllUppercase
+            font.pixelSize: 12
+            onClicked: paginatorItem.buttonClicked()
+            status: 0
         }
     }
 }

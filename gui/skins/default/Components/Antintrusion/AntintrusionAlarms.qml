@@ -5,15 +5,14 @@ import "../../js/datetime.js" as DateTime
 
 MenuColumn {
     id: column
+
     width: img.width;
     height: paginator.height
-    property string imagesPath: "../../images/"
 
-    Image {
+    SvgImage {
         id: img
-        width: 424
-        height: 390
-        source: imagesPath + "common/bg_registro_allarmi.png"
+
+        source: "../../images/common/alarm-log_panel.svg"
 
         PaginatorList {
             id: paginator
@@ -27,51 +26,73 @@ MenuColumn {
 
             onButtonClicked: modelList.clear()
 
-            delegate: Image {
+            delegate: SvgImage {
                 id: itemBackground
+
                 property variant itemObject: modelList.getObject(index)
 
-                source: imagesPath + (index % 2 === 0 ? "common/bg_registro_riga1.png" : "common/bg_registro_riga2.png")
+                source: "../../images/" + (index % 2 === 0 ? "common/row_background_01.svg" : "common/row_background_02.svg")
+                anchors.horizontalCenter: parent.horizontalCenter
+
                 Row {
                     anchors.fill: itemBackground
 
                     Row {
                         anchors.top: parent.top
-                        anchors.topMargin: 10
+                        anchors.topMargin: parent.height / 100 * 11
+
                         Item {
-                            width: 10
-                            height: 5
+                            height: parent.height / 100 * 89
+                            width: 5
                         }
 
                         Text {
-                            width: 125
+                            height: parent.height / 100 * 89
+                            width: 147
                             color: "white"
                             text: itemObject !== undefined ? pageObject.names.get('ALARM_TYPE', itemObject.type) : ""
-                            font.pointSize: 12
+                            font.pointSize: 10
+                        }
+
+                        Item {
+                            height: parent.height / 100 * 89
+                            width: 5
                         }
 
                         Text {
-                            width: 125
+                            height: parent.height / 100 * 89
+                            width: 111
                             color: "white"
                             text: itemObject !== undefined ? itemObject.number + "\n" + itemObject.name : ""
                             wrapMode: Text.WordWrap
-                            font.pointSize: 12
+                            font.pointSize: 10
+                        }
+
+                        Item {
+                            height: parent.height / 100 * 89
+                            width: 5
                         }
 
                         Text {
+                            height: parent.height / 100 * 89
+                            width: 106
                             color: "white"
-                            width: 105
                             text: itemObject !== undefined ? DateTime.format(itemObject.date_time)["date"] + "\n" + DateTime.format(itemObject.date_time)["time"] : ""
-                            font.pointSize: 12
+                            font.pointSize: 10
                         }
-                    }
 
-                    Image {
-                        source: imagesPath + "common/btn_elimina.png"
-                        MouseArea {
-                            id: btnArea
-                            anchors.fill: parent
-                            onClicked: modelList.remove(index);
+                        Item {
+                            height: parent.height / 100 * 89
+                            width: 7
+                        }
+
+                        SvgImage {
+                            source: "../../images/common/icon_delete.svg"
+                            MouseArea {
+                                id: btnArea
+                                anchors.fill: parent
+                                onClicked: modelList.remove(index)
+                            }
                         }
                     }
                 }
@@ -86,33 +107,59 @@ MenuColumn {
     Component {
         id: listHeader
 
-        Row {
-            width: paginator.width; height: 30
+        Item {
+            width: parent.width
+            height: 28
 
-            Item {
-                width: 10
-                height: 5
-            }
+            Row {
+                width: parent.width
+                height: 14
+                anchors.top: parent.top
+                anchors.topMargin: 7
 
-            Text {
-                width: 125
-                text: qsTr("type")
-                color: "#4F4F4F"
-                font.pointSize: 12
-            }
+                Item {
+                    height: parent.height
+                    width: 11
+                }
 
-            Text {
-                width: 125
-                text: qsTr("zone")
-                color: "#4F4F4F"
-                font.pointSize: 12
-            }
+                Item {
+                    height: parent.height
+                    width: 5
+                }
 
-            Text {
-                width: 105
-                text: qsTr("date and time")
-                color: "#4F4F4F"
-                font.pointSize: 12
+                Text {
+                    height: parent.height
+                    width: 147
+                    text: qsTr("type")
+                    color: "#4F4F4F"
+                    font.pointSize: 10
+                }
+
+                Item {
+                    height: parent.height
+                    width: 5
+                }
+
+                Text {
+                    height: parent.height
+                    width: 111
+                    text: qsTr("zone")
+                    color: "#4F4F4F"
+                    font.pointSize: 10
+                }
+
+                Item {
+                    height: parent.height
+                    width: 5
+                }
+
+                Text {
+                    height: parent.height
+                    width: 106
+                    text: qsTr("date and time")
+                    color: "#4F4F4F"
+                    font.pointSize: 10
+                }
             }
         }
     }

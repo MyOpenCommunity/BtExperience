@@ -190,7 +190,7 @@ MenuColumn {
 
         SvgImage {
             source: "../../images/common/panel_zones.svg"
-            height: zoneText.height + zoneView.height + spacingItem.height
+            height: zoneText.height + zoneView.height + buttonZones.height
 
             Rectangle {
                 id: zoneDarkRect
@@ -204,12 +204,12 @@ MenuColumn {
 
             Text {
                 id: zoneText
-                height: 28
                 text: qsTr("zone")
                 font.pixelSize: 14
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
                 anchors.top: parent.top
+                anchors.topMargin: parent.height / 100 * 1
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: zoneView.width
             }
@@ -219,6 +219,7 @@ MenuColumn {
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: zoneText.bottom
+                anchors.topMargin: parent.height / 100 * 2
                 width: cellWidth * 2
                 height: 200 // (cellHeight * zoneModel.count / 2) // Why it does not work???
                 interactive: false
@@ -268,6 +269,7 @@ MenuColumn {
             }
 
             ButtonThreeStates {
+                id: buttonZones
                 defaultImage: "../images/common/button_set-zones.svg"
                 pressedImage: "../images/common/button_set-zones_press.svg"
                 selectedImage: "../images/common/button_set-zones_select.svg"

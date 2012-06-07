@@ -21,6 +21,7 @@ private slots:
 
 	void testInsert();
 	void testRemove();
+	void testRemoveAll();
 
 	void testFilterContainer();
 	void testFilterRange();

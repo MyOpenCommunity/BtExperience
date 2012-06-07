@@ -44,7 +44,6 @@ SvgImage {
             right: bg.right
         }
         source: shadowImage
-        visible: true
     }
 
     states: [

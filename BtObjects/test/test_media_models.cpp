@@ -101,6 +101,32 @@ void TestMediaModel::testRemove()
 	QCOMPARE(src->getObject(1), items[2]);
 }
 
+void TestMediaModel::testRemoveAll()
+{
+	(*src) << items[0];
+	(*src) << items[1];
+	(*src) << items[2];
+	qApp->processEvents(); // flush pending countChanged()
+
+	ObjectTester ts(obj, SIGNAL(countChanged()));
+
+	QCOMPARE(obj->getCount(), 3);
+	QCOMPARE(obj->rowCount(), 3);
+
+	src->removeRows(1, 0);
+	ts.checkNoSignals();
+	QCOMPARE(obj->getCount(), 3);
+	QCOMPARE(obj->rowCount(), 3);
+
+	obj->clear();
+
+	QCOMPARE(obj->getCount(), 2);
+	QCOMPARE(obj->rowCount(), 2);
+
+	qApp->processEvents();
+	ts.checkSignals();
+}
+
 void TestMediaModel::testFilterContainer()
 {
 	foreach (ItemInterface *i, items)
