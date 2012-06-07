@@ -11,13 +11,6 @@ Page {
     property alias currentObject: container.currentObject
     property QtObject names: null
 
-    ToolBar {
-        id: toolbar
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
     // The spacing between the buttons on the left and the MenuContainer
     property int containerLeftMargin: systemPage.width / 100 * 2
 
