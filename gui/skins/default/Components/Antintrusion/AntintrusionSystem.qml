@@ -188,6 +188,7 @@ MenuColumn {
             }
         }
 
+
         SvgImage {
             source: "../../images/common/panel_zones.svg"
             height: zoneText.height + zoneView.height + buttonZones.height
