@@ -7,6 +7,10 @@ BasePage {
     id: page
     property alias toolbar: toolbar
 
+    function homeButtonClicked() {
+        Stack.backToHome()
+    }
+
     ToolBar {
         id: toolbar
         anchors {
@@ -15,6 +19,6 @@ BasePage {
             right: parent.right
         }
         fontSize: 17
-        onHomeClicked: Stack.backToHome()
+        onHomeClicked: homeButtonClicked()
     }
 }
