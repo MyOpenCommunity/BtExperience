@@ -45,6 +45,13 @@ Item {
         return Math.floor(ret)
     }
 
+    Image {
+        id: background
+        source: "../images/common/bg_paginazione.png"
+        width: parent.width
+        height: parent.height
+    }
+
     ListView {
         id: internalList
         interactive: false
