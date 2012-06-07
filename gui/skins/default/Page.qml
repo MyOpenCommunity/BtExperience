@@ -95,7 +95,7 @@ Image {
     }
 
     // The hooks called by the Stack javascript manager. See also PageAnimation
-    // If a page want to use a different animation, reimplement this hooks.
+    // If a page want to use a different animation, reimplement these hooks.
     function pushInStart() {
         var animation = Container.mainContainer.animation
         animation.page = page
