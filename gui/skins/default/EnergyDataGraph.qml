@@ -53,17 +53,6 @@ Page {
         id: translations
     }
 
-
-    ToolBar {
-        id: toolbar
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
     Constants {
         id: constants
     }

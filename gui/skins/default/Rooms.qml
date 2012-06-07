@@ -8,12 +8,6 @@ Page {
     source: "images/home/home.jpg"
     property int floorUii
 
-    ToolBar {
-        id: toolbar
-        onHomeClicked: Stack.backToHome()
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-    }
     Text {
         id: pageTitle
         text: qsTr("Rooms")

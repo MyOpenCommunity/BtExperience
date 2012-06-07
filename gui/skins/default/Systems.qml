@@ -13,13 +13,6 @@ Page {
         return {"page": "", "properties": {}}
     }
 
-    ToolBar {
-        id: toolbar
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
     Constants {
         id: constants
     }

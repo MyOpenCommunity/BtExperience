@@ -3,7 +3,7 @@ import Components 1.0
 import "js/Stack.js" as Stack
 
 
-Page {
+BasePage {
     id: videoCamera
 
     property QtObject camera: null
@@ -52,7 +52,6 @@ Page {
 
             ToolBar {
                 id: toolbar
-                fontFamily: semiBoldFont.name
                 fontSize: 17
                 onHomeClicked: {
                     endCall(Stack.backToHome)

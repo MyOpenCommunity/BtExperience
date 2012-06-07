@@ -43,17 +43,6 @@ Page {
 
     anchors.fill: parent
 
-    ToolBar {
-        id: toolbar
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        // TODO mettere le seguenti voci direttamente dentro ToolBar?
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
     Constants {
         id: constants
     }

@@ -30,13 +30,6 @@ Page {
         RssItem {}
     }
 
-    ToolBar {
-        id: toolbar
-        onExitClicked: console.log("exit")
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-    }
-
     ListView {
         id: favourites
         model: favouritesModel

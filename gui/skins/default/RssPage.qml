@@ -6,13 +6,6 @@ import "js/Stack.js" as Stack
 Page {
     id: rssPage
 
-    ToolBar {
-        id: toolbar
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
     Constants {
         id: constants
     }

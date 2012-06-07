@@ -16,6 +16,7 @@ Image {
     property alias regularFont: regularFont
     property alias semiBoldFont: semiBoldFont
     property alias popupLoader: popupLoader
+    property alias constants: constants
 
     // Warning: this property is an internal detail, it's not part of the public
     // interface
