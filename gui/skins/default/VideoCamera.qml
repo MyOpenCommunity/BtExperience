@@ -32,11 +32,6 @@ Page {
     signal replayClicked
     signal endCallClicked
 
-    Component.onCompleted: {
-        camera.callEnded.connect(Stack.popPage)
-        toolbar.z = 1
-    }
-
     function endCall(callback) {
         camera.callEnded.disconnect(Stack.popPage)
         camera.endCall()
@@ -251,5 +246,10 @@ Page {
             clip: false
             smooth: false
         }
+    }
+
+    Component.onCompleted: {
+        camera.callEnded.connect(Stack.popPage)
+        toolbar.z = 1
     }
 }
