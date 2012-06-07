@@ -152,28 +152,17 @@ Page {
         }
     }
 
-    Column {
-        id: buttonsColumn
-        x: 20
-        width: backButton.width
-        spacing: 10
+    NavigationBar {
+        systemsButton: false
+        text: qsTr("video")
         anchors {
             top: toolbar.bottom
             left: parent.left
-            topMargin: 35
-            leftMargin: 20
+            topMargin: constants.navbarTopMargin
+            bottom: parent.bottom
         }
 
-        ButtonBack {
-            id: backButton
-            onClicked: endCall(Stack.popPage)
-        }
-
-        // TODO: reenable it after May demo! :)
-        //                ButtonSystems {
-        //                    // 1 is systems page
-        //                    onClicked: Stack.showPreviousPage(1)
-        //                }
+        onBackClicked: endCall(Stack.popPage)
     }
 
     Column {
