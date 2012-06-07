@@ -20,7 +20,7 @@ void TestLight::init()
 
 	LightingDevice *d = new LightingDevice("3", NOT_PULL);
 
-	obj = new Light("", "", d);
+	obj = new Light("", "", "00:00:00", d);
 	dev = new LightingDevice("3", NOT_PULL, 1);
 }
 
