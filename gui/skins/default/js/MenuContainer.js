@@ -2,8 +2,7 @@
 // containers has always the same size.
 Qt.include("logging.js")
 
-var stackItems = []
-var stackTitles = []
+var stackObjects = []
 
 function loadComponent(menuLevel, component, title, dataModel, properties) {
     // checks if an operation is in progress and exit in case
@@ -65,7 +64,7 @@ function closeLastItem() {
     mainContainer.interactive = false
 
     debugMsg("closeLastItem")
-    if (stackItems.length > 1) {
+    if (stackObjects.length > 1) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
         pendingOperations.push({'id': OP_UPDATE_UI})
         processOperations()
@@ -84,7 +83,7 @@ function closeItem(menuLevel) {
     if (pendingOperations.length > 0) // we are during an operation
         return
 
-    if (menuLevel >= stackItems.length) { // the item to close does not exists
+    if (menuLevel >= stackObjects.length) { // the item to close does not exists
         debugMsg("closeItem: nothing to do")
         return
     }
@@ -92,7 +91,7 @@ function closeItem(menuLevel) {
     mainContainer.interactive = false
 
     debugMsg("closeItem level to close: " + menuLevel)
-    for (var i = stackItems.length - 1; i >= menuLevel; i--) {
+    for (var i = stackObjects.length - 1; i >= menuLevel; i--) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
     }
 
@@ -104,7 +103,7 @@ function closeItem(menuLevel) {
 function _addItem(item, title) {
     mainContainer.interactive = false
     debugMsg("_addItem level: " + item.menuLevel)
-    for (var i = stackItems.length - 1; i >= item.menuLevel; i--) {
+    for (var i = stackObjects.length - 1; i >= item.menuLevel; i--) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': false})
     }
 
@@ -125,8 +124,8 @@ function processOperations() {
     var op = pendingOperations[0]
 
     // Per far apparire il nuovo item da sotto (e farlo scomparire nello stesso modo)
-    for (var i = 0; i < stackItems.length; i++)
-        stackItems[i].z = 1 - i * 0.01
+    for (var i = 0; i < stackObjects.length; i++)
+        stackObjects[i]['item'].z = 1 - i * 0.01
 
     if (op['id'] === OP_OPEN)
         _openItem()
@@ -145,8 +144,8 @@ function _calculateFirstElement(starting_width) {
 
     var max_width = mainContainer.width
 
-    for (var i = stackItems.length - 1; i >= 0; i--) {
-        items_width += stackItems[i].width
+    for (var i = stackObjects.length - 1; i >= 0; i--) {
+        items_width += stackObjects[i]['item'].width
         if (items_width > max_width) {
             first_element = i + 1
             break
@@ -164,7 +163,7 @@ function _updateView() {
 
     var starting_x = 0
     for (var i = 0; i < first_item; i++) {
-        starting_x += stackItems[i].width // - horizontalOverlap
+        starting_x += stackObjects[i]['item'].width // - horizontalOverlap
     }
     debugMsg('starting x: ' + starting_x)
 
@@ -196,12 +195,12 @@ function _setStartProps() {
     item.enableAnimation = false
     title.enableAnimation = false
 
-    if (stackItems.length === 0) {
+    if (stackObjects.length === 0) {
         item.opacity = 1
         title.opacity = 1
     }
     else {
-        var last_item = stackItems[stackItems.length - 1]
+        var last_item = stackObjects[stackObjects.length - 1]['item']
         item.y = last_item.y + verticalOffset
         item.x = last_item.x - horizontalOverlap
         title.x = last_item.x
@@ -217,7 +216,7 @@ function _openItem() {
     var title = pendingOperations[0]['title']
 
     _setStartProps()
-    if (stackItems.length === 0) {
+    if (stackObjects.length === 0) {
         elementsContainer.width = item.width
         _doOpenItem()
     }
@@ -225,7 +224,7 @@ function _openItem() {
         item.animationRunningChanged.connect(_doOpenItem)
         elementsContainer.width += item.width - horizontalOverlap
 
-        var last_item = stackItems[stackItems.length - 1]
+        var last_item = stackObjects[stackObjects.length - 1]['item']
         hideLine(last_item, RIGHT_TO_LEFT)
 
         title.opacity = 1
@@ -245,15 +244,15 @@ function _doOpenItem() {
     var title = pendingOperations[0]['title']
     item.animationRunningChanged.disconnect(_doOpenItem)
 
-    if (stackItems.length >= 1) {
-        stackItems[stackItems.length - 1].child = item
-        stackItems[stackItems.length - 1].childLoaded()
+    if (stackObjects.length >= 1) {
+        var last_item = stackObjects[stackObjects.length - 1]['item']
+        last_item.child = item
+        last_item.childLoaded()
     }
 
-    stackItems.push(item)
-    stackTitles.push(title)
+    stackObjects.push({'item': item, 'title': title})
 
-    if (stackItems.length === 1)
+    if (stackObjects.length === 1)
         mainContainer.rootObject = item
 
     mainContainer.currentObject = item
@@ -288,13 +287,13 @@ function showLine(item, direction) {
 
 function _closeItem() {
     debugMsg("_closeItem")
-    var item = stackItems[stackItems.length - 1]
-    var title = stackTitles[stackTitles.length - 1]
+    var item = stackObjects[stackObjects.length - 1]['item']
+    var title = stackObjects[stackObjects.length - 1]['title']
     hideLine(item, LEFT_TO_RIGHT)
     item.animationRunningChanged.connect(_doCloseItem)
-    if (stackItems.length > 1) {
-        item.x = stackItems[stackItems.length - 2].x
-        title.x = stackTitles[stackTitles.length - 2].x
+    if (stackObjects.length > 1) {
+        item.x = stackObjects[stackObjects.length - 2]['item'].x
+        title.x = stackObjects[stackObjects.length - 2]['title'].x
     }
     else {
         item.x = 0
@@ -305,18 +304,17 @@ function _closeItem() {
 }
 
 function _doCloseItem() {
-    var item = stackItems[stackItems.length -1]
+    var item = stackObjects[stackObjects.length -1]['item']
     if (item.animationRunning)
         return
 
-    var title = stackTitles[stackTitles.length -1]
+    var title = stackObjects[stackObjects.length -1]['title']
 
     elementsContainer.width -= item.width
     item.destroy()
     title.destroy()
-    stackItems.length -= 1
-    stackTitles.length -= 1
-    var last_item = stackItems[stackItems.length -1]
+    stackObjects.length -= 1
+    var last_item = stackObjects[stackObjects.length -1]['item']
     last_item.child = null
     if (pendingOperations[0]['notifyChildDestroyed'])
         last_item.childDestroyed()
