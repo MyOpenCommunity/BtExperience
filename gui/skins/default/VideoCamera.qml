@@ -3,7 +3,7 @@ import Components 1.0
 import "js/Stack.js" as Stack
 
 
-BasePage {
+Page {
     id: videoCamera
     source: "images/videocitofonia.jpg"
 
@@ -34,6 +34,7 @@ BasePage {
 
     Component.onCompleted: {
         camera.callEnded.connect(Stack.popPage)
+        toolbar.z = 1
     }
 
     function endCall(callback) {
@@ -42,43 +43,17 @@ BasePage {
         callback()
     }
 
+    function homeButtonClicked() {
+        endCall(Stack.backToHome)
+    }
+
     Rectangle {
         id: bg
         anchors.fill: parent
         color: "black"
         opacity: 0.75
 
-        ToolBar {
-            id: toolbar
-            fontSize: 17
-            onHomeClicked: {
-                endCall(Stack.backToHome)
-            }
-        }
 
-        Column {
-            id: buttonsColumn
-            x: 20
-            width: backButton.width
-            spacing: 10
-            anchors {
-                top: toolbar.bottom
-                left: parent.left
-                topMargin: 35
-                leftMargin: 20
-            }
-
-            ButtonBack {
-                id: backButton
-                onClicked: endCall(Stack.popPage)
-            }
-
-            // TODO: reenable it after May demo! :)
-            //                ButtonSystems {
-            //                    // 1 is systems page
-            //                    onClicked: Stack.showPreviousPage(1)
-            //                }
-        }
 
         Text {
             id: title
@@ -103,58 +78,7 @@ BasePage {
             }
         }
 
-        Column {
-            id: propertyColumn
-            x: 590
-            width: 145
-            spacing: 10
-            anchors {
-                top: toolbar.bottom
-                right: parent.right
-                topMargin: 20
-                rightMargin: 65
-            }
 
-            ControlSlider2 {
-                visible: videoCamera.volumeVisible
-                title: qsTr("VOLUME")
-                value: videoCamera.volume
-                onPlusClicked: videoCamera.plusVolumeClicked()
-                onMinusClicked: videoCamera.minusVolumeClicked()
-            }
-            Image {
-                source: "images/common/btn_comando.png"
-                width: parent.width
-                height: 40
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: videoCamera.muteClicked()
-                }
-                Text {
-                    text: qsTr("MUTE")
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        verticalCenter: parent.verticalCenter
-                    }
-                }
-            }
-
-            ControlSlider2 {
-                visible: videoCamera.brightnessVisible
-                title: qsTr("BRIGHTNESS")
-                value: camera.brightness
-                onPlusClicked: if (camera.brightness < 100) camera.brightness += 1
-                onMinusClicked: if (camera.brightness > 00) camera.brightness -= 1
-            }
-
-            ControlSlider2 {
-                visible: videoCamera.contrastVisible
-                title: qsTr("CONTRAST")
-                value: camera.contrast
-                onPlusClicked: if (camera.contrast < 100) camera.contrast += 1
-                onMinusClicked: if (camera.contrast > 00) camera.contrast -= 1
-            }
-        }
 
         Column {
             id: commandColumn
@@ -230,6 +154,83 @@ BasePage {
                     }
                 }
             }
+        }
+    }
+
+    Column {
+        id: buttonsColumn
+        x: 20
+        width: backButton.width
+        spacing: 10
+        anchors {
+            top: toolbar.bottom
+            left: parent.left
+            topMargin: 35
+            leftMargin: 20
+        }
+
+        ButtonBack {
+            id: backButton
+            onClicked: endCall(Stack.popPage)
+        }
+
+        // TODO: reenable it after May demo! :)
+        //                ButtonSystems {
+        //                    // 1 is systems page
+        //                    onClicked: Stack.showPreviousPage(1)
+        //                }
+    }
+
+    Column {
+        id: propertyColumn
+        x: 590
+        width: 145
+        spacing: 10
+        anchors {
+            top: toolbar.bottom
+            right: parent.right
+            topMargin: 20
+            rightMargin: 65
+        }
+
+        ControlSlider2 {
+            visible: videoCamera.volumeVisible
+            title: qsTr("VOLUME")
+            value: videoCamera.volume
+            onPlusClicked: videoCamera.plusVolumeClicked()
+            onMinusClicked: videoCamera.minusVolumeClicked()
+        }
+        Image {
+            source: "images/common/btn_comando.png"
+            width: parent.width
+            height: 40
+            MouseArea {
+                anchors.fill: parent
+                onClicked: videoCamera.muteClicked()
+            }
+            Text {
+                text: qsTr("MUTE")
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+            }
+        }
+
+        ControlSlider2 {
+            visible: videoCamera.brightnessVisible
+            title: qsTr("BRIGHTNESS")
+            value: camera.brightness
+            onPlusClicked: if (camera.brightness < 100) camera.brightness += 1
+            onMinusClicked: if (camera.brightness > 00) camera.brightness -= 1
+        }
+
+        ControlSlider2 {
+            visible: videoCamera.contrastVisible
+            title: qsTr("CONTRAST")
+            value: camera.contrast
+            onPlusClicked: if (camera.contrast < 100) camera.contrast += 1
+            onMinusClicked: if (camera.contrast > 00) camera.contrast -= 1
         }
     }
 
