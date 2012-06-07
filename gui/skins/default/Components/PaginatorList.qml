@@ -13,6 +13,7 @@ Item {
     property alias listWidth: internalList.width
     property alias buttonVisible: button.visible
     property alias currentIndex: internalList.currentIndex
+    property alias source: background.source
 
     property int elementsOnPage: 6
     property alias currentPage: paginator.currentPage
@@ -34,7 +35,7 @@ Item {
         return Math.floor(ret)
     }
 
-    Image {
+    SvgImage {
         id: background
         source: "../images/common/bg_paginazione.png"
         width: parent.width
@@ -82,7 +83,7 @@ Item {
 
     Component.onCompleted: {
         if (internalList.children.length === 1 &&
-            internalList.children.length > 0) {
+            internalList.children[0].children.length > 0) {
             // We need to set the width of PaginatorList looking at the delegates;
             // this way, we avoid to use magic numbers (bottom-up approach).
             // See MenuContainer docs to know why we need to set the width

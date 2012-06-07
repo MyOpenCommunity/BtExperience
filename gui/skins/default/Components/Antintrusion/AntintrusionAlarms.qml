@@ -19,8 +19,9 @@ MenuColumn {
             width: parent.width
             listWidth: parent.width
             listHeight: parent.height
-            buttonVisible: true
+            buttonVisible: modelList.count !== 0
             elementsOnPage: privateProps.elementsOnPage
+            source: ""
 
             header: listHeader
 
