@@ -19,13 +19,6 @@ Item {
         column.closeItem(menuLevel + 1)
     }
 
-    Image {
-        id: background
-        source: "../images/common/bg_paginazione.png"
-        width: parent.width
-        height: parent.height
-    }
-
     // The signals captured from the MenuContainer to create/close child or the element
     // itself.
     signal closeItem(int menuLevel)

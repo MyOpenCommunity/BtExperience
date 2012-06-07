@@ -15,9 +15,6 @@ Item {
     width: 600
     height: 400
 
-    // the spacing between columns
-    property int itemsSpacing: 0
-
     // The root element (without scroll, the first column)
     property QtObject rootColumn
 

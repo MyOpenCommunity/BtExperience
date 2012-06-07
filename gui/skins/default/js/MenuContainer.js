@@ -26,9 +26,12 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     properties["y"] = titleObj.height
     properties["dataModel"] = dataModel
     properties["pageObject"] = pageObject
-    // creates an object from the component
-    var obj = component.createObject(mainContainer, properties)
 
+    // creates an object from the component
+    // Here we assume that width for the given MenuColumn is set correctly to
+    // the width of the children (which are assumed to be all the same width).
+    // Unfortunately, we can't use childrenRect because that includes shadows.
+    var obj = component.createObject(mainContainer, properties)
 
     if (obj && titleObj) {
         _addItem(obj, titleObj)
@@ -65,7 +68,7 @@ function closeLastItem() {
     if (stackItems.length > 1) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
         pendingOperations.push({'id': OP_UPDATE_UI})
-        processOperations();
+        processOperations()
     }
     else
     {
@@ -94,7 +97,7 @@ function closeItem(menuLevel) {
     }
 
     pendingOperations.push({'id': OP_UPDATE_UI})
-    processOperations();
+    processOperations()
 }
 
 
@@ -114,8 +117,7 @@ function processOperations() {
 
     debugMsg('processOperations -> operations pending: ' + pendingOperations.length)
 
-    if (pendingOperations.length  === 0)
-    {
+    if (pendingOperations.length  === 0) {
         mainContainer.interactive = true
         return
     }
@@ -126,12 +128,12 @@ function processOperations() {
     for (var i = 0; i < stackItems.length; i++)
         stackItems[i].z = 1 - i * 0.01
 
-    if (op['id'] == OP_OPEN)
+    if (op['id'] === OP_OPEN)
         _openItem()
     else if (op['id'] === OP_CLOSE)
         _closeItem()
     else if (op['id'] === OP_UPDATE_UI)
-        _updateView();
+        _updateView()
 }
 
 var verticalOffset = 10
@@ -144,13 +146,13 @@ function _calculateFirstElement(starting_width) {
     var max_width = mainContainer.width
 
     for (var i = stackItems.length - 1; i >= 0; i--) {
-        items_width += stackItems[i].width + mainContainer.itemsSpacing;
+        items_width += stackItems[i].width
         if (items_width > max_width) {
             first_element = i + 1
-            break;
+            break
         }
     }
-    return first_element;
+    return first_element
 }
 
 function _updateView() {
@@ -162,11 +164,11 @@ function _updateView() {
 
     var starting_x = 0
     for (var i = 0; i < first_item; i++) {
-        starting_x += stackItems[i].width + mainContainer.itemsSpacing // - horizontalOverlap
+        starting_x += stackItems[i].width // - horizontalOverlap
     }
     debugMsg('starting x: ' + starting_x)
 
-    if (elementsContainer.x == -starting_x) {
+    if (elementsContainer.x === -starting_x) {
         pendingOperations.shift()
         processOperations()
         return
@@ -221,15 +223,15 @@ function _openItem() {
     }
     else {
         item.animationRunningChanged.connect(_doOpenItem)
-        elementsContainer.width += mainContainer.itemsSpacing + item.width - horizontalOverlap
+        elementsContainer.width += item.width - horizontalOverlap
 
         var last_item = stackItems[stackItems.length - 1]
         hideLine(last_item, RIGHT_TO_LEFT)
 
         title.opacity = 1
         item.opacity = 1
-        item.x = last_item.x + last_item.width + mainContainer.itemsSpacing - horizontalOverlap
-        title.x = last_item.x + last_item.width + mainContainer.itemsSpacing
+        item.x = last_item.x + last_item.width - horizontalOverlap
+        title.x = last_item.x + last_item.width
     }
 }
 
@@ -256,7 +258,7 @@ function _doOpenItem() {
 
     mainContainer.currentObject = item
     pendingOperations.shift()
-    processOperations();
+    processOperations()
 }
 
 var RIGHT_TO_LEFT = 1
@@ -309,7 +311,7 @@ function _doCloseItem() {
 
     var title = stackTitles[stackTitles.length -1]
 
-    elementsContainer.width -= item.width + mainContainer.itemsSpacing
+    elementsContainer.width -= item.width
     item.destroy()
     title.destroy()
     stackItems.length -= 1
@@ -317,12 +319,12 @@ function _doCloseItem() {
     var last_item = stackItems[stackItems.length -1]
     last_item.child = null
     if (pendingOperations[0]['notifyChildDestroyed'])
-        last_item.childDestroyed();
+        last_item.childDestroyed()
 
     mainContainer.currentObject = last_item
     showLine(last_item, LEFT_TO_RIGHT)
     pendingOperations.shift()
-    processOperations();
+    processOperations()
 }
 
 
@@ -330,7 +332,7 @@ function _doCloseItem() {
 function createComponent(fileName, initData) {
     var component = Qt.createComponent(fileName)
     var object = null
-    if (component.status == Component.Ready) {
+    if (component.status === Component.Ready) {
         object = component.createObject(mainContainer, initData)
         if (object === null)
             logError('Error on creating the object for the component: ' + fileName)

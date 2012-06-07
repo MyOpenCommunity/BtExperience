@@ -34,6 +34,13 @@ Item {
         return Math.floor(ret)
     }
 
+    Image {
+        id: background
+        source: "../images/common/bg_paginazione.png"
+        width: parent.width
+        height: parent.height
+    }
+
     ListView {
         id: internalList
         interactive: false
@@ -70,6 +77,17 @@ Item {
             font.pixelSize: 12
             onClicked: paginatorItem.buttonClicked()
             status: 0
+        }
+    }
+
+    Component.onCompleted: {
+        if (internalList.children.length === 1 &&
+            internalList.children.length > 0) {
+            // We need to set the width of PaginatorList looking at the delegates;
+            // this way, we avoid to use magic numbers (bottom-up approach).
+            // See MenuContainer docs to know why we need to set the width
+            // Items that may go into a MenuColumn.
+            width = internalList.children[0].children[0].width
         }
     }
 }
