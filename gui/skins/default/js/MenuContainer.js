@@ -143,7 +143,7 @@ function _calculateFirstElement(starting_width) {
     var max_width = mainContainer.width
 
     for (var i = stackItems.length - 1; i >= 0; i--) {
-        items_width += stackItems[i].width + mainContainer.itemsSpacing
+        items_width += stackItems[i].width
         if (items_width > max_width) {
             first_element = i + 1
             break
@@ -161,7 +161,7 @@ function _updateView() {
 
     var starting_x = 0
     for (var i = 0; i < first_item; i++) {
-        starting_x += stackItems[i].width + mainContainer.itemsSpacing // - horizontalOverlap
+        starting_x += stackItems[i].width // - horizontalOverlap
     }
     debugMsg('starting x: ' + starting_x)
 
@@ -220,15 +220,15 @@ function _openItem() {
     }
     else {
         item.animationRunningChanged.connect(_doOpenItem)
-        elementsContainer.width += mainContainer.itemsSpacing + item.width - horizontalOverlap
+        elementsContainer.width += item.width - horizontalOverlap
 
         var last_item = stackItems[stackItems.length - 1]
         hideLine(last_item, RIGHT_TO_LEFT)
 
         title.opacity = 1
         item.opacity = 1
-        item.x = last_item.x + last_item.width + mainContainer.itemsSpacing - horizontalOverlap
-        title.x = last_item.x + last_item.width + mainContainer.itemsSpacing
+        item.x = last_item.x + last_item.width - horizontalOverlap
+        title.x = last_item.x + last_item.width
     }
 }
 
@@ -308,7 +308,7 @@ function _doCloseItem() {
 
     var title = stackTitles[stackTitles.length -1]
 
-    elementsContainer.width -= item.width + mainContainer.itemsSpacing
+    elementsContainer.width -= item.width
     item.destroy()
     title.destroy()
     stackItems.length -= 1
