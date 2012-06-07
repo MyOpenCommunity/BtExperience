@@ -32,7 +32,7 @@ MenuColumn {
                 property variant itemObject: modelList.getObject(index)
 
                 source: "../../images/" + (index % 2 === 0 ? "common/row_background_01.svg" : "common/row_background_02.svg")
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenter: parent === null ? undefined : parent.horizontalCenter
 
                 Row {
                     anchors.fill: itemBackground
@@ -117,7 +117,7 @@ MenuColumn {
         id: listHeader
 
         Item {
-            width: parent.width
+            width: paginator.width
             height: 28
 
             Row {

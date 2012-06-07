@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 Item {
     id: paginatorItem
-    height: internalList.height + bottomRow.height * paginator.visible
+    height: internalList.height
 
     // expose some ListView properties
     property alias footer: internalList.footer
@@ -40,22 +40,28 @@ Item {
         currentIndex: -1
     }
 
-    Row {
+    Item {
         id: bottomRow
-        height: paginator.height
+        height: button.height / 100 * 150
         width: parent.width
-        anchors.bottom: parent.bottom
+        anchors.bottom: internalList.bottom
 
         Paginator {
             id: paginator
             totalPages: computePagesFromModelSize(internalList.model.count, elementsOnPage)
+            anchors.left: parent.left
+            anchors.leftMargin: parent.width / 100 * 2
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: parent.height / 100 * 15
         }
 
         ButtonThreeStates {
             id: button
-            height: paginator.height
             visible: false
-            width: parent.width - paginator.width * paginator.visible
+            anchors.right: parent.right
+            anchors.rightMargin: parent.width / 100 * 2
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: parent.height / 100 * 15
             defaultImage: "../images/common/button_delete_all.svg"
             pressedImage: "../images/common/button_delete_all_press.svg"
             shadowImage: "../images/common/shadow_button_delete_all.svg"

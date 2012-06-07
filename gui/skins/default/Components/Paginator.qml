@@ -1,11 +1,10 @@
 import QtQuick 1.1
 
-Image {
+Item {
     id: paginator
     // all buttons in the paginator have the same width
     width: privateProps.numSlots * leftArrow.width
     height: leftArrow.height
-    source: "../images/common/bg_paginazione.png"
     visible: totalPages > 1
 
     // Number of pages present in the paginator
@@ -76,63 +75,71 @@ Image {
         id: buttonRow
         anchors.fill: parent
 
-        Image {
-            // TODO: copy-pasted from ButtonPagination, make it better
+        ButtonThreeStates {
             id: leftArrow
-            width: 42
-            height: 35
-            source: "../images/common/btn_NumeroPagina.png"
             visible: privateProps.needScrolling() && privateProps.needScrollLeft()
+            defaultImage: "../images/common/button_pager.svg"
+            pressedImage: "../images/common/button_pager_press.svg"
+            selectedImage: "../images/common/button_pager_select.svg"
+            shadowImage: "../images/common/shadow_button_pager.svg"
+            onClicked: privateProps.previousPage()
+            status: 0
 
-            Image {
+            SvgImage {
                 id: image1
-                x: 10
-                y: 4
-                source: "../images/common/freccia_sx.png"
-            }
+                source: "../images/common/icon_pager_arrow.svg"
+                anchors.centerIn: parent
+                rotation: 180
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: privateProps.previousPage()
-
+                states: [
+                    State {
+                        name: "pressedOrSelected"
+                        when: (leftArrow.state === "pressed") || (leftArrow.state === "selected")
+                        PropertyChanges { target: image1; source: "../images/common/icon_pager_arrow_select.svg" }
+                    }
+                ]
             }
         }
 
         Repeater {
             id: repeater
             model: paginator.totalPages
-            ButtonPagination {
-                pageNumber: index + 1
-                onClicked: privateProps.goToPage(pageNumber)
-                visible: privateProps.isButtonVisible(pageNumber)
-                states: [
-                    State {
-                        name: "extselected"
-                        extend: "selected"
-                        when: privateProps.currentPage === pageNumber
-                    }
-                ]
-            }
 
+            ButtonThreeStates {
+                property int pageNumber: index + 1
+                visible: privateProps.isButtonVisible(pageNumber)
+                text: pageNumber
+                defaultImage: "../images/common/button_pager.svg"
+                pressedImage: "../images/common/button_pager_press.svg"
+                selectedImage: "../images/common/button_pager_select.svg"
+                shadowImage: "../images/common/shadow_button_pager.svg"
+                onClicked: privateProps.goToPage(pageNumber)
+                status: privateProps.currentPage === pageNumber ? 1 : 0
+            }
         }
 
-        Image {
-            // TODO: copy-pasted from ButtonPagination, make it better
+        ButtonThreeStates {
             id: rightArrow
-            width: 42
-            height: 35
-            source: "../images/common/btn_NumeroPagina.png"
             visible: privateProps.needScrolling() && privateProps.needScrollRight()
+            defaultImage: "../images/common/button_pager.svg"
+            pressedImage: "../images/common/button_pager_press.svg"
+            selectedImage: "../images/common/button_pager_select.svg"
+            shadowImage: "../images/common/shadow_button_pager.svg"
+            onClicked: privateProps.nextPage()
+            status: 0
 
-            Image {
+            SvgImage {
                 id: image2
-                x: 10
-                y: 3
-                source: "../images/common/freccia_dx.png"
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: privateProps.nextPage()
+                source: "../images/common/icon_pager_arrow.svg"
+                anchors.centerIn: parent
+
+                states: [
+                    State {
+                        name: "pressedOrSelected"
+                        when: (rightArrow.state === "pressed") || (rightArrow.state === "selected")
+                        PropertyChanges { target: image2; source: "../images/common/icon_pager_arrow_select.svg" }
+                    }
+                ]
             }
         }
     }
