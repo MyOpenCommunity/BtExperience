@@ -31,6 +31,13 @@ Page {
             return EnergyData.CumulativeYearValue
     }
 
+    function systemsButtonClicked() {
+        Stack.showPreviousPage(1)
+    }
+
+    text: translations.get("ENERGY_TYPE", page.modelObject.energyType)
+    showSystemsButton: true
+
     Component.onCompleted: {
         // at page load completion we start all update requests
         modelObject.requestCurrentUpdateStart()
@@ -53,27 +60,13 @@ Page {
         id: translations
     }
 
-    NavigationBar {
-        id: buttonsColumn
-        anchors {
-            top: toolbar.bottom
-            left: parent.left
-            topMargin: constants.navbarTopMargin
-            bottom: parent.bottom
-        }
-
-        onBackClicked: Stack.popPage()
-        onSystemsClicked: Stack.showPreviousPage(1)
-        text: translations.get("ENERGY_TYPE", page.modelObject.energyType)
-    }
-
     TitleBar {
         id: bgTitle
 
         source: "../../images/common/svg_bolt.svg"
         title: translations.get("ENERGY_TYPE", page.modelObject.energyType)
         anchors {
-            left: buttonsColumn.right
+            left: navigationBar.right
             leftMargin: 20
             top: toolbar.bottom
             right: parent.right
@@ -108,7 +101,7 @@ Page {
         anchors {
             top: bgTitle.bottom
             topMargin: 10
-            left: buttonsColumn.right
+            left: navigationBar.right
             leftMargin: 20
             right: bgSideBar.left
             rightMargin: 10

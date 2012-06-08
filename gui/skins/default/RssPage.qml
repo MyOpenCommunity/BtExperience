@@ -5,23 +5,14 @@ import "js/Stack.js" as Stack
 
 Page {
     id: rssPage
-
-    NavigationBar {
-        id: backButton
-        systemsButton: false
-        anchors.topMargin: constants.navbarTopMargin
-        anchors.top: toolbar.bottom
-        anchors.left: parent.left
-
-        onBackClicked: Stack.popPage()
-    }
+    text: "rss"
 
     Item {
         id: window
         anchors {
             top: toolbar.bottom
             topMargin: parent.height / 100 * 5
-            left: backButton.right
+            left: navigationBar.right
             leftMargin: 10
             right: rssPage.right
             rightMargin: 10
