@@ -2,6 +2,7 @@ import QtQuick 1.1
 
 Column {
     id: keypad
+
     property string mainLabel
     property string helperLabel: qsTr("enter code")
     property string errorLabel
@@ -10,19 +11,6 @@ Column {
 
     signal cancelClicked
     signal digitClicked(string digit)
-
-    Text {
-        text: mainLabel
-        font.capitalization: Font.AllUppercase
-        font.family: semiBoldFont.name
-        font.pixelSize: 16
-        color: "white"
-    }
-    // A kind of spacing
-    Item {
-        height: 5
-        width: parent.width
-    }
 
     onCancelClicked: {
         textInserted = ""
@@ -35,7 +23,6 @@ Column {
         }
         else
             textInserted += digit
-//        console.log('textInserted: ' + textInserted)
     }
 
     onTextInsertedChanged: {
@@ -47,6 +34,19 @@ Column {
         }
         else
             labelKeypad.text = helperLabel
+    }
+
+    Text {
+        text: mainLabel
+        font.capitalization: Font.AllUppercase
+        font.family: semiBoldFont.name
+        font.pixelSize: 16
+        color: "white"
+    }
+
+    Item {
+        height: 5
+        width: parent.width
     }
 
     Image {
@@ -86,6 +86,7 @@ Column {
                     verticalAlignment: Text.AlignVCenter
                 }
             }
+
             Component {
                 id: errorLabelText
                 Image {
@@ -101,6 +102,7 @@ Column {
                     }
                 }
             }
+
             Component {
                 id: okLabelText
                 Image {
@@ -138,6 +140,7 @@ Column {
                 }
             }
         }
+
         Row {
             id: rowKeypad
             anchors.top: gridKeypad.bottom
@@ -163,6 +166,7 @@ Column {
                 }
             }
         }
+
         Item {
             id: spaceKeypad
             anchors.top: rowKeypad.bottom

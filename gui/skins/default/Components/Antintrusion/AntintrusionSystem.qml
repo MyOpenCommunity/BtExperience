@@ -4,8 +4,7 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: antintrusionColumn.height
+
     property string alarmLogTitle: qsTr("alarm log")
     property string imagesPath: "../../images/"
 
