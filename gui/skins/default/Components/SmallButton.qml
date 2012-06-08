@@ -32,10 +32,25 @@ Rectangle {
 
     Timer {
         id: clickTimer
+
+        property int activations: 0
+
+        onRunningChanged: {
+            if (running) {
+                activations = 1
+                interval = 500
+                buttonClicked()
+            }
+        }
+
         interval: 500
         running: false
         repeat: true
-        onTriggered: buttonClicked()
+        onTriggered: {
+            if (++activations === 4)
+                interval = 200
+            buttonClicked()
+        }
     }
 }
 

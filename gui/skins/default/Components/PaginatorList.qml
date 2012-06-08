@@ -2,7 +2,6 @@ import QtQuick 1.1
 
 Item {
     id: paginatorItem
-    height: internalList.height
 
     // expose some ListView properties
     property alias footer: internalList.footer
@@ -32,8 +31,8 @@ Item {
     // from the model size
     function computePagesFromModelSize(modelSize, elementsOnPage) {
         var ret = modelSize % elementsOnPage ?
-               modelSize / elementsOnPage + 1 :
-               modelSize / elementsOnPage
+                    modelSize / elementsOnPage + 1 :
+                    modelSize / elementsOnPage
         return Math.floor(ret)
     }
 
@@ -70,10 +69,15 @@ Item {
 
     Item {
         id: bottomRow
-        height: button.height
         anchors.left: internalList.left
         anchors.right: internalList.right
         anchors.top: spacing.bottom
+        opacity: ((paginator.visible === true) || (button.visible === true)) ? 1 : 0
+        onOpacityChanged: {
+            // this is needed for updating height when opacity changes
+            paginatorItem.height = internalList.height + bottomRow.height * bottomRow.opacity
+        }
+        height: Math.max(paginator.height, button.height)
 
         Paginator {
             id: paginator
@@ -100,7 +104,7 @@ Item {
 
     Component.onCompleted: {
         if (internalList.children.length === 1 &&
-            internalList.children[0].children.length > 0) {
+                internalList.children[0].children.length > 0) {
             // We need to set the width of PaginatorList looking at the delegates;
             // this way, we avoid to use magic numbers (bottom-up approach).
             // See MenuContainer docs to know why we need to set the width
@@ -109,8 +113,8 @@ Item {
             width = delegateWidth
             internalList.width = delegateWidth
             var delegateHeight = internalList.children[0].children[0].height
-            internalList.height = delegateHeight * elementsOnPage
-            height = internalList.height + bottomRow.height
+            internalList.height = delegateHeight * Math.min(elementsOnPage, internalList.model.count)
+            height = internalList.height + bottomRow.height * bottomRow.opacity
         }
     }
 }
