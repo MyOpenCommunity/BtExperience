@@ -9,7 +9,7 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
-    FilterListModel {
+    ObjectModel {
         id: modelList
         filters: [{objectId: ObjectInterface.IdIntercom}]
     }
@@ -29,7 +29,7 @@ MenuColumn {
             }
         }
 
-        FilterListModel {
+        ObjectModel {
             id: extPlaceModel
             source: modelList.getObject(0).externalPlaces
         }

@@ -42,7 +42,7 @@ Item {
         screensaver.isEnabled = true
     }
 
-    FilterListModel {
+    ObjectModel {
         id: listModel
         filters: [
             {objectId: ObjectInterface.IdCCTV},

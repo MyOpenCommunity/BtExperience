@@ -10,7 +10,7 @@ MenuColumn {
 
     property int is99zones: (dataModel.objectId === ObjectInterface.IdThermalControlUnit99)
 
-    FilterListModel {
+    ObjectModel {
         id: centralProbe
         // NOTE in case the central is 4 zones we must retrieve the temperature
         // from the associated probe; we don't know if the probe is with or

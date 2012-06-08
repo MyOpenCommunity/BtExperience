@@ -32,7 +32,7 @@ MenuColumn {
 
     BtObjectsMapping { id: mapping }
 
-    FilterListModel {
+    ObjectModel {
         id: objectModel
         filters: [
             {objectId: ObjectInterface.IdSplitBasicScenario},

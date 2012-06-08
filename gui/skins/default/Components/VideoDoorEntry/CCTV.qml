@@ -10,7 +10,7 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
-    FilterListModel {
+    ObjectModel {
         id: cctvModel
         filters: [{objectId: ObjectInterface.IdCCTV}]
     }
@@ -27,7 +27,7 @@ MenuColumn {
                 cctvModel.getObject(0).cameraOn(itemObject.where)
             }
         }
-        FilterListModel {
+        ObjectModel {
             id: extPlaceModel
             source: cctvModel.getObject(0).externalPlaces
         }

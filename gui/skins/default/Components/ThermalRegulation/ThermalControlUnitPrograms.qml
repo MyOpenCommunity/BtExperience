@@ -22,7 +22,7 @@ MenuColumn {
         model: programModel
     }
 
-    FilterListModel {
+    ObjectModel {
         id: programModel
         source: column.dataModel.programs
     }

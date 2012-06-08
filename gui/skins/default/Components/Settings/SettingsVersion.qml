@@ -13,7 +13,7 @@ MenuColumn {
     property string imagesPath: "../../images/"
 
     // object model to retrieve version data
-    FilterListModel {
+    ObjectModel {
         id: objectModel
         // TODO update filter to retrieve version data
         filters: [{objectId: ObjectInterface.IdPlatformSettings}]

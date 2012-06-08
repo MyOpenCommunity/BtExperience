@@ -22,7 +22,7 @@ MenuColumn {
     height: paginator.height
 
     // object model to retrieve network data
-    FilterListModel {
+    ObjectModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdPlatformSettings}]
     }

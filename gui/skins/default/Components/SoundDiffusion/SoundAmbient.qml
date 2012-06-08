@@ -63,7 +63,7 @@ MenuColumn {
 
     BtObjectsMapping { id: mapping }
 
-    FilterListModel {
+    ObjectModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdSoundAmplifierGeneral, objectKey: column.dataModel.objectKey},
             {objectId: ObjectInterface.IdSoundAmplifier, objectKey: column.dataModel.objectKey},

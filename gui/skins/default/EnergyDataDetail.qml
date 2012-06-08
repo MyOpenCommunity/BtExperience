@@ -79,7 +79,7 @@ Page {
                 objectName: "repeater" // to skip inside Helper
                 // TODO come recupero le linee? nota: il modello deve
                 // comprendere anche il generale!
-                model: FilterListModel {
+                model: ObjectModel {
                     id: modelEnergy
                     filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: page.keyString}]
                 }

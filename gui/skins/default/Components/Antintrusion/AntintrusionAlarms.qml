@@ -171,7 +171,7 @@ MenuColumn {
         }
     }
 
-    FilterListModel {
+    ObjectModel {
         id: modelList
         source: column.dataModel
         range: paginator.computePageRange(paginator.currentPage, privateProps.elementsOnPage)

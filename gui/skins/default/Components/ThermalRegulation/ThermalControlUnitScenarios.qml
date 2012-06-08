@@ -22,7 +22,7 @@ MenuColumn {
         model: scenarioModel
     }
 
-    FilterListModel {
+    ObjectModel {
         id: scenarioModel
         source: column.dataModel.scenarios
     }

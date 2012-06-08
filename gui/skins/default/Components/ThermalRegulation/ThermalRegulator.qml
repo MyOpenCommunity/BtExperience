@@ -49,7 +49,7 @@ MenuColumn {
 
     BtObjectsMapping { id: mapping }
 
-    FilterListModel {
+    ObjectModel {
         id: modelList
         // NOTE we can have only one ControlUnit; filters are defined to have
         // the ControlUnit as first element of the model, so we can investigate
