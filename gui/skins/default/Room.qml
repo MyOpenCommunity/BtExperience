@@ -11,20 +11,16 @@ Page {
     property int roomUii
     property int floorUii
 
-    Names {
-        id: translations
+    function systemsButtonClicked() {
+        Stack.popPage()
     }
 
-    NavigationBar {
-        id: systemsButton
-        backButton: false
-        anchors.left: parent.left
-        anchors.top: toolbar.bottom
-        anchors.topMargin: constants.navbarTopMargin
-        anchors.bottom: parent.bottom
+    text: roomName
+    showBackButton: false
+    showSystemsButton: true
 
-        onSystemsClicked: Stack.popPage()
-        text: roomName
+    Names {
+        id: translations
     }
 
     MediaModel {
@@ -56,7 +52,7 @@ Page {
     RoomView {
         id: roomCustomView
         anchors {
-            left: systemsButton.right
+            left: navigationBar.right
             leftMargin: 20
             right: parent.right
             rightMargin: 20
@@ -72,7 +68,7 @@ Page {
     ListView {
         id: roomView
         anchors.bottom: parent.bottom
-        anchors.left: systemsButton.right
+        anchors.left: navigationBar.right
         anchors.right: parent.right
         height: 110
 

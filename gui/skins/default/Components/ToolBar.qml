@@ -7,7 +7,7 @@ Item {
     id: toolbar
 
     property string imagesPath: "../images/"
-    property int fontSize: 15
+    property int fontSize: 17
     signal homeClicked
 
     width: 1024

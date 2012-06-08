@@ -42,6 +42,13 @@ Page {
         endCall(Stack.backToHome)
     }
 
+    function backButtonClicked() {
+        endCall(Stack.popPage)
+    }
+
+    text: qsTr("video")
+    showSystemsButton: false
+
     Rectangle {
         id: bg
         anchors.fill: parent
@@ -152,19 +159,6 @@ Page {
         }
     }
 
-    NavigationBar {
-        systemsButton: false
-        text: qsTr("video")
-        anchors {
-            top: toolbar.bottom
-            left: parent.left
-            topMargin: constants.navbarTopMargin
-            bottom: parent.bottom
-        }
-
-        onBackClicked: endCall(Stack.popPage)
-    }
-
     Column {
         id: propertyColumn
         x: 590
@@ -240,5 +234,6 @@ Page {
     Component.onCompleted: {
         camera.callEnded.connect(Stack.popPage)
         toolbar.z = 1
+        navigationBar.z = 1
     }
 }

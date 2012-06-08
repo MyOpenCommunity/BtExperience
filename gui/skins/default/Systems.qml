@@ -13,17 +13,8 @@ Page {
         return {"page": "", "properties": {}}
     }
 
-    NavigationBar {
-        id: buttonsColumn
-        anchors.topMargin: constants.navbarTopMargin
-        anchors.top: toolbar.bottom
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        systemsButton: false
-        text: qsTr("systems")
-
-        onBackClicked: Stack.popPage()
-    }
+    text: qsTr("systems")
+    showSystemsButton: false
 
     ListModel {
         id: systemsModel
@@ -80,7 +71,7 @@ Page {
             top: toolbar.bottom
             right: parent.right
             rightMargin: 30
-            left: buttonsColumn.right
+            left: navigationBar.right
             leftMargin: 30
             bottom: parent.bottom
         }
