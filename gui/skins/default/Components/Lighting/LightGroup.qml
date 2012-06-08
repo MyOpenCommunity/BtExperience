@@ -3,7 +3,6 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: image.width
 
     SvgImage {
         id: image

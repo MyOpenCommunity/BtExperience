@@ -15,8 +15,13 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     if (dataModel === undefined)
         dataModel = null
 
-    // creates title element
+
+
     var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
+    if (!titleObj) {
+        console.log("Error on creating the MenuTitle component")
+        return
+    }
 
     properties = typeof properties !== 'undefined' ? properties : {}
     properties["menuLevel"] = menuLevel + 1
@@ -30,22 +35,28 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     // Here we assume that width for the given MenuColumn is set correctly to
     // the width of the children (which are assumed to be all the same width).
     // Unfortunately, we can't use childrenRect because that includes shadows.
-    var obj = component.createObject(mainContainer, properties)
+    var itemObj = component.createObject(mainContainer, properties)
 
-    if (obj && titleObj) {
-        _addItem(obj, titleObj)
-        obj.closeItem.connect(closeItem)
-        obj.loadComponent.connect(loadComponent)
+    var shadowObj = createComponent("MenuShadow.qml", {"parent": elementsContainer, "opacity": 0, "anchors.fill": itemObj})
+    if (!shadowObj) {
+        itemObj.destroy()
+        titleObj.destroy()
+        console.log("Error on creating the MenuShadow component")
         return
     }
 
-    // cleanups the memory in case of errors
-    if (obj) {
-        obj.destroy()
+    if (itemObj) {
+        _addItem(itemObj, titleObj, shadowObj)
+        itemObj.closeItem.connect(closeItem)
+        itemObj.loadComponent.connect(loadComponent)
+        return
     }
-    if (titleObj) {
+    else {
+        console.log("Error on creating the Component: " + component)
+        shadowObj.destroy()
         titleObj.destroy()
     }
+
 }
 
 var OP_CLOSE = 1
@@ -100,7 +111,7 @@ function closeItem(menuLevel) {
 }
 
 
-function _addItem(item, title) {
+function _addItem(item, title, shadow) {
     mainContainer.interactive = false
     debugMsg("_addItem level: " + item.menuLevel)
     for (var i = stackObjects.length - 1; i >= item.menuLevel; i--) {
@@ -108,7 +119,7 @@ function _addItem(item, title) {
     }
 
     pendingOperations.push({'id': OP_UPDATE_UI, 'newItem': item})
-    pendingOperations.push({'id': OP_OPEN, 'item': item, 'title': title})
+    pendingOperations.push({'id': OP_OPEN, 'item': item, 'title': title, 'shadow': shadow})
     processOperations()
 }
 
@@ -191,11 +202,13 @@ function _doUpdateView() {
 function _setStartProps() {
     var item = pendingOperations[0]['item']
     var title = pendingOperations[0]['title']
+    var shadow = pendingOperations[0]['shadow']
 
     item.enableAnimation = false
     title.enableAnimation = false
 
     if (stackObjects.length === 0) {
+        shadow.opacity = 1
         item.opacity = 1
         title.opacity = 1
     }
@@ -214,6 +227,7 @@ function _openItem() {
 
     var item = pendingOperations[0]['item']
     var title = pendingOperations[0]['title']
+    var shadow = pendingOperations[0]['shadow']
 
     _setStartProps()
     if (stackObjects.length === 0) {
@@ -229,12 +243,14 @@ function _openItem() {
 
         title.opacity = 1
         item.opacity = 1
+        shadow.opacity = 1
         item.x = last_item.x + last_item.width - horizontalOverlap
         title.x = last_item.x + last_item.width
     }
 }
 
 function _doOpenItem() {
+
     var item = pendingOperations[0]['item']
     if (item.animationRunning)
         return
@@ -242,6 +258,8 @@ function _doOpenItem() {
     debugMsg('_doOpenItem')
     showLine(item, RIGHT_TO_LEFT)
     var title = pendingOperations[0]['title']
+    var shadow = pendingOperations[0]['shadow']
+
     item.animationRunningChanged.disconnect(_doOpenItem)
 
     if (stackObjects.length >= 1) {
@@ -250,7 +268,7 @@ function _doOpenItem() {
         last_item.childLoaded()
     }
 
-    stackObjects.push({'item': item, 'title': title})
+    stackObjects.push({'item': item, 'title': title, 'shadow': shadow})
 
     if (stackObjects.length === 1)
         mainContainer.rootObject = item
@@ -309,10 +327,12 @@ function _doCloseItem() {
         return
 
     var title = stackObjects[stackObjects.length -1]['title']
+    var shadow = stackObjects[stackObjects.length -1]['shadow']
 
     elementsContainer.width -= item.width
     item.destroy()
     title.destroy()
+    shadow.destroy()
     stackObjects.length -= 1
     var last_item = stackObjects[stackObjects.length -1]['item']
     last_item.child = null

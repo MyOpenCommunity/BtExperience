@@ -3,9 +3,6 @@ import Components 1.0
 
 
 MenuColumn {
-    width: column.width
-    height: column.height
-
     Column {
         id: column
 

@@ -44,6 +44,10 @@ Item {
     property bool enableAnimation: true
     property bool animationRunning: defaultanimation.running
 
+    // Needed to properly set the shadow (MenuShadow) size.
+    width: childrenRect.width
+    height: childrenRect.height
+
     Constants {
         id: constants
     }
@@ -56,16 +60,6 @@ Item {
     Behavior on opacity {
         enabled: column.enableAnimation
         NumberAnimation { duration: constants.elementTransitionDuration; easing.type: Easing.InSine }
-    }
-
-    BorderImage {
-        id: name
-        source: "../images/common/ombra1elemento.png"
-        anchors.fill: parent
-        border { left: 30; top: 30; right: 30; bottom: 30; }
-        anchors { leftMargin: -25; topMargin: -25; rightMargin: -25; bottomMargin: -25 }
-        horizontalTileMode: BorderImage.Stretch
-        verticalTileMode: BorderImage.Stretch
     }
 
     property QtObject dataModel: null

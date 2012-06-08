@@ -4,8 +4,6 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: paginator.width
-    height: paginator.height
 
     onChildDestroyed: {
         paginator.currentIndex = -1
