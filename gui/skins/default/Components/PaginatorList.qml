@@ -22,9 +22,6 @@ Item {
 
     signal buttonClicked
 
-    // this is needed for updating height when opacity changes
-    height: internalList.height + bottomRow.height * bottomRow.opacity
-
     // Convenience function to compute the visible range of a model
     function computePageRange(page, elementsOnPage) {
         return [(page - 1) * elementsOnPage, page * elementsOnPage]
@@ -76,6 +73,10 @@ Item {
         anchors.right: internalList.right
         anchors.top: spacing.bottom
         opacity: ((paginator.visible === true) || (button.visible === true)) ? 1 : 0
+        onOpacityChanged: {
+            // this is needed for updating height when opacity changes
+            paginatorItem.height = internalList.height + bottomRow.height * bottomRow.opacity
+        }
         height: Math.max(paginator.height, button.height)
 
         Paginator {
