@@ -10,6 +10,8 @@ Page {
     property alias currentObject: container.currentObject
     property QtObject names: null
 
+    showSystemsButton: true
+
     // The spacing between the buttons on the left and the MenuContainer
     property int containerLeftMargin: systemPage.width / 100 * 2
 
