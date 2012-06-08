@@ -7,29 +7,6 @@ BasePage {
     id: mainarea
     source: "images/home/home.jpg"
 
-    function bestDelegate(t) {
-        if (t === "camera")
-            return cameraDelegate
-        if (t === "web")
-            return webDelegate
-        return rssDelegate
-    }
-
-    Component {
-        id: cameraDelegate
-        CameraLink {}
-    }
-
-    Component {
-        id: webDelegate
-        FavoriteItem {}
-    }
-
-    Component {
-        id: rssDelegate
-        RssItem {}
-    }
-
     ToolBar {
         id: toolbar
         anchors {
@@ -45,7 +22,7 @@ BasePage {
         delegate: favouritesDelegate
         orientation: ListView.Horizontal
         height: 130
-        width: 170 * 6
+        width: 150 * 6
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
@@ -86,12 +63,36 @@ BasePage {
         }
 
         Component {
+            id: cameraDelegate
+            CameraLink {}
+        }
+
+        Component {
+            id: webDelegate
+            FavoriteItem {}
+        }
+
+        Component {
+            id: rssDelegate
+            RssItem {}
+        }
+
+        Component {
             id: favouritesDelegate
 
             Item {
                 id: favouriteItem
-                width: 170
+                width: 150
                 height: 130
+
+                function bestDelegate(t) {
+                    if (t === "camera")
+                        return cameraDelegate
+                    if (t === "web")
+                        return webDelegate
+                    return rssDelegate
+                }
+
                 Loader {
                     id: favouriteItemLoader
                     sourceComponent: bestDelegate(type)
@@ -131,8 +132,9 @@ BasePage {
             topMargin: 50
             bottom: favourites.top
             left: parent.left
-            leftMargin: 10
+            leftMargin: 20
             right: pages.left
+            rightMargin: 20
         }
     }
 
