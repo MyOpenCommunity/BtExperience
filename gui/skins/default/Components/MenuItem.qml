@@ -24,15 +24,17 @@ Item {
         id: privateProps
 
         function startEdit() {
-            label.forceActiveFocus()
-            label.openSoftwareInputPanel()
+            labelLoader.sourceComponent = labelInputComponent
+            labelLoader.item.forceActiveFocus()
+            labelLoader.item.openSoftwareInputPanel()
         }
 
         function editDone() {
-            if (label.text !== menuItem.name) {
-                menuItem.name = label.text
+            if (labelLoader.item.text !== menuItem.name) {
+                menuItem.name = labelLoader.item.text
                 menuItem.editCompleted()
             }
+            labelLoader.sourceComponent = labelComponent
         }
     }
 
@@ -71,20 +73,39 @@ Item {
             anchors.top: parent.top
         }
 
-        TextInput {
-            id: label
-            text: menuItem.name
-            activeFocusOnPress: false
-            font.family: lightFont.name
-            font.pixelSize: 14
-            color:  "#2d2d2d"
-            font.bold: true
+        Loader {
+            id: labelLoader
+            property color textColor: "#2d2d2d"
             anchors.left: parent.left
             anchors.leftMargin: menuItem.width / 100 * 9
             anchors.top: parent.top
             anchors.topMargin: menuItem.height / 100 * 16
             anchors.right: arrowRight.left
-            onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
+            sourceComponent: labelComponent
+        }
+
+        Component {
+            id: labelInputComponent
+            TextInput {
+                text: menuItem.name
+                activeFocusOnPress: false
+                font.family: lightFont.name
+                font.pixelSize: 14
+                color:  labelLoader.textColor
+                font.bold: true
+                onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
+            }
+        }
+
+        Component {
+            id: labelComponent
+            Text {
+                text: menuItem.name
+                font.family: lightFont.name
+                font.pixelSize: 14
+                color:  labelLoader.textColor
+                font.bold: true
+            }
         }
 
         Image {
@@ -100,9 +121,9 @@ Item {
         Item {
             id: boxInfo
             visible: false
-            anchors.top: label.bottom
+            anchors.top: labelLoader.bottom
             anchors.bottom: parent.bottom
-            anchors.left: label.left
+            anchors.left: labelLoader.left
             width: 45
 
             Rectangle {
@@ -145,8 +166,8 @@ Item {
             font.pixelSize: 14
             anchors.bottom: parent.bottom
             anchors.bottomMargin: menuItem.height / 100 * 10
-            anchors.top: label.bottom
-            anchors.left: boxInfo.visible ? boxInfo.right : label.left
+            anchors.top: labelLoader.bottom
+            anchors.left: boxInfo.visible ? boxInfo.right : labelLoader.left
             anchors.leftMargin: boxInfo.visible ? 5 : 0
             verticalAlignment: Text.AlignBottom
         }
@@ -164,7 +185,7 @@ Item {
     states: [
         State {
             name: "selected"
-            PropertyChanges { target: label; color: "#ffffff" }
+            PropertyChanges { target: labelLoader; textColor: "#ffffff" }
             PropertyChanges { target: textDescription; color: "#ffffff" }
             PropertyChanges { target: arrowRight; source: "../images/common/menu_column_item_arrow_white.svg" }
             PropertyChanges { target: background; source: "../images/common/menu_column_item_bg_selected.svg" }
@@ -172,7 +193,7 @@ Item {
         State {
             name: "pressed"
             when: mousearea.pressed
-            PropertyChanges { target: label; color: "#ffffff" }
+            PropertyChanges { target: labelLoader; textColor: "#ffffff" }
             PropertyChanges { target: textDescription; color: "#ffffff" }
             PropertyChanges { target: arrowRight; source: "../images/common/menu_column_item_arrow_white.svg" }
             PropertyChanges { target: background; source: "../images/common/menu_column_item_bg_pressed.svg" }
