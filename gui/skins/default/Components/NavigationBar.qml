@@ -46,7 +46,7 @@ Item {
         id: label
         color: "black"
         anchors.centerIn: background
-        rotation: 90
+        rotation: 270
         font.pointSize: 24
     }
 }
