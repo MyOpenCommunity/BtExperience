@@ -279,3 +279,15 @@ void TestDimmer100::testStepAmount()
 	obj->setStepAmount(7);
 	t.checkNoSignals();
 }
+
+void TestDimmer100::testSetTiming()
+{
+	obj->setOnSpeed(123);
+	obj->setHours(15);
+	obj->setMinutes(0);
+	obj->setSeconds(3);
+	obj->setActiveWithTiming();
+	dev->turnOn(123);
+	dev->variableTiming(15, 0, 3);
+	compareClientCommand();
+}

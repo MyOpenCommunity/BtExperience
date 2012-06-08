@@ -109,7 +109,7 @@ public:
 	/*!
 		\brief Turn on the light for a duration specified by \ref hours, \ref minutes and \ref seconds
 	*/
-	Q_INVOKABLE void setActiveWithTiming();
+	Q_INVOKABLE virtual void setActiveWithTiming();
 
 signals:
 	void activeChanged();
@@ -307,6 +307,7 @@ public:
 	}
 
 	virtual void setActive(bool st);
+	virtual void setActiveWithTiming();
 
 	void setOnSpeed(int speed);
 	int getOnSpeed() const;

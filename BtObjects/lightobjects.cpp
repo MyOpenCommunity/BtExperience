@@ -435,6 +435,13 @@ void Dimmer100::setActive(bool st)
 		dev->turnOff(off_speed);
 }
 
+void Dimmer100::setActiveWithTiming()
+{
+	// handle both on speed and timing (do not change frame order)
+	setActive(true);
+	Dimmer::setActiveWithTiming();
+}
+
 void Dimmer100::increaseLevel100()
 {
 	dev->increaseLevel100(step_amount, step_speed);

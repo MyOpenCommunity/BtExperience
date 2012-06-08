@@ -44,7 +44,7 @@ private slots:
 
 	virtual void testSetStatus();
 	void testReceiveStatus();
-	void testSetTiming();
+	virtual void testSetTiming();
 	void testSetHours();
 	void testSetMinutes();
 	void testSetSeconds();
@@ -93,6 +93,7 @@ private slots:
 
 private:
 	virtual void testSetStatus();
+	virtual void testSetTiming();
 	virtual void testReceiveLevel();
 
 	Dimmer100 *obj;
