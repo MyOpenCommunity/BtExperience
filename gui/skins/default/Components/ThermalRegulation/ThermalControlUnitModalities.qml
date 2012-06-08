@@ -33,7 +33,7 @@ MenuColumn {
         model: modalitiesModel
     }
 
-    FilterListModel {
+    ObjectModel {
         id: modalitiesModel
         source: column.dataModel.modalities
     }

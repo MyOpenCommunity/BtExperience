@@ -24,7 +24,7 @@ MenuColumn {
         model: objectModel
     }
 
-    FilterListModel {
+    ObjectModel {
         id: objectModel
         source: column.dataModel.presets
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)

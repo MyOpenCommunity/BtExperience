@@ -19,7 +19,7 @@ MenuColumn {
         AntintrusionScenarios {}
     }
 
-    FilterListModel {
+    ObjectModel {
         id: objectModel
         source: myHomeModels.myHomeObjects
         filters: [{objectId: ObjectInterface.IdAntintrusionSystem}]
@@ -261,7 +261,7 @@ MenuColumn {
                     status: itemObject.partialization ? 0 : 1
                 }
 
-                FilterListModel {
+                ObjectModel {
                     id: zoneModel
                     source: privateProps.model.zones
                 }

@@ -52,7 +52,7 @@ MenuColumn {
         }
     }
 
-    FilterListModel {
+    ObjectModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdSoundAmplifierGeneral, objectKey: "0"}]
     }

@@ -21,7 +21,7 @@ Page {
         id: translations
     }
 
-    FilterListModel {
+    ObjectModel {
         id: energiesCounters
         filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "general"}]
     }

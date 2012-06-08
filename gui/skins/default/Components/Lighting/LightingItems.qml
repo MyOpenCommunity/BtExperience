@@ -61,7 +61,7 @@ MenuColumn {
 
     BtObjectsMapping { id: mapping }
 
-    FilterListModel {
+    ObjectModel {
         id: objectModel
         source: myHomeModels.myHomeObjects
         containers: [Container.IdLights]

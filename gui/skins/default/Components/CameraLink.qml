@@ -12,7 +12,7 @@ QuickLink {
         cctvModel.getObject(0).cameraOn(address)
     }
 
-    FilterListModel {
+    ObjectModel {
         id: cctvModel
         filters: [{objectId: ObjectInterface.IdCCTV}]
     }

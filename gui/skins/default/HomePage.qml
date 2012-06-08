@@ -111,7 +111,7 @@ BasePage {
     }
 
     CardView {
-        FilterListModel {
+        ObjectModel {
             id: usersModel
             source: myHomeModels.profiles
         }
