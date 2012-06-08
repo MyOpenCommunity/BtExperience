@@ -61,8 +61,31 @@ class Light : public LightCommand
 	*/
 	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
 
+	/*!
+		\brief Time interval for  \ref setActiveWithTiming
+
+		After the specified amount of time, the light will turn off automatically.
+
+		\sa setActiveWithTiming
+	*/
 	Q_PROPERTY(int hours READ getHours WRITE setHours NOTIFY hoursChanged)
+
+	/*!
+		\brief Time interval for  \ref setActiveWithTiming
+
+		After the specified amount of time, the light will turn off automatically.
+
+		\sa setActiveWithTiming
+	*/
 	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
+
+	/*!
+		\brief Time interval for  \ref setActiveWithTiming
+
+		After the specified amount of time, the light will turn off automatically.
+
+		\sa setActiveWithTiming
+	*/
 	Q_PROPERTY(int seconds READ getSeconds WRITE setSeconds NOTIFY secondsChanged)
 
 public:
@@ -82,6 +105,10 @@ public:
 	int getMinutes();
 	void setSeconds(int s);
 	int getSeconds();
+
+	/*!
+		\brief Turn on the light for a duration specified by \ref hours, \ref minutes and \ref seconds
+	*/
 	Q_INVOKABLE void setActiveWithTiming();
 
 signals:
