@@ -29,7 +29,6 @@ BasePage {
             left: parent.left
             right: parent.right
         }
-        fontSize: 17
         onHomeClicked: homeButtonClicked()
     }
 

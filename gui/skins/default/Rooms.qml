@@ -3,10 +3,19 @@ import "js/Stack.js" as Stack
 import Components 1.0
 import BtObjects 1.0
 
-Page {
+BasePage {
     id: mainarea
     source: "images/home/home.jpg"
     property int floorUii
+
+    ToolBar {
+        id: toolbar
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
+    }
 
     Text {
         id: pageTitle
