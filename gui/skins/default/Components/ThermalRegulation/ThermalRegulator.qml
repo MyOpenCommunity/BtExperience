@@ -4,15 +4,11 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    height: itemList.height
-    width: 212
 
     onChildDestroyed: itemList.currentIndex = -1
 
     PaginatorList {
         id: itemList
-        width: parent.width
-        listHeight: 50 * modelList.count
         currentIndex: -1
 
         delegate: MenuItemDelegate {
