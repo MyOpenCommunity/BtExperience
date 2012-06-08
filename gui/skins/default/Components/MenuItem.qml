@@ -7,7 +7,7 @@ Item {
     width: background.width
 
     property bool editable: false
-    property alias name: label.text
+    property string name
     property alias description: textDescription.text
     property alias boxInfoState: boxInfo.state
     property alias boxInfoText: boxInfoText.text
@@ -22,7 +22,18 @@ Item {
 
     QtObject {
         id: privateProps
-        property string currentText: ""
+
+        function startEdit() {
+            label.forceActiveFocus()
+            label.openSoftwareInputPanel()
+        }
+
+        function editDone() {
+            if (label.text !== menuItem.name) {
+                menuItem.name = label.text
+                menuItem.editCompleted()
+            }
+        }
     }
 
     function statusVisible() {
@@ -61,15 +72,8 @@ Item {
         }
 
         TextInput {
-
-            onActiveFocusChanged: {
-                if (!activeFocus) { // edit done
-                    if (label.text !== privateProps.currentText)
-                        menuItem.editCompleted()
-                }
-            }
-
             id: label
+            text: menuItem.name
             activeFocusOnPress: false
             font.family: lightFont.name
             font.pixelSize: 14
@@ -80,6 +84,7 @@ Item {
             anchors.top: parent.top
             anchors.topMargin: menuItem.height / 100 * 16
             anchors.right: arrowRight.left
+            onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
         }
 
         Image {
@@ -150,13 +155,7 @@ Item {
     MouseArea {
         id: mousearea
         anchors.fill: parent
-        onPressAndHold: {
-            privateProps.currentText = label.text
-            if (menuItem.editable) {
-                label.forceActiveFocus()
-                label.openSoftwareInputPanel()
-            }
-        }
+        onPressAndHold: if (menuItem.editable) { privateProps.startEdit() }
         onClicked: menuItem.clicked(menuItem)
         onPressed: menuItem.pressed(menuItem)
         onReleased: menuItem.released(menuItem)
