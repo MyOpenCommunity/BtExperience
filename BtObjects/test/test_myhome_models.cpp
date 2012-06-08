@@ -17,9 +17,9 @@ void TestObjectModel::init()
 	dev1 = new DimmerDevice("1");
 	dev2 = AmplifierDevice::createDevice("22");
 
-	light1 = new Light("light1", "1", dev1);
-	light2 = new Light("light2", "2", dev1);
-	light3 = new Light("light3", "3", dev1);
+	light1 = new Light("light1", "1", QTime(), dev1);
+	light2 = new Light("light2", "2", QTime(), dev1);
+	light3 = new Light("light3", "3", QTime(), dev1);
 
 	amplifier1 = new Amplifier(2, "amplifier1", dev2);
 	amplifier2 = new Amplifier(3, "amplifier1", dev2);

@@ -20,7 +20,7 @@ void TestLight::init()
 
 	LightingDevice *d = new LightingDevice("3", NOT_PULL);
 
-	obj = new Light("", "", "00:00:00", d);
+	obj = new Light("", "", QTime(), d);
 	dev = new LightingDevice("3", NOT_PULL, 1);
 }
 
@@ -127,7 +127,7 @@ void TestDimmer::init()
 
 	DimmerDevice *d = new DimmerDevice("3", NOT_PULL);
 
-	obj = new Dimmer("", "", d);
+	obj = new Dimmer("", "", QTime(), d);
 	dev = new DimmerDevice("3", NOT_PULL, 1);
 
 	initObjects(dev, obj);
@@ -174,7 +174,7 @@ void TestDimmer100::init()
 
 	Dimmer100Device *d = new Dimmer100Device("3", NOT_PULL);
 
-	obj = new Dimmer100("", "", d, 255, 255);
+	obj = new Dimmer100("", "", QTime(), d, 255, 255);
 	dev = new Dimmer100Device("3", NOT_PULL, 1);
 
 	initObjects(dev, obj);
