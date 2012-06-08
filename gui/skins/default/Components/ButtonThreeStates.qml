@@ -34,6 +34,7 @@ SvgImage {
         id: label
         color: "black"
         anchors.centerIn: parent
+        wrapMode: Text.WordWrap
     }
 
     SvgImage {
