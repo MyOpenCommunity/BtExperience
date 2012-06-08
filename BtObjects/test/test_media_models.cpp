@@ -120,8 +120,8 @@ void TestMediaModel::testRemoveAll()
 
 	obj->clear();
 
-	QCOMPARE(obj->getCount(), 2);
-	QCOMPARE(obj->rowCount(), 2);
+	QCOMPARE(obj->getCount(), 0);
+	QCOMPARE(obj->rowCount(), 0);
 
 	qApp->processEvents();
 	ts.checkSignals();

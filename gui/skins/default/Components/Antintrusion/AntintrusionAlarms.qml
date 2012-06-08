@@ -7,23 +7,82 @@ MenuColumn {
     id: column
 
     width: img.width
-    height: paginator.height
+    height: img.height
 
     SvgImage {
         id: img
 
         source: "../../images/common/alarm-log_panel.svg"
 
+        Item {
+            id: realHeader
+            width: parent.width
+            height: 28
+            anchors.top: parent.top
+
+            Row {
+                width: parent.width
+                height: 14
+                anchors.top: parent.top
+                anchors.topMargin: 7
+
+                Item {
+                    height: parent.height
+                    width: 11
+                }
+
+                Item {
+                    height: parent.height
+                    width: 5
+                }
+
+                Text {
+                    height: parent.height
+                    width: 147
+                    text: qsTr("type")
+                    color: "#4F4F4F"
+                    font.pointSize: 10
+                }
+
+                Item {
+                    height: parent.height
+                    width: 5
+                }
+
+                Text {
+                    height: parent.height
+                    width: 111
+                    text: qsTr("zone")
+                    color: "#4F4F4F"
+                    font.pointSize: 10
+                }
+
+                Item {
+                    height: parent.height
+                    width: 5
+                }
+
+                Text {
+                    height: parent.height
+                    width: 106
+                    text: qsTr("date and time")
+                    color: "#4F4F4F"
+                    font.pointSize: 10
+                }
+            }
+        }
+
         PaginatorList {
             id: paginator
-            width: parent.width
-            listWidth: parent.width
-            listHeight: parent.height
+            anchors {
+                top: realHeader.bottom
+                topMargin: parent.height / 100 * 2
+            }
+            spacing: parent.height / 100 * 1
+            leftMargin: parent.width / 100 * 2.5
             buttonVisible: modelList.count !== 0
             elementsOnPage: privateProps.elementsOnPage
             source: ""
-
-            header: listHeader
 
             onButtonClicked: modelList.clear()
 
@@ -99,8 +158,6 @@ MenuColumn {
                 }
             }
 
-            footer: listFooter
-
             model: modelList
         }
 
@@ -114,82 +171,6 @@ MenuColumn {
         }
     }
 
-    Component {
-        id: listHeader
-
-        Item {
-            width: paginator.width
-            height: 28
-
-            Row {
-                width: parent.width
-                height: 14
-                anchors.top: parent.top
-                anchors.topMargin: 7
-
-                Item {
-                    height: parent.height
-                    width: 11
-                }
-
-                Item {
-                    height: parent.height
-                    width: 5
-                }
-
-                Text {
-                    height: parent.height
-                    width: 147
-                    text: qsTr("type")
-                    color: "#4F4F4F"
-                    font.pointSize: 10
-                }
-
-                Item {
-                    height: parent.height
-                    width: 5
-                }
-
-                Text {
-                    height: parent.height
-                    width: 111
-                    text: qsTr("zone")
-                    color: "#4F4F4F"
-                    font.pointSize: 10
-                }
-
-                Item {
-                    height: parent.height
-                    width: 5
-                }
-
-                Text {
-                    height: parent.height
-                    width: 106
-                    text: qsTr("date and time")
-                    color: "#4F4F4F"
-                    font.pointSize: 10
-                }
-            }
-        }
-    }
-
-    Component {
-        id: listFooter
-        Row {
-            visible: paginator.totalPages > 1
-            Item {
-                width: 10
-                height: 5
-            }
-            Text {
-                height: 60
-                text: qsTr("page %1 of %2").arg(paginator.currentPage).arg(paginator.totalPages)
-                color: "#4F4F4F"
-            }
-        }
-    }
-
     FilterListModel {
         id: modelList
         source: column.dataModel
@@ -198,6 +179,6 @@ MenuColumn {
 
     QtObject {
         id: privateProps
-        property int elementsOnPage: 6
+        property int elementsOnPage: 8
     }
 }

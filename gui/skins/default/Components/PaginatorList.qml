@@ -14,6 +14,8 @@ Item {
     property alias buttonVisible: button.visible
     property alias currentIndex: internalList.currentIndex
     property alias source: background.source
+    property alias spacing: spacing.height
+    property alias leftMargin: leftMargin.width
 
     property int elementsOnPage: 6
     property alias currentPage: paginator.currentPage
@@ -42,35 +44,49 @@ Item {
         height: parent.height
     }
 
+    Item {
+        id: leftMargin
+        anchors.left: parent.left
+        width: 0
+    }
+
     ListView {
         id: internalList
         interactive: false
         currentIndex: -1
+        // we need to set width and height to at least 1 otherwise the ListView
+        // will consider to have zero children and the Component.onCompleted code
+        // will not work as expected
+        width: 1
+        height: 1
+        anchors.left: leftMargin.right
+    }
+
+    Item {
+        id: spacing
+        anchors.top: internalList.bottom
+        height: 0
     }
 
     Item {
         id: bottomRow
-        height: button.height / 100 * 150
+        height: button.height
         anchors.left: internalList.left
         anchors.right: internalList.right
-        anchors.bottom: internalList.bottom
+        anchors.top: spacing.bottom
 
         Paginator {
             id: paginator
             totalPages: computePagesFromModelSize(internalList.model.count, elementsOnPage)
             anchors.left: parent.left
-            anchors.leftMargin: parent.width / 100 * 2
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: parent.height / 100 * 15
+            anchors.leftMargin: parent.width / 100 * 1
         }
 
         ButtonThreeStates {
             id: button
             visible: false
             anchors.right: parent.right
-            anchors.rightMargin: parent.width / 100 * 2
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: parent.height / 100 * 15
+            anchors.rightMargin: parent.width / 100 * 1
             defaultImage: "../images/common/button_delete_all.svg"
             pressedImage: "../images/common/button_delete_all_press.svg"
             shadowImage: "../images/common/shadow_button_delete_all.svg"
@@ -89,11 +105,12 @@ Item {
             // this way, we avoid to use magic numbers (bottom-up approach).
             // See MenuContainer docs to know why we need to set the width
             // Items that may go into a MenuColumn.
-            var numChildren = internalList.children[0].children.length
-            var maxWidth = 0
-            for (var i = 0; i < numChildren; i++)
-                maxWidth = Math.max(maxWidth, internalList.children[0].children[i].width)
-            width = maxWidth
+            var delegateWidth = internalList.children[0].children[0].width
+            width = delegateWidth
+            internalList.width = delegateWidth
+            var delegateHeight = internalList.children[0].children[0].height
+            internalList.height = delegateHeight * elementsOnPage
+            height = internalList.height + bottomRow.height
         }
     }
 }
