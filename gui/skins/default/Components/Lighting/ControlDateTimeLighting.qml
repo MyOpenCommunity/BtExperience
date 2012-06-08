@@ -72,7 +72,7 @@ Item {
     function rightPlusClicked() {
         if(control.mode === 0) {
             // sec
-            if(centerColumnValue >= 59)
+            if(rightColumnValue >= 59)
                 return
         }
         else {
@@ -114,7 +114,7 @@ Item {
     function rightMinusClicked() {
         if(control.mode === 0) {
             // sec
-            if(centerColumnValue <= 0)
+            if(rightColumnValue <= 0)
                 return
         }
         else {
