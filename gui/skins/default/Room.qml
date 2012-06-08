@@ -15,17 +15,6 @@ Page {
         id: translations
     }
 
-    ToolBar {
-        id: toolbar
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: systemsButton
         backButton: false

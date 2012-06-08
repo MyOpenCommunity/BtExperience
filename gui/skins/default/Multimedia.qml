@@ -6,17 +6,6 @@ Page {
     id: multimedia
     source: "images/multimedia.jpg"
 
-    ToolBar {
-        id: toolbar
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
-    Constants {
-        id: constants
-    }
-
     NavigationBar {
         id: systemsButton
         systemsButton: false

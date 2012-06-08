@@ -5,6 +5,7 @@ import "js/Stack.js" as Stack
 
 Page {
     id: videoCamera
+    source: "images/videocitofonia.jpg"
 
     property QtObject camera: null
 
@@ -31,209 +32,189 @@ Page {
     signal replayClicked
     signal endCallClicked
 
-    Component.onCompleted: {
-        camera.callEnded.connect(Stack.popPage)
-    }
-
     function endCall(callback) {
         camera.callEnded.disconnect(Stack.popPage)
         camera.endCall()
         callback()
     }
 
-    Image {
-        source: "images/videocitofonia.jpg"
+    function homeButtonClicked() {
+        endCall(Stack.backToHome)
+    }
+
+    Rectangle {
+        id: bg
         anchors.fill: parent
-        Rectangle {
-            id: bg
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.75
+        color: "black"
+        opacity: 0.75
 
-            ToolBar {
-                id: toolbar
-                fontFamily: semiBoldFont.name
-                fontSize: 17
-                onHomeClicked: {
-                    endCall(Stack.backToHome)
-                }
+
+
+        Text {
+            id: title
+            text: videoCamera.title
+            color: "white"
+            x: 103
+            y: 65
+            font.family: semiBoldFont.name
+            font.pixelSize: 18
+        }
+
+        Image {
+            id: next
+            source: "images/common/successivo.png"
+            x: 796
+            y: 56
+            width: 28
+            height: 28
+            MouseArea {
+                anchors.fill: parent
+                onClicked: videoCamera.nextCameraClicked()
             }
+        }
 
-            Column {
-                id: buttonsColumn
-                x: 20
-                width: backButton.width
-                spacing: 10
-                anchors {
-                    top: toolbar.bottom
-                    left: parent.left
-                    topMargin: 35
-                    leftMargin: 20
-                }
 
-                ButtonBack {
-                    id: backButton
-                    onClicked: endCall(Stack.popPage)
-                }
 
-                // TODO: reenable it after May demo! :)
-//                ButtonSystems {
-//                    // 1 is systems page
-//                    onClicked: Stack.showPreviousPage(1)
-//                }
-            }
-
-            Text {
-                id: title
-                text: videoCamera.title
-                color: "white"
-                x: 103
-                y: 65
-                font.family: semiBoldFont.name
-                font.pixelSize: 18
+        Column {
+            id: commandColumn
+            x: 590
+            y: 434
+            width: 145
+            spacing: 10
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+                bottomMargin: 26
+                rightMargin: 65
             }
 
             Image {
-                id: next
-                source: "images/common/successivo.png"
-                x: 796
-                y: 56
-                width: 28
-                height: 28
+                source: "images/common/btn_comando.png"
+                visible: videoCamera.commandStairLightVisible
+                width: 145
+                height: 40
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: videoCamera.nextCameraClicked()
+                    onPressed: camera.onStairLightActivate()
+                    onReleased: camera.onStairLightRelease()
+                }
+                Text {
+                    text: qsTr("STAIRLIGHT")
+                    font.pointSize: 10
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
+                    }
                 }
             }
 
-            Column {
-                id: propertyColumn
-                x: 590
+            Image {
+                source: "images/common/btn_comando.png"
+                visible: videoCamera.commandLockVisible
                 width: 145
-                spacing: 10
-                anchors {
-                    top: toolbar.bottom
-                    right: parent.right
-                    topMargin: 20
-                    rightMargin: 65
+                height: 40
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: camera.openLock()
+                    onReleased: camera.releaseLock()
                 }
-
-                ControlSlider2 {
-                    visible: videoCamera.volumeVisible
-                    title: qsTr("VOLUME")
-                    value: videoCamera.volume
-                    onPlusClicked: videoCamera.plusVolumeClicked()
-                    onMinusClicked: videoCamera.minusVolumeClicked()
-                }
-                Image {
-                    source: "images/common/btn_comando.png"
-                    width: parent.width
-                    height: 40
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: videoCamera.muteClicked()
+                Text {
+                    text: qsTr("OPEN LOCK")
+                    font.pointSize: 10
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
                     }
-                    Text {
-                        text: qsTr("MUTE")
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
-                    }
-                }
-
-                ControlSlider2 {
-                    visible: videoCamera.brightnessVisible
-                    title: qsTr("BRIGHTNESS")
-                    value: camera.brightness
-                    onPlusClicked: if (camera.brightness < 100) camera.brightness += 1
-                    onMinusClicked: if (camera.brightness > 00) camera.brightness -= 1
-                }
-
-                ControlSlider2 {
-                    visible: videoCamera.contrastVisible
-                    title: qsTr("CONTRAST")
-                    value: camera.contrast
-                    onPlusClicked: if (camera.contrast < 100) camera.contrast += 1
-                    onMinusClicked: if (camera.contrast > 00) camera.contrast -= 1
                 }
             }
 
-            Column {
-                id: commandColumn
-                x: 590
-                y: 434
+            Image {
+                source: "images/common/btn_comando.png"
+                visible: videoCamera.commandAnswerVisible
                 width: 145
-                spacing: 10
-                anchors {
-                    bottom: parent.bottom
-                    right: parent.right
-                    bottomMargin: 26
-                    rightMargin: 65
-                }
-
-                Image {
-                    source: "images/common/btn_comando.png"
-                    visible: videoCamera.commandStairLightVisible
-                    width: 145
-                    height: 40
-                    MouseArea {
-                        anchors.fill: parent
-                        onPressed: camera.onStairLightActivate()
-                        onReleased: camera.onStairLightRelease()
-                    }
-                    Text {
-                        text: qsTr("STAIRLIGHT")
-                        font.pointSize: 10
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
+                height: 40
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("Audio button clicked")
+                        videoCamera.camera.answerCall()
                     }
                 }
-
-                Image {
-                    source: "images/common/btn_comando.png"
-                    visible: videoCamera.commandLockVisible
-                    width: 145
-                    height: 40
-                    MouseArea {
-                        anchors.fill: parent
-                        onPressed: camera.openLock()
-                        onReleased: camera.releaseLock()
-                    }
-                    Text {
-                        text: qsTr("OPEN LOCK")
-                        font.pointSize: 10
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
-                    }
-                }
-
-                Image {
-                    source: "images/common/btn_comando.png"
-                    visible: videoCamera.commandAnswerVisible
-                    width: 145
-                    height: 40
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            console.log("Audio button clicked")
-                            videoCamera.camera.answerCall()
-                        }
-                    }
-                    Text {
-                        text: qsTr("ANSWER CALL")
-                        font.pointSize: 10
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
+                Text {
+                    text: qsTr("ANSWER CALL")
+                    font.pointSize: 10
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
                     }
                 }
             }
+        }
+    }
+
+    NavigationBar {
+        systemsButton: false
+        text: qsTr("video")
+        anchors {
+            top: toolbar.bottom
+            left: parent.left
+            topMargin: constants.navbarTopMargin
+            bottom: parent.bottom
+        }
+
+        onBackClicked: endCall(Stack.popPage)
+    }
+
+    Column {
+        id: propertyColumn
+        x: 590
+        width: 145
+        spacing: 10
+        anchors {
+            top: toolbar.bottom
+            right: parent.right
+            topMargin: 20
+            rightMargin: 65
+        }
+
+        ControlSlider2 {
+            visible: videoCamera.volumeVisible
+            title: qsTr("VOLUME")
+            value: videoCamera.volume
+            onPlusClicked: videoCamera.plusVolumeClicked()
+            onMinusClicked: videoCamera.minusVolumeClicked()
+        }
+        Image {
+            source: "images/common/btn_comando.png"
+            width: parent.width
+            height: 40
+            MouseArea {
+                anchors.fill: parent
+                onClicked: videoCamera.muteClicked()
+            }
+            Text {
+                text: qsTr("MUTE")
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+            }
+        }
+
+        ControlSlider2 {
+            visible: videoCamera.brightnessVisible
+            title: qsTr("BRIGHTNESS")
+            value: camera.brightness
+            onPlusClicked: if (camera.brightness < 100) camera.brightness += 1
+            onMinusClicked: if (camera.brightness > 00) camera.brightness -= 1
+        }
+
+        ControlSlider2 {
+            visible: videoCamera.contrastVisible
+            title: qsTr("CONTRAST")
+            value: camera.contrast
+            onPlusClicked: if (camera.contrast < 100) camera.contrast += 1
+            onMinusClicked: if (camera.contrast > 00) camera.contrast -= 1
         }
     }
 
@@ -254,5 +235,10 @@ Page {
             clip: false
             smooth: false
         }
+    }
+
+    Component.onCompleted: {
+        camera.callEnded.connect(Stack.popPage)
+        toolbar.z = 1
     }
 }

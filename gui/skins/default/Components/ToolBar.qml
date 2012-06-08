@@ -7,10 +7,8 @@ Item {
     id: toolbar
 
     property string imagesPath: "../images/"
-    property string fontFamily
     property int fontSize: 15
     signal homeClicked
-    signal exitClicked
 
     width: 1024
     height: toolbar_top.height + toolbar_bottom.height
@@ -55,11 +53,10 @@ Item {
             width: 56
             height: toolbar_top.height
 
-            Text {
+            UbuntuLightText {
                 id: temperature
                 text: "19°C"
                 font.pixelSize: toolbar.fontSize
-                font.family: toolbar.fontFamily
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -74,10 +71,9 @@ Item {
             width: 113
             height: toolbar_top.height
 
-            Text {
+            UbuntuLightText {
                 id: date
                 font.pixelSize: toolbar.fontSize
-                font.family: toolbar.fontFamily
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 function setDate(d) {
@@ -96,11 +92,10 @@ Item {
             width: 65
             height: toolbar_top.height
 
-            Text {
+            UbuntuLightText {
                 id: time
                 text: DateTime.format()["time"]
                 font.pixelSize: toolbar.fontSize
-                font.family: toolbar.fontFamily
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 function setTime(d) {
