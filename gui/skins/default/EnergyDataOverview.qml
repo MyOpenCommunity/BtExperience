@@ -8,8 +8,14 @@ import "js/RowColumnHelpers.js" as Helper
 
 
 Page {
+    function systemsButtonClicked() {
+        Stack.showPreviousPage(1)
+    }
+
     id: page
     source: "images/scenari.jpg" // TODO mettere lo sfondo giusto
+    text: translations.get("ENERGY_TYPE", "Consumption Management")
+    showSystemsButton: true
 
     Names {
         id: translations
@@ -18,35 +24,6 @@ Page {
     FilterListModel {
         id: energiesCounters
         filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "general"}]
-    }
-
-    ToolBar {
-        id: toolbar
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        // TODO mettere le seguenti voci direttamente dentro ToolBar?
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
-    Constants {
-        id: constants
-    }
-
-    NavigationBar {
-        id: buttonsColumn
-        anchors {
-            top: toolbar.bottom
-            left: parent.left
-            topMargin: constants.navbarTopMargin
-            bottom: parent.bottom
-        }
-
-        onBackClicked: Stack.popPage()
-        onSystemsClicked: Stack.showPreviousPage(1)
-        text: translations.get("ENERGY_TYPE", "Consumption Management")
     }
 
     Column {

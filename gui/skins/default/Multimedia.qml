@@ -5,29 +5,8 @@ import "js/Stack.js" as Stack
 Page {
     id: multimedia
     source: "images/multimedia.jpg"
-
-    ToolBar {
-        id: toolbar
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
-    Constants {
-        id: constants
-    }
-
-    NavigationBar {
-        id: systemsButton
-        systemsButton: false
-        anchors.left: parent.left
-        anchors.top: toolbar.bottom
-        anchors.topMargin: constants.navbarTopMargin
-        anchors.bottom: parent.bottom
-
-        onBackClicked: Stack.popPage()
-        text: qsTr("multimedia")
-    }
+    text: qsTr("multimedia")
+    showSystemsButton: false
 
     Image {
         id: addWeblinkButton
@@ -35,8 +14,8 @@ Page {
         width: weblinkView.width
         height: 50
         anchors {
-            top: systemsButton.top
-            left: systemsButton.right
+            top: navigationBar.top
+            left: navigationBar.right
             leftMargin: 40
             right: multimedia.right
             rightMargin: 40
@@ -84,7 +63,7 @@ Page {
         anchors {
             top: addWeblinkButton.bottom
             topMargin: 10
-            left: systemsButton.right
+            left: navigationBar.right
             leftMargin: 40
             right: multimedia.right
             rightMargin: 40

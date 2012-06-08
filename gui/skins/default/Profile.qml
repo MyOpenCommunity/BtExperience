@@ -7,36 +7,14 @@ Page {
     id: profilePage
     source: 'images/profiles.jpg'
     property variant profile
-
-    ToolBar {
-        id: toolbar
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
-
-    Constants {
-        id: constants
-    }
-
-    NavigationBar {
-        id: navbar
-        systemsButton: false
-        anchors.topMargin: constants.navbarTopMargin
-        anchors.top: toolbar.bottom
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-
-        onBackClicked: Stack.popPage()
-        text: profile.description
-    }
+    text: profile.description
+    showSystemsButton: false
 
     Pannable {
         id: pannable
-        anchors.left: navbar.right
+        anchors.left: navigationBar.right
         anchors.leftMargin: parent.width / 100 * 1
-        anchors.top: navbar.top
+        anchors.top: navigationBar.top
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 100 * 5
         anchors.right: parent.right

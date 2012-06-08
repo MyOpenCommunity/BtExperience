@@ -3,7 +3,7 @@ import "js/Stack.js" as Stack
 import BtObjects 1.0 // a temporary workaround to load immediately the BtObjects module
 import Components 1.0
 
-Page {
+BasePage {
     id: mainarea
     source: "images/home/home.jpg"
 
@@ -32,9 +32,11 @@ Page {
 
     ToolBar {
         id: toolbar
-        onExitClicked: console.log("exit")
-        fontFamily: semiBoldFont.name
-        fontSize: 17
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
     }
 
     ListView {

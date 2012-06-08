@@ -15,6 +15,10 @@ Page {
     property int valueType
     property string keyString
 
+    function systemsButtonClicked() {
+        Stack.showPreviousPage(1)
+    }
+
     Names {
         id: translations
     }
@@ -42,35 +46,8 @@ Page {
 
 
     anchors.fill: parent
-
-    ToolBar {
-        id: toolbar
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        // TODO mettere le seguenti voci direttamente dentro ToolBar?
-        fontFamily: semiBoldFont.name
-        fontSize: 17
-        onHomeClicked: Stack.backToHome()
-    }
-
-    Constants {
-        id: constants
-    }
-
-    NavigationBar {
-        id: buttonsColumn
-        anchors {
-            top: toolbar.bottom
-            left: parent.left
-            topMargin: constants.navbarTopMargin
-            bottom: parent.bottom
-        }
-
-        onBackClicked: Stack.popPage()
-        onSystemsClicked: Stack.showPreviousPage(1)
-        text: translations.get("ENERGY_TYPE", page.modelObject.energyType)
-    }
+    text: translations.get("ENERGY_TYPE", page.modelObject.energyType)
+    showSystemsButton: true
 
     Column {
         id: panel
