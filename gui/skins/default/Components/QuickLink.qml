@@ -8,8 +8,8 @@ Item {
     id: bgQuick
 
     property alias imageSource: icon.source
-    property alias text: label.text
-    property alias color: label.color
+    property string text: ""
+    property color color: "white"
     property string address: "www.corriere.it"
     property string page: "Browser.qml"
     property bool editable: true
@@ -26,7 +26,18 @@ Item {
 
     QtObject {
         id: privateProps
-        property string currentText: ""
+
+        function startEdit() {
+            label.forceActiveFocus()
+            label.openSoftwareInputPanel()
+        }
+
+        function editDone() {
+            if (label.text !== bgQuick.text) {
+                bgQuick.editCompleted()
+                bgQuick.text = label.text
+            }
+        }
     }
 
     Column {
@@ -71,21 +82,14 @@ Item {
         TextInput {
             id: label
 
-            color: "white"
+            text: bgQuick.text
+            color: bgQuick.color
             anchors.horizontalCenter: parent.horizontalCenter
-            text: title
             horizontalAlignment: Text.AlignHCenter
             width: icon.width
 
             activeFocusOnPress: false
-            onActiveFocusChanged: {
-                if (!activeFocus) { // edit done
-                    if (label.text !== privateProps.currentText) {
-                        bgQuick.editCompleted()
-                        label.text = privateProps.currentText
-                    }
-                }
-            }
+            onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
         }
     }
 
@@ -116,11 +120,7 @@ Item {
             }
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    label.forceActiveFocus()
-                    label.openSoftwareInputPanel()
-                    privateProps.currentText = label.text
-                }
+                onClicked: privateProps.startEdit()
             }
         }
 
