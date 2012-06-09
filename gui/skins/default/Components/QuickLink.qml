@@ -28,15 +28,17 @@ Item {
         id: privateProps
 
         function startEdit() {
-            label.forceActiveFocus()
-            label.openSoftwareInputPanel()
+            labelLoader.sourceComponent = labelInputComponent
+            labelLoader.item.forceActiveFocus()
+            labelLoader.item.openSoftwareInputPanel()
         }
 
         function editDone() {
-            if (label.text !== bgQuick.text) {
+            if (labelLoader.item.text !== bgQuick.text) {
                 bgQuick.editCompleted()
-                bgQuick.text = label.text
+                bgQuick.text = labelLoader.item.text
             }
+            labelLoader.sourceComponent = labelComponent
         }
     }
 
@@ -79,17 +81,31 @@ Item {
             }
         }
 
-        TextInput {
-            id: label
-
-            text: bgQuick.text
-            color: bgQuick.color
+        Loader {
+            id: labelLoader
             anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
             width: icon.width
+            sourceComponent: labelComponent
+        }
 
-            activeFocusOnPress: false
-            onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
+        Component {
+            id: labelComponent
+            Text {
+                text: bgQuick.text
+                color: bgQuick.color
+                horizontalAlignment: Text.AlignHCenter
+            }
+        }
+
+        Component {
+            id: labelInputComponent
+            TextInput {
+                text: bgQuick.text
+                color: bgQuick.color
+                horizontalAlignment: Text.AlignHCenter
+                activeFocusOnPress: false
+                onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
+            }
         }
     }
 
