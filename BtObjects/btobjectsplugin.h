@@ -20,6 +20,9 @@ public:
 	void initializeEngine(QDeclarativeEngine *engine, const char *uri);
 	void registerTypes(const char *uri);
 
+private slots:
+	void updateObjectName();
+
 private:
 	ObjectDataModel objmodel;
 	MediaDataModel room_model, floor_model, object_link_model, systems_model, note_model, profile_model, media_link_model;

@@ -50,6 +50,13 @@ public:
 		return items.value(uii);
 	}
 
+	/*!
+		\brief Find the uii corresponding to the given object.
+
+		Returns \c -1 if the Object is not in the map.
+	*/
+	int findUii(QObject *value) const;
+
 private slots:
 	void elementDestroyed(QObject *obj);
 
