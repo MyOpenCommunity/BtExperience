@@ -28,19 +28,18 @@
 #include "medialink.h"
 #include "note.h"
 
-#include <QtDeclarative/qdeclarative.h>
-#include <QtDeclarative/QDeclarativeEngine>
-#include <QtDeclarative/QDeclarativeContext>
+#include <qdeclarative.h> // qmlRegisterUncreatableType
+#include <QDeclarativeEngine>
+#include <QDeclarativeContext>
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
-#include <QApplication>
-
+#include <QCoreApplication> // qApp
 #include <QDomNode>
+
 
 #define CONF_FILE "conf.xml"
 #define LAYOUT_FILE "layout.xml"
-
 
 QHash<GlobalField, QString> *bt_global::config;
 

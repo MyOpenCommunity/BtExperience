@@ -1,11 +1,11 @@
 #ifndef BTOBJECTSPLUGIN_H
 #define BTOBJECTSPLUGIN_H
 
-#include <QtDeclarative/QDeclarativeExtensionPlugin>
-
 #include "objectmodel.h"
 #include "globalmodels.h"
 #include "uiimapper.h"
+
+#include <QDeclarativeExtensionPlugin>
 
 class QDomDocument;
 class QDomNode;
