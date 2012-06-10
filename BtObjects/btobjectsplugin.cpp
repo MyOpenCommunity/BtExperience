@@ -179,6 +179,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			{
 				connect(p.second, SIGNAL(nameChanged()), SLOT(updateObjectName()));
 				uii_map.insert(p.first, p.second);
+				uii_to_id[p.first] = id;
 				objmodel << p.second;
 			}
 		}
@@ -193,18 +194,29 @@ void BtObjectsPlugin::updateObjectName()
 	ObjectInterface *obj = qobject_cast<ObjectInterface *>(sender());
 	if (!obj)
 	{
-		qWarning() << "Try to update the name for an object that is not an ObjectInterface";
+		qWarning() << "Try to update the name for an object" << obj
+			<< "that is not an ObjectInterface";
 		return;
 	}
 
 	int uii = uii_map.findUii(obj);
 	if (uii == -1)
 	{
-		qWarning() << "The object who tries to update its name is not in the uii_map";
+		qWarning() << "The object " << obj << "is not in the uii_map";
 		return;
 	}
 
-	qDebug() << "Save the name" << obj->getName() << "for object with uii:" << uii;
+	if (!uii_to_id.contains(uii))
+	{
+		qWarning() << "Unknown id for the uii:" << uii;
+		return;
+	}
+
+	qDebug() << "Save the name" << obj->getName() << "for object with uii:"
+		<< uii << "and id:" << uii_to_id[uii];
+
+
+
 }
 
 void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
