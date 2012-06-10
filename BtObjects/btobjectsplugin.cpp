@@ -82,7 +82,6 @@ namespace
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
 	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath());
-	QDomDocument document;
 	if (!fh.exists() || !document.setContent(&fh))
 		qFatal("The config file %s does not seem a valid xml configuration file", qPrintable(QFileInfo(fh).absoluteFilePath()));
 
@@ -212,11 +211,29 @@ void BtObjectsPlugin::updateObjectName()
 		return;
 	}
 
-	qDebug() << "Save the name" << obj->getName() << "for object with uii:"
-		<< uii << "and id:" << uii_to_id[uii];
+	QString attribute_name = "descr"; // for the property "name"
+	foreach (QDomNode xml_obj, getChildren(document.documentElement(), "obj"))
+	{
+		if (uii_to_id[uii] == getIntAttribute(xml_obj, "id"))
+		{
+			foreach (QDomNode xml_ist, getChildren(xml_obj, "ist"))
+			{
+				if (uii == getIntAttribute(xml_ist, "uii"))
+				{
+					if (!setAttribute(xml_ist, attribute_name, obj->getName()))
+						qWarning() << "Attribute" << attribute_name
+							<< "not found for the node with uii:" << uii;
+					break;
+				}
+			}
+		}
+	}
 
-
-
+	QString filename = QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath();
+	if (!saveXml(document, filename))
+		qWarning() << "Error saving the config file" << filename;
+	else
+		qDebug() << "Config file saved";
 }
 
 void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)

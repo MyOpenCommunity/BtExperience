@@ -6,9 +6,9 @@
 #include "uiimapper.h"
 
 #include <QDeclarativeExtensionPlugin>
+#include <QDomDocument>
 #include <QHash>
 
-class QDomDocument;
 class QDomNode;
 
 
@@ -30,6 +30,7 @@ private:
 	GlobalModels global_models;
 	UiiMapper uii_map;
 	QHash<int, int> uii_to_id;
+	QDomDocument document;
 
 	// used to parse the made-up configuration we use for testing, remove after switching
 	// to the new configuration
