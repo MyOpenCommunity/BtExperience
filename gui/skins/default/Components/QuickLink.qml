@@ -95,6 +95,7 @@ Item {
                 color: bgQuick.color
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 13
+                elide: Text.ElideRight
             }
         }
 

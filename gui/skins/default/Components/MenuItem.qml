@@ -102,6 +102,7 @@ Item {
                 text: menuItem.name
                 font.pixelSize: 13
                 color:  labelLoader.textColor
+                elide: Text.ElideRight
             }
         }
 
