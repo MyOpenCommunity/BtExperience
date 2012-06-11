@@ -45,6 +45,7 @@ MenuColumn 1.0 MenuColumn.qml
 MenuContainer 1.0 MenuContainer.qml
 MenuItem 1.0 MenuItem.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
+MenuShadow 1.0 MenuShadow.qml
 MenuTitle 1.0 MenuTitle.qml
 NavigationBar 1.0 NavigationBar.qml
 PageAnimation 1.0 PageAnimation.qml
@@ -67,5 +68,3 @@ Text_12pt_bold 1.0 Text_12pt_bold.qml
 ToolBar 1.0 ToolBar.qml
 TwoButtonsSettings 1.0 TwoButtonsSettings.qml
 TwoButtonsSettingsLarge 1.0 TwoButtonsSettingsLarge.qml
-UbuntuLightText 1.0 UbuntuLightText.qml
-UbuntuMediumText 1.0 UbuntuMediumText.qml

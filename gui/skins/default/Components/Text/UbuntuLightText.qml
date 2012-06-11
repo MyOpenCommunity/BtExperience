@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import "../js/MainContainer.js" as Container
+import "../../js/MainContainer.js" as Container
 
 Text {
     font.family: {
