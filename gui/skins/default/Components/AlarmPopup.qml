@@ -13,9 +13,8 @@ Image {
     signal ignoreClicked
     signal alarmLogClicked
 
-    UbuntuLightText {
+    UbuntuMediumText {
         id: tagline
-        font.bold: true
         font.pixelSize: 18
         text: qsTr("alarm!")
         anchors.horizontalCenter: parent.horizontalCenter

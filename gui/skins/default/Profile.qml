@@ -35,13 +35,12 @@ Page {
                 anchors.fill: parent
             }
 
-            UbuntuLightText {
+            UbuntuMediumText {
                 id: headerProfileRect
                 anchors.top: parent.top
                 anchors.left: profileRect.left
                 text: qsTr("profile")
                 font.capitalization: Font.AllUppercase
-                font.bold: true
                 font.pixelSize: 16
             }
 
@@ -72,14 +71,13 @@ Page {
                 }
             }
 
-            UbuntuLightText {
+            UbuntuMediumText {
                 id: headerNote
                 anchors.top: profileRect.bottom
                 anchors.topMargin: 30
                 anchors.left: profileRect.left
                 text: qsTr("note")
                 font.capitalization: Font.AllUppercase
-                font.bold: true
                 font.pixelSize: 16
             }
 

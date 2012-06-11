@@ -23,7 +23,7 @@ Item {
         UbuntuLightText {
             id: labelText
             text: modelData
-            font.pixelSize: 12
+            font.pixelSize: 13
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
         }

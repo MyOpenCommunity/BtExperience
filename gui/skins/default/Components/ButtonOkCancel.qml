@@ -10,7 +10,7 @@ Row {
         source: "../images/common/btn_OKAnnulla.png"
         UbuntuLightText {
             text: qsTr("ok")
-            font.pixelSize: 16
+            font.pixelSize: 14
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
         }
@@ -24,7 +24,7 @@ Row {
         source: "../images/common/btn_OKAnnulla.png"
         UbuntuLightText {
             text: qsTr("cancel")
-            font.pixelSize: 16
+            font.pixelSize: 14
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
         }
