@@ -19,7 +19,7 @@ SvgImage {
         anchors.topMargin: 5
         anchors.left: parent.left
         anchors.leftMargin: 7
-        font.pointSize: 10.5
+        font.pixelSize: 10
         color: "#444546"
         text: buttonSlider.description
     }
@@ -31,7 +31,7 @@ SvgImage {
         anchors.topMargin: 5
         anchors.right: parent.right
         anchors.rightMargin: 15
-        font.pointSize: 10.5
+        font.pixelSize: 10
         color: "#444546"
     }
 

@@ -40,7 +40,7 @@ Image {
                 id: numberText
                 text: timeButtons.value
                 color: "#5b5b5b"
-                font.pointSize: 18
+                font.pixelSize: 18
                 font.bold: true
                 anchors.horizontalCenter: parent.horizontalCenter
             }

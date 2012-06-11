@@ -56,7 +56,7 @@ Item {
         UbuntuLightText {
             id: titleText
             text: title; width: parent.width; wrapMode: Text.WordWrap
-            font { bold: true; pointSize: 16 }
+            font { bold: true; pixelSize: 16 }
             textFormat: Text.RichText
         }
 

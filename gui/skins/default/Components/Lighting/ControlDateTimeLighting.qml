@@ -255,7 +255,7 @@ Item {
 
         text: formatNumberLength(leftColumnValue, 2)
         color: "#5b5b5b"
-        font.pointSize: 18
+        font.pixelSize: 18
         font.bold: true
         anchors.horizontalCenter: buttonLeftMinus.horizontalCenter
         anchors.bottom: buttonLeftMinus.top
@@ -267,7 +267,7 @@ Item {
 
         text: control.separator
         color: "#5b5b5b"
-        font.pointSize: 18
+        font.pixelSize: 18
         font.bold: true
         anchors.bottom: buttonCenterMinus.top
         anchors.bottomMargin: privateProps.textBottomMargin
@@ -281,7 +281,7 @@ Item {
 
         text: formatNumberLength(centerColumnValue, 2)
         color: "#5b5b5b"
-        font.pointSize: 18
+        font.pixelSize: 18
         font.bold: true
         anchors.horizontalCenter: buttonCenterMinus.horizontalCenter
         anchors.bottom: buttonCenterMinus.top
@@ -294,7 +294,7 @@ Item {
         color: "#5b5b5b"
         text: control.separator
         font.bold: true
-        font.pointSize: 18
+        font.pixelSize: 18
         visible: !twoFields
         anchors.bottom: buttonCenterMinus.top
         anchors.bottomMargin: privateProps.textBottomMargin
@@ -307,7 +307,7 @@ Item {
 
         text: formatNumberLength(rightColumnValue, 2)
         color: "#5b5b5b"
-        font.pointSize: 18
+        font.pixelSize: 18
         font.bold: true
         visible: !twoFields
         anchors.horizontalCenter: buttonRightMinus.horizontalCenter

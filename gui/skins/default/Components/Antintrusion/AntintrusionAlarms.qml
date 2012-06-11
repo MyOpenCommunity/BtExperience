@@ -42,7 +42,7 @@ MenuColumn {
                     width: 147
                     text: qsTr("type")
                     color: "#4F4F4F"
-                    font.pointSize: 10
+                    font.pixelSize: 10
                 }
 
                 Item {
@@ -55,7 +55,7 @@ MenuColumn {
                     width: 111
                     text: qsTr("zone")
                     color: "#4F4F4F"
-                    font.pointSize: 10
+                    font.pixelSize: 10
                 }
 
                 Item {
@@ -68,7 +68,7 @@ MenuColumn {
                     width: 106
                     text: qsTr("date and time")
                     color: "#4F4F4F"
-                    font.pointSize: 10
+                    font.pixelSize: 10
                 }
             }
         }
@@ -112,7 +112,7 @@ MenuColumn {
                             width: 147
                             color: "white"
                             text: itemObject !== undefined ? pageObject.names.get('ALARM_TYPE', itemObject.type) : ""
-                            font.pointSize: 10
+                            font.pixelSize: 10
                         }
 
                         Item {
@@ -126,7 +126,7 @@ MenuColumn {
                             color: "white"
                             text: itemObject !== undefined ? itemObject.number + "\n" + itemObject.name : ""
                             wrapMode: Text.WordWrap
-                            font.pointSize: 10
+                            font.pixelSize: 10
                         }
 
                         Item {
@@ -139,7 +139,7 @@ MenuColumn {
                             width: 106
                             color: "white"
                             text: itemObject !== undefined ? DateTime.format(itemObject.date_time)["date"] + "\n" + DateTime.format(itemObject.date_time)["time"] : ""
-                            font.pointSize: 10
+                            font.pixelSize: 10
                         }
 
                         Item {
@@ -167,7 +167,7 @@ MenuColumn {
             z: 1
             anchors.centerIn: parent
             text: qsTr("No Alarm Present")
-            font.pointSize: 18
+            font.pixelSize: 18
             visible: modelList.count === 0
         }
     }

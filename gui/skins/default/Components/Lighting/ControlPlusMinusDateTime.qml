@@ -124,7 +124,7 @@ Column {
             x: 27
             text: formatNumberLength(leftColumnValue, 2)
             color: "#5b5b5b"
-            font.pointSize: 18
+            font.pixelSize: 18
             font.bold: true
         }
         UbuntuLightText {
@@ -140,7 +140,7 @@ Column {
             y: 10
             text: control.separator
             color: "#5b5b5b"
-            font.pointSize: 18
+            font.pixelSize: 18
             font.bold: true
         }
 
@@ -150,7 +150,7 @@ Column {
             x: 109
             text: formatNumberLength(centerColumnValue, 2)
             color: "#5b5b5b"
-            font.pointSize: 18
+            font.pixelSize: 18
             font.bold: true
         }
         UbuntuLightText {
@@ -167,7 +167,7 @@ Column {
             color: "#5b5b5b"
             text: control.separator
             font.bold: true
-            font.pointSize: 18
+            font.pixelSize: 18
             visible: !twoFields
         }
 
@@ -176,7 +176,7 @@ Column {
             x: 191
             text: formatNumberLength(rightColumnValue, 2)
             color: "#5b5b5b"
-            font.pointSize: 18
+            font.pixelSize: 18
             font.bold: true
             visible: !twoFields
         }

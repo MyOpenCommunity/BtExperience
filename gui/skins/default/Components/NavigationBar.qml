@@ -49,6 +49,6 @@ Item {
         color: "black"
         anchors.centerIn: background
         rotation: 270
-        font.pointSize: 24
+        font.pixelSize: 24
     }
 }

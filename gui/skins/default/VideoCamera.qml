@@ -107,7 +107,7 @@ Page {
                 }
                 UbuntuLightText {
                     text: qsTr("STAIRLIGHT")
-                    font.pointSize: 10
+                    font.pixelSize: 10
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                         verticalCenter: parent.verticalCenter
@@ -127,7 +127,7 @@ Page {
                 }
                 UbuntuLightText {
                     text: qsTr("OPEN LOCK")
-                    font.pointSize: 10
+                    font.pixelSize: 10
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                         verticalCenter: parent.verticalCenter
@@ -149,7 +149,7 @@ Page {
                 }
                 UbuntuLightText {
                     text: qsTr("ANSWER CALL")
-                    font.pointSize: 10
+                    font.pixelSize: 10
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                         verticalCenter: parent.verticalCenter

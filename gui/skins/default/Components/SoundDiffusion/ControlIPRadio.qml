@@ -42,7 +42,7 @@ Image {
         anchors.horizontalCenter: control.horizontalCenter
         text: control.radioName
         font.bold: true
-        font.pointSize: 12
+        font.pixelSize: 12
         color: "#444546"
     }
 }

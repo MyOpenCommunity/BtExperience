@@ -164,7 +164,7 @@ Item {
                 anchors.centerIn: parent
                 text: "X"
                 color: "white"
-                font.pointSize: 12
+                font.pixelSize: 12
             }
 
             MouseArea {

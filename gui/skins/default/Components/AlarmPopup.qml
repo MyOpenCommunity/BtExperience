@@ -16,7 +16,7 @@ Image {
     UbuntuLightText {
         id: tagline
         font.bold: true
-        font.pointSize: 12
+        font.pixelSize: 12
         text: qsTr("alarm!")
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top

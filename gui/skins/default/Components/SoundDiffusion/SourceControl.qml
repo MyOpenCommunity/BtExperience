@@ -187,7 +187,7 @@ MenuColumn {
             UbuntuLightText {
                 y: 10
                 font.bold: true
-                font.pointSize: 12
+                font.pixelSize: 12
                 anchors.horizontalCenter: control.horizontalCenter
                 text: objModel.currentTrack
             }

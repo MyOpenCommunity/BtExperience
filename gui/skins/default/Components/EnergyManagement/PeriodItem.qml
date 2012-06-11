@@ -33,7 +33,7 @@ Item {
         UbuntuLightText {
             id: timeperiod
             text: qsTr("year")
-            font.pointSize: 10
+            font.pixelSize: 10
             color: "black"
             anchors {
                 top: parent.top
@@ -47,7 +47,7 @@ Item {
 
         UbuntuLightText {
             text: element.timepoint
-            font.pointSize: 14
+            font.pixelSize: 14
             color: "black"
             anchors {
                 bottom: parent.bottom
