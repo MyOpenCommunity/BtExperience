@@ -72,7 +72,7 @@ MenuColumn {
             }
         }
 
-        PaginatorList {
+        PaginatorAlarms {
             id: paginator
             anchors {
                 top: realHeader.bottom
