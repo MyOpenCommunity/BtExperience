@@ -64,7 +64,6 @@ ScreenSaverRectangles 1.0 ScreenSaverRectangles.qml
 SlideAnimation 1.0 SlideAnimation.qml
 SmallButton 1.0 SmallButton.qml
 SvgImage 1.0 SvgImage.qml
-Text_12pt_bold 1.0 Text_12pt_bold.qml
 ToolBar 1.0 ToolBar.qml
 TwoButtonsSettings 1.0 TwoButtonsSettings.qml
 TwoButtonsSettingsLarge 1.0 TwoButtonsSettingsLarge.qml

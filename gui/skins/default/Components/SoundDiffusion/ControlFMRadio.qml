@@ -36,11 +36,14 @@ Image {
         }
     }
 
-    Text_12pt_bold {
+    UbuntuLightText {
         id: text1
         y: 10
         anchors.horizontalCenter: control.horizontalCenter
         text: control.radioName
+        font.bold: true
+        font.pointSize: 12
+        color: "#444546"
     }
 
     UbuntuLightText {

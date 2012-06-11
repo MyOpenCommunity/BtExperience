@@ -1,6 +1,8 @@
 import QtQuick 1.1
-import "../../js/logging.js" as Log
 import Components 1.0
+import Components.Text 1.0
+import "../../js/logging.js" as Log
+
 
 Image {
     id: control
@@ -39,10 +41,13 @@ Image {
         }
     }
 
-    Text_12pt_bold {
+    UbuntuLightText {
         id: text1
         y: 10
         anchors.horizontalCenter: control.horizontalCenter
         text: control.songTitle
+        font.bold: true
+        font.pointSize: 12
+        color: "#444546"
     }
 }

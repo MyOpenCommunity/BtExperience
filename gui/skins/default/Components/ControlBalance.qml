@@ -1,4 +1,6 @@
 import QtQuick 1.1
+import Components.Text 1.0
+
 
 Image {
     id: controlBalance
@@ -8,12 +10,15 @@ Image {
     property int percentage: 30
     property string description: qsTr("balance")
 
-    Text_12pt_bold {
+    UbuntuLightText {
         id: labelText
         text: description
         anchors.top: controlBalance.top
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
+        font.bold: true
+        font.pointSize: 12
+        color: "#444546"
     }
 
     Image {
