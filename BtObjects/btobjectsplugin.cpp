@@ -28,19 +28,18 @@
 #include "medialink.h"
 #include "note.h"
 
-#include <QtDeclarative/qdeclarative.h>
-#include <QtDeclarative/QDeclarativeEngine>
-#include <QtDeclarative/QDeclarativeContext>
+#include <qdeclarative.h> // qmlRegisterUncreatableType
+#include <QDeclarativeEngine>
+#include <QDeclarativeContext>
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
-#include <QApplication>
-
+#include <QCoreApplication> // qApp
 #include <QDomNode>
+
 
 #define CONF_FILE "conf.xml"
 #define LAYOUT_FILE "layout.xml"
-
 
 QHash<GlobalField, QString> *bt_global::config;
 
@@ -83,7 +82,6 @@ namespace
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
 	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath());
-	QDomDocument document;
 	if (!fh.exists() || !document.setContent(&fh))
 		qFatal("The config file %s does not seem a valid xml configuration file", qPrintable(QFileInfo(fh).absoluteFilePath()));
 
@@ -178,7 +176,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		{
 			foreach (ObjectPair p, obj_list)
 			{
+				connect(p.second, SIGNAL(nameChanged()), SLOT(updateObjectName()));
 				uii_map.insert(p.first, p.second);
+				uii_to_id[p.first] = id;
 				objmodel << p.second;
 			}
 		}
@@ -186,6 +186,54 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 	if (antintrusion_zones.size())
 		objmodel << createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios);
+}
+
+void BtObjectsPlugin::updateObjectName()
+{
+	ObjectInterface *obj = qobject_cast<ObjectInterface *>(sender());
+	if (!obj)
+	{
+		qWarning() << "Try to update the name for an object" << obj
+			<< "that is not an ObjectInterface";
+		return;
+	}
+
+	int uii = uii_map.findUii(obj);
+	if (uii == -1)
+	{
+		qWarning() << "The object " << obj << "is not in the uii_map";
+		return;
+	}
+
+	if (!uii_to_id.contains(uii))
+	{
+		qWarning() << "Unknown id for the uii:" << uii;
+		return;
+	}
+
+	QString attribute_name = "descr"; // for the property "name"
+	foreach (QDomNode xml_obj, getChildren(document.documentElement(), "obj"))
+	{
+		if (uii_to_id[uii] == getIntAttribute(xml_obj, "id"))
+		{
+			foreach (QDomNode xml_ist, getChildren(xml_obj, "ist"))
+			{
+				if (uii == getIntAttribute(xml_ist, "uii"))
+				{
+					if (!setAttribute(xml_ist, attribute_name, obj->getName()))
+						qWarning() << "Attribute" << attribute_name
+							<< "not found for the node with uii:" << uii;
+					break;
+				}
+			}
+		}
+	}
+
+	QString filename = QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath();
+	if (!saveXml(document, filename))
+		qWarning() << "Error saving the config file" << filename;
+	else
+		qDebug() << "Config file saved";
 }
 
 void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)

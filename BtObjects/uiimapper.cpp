@@ -1,5 +1,6 @@
 #include "uiimapper.h"
 
+#include <QDebug>
 
 void UiiMapper::insert(int uii, QObject *value)
 {
@@ -14,17 +15,26 @@ void UiiMapper::insert(int uii, QObject *value)
 
 void UiiMapper::remove(QObject *value)
 {
-	QMutableHashIterator<int, QObject *> iter(items);
+	int uii = findUii(value);
+	if (uii == -1)
+	{
+		qWarning() << "Try to remove an object not in the list:" << value;
+		return;
+	}
+
+	items.remove(uii);
+}
+
+int UiiMapper::findUii(QObject *value) const
+{
+	QHashIterator<int, QObject *> iter(items);
 	while (iter.hasNext())
 	{
 		iter.next();
 		if (iter.value() == value)
-		{
-			iter.remove();
-			// we are removing only one item
-			break;
-		}
+			return iter.key();
 	}
+	return -1;
 }
 
 void UiiMapper::elementDestroyed(QObject *obj)

@@ -15,6 +15,7 @@ BasePage {
             left: parent.left
             right: parent.right
         }
+        onHomeClicked: Stack.backToHome()
     }
 
     Text {

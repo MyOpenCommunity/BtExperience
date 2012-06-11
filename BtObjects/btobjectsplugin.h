@@ -1,13 +1,14 @@
 #ifndef BTOBJECTSPLUGIN_H
 #define BTOBJECTSPLUGIN_H
 
-#include <QtDeclarative/QDeclarativeExtensionPlugin>
-
 #include "objectmodel.h"
 #include "globalmodels.h"
 #include "uiimapper.h"
 
-class QDomDocument;
+#include <QDeclarativeExtensionPlugin>
+#include <QDomDocument>
+#include <QHash>
+
 class QDomNode;
 
 
@@ -20,11 +21,16 @@ public:
 	void initializeEngine(QDeclarativeEngine *engine, const char *uri);
 	void registerTypes(const char *uri);
 
+private slots:
+	void updateObjectName();
+
 private:
 	ObjectDataModel objmodel;
 	MediaDataModel room_model, floor_model, object_link_model, systems_model, note_model, profile_model, media_link_model;
 	GlobalModels global_models;
 	UiiMapper uii_map;
+	QHash<int, int> uii_to_id;
+	QDomDocument document;
 
 	// used to parse the made-up configuration we use for testing, remove after switching
 	// to the new configuration

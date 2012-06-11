@@ -239,16 +239,17 @@ MenuColumn {
                         anchors {
                             top: parent.top
                             left: parent.left
-                            topMargin: parent.height / 100 * 14
-                            leftMargin: parent.width / 100 * 5
+                            topMargin: parent.height / 100 * 12 // manual alignment to center the image with the text
+                            leftMargin: parent.width / 100 * 6
                         }
                     }
 
                     textAnchors.centerIn: null
                     textAnchors.top: zoneButton.top
-                    textAnchors.topMargin: parent.height / 100 * 3
-                    textAnchors.left: zoneButton.left
-                    textAnchors.leftMargin: parent.width / 100 * 10
+                    textAnchors.topMargin: zoneButton.height / 100 * 6
+                    textAnchors.left: led.right
+                    textAnchors.leftMargin: zoneButton.width / 100 * 6
+                    textAnchors.right: zoneButton.right
                     font.pixelSize: 11
                     horizontalAlignment: Text.AlignLeft
                     defaultImage: "../images/common/button_zones.svg"

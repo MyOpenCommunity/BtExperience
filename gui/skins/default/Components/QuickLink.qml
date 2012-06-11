@@ -8,8 +8,8 @@ Item {
     id: bgQuick
 
     property alias imageSource: icon.source
-    property alias text: label.text
-    property alias color: label.color
+    property string text: ""
+    property color color: "white"
     property string address: "www.corriere.it"
     property string page: "Browser.qml"
     property bool editable: true
@@ -26,7 +26,20 @@ Item {
 
     QtObject {
         id: privateProps
-        property string currentText: ""
+
+        function startEdit() {
+            labelLoader.sourceComponent = labelInputComponent
+            labelLoader.item.forceActiveFocus()
+            labelLoader.item.openSoftwareInputPanel()
+        }
+
+        function editDone() {
+            if (labelLoader.item.text !== bgQuick.text) {
+                bgQuick.editCompleted()
+                bgQuick.text = labelLoader.item.text
+            }
+            labelLoader.sourceComponent = labelComponent
+        }
     }
 
     Column {
@@ -68,23 +81,30 @@ Item {
             }
         }
 
-        TextInput {
-            id: label
-
-            color: "white"
+        Loader {
+            id: labelLoader
             anchors.horizontalCenter: parent.horizontalCenter
-            text: title
-            horizontalAlignment: Text.AlignHCenter
             width: icon.width
+            sourceComponent: labelComponent
+        }
 
-            activeFocusOnPress: false
-            onActiveFocusChanged: {
-                if (!activeFocus) { // edit done
-                    if (label.text !== privateProps.currentText) {
-                        bgQuick.editCompleted()
-                        label.text = privateProps.currentText
-                    }
-                }
+        Component {
+            id: labelComponent
+            Text {
+                text: bgQuick.text
+                color: bgQuick.color
+                horizontalAlignment: Text.AlignHCenter
+            }
+        }
+
+        Component {
+            id: labelInputComponent
+            TextInput {
+                text: bgQuick.text
+                color: bgQuick.color
+                horizontalAlignment: Text.AlignHCenter
+                activeFocusOnPress: false
+                onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
             }
         }
     }
@@ -116,11 +136,7 @@ Item {
             }
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    label.forceActiveFocus()
-                    label.openSoftwareInputPanel()
-                    privateProps.currentText = label.text
-                }
+                onClicked: privateProps.startEdit()
             }
         }
 
