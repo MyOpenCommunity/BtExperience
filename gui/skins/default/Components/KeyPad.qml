@@ -45,7 +45,7 @@ SvgImage {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Text {
+        UbuntuLightText {
             id: titleLabel
             text: mainLabel
             font.capitalization: Font.AllUppercase
@@ -74,7 +74,7 @@ SvgImage {
             Component {
                 id: normalLabelText
 
-                Text {
+                UbuntuLightText {
                     text: labelKeypad.text
                     font.pixelSize: 15
                     horizontalAlignment: Text.AlignHCenter
@@ -86,7 +86,7 @@ SvgImage {
                 id: errorLabelText
                 Image {
                     source: "../images/common/bg_codice_errato.png"
-                    Text {
+                    UbuntuLightText {
                         anchors.fill: parent
                         text: errorLabel
                         font.pixelSize: 15
@@ -102,7 +102,7 @@ SvgImage {
                 id: okLabelText
                 Image {
                     source: "../images/common/bg_codice_ok.png"
-                    Text {
+                    UbuntuLightText {
                         anchors.fill: parent
                         text: okLabel
                         font.pixelSize: 15
@@ -166,7 +166,7 @@ SvgImage {
                 model: 9
                 Image {
                     source: "../images/common/btn_tastiera_numero.png"
-                    Text {
+                    UbuntuLightText {
                         anchors.fill: parent
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
@@ -183,7 +183,7 @@ SvgImage {
             anchors.horizontalCenter: parent.horizontalCenter
             Image {
                 source: "../images/common/btn_tastiera_numero.png"
-                Text {
+                UbuntuLightText {
                     anchors.fill: parent
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -193,7 +193,7 @@ SvgImage {
             }
             Image {
                 source: "../images/common/btn_tastiera_canc.png"
-                Text {
+                UbuntuLightText {
                     anchors.fill: parent
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -214,7 +214,7 @@ SvgImage {
             id: cancelKeypad
             anchors.top: spaceKeypad.bottom
             source: "../images/common/btn_annulla.png"
-            Text {
+            UbuntuLightText {
                 anchors.fill: parent
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
