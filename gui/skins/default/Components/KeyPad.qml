@@ -1,6 +1,6 @@
 import QtQuick 1.1
 
-Column {
+SvgImage {
     id: keypad
 
     property string mainLabel
@@ -11,6 +11,8 @@ Column {
 
     signal cancelClicked
     signal digitClicked(string digit)
+
+    source: "../images/common/panel_keypad.svg"
 
     onCancelClicked: {
         textInserted = ""
@@ -36,23 +38,117 @@ Column {
             labelKeypad.text = helperLabel
     }
 
-    UbuntuLightText {
-        text: mainLabel
-        font.capitalization: Font.AllUppercase
-        font.family: semiBoldFont.name
-        font.pixelSize: 16
-        color: "white"
+    SvgImage {
+        id: display
+
+        source: "../images/common/keypad_display_background.svg"
+        anchors.top: parent.top
+        anchors.topMargin: keypad.height / 100 * 4.65
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        UbuntuLightText {
+            id: titleLabel
+            text: mainLabel
+            font.capitalization: Font.AllUppercase
+            font.pixelSize: 16
+            color: "black"
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Item {
+            id: labelKeypad
+            property string text: helperLabel
+            anchors.top: titleLabel.bottom
+            anchors.bottom: parent.bottom
+            width: parent.width
+            z: 2
+
+            Loader {
+                id: labelLoader
+                anchors.fill: parent
+                sourceComponent: normalLabelText
+            }
+
+            Component {
+                id: normalLabelText
+
+                UbuntuLightText {
+                    text: labelKeypad.text
+                    font.pixelSize: 15
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            Component {
+                id: errorLabelText
+
+                Item {
+                    SvgImage {
+                        id: iconFail
+                        source: "../images/common/icon_input_fail.svg"
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.left
+                        anchors.leftMargin: keypad.width / 100 * 11.95
+                    }
+                    UbuntuLightText {
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.left: iconFail.right
+                        anchors.leftMargin: keypad.width / 100 * 11.95
+                        text: errorLabel
+                        font.pixelSize: 15
+                        font.bold: true
+                        color: "black"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                }
+            }
+
+            Component {
+                id: okLabelText
+
+                Item {
+                    SvgImage {
+                        id: iconCorrect
+                        source: "../images/common/icon_input_correct.svg"
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.left
+                        anchors.leftMargin: keypad.width / 100 * 11.95
+                    }
+                    UbuntuLightText {
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.left: iconCorrect.right
+                        anchors.leftMargin: keypad.width / 100 * 11.95
+                        text: okLabel
+                        font.pixelSize: 15
+                        font.bold: true
+                        color: "black"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                }
+            }
+        }
     }
 
     Item {
-        height: 5
-        width: parent.width
-    }
+        id: keypadBase
 
-    Image {
-        id: image1
-        height: childrenRect.height // we force the height because the image is smaller than the children size
-        source: "../images/common/bg_tastiera_codice.png"
+        anchors {
+            top: display.bottom
+            topMargin: keypad.height / 100 * 6.2
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
 
         Rectangle {
             id: darkRect
@@ -64,130 +160,104 @@ Column {
         }
 
         Item {
-            id: labelKeypad
-            property string text: helperLabel
-            width: parent.width
-            height: 50
-            z: 2
+            id: spaceKeypad
             anchors.top: parent.top
-
-            Loader {
-                id: labelLoader
-                anchors.fill: parent
-                sourceComponent: normalLabelText
-            }
-
-            Component {
-                id: normalLabelText
-                UbuntuLightText {
-                    text: labelKeypad.text
-                    font.pixelSize: 15
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-
-            Component {
-                id: errorLabelText
-                Image {
-                    source: "../images/common/bg_codice_errato.png"
-                    UbuntuLightText {
-                        anchors.fill: parent
-                        text: errorLabel
-                        font.pixelSize: 15
-                        font.bold: true
-                        color: "white"
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                }
-            }
-
-            Component {
-                id: okLabelText
-                Image {
-                    source: "../images/common/bg_codice_ok.png"
-                    UbuntuLightText {
-                        anchors.fill: parent
-                        text: okLabel
-                        font.pixelSize: 15
-                        font.bold: true
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                }
-            }
+            height: keypad.height / 100 * 6.2
+            width: parent.width
         }
 
-
-        Grid {
+        Column {
             id: gridKeypad
-            anchors.top: labelKeypad.bottom
+            anchors.top: spaceKeypad.top
             anchors.horizontalCenter: parent.horizontalCenter
-            rows: 3
-            columns: 3
-            Repeater {
-                model: 9
-                Image {
-                    source: "../images/common/btn_tastiera_numero.png"
-                    UbuntuLightText {
-                        anchors.fill: parent
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
+
+            Row {
+                Repeater {
+                    model: 3
+                    ButtonThreeStates {
+                        defaultImage: "../images/common/button_keypad.svg"
+                        pressedImage: "../images/common/button_keypad_press.svg"
+                        shadowImage: "../images/common/shadow_button_keypad.svg"
                         text: index + 1
-                        MouseArea { anchors.fill: parent; onClicked: keypad.digitClicked(parent.text) }
+                        onClicked: keypad.digitClicked(text)
+                        status: 0
                     }
                 }
             }
-        }
 
-        Row {
-            id: rowKeypad
-            anchors.top: gridKeypad.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            Image {
-                source: "../images/common/btn_tastiera_numero.png"
-                UbuntuLightText {
-                    anchors.fill: parent
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: "0"
-                    MouseArea { anchors.fill: parent; onClicked: keypad.digitClicked(parent.text) }
+            Item {
+                height: keypad.height / 100 * 6.2
+                width: 1
+            }
+
+            Row {
+                Repeater {
+                    model: 3
+                    ButtonThreeStates {
+                        defaultImage: "../images/common/button_keypad.svg"
+                        pressedImage: "../images/common/button_keypad_press.svg"
+                        shadowImage: "../images/common/shadow_button_keypad.svg"
+                        text: index + 4
+                        onClicked: keypad.digitClicked(text)
+                        status: 0
+                    }
                 }
             }
-            Image {
-                source: "../images/common/btn_tastiera_canc.png"
-                UbuntuLightText {
-                    anchors.fill: parent
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: qsTr("C")
-                    MouseArea { anchors.fill: parent; onClicked: keypad.digitClicked(parent.text) }
+
+            Item {
+                height: keypad.height / 100 * 6.2
+                width: 1
+            }
+
+            Row {
+                Repeater {
+                    model: 3
+                    ButtonThreeStates {
+                        defaultImage: "../images/common/button_keypad.svg"
+                        pressedImage: "../images/common/button_keypad_press.svg"
+                        shadowImage: "../images/common/shadow_button_keypad.svg"
+                        text: index + 7
+                        onClicked: keypad.digitClicked(text)
+                        status: 0
+                    }
                 }
             }
         }
 
         Item {
-            id: spaceKeypad
-            anchors.top: rowKeypad.bottom
-            height: 5
+            id: spaceKeypad2
+            anchors.top: gridKeypad.bottom
+            height: keypad.height / 100 * 6.2
             width: parent.width
         }
 
-        Image {
-            id: cancelKeypad
-            anchors.top: spaceKeypad.bottom
-            source: "../images/common/btn_annulla.png"
-            UbuntuLightText {
-                anchors.fill: parent
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                text: qsTr("cancel")
-                font.pixelSize: 15
-                font.capitalization: Font.AllUppercase
+        Row {
+            id: rowKeypad
+            anchors.top: spaceKeypad2.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
 
+            ButtonThreeStates {
+                defaultImage: "../images/common/button_key_delete.svg"
+                pressedImage: "../images/common/button_key_delete_press.svg"
+                shadowImage: "../images/common/shadow_button_key_delete.svg"
+                text: ""
+                onClicked: keypad.digitClicked("C")
+                status: 0
+
+                SvgImage {
+                    source: parent.state === "pressed" ? "../images/common/key_delete_press.svg" : "../images/common/key_delete.svg"
+                    anchors.centerIn: parent
+                }
             }
-            MouseArea { anchors.fill: parent; onClicked: keypad.cancelClicked() }
+
+            ButtonThreeStates {
+                defaultImage: "../images/common/button_keypad.svg"
+                pressedImage: "../images/common/button_keypad_press.svg"
+                shadowImage: "../images/common/shadow_button_keypad.svg"
+                text: "0"
+                onClicked: keypad.digitClicked(text)
+                status: 0
+            }
         }
     }
 
@@ -195,11 +265,17 @@ Column {
         State {
             name: "error"
             PropertyChanges { target: labelLoader; sourceComponent: errorLabelText }
+            PropertyChanges { target: titleLabel; visible: false }
+            PropertyChanges { target: labelKeypad; anchors.fill: parent }
+            PropertyChanges { target: labelKeypad; anchors.margins: keypad.height / 100 * 4.65 }
             PropertyChanges { target: darkRect; opacity: 0.7 }
         },
         State {
             name: "ok"
             PropertyChanges { target: labelLoader; sourceComponent: okLabelText }
+            PropertyChanges { target: titleLabel; visible: false }
+            PropertyChanges { target: labelKeypad; anchors.fill: parent }
+            PropertyChanges { target: labelKeypad; anchors.margins: keypad.height / 100 * 4.65 }
             PropertyChanges { target: darkRect; opacity: 0.7 }
         },
         State {
