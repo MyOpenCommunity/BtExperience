@@ -12,6 +12,7 @@ MenuColumn {
         }
 
         ControlTiming {
+            id: timing
             itemObject: dataModel
         }
     }
