@@ -5,17 +5,11 @@ Item {
     id: paginatorItem
 
     // expose some ListView properties
-    property alias footer: internalList.footer
-    property alias header: internalList.header
     property alias delegate: internalList.delegate
     property alias model: internalList.model
-    property alias listHeight: internalList.height
-    property alias listWidth: internalList.width
     property alias buttonVisible: button.visible
     property alias currentIndex: internalList.currentIndex
-    property alias source: background.source
     property alias spacing: spacing.height
-    property alias leftMargin: leftMargin.width
 
     property int elementsOnPage: 6
     property alias currentPage: paginator.currentPage
@@ -37,20 +31,6 @@ Item {
         return Math.floor(ret)
     }
 
-
-    SvgImage {
-        id: background
-        source: "../../images/common/bg_paginazione.png"
-        width: parent.width
-        height: parent.height
-    }
-
-    Item {
-        id: leftMargin
-        anchors.left: parent.left
-        width: 0
-    }
-
     ListView {
         id: internalList
         interactive: false
@@ -60,7 +40,7 @@ Item {
         // will not work as expected
         width: 1
         height: 1
-        anchors.left: leftMargin.right
+        anchors.left: parent.left
     }
 
     Item {
@@ -71,28 +51,25 @@ Item {
 
     Item {
         id: bottomRow
-        anchors.left: internalList.left
-        anchors.right: internalList.right
-        anchors.top: spacing.bottom
-        opacity: ((paginator.visible === true) || (button.visible === true)) ? 1 : 0
-        onOpacityChanged: {
-            // this is needed for updating height when opacity changes
-            paginatorItem.height = internalList.height + bottomRow.height * bottomRow.opacity
+        anchors {
+            left: internalList.left
+            right: internalList.right
+            bottom: parent.bottom
+            bottomMargin: parent.height / 100 * 1
         }
+        opacity: ((paginator.visible === true) || (button.visible === true)) ? 1 : 0
         height: Math.max(paginator.height, button.height)
 
         Paginator {
             id: paginator
             totalPages: computePagesFromModelSize(internalList.model.count, elementsOnPage)
             anchors.left: parent.left
-            anchors.leftMargin: parent.width / 100 * 1
         }
 
         ButtonThreeStates {
             id: button
             visible: false
             anchors.right: parent.right
-            anchors.rightMargin: parent.width / 100 * 1
             defaultImage: "../images/common/button_delete_all.svg"
             pressedImage: "../images/common/button_delete_all_press.svg"
             shadowImage: "../images/common/shadow_button_delete_all.svg"
@@ -112,11 +89,9 @@ Item {
             // See MenuContainer docs to know why we need to set the width
             // Items that may go into a MenuColumn.
             var delegateWidth = internalList.children[0].children[0].width
-            width = delegateWidth
             internalList.width = delegateWidth
             var delegateHeight = internalList.children[0].children[0].height
             internalList.height = delegateHeight * Math.min(elementsOnPage, internalList.model.count)
-            height = internalList.height + bottomRow.height * bottomRow.opacity
         }
     }
 }

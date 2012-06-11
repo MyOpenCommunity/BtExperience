@@ -78,12 +78,14 @@ MenuColumn {
             anchors {
                 top: realHeader.bottom
                 topMargin: parent.height / 100 * 2
+                left: parent.left
+                leftMargin: parent.width / 100 * 2.5
+                right: parent.right
+                bottom: parent.bottom
             }
             spacing: parent.height / 100 * 1
-            leftMargin: parent.width / 100 * 2.5
             buttonVisible: modelList.count !== 0
             elementsOnPage: privateProps.elementsOnPage
-            source: ""
 
             onButtonClicked: modelList.clear()
 
