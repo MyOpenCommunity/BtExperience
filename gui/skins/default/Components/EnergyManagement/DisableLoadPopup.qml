@@ -18,46 +18,36 @@ Image {
         Item {
             width: parent.width
             height: 30
-            UbuntuLightText {
+            UbuntuMediumText {
                 text: qsTr("disable for")
                 anchors {
                     centerIn: parent
                     verticalCenterOffset: 2
-                }
-                font {
-                    family: semiBoldFont.name
                 }
             }
         }
         Item {
             width: parent.width
             height: 50
-            UbuntuLightText {
+            UbuntuMediumText {
                 text: qsTr("120")
                 color: "white"
                 anchors {
                     centerIn: parent
                 }
-                font {
-                    family: semiBoldFont.name
-                    pixelSize: 48
-                    bold: true
-                }
+                font.pixelSize: 48
             }
         }
         Item {
             width: parent.width
             height: 20
-            UbuntuLightText {
+            UbuntuMediumText {
                 text: qsTr("minutes")
                 color: "white"
                 anchors {
                     centerIn: parent
                     verticalCenterOffset: -5
                     topMargin: 0
-                }
-                font {
-                    family: semiBoldFont.name
                 }
             }
         }
