@@ -1,6 +1,8 @@
 import QtQuick 1.1
-import Components.Lighting 1.0
 import Components 1.0
+import Components.Lighting 1.0
+import Components.Text 1.0
+
 
 MenuColumn {
     id: column

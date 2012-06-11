@@ -1,4 +1,7 @@
 import QtQuick 1.1
+import Components.Text 1.0
+
+
 Row {
     id: button
     signal okClicked

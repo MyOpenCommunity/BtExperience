@@ -1,7 +1,9 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
-import Components 1.0
 import BtObjects 1.0
+import Components 1.0
+import Components.Text 1.0
+import "js/Stack.js" as Stack
+
 
 BasePage {
     id: mainarea

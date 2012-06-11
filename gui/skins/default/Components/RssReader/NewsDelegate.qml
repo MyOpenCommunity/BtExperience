@@ -40,6 +40,8 @@
 ****************************************************************************/
 
 import QtQuick 1.0
+import Components.Text 1.0
+
 
 Item {
     id: delegate

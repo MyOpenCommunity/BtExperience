@@ -1,6 +1,7 @@
 import QtQuick 1.1
-import Components 1.0
 import BtObjects 1.0
+import Components 1.0
+import Components.Text 1.0
 
 
 Item {

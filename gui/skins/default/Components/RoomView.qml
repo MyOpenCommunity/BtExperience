@@ -1,6 +1,8 @@
 import QtQuick 1.1
 import Components 1.0
+import Components.Text 1.0
 import "../js/RoomView.js" as Script
+
 
 // Implementation of custom room view
 Item {

@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
-
+import Components.Text 1.0
 import "../../js/RowColumnHelpers.js" as Helper
 
 
