@@ -28,12 +28,12 @@ Item {
 
     FontLoader {
         id: ubuntuLightLoader
-        source: "Ubuntu-L.ttf"
+        source: "Components/Text/Ubuntu-L.ttf"
     }
 
     FontLoader {
         id: ubuntuMediumLoader
-        source: "Ubuntu-M.ttf"
+        source: "Components/Text/Ubuntu-M.ttf"
     }
 
     AnimationManager {
