@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import Components 1.0
 
 
 UbuntuLightText {
@@ -8,6 +9,5 @@ UbuntuLightText {
 
     text: title
     color: "white"
-    font.family: semiBoldFont.name
     font.pixelSize: 36
 }

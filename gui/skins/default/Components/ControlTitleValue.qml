@@ -25,7 +25,6 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: control.top
         anchors.topMargin: 5
-        font.family: lightFont.name
         font.pixelSize: 14
         color:  "#2d2d2d"
         font.bold: true
@@ -45,7 +44,6 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             text: control.value
-            font.family: regularFont.name
             font.pixelSize: 14
             color:  "#626262"
         }

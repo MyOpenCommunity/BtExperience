@@ -63,7 +63,6 @@ Page {
             color: "white"
             x: 103
             y: 65
-            font.family: semiBoldFont.name
             font.pixelSize: 18
         }
 
