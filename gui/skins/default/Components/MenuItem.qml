@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import Components.Text 1.0
 
 
 Item {
@@ -86,25 +87,21 @@ Item {
 
         Component {
             id: labelInputComponent
-            TextInput {
+            UbuntuMediumTextInput {
                 text: menuItem.name
                 activeFocusOnPress: false
-                font.family: lightFont.name
                 font.pixelSize: 14
                 color:  labelLoader.textColor
-                font.bold: true
                 onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
             }
         }
 
         Component {
             id: labelComponent
-            Text {
+            UbuntuMediumText {
                 text: menuItem.name
-                font.family: lightFont.name
                 font.pixelSize: 14
                 color:  labelLoader.textColor
-                font.bold: true
             }
         }
 
@@ -158,10 +155,9 @@ Item {
             ]
         }
 
-        Text {
+        UbuntuLightText {
             id: textDescription
             color: "#626262"
-            font.family: regularFont.name
             wrapMode: Text.NoWrap
             font.pixelSize: 14
             anchors.bottom: parent.bottom

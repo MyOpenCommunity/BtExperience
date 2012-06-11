@@ -54,11 +54,10 @@ Item {
     // the input field.
     Component {
     id: editableLabelComponent
-        TextInput {
+        UbuntuLightTextInput {
             text: control.value
             horizontalAlignment: Text.AlignHCenter
             onAccepted: { control.value = text; control.accepted() }
-            font.family: regularFont.name
             font.pixelSize: 14
             color:  "#626262"
         }
