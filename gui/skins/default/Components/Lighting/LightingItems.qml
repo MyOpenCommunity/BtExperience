@@ -12,8 +12,6 @@ MenuColumn {
     PaginatorList {
         id: paginator
 
-        listHeight: objectModel.count > elementsOnPage ? elementsOnPage * 50 : objectModel.count * 50
-
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
             editable: true

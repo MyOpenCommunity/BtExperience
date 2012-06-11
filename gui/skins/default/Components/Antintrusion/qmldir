@@ -1,4 +1,6 @@
 AntintrusionAlarms 1.0 AntintrusionAlarms.qml
 AntintrusionScenarios 1.0 AntintrusionScenarios.qml
+AntintrusionSwitch 1.0 AntintrusionSwitch.qml
 AntintrusionSystem 1.0 AntintrusionSystem.qml
 LedZone 1.0 LedZone.qml
+PaginatorAlarms 1.0 PaginatorAlarms.qml
