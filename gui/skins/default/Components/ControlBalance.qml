@@ -17,7 +17,7 @@ Image {
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
         font.bold: true
-        font.pixelSize: 12
+        font.pixelSize: 16
         color: "#444546"
     }
 

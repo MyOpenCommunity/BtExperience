@@ -21,7 +21,7 @@ Image {
         y: 15
         font {
             bold: true
-            pixelSize: 12
+            pixelSize: 16
         }
         color: "#444546"
 

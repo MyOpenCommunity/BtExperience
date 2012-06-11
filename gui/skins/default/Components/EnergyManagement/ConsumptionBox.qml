@@ -31,7 +31,7 @@ Item {
             id: txtLabel
             text: qsTr("yearly cumulative consumption")
             wrapMode: Text.WordWrap
-            font.pixelSize: 10
+            font.pixelSize: 14
             color: "white"
             anchors {
                 fill: parent
@@ -59,7 +59,7 @@ Item {
         UbuntuLightText {
             id: txtValue
             text: element.value
-            font.pixelSize: 11
+            font.pixelSize: 16
             font.bold: true
             color: "white"
             anchors {
@@ -114,7 +114,7 @@ Item {
         UbuntuLightText {
             id: txtUnit
             text: element.unit
-            font.pixelSize: 10
+            font.pixelSize: 14
             font.bold: true
             color: "white"
             anchors {
