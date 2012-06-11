@@ -22,6 +22,8 @@ SvgImage {
         if (digit === "C") {
             if (textInserted.length > 0)
                 textInserted = textInserted.substring(0, textInserted.length - 1)
+            else
+                keypad.cancelClicked()
         }
         else
             textInserted += digit
