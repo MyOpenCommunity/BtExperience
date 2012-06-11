@@ -39,7 +39,6 @@ Rectangle {
             if (running) {
                 activations = 1
                 interval = 500
-                buttonClicked()
             }
         }
 
