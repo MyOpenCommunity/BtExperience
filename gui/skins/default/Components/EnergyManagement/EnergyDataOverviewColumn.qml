@@ -39,7 +39,7 @@ Item {
                 horizontalCenter: parent.horizontalCenter
             }
         }
-        Text {
+        UbuntuLightText {
             text: element.description
             color: "black"
             anchors {
@@ -78,7 +78,7 @@ Item {
                 left: parent.left
                 right: parent.right
             }
-            Text {
+            UbuntuLightText {
                 text: element.title
                 color: "white"
                 anchors {
@@ -151,7 +151,7 @@ Item {
                 left: parent.left
                 right: parent.right
             }
-            Text {
+            UbuntuLightText {
                 text: formatFooter(new Date())
                 color: "white"
                 anchors {

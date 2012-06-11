@@ -97,7 +97,7 @@ Item {
                     centerIn: parent
                     margins: 2
                 }
-                Text {
+                UbuntuLightText {
                     text: "0"
                     color: "white"
                     anchors {
@@ -128,7 +128,7 @@ Item {
                     centerIn: parent
                     margins: 2
                 }
-                Text {
+                UbuntuLightText {
                     text: level_critical
                     color: "white"
                     anchors {

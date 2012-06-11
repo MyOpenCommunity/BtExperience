@@ -90,7 +90,7 @@ Item {
 
         Component {
             id: labelComponent
-            Text {
+            UbuntuLightText {
                 text: bgQuick.text
                 color: bgQuick.color
                 horizontalAlignment: Text.AlignHCenter

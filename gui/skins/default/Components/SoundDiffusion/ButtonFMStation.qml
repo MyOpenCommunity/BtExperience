@@ -20,7 +20,7 @@ Image {
         height: 34
     }
 
-    Text {
+    UbuntuLightText {
         text: button.stationNumber
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom

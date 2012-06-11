@@ -20,7 +20,7 @@ MenuColumn {
                 width: parent.width
                 height: 50
 
-                Text {
+                UbuntuLightText {
                     id: title
                     text: qsTr("instant consumption")
                     anchors {
@@ -32,7 +32,7 @@ MenuColumn {
                     font.pixelSize: 13
                 }
 
-                Text {
+                UbuntuLightText {
                     id: power
                     text: "32 W"
                     anchors {

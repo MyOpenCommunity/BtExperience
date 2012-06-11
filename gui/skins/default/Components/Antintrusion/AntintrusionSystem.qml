@@ -202,7 +202,7 @@ MenuColumn {
                 MouseArea { anchors.fill: parent } // block the mouse clicks
             }
 
-            Text {
+            UbuntuLightText {
                 id: zoneText
                 text: qsTr("zone")
                 font.pixelSize: 14

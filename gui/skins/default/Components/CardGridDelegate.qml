@@ -37,7 +37,7 @@ Item {
             color: "white"
             anchors.top: parent.top
             opacity: 0.75
-            Text {
+            UbuntuLightText {
                 id: labelText
                 font.family: regularFont.name
                 font.pixelSize: 15

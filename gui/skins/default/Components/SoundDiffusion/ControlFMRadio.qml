@@ -41,7 +41,7 @@ Image {
         text: control.radioName
     }
 
-    Text {
+    UbuntuLightText {
         id: text2
         x: 15
         y: 62

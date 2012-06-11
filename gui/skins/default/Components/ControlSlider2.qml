@@ -13,7 +13,7 @@ Item {
     signal minusClicked
     signal plusClicked
 
-    Text {
+    UbuntuLightText {
         id: title
         width: parent.width
         text: control.title

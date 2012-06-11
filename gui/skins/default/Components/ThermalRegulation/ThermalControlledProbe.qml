@@ -88,7 +88,7 @@ MenuColumn {
         height: 50
         source: imagesPath + "common/dimmer_bg.png"
 
-        Text {
+        UbuntuLightText {
             id: textTemperature
             anchors.centerIn: parent
             text: dataModel.temperature  / 10 + qsTr("°C")

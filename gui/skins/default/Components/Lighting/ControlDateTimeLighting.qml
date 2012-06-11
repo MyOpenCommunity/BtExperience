@@ -248,7 +248,7 @@ Item {
         onButtonClicked: rightMinusClicked()
     }
 
-    Text {
+    UbuntuLightText {
         id: leftText
 
         text: formatNumberLength(leftColumnValue, 2)
@@ -260,7 +260,7 @@ Item {
         anchors.bottomMargin: privateProps.textBottomMargin
     }
 
-    Text {
+    UbuntuLightText {
         id: separator1
 
         text: control.separator
@@ -274,7 +274,7 @@ Item {
     }
 
 
-    Text {
+    UbuntuLightText {
         id: centerText
 
         text: formatNumberLength(centerColumnValue, 2)
@@ -286,7 +286,7 @@ Item {
         anchors.bottomMargin: privateProps.textBottomMargin
     }
 
-    Text {
+    UbuntuLightText {
         id: separator2
 
         color: "#5b5b5b"
@@ -300,7 +300,7 @@ Item {
         anchors.rightMargin: privateProps.separatorOffset
     }
 
-    Text {
+    UbuntuLightText {
         id: rightText
 
         text: formatNumberLength(rightColumnValue, 2)

@@ -8,7 +8,7 @@ Column {
     signal closeAlert
     width: 212
 
-    Text {
+    UbuntuLightText {
         id: warningText
         text: qsTr("warning")
         color: "#ff2e2e"
@@ -28,7 +28,7 @@ Column {
         height: 130
         source: "../images/home/alert.png"
 
-        Text {
+        UbuntuLightText {
             id: text
             anchors.left: parent.left
             anchors.leftMargin: 20

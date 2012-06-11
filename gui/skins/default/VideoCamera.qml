@@ -57,7 +57,7 @@ Page {
 
 
 
-        Text {
+        UbuntuLightText {
             id: title
             text: videoCamera.title
             color: "white"
@@ -105,7 +105,7 @@ Page {
                     onPressed: camera.onStairLightActivate()
                     onReleased: camera.onStairLightRelease()
                 }
-                Text {
+                UbuntuLightText {
                     text: qsTr("STAIRLIGHT")
                     font.pointSize: 10
                     anchors {
@@ -125,7 +125,7 @@ Page {
                     onPressed: camera.openLock()
                     onReleased: camera.releaseLock()
                 }
-                Text {
+                UbuntuLightText {
                     text: qsTr("OPEN LOCK")
                     font.pointSize: 10
                     anchors {
@@ -147,7 +147,7 @@ Page {
                         videoCamera.camera.answerCall()
                     }
                 }
-                Text {
+                UbuntuLightText {
                     text: qsTr("ANSWER CALL")
                     font.pointSize: 10
                     anchors {
@@ -186,7 +186,7 @@ Page {
                 anchors.fill: parent
                 onClicked: videoCamera.muteClicked()
             }
-            Text {
+            UbuntuLightText {
                 text: qsTr("MUTE")
                 anchors {
                     horizontalCenter: parent.horizontalCenter

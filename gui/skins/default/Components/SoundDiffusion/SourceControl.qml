@@ -183,7 +183,7 @@ MenuColumn {
 
             source: imagesPath + "common/bg_UnaRegolazione.png"
 
-            Text {
+            UbuntuLightText {
                 y: 10
                 font.bold: true
                 font.pointSize: 12

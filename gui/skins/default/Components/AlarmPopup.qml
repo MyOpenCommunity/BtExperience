@@ -11,7 +11,7 @@ Image {
     signal ignoreClicked
     signal alarmLogClicked
 
-    Text {
+    UbuntuLightText {
         id: tagline
         font.bold: true
         font.pointSize: 12
@@ -21,7 +21,7 @@ Image {
         anchors.topMargin: 10
     }
 
-    Text {
+    UbuntuLightText {
         id: datetime
         text: alarmAlert.alarmDateTime
         anchors.horizontalCenter: parent.horizontalCenter
@@ -30,7 +30,7 @@ Image {
     }
 
 
-    Text {
+    UbuntuLightText {
         id: location
         text: alarmAlert.alarmLocation
         anchors.horizontalCenter: parent.horizontalCenter
@@ -47,7 +47,7 @@ Image {
             source: "../images/common/btn_OKAnnulla.png"
             width: parent.width / 2; height: 30
 
-            Text {
+            UbuntuLightText {
                 wrapMode: Text.WordWrap
                 text: qsTr("alarm log")
                 anchors.centerIn: parent
@@ -65,7 +65,7 @@ Image {
             source: "../images/common/btn_OKAnnulla.png"
             width: parent.width / 2; height: 30
 
-            Text {
+            UbuntuLightText {
                 anchors.centerIn: parent
                 text: qsTr("ignore")
             }

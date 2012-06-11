@@ -46,7 +46,7 @@ Item {
 
     width: delegate.ListView.view.width; height: 60
 
-    Text {
+    UbuntuLightText {
         text: name
         color: delegate.ListView.isCurrentItem ? "white" : "black"
         font { pixelSize: 16; bold: true }

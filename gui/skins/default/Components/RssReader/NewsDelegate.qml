@@ -51,14 +51,14 @@ Item {
         x: 20; y: 20
         width: parent.width - 40
 
-        Text {
+        UbuntuLightText {
             id: titleText
             text: title; width: parent.width; wrapMode: Text.WordWrap
             font { bold: true; pointSize: 16 }
             textFormat: Text.RichText
         }
 
-        Text {
+        UbuntuLightText {
             id: descriptionText
             width: parent.width; text: description
             wrapMode: Text.WordWrap

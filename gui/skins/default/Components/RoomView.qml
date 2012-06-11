@@ -158,7 +158,7 @@ Item {
             radius: 30
             color: parent.color
 
-            Text {
+            UbuntuLightText {
                 anchors.centerIn: parent
                 text: "X"
                 color: "white"

@@ -117,7 +117,7 @@ Column {
         source: "../../images/common/date_panel_inner_background.svg"
         width: buttons.width
 
-        Text {
+        UbuntuLightText {
             id: leftText
             x: 27
             text: formatNumberLength(leftColumnValue, 2)
@@ -125,14 +125,14 @@ Column {
             font.pointSize: 18
             font.bold: true
         }
-        Text {
+        UbuntuLightText {
             text: control.leftLabel
             y: 30
             anchors.horizontalCenter: leftText.horizontalCenter
             color: "#5b5b5b"
         }
 
-        Text {
+        UbuntuLightText {
             id: separator1
             x: 79
             y: 10
@@ -143,7 +143,7 @@ Column {
         }
 
 
-        Text {
+        UbuntuLightText {
             id: centerText
             x: 109
             text: formatNumberLength(centerColumnValue, 2)
@@ -151,14 +151,14 @@ Column {
             font.pointSize: 18
             font.bold: true
         }
-        Text {
+        UbuntuLightText {
             y: 30
             text: control.centerLabel
             anchors.horizontalCenter: centerText.horizontalCenter
             color: "#5b5b5b"
         }
 
-        Text {
+        UbuntuLightText {
             id: separator2
             x: 162
             y: 10
@@ -169,7 +169,7 @@ Column {
             visible: !twoFields
         }
 
-        Text {
+        UbuntuLightText {
             id: rightText
             x: 191
             text: formatNumberLength(rightColumnValue, 2)
@@ -178,7 +178,7 @@ Column {
             font.bold: true
             visible: !twoFields
         }
-        Text {
+        UbuntuLightText {
             y: 30
             text: control.rightLabel
             anchors.horizontalCenter: rightText.horizontalCenter

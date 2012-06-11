@@ -23,7 +23,7 @@ Item {
     }
 
 
-    Text {
+    UbuntuLightText {
         id: header
         text: qsTr("Edit favorite item")
         anchors.top:parent.top
@@ -31,7 +31,7 @@ Item {
         anchors.horizontalCenter: background.horizontalCenter
     }
 
-    Text {
+    UbuntuLightText {
         id: addressText
         text: qsTr("Address:")
         anchors.left: parent.left
@@ -50,7 +50,7 @@ Item {
         anchors.right: background.right
         anchors.rightMargin: 10
 
-        Text {
+        UbuntuLightText {
             id: httpText
             text: "http://"
             anchors.left: parent.left
@@ -78,7 +78,7 @@ Item {
         }
     }
 
-    Text {
+    UbuntuLightText {
         id: titleText
         text: qsTr("Favorite label:")
         anchors.top: addressRow.bottom
@@ -122,7 +122,7 @@ Item {
             id: buttonOk
             source: "../images/common/btn_OKAnnulla.png"
 
-            Text {
+            UbuntuLightText {
                 anchors.centerIn: parent
                 text: qsTr("ok")
             }
@@ -142,7 +142,7 @@ Item {
             id: buttonCancel
             source: "../images/common/btn_OKAnnulla.png"
 
-            Text {
+            UbuntuLightText {
                 anchors.centerIn: parent
                 text: qsTr("cancel")
             }

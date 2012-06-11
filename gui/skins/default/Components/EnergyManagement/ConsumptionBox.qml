@@ -26,7 +26,7 @@ Item {
             rightMargin: 2
         }
 
-        Text {
+        UbuntuLightText {
             id: txtLabel
             text: qsTr("yearly cumulative consumption")
             wrapMode: Text.WordWrap
@@ -55,7 +55,7 @@ Item {
             rightMargin: 2
         }
 
-        Text {
+        UbuntuLightText {
             id: txtValue
             text: element.value
             font.pointSize: 11
@@ -110,7 +110,7 @@ Item {
             rightMargin: 2
         }
 
-        Text {
+        UbuntuLightText {
             id: txtUnit
             text: element.unit
             font.pointSize: 10

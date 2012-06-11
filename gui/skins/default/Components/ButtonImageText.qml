@@ -12,7 +12,7 @@ Image {
     source: "../images/common/bg_DueRegolazioni.png"
     visible: source === "" ? false : true
 
-    Text {
+    UbuntuLightText {
         text: bg.text
         anchors {
             fill: parent

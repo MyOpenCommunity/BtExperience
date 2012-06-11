@@ -18,7 +18,7 @@ BasePage {
         onHomeClicked: Stack.backToHome()
     }
 
-    Text {
+    UbuntuLightText {
         id: pageTitle
         text: qsTr("Rooms")
         font.pixelSize: 50
@@ -80,7 +80,7 @@ BasePage {
             property variant itemObject: floorsModel.getObject(index)
 
             source: index === floorView.currentIndex ? "images/common/pianoS.png" : "images/common/piano.png"
-            Text {
+            UbuntuLightText {
                 text: itemObject.description
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter

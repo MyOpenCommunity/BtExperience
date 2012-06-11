@@ -10,7 +10,7 @@ Image {
     signal minusClicked
     signal plusClicked
 
-    Text {
+    UbuntuLightText {
         id: title
         color: "#000000"
         text: qsTr("title")
@@ -21,7 +21,7 @@ Image {
         font.pixelSize: 13
     }
 
-    Text {
+    UbuntuLightText {
         id: label
         x: 32
         y: 65

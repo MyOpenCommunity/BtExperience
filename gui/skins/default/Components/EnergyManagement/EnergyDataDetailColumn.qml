@@ -43,7 +43,7 @@ Column {
         opacity: 1
         radius: 4
         height: parent.height * 40 / 350
-        Text {
+        UbuntuLightText {
             text: element.note_header
             color: "white"
             anchors {
@@ -53,7 +53,7 @@ Column {
             }
             horizontalAlignment: Text.AlignHCenter
         }
-        Text {
+        UbuntuLightText {
             text: element.note_footer
             color: "white"
             anchors {

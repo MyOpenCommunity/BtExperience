@@ -1,7 +1,7 @@
 import QtQuick 1.1
 
 
-Text {
+UbuntuLightText {
     id: element
 
     property string title: "Title"

@@ -15,7 +15,7 @@ Rectangle {
             source: mouseArea.pressed ? "../../images/common/date_button_press.svg" :
                                         "../../images/common/date_button_background.svg"
 
-            Text {
+            UbuntuLightText {
                 text: button.text
                 anchors.centerIn: parent
             }

@@ -13,7 +13,7 @@ Image {
     signal upClicked()
     signal resetClicked()
 
-    Text {
+    UbuntuLightText {
         id: title
         text: qsTr("title")
         anchors.top: parent.top
@@ -23,7 +23,7 @@ Image {
         font.pixelSize: 13
     }
 
-    Text {
+    UbuntuLightText {
         id: label
         x: 33
         y: 64
@@ -93,7 +93,7 @@ Image {
         }
         source: "../../images/common/btn_OKAnnulla.png"
 
-        Text {
+        UbuntuLightText {
             id: resetText
             text: qsTr("force reset")
             font.capitalization: Font.SmallCaps

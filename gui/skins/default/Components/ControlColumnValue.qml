@@ -105,7 +105,7 @@ Item {
                 right: parent.right
                 rightMargin: 1
             }
-            Text {
+            UbuntuLightText {
                 text: bar.label
                 color: "white"
                 font.pixelSize: 10

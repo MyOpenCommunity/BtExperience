@@ -13,7 +13,7 @@ Image {
     property alias text: caption.text
     signal clicked()
 
-    Text {
+    UbuntuLightText {
         id: line1
         text: qsTr("line1")
         font {
@@ -28,7 +28,7 @@ Image {
         }
     }
 
-    Text {
+    UbuntuLightText {
         id: line2
         text: qsTr("line2")
         font {
@@ -44,7 +44,7 @@ Image {
         wrapMode: Text.WordWrap
     }
 
-    Text {
+    UbuntuLightText {
         id: line3
         text: qsTr("line3")
         color: "white"
@@ -74,7 +74,7 @@ Image {
             rightMargin: 2
         }
 
-        Text {
+        UbuntuLightText {
             id: caption
             text: qsTr("caption")
             anchors {

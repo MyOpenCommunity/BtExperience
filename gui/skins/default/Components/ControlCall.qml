@@ -47,7 +47,7 @@ Rectangle {
             right: parent.right
         }
 
-        Text {
+        UbuntuLightText {
             id: textDescription
 
             anchors {
@@ -61,7 +61,7 @@ Rectangle {
             text: control.description
         }
 
-        Text {
+        UbuntuLightText {
             id: textPlace
 
             anchors {
@@ -139,7 +139,7 @@ Rectangle {
                 source: "../images/common/answer_call.svg"
             }
 
-            Text {
+            UbuntuLightText {
                 color: "white"
                 anchors {
                     top: parent.top
@@ -192,7 +192,7 @@ Rectangle {
                 source: "../images/common/end_call.svg"
             }
 
-            Text {
+            UbuntuLightText {
                 color: "white"
                 anchors {
                     top: parent.top
@@ -244,7 +244,7 @@ Rectangle {
             right: parent.right
         }
 
-        Text {
+        UbuntuLightText {
             anchors {
                 fill: parent
                 centerIn: parent

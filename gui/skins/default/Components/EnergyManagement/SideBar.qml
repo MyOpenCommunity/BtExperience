@@ -114,7 +114,7 @@ Item {
             height: 60
             anchors.horizontalCenter: parent.horizontalCenter
 
-            Text {
+            UbuntuLightText {
                 text: qsTr("instant consumption")
                 color: "white"
                 anchors {
@@ -135,7 +135,7 @@ Item {
                     bottom: parent.bottom
                 }
 
-                Text {
+                UbuntuLightText {
                     text: bg.value.isValid ? bg.value.value + " " + qsTr("Wh") : "---"
                     color: "black"
                     anchors {

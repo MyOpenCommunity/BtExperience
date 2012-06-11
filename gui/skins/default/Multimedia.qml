@@ -21,7 +21,7 @@ Page {
             rightMargin: 40
         }
 
-        Text {
+        UbuntuLightText {
             anchors.left: parent.left
             anchors.leftMargin: 5
             anchors.top: parent.top
@@ -82,12 +82,12 @@ Page {
                 anchors.leftMargin: 10
                 anchors.topMargin: 2
 
-                Text {
+                UbuntuLightText {
                     id: title
                     text: name
                 }
 
-                Text {
+                UbuntuLightText {
                     id: url
                     text: address
                     color: "#606060"

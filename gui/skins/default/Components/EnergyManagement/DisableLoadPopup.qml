@@ -17,7 +17,7 @@ Image {
         Item {
             width: parent.width
             height: 30
-            Text {
+            UbuntuLightText {
                 text: qsTr("disable for")
                 anchors {
                     centerIn: parent
@@ -31,7 +31,7 @@ Image {
         Item {
             width: parent.width
             height: 50
-            Text {
+            UbuntuLightText {
                 text: qsTr("120")
                 color: "white"
                 anchors {
@@ -47,7 +47,7 @@ Image {
         Item {
             width: parent.width
             height: 20
-            Text {
+            UbuntuLightText {
                 text: qsTr("minutes")
                 color: "white"
                 anchors {

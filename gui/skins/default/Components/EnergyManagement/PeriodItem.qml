@@ -29,7 +29,7 @@ Item {
             rightMargin: 2
         }
 
-        Text {
+        UbuntuLightText {
             id: timeperiod
             text: qsTr("year")
             font.pointSize: 10
@@ -44,7 +44,7 @@ Item {
             verticalAlignment: Text.AlignVCenter
         }
 
-        Text {
+        UbuntuLightText {
             text: element.timepoint
             font.pointSize: 14
             color: "black"
@@ -74,7 +74,7 @@ Item {
             leftMargin: 1
         }
 
-        Text {
+        UbuntuLightText {
             text: "<"
             color: "black"
             anchors {
@@ -105,7 +105,7 @@ Item {
             rightMargin: 1
         }
 
-        Text {
+        UbuntuLightText {
             text: ">"
             color: "black"
             anchors {

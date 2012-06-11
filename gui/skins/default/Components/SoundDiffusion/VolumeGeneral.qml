@@ -14,7 +14,7 @@ Image {
     signal plusClicked
     signal minusClicked
 
-    Text {
+    UbuntuLightText {
         id: label
         x: 85
         y: 15

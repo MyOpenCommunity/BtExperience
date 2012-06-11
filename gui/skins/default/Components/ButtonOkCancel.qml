@@ -5,7 +5,7 @@ Row {
     signal cancelClicked
     Image {
         source: "../images/common/btn_OKAnnulla.png"
-        Text {
+        UbuntuLightText {
             text: qsTr("ok")
             font.family: semiBoldFont.name
             font.pixelSize: 16
@@ -20,7 +20,7 @@ Row {
     }
     Image {
         source: "../images/common/btn_OKAnnulla.png"
-        Text {
+        UbuntuLightText {
             text: qsTr("cancel")
             font.family: semiBoldFont.name
             font.pixelSize: 16

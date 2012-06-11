@@ -36,7 +36,7 @@ MenuColumn {
                     width: 5
                 }
 
-                Text {
+                UbuntuLightText {
                     height: parent.height
                     width: 147
                     text: qsTr("type")
@@ -49,7 +49,7 @@ MenuColumn {
                     width: 5
                 }
 
-                Text {
+                UbuntuLightText {
                     height: parent.height
                     width: 111
                     text: qsTr("zone")
@@ -62,7 +62,7 @@ MenuColumn {
                     width: 5
                 }
 
-                Text {
+                UbuntuLightText {
                     height: parent.height
                     width: 106
                     text: qsTr("date and time")
@@ -106,7 +106,7 @@ MenuColumn {
                             width: 5
                         }
 
-                        Text {
+                        UbuntuLightText {
                             height: parent.height / 100 * 89
                             width: 147
                             color: "white"
@@ -119,7 +119,7 @@ MenuColumn {
                             width: 5
                         }
 
-                        Text {
+                        UbuntuLightText {
                             height: parent.height / 100 * 89
                             width: 111
                             color: "white"
@@ -133,7 +133,7 @@ MenuColumn {
                             width: 5
                         }
 
-                        Text {
+                        UbuntuLightText {
                             height: parent.height / 100 * 89
                             width: 106
                             color: "white"
@@ -161,7 +161,7 @@ MenuColumn {
             model: modelList
         }
 
-        Text {
+        UbuntuLightText {
             id: noAlarmText
             z: 1
             anchors.centerIn: parent

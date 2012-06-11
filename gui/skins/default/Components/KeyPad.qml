@@ -36,7 +36,7 @@ Column {
             labelKeypad.text = helperLabel
     }
 
-    Text {
+    UbuntuLightText {
         text: mainLabel
         font.capitalization: Font.AllUppercase
         font.family: semiBoldFont.name
@@ -79,7 +79,7 @@ Column {
 
             Component {
                 id: normalLabelText
-                Text {
+                UbuntuLightText {
                     text: labelKeypad.text
                     font.pixelSize: 15
                     horizontalAlignment: Text.AlignHCenter
@@ -91,7 +91,7 @@ Column {
                 id: errorLabelText
                 Image {
                     source: "../images/common/bg_codice_errato.png"
-                    Text {
+                    UbuntuLightText {
                         anchors.fill: parent
                         text: errorLabel
                         font.pixelSize: 15
@@ -107,7 +107,7 @@ Column {
                 id: okLabelText
                 Image {
                     source: "../images/common/bg_codice_ok.png"
-                    Text {
+                    UbuntuLightText {
                         anchors.fill: parent
                         text: okLabel
                         font.pixelSize: 15
@@ -130,7 +130,7 @@ Column {
                 model: 9
                 Image {
                     source: "../images/common/btn_tastiera_numero.png"
-                    Text {
+                    UbuntuLightText {
                         anchors.fill: parent
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
@@ -147,7 +147,7 @@ Column {
             anchors.horizontalCenter: parent.horizontalCenter
             Image {
                 source: "../images/common/btn_tastiera_numero.png"
-                Text {
+                UbuntuLightText {
                     anchors.fill: parent
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -157,7 +157,7 @@ Column {
             }
             Image {
                 source: "../images/common/btn_tastiera_canc.png"
-                Text {
+                UbuntuLightText {
                     anchors.fill: parent
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -178,7 +178,7 @@ Column {
             id: cancelKeypad
             anchors.top: spaceKeypad.bottom
             source: "../images/common/btn_annulla.png"
-            Text {
+            UbuntuLightText {
                 anchors.fill: parent
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter

@@ -42,7 +42,7 @@ Item {
         }
     }
 
-    Text {
+    UbuntuLightText {
         id: label
         color: "black"
         anchors.centerIn: background

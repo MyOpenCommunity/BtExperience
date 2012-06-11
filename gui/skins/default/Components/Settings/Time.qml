@@ -35,7 +35,7 @@ MenuColumn {
             width: 212
             height: 50
             source: imagesPath + "common/btn_menu.png"
-            Text {
+            UbuntuLightText {
                 id: time
                 // TODO must be editable
                 text: privateProps.model.time

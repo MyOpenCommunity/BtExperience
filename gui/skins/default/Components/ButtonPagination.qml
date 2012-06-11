@@ -10,7 +10,7 @@ Image {
     height: 35
     source: "../images/common/btn_NumeroPagina.png"
 
-    Text {
+    UbuntuLightText {
         id: label
         text: pageButton.pageNumber
         anchors.centerIn: parent

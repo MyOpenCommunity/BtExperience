@@ -11,7 +11,7 @@ Image {
     source: "../images/common/bg_DueRegolazioni.png"
     anchors.fill: parent
 
-    Text {
+    UbuntuLightText {
         id: textDescription
 
         anchors.fill: parent

@@ -19,7 +19,7 @@ MenuColumn {
         height: 170
         source: imagesPath + "common/ora.png"
 
-        Text {
+        UbuntuLightText {
             id: text1
             x: 45
             y: 5
@@ -27,7 +27,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text2
             x: 139
             y: 5
@@ -35,7 +35,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text3
             x: 48
             y: 35
@@ -43,7 +43,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text4
             x: 151
             y: 35
@@ -51,7 +51,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text5
             x: 48
             y: 60
@@ -59,7 +59,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text6
             x: 151
             y: 60
@@ -67,7 +67,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text7
             x: 48
             y: 89
@@ -76,7 +76,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text8
             x: 151
             y: 89
@@ -85,7 +85,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text9
             x: 48
             y: 120
@@ -93,7 +93,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text10
             x: 48
             y: 144
@@ -101,7 +101,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text11
             x: 151
             y: 120
@@ -109,7 +109,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text12
             x: 151
             y: 144

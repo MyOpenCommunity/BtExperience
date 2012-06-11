@@ -18,7 +18,7 @@ Item {
         height: 20
         color: Qt.rgba(230, 230, 230)
         opacity: 0.5
-        Text {
+        UbuntuLightText {
             id: labelText
             text: modelData
             font.family: regularFont.name

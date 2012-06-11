@@ -11,7 +11,7 @@ Row {
         width: parent.width / 2
         height: 50
         property alias textColor: textOn.color
-        Text {
+        UbuntuLightText {
             id: textOn
             text: qsTr("on")
             font.pixelSize: 18
@@ -30,7 +30,7 @@ Row {
         height: 50
 
         property alias textColor: textOff.color
-        Text {
+        UbuntuLightText {
             id: textOff
             text: qsTr("off")
             color: "#ffffff";

@@ -11,7 +11,7 @@ Image {
     signal plusClicked
     signal minusClicked
 
-    Text {
+    UbuntuLightText {
         id: label
         text: control.description
         anchors.horizontalCenter: parent.horizontalCenter
@@ -19,7 +19,7 @@ Image {
         anchors.topMargin: 5
     }
 
-    Text {
+    UbuntuLightText {
         id: choice
         text: control.choice
         font.pixelSize: 16

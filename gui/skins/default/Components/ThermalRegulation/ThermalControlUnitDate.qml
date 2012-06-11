@@ -19,7 +19,7 @@ MenuColumn {
         height: 170
         source: imagesPath + "common/data.png"
 
-        Text {
+        UbuntuLightText {
             id: text1
             x: 91
             y: 5
@@ -28,7 +28,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text2
             x: 43
             y: 33
@@ -38,7 +38,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text3
             x: 139
             y: 33
@@ -46,7 +46,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text4
             x: 21
             y: 60
@@ -55,7 +55,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text6
             x: 22
             y: 103
@@ -64,7 +64,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text7
             x: 25
             y: 126
@@ -73,7 +73,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text9
             x: 149
             y: 60
@@ -82,7 +82,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text10
             x: 149
             y: 82
@@ -91,7 +91,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text5
             x: 32
             y: 82
@@ -100,7 +100,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text8
             x: 29
             y: 145
@@ -109,7 +109,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text11
             x: 149
             y: 103
@@ -118,7 +118,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text12
             x: 149
             y: 126
@@ -127,7 +127,7 @@ MenuColumn {
             font.pixelSize: 13
         }
 
-        Text {
+        UbuntuLightText {
             id: text13
             x: 149
             y: 145

@@ -23,7 +23,7 @@ Image {
 
          Item {
              width: parent.width; height: 20
-             Text {
+             UbuntuLightText {
                  anchors.centerIn: parent
                  text: webView.title; font.pixelSize: 14; font.bold: true
                  color: "white"; styleColor: "black"; style: Text.Sunken
@@ -63,7 +63,7 @@ Image {
                  action: webView.reload; image: "../../images/browser/view-refresh.png"
                  visible: webView.progress == 1.0 && !header.urlChanged
              }
-             Text {
+             UbuntuLightText {
                  id: quitButton
                  color: "white"
                  style: Text.Sunken

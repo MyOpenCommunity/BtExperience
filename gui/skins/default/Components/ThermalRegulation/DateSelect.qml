@@ -14,7 +14,7 @@ MenuColumn {
         id: background
         source: "../../images/common/date_panel_background.svg"
 
-        Text {
+        UbuntuLightText {
             id: label
             text: twoFields ? qsTr("time") : qsTr("date")
             anchors.top: parent.top

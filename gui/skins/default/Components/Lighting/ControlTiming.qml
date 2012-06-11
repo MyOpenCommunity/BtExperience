@@ -9,7 +9,7 @@ SvgImage {
 
     source: "../../images/common/panel_time.svg"
 
-    Text {
+    UbuntuLightText {
         id: title
         color: "black"
         text: qsTr("timer")

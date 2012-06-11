@@ -36,7 +36,7 @@ Image {
         }
     }
 
-    Text {
+    UbuntuLightText {
         id: title
         text: qsTr("title")
         anchors.top: parent.top
@@ -46,7 +46,7 @@ Image {
         font.pixelSize: 13
     }
 
-    Text {
+    UbuntuLightText {
         id: label
         x: 33
         y: 64

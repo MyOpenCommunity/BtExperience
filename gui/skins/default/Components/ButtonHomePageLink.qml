@@ -15,7 +15,7 @@ SvgImage {
         onClicked: button.clicked()
     }
 
-    Text {
+    UbuntuLightText {
         id: text
         color: "#000000"
         text: parent.text

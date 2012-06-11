@@ -20,7 +20,7 @@ Image {
             width: parent.width
             height: 24
 
-            Text {
+            UbuntuLightText {
                 text: "+"
                 anchors.centerIn: parent
             }
@@ -34,7 +34,7 @@ Image {
         Item {
             width: parent.width
             height: timeButtons.height - plusButton.height * 2
-            Text {
+            UbuntuLightText {
                 id: numberText
                 text: timeButtons.value
                 color: "#5b5b5b"
@@ -43,7 +43,7 @@ Image {
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            Text {
+            UbuntuLightText {
                 id: units
                 text: "hours"
                 color: "#5b5b5b"
@@ -58,7 +58,7 @@ Image {
             width: parent.width
             height: 24
 
-            Text {
+            UbuntuLightText {
                 text: "-"
                 anchors.centerIn: parent
             }

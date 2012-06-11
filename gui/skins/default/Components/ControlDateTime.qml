@@ -24,7 +24,7 @@ Image {
         property int currentElement: -1
     }
 
-    Text {
+    UbuntuLightText {
         id: text1
         x: 22
         y: 68
@@ -39,7 +39,7 @@ Image {
         visible: dateVisible
     }
 
-    Text {
+    UbuntuLightText {
         id: text2
         x: 22
         y: dateVisible ? 113 : 68
@@ -52,7 +52,7 @@ Image {
         font.pixelSize: 16
     }
 
-    Text {
+    UbuntuLightText {
         id: text3
         x: 22
         y: 11

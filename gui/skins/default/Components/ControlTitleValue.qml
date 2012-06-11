@@ -18,7 +18,7 @@ Item {
         source: "../images/common/menu_column_item_bg.svg";
     }
 
-    Text {
+    UbuntuLightText {
         text: control.title
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -41,7 +41,7 @@ Item {
 
     Component {
         id: simpleLabelComponent
-        Text {
+        UbuntuLightText {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             text: control.value

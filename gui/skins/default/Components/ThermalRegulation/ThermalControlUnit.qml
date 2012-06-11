@@ -153,7 +153,7 @@ MenuColumn {
             visible: (!is99zones)
             source: "../../images/common/bg_UnaRegolazione.png"
 
-            Text {
+            UbuntuLightText {
                 id: textTemperature
                 anchors.centerIn: parent
                 text: centralProbe.getObject(0).temperature  / 10 + qsTr("°C")

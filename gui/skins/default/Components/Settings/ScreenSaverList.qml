@@ -98,7 +98,7 @@ MenuColumn {
                 anchors.fill: parent
                 color: "#88333333"
                 anchors.centerIn: parent
-                Text {
+                UbuntuLightText {
                     text: qsTr("preview")
                     anchors.centerIn: parent
                 }
@@ -157,12 +157,12 @@ MenuColumn {
                 width: 212
                 height: 50
                 source: imagesPath + "common/menu_column_item_bg.svg"
-                Text {
+                UbuntuLightText {
                     // TODO implementation of browsing/setting of an image
                     text: qsTr("Browse")
                     anchors.fill: parent
                 }
-                Text {
+                UbuntuLightText {
                     id: screensaverImage
                     text: global.guiSettings.screensaverImage
                     anchors.fill: parent
@@ -204,7 +204,7 @@ MenuColumn {
                 width: 212
                 height: 50
                 source: imagesPath + "common/menu_column_item_bg.svg"
-                Text {
+                UbuntuLightText {
                     id: screensaverText
                     text: qsTr("Change text")
                     anchors.fill: parent

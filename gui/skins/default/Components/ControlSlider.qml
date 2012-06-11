@@ -11,7 +11,7 @@ SvgImage {
 
     source: "../images/common/panel_dimmer.svg"
 
-    Text {
+    UbuntuLightText {
         id: label
         anchors.top: parent.top
         anchors.topMargin: 5
@@ -22,7 +22,7 @@ SvgImage {
         text: buttonSlider.description
     }
 
-    Text {
+    UbuntuLightText {
         id: percentageLabel
         text: percentage + " %"
         anchors.top: parent.top

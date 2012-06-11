@@ -15,7 +15,7 @@ Rectangle {
     radius: 4
     anchors.margins: 1
 
-    Text {
+    UbuntuLightText {
         id: txtLabel
         text: label
         font.pixelSize: 12
