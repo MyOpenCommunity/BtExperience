@@ -35,128 +35,134 @@ Page {
                 anchors.fill: parent
             }
 
-            UbuntuMediumText {
-                id: headerProfileRect
+            Column {
+                id: rightArea
                 anchors.top: parent.top
-                anchors.left: profileRect.left
-                text: qsTr("profile")
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: 16
-            }
-
-            Rectangle {
-                id: profileRect
-                width: 212
-                height: 100
-                color: "grey"
                 anchors.right: parent.right
-                anchors.top: headerProfileRect.bottom
 
-                Image {
-                    id: imageProfile
-                    width: 100
-                    height: parent.height
-                    source: profilePage.profile.image
-                    fillMode: Image.PreserveAspectFit
-                }
-
-                UbuntuLightText {
-                    anchors.left: imageProfile.right
-                    anchors.right: parent.right
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.top: parent.top
-                    anchors.topMargin: 10
+                UbuntuMediumText {
+                    id: headerProfileRect
+                    text: qsTr("profile")
+                    font.capitalization: Font.AllUppercase
                     font.pixelSize: 16
-                    text: profilePage.profile.description
-                }
-            }
-
-            UbuntuMediumText {
-                id: headerNote
-                anchors.top: profileRect.bottom
-                anchors.topMargin: 30
-                anchors.left: profileRect.left
-                text: qsTr("note")
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: 16
-            }
-
-            SvgImage {
-                id: addNote
-                source: "images/common/menu_column_item_bg.svg";
-                anchors.right: parent.right
-                anchors.top: headerNote.bottom
-
-                UbuntuLightText {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 5
-                    anchors.top: parent.top
-                    anchors.topMargin: 5
-                    font.pixelSize: 16
-                    text: qsTr("Add Note")
                 }
 
-                Image {
-                    source: "images/common/piu.png"
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: pannableChild.addNote()
-                }
-            }
-
-            PaginatorList {
-                anchors.top: addNote.bottom
-                anchors.topMargin: 10
-                anchors.left: addNote.left
-
-                id: paginator
-                width: addNote.width
-                elementsOnPage: 4
-                listHeight: model.count > elementsOnPage ? elementsOnPage * 50 : model.count * 50
-
-                delegate: Rectangle {
-                    color: index % 2 !== 0 ? "light gray" : "gray"
+                Rectangle {
+                    id: profileRect
                     width: 212
-                    height: 50
-                    property variant obj: userNotes.getObject(index)
+                    height: 100
+                    color: "grey"
+
+                    Image {
+                        id: imageProfile
+                        width: 100
+                        height: parent.height
+                        source: profilePage.profile.image
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    UbuntuLightText {
+                        anchors.left: imageProfile.right
+                        anchors.right: parent.right
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.top: parent.top
+                        anchors.topMargin: 10
+                        font.pixelSize: 16
+                        text: profilePage.profile.description
+                    }
+                }
+
+                Item {
+                    height: 30
+                    width: parent.width
+                }
+
+                UbuntuMediumText {
+                    id: headerNote
+                    text: qsTr("note")
+                    font.capitalization: Font.AllUppercase
+                    font.pixelSize: 16
+                }
+
+                SvgImage {
+                    id: addNote
+                    source: "images/common/menu_column_item_bg.svg";
+                    anchors.right: parent.right
+                    anchors.top: headerNote.bottom
 
                     UbuntuLightText {
                         anchors.left: parent.left
                         anchors.leftMargin: 5
-                        anchors.right: parent.right
-                        anchors.rightMargin: 5
                         anchors.top: parent.top
                         anchors.topMargin: 5
-                        font.pixelSize: 13
-                        wrapMode: Text.WordWrap
-                        text: obj.text
+                        font.pixelSize: 16
+                        text: qsTr("Add Note")
                     }
+
                     Image {
+                        source: "images/common/piu.png"
                         anchors.right: parent.right
-                        anchors.rightMargin: 5
                         anchors.top: parent.top
-                        anchors.topMargin: 5
-                        source: "images/profiles/icon_x.png"
-                        width: 20
-                        height: 20
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: userNotes.remove(index)
-                        }
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: pannableChild.addNote()
                     }
                 }
 
-                model: userNotes
-            }
+                Item {
+                    height: 10
+                    width: parent.width
+                }
 
-            MediaModel {
-                id: userNotes
-                source: myHomeModels.notes
-                containers: [profile.uii]
-                range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+                PaginatorList {
+
+                    id: paginator
+                    width: addNote.width
+                    elementsOnPage: 4
+                    listHeight: model.count > elementsOnPage ? elementsOnPage * 50 : model.count * 50
+
+                    delegate: Rectangle {
+                        color: index % 2 !== 0 ? "light gray" : "gray"
+                        width: 212
+                        height: 50
+                        property variant obj: userNotes.getObject(index)
+
+                        UbuntuLightText {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 5
+                            anchors.right: parent.right
+                            anchors.rightMargin: 5
+                            anchors.top: parent.top
+                            anchors.topMargin: 5
+                            font.pixelSize: 13
+                            wrapMode: Text.WordWrap
+                            text: obj.text
+                        }
+                        Image {
+                            anchors.right: parent.right
+                            anchors.rightMargin: 5
+                            anchors.top: parent.top
+                            anchors.topMargin: 5
+                            source: "images/profiles/icon_x.png"
+                            width: 20
+                            height: 20
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: userNotes.remove(index)
+                            }
+                        }
+                    }
+                    model: userNotes
+                }
+
+                MediaModel {
+                    id: userNotes
+                    source: myHomeModels.notes
+                    containers: [profile.uii]
+                    range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+                }
+
             }
 
             MediaModel {
@@ -174,7 +180,6 @@ Page {
                 id: popup
                 FavoriteEditPopup { }
             }
-
 
             function addNote() {
                 installPopup(popupAddNote)
