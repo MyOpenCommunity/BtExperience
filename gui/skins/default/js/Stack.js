@@ -39,6 +39,7 @@ function _openPage(filename, properties) {
 
     var page = undefined
     var deletingPages = []
+    var parachute = 0
     while (filename !== "")
     {
         // now, Stack.js is in a js subdir so we have to trick the filename
@@ -66,6 +67,23 @@ function _openPage(filename, properties) {
                 deletingPages.push(page)
             }
             properties = ret["properties"]
+        }
+        // Component.Error
+        else if (page_component.status === 3) {
+            logError("Error in creating page component: ")
+            logError(page_component.errorString())
+            changePageDone()
+            _deletePages(deletingPages)
+            return null
+        }
+
+        ++parachute
+        if (parachute >= 20)
+        {
+            logError("Maximum number skip pages reached, aborting")
+            changePageDone()
+            _deletePages(deletingPages)
+            return null
         }
     }
 
