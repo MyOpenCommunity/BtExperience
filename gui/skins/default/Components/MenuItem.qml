@@ -90,7 +90,7 @@ Item {
             UbuntuMediumTextInput {
                 text: menuItem.name
                 activeFocusOnPress: false
-                font.pixelSize: 14
+                font.pixelSize: 13
                 color:  labelLoader.textColor
                 onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
             }
@@ -100,7 +100,7 @@ Item {
             id: labelComponent
             UbuntuMediumText {
                 text: menuItem.name
-                font.pixelSize: 14
+                font.pixelSize: 13
                 color:  labelLoader.textColor
             }
         }
@@ -132,11 +132,12 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Text {
+                UbuntuLightText {
                     id: boxInfoText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     color: "white"
+                    font.pixelSize: 13
                 }
             }
 
@@ -159,7 +160,7 @@ Item {
             id: textDescription
             color: "#626262"
             wrapMode: Text.NoWrap
-            font.pixelSize: 14
+            font.pixelSize: 13
             anchors.bottom: parent.bottom
             anchors.bottomMargin: menuItem.height / 100 * 10
             anchors.top: labelLoader.bottom

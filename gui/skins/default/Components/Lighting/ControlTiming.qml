@@ -19,7 +19,7 @@ SvgImage {
         anchors.topMargin: 5
         anchors.left: parent.left
         anchors.leftMargin: 7
-        font.pixelSize: 10
+        font.pixelSize: 13
     }
 
     QtObject {
