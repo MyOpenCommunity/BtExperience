@@ -4,12 +4,9 @@ Item {
     id: paginatorItem
 
     // expose some ListView properties
-    property alias footer: internalList.footer
-    property alias header: internalList.header
     property alias delegate: internalList.delegate
     property alias model: internalList.model
     property alias listHeight: internalList.height
-    property alias listWidth: internalList.width
     property alias currentIndex: internalList.currentIndex
     property alias source: background.source
 
