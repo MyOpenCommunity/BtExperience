@@ -152,7 +152,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 text: qsTr("Answer")
                 font {
-                    pixelSize: 10
+                    pixelSize: 12
                     capitalization: Font.AllUppercase
                 }
             }
@@ -205,7 +205,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 text: qsTr("End Call")
                 font {
-                    pixelSize: 10
+                    pixelSize: 12
                     capitalization: Font.AllUppercase
                 }
             }
@@ -255,7 +255,7 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             text: qsTr("mute")
             font {
-                pixelSize: 12
+                pixelSize: 14
                 capitalization: Font.AllUppercase
             }
         }

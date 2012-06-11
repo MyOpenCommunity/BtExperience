@@ -23,7 +23,7 @@ Image {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font {
-            pixelSize: 10
+            pixelSize: 12
             capitalization: Font.AllUppercase
         }
     }

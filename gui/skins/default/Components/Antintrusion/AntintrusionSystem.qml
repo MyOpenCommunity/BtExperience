@@ -252,7 +252,7 @@ MenuColumn {
                     textAnchors.left: led.right
                     textAnchors.leftMargin: zoneButton.width / 100 * 6
                     textAnchors.right: zoneButton.right
-                    font.pixelSize: 11
+                    font.pixelSize: 12
                     horizontalAlignment: Text.AlignLeft
                     defaultImage: "../images/common/button_zones.svg"
                     pressedImage: "../images/common/button_zones_press.svg"
