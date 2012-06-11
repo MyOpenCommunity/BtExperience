@@ -8,11 +8,10 @@ Column {
     signal closeAlert
     width: 212
 
-    UbuntuLightText {
+    UbuntuMediumText {
         id: warningText
         text: qsTr("warning")
         color: "#ff2e2e"
-        font.family: semiBoldFont.name
         font.capitalization: Font.AllUppercase
         font.pixelSize: 16
     }
@@ -38,8 +37,7 @@ Column {
             anchors.topMargin: 20
             anchors.bottom: parent.bottom
             text: qsTr("")
-            font.family: regularFont.name
-            font.pixelSize: 16
+            font.pixelSize: 14
             wrapMode: Text.WordWrap
         }
     }
