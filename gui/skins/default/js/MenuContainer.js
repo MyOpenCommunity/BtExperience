@@ -16,7 +16,6 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
         dataModel = null
 
 
-
     var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
     if (!titleObj) {
         console.log("Error on creating the MenuTitle component")
@@ -135,8 +134,10 @@ function processOperations() {
     var op = pendingOperations[0]
 
     // To show the new item from behind (and to hide in the same way)
-    for (var i = 0; i < stackObjects.length; i++)
+    for (var i = 0; i < stackObjects.length; i++) {
         stackObjects[i]['item'].z = 1 - i * 0.01
+        stackObjects[i]['shadow'].z = 1 - i * 0.01
+    }
 
     if (op['id'] === OP_OPEN)
         _openItem()
