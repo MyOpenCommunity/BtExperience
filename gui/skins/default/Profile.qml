@@ -132,7 +132,7 @@ Page {
                         anchors.rightMargin: 5
                         anchors.top: parent.top
                         anchors.topMargin: 5
-                        font.pixelSize: 16
+                        font.pixelSize: 13
                         wrapMode: Text.WordWrap
                         text: obj.text
                     }

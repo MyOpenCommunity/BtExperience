@@ -22,7 +22,7 @@ SvgImage {
         color: "#000000"
         text: parent.text
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 13
+        font.pixelSize: 15
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.textFirst ? parent.top : undefined
         anchors.topMargin: parent.textFirst ? 20 : 0

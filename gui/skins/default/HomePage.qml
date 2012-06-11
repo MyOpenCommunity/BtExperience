@@ -159,6 +159,7 @@ BasePage {
             anchors.right: parent.right
             anchors.rightMargin: 30
         }
+
         Grid {
             id: column1
             spacing: 0
