@@ -7,7 +7,6 @@ import "../js/CardView.js" as CardViewScript
 Item {
     property alias source: imageDelegate.source
     property alias label: labelText.text
-    property variant view: ListView.view === null ? GridView.view : ListView.view
 
     signal clicked
 
@@ -27,7 +26,6 @@ Item {
         opacity: 0.5
         UbuntuLightText {
             id: labelText
-            text: modelData
             font.pixelSize: CardViewScript.listDelegateWidth / 100 * 7
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
@@ -75,12 +73,12 @@ Item {
         anchors.fill: parent
 
         onClicked: itemDelegate.clicked()
-        onPressed: view.currentPressed = index
-        onReleased: view.currentPressed = -1
+        onPressed: itemDelegate.ListView.view.currentPressed = index
+        onReleased: itemDelegate.ListView.view.currentPressed = -1
     }
 
     states: State {
-        when: view.currentPressed === index
+        when: itemDelegate.ListView.view.currentPressed === index
         PropertyChanges {
             target: rectPressed
             visible: true
