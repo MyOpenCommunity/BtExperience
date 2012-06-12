@@ -133,7 +133,7 @@ BasePage {
             bottom: favourites.top
             left: parent.left
             leftMargin: 20
-            right: pages.left
+            right: homeMenu.left
             rightMargin: 20
         }
     }
@@ -144,37 +144,30 @@ BasePage {
     }
 
     Item {
-        id: pages
-        anchors.right: parent.right
-        anchors.bottom: favourites.top
-        anchors.top: toolbar.bottom
-        width: 288
+        id: homeMenu
+        width: menu_bg.width
+        height: menu_bg.height
 
-        SvgImage {
-            source: "images/home/menu.svg"
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: -30
-            anchors.right: parent.right
-            anchors.rightMargin: 30
+        anchors {
+            right: parent.right
+            rightMargin: parent.width / 100 * 1.3
+            bottom: favourites.top
+            top: parent.top
+            topMargin: parent.height / 100 * 20
         }
 
+        SvgImage {
+            id: menu_bg
+            source: "images/home/home_menu_bg_shadow.svg"
+        }
         Grid {
-            id: column1
-            spacing: 0
+            anchors.fill: menu_bg
+            spacing: 5
             columns: 2
-            anchors.top: parent.top
-            anchors.topMargin: 70
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            width: 288
-            height: 328
-
             ButtonHomePageLink {
-                textFirst: false
-                source: "images/home/stanze.svg"
-                sourcePressed: "images/home/stanze_p.svg"
+                source: "images/home/home_menu_bg_top_left.svg"
+                sourcePressed: "images/home/home_menu_bg_top_left_pressed.svg"
+                icon: "images/home/home_menu_icon_rooms.svg"
                 text: qsTr("rooms")
                 onClicked: {
                     if (roomModel.count > 1)
@@ -185,23 +178,25 @@ BasePage {
             }
 
             ButtonHomePageLink {
-                textFirst: false
-                source: "images/home/sistemi.svg"
-                sourcePressed: "images/home/sistemi_p.svg"
+                source: "images/home/home_menu_bg_top_right.svg"
+                sourcePressed: "images/home/home_menu_bg_top_right_pressed.svg"
+                icon: "images/home/home_menu_icon_systems.svg"
                 text: qsTr("systems")
                 onClicked: Stack.openPage("Systems.qml")
             }
 
             ButtonHomePageLink {
-                source: "images/home/opzioni.svg"
-                sourcePressed: "images/home/opzioni_p.svg"
+                source: "images/home/home_menu_bg_bottom_left.svg"
+                sourcePressed: "images/home/home_menu_bg_bottom_left_pressed.svg"
+                icon: "images/home/home_menu_icon_options.svg"
                 text: qsTr("options")
                 onClicked: Stack.openPage("Settings.qml")
             }
 
             ButtonHomePageLink {
-                source: "images/home/multimedia.svg"
-                sourcePressed: "images/home/multimedia_p.svg"
+                source: "images/home/home_menu_bg_bottom_right.svg"
+                sourcePressed: "images/home/home_menu_bg_bottom_right_pressed.svg"
+                icon: "images/home/home_menu_icon_multimedia.svg"
                 text: qsTr("multimedia")
                 onClicked: Stack.openPage("Multimedia.qml")
             }
