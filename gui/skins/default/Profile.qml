@@ -94,14 +94,18 @@ Page {
                         anchors.leftMargin: 5
                         anchors.top: parent.top
                         anchors.topMargin: 5
-                        font.pixelSize: 16
-                        text: qsTr("Add Note")
+                        font.pixelSize: 14
+                        text: qsTr("Add note")
                     }
 
-                    Image {
-                        source: "images/common/piu.png"
-                        anchors.right: parent.right
-                        anchors.top: parent.top
+                    SvgImage {
+                        source: "images/common/symbol_plus.svg"
+                        anchors {
+                            right: parent.right
+                            rightMargin: parent.width / 100 * 2
+                            top: parent.top
+                            topMargin:  parent.height / 100 * 10
+                        }
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -118,34 +122,40 @@ Page {
 
                     id: paginator
                     width: addNote.width
-                    elementsOnPage: 4
+                    elementsOnPage: 3
 
                     delegate: Rectangle {
                         id: delegate
                         color: index % 2 !== 0 ? "light gray" : "gray"
+                        // TODO: this should probably be a background image.
+                        // It's a bad idea to have delegates of different sizes
+                        // (think empty space at bottom, think moving paginator
+                        // at bottom and so on)
+                        // Leave size hardcoded for now.
                         width: 212
-                        height: 50
+                        height: 60
                         property variant obj: userNotes.getObject(index)
 
                         UbuntuLightText {
                             anchors.left: parent.left
-                            anchors.leftMargin: 5
-                            anchors.right: parent.right
-                            anchors.rightMargin: 5
+                            anchors.leftMargin: delegate.width / 100 * 2
+                            anchors.right: crossImage.left
+                            anchors.rightMargin: delegate.width / 100 * 2
                             anchors.top: parent.top
-                            anchors.topMargin: 5
+                            anchors.topMargin: delegate.height / 100 * 9
                             font.pixelSize: 13
-                            wrapMode: Text.WordWrap
+                            wrapMode: Text.Wrap
                             text: delegate.obj.text
+                            elide: Text.ElideRight
+                            maximumLineCount: 3
                         }
-                        Image {
+                        SvgImage {
+                            id: crossImage
                             anchors.right: parent.right
-                            anchors.rightMargin: 5
+                            anchors.rightMargin: delegate.width / 100 * 2
                             anchors.top: parent.top
-                            anchors.topMargin: 5
-                            source: "images/profiles/icon_x.png"
-                            width: 20
-                            height: 20
+                            anchors.topMargin: delegate.height / 100 * 9
+                            source: "images/common/icon_delete.svg"
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: userNotes.remove(index)
