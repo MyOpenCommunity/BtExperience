@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
+import "../js/CardView.js" as CardViewScript
 
 
 Item {
@@ -16,14 +17,14 @@ Item {
 
     Rectangle {
         id: textDelegate
-        width: 175
-        height: 20
+        width: CardViewScript.listDelegateWidth
+        height: CardViewScript.listDelegateWidth / 100 * 11
         color: Qt.rgba(230, 230, 230)
         opacity: 0.5
         UbuntuLightText {
             id: labelText
             text: modelData
-            font.pixelSize: 13
+            font.pixelSize: CardViewScript.listDelegateWidth / 100 * 7
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
         }
@@ -31,8 +32,8 @@ Item {
 
     Rectangle {
         id: delegateBackground
-        width: 175
-        height: 244
+        width: CardViewScript.listDelegateWidth
+        height: CardViewScript.listDelegateWidth / 100 * 139
         anchors.top: textDelegate.bottom
         color: Qt.rgba(230, 230, 230)
         opacity: 0.5
@@ -40,11 +41,11 @@ Item {
 
     Image {
         id: imageDelegate
-        width: 169
-        height: 238
+        width: CardViewScript.listDelegateWidth / 100 * 97
+        height: CardViewScript.listDelegateWidth / 100 * 136
         anchors {
             bottom: delegateBackground.bottom
-            bottomMargin: 5
+            bottomMargin: CardViewScript.listDelegateWidth / 100 * 3
             horizontalCenter: delegateBackground.horizontalCenter
         }
         source: users.selectRoomImage(modelData)
@@ -55,7 +56,7 @@ Item {
         source: "../images/home/pager_shadow.svg"
         anchors {
             top: delegateBackground.bottom
-            topMargin: 5
+            topMargin: CardViewScript.listDelegateWidth / 100 * 3
             horizontalCenter: delegateBackground.horizontalCenter
         }
     }

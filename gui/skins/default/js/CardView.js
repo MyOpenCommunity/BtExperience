@@ -4,11 +4,21 @@
 // These values are defined here since are needed in the delegates, other values
 // (eg. spacing between delegates) are defined in the Views
 
-var _gridCardHeight = 160
-var _gridShadowHeight = 22
-var gridDelegateHeight = _gridCardHeight + _gridShadowHeight
-var gridDelegateWidth = 140
+// the first thing we need is a measure to base other computations; we choose
+// the delegate width: changing it, everything else changes accordingly
 var listDelegateWidth = 175
+// NOTE: when changing listDelegateWidth check that delegates (completed with
+// shadows) are completely visible because height is computed with respect to
+// width
+
+// not sure we need it
+var gridDelegateWidth = 140
+
+// some measures dependent on widths
+var _gridCardHeight = gridDelegateWidth / 100 * 114
+var _gridShadowHeight = gridDelegateWidth / 100 * 16
+var gridDelegateHeight = _gridCardHeight + _gridShadowHeight
+
 
 function visibleColumns(fullWidth, delegateWidth, horizontalSpacing, rows, modelCount) {
     var elementColumns = Math.ceil(modelCount / rows)
