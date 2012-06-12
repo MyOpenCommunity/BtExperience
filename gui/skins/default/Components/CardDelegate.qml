@@ -19,24 +19,10 @@ Item {
     }
 
     Rectangle {
-        id: textDelegate
-        width: CardViewScript.listDelegateWidth
-        height: CardViewScript.listDelegateWidth / 100 * 11
-        color: Qt.rgba(230, 230, 230)
-        opacity: 0.5
-        UbuntuLightText {
-            id: labelText
-            font.pixelSize: CardViewScript.listDelegateWidth / 100 * 7
-            anchors.fill: parent
-            horizontalAlignment: Text.AlignHCenter
-        }
-    }
-
-    Rectangle {
         id: delegateBackground
         width: CardViewScript.listDelegateWidth
         height: CardViewScript.listDelegateWidth / 100 * 139
-        anchors.top: textDelegate.bottom
+
         color: Qt.rgba(230, 230, 230)
         opacity: 0.5
     }
@@ -52,11 +38,26 @@ Item {
         }
     }
 
+    Rectangle {
+        id: textDelegate
+        width: CardViewScript.listDelegateWidth
+        height: CardViewScript.listDelegateWidth / 100 * 11
+        anchors.top: delegateBackground.bottom
+        color: Qt.rgba(230, 230, 230)
+        opacity: 0.5
+        UbuntuLightText {
+            id: labelText
+            font.pixelSize: CardViewScript.listDelegateWidth / 100 * 7
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignHCenter
+        }
+    }
+
     SvgImage {
         id: delegateShadow
         source: "../images/home/pager_shadow.svg"
         anchors {
-            top: delegateBackground.bottom
+            top: textDelegate.bottom
             topMargin: CardViewScript.listDelegateWidth / 100 * 3
             horizontalCenter: delegateBackground.horizontalCenter
         }
