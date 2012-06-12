@@ -161,16 +161,9 @@ SvgImage {
             MouseArea { anchors.fill: parent }
         }
 
-        Item {
-            id: spaceKeypad
-            anchors.top: parent.top
-            height: keypad.height / 100 * 6.2
-            width: parent.width
-        }
-
         Column {
             id: gridKeypad
-            anchors.top: spaceKeypad.top
+            anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: keypad.height / 100 * 6.2
 
@@ -215,41 +208,34 @@ SvgImage {
                     }
                 }
             }
-        }
 
-        Item {
-            id: spaceKeypad2
-            anchors.top: gridKeypad.bottom
-            height: keypad.height / 100 * 6.2
-            width: parent.width
-        }
+            Row {
+                id: rowKeypad
+                anchors.top: spaceKeypad2.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
 
-        Row {
-            id: rowKeypad
-            anchors.top: spaceKeypad2.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
+                ButtonThreeStates {
+                    defaultImage: "../images/common/button_key_delete.svg"
+                    pressedImage: "../images/common/button_key_delete_press.svg"
+                    shadowImage: "../images/common/shadow_button_key_delete.svg"
+                    text: ""
+                    onClicked: keypad.digitClicked("C")
+                    status: 0
 
-            ButtonThreeStates {
-                defaultImage: "../images/common/button_key_delete.svg"
-                pressedImage: "../images/common/button_key_delete_press.svg"
-                shadowImage: "../images/common/shadow_button_key_delete.svg"
-                text: ""
-                onClicked: keypad.digitClicked("C")
-                status: 0
-
-                SvgImage {
-                    source: parent.state === "pressed" ? "../images/common/key_delete_press.svg" : "../images/common/key_delete.svg"
-                    anchors.centerIn: parent
+                    SvgImage {
+                        source: parent.state === "pressed" ? "../images/common/key_delete_press.svg" : "../images/common/key_delete.svg"
+                        anchors.centerIn: parent
+                    }
                 }
-            }
 
-            ButtonThreeStates {
-                defaultImage: "../images/common/button_keypad.svg"
-                pressedImage: "../images/common/button_keypad_press.svg"
-                shadowImage: "../images/common/shadow_button_keypad.svg"
-                text: "0"
-                onClicked: keypad.digitClicked(text)
-                status: 0
+                ButtonThreeStates {
+                    defaultImage: "../images/common/button_keypad.svg"
+                    pressedImage: "../images/common/button_keypad_press.svg"
+                    shadowImage: "../images/common/shadow_button_keypad.svg"
+                    text: "0"
+                    onClicked: keypad.digitClicked(text)
+                    status: 0
+                }
             }
         }
     }
