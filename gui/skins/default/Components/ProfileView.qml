@@ -1,7 +1,8 @@
 import QtQuick 1.1
 import Components 1.0
 import BtObjects 1.0
-import "../js/ProfileView.js" as Script
+
+import "../js/array.js" as Script
 
 // Implementation of custom profile view
 Item {
@@ -27,9 +28,9 @@ Item {
     }
 
     function clearObjects() {
-        var len = Script.obj_array.length
+        var len = Script.container.length
         for (var i = 0; i < len; ++i)
-            Script.obj_array.pop().destroy()
+            Script.container.pop().destroy()
     }
 
     Component {
@@ -76,7 +77,7 @@ Item {
             instance.selected.connect(function (instance) {
                 bringOver(instance)
             })
-            Script.obj_array.push(instance)
+            Script.container.push(instance)
         }
     }
 
