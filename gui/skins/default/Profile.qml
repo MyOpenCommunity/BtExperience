@@ -137,12 +137,14 @@ Page {
                         property variant obj: userNotes.getObject(index)
 
                         UbuntuLightText {
-                            anchors.left: parent.left
-                            anchors.leftMargin: delegate.width / 100 * 2
-                            anchors.right: crossImage.left
-                            anchors.rightMargin: delegate.width / 100 * 2
-                            anchors.top: parent.top
-                            anchors.topMargin: delegate.height / 100 * 9
+                            anchors {
+                                left: parent.left
+                                leftMargin: delegate.width / 100 * 2
+                                right: crossImage.left
+                                rightMargin: delegate.width / 100 * 2
+                                top: parent.top
+                                topMargin: delegate.height / 100 * 9
+                            }
                             font.pixelSize: 13
                             wrapMode: Text.Wrap
                             text: delegate.obj.text
@@ -151,10 +153,12 @@ Page {
                         }
                         SvgImage {
                             id: crossImage
-                            anchors.right: parent.right
-                            anchors.rightMargin: delegate.width / 100 * 2
-                            anchors.top: parent.top
-                            anchors.topMargin: delegate.height / 100 * 9
+                            anchors {
+                                right: parent.right
+                                rightMargin: delegate.width / 100 * 2
+                                top: parent.top
+                                topMargin: delegate.height / 100 * 9
+                            }
                             source: "images/common/icon_delete.svg"
                             MouseArea {
                                 anchors.fill: parent
