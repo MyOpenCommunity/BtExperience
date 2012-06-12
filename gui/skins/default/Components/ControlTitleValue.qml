@@ -28,7 +28,6 @@ Item {
         anchors.topMargin: 5
         font.pixelSize: 14
         color:  "#2d2d2d"
-        font.bold: true
     }
 
     Loader {

@@ -99,14 +99,13 @@ SvgImage {
                         anchors.left: parent.left
                         anchors.leftMargin: keypad.width / 100 * 11.95
                     }
-                    UbuntuLightText {
+                    UbuntuMediumText {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.left: iconFail.right
                         anchors.leftMargin: keypad.width / 100 * 11.95
                         text: errorLabel
                         font.pixelSize: 15
-                        font.bold: true
                         color: "black"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -126,14 +125,13 @@ SvgImage {
                         anchors.left: parent.left
                         anchors.leftMargin: keypad.width / 100 * 11.95
                     }
-                    UbuntuLightText {
+                    UbuntuMediumText {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.left: iconCorrect.right
                         anchors.leftMargin: keypad.width / 100 * 11.95
                         text: okLabel
                         font.pixelSize: 15
-                        font.bold: true
                         color: "black"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
