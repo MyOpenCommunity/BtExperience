@@ -152,6 +152,7 @@ MenuColumn {
                 anchors.verticalCenter: parent.verticalCenter
                 status: 1
                 onClicked: {
+                    column.closeChild()
                     var title = column.state === "" ? qsTr("enable system") : qsTr("disable system")
                     var okMessage = column.state === "" ? qsTr("system enabled") : qsTr("system disabled")
                     privateProps.toggleActivation(title, qsTr("wrong code"), okMessage)
