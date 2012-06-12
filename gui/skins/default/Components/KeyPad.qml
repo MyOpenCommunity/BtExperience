@@ -174,6 +174,7 @@ SvgImage {
             id: gridKeypad
             anchors.top: spaceKeypad.top
             anchors.horizontalCenter: parent.horizontalCenter
+            spacing: keypad.height / 100 * 6.2
 
             Row {
                 Repeater {
@@ -189,11 +190,6 @@ SvgImage {
                 }
             }
 
-            Item {
-                height: keypad.height / 100 * 6.2
-                width: 1
-            }
-
             Row {
                 Repeater {
                     model: 3
@@ -206,11 +202,6 @@ SvgImage {
                         status: 0
                     }
                 }
-            }
-
-            Item {
-                height: keypad.height / 100 * 6.2
-                width: 1
             }
 
             Row {
