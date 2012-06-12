@@ -134,7 +134,7 @@ BasePage {
             left: parent.left
             leftMargin: 20
             right: homeMenu.left
-            rightMargin: 20
+            rightMargin: 100
         }
     }
 

@@ -6,7 +6,7 @@
 
 // the first thing we need is a measure to base other computations; we choose
 // the delegate width: changing it, everything else changes accordingly
-var listDelegateWidth = 175
+var listDelegateWidth = 150
 // NOTE: when changing listDelegateWidth check that delegates (completed with
 // shadows) are completely visible because height is computed with respect to
 // width
