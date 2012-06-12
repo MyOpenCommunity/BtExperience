@@ -13,7 +13,11 @@ Item {
 
     id: itemDelegate
     width: delegateBackground.width
-    height: delegateBackground.height + delegateShadow.height
+    height: {
+        var h = textDelegate.height + delegateBackground.height + delegateShadow.height + delegateShadow.anchors.topMargin
+        ListView.view.height = h
+        return h
+    }
 
     Rectangle {
         id: textDelegate
@@ -48,7 +52,6 @@ Item {
             bottomMargin: CardViewScript.listDelegateWidth / 100 * 3
             horizontalCenter: delegateBackground.horizontalCenter
         }
-        source: users.selectRoomImage(modelData)
     }
 
     SvgImage {

@@ -38,7 +38,6 @@ Item {
             orientation: ListView.Horizontal
             interactive: false
             spacing: privateProps.delegateSpacing
-            height: parent.height
             // Compute width to center the list view
             width: {
                 var min = Math.min(privateProps.visibleElements, model.count)
