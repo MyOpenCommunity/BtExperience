@@ -88,7 +88,6 @@ Page {
                     id: addNote
                     source: "images/common/menu_column_item_bg.svg";
                     anchors.right: parent.right
-                    anchors.top: headerNote.bottom
 
                     UbuntuLightText {
                         anchors.left: parent.left
@@ -120,9 +119,9 @@ Page {
                     id: paginator
                     width: addNote.width
                     elementsOnPage: 4
-                    listHeight: model.count > elementsOnPage ? elementsOnPage * 50 : model.count * 50
 
                     delegate: Rectangle {
+                        id: delegate
                         color: index % 2 !== 0 ? "light gray" : "gray"
                         width: 212
                         height: 50
@@ -137,7 +136,7 @@ Page {
                             anchors.topMargin: 5
                             font.pixelSize: 13
                             wrapMode: Text.WordWrap
-                            text: obj.text
+                            text: delegate.obj.text
                         }
                         Image {
                             anchors.right: parent.right

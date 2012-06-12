@@ -40,13 +40,23 @@ Item {
 
     ListView {
         id: internalList
+
+        // initially we set values to 1 to be sure to enter inside the if
+        // contained in the Component.onCompleted function; this is because
+        // a list creates at least one delegate if its width and height are
+        // at least 1 both
+        property int delegateWidth: 1
+        property int delegateHeight: 1
+
+        width: delegateWidth
+        // here we calculate the min between elementsOnPage and model.count to
+        // know the height of the list; the problems is that model.count is
+        // initially zero, so we have to trick with the max function to always
+        // have an height of at least 1 (otherwise we miss the if in the
+        // Component.onCompleted function)
+        height: Math.max(1, delegateHeight * Math.min(elementsOnPage, internalList.model.count))
         interactive: false
         currentIndex: -1
-        // we need to set width and height to at least 1 otherwise the ListView
-        // will consider to have zero children and the Component.onCompleted code
-        // will not work as expected
-        width: 1
-        height: 1
     }
 
     Paginator {
@@ -64,10 +74,8 @@ Item {
             // this way, we avoid to use magic numbers (bottom-up approach).
             // See MenuContainer docs to know why we need to set the width
             // Items that may go into a MenuColumn.
-            var delegateWidth = internalList.children[0].children[0].width
-            internalList.width = delegateWidth
-            var delegateHeight = internalList.children[0].children[0].height
-            internalList.height = delegateHeight * Math.min(elementsOnPage, internalList.model.count)
+            internalList.delegateWidth = internalList.children[0].children[0].width
+            internalList.delegateHeight = internalList.children[0].children[0].height
         }
     }
 }
