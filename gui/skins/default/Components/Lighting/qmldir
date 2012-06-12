@@ -4,5 +4,5 @@ ControlTiming 1.0 ControlTiming.qml
 DateTimeButton 1.0 DateTimeButton.qml
 Dimmer 1.0 Dimmer.qml
 Light 1.0 Light.qml
+LightGroup 1.0 LightGroup.qml
 LightingItems 1.0 LightingItems.qml
-TimeButtons 1.0 TimeButtons.qml
