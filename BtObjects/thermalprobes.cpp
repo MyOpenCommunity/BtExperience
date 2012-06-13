@@ -5,6 +5,45 @@
 #include <QDebug>
 
 
+ThermalNonControlledProbe::ThermalNonControlledProbe(QString _name, QString _key, ObjectId _object_id, NonControlledProbeDevice *_dev)
+{
+	name = _name;
+	key = _key;
+	object_id = _object_id;
+	dev = _dev;
+
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
+}
+
+QString ThermalNonControlledProbe::getObjectKey() const
+{
+	return key;
+}
+
+int ThermalNonControlledProbe::getTemperature() const
+{
+	return bt2Celsius(temperature);
+}
+
+void ThermalNonControlledProbe::valueReceived(const DeviceValues &values_list)
+{
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		if (it.key() == NonControlledProbeDevice::DIM_TEMPERATURE)
+		{
+			if (temperature != it.value().toInt())
+			{
+				temperature = it.value().toInt();
+				emit temperatureChanged();
+			}
+		}
+
+		++it;
+	}
+}
+
+
 ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, CentralType _central_type, ControlledProbeDevice *d)
 {
 	name = _name;

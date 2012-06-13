@@ -77,6 +77,8 @@ public:
 		IdStopAndGoBTest,
 		IdEnergyData,                           // 30
 		IdThermalControlledProbeFancoil, //!< Thermal controlled probe with fancoil
+		IdThermalNonControlledProbe, //!< Thermal non-controlled probe device
+		IdThermalExternalProbe, //!< Thermal external probe device
 		// used internally
 		IdDimmerGroup = 100, //!< Group of lights containing only dimmer objects
 		IdDimmer100Group = 101, //!< group of lights containing only 100-level dimmer objects

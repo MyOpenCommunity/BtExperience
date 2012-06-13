@@ -29,6 +29,36 @@
 #include <QPair>
 
 
+void TestThermalNonControlledProbes::init()
+{
+	NonControlledProbeDevice *d = new NonControlledProbeDevice("23#1", NonControlledProbeDevice::EXTERNAL);
+
+	obj = new ThermalNonControlledProbe("", "", ObjectInterface::IdThermalExternalProbe, d);
+	dev = new NonControlledProbeDevice("23#1", NonControlledProbeDevice::EXTERNAL, 1);
+}
+
+void TestThermalNonControlledProbes::cleanup()
+{
+	delete obj->dev;
+	delete obj;
+	delete dev;
+}
+
+void TestThermalNonControlledProbes::testReceiveTemperature()
+{
+	DeviceValues v;
+	v[NonControlledProbeDevice::DIM_TEMPERATURE] = 1010;
+
+	ObjectTester t(obj, SIGNAL(temperatureChanged()));
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(-10, obj->getTemperature());
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+
 void TestThermalControlledProbes::initObjects(ControlledProbeDevice *_dev, ThermalControlledProbeFancoil *_obj)
 {
 	obj = _obj;
