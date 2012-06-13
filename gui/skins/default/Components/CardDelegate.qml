@@ -12,11 +12,8 @@ Item {
 
     id: itemDelegate
     width: delegateBackground.width
-    height: {
-        var h = textDelegate.height + delegateBackground.height + delegateShadow.height + delegateShadow.anchors.topMargin
-        ListView.view.height = h
-        return h
-    }
+    height: textDelegate.height + delegateBackground.height + delegateShadow.height + delegateShadow.anchors.topMargin
+    onHeightChanged: ListView.view.height = height
 
     Rectangle {
         id: delegateBackground
