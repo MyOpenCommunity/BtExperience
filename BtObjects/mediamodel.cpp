@@ -249,7 +249,16 @@ void MediaModel::remove(int index)
 
 void MediaModel::clear()
 {
-	removeRows(0, counter, QModelIndex());
+	MediaDataModel *source = getSource();
+
+	// we can't call removeRows() on ourselves because this will only remove items that
+	// match both filter and range (and we want to ignore the range), and we need to take into
+	// account the filter when calling removeRows() on the source
+	for (int source_row = source->rowCount() - 1; source_row >= 0; --source_row)
+		if (acceptsRow(source_row))
+			source->removeRows(source_row, 1, QModelIndex());
+
+	reset();
 }
 
 void MediaModel::append(ItemInterface *obj)

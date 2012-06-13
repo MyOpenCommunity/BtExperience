@@ -121,22 +121,118 @@ void TestMediaModel::testRemove()
 	ts.checkSignals();
 }
 
-void TestMediaModel::testRemoveAll()
+void TestMediaModel::testRemoveFiltered()
 {
 	(*src) << items[0];
 	(*src) << items[1];
 	(*src) << items[2];
+	(*src) << items[3];
+	(*src) << items[4];
+
+	obj->setContainers(QVariantList() << 3);
+	obj->rowCount(); // force recount
+
 	qApp->processEvents(); // flush pending countChanged()
 
 	ObjectTester ts(obj, SIGNAL(countChanged()));
 
 	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
+	QCOMPARE(src->rowCount(), 5);
+
+	src->removeRows(1, 0);
+	ts.checkNoSignals();
+	QCOMPARE(obj->getCount(), 3);
+	QCOMPARE(obj->rowCount(), 3);
+
+	obj->remove(1);
+
+	QCOMPARE(obj->getCount(), 2);
+	QCOMPARE(obj->rowCount(), 2);
+	QCOMPARE(src->rowCount(), 4);
+
+	qApp->processEvents();
+	ts.checkSignals();
+	return;
+	QCOMPARE(src->getObject(0), items[0]);
+	QCOMPARE(src->getObject(1), items[2]);
+
+	// remove another element
+	obj->remove(0);
+
+	QCOMPARE(obj->getCount(), 1);
+	QCOMPARE(obj->rowCount(), 1);
+	QCOMPARE(src->rowCount(), 3);
+
+	qApp->processEvents();
+	ts.checkSignals();
+
+	QCOMPARE(src->getObject(0), items[2]);
+
+	// remove last element
+	obj->remove(0);
+
+	QCOMPARE(obj->getCount(), 0);
+	QCOMPARE(obj->rowCount(), 0);
+	QCOMPARE(src->rowCount(), 2);
+
+	qApp->processEvents();
+	ts.checkSignals();
+}
+
+void TestMediaModel::testRemoveAll()
+{
+	(*src) << items[0];
+	(*src) << items[1];
+	(*src) << items[2];
+	(*src) << items[3];
+	(*src) << items[4];
+
+	obj->setRange(QVariantList() << 1 << 4);
+
+	qApp->processEvents(); // flush pending countChanged()
+
+	ObjectTester ts(obj, SIGNAL(countChanged()));
+
+	QCOMPARE(obj->getCount(), 5);
+	QCOMPARE(obj->rowCount(), 3);
+	QCOMPARE(src->rowCount(), 5);
 
 	obj->clear();
 
 	QCOMPARE(obj->getCount(), 0);
 	QCOMPARE(obj->rowCount(), 0);
+	QCOMPARE(src->rowCount(), 0);
+
+	qApp->processEvents();
+	ts.checkSignals();
+}
+
+void TestMediaModel::testRemoveAllFiltered()
+{
+	(*src) << items[0];
+	(*src) << items[1];
+	(*src) << items[2];
+	(*src) << items[3];
+	(*src) << items[4];
+
+	obj->setRange(QVariantList() << 1 << 2);
+	obj->setContainers(QVariantList() << 3);
+	obj->rowCount(); // force recount
+
+	qApp->processEvents(); // flush pending countChanged()
+
+	ObjectTester ts(obj, SIGNAL(countChanged()));
+
+	QCOMPARE(obj->getCount(), 3);
+	QCOMPARE(obj->rowCount(), 1);
+	QCOMPARE(src->rowCount(), 5);
+
+	obj->clear();
+
+	QCOMPARE(obj->getCount(), 0);
+	QCOMPARE(obj->rowCount(), 0);
+	QCOMPARE(src->rowCount(), 2);
 
 	qApp->processEvents();
 	ts.checkSignals();
