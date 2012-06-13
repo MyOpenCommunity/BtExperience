@@ -216,11 +216,7 @@ bool MediaModel::acceptsRow(int source_row) const
 
 bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-	// TODO la removeAll (clear) funziona solo in prima pagina, capire perché
-	qDebug() << "removeRows" << row << count << parent;
-	QModelIndex idx = index(row, 0);
-	int original_row = mapToSource(idx).row();
-	if (getSource()->removeRows(original_row, count, mapToSource(parent)))
+	if (QSortFilterProxyModel::removeRows(row, count, parent))
 	{
 		counter -= count;
 		invalidate();
