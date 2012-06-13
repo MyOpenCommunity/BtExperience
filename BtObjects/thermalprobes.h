@@ -12,6 +12,51 @@
 #include <QString>
 
 class ControlledProbeDevice;
+class NonControlledProbeDevice;
+
+
+/*!
+	\ingroup ThermalRegulation
+	\brief Manages thermal regulation external probes
+
+	The object id is \ref ObjectInterface::IdThermalExternalProbe or \ref ObjectInterface::IdThermalNonControlledProbe,
+	the object key is the SCS where.
+*/
+class ThermalNonControlledProbe : public ObjectInterface
+{
+	friend class TestThermalNonControlledProbes;
+
+	Q_OBJECT
+
+	/*!
+		\brief Gets the temperature measured by the probe
+	*/
+	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
+
+public:
+	ThermalNonControlledProbe(QString name, QString key, ObjectId object_id, NonControlledProbeDevice *dev);
+
+	virtual QString getObjectKey() const;
+
+	virtual int getObjectId() const
+	{
+		return object_id;
+	}
+
+	int getTemperature() const;
+
+signals:
+	void temperatureChanged();
+
+private slots:
+	void valueReceived(const DeviceValues &values_list);
+
+private:
+	QString key;
+	int object_id;
+	NonControlledProbeDevice *dev;
+	int temperature;
+};
 
 
 /*!
@@ -22,7 +67,7 @@ class ControlledProbeDevice;
 */
 class ThermalControlledProbe : public ObjectInterface
 {
-	friend class TestThermalProbes;
+	friend class TestThermalControlledProbes;
 
 	Q_OBJECT
 
@@ -132,7 +177,7 @@ private:
 */
 class ThermalControlledProbeFancoil : public ThermalControlledProbe
 {
-	friend class TestThermalProbesFancoil;
+	friend class TestThermalControlledProbesFancoil;
 
 	Q_OBJECT
 

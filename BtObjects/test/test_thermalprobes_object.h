@@ -28,10 +28,27 @@
 #include <QObject>
 
 class ThermalControlledProbe;
+class ThermalNonControlledProbe;
 class ControlledProbeDevice;
+class NonControlledProbeDevice;
 
 
-class TestThermalProbes : public TestBtObject
+class TestThermalNonControlledProbes : public TestBtObject
+{
+Q_OBJECT
+private slots:
+	void init();
+	void cleanup();
+
+	void testReceiveTemperature();
+
+private:
+	ThermalNonControlledProbe *obj;
+	NonControlledProbeDevice *dev;
+};
+
+
+class TestThermalControlledProbes : public TestBtObject
 {
 Q_OBJECT
 private slots:
@@ -63,7 +80,7 @@ private:
 };
 
 
-class TestThermalProbesFancoil : public TestThermalProbes
+class TestThermalControlledProbesFancoil : public TestThermalControlledProbes
 {
 Q_OBJECT
 private slots:

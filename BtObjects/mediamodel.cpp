@@ -216,14 +216,14 @@ bool MediaModel::acceptsRow(int source_row) const
 
 bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-	// TODO la removeAll (clear) funziona solo in prima pagina, capire perché
-	qDebug() << "removeRows" << row << count << parent;
-	QModelIndex idx = index(row, 0);
-	int original_row = mapToSource(idx).row();
-	if (getSource()->removeRows(original_row, count, mapToSource(parent)))
+	if (QSortFilterProxyModel::removeRows(row, count, parent))
 	{
 		counter -= count;
 		invalidate();
+		// when there are no rows in the source model, filterAcceptsRow() is never called, so we must
+		// emit countChanged() here
+		if (getSource()->rowCount() == 0)
+			QTimer::singleShot(0, this, SIGNAL(countChanged()));
 		return true;
 	}
 	else
@@ -245,13 +245,20 @@ ItemInterface *MediaModel::getObject(int row)
 void MediaModel::remove(int index)
 {
 	removeRow(index);
-	emit countChanged();
 }
 
 void MediaModel::clear()
 {
-	if (removeRows(0, counter, QModelIndex()))
-		emit countChanged();
+	MediaDataModel *source = getSource();
+
+	// we can't call removeRows() on ourselves because this will only remove items that
+	// match both filter and range (and we want to ignore the range), and we need to take into
+	// account the filter when calling removeRows() on the source
+	for (int source_row = source->rowCount() - 1; source_row >= 0; --source_row)
+		if (acceptsRow(source_row))
+			source->removeRows(source_row, 1, QModelIndex());
+
+	reset();
 }
 
 void MediaModel::append(ItemInterface *obj)
