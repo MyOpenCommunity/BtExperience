@@ -58,102 +58,39 @@ int main(int argc, char *argv[])
 	QCoreApplication app(argc, argv);
 	QList<TestBtObject *> test_list;
 
-	TestAntintrusionSystem test_antintrusion_system;
-	test_list << &test_antintrusion_system;
-
-	TestAmplifier test_amplifier;
-	test_list << &test_amplifier;
-
-	TestPowerAmplifier test_power_amplifier;
-	test_list << &test_power_amplifier;
-
-	TestSourceAux test_source_aux;
-	test_list << &test_source_aux;
-
-	TestSourceRadio test_source_radio;
-	test_list << &test_source_radio;
-
-	TestSoundAmbient test_sound_ambient;
-	test_list << &test_sound_ambient;
-
+	ADD_TEST(TestAntintrusionSystem);
+	ADD_TEST(TestAmplifier);
+	ADD_TEST(TestPowerAmplifier);
+	ADD_TEST(TestSourceAux);
+	ADD_TEST(TestSourceRadio);
+	ADD_TEST(TestSoundAmbient);
+	ADD_TEST(TestThermalControlUnit4Zones);
+	ADD_TEST(TestThermalControlUnit99Zones);
+	ADD_TEST(TestThermalControlUnitManual);
+	ADD_TEST(TestThermalControlUnitTimedManual);
+	ADD_TEST(TestThermalControlUnitScenario);
+	ADD_TEST(TestThermalControlUnitProgram);
+	ADD_TEST(TestThermalControlUnitVacation);
+	ADD_TEST(TestThermalControlUnitHoliday);
+	ADD_TEST(TestLight);
+	ADD_TEST(TestDimmer);
+	ADD_TEST(TestDimmer100);
+	ADD_TEST(TestFolderListModel);
+	ADD_TEST(TestPagedFolderListModel);
+	ADD_TEST(TestFileObject);
+	ADD_TEST(TestSplitScenarios);
+	ADD_TEST(TestScenarioModule);
+	ADD_TEST(TestVideoDoorEntry);
+	ADD_TEST(TestEnergyLoadManagement);
+	ADD_TEST(TestEnergyLoadManagementWithControlUnit);
+	ADD_TEST(TestStopAndGo);
+	ADD_TEST(TestStopAndGoPlus);
+	ADD_TEST(TestStopAndGoBTest);
+	ADD_TEST(TestEnergyItem);
+	ADD_TEST(TestEnergyGraph);
+	ADD_TEST(TestEnergyData);
 	ADD_TEST(TestThermalProbes);
 	ADD_TEST(TestThermalProbesFancoil);
-
-	TestThermalControlUnit4Zones test_thermal_control_unit_4z;
-	test_list << &test_thermal_control_unit_4z;
-
-	TestThermalControlUnit99Zones test_thermal_control_unit_99z;
-	test_list << &test_thermal_control_unit_99z;
-
-	TestThermalControlUnitManual test_thermal_control_unit_manual;
-	test_list << &test_thermal_control_unit_manual;
-
-	TestThermalControlUnitTimedManual test_thermal_control_unit_timed_manual;
-	test_list << &test_thermal_control_unit_timed_manual;
-
-	TestThermalControlUnitScenario test_thermal_control_unit_scenario;
-	test_list << &test_thermal_control_unit_scenario;
-
-	TestThermalControlUnitProgram test_thermal_control_unit_program;
-	test_list << &test_thermal_control_unit_program;
-
-	TestThermalControlUnitVacation test_thermal_control_unit_timed_vacation;
-	test_list << &test_thermal_control_unit_timed_vacation;
-
-	TestThermalControlUnitHoliday test_thermal_control_unit_timed_holiday;
-	test_list << &test_thermal_control_unit_timed_holiday;
-
-	TestLight test_light;
-	test_list << &test_light;
-
-	TestDimmer test_dimmer;
-	test_list << &test_dimmer;
-
-	TestDimmer100 test_dimmer_100;
-	test_list << &test_dimmer_100;
-
-	TestFolderListModel test_folder_model;
-	test_list << &test_folder_model;
-
-	TestPagedFolderListModel test_paged_folder_model;
-	test_list << &test_paged_folder_model;
-
-	TestFileObject test_file_object;
-	test_list << &test_file_object;
-
-	TestSplitScenarios test_split_scenarios;
-	test_list << &test_split_scenarios;
-
-	TestScenarioModule test_scenario_module;
-	test_list << &test_scenario_module;
-
-	TestVideoDoorEntry test_videodoorentry;
-	test_list << &test_videodoorentry;
-
-	TestEnergyLoadManagement test_energy_load;
-	test_list << &test_energy_load;
-
-	TestEnergyLoadManagementWithControlUnit test_energy_load_with_cu;
-	test_list << &test_energy_load_with_cu;
-
-	TestStopAndGo test_stopandgo;
-	test_list << &test_stopandgo;
-
-	TestStopAndGoPlus test_stopandgo_plus;
-	test_list << &test_stopandgo_plus;
-
-	TestStopAndGoBTest test_stopandgo_btest;
-	test_list << &test_stopandgo_btest;
-
-	TestEnergyItem test_energy_item;
-	test_list << &test_energy_item;
-
-	TestEnergyGraph test_energy_graph;
-	test_list << &test_energy_graph;
-
-	TestEnergyData test_energy_data;
-	test_list << &test_energy_data;
-
 	ADD_TEST(TestMediaModel);
 	ADD_TEST(TestObjectModel);
 
