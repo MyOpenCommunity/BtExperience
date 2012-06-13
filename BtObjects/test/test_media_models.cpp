@@ -113,11 +113,6 @@ void TestMediaModel::testRemoveAll()
 	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
 
-	src->removeRows(1, 0);
-	ts.checkNoSignals();
-	QCOMPARE(obj->getCount(), 3);
-	QCOMPARE(obj->rowCount(), 3);
-
 	obj->clear();
 
 	QCOMPARE(obj->getCount(), 0);
