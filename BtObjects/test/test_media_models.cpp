@@ -99,6 +99,26 @@ void TestMediaModel::testRemove()
 
 	QCOMPARE(src->getObject(0), items[0]);
 	QCOMPARE(src->getObject(1), items[2]);
+
+	// remove another element
+	obj->remove(0);
+
+	QCOMPARE(obj->getCount(), 1);
+	QCOMPARE(obj->rowCount(), 1);
+
+	qApp->processEvents();
+	ts.checkSignals();
+
+	QCOMPARE(src->getObject(0), items[2]);
+
+	// remove last element
+	obj->remove(0);
+
+	QCOMPARE(obj->getCount(), 0);
+	QCOMPARE(obj->rowCount(), 0);
+
+	qApp->processEvents();
+	ts.checkSignals();
 }
 
 void TestMediaModel::testRemoveAll()

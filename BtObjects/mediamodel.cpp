@@ -224,6 +224,10 @@ bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 	{
 		counter -= count;
 		invalidate();
+		// when there are no rows in the source model, filterAcceptsRow() is never called, so we must
+		// emit countChanged() here
+		if (getSource()->rowCount() == 0)
+			QTimer::singleShot(0, this, SIGNAL(countChanged()));
 		return true;
 	}
 	else
@@ -245,13 +249,11 @@ ItemInterface *MediaModel::getObject(int row)
 void MediaModel::remove(int index)
 {
 	removeRow(index);
-	emit countChanged();
 }
 
 void MediaModel::clear()
 {
-	if (removeRows(0, counter, QModelIndex()))
-		emit countChanged();
+	removeRows(0, counter, QModelIndex());
 }
 
 void MediaModel::append(ItemInterface *obj)
