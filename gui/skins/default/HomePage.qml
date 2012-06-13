@@ -22,7 +22,7 @@ BasePage {
         delegate: favouritesDelegate
         orientation: ListView.Horizontal
         height: 130
-        width: 150 * 6
+        width: 140 * 7
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
@@ -60,6 +60,11 @@ BasePage {
                 address: "http://www.corriere.it"
                 name: "News Corriere.it"
             }
+            ListElement {
+                type: "web"
+                address: "http://www.bticino.it"
+                name: "BTicino.it"
+            }
         }
 
         Component {
@@ -82,7 +87,7 @@ BasePage {
 
             Item {
                 id: favouriteItem
-                width: 150
+                width: 140
                 height: 130
 
                 function bestDelegate(t) {
