@@ -259,6 +259,9 @@ void MediaModel::clear()
 			source->removeRows(source_row, 1, QModelIndex());
 
 	reset();
+
+	if (getSource()->rowCount() == 0)
+		QTimer::singleShot(0, this, SIGNAL(countChanged()));
 }
 
 void MediaModel::append(ItemInterface *obj)

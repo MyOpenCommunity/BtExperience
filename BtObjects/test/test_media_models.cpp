@@ -188,14 +188,12 @@ void TestMediaModel::testRemoveAll()
 	(*src) << items[3];
 	(*src) << items[4];
 
-	obj->setRange(QVariantList() << 1 << 4);
-
 	qApp->processEvents(); // flush pending countChanged()
 
 	ObjectTester ts(obj, SIGNAL(countChanged()));
 
 	QCOMPARE(obj->getCount(), 5);
-	QCOMPARE(obj->rowCount(), 3);
+	QCOMPARE(obj->rowCount(), 5);
 	QCOMPARE(src->rowCount(), 5);
 
 	obj->clear();
