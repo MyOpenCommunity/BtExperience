@@ -29,13 +29,13 @@
 #include <QPair>
 
 
-void TestThermalProbes::initObjects(ControlledProbeDevice *_dev, ThermalControlledProbeFancoil *_obj)
+void TestThermalControlledProbes::initObjects(ControlledProbeDevice *_dev, ThermalControlledProbeFancoil *_obj)
 {
 	obj = _obj;
 	dev = _dev;
 }
 
-void TestThermalProbes::init()
+void TestThermalControlledProbes::init()
 {
 	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL);
 
@@ -43,21 +43,21 @@ void TestThermalProbes::init()
 	dev = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL, 1);
 }
 
-void TestThermalProbes::cleanup()
+void TestThermalControlledProbes::cleanup()
 {
 	delete obj->dev;
 	delete obj;
 	delete dev;
 }
 
-void TestThermalProbes::compareClientCommand()
+void TestThermalControlledProbes::compareClientCommand()
 {
 	flushCompressedFrames(dev);
 	flushCompressedFrames(obj->dev);
 	TestBtObject::compareClientCommand();
 }
 
-void TestThermalProbes::testSetSetPoint()
+void TestThermalControlledProbes::testSetSetPoint()
 {
 	// test sending the first frame
 	obj->setSetpoint(-10);
@@ -72,7 +72,7 @@ void TestThermalProbes::testSetSetPoint()
 	// TODO check frame not sent if same setpoint
 }
 
-void TestThermalProbes::testSetProbeStatus()
+void TestThermalControlledProbes::testSetProbeStatus()
 {
 	obj->setProbeStatus(ThermalControlledProbe::Off);
 	dev->setOff();
@@ -93,7 +93,7 @@ void TestThermalProbes::testSetProbeStatus()
 	// TODO check frame not sent if same state
 }
 
-void TestThermalProbes::testReceiveTemperature()
+void TestThermalControlledProbes::testReceiveTemperature()
 {
 	DeviceValues v;
 	v[ControlledProbeDevice::DIM_TEMPERATURE] = 1010;
@@ -107,7 +107,7 @@ void TestThermalProbes::testReceiveTemperature()
 	t.checkNoSignals();
 }
 
-void TestThermalProbes::testReceiveSetPoint()
+void TestThermalControlledProbes::testReceiveSetPoint()
 {
 	DeviceValues v;
 	v[ControlledProbeDevice::DIM_SETPOINT] = 1010;
@@ -121,7 +121,7 @@ void TestThermalProbes::testReceiveSetPoint()
 	t.checkNoSignals();
 }
 
-void TestThermalProbes::testReceiveStatus(ControlledProbeDevice::ProbeStatus device_status,
+void TestThermalControlledProbes::testReceiveStatus(ControlledProbeDevice::ProbeStatus device_status,
 					  ThermalControlledProbe::ProbeStatus object_status)
 {
 	DeviceValues v;
@@ -136,7 +136,7 @@ void TestThermalProbes::testReceiveStatus(ControlledProbeDevice::ProbeStatus dev
 	t.checkNoSignals();
 }
 
-void TestThermalProbes::testReceiveLocalStatus(ControlledProbeDevice::ProbeStatus device_status,
+void TestThermalControlledProbes::testReceiveLocalStatus(ControlledProbeDevice::ProbeStatus device_status,
 					       ThermalControlledProbe::ProbeStatus object_status,
 					       bool changed)
 {
@@ -155,7 +155,7 @@ void TestThermalProbes::testReceiveLocalStatus(ControlledProbeDevice::ProbeStatu
 	t.checkNoSignals();
 }
 
-void TestThermalProbes::testReceiveStatus()
+void TestThermalControlledProbes::testReceiveStatus()
 {
 	testReceiveStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off);
 	testReceiveStatus(ControlledProbeDevice::ST_NONE, ThermalControlledProbe::Unknown);
@@ -164,7 +164,7 @@ void TestThermalProbes::testReceiveStatus()
 	testReceiveStatus(ControlledProbeDevice::ST_AUTO, ThermalControlledProbe::Auto);
 }
 
-void TestThermalProbes::testReceiveLocalStatus()
+void TestThermalControlledProbes::testReceiveLocalStatus()
 {
 	testReceiveStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off);
 	testReceiveLocalStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off, false);
@@ -186,7 +186,7 @@ void TestThermalProbes::testReceiveLocalStatus()
 	testReceiveLocalStatus(ControlledProbeDevice::ST_NORMAL, ThermalControlledProbe::Auto, true);
 }
 
-void TestThermalProbes::testReceiveLocalOffset()
+void TestThermalControlledProbes::testReceiveLocalOffset()
 {
 	DeviceValues v;
 	v[ControlledProbeDevice::DIM_LOCAL_STATUS] = ControlledProbeDevice::ST_NORMAL;
@@ -210,7 +210,7 @@ void TestThermalProbes::testReceiveLocalOffset()
 }
 
 
-void TestThermalProbesFancoil::init()
+void TestThermalControlledProbesFancoil::init()
 {
 	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL);
 
@@ -220,7 +220,7 @@ void TestThermalProbesFancoil::init()
 	initObjects(dev, obj);
 }
 
-void TestThermalProbesFancoil::testSetFancoilSpeed()
+void TestThermalControlledProbesFancoil::testSetFancoilSpeed()
 {
 	obj->setFancoil(ThermalControlledProbeFancoil::FancoilMin);
 	dev->setFancoilSpeed(1);
@@ -239,7 +239,7 @@ void TestThermalProbesFancoil::testSetFancoilSpeed()
 	compareClientCommand();
 }
 
-void TestThermalProbesFancoil::testReceiveFancoilSpeed(int device_speed, ThermalControlledProbeFancoil::FancoilSpeed object_speed)
+void TestThermalControlledProbesFancoil::testReceiveFancoilSpeed(int device_speed, ThermalControlledProbeFancoil::FancoilSpeed object_speed)
 {
 	DeviceValues v;
 	v[ControlledProbeDevice::DIM_FANCOIL_STATUS] = device_speed;
@@ -253,7 +253,7 @@ void TestThermalProbesFancoil::testReceiveFancoilSpeed(int device_speed, Thermal
 	t.checkNoSignals();
 }
 
-void TestThermalProbesFancoil::testReceiveFancoilSpeed()
+void TestThermalControlledProbesFancoil::testReceiveFancoilSpeed()
 {
 	testReceiveFancoilSpeed(1, ThermalControlledProbeFancoil::FancoilMin);
 	testReceiveFancoilSpeed(2, ThermalControlledProbeFancoil::FancoilMed);

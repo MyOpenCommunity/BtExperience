@@ -22,7 +22,7 @@ class ControlledProbeDevice;
 */
 class ThermalControlledProbe : public ObjectInterface
 {
-	friend class TestThermalProbes;
+	friend class TestThermalControlledProbes;
 
 	Q_OBJECT
 
@@ -132,7 +132,7 @@ private:
 */
 class ThermalControlledProbeFancoil : public ThermalControlledProbe
 {
-	friend class TestThermalProbesFancoil;
+	friend class TestThermalControlledProbesFancoil;
 
 	Q_OBJECT
 

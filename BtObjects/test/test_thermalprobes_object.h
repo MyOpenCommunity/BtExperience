@@ -31,7 +31,7 @@ class ThermalControlledProbe;
 class ControlledProbeDevice;
 
 
-class TestThermalProbes : public TestBtObject
+class TestThermalControlledProbes : public TestBtObject
 {
 Q_OBJECT
 private slots:
@@ -63,7 +63,7 @@ private:
 };
 
 
-class TestThermalProbesFancoil : public TestThermalProbes
+class TestThermalControlledProbesFancoil : public TestThermalControlledProbes
 {
 Q_OBJECT
 private slots:

@@ -89,8 +89,8 @@ int main(int argc, char *argv[])
 	ADD_TEST(TestEnergyItem);
 	ADD_TEST(TestEnergyGraph);
 	ADD_TEST(TestEnergyData);
-	ADD_TEST(TestThermalProbes);
-	ADD_TEST(TestThermalProbesFancoil);
+	ADD_TEST(TestThermalControlledProbes);
+	ADD_TEST(TestThermalControlledProbesFancoil);
 	ADD_TEST(TestMediaModel);
 	ADD_TEST(TestObjectModel);
 
