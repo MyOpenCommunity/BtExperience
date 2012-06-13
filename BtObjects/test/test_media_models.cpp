@@ -122,6 +122,37 @@ void TestMediaModel::testRemoveAll()
 	ts.checkSignals();
 }
 
+void TestMediaModel::testRemoveAllWithRange()
+{
+	foreach (ItemInterface *i, items)
+		(*src) << i;
+	qApp->processEvents(); // flush pending countChanged()
+
+	ObjectTester ts(obj, SIGNAL(countChanged()));
+
+	QCOMPARE(obj->getCount(), 5);
+	QCOMPARE(obj->rowCount(), 5);
+
+	obj->setRange(QVariantList() << 2 << 4);
+
+	QCOMPARE(obj->getCount(), 5);
+	QCOMPARE(obj->rowCount(), 2);
+
+	qApp->processEvents();
+	ts.checkSignals();
+
+	QCOMPARE(obj->getObject(0), items[2]);
+	QCOMPARE(obj->getObject(1), items[3]);
+
+	obj->clear();
+
+	QCOMPARE(obj->getCount(), 0);
+	QCOMPARE(obj->rowCount(), 0);
+
+	qApp->processEvents();
+	ts.checkSignals();
+}
+
 void TestMediaModel::testFilterContainer()
 {
 	foreach (ItemInterface *i, items)
