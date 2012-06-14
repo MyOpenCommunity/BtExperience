@@ -39,7 +39,11 @@ ObjectTester::~ObjectTester()
 bool ObjectTester::waitForSignal(int milliseconds)
 {
 	if (signalTotals(sl))
+	{
+		clearSignals();
+
 		return true;
+	}
 
 	return waitForNewSignal(milliseconds);
 }
@@ -52,7 +56,11 @@ bool ObjectTester::waitForNewSignal(int milliseconds)
 	while (QDateTime::currentMSecsSinceEpoch() - start < milliseconds && signalTotals(sl) == total)
 		QCoreApplication::processEvents();
 
-	return signalTotals(sl) != total;
+	bool ok = signalTotals(sl) != total;
+
+	clearSignals();
+
+	return ok;
 }
 
 void ObjectTester::checkSignalCount(const char *sig, int sig_count)

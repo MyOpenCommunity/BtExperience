@@ -46,15 +46,12 @@ void TestMultiMediaPlayer::testSanity()
 
 	QVERIFY(state_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
-	state_changed->clearSignals();
 
 	QVERIFY(output_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
-	output_changed->clearSignals();
 
 	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
 	MultiMediaPlayer::TrackInfo info = player->getTrackInfo();
-	track_info_changed->clearSignals();
 
 	QCOMPARE(info["meta_title"], QString("D3 pluck"));
 
@@ -62,9 +59,7 @@ void TestMultiMediaPlayer::testSanity()
 
 	QVERIFY(state_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Stopped);
-	state_changed->clearSignals();
 
 	QVERIFY(output_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputStopped);
-	output_changed->clearSignals();
 }
