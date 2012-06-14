@@ -2,7 +2,7 @@
 #define MULTIMEDIAPLAYER_H
 
 #include <QObject>
-#include <QMap>
+#include <QVariant>
 #include <QMetaType>
 
 class MediaPlayer;
@@ -17,15 +17,13 @@ class MultiMediaPlayer : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QString currentSource READ getCurrentSource WRITE setCurrentSource NOTIFY currentSourceChanged)
-	Q_PROPERTY(TrackInfo trackInfo READ getTrackInfo NOTIFY trackInfoChanged)
+	Q_PROPERTY(QVariantMap trackInfo READ getTrackInfo NOTIFY trackInfoChanged)
 	Q_PROPERTY(PlayerState playerState READ getPlayerState NOTIFY playerStateChanged)
 	Q_PROPERTY(AudioOutputState audioOutputState READ getAudioOutputState NOTIFY audioOutputStateChanged)
 
 	Q_ENUMS(PlayerState)
 
 public:
-	typedef QMap<QString, QString> TrackInfo;
-
 	enum PlayerState
 	{
 		Stopped = 1,
@@ -44,7 +42,7 @@ public:
 	MultiMediaPlayer();
 
 	QString getCurrentSource() const;
-	TrackInfo getTrackInfo() const;
+	QVariantMap getTrackInfo() const;
 	PlayerState getPlayerState() const;
 	AudioOutputState getAudioOutputState() const;
 
@@ -59,7 +57,7 @@ public slots:
 
 signals:
 	void currentSourceChanged(QString current_source);
-	void trackInfoChanged(MultiMediaPlayer::TrackInfo info);
+	void trackInfoChanged(QVariantMap info);
 	void playerStateChanged(MultiMediaPlayer::PlayerState state);
 	void audioOutputStateChanged(MultiMediaPlayer::AudioOutputState state);
 
@@ -84,13 +82,12 @@ private:
 	QTimer *info_poll_timer;
 
 	QString current_source;
-	TrackInfo track_info;
+	QVariantMap track_info;
 	PlayerState player_state;
 	AudioOutputState output_state;
 };
 
 Q_DECLARE_METATYPE(MultiMediaPlayer::PlayerState)
 Q_DECLARE_METATYPE(MultiMediaPlayer::AudioOutputState)
-Q_DECLARE_METATYPE(MultiMediaPlayer::TrackInfo)
 
 #endif // MULTIMEDIAPLAYER_H

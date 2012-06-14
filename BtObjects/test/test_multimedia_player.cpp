@@ -15,7 +15,7 @@ void TestMultiMediaPlayer::init()
 	player = new MultiMediaPlayer();
 	state_changed = new ObjectTester(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)));
 	output_changed = new ObjectTester(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)));
-	track_info_changed = new ObjectTester(player, SIGNAL(trackInfoChanged(MultiMediaPlayer::TrackInfo)));
+	track_info_changed = new ObjectTester(player, SIGNAL(trackInfoChanged(QVariantMap)));
 	source_changed = new ObjectTester(player, SIGNAL(currentSourceChanged(QString)));
 }
 
@@ -33,7 +33,7 @@ void TestMultiMediaPlayer::testPreconditions()
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Stopped);
 	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputStopped);
 	QCOMPARE(player->getCurrentSource(), QString());
-	QCOMPARE(player->getTrackInfo(), MultiMediaPlayer::TrackInfo());
+	QCOMPARE(player->getTrackInfo(), QVariantMap());
 }
 
 void TestMultiMediaPlayer::testSanity()
@@ -41,6 +41,7 @@ void TestMultiMediaPlayer::testSanity()
 	player->setCurrentSource("files/audio/d3.mp3");
 
 	source_changed->checkSignals();
+	track_info_changed->checkSignals();
 
 	player->play();
 
@@ -51,9 +52,9 @@ void TestMultiMediaPlayer::testSanity()
 	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
 
 	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
-	MultiMediaPlayer::TrackInfo info = player->getTrackInfo();
+	QVariantMap info = player->getTrackInfo();
 
-	QCOMPARE(info["meta_title"], QString("D3 pluck"));
+	QCOMPARE(info["meta_title"], QVariant("D3 pluck"));
 
 	player->stop();
 

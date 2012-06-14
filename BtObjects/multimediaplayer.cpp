@@ -1,6 +1,7 @@
 #include "multimediaplayer.h"
 #include "mediaplayer.h"
 
+#include <QTime>
 #include <QTimer>
 
 #define INFO_POLL_INTERVAL 500
@@ -24,7 +25,6 @@ MultiMediaPlayer::MultiMediaPlayer()
 
 	qRegisterMetaType<MultiMediaPlayer::PlayerState>();
 	qRegisterMetaType<MultiMediaPlayer::AudioOutputState>();
-	qRegisterMetaType<MultiMediaPlayer::TrackInfo>();
 }
 
 QString MultiMediaPlayer::getCurrentSource() const
@@ -32,7 +32,7 @@ QString MultiMediaPlayer::getCurrentSource() const
 	return current_source;
 }
 
-MultiMediaPlayer::TrackInfo MultiMediaPlayer::getTrackInfo() const
+QVariantMap MultiMediaPlayer::getTrackInfo() const
 {
 	return track_info;
 }
@@ -52,12 +52,34 @@ void MultiMediaPlayer::readPlayerInfo()
 	playerInfoReceived(player->getPlayingInfo());
 }
 
+namespace
+{
+	QStringList COMMON_ATTRIBUTES =
+		QStringList() << "meta_title" << "file_name" << "meta_artist" << "meta_album"
+			      << "stream_url" << "stream_title";
+}
+
 void MultiMediaPlayer::playerInfoReceived(QMap<QString, QString> new_track_info)
 {
-	if (new_track_info == track_info)
+	QVariantMap new_info = track_info;
+
+	// TODO maybe handle here out-of-band metadata from UPnP
+	foreach (QString key, COMMON_ATTRIBUTES)
+		if (new_track_info.contains(key))
+			new_info[key] = new_track_info[key];
+
+	if (new_track_info.contains("total_time"))
+		new_info["total_time"] = parseMPlayerTime(new_track_info["total_time"]);
+
+	if (new_track_info.contains("current_time"))
+		new_info["current_time"] = parseMPlayerTime(new_track_info["current_time"]);
+	else if (new_track_info.contains("current_time_only"))
+		new_info["current_time"] = parseMPlayerTime(new_track_info["current_time_only"]);
+
+	if (new_info == track_info)
 		return;
 
-	track_info = new_track_info;
+	track_info = new_info;
 	emit trackInfoChanged(track_info);
 }
 
@@ -102,6 +124,7 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 		return;
 
 	current_source = source;
+	track_info.clear();
 
 	// if playing, start playing new track right now (which automatically gets
 	// track info), otherwise request track info separately
@@ -115,6 +138,7 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 		player->requestInitialPlayingInfo(current_source);
 	}
 
+	emit trackInfoChanged(track_info);
 	emit currentSourceChanged(current_source);
 }
 
