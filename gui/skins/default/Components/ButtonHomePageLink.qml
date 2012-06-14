@@ -19,9 +19,12 @@ SvgImage {
     Column {
         spacing: 5
         anchors.centerIn: parent
+        width: text.width
+
         SvgImage {
             id: imageIcon
             source: button.icon
+            anchors.horizontalCenter: text.horizontalCenter
         }
 
         UbuntuLightText {
@@ -29,7 +32,6 @@ SvgImage {
             color: "#000000"
             text: button.text
             font.pixelSize: 13
-            anchors.horizontalCenter: imageIcon.horizontalCenter
         }
     }
 
