@@ -1,8 +1,10 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 import "js/Stack.js" as Stack
 import "js/MainContainer.js" as Container
 import "js/datetime.js" as DateTime
+
 
 Image {
     id: page
@@ -65,10 +67,20 @@ Image {
         page.state = "popup"
     }
 
-    function showAlarmPopup(type, zone, time) {
+    function showAlarmPopup(type, zone, number, time) {
         popupLoader.sourceComponent = alarmComponent
         popupLoader.item.alarmDateTime = DateTime.format(time)["time"] + " - " + DateTime.format(time)["date"]
-        popupLoader.item.alarmLocation = privateProps.antintrusionNames.get('ALARM_TYPE', type) + ": " + qsTr("zone %1 - %2").arg(zone.objectId).arg(zone.name)
+        // for location, firstly we have alarm type
+        var location = privateProps.antintrusionNames.get('ALARM_TYPE', type)
+        location += ": "
+        // lastly, we have zone and description (or number if it lacks)
+        if (type === AntintrusionAlarm.Technical)
+            location += qsTr("aux") + " " + number
+        else if (number >= 1 && number <= 8 && zone !== null)
+            location += qsTr("zone") + " " + zone.name
+        else
+            location += qsTr("zone") + " " + number
+        popupLoader.item.alarmLocation = location
         popupLoader.item.ignoreClicked.connect(closePopup)
         popupLoader.item.alarmLogClicked.connect(closeAlarmAndShowLog)
         page.state = "popup"

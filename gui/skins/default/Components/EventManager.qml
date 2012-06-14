@@ -72,7 +72,7 @@ Item {
         id: antintrusionConnection
         target: null
         onNewAlarm: {
-            Stack.currentPage().showAlarmPopup(alarm.type, alarm.source, alarm.date_time)
+            Stack.currentPage().showAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
         }
     }
 }
