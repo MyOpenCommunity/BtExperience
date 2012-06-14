@@ -1,10 +1,17 @@
 import QtQuick 1.1
 import Components 1.0
+import Components.Text 1.0
 
 import "js/Stack.js" as Stack
 
 BasePage {
     id: page
+
+    Rectangle {
+        color: "white"
+        anchors.fill: parent
+    }
+
     ToolBar { // does not work, it is just for homogeneity with other pages.
         id: toolbar
         anchors {
@@ -16,42 +23,108 @@ BasePage {
 
     QtObject {
         id: privateProps
+        property int zoom: 100
+        property int zoomStep: 25
+        property variant originalRect: undefined
+
         property real darkRectOpacity: 0.5
         property color darkRectColor: "black"
         property int arrowsMargin: 50
         property int movementDelta: 10
 
-        function leftArrowClicked() {
-            if (transparentRect.x - movementDelta >= sourceImage.x)
-                transparentRect.x -= movementDelta
-            else // align to the left margin
+        function doZoom(zoom_factor) {
+            console.log("Zoom factor: " + zoom_factor)
+
+            if (originalRect === undefined) {
+                originalRect = Qt.rect(sourceImage.x, sourceImage.y, sourceImage.width, sourceImage.height)
+            }
+
+            var new_width = originalRect.width * zoom_factor
+            sourceImage.x = originalRect.x - (new_width - originalRect.width) / 2
+            sourceImage.width = new_width
+            var new_height = originalRect.height * zoom_factor
+            sourceImage.y = originalRect.y - (new_height- originalRect.height) / 2
+            sourceImage.height = new_height
+        }
+
+        function adjustPosition() {
+            if (transparentRect.x < sourceImage.x)
                 transparentRect.x = sourceImage.x
+
+            if (transparentRect.x + transparentRect.width > sourceImage.x + sourceImage.width)
+                transparentRect.x = sourceImage.x + sourceImage.width - transparentRect.width
+
+            if (transparentRect.y < sourceImage.y)
+                transparentRect.y = sourceImage.y
+
+            if (transparentRect.y + transparentRect.height > sourceImage.y + sourceImage.height)
+                transparentRect.y = sourceImage.y + sourceImage.height - transparentRect.height
+        }
+
+        function zoomIn() {
+            if (zoom < 200) {
+                zoom += zoomStep
+                doZoom(zoom / 100)
+            }
+        }
+
+        function zoomOut() {
+            if (zoom > 25) {
+                zoom -= zoomStep
+                doZoom(zoom / 100)
+                adjustPosition()
+            }
+        }
+
+        function leftArrowClicked() {
+            transparentRect.x -= movementDelta
+            adjustPosition()
         }
 
         function rightArrowClicked() {
-            if (transparentRect.x + transparentRect.width + movementDelta <= sourceImage.x + sourceImage.width)
-                transparentRect.x += movementDelta
-            else // align to the right margin
-                transparentRect.x = sourceImage.x + sourceImage.width - transparentRect.width
+            transparentRect.x += movementDelta
+            adjustPosition()
         }
 
         function topArrowClicked() {
-            if (transparentRect.y - movementDelta >= sourceImage.y)
-                transparentRect.y -= movementDelta
-            else // align to the top margin
-                transparentRect.y = sourceImage.y
+            transparentRect.y -= movementDelta
+            adjustPosition()
         }
 
         function bottomArrowClicked() {
-            if (transparentRect.y + transparentRect.height + movementDelta <= sourceImage.y + sourceImage.height)
-                transparentRect.y += movementDelta
-            else // align to the bottom margin
-                transparentRect.y = sourceImage.y + sourceImage.height - transparentRect.height
+            transparentRect.y += movementDelta
+            adjustPosition()
         }
 
         function saveCard() {
             global.takeScreenshot(Qt.rect(transparentRect.x, transparentRect.y,
                                           transparentRect.width, transparentRect.height))
+        }
+    }
+
+    Row {
+        z: 1
+        spacing: 10
+
+        anchors {
+            right: parent.right
+            rightMargin: 50
+            top: parent.top
+            topMargin: 60
+        }
+
+        UbuntuLightText {
+            id: zoomText
+            text: privateProps.zoom + "%"
+            color: "white"
+            font.pixelSize: 15
+            anchors.verticalCenter: zoomControls.verticalCenter
+        }
+
+        TwoButtonsSettingsLarge {
+            id: zoomControls
+            onLeftClicked: privateProps.zoomOut()
+            onRightClicked: privateProps.zoomIn()
         }
     }
 
