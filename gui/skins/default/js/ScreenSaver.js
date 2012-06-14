@@ -1,3 +1,5 @@
+.pragma library // needed to have a unique last variable
+
 /**
   * Logic for screensaver timeout management.
   *

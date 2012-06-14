@@ -22,19 +22,30 @@ Item {
 
     Connections {
         target: global
-        onLastTimePressChanged: {
-            // if state is already running skips
+        onLastTimePressChanged: manageScreensaverState()
+    }
+
+    function manageScreensaverState() {
+        // if timeoutActive is false, screensaver must run indefinitely
+        if (!timeoutActive) {
             if (screensaver.state === "running")
                 return
-            // if timeoutActive is false, screensaver must run indefinitely
-            if (!timeoutActive) {
-                screensaver.state = "running"
+            screensaver.state = "running"
+            return
+        }
+        // timeoutActive is true; we check if timeout is elapsed and set the
+        // screensaver accordingly
+        if (Script.elapsed(global.lastTimePress, global.guiSettings.timeOutInSeconds) && isEnabled) {
+            // timeout is elapsed; we set screensaver state to running
+            if (screensaver.state === "running")
                 return
-            }
-            // we are here if we are in default state and timeoutActive is true
-            // checks timeout and (eventually) sets state to running
-            if (Script.elapsed(global.lastTimePress, global.guiSettings.timeOutInSeconds) && isEnabled)
-                screensaver.state = "running"
+            screensaver.state = "running"
+        }
+        else {
+            // timeout is not elapsed; we set screensaver state to default (not running)
+            if (screensaver.state === "")
+                return
+            screensaver.state = ""
         }
     }
 

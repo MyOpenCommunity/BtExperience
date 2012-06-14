@@ -2,15 +2,28 @@ import QtQuick 1.1
 import Components 1.0
 import BtObjects 1.0
 import "../js/Stack.js" as Stack
+import "../js/ScreenSaver.js" as ScreenSaver
 
 
 Item {
     id: eventManager
+
     anchors.fill: parent
 
     ScreenSaver {
         id: screensaver
         z: parent.z
+    }
+
+    // this is needed to manage the activation of the screensaver;
+    // this function is used to send an event to reactivate the screensaver
+    // even in those cases where an interaction with the user is not performed;
+    // see comments in ScreenSaver.js file for more info on this subject
+    function screensaverEvent() {
+        // the updateLast call is needed to compute elapsed time correctly
+        // see comments in ScreenSaver.js file for more info on this subject
+        ScreenSaver.updateLast()
+        screensaver.manageScreensaverState()
     }
 
     function vctIncomingCall(vctObject) {
@@ -72,6 +85,8 @@ Item {
         id: antintrusionConnection
         target: null
         onNewAlarm: {
+            // we generate a screensaver "event" every time an alarm arrives
+            eventManager.screensaverEvent()
             Stack.currentPage().showAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
         }
     }
