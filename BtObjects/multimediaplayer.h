@@ -21,7 +21,7 @@ class MultiMediaPlayer : public QObject
 	Q_PROPERTY(PlayerState playerState READ getPlayerState NOTIFY playerStateChanged)
 	Q_PROPERTY(AudioOutputState audioOutputState READ getAudioOutputState NOTIFY audioOutputStateChanged)
 
-	Q_ENUMS(PlayerState)
+	Q_ENUMS(PlayerState AudioOutputState)
 
 public:
 	enum PlayerState
