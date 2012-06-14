@@ -29,8 +29,7 @@ public:
 		Stopped = 1,
 		Paused = 2,
 		Playing = 3,
-		AboutToPause = 4,
-		AboutToResume = 5
+		AboutToPause = 4
 	};
 
 	enum AudioOutputState

@@ -99,8 +99,6 @@ void MultiMediaPlayer::pause()
 void MultiMediaPlayer::resume()
 {
 	// TODO only when paused
-	setPlayerState(AboutToResume);
-
 	if (player->isInstanceRunning())
 		player->resume();
 	else
