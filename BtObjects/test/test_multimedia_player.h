@@ -18,6 +18,13 @@ private slots:
 	void testPreconditions();
 	void testSanity();
 
+	// test playback, track info updates and current playback time updates
+	void testPlay();
+
+	// test pause/resume sequences
+	void testPauseResume();
+	void testMultiplePauseResume();
+
 private:
 	MultiMediaPlayer *player;
 	ObjectTester *state_changed, *output_changed, *track_info_changed, *source_changed;
