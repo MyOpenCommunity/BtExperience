@@ -34,6 +34,20 @@ public:
 	 */
 	void clearSignals();
 
+	/**
+	 * Wait until a signal is available or timeout expires (calls processEvents())
+	 * returns \a false if timeout expires, \a true if a signal is available.
+	 *
+	 * Note that if a signal has already been received, the function returns immediatly.
+	 */
+	bool waitForSignal(int milliseconds);
+
+	/**
+	 * Wait until a new signal is received or timeout expires (calls processEvents())
+	 * returns \a false if timeout expires, \a true if a signal is received.
+	 */
+	bool waitForNewSignal(int milliseconds);
+
 private:
 	QObject *obj;
 	QList<QSignalSpy *> sl;
