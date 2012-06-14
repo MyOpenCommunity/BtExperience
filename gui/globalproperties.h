@@ -42,7 +42,7 @@ public:
 	QString getBasePath() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
-	Q_INVOKABLE QImage takeScreenshot(QRect rect = QRect());
+	Q_INVOKABLE void takeScreenshot(QRect rect);
 
 	Q_INVOKABLE void reboot()
 	{
