@@ -8,7 +8,7 @@
 	\ingroup Core
 	\brief A generic container for ItemInterface%s
 
-	The #uii property can be used as a filter criterium for MediaModel.
+	The \ref uii property can be used as a filter criterium for MediaModel.
 */
 class Container : public ItemInterface
 {

@@ -74,7 +74,7 @@
 
 	defines a model containing all the lights defined in the lighting container.
 
-	When required, MediaModel::count and MediaModel::range can be used to implement paging, for example:
+	When required, \ref MediaModel::count and \ref MediaModel::range can be used to implement paging, for example:
 
 	\verbatim
 	// currentPage can go from 0 to Math.ceil(userNotes.count / elementsOnPage)
@@ -86,7 +86,7 @@
 	\endverbatim
 
 	Most models are organized in a container hierarchy (for example, floors contains rooms,
-	and rooms contain MyHome object links); Container.uii can be used to filter a model
+	and rooms contain MyHome object links); \ref Container.uii can be used to filter a model
 	for the contained objects.
 
 	\section overview-subsystems Subsystems

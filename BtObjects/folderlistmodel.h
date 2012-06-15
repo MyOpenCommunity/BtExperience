@@ -65,10 +65,10 @@ private:
 		range: [0, 6] // obtain range from paginator
 	}
 
-	The interface is similar \a ObjectModel, but it only implements a range filter
+	The interface is similar \ref ObjectModel, but it only implements a range filter
 	for pagination.
 
-	The objects returned by \a getObject() are \a FileObject instances.
+	The objects returned by \ref getObject() are \a FileObject instances.
 */
 class TreeBrowserListModelBase : public QAbstractListModel
 {
@@ -127,6 +127,11 @@ public:
 		return QVariant();
 	}
 
+	/*!
+		\brief Returns the specified item
+
+		Row must be in the range <tt>[0 .. rangeCount - 1]</tt>
+	*/
 	Q_INVOKABLE virtual ObjectInterface *getObject(int row) = 0;
 
 	virtual void setRootPath(QVariantList path);

@@ -48,8 +48,8 @@ protected:
 	\ingroup Scenarios
 	\brief A programmable scenario
 
-	Allows programming a new set of events for the scenario.  Call #startProgramming()
-	to enter edit mode and #stopProgramming() when finished.
+	Allows programming a new set of events for the scenario.  Call \ref startProgramming()
+	to enter edit mode and \ref stopProgramming() when finished.
 */
 class ScenarioModule : public SimpleScenario
 {

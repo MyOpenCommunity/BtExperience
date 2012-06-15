@@ -461,7 +461,7 @@ class PowerAmplifier : public Amplifier
 	/*!
 		\brief Gets the list of available presets
 
-		Returns a list of \a PowerAmplifierPreset objects; the first 10
+		Returns a list of \ref PowerAmplifierPreset objects; the first 10
 		are fixed presets, the last 10 are user-defined
 	*/
 	Q_PROPERTY(ObjectDataModel *presets READ getPresets CONSTANT)

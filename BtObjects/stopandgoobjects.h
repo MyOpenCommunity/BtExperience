@@ -121,7 +121,7 @@ public slots:
 	/*!
 		\brief Tries to force the circuit breaker status to close
 
-		After the operation completes, emits \a forceClosedComplete() to communicate
+		After the operation completes, emits \ref forceClosedComplete() to communicate
 		the success/failure status of the operation
 	*/
 	void forceClosed();

@@ -18,7 +18,7 @@ class QTimer;
 	\ingroup Multimedia
 	\brief Plays audio and video files
 
-	Note that communication with the media player is asynchronous, so status changes
+	%Note that communication with the media player is asynchronous, so status changes
 	only happen some time after tha status-changing method is called.
 
 	Typical usage is:
