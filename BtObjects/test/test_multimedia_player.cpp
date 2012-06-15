@@ -450,3 +450,30 @@ void TestMultiMediaPlayer::testSeek()
 	delta = info["current_time"].toTime().second() - last_time.toTime().second();
 	QVERIFY(delta >= 5 && delta <= 7);
 }
+
+void TestMultiMediaPlayer::testDone()
+{
+	player->setCurrentSource("files/audio/d3.mp3");
+	player->play();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // Playing
+
+	player->pause();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // AboutToPause
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+
+	// seek past the end and resume
+	player->seek(30);
+	player->resume();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Stopped);
+
+	QVERIFY(!player->info_poll_timer->isActive());
+	QCOMPARE(player->getCurrentSource(), QString(""));
+	QCOMPARE(player->getTrackInfo(), QVariantMap());
+}
