@@ -110,9 +110,6 @@ void TestMultiMediaPlayer::testPlay()
 
 	player->setCurrentSource("files/audio/d3.mp3");
 
-	source_changed->checkSignals();
-	track_info_changed->checkSignals();
-
 	player->play();
 
 	// wait for first track info update
@@ -133,10 +130,6 @@ void TestMultiMediaPlayer::testPlay()
 void TestMultiMediaPlayer::testPauseResume()
 {
 	player->setCurrentSource("files/audio/d3.mp3");
-
-	source_changed->checkSignals();
-	track_info_changed->checkSignals();
-
 	player->play();
 
 	// wait for first status update
@@ -196,10 +189,6 @@ void TestMultiMediaPlayer::testPauseResume()
 void TestMultiMediaPlayer::testMultiplePauseResume()
 {
 	player->setCurrentSource("files/audio/d3.mp3");
-
-	source_changed->checkSignals();
-	track_info_changed->checkSignals();
-
 	player->play();
 
 	// wait for first status update
@@ -273,10 +262,6 @@ void TestMultiMediaPlayer::testSetSource()
 	QVariant last_time;
 
 	player->setCurrentSource("files/audio/d3.mp3");
-
-	source_changed->checkSignals();
-	track_info_changed->checkSignals();
-
 	player->play();
 
 	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
@@ -329,10 +314,6 @@ void TestMultiMediaPlayer::testSetSourcePaused()
 	QVariant last_time;
 
 	player->setCurrentSource("files/audio/d3.mp3");
-
-	source_changed->checkSignals();
-	track_info_changed->checkSignals();
-
 	player->play();
 
 	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
@@ -391,10 +372,6 @@ void TestMultiMediaPlayer::testSetSourcePaused()
 void TestMultiMediaPlayer::testSetEmptySource()
 {
 	player->setCurrentSource("files/audio/d3.mp3");
-
-	source_changed->checkSignals();
-	track_info_changed->checkSignals();
-
 	player->play();
 
 	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
@@ -435,10 +412,6 @@ void TestMultiMediaPlayer::testSeek()
 	int delta;
 
 	player->setCurrentSource("files/audio/d3.mp3");
-
-	source_changed->checkSignals();
-	track_info_changed->checkSignals(); // track info cleared
-
 	player->play();
 
 	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // Playing
