@@ -103,9 +103,7 @@ void TestAntintrusionSystem::testToggleActivation()
 //  - generic creation of signal spies with variable number of arguments - maybe not needed?
 void TestAntintrusionSystem::testActivateSystem()
 {
-	// system not active
-	obj->initialized = true;
-	obj->status = false;
+	setSystemActive(false);
 
 	// simulate activation
 	obj->toggleActivation("12345");
@@ -121,9 +119,7 @@ void TestAntintrusionSystem::testActivateSystem()
 
 void TestAntintrusionSystem::testPasswordFail()
 {
-	// system not active
-	obj->initialized = true;
-	obj->status = false;
+	setSystemActive(false);
 
 	obj->toggleActivation("12345");
 	DeviceValues v;
@@ -224,8 +220,7 @@ void TestAntintrusionSystem::testResetTechnicalAlarm()
 void TestAntintrusionSystem::testClearAlarmsOnInsert()
 {
 	// init: not inserted and 1 alarm pending
-	obj->initialized = true;
-	obj->status = false;
+	setSystemActive(false);
 	obj->alarms << new AntintrusionAlarm(AntintrusionAlarm::Intrusion,
 		static_cast<const AntintrusionZone *>(obj->zones.getObject(0)), 1, QDateTime::currentDateTime());
 
@@ -262,6 +257,113 @@ void TestAntintrusionSystem::testTechnicalAlarmOnNotConfiguredZone()
 	QCOMPARE(obj->getAlarms()->getCount(), 0);
 }
 
+void TestAntintrusionSystem::testModifyPartializationWithRightCode()
+{
+	setSystemActive(false);
+	setZonesInserted();
+	graphicallyPartializeFirstTwoZones();
+
+	obj->requestPartialization("12345");
+
+	checkWaitingResponse(true);
+
+	ObjectTester t(obj, SIGNAL(codeAccepted()));
+
+	// now, first 2 zones are partialized
+	DeviceValues v;
+	for (int i = 1; i <= 7; ++i)
+	{
+		int k = AntintrusionDevice::DIM_ZONE_INSERTED;
+		if (i <= 2)
+			k = AntintrusionDevice::DIM_ZONE_PARTIALIZED;
+		v[k] = i;
+		obj->valueReceived(v);
+		v.clear();
+	}
+
+	// checks first 2 zones are really partialized
+	ObjectDataModel *zones = obj->getZones();
+	for (int i = 0; i < 7; ++i)
+	{
+		AntintrusionZone *z = static_cast<AntintrusionZone *>(zones->getObject(i));
+		bool actual = z->getPartialization();
+		bool expected = ((i + 1) <= 2) ? true : false;
+		QString msg = QString("Zone %1 - Actual partialization: %2 Expected partialization: %3").arg(i + 1).arg(actual).arg(expected);
+		QVERIFY2(expected == actual, qPrintable(msg));
+	}
+
+	t.checkSignals();
+}
+
+void TestAntintrusionSystem::testModifyPartializationWithWrongCode()
+{
+	setSystemActive(false);
+	setZonesInserted();
+	graphicallyPartializeFirstTwoZones();
+
+	obj->requestPartialization("11111");
+
+	ObjectTester t(obj, SIGNAL(codeRefused()));
+
+	checkWaitingResponse(true);
+
+	// all zones are inserted (simulates wrong code)
+	DeviceValues v;
+	for (int i = 1; i <= 7; ++i)
+	{
+		int k = AntintrusionDevice::DIM_ZONE_INSERTED;
+		v[k] = i;
+		obj->valueReceived(v);
+		v.clear();
+	}
+
+	// checks all zones are inserted
+	ObjectDataModel *zones = obj->getZones();
+	for (int i = 0; i < 7; ++i)
+	{
+		AntintrusionZone *z = static_cast<AntintrusionZone *>(zones->getObject(i));
+		bool actual = z->getPartialization();
+		bool expected = false;
+		QString msg = QString("Zone %1 - Actual partialization: %2 Expected partialization: %3").arg(i + 1).arg(actual).arg(expected);
+		QVERIFY2(expected == actual, qPrintable(msg));
+	}
+
+	t.checkSignals();
+}
+
+void TestAntintrusionSystem::testPartializationWithoutModification()
+{
+	setSystemActive(false);
+	setZonesInserted();
+
+	// in reality we want to check that no signal is emitted, but ObjectTester
+	// ctor wants a signal so we pass it a random one
+	ObjectTester t(obj, SIGNAL(codeRefused()));
+
+	obj->requestPartialization("11111");
+
+	checkWaitingResponse(false);
+
+	t.checkNoSignals();
+}
+
+void TestAntintrusionSystem::testPartializationWithSystemInserted()
+{
+	setSystemActive(true);
+	setZonesInserted();
+	graphicallyPartializeFirstTwoZones();
+
+	// in reality we want to check that no signal is emitted, but ObjectTester
+	// ctor wants a signal so we pass it a random one
+	ObjectTester t(obj, SIGNAL(codeRefused()));
+
+	obj->requestPartialization("11111");
+
+	checkWaitingResponse(false);
+
+	t.checkNoSignals();
+}
+
 void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
 {
 	AlarmZoneList actual;
@@ -273,4 +375,38 @@ void TestAntintrusionSystem::checkAlarmedZones(AlarmZoneList expected)
 	}
 
 	QCOMPARE(actual, expected);
+}
+
+void TestAntintrusionSystem::setSystemActive(bool active)
+{
+	obj->initialized = true;
+	obj->status = active;
+	obj->waiting_response = false;
+}
+
+void TestAntintrusionSystem::setZonesInserted()
+{
+	DeviceValues v;
+	for (int i = 1; i <= 7; ++i)
+	{
+		v[AntintrusionDevice::DIM_ZONE_INSERTED] = i;
+		obj->valueReceived(v);
+		v.clear();
+	}
+}
+
+void TestAntintrusionSystem::graphicallyPartializeFirstTwoZones()
+{
+	ObjectDataModel *zones = obj->getZones();
+	for (int i = 0; i < 2; ++i)
+	{
+		AntintrusionZone *z = static_cast<AntintrusionZone *>(zones->getObject(i));
+		z->setGraphicPartialization(true);
+	}
+}
+
+void TestAntintrusionSystem::checkWaitingResponse(bool waiting_response)
+{
+	QString msg = QString("Waiting response value (%1) is not as expected (%2)").arg(obj->waiting_response).arg(waiting_response);
+	QVERIFY2(waiting_response == obj->waiting_response, qPrintable(msg));
 }

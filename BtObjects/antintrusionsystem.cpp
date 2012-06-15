@@ -142,25 +142,46 @@ int AntintrusionAlarmSource::getNumber() const
 
 AntintrusionZone::AntintrusionZone(int id, QString _name) : AntintrusionAlarmSource(id, _name)
 {
-	partialized = true;
+	partialized_device = partialized_graphic = true;
 }
 
 bool AntintrusionZone::getPartialization() const
 {
-	return partialized;
+	return partialized_graphic;
 }
 
-void AntintrusionZone::setPartialization(bool p, bool request_partialization)
+bool AntintrusionZone::getDevicePartialization() const
 {
-	if (p != partialized)
+	return partialized_device;
+}
+
+void AntintrusionZone::setGraphicPartialization(bool p)
+{
+	// only graphic state changes
+	if (p != partialized_graphic)
 	{
-		partialized = p;
+		partialized_graphic = p;
 		emit partializationChanged();
-		if (request_partialization)
-			emit requestPartialization(getNumber(), p);
+		// we need the device to request the parzialization when inserting
+		// the system
+		emit requestPartialization(getNumber(), p);
 	}
 }
 
+void AntintrusionZone::setDevicePartialization(bool p)
+{
+	// we must update the device state and the graphic one to the new value
+	if (p != partialized_device)
+	{
+		partialized_device = p;
+		emit deviceChanged();
+	}
+	if (p != partialized_graphic)
+	{
+		partialized_graphic = p;
+		emit partializationChanged();
+	}
+}
 
 AntintrusionScenario::AntintrusionScenario(QString _name, QList<int> _scenario_zones, QList<AntintrusionZone*> _zones)
 {
@@ -208,7 +229,7 @@ void AntintrusionScenario::apply()
 	foreach (AntintrusionZone *z, zones)
 	{
 		bool inserted = scenario_zones.contains(z->getNumber());
-		z->setPartialization(!inserted);
+		z->setGraphicPartialization(!inserted);
 	}
 }
 
@@ -342,7 +363,22 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 			{
 				AntintrusionZone *z = static_cast<AntintrusionZone*>(zones.getObject(i));
 				if (z->getNumber() == it.value().toInt())
-					z->setPartialization(it.key() == AntintrusionDevice::DIM_ZONE_PARTIALIZED, false);
+				{
+					// we have to check code correctness: we assume the code
+					// is wrong if no zone has changed its partialization
+					// value, otherwise we assume it is right
+					bool newPartializationValue = (it.key() == AntintrusionDevice::DIM_ZONE_PARTIALIZED);
+					if (z->getDevicePartialization() != newPartializationValue)
+						code_right = true;
+					z->setDevicePartialization(newPartializationValue);
+					if (!(--zones_to_check))
+					{
+						if (code_right)
+							emit codeAccepted();
+						else
+							emit codeRefused();
+					}
+				}
 			}
 			break;
 		case AntintrusionDevice::DIM_ANTIPANIC_ALARM:
@@ -465,6 +501,31 @@ bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zo
 
 void AntintrusionSystem::requestPartialization(const QString &password)
 {
+	// if system is inserted is not possible to request a partialization
+	if (status)
+	{
+		qWarning() << "System inserted: ignoring partialization request";
+		return;
+	}
+	// we request a partialization only if zones configuration is changed
+	bool partialize = false;
+	for (int i = 0; i < zones.getCount(); ++i)
+	{
+		AntintrusionZone *z = static_cast<AntintrusionZone*>(zones.getObject(i));
+		if (z->getDevicePartialization() != z->getPartialization())
+		{
+			partialize = true;
+			break;
+		}
+	}
+	if (!partialize)
+	{
+		qWarning() << "No zones partialization configuration changes: ignoring partialization request";
+		return;
+	}
+	// sets some values to check code correctness for partialization
+	zones_to_check = zones.getCount();
+	code_right = false;
 	dev->setPartialization(password);
 	waiting_response = true;
 	QTimer::singleShot(CODE_TIMEOUT_SECS * 1000, this, SLOT(handleCodeTimeout()));

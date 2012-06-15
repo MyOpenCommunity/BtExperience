@@ -72,9 +72,17 @@ private slots:
 	void testClearAlarmsOnInsert();
 	void testAlarmOnNotConfiguredZone();
 	void testTechnicalAlarmOnNotConfiguredZone();
+	void testModifyPartializationWithRightCode();
+	void testModifyPartializationWithWrongCode();
+	void testPartializationWithoutModification();
+	void testPartializationWithSystemInserted();
 
 private:
 	void checkAlarmedZones(AlarmZoneList l);
+	void setSystemActive(bool active);
+	void setZonesInserted();
+	void graphicallyPartializeFirstTwoZones();
+	void checkWaitingResponse(bool waiting_response);
 	AntintrusionSystem *obj;
 	AntintrusionDevice *dev;
 };
