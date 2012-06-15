@@ -117,7 +117,7 @@ BasePage {
         }
     }
 
-    CustomView {
+    CardView {
         ObjectModel {
             id: usersModel
             source: myHomeModels.profiles
@@ -125,7 +125,7 @@ BasePage {
 
         id: users
         model: usersModel
-        delegate: CustomDelegate {
+        delegate: CardDelegate {
             property variant itemObject: usersModel.getObject(index)
 
             source: itemObject.image

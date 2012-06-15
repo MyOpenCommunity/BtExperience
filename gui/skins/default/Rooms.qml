@@ -29,7 +29,7 @@ BasePage {
         anchors.leftMargin: 20
     }
 
-    CustomView {
+    CardView {
         id: users
         anchors {
             right: parent.right
@@ -49,7 +49,7 @@ BasePage {
 
 
         model: roomsModel
-        delegate: CustomDelegate {
+        delegate: CardDelegate {
             source: users.selectRoomImage(itemObject.description)
             property variant itemObject: roomsModel.getObject(index)
             label: itemObject.description
