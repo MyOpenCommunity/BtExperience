@@ -65,6 +65,7 @@ BasePage {
             if (zoom < 200) {
                 zoom += zoomStep
                 doZoom(zoom / 100)
+                adjustPosition()
             }
         }
 
@@ -98,7 +99,7 @@ BasePage {
 
         function saveCard() {
             global.takeScreenshot(Qt.rect(transparentRect.x, transparentRect.y,
-                                          transparentRect.width, transparentRect.height))
+                                          transparentRect.width, transparentRect.height), "images/home/newcard.png")
         }
     }
 
@@ -130,7 +131,7 @@ BasePage {
 
     Image {
         id: sourceImage
-        source: "images/home/card_1.png"
+        source: "images/common/addams.jpg"
         x: (page.width - width) / 2
         y: (page.height - height) / 2
     }
@@ -209,7 +210,10 @@ BasePage {
         z: 1
 
         onCancelClicked: Stack.popPage()
-        onOkClicked: privateProps.saveCard()
+        onOkClicked: {
+            privateProps.saveCard()
+            // Stack.popPage()
+        }
     }
 
 
