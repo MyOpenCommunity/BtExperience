@@ -80,7 +80,7 @@ void TestAntintrusionSystem::init()
 	obj = new AntintrusionSystem(d, scenarios, aux, zones);
 	dev = new AntintrusionDevice(1);
 	foreach (AntintrusionZone *z, zones)
-		dev->partializeZone(z->getNumber(), z->getPartialization());
+		dev->partializeZone(z->getNumber(), !z->getSelected());
 }
 
 void TestAntintrusionSystem::cleanup()
@@ -261,7 +261,7 @@ void TestAntintrusionSystem::testModifyPartializationWithRightCode()
 {
 	setSystemActive(false);
 	setZonesInserted();
-	graphicallyPartializeFirstTwoZones();
+	unselectFirstTwoZones();
 
 	obj->requestPartialization("12345");
 
@@ -286,8 +286,8 @@ void TestAntintrusionSystem::testModifyPartializationWithRightCode()
 	for (int i = 0; i < 7; ++i)
 	{
 		AntintrusionZone *z = static_cast<AntintrusionZone *>(zones->getObject(i));
-		bool actual = z->getPartialization();
-		bool expected = ((i + 1) <= 2) ? true : false;
+		bool actual = z->getSelected();
+		bool expected = ((i + 1) <= 2) ? false : true;
 		QString msg = QString("Zone %1 - Actual partialization: %2 Expected partialization: %3").arg(i + 1).arg(actual).arg(expected);
 		QVERIFY2(expected == actual, qPrintable(msg));
 	}
@@ -299,7 +299,7 @@ void TestAntintrusionSystem::testModifyPartializationWithWrongCode()
 {
 	setSystemActive(false);
 	setZonesInserted();
-	graphicallyPartializeFirstTwoZones();
+	unselectFirstTwoZones();
 
 	obj->requestPartialization("11111");
 
@@ -322,8 +322,8 @@ void TestAntintrusionSystem::testModifyPartializationWithWrongCode()
 	for (int i = 0; i < 7; ++i)
 	{
 		AntintrusionZone *z = static_cast<AntintrusionZone *>(zones->getObject(i));
-		bool actual = z->getPartialization();
-		bool expected = false;
+		bool actual = z->getSelected();
+		bool expected = true;
 		QString msg = QString("Zone %1 - Actual partialization: %2 Expected partialization: %3").arg(i + 1).arg(actual).arg(expected);
 		QVERIFY2(expected == actual, qPrintable(msg));
 	}
@@ -351,7 +351,7 @@ void TestAntintrusionSystem::testPartializationWithSystemInserted()
 {
 	setSystemActive(true);
 	setZonesInserted();
-	graphicallyPartializeFirstTwoZones();
+	unselectFirstTwoZones();
 
 	// in reality we want to check that no signal is emitted, but ObjectTester
 	// ctor wants a signal so we pass it a random one
@@ -395,13 +395,13 @@ void TestAntintrusionSystem::setZonesInserted()
 	}
 }
 
-void TestAntintrusionSystem::graphicallyPartializeFirstTwoZones()
+void TestAntintrusionSystem::unselectFirstTwoZones()
 {
 	ObjectDataModel *zones = obj->getZones();
 	for (int i = 0; i < 2; ++i)
 	{
 		AntintrusionZone *z = static_cast<AntintrusionZone *>(zones->getObject(i));
-		z->setGraphicPartialization(true);
+		z->setSelected(false);
 	}
 }
 

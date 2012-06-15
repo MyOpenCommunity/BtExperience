@@ -98,16 +98,16 @@ class AntintrusionZone : public AntintrusionAlarmSource
 		#AntintrusionSystem::requestPartialization() or #AntintrusionSystem::toggleActivation()
 		to transmit the setting to the control unit.
 	*/
-	Q_PROPERTY(bool partialization READ getPartialization WRITE setGraphicPartialization NOTIFY partializationChanged)
+	Q_PROPERTY(bool selected READ getSelected WRITE setSelected NOTIFY selectedChanged)
 
 	/*!
-		\brief The device partialization state
+		\brief The activation state of the zone on the device
 
 		This is the state of the zone as received by the device. It cannot be changed by user
 		but it can only be acquired from frames. Every time we receive a notification on zone
-		status we have to reset the graphic state, too.
+		status we have to reset the selected state, too.
 	  */
-	Q_PROPERTY(bool devicePartialization READ getDevicePartialization NOTIFY deviceChanged)
+	Q_PROPERTY(bool active READ getActive NOTIFY activeChanged)
 
 public:
 	AntintrusionZone(int id, QString name);
@@ -117,19 +117,19 @@ public:
 		return ObjectInterface::IdAntintrusionZone;
 	}
 
-	bool getPartialization() const;
-	bool getDevicePartialization() const;
-	void setGraphicPartialization(bool p);
-	void setDevicePartialization(bool p);
+	bool getSelected() const;
+	bool getActive() const;
+	void setSelected(bool p);
+	void setActive(bool p);
 
 signals:
-	void partializationChanged(); // emitted when QML state changes
-	void deviceChanged(); // emitted when device state changes
+	void selectedChanged();
+	void activeChanged();
 	void requestPartialization(int zone_number, bool partialize);
 
 private:
-	bool partialized_device; // the state on the device as read from frames
-	bool partialized_graphic; // the state on QML
+	bool active; // zone must be activated on system insertion
+	bool selected; // zone configuration for activation
 };
 
 

@@ -142,44 +142,42 @@ int AntintrusionAlarmSource::getNumber() const
 
 AntintrusionZone::AntintrusionZone(int id, QString _name) : AntintrusionAlarmSource(id, _name)
 {
-	partialized_device = partialized_graphic = true;
+	active = selected = false;
 }
 
-bool AntintrusionZone::getPartialization() const
+bool AntintrusionZone::getSelected() const
 {
-	return partialized_graphic;
+	return selected;
 }
 
-bool AntintrusionZone::getDevicePartialization() const
+bool AntintrusionZone::getActive() const
 {
-	return partialized_device;
+	return active;
 }
 
-void AntintrusionZone::setGraphicPartialization(bool p)
+void AntintrusionZone::setSelected(bool p)
 {
-	// only graphic state changes
-	if (p != partialized_graphic)
+	if (p != selected)
 	{
-		partialized_graphic = p;
-		emit partializationChanged();
+		selected = p;
+		emit selectedChanged();
 		// we need the device to request the parzialization when inserting
 		// the system
 		emit requestPartialization(getNumber(), p);
 	}
 }
 
-void AntintrusionZone::setDevicePartialization(bool p)
+void AntintrusionZone::setActive(bool p)
 {
-	// we must update the device state and the graphic one to the new value
-	if (p != partialized_device)
+	if (p != active)
 	{
-		partialized_device = p;
-		emit deviceChanged();
+		active = p;
+		emit activeChanged();
 	}
-	if (p != partialized_graphic)
+	if (p != selected)
 	{
-		partialized_graphic = p;
-		emit partializationChanged();
+		selected = p;
+		emit selectedChanged();
 	}
 }
 
@@ -189,7 +187,7 @@ AntintrusionScenario::AntintrusionScenario(QString _name, QList<int> _scenario_z
 	scenario_zones = _scenario_zones;
 	zones = _zones;
 	foreach (AntintrusionZone *z, zones)
-		connect(z, SIGNAL(partializationChanged()), SLOT(verifySelection()));
+		connect(z, SIGNAL(selectedChanged()), SLOT(verifySelection()));
 	verifySelection(false);
 }
 
@@ -206,7 +204,7 @@ void AntintrusionScenario::verifySelection(bool notify)
 {
 	QList<int> selected_zones;
 	foreach (AntintrusionZone *z, zones)
-		if (!z->getPartialization())
+		if (z->getSelected())
 			selected_zones.append(z->getNumber());
 
 	bool s = (scenario_zones == selected_zones);
@@ -229,7 +227,7 @@ void AntintrusionScenario::apply()
 	foreach (AntintrusionZone *z, zones)
 	{
 		bool inserted = scenario_zones.contains(z->getNumber());
-		z->setGraphicPartialization(!inserted);
+		z->setSelected(inserted);
 	}
 }
 
@@ -279,10 +277,10 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 	foreach (AntintrusionZone *z, _zones)
 	{
 		zones << z;
-		d->partializeZone(z->getNumber(), z->getPartialization()); // initialization
+		d->partializeZone(z->getNumber(), !z->getSelected()); // initialization
 		connect(z, SIGNAL(requestPartialization(int,bool)), d, SLOT(partializeZone(int,bool)));
-		connect(z, SIGNAL(partializationChanged()), this, SIGNAL(canPartializeChanged()));
-		connect(z, SIGNAL(deviceChanged()), this, SIGNAL(canPartializeChanged()));
+		connect(z, SIGNAL(selectedChanged()), this, SIGNAL(canPartializeChanged()));
+		connect(z, SIGNAL(activeChanged()), this, SIGNAL(canPartializeChanged()));
 	}
 
 	foreach (AntintrusionAlarmSource *a, _aux)
@@ -369,10 +367,10 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 					// we have to check code correctness: we assume the code
 					// is wrong if no zone has changed its partialization
 					// value, otherwise we assume it is right
-					bool newPartializationValue = (it.key() == AntintrusionDevice::DIM_ZONE_PARTIALIZED);
-					if (z->getDevicePartialization() != newPartializationValue)
+					bool newActiveValue = (it.key() == AntintrusionDevice::DIM_ZONE_INSERTED);
+					if (z->getActive() != newActiveValue)
 						code_right = true;
-					z->setDevicePartialization(newPartializationValue);
+					z->setActive(newActiveValue);
 					if (!(--zones_to_check))
 					{
 						if (code_right)
@@ -531,7 +529,7 @@ bool AntintrusionSystem::canPartialize() const
 	for (int i = 0; i < zones.getCount(); ++i)
 	{
 		AntintrusionZone *z = static_cast<AntintrusionZone*>(zones.getObject(i));
-		if (z->getDevicePartialization() != z->getPartialization())
+		if (z->getActive() != z->getSelected())
 			return true;
 	}
 	return false;

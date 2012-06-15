@@ -81,7 +81,7 @@ private:
 	void checkAlarmedZones(AlarmZoneList l);
 	void setSystemActive(bool active);
 	void setZonesInserted();
-	void graphicallyPartializeFirstTwoZones();
+	void unselectFirstTwoZones();
 	void checkWaitingResponse(bool waiting_response);
 	AntintrusionSystem *obj;
 	AntintrusionDevice *dev;

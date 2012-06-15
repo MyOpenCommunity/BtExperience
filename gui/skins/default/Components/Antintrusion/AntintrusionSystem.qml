@@ -249,7 +249,7 @@ MenuColumn {
                     LedZone {
                         id: led
                         text: itemObject.number
-                        status: itemObject.partialization ? 0 : 1
+                        status: itemObject.selected ? 1 : 0
                         anchors {
                             top: parent.top
                             left: parent.left
@@ -271,8 +271,11 @@ MenuColumn {
                     selectedImage: "../images/common/button_zones_select.svg"
                     shadowImage: "../images/common/shadow_button_zones.svg"
                     text: itemObject.name
-                    onClicked: itemObject.partialization = !itemObject.partialization
-                    status: itemObject.partialization ? 0 : 1
+                    onClicked: {
+                        column.closeChild()
+                        itemObject.selected = !itemObject.selected
+                    }
+                    status: itemObject.selected ? 1 : 0
                 }
 
                 ObjectModel {
