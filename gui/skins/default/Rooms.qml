@@ -29,7 +29,7 @@ BasePage {
         anchors.leftMargin: 20
     }
 
-    CardView {
+    CustomView {
         id: users
         anchors {
             right: parent.right
@@ -37,6 +37,7 @@ BasePage {
             left: parent.left
             leftMargin: 30
             top: pageTitle.bottom
+            topMargin: 50
             bottom: floorView.top
         }
 
@@ -46,8 +47,9 @@ BasePage {
             containers: [floorUii]
         }
 
+
         model: roomsModel
-        delegate: CardDelegate {
+        delegate: CustomDelegate {
             source: users.selectRoomImage(itemObject.description)
             property variant itemObject: roomsModel.getObject(index)
             label: itemObject.description
