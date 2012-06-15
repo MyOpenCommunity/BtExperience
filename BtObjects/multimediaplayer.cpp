@@ -20,6 +20,9 @@ MultiMediaPlayer::MultiMediaPlayer()
 	connect(player, SIGNAL(mplayerStopped()), SLOT(mplayerStopped()));
 	connect(player, SIGNAL(mplayerPaused()), SLOT(mplayerPaused()));
 
+	connect(player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
+		SLOT(playerInfoReceived(QMap<QString,QString>)));
+
 	info_poll_timer = new QTimer(this);
 	info_poll_timer->setInterval(INFO_POLL_INTERVAL);
 	connect(info_poll_timer, SIGNAL(timeout()), this, SLOT(readPlayerInfo()));
@@ -111,7 +114,7 @@ void MultiMediaPlayer::resume()
 
 void MultiMediaPlayer::stop()
 {
-	player->stop();
+	setCurrentSource("");
 }
 
 void MultiMediaPlayer::seek(int seconds)
@@ -130,12 +133,19 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 
 	// if playing, start playing new track right now (which automatically gets
 	// track info), otherwise request track info separately
-	if (player->isPlaying())
+	if (current_source.isEmpty())
+	{
+		player->stop();
+	}
+	else if (player->isPlaying())
 	{
 		player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 	}
 	else if (player->isPaused())
 	{
+		// accourding to documentation, "pausing_keep loadfile" should do the right thing, but
+		// it does not, so we call quit() here to force a restart when resume() is called
+		player->quit();
 		// TODO maybe request after some time, in case we start playing
 		player->requestInitialPlayingInfo(current_source);
 	}
@@ -183,6 +193,11 @@ void MultiMediaPlayer::mplayerStarted()
 
 void MultiMediaPlayer::mplayerStopped()
 {
+	// this handles the pause() -> change source sequence: MPlayer is stopped,
+	// but the "logical" state is still paused
+	if (player_state == Paused && !current_source.isEmpty())
+		return;
+
 	playbackStopped();
 	setPlayerState(Stopped);
 	setAudioOutputState(AudioOutputStopped);
