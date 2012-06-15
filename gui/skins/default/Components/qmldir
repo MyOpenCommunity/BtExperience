@@ -34,6 +34,8 @@ ControlSlider 1.0 ControlSlider.qml
 ControlSlider2 1.0 ControlSlider2.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
 ControlUpDown 1.0 ControlUpDown.qml
+CustomDelegate 1.0 CustomDelegate.qml
+CustomView 1.0 CustomView.qml
 EventManager 1.0 EventManager.qml
 FadeAnimation 1.0 FadeAnimation.qml
 FavoriteEditPopup 1.0 FavoriteEditPopup.qml

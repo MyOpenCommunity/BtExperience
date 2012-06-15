@@ -117,7 +117,7 @@ BasePage {
         }
     }
 
-    CardView {
+    CustomView {
         ObjectModel {
             id: usersModel
             source: myHomeModels.profiles
@@ -125,7 +125,7 @@ BasePage {
 
         id: users
         model: usersModel
-        delegate: CardDelegate {
+        delegate: CustomDelegate {
             property variant itemObject: usersModel.getObject(index)
 
             source: itemObject.image
@@ -133,6 +133,7 @@ BasePage {
 
             onClicked: Stack.openPage('Profile.qml', {'profile': itemObject})
         }
+
         anchors {
             top: toolbar.bottom
             topMargin: 50
