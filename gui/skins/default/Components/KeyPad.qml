@@ -211,8 +211,6 @@ SvgImage {
 
             Row {
                 id: rowKeypad
-                anchors.top: spaceKeypad2.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
 
                 ButtonThreeStates {
                     defaultImage: "../images/common/button_key_delete.svg"
