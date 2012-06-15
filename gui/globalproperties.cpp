@@ -83,12 +83,13 @@ void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
 	main_widget = _viewport;
 }
 
-QImage GlobalProperties::takeScreenshot(QRect rect)
+void GlobalProperties::takeScreenshot(QRect rect)
 {
 	QWidget *viewport = main_widget->viewport();
 
 	if (!viewport)
 		viewport = main_widget;
 
-	return QPixmap::grabWidget(viewport, rect.isValid() ? rect : main_widget->rect()).toImage();
+	QImage image = QPixmap::grabWidget(viewport, rect.isValid() ? rect : main_widget->rect()).toImage();
+	image.save("newcard.png");
 }

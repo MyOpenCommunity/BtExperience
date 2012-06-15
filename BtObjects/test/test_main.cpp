@@ -30,6 +30,7 @@
 #include "test_filebrowser.h"
 #include "test_light_objects.h"
 #include "test_media_objects.h"
+#include "test_multimedia_player.h"
 #include "test_splitscenarios_object.h"
 #include "test_thermalprobes_object.h"
 #include "test_thermal_objects.h"
@@ -94,6 +95,7 @@ int main(int argc, char *argv[])
 	ADD_TEST(TestThermalControlledProbesFancoil);
 	ADD_TEST(TestMediaModel);
 	ADD_TEST(TestObjectModel);
+	ADD_TEST(TestMultiMediaPlayer);
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))

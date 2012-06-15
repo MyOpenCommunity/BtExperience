@@ -1,3 +1,5 @@
+DEFINES += MEDIAPLAYER_DISABLE_HARDWARE_FUNCTIONS
+
 HEADERS += \
 	antintrusionsystem.h \
 	container.h \
@@ -12,6 +14,7 @@ HEADERS += \
 	medialink.h \
 	mediamodel.h \
 	mediaobjects.h \
+	multimediaplayer.h \
 	note.h \
 	objectinterface.h \
 	objectmodel.h \
@@ -45,6 +48,7 @@ HEADERS += \
 	ts/openclient.h \
 	ts/treebrowser.h \
 	ts/frame_functions.h \
+	ts/mediaplayer.h \
 	ts/devices_cache.h \
 	ts/xml_functions.h \
 	ts/xmldevice.h \
@@ -65,6 +69,7 @@ SOURCES += \
 	medialink.cpp \
 	mediamodel.cpp \
 	mediaobjects.cpp \
+	multimediaplayer.cpp \
 	note.cpp \
 	objectinterface.cpp \
 	objectmodel.cpp \
@@ -98,6 +103,7 @@ SOURCES += \
 	ts/openclient.cpp \
 	ts/treebrowser.cpp \
 	ts/frame_functions.cpp \
+	ts/mediaplayer.cpp \
 	ts/devices_cache.cpp \
 	ts/xml_functions.cpp \
 	ts/xmldevice.cpp \

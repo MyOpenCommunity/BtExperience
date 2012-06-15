@@ -2,6 +2,20 @@
 
 #include <QSignalSpy>
 #include <QtTest>
+#include <QDateTime>
+
+namespace
+{
+	int signalTotals(QList<QSignalSpy *> spies)
+	{
+		int total = 0;
+
+		foreach(QSignalSpy *spy, spies)
+			total += spy->size();
+
+		return total;
+	}
+}
 
 ObjectTester::ObjectTester(QObject *_obj, SignalList l)
 {
@@ -20,6 +34,33 @@ ObjectTester::~ObjectTester()
 {
 	foreach(QSignalSpy *spy, sl)
 		delete spy;
+}
+
+bool ObjectTester::waitForSignal(int milliseconds)
+{
+	if (signalTotals(sl))
+	{
+		clearSignals();
+
+		return true;
+	}
+
+	return waitForNewSignal(milliseconds);
+}
+
+bool ObjectTester::waitForNewSignal(int milliseconds)
+{
+	qint64 start = QDateTime::currentMSecsSinceEpoch();
+	int total = signalTotals(sl);
+
+	while (QDateTime::currentMSecsSinceEpoch() - start < milliseconds && signalTotals(sl) == total)
+		QCoreApplication::processEvents();
+
+	bool ok = signalTotals(sl) != total;
+
+	clearSignals();
+
+	return ok;
 }
 
 void ObjectTester::checkSignalCount(const char *sig, int sig_count)

@@ -424,6 +424,16 @@ class ThermalControlUnitManual : public ThermalControlUnitObject
 	*/
 	Q_PROPERTY(int temperature READ getTemperature WRITE setTemperature NOTIFY temperatureChanged)
 
+	/*!
+		\brief Gets the mimimum allowed temperature for manual mode (in Celsius degrees * 10)
+	*/
+	Q_PROPERTY(int minimumManualTemperature READ getMinimumManualTemperature CONSTANT)
+
+	/*!
+		\brief Gets the maximum allowed temperature for manual mode (in Celsius degrees * 10)
+	*/
+	Q_PROPERTY(int maximumManualTemperature READ getMaximumManualTemperature CONSTANT)
+
 public:
 	ThermalControlUnitManual(QString name, ThermalDevice *dev);
 
@@ -435,6 +445,8 @@ public:
 	int getTemperature() const;
 	void setTemperature(int temp);
 
+	int getMinimumManualTemperature() const;
+	int getMaximumManualTemperature() const;
 
 public slots:
 	virtual void apply();
