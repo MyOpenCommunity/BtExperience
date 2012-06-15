@@ -136,7 +136,7 @@ BasePage {
 
         anchors {
             top: toolbar.bottom
-            topMargin: 50
+            topMargin: 100
             bottom: favourites.top
             left: parent.left
             leftMargin: 20
