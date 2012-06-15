@@ -283,6 +283,9 @@ friend class TestAntintrusionSystem;
 	/// List of configured zones (contains \c AntintrusionZone objects)
 	Q_PROPERTY(ObjectDataModel *zones READ getZones CONSTANT)
 
+	/// Returns \c true when a partialization request can be sent
+	Q_PROPERTY(bool canPartialize READ canPartialize NOTIFY canPartializeChanged)
+
 	/// List of configured scenarios (contains \c AntintrusionScenario objects)
 	Q_PROPERTY(ObjectDataModel *scenarios READ getScenarios CONSTANT)
 
@@ -327,6 +330,8 @@ public:
 		return status;
 	}
 
+	bool canPartialize() const;
+
 	QObject *getCurrentScenario() const;
 
 signals:
@@ -343,6 +348,8 @@ signals:
 	void codeAccepted();
 	void codeRefused();
 	void codeTimeout();
+
+	void canPartializeChanged();
 
 private slots:
 	virtual void valueReceived(const DeviceValues &values_list);

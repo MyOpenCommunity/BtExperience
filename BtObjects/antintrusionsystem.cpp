@@ -281,6 +281,8 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 		zones << z;
 		d->partializeZone(z->getNumber(), z->getPartialization()); // initialization
 		connect(z, SIGNAL(requestPartialization(int,bool)), d, SLOT(partializeZone(int,bool)));
+		connect(z, SIGNAL(partializationChanged()), this, SIGNAL(canPartializeChanged()));
+		connect(z, SIGNAL(deviceChanged()), this, SIGNAL(canPartializeChanged()));
 	}
 
 	foreach (AntintrusionAlarmSource *a, _aux)
@@ -501,26 +503,9 @@ bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zo
 
 void AntintrusionSystem::requestPartialization(const QString &password)
 {
-	// if system is inserted is not possible to request a partialization
-	if (status)
+	if (!canPartialize())
 	{
-		qWarning() << "System inserted: ignoring partialization request";
-		return;
-	}
-	// we request a partialization only if zones configuration is changed
-	bool partialize = false;
-	for (int i = 0; i < zones.getCount(); ++i)
-	{
-		AntintrusionZone *z = static_cast<AntintrusionZone*>(zones.getObject(i));
-		if (z->getDevicePartialization() != z->getPartialization())
-		{
-			partialize = true;
-			break;
-		}
-	}
-	if (!partialize)
-	{
-		qWarning() << "No zones partialization configuration changes: ignoring partialization request";
+		qWarning() << "Ignoring partialization request. System is inserted or configuration is not changed.";
 		return;
 	}
 	// sets some values to check code correctness for partialization
@@ -535,6 +520,21 @@ void AntintrusionSystem::toggleActivation(const QString &password)
 {
 	dev->toggleActivation(password);
 	waiting_response = true;
+}
+
+bool AntintrusionSystem::canPartialize() const
+{
+	// if system is inserted is not possible to request a partialization
+	if (status)
+		return false;
+	// we request a partialization only if zones configuration is changed
+	for (int i = 0; i < zones.getCount(); ++i)
+	{
+		AntintrusionZone *z = static_cast<AntintrusionZone*>(zones.getObject(i));
+		if (z->getDevicePartialization() != z->getPartialization())
+			return true;
+	}
+	return false;
 }
 
 QObject *AntintrusionSystem::getCurrentScenario() const

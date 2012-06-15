@@ -138,7 +138,7 @@ MenuColumn {
 
             backgroundImage: "../../images/common/panel_switch.svg"
             name: qsTr("system")
-            description: qsTr("disabled")
+            description: privateProps.model.status === true ? qsTr("enabled") : qsTr("disabled")
             hasChild: false
 
             MouseArea {
@@ -187,6 +187,17 @@ MenuColumn {
                 column.loadColumn(antinstrusionScenarios, name, privateProps.model.scenarios)
                 if (privateProps.currentElement != 2)
                     privateProps.currentElement = 2
+            }
+
+            // disabling rect for scenarios when system is enabled
+            Rectangle {
+                id: scenarioDarkRect
+                z: 1
+                anchors.fill: parent
+                color: "black"
+                opacity: 0.7
+                visible: false
+                MouseArea { anchors.fill: parent } // block the mouse clicks
             }
         }
 
@@ -286,6 +297,14 @@ MenuColumn {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: parent.height / 100 * 3
                 anchors.horizontalCenter: parent.horizontalCenter
+                Rectangle {
+                    z: 1
+                    anchors.fill: parent
+                    color: "silver"
+                    opacity: privateProps.model.canPartialize ? 0 : 0.7
+                    visible: privateProps.model.canPartialize === false
+                    MouseArea { anchors.fill: parent } // block the mouse clicks
+                }
             }
         }
     }
@@ -293,10 +312,10 @@ MenuColumn {
         State {
             name: "systemActive"
             when: privateProps.model.status === true
-            PropertyChanges { target: systemItem; name: qsTr("system enabled") }
             PropertyChanges { target: systemIcon; status: 0 }
             PropertyChanges { target: zoneDarkRect; visible: true }
             PropertyChanges { target: registerDarkRect; visible: true }
+            PropertyChanges { target: scenarioDarkRect; visible: true }
         }
     ]
 }
