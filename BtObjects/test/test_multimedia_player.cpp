@@ -158,6 +158,14 @@ void TestMultiMediaPlayer::testPauseResume()
 
 	QVERIFY(!player->info_poll_timer->isActive());
 
+	// calling pause() again is a no-op
+	player->pause();
+
+	QVERIFY(!state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+
+	QVERIFY(!player->info_poll_timer->isActive());
+
 	// resume() changes status and sends resume command to mplayer
 	player->resume();
 
@@ -166,6 +174,14 @@ void TestMultiMediaPlayer::testPauseResume()
 
 	QVERIFY(output_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
+
+	QVERIFY(player->info_poll_timer->isActive());
+
+	// calling resume() again is a no-op
+	player->resume();
+
+	QVERIFY(!state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
 
 	QVERIFY(player->info_poll_timer->isActive());
 }

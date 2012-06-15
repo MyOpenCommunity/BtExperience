@@ -90,15 +90,18 @@ void MultiMediaPlayer::play()
 
 void MultiMediaPlayer::pause()
 {
-	// TODO only when playing
-	setPlayerState(AboutToPause);
+	if (player_state != Playing)
+		return;
 
+	setPlayerState(AboutToPause);
 	player->pause();
 }
 
 void MultiMediaPlayer::resume()
 {
-	// TODO only when paused
+	if (player_state != Paused && player_state != AboutToPause)
+		return;
+
 	if (player->isInstanceRunning())
 		player->resume();
 	else
