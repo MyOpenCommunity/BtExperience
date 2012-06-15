@@ -340,6 +340,16 @@ void ThermalControlUnitManual::setTemperature(int temp)
 	}
 }
 
+int ThermalControlUnitManual::getMinimumManualTemperature() const
+{
+	return bt2Celsius(dev->minimumTemp());
+}
+
+int ThermalControlUnitManual::getMaximumManualTemperature() const
+{
+	return bt2Celsius(dev->maximumTemp());
+}
+
 void ThermalControlUnitManual::apply()
 {
 	current = to_apply;
