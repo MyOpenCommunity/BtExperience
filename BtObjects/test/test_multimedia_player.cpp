@@ -79,7 +79,7 @@ void TestMultiMediaPlayer::testSanity()
 	player->setCurrentSource("files/audio/d3.mp3");
 
 	source_changed->checkSignals();
-	track_info_changed->checkSignals();
+	track_info_changed->checkNoSignals();
 
 	player->play();
 

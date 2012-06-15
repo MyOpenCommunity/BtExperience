@@ -148,6 +148,8 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 	if (source == current_source)
 		return;
 
+	bool had_track_info = track_info.size() != 0;
+
 	current_source = source;
 	track_info.clear();
 
@@ -170,7 +172,8 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 		player->requestInitialPlayingInfo(current_source);
 	}
 
-	emit trackInfoChanged(track_info);
+	if (had_track_info)
+		emit trackInfoChanged(track_info);
 	emit currentSourceChanged(current_source);
 }
 
