@@ -9,7 +9,7 @@
 
 namespace
 {
-	QVariantMap d3_info, f5_info;
+	QVariantMap d3_info, f5_info, a4_info;
 
 	bool compareInfo(QVariantMap got, QVariantMap expected)
 	{
@@ -48,7 +48,13 @@ void TestMultiMediaPlayer::init()
 	f5_info["file_name"] = "f5.mp3";
 	f5_info["meta_album"] = "BTicino tests";
 	f5_info["meta_artist"] = "Sox";
-	f5_info["total_time"] = QTime(0, 0, 14);
+	f5_info["total_time"] = QTime(0, 0, 21);
+
+	a4_info["meta_title"] = "A4 pluck";
+	a4_info["file_name"] = "a4.mp3";
+	a4_info["meta_album"] = "BTicino tests";
+	a4_info["meta_artist"] = "Sox";
+	a4_info["total_time"] = QTime(0, 0, 20);
 }
 
 void TestMultiMediaPlayer::cleanup()
