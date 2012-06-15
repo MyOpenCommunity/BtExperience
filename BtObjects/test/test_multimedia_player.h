@@ -30,6 +30,9 @@ private slots:
 	void testSetSourcePaused();
 	void testSetEmptySource();
 
+	// seek
+	void testSeek();
+
 private:
 	MultiMediaPlayer *player;
 	ObjectTester *state_changed, *output_changed, *track_info_changed, *source_changed;

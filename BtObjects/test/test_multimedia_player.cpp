@@ -427,3 +427,53 @@ void TestMultiMediaPlayer::testSetEmptySource()
 	QVERIFY(state_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Stopped);
 }
+
+void TestMultiMediaPlayer::testSeek()
+{
+	QVariantMap info;
+	QVariant last_time;
+	int delta;
+
+	player->setCurrentSource("files/audio/d3.mp3");
+
+	source_changed->checkSignals();
+	track_info_changed->checkSignals(); // track info cleared
+
+	player->play();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // Playing
+
+	player->pause();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // AboutToPause
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+	last_time = info["current_time"];
+
+	// seek and check time delta
+	player->seek(2);
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+
+	// since this is an MP3 with constant bit rate, the seek should be more-or-less correct,
+	// tolerate at most 1 second error
+	delta = info["current_time"].toTime().second() - last_time.toTime().second();
+	QVERIFY(delta >= 1 && delta <= 3);
+	last_time = info["current_time"];
+
+	// multiple seeks
+	player->seek(3);
+	player->seek(2);
+	player->seek(1);
+
+	// wait until we receive all updates
+	while(track_info_changed->waitForSignal(TIMEOUT)) /* do nothing */;
+	info = player->getTrackInfo();
+
+	delta = info["current_time"].toTime().second() - last_time.toTime().second();
+	QVERIFY(delta >= 5 && delta <= 7);
+}

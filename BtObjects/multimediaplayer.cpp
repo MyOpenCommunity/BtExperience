@@ -5,6 +5,7 @@
 #include <QTimer>
 
 #define INFO_POLL_INTERVAL 500
+#define SEEK_TICK_TIMEOUT 4
 
 
 MultiMediaPlayer::MultiMediaPlayer()
@@ -13,6 +14,7 @@ MultiMediaPlayer::MultiMediaPlayer()
 	player_state = Stopped;
 	output_state = AudioOutputStopped;
 	mediaplayer_output_mode = MediaPlayer::OutputAll;
+	seek_tick_count = 0;
 
 	connect(player, SIGNAL(mplayerStarted()), SLOT(mplayerStarted()));
 	connect(player, SIGNAL(mplayerResumed()), SLOT(mplayerResumed()));
@@ -67,6 +69,15 @@ void MultiMediaPlayer::playerInfoReceived(QMap<QString, QString> new_track_info)
 {
 	QVariantMap new_info = track_info;
 
+	// if we're paused, and the timer is active, it means it was reactivated by seek(),
+	// so we can stop it now
+	if (player_state != Playing && info_poll_timer->isActive())
+	{
+		++seek_tick_count;
+		if (seek_tick_count > SEEK_TICK_TIMEOUT)
+			info_poll_timer->stop();
+	}
+
 	// TODO maybe handle here out-of-band metadata from UPnP
 	foreach (QString key, COMMON_ATTRIBUTES)
 		if (new_track_info.contains(key))
@@ -119,8 +130,17 @@ void MultiMediaPlayer::stop()
 
 void MultiMediaPlayer::seek(int seconds)
 {
-	// TODO only when playing/paused
+	if (player_state == Stopped)
+		return;
+
+	// TODO does not handle the case pause() -> setSource() -> seek()
 	player->seek(seconds);
+	// restart poll timer so we get the new position
+	if (player_state != Playing)
+	{
+		seek_tick_count = 0;
+		info_poll_timer->start();
+	}
 }
 
 void MultiMediaPlayer::setCurrentSource(QString source)
