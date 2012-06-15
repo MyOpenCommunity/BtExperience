@@ -12,6 +12,7 @@ MultiMediaPlayer::MultiMediaPlayer()
 	player = new MediaPlayer(this);
 	player_state = Stopped;
 	output_state = AudioOutputStopped;
+	mediaplayer_output_mode = MediaPlayer::OutputAll;
 
 	connect(player, SIGNAL(mplayerStarted()), SLOT(mplayerStarted()));
 	connect(player, SIGNAL(mplayerResumed()), SLOT(mplayerResumed()));
@@ -85,7 +86,7 @@ void MultiMediaPlayer::playerInfoReceived(QMap<QString, QString> new_track_info)
 
 void MultiMediaPlayer::play()
 {
-	player->play(current_source);
+	player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 }
 
 void MultiMediaPlayer::pause()
@@ -131,7 +132,7 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 	// track info), otherwise request track info separately
 	if (player->isPlaying())
 	{
-		player->play(current_source);
+		player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 	}
 	else if (player->isPaused())
 	{

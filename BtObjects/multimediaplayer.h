@@ -84,6 +84,7 @@ private:
 	QVariantMap track_info;
 	PlayerState player_state;
 	AudioOutputState output_state;
+	int mediaplayer_output_mode;
 };
 
 Q_DECLARE_METATYPE(MultiMediaPlayer::PlayerState)

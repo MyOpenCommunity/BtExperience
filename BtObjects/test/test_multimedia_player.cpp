@@ -32,6 +32,7 @@ void TestMultiMediaPlayer::init()
 	MediaPlayer::setCommandLineArguments("mplayer", QStringList() << "-ao" << "null", QStringList());
 
 	player = new MultiMediaPlayer();
+	player->mediaplayer_output_mode = MediaPlayer::OutputStdout;
 	state_changed = new ObjectTester(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)));
 	output_changed = new ObjectTester(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)));
 	track_info_changed = new ObjectTester(player, SIGNAL(trackInfoChanged(QVariantMap)));
