@@ -81,7 +81,7 @@ Item {
 
     states: [
         State {
-            when: itemDelegate.ListView.view.currentPressed === index
+            when: itemDelegate.view.currentPressed === index
             PropertyChanges {
                 target: rectPressed
                 visible: true
