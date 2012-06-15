@@ -56,6 +56,8 @@ BasePage {
 
             onClicked: Stack.openPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
         }
+        delegateSpacing: 20
+        visibleElements: 4
 
         function selectRoomImage(room) {
             if (room === "living room")
