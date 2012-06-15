@@ -17,6 +17,10 @@ Item {
             console.log("Model count changed")
             clipView.modelReset()
         }
+        onContainersChanged: {
+            console.log("Model containers changed")
+            clipView.modelReset()
+        }
     }
 
     Image {
@@ -29,7 +33,17 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            enabled: !Vars.dict[(clipView.currentIndex + 1) % model.count].moveAnimationRunning
+            enabled: {
+                // Any delegate is ok to test the animation running property
+                //
+                // Take currentIndex + 1 because we are guaranteed it always exists
+                // (after delegates are created) and also the modulo operation
+                // is always in the range [0, model.count - 1] (not so if we use currentIndex - 1)
+                // Don't use currentIndex because in some cases it's going to be
+                // destroyed.
+                var delegate = Vars.dict[(clipView.currentIndex + 1) % model.count]
+                return delegate === undefined ? false : !delegate.moveAnimationRunning
+            }
             onClicked: clipView.decrementCurrentIndex()
         }
     }
@@ -49,7 +63,8 @@ Item {
             property int currentPressed: -1
 
             function initDelegates() {
-                for (var i = 0; i < visibleElements; ++i) {
+                var elementNumber = Math.min(visibleElements, model.count)
+                for (var i = 0; i < elementNumber; ++i) {
                     var delegateX = (Script.listDelegateWidth + delegateSpacing) * i
                     Vars.dict[i] = delegate.createObject(clipView, {"x": delegateX, "y": clipView.y, "index": i, "view": clipView})
                 }
@@ -132,10 +147,25 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            enabled: !Vars.dict[(clipView.currentIndex + 1) % model.count].moveAnimationRunning
+            enabled: {
+                // see comment on the other arrow
+                var delegate = Vars.dict[(clipView.currentIndex + 1) % model.count]
+                return delegate === undefined ? false : !delegate.moveAnimationRunning
+            }
             onClicked: clipView.incrementCurrentIndex()
         }
     }
 
-    Component.onCompleted: clipView.initDelegates()
+    states: State {
+        name: "hiddenArrows"
+        when: model.count <= visibleElements
+        PropertyChanges {
+            target: nextArrow
+            visible: false
+        }
+        PropertyChanges {
+            target: prevArrow
+            visible: false
+        }
+    }
 }
