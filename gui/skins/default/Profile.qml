@@ -140,7 +140,7 @@ Page {
                             anchors {
                                 left: parent.left
                                 leftMargin: delegate.width / 100 * 2
-                                right: crossImage.left
+                                right: parent.right
                                 rightMargin: delegate.width / 100 * 2
                                 top: parent.top
                                 topMargin: delegate.height / 100 * 9
@@ -151,18 +151,19 @@ Page {
                             elide: Text.ElideRight
                             maximumLineCount: 3
                         }
-                        SvgImage {
-                            id: crossImage
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressAndHold: menu.state = "selected"
+                        }
+
+                        NoteActions {
+                            id: menu
+                            onEditClicked: console.log("edit note")
+                            onDeleteClicked: userNotes.remove(index)
                             anchors {
-                                right: parent.right
-                                rightMargin: delegate.width / 100 * 2
-                                top: parent.top
-                                topMargin: delegate.height / 100 * 9
-                            }
-                            source: "images/common/icon_delete.svg"
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: userNotes.remove(index)
+                                bottom: parent.bottom
+                                right: parent.left
                             }
                         }
                     }

@@ -47,6 +47,7 @@ MenuItemDelegate 1.0 MenuItemDelegate.qml
 MenuShadow 1.0 MenuShadow.qml
 MenuTitle 1.0 MenuTitle.qml
 NavigationBar 1.0 NavigationBar.qml
+NoteActions 1.0 NoteActions.qml
 PageAnimation 1.0 PageAnimation.qml
 Paginator 1.0 Paginator.qml
 PaginatorColumn 1.0 PaginatorColumn.qml
