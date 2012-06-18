@@ -25,6 +25,17 @@ private slots:
 	void testPauseResume();
 	void testMultiplePauseResume();
 
+	// change current source
+	void testSetSource();
+	void testSetSourcePaused();
+	void testSetEmptySource();
+
+	// seek
+	void testSeek();
+
+	// track complete
+	void testDone();
+
 private:
 	MultiMediaPlayer *player;
 	ObjectTester *state_changed, *output_changed, *track_info_changed, *source_changed;

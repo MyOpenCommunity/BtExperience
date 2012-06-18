@@ -19,9 +19,9 @@ class GlobalModels : public QObject
 	/*!
 		\brief Floors defined by \c layout.xml
 
-		List of Container objects, #ItemInterface::containerId is -1.
+		List of Container objects, \ref ItemInterface::containerId is -1.
 
-		The #Container::uii field can be used to filter the #rooms model.
+		The \ref Container::uii field can be used to filter the \ref rooms model.
 
 		\sa rooms
 	*/
@@ -30,9 +30,9 @@ class GlobalModels : public QObject
 	/*!
 		\brief Rooms defined by \c layout.xml
 
-		List of Container objects, #ItemInterface::containerId is the containing floor
+		List of Container objects, \ref ItemInterface::containerId is the containing floor
 
-		The #Container::uii field can be used to filter the #objectLinks model.
+		The \ref Container::uii field can be used to filter the \ref objectLinks model.
 
 		\sa floors
 	*/
@@ -41,9 +41,9 @@ class GlobalModels : public QObject
 	/*!
 		\brief Subsystem containers defined by \c layout.xml
 
-		List of Container objects, #ItemInterface::containerId is -1.
+		List of Container objects, \ref ItemInterface::containerId is -1.
 
-		The #Container::uii field can be used to filter the #myHomeObjects model.
+		The \ref Container::uii field can be used to filter the \ref myHomeObjects model.
 
 		\sa myHomeObjects
 	*/
@@ -52,7 +52,7 @@ class GlobalModels : public QObject
 	/*!
 		\brief MyHome objects contained in a room
 
-		List of ObjectLink objects, #ItemInterface::containerId is the containing room.
+		List of ObjectLink objects, \ref ItemInterface::containerId is the containing room.
 
 		\sa rooms
 		\sa myHomeObjects
@@ -62,9 +62,9 @@ class GlobalModels : public QObject
 	/*!
 		\brief All the MyHome objects defined by \c archive.xml
 
-		List of ObjectInterface objects, #ItemInterface::containerId is the containing system.
+		List of ObjectInterface objects, \ref ItemInterface::containerId is the containing system.
 
-		Can be filtered by the Container%s defined in #systems.
+		Can be filtered by the Container%s defined in \ref systems.
 
 		\sa systems
 		\sa objectLinks
@@ -74,9 +74,9 @@ class GlobalModels : public QObject
 	/*!
 		\brief User-defined notes
 
-		List of Note objects, #ItemInterface::containerId is the containing profile.
+		List of Note objects, \ref ItemInterface::containerId is the containing profile.
 
-		Can be filtered by the Container%s defined in #profiles.
+		Can be filtered by the Container%s defined in \ref profiles.
 
 		\sa profiles
 	*/
@@ -85,7 +85,7 @@ class GlobalModels : public QObject
 	/*!
 		\brief List of user profiles
 
-		List of Container objects, #ItemInterface::containerId is -1.
+		List of Container objects, \ref ItemInterface::containerId is -1.
 
 		\sa notes
 		\sa mediaLinks
@@ -95,7 +95,7 @@ class GlobalModels : public QObject
 	/*!
 		\brief List of user profiles
 
-		List of MediaLink objects, #ItemInterface::containerId is the containing profile.
+		List of MediaLink objects, \ref ItemInterface::containerId is the containing profile.
 
 		\sa profiles
 		\sa notes

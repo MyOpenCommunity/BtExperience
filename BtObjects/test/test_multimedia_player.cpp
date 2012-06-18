@@ -9,7 +9,7 @@
 
 namespace
 {
-	QVariantMap d3_info, f5_info;
+	QVariantMap d3_info, f5_info, a4_info;
 
 	bool compareInfo(QVariantMap got, QVariantMap expected)
 	{
@@ -32,6 +32,7 @@ void TestMultiMediaPlayer::init()
 	MediaPlayer::setCommandLineArguments("mplayer", QStringList() << "-ao" << "null", QStringList());
 
 	player = new MultiMediaPlayer();
+	player->mediaplayer_output_mode = MediaPlayer::OutputStdout;
 	state_changed = new ObjectTester(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)));
 	output_changed = new ObjectTester(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)));
 	track_info_changed = new ObjectTester(player, SIGNAL(trackInfoChanged(QVariantMap)));
@@ -47,7 +48,13 @@ void TestMultiMediaPlayer::init()
 	f5_info["file_name"] = "f5.mp3";
 	f5_info["meta_album"] = "BTicino tests";
 	f5_info["meta_artist"] = "Sox";
-	f5_info["total_time"] = QTime(0, 0, 14);
+	f5_info["total_time"] = QTime(0, 0, 21);
+
+	a4_info["meta_title"] = "A4 pluck";
+	a4_info["file_name"] = "a4.mp3";
+	a4_info["meta_album"] = "BTicino tests";
+	a4_info["meta_artist"] = "Sox";
+	a4_info["total_time"] = QTime(0, 0, 20);
 }
 
 void TestMultiMediaPlayer::cleanup()
@@ -72,7 +79,7 @@ void TestMultiMediaPlayer::testSanity()
 	player->setCurrentSource("files/audio/d3.mp3");
 
 	source_changed->checkSignals();
-	track_info_changed->checkSignals();
+	track_info_changed->checkNoSignals();
 
 	player->play();
 
@@ -103,9 +110,6 @@ void TestMultiMediaPlayer::testPlay()
 
 	player->setCurrentSource("files/audio/d3.mp3");
 
-	source_changed->checkSignals();
-	track_info_changed->checkSignals();
-
 	player->play();
 
 	// wait for first track info update
@@ -126,10 +130,6 @@ void TestMultiMediaPlayer::testPlay()
 void TestMultiMediaPlayer::testPauseResume()
 {
 	player->setCurrentSource("files/audio/d3.mp3");
-
-	source_changed->checkSignals();
-	track_info_changed->checkSignals();
-
 	player->play();
 
 	// wait for first status update
@@ -189,10 +189,6 @@ void TestMultiMediaPlayer::testPauseResume()
 void TestMultiMediaPlayer::testMultiplePauseResume()
 {
 	player->setCurrentSource("files/audio/d3.mp3");
-
-	source_changed->checkSignals();
-	track_info_changed->checkSignals();
-
 	player->play();
 
 	// wait for first status update
@@ -258,4 +254,226 @@ void TestMultiMediaPlayer::testMultiplePauseResume()
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
 
 	QVERIFY(player->info_poll_timer->isActive());
+}
+
+void TestMultiMediaPlayer::testSetSource()
+{
+	QVariantMap info;
+	QVariant last_time;
+
+	player->setCurrentSource("files/audio/d3.mp3");
+	player->play();
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	// set new source (starts playing automatically)
+	player->setCurrentSource("files/audio/f5.mp3");
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+
+	QVERIFY(compareInfo(info, f5_info));
+	last_time = info["current_time"];
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+
+	QVERIFY(compareInfo(info, f5_info));
+	QVERIFY(last_time != info["current_time"]);
+
+	// set new source (starts playing automatically)
+	player->setCurrentSource("files/audio/a4.mp3");
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+
+	QVERIFY(compareInfo(info, a4_info));
+	last_time = info["current_time"];
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+
+	QVERIFY(compareInfo(info, a4_info));
+	QVERIFY(last_time != info["current_time"]);
+}
+
+void TestMultiMediaPlayer::testSetSourcePaused()
+{
+	QVariantMap info;
+	QVariant last_time;
+
+	player->setCurrentSource("files/audio/d3.mp3");
+	player->play();
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
+
+	player->pause();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // AboutToPause
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+
+	// set new source and wait for update, player is still paused
+	player->setCurrentSource("files/audio/f5.mp3");
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+
+	QVERIFY(compareInfo(info, f5_info));
+	QCOMPARE(info["current_time"], QVariant(QTime(0, 0, 0)));
+
+	QVERIFY(!state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+
+	// set new source and wait for update, player is still paused
+	player->setCurrentSource("files/audio/a4.mp3");
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+
+	QVERIFY(compareInfo(info, a4_info));
+	QCOMPARE(info["current_time"], QVariant(QTime(0, 0, 0)));
+	last_time = info["current_time"];
+
+	QVERIFY(!state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+
+	// resume player and check it's actually playing
+	player->resume();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	// this resume() restarts MPlayer, and is consistently slower than other tests
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT * 2));
+	info = player->getTrackInfo();
+
+	QVERIFY(compareInfo(info, a4_info));
+	last_time = info["current_time"];
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+	QVERIFY(last_time != info["current_time"]);
+}
+
+void TestMultiMediaPlayer::testSetEmptySource()
+{
+	player->setCurrentSource("files/audio/d3.mp3");
+	player->play();
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT)); // track info cleared
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	// set empty source: stops player
+	player->setCurrentSource("");
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Stopped);
+
+	// restart playback
+	player->setCurrentSource("files/audio/d3.mp3");
+
+	player->play();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	player->pause();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // AboutToPause
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+
+	player->setCurrentSource("");
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Stopped);
+}
+
+void TestMultiMediaPlayer::testSeek()
+{
+	QVariantMap info;
+	QVariant last_time;
+	int delta;
+
+	player->setCurrentSource("files/audio/d3.mp3");
+	player->play();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // Playing
+
+	player->pause();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // AboutToPause
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+	last_time = info["current_time"];
+
+	// seek and check time delta
+	player->seek(2);
+
+	QVERIFY(track_info_changed->waitForSignal(TIMEOUT));
+	info = player->getTrackInfo();
+
+	// since this is an MP3 with constant bit rate, the seek should be more-or-less correct,
+	// tolerate at most 1 second error
+	delta = info["current_time"].toTime().second() - last_time.toTime().second();
+	QVERIFY(delta >= 1 && delta <= 3);
+	last_time = info["current_time"];
+
+	// multiple seeks
+	player->seek(3);
+	player->seek(2);
+	player->seek(1);
+
+	// wait until we receive all updates
+	while(track_info_changed->waitForSignal(TIMEOUT)) /* do nothing */;
+	info = player->getTrackInfo();
+
+	delta = info["current_time"].toTime().second() - last_time.toTime().second();
+	QVERIFY(delta >= 5 && delta <= 7);
+}
+
+void TestMultiMediaPlayer::testDone()
+{
+	player->setCurrentSource("files/audio/d3.mp3");
+	player->play();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // Playing
+
+	player->pause();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT)); // AboutToPause
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+
+	// seek past the end and resume
+	player->seek(30);
+	player->resume();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Stopped);
+
+	QVERIFY(!player->info_poll_timer->isActive());
+	QCOMPARE(player->getCurrentSource(), QString(""));
+	QCOMPARE(player->getTrackInfo(), QVariantMap());
 }

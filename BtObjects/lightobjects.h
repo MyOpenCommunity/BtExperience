@@ -323,12 +323,12 @@ public:
 
 public slots:
 	/*!
-		\brief Increase dimmer level by \a stepAmount at speed \a stepSpeed.
+		\brief Increase dimmer level by \ref stepAmount at speed \ref stepSpeed.
 	*/
 	void increaseLevel100();
 
 	/*!
-		\brief Decrease dimmer level by \a stepAmount at speed \a stepSpeed.
+		\brief Decrease dimmer level by \ref stepAmount at speed \ref stepSpeed.
 	*/
 	void decreaseLevel100();
 

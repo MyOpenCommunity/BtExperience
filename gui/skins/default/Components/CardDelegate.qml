@@ -7,13 +7,17 @@ import "../js/CardView.js" as CardViewScript
 Item {
     property alias source: imageDelegate.source
     property alias label: labelText.text
+    property int index: -1
+    property variant view
+    property alias moveAnimationRunning: defaultAnimation.running
 
     signal clicked
+    signal removeAnimationFinished()
 
     id: itemDelegate
     width: delegateBackground.width
     height: textDelegate.height + delegateBackground.height + delegateShadow.height + delegateShadow.anchors.topMargin
-    onHeightChanged: ListView.view.height = height
+    onHeightChanged: itemDelegate.view.height = height
 
     Rectangle {
         id: delegateBackground
@@ -71,15 +75,34 @@ Item {
         anchors.fill: parent
 
         onClicked: itemDelegate.clicked()
-        onPressed: itemDelegate.ListView.view.currentPressed = index
-        onReleased: itemDelegate.ListView.view.currentPressed = -1
+        onPressed: itemDelegate.view.currentPressed = index
+        onReleased: itemDelegate.view.currentPressed = -1
     }
 
-    states: State {
-        when: itemDelegate.ListView.view.currentPressed === index
-        PropertyChanges {
-            target: rectPressed
-            visible: true
+    states: [
+        State {
+            when: itemDelegate.view.currentPressed === index
+            PropertyChanges {
+                target: rectPressed
+                visible: true
+            }
+        },
+        State {
+            name: "remove"
         }
+    ]
+
+    transitions:
+        Transition {
+            from: "*"
+            to: "remove"
+            SequentialAnimation {
+                NumberAnimation { target: itemDelegate; property: "opacity"; to: 0; duration: 200; easing.type: Easing.InSine }
+                ScriptAction { script: itemDelegate.removeAnimationFinished() }
+            }
+        }
+
+    Behavior on x {
+        NumberAnimation { id: defaultAnimation; duration: 300; easing.type: Easing.InSine }
     }
 }

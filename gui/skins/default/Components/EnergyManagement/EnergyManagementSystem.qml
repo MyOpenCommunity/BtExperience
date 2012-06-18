@@ -13,9 +13,9 @@ MenuColumn {
     }
 
     Component.onCompleted: {
-        listModel.append({"name": qsTr("systems supervision"), "component": supervision})
-        listModel.append({"name": qsTr("consumption/production"), "component": supervision}) // treated differently
-        listModel.append({"name": qsTr("load management"), "component": loadManagement})
+        listModel.append({"name": qsTr("systems supervision"), "component": supervision, "page": ""})
+        listModel.append({"name": qsTr("consumption/production"), "component": undefined, "page": "EnergyDataOverview.qml"})
+        listModel.append({"name": qsTr("load management"), "component": loadManagement, "page": ""})
     }
 
     ListView {
@@ -27,10 +27,10 @@ MenuColumn {
             name: model.name
             hasChild: true
             onClicked: {
-                if (model.name === qsTr("consumption/production") ) {
+                if (model.component === undefined) {
                     listView.currentIndex = -1
                     element.closeChild()
-                    Stack.openPage("EnergyDataOverview.qml")
+                    Stack.openPage(model.page)
                 }
                 else
                     element.loadColumn(model.component, model.name)

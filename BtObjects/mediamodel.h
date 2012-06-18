@@ -13,7 +13,7 @@ class ItemInterface;
 	This model contains instances of various items read from configuration or
 	created dynamically from the UI.
 
-	It should only be used as the source model of a \a MediaModel.
+	It should only be used as the source model of a \ref MediaModel.
 */
 class MediaDataModel : public QAbstractListModel
 {
@@ -74,7 +74,7 @@ private:
 
 /*!
 	\ingroup Core
-	\brief Provides a view over a \a MediaDataModel.
+	\brief Provides a view over a \ref MediaDataModel.
 
 	This object can be used to filter the source model using
 	- a set of container ids
@@ -150,7 +150,7 @@ class MediaModel : public QSortFilterProxyModel
 	/*!
 		\brief The number of filtered rows without taking range into account
 
-		When a range is	not set, this number is equal to #rangeCount.
+		When a range is	not set, this number is equal to \ref rangeCount.
 	*/
 	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
@@ -158,7 +158,7 @@ class MediaModel : public QSortFilterProxyModel
 		\brief The number of filtered rows taking range into account
 
 		Only elements with indices from 0 to rangeCount can be accessed; when a range is
-		not set, this number is equal to #count.
+		not set, this number is equal to \ref count.
 	*/
 	Q_PROPERTY(int rangeCount READ getRangeCount NOTIFY countChanged)
 

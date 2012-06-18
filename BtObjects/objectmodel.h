@@ -71,8 +71,8 @@ class ObjectModel : public MediaModel
 		- objectId (ObjectInterface::ObjectId, required)
 		- objectKey (comma-separated string, optional)
 
-		The object is selected if its \a ObjectInterface::objectId matches and each susbstring in the
-		key is contained in the \a ObjectInterface::objectKey
+		The object is selected if its \ref ObjectInterface::objectId matches and each susbstring in the
+		key is contained in the \ref ObjectInterface::objectKey
 
 		An empty list matches all objects.
 	*/

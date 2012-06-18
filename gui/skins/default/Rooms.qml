@@ -37,6 +37,7 @@ BasePage {
             left: parent.left
             leftMargin: 30
             top: pageTitle.bottom
+            topMargin: 50
             bottom: floorView.top
         }
 
@@ -46,6 +47,7 @@ BasePage {
             containers: [floorUii]
         }
 
+
         model: roomsModel
         delegate: CardDelegate {
             source: users.selectRoomImage(itemObject.description)
@@ -54,6 +56,8 @@ BasePage {
 
             onClicked: Stack.openPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
         }
+        delegateSpacing: 20
+        visibleElements: 4
 
         function selectRoomImage(room) {
             if (room === "living room")

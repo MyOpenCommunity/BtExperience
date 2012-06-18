@@ -87,12 +87,12 @@ class ThermalControlUnit : public ObjectInterface
 	Q_PROPERTY(ObjectDataModel *modalities READ getModalities NOTIFY modalitiesChanged)
 
 	/*!
-		\brief The list of \a ThermalRegulationProgram configured for the control unit
+		\brief The list of \ref ThermalRegulationProgram configured for the control unit
 	*/
 	Q_PROPERTY(ObjectDataModel *programs READ getPrograms NOTIFY programsChanged)
 
 	/*!
-		\brief A \a ThermalControlUnitObject subclass representing the current modality
+		\brief A \ref ThermalControlUnitObject subclass representing the current modality
 
 		\see ThermalControlUnitObject
 		\see ThermalControlUnitProgram
@@ -220,7 +220,7 @@ private:
 	before applying the modality to the control unit).
 
 	The properties only alter the editing state of the object; the state is applied
-	to the device when calling \a apply().
+	to the device when calling \ref apply().
 
 	\see ThermalControlUnitProgram
 	\see ThermalControlUnitTimedProgram
@@ -284,7 +284,7 @@ class ThermalControlUnitProgram : public ThermalControlUnitObject
 	Q_PROPERTY(QString programDescription READ getProgramDescription NOTIFY programChanged)
 
 	/*!
-		\brief The list of \a ThermalRegulationProgram configured for the control unit
+		\brief The list of \ref ThermalRegulationProgram configured for the control unit
 	*/
 	Q_PROPERTY(ObjectDataModel *programs READ getPrograms CONSTANT)
 
@@ -521,7 +521,7 @@ class ThermalControlUnitScenario : public ThermalControlUnitObject
 	Q_PROPERTY(QString scenarioDescription READ getScenarioDescription NOTIFY scenarioChanged)
 
 	/*!
-		\brief The list of \a ThermalRegulationProgram configured for the control unit
+		\brief The list of \ref ThermalRegulationProgram configured for the control unit
 	*/
 	Q_PROPERTY(ObjectDataModel *scenarios READ getScenarios CONSTANT)
 

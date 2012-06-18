@@ -74,7 +74,7 @@ inline uint qHash(const CacheKey &key)
 	This object gives access to multiple scalar values (current consumption, averages, cumulative values)
 	and graphs (average and cumulative).
 
-	Each value is returned as either a \c EnergyItem or \c EnergyGraph.  The value is requested asynchronously,
+	Each value is returned as either a \ref EnergyItem or \ref EnergyGraph.  The value is requested asynchronously,
 	hence the returned value will typically be invalid and become valid only some time later.
 */
 class EnergyData : public ObjectInterface
@@ -165,7 +165,7 @@ public:
 		Data is requested asynchronously, hence the returned object might receive graph
 		data at some later time.
 
-		If this energy device does not have an associated tariff, passing \c Currency as measure
+		If this energy device does not have an associated tariff, passing \ref Currency as measure
 		returns NULL.
 	*/
 	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, MeasureType measure = Consumption);
@@ -176,7 +176,7 @@ public:
 		Data is requested asynchronously, hence the returned object might receive the value
 		at some later time.
 
-		If this energy device does not have an associated tariff, passing \c Currency as measure
+		If this energy device does not have an associated tariff, passing \ref Currency as measure
 		returns NULL.
 	*/
 	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, MeasureType measure = Consumption);
@@ -286,7 +286,7 @@ class EnergyItem : public QObject
 		\brief The value for the measure
 
 		Since the value is requested asynchronously, the value might be invalid when the
-		\c EnergyItem object is returned.  Once the value becomes valid, it stays valid.
+		\ref EnergyItem object is returned.  Once the value becomes valid, it stays valid.
 
 		\sa isValid
 	*/
@@ -301,7 +301,7 @@ class EnergyItem : public QObject
 	Q_PROPERTY(QDate date READ getDate CONSTANT)
 
 	/*!
-		\brief Whether the value returned by \c value is valid
+		\brief Whether the value returned by \ref value is valid
 
 		\sa value
 	*/
@@ -325,7 +325,7 @@ public slots:
 		\brief Can be used to force a value update for the device
 
 		It should never be needed (cache/request logic is handled transparently
-		by \c EnergyData).
+		by \ref EnergyData).
 	*/
 	void requestUpdate();
 
@@ -368,7 +368,7 @@ class EnergyGraphBar : public QObject
 		\brief The value for the bar
 
 		Since the value is requested asynchronously, the value might be invalid when the
-		\c EnergyItem object is returned.  Once the value becomes valid, it stays valid.
+		\ref EnergyItem object is returned.  Once the value becomes valid, it stays valid.
 
 		\sa EnergyGraph::isValid
 	*/
@@ -409,7 +409,7 @@ class EnergyGraph : public QObject
 		\brief List of bars composing the graph
 
 		Since the value is requested asynchronously, the value might be invalid when the
-		\c EnergyItem object is returned.  Once the value becomes valid, it stays valid.
+		\ref EnergyItem object is returned.  Once the value becomes valid, it stays valid.
 
 		\sa isValid
 	*/
@@ -424,7 +424,7 @@ class EnergyGraph : public QObject
 	Q_PROPERTY(QDate date READ getDate CONSTANT)
 
 	/*!
-		\brief Whether the bars returned by \c graph contain valid values
+		\brief Whether the bars returned by \ref graph contain valid values
 
 		\sa graph
 	*/
@@ -448,7 +448,7 @@ public slots:
 		\brief Can be used to force a graph update for the device
 
 		It should never be needed (cache/request logic is handled transparently
-		by \c EnergyData).
+		by \ref EnergyData).
 	*/
 	void requestUpdate();
 

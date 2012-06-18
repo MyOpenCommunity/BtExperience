@@ -11,16 +11,16 @@
 	by a central unit that disable the load according to total energy consumption and
 	priority, or they can provide cumulative consumption measures over a period.
 
-	Use #EnergyLoadManagement to access electricity consumption (either current or cumulative)
-	and #EnergyLoadManagementWithControlUnit to enable/disable individual loads controlled by
+	Use \ref EnergyLoadManagement to access electricity consumption (either current or cumulative)
+	and \ref EnergyLoadManagementWithControlUnit to enable/disable individual loads controlled by
 	the central control unit.
 
 	\defgroup LoadDiagnostic Load diagnostic
 
 	Load diagnostic (part of the supervision subsystem) allows accessing electricity
 	consumption status of each device (normal consumption, higher than normal, critial level).
-	This information can be accessed using #EnergyLoadManagement::loadStatus; status
-	updates are requested by calling the #EnergyLoadManagement::requestLoadStatus() slot.
+	This information can be accessed using \ref EnergyLoadManagement::loadStatus; status
+	updates are requested by calling the \ref EnergyLoadManagement::requestLoadStatus() slot.
 */
 
 #include "objectinterface.h"
@@ -93,14 +93,14 @@ class EnergyLoadManagement : public ObjectInterface
 	/*!
 		\brief The ok/warning/critical status of the device
 
-		Call \a requestLoadStatus() to request a status update.
+		Call \ref requestLoadStatus() to request a status update.
 	*/
 	Q_PROPERTY(LoadStatus loadStatus READ getLoadStatus NOTIFY loadStatusChanged)
 \
 	/*!
 		\brief Electricity consumption, in Watts.
 
-		Call \a requestConsumptionUpdateStart() and \a requestConsumptionUpdateStop()
+		Call \ref requestConsumptionUpdateStart() and \ref requestConsumptionUpdateStop()
 		to start/stop automatic consumption updates.
 
 		\sa hasConsumptionMeters
@@ -110,8 +110,8 @@ class EnergyLoadManagement : public ObjectInterface
 	/*!
 		\brief Information about period totals and reset time.
 
-		Returns a 2-element array where each element is a \a EnergyLoadTotal instance,
-		call #requestTotals() to request a status update.
+		Returns a 2-element array where each element is a \ref EnergyLoadTotal instance,
+		call \ref requestTotals() to request a status update.
 
 		\sa hasConsumptionMeters
 	*/
@@ -130,7 +130,7 @@ class EnergyLoadManagement : public ObjectInterface
 	/*!
 		\brief Whether this actuator has consumption meters
 
-		If this property is \c false, \a consumption and \a periodTotals are
+		If this property is \c false, \ref consumption and \ref periodTotals are
 		always zero.
 	*/
 	Q_PROPERTY(bool hasConsumptionMeters READ getHasConsumptionMeters CONSTANT)
@@ -220,15 +220,15 @@ private:
 	of excessive load and force-enabled by the user.
 
 	The typical use is:
-	- #loadEnabled = \c true, #loadForced = \c false
-	  load is working and controlled by the control unit; calling #forceOn(int)
+	- \ref loadEnabled = \c true, \ref loadForced = \c false
+	  load is working and controlled by the control unit; calling \ref forceOn(int)
 	  will stop the control unit from managing the load
-	- #loadEnabled = \c true, #loadForced = \c true
+	- \ref loadEnabled = \c true, \ref loadForced = \c true
 	  load is working but not controlled by the control unit; after a maximum of 4
 	  hours, the load is put again under control unit control
-	- #loadEnabled = \c false (#loadForced not relevant, will always be \c false)
+	- \ref loadEnabled = \c false (\ref loadForced not relevant, will always be \c false)
 	  load has been disabled by the control unit, can be re-enabled for 4 hours by
-	  calling #forceOn()
+	  calling \ref forceOn()
 */
 class EnergyLoadManagementWithControlUnit : public EnergyLoadManagement
 {
@@ -240,14 +240,14 @@ class EnergyLoadManagementWithControlUnit : public EnergyLoadManagement
 		\brief Whether the load is active or not
 
 		If the load has been disabled (for excessive load) by the control unit, it can
-		be enabled by calling \a forceOn()
+		be enabled by calling \ref forceOn()
 	*/
 	Q_PROPERTY(bool loadEnabled READ getLoadEnabled NOTIFY loadEnabledChanged)
 
 	/*!
-		\brief Whether the load has been forced by calling \a forceOn()
+		\brief Whether the load has been forced by calling \ref forceOn()
 
-		Call \a stopForcing() to stop forcing the load to on.
+		Call \ref stopForcing() to stop forcing the load to on.
 	*/
 	Q_PROPERTY(bool loadForced READ getLoadForced NOTIFY loadForcedChanged)
 
@@ -265,7 +265,7 @@ public slots:
 	/*!
 		\brief Enable the energy load for 4 hours, outside central unit control
 
-		If called when \a loadEnabled is \c false, will re-enable the load, otherwise will
+		If called when \ref loadEnabled is \c false, will re-enable the load, otherwise will
 		just disable central unit control.
 	*/
 	void forceOn();
@@ -273,7 +273,7 @@ public slots:
 	/*!
 		\brief Enable the energy load for the specified time, outside central unit control
 
-		If called when \a loadEnabled is \c false, will re-enable the load, otherwise will
+		If called when \ref loadEnabled is \c false, will re-enable the load, otherwise will
 		just disable central unit control.
 	*/
 	void forceOn(int minutes);
@@ -281,7 +281,7 @@ public slots:
 	/*!
 		\brief Put the energy load under central control unit control
 
-		Can be called when \a loadForced is \c true.
+		Can be called when \ref loadForced is \c true.
 	*/
 	void stopForcing();
 

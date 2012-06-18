@@ -15,14 +15,14 @@
 
 	Every change to system status is protected by a password.
 
-	The #AntintrusionSystem class is the single entry point for the whole system.
+	The \ref AntintrusionSystem class is the single entry point for the whole system.
 
-	After changing partialization state, either using AntintrusionZone::partialization or
-	AntintrusionScenario::apply(), call AntintrusionSystem::requestPartialization() or
-	AntintrusionSystem::toggleActivation() to apply the new state.
+	After changing partialization state, either using \ref AntintrusionZone::partialization or
+	\ref AntintrusionScenario::apply(), call \ref AntintrusionSystem::requestPartialization() or
+	\ref AntintrusionSystem::toggleActivation() to apply the new state.
 
-	Notification of new alarms goes through AntintrusionSystem::newAlarm() and the list of currently-active
-	alarms can be retrieved using AntintrusionSystem::alarms.
+	Notification of new alarms goes through \ref AntintrusionSystem::newAlarm() and the list of currently-active
+	alarms can be retrieved using \ref AntintrusionSystem::alarms.
 */
 
 #include "objectinterface.h"
@@ -52,7 +52,7 @@ AntintrusionSystem *createAntintrusionSystem(QList<AntintrusionZone *> zones, QL
 	\ingroup Antintrusion
 	\brief The source for an alarm (either a zone or an aux input)
 
-	The \c name property holds the zone/aux description (if any)
+	The \ref name property holds the zone/aux description (if any)
 */
 class AntintrusionAlarmSource : public ObjectInterface
 {
@@ -95,7 +95,7 @@ class AntintrusionZone : public AntintrusionAlarmSource
 		\brief When a zone is partialized the system does not report alarms for this zone
 
 		After setting desired zone status on all antintrusion zones, call
-		#AntintrusionSystem::requestPartialization() or #AntintrusionSystem::toggleActivation()
+		\ref AntintrusionSystem::requestPartialization() or \ref AntintrusionSystem::toggleActivation()
 		to transmit the setting to the control unit.
 	*/
 	Q_PROPERTY(bool selected READ getSelected WRITE setSelected NOTIFY selectedChanged)
@@ -148,8 +148,8 @@ class AntintrusionScenario : public ObjectInterface
 		(not partialized).
 
 		%Note that this reflects the zone status in the program, and is not synchronized
-		with the control unit unless #AntintrusionSystem::requestPartialization() or
-		#AntintrusionSystem::toggleActivation() is called.
+		with the control unit unless \ref AntintrusionSystem::requestPartialization() or
+		\ref AntintrusionSystem::toggleActivation() is called.
 	*/
 	Q_PROPERTY(bool selected READ isSelected NOTIFY selectionChanged)
 
@@ -165,8 +165,8 @@ public:
 	/*!
 		\brief Applies the scenario
 
-		After applying the scenario, call #AntintrusionSystem::requestPartialization() or
-		#AntintrusionSystem::toggleActivation() to transmit the setting to the control unit.
+		After applying the scenario, call \ref AntintrusionSystem::requestPartialization() or
+		\ref AntintrusionSystem::toggleActivation() to transmit the setting to the control unit.
 	*/
 	Q_INVOKABLE void apply();
 
@@ -190,7 +190,7 @@ private:
 	\ingroup Antintrusion
 	\brief A single antintrusion alarm
 
-	Provides access to the alarm #type, the zone #number the alarm has been reported in
+	Provides access to the alarm \ref type, the zone \ref number the alarm has been reported in
 	and a description of the zone, if available.
 */
 class AntintrusionAlarm : public ObjectInterface
@@ -207,23 +207,23 @@ class AntintrusionAlarm : public ObjectInterface
 	/*!
 		\brief Alarm source id
 
-		For alarms coming from a normal antintrusion zone (#Intrusion, some #Tamper alarms)
-		this is the antintrusion zone number (1-8) and \c name is set to the zone name.
+		For alarms coming from a normal antintrusion zone (\ref Intrusion, some \ref Tamper alarms)
+		this is the antintrusion zone number (1-8) and \ref name is set to the zone name.
 
-		For alarms coming from an auxiliary input (#Technical) this is the input id (1-16)
-		and \c name is set to the description of the input.
+		For alarms coming from an auxiliary input (\ref Technical) this is the input id (1-16)
+		and \ref name is set to the description of the input.
 
-		For alarms coming from a special zone (#Tamper) this is the special zone number
-		(9-16) and \c name is empty.
+		For alarms coming from a special zone (\ref Tamper) this is the special zone number
+		(9-16) and \ref name is empty.
 
-		For #Antipanic alarms, this is the fixed value 9 and \c name is empty.
+		For \ref Antipanic alarms, this is the fixed value 9 and \ref name is empty.
 	*/
 	Q_PROPERTY(int number READ getNumber CONSTANT)
 
 	/*!
 		\brief The source of the alarm
 
-		Only set for #Technical, #Intrusion and #Tamper alarms coming from a normal
+		Only set for \ref Technical, \ref Intrusion and \ref Tamper alarms coming from a normal
 		antintrusion zone (1-8).
 	*/
 	Q_PROPERTY(ObjectInterface *source READ getSource CONSTANT)
@@ -280,16 +280,16 @@ friend class TestAntintrusionSystem;
 
 	Q_OBJECT
 
-	/// List of configured zones (contains \c AntintrusionZone objects)
+	/// List of configured zones (contains \ref AntintrusionZone objects)
 	Q_PROPERTY(ObjectDataModel *zones READ getZones CONSTANT)
 
 	/// Returns \c true when a partialization request can be sent
 	Q_PROPERTY(bool canPartialize READ canPartialize NOTIFY canPartializeChanged)
 
-	/// List of configured scenarios (contains \c AntintrusionScenario objects)
+	/// List of configured scenarios (contains \ref AntintrusionScenario objects)
 	Q_PROPERTY(ObjectDataModel *scenarios READ getScenarios CONSTANT)
 
-	/// List of active alarms (contains \c AntintrusionAlarm objects)
+	/// List of active alarms (contains \ref AntintrusionAlarm objects)
 	Q_PROPERTY(ObjectDataModel *alarms READ getAlarms NOTIFY alarmsChanged)
 
 	/// Returns \c true when the antintrusion system is active
@@ -314,7 +314,7 @@ public:
 		\brief Apply the current partialization state to the control unit
 
 		Only call it when the antintrusion system is active, otherwise call
-		\a toggleActivation() that activates the system and sets the partialization.
+		\ref toggleActivation() that activates the system and sets the partialization.
 	*/
 	Q_INVOKABLE void requestPartialization(const QString &password);
 
