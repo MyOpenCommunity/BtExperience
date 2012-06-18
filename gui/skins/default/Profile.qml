@@ -31,23 +31,26 @@ Page {
     QtObject {
         id: privateProps
 
+        property variant actualFavorite: undefined
+
         function selectObj(object) {
             unselectObj()
             object.z = bgPannable.z + 1
             bgPannable.visible = true
-            bgPannable.actualFavorite = object
+            privateProps.actualFavorite = object
         }
 
         function unselectObj() {
             if (profilePage.state !== "")
                 profilePage.state = ""
-            if (bgPannable.actualFavorite === undefined)
+            if (privateProps.actualFavorite === undefined)
                 return
+            privateProps.actualFavorite.editDone()
             bgPannable.visible = false
-            bgPannable.actualFavorite.z = 0
-            bgPannable.actualFavorite.state = ""
+            privateProps.actualFavorite.z = 0
+            privateProps.actualFavorite.state = ""
             // TODO gestire il focus?
-            bgPannable.actualFavorite = undefined
+            privateProps.actualFavorite = undefined
         }
 
         function updateProfileView() {
@@ -229,8 +232,6 @@ Page {
 
             Rectangle {
                 id: bgPannable
-
-                property variant actualFavorite: undefined
 
                 visible: false
                 color: "black"
