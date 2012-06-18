@@ -5,6 +5,7 @@ ConsumptionBox 1.0 ConsumptionBox.qml
 ControlBar 1.0 ControlBar.qml
 ControlUpDownReset 1.0 ControlUpDownReset.qml
 DisableLoadPopup 1.0 DisableLoadPopup.qml
+EnergyDataDelegate 1.0 EnergyDataDelegate.qml
 EnergyDataDetailColumn 1.0 EnergyDataDetailColumn.qml
 EnergyDataOverviewColumn 1.0 EnergyDataOverviewColumn.qml
 EnergyDataTitle 1.0 EnergyDataTitle.qml

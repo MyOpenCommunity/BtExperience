@@ -14,7 +14,7 @@ MenuColumn {
 
     Component.onCompleted: {
         listModel.append({"name": qsTr("systems supervision"), "component": supervision, "page": ""})
-        listModel.append({"name": qsTr("consumption/production"), "component": undefined, "page": "EnergyDataOverview.qml"})
+        listModel.append({"name": qsTr("consumption/production"), "component": undefined, "page": "EnergyDataOverview2.qml"})
         listModel.append({"name": qsTr("load management"), "component": loadManagement, "page": ""})
     }
 
