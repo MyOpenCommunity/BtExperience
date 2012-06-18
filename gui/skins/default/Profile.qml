@@ -3,12 +3,15 @@ import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 import "js/Stack.js" as Stack
+import "js/array.js" as Script
 
 
 Page {
     id: profilePage
-    source: 'images/profiles.jpg'
+
     property variant profile
+
+    source: 'images/profiles.jpg'
     text: profile.description
     showSystemsButton: false
 
@@ -22,6 +25,25 @@ Page {
         anchors.right: parent.right
         anchors.rightMargin: parent.width / 100 * 3
 
+        function selectObj(object) {
+            unselectObj()
+            object.z = bgPannable.z + 1
+            bgPannable.visible = true
+            bgPannable.actualFavorite = object
+        }
+
+        function unselectObj() {
+            if (paginator.state !== "")
+                paginator.state = ""
+            if (bgPannable.actualFavorite === undefined)
+                return
+            bgPannable.visible = false
+            bgPannable.actualFavorite.z = 0
+            bgPannable.actualFavorite.state = ""
+            // TODO gestire il focus?
+            bgPannable.actualFavorite = undefined
+        }
+
         Item {
             id: pannableChild
             x: 0
@@ -29,10 +51,103 @@ Page {
             width: parent.width
             height: parent.height
 
-            ProfileView {
-                model: mediaLinks
-                container: pannableChild
+            Rectangle {
+                id: bgPannable
+
+                property variant actualFavorite: undefined
+
+                visible: false
+                color: "black"
+                opacity: 0.5
+                radius: 20
                 anchors.fill: parent
+                z: 1
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: pannable.unselectObj()
+                }
+            }
+
+            Item {
+                id: profileView
+                property variant model: mediaLinks
+
+                anchors.fill: parent
+
+                Component.onCompleted: {
+                    createProfileObjects()
+                }
+
+                Component {
+                    id: favouriteItemComponent
+                    FavoriteItem { }
+                }
+
+                Component {
+                    id: cameraItemComponent
+                    RssItem { }
+                }
+
+                Component {
+                    id: rssItemComponent
+                    CameraLink { }
+                }
+
+                Connections {
+                    target: profileView.model
+                    onModelReset: {
+                        // TODO: maybe we can optimize performance by setting opacity to 0
+                        // for items that we don't want to show, thus avoiding a whole
+                        // createObject()/destroy() cycle each time
+                        // Anyway, this needs a more complex management and performance gains
+                        // must be measurable.
+                        updateProfileView()
+                    }
+                }
+
+                function updateProfileView() {
+                    clearProfileObjects()
+                    createProfileObjects()
+                }
+
+                function clearProfileObjects() {
+                    var len = Script.container.length
+                    for (var i = 0; i < len; ++i)
+                        Script.container.pop().destroy()
+                }
+
+                function createProfileObjects() {
+                    for (var i = 0; i < model.count; ++i) {
+                        var obj = model.getObject(i);
+                        var y = obj.position.y
+                        var x = obj.position.x
+                        var text = obj.name
+                        var address = obj.address
+
+                        var component;
+                        switch (obj.type) {
+                        case MediaLink.Web:
+                            component = favouriteItemComponent
+                            break
+                        case MediaLink.Rss:
+                            component = rssItemComponent
+                            break
+                        case MediaLink.Camera:
+                            component = cameraItemComponent
+                            break
+                        }
+
+                        var instance = component.createObject(pannableChild, {'x': x, 'y': y, 'text': text, 'address': address})
+
+                        instance.requestEdit.connect(function (instance) {
+                                                         pannableChild.showEditBox(instance)
+                                                     })
+                        instance.selected.connect(function (instance) {
+                                                      pannable.selectObj(instance)
+                                                  })
+                        Script.container.push(instance)
+                    }
+                }
             }
 
             Column {
@@ -112,71 +227,88 @@ Page {
                         onClicked: pannableChild.addNote()
                     }
                 }
+            }
 
-                Item {
-                    height: 10
-                    width: parent.width
-                }
+            PaginatorList {
+                id: paginator
 
-                PaginatorList {
+                anchors.top: rightArea.bottom
+                anchors.topMargin: 10
+                anchors.right: rightArea.right
 
-                    id: paginator
-                    width: addNote.width
-                    elementsOnPage: 3
+                width: addNote.width
+                elementsOnPage: 3
 
-                    delegate: Rectangle {
-                        id: delegate
-                        color: index % 2 !== 0 ? "light gray" : "gray"
-                        // TODO: this should probably be a background image.
-                        // It's a bad idea to have delegates of different sizes
-                        // (think empty space at bottom, think moving paginator
-                        // at bottom and so on)
-                        // Leave size hardcoded for now.
-                        width: 212
-                        height: 60
-                        property variant obj: userNotes.getObject(index)
+                delegate: Rectangle {
+                    id: delegate
+                    color: index % 2 !== 0 ? "light gray" : "gray"
+                    // TODO: this should probably be a background image.
+                    // It's a bad idea to have delegates of different sizes
+                    // (think empty space at bottom, think moving paginator
+                    // at bottom and so on)
+                    // Leave size hardcoded for now.
+                    width: 212
+                    height: 60
+                    property variant obj: userNotes.getObject(index)
 
-                        UbuntuLightText {
-                            anchors {
-                                left: parent.left
-                                leftMargin: delegate.width / 100 * 2
-                                right: parent.right
-                                rightMargin: delegate.width / 100 * 2
-                                top: parent.top
-                                topMargin: delegate.height / 100 * 9
-                            }
-                            font.pixelSize: 13
-                            wrapMode: Text.Wrap
-                            text: delegate.obj.text
-                            elide: Text.ElideRight
-                            maximumLineCount: 3
+                    UbuntuLightText {
+                        anchors {
+                            left: parent.left
+                            leftMargin: delegate.width / 100 * 2
+                            right: parent.right
+                            rightMargin: delegate.width / 100 * 2
+                            top: parent.top
+                            topMargin: delegate.height / 100 * 9
                         }
+                        font.pixelSize: 13
+                        wrapMode: Text.Wrap
+                        text: delegate.obj === undefined ? "" : delegate.obj.text
+                        elide: Text.ElideRight
+                        maximumLineCount: 3
+                    }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onPressAndHold: menu.state = "selected"
-                        }
-
-                        NoteActions {
-                            id: menu
-                            onEditClicked: console.log("edit note")
-                            onDeleteClicked: userNotes.remove(index)
-                            anchors {
-                                bottom: parent.bottom
-                                right: parent.left
-                            }
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressAndHold: {
+                            pannable.selectObj(menu)
+                            menu.state = "selected"
+                            pannableChild.state = "selected"
                         }
                     }
-                    model: userNotes
-                }
 
-                MediaModel {
-                    id: userNotes
-                    source: myHomeModels.notes
-                    containers: [profile.uii]
-                    range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+                    NoteActions {
+                        id: menu
+                        onEditClicked: console.log("edit note")
+                        onDeleteClicked: {
+                            pannable.unselectObj()
+                            userNotes.remove(index)
+                        }
+                        anchors {
+                            bottom: parent.bottom
+                            right: parent.left
+                        }
+                    }
                 }
+                model: userNotes
+            }
 
+            // the states definition is here because inside the PaginatorList
+            // it doesn't work (the state assignment is not executed)
+            states: [
+                State {
+                    name: "selected"
+                    PropertyChanges {
+                        target: paginator
+                        z: bgPannable.z + 1
+                    }
+                }
+            ]
+
+            MediaModel {
+                id: userNotes
+                source: myHomeModels.notes
+                containers: [profile.uii]
+                range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
             }
 
             MediaModel {
