@@ -13,6 +13,11 @@ Page {
     text: qsTr("energy management")
     source: "images/bg2.jpg"
 
+    QtObject {
+        id: privateProps
+        property bool showCurrency: false
+    }
+
     SvgImage {
         id: header
         source: "images/energy/bg_titolo.svg"
@@ -59,6 +64,8 @@ Page {
                 selectedImage: "../images/energy/btn_value_S.svg"
                 shadowImage: "../images/energy/ombra_btn_value.svg"
                 text: qsTr("€")
+                status: privateProps.showCurrency === true ? 1 : 0
+                onClicked: privateProps.showCurrency = true
             }
             ButtonThreeStates {
                 id: consumptionButton
@@ -67,6 +74,8 @@ Page {
                 selectedImage: "../images/energy/btn_value_S.svg"
                 shadowImage: "../images/energy/ombra_btn_value.svg"
                 text: qsTr("units")
+                status: privateProps.showCurrency === false ? 1 : 0
+                onClicked: privateProps.showCurrency = false
             }
         }
 
@@ -82,6 +91,7 @@ Page {
 
         ListView {
             id: columnView
+            interactive: false
             anchors {
                 bottom: parent.bottom
                 bottomMargin: 20
@@ -91,10 +101,19 @@ Page {
             orientation: ListView.Horizontal
             height: 315
             width: 700
-            delegate: EnergyDataDelegate {}
+            delegate: EnergyDataDelegate {
+                id: delegate
+                itemObject: energiesCounters.getObject(index)
+                description: translations.get("ENERGY_TYPE", delegate.itemObject.energyType)
+                measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
+            }
             spacing: 106
             model: energiesCounters
         }
+    }
+
+    Names {
+        id: translations
     }
 
     ObjectModel {
