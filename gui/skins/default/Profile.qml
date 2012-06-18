@@ -15,15 +15,21 @@ Page {
     text: profile.description
     showSystemsButton: false
 
-    Pannable {
-        id: pannable
-        anchors.left: navigationBar.right
-        anchors.leftMargin: parent.width / 100 * 1
-        anchors.top: navigationBar.top
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height / 100 * 5
-        anchors.right: parent.right
-        anchors.rightMargin: parent.width / 100 * 3
+    MediaModel {
+        id: userNotes
+        source: myHomeModels.notes
+        containers: [profile.uii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    MediaModel {
+        id: mediaLinks
+        source: myHomeModels.mediaLinks
+        containers: [profile.uii]
+    }
+
+    QtObject {
+        id: privateProps
 
         function selectObj(object) {
             unselectObj()
@@ -44,8 +50,178 @@ Page {
             bgPannable.actualFavorite = undefined
         }
 
+        function updateProfileView() {
+            clearProfileObjects()
+            createProfileObjects()
+        }
+
+        function clearProfileObjects() {
+            var len = Script.container.length
+            for (var i = 0; i < len; ++i)
+                Script.container.pop().destroy()
+        }
+
+        function createProfileObjects() {
+            for (var i = 0; i < mediaLinks.count; ++i) {
+                var obj = mediaLinks.getObject(i);
+                var y = obj.position.y
+                var x = obj.position.x
+                var text = obj.name
+                var address = obj.address
+
+                var component;
+                switch (obj.type) {
+                case MediaLink.Web:
+                    component = favouriteItemComponent
+                    break
+                case MediaLink.Rss:
+                    component = rssItemComponent
+                    break
+                case MediaLink.Camera:
+                    component = cameraItemComponent
+                    break
+                }
+
+                var instance = component.createObject(pannableChild, {'x': x, 'y': y, 'text': text, 'address': address})
+
+                instance.requestEdit.connect(function (instance) {
+                                                 showEditBox(instance)
+                                             })
+                instance.selected.connect(function (instance) {
+                                              selectObj(instance)
+                                          })
+                Script.container.push(instance)
+            }
+        }
+
+        function showEditBox(favorite) {
+            installPopup(popup)
+            popupLoader.item.favoriteItem = favorite
+        }
+
+        function addNote() {
+            installPopup(popupAddNote)
+        }
+    }
+
+    Component {
+        id: favouriteItemComponent
+        FavoriteItem { }
+    }
+
+    Component {
+        id: cameraItemComponent
+        RssItem { }
+    }
+
+    Component {
+        id: rssItemComponent
+        CameraLink { }
+    }
+
+    Component {
+        id: popup
+        FavoriteEditPopup { }
+    }
+
+    Component {
+        id: popupAddNote
+
+        Rectangle {
+            signal closePopup
+
+            width: 300
+            height: 200
+            color: "light gray"
+
+            UbuntuLightText {
+                text: qsTr("Note")
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.top: parent.top
+            }
+
+            Rectangle {
+                color: "white"
+                anchors {
+                    top: parent.top
+                    topMargin: 20
+                    bottom: buttonsRow.top
+                    bottomMargin: 10
+                    left: parent.left
+                    leftMargin: 10
+                    right: parent.right
+                    rightMargin: 10
+                }
+                TextEdit {
+                    id: textEdit
+                    anchors.fill: parent
+                    text: ""
+                }
+            }
+
+            Row {
+                id: buttonsRow
+
+                spacing: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 10
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+
+                Image {
+                    id: buttonOk
+                    source: "images/common/btn_OKAnnulla.png"
+
+                    UbuntuLightText {
+                        anchors.centerIn: parent
+                        text: qsTr("ok")
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            userNotes.append(myHomeModels.createNote(profile.uii, textEdit.text))
+                            closePopup()
+                        }
+                    }
+                }
+
+                Image {
+                    id: buttonCancel
+                    source: "images/common/btn_OKAnnulla.png"
+
+                    UbuntuLightText {
+                        anchors.centerIn: parent
+                        text: qsTr("cancel")
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: closePopup()
+                    }
+                }
+            }
+            Component.onCompleted: textEdit.forceActiveFocus()
+        }
+    }
+
+    Pannable {
+        id: pannable
+
+        anchors {
+            left: navigationBar.right
+            leftMargin: parent.width / 100 * 1
+            top: navigationBar.top
+            bottom: parent.bottom
+            bottomMargin: parent.height / 100 * 5
+            right: parent.right
+            rightMargin: parent.width / 100 * 3
+        }
+
         Item {
             id: pannableChild
+
             x: 0
             y: parent.childOffset
             width: parent.width
@@ -62,36 +238,21 @@ Page {
                 radius: 20
                 anchors.fill: parent
                 z: 1
+
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: pannable.unselectObj()
+                    onClicked: privateProps.unselectObj()
                 }
             }
 
             Item {
                 id: profileView
+
                 property variant model: mediaLinks
 
                 anchors.fill: parent
 
-                Component.onCompleted: {
-                    createProfileObjects()
-                }
-
-                Component {
-                    id: favouriteItemComponent
-                    FavoriteItem { }
-                }
-
-                Component {
-                    id: cameraItemComponent
-                    RssItem { }
-                }
-
-                Component {
-                    id: rssItemComponent
-                    CameraLink { }
-                }
+                Component.onCompleted:privateProps.createProfileObjects()
 
                 Connections {
                     target: profileView.model
@@ -101,57 +262,14 @@ Page {
                         // createObject()/destroy() cycle each time
                         // Anyway, this needs a more complex management and performance gains
                         // must be measurable.
-                        updateProfileView()
-                    }
-                }
-
-                function updateProfileView() {
-                    clearProfileObjects()
-                    createProfileObjects()
-                }
-
-                function clearProfileObjects() {
-                    var len = Script.container.length
-                    for (var i = 0; i < len; ++i)
-                        Script.container.pop().destroy()
-                }
-
-                function createProfileObjects() {
-                    for (var i = 0; i < model.count; ++i) {
-                        var obj = model.getObject(i);
-                        var y = obj.position.y
-                        var x = obj.position.x
-                        var text = obj.name
-                        var address = obj.address
-
-                        var component;
-                        switch (obj.type) {
-                        case MediaLink.Web:
-                            component = favouriteItemComponent
-                            break
-                        case MediaLink.Rss:
-                            component = rssItemComponent
-                            break
-                        case MediaLink.Camera:
-                            component = cameraItemComponent
-                            break
-                        }
-
-                        var instance = component.createObject(pannableChild, {'x': x, 'y': y, 'text': text, 'address': address})
-
-                        instance.requestEdit.connect(function (instance) {
-                                                         pannableChild.showEditBox(instance)
-                                                     })
-                        instance.selected.connect(function (instance) {
-                                                      pannable.selectObj(instance)
-                                                  })
-                        Script.container.push(instance)
+                        privateProps.updateProfileView()
                     }
                 }
             }
 
             Column {
                 id: rightArea
+
                 anchors.top: parent.top
                 anchors.right: parent.right
 
@@ -177,11 +295,13 @@ Page {
                     }
 
                     UbuntuLightText {
-                        anchors.left: imageProfile.right
-                        anchors.right: parent.right
+                        anchors {
+                            left: imageProfile.right
+                            right: parent.right
+                            top: parent.top
+                            topMargin: 10
+                        }
                         horizontalAlignment: Text.AlignHCenter
-                        anchors.top: parent.top
-                        anchors.topMargin: 10
                         font.pixelSize: 16
                         text: profilePage.profile.description
                     }
@@ -205,10 +325,12 @@ Page {
                     anchors.right: parent.right
 
                     UbuntuLightText {
-                        anchors.left: parent.left
-                        anchors.leftMargin: 5
-                        anchors.top: parent.top
-                        anchors.topMargin: 5
+                        anchors {
+                            left: parent.left
+                            leftMargin: 5
+                            top: parent.top
+                            topMargin: 5
+                        }
                         font.pixelSize: 14
                         text: qsTr("Add note")
                     }
@@ -224,7 +346,7 @@ Page {
                     }
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: pannableChild.addNote()
+                        onClicked: privateProps.addNote()
                     }
                 }
             }
@@ -232,15 +354,20 @@ Page {
             PaginatorList {
                 id: paginator
 
-                anchors.top: rightArea.bottom
-                anchors.topMargin: 10
-                anchors.right: rightArea.right
+                anchors {
+                    top: rightArea.bottom
+                    topMargin: 10
+                    right: rightArea.right
+                }
 
                 width: addNote.width
                 elementsOnPage: 3
 
                 delegate: Rectangle {
                     id: delegate
+
+                    property variant obj: userNotes.getObject(index)
+
                     color: index % 2 !== 0 ? "light gray" : "gray"
                     // TODO: this should probably be a background image.
                     // It's a bad idea to have delegates of different sizes
@@ -249,7 +376,6 @@ Page {
                     // Leave size hardcoded for now.
                     width: 212
                     height: 60
-                    property variant obj: userNotes.getObject(index)
 
                     UbuntuLightText {
                         anchors {
@@ -270,9 +396,9 @@ Page {
                     MouseArea {
                         anchors.fill: parent
                         onPressAndHold: {
-                            pannable.selectObj(menu)
+                            privateProps.selectObj(menu)
                             menu.state = "selected"
-                            pannableChild.state = "selected"
+                            profilePage.state = "selected"
                         }
                     }
 
@@ -280,7 +406,7 @@ Page {
                         id: menu
                         onEditClicked: console.log("edit note")
                         onDeleteClicked: {
-                            pannable.unselectObj()
+                            privateProps.unselectObj()
                             userNotes.remove(index)
                         }
                         anchors {
@@ -291,125 +417,16 @@ Page {
                 }
                 model: userNotes
             }
-
-            // the states definition is here because inside the PaginatorList
-            // it doesn't work (the state assignment is not executed)
-            states: [
-                State {
-                    name: "selected"
-                    PropertyChanges {
-                        target: paginator
-                        z: bgPannable.z + 1
-                    }
-                }
-            ]
-
-            MediaModel {
-                id: userNotes
-                source: myHomeModels.notes
-                containers: [profile.uii]
-                range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-            }
-
-            MediaModel {
-                id: mediaLinks
-                source: myHomeModels.mediaLinks
-                containers: [profile.uii]
-            }
-
-            function showEditBox(favorite) {
-                installPopup(popup)
-                popupLoader.item.favoriteItem = favorite
-            }
-
-            Component {
-                id: popup
-                FavoriteEditPopup { }
-            }
-
-            function addNote() {
-                installPopup(popupAddNote)
-            }
-
-            Component {
-                id: popupAddNote
-                Rectangle {
-
-                    signal closePopup
-                    width: 300
-                    height: 200
-                    color: "light gray"
-                    UbuntuLightText {
-                        text: qsTr("Note")
-                        anchors.left: parent.left
-                        anchors.leftMargin: 10
-                        anchors.top: parent.top
-                    }
-
-                    Rectangle {
-                        color: "white"
-                        anchors {
-                            top: parent.top
-                            topMargin: 20
-                            bottom: buttonsRow.top
-                            bottomMargin: 10
-                            left: parent.left
-                            leftMargin: 10
-                            right: parent.right
-                            rightMargin: 10
-                        }
-                        TextEdit {
-                            id: textEdit
-                            anchors.fill: parent
-                            text: ""
-                        }
-                    }
-                    Row {
-                        id: buttonsRow
-                        spacing: 0
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 10
-                        anchors.right: parent.right
-                        anchors.rightMargin: 10
-
-                        Image {
-                            id: buttonOk
-                            source: "images/common/btn_OKAnnulla.png"
-
-                            UbuntuLightText {
-                                anchors.centerIn: parent
-                                text: qsTr("ok")
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    userNotes.append(myHomeModels.createNote(profile.uii, textEdit.text))
-                                    closePopup()
-                                }
-                            }
-                        }
-
-                        Image {
-                            id: buttonCancel
-                            source: "images/common/btn_OKAnnulla.png"
-
-                            UbuntuLightText {
-                                anchors.centerIn: parent
-                                text: qsTr("cancel")
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    closePopup()
-                                }
-                            }
-                        }
-                    }
-                    Component.onCompleted: textEdit.forceActiveFocus()
-                }
-            }
         }
     }
+
+    states: [
+        State {
+            name: "selected"
+            PropertyChanges {
+                target: paginator
+                z: bgPannable.z + 1
+            }
+        }
+    ]
 }
