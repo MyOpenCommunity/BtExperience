@@ -368,6 +368,7 @@ Page {
                     id: delegate
 
                     property variant obj: userNotes.getObject(index)
+                    property string text: delegate.obj === undefined ? "" : delegate.obj.text
 
                     color: index % 2 !== 0 ? "light gray" : "gray"
                     // TODO: this should probably be a background image.
@@ -378,7 +379,26 @@ Page {
                     width: 212
                     height: 60
 
-                    UbuntuLightText {
+                    function startEdit() {
+                        labelLoader.sourceComponent = labelInputComponent
+                        labelLoader.item.text = privateProps.actualFavorite.text
+                        labelLoader.item.forceActiveFocus()
+                        labelLoader.item.openSoftwareInputPanel()
+                    }
+
+                    function editDone() {
+                        if (delegate.obj !== undefined) {
+                            if (delegate.obj.text !== labelLoader.item.text) {
+                                delegate.obj.text = labelLoader.item.text
+                            }
+                        }
+                        labelLoader.sourceComponent = labelComponent
+                    }
+
+                    Loader {
+                        id: labelLoader
+                        property string text: delegate.text
+                        sourceComponent: labelComponent
                         anchors {
                             left: parent.left
                             leftMargin: delegate.width / 100 * 2
@@ -387,11 +407,30 @@ Page {
                             top: parent.top
                             topMargin: delegate.height / 100 * 9
                         }
-                        font.pixelSize: 13
-                        wrapMode: Text.Wrap
-                        text: delegate.obj === undefined ? "" : delegate.obj.text
-                        elide: Text.ElideRight
-                        maximumLineCount: 3
+                    }
+
+                    Component {
+                        id: labelInputComponent
+
+                        UbuntuLightTextEdit {
+                            font.pixelSize: 13
+                            wrapMode: Text.Wrap
+                            text: labelLoader.text
+                            activeFocusOnPress: false
+                            onActiveFocusChanged: if (!activeFocus) { delegate.editDone() }
+                        }
+                    }
+
+                    Component {
+                        id: labelComponent
+
+                        UbuntuLightText {
+                            font.pixelSize: 13
+                            wrapMode: Text.Wrap
+                            text: labelLoader.text
+                            elide: Text.ElideRight
+                            maximumLineCount: 3
+                        }
                     }
 
                     MouseArea {
@@ -405,7 +444,7 @@ Page {
 
                     NoteActions {
                         id: menu
-                        onEditClicked: console.log("edit note")
+                        onEditClicked: delegate.startEdit()
                         onDeleteClicked: {
                             privateProps.unselectObj()
                             userNotes.remove(index)
