@@ -39,8 +39,8 @@ Page {
         }
 
         function unselectObj() {
-            if (paginator.state !== "")
-                paginator.state = ""
+            if (profilePage.state !== "")
+                profilePage.state = ""
             if (bgPannable.actualFavorite === undefined)
                 return
             bgPannable.visible = false
@@ -396,9 +396,9 @@ Page {
                     MouseArea {
                         anchors.fill: parent
                         onPressAndHold: {
-                            privateProps.selectObj(menu)
-                            menu.state = "selected"
+                            privateProps.selectObj(delegate)
                             profilePage.state = "selected"
+                            delegate.state = "selected"
                         }
                     }
 
@@ -414,6 +414,16 @@ Page {
                             right: parent.left
                         }
                     }
+
+                    states: [
+                        State {
+                            name: "selected"
+                            PropertyChanges {
+                                target: menu
+                                state: "selected"
+                            }
+                        }
+                    ]
                 }
                 model: userNotes
             }
