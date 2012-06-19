@@ -419,6 +419,7 @@ Page {
                             text: labelLoader.text
                             activeFocusOnPress: false
                             onActiveFocusChanged: if (!activeFocus) { delegate.editDone() }
+                            cursorPosition: text.length
                         }
                     }
 
