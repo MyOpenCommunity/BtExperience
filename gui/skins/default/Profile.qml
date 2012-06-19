@@ -41,15 +41,13 @@ Page {
         }
 
         function unselectObj() {
+            bgPannable.visible = false
             if (profilePage.state !== "")
                 profilePage.state = ""
-            if (privateProps.actualFavorite === undefined)
-                return
-            if (privateProps.actualFavorite.editDone)
-                privateProps.actualFavorite.editDone()
-            bgPannable.visible = false
-            privateProps.actualFavorite.z = 0
-            privateProps.actualFavorite.state = ""
+            if (privateProps.actualFavorite) {
+                privateProps.actualFavorite.z = 0
+                privateProps.actualFavorite.state = ""
+            }
             // TODO gestire il focus?
             privateProps.actualFavorite = undefined
         }
@@ -130,83 +128,24 @@ Page {
 
     Component {
         id: popupAddNote
-
-        Rectangle {
-            signal closePopup
-
-            width: 300
-            height: 200
-            color: "light gray"
-
-            UbuntuLightText {
-                text: qsTr("Note")
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                anchors.top: parent.top
+        EditNote {
+            onOkClicked: {
+                userNotes.append(myHomeModels.createNote(profile.uii, text))
+                privateProps.unselectObj()
             }
+            onCancelClicked: privateProps.unselectObj()
+        }
+    }
 
-            Rectangle {
-                color: "white"
-                anchors {
-                    top: parent.top
-                    topMargin: 20
-                    bottom: buttonsRow.top
-                    bottomMargin: 10
-                    left: parent.left
-                    leftMargin: 10
-                    right: parent.right
-                    rightMargin: 10
-                }
-                TextEdit {
-                    id: textEdit
-                    anchors.fill: parent
-                    text: ""
-                }
+    Component {
+        id: popupEditNote
+        EditNote {
+            onOkClicked: {
+                // we must set text directly on obj otherwise mods are lost
+                privateProps.actualFavorite.obj.text = text
+                privateProps.unselectObj()
             }
-
-            Row {
-                id: buttonsRow
-
-                spacing: 0
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 10
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-
-                Image {
-                    id: buttonOk
-                    source: "images/common/btn_OKAnnulla.png"
-
-                    UbuntuLightText {
-                        anchors.centerIn: parent
-                        text: qsTr("ok")
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            userNotes.append(myHomeModels.createNote(profile.uii, textEdit.text))
-                            closePopup()
-                        }
-                    }
-                }
-
-                Image {
-                    id: buttonCancel
-                    source: "images/common/btn_OKAnnulla.png"
-
-                    UbuntuLightText {
-                        anchors.centerIn: parent
-                        text: qsTr("cancel")
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: closePopup()
-                    }
-                }
-            }
-            Component.onCompleted: textEdit.forceActiveFocus()
+            onCancelClicked: privateProps.unselectObj()
         }
     }
 
@@ -364,6 +303,10 @@ Page {
 
                 width: addNote.width
                 elementsOnPage: 3
+                // a line from the paginator background remains visible if I
+                // delete all notes; the following line avoids to see it in
+                // such a case
+                opacity: model.count === 0 ? 0 : 1
 
                 delegate: Rectangle {
                     id: delegate
@@ -380,26 +323,7 @@ Page {
                     width: 212
                     height: 60
 
-                    function startEdit() {
-                        labelLoader.sourceComponent = labelInputComponent
-                        labelLoader.item.text = privateProps.actualFavorite.text
-                        labelLoader.item.forceActiveFocus()
-                        labelLoader.item.openSoftwareInputPanel()
-                    }
-
-                    function editDone() {
-                        if (delegate.obj !== undefined) {
-                            if (delegate.obj.text !== labelLoader.item.text) {
-                                delegate.obj.text = labelLoader.item.text
-                            }
-                        }
-                        labelLoader.sourceComponent = labelComponent
-                    }
-
-                    Loader {
-                        id: labelLoader
-                        property string text: delegate.text
-                        sourceComponent: labelComponent
+                    UbuntuLightText {
                         anchors {
                             left: parent.left
                             leftMargin: delegate.width / 100 * 2
@@ -408,31 +332,11 @@ Page {
                             top: parent.top
                             topMargin: delegate.height / 100 * 9
                         }
-                    }
-
-                    Component {
-                        id: labelInputComponent
-
-                        UbuntuLightTextEdit {
-                            font.pixelSize: 13
-                            wrapMode: Text.Wrap
-                            text: labelLoader.text
-                            activeFocusOnPress: false
-                            onActiveFocusChanged: if (!activeFocus) { delegate.editDone() }
-                            cursorPosition: text.length
-                        }
-                    }
-
-                    Component {
-                        id: labelComponent
-
-                        UbuntuLightText {
-                            font.pixelSize: 13
-                            wrapMode: Text.Wrap
-                            text: labelLoader.text
-                            elide: Text.ElideRight
-                            maximumLineCount: 3
-                        }
+                        font.pixelSize: 13
+                        wrapMode: Text.Wrap
+                        text: delegate.text
+                        elide: Text.ElideRight
+                        maximumLineCount: 3
                     }
 
                     MouseArea {
@@ -446,7 +350,10 @@ Page {
 
                     NoteActions {
                         id: menu
-                        onEditClicked: delegate.startEdit()
+                        onEditClicked: {
+                            installPopup(popupEditNote)
+                            popupLoader.item.text = delegate.text
+                        }
                         onDeleteClicked: {
                             privateProps.unselectObj()
                             userNotes.remove(index)
@@ -468,6 +375,7 @@ Page {
                     ]
                 }
                 model: userNotes
+                onCurrentPageChanged: privateProps.unselectObj()
             }
         }
     }
