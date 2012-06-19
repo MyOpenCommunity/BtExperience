@@ -45,7 +45,8 @@ Page {
                 profilePage.state = ""
             if (privateProps.actualFavorite === undefined)
                 return
-            privateProps.actualFavorite.editDone()
+            if (privateProps.actualFavorite.editDone)
+                privateProps.actualFavorite.editDone()
             bgPannable.visible = false
             privateProps.actualFavorite.z = 0
             privateProps.actualFavorite.state = ""
