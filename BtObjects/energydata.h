@@ -3,6 +3,15 @@
 
 /*!
 	\defgroup EnergyDataSystem Energy data
+
+	This system provides data consumption values for various energy types.
+
+	Each interface is represented with a \ref EnergyData object. Scalar values
+	are retrieved using \ref EnergyData::getValue(), graph data is retrieved
+	using \ref EnergyData::getGraph().
+
+	\ref EnergyData automatically caches requested values in order to minimize
+	request frames.
 */
 
 #include "objectinterface.h"
@@ -160,7 +169,7 @@ public:
 	virtual QString getObjectKey() const;
 
 	/*!
-		\brief Returns an object holding graph data for the specified measure/time
+		\brief Returns an \ref EnergyGraph holding graph data for the specified measure/time
 
 		Data is requested asynchronously, hence the returned object might receive graph
 		data at some later time.
@@ -171,7 +180,7 @@ public:
 	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, MeasureType measure = Consumption);
 
 	/*!
-		\brief Returns an object holding the value for the specified measure/time
+		\brief Returns an \ref EnergyItem holding the value for the specified measure/time
 
 		Data is requested asynchronously, hence the returned object might receive the value
 		at some later time.
