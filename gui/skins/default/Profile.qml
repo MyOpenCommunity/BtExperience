@@ -78,8 +78,6 @@ Page {
         function createProfileObjects() {
             for (var i = 0; i < mediaLinks.count; ++i) {
                 var obj = mediaLinks.getObject(i);
-                var y = obj.position.y
-                var x = obj.position.x
                 var text = obj.name
                 var address = obj.address
 
@@ -96,7 +94,9 @@ Page {
                     break
                 }
 
-                var instance = component.createObject(pannableChild, {'x': x, 'y': y, 'text': text, 'address': address})
+                // x and y are absolute coordinates
+                var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
+                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'text': text, 'address': address})
 
                 instance.requestEdit.connect(function (instance) {
                                                  showEditBox(instance)
