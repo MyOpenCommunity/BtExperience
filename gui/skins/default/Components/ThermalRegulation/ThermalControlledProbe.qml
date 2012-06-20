@@ -155,12 +155,12 @@ MenuColumn {
                 // fancoil panel is visible only for fancoil probes
                 visible: isFancoil()
                 onDownClicked: {
-                    if(rootAutoComponent.speed <= 1)
+                    if (rootAutoComponent.speed <= 1)
                         return
                     rootAutoComponent.speed -= 1
                 }
                 onUpClicked: {
-                    if(rootAutoComponent.speed >= 4)
+                    if (rootAutoComponent.speed >= 4)
                         return
                     rootAutoComponent.speed += 1
                 }
@@ -199,12 +199,12 @@ MenuColumn {
                 // fancoil panel is visible only for fancoil probes
                 visible: isFancoil()
                 onDownClicked: {
-                    if(rootManualComponent.speed <= 1)
+                    if (rootManualComponent.speed <= 1)
                         return
                     rootManualComponent.speed -= 1
                 }
                 onUpClicked: {
-                    if(rootManualComponent.speed >= 4)
+                    if (rootManualComponent.speed >= 4)
                         return
                     rootManualComponent.speed += 1
                 }

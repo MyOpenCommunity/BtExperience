@@ -25,7 +25,7 @@ MenuColumn {
             }
             hasChild: true
             boxInfoState: {
-                if(itemObject.objectId === ObjectInterface.IdLight ||
+                if (itemObject.objectId === ObjectInterface.IdLight ||
                         itemObject.objectId === ObjectInterface.IdLightGroup ||
                         itemObject.objectId === ObjectInterface.IdDimmerGroup ||
                         itemObject.objectId === ObjectInterface.IdDimmer100Group)
@@ -34,13 +34,13 @@ MenuColumn {
                 return "info"
             }
             boxInfoText: {
-                if(itemObject.objectId === ObjectInterface.IdLight ||
+                if (itemObject.objectId === ObjectInterface.IdLight ||
                         itemObject.objectId === ObjectInterface.IdLightGroup ||
                         itemObject.objectId === ObjectInterface.IdDimmerGroup ||
                         itemObject.objectId === ObjectInterface.IdDimmer100Group)
                     return ""
                 // Dimmer10 and Dimmer100
-                if(itemObject.active)
+                if (itemObject.active)
                     return itemObject.percentage + "%"
                 return "-"
             }

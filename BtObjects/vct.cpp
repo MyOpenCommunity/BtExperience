@@ -304,7 +304,7 @@ void Intercom::setTalkerFromWhere(QString where)
 	// note: the where passed as CALLER_ADDRESS may be a boolean, it doesn't
 	// matter, in that case, the where is set in startCall and we never enter
 	// the if
-	for(int i = 0; i < external_places.getCount(); ++i)
+	for (int i = 0; i < external_places.getCount(); ++i)
 	{
 		ObjectInterface *obj = external_places.getObject(i);
 		ExternalPlace *ep = static_cast<ExternalPlace *>(obj);

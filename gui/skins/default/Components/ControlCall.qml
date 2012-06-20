@@ -20,7 +20,7 @@ Rectangle {
     height: 50
 
     onDataObjectChanged: {
-        if(dataObject !== undefined) {
+        if (dataObject !== undefined) {
             dataObject.callAnswered.connect(callAnswered)
             dataObject.callEnded.connect(callEnding)
         }

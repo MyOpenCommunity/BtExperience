@@ -301,7 +301,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 		measure_unit = type == CurrentValue ? "kw" : "kwh";
 
 	EnergyItem *value = new EnergyItem(this, type, actual_date, val, measure_unit,
-			decimals, goal,measure == Currency ? rate : 0);
+			decimals, goal, measure == Currency ? rate : 0);
 
 	item_cache[key] = value;
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
@@ -341,7 +341,7 @@ QString EnergyData::getObjectKey() const
 		break;
 	}
 
-	if(isGeneral())
+	if (isGeneral())
 		result << "general";
 	else
 		result << "line";
@@ -490,11 +490,11 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 	{
 	case DailyAverageGraph:
 	case CumulativeDayGraph:
-		for(int i = 0; i < values.count(); ++i)
+		for (int i = 0; i < values.count(); ++i)
 			keys << QString("%1-%2").arg(i).arg(i + 1);
 		break;
 	case CumulativeMonthGraph:
-		for(int i = 0; i < values.count(); ++i)
+		for (int i = 0; i < values.count(); ++i)
 			keys << QString::number(i + 1);
 		break;
 	case CumulativeYearGraph:
