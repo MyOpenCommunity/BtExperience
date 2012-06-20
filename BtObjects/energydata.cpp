@@ -140,6 +140,21 @@ namespace
 	{
 		return date == normalizeDate(type, QDate::currentDate());
 	}
+
+	double conversionFactor(EnergyData::EnergyType type)
+	{
+		// for electricity, the device returns values in watts, but the GUI always
+		// displays kilowatts, so it's easier to do the conversion here
+		return type == EnergyData::Electricity ? 1000.0 : 1.0;
+	}
+
+#if TEST_ENERGY_DATA
+	int valueRange(EnergyData::EnergyType type)
+	{
+		return type == EnergyData::Electricity ? 3000 : 100;
+	}
+#endif
+
 }
 
 
@@ -271,6 +286,16 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	int decimals = 2;
 	double goal = 100.;
 
+#ifdef TEST_ENERGY_DATA
+	if (general)
+	{
+		// We want to test the GUI representation and we do that in the general page of
+		// energy. We set the goal as 70% of the max value so that we have a good
+		// chance to exceed the goal using random values.
+		goal = 0.7 * valueRange(getEnergyType()) / conversionFactor(getEnergyType());
+	}
+#endif
+
 	QString measure_unit = QString::fromUtf8("€");
 	if (measure != Currency)
 		measure_unit = type == CurrentValue ? "kw" : "kwh";
@@ -363,9 +388,7 @@ void EnergyData::requestCurrentUpdateStop()
 
 void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 {
-	// for electricity, the device returns values in watts, but the GUI always displays kilowatts,
-	// so it's easier to do the conversion here
-	double conversion = getEnergyType() == Electricity ? 1000.0 : 1.0;
+	double conversion = conversionFactor(getEnergyType());
 	value_cache.insert(CacheKey(type, date), new QVector<double>(1, value / conversion), 1);
 
 	// update values in returned EnergyItem objects
@@ -381,9 +404,7 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 
 void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph)
 {
-	// for electricity, the device returns values in watts, but the GUI always displays kilowatts,
-	// so it's easier to do the conversion here
-	double conversion = getEnergyType() == Electricity ? 1000.0 : 1.0;
+	double conversion = conversionFactor(getEnergyType());
 	QVector<double> *values = new QVector<double>(graph.size());
 
 	value_cache.insert(CacheKey(type, date), values, graph.size());
@@ -674,13 +695,6 @@ bool EnergyData::isGeneral() const
 }
 
 #if TEST_ENERGY_DATA
-namespace
-{
-	int valueRange(EnergyData::EnergyType type)
-	{
-		return type == EnergyData::Electricity ? 3000 : 100;
-	}
-}
 
 void EnergyData::testValueData(ValueType type, QDate date)
 {
