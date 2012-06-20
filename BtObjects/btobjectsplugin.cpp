@@ -76,6 +76,14 @@ namespace
 
 		return res;
 	}
+
+	// these are defined here because there is no 1-to-1 correspondence
+	// between used in QML (the ones in objectinterface.h file) and the ones
+	// used in configuration file (defined here)
+	enum ParserConstants {
+		IdDimmer100 = 2002,
+		IdLight = 2003
+	};
 }
 
 
@@ -143,13 +151,13 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 		switch (id)
 		{
-		case ObjectInterface::IdLight:
+		case IdLight:
 			obj_list = parseLight(xml_obj);
 			break;
 		case ObjectInterface::IdDimmer:
 			obj_list = parseDimmer(xml_obj);
 			break;
-		case ObjectInterface::IdDimmer100:
+		case IdDimmer100:
 			obj_list = parseDimmer100(xml_obj);
 			break;
 		case ObjectInterface::IdLightGroup:
