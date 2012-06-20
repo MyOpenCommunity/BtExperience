@@ -32,6 +32,7 @@ Page {
         id: privateProps
 
         property variant actualFavorite: undefined
+        property variant movingObject: undefined
 
         function selectObj(object) {
             unselectObj()
@@ -55,6 +56,17 @@ Page {
         function updateProfileView() {
             clearProfileObjects()
             createProfileObjects()
+        }
+
+        function moveBegin(favorite) {
+            unselectObj()
+            movingObject = favorite
+            moveGrid.state = "shown"
+        }
+
+        function moveEnd() {
+            moveGrid.state = ""
+            movingObject = undefined
         }
 
         function clearProfileObjects() {
@@ -92,6 +104,7 @@ Page {
                 instance.selected.connect(function (instance) {
                                               selectObj(instance)
                                           })
+                instance.requestMove.connect(moveBegin)
                 Script.container.push(instance)
             }
         }
@@ -376,6 +389,61 @@ Page {
                 }
                 model: userNotes
                 onCurrentPageChanged: privateProps.unselectObj()
+            }
+
+            Grid {
+                id: moveGrid
+                anchors {
+                    left: parent.left
+                    right: rightArea.left
+                    top: parent.top
+                    bottom: parent.bottom
+                }
+
+                columns: 4
+                rows: 4
+                opacity: 0
+
+                Repeater {
+                    model: moveGrid.columns * moveGrid.rows
+
+                    delegate: Rectangle {
+                        id: rectDelegate
+                        color: "transparent"
+                        width: moveGrid.width / moveGrid.columns
+                        height: moveGrid.height / moveGrid.rows
+                        border {
+                            width: 1
+                            color: "red"
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                // map the coordinates to the quicklink's parent
+                                var absPos = parent.mapToItem(null, x, y)
+                                var itemPos = pannableChild.mapFromItem(null, absPos.x, absPos.y)
+                                privateProps.movingObject.x = itemPos.x
+                                privateProps.movingObject.y = itemPos.y
+                                privateProps.moveEnd()
+                            }
+                        }
+                    }
+                }
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+                }
+
+                states: [
+                    State {
+                        name: "shown"
+                        PropertyChanges {
+                            target: moveGrid
+                            opacity: 1
+                        }
+                    }
+                ]
             }
         }
     }
