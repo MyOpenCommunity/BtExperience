@@ -235,6 +235,14 @@ Item {
         }
     }
 
+    Behavior on x {
+        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+    }
+
+    Behavior on y {
+        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+    }
+
     states: [
         State {
             name: "selected"
