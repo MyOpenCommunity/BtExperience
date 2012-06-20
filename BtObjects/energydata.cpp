@@ -267,7 +267,12 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	if (cached)
 		val = (*cached)[0];
 
-	EnergyItem *value = new EnergyItem(this, type, actual_date, val, measure == Currency ? rate : 0);
+	// TODO: these must be read from conf.xml
+	int decimals = 0;
+	double goal = 100.;
+	QString measure_unit = "kw";
+	EnergyItem *value = new EnergyItem(this, type, actual_date, val, measure_unit,
+			decimals, goal,measure == Currency ? rate : 0);
 
 	item_cache[key] = value;
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
@@ -726,13 +731,17 @@ EnergyRate *EnergyData::getRate() const
 	return rate;
 }
 
-EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value, EnergyRate *_rate)
+EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value,
+		QString _measure_unit, int _decimals, QVariant goal, EnergyRate *_rate)
 {
 	data = _data;
 	type = _type;
 	date = _date;
 	value = _value;
 	rate = _rate;
+	measure_unit = _measure_unit;
+	decimals = _decimals;
+	consumption_goal = goal;
 
 	if (rate)
 		connect(rate, SIGNAL(rateChanged()), this, SIGNAL(valueChanged()));
@@ -779,6 +788,22 @@ void EnergyItem::setValue(QVariant val)
 		emit validChanged();
 	emit valueChanged();
 }
+
+QString EnergyItem::getMeasureUnit() const
+{
+	return measure_unit;
+}
+
+QVariant EnergyItem::getConsumptionGoal() const
+{
+	return consumption_goal;
+}
+
+int EnergyItem::getDecimals() const
+{
+	return decimals;
+}
+
 
 EnergyGraphBar::EnergyGraphBar(QVariant _index, QString _label, QVariant _value, EnergyRate *_rate)
 {

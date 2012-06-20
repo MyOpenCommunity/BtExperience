@@ -316,8 +316,29 @@ class EnergyItem : public QObject
 	*/
 	Q_PROPERTY(bool isValid READ isValid NOTIFY validChanged)
 
+	/*!
+		\brief Number of decimals to be used to approximate economic data
+	*/
+	Q_PROPERTY(int decimals READ getDecimals CONSTANT)
+
+	/*!
+		\brief Consumption goal for this month cumulative value.
+
+		If a goal is not set for a particular interface or energy type, this
+		value is invalid.
+	*/
+	Q_PROPERTY(QVariant consumptionGoal READ getConsumptionGoal CONSTANT)
+
+	/*!
+		\brief Measure unit in which the value is expressed
+
+		\sa value
+	*/
+	Q_PROPERTY(QString measureUnit READ getMeasureUnit CONSTANT)
+
 public:
-	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value, EnergyRate *rate = 0);
+	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
+			QString measure_unit, int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
 
 	QVariant getValue() const;
 
@@ -328,6 +349,12 @@ public:
 	bool isValid() const;
 
 	void setValue(QVariant value);
+
+	QString getMeasureUnit() const;
+
+	QVariant getConsumptionGoal() const;
+
+	int getDecimals() const;
 
 public slots:
 	/*!
@@ -348,6 +375,9 @@ private:
 	QDate date;
 	QVariant value;
 	EnergyRate *rate;
+	QString measure_unit;
+	int decimals;
+	QVariant consumption_goal;
 };
 
 
