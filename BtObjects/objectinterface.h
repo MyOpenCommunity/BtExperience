@@ -96,12 +96,14 @@ public:
 		// ids used in configuration file; ids used in configuration file
 		// are defined inside the anonymous namespace contained in
 		// btobjectsplugin.cpp file
-		IdLightCustom = 10012003, //!< A simple light actuator with custom time
-		IdLightFixed = 10002003, //!< A simple light actuator with fixed time
 		IdDimmer100Custom = 10012002, //!< 100-level dimmer with custom time
-		IdDimmer100Fixed = 10002002, //!< 100-level dimmer with fixed time
+		IdDimmer100Fixed = 10022002, //!< 100-level dimmer with fixed time
+		IdLightCustom = 10012003, //!< A simple light actuator with custom time
+		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
 
-		IdMax // the last value + 1, used to check the ids requested from qml
+		// the last value + 1, used to check the ids requested from qml
+		// NOTE: always verify is the highest value out there!
+		IdMax
 	};
 
 	virtual int getObjectId() const;

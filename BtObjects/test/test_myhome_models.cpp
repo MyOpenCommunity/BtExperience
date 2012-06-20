@@ -17,9 +17,9 @@ void TestObjectModel::init()
 	dev1 = new DimmerDevice("1");
 	dev2 = AmplifierDevice::createDevice("22");
 
-	light1 = new Light("light1", "1", QTime(), dev1);
-	light2 = new Light("light2", "2", QTime(), dev1);
-	light3 = new Light("light3", "3", QTime(), dev1);
+	light1 = new Light("light1", "1", QTime(), Light::FixedTimingDisabled, true, dev1);
+	light2 = new Light("light2", "2", QTime(), Light::FixedTimingDisabled, true, dev1);
+	light3 = new Light("light3", "3", QTime(), Light::FixedTimingDisabled, true, dev1);
 
 	amplifier1 = new Amplifier(2, "amplifier1", dev2);
 	amplifier2 = new Amplifier(3, "amplifier1", dev2);
@@ -65,7 +65,7 @@ void TestObjectModel::testFilterObjectId()
 
 	QVariantMap filters;
 
-	filters["objectId"] = ObjectInterface::IdLight;
+	filters["objectId"] = ObjectInterface::IdLightCustom;
 	obj->setFilters(QVariantList() << filters);
 
 	QCOMPARE(obj->getCount(), 3);
@@ -107,7 +107,7 @@ void TestObjectModel::testFilterObjectKey()
 
 	QVariantMap filters;
 
-	filters["objectId"] = ObjectInterface::IdLight;
+	filters["objectId"] = ObjectInterface::IdLightCustom;
 	filters["objectKey"] = "2";
 	obj->setFilters(QVariantList() << filters);
 
@@ -145,7 +145,7 @@ void TestObjectModel::testComplexFilter()
 
 	QVariantMap filters;
 
-	filters["objectId"] = ObjectInterface::IdLight;
+	filters["objectId"] = ObjectInterface::IdLightCustom;
 	obj->setFilters(QVariantList() << filters);
 
 	QCOMPARE(obj->getCount(), 3);
