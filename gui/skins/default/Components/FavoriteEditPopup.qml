@@ -52,15 +52,9 @@ Item {
         anchors.right: background.right
         anchors.rightMargin: 10
 
-        UbuntuLightText {
-            id: httpText
-            text: "http://"
-            anchors.left: parent.left
-        }
-
         Rectangle {
             id: rect
-            anchors.left: httpText.right
+            anchors.left: parent.left
             anchors.right: parent.right
             height: 20
             TextInput {
