@@ -20,6 +20,7 @@ Item {
     signal requestEdit(variant favorite)
     signal clicked()
     signal editCompleted()
+    signal requestMove(variant favorite)
 
     width: column.width + 10
     height: column.height + 10
@@ -186,6 +187,13 @@ Item {
                 source: "../images/icon_move.png"
                 anchors.fill: parent
                 anchors.margins: 10
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    bgQuick.requestMove(bgQuick)
+                }
             }
         }
 
