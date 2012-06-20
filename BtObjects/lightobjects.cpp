@@ -16,14 +16,16 @@ namespace
 {
 	int findDumberObject(int first, int second)
 	{
-		if (first == ObjectInterface::IdLight || second == ObjectInterface::IdLight)
-			return ObjectInterface::IdLight;
+		if (first == ObjectInterface::IdLightCustom || second == ObjectInterface::IdLightCustom
+			|| first == ObjectInterface::IdLightFixed || second == ObjectInterface::IdLightFixed)
+			return ObjectInterface::IdLightFixed;
 		if (first == ObjectInterface::IdLightCommand || second == ObjectInterface::IdLightCommand)
-			return ObjectInterface::IdLight;
-		if (first == ObjectInterface::IdDimmer || second == ObjectInterface::IdDimmer)
-			return ObjectInterface::IdDimmer;
-		if (first == ObjectInterface::IdDimmer100 || second == ObjectInterface::IdDimmer100)
-			return ObjectInterface::IdDimmer100;
+			return ObjectInterface::IdLightFixed;
+		if (first == ObjectInterface::IdDimmerFixed || second == ObjectInterface::IdDimmerFixed)
+			return ObjectInterface::IdDimmerFixed;
+		if (first == ObjectInterface::IdDimmer100Custom || second == ObjectInterface::IdDimmer100Custom
+			|| first == ObjectInterface::IdDimmer100Fixed || second == ObjectInterface::IdDimmer100Fixed)
+			return ObjectInterface::IdDimmer100Fixed;
 
 		Q_ASSERT_X(false, "findDumberObject", "Invalid light types in light group");
 
@@ -59,6 +61,8 @@ QList<ObjectPair> parseDimmer100(const QDomNode &obj)
 	int def_sstart = getIntAttribute(obj, "sstart");
 	int def_sstop = getIntAttribute(obj, "sstop");
 	QTime def_ctime = getTimeAttribute(obj, "ctime");
+	Light::FixedTimingType def_ftime = static_cast<Light::FixedTimingType>(getIntAttribute(obj, "ftime"));
+	int def_ectime = getIntAttribute(obj, "ectime", 0);
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -69,9 +73,11 @@ QList<ObjectPair> parseDimmer100(const QDomNode &obj)
 		int sstart = getIntAttribute(ist, "sstart", def_sstart);
 		int sstop = getIntAttribute(ist, "sstop", def_sstop);
 		QTime ctime = getTimeAttribute(ist, "ctime", def_ctime);
+		Light::FixedTimingType ftime = static_cast<Light::FixedTimingType>(getIntAttribute(ist, "ftime", def_ftime));
+		int ectime = getIntAttribute(ist, "ectime", def_ectime);
 
 		Dimmer100Device *d = bt_global::add_device_to_cache(new Dimmer100Device(where, pul));
-		obj_list << ObjectPair(uii, new Dimmer100(descr, where, ctime, d, sstart, sstop));
+		obj_list << ObjectPair(uii, new Dimmer100(descr, where, ctime, ftime, ectime, d, sstart, sstop));
 	}
 	return obj_list;
 }
@@ -83,7 +89,7 @@ QList<ObjectPair> parseDimmer(const QDomNode &obj)
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul");
-	QTime def_ctime = getTimeAttribute(obj, "ctime");
+	Light::FixedTimingType def_ftime = static_cast<Light::FixedTimingType>(getIntAttribute(obj, "ftime"));
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -91,10 +97,10 @@ QList<ObjectPair> parseDimmer(const QDomNode &obj)
 		QString descr = getAttribute(ist, "descr", def_descr);
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
-		QTime ctime = getTimeAttribute(ist, "ctime", def_ctime);
+		Light::FixedTimingType ftime = static_cast<Light::FixedTimingType>(getIntAttribute(ist, "ftime", def_ftime));
 
 		DimmerDevice *d = bt_global::add_device_to_cache(new DimmerDevice(where, pul));
-		obj_list << ObjectPair(uii, new Dimmer(descr, where, ctime, d));
+		obj_list << ObjectPair(uii, new Dimmer(descr, where, ftime, d));
 	}
 	return obj_list;
 }
@@ -107,6 +113,8 @@ QList<ObjectPair> parseLight(const QDomNode &obj)
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul");
 	QTime def_ctime = getTimeAttribute(obj, "ctime");
+	Light::FixedTimingType def_ftime = static_cast<Light::FixedTimingType>(getIntAttribute(obj, "ftime"));
+	int def_ectime = getIntAttribute(obj, "ectime", 0);
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -115,9 +123,11 @@ QList<ObjectPair> parseLight(const QDomNode &obj)
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
 		QTime ctime = getTimeAttribute(ist, "ctime", def_ctime);
+		Light::FixedTimingType ftime = static_cast<Light::FixedTimingType>(getIntAttribute(ist, "ftime", def_ftime));
+		int ectime = getIntAttribute(ist, "ectime", def_ectime);
 
 		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
-		obj_list << ObjectPair(uii, new Light(descr, where, ctime, d));
+		obj_list << ObjectPair(uii, new Light(descr, where, ctime, ftime, ectime, d));
 	}
 	return obj_list;
 }
@@ -150,7 +160,7 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 		int uii = getIntAttribute(ist, "uii");
 		QString descr = getAttribute(ist, "descr", def_descr);
 		QList<ObjectInterface *> items;
-		int dumber_type = ObjectInterface::IdDimmer100;
+		int dumber_type = ObjectInterface::IdDimmer100Fixed;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
@@ -170,13 +180,13 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 
 		switch (dumber_type)
 		{
-		case ObjectInterface::IdLight:
+		case ObjectInterface::IdLightFixed:
 			obj_list << ObjectPair(uii, new LightGroup(descr, convertQObjectList<LightCommand *>(items)));
 			break;
-		case ObjectInterface::IdDimmer:
+		case ObjectInterface::IdDimmerFixed:
 			obj_list << ObjectPair(uii, new DimmerGroup(descr, convertQObjectList<Dimmer *>(items)));
 			break;
-		case ObjectInterface::IdDimmer100:
+		case ObjectInterface::IdDimmer100Fixed:
 			obj_list << ObjectPair(uii, new Dimmer100Group(descr, convertQObjectList<Dimmer100 *>(items)));
 			break;
 		}
@@ -200,7 +210,7 @@ void LightCommand::setActive(bool st)
 }
 
 
-Light::Light(QString _name, QString _key, QTime ctime, LightingDevice *d) : LightCommand(d)
+Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType _ftime, bool _ectime, LightingDevice *d) : LightCommand(d)
 {
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
@@ -210,6 +220,16 @@ Light::Light(QString _name, QString _key, QTime ctime, LightingDevice *d) : Ligh
 	hours = ctime.hour();
 	minutes = ctime.minute();
 	seconds = ctime.second();
+	ftime = _ftime;
+	ectime = _ectime;
+}
+
+int Light::getObjectId() const
+{
+	if (ectime)
+		return ObjectInterface::IdLightCustom;
+	else
+		return ObjectInterface::IdLightFixed;
 }
 
 QString Light::getObjectKey() const
@@ -302,10 +322,23 @@ void LightGroup::setActive(bool status)
 }
 
 
-Dimmer::Dimmer(QString name, QString key, QTime ctime, DimmerDevice *d) : Light(name, key, ctime, d)
+Dimmer::Dimmer(QString name, QString key, FixedTimingType ftime, DimmerDevice *d)
+	: Light(name, key, QTime(), ftime, false, d)
 {
 	dev = d;
 	percentage = 0; // initial value
+}
+
+Dimmer::Dimmer(QString name, QString key, QTime ctime, Light::FixedTimingType ftime, bool ectime, DimmerDevice *d)
+	: Light(name, key, ctime, ftime, ectime, d)
+{
+	dev = d;
+	percentage = 0; // initial value
+}
+
+int Dimmer::getObjectId() const
+{
+	return ObjectInterface::IdDimmerFixed;
 }
 
 int Dimmer::getPercentage() const
@@ -342,7 +375,6 @@ void Dimmer::valueReceived(const DeviceValues &values_list)
 	}
 }
 
-
 DimmerGroup::DimmerGroup(QString name, QList<Dimmer *> d) : LightGroup(name, convertQObjectList<LightCommand *>(d))
 {
 	objects = d;
@@ -361,14 +393,22 @@ void DimmerGroup::decreaseLevel()
 }
 
 
-Dimmer100::Dimmer100(QString name, QString key, QTime ctime, Dimmer100Device *d, int onspeed, int offspeed) :
-	Dimmer(name, key, ctime, d)
+Dimmer100::Dimmer100(QString name, QString key, QTime ctime, Light::FixedTimingType ftime, bool ectime, Dimmer100Device *d, int onspeed, int offspeed) :
+	Dimmer(name, key, ctime, ftime, ectime, d)
 {
 	dev = d;
 	on_speed = onspeed;
 	off_speed = offspeed;
 	step_speed = DIMMER100_SPEED;
 	step_amount = DIMMER100_STEP;
+}
+
+int Dimmer100::getObjectId() const
+{
+	if (ectime)
+		return ObjectInterface::IdDimmer100Custom;
+	else
+		return ObjectInterface::IdDimmer100Fixed;
 }
 
 void Dimmer100::setOnSpeed(int speed)

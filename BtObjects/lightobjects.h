@@ -32,7 +32,7 @@ public:
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdLight;
+		return ObjectInterface::IdLightCommand;
 	}
 
 	virtual void setActive(bool st);
@@ -88,16 +88,46 @@ class Light : public LightCommand
 	*/
 	Q_PROPERTY(int seconds READ getSeconds WRITE setSeconds NOTIFY secondsChanged)
 
+	/*!
+		\brief Time interval for  \ref LightingDevice::fixedTiming
+
+		After the specified amount of time, the light will turn off automatically.
+
+		\sa LightingDevice::fixedTiming
+	*/
+	Q_PROPERTY(FixedTimingType ftime READ getFTime WRITE setFTime NOTIFY fTimeChanged)
+
+	Q_ENUMS(FixedTimingType)
+
 public:
-	Light(QString name, QString key, QTime ctime, LightingDevice *d);
 
-	virtual int getObjectId() const
+	/// Fixed timing type. \sa LightingDevice::fixedTiming
+	enum FixedTimingType
 	{
-		return ObjectInterface::IdLight;
-	}
+		/// fixed timing is not enabled/known
+		FixedTimingDisabled = -1,
+		/// 1 minute (11 in xml file)
+		FixedTimingMinutes1 = 0,
+		/// 2 minutes (12 in xml file)
+		FixedTimingMinutes2,
+		/// 3 minutes (13 in xml file)
+		FixedTimingMinutes3,
+		/// 4 minutes (14 in xml file)
+		FixedTimingMinutes4,
+		/// 5 minutes (15 in xml file)
+		FixedTimingMinutes5,
+		/// 15 minutes (16 in xml file)
+		FixedTimingMinutes15,
+		/// 30 seconds (17 in xml file)
+		FixedTimingSeconds30,
+		/// 0.5 seconds (18 in xml file)
+		FixedTimingSeconds0_5
+	};
 
+	Light(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, LightingDevice *d);
+
+	virtual int getObjectId() const;
 	virtual QString getObjectKey() const;
-
 	virtual bool isActive() const;
 	void setHours(int h);
 	int getHours();
@@ -105,6 +135,8 @@ public:
 	int getMinutes();
 	void setSeconds(int s);
 	int getSeconds();
+	FixedTimingType getFTime() const;
+	void setFTime(FixedTimingType ftime);
 
 	/*!
 		\brief Turn on the light for a duration specified by \ref hours, \ref minutes and \ref seconds
@@ -116,6 +148,7 @@ signals:
 	void hoursChanged();
 	void minutesChanged();
 	void secondsChanged();
+	void fTimeChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -123,9 +156,11 @@ protected slots:
 protected:
 	QString key;
 	bool active;
+	bool ectime;
 
 private:
 	int hours, minutes, seconds;
+	FixedTimingType ftime;
 };
 
 
@@ -182,13 +217,9 @@ class Dimmer : public Light
 	Q_PROPERTY(int percentage READ getPercentage NOTIFY percentageChanged)
 
 public:
-	Dimmer(QString name, QString key, QTime ctime, DimmerDevice *d);
+	Dimmer(QString name, QString key, FixedTimingType ftime, DimmerDevice *d);
 
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdDimmer;
-	}
-
+	virtual int getObjectId() const;
 	virtual int getPercentage() const;
 
 public slots:
@@ -209,6 +240,8 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
+	Dimmer(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, DimmerDevice *d);
+
 	int percentage;
 
 private:
@@ -299,13 +332,9 @@ class Dimmer100 : public Dimmer
 	Q_PROPERTY(int stepAmount READ getStepAmount WRITE setStepAmount NOTIFY stepAmountChanged)
 
 public:
-	Dimmer100(QString name, QString key, QTime ctime, Dimmer100Device *d, int onspeed, int offsspeed);
+	Dimmer100(QString name, QString key, QTime ctime, Light::FixedTimingType ftime, bool ectime, Dimmer100Device *d, int onspeed, int offspeed);
 
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdDimmer100;
-	}
-
+	virtual int getObjectId() const;
 	virtual void setActive(bool st);
 	virtual void setActiveWithTiming();
 

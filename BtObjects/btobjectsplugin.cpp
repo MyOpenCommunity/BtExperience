@@ -154,7 +154,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case IdLight:
 			obj_list = parseLight(xml_obj);
 			break;
-		case ObjectInterface::IdDimmer:
+		case ObjectInterface::IdDimmerFixed:
 			obj_list = parseDimmer(xml_obj);
 			break;
 		case IdDimmer100:

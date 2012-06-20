@@ -84,15 +84,23 @@ public:
 		IdDimmer100Group = 101, //!< group of lights containing only 100-level dimmer objects
 		// from configuration file
 		// lights
-		IdLight = 2003, //!< A simple light actuator
-		IdDimmer = 2001, //!< 10-level dimmer
-		IdDimmer100 = 2002, //!< 100-level dimmer
+		IdDimmerFixed = 2001, //!< 10-level dimmer
 		IdLightGroup = 2004, //!< A set of lights
 		IdLightCommand = 2005, //!< Command to control the lights for an environment or all the lights
 		// antintrusion
 		IdAntintrusionZone = 13001, //!< A signe anti-intrusion zone
 		IdAntintrusionScenario = 13010, //!< Set of anti-intrusion zones
 		IdAntintrusionAux = 13101, //!< Auxiliary alarm channel (for technical alarms)
+
+		// the following constants don't have a correspondence 1-to-1 with
+		// ids used in configuration file; ids used in configuration file
+		// are defined inside the anonymous namespace contained in
+		// btobjectsplugin.cpp file
+		IdLightCustom = 10012003, //!< A simple light actuator with custom time
+		IdLightFixed = 10002003, //!< A simple light actuator with fixed time
+		IdDimmer100Custom = 10012002, //!< 100-level dimmer with custom time
+		IdDimmer100Fixed = 10002002, //!< 100-level dimmer with fixed time
+
 		IdMax // the last value + 1, used to check the ids requested from qml
 	};
 
