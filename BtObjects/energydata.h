@@ -3,6 +3,15 @@
 
 /*!
 	\defgroup EnergyDataSystem Energy data
+
+	This system provides data consumption values for various energy types.
+
+	Each interface is represented with a \ref EnergyData object. Scalar values
+	are retrieved using \ref EnergyData::getValue(), graph data is retrieved
+	using \ref EnergyData::getGraph().
+
+	\ref EnergyData automatically caches requested values in order to minimize
+	request frames.
 */
 
 #include "objectinterface.h"
@@ -160,7 +169,7 @@ public:
 	virtual QString getObjectKey() const;
 
 	/*!
-		\brief Returns an object holding graph data for the specified measure/time
+		\brief Returns an \ref EnergyGraph holding graph data for the specified measure/time
 
 		Data is requested asynchronously, hence the returned object might receive graph
 		data at some later time.
@@ -171,7 +180,7 @@ public:
 	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, MeasureType measure = Consumption);
 
 	/*!
-		\brief Returns an object holding the value for the specified measure/time
+		\brief Returns an \ref EnergyItem holding the value for the specified measure/time
 
 		Data is requested asynchronously, hence the returned object might receive the value
 		at some later time.
@@ -307,8 +316,29 @@ class EnergyItem : public QObject
 	*/
 	Q_PROPERTY(bool isValid READ isValid NOTIFY validChanged)
 
+	/*!
+		\brief Number of decimals to be used to approximate economic data
+	*/
+	Q_PROPERTY(int decimals READ getDecimals CONSTANT)
+
+	/*!
+		\brief Consumption goal for this month cumulative value.
+
+		If a goal is not set for a particular interface or energy type, this
+		value is invalid.
+	*/
+	Q_PROPERTY(QVariant consumptionGoal READ getConsumptionGoal CONSTANT)
+
+	/*!
+		\brief Measure unit in which the value is expressed
+
+		\sa value
+	*/
+	Q_PROPERTY(QString measureUnit READ getMeasureUnit CONSTANT)
+
 public:
-	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value, EnergyRate *rate = 0);
+	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
+			QString measure_unit, int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
 
 	QVariant getValue() const;
 
@@ -319,6 +349,12 @@ public:
 	bool isValid() const;
 
 	void setValue(QVariant value);
+
+	QString getMeasureUnit() const;
+
+	QVariant getConsumptionGoal() const;
+
+	int getDecimals() const;
 
 public slots:
 	/*!
@@ -339,6 +375,9 @@ private:
 	QDate date;
 	QVariant value;
 	EnergyRate *rate;
+	QString measure_unit;
+	int decimals;
+	QVariant consumption_goal;
 };
 
 
