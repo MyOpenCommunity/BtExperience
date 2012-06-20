@@ -13,6 +13,7 @@ Item {
     property string address: "www.corriere.it"
     property string page: "Browser.qml"
     property bool editable: true
+    property variant itemObject
 
     property int additionalWidth: 10
 

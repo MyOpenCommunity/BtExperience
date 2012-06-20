@@ -96,7 +96,7 @@ Page {
 
                 // x and y are absolute coordinates
                 var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
-                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'text': text, 'address': address})
+                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'text': text, 'address': address, "itemObject": obj})
 
                 instance.requestEdit.connect(showEditBox)
                 instance.selected.connect(selectObj)
@@ -421,6 +421,7 @@ Page {
                                 var itemPos = pannableChild.mapFromItem(null, absPos.x, absPos.y)
                                 privateProps.movingObject.x = itemPos.x
                                 privateProps.movingObject.y = itemPos.y
+                                privateProps.movingObject.itemObject.position = Qt.point(absPos.x, absPos.y)
                                 privateProps.moveEnd()
                             }
                         }
