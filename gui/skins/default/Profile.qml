@@ -31,8 +31,8 @@ Page {
     QtObject {
         id: privateProps
 
-        property variant actualFavorite: undefined
-        property variant movingObject: undefined
+        property Item actualFavorite: null
+        property Item movingObject: null
 
         function selectObj(favorite) {
             unselectObj()
@@ -50,7 +50,7 @@ Page {
                 privateProps.actualFavorite.state = ""
             }
             // TODO gestire il focus?
-            privateProps.actualFavorite = undefined
+            privateProps.actualFavorite = null
         }
 
         function updateProfileView() {
@@ -66,7 +66,7 @@ Page {
 
         function moveEnd() {
             moveGrid.state = ""
-            movingObject = undefined
+            movingObject = null
         }
 
         function clearProfileObjects() {
