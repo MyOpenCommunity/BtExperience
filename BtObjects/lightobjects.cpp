@@ -284,6 +284,19 @@ int Light::getSeconds()
 	return seconds;
 }
 
+Light::FixedTimingType Light::getFTime() const
+{
+	return ftime;
+}
+
+void Light::setFTime(Light::FixedTimingType f)
+{
+	if (f == ftime)
+		return;
+	ftime = f;
+	emit fTimeChanged();
+}
+
 void Light::setActiveWithTiming()
 {
 	dev->variableTiming(hours, minutes, seconds);
