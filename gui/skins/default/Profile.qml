@@ -34,11 +34,11 @@ Page {
         property variant actualFavorite: undefined
         property variant movingObject: undefined
 
-        function selectObj(object) {
+        function selectObj(favorite) {
             unselectObj()
-            object.z = bgPannable.z + 1
+            favorite.z = bgPannable.z + 1
             bgPannable.visible = true
-            privateProps.actualFavorite = object
+            privateProps.actualFavorite = favorite
         }
 
         function unselectObj() {
@@ -98,12 +98,8 @@ Page {
                 var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
                 var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'text': text, 'address': address})
 
-                instance.requestEdit.connect(function (instance) {
-                                                 showEditBox(instance)
-                                             })
-                instance.selected.connect(function (instance) {
-                                              selectObj(instance)
-                                          })
+                instance.requestEdit.connect(showEditBox)
+                instance.selected.connect(selectObj)
                 instance.requestMove.connect(moveBegin)
                 Script.container.push(instance)
             }
