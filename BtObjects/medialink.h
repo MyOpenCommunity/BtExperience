@@ -33,7 +33,7 @@ class MediaLink : public ItemInterface
 	/*!
 		\brief Absolute position for screen display
 	*/
-	Q_PROPERTY(QPoint position READ getPosition WRITE setPosition NOTIFY positionChanged)
+	Q_PROPERTY(QPointF position READ getPosition WRITE setPosition NOTIFY positionChanged)
 
 	Q_ENUMS(MediaType)
 
@@ -51,17 +51,17 @@ public:
 	MediaType getType() const;
 	QString getName() const;
 	QString getAddress() const;
-	QPoint getPosition() const;
+	QPointF getPosition() const;
 
 public slots:
 	void setName(QString name);
 	void setAddress(QString address);
-	void setPosition(QPoint position);
+	void setPosition(QPointF position);
 
 signals:
 	void nameChanged(QString address);
 	void addressChanged(QString address);
-	void positionChanged(QPoint position);
+	void positionChanged(QPointF position);
 
 private:
 	MediaType type;
