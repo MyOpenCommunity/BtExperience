@@ -268,9 +268,13 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 		val = (*cached)[0];
 
 	// TODO: these must be read from conf.xml
-	int decimals = 0;
+	int decimals = 2;
 	double goal = 100.;
-	QString measure_unit = "kw";
+
+	QString measure_unit = QString::fromUtf8("€");
+	if (measure != Currency)
+		measure_unit = type == CurrentValue ? "kw" : "kwh";
+
 	EnergyItem *value = new EnergyItem(this, type, actual_date, val, measure_unit,
 			decimals, goal,measure == Currency ? rate : 0);
 

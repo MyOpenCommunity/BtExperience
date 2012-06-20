@@ -26,16 +26,11 @@ Column {
         }
     }
 
-    function formatValue(energyType, suffix) {
-        var value = itemObject.getValue(energyType, new Date(), measureType).value
+    function formatValue(energyType) {
+        var energy_item = itemObject.getValue(energyType, new Date(), measureType)
+        var value = energy_item.value
         if (value !== undefined) {
-            // TODO: read from itemObject
-            value = value.toFixed(3)
-            if (measureType === EnergyData.Consumption)
-                value += " " + suffix
-            else
-                value += " €"
-            return value
+            return value.toFixed(energy_item.decimals) + " " + energy_item.measureUnit;
         }
         return "---"
     }
@@ -70,7 +65,7 @@ Column {
 
     UbuntuLightText {
         font.pixelSize: 18
-        text: formatValue(EnergyData.CumulativeMonthValue, "kwh")
+        text: formatValue(EnergyData.CumulativeMonthValue)
         anchors.horizontalCenter: parent.horizontalCenter
         color: "white"
     }
@@ -114,7 +109,7 @@ Column {
             UbuntuLightText {
                 anchors.centerIn: parent
                 font.pixelSize: 14
-                text: formatValue(EnergyData.CurrentValue, "w")
+                text: formatValue(EnergyData.CurrentValue)
             }
         }
     }
