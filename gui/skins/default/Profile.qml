@@ -126,12 +126,12 @@ Page {
 
     Component {
         id: cameraItemComponent
-        RssItem { }
+        CameraLink { }
     }
 
     Component {
         id: rssItemComponent
-        CameraLink { }
+        RssItem { }
     }
 
     Component {
