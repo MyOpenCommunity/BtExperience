@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
 		if (testing_class.isEmpty() || class_name.contains(re))
 		{
 			tester->initTestSystem();
-			r = QTest::qExec(tester, arglist);
+			r += QTest::qExec(tester, arglist);
 		}
 	}
 
