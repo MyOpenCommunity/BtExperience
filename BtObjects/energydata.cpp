@@ -286,7 +286,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	int decimals = 2;
 	double goal = 100.;
 
-#ifdef TEST_ENERGY_DATA
+#if TEST_ENERGY_DATA
 	if (general)
 	{
 		// We want to test the GUI representation and we do that in the general page of
