@@ -31,8 +31,8 @@ Page {
     QtObject {
         id: privateProps
 
-        property variant actualFavorite: undefined
-        property variant movingObject: undefined
+        property Item actualFavorite: null
+        property Item movingObject: null
 
         function selectObj(favorite) {
             unselectObj()
@@ -50,7 +50,7 @@ Page {
                 privateProps.actualFavorite.state = ""
             }
             // TODO gestire il focus?
-            privateProps.actualFavorite = undefined
+            privateProps.actualFavorite = null
         }
 
         function updateProfileView() {
@@ -66,7 +66,7 @@ Page {
 
         function moveEnd() {
             moveGrid.state = ""
-            movingObject = undefined
+            movingObject = null
         }
 
         function clearProfileObjects() {
@@ -96,7 +96,7 @@ Page {
 
                 // x and y are absolute coordinates
                 var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
-                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'text': text, 'address': address})
+                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'text': text, 'address': address, "itemObject": obj})
 
                 instance.requestEdit.connect(showEditBox)
                 instance.selected.connect(selectObj)
@@ -421,6 +421,7 @@ Page {
                                 var itemPos = pannableChild.mapFromItem(null, absPos.x, absPos.y)
                                 privateProps.movingObject.x = itemPos.x
                                 privateProps.movingObject.y = itemPos.y
+                                privateProps.movingObject.itemObject.position = Qt.point(absPos.x, absPos.y)
                                 privateProps.moveEnd()
                             }
                         }

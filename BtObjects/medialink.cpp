@@ -25,7 +25,7 @@ QString MediaLink::getAddress() const
 	return address;
 }
 
-QPoint MediaLink::getPosition() const
+QPointF MediaLink::getPosition() const
 {
 	return position;
 }
@@ -46,10 +46,11 @@ void MediaLink::setAddress(QString _address)
 	emit addressChanged(address);
 }
 
-void MediaLink::setPosition(QPoint _position)
+void MediaLink::setPosition(QPointF _position)
 {
-	if (position == _position)
+	QPoint p = _position.toPoint();
+	if (position == p)
 		return;
-	position = _position;
+	position = p;
 	emit positionChanged(position);
 }
