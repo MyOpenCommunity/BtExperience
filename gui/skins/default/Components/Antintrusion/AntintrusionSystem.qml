@@ -145,7 +145,7 @@ MenuColumn {
                 anchors.fill: parent
             }
 
-            AntintrusionSwitch {
+            Switch {
                 id: systemIcon
                 anchors.right: parent.right
                 anchors.rightMargin: width / 100 * 10

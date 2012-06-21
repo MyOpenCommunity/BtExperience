@@ -7,6 +7,7 @@ ButtonBack 1.0 ButtonBack.qml
 ButtonCommand 1.0 ButtonCommand.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
 ButtonImageText 1.0 ButtonImageText.qml
+ButtonImageThreeStates 1.0 ButtonImageThreeStates.qml
 ButtonLeftRight 1.0 ButtonLeftRight.qml
 ButtonMediaControl 1.0 ButtonMediaControl.qml
 ButtonMinusPlus 1.0 ButtonMinusPlus.qml
@@ -28,6 +29,7 @@ ControlChoices 1.0 ControlChoices.qml
 ControlColumnBar 1.0 ControlColumnBar.qml
 ControlColumnValue 1.0 ControlColumnValue.qml
 ControlDateTime 1.0 ControlDateTime.qml
+ControlLeftRight 1.0 ControlLeftRight.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlSlider 1.0 ControlSlider.qml
@@ -64,6 +66,7 @@ ScreenSaverRectangles 1.0 ScreenSaverRectangles.qml
 SlideAnimation 1.0 SlideAnimation.qml
 SmallButton 1.0 SmallButton.qml
 SvgImage 1.0 SvgImage.qml
+Switch 1.0 Switch.qml
 ToolBar 1.0 ToolBar.qml
 TwoButtonsSettings 1.0 TwoButtonsSettings.qml
 TwoButtonsSettingsLarge 1.0 TwoButtonsSettingsLarge.qml
