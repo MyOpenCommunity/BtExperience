@@ -14,7 +14,7 @@ MenuColumn {
             text: qsTr("enabled")
         }
 
-        ControlMinusPlus {
+        ControlMinusPlusOld {
             title: qsTr("self test interval")
             text: qsTr("30 days")
         }

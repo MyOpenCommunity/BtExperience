@@ -31,6 +31,7 @@ ControlColumnValue 1.0 ControlColumnValue.qml
 ControlDateTime 1.0 ControlDateTime.qml
 ControlLeftRight 1.0 ControlLeftRight.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
+ControlMinusPlusOld 1.0 ControlMinusPlusOld.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlSlider 1.0 ControlSlider.qml
 ControlSlider2 1.0 ControlSlider2.qml
