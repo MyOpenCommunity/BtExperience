@@ -25,7 +25,8 @@ MenuColumn {
             }
             hasChild: true
             boxInfoState: {
-                if(itemObject.objectId === ObjectInterface.IdLight ||
+                if(itemObject.objectId === ObjectInterface.IdLightCustom ||
+                        itemObject.objectId === ObjectInterface.IdLightFixed ||
                         itemObject.objectId === ObjectInterface.IdLightGroup ||
                         itemObject.objectId === ObjectInterface.IdDimmerGroup ||
                         itemObject.objectId === ObjectInterface.IdDimmer100Group)
@@ -35,6 +36,7 @@ MenuColumn {
             }
             boxInfoText: {
                 if(itemObject.objectId === ObjectInterface.IdLight ||
+                        itemObject.objectId === ObjectInterface.IdLightFixed ||
                         itemObject.objectId === ObjectInterface.IdLightGroup ||
                         itemObject.objectId === ObjectInterface.IdDimmerGroup ||
                         itemObject.objectId === ObjectInterface.IdDimmer100Group)
@@ -46,10 +48,7 @@ MenuColumn {
             }
 
             onClicked: {
-                column.loadColumn(
-                            mapping.getComponent(itemObject.objectId),
-                            itemObject.name,
-                            objectModel.getObject(model.index))
+                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, objectModel.getObject(model.index))
             }
         }
         model: objectModel
