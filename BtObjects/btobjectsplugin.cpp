@@ -267,7 +267,7 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		{
 			ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?
 						ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
-			if(fancoil == ControlledProbeDevice::NORMAL)
+			if (fancoil == ControlledProbeDevice::NORMAL)
 				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit4Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
 			else
 				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit4Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
@@ -388,12 +388,12 @@ void BtObjectsPlugin::parseConfig()
 	profile_model << new Container(1, 904, "images/home/card_4.png", "mamma");
 	profile_model << new Container(1, 905, "images/home/card_5.png", QString::fromUtf8("papà"));
 
-	media_link_model << new MediaLink(901, MediaLink::Rss, "news - Corriere della Sera", "http://www.corriere.it", QPoint(400, 100));
+	media_link_model << new MediaLink(901, MediaLink::Rss, "news - Corriere della Sera", "http://www.corriere.it", QPoint(100, 100));
 	media_link_model << new MediaLink(901, MediaLink::Camera, "camera #0", "7", QPoint(500, 220));
-	media_link_model << new MediaLink(901, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(200, 50));
+	media_link_model << new MediaLink(901, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(450, 120));
 	media_link_model << new MediaLink(901, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(300, 250));
 	media_link_model << new MediaLink(902, MediaLink::Web, "Repubblica.it - Il sito web di Repubblica", "http://www.repubblica.it", QPoint(300, 250));
-	media_link_model << new MediaLink(903, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(200, 50));
+	media_link_model << new MediaLink(903, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(600, 250));
 	media_link_model << new MediaLink(904, MediaLink::Rss, "news - Corriere della Sera", "http://www.corriere.it", QPoint(400, 100));
 	media_link_model << new MediaLink(905, MediaLink::Camera, "camera #0", "7", QPoint(500, 220));
 }

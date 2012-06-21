@@ -117,5 +117,5 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: textEdit.forceActiveFocus()
+    Component.onCompleted: edit.forceActiveFocus()
 }

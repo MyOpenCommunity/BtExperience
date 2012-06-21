@@ -11,11 +11,11 @@ function updateRowChildren(row, expand) {
     var s = row.spacing
     var e = typeof expand !== 'undefined' ? expand : false
 
-    for(var i = 0; i < l; ++i)
+    for (var i = 0; i < l; ++i)
         if (row.children[i].objectName === 'repeater')
             --c
 
-    for(var j = 0; j < l; ++j) {
+    for (var j = 0; j < l; ++j) {
         if (row.children[j].objectName === 'repeater')
             continue
         var m = (t - (c - 1) * s) / c
@@ -31,11 +31,11 @@ function updateColumnChildren(col, expand) {
     var s = col.spacing
     var e = typeof expand !== 'undefined' ? expand : false
 
-    for(var i = 0; i < l; ++i)
+    for (var i = 0; i < l; ++i)
         if (col.children[i].objectName === 'repeater')
             --c
 
-    for(var j = 0; j < l; ++j) {
+    for (var j = 0; j < l; ++j) {
         if (col.children[j].objectName === 'repeater')
             continue
         var m = (t - (c - 1) * s) / c

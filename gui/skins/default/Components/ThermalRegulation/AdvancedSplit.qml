@@ -120,7 +120,7 @@ MenuColumn {
                     }
                 }
                 onUpClicked: {
-                    if(currentIndex < 4) {
+                    if (currentIndex < 4) {
                         dataModel.resetProgram()
                         ++currentIndex
                     }
@@ -138,7 +138,7 @@ MenuColumn {
                     }
                 }
                 onUpClicked: {
-                    if(currentIndex < 1) {
+                    if (currentIndex < 1) {
                         dataModel.resetProgram()
                         ++currentIndex
                     }
@@ -173,7 +173,7 @@ MenuColumn {
                     }
                 }
                 onUpClicked: {
-                    if(currentIndex < 4) {
+                    if (currentIndex < 4) {
                         dataModel.resetProgram()
                         ++currentIndex
                     }
@@ -191,7 +191,7 @@ MenuColumn {
                     }
                 }
                 onUpClicked: {
-                    if(currentIndex < 1) {
+                    if (currentIndex < 1) {
                         dataModel.resetProgram()
                         ++currentIndex
                     }

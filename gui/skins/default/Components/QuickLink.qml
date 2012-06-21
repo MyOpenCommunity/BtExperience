@@ -20,6 +20,7 @@ Item {
     signal requestEdit(variant favorite)
     signal clicked()
     signal editCompleted()
+    signal requestMove(variant favorite)
 
     width: column.width + 10
     height: column.height + 10
@@ -187,6 +188,13 @@ Item {
                 anchors.fill: parent
                 anchors.margins: 10
             }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    bgQuick.requestMove(bgQuick)
+                }
+            }
         }
 
         Rectangle {
@@ -225,6 +233,14 @@ Item {
                 Stack.openPage(page, {'urlString': address})
             bgQuick.clicked()
         }
+    }
+
+    Behavior on x {
+        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+    }
+
+    Behavior on y {
+        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
     }
 
     states: [

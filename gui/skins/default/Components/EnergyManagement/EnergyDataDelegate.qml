@@ -8,36 +8,107 @@ Column {
     property variant itemObject: undefined
     property int measureType: EnergyData.Consumption
 
-    function getIcon(energyType) {
-        switch (energyType) {
-        case EnergyData.Electricity:
-            return "../../images/energy/ico_electricity.svg"
-        case EnergyData.Water:
-            return "../../images/energy/ico_water.svg"
-        case EnergyData.Gas:
-            return "../../images/energy/ico_gas.svg"
-        case EnergyData.HotWater:
-            return "../../images/energy/ico_hot_water.svg"
-        case EnergyData.Heat:
-            return "../../images/energy/ico_heating.svg"
-        default:
-            console.log("EnergyDataDelegate, unknown energy type (" + energyType + "), use default icon")
-            return "../../images/energy/ico_electricity.svg"
-        }
-    }
 
-    function formatValue(energyType, suffix) {
-        var value = itemObject.getValue(energyType, new Date(), measureType).value
-        if (value !== undefined) {
-            // TODO: read from itemObject
-            value = value.toFixed(3)
-            if (measureType === EnergyData.Consumption)
-                value += " " + suffix
-            else
-                value += " €"
-            return value
+    QtObject {
+        id: privateProps
+        property variant monthConsumptionItem: undefined
+        property variant goal: monthConsumptionItem !== undefined ? monthConsumptionItem.consumptionGoal : 0.0
+        property variant consumption: monthConsumptionItem !== undefined ? monthConsumptionItem.value : 0.0
+
+        function getIcon(energyType) {
+            switch (energyType) {
+            case EnergyData.Electricity:
+                return "../../images/energy/ico_electricity.svg"
+            case EnergyData.Water:
+                return "../../images/energy/ico_water.svg"
+            case EnergyData.Gas:
+                return "../../images/energy/ico_gas.svg"
+            case EnergyData.HotWater:
+                return "../../images/energy/ico_hot_water.svg"
+            case EnergyData.Heat:
+                return "../../images/energy/ico_heating.svg"
+            default:
+                console.log("EnergyDataDelegate, unknown energy type (" + energyType + "), use default icon")
+                return "../../images/energy/ico_electricity.svg"
+            }
         }
-        return "---"
+
+        function formatValue(energyType) {
+            var energyItem = itemObject.getValue(energyType, new Date(), measureType)
+            var value = energyItem.value
+            if (value !== undefined) {
+                return value.toFixed(energyItem.decimals) + " " + energyItem.measureUnit;
+            }
+            return "---"
+        }
+
+        function maxHeight(columnHeight) {
+            return columnHeight * .95
+        }
+
+        function idealGoalHeight(columnHeight) {
+            return columnHeight * .9
+        }
+
+        function loadConsumptionData() {
+            if (monthConsumptionItem === undefined)
+                monthConsumptionItem = itemObject.getValue(EnergyData.CumulativeMonthValue,
+                                                           new Date(), EnergyData.Consumption)
+        }
+
+        // the height of goal line. Can be as the "ideal" goal height or less if
+        // the consumption height is greater than the maximum height.
+        function goalHeight(columnHeight) {
+            loadConsumptionData()
+
+            if (goal === undefined) // the goal line is not shown at all, using hasGoal()
+                return 0.0
+
+            var height = consumption / goal * idealGoalHeight(columnHeight)
+            if (height > maxHeight(columnHeight))
+                return goal / consumption * idealGoalHeight(columnHeight)
+            else
+                return idealGoalHeight(columnHeight)
+        }
+
+        // the height of the consumption bar. It is a value related to the goal
+        // height, and it has a maximum value (in the latter case, the goal height
+        // is decreased proportionally).
+        function getConsumptionHeight(columnHeight) {
+            loadConsumptionData()
+
+            if (consumption === undefined)
+                return 0
+
+            if (goal !== undefined) {
+                var height = consumption / goal * idealGoalHeight(columnHeight)
+                return Math.min(height, maxHeight(columnHeight))
+            }
+            else {
+                // a very simplified representation of the consumption height,
+                // proportionally to the days elapsed in the month.
+                // TODO: find a better representation!
+                var d = new Date()
+                return d.getDate() / 30 * idealGoalHeight(columnHeight)
+            }
+        }
+
+        // return true if the consumption exceed the goal (and, of course, if both are present)
+        function consumptionExceedGoal() {
+            loadConsumptionData()
+
+            if (consumption !== undefined && goal !== undefined) {
+                if (consumption > goal)
+                    return true
+            }
+            return false
+        }
+
+        function hasGoal() {
+            loadConsumptionData()
+            return goal !== undefined
+        }
+
     }
 
     spacing: 5
@@ -56,7 +127,7 @@ Column {
 
             SvgImage {
                 id: energyIcon
-                source: getIcon(itemObject.energyType)
+                source: privateProps.getIcon(itemObject.energyType)
             }
 
             UbuntuLightText {
@@ -70,20 +141,29 @@ Column {
 
     UbuntuLightText {
         font.pixelSize: 18
-        text: formatValue(EnergyData.CumulativeMonthValue, "kwh")
+        text: privateProps.formatValue(EnergyData.CumulativeMonthValue)
         anchors.horizontalCenter: parent.horizontalCenter
         color: "white"
     }
 
     Column {
+
         SvgImage {
             source: "../../images/energy/colonna.svg"
 
             SvgImage {
                 anchors.bottom: parent.bottom
-                source: "../../images/energy/colonna_verde_overview.svg"
-                // TODO: compute height using a very complicated formula...
-                height: 30
+                source: privateProps.consumptionExceedGoal() ? "../../images/energy/colonna_rosso_overview.svg" :
+                    "../../images/energy/colonna_verde_overview.svg"
+                height: privateProps.getConsumptionHeight(parent.height)
+            }
+            SvgImage {
+                id: goalLine
+                source: "../../images/energy/linea_livello_colonna.svg"
+                visible: privateProps.hasGoal()
+                width: parent.width
+                anchors.top: parent.top
+                anchors.topMargin: parent.height - privateProps.goalHeight(parent.height)
             }
         }
         SvgImage {
@@ -114,7 +194,7 @@ Column {
             UbuntuLightText {
                 anchors.centerIn: parent
                 font.pixelSize: 14
-                text: formatValue(EnergyData.CurrentValue, "w")
+                text: privateProps.formatValue(EnergyData.CurrentValue)
             }
         }
     }

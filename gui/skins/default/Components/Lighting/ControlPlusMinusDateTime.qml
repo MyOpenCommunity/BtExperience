@@ -18,69 +18,69 @@ Column {
 
 
     function leftPlusClicked() {
-        if(control.twoFields) {
+        if (control.twoFields) {
             // hour
-            if(leftColumnValue >= 23)
+            if (leftColumnValue >= 23)
                 return
         }
         else {
             // day
-            if(leftColumnValue >= DateTime.daysInMonth(centerColumnValue,"20"+rightColumnValue))
+            if (leftColumnValue >= DateTime.daysInMonth(centerColumnValue,"20"+rightColumnValue))
                 return
         }
         leftColumnValue += 1
     }
 
     function centerPlusClicked() {
-        if(control.twoFields) {
+        if (control.twoFields) {
             // min
-            if(centerColumnValue >= 59)
+            if (centerColumnValue >= 59)
                 return
         }
         else {
             // month
-            if(centerColumnValue >= 12)
+            if (centerColumnValue >= 12)
                 return
         }
         centerColumnValue += 1
     }
 
     function rightPlusClicked() {
-        if(rightColumnValue >= 99)
+        if (rightColumnValue >= 99)
             rightColumnValue = -1
         rightColumnValue += 1
     }
 
     function leftMinusClicked() {
-        if(control.twoFields) {
+        if (control.twoFields) {
             // hour
-            if(leftColumnValue <= 0)
+            if (leftColumnValue <= 0)
                 return
         }
         else {
             // day
-            if(leftColumnValue <= 1)
+            if (leftColumnValue <= 1)
                 return
         }
         leftColumnValue -= 1
     }
 
     function centerMinusClicked() {
-        if(control.twoFields) {
+        if (control.twoFields) {
             // minutes
-            if(centerColumnValue <= 0)
+            if (centerColumnValue <= 0)
                 return
         }
         else {
             // month
-            if(centerColumnValue <= 1)
+            if (centerColumnValue <= 1)
                 return
         }
         centerColumnValue -= 1
     }
 
     function rightMinusClicked() {
-        if(rightColumnValue <= 0)
+        if (rightColumnValue <= 0)
             rightColumnValue = 100
         rightColumnValue -= 1
     }

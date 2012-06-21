@@ -32,12 +32,13 @@ Page {
         id: privateProps
 
         property variant actualFavorite: undefined
+        property variant movingObject: undefined
 
-        function selectObj(object) {
+        function selectObj(favorite) {
             unselectObj()
-            object.z = bgPannable.z + 1
+            favorite.z = bgPannable.z + 1
             bgPannable.visible = true
-            privateProps.actualFavorite = object
+            privateProps.actualFavorite = favorite
         }
 
         function unselectObj() {
@@ -57,6 +58,17 @@ Page {
             createProfileObjects()
         }
 
+        function moveBegin(favorite) {
+            unselectObj()
+            movingObject = favorite
+            moveGrid.state = "shown"
+        }
+
+        function moveEnd() {
+            moveGrid.state = ""
+            movingObject = undefined
+        }
+
         function clearProfileObjects() {
             var len = Script.container.length
             for (var i = 0; i < len; ++i)
@@ -66,8 +78,6 @@ Page {
         function createProfileObjects() {
             for (var i = 0; i < mediaLinks.count; ++i) {
                 var obj = mediaLinks.getObject(i);
-                var y = obj.position.y
-                var x = obj.position.x
                 var text = obj.name
                 var address = obj.address
 
@@ -84,14 +94,13 @@ Page {
                     break
                 }
 
-                var instance = component.createObject(pannableChild, {'x': x, 'y': y, 'text': text, 'address': address})
+                // x and y are absolute coordinates
+                var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
+                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'text': text, 'address': address})
 
-                instance.requestEdit.connect(function (instance) {
-                                                 showEditBox(instance)
-                                             })
-                instance.selected.connect(function (instance) {
-                                              selectObj(instance)
-                                          })
+                instance.requestEdit.connect(showEditBox)
+                instance.selected.connect(selectObj)
+                instance.requestMove.connect(moveBegin)
                 Script.container.push(instance)
             }
         }
@@ -113,12 +122,12 @@ Page {
 
     Component {
         id: cameraItemComponent
-        RssItem { }
+        CameraLink { }
     }
 
     Component {
         id: rssItemComponent
-        CameraLink { }
+        RssItem { }
     }
 
     Component {
@@ -376,6 +385,61 @@ Page {
                 }
                 model: userNotes
                 onCurrentPageChanged: privateProps.unselectObj()
+            }
+
+            Grid {
+                id: moveGrid
+                anchors {
+                    left: parent.left
+                    right: rightArea.left
+                    top: parent.top
+                    bottom: parent.bottom
+                }
+
+                columns: 4
+                rows: 4
+                opacity: 0
+
+                Repeater {
+                    model: moveGrid.columns * moveGrid.rows
+
+                    delegate: Rectangle {
+                        id: rectDelegate
+                        color: "transparent"
+                        width: moveGrid.width / moveGrid.columns
+                        height: moveGrid.height / moveGrid.rows
+                        border {
+                            width: 1
+                            color: "red"
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                // map the coordinates to the quicklink's parent
+                                var absPos = parent.mapToItem(null, x, y)
+                                var itemPos = pannableChild.mapFromItem(null, absPos.x, absPos.y)
+                                privateProps.movingObject.x = itemPos.x
+                                privateProps.movingObject.y = itemPos.y
+                                privateProps.moveEnd()
+                            }
+                        }
+                    }
+                }
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+                }
+
+                states: [
+                    State {
+                        name: "shown"
+                        PropertyChanges {
+                            target: moveGrid
+                            opacity: 1
+                        }
+                    }
+                ]
             }
         }
     }

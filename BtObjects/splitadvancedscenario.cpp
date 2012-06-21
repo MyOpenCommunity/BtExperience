@@ -96,7 +96,7 @@ QString SplitAdvancedScenario::getProgram() const
 QStringList SplitAdvancedScenario::getPrograms() const
 {
 	QStringList result;
-	for(int i = 0; i < program_list.size(); ++i)
+	for (int i = 0; i < program_list.size(); ++i)
 		result << program_list.at(i)->name;
 	return result;
 }
@@ -210,7 +210,7 @@ void SplitAdvancedScenario::setSpeed(SplitProgram::Speed speed)
 
 void SplitAdvancedScenario::ok()
 {
-	if(actual_program.mode == SplitProgram::ModeOff)
+	if (actual_program.mode == SplitProgram::ModeOff)
 		sendOffCommand();
 	else
 		sendScenarioCommand();

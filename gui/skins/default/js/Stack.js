@@ -53,7 +53,7 @@ function _openPage(filename, properties) {
             if (page === null) {
                 logError('Error on creating the object for the page: ' + filename)
                 logError('Properties:')
-                for(var k in properties)
+                for (var k in properties)
                     logError('    ' + k + ": " + properties[k])
                 changePageDone()
                 _deletePages(deletingPages)
