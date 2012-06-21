@@ -17,6 +17,8 @@ class ItemInterface;
 */
 class MediaDataModel : public QAbstractListModel
 {
+friend class TestMediaModel;
+
 	Q_OBJECT
 	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
@@ -56,8 +58,8 @@ public:
 		return item_list.size();
 	}
 
-	void remove(int index);
 	void append(ItemInterface *obj);
+	bool remove(ItemInterface *obj);
 
 signals:
 	void countChanged();
@@ -176,6 +178,8 @@ public:
 		\brief Deletes the specified element in this model from the source model
 	*/
 	Q_INVOKABLE void remove(int index);
+
+	Q_INVOKABLE void remove(QObject *obj);
 
 	/*!
 		\brief Append an object to the source model
