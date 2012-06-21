@@ -3,30 +3,24 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    height: 150
-    width: 212
 
     onChildDestroyed: {
-        itemList.currentIndex = -1
+        paginator.currentIndex = -1
     }
 
-    ListView {
-        id: itemList
-        anchors.fill: parent
-        currentIndex: -1
-        interactive: false
+    PaginatorList {
+        id: paginator
 
         delegate: MenuItemDelegate {
+            itemObject: modelList.get(index)
+            status: -1
             name: model.name
             hasChild: true
-            onDelegateClicked: {
-                var clickedItem = modelList.get(index)
-                column.loadColumn(clickedItem.component, clickedItem.name)
-            }
+            onClicked: column.loadColumn(itemObject.component, itemObject.name)
         }
 
         model: modelList
-
+        onCurrentPageChanged: column.closeChild()
     }
 
     ListModel {
@@ -53,6 +47,3 @@ MenuColumn {
         Item {}
     }
 }
-
-
-
