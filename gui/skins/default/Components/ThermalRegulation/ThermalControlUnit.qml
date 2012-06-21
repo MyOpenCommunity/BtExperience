@@ -12,10 +12,6 @@ MenuColumn {
 
     ObjectModel {
         id: centralProbe
-        // NOTE in case the central is 4 zones we must retrieve the temperature
-        // from the associated probe; we don't know if the probe is with or
-        // without fancoil; we look for both cases: one will return the probe,
-        // the other will not return anything
         filters: [
             {objectId: ObjectInterface.IdThermalControlledProbe, objectKey: column.dataModel.objectKey},
             {objectId: ObjectInterface.IdThermalControlledProbeFancoil, objectKey: column.dataModel.objectKey}
