@@ -64,7 +64,6 @@ ScreenSaver 1.0 ScreenSaver.qml
 ScreenSaverBouncingImage 1.0 ScreenSaverBouncingImage.qml
 ScreenSaverRectangles 1.0 ScreenSaverRectangles.qml
 SlideAnimation 1.0 SlideAnimation.qml
-SmallButton 1.0 SmallButton.qml
 SvgImage 1.0 SvgImage.qml
 Switch 1.0 Switch.qml
 ToolBar 1.0 ToolBar.qml

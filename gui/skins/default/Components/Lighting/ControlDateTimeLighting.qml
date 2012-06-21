@@ -141,7 +141,7 @@ Item {
         visible: !control.enabled
     }
 
-    SmallButton {
+    ButtonImageThreeStates {
         id: buttonLeftPlus
         z: 1
         anchors {
@@ -155,11 +155,11 @@ Item {
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         status: 0
-
-        onButtonClicked: leftPlusClicked()
+        timerEnabled: true
+        onClicked: leftPlusClicked()
     }
 
-    SmallButton {
+    ButtonImageThreeStates {
         id: buttonCenterPlus
         z: 1
         anchors {
@@ -173,11 +173,11 @@ Item {
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         status: 0
-
-        onButtonClicked: centerPlusClicked()
+        timerEnabled: true
+        onClicked: centerPlusClicked()
     }
 
-    SmallButton {
+    ButtonImageThreeStates {
         id: buttonRightPlus
         z: 1
         anchors {
@@ -192,8 +192,8 @@ Item {
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         status: 0
-
-        onButtonClicked: rightPlusClicked()
+        timerEnabled: true
+        onClicked: rightPlusClicked()
     }
 
     SvgImage {
@@ -207,7 +207,7 @@ Item {
         }
     }
 
-    SmallButton {
+    ButtonImageThreeStates {
         id: buttonLeftMinus
         z: 1
         anchors {
@@ -221,11 +221,11 @@ Item {
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         status: 0
-
-        onButtonClicked: leftMinusClicked()
+        timerEnabled: true
+        onClicked: leftMinusClicked()
     }
 
-    SmallButton {
+    ButtonImageThreeStates {
         id: buttonCenterMinus
         z: 1
         anchors {
@@ -239,11 +239,11 @@ Item {
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         status: 0
-
-        onButtonClicked: centerMinusClicked()
+        timerEnabled: true
+        onClicked: centerMinusClicked()
     }
 
-    SmallButton {
+    ButtonImageThreeStates {
         id: buttonRightMinus
         z: 1
         anchors {
@@ -258,8 +258,8 @@ Item {
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         status: 0
-
-        onButtonClicked: rightMinusClicked()
+        timerEnabled: true
+        onClicked: rightMinusClicked()
     }
 
     UbuntuLightText {
