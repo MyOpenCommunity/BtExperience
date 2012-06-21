@@ -299,7 +299,10 @@ void Light::setFTime(Light::FixedTimingType f)
 
 void Light::setActiveWithTiming()
 {
-	dev->variableTiming(hours, minutes, seconds);
+	if (ectime)
+		dev->variableTiming(hours, minutes, seconds);
+	else
+		dev->fixedTiming(ftime);
 }
 
 void Light::valueReceived(const DeviceValues &values_list)

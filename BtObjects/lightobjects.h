@@ -104,6 +104,12 @@ public:
 	/// Fixed timing type. \sa LightingDevice::fixedTiming
 	enum FixedTimingType
 	{
+		/*
+		  Due to bug https://bugreports.qt-project.org/browse/QTBUG-21672
+		  a -1 defined in enum is converted to undefined in QML
+		  Bug will be solved in Qt 5, for now, we have to trick some values
+		  in QML code
+		  */
 		/// fixed timing is not enabled/known
 		FixedTimingDisabled = -1,
 		/// 1 minute (11 in xml file)
