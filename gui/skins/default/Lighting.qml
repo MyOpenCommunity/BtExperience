@@ -6,5 +6,6 @@ SystemPage {
     source: "images/illuminazione.jpg"
     text: qsTr("lighting")
     rootColumn: Component { LightingItems {} }
+    names: LightingNames {}
 }
 
