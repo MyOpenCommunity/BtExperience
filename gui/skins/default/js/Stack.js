@@ -40,8 +40,7 @@ function _openPage(filename, properties) {
     var page = undefined
     var deletingPages = []
     var parachute = 0
-    while (filename !== "")
-    {
+    while (filename !== "") {
         // now, Stack.js is in a js subdir so we have to trick the filename
         var page_component = Qt.createComponent("../" + filename)
         // The component status (like the Component.Ready that has 1 as value) is not currently
@@ -78,8 +77,7 @@ function _openPage(filename, properties) {
         }
 
         ++parachute
-        if (parachute >= 20)
-        {
+        if (parachute >= 20) {
             logError("Maximum number skip pages reached, aborting")
             changePageDone()
             _deletePages(deletingPages)
@@ -144,7 +142,7 @@ function backToHome() {
 
 function changePageDone() {
     for (var i = 0; i < stack.length; i++) {
-        if (i != current_index)
+        if (i !== current_index)
             stack[i].visible = false
 
         if (i > current_index)
