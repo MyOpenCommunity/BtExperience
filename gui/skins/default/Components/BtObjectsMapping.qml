@@ -12,11 +12,15 @@ import BtObjects 1.0
 QtObject {
     function getComponent(objectId) {
         switch (objectId) {
-        case ObjectInterface.IdLight:
+        case ObjectInterface.IdLightCustom:
             return Qt.createComponent("Lighting/Light.qml")
-        case ObjectInterface.IdDimmer:
+        case ObjectInterface.IdLightFixed:
+            return Qt.createComponent("Lighting/Light.qml")
+        case ObjectInterface.IdDimmerFixed:
             return Qt.createComponent("Lighting/Dimmer.qml")
-        case ObjectInterface.IdDimmer100:
+        case ObjectInterface.IdDimmer100Custom:
+            return Qt.createComponent("Lighting/Dimmer.qml")
+        case ObjectInterface.IdDimmer100Fixed:
             return Qt.createComponent("Lighting/Dimmer.qml")
         case ObjectInterface.IdLightGroup:
         case ObjectInterface.IdDimmerGroup:
