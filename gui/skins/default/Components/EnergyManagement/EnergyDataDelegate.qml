@@ -11,7 +11,8 @@ Column {
 
     QtObject {
         id: privateProps
-        property variant monthConsumptionItem: undefined
+        property variant monthConsumptionItem: itemObject.getValue(EnergyData.CumulativeMonthValue,
+                                                                   new Date(), EnergyData.Consumption)
         property variant goal: monthConsumptionItem !== undefined ? monthConsumptionItem.consumptionGoal : 0.0
         property variant consumption: monthConsumptionItem !== undefined ? monthConsumptionItem.value : 0.0
 
@@ -50,17 +51,9 @@ Column {
             return columnHeight * .9
         }
 
-        function loadConsumptionData() {
-            if (monthConsumptionItem === undefined)
-                monthConsumptionItem = itemObject.getValue(EnergyData.CumulativeMonthValue,
-                                                           new Date(), EnergyData.Consumption)
-        }
-
         // the height of goal line. Can be as the "ideal" goal height or less if
         // the consumption height is greater than the maximum height.
         function goalHeight(columnHeight) {
-            loadConsumptionData()
-
             if (goal === undefined) // the goal line is not shown at all, using hasGoal()
                 return 0.0
 
@@ -75,8 +68,6 @@ Column {
         // height, and it has a maximum value (in the latter case, the goal height
         // is decreased proportionally).
         function getConsumptionHeight(columnHeight) {
-            loadConsumptionData()
-
             if (consumption === undefined)
                 return 0
 
@@ -95,8 +86,6 @@ Column {
 
         // return true if the consumption exceed the goal (and, of course, if both are present)
         function consumptionExceedGoal() {
-            loadConsumptionData()
-
             if (consumption !== undefined && goal !== undefined) {
                 if (consumption > goal)
                     return true
@@ -105,7 +94,6 @@ Column {
         }
 
         function hasGoal() {
-            loadConsumptionData()
             return goal !== undefined
         }
 
