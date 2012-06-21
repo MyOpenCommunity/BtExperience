@@ -7,6 +7,9 @@ MenuColumn {
 
     onChildDestroyed: itemList.currentIndex = -1
 
+    width: 212
+    height: 250
+
     PaginatorList {
         id: itemList
         currentIndex: -1
