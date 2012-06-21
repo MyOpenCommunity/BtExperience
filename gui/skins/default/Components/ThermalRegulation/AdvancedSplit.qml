@@ -16,9 +16,6 @@ MenuColumn {
         AdvancedSplitModalities {}
     }
 
-    width: 212
-    height: paginator.height
-
     QtObject {
         id: privateProps
         property int currentIndex: -1
@@ -62,10 +59,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                column.loadColumn(
-                            programListSplit,
-                            name,
-                            dataModel)
+                column.loadColumn(programListSplit, name, dataModel)
             }
         }
 
@@ -78,15 +72,23 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                column.loadColumn(
-                            advancedSplitModalities,
-                            name,
-                            dataModel)
+                column.loadColumn(advancedSplitModalities, name, dataModel)
             }
         }
 
         AnimatedLoader {
             id: options
+        }
+    }
+
+    Component {
+        id: off
+        ButtonOkCancel {
+            onCancelClicked: column.closeColumn()
+            onOkClicked: {
+                dataModel.ok()
+                column.closeColumn()
+            }
         }
     }
 
@@ -205,17 +207,6 @@ MenuColumn {
                     dataModel.ok()
                     column.closeColumn()
                 }
-            }
-        }
-    }
-
-    Component {
-        id: off
-        ButtonOkCancel {
-            onCancelClicked: column.closeColumn()
-            onOkClicked: {
-                dataModel.ok()
-                column.closeColumn()
             }
         }
     }
