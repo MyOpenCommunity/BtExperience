@@ -75,6 +75,14 @@ Page {
                 Script.container.pop().destroy()
         }
 
+        function deleteFavorite(favorite) {
+            unselectObj()
+            var index = Script.container.indexOf(favorite)
+            var deletingObject = Script.container.splice(index, 1)[0]
+            mediaLinks.remove(favorite.itemObject)
+            deletingObject.destroy()
+        }
+
         function createProfileObjects() {
             for (var i = 0; i < mediaLinks.count; ++i) {
                 var obj = mediaLinks.getObject(i);
@@ -101,6 +109,7 @@ Page {
                 instance.requestEdit.connect(showEditBox)
                 instance.selected.connect(selectObj)
                 instance.requestMove.connect(moveBegin)
+                instance.requestDelete.connect(deleteFavorite)
                 Script.container.push(instance)
             }
         }

@@ -22,6 +22,7 @@ Item {
     signal clicked()
     signal editCompleted()
     signal requestMove(variant favorite)
+    signal requestDelete(variant favorite)
 
     width: column.width + 10
     height: column.height + 10
@@ -215,6 +216,13 @@ Item {
                 source: "../images/icon_trash.png"
                 anchors.fill: parent
                 anchors.margins: 10
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        bgQuick.requestDelete(bgQuick)
+                    }
+                }
             }
         }
 
