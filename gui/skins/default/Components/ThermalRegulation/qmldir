@@ -2,7 +2,9 @@ AdvancedSplit 1.0 AdvancedSplit.qml
 AdvancedSplitModalities 1.0 AdvancedSplitModalities.qml
 AirConditioning 1.0 AirConditioning.qml
 BasicSplit 1.0 BasicSplit.qml
+ControlPlusMinusDateTime 1.0 ControlPlusMinusDateTime.qml
 DateSelect 1.0 DateSelect.qml
+DateTimeButton 1.0 DateTimeButton.qml
 ProgramListSplit 1.0 ProgramListSplit.qml
 ThermalControlUnit 1.0 ThermalControlUnit.qml
 ThermalControlUnitDate 1.0 ThermalControlUnitDate.qml
