@@ -570,6 +570,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<EnergyData>(
 				uri, 1, 0, "EnergyData",
 				"unable to create an EnergyData instance");
+	qmlRegisterUncreatableType<Light>(
+				uri, 1, 0, "Light",
+				"unable to create an Light instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
