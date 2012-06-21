@@ -149,10 +149,12 @@ Item {
             left: parent.left
         }
 
-        SvgImage {
-            anchors.centerIn: parent
-            source: "../../images/common/symbol_plus.svg"
-        }
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImage: "../images/common/ico_piu.svg"
+        pressedImage: "../images/common/ico_piu_P.svg"
+        status: 0
 
         onButtonClicked: leftPlusClicked()
     }
@@ -165,10 +167,12 @@ Item {
             left: buttonLeftPlus.right
         }
 
-        SvgImage {
-            anchors.centerIn: parent
-            source: "../../images/common/symbol_plus.svg"
-        }
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImage: "../images/common/ico_piu.svg"
+        pressedImage: "../images/common/ico_piu_P.svg"
+        status: 0
 
         onButtonClicked: centerPlusClicked()
     }
@@ -182,10 +186,12 @@ Item {
         }
         visible: !control.twoFields
 
-        SvgImage {
-            anchors.centerIn: parent
-            source: "../../images/common/symbol_plus.svg"
-        }
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImage: "../images/common/ico_piu.svg"
+        pressedImage: "../images/common/ico_piu_P.svg"
+        status: 0
 
         onButtonClicked: rightPlusClicked()
     }
@@ -209,10 +215,12 @@ Item {
             left: parent.left
         }
 
-        SvgImage {
-            anchors.centerIn: parent
-            source: "../../images/common/symbol_minus.svg"
-        }
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImage: "../images/common/ico_meno.svg"
+        pressedImage: "../images/common/ico_meno_P.svg"
+        status: 0
 
         onButtonClicked: leftMinusClicked()
     }
@@ -225,10 +233,12 @@ Item {
             left: buttonLeftMinus.right
         }
 
-        SvgImage {
-            anchors.centerIn: parent
-            source: "../../images/common/symbol_minus.svg"
-        }
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImage: "../images/common/ico_meno.svg"
+        pressedImage: "../images/common/ico_meno_P.svg"
+        status: 0
 
         onButtonClicked: centerMinusClicked()
     }
@@ -242,10 +252,12 @@ Item {
         }
         visible: !control.twoFields
 
-        SvgImage {
-            anchors.centerIn: parent
-            source: "../../images/common/symbol_minus.svg"
-        }
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImage: "../images/common/ico_meno.svg"
+        pressedImage: "../images/common/ico_meno_P.svg"
+        status: 0
 
         onButtonClicked: rightMinusClicked()
     }
@@ -255,8 +267,7 @@ Item {
 
         text: formatNumberLength(leftColumnValue, 2)
         color: "#5b5b5b"
-        font.pixelSize: 24
-        font.bold: true
+        font.pixelSize: 22
         anchors.horizontalCenter: buttonLeftMinus.horizontalCenter
         anchors.bottom: buttonLeftMinus.top
         anchors.bottomMargin: privateProps.textBottomMargin
@@ -267,8 +278,7 @@ Item {
 
         text: control.separator
         color: "#5b5b5b"
-        font.pixelSize: 24
-        font.bold: true
+        font.pixelSize: 22
         anchors.bottom: buttonCenterMinus.top
         anchors.bottomMargin: privateProps.textBottomMargin
         anchors.left: buttonCenterMinus.left
@@ -279,10 +289,9 @@ Item {
     UbuntuLightText {
         id: centerText
 
-        text: formatNumberLength(centerColumnValue, 2)
+        text: formatNumberLength(centerColumnValue, 2) + (twoFields ? "" : "'")
         color: "#5b5b5b"
-        font.pixelSize: 24
-        font.bold: true
+        font.pixelSize: 22
         anchors.horizontalCenter: buttonCenterMinus.horizontalCenter
         anchors.bottom: buttonCenterMinus.top
         anchors.bottomMargin: privateProps.textBottomMargin
@@ -293,8 +302,7 @@ Item {
 
         color: "#5b5b5b"
         text: control.separator
-        font.bold: true
-        font.pixelSize: 24
+        font.pixelSize: 22
         visible: !twoFields
         anchors.bottom: buttonCenterMinus.top
         anchors.bottomMargin: privateProps.textBottomMargin
@@ -305,10 +313,9 @@ Item {
     UbuntuLightText {
         id: rightText
 
-        text: formatNumberLength(rightColumnValue, 2)
+        text: formatNumberLength(rightColumnValue, 2) + "\""
         color: "#5b5b5b"
-        font.pixelSize: 24
-        font.bold: true
+        font.pixelSize: 22
         visible: !twoFields
         anchors.horizontalCenter: buttonRightMinus.horizontalCenter
         anchors.bottom: buttonRightMinus.top
