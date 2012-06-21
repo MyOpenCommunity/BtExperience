@@ -105,6 +105,7 @@ void TestMultiMediaPlayer::testSanity()
 
 void TestMultiMediaPlayer::testPlay()
 {
+	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	QVariantMap info;
 	QVariant last_time;
 
@@ -258,6 +259,7 @@ void TestMultiMediaPlayer::testMultiplePauseResume()
 
 void TestMultiMediaPlayer::testSetSource()
 {
+	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	QVariantMap info;
 	QVariant last_time;
 
@@ -310,6 +312,7 @@ void TestMultiMediaPlayer::testSetSource()
 
 void TestMultiMediaPlayer::testSetSourcePaused()
 {
+	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	QVariantMap info;
 	QVariant last_time;
 
@@ -371,6 +374,7 @@ void TestMultiMediaPlayer::testSetSourcePaused()
 
 void TestMultiMediaPlayer::testSetEmptySource()
 {
+	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	player->setCurrentSource("files/audio/d3.mp3");
 	player->play();
 
@@ -407,6 +411,7 @@ void TestMultiMediaPlayer::testSetEmptySource()
 
 void TestMultiMediaPlayer::testSeek()
 {
+	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	QVariantMap info;
 	QVariant last_time;
 	int delta;
