@@ -8,9 +8,9 @@ Item {
     id: control
 
     property variant itemObject: undefined
-    property int leftColumnValue: itemObject === undefined ? 1 : itemObject.hours
-    property int centerColumnValue: itemObject === undefined ? 1 : itemObject.minutes
-    property int rightColumnValue: itemObject === undefined ? 13 : itemObject.seconds
+    property int leftColumnValue: mode === 0 ? itemObject.hours : itemObject.days
+    property int centerColumnValue: mode === 0 ? itemObject.minutes : itemObject.months
+    property int rightColumnValue: mode === 0 ? itemObject.seconds : itemObject.years
     property string separator: ":"
     property bool twoFields: false // if true right disappears
     property int mode: 0 // 0 - hms, 1 - dmy
@@ -25,106 +25,6 @@ Item {
         id: privateProps
         property int textBottomMargin: 1
         property int separatorOffset: -3
-    }
-
-    onLeftColumnValueChanged: {
-        if (itemObject === undefined)
-            return // nothing to do
-        itemObject.hours = leftColumnValue
-    }
-    onCenterColumnValueChanged: {
-        if (itemObject === undefined)
-            return // nothing to do
-        itemObject.minutes = centerColumnValue
-    }
-    onRightColumnValueChanged: {
-        if (itemObject === undefined)
-            return // nothing to do
-        itemObject.seconds = rightColumnValue
-    }
-
-    function leftPlusClicked() {
-        if (control.mode === 0) {
-            // hour
-            if (leftColumnValue >= 23)
-                return
-        }
-        else {
-            // day
-            if (leftColumnValue >= DateTime.daysInMonth(centerColumnValue,"20"+rightColumnValue))
-                return
-        }
-        leftColumnValue += 1
-    }
-
-    function centerPlusClicked() {
-        if (control.mode === 0) {
-            // min
-            if (centerColumnValue >= 59)
-                return
-        }
-        else {
-            // month
-            if (centerColumnValue >= 12)
-                return
-        }
-        centerColumnValue += 1
-    }
-
-    function rightPlusClicked() {
-        if (control.mode === 0) {
-            // sec
-            if (rightColumnValue >= 59)
-                return
-        }
-        else {
-            // year
-            if (rightColumnValue >= 99)
-                rightColumnValue = -1 // rotate to zero
-        }
-        rightColumnValue += 1
-    }
-
-    function leftMinusClicked() {
-        if (control.mode === 0) {
-            // hour
-            if (leftColumnValue <= 0)
-                return
-        }
-        else {
-            // day
-            if (leftColumnValue <= 1)
-                return
-        }
-        leftColumnValue -= 1
-    }
-
-    function centerMinusClicked() {
-        if (control.mode === 0) {
-            // minutes
-            if (centerColumnValue <= 0)
-                return
-        }
-        else {
-            // month
-            if (centerColumnValue <= 1)
-                return
-        }
-        centerColumnValue -= 1
-    }
-
-    function rightMinusClicked() {
-        if (control.mode === 0) {
-            // sec
-            if (rightColumnValue <= 0)
-                return
-        }
-        else {
-            // year
-            if (rightColumnValue <= 0)
-                rightColumnValue = 100 // rotate to 99
-        }
-        rightColumnValue -= 1
     }
 
     function formatNumberLength(num, length) {
@@ -156,7 +56,7 @@ Item {
         pressedImage: "../images/common/ico_piu_P.svg"
         status: 0
         timerEnabled: true
-        onClicked: leftPlusClicked()
+        onClicked: mode === 0 ? itemObject.hours += 1 : itemObject.days += 1
     }
 
     ButtonImageThreeStates {
@@ -174,7 +74,7 @@ Item {
         pressedImage: "../images/common/ico_piu_P.svg"
         status: 0
         timerEnabled: true
-        onClicked: centerPlusClicked()
+        onClicked: mode === 0 ? itemObject.minutes += 1 : itemObject.months += 1
     }
 
     ButtonImageThreeStates {
@@ -193,7 +93,7 @@ Item {
         pressedImage: "../images/common/ico_piu_P.svg"
         status: 0
         timerEnabled: true
-        onClicked: rightPlusClicked()
+        onClicked: mode === 0 ? itemObject.seconds += 1 : itemObject.years += 1
     }
 
     SvgImage {
@@ -222,7 +122,7 @@ Item {
         pressedImage: "../images/common/ico_meno_P.svg"
         status: 0
         timerEnabled: true
-        onClicked: leftMinusClicked()
+        onClicked: mode === 0 ? itemObject.hours -= 1 : itemObject.days -= 1
     }
 
     ButtonImageThreeStates {
@@ -240,7 +140,7 @@ Item {
         pressedImage: "../images/common/ico_meno_P.svg"
         status: 0
         timerEnabled: true
-        onClicked: centerMinusClicked()
+        onClicked: mode === 0 ? itemObject.minutes -= 1 : itemObject.months -= 1
     }
 
     ButtonImageThreeStates {
@@ -259,7 +159,7 @@ Item {
         pressedImage: "../images/common/ico_meno_P.svg"
         status: 0
         timerEnabled: true
-        onClicked: rightMinusClicked()
+        onClicked: mode === 0 ? itemObject.seconds -= 1 : itemObject.years -= 1
     }
 
     UbuntuLightText {

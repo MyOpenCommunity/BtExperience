@@ -334,30 +334,56 @@ class ThermalControlUnitTimedProgram : public ThermalControlUnitProgram
 	Q_OBJECT
 
 	/*!
-		\brief Sets and gets the date used in the modality
+		\brief Sets and gets hour in holiday or weekend timed program
 	*/
-	Q_PROPERTY(QDate date READ getDate WRITE setDate NOTIFY dateChanged)
-
+	Q_PROPERTY(int hours READ getHours WRITE setHours NOTIFY hoursChanged)
 	/*!
-		\brief Sets and gets the time used in the modality
+		\brief Sets and gets minute in holiday or weekend timed program
 	*/
-	Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
+	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
+	/*!
+		\brief Sets and gets second in holiday or weekend timed program
+	*/
+	Q_PROPERTY(int seconds READ getSeconds WRITE setSeconds NOTIFY secondsChanged)
+	/*!
+		\brief Sets and gets day in holiday or weekend timed program
+	*/
+	Q_PROPERTY(int days READ getDays WRITE setDays NOTIFY daysChanged)
+	/*!
+		\brief Sets and gets month in holiday or weekend timed program
+	*/
+	Q_PROPERTY(int months READ getMonths WRITE setMonths NOTIFY monthsChanged)
+	/*!
+		\brief Sets and gets year in holiday or weekend timed program
+	*/
+	Q_PROPERTY(int years READ getYears WRITE setYears NOTIFY yearsChanged)
 
 public:
 	ThermalControlUnitTimedProgram(QString name, int object_id, ObjectDataModel *programs, ThermalDevice *dev);
 
-	QDate getDate() const;
-	void setDate(QDate date);
-
-	QTime getTime() const;
-	void setTime(QTime time);
+	int getHours() const;
+	void setHours(int newValue);
+	int getMinutes() const;
+	void setMinutes(int newValue);
+	int getSeconds() const;
+	void setSeconds(int newValue);
+	int getDays() const;
+	void setDays(int newValue);
+	int getMonths() const;
+	void setMonths(int newValue);
+	int getYears() const;
+	void setYears(int newValue);
 
 public slots:
 	virtual void apply();
 
 signals:
-	void dateChanged();
-	void timeChanged();
+	void hoursChanged();
+	void minutesChanged();
+	void secondsChanged();
+	void daysChanged();
+	void monthsChanged();
+	void yearsChanged();
 };
 
 
