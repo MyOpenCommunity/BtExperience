@@ -45,15 +45,15 @@ Column {
 
     ButtonOkCancel {
         onOkClicked: {
-            source.alertOkClicked()
-            source = null
+            alert.source.alertOkClicked()
+            alert.source = null
             alert.closeAlert()
         }
 
         onCancelClicked: {
-            if (source.alertCancelClicked)
-                source.alertCancelClicked()
-            source = null
+            if (alert.source.alertCancelClicked)
+                alert.source.alertCancelClicked()
+            alert.source = null
             alert.closeAlert()
         }
     }
