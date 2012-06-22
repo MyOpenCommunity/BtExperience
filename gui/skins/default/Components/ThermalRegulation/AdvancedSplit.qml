@@ -78,6 +78,11 @@ MenuColumn {
 
         AnimatedLoader {
             id: options
+            onItemChanged: {
+                // TODO when loaded item changes menu height is not updated
+                // this trick is to force height update
+                paginator.height = programItem.height + modalityItem.height + item.height
+            }
         }
     }
 
