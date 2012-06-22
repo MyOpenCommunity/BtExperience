@@ -11,6 +11,10 @@ Item {
         id: energyManagementNames
     }
 
+    LightingNames {
+        id: lightingNames
+    }
+
     SettingsNames {
         id: settingsNames
     }
@@ -27,6 +31,7 @@ Item {
     function _init(container) {
         antintrusionNames._init(container)
         energyManagementNames._init(container)
+        lightingNames._init(container)
         settingsNames._init(container)
         thermalNames._init(container)
         videoDoorEntryNames._init(container)
