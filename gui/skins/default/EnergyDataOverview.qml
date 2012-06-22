@@ -104,7 +104,7 @@ Page {
             delegate: EnergyDataDelegate {
                 id: delegate
                 itemObject: energiesCounters.getObject(index)
-                description: translations.get("ENERGY_TYPE", delegate.itemObject.energyType)
+                description: itemObject.name
                 measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
             }
             spacing: 106
@@ -112,7 +112,7 @@ Page {
         }
     }
 
-    Names {
+    EnergyManagementNames {
         id: translations
     }
 
