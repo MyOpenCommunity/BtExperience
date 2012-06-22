@@ -8,7 +8,6 @@ DateTimeButton 1.0 DateTimeButton.qml
 ProgramListSplit 1.0 ProgramListSplit.qml
 ThermalControlUnit 1.0 ThermalControlUnit.qml
 ThermalControlUnitModalities 1.0 ThermalControlUnitModalities.qml
-ThermalControlUnitScenarios 1.0 ThermalControlUnitScenarios.qml
 ThermalControlUnitSeasons 1.0 ThermalControlUnitSeasons.qml
 ThermalControlledProbe 1.0 ThermalControlledProbe.qml
 ThermalControlledProbeModalities 1.0 ThermalControlledProbeModalities.qml

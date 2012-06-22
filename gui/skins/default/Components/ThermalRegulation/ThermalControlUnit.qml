@@ -28,11 +28,6 @@ MenuColumn {
         ThermalControlUnitModalities {}
     }
 
-    Component {
-        id: thermalControlUnitScenarios
-        ThermalControlUnitScenarios {}
-    }
-
     width: 212
     height: seasonItem.height + modalityItem.height + itemLoader.height
 
@@ -437,19 +432,11 @@ MenuColumn {
             Column {
                 property variant objModel
 
-                MenuItem {
-                    name: qsTr("next scenario")
-                    description: objModel.scenarioDescription
-                    hasChild: true
-                    state: privateProps.currentElement === 3 ? "selected" : ""
-                    onClicked: {
-                        column.loadColumn(
-                                    thermalControlUnitScenarios,
-                                    qsTr("scenarios"),
-                                    objModel)
-                        if (privateProps.currentElement !== 3)
-                            privateProps.currentElement = 3
-                    }
+                ControlLeftRightWithTitle {
+                    title: qsTr("next scenario")
+                    text: objModel.scenarioDescription
+                    onLeftClicked: objModel.scenarioIndex -= 1
+                    onRightClicked: objModel.scenarioIndex += 1
                 }
 
                 ButtonOkCancel {
