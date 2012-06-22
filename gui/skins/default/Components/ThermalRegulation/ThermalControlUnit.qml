@@ -35,6 +35,14 @@ MenuColumn {
         id: privateProps
         property int currentElement: -1
         property int pendingSeason: -1
+
+        function getDateTime(objModel) {
+            var dt = new Date(objModel.months+"/"+objModel.days+"/"+objModel.years)
+            dt.setHours(objModel.hours)
+            dt.setMinutes(objModel.minutes)
+            dt.setSeconds(objModel.seconds)
+            return dt
+        }
     }
 
     function okClicked() {
@@ -193,31 +201,20 @@ MenuColumn {
                     }
                 }
 
-                ControlDateTime {
+                ControlSetDateTime {
                     id: dateTime
-                    text: qsTr("valid until")
-                    date: DateTime.format(objModel.date)["date"]
-                    time: DateTime.format(objModel.date)["time"]
 
-                    function checkReset() {
-                        if (privateProps.currentElement !== -1)
-                            resetSelection()
+                    date: DateTime.format(privateProps.getDateTime(objModel))["date"]
+                    time: DateTime.format(privateProps.getDateTime(objModel))["time"]
+
+                    onStatusChanged: {
+                        if (status === 0)
+                            column.closeChild()
+                        else
+                            column.loadColumn(dateSelect, column.title, objModel)
                     }
 
-                    Component.onCompleted: {
-                        column.childDestroyed.connect(resetSelection)
-                        privateProps.currentElementChanged.connect(checkReset)
-                    }
-
-                    onDateClicked: {
-                        column.loadColumn(dateSelect, qsTr("date"), objModel, {"twoFields": false})
-                        privateProps.currentElement = -1
-                    }
-
-                    onTimeClicked: {
-                        column.loadColumn(dateSelect, qsTr("time"), objModel, {"twoFields": true})
-                        privateProps.currentElement = -1
-                    }
+                    onEditClicked: status === 0 ? status = 1 : status = 0
                 }
 
                 ControlLeftRightWithTitle {
