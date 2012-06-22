@@ -273,7 +273,7 @@ int ThermalControlUnitTimedProgram::getHours() const
 void ThermalControlUnitTimedProgram::setHours(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
-	if (newValue == time.hour())
+	if (newValue == time.hour() || newValue < 0 || newValue > 23)
 		return;
 	time.setHMS(newValue, time.minute(), time.second());
 	to_apply[TIME] = time;
@@ -289,7 +289,7 @@ int ThermalControlUnitTimedProgram::getMinutes() const
 void ThermalControlUnitTimedProgram::setMinutes(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
-	if (newValue == time.minute())
+	if (newValue == time.minute() || newValue < 0 || newValue > 59)
 		return;
 	time.setHMS(time.hour(), newValue, time.second());
 	to_apply[TIME] = time;
@@ -305,7 +305,7 @@ int ThermalControlUnitTimedProgram::getSeconds() const
 void ThermalControlUnitTimedProgram::setSeconds(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
-	if (newValue == time.second())
+	if (newValue == time.second() || newValue < 0 || newValue > 59)
 		return;
 	time.setHMS(time.hour(), time.minute(), newValue);
 	to_apply[TIME] = time;
@@ -323,7 +323,8 @@ void ThermalControlUnitTimedProgram::setDays(int newValue)
 	QDate date = to_apply[DATE].toDate();
 	if (newValue == date.day())
 		return;
-	date.setDate(date.year(), date.month(), newValue);
+	if (!date.setDate(date.year(), date.month(), newValue))
+		return;
 	to_apply[DATE] = date;
 	emit daysChanged();
 }
@@ -339,7 +340,8 @@ void ThermalControlUnitTimedProgram::setMonths(int newValue)
 	QDate date = to_apply[DATE].toDate();
 	if (newValue == date.month())
 		return;
-	date.setDate(date.year(), newValue, date.day());
+	if (!date.setDate(date.year(), newValue, date.day()))
+		return;
 	to_apply[DATE] = date;
 	emit monthsChanged();
 }
@@ -355,7 +357,8 @@ void ThermalControlUnitTimedProgram::setYears(int newValue)
 	QDate date = to_apply[DATE].toDate();
 	if (newValue == date.year())
 		return;
-	date.setDate(newValue, date.month(), date.day());
+	if (!date.setDate(newValue, date.month(), date.day()))
+		return;
 	to_apply[DATE] = date;
 	emit yearsChanged();
 }
