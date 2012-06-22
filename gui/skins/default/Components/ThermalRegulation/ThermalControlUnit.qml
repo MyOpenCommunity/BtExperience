@@ -29,11 +29,6 @@ MenuColumn {
     }
 
     Component {
-        id: thermalControlUnitPrograms
-        ThermalControlUnitPrograms {}
-    }
-
-    Component {
         id: thermalControlUnitScenarios
         ThermalControlUnitScenarios {}
     }
@@ -230,19 +225,11 @@ MenuColumn {
                     }
                 }
 
-                MenuItem {
-                    name: qsTr("next program")
-                    description: objModel.programDescription
-                    hasChild: true
-                    state: privateProps.currentElement === 3 ? "selected" : ""
-                    onClicked: {
-                        column.loadColumn(
-                                    thermalControlUnitPrograms,
-                                    qsTr("programs"),
-                                    objModel)
-                        if (privateProps.currentElement !== 3)
-                            privateProps.currentElement = 3
-                    }
+                ControlLeftRightWithTitle {
+                    title: qsTr("next program")
+                    text: objModel.programDescription
+                    onLeftClicked: objModel.programIndex -= 1
+                    onRightClicked: objModel.programIndex += 1
                 }
 
                 ButtonOkCancel {
@@ -312,19 +299,11 @@ MenuColumn {
             Column {
                 property variant objModel
 
-                MenuItem {
-                    name: qsTr("next program")
-                    description: objModel.programDescription
-                    hasChild: true
-                    state: privateProps.currentElement === 3 ? "selected" : ""
-                    onClicked: {
-                        column.loadColumn(
-                                    thermalControlUnitPrograms,
-                                    qsTr("programs"),
-                                    objModel)
-                        if (privateProps.currentElement !== 3)
-                            privateProps.currentElement = 3
-                    }
+                ControlLeftRightWithTitle {
+                    title: qsTr("next program")
+                    text: objModel.programDescription
+                    onLeftClicked: objModel.programIndex -= 1
+                    onRightClicked: objModel.programIndex += 1
                 }
 
                 ButtonOkCancel {
@@ -432,19 +411,11 @@ MenuColumn {
                     }
                 }
 
-                MenuItem {
-                    name: qsTr("next program")
-                    description: objModel.programDescription
-                    hasChild: true
-                    state: privateProps.currentElement === 3 ? "selected" : ""
-                    onClicked: {
-                        column.loadColumn(
-                                    thermalControlUnitPrograms,
-                                    qsTr("programs"),
-                                    objModel)
-                        if (privateProps.currentElement !== 3)
-                            privateProps.currentElement = 3
-                    }
+                ControlLeftRightWithTitle {
+                    title: qsTr("next program")
+                    text: objModel.programDescription
+                    onLeftClicked: objModel.programIndex -= 1
+                    onRightClicked: objModel.programIndex += 1
                 }
 
                 ButtonOkCancel {
