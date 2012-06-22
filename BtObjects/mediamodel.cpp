@@ -20,6 +20,14 @@ void MediaDataModel::append(ItemInterface *item)
 	insertObject(item);
 }
 
+bool MediaDataModel::remove(ItemInterface *obj)
+{
+	bool ok = removeRows(item_list.indexOf(obj), 1);
+	if (!ok)
+		qWarning() << "MediaDataModel::remove, there was an error when removing object" << obj;
+	return ok;
+}
+
 int MediaDataModel::rowCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent);
@@ -80,11 +88,6 @@ ItemInterface *MediaDataModel::getObject(int row) const
 		return 0;
 
 	return item_list.at(row);
-}
-
-void MediaDataModel::remove(int index)
-{
-	removeRow(index);
 }
 
 
@@ -245,6 +248,15 @@ ItemInterface *MediaModel::getObject(int row)
 void MediaModel::remove(int index)
 {
 	removeRow(index);
+}
+
+void MediaModel::remove(QObject *obj)
+{
+	ItemInterface *item = qobject_cast<ItemInterface *>(obj);
+	if (item && getSource()->remove(item)) {
+		reset();
+		emit countChanged();
+	}
 }
 
 void MediaModel::clear()

@@ -4,14 +4,18 @@ import Components.Text 1.0
 import BtObjects 1.0
 
 Column {
+    id: delegate
     property alias description: topText.text
     property variant itemObject: undefined
     property int measureType: EnergyData.Consumption
+    property bool isOverview: true
 
+    signal headerClicked(variant mouse)
 
-    QtObject {
+        QtObject {
         id: privateProps
-        property variant monthConsumptionItem: undefined
+        property variant monthConsumptionItem: itemObject.getValue(EnergyData.CumulativeMonthValue,
+                                                                   new Date(), EnergyData.Consumption)
         property variant goal: monthConsumptionItem !== undefined ? monthConsumptionItem.consumptionGoal : 0.0
         property variant consumption: monthConsumptionItem !== undefined ? monthConsumptionItem.value : 0.0
 
@@ -50,17 +54,9 @@ Column {
             return columnHeight * .9
         }
 
-        function loadConsumptionData() {
-            if (monthConsumptionItem === undefined)
-                monthConsumptionItem = itemObject.getValue(EnergyData.CumulativeMonthValue,
-                                                           new Date(), EnergyData.Consumption)
-        }
-
         // the height of goal line. Can be as the "ideal" goal height or less if
         // the consumption height is greater than the maximum height.
         function goalHeight(columnHeight) {
-            loadConsumptionData()
-
             if (goal === undefined) // the goal line is not shown at all, using hasGoal()
                 return 0.0
 
@@ -75,8 +71,6 @@ Column {
         // height, and it has a maximum value (in the latter case, the goal height
         // is decreased proportionally).
         function getConsumptionHeight(columnHeight) {
-            loadConsumptionData()
-
             if (consumption === undefined)
                 return 0
 
@@ -95,8 +89,6 @@ Column {
 
         // return true if the consumption exceed the goal (and, of course, if both are present)
         function consumptionExceedGoal() {
-            loadConsumptionData()
-
             if (consumption !== undefined && goal !== undefined) {
                 if (consumption > goal)
                     return true
@@ -105,7 +97,6 @@ Column {
         }
 
         function hasGoal() {
-            loadConsumptionData()
             return goal !== undefined
         }
 
@@ -113,9 +104,9 @@ Column {
 
     spacing: 5
     ButtonThreeStates {
-        defaultImage: "../images/energy/btn_colonna_grafico.svg"
-        pressedImage: "../images/energy/btn_colonna_grafico.svg"
-        shadowImage: "../images/energy/ombra_btn_colonna_grafico.svg"
+        defaultImage: "../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
+        pressedImage: "../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
+        shadowImage: "../images/energy/ombra_btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
 
         Row {
             anchors {
@@ -137,6 +128,7 @@ Column {
                 color: "#5A5A5A"
             }
         }
+        onClicked: delegate.headerClicked(mouse)
     }
 
     UbuntuLightText {
@@ -149,17 +141,23 @@ Column {
     Column {
 
         SvgImage {
-            source: "../../images/energy/colonna.svg"
+            source: "../../images/energy/colonna" + (isOverview ? '_overview' : '') + ".svg"
 
             SvgImage {
                 anchors.bottom: parent.bottom
-                source: privateProps.consumptionExceedGoal() ? "../../images/energy/colonna_rosso_overview.svg" :
-                    "../../images/energy/colonna_verde_overview.svg"
+                source: {
+                    if (privateProps.consumptionExceedGoal()) {
+                        "../../images/energy/colonna_rosso" + (isOverview ? '_overview' : '') + ".svg"
+                    }
+                    else {
+                        "../../images/energy/colonna_verde" + (isOverview ? '_overview' : '') + ".svg"
+                    }
+                }
                 height: privateProps.getConsumptionHeight(parent.height)
             }
             SvgImage {
                 id: goalLine
-                source: "../../images/energy/linea_livello_colonna.svg"
+                source: "../../images/energy/linea_livello_colonna" + (isOverview ? '_overview' : '') + ".svg"
                 visible: privateProps.hasGoal()
                 width: parent.width
                 anchors.top: parent.top
@@ -167,7 +165,7 @@ Column {
             }
         }
         SvgImage {
-            source: "../../images/energy/ombra_btn_colonna_grafico.svg"
+            source: "../../images/energy/ombra_btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
         }
     }
 

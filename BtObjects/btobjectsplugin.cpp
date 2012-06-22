@@ -80,7 +80,8 @@ namespace
 	// these are defined here because there is no 1-to-1 correspondence
 	// between used in QML (the ones in objectinterface.h file) and the ones
 	// used in configuration file (defined here)
-	enum ParserConstants {
+	enum ParserConstants
+	{
 		IdDimmer100 = 2002,
 		IdLight = 2003
 	};

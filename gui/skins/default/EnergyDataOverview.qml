@@ -1,165 +1,125 @@
 import QtQuick 1.1
-import BtObjects 1.0
 import Components 1.0
+import Components.Text 1.0
 import Components.EnergyManagement 1.0
+import BtObjects 1.0
 
 import "js/Stack.js" as Stack
-import "js/RowColumnHelpers.js" as Helper
-
 
 Page {
     function systemsButtonClicked() {
-        Stack.showPreviousPage(1)
+        container.closed()
     }
 
-    id: page
-    source: "images/scenari.jpg" // TODO mettere lo sfondo giusto
-    text: translations.get("ENERGY_TYPE", "Consumption Management")
     showSystemsButton: true
+    text: qsTr("energy management")
+    source: "images/bg2.jpg"
 
-    Names {
+    QtObject {
+        id: privateProps
+        property bool showCurrency: false
+    }
+
+    SvgImage {
+        id: header
+        source: "images/energy/bg_titolo.svg"
+        anchors {
+            top: navigationBar.top
+            left: parent.left
+            leftMargin: 130
+        }
+
+        UbuntuLightText {
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                leftMargin: parent.width / 100 * 5
+            }
+
+            font.pixelSize: 24
+            text: qsTr("energy consumption")
+            color: "white"
+        }
+    }
+
+    SvgImage {
+        id: bg_graph
+        source: "images/energy/bg_grafico.svg"
+        anchors {
+            top: header.bottom
+            topMargin: 4
+            left: header.left
+        }
+
+        Row {
+            id: buttonRow
+            anchors {
+                top: parent.top
+                topMargin: parent.width / 100 * 2
+                right: divisorLine.right
+            }
+
+            ButtonThreeStates {
+                id: moneyButton
+                defaultImage: "../images/energy/btn_value.svg"
+                pressedImage: "../images/energy/btn_value_P.svg"
+                selectedImage: "../images/energy/btn_value_S.svg"
+                shadowImage: "../images/energy/ombra_btn_value.svg"
+                text: qsTr("€")
+                status: privateProps.showCurrency === true ? 1 : 0
+                onClicked: privateProps.showCurrency = true
+            }
+            ButtonThreeStates {
+                id: consumptionButton
+                defaultImage: "../images/energy/btn_value.svg"
+                pressedImage: "../images/energy/btn_value_P.svg"
+                selectedImage: "../images/energy/btn_value_S.svg"
+                shadowImage: "../images/energy/ombra_btn_value.svg"
+                text: qsTr("units")
+                status: privateProps.showCurrency === false ? 1 : 0
+                onClicked: privateProps.showCurrency = false
+            }
+        }
+
+        SvgImage {
+            id: divisorLine
+            source: "images/energy/linea.svg"
+            anchors {
+                top: buttonRow.bottom
+                topMargin: parent.height / 100 * 3
+                horizontalCenter: parent.horizontalCenter
+            }
+        }
+
+        ListView {
+            id: columnView
+            interactive: false
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: 20
+                horizontalCenter: parent.horizontalCenter
+            }
+            orientation: ListView.Horizontal
+            height: 315
+            width: 700
+            delegate: EnergyDataDelegate {
+                id: delegate
+                itemObject: energiesCounters.getObject(index)
+                description: itemObject.name
+                measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
+                onHeaderClicked: Stack.openPage("EnergyDataDetail.qml", {"energyType": itemObject.energyType})
+            }
+            spacing: 100
+            model: energiesCounters
+        }
+    }
+
+    EnergyManagementNames {
         id: translations
     }
 
     ObjectModel {
         id: energiesCounters
         filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "general"}]
-    }
-
-    Column {
-        id: panel
-        spacing: 40
-        anchors.left: parent.left
-        anchors.leftMargin: 195
-        anchors.top: toolbar.bottom
-        anchors.topMargin: parent.height / 100 * 15
-        anchors.right: parent.right
-        anchors.rightMargin: 150
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height / 100 * 5
-
-        Row {
-            id: energyCategories
-
-            property int valueType: EnergyData.CumulativeMonthValue
-
-            anchors {
-                horizontalCenter: panel.horizontalCenter
-                horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
-            }
-            spacing: 80
-            width: panel.width
-
-            onChildrenChanged: Helper.updateRowChildren(energyCategories)
-            onVisibleChanged: Helper.updateRowChildren(energyCategories)
-            onWidthChanged: Helper.updateRowChildren(energyCategories)
-
-            Repeater {
-                id: repeaterElement
-                objectName: "repeater" // to skip inside Helper
-                model: energiesCounters
-                delegate: energyCategoriesDelegate
-            }
-
-            Component {
-                id: energyCategoriesDelegate
-
-                EnergyDataOverviewColumn {
-
-                    function getSymbol(t) {
-                        if (t === EnergyData.Electricity)
-                            return "../../images/common/svg_bolt.svg"
-                        else if (t === EnergyData.Water)
-                            return "../../images/common/svg_water.svg"
-                        // TODO add images
-                        //                    else if (t === EnergyData.Gas)
-                        //                        return "../../images/common/svg_gas.svg"
-                        //                    else if (t === EnergyData.HotWater)
-                        //                        return "../../images/common/svg_hot_water.svg"
-                        else if (t === EnergyData.Heat)
-                            return "../../images/common/svg_temp.svg"
-                        //                            else if (t === EnergyData.???)
-                        //                                return "../../images/common/svg_???.svg"
-                        return "../../images/common/svg_bolt.svg"
-                    }
-
-                    function getKeyString(t) {
-                        if (t === EnergyData.Electricity)
-                            return "Electricity"
-                        else if (t === EnergyData.Water)
-                            return "Water"
-                        else if (t === EnergyData.Gas)
-                            return "Gas"
-                        else if (t === EnergyData.HotWater)
-                            return "HotWater"
-                        else if (t === EnergyData.Heat)
-                            return "Heat"
-                        //                            else if (t === EnergyData.???)
-                        //                                return "???"
-                        return "Electricity"
-                    }
-
-                    function openLinkedPage(obj) {
-                        Stack.openPage("EnergyDataDetail.qml", {"modelObject": obj,"valueType": energyCategories.valueType, "keyString": getKeyString(obj.energyType)})
-                    }
-
-                    height: 345
-                    property variant obj: repeaterElement.model.getObject(index)
-                    property variant v: obj.getValue(energyCategories.valueType, new Date())
-                    level_actual: v.isValid ? v.value : 0
-                    perc_warning: 0.8
-                    level_critical: 90 // TODO it must come from somewhere
-                    title: level_actual + " " + translations.get("ENERGY_UNIT", obj.energyType)
-                    description: translations.get("ENERGY_TYPE", obj.energyType)
-                    valueType: energyCategories.valueType
-                    source: getSymbol(obj.energyType)
-                    onClicked: openLinkedPage(obj)
-                }
-            }
-        }
-
-        Row {
-            anchors {
-                horizontalCenter: panel.horizontalCenter
-                horizontalCenterOffset: (panel.anchors.leftMargin - panel.anchors.rightMargin) / 2.0
-            }
-            height: 30
-            width: 300
-            spacing: 1
-
-            TimeValueItem {
-                id: selDay
-                label: qsTr("day")
-                onClicked: {
-                    selDay.state = "selected"
-                    selMonth.state = ""
-                    selYear.state = ""
-                    energyCategories.valueType = EnergyData.CumulativeDayValue
-                }
-            }
-
-            TimeValueItem {
-                id: selMonth
-                label: qsTr("month")
-                state: "selected"
-                onClicked: {
-                    selDay.state = ""
-                    selMonth.state = "selected"
-                    selYear.state = ""
-                    energyCategories.valueType = EnergyData.CumulativeMonthValue
-                }
-            }
-
-            TimeValueItem {
-                id: selYear
-                label: qsTr("year")
-                onClicked: {
-                    selDay.state = ""
-                    selMonth.state = ""
-                    selYear.state = "selected"
-                    energyCategories.valueType = EnergyData.CumulativeYearValue
-                }
-            }
-        }
     }
 }

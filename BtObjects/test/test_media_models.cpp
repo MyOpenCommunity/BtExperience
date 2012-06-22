@@ -6,6 +6,21 @@
 #include <QtTest>
 
 
+namespace QTest
+{
+	template<> char *toString(const QList<ItemInterface *> &l)
+	{
+		QByteArray ba = "Objectlist(";
+		for (int i = 0; i < l.length(); ++i)
+		{
+			ba += "(" + QString().sprintf("%p", l[i]) + ")";
+		}
+		ba = ba.left(ba.length() - 1) + ")";
+		return qstrdup(ba.data());
+	}
+}
+
+
 void TestMediaModel::initObjects(MediaDataModel *_src, MediaModel *_obj, QList<ItemInterface *> _items)
 {
 	src = _src;
@@ -119,6 +134,19 @@ void TestMediaModel::testRemove()
 
 	qApp->processEvents();
 	ts.checkSignals();
+}
+
+void TestMediaModel::testRemoveObject()
+{
+	(*src) << items[0];
+	(*src) << items[1];
+	(*src) << items[2];
+	qApp->processEvents(); // flush pending countChanged()
+	ObjectTester ts(obj, SIGNAL(countChanged()));
+
+	obj->remove(items[0]);
+	ts.checkSignals();
+	QCOMPARE(src->item_list, items.mid(1, 2));
 }
 
 void TestMediaModel::testRemoveFiltered()
