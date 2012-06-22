@@ -340,10 +340,7 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 				else
 				{
 					if (!status)
-					{
 						alarms.clear();
-						emit alarmsChanged();
-					}
 					status = inserted;
 					emit statusChanged();
 
@@ -467,7 +464,6 @@ void AntintrusionSystem::addAlarm(AntintrusionAlarm::AlarmType t, int zone_num)
 
 	AntintrusionAlarm *a = new AntintrusionAlarm(t, source, zone_num, QDateTime::currentDateTime());
 	alarms << a;
-	emit alarmsChanged();
 	emit newAlarm(a);
 }
 
@@ -481,7 +477,6 @@ void AntintrusionSystem::removeAlarm(AntintrusionAlarm::AlarmType t, int zone_nu
 		if (alarm->getType() == t && number == zone_num)
 		{
 			alarms.removeRow(i);
-			emit alarmsChanged();
 			return;
 		}
 	}

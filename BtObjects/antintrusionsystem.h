@@ -290,7 +290,7 @@ friend class TestAntintrusionSystem;
 	Q_PROPERTY(ObjectDataModel *scenarios READ getScenarios CONSTANT)
 
 	/// List of active alarms (contains \ref AntintrusionAlarm objects)
-	Q_PROPERTY(ObjectDataModel *alarms READ getAlarms NOTIFY alarmsChanged)
+	Q_PROPERTY(ObjectDataModel *alarms READ getAlarms CONSTANT)
 
 	/// Returns \c true when the antintrusion system is active
 	Q_PROPERTY(bool status READ getStatus NOTIFY statusChanged)
@@ -335,8 +335,6 @@ public:
 	QObject *getCurrentScenario() const;
 
 signals:
-	void alarmsChanged();
-
 	/*!
 		\brief Send when receiving a new alarm
 	*/
