@@ -31,15 +31,37 @@ Item {
         return Math.floor(ret)
     }
 
+    QtObject {
+        id: privateProps
+
+        function computeDelegateHeight() {
+            if (internalList.children.length === 1 &&
+                    internalList.children[0].children.length > 0) {
+                // See PaginatorList for comments
+                internalList.delegateWidth = internalList.children[0].children[0].width
+                internalList.delegateHeight = internalList.children[0].children[0].height
+            }
+        }
+    }
+
+    // Necessary when the alarm log is shown and initially empty, otherwise the
+    // delegateWidth property is never updated
+    Connections {
+        target: model
+        onCountChanged: privateProps.computeDelegateHeight()
+    }
+
     ListView {
+        property int delegateWidth: 1
+        property int delegateHeight: 1
+
         id: internalList
         interactive: false
         currentIndex: -1
-        // we need to set width and height to at least 1 otherwise the ListView
-        // will consider to have zero children and the Component.onCompleted code
-        // will not work as expected
-        width: 1
-        height: 1
+        // see comments in PaginatorList
+        width: delegateWidth
+        height: delegateHeight * elementsOnPage
+
         anchors.left: parent.left
     }
 
@@ -81,18 +103,6 @@ Item {
         }
     }
 
-    Component.onCompleted: {
-        if (internalList.children.length === 1 &&
-                internalList.children[0].children.length > 0) {
-            // We need to set the width of PaginatorList looking at the delegates;
-            // this way, we avoid to use magic numbers (bottom-up approach).
-            // See MenuContainer docs to know why we need to set the width
-            // Items that may go into a MenuColumn.
-            var delegateWidth = internalList.children[0].children[0].width
-            internalList.width = delegateWidth
-            var delegateHeight = internalList.children[0].children[0].height
-            internalList.height = delegateHeight * Math.min(elementsOnPage, internalList.model.count)
-        }
-    }
+    Component.onCompleted: privateProps.computeDelegateHeight()
 }
 
