@@ -4,6 +4,7 @@ import BtObjects 1.0
 
 MenuColumn {
     id: column
+
     width: 212
     height: paginator.height
 
@@ -19,10 +20,7 @@ MenuColumn {
             description: objectModel.getObject(index).temperature / 10 + "°C"
             hasChild: true
             onClicked: {
-                column.loadColumn(
-                            mapping.getComponent(itemObject.objectId),
-                            itemObject.name,
-                            objectModel.getObject(model.index))
+                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, objectModel.getObject(model.index))
             }
         }
         model: objectModel
