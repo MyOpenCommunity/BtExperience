@@ -81,7 +81,9 @@ MenuColumn {
             onItemChanged: {
                 // TODO when loaded item changes menu height is not updated
                 // this trick is to force height update
-                paginator.height = programItem.height + modalityItem.height + item.height
+                paginator.height = programItem.height + modalityItem.height
+                if (item)
+                    paginator.height += item.height
             }
         }
     }
@@ -115,36 +117,36 @@ MenuColumn {
                     ++currentTemp
                 }
             }
-            ControlUpDown {
+            ControlLeftRightWithTitle {
                 id: fancoilMode
                 title: qsTr("fancoil")
                 text: pageObject.names.get('SPEED', currentIndex)
                 property int currentIndex: dataModel.speed
-                onDownClicked: {
+                onLeftClicked: {
                     if (currentIndex > 0) {
                         dataModel.resetProgram()
                         --currentIndex
                     }
                 }
-                onUpClicked: {
+                onRightClicked: {
                     if (currentIndex < 4) {
                         dataModel.resetProgram()
                         ++currentIndex
                     }
                 }
             }
-            ControlUpDown {
+            ControlLeftRightWithTitle {
                 id: swing
                 title: qsTr("swing")
                 text: pageObject.names.get('SWING', currentIndex)
                 property int currentIndex: dataModel.swing
-                onDownClicked: {
+                onLeftClicked: {
                     if (currentIndex > 0) {
                         dataModel.resetProgram()
                         --currentIndex
                     }
                 }
-                onUpClicked: {
+                onRightClicked: {
                     if (currentIndex < 1) {
                         dataModel.resetProgram()
                         ++currentIndex
@@ -168,36 +170,36 @@ MenuColumn {
         id: fancoil
 
         Column {
-            ControlUpDown {
+            ControlLeftRightWithTitle {
                 id: fancoilMode
                 title: qsTr("fancoil")
                 text: pageObject.names.get('SPEED', currentIndex)
                 property int currentIndex: dataModel.speed
-                onDownClicked: {
+                onLeftClicked: {
                     if (currentIndex > 0) {
                         dataModel.resetProgram()
                         --currentIndex
                     }
                 }
-                onUpClicked: {
+                onRightClicked: {
                     if (currentIndex < 4) {
                         dataModel.resetProgram()
                         ++currentIndex
                     }
                 }
             }
-            ControlUpDown {
+            ControlLeftRightWithTitle {
                 id: swing
                 title: qsTr("swing")
                 text: pageObject.names.get('SWING', currentIndex)
                 property int currentIndex: dataModel.swing
-                onDownClicked: {
+                onLeftClicked: {
                     if (currentIndex > 0) {
                         dataModel.resetProgram()
                         --currentIndex
                     }
                 }
-                onUpClicked: {
+                onRightClicked: {
                     if (currentIndex < 1) {
                         dataModel.resetProgram()
                         ++currentIndex
