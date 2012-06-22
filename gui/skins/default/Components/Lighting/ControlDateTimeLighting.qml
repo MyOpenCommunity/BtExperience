@@ -289,7 +289,7 @@ Item {
     UbuntuLightText {
         id: centerText
 
-        text: formatNumberLength(centerColumnValue, 2) + (twoFields ? "" : "'")
+        text: formatNumberLength(centerColumnValue, 2) + ((twoFields || mode === 1) ? "" : "'")
         color: "#5b5b5b"
         font.pixelSize: 22
         anchors.horizontalCenter: buttonCenterMinus.horizontalCenter
@@ -313,7 +313,7 @@ Item {
     UbuntuLightText {
         id: rightText
 
-        text: formatNumberLength(rightColumnValue, 2) + "\""
+        text: formatNumberLength(rightColumnValue, 2) + ((mode === 1) ? "" : "\"")
         color: "#5b5b5b"
         font.pixelSize: 22
         visible: !twoFields
