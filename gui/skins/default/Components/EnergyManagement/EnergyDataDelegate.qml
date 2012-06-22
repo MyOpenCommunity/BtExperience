@@ -4,12 +4,15 @@ import Components.Text 1.0
 import BtObjects 1.0
 
 Column {
+    id: delegate
     property alias description: topText.text
     property variant itemObject: undefined
     property int measureType: EnergyData.Consumption
+    property bool isOverview: true
 
+    signal headerClicked(variant mouse)
 
-    QtObject {
+        QtObject {
         id: privateProps
         property variant monthConsumptionItem: itemObject.getValue(EnergyData.CumulativeMonthValue,
                                                                    new Date(), EnergyData.Consumption)
@@ -101,9 +104,9 @@ Column {
 
     spacing: 5
     ButtonThreeStates {
-        defaultImage: "../images/energy/btn_colonna_grafico.svg"
-        pressedImage: "../images/energy/btn_colonna_grafico.svg"
-        shadowImage: "../images/energy/ombra_btn_colonna_grafico.svg"
+        defaultImage: "../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
+        pressedImage: "../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
+        shadowImage: "../images/energy/ombra_btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
 
         Row {
             anchors {
@@ -125,6 +128,7 @@ Column {
                 color: "#5A5A5A"
             }
         }
+        onClicked: delegate.headerClicked(mouse)
     }
 
     UbuntuLightText {
@@ -137,17 +141,23 @@ Column {
     Column {
 
         SvgImage {
-            source: "../../images/energy/colonna.svg"
+            source: "../../images/energy/colonna" + (isOverview ? '_overview' : '') + ".svg"
 
             SvgImage {
                 anchors.bottom: parent.bottom
-                source: privateProps.consumptionExceedGoal() ? "../../images/energy/colonna_rosso_overview.svg" :
-                    "../../images/energy/colonna_verde_overview.svg"
+                source: {
+                    if (privateProps.consumptionExceedGoal()) {
+                        "../../images/energy/colonna_rosso" + (isOverview ? '_overview' : '') + ".svg"
+                    }
+                    else {
+                        "../../images/energy/colonna_verde" + (isOverview ? '_overview' : '') + ".svg"
+                    }
+                }
                 height: privateProps.getConsumptionHeight(parent.height)
             }
             SvgImage {
                 id: goalLine
-                source: "../../images/energy/linea_livello_colonna.svg"
+                source: "../../images/energy/linea_livello_colonna" + (isOverview ? '_overview' : '') + ".svg"
                 visible: privateProps.hasGoal()
                 width: parent.width
                 anchors.top: parent.top
@@ -155,7 +165,7 @@ Column {
             }
         }
         SvgImage {
-            source: "../../images/energy/ombra_btn_colonna_grafico.svg"
+            source: "../../images/energy/ombra_btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
         }
     }
 

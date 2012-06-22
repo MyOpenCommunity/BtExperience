@@ -287,13 +287,9 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	double goal = 100.;
 
 #if TEST_ENERGY_DATA
-	if (general)
-	{
-		// We want to test the GUI representation and we do that in the general page of
-		// energy. We set the goal as 70% of the max value so that we have a good
-		// chance to exceed the goal using random values.
-		goal = 0.7 * valueRange(getEnergyType()) / conversionFactor(getEnergyType());
-	}
+	// We want to test the GUI representation. We set the goal as 70% of the
+	// max value so that we have a good chance to exceed the goal using random values.
+	goal = 0.7 * valueRange(getEnergyType()) / conversionFactor(getEnergyType());
 #endif
 
 	QString measure_unit = QString::fromUtf8("€");
@@ -321,25 +317,28 @@ int EnergyData::getObjectId() const
 QString EnergyData::getObjectKey() const
 {
 	QStringList result;
+	result << QString("type:%1").arg(static_cast<int>(getEnergyType()));
 
-	switch (dev->getEnergyType())
-	{
-	case 1:
-		result << "Electricity";
-		break;
-	case 2:
-		result << "Water";
-		break;
-	case 3:
-		result << "Gas";
-		break;
-	case 4:
-		result << "HotWater";
-		break;
-	case 5:
-		result << "Heat";
-		break;
-	}
+	// TODO: remove this commented code after the removing of the old energy
+	// interface.
+//	switch (dev->getEnergyType())
+//	{
+//	case 1:
+//		result << "Electricity";
+//		break;
+//	case 2:
+//		result << "Water";
+//		break;
+//	case 3:
+//		result << "Gas";
+//		break;
+//	case 4:
+//		result << "HotWater";
+//		break;
+//	case 5:
+//		result << "Heat";
+//		break;
+//	}
 
 	if (isGeneral())
 		result << "general";

@@ -4,15 +4,15 @@ import Components.Text 1.0
 import Components.EnergyManagement 1.0
 import BtObjects 1.0
 
-import "js/Stack.js" as Stack
-
 Page {
+    property int energyType: 0
+
     function systemsButtonClicked() {
         container.closed()
     }
 
     showSystemsButton: true
-    text: qsTr("energy management")
+    text: qsTr("energy consumption")
     source: "images/bg2.jpg"
 
     QtObject {
@@ -29,7 +29,17 @@ Page {
             leftMargin: 130
         }
 
+        SvgImage {
+            source: "images/energy/ico_electricity_bianca.svg"
+            anchors {
+                verticalCenter: parent.verticalCenter
+                right: titleText.left
+                rightMargin: 5
+            }
+        }
+
         UbuntuLightText {
+            id: titleText
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
@@ -37,7 +47,7 @@ Page {
             }
 
             font.pixelSize: 24
-            text: qsTr("energy consumption")
+            text: translations.get("ENERGY_TYPE", energyType)
             color: "white"
         }
     }
@@ -105,11 +115,11 @@ Page {
             delegate: EnergyDataDelegate {
                 id: delegate
                 itemObject: energiesCounters.getObject(index)
-                description: itemObject.name
+                description: itemObject.general ? qsTr("Overall") : itemObject.name
                 measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
-                onHeaderClicked: Stack.openPage("EnergyDataDetail.qml", {"energyType": itemObject.energyType})
+                isOverview: false
             }
-            spacing: 100
+            spacing: 40
             model: energiesCounters
         }
     }
@@ -120,6 +130,6 @@ Page {
 
     ObjectModel {
         id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "general"}]
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "type:" + energyType}]
     }
 }
