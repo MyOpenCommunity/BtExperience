@@ -20,7 +20,6 @@ class MediaDataModel : public QAbstractListModel
 friend class TestMediaModel;
 
 	Q_OBJECT
-	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
 public:
 	MediaDataModel(QObject *parent = 0);
@@ -60,9 +59,6 @@ public:
 
 	void append(ItemInterface *obj);
 	bool remove(ItemInterface *obj);
-
-signals:
-	void countChanged();
 
 protected:
 	void insertObject(ItemInterface *obj);
@@ -222,6 +218,8 @@ protected:
 
 private slots:
 	void resetCounter();
+	void resetFilter();
+	void waitResetFilter();
 
 private:
 	QVariantList containers;
