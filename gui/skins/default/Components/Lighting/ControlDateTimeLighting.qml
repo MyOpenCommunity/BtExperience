@@ -49,9 +49,9 @@ Item {
             left: parent.left
         }
 
-        defaultImageBg: "../images/common/btn_66x35.svg"
-        pressedImageBg: "../images/common/btn_66x35_P.svg"
-        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImageBg: twoFields ? "../images/common/btn_99x35.svg" : "../images/common/btn_66x35.svg"
+        pressedImageBg: twoFields ? "../images/common/btn_99x35_P.svg" : "../images/common/btn_66x35_P.svg"
+        shadowImage: twoFields ? "../images/common/btn_shadow_99x35.svg" : "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         status: 0
@@ -67,9 +67,9 @@ Item {
             left: buttonLeftPlus.right
         }
 
-        defaultImageBg: "../images/common/btn_66x35.svg"
-        pressedImageBg: "../images/common/btn_66x35_P.svg"
-        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImageBg: twoFields ? "../images/common/btn_99x35.svg" : "../images/common/btn_66x35.svg"
+        pressedImageBg: twoFields ? "../images/common/btn_99x35_P.svg" : "../images/common/btn_66x35_P.svg"
+        shadowImage: twoFields ? "../images/common/btn_shadow_99x35.svg" : "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         status: 0
@@ -115,9 +115,9 @@ Item {
             left: parent.left
         }
 
-        defaultImageBg: "../images/common/btn_66x35.svg"
-        pressedImageBg: "../images/common/btn_66x35_P.svg"
-        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImageBg: twoFields ? "../images/common/btn_99x35.svg" : "../images/common/btn_66x35.svg"
+        pressedImageBg: twoFields ? "../images/common/btn_99x35_P.svg" : "../images/common/btn_66x35_P.svg"
+        shadowImage: twoFields ? "../images/common/btn_shadow_99x35.svg" : "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         status: 0
@@ -133,9 +133,9 @@ Item {
             left: buttonLeftMinus.right
         }
 
-        defaultImageBg: "../images/common/btn_66x35.svg"
-        pressedImageBg: "../images/common/btn_66x35_P.svg"
-        shadowImage: "../images/common/btn_shadow_66x35.svg"
+        defaultImageBg: twoFields ? "../images/common/btn_99x35.svg" : "../images/common/btn_66x35.svg"
+        pressedImageBg: twoFields ? "../images/common/btn_99x35_P.svg" : "../images/common/btn_66x35_P.svg"
+        shadowImage: twoFields ? "../images/common/btn_shadow_99x35.svg" : "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         status: 0
