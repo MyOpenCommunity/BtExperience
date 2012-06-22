@@ -2,82 +2,73 @@ import QtQuick 1.1
 import Components.Text 1.0
 
 
-Image {
+SvgImage {
     id: control
-    source: "../images/common/bg_UnaRegolazione.png"
-    width: 212
-    height: 100
-    property alias title: title.text
-    property alias text: label.text
+
+    property string text: "7 seconds"
+    property string title: "temperature"
+
     signal minusClicked
     signal plusClicked
 
+    source: "../images/termo/selettore/bg_selettore.svg"
+
     UbuntuLightText {
         id: title
-        color: "#000000"
-        text: qsTr("title")
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 5
-        horizontalAlignment: Text.AlignHCenter
+        color: "black"
+        text: control.title
         font.pixelSize: 13
+        anchors {
+            top: parent.top
+            topMargin: 5
+            left: parent.left
+            leftMargin: 7
+        }
     }
 
     UbuntuLightText {
-        id: label
-        x: 32
-        y: 65
-        color: "#ffffff"
-        text: qsTr("label")
-        verticalAlignment: Text.AlignVCenter
-        font.pixelSize: 15
+        id: value
+
+        anchors {
+            verticalCenter: rightButton.verticalCenter
+            left: parent.left
+            leftMargin: 7
+        }
+        font.pixelSize: 13
+        color: "white"
+        text: control.text
     }
 
-    Image {
-        id: minus
-        width: 43
-        height: 45
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
-        anchors.right: plus.left
-        source: "../images/common/btn_comando.png"
-
-        Image {
-            id: image7
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            source: "../images/common/meno.png"
-        }
-
-        MouseArea {
-            id: minusMouseArea
-            anchors.fill: parent
-            onClicked: control.minusClicked()
+    ButtonImageThreeStates {
+        defaultImageBg: "../images/termo/selettore/btn_frecce.svg"
+        pressedImageBg: "../images/termo/selettore/btn_frecce_P.svg"
+        shadowImage: "../images/termo/selettore/ombra_btn_frecce.svg"
+        defaultImage: "../images/termo/selettore/ico_meno.svg"
+        pressedImage: "../images/termo/selettore/ico_meno_P.svg"
+        onClicked: minusClicked()
+        status: 0
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: 11
+            right: rightButton.left
+            rightMargin: 3
         }
     }
 
-    Image {
-        id: plus
-        width: 43
-        height: 45
-        anchors.right: parent.right
-        anchors.rightMargin: 5
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
-        source: "../images/common/btn_comando.png"
-
-        Image {
-            id: image8
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            source: "../images/common/piu.png"
-        }
-
-        MouseArea {
-            id: plusMouseArea
-            anchors.fill: parent
-            onClicked: control.plusClicked()
+    ButtonImageThreeStates {
+        id: rightButton
+        defaultImageBg: "../images/termo/selettore/btn_frecce.svg"
+        pressedImageBg: "../images/termo/selettore/btn_frecce_P.svg"
+        shadowImage: "../images/termo/selettore/ombra_btn_frecce.svg"
+        defaultImage: "../images/termo/selettore/ico_piu.svg"
+        pressedImage: "../images/termo/selettore/ico_piu_P.svg"
+        onClicked: plusClicked()
+        status: 0
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: 11
+            right: parent.right
+            rightMargin: 7
         }
     }
 }
-
