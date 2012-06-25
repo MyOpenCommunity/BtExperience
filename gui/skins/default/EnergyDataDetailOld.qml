@@ -109,7 +109,7 @@ Page {
                     }
 
                     function openLinkedPage(obj) {
-                        Stack.openPage("EnergyDataGraph.qml", {"modelObject": obj,"graphType": EnergyData.CumulativeYearGraph})
+                        Stack.openPage("EnergyDataGraphOld.qml", {"modelObject": obj,"graphType": EnergyData.CumulativeYearGraph})
                     }
 
                     function dummy(d) {
