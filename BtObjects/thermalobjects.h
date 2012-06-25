@@ -384,6 +384,10 @@ signals:
 	void daysChanged();
 	void monthsChanged();
 	void yearsChanged();
+
+private:
+	void emitDateSignals(QDate oldDate, QDate newDate);
+	void emitTimeSignals(QTime oldTime, QTime newTime);
 };
 
 
