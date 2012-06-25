@@ -68,9 +68,7 @@ MenuColumn {
             child.seasonSelected.connect(seasonSelected)
     }
 
-    onChildDestroyed: {
-        privateProps.currentElement = -1
-    }
+    onChildDestroyed: privateProps.currentElement = -1
 
     Connections {
         target: dataModel
@@ -160,15 +158,11 @@ MenuColumn {
             hasChild: true
             anchors.top: fixedItem.bottom
             name: qsTr("season")
-            state: privateProps.currentElement === 1 ? "selected" : ""
-
+            isSelected: privateProps.currentElement === 1
             onClicked: {
-                column.loadColumn(
-                            thermalControlUnitSeasons,
-                            seasonItem.name,
-                            column.dataModel)
                 if (privateProps.currentElement !== 1)
                     privateProps.currentElement = 1
+                column.loadColumn(thermalControlUnitSeasons, seasonItem.name, column.dataModel)
             }
         }
 
@@ -177,13 +171,9 @@ MenuColumn {
             hasChild: true
             anchors.top: seasonItem.bottom
             name: qsTr("mode")
-            state: privateProps.currentElement === 2 ? "selected" : ""
-
+            isSelected: privateProps.currentElement === 2
             onClicked: {
-                column.loadColumn(
-                            thermalControlUnitModalities,
-                            modalityItem.name,
-                            column.dataModel)
+                column.loadColumn(thermalControlUnitModalities, modalityItem.name, column.dataModel)
                 if (privateProps.currentElement !== 2)
                     privateProps.currentElement = 2
             }
@@ -197,8 +187,7 @@ MenuColumn {
 
                 Component {
                     id: dateSelect
-                    DateSelect {
-                    }
+                    DateSelect {}
                 }
 
                 ControlSetDateTime {

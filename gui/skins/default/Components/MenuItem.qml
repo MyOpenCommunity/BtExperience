@@ -7,6 +7,7 @@ Item {
     height: background.height
     width: background.width
 
+    property bool isSelected: false
     property bool editable: false
     property string name
     property alias description: textDescription.text
@@ -176,13 +177,14 @@ Item {
         anchors.fill: parent
         onPressAndHold: if (menuItem.editable) { privateProps.startEdit() }
         onClicked: menuItem.clicked(menuItem)
-        onPressed: menuItem.pressed(menuItem)
-        onReleased: menuItem.released(menuItem)
+        onPressed:menuItem.pressed(menuItem)
+        onReleased:menuItem.released(menuItem)
     }
 
     states: [
         State {
             name: "selected"
+            when: isSelected && !mousearea.pressed
             PropertyChanges { target: labelLoader; textColor: "#ffffff" }
             PropertyChanges { target: textDescription; color: "#ffffff" }
             PropertyChanges { target: arrowRight; source: "../images/common/menu_column_item_arrow_white.svg" }
