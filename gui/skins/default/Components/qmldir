@@ -28,6 +28,7 @@ ControlCall 1.0 ControlCall.qml
 ControlChoices 1.0 ControlChoices.qml
 ControlColumnBar 1.0 ControlColumnBar.qml
 ControlColumnValue 1.0 ControlColumnValue.qml
+ControlDateTime 1.0 ControlDateTime.qml
 ControlLeftRight 1.0 ControlLeftRight.qml
 ControlLeftRightWithTitle 1.0 ControlLeftRightWithTitle.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
