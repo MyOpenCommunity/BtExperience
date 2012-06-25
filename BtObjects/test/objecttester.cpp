@@ -75,6 +75,7 @@ void ObjectTester::checkSignalCount(const char *sig, int sig_count)
 	}
 
 	QCOMPARE(spy->count(), sig_count);
+	spy->clear();
 }
 
 void ObjectTester::checkSignals()
