@@ -195,15 +195,13 @@ MenuColumn {
 
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
+                    status: (privateProps.currentElement === 3) ? 1 : 0
 
-                    onStatusChanged: {
-                        if (status === 0)
-                            column.closeChild()
-                        else
-                            column.loadColumn(dateSelect, column.title, objModel)
+                    onEditClicked: {
+                        if (privateProps.currentElement !== 3)
+                            privateProps.currentElement = 3
+                        column.loadColumn(dateSelect, column.title, objModel)
                     }
-
-                    onEditClicked: status === 0 ? status = 1 : status = 0
                 }
 
                 ControlLeftRightWithTitle {
@@ -231,6 +229,7 @@ MenuColumn {
             id: manualComponent
             Column {
                 property variant objModel
+
                 ControlMinusPlus {
                     title: qsTr("temperature set")
                     text: objModel.temperature / 10 + "°C"
@@ -255,6 +254,7 @@ MenuColumn {
             id: offComponent
             ButtonOkCancel {
                 property variant objModel
+
                 onCancelClicked: column.cancelClicked() // Nothing to reset
                 onOkClicked: {
                     column.okClicked()
@@ -267,6 +267,7 @@ MenuColumn {
             id: antifreezeComponent
             ButtonOkCancel {
                 property variant objModel
+
                 onCancelClicked: column.cancelClicked() // Nothing to reset
                 onOkClicked: {
                     column.okClicked()
@@ -306,31 +307,21 @@ MenuColumn {
                 property variant objModel
 
                 Component {
-                    id: dateSelectTimed
-                    DateSelect {
-                    }
+                    id: dateSelect
+                    DateSelect {}
                 }
 
-                ControlDateTime {
-                    id: dateTimeTimed
-                    text: qsTr("duration")
-                    time: DateTime.format(objModel.date)["time"]
-                    // in timed mode we can set only the end time, no date setting
-                    dateVisible: false
+                ControlSetDateTime {
+                    id: dateTime
 
-                    function checkReset() {
-                        if (privateProps.currentElement !== -1)
-                            resetSelection()
-                    }
+                    date: DateTime.format(privateProps.getDateTime(objModel))["date"]
+                    time: DateTime.format(privateProps.getDateTime(objModel))["time"]
+                    status: (privateProps.currentElement === 3) ? 1 : 0
 
-                    Component.onCompleted: {
-                        column.childDestroyed.connect(resetSelection)
-                        privateProps.currentElementChanged.connect(checkReset)
-                    }
-
-                    onTimeClicked: {
-                        column.loadColumn(dateSelectTimed, qsTr("time"), objModel, {"twoFields": true})
-                        privateProps.currentElement = -1
+                    onEditClicked: {
+                        if (privateProps.currentElement !== 3)
+                            privateProps.currentElement = 3
+                        column.loadColumn(dateSelect, column.title, objModel)
                     }
                 }
 
@@ -360,35 +351,21 @@ MenuColumn {
                 property variant objModel
 
                 Component {
-                    id: dateSelectWorking
-                    DateSelect {
-                    }
+                    id: dateSelect
+                    DateSelect {}
                 }
 
-                ControlDateTime {
-                    id: dateTimeWorking
-                    text: qsTr("valid until")
-                    date: DateTime.format(objModel.date)["date"]
-                    time: DateTime.format(objModel.date)["time"]
+                ControlSetDateTime {
+                    id: dateTime
 
-                    function checkReset() {
-                        if (privateProps.currentElement !== -1)
-                            resetSelection()
-                    }
+                    date: DateTime.format(privateProps.getDateTime(objModel))["date"]
+                    time: DateTime.format(privateProps.getDateTime(objModel))["time"]
+                    status: (privateProps.currentElement === 3) ? 1 : 0
 
-                    Component.onCompleted: {
-                        column.childDestroyed.connect(resetSelection)
-                        privateProps.currentElementChanged.connect(checkReset)
-                    }
-
-                    onDateClicked: {
-                        column.loadColumn(dateSelectWorking, qsTr("date"), objModel, {"twoFields": false})
-                        privateProps.currentElement = -1
-                    }
-
-                    onTimeClicked: {
-                        column.loadColumn(dateSelectWorking, qsTr("time"), objModel, {"twoFields": true})
-                        privateProps.currentElement = -1
+                    onEditClicked: {
+                        if (privateProps.currentElement !== 3)
+                            privateProps.currentElement = 3
+                        column.loadColumn(dateSelect, column.title, objModel)
                     }
                 }
 
