@@ -186,13 +186,11 @@ MenuColumn {
                 property variant objModel
 
                 Component {
-                    id: dateSelect
+                    id: dateSelectHoliday
                     DateSelect {}
                 }
 
                 ControlSetDateTime {
-                    id: dateTime
-
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
                     status: (privateProps.currentElement === 3) ? 1 : 0
@@ -200,7 +198,7 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
-                        column.loadColumn(dateSelect, column.title, objModel)
+                        column.loadColumn(dateSelectHoliday, column.title, objModel)
                     }
                 }
 
@@ -307,13 +305,11 @@ MenuColumn {
                 property variant objModel
 
                 Component {
-                    id: dateSelect
+                    id: dateSelectTimed
                     DateSelect {}
                 }
 
                 ControlSetDateTime {
-                    id: dateTime
-
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
                     status: (privateProps.currentElement === 3) ? 1 : 0
@@ -321,7 +317,7 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
-                        column.loadColumn(dateSelect, column.title, objModel)
+                        column.loadColumn(dateSelectTimed, column.title, objModel)
                     }
                 }
 
@@ -351,13 +347,11 @@ MenuColumn {
                 property variant objModel
 
                 Component {
-                    id: dateSelect
+                    id: dateSelectWorking
                     DateSelect {}
                 }
 
                 ControlSetDateTime {
-                    id: dateTime
-
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
                     status: (privateProps.currentElement === 3) ? 1 : 0
@@ -365,7 +359,7 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
-                        column.loadColumn(dateSelect, column.title, objModel)
+                        column.loadColumn(dateSelectWorking, column.title, objModel)
                     }
                 }
 
