@@ -398,26 +398,30 @@ void TestThermalControlUnitTimedProgram::initProgram(int object_id)
 
 void TestThermalControlUnitTimedProgram::testSetDate()
 {
-	ObjectTester t(obj, SIGNAL(dateChanged()));
-	QDate date = QDate::currentDate().addDays(-1);
+	obj->setYears(2012);
+	obj->setMonths(1);
+	obj->setDays(1);
 
-	obj->setDate(date);
+	ObjectTester t(obj, SignalList() << SIGNAL(daysChanged())
+				   << SIGNAL(monthsChanged())
+				   << SIGNAL(yearsChanged()));
+
+	obj->setDays(0);
 	t.checkSignals();
-
-	obj->setDate(date);
-	t.checkNoSignals();
 }
 
 void TestThermalControlUnitTimedProgram::testSetTime()
 {
-	ObjectTester t(obj, SIGNAL(timeChanged()));
-	QTime time = QTime::currentTime().addSecs(-10);
+	obj->setHours(0);
+	obj->setMinutes(0);
+	obj->setSeconds(0);
 
-	obj->setTime(time);
+	ObjectTester t(obj, SignalList() << SIGNAL(hoursChanged())
+				   << SIGNAL(minutesChanged())
+				   << SIGNAL(secondsChanged()));
+
+	obj->setSeconds(-1);
 	t.checkSignals();
-
-	obj->setTime(time);
-	t.checkNoSignals();
 }
 
 
@@ -428,15 +432,16 @@ void TestThermalControlUnitVacation::init()
 
 void TestThermalControlUnitVacation::testApply()
 {
-	QDate date = QDate::currentDate();
-	QTime time = QTime::currentTime();
-
 	obj->setProgramIndex(1);
-	obj->setDate(date);
-	obj->setTime(time);
-
+	obj->setYears(2012);
+	obj->setMonths(1);
+	obj->setDays(1);
+	obj->setHours(0);
+	obj->setMinutes(0);
+	obj->setSeconds(0);
 	obj->apply();
-	dev->setHolidayDateTime(date, time, 3);
+
+	dev->setHolidayDateTime(QDate(2012, 1, 1), QTime(0, 0, 0), 3);
 	compareClientCommand();
 }
 
@@ -448,14 +453,15 @@ void TestThermalControlUnitHoliday::init()
 
 void TestThermalControlUnitHoliday::testApply()
 {
-	QDate date = QDate::currentDate();
-	QTime time = QTime::currentTime();
-
 	obj->setProgramIndex(1);
-	obj->setDate(date);
-	obj->setTime(time);
-
+	obj->setYears(2012);
+	obj->setMonths(1);
+	obj->setDays(1);
+	obj->setHours(0);
+	obj->setMinutes(0);
+	obj->setSeconds(0);
 	obj->apply();
-	dev->setWeekendDateTime(date, time, 3);
+
+	dev->setWeekendDateTime(QDate(2012, 1, 1), QTime(0, 0, 0), 3);
 	compareClientCommand();
 }

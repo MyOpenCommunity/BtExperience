@@ -317,7 +317,7 @@ int ThermalControlUnitTimedProgram::getSeconds() const
 void ThermalControlUnitTimedProgram::setSeconds(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
-	int oldValue = time.minute();
+	int oldValue = time.second();
 	if ((newValue - oldValue) == 0)
 		return;
 	QTime newTime = time.addSecs(newValue - oldValue);
