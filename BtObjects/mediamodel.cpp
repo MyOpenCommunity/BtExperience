@@ -48,7 +48,6 @@ bool MediaDataModel::removeRows(int row, int count, const QModelIndex &parent)
 			it->deleteLater();
 		}
 		endRemoveRows();
-		emit countChanged();
 		return true;
 	}
 	return false;
@@ -127,6 +126,13 @@ int MediaModel::getRangeCount() const
 
 void MediaModel::setSource(MediaDataModel *s)
 {
+	if (sourceModel())
+	{
+		disconnect(sourceModel(), SIGNAL(rowsRemoved(const QModelIndex &, int, int)));
+		disconnect(sourceModel(), SIGNAL(rowsInserted(const QModelIndex &, int, int)));
+	}
+	connect(s, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), SLOT(waitResetFilter()));
+	connect(s, SIGNAL(rowsInserted(const QModelIndex &, int, int)), SLOT(waitResetFilter()));
 	setSourceModel(s);
 }
 
@@ -219,23 +225,32 @@ bool MediaModel::acceptsRow(int source_row) const
 
 bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-	if (QSortFilterProxyModel::removeRows(row, count, parent))
-	{
-		counter -= count;
-		invalidate();
-		// when there are no rows in the source model, filterAcceptsRow() is never called, so we must
-		// emit countChanged() here
-		if (getSource()->rowCount() == 0)
-			QTimer::singleShot(0, this, SIGNAL(countChanged()));
-		return true;
-	}
-	else
-		return false;
+	return QSortFilterProxyModel::removeRows(row, count, parent);
 }
 
 void MediaModel::resetCounter()
 {
 	counter = 0;
+}
+
+void MediaModel::resetFilter()
+{
+	reset();
+	emit countChanged();
+}
+
+void MediaModel::waitResetFilter()
+{
+	// We need to reset the filter when the underlying model has done adding or
+	// removing rows. This isn't done automatically because of our implementation
+	// of the filter (filterAcceptsRow() must be called in order on each row and
+	// this can be done only by resetting the filter).
+	//
+	// Furthermore, we cannot reset() here because our base class is already
+	// reacting to a row change: if we reset() and emit, a new calculation is
+	// triggered before the base class has finished doing its things.
+	// This instruction lets the base class finish its work before.
+	QTimer::singleShot(0, this, SLOT(resetFilter()));
 }
 
 ItemInterface *MediaModel::getObject(int row)

@@ -55,7 +55,7 @@ Page {
             id: buttonRow
             anchors {
                 top: parent.top
-                topMargin: parent.width / 100 * 2
+                topMargin: parent.height / 100 * 3
                 right: divisorLine.right
             }
 

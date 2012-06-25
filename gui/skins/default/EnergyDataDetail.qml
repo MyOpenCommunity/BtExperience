@@ -4,6 +4,8 @@ import Components.Text 1.0
 import Components.EnergyManagement 1.0
 import BtObjects 1.0
 
+import "js/Stack.js" as Stack
+
 Page {
     property int energyType: 0
 
@@ -65,7 +67,7 @@ Page {
             id: buttonRow
             anchors {
                 top: parent.top
-                topMargin: parent.width / 100 * 2
+                topMargin: parent.height / 100 * 3
                 right: divisorLine.right
             }
 
@@ -118,6 +120,7 @@ Page {
                 description: itemObject.general ? qsTr("Overall") : itemObject.name
                 measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
                 isOverview: false
+                onHeaderClicked: Stack.openPage("EnergyDataGraph.qml", {"energyItem": itemObject})
             }
             spacing: 40
             model: energiesCounters
