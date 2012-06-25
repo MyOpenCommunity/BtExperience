@@ -62,6 +62,8 @@ void TestObjectModel::testFilterObjectId()
 
 	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 5);
+	qApp->processEvents();
+	ts.clearSignals();
 
 	QVariantMap filters;
 
@@ -104,6 +106,8 @@ void TestObjectModel::testFilterObjectKey()
 
 	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 5);
+	qApp->processEvents();
+	ts.clearSignals();
 
 	QVariantMap filters;
 

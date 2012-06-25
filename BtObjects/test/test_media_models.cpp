@@ -87,7 +87,7 @@ void TestMediaModel::testInsert()
 	QCOMPARE(src->getObject(2), items[2]);
 }
 
-void TestMediaModel::testRemove()
+void TestMediaModel::testRemoveNoElements()
 {
 	(*src) << items[0];
 	(*src) << items[1];
@@ -95,45 +95,67 @@ void TestMediaModel::testRemove()
 	qApp->processEvents(); // flush pending countChanged()
 
 	ObjectTester ts(obj, SIGNAL(countChanged()));
-
-	QCOMPARE(obj->getCount(), 3);
-	QCOMPARE(obj->rowCount(), 3);
-
 	src->removeRows(1, 0);
+	qApp->processEvents();
 	ts.checkNoSignals();
-	QCOMPARE(obj->getCount(), 3);
-	QCOMPARE(obj->rowCount(), 3);
 
+	QCOMPARE(obj->getCount(), 3);
+	QCOMPARE(obj->getRangeCount(), 3);
+	qApp->processEvents();
+	ts.checkSignals();
+}
+
+void TestMediaModel::testRemove()
+{
+	(*src) << items[0];
+	(*src) << items[1];
+	(*src) << items[2];
+	qApp->processEvents(); // flush pending countChanged()
+
+	// remove one element
+	ObjectTester ts(obj, SIGNAL(countChanged()));
 	obj->remove(1);
+	qApp->processEvents();
+	ts.checkSignalCount(SIGNAL(countChanged), 2);
 
 	QCOMPARE(obj->getCount(), 2);
-	QCOMPARE(obj->rowCount(), 2);
+	QCOMPARE(obj->getRangeCount(), 2);
 
 	qApp->processEvents();
 	ts.checkSignals();
+}
 
-	QCOMPARE(src->getObject(0), items[0]);
-	QCOMPARE(src->getObject(1), items[2]);
+void TestMediaModel::testRemove2()
+{
+	(*src) << items[0];
+	(*src) << items[1];
+	(*src) << items[2];
+	qApp->processEvents(); // flush pending countChanged()
 
-	// remove another element
+	ObjectTester ts(obj, SIGNAL(countChanged()));
+	obj->remove(2);
+	obj->remove(1);
 	obj->remove(0);
-
-	QCOMPARE(obj->getCount(), 1);
-	QCOMPARE(obj->rowCount(), 1);
-
 	qApp->processEvents();
-	ts.checkSignals();
-
-	QCOMPARE(src->getObject(0), items[2]);
-
-	// remove last element
-	obj->remove(0);
+	ts.checkSignalCount(SIGNAL(countChanged()), 4);
 
 	QCOMPARE(obj->getCount(), 0);
-	QCOMPARE(obj->rowCount(), 0);
+	QCOMPARE(obj->getRangeCount(), 0);
+}
 
+void TestMediaModel::testRemove3()
+{
+	(*src) << items[0];
+	(*src) << items[1];
+	(*src) << items[2];
+	qApp->processEvents(); // flush pending countChanged()
+	ObjectTester ts(obj, SIGNAL(countChanged()));
+
+	// remove an element in the middle
+	obj->remove(1);
 	qApp->processEvents();
-	ts.checkSignals();
+	ts.checkSignalCount(SIGNAL(countChanged), 2);
+	QCOMPARE(src->getObject(1), items[2]);
 }
 
 void TestMediaModel::testRemoveObject()
@@ -167,45 +189,16 @@ void TestMediaModel::testRemoveFiltered()
 	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
 	QCOMPARE(src->rowCount(), 5);
-
-	src->removeRows(1, 0);
-	ts.checkNoSignals();
-	QCOMPARE(obj->getCount(), 3);
-	QCOMPARE(obj->rowCount(), 3);
+	qApp->processEvents();
+	ts.clearSignals();
 
 	obj->remove(1);
+	qApp->processEvents();
+	ts.checkSignals();
 
 	QCOMPARE(obj->getCount(), 2);
 	QCOMPARE(obj->rowCount(), 2);
 	QCOMPARE(src->rowCount(), 4);
-
-	qApp->processEvents();
-	ts.checkSignals();
-	return;
-	QCOMPARE(src->getObject(0), items[0]);
-	QCOMPARE(src->getObject(1), items[2]);
-
-	// remove another element
-	obj->remove(0);
-
-	QCOMPARE(obj->getCount(), 1);
-	QCOMPARE(obj->rowCount(), 1);
-	QCOMPARE(src->rowCount(), 3);
-
-	qApp->processEvents();
-	ts.checkSignals();
-
-	QCOMPARE(src->getObject(0), items[2]);
-
-	// remove last element
-	obj->remove(0);
-
-	QCOMPARE(obj->getCount(), 0);
-	QCOMPARE(obj->rowCount(), 0);
-	QCOMPARE(src->rowCount(), 2);
-
-	qApp->processEvents();
-	ts.checkSignals();
 }
 
 void TestMediaModel::testRemoveAll()
@@ -223,15 +216,16 @@ void TestMediaModel::testRemoveAll()
 	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 5);
 	QCOMPARE(src->rowCount(), 5);
+	qApp->processEvents();
+	ts.clearSignals();
 
 	obj->clear();
+	qApp->processEvents();
+	ts.checkSignalCount(SIGNAL(countChanged), 5);
 
 	QCOMPARE(obj->getCount(), 0);
 	QCOMPARE(obj->rowCount(), 0);
 	QCOMPARE(src->rowCount(), 0);
-
-	qApp->processEvents();
-	ts.checkSignals();
 }
 
 void TestMediaModel::testRemoveAllFiltered()
@@ -253,15 +247,16 @@ void TestMediaModel::testRemoveAllFiltered()
 	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 1);
 	QCOMPARE(src->rowCount(), 5);
+	qApp->processEvents();
+	ts.clearSignals();
 
 	obj->clear();
+	qApp->processEvents();
+	ts.checkSignalCount(SIGNAL(countChanged), 3);
 
 	QCOMPARE(obj->getCount(), 0);
 	QCOMPARE(obj->rowCount(), 0);
 	QCOMPARE(src->rowCount(), 2);
-
-	qApp->processEvents();
-	ts.checkSignals();
 }
 
 void TestMediaModel::testRemoveAllWithRange()
@@ -272,27 +267,21 @@ void TestMediaModel::testRemoveAllWithRange()
 
 	ObjectTester ts(obj, SIGNAL(countChanged()));
 
-	QCOMPARE(obj->getCount(), 5);
-	QCOMPARE(obj->rowCount(), 5);
-
 	obj->setRange(QVariantList() << 2 << 4);
 
 	QCOMPARE(obj->getCount(), 5);
 	QCOMPARE(obj->rowCount(), 2);
-
-	qApp->processEvents();
-	ts.checkSignals();
+	ts.clearSignals();
 
 	QCOMPARE(obj->getObject(0), items[2]);
 	QCOMPARE(obj->getObject(1), items[3]);
 
 	obj->clear();
+	qApp->processEvents();
+	ts.checkSignalCount(SIGNAL(countChanged), 6);
 
 	QCOMPARE(obj->getCount(), 0);
 	QCOMPARE(obj->rowCount(), 0);
-
-	qApp->processEvents();
-	ts.checkSignals();
 }
 
 void TestMediaModel::testFilterContainer()
@@ -312,7 +301,7 @@ void TestMediaModel::testFilterContainer()
 	QCOMPARE(obj->rowCount(), 3);
 
 	qApp->processEvents();
-	ts.checkSignals();
+	ts.checkSignalCount(SIGNAL(countChanged()), 2);
 
 	QCOMPARE(obj->getObject(0), items[0]);
 	QCOMPARE(obj->getObject(1), items[1]);
@@ -347,7 +336,7 @@ void TestMediaModel::testFilterRange()
 	QCOMPARE(obj->rowCount(), 2);
 
 	qApp->processEvents();
-	ts.checkSignals(); // TODO should not emit countChanged()
+	ts.checkSignalCount(SIGNAL(countChanged()), 2);
 
 	QCOMPARE(obj->getObject(0), items[2]);
 	QCOMPARE(obj->getObject(1), items[3]);
