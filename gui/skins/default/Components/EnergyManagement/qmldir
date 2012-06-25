@@ -9,6 +9,7 @@ EnergyDataDelegate 1.0 EnergyDataDelegate.qml
 EnergyDataDetailColumn 1.0 EnergyDataDetailColumn.qml
 EnergyDataOverviewColumn 1.0 EnergyDataOverviewColumn.qml
 EnergyDataTitle 1.0 EnergyDataTitle.qml
+EnergyDateSelector 1.0 EnergyDateSelector.qml
 EnergyManagementSystem 1.0 EnergyManagementSystem.qml
 LoadDetail 1.0 LoadDetail.qml
 LoadDiagnostic 1.0 LoadDiagnostic.qml
