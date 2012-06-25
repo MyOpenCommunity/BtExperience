@@ -290,6 +290,10 @@ int main(int argc, char *argv[])
 	// their, we have to install the event filter in the QApplication
 	app.installEventFilter(last_click);
 
+        //Set user-agent of the application in order to see the Mobile version of the web sites
+        app.setApplicationName(QString("Nokia"));
+        app.setApplicationVersion(QString("Mobile"));
+
 	GlobalProperties global;
 	ImageReader::setBasePath(global.getBasePath());
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
