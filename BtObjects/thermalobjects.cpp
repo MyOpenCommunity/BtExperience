@@ -26,7 +26,7 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	programs << new ThermalRegulationProgram(1, QString("P1"));
 	programs << new ThermalRegulationProgram(3, QString("P3"));
 	programs << new ThermalRegulationProgram(5, QString("P5"));
-	current_modality = -1;
+	current_modality_index = -1;
 
 	// The objects list should contain only one item per id
 	// TODO: fix the the timed programs
@@ -72,7 +72,14 @@ ObjectDataModel *ThermalControlUnit::getModalities() const
 
 QObject* ThermalControlUnit::getCurrentModality() const
 {
-	return current_modality == -1 ? 0 : modalities.getObject(current_modality);
+	return current_modality_index == -1 ? 0 : modalities.getObject(current_modality_index);
+}
+
+ThermalControlUnit::ThermalControlUnitId ThermalControlUnit::getCurrentModalityId() const
+{
+	return current_modality_index == -1 ?
+				static_cast<ThermalControlUnitId>(-1) :
+				static_cast<ThermalControlUnitId>(modalities.getObject(current_modality_index)->getObjectId());
 }
 
 void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
@@ -137,10 +144,11 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 			{
 				if (modalities.getObject(i)->getObjectId() == id)
 				{
-					if (i != current_modality)
+					if (i != current_modality_index)
 					{
-						current_modality = i;
+						current_modality_index = i;
 						emit currentModalityChanged();
+						emit currentModalityIdChanged();
 					}
 					break;
 				}

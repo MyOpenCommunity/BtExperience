@@ -105,6 +105,11 @@ class ThermalControlUnit : public ObjectInterface
 	*/
 	Q_PROPERTY(QObject *currentModality READ getCurrentModality NOTIFY currentModalityChanged)
 
+	/*!
+		\brief The \ref ThermalControlUnitId corresponding to the \ref currentModality
+	*/
+	Q_PROPERTY(ThermalControlUnitId currentModalityId READ getCurrentModalityId NOTIFY currentModalityIdChanged)
+
 public:
 	enum ThermalControlUnitId
 	{
@@ -135,12 +140,14 @@ public:
 	ObjectDataModel *getPrograms() const;
 
 	QObject* getCurrentModality() const;
+	ThermalControlUnitId getCurrentModalityId() const;
 
 signals:
 	void seasonChanged();
 	void modalitiesChanged();
 	void programsChanged();
 	void currentModalityChanged();
+	void currentModalityIdChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -154,7 +161,7 @@ private:
 	SeasonType season;
 	ObjectDataModel programs;
 	ThermalDevice *dev;
-	int current_modality;
+	int current_modality_index;
 };
 
 
