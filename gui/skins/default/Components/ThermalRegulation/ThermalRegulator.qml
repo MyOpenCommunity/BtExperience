@@ -15,32 +15,40 @@ MenuColumn {
         currentIndex: -1
 
         delegate: MenuItemDelegate {
-            function isControlledProbe() {
-                return (itemObject.objectId === ObjectInterface.IdThermalControlledProbe ||
-                        itemObject.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
-            }
-
-            function getDescription() {
-                var descr = ""
-                if (isControlledProbe()) {
-                    if (itemObject.probeStatus === ThermalControlledProbe.Manual)
-                        descr += itemObject.setpoint / 10 + qsTr("°C") + " ";
-
-                    descr += pageObject.names.get('PROBE_STATUS', itemObject.probeStatus);
-                }
-                return descr
-            }
-
             itemObject: modelList.getObject(index)
-            description: getDescription()
-            boxInfoState: isControlledProbe() ? "info" : ""
-            boxInfoText: isControlledProbe() ? (itemObject.temperature / 10).toFixed() + qsTr("°C") : ""
+            description: privateProps.getDescription(itemObject.currentModalityId)
             hasChild: true
             onClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
+            boxInfoState: privateProps.getBoxInfoState(itemObject, itemObject.currentModalityId)
+            boxInfoText: privateProps.getBoxInfoText(itemObject, itemObject.currentModalityId)
         }
 
         model: modelList
         onCurrentPageChanged: column.closeChild()
+    }
+
+    QtObject {
+        id: privateProps
+
+        function getDescription(currentModalityId) {
+            var descr = "--"
+            if (currentModalityId >= 0)
+                descr = pageObject.names.get('CENTRAL_STATUS', currentModalityId)
+            return descr
+        }
+
+        function getBoxInfoState(itemObject, currentModalityId) {
+            if (itemObject.probeStatus === ThermalControlledProbe.Manual ||
+                    currentModalityId === ThermalControlUnit.IdManual)
+                return "info"
+            return ""
+        }
+
+        function getBoxInfoText(itemObject, currentModalityId) {
+            if (currentModalityId === ThermalControlUnit.IdManual)
+                return (itemObject.currentModality.temperature / 10).toFixed(1) + qsTr("°C")
+            return ""
+        }
     }
 
     BtObjectsMapping { id: mapping }
