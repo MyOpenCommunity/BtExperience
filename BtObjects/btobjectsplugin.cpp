@@ -274,6 +274,13 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit4Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
 			break;
 		}
+			// TODO implement parsing of not controlled and external probes
+		case ObjectInterface::IdThermalNonControlledProbe:
+			obj = new ThermalNonControlledProbe(descr, where, ObjectInterface::IdThermalNonControlledProbe, bt_global::add_device_to_cache(new NonControlledProbeDevice(where, NonControlledProbeDevice::INTERNAL)));
+			break;
+		case ObjectInterface::IdThermalExternalProbe:
+			obj = new ThermalNonControlledProbe(descr, where, ObjectInterface::IdThermalExternalProbe, bt_global::add_device_to_cache(new NonControlledProbeDevice(where, NonControlledProbeDevice::EXTERNAL)));
+			break;
 		case ObjectInterface::IdHardwareSettings:
 			obj = new HardwareSettings;
 			break;

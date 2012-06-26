@@ -83,19 +83,9 @@ MenuColumn {
 
     Component.onCompleted: modalitySelected(dataModel.probeStatus)
 
-    Image {
+    ControlTemperature {
         id: fixedItem
-        anchors.top: parent.top
-        width: parent.width
-        height: 50
-        source: imagesPath + "common/dimmer_bg.png"
-
-        UbuntuLightText {
-            id: textTemperature
-            anchors.centerIn: parent
-            text: dataModel.temperature  / 10 + qsTr("°C")
-            font.pixelSize: 24
-        }
+        text: (dataModel.temperature / 10).toFixed(1) + qsTr("°C")
     }
 
     MenuItem {
