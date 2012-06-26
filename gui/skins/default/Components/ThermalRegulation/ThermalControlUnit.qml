@@ -148,7 +148,7 @@ MenuColumn {
             UbuntuLightText {
                 id: textTemperature
                 anchors.centerIn: parent
-                text: centralProbe.getObject(0).temperature  / 10 + qsTr("°C")
+                text: (centralProbe.getObject(0).temperature / 10).toFixed(1) + qsTr("°C")
                 font.pixelSize: 24
             }
         }
@@ -230,7 +230,7 @@ MenuColumn {
 
                 ControlMinusPlus {
                     title: qsTr("temperature set")
-                    text: objModel.temperature / 10 + "°C"
+                    text: (objModel.temperature / 10).toFixed(1) + qsTr("°C")
                     onMinusClicked: objModel.temperature -= 5
                     onPlusClicked: objModel.temperature += 5
                 }
@@ -323,7 +323,7 @@ MenuColumn {
 
                 ControlMinusPlus {
                     title: qsTr("temperature set")
-                    text: objModel.temperature / 10 + "°C"
+                    text: (objModel.temperature / 10).toFixed(1) + qsTr("°C")
                     onMinusClicked: objModel.temperature -= 5
                     onPlusClicked: objModel.temperature += 5
                 }

@@ -34,7 +34,7 @@ MenuColumn {
             itemObject: modelList.getObject(index)
             description: getDescription()
             boxInfoState: isControlledProbe() ? "info" : ""
-            boxInfoText: isControlledProbe() ? itemObject.temperature / 10 + qsTr("°C") : ""
+            boxInfoText: isControlledProbe() ? (itemObject.temperature / 10).toFixed() + qsTr("°C") : ""
             hasChild: true
             onClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
         }
