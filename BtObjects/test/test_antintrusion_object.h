@@ -57,6 +57,7 @@ class TestAntintrusionSystem : public TestBtObject
 {
 Q_OBJECT
 private slots:
+	void initTestCase();
 	void init();
 	void cleanup();
 
