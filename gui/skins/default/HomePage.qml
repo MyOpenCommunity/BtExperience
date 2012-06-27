@@ -117,32 +117,105 @@ BasePage {
         }
     }
 
-    CardView {
+    PathView {
         ObjectModel {
             id: usersModel
             source: myHomeModels.profiles
         }
 
+        Component {
+            id: usersDelegate
+            Item {
+                id: itemDelegate
+                property variant itemObject: usersModel.getObject(index)
+                width: imageDelegate.sourceSize.width
+                height: imageDelegate.sourceSize.height + textDelegate.height
+
+                z: PathView.z
+                scale: PathView.iconScale + 0.1
+
+                Image {
+                    id: imageDelegate
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    source: itemObject.image
+                }
+
+                Text {
+                    id: textDelegate
+                    text: itemObject.description
+                    font.family: regularFont.name
+                    font.pixelSize: 22
+                    anchors.top: imageDelegate.bottom
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    horizontalAlignment: Text.AlignHCenter
+                }
+
+                //Component.onCompleted: {
+                //console.log('icon scale: ' + PathView.iconScale + ' x:' + itemDelegate.x)
+                //}
+                SvgImage {
+                    id: rectPressed
+                    source: "images/common/profilo_p.svg"
+                    visible: false
+                    anchors {
+                        centerIn: imageDelegate
+                        fill: imageDelegate
+                        margins: 20
+                    }
+                    width: imageDelegate.width
+                    height: imageDelegate.height
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Stack.openPage('Profile.qml', {'profile': itemDelegate.itemObject})
+                    onPressed: itemDelegate.PathView.view.currentPressed = index
+                    onReleased: itemDelegate.PathView.view.currentPressed = -1
+                }
+
+                states: State {
+                    when: itemDelegate.PathView.view.currentPressed === index
+                    PropertyChanges {
+                        target: rectPressed
+                        visible: true
+                    }
+                }
+            }
+        }
+
         id: users
+        property int currentPressed: -1
         model: usersModel
-        delegate: CardDelegate {
-            property variant itemObject: usersModel.getObject(index)
+        delegate: usersDelegate
 
-            source: itemObject.image
-            label: itemObject.description
-
-            onClicked: Stack.openPage('Profile.qml', {'profile': itemObject})
+        path:  Path {
+            startX: 100; startY: 250
+            PathAttribute { name: "iconScale"; value: 0.4 }
+            PathAttribute { name: "z"; value: 0.1 }
+            PathLine { x: 160; y: 250; }
+            PathAttribute { name: "iconScale"; value: 0.5 }
+            PathLine { x: 310; y: 210; }
+            PathAttribute { name: "iconScale"; value: 1.0 }
+            PathAttribute { name: "z"; value: 1.0 }
+            PathLine { x: 420; y: 243; }
+            PathAttribute { name: "iconScale"; value: 0.6 }
+            PathLine { x: 560; y: 252; }
+            PathAttribute { name: "iconScale"; value: 0.35 }
+            PathLine { x: 630; y: 250; }
         }
-
-        anchors {
-            top: toolbar.bottom
-            topMargin: 100
-            bottom: favourites.top
-            left: parent.left
-            leftMargin: 20
-            right: homeMenu.left
-            rightMargin: 100
-        }
+        width: 620
+        pathItemCount: 5
+        anchors.bottom: favourites.top
+        anchors.bottomMargin: 0
+        anchors.top: toolbar.bottom
+        anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        onFlickStarted: currentPressed = -1
+        onMovementEnded: currentPressed = -1
     }
 
     MediaModel {
@@ -210,5 +283,3 @@ BasePage {
         }
     }
 }
-
-
