@@ -557,7 +557,7 @@ void EnergyData::requestUpdate(int type, QDate date, RequestOptions options)
 	case CumulativeMonthGraph:
 	{
 		DelayedSlotCaller *caller = new DelayedSlotCaller;
-		caller->setSlot(this, SLOT(testGraphData(EnergyData::GraphType,QDate)), 500);
+		caller->setSlot(this, SLOT(testGraphData(EnergyData::GraphType,QDate)), 0);
 		caller->addArgument(static_cast<GraphType>(type));
 		caller->addArgument(key.date);
 	}
