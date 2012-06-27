@@ -27,6 +27,7 @@
 #include "container.h"
 #include "medialink.h"
 #include "note.h"
+#include "choicelist.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -317,13 +318,21 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 									getTextChild(program_node, "set_point").toInt(),
 									SplitProgram::int2Speed(getTextChild(program_node, "speed").toInt()),
 									SplitProgram::int2Swing(getTextChild(program_node, "swing").toInt()));
+			QList<int> modes;
+			modes << SplitProgram::ModeOff
+				  << SplitProgram::ModeWinter
+				  << SplitProgram::ModeSummer
+				  << SplitProgram::ModeFan
+				  << SplitProgram::ModeDehumidification
+				  << SplitProgram::ModeAuto;
 			obj = new SplitAdvancedScenario(descr,
 											where,
 											bt_global::add_device_to_cache(
 												new AdvancedAirConditioningDevice(where)),
 											getTextChild(item, "command"),
 											createNonControlledProbeDevice(item),
-											programs);
+											programs,
+											modes);
 			break;
 		}
 		case ObjectInterface::IdScenarioSystem:
@@ -581,6 +590,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<Light>(
 				uri, 1, 0, "Light",
 				"unable to create an Light instance");
+	qmlRegisterUncreatableType<ChoiceList>(
+				uri, 1, 0, "ChoiceList",
+				"unable to create an ChoiceList instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

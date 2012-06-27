@@ -13,6 +13,7 @@
 #include <QStringList>
 
 class NonControlledProbeDevice;
+class ChoiceList;
 
 
 /*!
@@ -148,6 +149,11 @@ class SplitAdvancedScenario : public ObjectInterface
 	*/
 	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
 
+	/*!
+		\brief Gets the modes list
+	*/
+	Q_PROPERTY(QObject *modes READ getModes CONSTANT)
+
 public:
 	explicit SplitAdvancedScenario(QString name,
 								   QString key,
@@ -155,6 +161,7 @@ public:
 								   QString command,
 								   NonControlledProbeDevice *d_probe,
 								   QList<SplitProgram *> programs,
+								   QList<int> modes,
 								   QObject *parent = 0);
 
 	virtual int getObjectId() const
@@ -180,6 +187,7 @@ public:
 	void setSpeed(SplitProgram::Speed speed);
 	int getCount() const;
 	int getTemperature() const;
+	QObject *getModes() const;
 
 	Q_INVOKABLE void ok();
 	Q_INVOKABLE void resetProgram();
@@ -207,6 +215,7 @@ private:
 	SplitProgram actual_program; // name empty means custom programming
 	QList<SplitProgram *> program_list;
 	int temperature;
+	ChoiceList *modes;
 };
 
 #endif // SPLITADVANCEDSCENARIO_H

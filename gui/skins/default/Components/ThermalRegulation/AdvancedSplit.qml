@@ -38,8 +38,8 @@ MenuColumn {
         dataModel.mode = mode
         if (mode === SplitProgram.ModeFan)
             options.setComponent(fancoil)
-        else if (mode === SplitProgram.ModeOff
-                 || mode === SplitProgram.ModeDehumidification)
+        else if (mode === SplitProgram.ModeOff ||
+                 mode === SplitProgram.ModeDehumidification)
             options.setComponent(off)
         else
             options.setComponent(temperature)

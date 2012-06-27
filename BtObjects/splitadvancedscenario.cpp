@@ -1,6 +1,7 @@
 #include "splitadvancedscenario.h"
 #include "probe_device.h"
 #include "scaleconversion.h"
+#include "choicelist.h"
 
 #include <QDebug>
 
@@ -36,6 +37,7 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 											 QString command,
 											 NonControlledProbeDevice *d_probe,
 											 QList<SplitProgram *> programs,
+											 QList<int> _modes,
 											 QObject *parent) :
 	ObjectInterface(parent)
 {
@@ -47,12 +49,16 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 				SLOT(valueReceived(DeviceValues)));
 	}
 
+	modes = new ChoiceList(this);
+	foreach (int mode, _modes) {
+		modes->add(mode);
+	}
 	this->command = command;
 	this->key = key;
 	this->name = name;
 	program_list = programs;
 	actual_program.name = QString();
-	actual_program.mode = SplitProgram::ModeOff;
+	actual_program.mode = static_cast<SplitProgram::Mode>(modes->value());
 	actual_program.swing = SplitProgram::SwingOff;
 	actual_program.temperature = 200;
 	actual_program.speed = SplitProgram::SpeedSilent;
@@ -234,4 +240,10 @@ void SplitAdvancedScenario::sendOffCommand()
 int SplitAdvancedScenario::getTemperature() const
 {
 	return bt2Celsius(temperature);
+}
+
+QObject *SplitAdvancedScenario::getModes() const
+{
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ChoiceList *>(modes);
 }

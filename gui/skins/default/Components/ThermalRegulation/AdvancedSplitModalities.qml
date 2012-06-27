@@ -22,12 +22,7 @@ MenuColumn {
         model: ListModel {
             id: modelList
             Component.onCompleted: {
-                var l = [SplitProgram.ModeOff,
-                         SplitProgram.ModeWinter,
-                         SplitProgram.ModeSummer,
-                         SplitProgram.ModeFan,
-                         SplitProgram.ModeDehumidification,
-                         SplitProgram.ModeAuto]
+                var l = dataModel.modes.values
                 for (var i = 0; i < l.length; i++)
                     append({
                                "type": l[i],
