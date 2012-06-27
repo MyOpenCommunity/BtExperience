@@ -92,9 +92,9 @@ Item {
             id: button
             visible: false
             anchors.right: parent.right
-            defaultImage: "../images/common/button_delete_all.svg"
-            pressedImage: "../images/common/button_delete_all_press.svg"
-            shadowImage: "../images/common/shadow_button_delete_all.svg"
+            defaultImage: "../../images/common/button_delete_all.svg"
+            pressedImage: "../../images/common/button_delete_all_press.svg"
+            shadowImage: "../../images/common/shadow_button_delete_all.svg"
             text: qsTr("remove all")
             font.capitalization: Font.AllUppercase
             font.pixelSize: 12

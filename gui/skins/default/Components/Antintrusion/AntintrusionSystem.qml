@@ -271,10 +271,10 @@ MenuColumn {
                     textAnchors.right: zoneButton.right
                     font.pixelSize: 12
                     horizontalAlignment: Text.AlignLeft
-                    defaultImage: "../images/common/button_zones.svg"
-                    pressedImage: "../images/common/button_zones_press.svg"
-                    selectedImage: "../images/common/button_zones_select.svg"
-                    shadowImage: "../images/common/shadow_button_zones.svg"
+                    defaultImage: "../../images/common/button_zones.svg"
+                    pressedImage: "../../images/common/button_zones_press.svg"
+                    selectedImage: "../../images/common/button_zones_select.svg"
+                    shadowImage: "../../images/common/shadow_button_zones.svg"
                     text: itemObject.name
                     onClicked: {
                         column.closeChild()
@@ -293,10 +293,10 @@ MenuColumn {
 
             ButtonThreeStates {
                 id: buttonZones
-                defaultImage: "../images/common/button_set-zones.svg"
-                pressedImage: "../images/common/button_set-zones_press.svg"
-                selectedImage: "../images/common/button_set-zones_select.svg"
-                shadowImage: "../images/common/shadow_button_set-zones.svg"
+                defaultImage: "../../images/common/button_set-zones.svg"
+                pressedImage: "../../images/common/button_set-zones_press.svg"
+                selectedImage: "../../images/common/button_set-zones_select.svg"
+                shadowImage: "../../images/common/shadow_button_set-zones.svg"
                 text: qsTr("modify zones")
                 font.capitalization: Font.AllUppercase
                 font.pixelSize: 15
