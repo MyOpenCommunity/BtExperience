@@ -509,9 +509,17 @@ class ThermalControlUnitTimedManual : public ThermalControlUnitManual
 	Q_OBJECT
 
 	/*!
-		\brief Sets and gets the time used in the modality
+		\brief Sets and gets hour for timed program
 	*/
-	Q_PROPERTY(QTime time READ getTime WRITE setTime NOTIFY timeChanged)
+	Q_PROPERTY(int hours READ getHours WRITE setHours NOTIFY hoursChanged)
+	/*!
+		\brief Sets and gets minute for timed program
+	*/
+	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
+	/*!
+		\brief Sets and gets second for timed program
+	*/
+	Q_PROPERTY(int seconds READ getSeconds WRITE setSeconds NOTIFY secondsChanged)
 
 public:
 	ThermalControlUnitTimedManual(QString name, ThermalDevice4Zones *dev);
@@ -521,16 +529,24 @@ public:
 		return ThermalControlUnit::IdTimedManual;
 	}
 
-	QTime getTime() const;
-	void setTime(QTime time);
+	int getHours() const;
+	void setHours(int newValue);
+	int getMinutes() const;
+	void setMinutes(int newValue);
+	int getSeconds() const;
+	void setSeconds(int newValue);
 
 public slots:
 	virtual void apply();
 
 signals:
-	void timeChanged();
+	void hoursChanged();
+	void minutesChanged();
+	void secondsChanged();
 
 private:
+	void emitTimeSignals(QTime oldTime, QTime newTime);
+
 	ThermalDevice4Zones *dev;
 };
 

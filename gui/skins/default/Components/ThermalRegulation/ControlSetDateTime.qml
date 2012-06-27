@@ -9,6 +9,7 @@ SvgImage {
     property string date
     property string time
     property alias status: buttonEdit.status
+    property bool dateVisible: true
 
     signal editClicked
 
@@ -16,6 +17,7 @@ SvgImage {
 
     UbuntuLightText {
         id: labelDate
+        visible: control.dateVisible
         color: "black"
         text: qsTr("until date")
         font.pixelSize: 13
@@ -29,6 +31,7 @@ SvgImage {
 
     UbuntuLightText {
         id: valueDate
+        visible: control.dateVisible
         color: "white"
         text: control.date
         font.pixelSize: 14
@@ -46,7 +49,7 @@ SvgImage {
         text: qsTr("until time")
         font.pixelSize: 13
         anchors {
-            top: valueDate.bottom
+            top: control.dateVisible ? valueDate.bottom : parent.top
             topMargin: 5
             left: parent.left
             leftMargin: 7

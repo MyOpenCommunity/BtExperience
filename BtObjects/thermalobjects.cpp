@@ -485,18 +485,68 @@ ThermalControlUnitTimedManual::ThermalControlUnitTimedManual(QString name, Therm
 	to_apply = current;
 }
 
-QTime ThermalControlUnitTimedManual::getTime() const
+void ThermalControlUnitTimedManual::emitTimeSignals(QTime oldTime, QTime newTime)
 {
-	return to_apply[TIME].toTime();
+	if (oldTime.hour() != newTime.hour())
+		emit hoursChanged();
+	if (oldTime.minute() != newTime.minute())
+		emit minutesChanged();
+	if (oldTime.second() != newTime.second())
+		emit secondsChanged();
 }
 
-void ThermalControlUnitTimedManual::setTime(QTime time)
+int ThermalControlUnitTimedManual::getHours() const
 {
-	if (to_apply[TIME].toTime() == time)
-		return;
+	const QTime &time = to_apply[TIME].toTime();
+	return time.hour();
+}
 
-	to_apply[TIME] = time;
-	emit timeChanged();
+void ThermalControlUnitTimedManual::setHours(int newValue)
+{
+	QTime time = to_apply[TIME].toTime();
+	int oldValue = time.hour();
+	int diff = newValue - oldValue;
+	if (newValue == oldValue)
+		return;
+	QTime newTime = time.addSecs(diff * 60 * 60);
+	to_apply[TIME] = newTime;
+	emitTimeSignals(time, newTime);
+}
+
+int ThermalControlUnitTimedManual::getMinutes() const
+{
+	const QTime &time = to_apply[TIME].toTime();
+	return time.minute();
+}
+
+void ThermalControlUnitTimedManual::setMinutes(int newValue)
+{
+	QTime time = to_apply[TIME].toTime();
+	int oldValue = time.minute();
+	int diff = newValue - oldValue;
+	if (newValue == oldValue)
+		return;
+	QTime newTime = time.addSecs(diff * 60);
+	to_apply[TIME] = newTime;
+	emitTimeSignals(time, newTime);
+}
+
+int ThermalControlUnitTimedManual::getSeconds() const
+{
+	const QTime &time = to_apply[TIME].toTime();
+	return time.second();
+}
+
+void ThermalControlUnitTimedManual::setSeconds(int newValue)
+{
+	QTime time = to_apply[TIME].toTime();
+	int oldValue = time.second();
+	int diff = newValue - oldValue;
+	if (newValue == oldValue)
+		return;
+	QTime newTime = time.addSecs(diff);
+	to_apply[TIME] = newTime;
+	emitTimeSignals(time, newTime);
 }
 
 void ThermalControlUnitTimedManual::apply()

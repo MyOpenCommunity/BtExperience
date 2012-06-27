@@ -29,7 +29,7 @@ MenuColumn {
     }
 
     width: 212
-    height: seasonItem.height + modalityItem.height + itemLoader.height
+    height: fixedItem.height + seasonItem.height + modalityItem.height + itemLoader.height
 
     QtObject {
         id: privateProps
@@ -37,7 +37,16 @@ MenuColumn {
         property int pendingSeason: -1
 
         function getDateTime(objModel) {
-            var dt = new Date(objModel.months+"/"+objModel.days+"/"+objModel.years)
+            var m = objModel.months
+            if (m === undefined)
+                m = 1
+            var d = objModel.days
+            if (d === undefined)
+                d = 1
+            var y = objModel.years
+            if (y === undefined)
+                y = 2012
+            var dt = new Date(m+"/"+d+"/"+y)
             dt.setHours(objModel.hours)
             dt.setMinutes(objModel.minutes)
             dt.setSeconds(objModel.seconds)
@@ -310,6 +319,7 @@ MenuColumn {
                 }
 
                 ControlSetDateTime {
+                    dateVisible: false
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
                     status: (privateProps.currentElement === 3) ? 1 : 0
@@ -317,7 +327,7 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
-                        column.loadColumn(dateSelectTimed, column.title, objModel)
+                        column.loadColumn(dateSelectTimed, column.title, objModel, {dateVisible: false})
                     }
                 }
 

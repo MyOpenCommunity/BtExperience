@@ -5,6 +5,8 @@ import Components.Text 1.0
 MenuColumn {
     id: column
 
+    property bool dateVisible: true
+
     height: background.height
     width: background.width
 
@@ -14,6 +16,7 @@ MenuColumn {
 
         UbuntuLightText {
             id: labelDate
+            visible: column.dateVisible
             color: "black"
             text: qsTr("until date")
             font.pixelSize: 13
@@ -27,6 +30,7 @@ MenuColumn {
 
         ControlDateTime {
             id: controlDate
+            visible: column.dateVisible
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: labelDate.bottom
