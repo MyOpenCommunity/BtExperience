@@ -104,9 +104,9 @@ Column {
 
     spacing: 5
     ButtonThreeStates {
-        defaultImage: "../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
-        pressedImage: "../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
-        shadowImage: "../images/energy/ombra_btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
+        defaultImage: "../../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
+        pressedImage: "../../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
+        shadowImage: "../../images/energy/ombra_btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
 
         Row {
             anchors {

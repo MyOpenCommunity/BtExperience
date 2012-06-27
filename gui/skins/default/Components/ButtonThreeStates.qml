@@ -6,10 +6,10 @@ import Components.Text 1.0
 SvgImage {
     id: bg
 
-    property string defaultImage: ""
-    property string pressedImage: ""
-    property string selectedImage: ""
-    property string shadowImage: ""
+    property url defaultImage: ""
+    property url pressedImage: ""
+    property url selectedImage: ""
+    property url shadowImage: ""
 
     property alias text: label.text
     property alias font: label.font

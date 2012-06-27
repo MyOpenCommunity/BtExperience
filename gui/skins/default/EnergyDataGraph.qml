@@ -21,6 +21,10 @@ Page {
     QtObject {
         id: privateProps
         property bool showCurrency: false
+        // TODO: make the date change possible!
+        property int graphType: EnergyData.CumulativeMonthGraph
+        property date graphDate: new Date(2011, 4, 15)
+        property variant modelGraph: energyItem.getGraph(graphType, graphDate, EnergyData.Consumption)
     }
 
     SvgImage {
@@ -86,30 +90,30 @@ Page {
                 }
                 ButtonThreeStates {
                     id: dayButton
-                    defaultImage: "../images/energy/btn_time.svg"
-                    pressedImage: "../images/energy/btn_time_P.svg"
-                    selectedImage: "../images/energy/btn_time_S.svg"
-                    shadowImage: "../images/energy/ombra_btn_time.svg"
+                    defaultImage: "images/energy/btn_time.svg"
+                    pressedImage: "images/energy/btn_time_P.svg"
+                    selectedImage: "images/energy/btn_time_S.svg"
+                    shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("day")
                     status: 0
                     onClicked: {}
                 }
                 ButtonThreeStates {
                     id: monthButton
-                    defaultImage: "../images/energy/btn_time.svg"
-                    pressedImage: "../images/energy/btn_time_P.svg"
-                    selectedImage: "../images/energy/btn_time_S.svg"
-                    shadowImage: "../images/energy/ombra_btn_time.svg"
+                    defaultImage: "images/energy/btn_time.svg"
+                    pressedImage: "images/energy/btn_time_P.svg"
+                    selectedImage: "images/energy/btn_time_S.svg"
+                    shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("month")
                     status: 1
                     onClicked: {}
                 }
                 ButtonThreeStates {
                     id: yearButton
-                    defaultImage: "../images/energy/btn_time.svg"
-                    pressedImage: "../images/energy/btn_time_P.svg"
-                    selectedImage: "../images/energy/btn_time_S.svg"
-                    shadowImage: "../images/energy/ombra_btn_time.svg"
+                    defaultImage: "images/energy/btn_time.svg"
+                    pressedImage: "images/energy/btn_time_P.svg"
+                    selectedImage: "images/energy/btn_time_S.svg"
+                    shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("year")
                     status: 0
                     onClicked: {}
@@ -136,20 +140,20 @@ Page {
                 }
                 ButtonThreeStates {
                     id: moneyButton
-                    defaultImage: "../images/energy/btn_value.svg"
-                    pressedImage: "../images/energy/btn_value_P.svg"
-                    selectedImage: "../images/energy/btn_value_S.svg"
-                    shadowImage: "../images/energy/ombra_btn_value.svg"
+                    defaultImage: "images/energy/btn_value.svg"
+                    pressedImage: "images/energy/btn_value_P.svg"
+                    selectedImage: "images/energy/btn_value_S.svg"
+                    shadowImage: "images/energy/ombra_btn_value.svg"
                     text: qsTr("€")
                     status: privateProps.showCurrency === true ? 1 : 0
                     onClicked: privateProps.showCurrency = true
                 }
                 ButtonThreeStates {
                     id: consumptionButton
-                    defaultImage: "../images/energy/btn_value.svg"
-                    pressedImage: "../images/energy/btn_value_P.svg"
-                    selectedImage: "../images/energy/btn_value_S.svg"
-                    shadowImage: "../images/energy/ombra_btn_value.svg"
+                    defaultImage: "images/energy/btn_value.svg"
+                    pressedImage: "images/energy/btn_value_P.svg"
+                    selectedImage: "images/energy/btn_value_S.svg"
+                    shadowImage: "images/energy/ombra_btn_value.svg"
                     text: qsTr("units")
                     status: privateProps.showCurrency === false ? 1 : 0
                     onClicked: privateProps.showCurrency = false
@@ -165,6 +169,25 @@ Page {
                     horizontalCenter: parent.horizontalCenter
                 }
             }
+
+
+            Loader {
+                id: pageContent
+                anchors {
+                    top: divisorLine.bottom
+                    topMargin: parent.height * 0.1
+                    left: divisorLine.left
+                }
+
+                sourceComponent: Component {
+                    EnergyMonthGraph {
+                        modelGraph: privateProps.modelGraph
+                    }
+                }
+            }
+
+
+
         }
 
         SvgImage {

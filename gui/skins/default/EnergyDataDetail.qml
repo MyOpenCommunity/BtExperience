@@ -73,20 +73,20 @@ Page {
 
             ButtonThreeStates {
                 id: moneyButton
-                defaultImage: "../images/energy/btn_value.svg"
-                pressedImage: "../images/energy/btn_value_P.svg"
-                selectedImage: "../images/energy/btn_value_S.svg"
-                shadowImage: "../images/energy/ombra_btn_value.svg"
+                defaultImage: "images/energy/btn_value.svg"
+                pressedImage: "images/energy/btn_value_P.svg"
+                selectedImage: "images/energy/btn_value_S.svg"
+                shadowImage: "images/energy/ombra_btn_value.svg"
                 text: qsTr("€")
                 status: privateProps.showCurrency === true ? 1 : 0
                 onClicked: privateProps.showCurrency = true
             }
             ButtonThreeStates {
                 id: consumptionButton
-                defaultImage: "../images/energy/btn_value.svg"
-                pressedImage: "../images/energy/btn_value_P.svg"
-                selectedImage: "../images/energy/btn_value_S.svg"
-                shadowImage: "../images/energy/ombra_btn_value.svg"
+                defaultImage: "images/energy/btn_value.svg"
+                pressedImage: "images/energy/btn_value_P.svg"
+                selectedImage: "images/energy/btn_value_S.svg"
+                shadowImage: "images/energy/ombra_btn_value.svg"
                 text: qsTr("units")
                 status: privateProps.showCurrency === false ? 1 : 0
                 onClicked: privateProps.showCurrency = false
