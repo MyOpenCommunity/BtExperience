@@ -92,7 +92,7 @@ Item {
                 text: menuItem.name
                 activeFocusOnPress: false
                 font.pixelSize: 13
-                color:  labelLoader.textColor
+                color: labelLoader.textColor
                 onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
             }
         }
@@ -177,8 +177,8 @@ Item {
         anchors.fill: parent
         onPressAndHold: if (menuItem.editable) { privateProps.startEdit() }
         onClicked: menuItem.clicked(menuItem)
-        onPressed:menuItem.pressed(menuItem)
-        onReleased:menuItem.released(menuItem)
+        onPressed: menuItem.pressed(menuItem)
+        onReleased: menuItem.released(menuItem)
     }
 
     states: [
