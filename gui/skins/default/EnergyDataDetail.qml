@@ -10,7 +10,7 @@ Page {
     property int energyType: 0
 
     function systemsButtonClicked() {
-        container.closed()
+        Stack.showPreviousPage(1)
     }
 
     showSystemsButton: true

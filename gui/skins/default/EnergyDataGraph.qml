@@ -11,7 +11,7 @@ Page {
     property variant energyItem: undefined
 
     function systemsButtonClicked() {
-        container.closed()
+        Stack.showPreviousPage(1)
     }
 
     showSystemsButton: true
