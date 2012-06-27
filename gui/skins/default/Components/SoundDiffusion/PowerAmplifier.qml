@@ -15,10 +15,9 @@ MenuColumn {
 
     onChildDestroyed: amplifierSettings.state = ""
 
-    ButtonOnOff {
+    ControlOnOff {
         id: buttonOnOff
-        status: column.dataModel.active
-        height: 50
+        active: column.dataModel.active
         onClicked: column.dataModel.active = newStatus
     }
 
@@ -39,10 +38,7 @@ MenuColumn {
         hasChild: true
         onClicked: {
             state = "selected"
-            column.loadColumn(
-                        amplifierSettings,
-                        qsTr("settings"),
-                        column.dataModel)
+            column.loadColumn(amplifierSettings, qsTr("settings"), column.dataModel)
         }
     }
 }
