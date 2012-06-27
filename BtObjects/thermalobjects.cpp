@@ -292,9 +292,10 @@ void ThermalControlUnitTimedProgram::setHours(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
 	int oldValue = time.hour();
-	if ((newValue - oldValue) == 0)
+	int diff = newValue - oldValue;
+	if (newValue == oldValue)
 		return;
-	QTime newTime = time.addSecs((newValue - oldValue) * 60 * 60);
+	QTime newTime = time.addSecs(diff * 60 * 60);
 	to_apply[TIME] = newTime;
 	emitTimeSignals(time, newTime);
 }
@@ -309,9 +310,10 @@ void ThermalControlUnitTimedProgram::setMinutes(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
 	int oldValue = time.minute();
-	if ((newValue - oldValue) == 0)
+	int diff = newValue - oldValue;
+	if (newValue == oldValue)
 		return;
-	QTime newTime = time.addSecs((newValue - oldValue) * 60);
+	QTime newTime = time.addSecs(diff * 60);
 	to_apply[TIME] = newTime;
 	emitTimeSignals(time, newTime);
 }
@@ -326,9 +328,10 @@ void ThermalControlUnitTimedProgram::setSeconds(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
 	int oldValue = time.second();
-	if ((newValue - oldValue) == 0)
+	int diff = newValue - oldValue;
+	if (newValue == oldValue)
 		return;
-	QTime newTime = time.addSecs(newValue - oldValue);
+	QTime newTime = time.addSecs(diff);
 	to_apply[TIME] = newTime;
 	emitTimeSignals(time, newTime);
 }
