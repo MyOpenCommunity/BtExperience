@@ -7,14 +7,10 @@ MenuColumn {
 
     onChildDestroyed: itemList.currentIndex = -1
 
-    width: 212
-    height: itemList.height
-
     PaginatorList {
         id: itemList
 
         currentIndex: -1
-        listHeight: Math.max(1, 50 * modelList.count)
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
             hasChild: true
