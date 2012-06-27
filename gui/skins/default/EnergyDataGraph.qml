@@ -23,7 +23,7 @@ Page {
         property bool showCurrency: false
         // TODO: make the date change possible!
         property int graphType: EnergyData.CumulativeMonthGraph
-        property date graphDate: new Date(2011, 4, 15)
+        property alias graphDate: dateSelector.date
         property variant modelGraph: energyItem.getGraph(graphType, graphDate, EnergyData.Consumption)
     }
 
@@ -186,20 +186,19 @@ Page {
                 }
             }
 
-
-
         }
 
         SvgImage {
             source: "images/energy/bg_grafico_consumption.svg"
 
             EnergyDateSelector {
+                id: dateSelector
                 anchors {
                     top: parent.top
                     topMargin: parent.height / 100 * 3
                     horizontalCenter: parent.horizontalCenter
                 }
-                label: "month"
+
 
             }
         }
