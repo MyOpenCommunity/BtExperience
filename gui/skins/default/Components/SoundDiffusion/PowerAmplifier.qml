@@ -10,9 +10,6 @@ MenuColumn {
         AmplifierSettings {}
     }
 
-    height: buttonOnOff.height + volumeSlider.height + amplifierSettings.height
-    width: 212
-
     onChildDestroyed: amplifierSettings.state = ""
 
     ControlOnOff {
