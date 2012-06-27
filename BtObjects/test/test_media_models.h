@@ -20,7 +20,10 @@ private slots:
 	void cleanup();
 
 	void testInsert();
+	void testRemoveNoElements();
 	void testRemove();
+	void testRemove2();
+	void testRemove3();
 	void testRemoveObject();
 	void testRemoveFiltered();
 	void testRemoveAll();

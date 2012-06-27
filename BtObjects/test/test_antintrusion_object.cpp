@@ -27,6 +27,10 @@
 #include <QtTest/QtTest>
 #include <QPair>
 
+
+Q_DECLARE_METATYPE(AntintrusionAlarm *)
+
+
 namespace
 {
 	QList<int> splitZones(QString zones)
@@ -54,6 +58,11 @@ namespace QTest
 	}
 }
 
+
+void TestAntintrusionSystem::initTestCase()
+{
+	qRegisterMetaType<AntintrusionAlarm *>();
+}
 
 void TestAntintrusionSystem::init()
 {
@@ -137,7 +146,7 @@ void TestAntintrusionSystem::testIntrusionAlarm()
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_INTRUSION_ALARM] = 2;
 
-	ObjectTester t(obj, SIGNAL(alarmsChanged()));
+	ObjectTester t(obj, SIGNAL(newAlarm(AntintrusionAlarm *)));
 	obj->valueReceived(v);
 	t.checkSignals();
 	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Intrusion, 2, "cucina"));
@@ -148,7 +157,7 @@ void TestAntintrusionSystem::testTamperingAlarm()
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_TAMPER_ALARM] = 12;
 
-	ObjectTester t(obj, SIGNAL(alarmsChanged()));
+	ObjectTester t(obj, SIGNAL(newAlarm(AntintrusionAlarm *)));
 	obj->valueReceived(v);
 	t.checkSignals();
 	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Tamper, 12, ""));
@@ -164,7 +173,7 @@ void TestAntintrusionSystem::testTechnicalAlarm()
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_TECHNICAL_ALARM] = 12;
 
-	ObjectTester t(obj, SIGNAL(alarmsChanged()));
+	ObjectTester t(obj, SIGNAL(newAlarm(AntintrusionAlarm *)));
 	obj->valueReceived(v);
 	t.checkSignals();
 	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Technical, 12, "freezer"));
@@ -175,7 +184,7 @@ void TestAntintrusionSystem::testAntipanicAlarm()
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_ANTIPANIC_ALARM] = 9;
 
-	ObjectTester t(obj, SIGNAL(alarmsChanged()));
+	ObjectTester t(obj, SIGNAL(newAlarm(AntintrusionAlarm *)));
 	obj->valueReceived(v);
 	t.checkSignals();
 	checkAlarmedZones(AlarmZoneList() << AlarmInfo(AntintrusionAlarm::Antipanic, 9, ""));
@@ -198,7 +207,7 @@ void TestAntintrusionSystem::testNoDoubleAlarms()
 
 void TestAntintrusionSystem::testResetTechnicalAlarm()
 {
-	ObjectTester t(obj, SIGNAL(alarmsChanged()));
+	ObjectTester t(obj, SIGNAL(newAlarm(AntintrusionAlarm *)));
 
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_TECHNICAL_ALARM] = 12;
@@ -209,7 +218,7 @@ void TestAntintrusionSystem::testResetTechnicalAlarm()
 	v.clear();
 	v[AntintrusionDevice::DIM_RESET_TECHNICAL_ALARM] = 12;
 	obj->valueReceived(v);
-	t.checkSignals();
+	t.checkNoSignals();
 	QCOMPARE(obj->getAlarms()->getCount(), 0);
 
 	obj->valueReceived(v);
@@ -224,18 +233,18 @@ void TestAntintrusionSystem::testClearAlarmsOnInsert()
 	obj->alarms << new AntintrusionAlarm(AntintrusionAlarm::Intrusion,
 		static_cast<const AntintrusionZone *>(obj->zones.getObject(0)), 1, QDateTime::currentDateTime());
 
-	ObjectTester t(obj, SIGNAL(alarmsChanged()));
+	ObjectTester t(obj, SIGNAL(newAlarm(AntintrusionAlarm *)));
 
 	DeviceValues v;
 	v[AntintrusionDevice::DIM_SYSTEM_INSERTED] = true;
 	obj->valueReceived(v);
-	t.checkSignals();
+	t.checkNoSignals();
 	QCOMPARE(obj->getAlarms()->getCount(), 0);
 }
 
 void TestAntintrusionSystem::testAlarmOnNotConfiguredZone()
 {
-	const char *sig = SIGNAL(alarmsChanged());
+	const char *sig = SIGNAL(newAlarm(AntintrusionAlarm *));
 
 	ObjectTester t(obj, sig);
 	DeviceValues v;
@@ -247,7 +256,7 @@ void TestAntintrusionSystem::testAlarmOnNotConfiguredZone()
 
 void TestAntintrusionSystem::testTechnicalAlarmOnNotConfiguredZone()
 {
-	const char *sig = SIGNAL(alarmsChanged());
+	const char *sig = SIGNAL(newAlarm(AntintrusionAlarm *));
 
 	ObjectTester t(obj, sig);
 	DeviceValues v;

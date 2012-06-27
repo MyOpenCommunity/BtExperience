@@ -88,7 +88,7 @@ SvgImage {
                 status: !privateProps.enabled
             }
 
-            ControlDateTimeLighting {
+            ControlDateTime {
                 id: timingButtons
                 anchors {
                     bottom: parent.bottom

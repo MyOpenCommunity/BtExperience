@@ -264,6 +264,16 @@ ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int
 	to_apply = current;
 }
 
+void ThermalControlUnitTimedProgram::emitTimeSignals(QTime oldTime, QTime newTime)
+{
+	if (oldTime.hour() != newTime.hour())
+		emit hoursChanged();
+	if (oldTime.minute() != newTime.minute())
+		emit minutesChanged();
+	if (oldTime.second() != newTime.second())
+		emit secondsChanged();
+}
+
 int ThermalControlUnitTimedProgram::getHours() const
 {
 	const QTime &time = to_apply[TIME].toTime();
@@ -273,11 +283,12 @@ int ThermalControlUnitTimedProgram::getHours() const
 void ThermalControlUnitTimedProgram::setHours(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
-	if (newValue == time.hour())
+	int oldValue = time.hour();
+	if ((newValue - oldValue) == 0)
 		return;
-	time.setHMS(newValue, time.minute(), time.second());
-	to_apply[TIME] = time;
-	emit hoursChanged();
+	QTime newTime = time.addSecs((newValue - oldValue) * 60 * 60);
+	to_apply[TIME] = newTime;
+	emitTimeSignals(time, newTime);
 }
 
 int ThermalControlUnitTimedProgram::getMinutes() const
@@ -289,11 +300,12 @@ int ThermalControlUnitTimedProgram::getMinutes() const
 void ThermalControlUnitTimedProgram::setMinutes(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
-	if (newValue == time.minute())
+	int oldValue = time.minute();
+	if ((newValue - oldValue) == 0)
 		return;
-	time.setHMS(time.hour(), newValue, time.second());
-	to_apply[TIME] = time;
-	emit minutesChanged();
+	QTime newTime = time.addSecs((newValue - oldValue) * 60);
+	to_apply[TIME] = newTime;
+	emitTimeSignals(time, newTime);
 }
 
 int ThermalControlUnitTimedProgram::getSeconds() const
@@ -305,11 +317,22 @@ int ThermalControlUnitTimedProgram::getSeconds() const
 void ThermalControlUnitTimedProgram::setSeconds(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
-	if (newValue == time.second())
+	int oldValue = time.second();
+	if ((newValue - oldValue) == 0)
 		return;
-	time.setHMS(time.hour(), time.minute(), newValue);
-	to_apply[TIME] = time;
-	emit secondsChanged();
+	QTime newTime = time.addSecs(newValue - oldValue);
+	to_apply[TIME] = newTime;
+	emitTimeSignals(time, newTime);
+}
+
+void ThermalControlUnitTimedProgram::emitDateSignals(QDate oldDate, QDate newDate)
+{
+	if (oldDate.day() != newDate.day())
+		emit daysChanged();
+	if (oldDate.month() != newDate.month())
+		emit monthsChanged();
+	if (oldDate.year() != newDate.year())
+		emit yearsChanged();
 }
 
 int ThermalControlUnitTimedProgram::getDays() const
@@ -321,11 +344,12 @@ int ThermalControlUnitTimedProgram::getDays() const
 void ThermalControlUnitTimedProgram::setDays(int newValue)
 {
 	QDate date = to_apply[DATE].toDate();
-	if (newValue == date.day())
+	int oldValue = date.day();
+	if ((newValue - oldValue) == 0)
 		return;
-	date.setDate(date.year(), date.month(), newValue);
-	to_apply[DATE] = date;
-	emit daysChanged();
+	QDate newDate = date.addDays(newValue - oldValue);
+	to_apply[DATE] = newDate;
+	emitDateSignals(date, newDate);
 }
 
 int ThermalControlUnitTimedProgram::getMonths() const
@@ -337,11 +361,12 @@ int ThermalControlUnitTimedProgram::getMonths() const
 void ThermalControlUnitTimedProgram::setMonths(int newValue)
 {
 	QDate date = to_apply[DATE].toDate();
-	if (newValue == date.month())
+	int oldValue = date.month();
+	if ((newValue - oldValue) == 0)
 		return;
-	date.setDate(date.year(), newValue, date.day());
-	to_apply[DATE] = date;
-	emit monthsChanged();
+	QDate newDate = date.addMonths(newValue - oldValue);
+	to_apply[DATE] = newDate;
+	emitDateSignals(date, newDate);
 }
 
 int ThermalControlUnitTimedProgram::getYears() const
@@ -353,11 +378,12 @@ int ThermalControlUnitTimedProgram::getYears() const
 void ThermalControlUnitTimedProgram::setYears(int newValue)
 {
 	QDate date = to_apply[DATE].toDate();
-	if (newValue == date.year())
+	int oldValue = date.year();
+	if ((newValue - oldValue) == 0)
 		return;
-	date.setDate(newValue, date.month(), date.day());
-	to_apply[DATE] = date;
-	emit yearsChanged();
+	QDate newDate = date.addYears(newValue - oldValue);
+	to_apply[DATE] = newDate;
+	emitDateSignals(date, newDate);
 }
 
 void ThermalControlUnitTimedProgram::apply()

@@ -2,8 +2,6 @@ import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
 
-import Components.Lighting 1.0
-
 MenuColumn {
     id: column
 
@@ -27,7 +25,7 @@ MenuColumn {
             }
         }
 
-        ControlDateTimeLighting {
+        ControlDateTime {
             id: controlDate
             anchors {
                 horizontalCenter: parent.horizontalCenter
@@ -52,7 +50,7 @@ MenuColumn {
             }
         }
 
-        ControlDateTimeLighting {
+        ControlDateTime {
             id: controlTime
             anchors {
                 horizontalCenter: parent.horizontalCenter

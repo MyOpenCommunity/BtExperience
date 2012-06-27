@@ -28,7 +28,8 @@ MenuColumn {
         Component.onCompleted: {
             modelList.append({"name": qsTr("Thermal Regulator"), "component": thermalRegulator})
             modelList.append({"name": qsTr("Air Conditioning"), "component": airConditioning})
-            modelList.append({"name": qsTr("Sensors"), "component": thermalProbe})
+            modelList.append({"name": qsTr("Not Controlled Probes"), "component": notControlledProbes})
+            modelList.append({"name": qsTr("External Probes"), "component": externalProbes})
         }
     }
 
@@ -43,7 +44,12 @@ MenuColumn {
     }
 
     Component {
-        id: thermalProbe
-        Item {}
+        id: notControlledProbes
+        NotControlledProbes {}
+    }
+
+    Component {
+        id: externalProbes
+        ExternalProbes {}
     }
 }
