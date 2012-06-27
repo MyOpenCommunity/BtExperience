@@ -8,8 +8,9 @@ import "js/Stack.js" as Stack
 
 Page {
     function systemsButtonClicked() {
-        container.closed()
+        Stack.showPreviousPage(1)
     }
+
 
     showSystemsButton: true
     text: qsTr("energy management")
