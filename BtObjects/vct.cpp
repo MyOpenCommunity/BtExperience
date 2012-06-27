@@ -5,8 +5,7 @@
 
 #include <QDebug>
 
-QString video_grabber_path = "/usr/share/ti/linux-driver-examples/video/saUserPtrLoopback";
-QString video_grabber_args = "-i 0 -s 2";
+QString video_grabber_path = "/usr/local/bin/Fw-A-LcdOpenGLRenderingQt.sh";
 
 ObjectInterface *parseCCTV(const QDomNode &n)
 {
@@ -162,8 +161,8 @@ void CCTV::startVideo()
 	qDebug() << "CCTV::startVideo";
 	if (video_grabber.state() == QProcess::NotRunning)
 	{
-		qDebug() << "Starting grabber with args: " << (video_grabber_path + " " + video_grabber_args);
-		video_grabber.start(video_grabber_path + " " + video_grabber_args);
+		qDebug() << "Starting grabber" << (video_grabber_path);
+		video_grabber.start(video_grabber_path);
 	}
 }
 
@@ -173,6 +172,8 @@ void CCTV::stopVideo()
 	if (video_grabber.state() != QProcess::NotRunning)
 	{
 		qDebug() << "terminate grabber";
+                //TODO: fix correctly the kill of this process
+                system ("killall loopback");
 		video_grabber.terminate();
 	}
 }
