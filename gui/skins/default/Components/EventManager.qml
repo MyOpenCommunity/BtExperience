@@ -30,6 +30,7 @@ Item {
         console.log("EventManager::vctIncomingCall")
         screensaver.stopScreensaver()
         screensaver.isEnabled = false
+        console.log("Opening call page with object: " + vctObject)
         Stack.openPage("VideoCamera.qml", {"camera": vctObject})
     }
 
@@ -67,17 +68,40 @@ Item {
                 var obj = listModel.getObject(i)
                 switch (obj.objectId) {
                 case ObjectInterface.IdCCTV:
-                    obj.incomingCall.connect(function() { return vctIncomingCall(obj); })
-                    obj.callEnded.connect(enableScreensaver)
+                    vctConnection.target = obj
                     break
                 case ObjectInterface.IdIntercom:
-                    obj.incomingCall.connect(function() { return intercomIncomingCall(obj); })
+                    intercomConnection.target = obj
                     break
                 case ObjectInterface.IdAntintrusionSystem:
                     antintrusionConnection.target = obj
                     break
                 }
             }
+        }
+    }
+
+    Connections {
+        id: vctConnection
+        target: null
+        onIncomingCall: {
+            console.log("EventManager::vctIncomingCall")
+            screensaver.stopScreensaver()
+            screensaver.isEnabled = false
+            Stack.openPage("VideoCamera.qml", {"camera": vctConnection.target})
+        }
+        onCallEnded: enableScreensaver()
+    }
+
+    Connections {
+        id: intercomConnection
+        target: null
+        onIncomingCall: {
+            screensaver.stopScreensaver()
+            screensaver.isEnabled = false
+            Stack.currentPage().installPopup(callPopup)
+            Stack.currentPage().popupLoader.item.dataObject = intercomConnection.target
+            Stack.currentPage().popupLoader.item.state = "ringing"
         }
     }
 
