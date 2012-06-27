@@ -62,6 +62,21 @@
 			  <name>Salotto</name>
 			  <env>3</env>
 		  </item>
+		  <item>
+			  <id>9</id>
+			  <name>Cameretta</name>
+			  <env>4</env>
+		  </item>
+		  <item>
+			  <id>9</id>
+			  <name>Garage</name>
+			  <env>5</env>
+		  </item>
+		  <item>
+			  <id>9</id>
+			  <name>Giardino</name>
+			  <env>6</env>
+		  </item>
 	  </ambients>
 	  <sources>
 		  <item>
