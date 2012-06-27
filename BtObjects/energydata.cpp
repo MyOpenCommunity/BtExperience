@@ -856,6 +856,7 @@ EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _
 	data = _data;
 	type = _type;
 	date = _date;
+	max_value = 0.0;
 	setGraph(_graph);
 }
 
@@ -909,10 +910,27 @@ void EnergyGraph::setGraph(QList<QObject *> _graph)
 	bool valid = isValid();
 
 	graph = _graph;
-	foreach (QObject *bar, graph)
+
+	double max = max_value;
+	for (int i = 0; i < graph.count(); ++i)
+	{
+		EnergyGraphBar *bar = qobject_cast<EnergyGraphBar*>(graph[i]);
 		bar->setParent(this);
+		max = qMax(max, bar->getValue().toDouble());
+	}
 
 	if (!valid && isValid())
 		emit validChanged();
 	emit graphChanged();
+
+	if (max != max_value)
+	{
+		max_value = max;
+		emit maxValueChanged();
+	}
+}
+
+QVariant EnergyGraph::getMaxValue() const
+{
+	return max_value;
 }

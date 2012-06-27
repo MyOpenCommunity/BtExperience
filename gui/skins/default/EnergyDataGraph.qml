@@ -21,6 +21,10 @@ Page {
     QtObject {
         id: privateProps
         property bool showCurrency: false
+        // TODO: make the date change possible!
+        property int graphType: EnergyData.CumulativeMonthGraph
+        property date graphDate: new Date(2011, 4, 15)
+        property variant modelGraph: energyItem.getGraph(graphType, graphDate, EnergyData.Consumption)
     }
 
     SvgImage {
@@ -165,6 +169,25 @@ Page {
                     horizontalCenter: parent.horizontalCenter
                 }
             }
+
+
+            Loader {
+                id: pageContent
+                anchors {
+                    top: divisorLine.bottom
+                    topMargin: parent.height * 0.1
+                    left: divisorLine.left
+                }
+
+                sourceComponent: Component {
+                    EnergyMonthGraph {
+                        modelGraph: privateProps.modelGraph
+                    }
+                }
+            }
+
+
+
         }
 
         SvgImage {

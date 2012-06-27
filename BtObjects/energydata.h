@@ -469,6 +469,11 @@ class EnergyGraph : public QObject
 	*/
 	Q_PROPERTY(bool isValid READ isValid NOTIFY validChanged)
 
+	/*!
+		\brief The maximum value contained in the graph.
+	*/
+	Q_PROPERTY(QVariant maxValue READ getMaxValue NOTIFY maxValueChanged)
+
 public:
 	EnergyGraph(EnergyData *data, EnergyData::GraphType type, QDate date, QList<QObject*> graph);
 
@@ -482,6 +487,8 @@ public:
 
 	void setGraph(QList<QObject*> graph);
 
+	QVariant getMaxValue() const;
+
 public slots:
 	/*!
 		\brief Can be used to force a graph update for the device
@@ -494,10 +501,12 @@ public slots:
 signals:
 	void graphChanged();
 	void validChanged();
+	void maxValueChanged();
 
 private:
 	static bool graphEqual(QList<QObject*> first, QList<QObject*> second);
 
+	double max_value;
 	EnergyData *data;
 	EnergyData::GraphType type;
 	QDate date;
