@@ -7,17 +7,17 @@ SvgImage {
     id: bg
 
     // images for button background
-    property string defaultImageBg: ""
-    property string pressedImageBg: ""
-    property string selectedImageBg: ""
+    property url defaultImageBg: ""
+    property url pressedImageBg: ""
+    property url selectedImageBg: ""
 
     // image for button shadow
-    property string shadowImage: ""
+    property url shadowImage: ""
 
     // images on top of the button
-    property string defaultImage: ""
-    property string pressedImage: ""
-    property string selectedImage: ""
+    property url defaultImage: ""
+    property url pressedImage: ""
+    property url selectedImage: ""
 
     property bool enabled: true // button accepts input or not
     property int status: 0 // 0 - up, 1 - down

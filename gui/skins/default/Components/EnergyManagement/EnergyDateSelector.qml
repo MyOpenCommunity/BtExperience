@@ -9,12 +9,12 @@ Row {
     spacing: 4
 
     ButtonImageThreeStates {
-        defaultImageBg: "../images/energy/btn_freccia.svg"
-        pressedImageBg: "../images/energy/btn_freccia_P.svg"
-        shadowImage: "../images/energy/ombra_btn_freccia.svg"
+        defaultImageBg: "../../images/energy/btn_freccia.svg"
+        pressedImageBg: "../../images/energy/btn_freccia_P.svg"
+        shadowImage: "../../images/energy/ombra_btn_freccia.svg"
+        defaultImage: "../../images/common/ico_freccia_sx.svg"
+        pressedImage: "../../images/common/ico_freccia_sx_P.svg"
 
-        defaultImage: "../images/common/ico_freccia_sx.svg"
-        pressedImage: "../images/common/ico_freccia_sx_P.svg"
         onClicked: {
             var d = selector.date
             var month = d.getMonth()
@@ -81,12 +81,11 @@ Row {
     }
 
     ButtonImageThreeStates {
-        defaultImageBg: "../images/energy/btn_freccia.svg"
-        pressedImageBg: "../images/energy/btn_freccia_P.svg"
-        shadowImage: "../images/energy/ombra_btn_freccia.svg"
-
-        defaultImage: "../images/common/ico_freccia_dx.svg"
-        pressedImage: "../images/common/ico_freccia_dx_P.svg"
+        defaultImageBg: "../../images/energy/btn_freccia.svg"
+        pressedImageBg: "../../images/energy/btn_freccia_P.svg"
+        shadowImage: "../../images/energy/ombra_btn_freccia.svg"
+        defaultImage: "../../images/common/ico_freccia_dx.svg"
+        pressedImage: "../../images/common/ico_freccia_dx_P.svg"
 
         enabled: {
             var d = new Date()
