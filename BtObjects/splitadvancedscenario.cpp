@@ -38,6 +38,8 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 											 NonControlledProbeDevice *d_probe,
 											 QList<SplitProgram *> programs,
 											 QList<int> _modes,
+											 QList<int> _speeds,
+											 QList<int> _swings,
 											 QObject *parent) :
 	ObjectInterface(parent)
 {
@@ -53,15 +55,23 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 	foreach (int mode, _modes) {
 		modes->add(mode);
 	}
+	speeds = new ChoiceList(this);
+	foreach (int speed, _speeds) {
+		speeds->add(speed);
+	}
+	swings = new ChoiceList(this);
+	foreach (int swing, _swings) {
+		swings->add(swing);
+	}
 	this->command = command;
 	this->key = key;
 	this->name = name;
 	program_list = programs;
 	actual_program.name = QString();
 	actual_program.mode = static_cast<SplitProgram::Mode>(modes->value());
-	actual_program.swing = SplitProgram::SwingOff;
+	actual_program.swing = static_cast<SplitProgram::Swing>(swings->value());
 	actual_program.temperature = 200;
-	actual_program.speed = SplitProgram::SpeedSilent;
+	actual_program.speed = static_cast<SplitProgram::Speed>(speeds->value());
 	temperature = 200;
 }
 
@@ -246,4 +256,16 @@ QObject *SplitAdvancedScenario::getModes() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
 	return const_cast<ChoiceList *>(modes);
+}
+
+QObject *SplitAdvancedScenario::getSpeeds() const
+{
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ChoiceList *>(speeds);
+}
+
+QObject *SplitAdvancedScenario::getSwings() const
+{
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ChoiceList *>(swings);
 }

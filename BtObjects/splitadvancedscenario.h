@@ -154,6 +154,16 @@ class SplitAdvancedScenario : public ObjectInterface
 	*/
 	Q_PROPERTY(QObject *modes READ getModes CONSTANT)
 
+	/*!
+		\brief Gets the speed values list
+	*/
+	Q_PROPERTY(QObject *speeds READ getSpeeds CONSTANT)
+
+	/*!
+		\brief Gets the swing values list
+	*/
+	Q_PROPERTY(QObject *swings READ getSwings CONSTANT)
+
 public:
 	explicit SplitAdvancedScenario(QString name,
 								   QString key,
@@ -162,6 +172,8 @@ public:
 								   NonControlledProbeDevice *d_probe,
 								   QList<SplitProgram *> programs,
 								   QList<int> modes,
+								   QList<int> speeds,
+								   QList<int> swings,
 								   QObject *parent = 0);
 
 	virtual int getObjectId() const
@@ -188,6 +200,8 @@ public:
 	int getCount() const;
 	int getTemperature() const;
 	QObject *getModes() const;
+	QObject *getSpeeds() const;
+	QObject *getSwings() const;
 
 	Q_INVOKABLE void ok();
 	Q_INVOKABLE void resetProgram();
@@ -216,6 +230,8 @@ private:
 	QList<SplitProgram *> program_list;
 	int temperature;
 	ChoiceList *modes;
+	ChoiceList *speeds;
+	ChoiceList *swings;
 };
 
 #endif // SPLITADVANCEDSCENARIO_H
