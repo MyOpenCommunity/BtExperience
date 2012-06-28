@@ -46,8 +46,6 @@ MenuColumn {
 
         ControlOnOff {
             id: buttonOnOff
-            width: control.width
-            active: -1
             onClicked: objectModel.getObject(0).active = newStatus
         }
     }
