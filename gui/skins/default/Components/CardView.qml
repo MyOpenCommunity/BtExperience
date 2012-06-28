@@ -67,7 +67,7 @@ Item {
                 var elementNumber = Math.min(visibleElements, model.count)
                 for (var i = 0; i < elementNumber; ++i) {
                     var delegateX = (Script.listDelegateWidth + delegateSpacing) * i
-                    Vars.dict[i] = delegate.createObject(clipView, {"x": delegateX, "y": clipView.y, "index": i, "view": clipView})
+                    Vars.dict[i] = delegate.createObject(clipView, {"x": delegateX, "y": 0, "index": i, "view": clipView})
                 }
                 currentIndex = 0
             }
@@ -101,7 +101,7 @@ Item {
                 var lastIndex = (currentIndex + visibleElements - 1) % model.count
                 var newDelegateIndex = (lastIndex + 1) % model.count
                 var newDelegateX = Vars.dict[lastIndex].x + Script.listDelegateWidth + delegateSpacing
-                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": clipView.y, "index": newDelegateIndex, "view": clipView})
+                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": 0, "index": newDelegateIndex, "view": clipView})
 
                 // 2. Remove and destroy the leftmost delegate
                 removeDelegate(currentIndex)
@@ -118,7 +118,7 @@ Item {
                     newDelegateIndex = model.count - 1
 
                 var newDelegateX = Vars.dict[currentIndex].x - Script.listDelegateWidth - delegateSpacing
-                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": clipView.y, "index": newDelegateIndex, "view": clipView})
+                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": 0, "index": newDelegateIndex, "view": clipView})
 
                 var lastIndex = (currentIndex + visibleElements - 1) % model.count
                 removeDelegate(lastIndex)
@@ -134,7 +134,7 @@ Item {
                 var min = Math.min(visibleElements, model.count)
                 return min * Script.listDelegateWidth + (min - 1) * delegateSpacing
             }
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
         }
     }
 
