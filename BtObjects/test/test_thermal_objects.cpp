@@ -268,14 +268,24 @@ void TestThermalControlUnitTimedManual::init()
 
 void TestThermalControlUnitTimedManual::testSetTime()
 {
-	QTime time = QTime::currentTime().addSecs(-10);
+	// in the test we must be sure that h, m, s all change
+	QTime time = QTime(obj->getHours(), obj->getMinutes(), obj->getSeconds()).addSecs(-2 * 60 * 60 - 3 * 60 - 5);
 
-	ObjectTester t(obj, SIGNAL(timeChanged()));
-	obj->setTime(time);
+	ObjectTester t(obj, SignalList()
+				   << SIGNAL(hoursChanged())
+				   << SIGNAL(minutesChanged())
+				   << SIGNAL(secondsChanged()));
+	obj->setHours(time.hour());
+	obj->setMinutes(time.minute());
+	obj->setSeconds(time.second());
 	t.checkSignals();
-	QCOMPARE(obj->getTime(), time);
+	QCOMPARE(obj->getHours(), time.hour());
+	QCOMPARE(obj->getMinutes(), time.minute());
+	QCOMPARE(obj->getSeconds(), time.second());
 
-	obj->setTime(time);
+	obj->setHours(time.hour());
+	obj->setMinutes(time.minute());
+	obj->setSeconds(time.second());
 	t.checkNoSignals();
 }
 
@@ -283,7 +293,9 @@ void TestThermalControlUnitTimedManual::testApply()
 {
 	QTime time = QTime::currentTime();
 
-	obj->setTime(time);
+	obj->setHours(time.hour());
+	obj->setMinutes(time.minute());
+	obj->setSeconds(time.second());
 	obj->setTemperature(20);
 
 	obj->apply();

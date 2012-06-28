@@ -76,7 +76,7 @@ public:
 	int getCount() const;
 	int getTemperature() const;
 
-	Q_INVOKABLE void ok();
+	Q_INVOKABLE void apply();
 
 signals:
 	void programChanged();

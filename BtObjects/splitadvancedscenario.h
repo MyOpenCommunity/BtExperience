@@ -11,6 +11,8 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QHash>
+
 
 class NonControlledProbeDevice;
 class ChoiceList;
@@ -115,9 +117,9 @@ class SplitAdvancedScenario : public ObjectInterface
 	Q_PROPERTY(SplitProgram::Mode mode READ getMode WRITE setMode NOTIFY modeChanged)
 
 	/*!
-		\brief Gets or sets the split swing
+		\brief Gets the split swing
 	*/
-	Q_PROPERTY(SplitProgram::Swing swing READ getSwing WRITE setSwing NOTIFY swingChanged)
+	Q_PROPERTY(SplitProgram::Swing swing READ getSwing NOTIFY swingChanged)
 
 	/*!
 		\brief Gets or sets the split temperature set point
@@ -125,9 +127,9 @@ class SplitAdvancedScenario : public ObjectInterface
 	Q_PROPERTY(int setPoint READ getSetPoint WRITE setSetPoint NOTIFY setPointChanged)
 
 	/*!
-		\brief Gets or sets the split fan speed
+		\brief Gets the split fan speed
 	*/
-	Q_PROPERTY(SplitProgram::Speed speed READ getSpeed WRITE setSpeed NOTIFY speedChanged)
+	Q_PROPERTY(SplitProgram::Speed speed READ getSpeed NOTIFY speedChanged)
 
 	/*!
 		\brief Gets or sets the actual program
@@ -192,18 +194,19 @@ public:
 	void setProgram(QString program);
 	QStringList getPrograms() const;
 	SplitProgram::Swing getSwing() const;
-	void setSwing(SplitProgram::Swing swing);
 	int getSetPoint() const;
 	void setSetPoint(int setPoint);
 	SplitProgram::Speed getSpeed() const;
-	void setSpeed(SplitProgram::Speed speed);
 	int getCount() const;
 	int getTemperature() const;
 	QObject *getModes() const;
 	QObject *getSpeeds() const;
 	QObject *getSwings() const;
 
-	Q_INVOKABLE void ok();
+	Q_INVOKABLE void prevSpeed();
+	Q_INVOKABLE void nextSpeed();
+	Q_INVOKABLE void prevSwing();
+	Q_INVOKABLE void nextSwing();
 	Q_INVOKABLE void resetProgram();
 
 signals:
@@ -217,11 +220,15 @@ signals:
 public slots:
 	void sendScenarioCommand();
 	void sendOffCommand();
+	void apply();
+	void reset();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
+	void sync();
+
 	QString command;
 	AdvancedAirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
@@ -232,6 +239,8 @@ private:
 	ChoiceList *modes;
 	ChoiceList *speeds;
 	ChoiceList *swings;
+
+	QHash<int, QVariant> current, to_apply;
 };
 
 #endif // SPLITADVANCEDSCENARIO_H

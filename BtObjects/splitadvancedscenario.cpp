@@ -6,6 +6,15 @@
 #include <QDebug>
 
 
+namespace
+{
+	enum ToApplyKeys
+	{
+		SPLIT_SPEED,
+		SPLIT_SWING
+	};
+}
+
 SplitProgram::SplitProgram(QObject *parent) :
 	QObject(parent),
 	name(""),
@@ -69,39 +78,20 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 	program_list = programs;
 	actual_program.name = QString();
 	actual_program.mode = static_cast<SplitProgram::Mode>(modes->value());
-	actual_program.swing = static_cast<SplitProgram::Swing>(swings->value());
+	current[SPLIT_SWING] = static_cast<SplitProgram::Swing>(swings->value());
 	actual_program.temperature = 200;
-	actual_program.speed = static_cast<SplitProgram::Speed>(speeds->value());
+	current[SPLIT_SPEED] = static_cast<SplitProgram::Speed>(speeds->value());
 	temperature = 200;
+	reset();
+	sync();
 }
 
-void SplitAdvancedScenario::valueReceived(const DeviceValues &values_list)
+void SplitAdvancedScenario::sync()
 {
-	DeviceValues::const_iterator it = values_list.constBegin();
-	while (it != values_list.constEnd())
-	{
-		switch (it.key())
-		{
-		case NonControlledProbeDevice::DIM_TEMPERATURE:
-			if (it.value().toInt() != temperature)
-			{
-				temperature = it.value().toInt();
-				emit temperatureChanged();
-			}
-			break;
-		}
-		++it;
-	}
-}
-
-void SplitAdvancedScenario::resetProgram()
-{
-	// resets the name of the actual program (but data is still valid as custom)
-	if (actual_program.name.isEmpty())
-		// nothing to do
-		return;
-	actual_program.name.clear();
-	emit programChanged();
+	while (speeds->value() != to_apply[SPLIT_SPEED].toInt())
+		speeds->next();
+	while (swings->value() != to_apply[SPLIT_SWING].toInt())
+		swings->next();
 }
 
 QString SplitAdvancedScenario::getProgram() const
@@ -159,9 +149,18 @@ void SplitAdvancedScenario::setProgram(QString program)
 		emit programChanged();
 	}
 	setMode(program_list.at(p)->mode);
-	setSpeed(program_list.at(p)->speed);
-	setSwing(program_list.at(p)->swing);
 	setSetPoint(program_list.at(p)->temperature);
+	if (to_apply[SPLIT_SPEED] != program_list.at(p)->speed)
+	{
+		to_apply[SPLIT_SPEED] = program_list.at(p)->speed;
+		emit speedChanged();
+	}
+	if (to_apply[SPLIT_SWING] != program_list.at(p)->swing)
+	{
+		to_apply[SPLIT_SWING] = program_list.at(p)->swing;
+		emit swingChanged();
+	}
+	sync();
 }
 
 SplitProgram::Mode SplitAdvancedScenario::getMode() const
@@ -181,17 +180,7 @@ void SplitAdvancedScenario::setMode(SplitProgram::Mode mode)
 
 SplitProgram::Swing SplitAdvancedScenario::getSwing() const
 {
-	return actual_program.swing;
-}
-
-void SplitAdvancedScenario::setSwing(SplitProgram::Swing swing)
-{
-	// TODO save value somewhere
-	if (actual_program.swing == swing)
-		// nothing to do
-		return;
-	actual_program.swing = swing;
-	emit swingChanged();
+	return static_cast<SplitProgram::Swing>(to_apply[SPLIT_SWING].toInt());
 }
 
 int SplitAdvancedScenario::getSetPoint() const
@@ -207,29 +196,63 @@ void SplitAdvancedScenario::setSetPoint(int setPoint)
 		return;
 	actual_program.temperature = setPoint;
 	emit setPointChanged();
+	sync();
 }
 
 SplitProgram::Speed SplitAdvancedScenario::getSpeed() const
 {
-	return actual_program.speed;
+	return static_cast<SplitProgram::Speed>(to_apply[SPLIT_SPEED].toInt());
 }
 
-void SplitAdvancedScenario::setSpeed(SplitProgram::Speed speed)
+void SplitAdvancedScenario::resetProgram()
 {
-	// TODO save value somewhere
-	if (actual_program.speed == speed)
+	// resets the name of the actual program (but data is still valid as custom)
+	if (actual_program.name.isEmpty())
 		// nothing to do
 		return;
-	actual_program.speed = speed;
-	emit speedChanged();
+	actual_program.name.clear();
+	emit programChanged();
 }
 
-void SplitAdvancedScenario::ok()
+void SplitAdvancedScenario::nextSpeed()
 {
-	if (actual_program.mode == SplitProgram::ModeOff)
-		sendOffCommand();
-	else
-		sendScenarioCommand();
+	resetProgram();
+	SplitProgram::Speed old_value = static_cast<SplitProgram::Speed>(to_apply[SPLIT_SPEED].toInt());
+	speeds->next();
+	to_apply[SPLIT_SPEED] = speeds->value();
+	if (old_value != to_apply[SPLIT_SPEED])
+		emit speedChanged();
+}
+
+void SplitAdvancedScenario::prevSpeed()
+{
+	resetProgram();
+	SplitProgram::Speed old_value = static_cast<SplitProgram::Speed>(to_apply[SPLIT_SPEED].toInt());
+	speeds->previous();
+	to_apply[SPLIT_SPEED] = speeds->value();
+	if (old_value != to_apply[SPLIT_SPEED])
+		emit speedChanged();
+}
+
+#include <iostream>
+void SplitAdvancedScenario::nextSwing()
+{
+	resetProgram();
+	SplitProgram::Swing old_value = static_cast<SplitProgram::Swing>(to_apply[SPLIT_SWING].toInt());
+	swings->next();
+	to_apply[SPLIT_SWING] = swings->value();
+	if (old_value != to_apply[SPLIT_SWING])
+		emit swingChanged();
+}
+
+void SplitAdvancedScenario::prevSwing()
+{
+	resetProgram();
+	SplitProgram::Swing old_value = static_cast<SplitProgram::Swing>(to_apply[SPLIT_SWING].toInt());
+	swings->previous();
+	to_apply[SPLIT_SWING] = swings->value();
+	if (old_value != to_apply[SPLIT_SWING])
+		emit swingChanged();
 }
 
 void SplitAdvancedScenario::sendScenarioCommand()
@@ -237,14 +260,48 @@ void SplitAdvancedScenario::sendScenarioCommand()
 	dev->setStatus(
 				static_cast<AdvancedAirConditioningDevice::Mode>(actual_program.mode),
 				actual_program.temperature,
-				static_cast<AdvancedAirConditioningDevice::Velocity>(actual_program.speed),
-				static_cast<AdvancedAirConditioningDevice::Swing>(actual_program.swing)
+				static_cast<AdvancedAirConditioningDevice::Velocity>(current[SPLIT_SPEED].toInt()),
+				static_cast<AdvancedAirConditioningDevice::Swing>(current[SPLIT_SWING].toInt())
 				);
 }
 
 void SplitAdvancedScenario::sendOffCommand()
 {
 	dev->turnOff();
+}
+
+void SplitAdvancedScenario::apply()
+{
+	current = to_apply;
+
+	if (actual_program.mode == SplitProgram::ModeOff)
+		sendOffCommand();
+	else
+		sendScenarioCommand();
+}
+
+void SplitAdvancedScenario::reset()
+{
+	to_apply = current;
+}
+
+void SplitAdvancedScenario::valueReceived(const DeviceValues &values_list)
+{
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		switch (it.key())
+		{
+		case NonControlledProbeDevice::DIM_TEMPERATURE:
+			if (it.value().toInt() != temperature)
+			{
+				temperature = it.value().toInt();
+				emit temperatureChanged();
+			}
+			break;
+		}
+		++it;
+	}
 }
 
 int SplitAdvancedScenario::getTemperature() const

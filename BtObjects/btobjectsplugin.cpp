@@ -330,12 +330,10 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 				   << SplitProgram::SpeedMin
 				   << SplitProgram::SpeedMed
 				   << SplitProgram::SpeedMax
-				   << SplitProgram::SpeedSilent
-				   << SplitProgram::SpeedInvalid;
+				   << SplitProgram::SpeedSilent;
 			QList<int> swings;
 			swings << SplitProgram::SwingOff
-				   << SplitProgram::SwingOn
-				   << SplitProgram::SwingInvalid;
+				   << SplitProgram::SwingOn;
 			obj = new SplitAdvancedScenario(descr,
 											where,
 											bt_global::add_device_to_cache(
@@ -343,9 +341,9 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 											getTextChild(item, "command"),
 											createNonControlledProbeDevice(item),
 											programs,
+											modes,
 											speeds,
-											swings,
-											modes);
+											swings);
 			break;
 		}
 		case ObjectInterface::IdScenarioSystem:

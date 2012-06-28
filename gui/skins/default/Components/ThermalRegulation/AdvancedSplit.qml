@@ -93,7 +93,7 @@ MenuColumn {
         ButtonOkCancel {
             onCancelClicked: column.closeColumn()
             onOkClicked: {
-                dataModel.ok()
+                dataModel.apply()
                 column.closeColumn()
             }
         }
@@ -120,46 +120,22 @@ MenuColumn {
             ControlLeftRightWithTitle {
                 id: fancoilMode
                 title: qsTr("fancoil")
-                text: pageObject.names.get('SPEED', currentIndex)
-                property int currentIndex: dataModel.speed
-                onLeftClicked: {
-                    if (currentIndex > 0) {
-                        dataModel.resetProgram()
-                        --currentIndex
-                    }
-                }
-                onRightClicked: {
-                    if (currentIndex < 4) {
-                        dataModel.resetProgram()
-                        ++currentIndex
-                    }
-                }
+                text: pageObject.names.get('SPEED', dataModel.speed)
+                onLeftClicked: dataModel.prevSpeed()
+                onRightClicked: dataModel.nextSpeed()
             }
             ControlLeftRightWithTitle {
                 id: swing
                 title: qsTr("swing")
-                text: pageObject.names.get('SWING', currentIndex)
-                property int currentIndex: dataModel.swing
-                onLeftClicked: {
-                    if (currentIndex > 0) {
-                        dataModel.resetProgram()
-                        --currentIndex
-                    }
-                }
-                onRightClicked: {
-                    if (currentIndex < 1) {
-                        dataModel.resetProgram()
-                        ++currentIndex
-                    }
-                }
+                text: pageObject.names.get('SWING', dataModel.swing)
+                onLeftClicked: dataModel.prevSwing()
+                onRightClicked: dataModel.nextSwing()
             }
             ButtonOkCancel {
                 onCancelClicked: column.closeColumn()
                 onOkClicked: {
-                    dataModel.speed = fancoilMode.currentIndex
-                    dataModel.swing = swing.currentIndex
                     dataModel.setPoint = temp.currentTemp * 10
-                    dataModel.ok()
+                    dataModel.apply()
                     column.closeColumn()
                 }
             }
@@ -173,45 +149,21 @@ MenuColumn {
             ControlLeftRightWithTitle {
                 id: fancoilMode
                 title: qsTr("fancoil")
-                text: pageObject.names.get('SPEED', currentIndex)
-                property int currentIndex: dataModel.speed
-                onLeftClicked: {
-                    if (currentIndex > 0) {
-                        dataModel.resetProgram()
-                        --currentIndex
-                    }
-                }
-                onRightClicked: {
-                    if (currentIndex < 4) {
-                        dataModel.resetProgram()
-                        ++currentIndex
-                    }
-                }
+                text: pageObject.names.get('SPEED', dataModel.speed)
+                onLeftClicked: dataModel.prevSpeed()
+                onRightClicked: dataModel.nextSpeed()
             }
             ControlLeftRightWithTitle {
                 id: swing
                 title: qsTr("swing")
-                text: pageObject.names.get('SWING', currentIndex)
-                property int currentIndex: dataModel.swing
-                onLeftClicked: {
-                    if (currentIndex > 0) {
-                        dataModel.resetProgram()
-                        --currentIndex
-                    }
-                }
-                onRightClicked: {
-                    if (currentIndex < 1) {
-                        dataModel.resetProgram()
-                        ++currentIndex
-                    }
-                }
+                text: pageObject.names.get('SWING', dataModel.swing)
+                onLeftClicked: dataModel.prevSwing()
+                onRightClicked: dataModel.nextSwing()
             }
             ButtonOkCancel {
                 onCancelClicked: column.closeColumn()
                 onOkClicked: {
-                    dataModel.speed = fancoilMode.currentIndex
-                    dataModel.swing = swing.currentIndex
-                    dataModel.ok()
+                    dataModel.apply()
                     column.closeColumn()
                 }
             }

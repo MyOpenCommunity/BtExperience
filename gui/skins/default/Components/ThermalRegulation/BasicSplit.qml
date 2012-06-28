@@ -45,7 +45,7 @@ MenuColumn {
         ButtonOkCancel {
             onCancelClicked: column.closeColumn()
             onOkClicked: {
-                dataModel.ok()
+                dataModel.apply()
                 column.closeColumn()
             }
         }

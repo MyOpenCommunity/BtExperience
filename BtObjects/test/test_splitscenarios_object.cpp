@@ -44,10 +44,27 @@ namespace {
 
 	SplitProgram PROGRAM_DAY(DAY, SplitProgram::ModeDehumidification, 200, SplitProgram::SpeedMed, SplitProgram::SwingOn);
 	SplitProgram PROGRAM_NIGHT(NIGHT, SplitProgram::ModeDehumidification, 200, SplitProgram::SpeedMin, SplitProgram::SwingOff);
+
+	QList<int> modes;
+	QList<int> speeds;
+	QList<int> swings;
 }
 
 void TestSplitScenarios::init()
 {
+	modes << SplitProgram::ModeOff
+		  << SplitProgram::ModeWinter
+		  << SplitProgram::ModeSummer
+		  << SplitProgram::ModeFan
+		  << SplitProgram::ModeDehumidification
+		  << SplitProgram::ModeAuto;
+	speeds << SplitProgram::SpeedAuto
+		   << SplitProgram::SpeedMin
+		   << SplitProgram::SpeedMed
+		   << SplitProgram::SpeedMax
+		   << SplitProgram::SpeedSilent;
+	swings << SplitProgram::SwingOff
+		   << SplitProgram::SwingOn;
 	dev_probe = new NonControlledProbeDevice("11", NonControlledProbeDevice::INTERNAL, 1);
 	dev = new AirConditioningDevice("12", 1);
 	dev_adv = new AdvancedAirConditioningDevice("16", 1);
@@ -69,7 +86,10 @@ void TestSplitScenarios::init()
 				new AdvancedAirConditioningDevice("16"),
 				"18",
 				new NonControlledProbeDevice("11", NonControlledProbeDevice::INTERNAL),
-				split_programs);
+				split_programs,
+				modes,
+				speeds,
+				swings);
 }
 
 void TestSplitScenarios::cleanup()
@@ -103,7 +123,10 @@ void TestSplitScenarios::testCreationWithNullProbe()
 				new AdvancedAirConditioningDevice("20"),
 				"21",
 				0,
-				split_programs_tmp);
+				split_programs_tmp,
+				modes,
+				speeds,
+				swings);
 	delete obj_adv_tmp;
 }
 
@@ -220,7 +243,7 @@ void TestSplitScenarios::testSendCommand()
 	QCOMPARE(PROGRAM_COMMAND_1, obj->getProgram());
 
 	// confirms operation the frame is sent
-	obj->ok();
+	obj->apply();
 	dev->activateScenario("14");
 	compareClientCommand();
 }
@@ -232,7 +255,7 @@ void TestSplitScenarios::testSendAdvancedCommand()
 	QCOMPARE(DAY, obj_adv->getProgram());
 
 	// confirms operation the frame is sent
-	obj_adv->ok();
+	obj_adv->apply();
 	dev_adv->setStatus(
 				AdvancedAirConditioningDevice::MODE_DEHUM,
 				200,
@@ -249,7 +272,7 @@ void TestSplitScenarios::testSendOffCommand()
 	QCOMPARE(PROGRAM_OFF, obj->getProgram());
 
 	// confirms operations: the frame is sent
-	obj->ok();
+	obj->apply();
 	dev->setOffCommand("15");
 	dev->turnOff();
 	compareClientCommand();
@@ -266,7 +289,7 @@ void TestSplitScenarios::testSendAdvancedOffCommand()
 	QCOMPARE(DAY, obj_adv->getProgram());
 
 	// confirms operations: the frame is sent
-	obj_adv->ok();
+	obj_adv->apply();
 	dev_adv->turnOff();
 	compareClientCommand();
 }
@@ -285,7 +308,7 @@ void TestSplitScenarios::testSetAdvancedProperties()
 
 	// switches off swing
 	ObjectTester t2(obj_adv, SIGNAL(swingChanged()));
-	obj_adv->setSwing(SplitProgram::SwingOff);
+	obj_adv->nextSwing();
 	t2.checkSignals();
 	QCOMPARE(SplitProgram::SwingOff, obj_adv->getSwing());
 
@@ -297,13 +320,13 @@ void TestSplitScenarios::testSetAdvancedProperties()
 
 	// changes speed
 	ObjectTester t4(obj_adv, SIGNAL(speedChanged()));
-	obj_adv->setSpeed(SplitProgram::SpeedSilent);
+	obj_adv->nextSpeed();
 	t4.checkSignals();
-	QCOMPARE(SplitProgram::SpeedSilent, obj_adv->getSpeed());
+	QCOMPARE(SplitProgram::SpeedMax, obj_adv->getSpeed());
 
 	// sets swing to on and changes the program to night: all signals must be
 	// emitted
-	obj_adv->setSwing(SplitProgram::SwingOn);
+	obj_adv->nextSwing();
 	ObjectTester t5(obj_adv, SignalList()
 				   << SIGNAL(programChanged())
 					<< SIGNAL(modeChanged())

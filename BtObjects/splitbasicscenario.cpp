@@ -103,7 +103,7 @@ void SplitBasicScenario::setProgram(QString program)
 	emit programChanged();
 }
 
-void SplitBasicScenario::ok()
+void SplitBasicScenario::apply()
 {
 	if (actual_program == tr("off"))
 		sendOffCommand();
