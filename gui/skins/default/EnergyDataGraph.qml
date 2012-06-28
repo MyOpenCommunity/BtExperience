@@ -54,7 +54,7 @@ Page {
             }
 
             font.pixelSize: 24
-            text: translations.get("ENERGY_TYPE", energyItem.energyType)
+            text: energyItem.general ? qsTr("Overall") : energyItem.name
             color: "white"
         }
     }
@@ -198,8 +198,106 @@ Page {
                     topMargin: parent.height / 100 * 3
                     horizontalCenter: parent.horizontalCenter
                 }
+            }
+
+            UbuntuLightText {
+                text: qsTr("instant consumption")
+                color: "white"
+                wrapMode: Text.WordWrap
+                anchors {
+                    bottom: instantConsumption.top
+                    bottomMargin: 5
+                    left: instantConsumption.left
+                    right: instantConsumption.right
+                }
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            SvgImage {
+                id: instantConsumption
+                source: "images/energy/bg_instant_consumption.svg"
+                anchors {
+                    top: dateSelector.bottom
+                    topMargin: parent.height / 100 * 24
+                    horizontalCenter: parent.horizontalCenter
+                }
+                UbuntuLightText {
+                    anchors.centerIn: parent
+                    text: "45 w/h"
+                    color: "grey"
+                    font.pixelSize: 16
+                }
+            }
 
 
+            UbuntuLightText {
+                text: qsTr("month cumulative consumption")
+                color: "white"
+                wrapMode: Text.WordWrap
+                anchors {
+                    bottom: cumulativeConsumption.top
+                    bottomMargin: 5
+                    left: cumulativeConsumption.left
+                    right: cumulativeConsumption.right
+                }
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            EnergyConsumptionLogic {
+                id: logic
+                monthConsumptionItem: energyItem.getValue(EnergyData.CumulativeMonthValue,
+                                                          dateSelector.date, EnergyData.Consumption)
+            }
+
+            SvgImage {
+                id: cumulativeConsumption
+                source: "images/energy/livello_cumulative_consumption.svg"
+                anchors {
+                    top: instantConsumption.bottom
+                    topMargin: parent.height / 100 * 25
+                    horizontalCenter: parent.horizontalCenter
+                }
+
+                SvgImage {
+                    source:  "images/energy/livello_cumulative_consumption_" + (logic.consumptionExceedGoal() ? "rosso" : "verde") + ".svg"
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    width: logic.getConsumptionHeight(parent.width)
+                }
+
+                SvgImage {
+                    source: "images/energy/linea_livello_cumulative_consumption.svg"
+                    visible: logic.hasGoal()
+                    anchors.left: parent.left
+                    anchors.leftMargin: logic.goalHeight(parent.width)
+                    height: parent.height
+                }
+            }
+            SvgImage {
+                source: "images/energy/ombra_livello_cumulative_consumption.svg"
+                anchors.top: cumulativeConsumption.bottom
+                anchors.left: cumulativeConsumption.left
+                anchors.right: cumulativeConsumption.right
+            }
+
+            UbuntuLightText {
+                text: qsTr("units")
+                color: "white"
+                anchors {
+                    top: cumulativeConsumption.bottom
+                    topMargin: 5
+                    left: cumulativeConsumption.left
+                }
+            }
+
+            UbuntuLightText {
+                text: logic.monthConsumptionItem.value.toFixed(2)
+                color: "white"
+                anchors {
+                    top: cumulativeConsumption.bottom
+                    topMargin: 5
+                    right: cumulativeConsumption.right
+                }
             }
         }
     }
