@@ -2,6 +2,7 @@ import QtQuick 1.1
 import "js/Stack.js" as Stack
 import BtObjects 1.0 // a temporary workaround to load immediately the BtObjects module
 import Components 1.0
+import Components.Text 1.0
 
 BasePage {
     id: mainarea
@@ -142,20 +143,21 @@ BasePage {
                     source: itemObject.image
                 }
 
-                Text {
+                UbuntuLightText {
                     id: textDelegate
                     text: itemObject.description
-                    font.family: regularFont.name
                     font.pixelSize: 22
                     anchors.top: imageDelegate.bottom
                     anchors.left: parent.left
                     anchors.right: parent.right
+                    anchors.topMargin: 8
                     horizontalAlignment: Text.AlignHCenter
                 }
 
                 //Component.onCompleted: {
                 //console.log('icon scale: ' + PathView.iconScale + ' x:' + itemDelegate.x)
                 //}
+
                 SvgImage {
                     id: rectPressed
                     source: "images/common/profilo_p.svg"
@@ -163,7 +165,6 @@ BasePage {
                     anchors {
                         centerIn: imageDelegate
                         fill: imageDelegate
-                        margins: 20
                     }
                     width: imageDelegate.width
                     height: imageDelegate.height
