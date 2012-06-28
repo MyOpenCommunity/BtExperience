@@ -23,8 +23,10 @@ Page {
         property bool showCurrency: false
         // TODO: make the date change possible!
         property int graphType: EnergyData.CumulativeMonthGraph
-        property alias graphDate: dateSelector.date
-        property variant modelGraph: energyItem.getGraph(graphType, graphDate, EnergyData.Consumption)
+        property variant modelGraph: energyItem.getGraph(graphType, dateSelector.date,
+                                                         EnergyData.Consumption)
+        property variant monthConsumption: energyItem.getValue(EnergyData.CumulativeMonthValue,
+            dateSelector.date, EnergyData.Consumption)
     }
 
     SvgImage {
@@ -245,8 +247,7 @@ Page {
 
             EnergyConsumptionLogic {
                 id: logic
-                monthConsumptionItem: energyItem.getValue(EnergyData.CumulativeMonthValue,
-                                                          dateSelector.date, EnergyData.Consumption)
+                monthConsumptionItem: privateProps.monthConsumption
             }
 
             SvgImage {
@@ -273,6 +274,7 @@ Page {
                     height: parent.height
                 }
             }
+
             SvgImage {
                 source: "images/energy/ombra_livello_cumulative_consumption.svg"
                 anchors.top: cumulativeConsumption.bottom
@@ -291,7 +293,7 @@ Page {
             }
 
             UbuntuLightText {
-                text: logic.monthConsumptionItem.value.toFixed(2)
+                text: privateProps.monthConsumption.value.toFixed(2)
                 color: "white"
                 anchors {
                     top: cumulativeConsumption.bottom

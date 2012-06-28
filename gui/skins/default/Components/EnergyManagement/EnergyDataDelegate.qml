@@ -12,12 +12,6 @@ Column {
 
     signal headerClicked(variant mouse)
 
-    EnergyConsumptionLogic {
-        id: logic
-        monthConsumptionItem: itemObject.getValue(EnergyData.CumulativeMonthValue,
-                                                  new Date(), EnergyData.Consumption)
-    }
-
     QtObject {
         id: privateProps
 
@@ -83,6 +77,12 @@ Column {
         text: privateProps.formatValue(EnergyData.CumulativeMonthValue)
         anchors.horizontalCenter: parent.horizontalCenter
         color: "white"
+    }
+
+    EnergyConsumptionLogic {
+        id: logic
+        monthConsumptionItem: itemObject.getValue(EnergyData.CumulativeMonthValue,
+                                                  new Date(), EnergyData.Consumption)
     }
 
     Column {
