@@ -75,7 +75,12 @@ Page {
             leftMargin: 30
             bottom: parent.bottom
         }
-        sourceComponent: cardList/*systemsModel.count > 7 ? cardGrid : cardList*/
+        // To switch between CardView and CardGridView:
+        // systemsModel.count > 7 ? cardGrid : cardList
+        //
+        // I'm leaving the CardGridView below just in case we want to enable
+        // it again.
+        sourceComponent: cardList
     }
 
     Component {
