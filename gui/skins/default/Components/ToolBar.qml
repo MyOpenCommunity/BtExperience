@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtExperience 1.0
 import Components.Text 1.0
 import "../js/datetime.js" as DateTime
+import Components 1.0
 
 
 Item {
@@ -30,18 +31,17 @@ Item {
         anchors.left: toolbar_top.left
 
         Item {
-            width: 100
+            width: 120
             height: toolbar_top.height
 
-            SvgImage {
-                source: imagesPath + "toolbar/icon_home.svg"
+            ButtonImageThreeStates {
+                defaultImageBg: imagesPath + "toolbar/bg_home.svg"
+                pressedImageBg: imagesPath + "toolbar/bg_home_pressed.svg"
+                defaultImage: imagesPath + "toolbar/icon_home.svg"
+                pressedImage: imagesPath + "toolbar/icon_home_pressed.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: toolbar.homeClicked()
-                }
+                onClicked: toolbar.homeClicked() //doStuff()
             }
         }
 
@@ -51,7 +51,7 @@ Item {
         }
 
         Item {
-            width: 56
+            width: 64
             height: toolbar_top.height
 
             UbuntuLightText {
@@ -69,7 +69,7 @@ Item {
         }
 
         Item {
-            width: 113
+            width: 99
             height: toolbar_top.height
 
             UbuntuLightText {
@@ -90,7 +90,7 @@ Item {
         }
 
         Item {
-            width: 65
+            width: 64
             height: toolbar_top.height
 
             UbuntuLightText {
@@ -121,7 +121,7 @@ Item {
     }
 
     SvgImage {
-        source: imagesPath + "toolbar/toolbar_logo_white.svg"
+        source: imagesPath + "toolbar/toolbar_logo_black.svg"
         anchors.verticalCenter: toolbar_top.verticalCenter
         anchors.horizontalCenter: toolbar_top.horizontalCenter
     }
@@ -137,7 +137,7 @@ Item {
         }
 
         Item {
-            width: height
+            width: 51
             height: toolbar_top.height + 10
             SvgImage {
                 source: imagesPath + "toolbar/icon_alert.svg"
@@ -153,7 +153,7 @@ Item {
         }
 
         Item {
-            width: height
+            width: 51
             height: toolbar_top.height + 10
             SvgImage {
                 source: imagesPath + "toolbar/icon_antintrusion.svg"
@@ -169,7 +169,7 @@ Item {
         }
 
         Item {
-            width: height
+            width: 51
             height: toolbar_top.height + 10
             SvgImage {
                 source: imagesPath + "toolbar/icon_clock.svg"
