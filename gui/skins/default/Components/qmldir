@@ -12,7 +12,6 @@ ButtonLeftRight 1.0 ButtonLeftRight.qml
 ButtonMediaControl 1.0 ButtonMediaControl.qml
 ButtonMinusPlus 1.0 ButtonMinusPlus.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
-ButtonOnOff 1.0 ButtonOnOff.qml
 ButtonSystems 1.0 ButtonSystems.qml
 ButtonThreeStates 1.0 ButtonThreeStates.qml
 CameraLink 1.0 CameraLink.qml
