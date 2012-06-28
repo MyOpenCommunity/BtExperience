@@ -3,10 +3,8 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: 50
-    ButtonOnOff {
-        status: column.dataModel.loud
+    ControlOnOff {
+        active: column.dataModel.loud
         onClicked: column.dataModel.loud = newStatus
     }
 }
