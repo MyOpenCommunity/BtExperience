@@ -26,13 +26,14 @@ Item {
 
     Image {
         id: prevArrow
-        source: "../images/common/pager_arrow_previous.svg"
+        source: "../images/common/freccia_sx.svg"
         anchors {
             left: parent.left
             verticalCenter: parent.verticalCenter
         }
 
         MouseArea {
+            id: mouseAreaSx
             anchors.fill: parent
             enabled: {
                 // Any delegate is ok to test the animation running property
@@ -47,6 +48,17 @@ Item {
             }
             onClicked: clipView.decrementCurrentIndex()
         }
+
+        states: [
+            State {
+                name: "pressed"
+                when: mouseAreaSx.pressed === true
+                PropertyChanges {
+                    target: prevArrow
+                    source: "../images/common/freccia_sx_P.svg"
+                }
+            }
+        ]
     }
 
     Item {
@@ -140,13 +152,14 @@ Item {
 
     Image {
         id: nextArrow
-        source: "../images/common/pager_arrow_next.svg"
+        source: "../images/common/freccia_dx.svg"
         anchors {
             right: parent.right
             verticalCenter: parent.verticalCenter
         }
 
         MouseArea {
+            id: mouseAreaDx
             anchors.fill: parent
             enabled: {
                 // see comment on the other arrow
@@ -155,6 +168,17 @@ Item {
             }
             onClicked: clipView.incrementCurrentIndex()
         }
+
+        states: [
+            State {
+                name: "pressed"
+                when: mouseAreaDx.pressed === true
+                PropertyChanges {
+                    target: nextArrow
+                    source: "../images/common/freccia_dx_P.svg"
+                }
+            }
+        ]
     }
 
     states: State {
