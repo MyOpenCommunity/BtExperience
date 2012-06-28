@@ -5,44 +5,44 @@ QtObject {
     property variant goal: monthConsumptionItem !== undefined ? monthConsumptionItem.consumptionGoal : 0.0
     property variant consumption: monthConsumptionItem !== undefined ? monthConsumptionItem.value : 0.0
 
-    function maxHeight(columnHeight) {
-        return columnHeight * .95
+    function maxSize(referenceSize) {
+        return referenceSize * .95
     }
 
-    function idealGoalHeight(columnHeight) {
-        return columnHeight * .9
+    function idealGoalSize(referenceSize) {
+        return referenceSize * .9
     }
 
-    // the height of goal line. Can be as the "ideal" goal height or less if
-    // the consumption height is greater than the maximum height.
-    function goalHeight(columnHeight) {
+    // the size of goal line. Can be as the "ideal" goal size or less if
+    // the consumption size is greater than the reference size.
+    function goalSize(referenceSize) {
         if (goal === undefined) // the goal line is not shown at all, using hasGoal()
             return 0.0
 
-        var height = consumption / goal * idealGoalHeight(columnHeight)
-        if (height > maxHeight(columnHeight))
-            return goal / consumption * idealGoalHeight(columnHeight)
+        var size = consumption / goal * idealGoalSize(referenceSize)
+        if (size > maxSize(referenceSize))
+            return goal / consumption * idealGoalSize(referenceSize)
         else
-            return idealGoalHeight(columnHeight)
+            return idealGoalSize(referenceSize)
     }
 
-    // the height of the consumption bar. It is a value related to the goal
-    // height, and it has a maximum value (in the latter case, the goal height
+    // the size of the consumption bar. It is a value related to the goal
+    // size, and it has a maximum value (in the latter case, the goal size
     // is decreased proportionally).
-    function getConsumptionHeight(columnHeight) {
+    function getConsumptionSize(referenceSize) {
         if (consumption === undefined)
             return 0
 
         if (goal !== undefined) {
-            var height = consumption / goal * idealGoalHeight(columnHeight)
-            return Math.min(height, maxHeight(columnHeight))
+            var size = consumption / goal * idealGoalSize(referenceSize)
+            return Math.min(size, maxSize(referenceSize))
         }
         else {
-            // a very simplified representation of the consumption height,
+            // a very simplified representation of the consumption size,
             // proportionally to the days elapsed in the month.
             // TODO: find a better representation!
             var d = new Date()
-            return d.getDate() / 30 * idealGoalHeight(columnHeight)
+            return d.getDate() / 30 * idealGoalSize(referenceSize)
         }
     }
 

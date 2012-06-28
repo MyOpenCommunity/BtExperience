@@ -262,14 +262,14 @@ Page {
                     source:  "images/energy/livello_cumulative_consumption_" + (logic.consumptionExceedGoal() ? "rosso" : "verde") + ".svg"
                     anchors.left: parent.left
                     anchors.top: parent.top
-                    width: logic.getConsumptionHeight(parent.width)
+                    width: logic.getConsumptionSize(parent.width)
                 }
 
                 SvgImage {
                     source: "images/energy/linea_livello_cumulative_consumption.svg"
                     visible: logic.hasGoal()
                     anchors.left: parent.left
-                    anchors.leftMargin: logic.goalHeight(parent.width)
+                    anchors.leftMargin: logic.goalSize(parent.width)
                     height: parent.height
                 }
             }

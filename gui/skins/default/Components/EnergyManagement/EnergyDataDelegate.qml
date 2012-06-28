@@ -86,7 +86,6 @@ Column {
     }
 
     Column {
-
         SvgImage {
             source: "../../images/energy/colonna" + (isOverview ? '_overview' : '') + ".svg"
 
@@ -100,7 +99,7 @@ Column {
                         "../../images/energy/colonna_verde" + (isOverview ? '_overview' : '') + ".svg"
                     }
                 }
-                height: logic.getConsumptionHeight(parent.height)
+                height: logic.getConsumptionSize(parent.height)
             }
             SvgImage {
                 id: goalLine
@@ -108,7 +107,7 @@ Column {
                 visible: logic.hasGoal()
                 width: parent.width
                 anchors.top: parent.top
-                anchors.topMargin: parent.height - logic.goalHeight(parent.height)
+                anchors.topMargin: parent.height - logic.goalSize(parent.height)
             }
         }
         SvgImage {
