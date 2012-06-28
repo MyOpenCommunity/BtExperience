@@ -44,10 +44,10 @@ MenuColumn {
             onMinusClicked: objectModel.getObject(0).volumeDown()
         }
 
-        ButtonOnOff {
+        ControlOnOff {
             id: buttonOnOff
             width: control.width
-            status: -1
+            active: -1
             onClicked: objectModel.getObject(0).active = newStatus
         }
     }

@@ -15,11 +15,9 @@ MenuColumn {
         onPlusClicked: column.dataModel.volumeUp()
     }
 
-    ButtonOnOff {
+    ControlOnOff {
         id: buttonOnOff
         anchors.bottom: parent.bottom
-        status: -1
-        width: parent.width
         onClicked: column.dataModel.active = newStatus
     }
 }
