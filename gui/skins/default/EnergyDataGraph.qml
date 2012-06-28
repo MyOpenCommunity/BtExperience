@@ -21,10 +21,9 @@ Page {
     QtObject {
         id: privateProps
         property bool showCurrency: false
-        // TODO: make the date change possible!
         property int graphType: EnergyData.CumulativeMonthGraph
         property variant modelGraph: energyItem.getGraph(graphType, dateSelector.date,
-                                                         EnergyData.Consumption)
+                                                         showCurrency ? EnergyData.Currency: EnergyData.Consumption)
         property variant monthConsumption: energyItem.getValue(EnergyData.CumulativeMonthValue,
             dateSelector.date, EnergyData.Consumption)
     }
@@ -283,7 +282,7 @@ Page {
             }
 
             UbuntuLightText {
-                text: qsTr("units")
+                text: cumulativeConsumptionLabel.monthItem.measureUnit
                 color: "white"
                 anchors {
                     top: cumulativeConsumption.bottom
@@ -293,7 +292,11 @@ Page {
             }
 
             UbuntuLightText {
-                text: privateProps.monthConsumption.value.toFixed(2)
+                id: cumulativeConsumptionLabel
+                property variant monthItem: energyItem.getValue(EnergyData.CumulativeMonthValue, dateSelector.date,
+                    privateProps.showCurrency ? EnergyData.Currency : EnergyData.Consumption)
+
+                text: monthItem.value.toFixed(2)
                 color: "white"
                 anchors {
                     top: cumulativeConsumption.bottom
