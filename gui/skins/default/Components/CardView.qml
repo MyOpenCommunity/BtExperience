@@ -13,6 +13,7 @@ Item {
 
     Connections {
         target: model
+        ignoreUnknownSignals: true
         onCountChanged: {
             console.log("Model count changed")
             clipView.modelReset()
@@ -168,4 +169,8 @@ Item {
             visible: false
         }
     }
+
+    // hack to work using ListModel, which don't send the countChanged
+    // signals when the model is associated to the view.
+    Component.onCompleted: clipView.modelReset()
 }
