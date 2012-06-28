@@ -35,7 +35,7 @@ Item {
         MouseArea {
             id: mouseAreaSx
             anchors.fill: parent
-            enabled: {
+            onClicked: {
                 // Any delegate is ok to test the animation running property
                 //
                 // Take currentIndex + 1 because we are guaranteed it always exists
@@ -44,9 +44,10 @@ Item {
                 // Don't use currentIndex because in some cases it's going to be
                 // destroyed.
                 var delegate = Vars.dict[(clipView.currentIndex + 1) % model.count]
-                return delegate === undefined ? false : !delegate.moveAnimationRunning
+                var enabled = delegate === undefined ? false : !delegate.moveAnimationRunning
+                if (enabled)
+                    clipView.decrementCurrentIndex()
             }
-            onClicked: clipView.decrementCurrentIndex()
         }
 
         states: [
@@ -161,12 +162,13 @@ Item {
         MouseArea {
             id: mouseAreaDx
             anchors.fill: parent
-            enabled: {
+            onClicked: {
                 // see comment on the other arrow
                 var delegate = Vars.dict[(clipView.currentIndex + 1) % model.count]
-                return delegate === undefined ? false : !delegate.moveAnimationRunning
+                var enabled = delegate === undefined ? false : !delegate.moveAnimationRunning
+                if (enabled)
+                    clipView.incrementCurrentIndex()
             }
-            onClicked: clipView.incrementCurrentIndex()
         }
 
         states: [
