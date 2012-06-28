@@ -4,16 +4,10 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    height: buttonOnOff.height + volumeSlider.height
-    width: 212
 
-    onChildDestroyed: amplifierSettings.state = ""
-
-    ButtonOnOff {
+    ControlOnOff {
         id: buttonOnOff
-        width: column.width
-        status: column.dataModel.active
-        height: 50
+        active: column.dataModel.active
         onClicked: column.dataModel.active = newStatus
     }
 

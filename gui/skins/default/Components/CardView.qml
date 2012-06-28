@@ -13,6 +13,7 @@ Item {
 
     Connections {
         target: model
+        ignoreUnknownSignals: true
         onCountChanged: {
             console.log("Model count changed")
             clipView.modelReset()
@@ -25,15 +26,16 @@ Item {
 
     Image {
         id: prevArrow
-        source: "../images/common/pager_arrow_previous.svg"
+        source: "../images/common/freccia_sx.svg"
         anchors {
             left: parent.left
             verticalCenter: parent.verticalCenter
         }
 
         MouseArea {
+            id: mouseAreaSx
             anchors.fill: parent
-            enabled: {
+            onClicked: {
                 // Any delegate is ok to test the animation running property
                 //
                 // Take currentIndex + 1 because we are guaranteed it always exists
@@ -42,10 +44,22 @@ Item {
                 // Don't use currentIndex because in some cases it's going to be
                 // destroyed.
                 var delegate = Vars.dict[(clipView.currentIndex + 1) % model.count]
-                return delegate === undefined ? false : !delegate.moveAnimationRunning
+                var enabled = delegate === undefined ? false : !delegate.moveAnimationRunning
+                if (enabled)
+                    clipView.decrementCurrentIndex()
             }
-            onClicked: clipView.decrementCurrentIndex()
         }
+
+        states: [
+            State {
+                name: "pressed"
+                when: mouseAreaSx.pressed === true
+                PropertyChanges {
+                    target: prevArrow
+                    source: "../images/common/freccia_sx_P.svg"
+                }
+            }
+        ]
     }
 
     Item {
@@ -66,7 +80,7 @@ Item {
                 var elementNumber = Math.min(visibleElements, model.count)
                 for (var i = 0; i < elementNumber; ++i) {
                     var delegateX = (Script.listDelegateWidth + delegateSpacing) * i
-                    Vars.dict[i] = delegate.createObject(clipView, {"x": delegateX, "y": clipView.y, "index": i, "view": clipView})
+                    Vars.dict[i] = delegate.createObject(clipView, {"x": delegateX, "y": 0, "index": i, "view": clipView})
                 }
                 currentIndex = 0
             }
@@ -100,7 +114,7 @@ Item {
                 var lastIndex = (currentIndex + visibleElements - 1) % model.count
                 var newDelegateIndex = (lastIndex + 1) % model.count
                 var newDelegateX = Vars.dict[lastIndex].x + Script.listDelegateWidth + delegateSpacing
-                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": clipView.y, "index": newDelegateIndex, "view": clipView})
+                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": 0, "index": newDelegateIndex, "view": clipView})
 
                 // 2. Remove and destroy the leftmost delegate
                 removeDelegate(currentIndex)
@@ -117,7 +131,7 @@ Item {
                     newDelegateIndex = model.count - 1
 
                 var newDelegateX = Vars.dict[currentIndex].x - Script.listDelegateWidth - delegateSpacing
-                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": clipView.y, "index": newDelegateIndex, "view": clipView})
+                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": 0, "index": newDelegateIndex, "view": clipView})
 
                 var lastIndex = (currentIndex + visibleElements - 1) % model.count
                 removeDelegate(lastIndex)
@@ -133,27 +147,40 @@ Item {
                 var min = Math.min(visibleElements, model.count)
                 return min * Script.listDelegateWidth + (min - 1) * delegateSpacing
             }
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
         }
     }
 
     Image {
         id: nextArrow
-        source: "../images/common/pager_arrow_next.svg"
+        source: "../images/common/freccia_dx.svg"
         anchors {
             right: parent.right
             verticalCenter: parent.verticalCenter
         }
 
         MouseArea {
+            id: mouseAreaDx
             anchors.fill: parent
-            enabled: {
+            onClicked: {
                 // see comment on the other arrow
                 var delegate = Vars.dict[(clipView.currentIndex + 1) % model.count]
-                return delegate === undefined ? false : !delegate.moveAnimationRunning
+                var enabled = delegate === undefined ? false : !delegate.moveAnimationRunning
+                if (enabled)
+                    clipView.incrementCurrentIndex()
             }
-            onClicked: clipView.incrementCurrentIndex()
         }
+
+        states: [
+            State {
+                name: "pressed"
+                when: mouseAreaDx.pressed === true
+                PropertyChanges {
+                    target: nextArrow
+                    source: "../images/common/freccia_dx_P.svg"
+                }
+            }
+        ]
     }
 
     states: State {
@@ -168,4 +195,8 @@ Item {
             visible: false
         }
     }
+
+    // hack to work using ListModel, which don't send the countChanged
+    // signals when the model is associated to the view.
+    Component.onCompleted: clipView.modelReset()
 }

@@ -79,13 +79,13 @@ SvgImage {
             bottomMargin: 5
         }
 
-        defaultImageBg: "../images/termo/imposta_data-ora/btn_imposta_data-ora.svg"
-        pressedImageBg: "../images/termo/imposta_data-ora/btn_imposta_data-ora_P.svg"
-        selectedImageBg: "../images/termo/imposta_data-ora/btn_imposta_data-ora_S.svg"
-        shadowImage: "../images/termo/imposta_data-ora/ombra_btn_imposta_data-ora.svg"
-        defaultImage: "../images/termo/imposta_data-ora/ico_imposta_data-ora.svg"
-        pressedImage: "../images/termo/imposta_data-ora/ico_imposta_data-ora_P.svg"
-        selectedImage: "../images/termo/imposta_data-ora/ico_imposta_data-ora_P.svg" // we don't have a _S version
+        defaultImageBg: "../../images/termo/imposta_data-ora/btn_imposta_data-ora.svg"
+        pressedImageBg: "../../images/termo/imposta_data-ora/btn_imposta_data-ora_P.svg"
+        selectedImageBg: "../../images/termo/imposta_data-ora/btn_imposta_data-ora_S.svg"
+        shadowImage: "../../images/termo/imposta_data-ora/ombra_btn_imposta_data-ora.svg"
+        defaultImage: "../../images/termo/imposta_data-ora/ico_imposta_data-ora.svg"
+        pressedImage: "../../images/termo/imposta_data-ora/ico_imposta_data-ora_P.svg"
+        selectedImage: "../../images/termo/imposta_data-ora/ico_imposta_data-ora_P.svg" // we don't have a _S version
         status: 0
         onClicked: control.editClicked()
     }

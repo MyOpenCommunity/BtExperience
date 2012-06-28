@@ -4,19 +4,11 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: itemList.height
 
-    onChildDestroyed: {
-        itemList.currentIndex = -1
-    }
+    onChildDestroyed: paginator.currentIndex = -1
 
-    ListView {
-        id: itemList
-        height: 50 * count
-        anchors.fill: parent
-        currentIndex: -1
-        interactive: false
+    PaginatorList {
+        id: paginator
 
         delegate: MenuItemDelegate {
             editable: true
@@ -38,5 +30,6 @@ MenuColumn {
             {objectId: ObjectInterface.IdMultiChannelSoundAmbient},
             {objectId: ObjectInterface.IdMonoChannelSoundAmbient},
         ]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }

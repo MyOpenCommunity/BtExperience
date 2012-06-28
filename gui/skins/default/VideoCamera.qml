@@ -215,20 +215,10 @@ Page {
     Rectangle {
         id: bg_video
         color: "red"
-
-        Image {
-            id: video
-            source: "images/videocitofonia_rossa.png"
-            x: 112
-            y: 96
-            width: 640
-            height: 480
-            visible: true
-            opacity: 1
-            fillMode: Image.Stretch
-            clip: false
-            smooth: false
-        }
+        x: 112
+        y: 96
+        width: 640
+        height: 480
     }
 
     Component.onCompleted: {

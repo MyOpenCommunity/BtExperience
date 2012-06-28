@@ -51,7 +51,7 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
         return
     }
     else {
-        console.log("Error on creating the Component: " + component)
+        console.log("Error on creating the Component: " + component + "error: " + component.errorString())
         shadowObj.destroy()
         titleObj.destroy()
     }

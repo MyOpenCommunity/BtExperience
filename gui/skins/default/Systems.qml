@@ -75,21 +75,30 @@ Page {
             leftMargin: 30
             bottom: parent.bottom
         }
-        sourceComponent: systemsModel.count > 7 ? cardGrid : cardList
+        // To switch between CardView and CardGridView:
+        // systemsModel.count > 7 ? cardGrid : cardList
+        //
+        // I'm leaving the CardGridView below just in case we want to enable
+        // it again.
+        sourceComponent: cardList
     }
 
     Component {
         id: cardList
         CardView {
             delegate: CardDelegate {
-                source: image
-                label: name
+                property variant itemObject: systemsModel.get(index)
+                source: itemObject.image
+                label: itemObject.name
 
                 onClicked: {
-                    if (target !== "")
-                        Stack.openPage(target)
+                    if (itemObject.target !== "")
+                        Stack.openPage(itemObject.target)
                 }
             }
+
+            delegateSpacing: 20
+            visibleElements: 4
 
             model: systemsModel
         }
