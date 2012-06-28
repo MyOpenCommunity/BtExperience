@@ -4,7 +4,7 @@ import Components 1.0
 MenuColumn {
     id: column
     ControlOnOff {
-        active: column.dataModel.loud
+        status: column.dataModel.loud
         onClicked: column.dataModel.loud = newStatus
     }
 }

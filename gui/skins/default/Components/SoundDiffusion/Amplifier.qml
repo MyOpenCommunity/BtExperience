@@ -7,7 +7,7 @@ MenuColumn {
 
     ControlOnOff {
         id: buttonOnOff
-        active: column.dataModel.active
+        status: column.dataModel.active
         onClicked: column.dataModel.active = newStatus
     }
 

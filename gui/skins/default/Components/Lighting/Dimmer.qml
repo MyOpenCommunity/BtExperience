@@ -6,7 +6,7 @@ MenuColumn {
         id: column
 
         ControlOnOff {
-            active: dataModel.active
+            status: dataModel.active
             onClicked: (timing.isEnabled && newStatus === true) ? dataModel.setActiveWithTiming() : dataModel.active = newStatus
         }
 
