@@ -156,6 +156,7 @@ BasePage {
                 //Component.onCompleted: {
                 //console.log('icon scale: ' + PathView.iconScale + ' x:' + itemDelegate.x)
                 //}
+
                 SvgImage {
                     id: rectPressed
                     source: "images/common/profilo_p.svg"
@@ -163,7 +164,6 @@ BasePage {
                     anchors {
                         centerIn: imageDelegate
                         fill: imageDelegate
-                        margins: 20
                     }
                     width: imageDelegate.width
                     height: imageDelegate.height
