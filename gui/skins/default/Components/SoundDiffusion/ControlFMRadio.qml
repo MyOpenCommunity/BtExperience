@@ -15,7 +15,7 @@ Image {
     signal nextTrack
     signal previousTrack
 
-    source: imagesPath + "common/bg_UnaRegolazione.png"
+    source: imagesPath + "common/bg_player.svg"
 
     Row {
         anchors {
@@ -38,12 +38,14 @@ Image {
 
     UbuntuLightText {
         id: text1
-        y: 10
-        anchors.horizontalCenter: control.horizontalCenter
-        text: control.radioName
+        text: qsTr("radio FM")
         font.bold: true
-        font.pixelSize: 16
+        font.pixelSize: 12
         color: "#444546"
+    }
+
+    Image {
+        source: imagesPath + ""
     }
 
     UbuntuLightText {
