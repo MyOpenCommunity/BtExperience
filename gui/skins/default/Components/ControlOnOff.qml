@@ -1,10 +1,11 @@
 import QtQuick 1.1
 
-
+// On/Off control
+// active: -1 no button is down ever, 0 off button is down, 1 on button is down
 SvgImage {
     id: control
 
-    property bool active: false
+    property int active: -1
     property string onText: qsTr("ON")
     property string offText: qsTr("OFF")
 
@@ -22,7 +23,7 @@ SvgImage {
             shadowImage: "../images/common/btn_shadow_99x35.svg"
             text: onText
             onClicked: control.clicked(true)
-            status: active ? 1 : 0
+            status: active === -1 ? 0 : (active ? 1 : 0)
         }
 
         ButtonThreeStates {
@@ -32,7 +33,7 @@ SvgImage {
             shadowImage: "../images/common/btn_shadow_99x35.svg"
             text: offText
             onClicked: control.clicked(false)
-            status: active ? 0 : 1
+            status: active === -1 ? 0 : (active ? 0 : 1)
         }
     }
 
