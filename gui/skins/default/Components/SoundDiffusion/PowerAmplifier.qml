@@ -10,7 +10,7 @@ MenuColumn {
         AmplifierSettings {}
     }
 
-    onChildDestroyed: amplifierSettings.state = ""
+    onChildDestroyed: amplifierSettingsMenu.state = ""
 
     ControlOnOff {
         id: buttonOnOff
