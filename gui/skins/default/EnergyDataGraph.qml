@@ -8,7 +8,7 @@ import "js/Stack.js" as Stack
 
 
 Page {
-    property variant energyItem: undefined
+    property variant energyData: undefined
 
     function systemsButtonClicked() {
         Stack.showPreviousPage(1)
@@ -22,9 +22,9 @@ Page {
         id: privateProps
         property bool showCurrency: false
         property int graphType: EnergyData.CumulativeMonthGraph
-        property variant modelGraph: energyItem.getGraph(graphType, dateSelector.date,
+        property variant modelGraph: energyData.getGraph(graphType, dateSelector.date,
                                                          showCurrency ? EnergyData.Currency: EnergyData.Consumption)
-        property variant monthConsumption: energyItem.getValue(EnergyData.CumulativeMonthValue,
+        property variant monthConsumption: energyData.getValue(EnergyData.CumulativeMonthValue,
             dateSelector.date, EnergyData.Consumption)
     }
 
@@ -55,7 +55,7 @@ Page {
             }
 
             font.pixelSize: 24
-            text: energyItem.general ? qsTr("Overall") : energyItem.name
+            text: energyData.general ? qsTr("Overall") : energyData.name
             color: "white"
         }
     }
@@ -293,7 +293,7 @@ Page {
 
             UbuntuLightText {
                 id: cumulativeConsumptionLabel
-                property variant monthItem: energyItem.getValue(EnergyData.CumulativeMonthValue, dateSelector.date,
+                property variant monthItem: energyData.getValue(EnergyData.CumulativeMonthValue, dateSelector.date,
                     privateProps.showCurrency ? EnergyData.Currency : EnergyData.Consumption)
 
                 text: monthItem.value.toFixed(2)
