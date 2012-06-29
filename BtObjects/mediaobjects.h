@@ -169,6 +169,7 @@ public:
 	{
 		Radio = 1,
 		Aux,
+		MultiMedia,
 	};
 
 	virtual int getObjectId() const
@@ -234,6 +235,16 @@ class SourceAux : public SourceBase
 
 public:
 	SourceAux(SourceDevice *d, QString name);
+};
+
+
+// Stub class to test media browsing in the GUI
+class SourceMultiMedia : public SourceBase
+{
+	Q_OBJECT
+
+public:
+	SourceMultiMedia(SourceDevice *d, QString name);
 };
 
 

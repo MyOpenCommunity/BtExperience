@@ -50,6 +50,8 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		case SourceBase::Aux:
 			sources << new SourceAux(bt_global::add_device_to_cache(new SourceDevice(where)), name);
 			break;
+		case SourceBase::MultiMedia:
+			sources << new SourceMultiMedia(bt_global::add_device_to_cache(new SourceDevice(where)), name);
 		}
 	}
 
@@ -338,6 +340,12 @@ void SourceBase::valueReceived(const DeviceValues &values_list)
 
 SourceAux::SourceAux(SourceDevice *d, QString name) :
 	SourceBase(d, name, Aux)
+{
+}
+
+
+SourceMultiMedia::SourceMultiMedia(SourceDevice *d, QString name) :
+	SourceBase(d, name, MultiMedia)
 {
 }
 
@@ -705,3 +713,4 @@ void PowerAmplifier::valueReceived(const DeviceValues &values_list)
 		++it;
 	}
 }
+
