@@ -8,7 +8,6 @@ Item {
     property alias delegate: internalList.delegate
     property alias model: internalList.model
     property alias buttonVisible: button.visible
-    property alias currentIndex: internalList.currentIndex
     property alias spacing: spacing.height
 
     property int elementsOnPage: 6
