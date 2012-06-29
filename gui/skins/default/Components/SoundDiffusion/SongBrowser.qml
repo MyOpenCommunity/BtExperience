@@ -1,40 +1,65 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
-
+import Components.Text 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: paginator.height + backButton.height
 
-    PaginatorList {
+    Image {
+        id: imageBg
+        source: "../../images/sound_diffusion/bg_elenco_file.svg"
+    }
+
+    ButtonImageThreeStates {
+        id: backButton
+        defaultImageBg: "../../images/common/btn_66x35.svg"
+        pressedImageBg: "../../images/common/btn_66x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_66x35.svg"
+        defaultImage: "../../images/sound_diffusion/ico_back.svg"
+        pressedImage: "../../images/sound_diffusion/ico_back_P.svg"
+        anchors {
+            top: imageBg.top
+            topMargin: 6
+            left: imageBg.left
+            leftMargin: 10
+        }
+
+        onClicked: files.exitDirectory()
+        status: 0
+    }
+
+    PaginatorOnBackground {
         id: paginator
+        anchors {
+            top: backButton.bottom
+            topMargin: 10
+            left: parent.left
+            leftMargin: 10
+            right: parent.right
+            rightMargin: 10
+            bottom: parent.bottom
+            bottomMargin: 6
+        }
+        elementsOnPage: 10
+        buttonVisible: false
+        spacing: 5
 
-        listHeight: 50 * paginator.elementsOnPage
-        delegate: MenuItemDelegate {
+        delegate: SongBrowserDelegate {
             itemObject: files.getObject(index)
-            name: itemObject.name
-            hasChild: itemObject.fileType === FileObject.Directory ? true : false
-            // TODO: quick hack to distinguish directories from files
-            status: hasChild ? 0 : -1
             onDelegateClicked: {
-                console.log("SongBrowser, clicked on: " + itemObject.name)
-                if (hasChild) {
+                switch (itemObject.fileType)
+                {
+                case FileObject.Audio:
+                    break
+                case FileObject.Directory:
                     files.enterDirectory(itemObject.name)
+                    break
                 }
             }
         }
 
         model: files
-    }
-
-    MenuItem {
-        id: backButton
-        anchors.bottom: parent.bottom
-        name: "back"
-        description: "Go directory up"
-        onClicked: files.exitDirectory()
     }
 
     DirectoryListModel {
