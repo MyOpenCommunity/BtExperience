@@ -6,7 +6,6 @@ BtObjectsMapping 1.0 BtObjectsMapping.qml
 ButtonBack 1.0 ButtonBack.qml
 ButtonCommand 1.0 ButtonCommand.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
-ButtonImageText 1.0 ButtonImageText.qml
 ButtonImageThreeStates 1.0 ButtonImageThreeStates.qml
 ButtonLeftRight 1.0 ButtonLeftRight.qml
 ButtonMediaControl 1.0 ButtonMediaControl.qml
@@ -54,6 +53,7 @@ PageAnimation 1.0 PageAnimation.qml
 Paginator 1.0 Paginator.qml
 PaginatorColumn 1.0 PaginatorColumn.qml
 PaginatorList 1.0 PaginatorList.qml
+PaginatorOnBackground 1.0 PaginatorOnBackground.qml
 Pannable 1.0 Pannable.qml
 QuickLink 1.0 QuickLink.qml
 RoomItem 1.0 RoomItem.qml
