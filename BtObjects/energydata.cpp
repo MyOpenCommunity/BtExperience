@@ -526,7 +526,7 @@ void EnergyData::requestUpdate(int type, QDate date, RequestOptions options)
 	case MonthlyAverageValue:
 	{
 		DelayedSlotCaller *caller = new DelayedSlotCaller;
-		caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 500);
+		caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 0);
 		caller->addArgument(static_cast<ValueType>(type));
 		caller->addArgument(key.date);
 	}

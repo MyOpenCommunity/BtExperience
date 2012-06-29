@@ -8,6 +8,7 @@ import "js/Stack.js" as Stack
 
 
 Page {
+    id: page
     property variant energyData: undefined
 
     function systemsButtonClicked() {
@@ -97,6 +98,14 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("day")
                     status: 0
+                    enabled: dateSelector.isEnergyDayValid(dateSelector.date)
+                    Rectangle {
+                        z: 1
+                        anchors.fill: parent
+                        color: "silver"
+                        opacity: 0.6
+                        visible: parent.enabled === false
+                    }
                     onClicked: {}
                 }
                 ButtonThreeStates {
@@ -107,7 +116,18 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("month")
                     status: 1
-                    onClicked: {}
+                    enabled: dateSelector.isEnergyMonthValid(dateSelector.date)
+                    Rectangle {
+                        z: 1
+                        anchors.fill: parent
+                        color: "silver"
+                        opacity: 0.6
+                        visible: parent.enabled === false
+                    }
+                    onClicked: {
+                        page.state = ""
+                        pageContent.sourceComponent = energyMonthGraphComponent
+                    }
                 }
                 ButtonThreeStates {
                     id: yearButton
@@ -117,7 +137,22 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("year")
                     status: 0
-                    onClicked: {}
+                    enabled: dateSelector.isEnergyYearValid(dateSelector.date)
+                    Rectangle {
+                        z: 1
+                        anchors.fill: parent
+                        color: "silver"
+                        opacity: 0.6
+                        visible: parent.enabled === false
+                    }
+                    onClicked: {
+                        page.state = "yearGraph"
+                        // Change the energy graph is an operation that ideally
+                        // should be put inside the state change, but in this way
+                        // (because is a very slow operation) the user experience
+                        // is better because the ui does not appears blocked.
+                        pageContent.sourceComponent = energyYearGraphComponent
+                    }
                 }
             }
 
@@ -180,14 +215,25 @@ Page {
                     left: divisorLine.left
                 }
 
-                sourceComponent: Component {
-                    EnergyMonthGraph {
-                        modelGraph: privateProps.modelGraph
-                    }
+                sourceComponent: energyMonthGraphComponent
+            }
+
+            Component {
+                id: energyMonthGraphComponent
+                EnergyMonthGraph {
+                    modelGraph: privateProps.modelGraph
+                }
+            }
+
+            Component {
+                id: energyYearGraphComponent
+                EnergyYearGraph {
+                    modelGraph: privateProps.modelGraph
                 }
             }
 
         }
+
 
         SvgImage {
             source: "images/energy/bg_grafico_consumption.svg"
@@ -307,7 +353,19 @@ Page {
         }
     }
 
+
     EnergyManagementNames {
         id: translations
     }
+
+    states: [
+        State {
+            name: "yearGraph"
+            PropertyChanges { target: yearButton; status: 1 }
+            PropertyChanges { target: monthButton; status: 0 }
+            PropertyChanges { target: dayButton; status: 0 }
+            PropertyChanges { target: privateProps; graphType: EnergyData.CumulativeYearGraph }
+            PropertyChanges { target: dateSelector; state: "year" }
+        }
+    ]
 }
