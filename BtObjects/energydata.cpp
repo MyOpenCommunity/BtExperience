@@ -319,27 +319,6 @@ QString EnergyData::getObjectKey() const
 	QStringList result;
 	result << QString("type:%1").arg(static_cast<int>(getEnergyType()));
 
-	// TODO: remove this commented code after the removing of the old energy
-	// interface.
-//	switch (dev->getEnergyType())
-//	{
-//	case 1:
-//		result << "Electricity";
-//		break;
-//	case 2:
-//		result << "Water";
-//		break;
-//	case 3:
-//		result << "Gas";
-//		break;
-//	case 4:
-//		result << "HotWater";
-//		break;
-//	case 5:
-//		result << "Heat";
-//		break;
-//	}
-
 	if (isGeneral())
 		result << "general";
 	else
