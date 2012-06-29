@@ -77,7 +77,6 @@ SvgImage {
                 width: infoBox.width - 35
                 elide: Text.ElideRight
             }
-            Text {}
         }
     }
 
