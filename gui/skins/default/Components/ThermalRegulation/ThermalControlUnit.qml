@@ -16,6 +16,7 @@ MenuColumn {
             {objectId: ObjectInterface.IdThermalControlledProbe, objectKey: column.dataModel.objectKey},
             {objectId: ObjectInterface.IdThermalControlledProbeFancoil, objectKey: column.dataModel.objectKey}
         ]
+        onModelReset: fixedItem.temperature = getObject(0).temperature
     }
 
     Component {
@@ -137,29 +138,20 @@ MenuColumn {
         }
     }
 
-
     Item {
         id: mainItem
         width: 212
         height: 326
         anchors.fill: parent
 
-        Image {
+        ControlTemperature {
             id: fixedItem
+            property int temperature: 0
             anchors.top: parent.top
-            width: parent.width
-            height: visible ? 50 : 0
             // 4 zones central units are zones themselves: we must show the
             // temperature of the linked probe in such cases
             visible: (!is99zones)
-            source: "../../images/common/bg_UnaRegolazione.png"
-
-            UbuntuLightText {
-                id: textTemperature
-                anchors.centerIn: parent
-                text: (centralProbe.getObject(0).temperature / 10).toFixed(1) + qsTr("°C")
-                font.pixelSize: 24
-            }
+            text: (fixedItem.temperature / 10).toFixed(1) + qsTr("°C")
         }
 
         MenuItem {
