@@ -320,6 +320,7 @@ MenuColumn {
 
                 ControlSetDateTime {
                     dateVisible: false
+                    source: "../../images/termo/4-zone_temporizzato/bg_imposta-ora.svg"
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
                     status: (privateProps.currentElement === 3) ? 1 : 0
@@ -327,7 +328,8 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
-                        column.loadColumn(dateSelectTimed, column.title, objModel, {dateVisible: false})
+                        // I don't know why, but here we need only ../ and not ../../
+                        column.loadColumn(dateSelectTimed, column.title, objModel, {dateVisible: false, source: "../images/termo/4-zone_temporizzato/bg_comando-ora.svg"})
                     }
                 }
 

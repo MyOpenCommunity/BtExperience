@@ -6,6 +6,7 @@ MenuColumn {
     id: column
 
     property bool dateVisible: true
+    property alias source: background.source
 
     height: background.height
     width: background.width
@@ -36,7 +37,7 @@ MenuColumn {
                 top: labelDate.bottom
                 topMargin: 7
             }
-            itemObject: dataModel
+            itemObject: column.dateVisible ? dataModel : undefined
             separator: "/"
             mode: 1
         }
@@ -47,7 +48,7 @@ MenuColumn {
             text: qsTr("until time")
             font.pixelSize: 13
             anchors {
-                top: controlDate.bottom
+                top: column.dateVisible ? controlDate.bottom : parent.top
                 topMargin: 5
                 left: parent.left
                 leftMargin: 7

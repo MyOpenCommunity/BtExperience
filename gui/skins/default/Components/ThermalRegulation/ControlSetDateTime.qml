@@ -76,7 +76,7 @@ SvgImage {
             right: parent.right
             rightMargin: 7
             bottom: parent.bottom
-            bottomMargin: 5
+            bottomMargin: control.dateVisible ? 5 : 10
         }
 
         defaultImageBg: "../../images/termo/imposta_data-ora/btn_imposta_data-ora.svg"
