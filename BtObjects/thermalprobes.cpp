@@ -38,7 +38,6 @@ void ThermalNonControlledProbe::valueReceived(const DeviceValues &values_list)
 				emit temperatureChanged();
 			}
 		}
-
 		++it;
 	}
 }

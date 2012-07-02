@@ -24,10 +24,7 @@ MenuColumn {
             Component.onCompleted: {
                 var l = dataModel.modes.values
                 for (var i = 0; i < l.length; i++)
-                    append({
-                               "type": l[i],
-                               "name": pageObject.names.get('MODE', l[i])
-                           })
+                    append({"type": l[i], "name": pageObject.names.get('MODE', l[i])})
             }
         }
     }

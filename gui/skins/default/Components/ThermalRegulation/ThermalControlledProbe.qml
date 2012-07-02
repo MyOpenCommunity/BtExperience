@@ -14,10 +14,6 @@ MenuColumn {
         ThermalControlledProbeModalities {}
     }
 
-    width: 212
-    height: fixedItem.height + itemLoader.height
-    property string imagesPath: "../../images/"
-
     QtObject {
         id: privateProps
         property int pendingModality: -1

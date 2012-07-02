@@ -312,12 +312,9 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			QList<SplitProgram *> programs;
 			foreach (const QDomNode &programs_node, getChildrenExact(item, "programs"))
 				foreach (const QDomNode &program_node, getChildrenExact(programs_node, "program"))
-					programs << new SplitProgram(
-									getTextChild(program_node, "name"),
-									SplitProgram::int2Mode(getTextChild(program_node, "mode").toInt()),
-									getTextChild(program_node, "set_point").toInt(),
-									SplitProgram::int2Speed(getTextChild(program_node, "speed").toInt()),
-									SplitProgram::int2Swing(getTextChild(program_node, "swing").toInt()));
+					programs << new SplitProgram(getTextChild(program_node, "name"), SplitProgram::int2Mode(getTextChild(program_node, "mode").toInt()),
+												 getTextChild(program_node, "set_point").toInt(), SplitProgram::int2Speed(getTextChild(program_node, "speed").toInt()),
+												 SplitProgram::int2Swing(getTextChild(program_node, "swing").toInt()));
 			QList<int> modes;
 			modes << SplitProgram::ModeOff
 				  << SplitProgram::ModeWinter
