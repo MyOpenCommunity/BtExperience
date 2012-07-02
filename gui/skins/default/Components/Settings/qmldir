@@ -15,6 +15,7 @@ SettingsInternational 1.0 SettingsInternational.qml
 SettingsItems 1.0 SettingsItems.qml
 SettingsNetwork 1.0 SettingsNetwork.qml
 SettingsPassword 1.0 SettingsPassword.qml
+SettingsProfiles 1.0 SettingsProfiles.qml
 SettingsVersion 1.0 SettingsVersion.qml
 TextLanguage 1.0 TextLanguage.qml
 Time 1.0 Time.qml

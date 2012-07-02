@@ -51,7 +51,7 @@ MenuColumn {
 
     Component {
         id: profiles
-        Item {}
+        SettingsProfiles {}
     }
 
     Component {

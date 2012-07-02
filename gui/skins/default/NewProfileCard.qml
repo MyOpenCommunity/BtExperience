@@ -145,7 +145,7 @@ BasePage {
     }
 
     SvgImage {
-        source: "images/common/pager_arrow_next.svg"
+        source: "images/common/freccia_dx.svg"
         anchors {
             top: parent.top
             topMargin: privateProps.arrowsMargin
@@ -160,7 +160,7 @@ BasePage {
     }
 
     SvgImage {
-        source: "images/common/pager_arrow_next.svg"
+        source: "images/common/freccia_dx.svg"
         anchors {
             bottom: parent.bottom
             bottomMargin: privateProps.arrowsMargin
@@ -175,7 +175,7 @@ BasePage {
     }
 
     SvgImage {
-        source: "images/common/pager_arrow_next.svg"
+        source: "images/common/freccia_dx.svg"
         anchors {
             right: parent.right
             rightMargin: privateProps.arrowsMargin
@@ -188,7 +188,7 @@ BasePage {
     }
 
     SvgImage {
-        source: "images/common/pager_arrow_previous.svg"
+        source: "images/common/freccia_sx.svg"
         anchors {
             left: parent.left
             leftMargin: privateProps.arrowsMargin
