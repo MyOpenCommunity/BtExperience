@@ -15,7 +15,6 @@ BasePage {
             left: parent.left
             right: parent.right
         }
-        onHomeClicked: Stack.openPage("NewProfileCard.qml")
     }
 
     ListView {
