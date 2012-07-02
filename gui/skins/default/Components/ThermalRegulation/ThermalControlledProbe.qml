@@ -9,6 +9,8 @@ MenuColumn {
 
     property int is99zones: (dataModel.centralType === ThermalControlledProbe.CentralUnit99Zones)
 
+    height: fixedItem.height + modalityItem.height + itemLoader.height
+
     Component {
         id: thermalControlledProbeModalities
         ThermalControlledProbeModalities {}
@@ -108,6 +110,9 @@ MenuColumn {
     Component {
         id: offComponent
         ButtonOkCancel {
+            // a trick to avoid wrong menu column height computation
+            visible: is99zones
+            onVisibleChanged: if (!visible) height = 0
             onCancelClicked: column.cancelClicked()
             onOkClicked: column.okClicked()
         }
@@ -116,6 +121,9 @@ MenuColumn {
     Component {
         id: antifreezeComponent
         ButtonOkCancel {
+            // a trick to avoid wrong menu column height computation
+            visible: is99zones
+            onVisibleChanged: if (!visible) height = 0
             onCancelClicked: column.cancelClicked()
             onOkClicked: column.okClicked()
         }
