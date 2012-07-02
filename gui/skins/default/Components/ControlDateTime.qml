@@ -8,9 +8,9 @@ Item {
     id: control
 
     property variant itemObject: undefined
-    property int leftColumnValue: mode === 0 ? itemObject.hours : itemObject.days
-    property int centerColumnValue: mode === 0 ? itemObject.minutes : itemObject.months
-    property int rightColumnValue: mode === 0 ? itemObject.seconds : itemObject.years
+    property int leftColumnValue: itemObject === undefined ? 0 : mode === 0 ? itemObject.hours : itemObject.days
+    property int centerColumnValue: itemObject === undefined ? 0 : mode === 0 ? itemObject.minutes : itemObject.months
+    property int rightColumnValue: itemObject === undefined ? 0 : mode === 0 ? itemObject.seconds : itemObject.years
     property string separator: ":"
     property bool twoFields: false // if true right disappears
     property int mode: 0 // 0 - hms, 1 - dmy
