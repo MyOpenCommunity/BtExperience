@@ -31,7 +31,7 @@ Item {
         }
         text: qsTr("units")
         color: "white"
-        font.pixelSize: 11
+        font.pointSize: 12
     }
 
     Item {
@@ -56,7 +56,7 @@ Item {
             UbuntuLightText {
                text: valuesAxis.calculateValue(index).toFixed(0)
                color: "white"
-               font.pixelSize: 11
+               font.pointSize: 12
                anchors.left: parent.left
                // We remove the paintedHeight from the calculation because we want to draw
                // the last value on top of the graph colunm.
@@ -155,7 +155,7 @@ Item {
                 text: model.value
                 width: columnPrototype.width
                 color: "white"
-                font.pixelSize: 11
+                font.pointSize: 12
                 horizontalAlignment: Text.AlignHCenter
                 x: (value - 1) * (columnPrototype.width + privateProps.columnSpacing)
             }
@@ -171,7 +171,7 @@ Item {
         }
         text: qsTr("day")
         color: "white"
-        font.pixelSize: 11
+        font.pointSize: 12
     }
 
 }

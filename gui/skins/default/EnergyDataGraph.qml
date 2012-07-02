@@ -52,7 +52,7 @@ Page {
                 leftMargin: parent.width / 100 * 5
             }
 
-            font.pixelSize: 24
+            font.pointSize: 28
             text: energyData.general ? qsTr("Overall") : energyData.name
             color: "white"
         }
@@ -81,7 +81,7 @@ Page {
                     text: "time"
                     color: "white"
                     anchors.verticalCenter: dayButton.verticalCenter
-                    font.pixelSize: 14
+                    font.pointSize: 14
                 }
                 Item {
                     width: 15
@@ -89,6 +89,7 @@ Page {
                 }
                 ButtonThreeStates {
                     id: dayButton
+                    font.pointSize: 14
                     defaultImage: "images/energy/btn_time.svg"
                     pressedImage: "images/energy/btn_time_P.svg"
                     selectedImage: "images/energy/btn_time_S.svg"
@@ -107,6 +108,7 @@ Page {
                 }
                 ButtonThreeStates {
                     id: monthButton
+                    font.pointSize: 14
                     defaultImage: "images/energy/btn_time.svg"
                     pressedImage: "images/energy/btn_time_P.svg"
                     selectedImage: "images/energy/btn_time_S.svg"
@@ -128,6 +130,7 @@ Page {
                 }
                 ButtonThreeStates {
                     id: yearButton
+                    font.pointSize: 14
                     defaultImage: "images/energy/btn_time.svg"
                     pressedImage: "images/energy/btn_time_P.svg"
                     selectedImage: "images/energy/btn_time_S.svg"
@@ -165,7 +168,7 @@ Page {
                     text: "value"
                     color: "white"
                     anchors.verticalCenter: moneyButton.verticalCenter
-                    font.pixelSize: 14
+                    font.pointSize: 14
                 }
                 Item {
                     width: 15
@@ -173,6 +176,7 @@ Page {
                 }
                 ButtonThreeStates {
                     id: moneyButton
+                    font.pointSize: 14
                     defaultImage: "images/energy/btn_value.svg"
                     pressedImage: "images/energy/btn_value_P.svg"
                     selectedImage: "images/energy/btn_value_S.svg"
@@ -183,6 +187,7 @@ Page {
                 }
                 ButtonThreeStates {
                     id: consumptionButton
+                    font.pointSize: 14
                     defaultImage: "images/energy/btn_value.svg"
                     pressedImage: "images/energy/btn_value_P.svg"
                     selectedImage: "images/energy/btn_value_S.svg"
@@ -251,6 +256,7 @@ Page {
             UbuntuLightText {
                 text: qsTr("instant consumption")
                 color: "white"
+                font.pointSize: 14
                 wrapMode: Text.WordWrap
                 anchors {
                     bottom: instantConsumption.top
@@ -273,7 +279,7 @@ Page {
                     anchors.centerIn: parent
                     text: "45 w/h"
                     color: "grey"
-                    font.pixelSize: 16
+                    font.pointSize: 18
                 }
             }
 
@@ -281,6 +287,7 @@ Page {
             UbuntuLightText {
                 text: qsTr("month cumulative consumption")
                 color: "white"
+                font.pointSize: 14
                 wrapMode: Text.WordWrap
                 anchors {
                     bottom: cumulativeConsumption.top
@@ -331,6 +338,7 @@ Page {
             UbuntuLightText {
                 text: cumulativeConsumptionLabel.monthItem.measureUnit
                 color: "white"
+                font.pointSize: 14
                 anchors {
                     top: cumulativeConsumption.bottom
                     topMargin: 5
@@ -344,6 +352,7 @@ Page {
                     privateProps.showCurrency ? EnergyData.Currency : EnergyData.Consumption)
 
                 text: monthItem.value.toFixed(2)
+                font.pointSize: 14
                 color: "white"
                 anchors {
                     top: cumulativeConsumption.bottom

@@ -142,7 +142,7 @@ Row {
         UbuntuLightText {
             id: textLabel
             text: qsTr("month")
-            font.pixelSize: 14
+            font.pointSize: 14
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
@@ -151,7 +151,7 @@ Row {
 
         UbuntuLightText {
             id: dateLabel
-            font.pixelSize: 13
+            font.pointSize: 14
             text: Qt.formatDateTime(selector.date, qsTr("MM/yyyy"))
             anchors {
                 horizontalCenter: parent.horizontalCenter
