@@ -22,9 +22,6 @@ Page {
     QtObject {
         id: privateProps
         property bool showCurrency: false
-        property int graphType: EnergyData.CumulativeMonthGraph
-        property variant modelGraph: energyData.getGraph(graphType, dateSelector.date,
-                                                         showCurrency ? EnergyData.Currency: EnergyData.Consumption)
         property variant monthConsumption: energyData.getValue(EnergyData.CumulativeMonthValue,
             dateSelector.date, EnergyData.Consumption)
     }
@@ -221,14 +218,18 @@ Page {
             Component {
                 id: energyMonthGraphComponent
                 EnergyMonthGraph {
-                    modelGraph: privateProps.modelGraph
+                    showCurrency: privateProps.showCurrency
+                    graphDate: dateSelector.date
+                    energyData: page.energyData
                 }
             }
 
             Component {
                 id: energyYearGraphComponent
                 EnergyYearGraph {
-                    modelGraph: privateProps.modelGraph
+                    showCurrency: privateProps.showCurrency
+                    graphDate: dateSelector.date
+                    energyData: page.energyData
                 }
             }
 
@@ -364,7 +365,6 @@ Page {
             PropertyChanges { target: yearButton; status: 1 }
             PropertyChanges { target: monthButton; status: 0 }
             PropertyChanges { target: dayButton; status: 0 }
-            PropertyChanges { target: privateProps; graphType: EnergyData.CumulativeYearGraph }
             PropertyChanges { target: dateSelector; state: "year" }
         }
     ]

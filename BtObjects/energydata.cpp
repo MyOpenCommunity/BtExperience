@@ -830,6 +830,7 @@ QVariant EnergyGraphBar::getValue() const
 		return value.toDouble() * rate->getRate();
 }
 
+
 EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph)
 {
 	data = _data;
@@ -907,6 +908,17 @@ void EnergyGraph::setGraph(QList<QObject *> _graph)
 		max_value = max;
 		emit maxValueChanged();
 	}
+}
+
+QObject *EnergyGraph::getGraphBar(int index) const
+{
+	if (index < 0 || index >= graph.size())
+	{
+		qWarning() << "EnergyGraph::getGraphBar() requested an index" << index
+			<< QString("that is not in the limits [0, %1)").arg(graph.size());
+		return 0;
+	}
+	return graph.at(index);
 }
 
 QVariant EnergyGraph::getMaxValue() const

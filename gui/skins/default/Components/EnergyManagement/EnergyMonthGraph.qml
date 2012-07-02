@@ -1,14 +1,18 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 
 Item {
-    id: itemGraph
-    property variant modelGraph: undefined
+    property bool showCurrency
+    property date graphDate
+    property variant energyData
 
     QtObject {
         id: privateProps
-        property real maxValue: itemGraph.modelGraph.maxValue * 1.1
+        property variant modelGraph: energyData.getGraph(EnergyData.CumulativeMonthGraph, graphDate,
+                                                         showCurrency ? EnergyData.Currency : EnergyData.Consumption)
+        property real maxValue: modelGraph.maxValue * 1.1
         property int columnSpacing: 6
     }
 
@@ -94,7 +98,7 @@ Item {
                     z: 1
 
                     height: {
-                        if (!modelGraph.isValid)
+                        if (!privateProps.modelGraph.isValid)
                             return 0
                         else {
                             return model.modelData.value / privateProps.maxValue * columnGraphBg.height
@@ -102,7 +106,7 @@ Item {
                     }
                 }
             }
-            model: modelGraph.graph
+            model: privateProps.modelGraph.graph
         }
     }
 
@@ -147,7 +151,7 @@ Item {
         Repeater {
             model: daysModel
             UbuntuLightText {
-                visible: value <= modelGraph.graph.length
+                visible: value <= privateProps.modelGraph.graph.length
                 text: model.value
                 width: columnPrototype.width
                 color: "white"
