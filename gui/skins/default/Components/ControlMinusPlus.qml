@@ -7,6 +7,7 @@ SvgImage {
 
     property string text: "7 seconds"
     property string title: "temperature"
+    property bool changeable: true
 
     signal minusClicked
     signal plusClicked
@@ -40,11 +41,13 @@ SvgImage {
     }
 
     ButtonImageThreeStates {
+        visible: control.changeable
         defaultImageBg: "../images/termo/selettore/btn_frecce.svg"
         pressedImageBg: "../images/termo/selettore/btn_frecce_P.svg"
         shadowImage: "../images/termo/selettore/ombra_btn_frecce.svg"
         defaultImage: "../images/termo/selettore/ico_meno.svg"
         pressedImage: "../images/termo/selettore/ico_meno_P.svg"
+        timerEnabled: true
         onClicked: minusClicked()
         status: 0
         anchors {
@@ -57,11 +60,13 @@ SvgImage {
 
     ButtonImageThreeStates {
         id: rightButton
+        visible: control.changeable
         defaultImageBg: "../images/termo/selettore/btn_frecce.svg"
         pressedImageBg: "../images/termo/selettore/btn_frecce_P.svg"
         shadowImage: "../images/termo/selettore/ombra_btn_frecce.svg"
         defaultImage: "../images/termo/selettore/ico_piu.svg"
         pressedImage: "../images/termo/selettore/ico_piu_P.svg"
+        timerEnabled: true
         onClicked: plusClicked()
         status: 0
         anchors {
