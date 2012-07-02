@@ -127,7 +127,6 @@ void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
 	{
 		if (it.key() == ControlledProbeDevice::DIM_STATUS)
 		{
-			qDebug() << "ThermalControlledProbe status changed: " << it.value().toInt();
 			if (plant_status != it.value().toInt())
 			{
 				plant_status = static_cast<ProbeStatus>(it.value().toInt());
@@ -135,7 +134,6 @@ void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
 		}
 		else if (it.key() == ControlledProbeDevice::DIM_LOCAL_STATUS)
 		{
-			qDebug() << "ThermalControlledProbe local status changed: " << it.value().toInt();
 			int old_offset = local_offset;
 
 			if (it.value().toInt() == Normal)

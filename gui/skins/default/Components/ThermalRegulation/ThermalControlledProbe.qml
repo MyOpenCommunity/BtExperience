@@ -94,10 +94,7 @@ MenuColumn {
         visible: is99zones
 
         onClicked: {
-            column.loadColumn(
-                        thermalControlledProbeModalities,
-                        modalityItem.name,
-                        dataModel)
+            column.loadColumn(thermalControlledProbeModalities, modalityItem.name, dataModel)
             if (modalityItem.state == "")
                 modalityItem.state =  "selected"
         }

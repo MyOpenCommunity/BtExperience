@@ -29,7 +29,6 @@ MenuColumn {
         ThermalControlUnitModalities {}
     }
 
-    width: 212
     height: fixedItem.height + seasonItem.height + modalityItem.height + itemLoader.height
 
     QtObject {
