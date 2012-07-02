@@ -17,7 +17,7 @@ QtObject {
         container['CENTRAL_STATUS'][ThermalControlUnit.IdManual] = qsTr("manual")
         container['CENTRAL_STATUS'][ThermalControlUnit.IdTimedManual] = qsTr("timed manual")
         container['CENTRAL_STATUS'][ThermalControlUnit.IdWeeklyPrograms] = qsTr("weekly programs")
-        container['CENTRAL_STATUS'][ThermalControlUnit.IdWorking] = qsTr("vacation")
+        container['CENTRAL_STATUS'][ThermalControlUnit.IdWorking] = qsTr("working")
         container['CENTRAL_STATUS'][ThermalControlUnit.IdScenarios] = qsTr("scenario")
 
         container['PROBE_STATUS'] = []

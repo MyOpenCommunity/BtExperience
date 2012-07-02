@@ -406,9 +406,9 @@ void ThermalControlUnitTimedProgram::apply()
 	const QTime &time = to_apply[TIME].toTime();
 
 	if (getObjectId() == ThermalControlUnit::IdHoliday)
-		dev->setWeekendDateTime(date, time, program_id);
-	else
 		dev->setHolidayDateTime(date, time, program_id);
+	else
+		dev->setWeekendDateTime(date, time, program_id);
 }
 
 
