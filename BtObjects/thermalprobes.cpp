@@ -105,7 +105,7 @@ void ThermalControlledProbe::setSetpoint(int sp)
 
 int ThermalControlledProbe::getLocalOffset() const
 {
-	return bt2Celsius(local_offset);
+	return local_offset;
 }
 
 ThermalControlledProbe::CentralType ThermalControlledProbe::getCentralType() const
