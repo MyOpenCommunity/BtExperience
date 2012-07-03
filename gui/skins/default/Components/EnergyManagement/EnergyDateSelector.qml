@@ -4,7 +4,8 @@ import Components.Text 1.0
 
 Row {
     id: selector
-    property date date: new Date()
+    property date monthDate: new Date()
+    property date yearDate: new Date()
 
     spacing: 4
 
@@ -48,7 +49,7 @@ Row {
 
         // Month functions
         function previousMonth() {
-            selector.date = _previousMonth(selector.date)
+            selector.monthDate = _previousMonth(selector.monthDate)
         }
 
         function _previousMonth(d) {
@@ -64,7 +65,7 @@ Row {
         }
 
         function nextMonth() {
-            selector.date = _nextMonth(selector.date)
+            selector.monthDate = _nextMonth(selector.monthDate)
         }
 
         function _nextMonth(d) {
@@ -80,16 +81,16 @@ Row {
         }
 
         function previousMonthEnabled() {
-            return selector.isEnergyMonthValid(_previousMonth(selector.date))
+            return selector.isEnergyMonthValid(_previousMonth(selector.monthDate))
         }
 
         function nextMonthEnabled(){
-            return selector.isEnergyMonthValid(_nextMonth(selector.date))
+            return selector.isEnergyMonthValid(_nextMonth(selector.monthDate))
         }
 
         // Year functions
         function previousYear() {
-            selector.date = _previousYear(selector.date)
+            selector.yearDate = _previousYear(selector.yearDate)
         }
 
         function _previousYear(d) {
@@ -98,7 +99,7 @@ Row {
         }
 
         function nextYear() {
-            selector.date = _nextYear(selector.date)
+            selector.yearDate = _nextYear(selector.yearDate)
         }
 
         function _nextYear(d) {
@@ -107,11 +108,11 @@ Row {
         }
 
         function previousYearEnabled() {
-            return selector.isEnergyYearValid(_previousYear(selector.date))
+            return selector.isEnergyYearValid(_previousYear(selector.yearDate))
         }
 
         function nextYearEnabled() {
-            return selector.isEnergyYearValid(_nextYear(selector.date))
+            return selector.isEnergyYearValid(_nextYear(selector.yearDate))
         }
 
     }
@@ -152,7 +153,7 @@ Row {
         UbuntuLightText {
             id: dateLabel
             font.pixelSize: 14
-            text: Qt.formatDateTime(selector.date, qsTr("MM/yyyy"))
+            text: Qt.formatDateTime(selector.monthDate, qsTr("MM/yyyy"))
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: textLabel.bottom
@@ -194,7 +195,7 @@ Row {
         State {
             name: "year"
             PropertyChanges { target: textLabel; text: qsTr("year") }
-            PropertyChanges { target: dateLabel; text: Qt.formatDateTime(selector.date, qsTr("yyyy")) }
+            PropertyChanges { target: dateLabel; text: Qt.formatDateTime(selector.yearDate, qsTr("yyyy")) }
             PropertyChanges { target: previousButton; onClicked: privateProps.previousYear() }
             PropertyChanges { target: previousButton; enabled: privateProps.previousYearEnabled() }
             PropertyChanges { target: nextButton; onClicked: privateProps.nextYear() }
