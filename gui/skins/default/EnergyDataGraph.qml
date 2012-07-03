@@ -22,8 +22,6 @@ Page {
     QtObject {
         id: privateProps
         property bool showCurrency: false
-        property variant monthConsumption: energyData.getValue(EnergyData.CumulativeMonthValue,
-            dateSelector.date, EnergyData.Consumption)
     }
 
     SvgImage {
@@ -96,7 +94,7 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("day")
                     status: 0
-                    enabled: dateSelector.isEnergyDayValid(dateSelector.date)
+                    enabled: false // TODO: what are the logics to do that?
                     Rectangle {
                         z: 1
                         anchors.fill: parent
@@ -115,7 +113,7 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("month")
                     status: 1
-                    enabled: dateSelector.isEnergyMonthValid(dateSelector.date)
+                    enabled: true // TODO: what are the logics to do that?
                     Rectangle {
                         z: 1
                         anchors.fill: parent
@@ -137,7 +135,7 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("year")
                     status: 0
-                    enabled: dateSelector.isEnergyYearValid(dateSelector.date)
+                    enabled: true // TODO: what are the logics to do that?
                     Rectangle {
                         z: 1
                         anchors.fill: parent
@@ -224,7 +222,7 @@ Page {
                 id: energyMonthGraphComponent
                 EnergyMonthGraph {
                     showCurrency: privateProps.showCurrency
-                    graphDate: dateSelector.date
+                    graphDate: dateSelector.monthDate
                     energyData: page.energyData
                 }
             }
@@ -233,11 +231,10 @@ Page {
                 id: energyYearGraphComponent
                 EnergyYearGraph {
                     showCurrency: privateProps.showCurrency
-                    graphDate: dateSelector.date
+                    graphDate: dateSelector.yearDate
                     energyData: page.energyData
                 }
             }
-
         }
 
 
@@ -303,7 +300,8 @@ Page {
 
             EnergyConsumptionLogic {
                 id: logic
-                monthConsumptionItem: privateProps.monthConsumption
+                monthConsumptionItem: energyData.getValue(EnergyData.CumulativeMonthValue,
+                                                          dateSelector.monthDate, EnergyData.Consumption)
             }
 
             SvgImage {
@@ -351,10 +349,10 @@ Page {
 
             UbuntuLightText {
                 id: cumulativeConsumptionLabel
-                property variant monthItem: energyData.getValue(EnergyData.CumulativeMonthValue, dateSelector.date,
+                property variant monthItem: energyData.getValue(EnergyData.CumulativeMonthValue, dateSelector.monthDate,
                     privateProps.showCurrency ? EnergyData.Currency : EnergyData.Consumption)
 
-                text: monthItem.value.toFixed(2)
+                text: monthItem.isValid ? monthItem.value.toFixed(2) : 0
                 font.pixelSize: 14
                 color: "white"
                 anchors {
