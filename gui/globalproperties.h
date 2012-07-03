@@ -43,6 +43,7 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(GuiSettings *guiSettings READ getGuiSettings CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
+	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
 	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout NOTIFY keyboardLayoutChanged)
 
 public:
@@ -85,6 +86,8 @@ private:
 	QDateTime last_press;
 	GuiSettings *settings;
 #ifdef BT_MALIIT
+	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
+
 	Maliit::SettingsManager *maliit_settings;
 	QSharedPointer<Maliit::SettingsEntry> keyboard_layout;
 	QHash<QString, QString> language_map;
