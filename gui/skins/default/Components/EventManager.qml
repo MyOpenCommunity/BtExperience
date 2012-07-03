@@ -23,7 +23,6 @@ Item {
         // the updateLast call is needed to compute elapsed time correctly
         // see comments in ScreenSaver.js file for more info on this subject
         ScreenSaver.updateLast()
-        screensaver.manageScreensaverState()
     }
 
     function vctIncomingCall(vctObject) {

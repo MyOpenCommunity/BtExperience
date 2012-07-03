@@ -36,14 +36,17 @@ function updateLast() {
 }
 
 // calculates if timeout is elapsed for screensaver activation
-function elapsed(lastTimePress, timeout) {
-    // computes elapsed time from last
+// please note that lastTimePress is optional: if not passed in, function
+// considers only internal events
+function elapsed(timeout, lastTimePress) {
+    // calculates elapsed time from last
     var d = new Date()
     var now = d.getTime()
-    var elapsed = (now - last) / 1000;
-    // elapsed time is the min of last event and last press
-    if (elapsed > lastTimePress)
-        elapsed = lastTimePress
+    var elapsed = (now - last) / 1000
+    // elapsed time is the min of last event and last press (if defined)
+    if (typeof lastTimePress !== 'undefined')
+        if (elapsed > lastTimePress)
+            elapsed = lastTimePress
     if (elapsed > timeout)
         return true
     return false

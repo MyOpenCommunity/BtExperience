@@ -11,7 +11,7 @@ SvgImage {
     signal leftClicked
     signal rightClicked
 
-    source: "../images/termo/selettore/bg_selettore.svg"
+    source: "../images/common/panel_212x73.svg"
 
     UbuntuLightText {
         id: title

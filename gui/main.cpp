@@ -93,44 +93,6 @@ void setupOpenGL(QDeclarativeView *v)
 #endif
 
 
-#if defined(BT_MALIIT)
-// QGraphicsProxyWidget::paint() uses QWidget::render() which seems to render the masked
-// region of a widget at coordinates (0, 0) rather than using the original coordinates
-//
-// just a temporary workaround until the Maliit surfaces branch lands
-class KeyboardHost : public QGraphicsProxyWidget
-{
-	Q_OBJECT
-
-public:
-	KeyboardHost(QWidget *keyboard)
-	{
-		setWidget(keyboard);
-
-		connect(qApp->inputContext(), SIGNAL(inputMethodAreaChanged(QRect)),
-			this, SLOT(setKeyboardRect(QRect)));
-	}
-
-protected:
-	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-	{
-		painter->translate(0, rect.top());
-
-		QGraphicsProxyWidget::paint(painter, option, widget);
-	}
-
-private slots:
-	void setKeyboardRect(QRect _rect)
-	{
-		rect = _rect;
-	}
-
-private:
-	QRect rect;
-};
-
-#endif
-
 // Sets a language on the GUI; the GUI must be restarted for changes to have effect
 void setLanguage(QString language)
 {
@@ -200,24 +162,13 @@ public:
 		global->setMainWidget(viewer);
 
 #if defined(BT_MALIIT)
-		QWidget *im_widget = Maliit::InputMethod::instance()->widget();
-
-		if (!im_widget)
+		if (!Maliit::InputMethod::instance()->widget())
 			qFatal("Maliit initialization failed");
 
-		im_widget->resize(global->getMainWidth(), global->getMainHeight());
-		im_widget->hide();
-
-		im_widget->setParent(NULL);
-
-		QGraphicsProxyWidget *wid = new KeyboardHost(im_widget);
-
-		viewer->scene()->addItem(wid);
-#if !USE_OPENGL
+		addMaliitSurfaces(viewer->scene(), Maliit::InputMethod::instance()->widget());
+	#if !USE_OPENGL
 		viewer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-#endif
-		wid->setFocusPolicy(Qt::NoFocus);
-		wid->setZValue(1200);
+	#endif
 #endif
 
 #if defined(Q_WS_X11) || defined(Q_WS_MAC)
@@ -241,11 +192,30 @@ public slots:
 	}
 
 private:
+	void addMaliitSurfaces(QGraphicsScene *scene, QWidget *root)
+	{
+		foreach (QObject *c, root->children()) {
+			QGraphicsView *view = qobject_cast<QGraphicsView *>(c);
+			if (!view)
+				continue;
+
+			view->setParent(0);
+
+			QGraphicsProxyWidget *wid = new QGraphicsProxyWidget;
+
+			wid->setWidget(view);
+			wid->setFocusPolicy(Qt::NoFocus);
+
+			scene->addItem(wid);
+
+			addMaliitSurfaces(scene, view);
+		}
+	}
+
 	QmlApplicationViewer *viewer;
 	GlobalProperties *global;
 	QPoint viewer_pos;
 };
-
 
 
 int main(int argc, char *argv[])

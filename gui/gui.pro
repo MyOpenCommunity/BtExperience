@@ -24,7 +24,7 @@ LIBS += -lssl
 
 maliit {
     CONFIG += link_pkgconfig
-    PKGCONFIG += maliit-1.0
+    PKGCONFIG += maliit-1.0 maliit-settings-1.0
     DEFINES += BT_MALIIT
 }
 
