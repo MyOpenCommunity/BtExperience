@@ -203,8 +203,7 @@ void BtObjectsPlugin::updateObjectName()
 	ObjectInterface *obj = qobject_cast<ObjectInterface *>(sender());
 	if (!obj)
 	{
-		qWarning() << "Try to update the name for an object" << obj
-			<< "that is not an ObjectInterface";
+		qWarning() << "Try to update the name for an object" << obj << "that is not an ObjectInterface";
 		return;
 	}
 
@@ -231,8 +230,7 @@ void BtObjectsPlugin::updateObjectName()
 				if (uii == getIntAttribute(xml_ist, "uii"))
 				{
 					if (!setAttribute(xml_ist, attribute_name, obj->getName()))
-						qWarning() << "Attribute" << attribute_name
-							<< "not found for the node with uii:" << uii;
+						qWarning() << "Attribute" << attribute_name << "not found for the node with uii:" << uii;
 					break;
 				}
 			}
@@ -270,9 +268,17 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?
 						ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
 			if (fancoil == ControlledProbeDevice::NORMAL)
-				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit4Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
+			{
+				// TODO remove fake code when parsing is implemented; first fake line is for 99 zones case, last one is for 4 zones
+				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit99Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+//				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit4Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
+			}
 			else
-				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit4Zones, new ControlledProbeDevice(QString(where)+"#4", QString(where)+"#4", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
+			{
+				// TODO remove fake code when parsing is implemented; first fake line is for 99 zones case, last one is for 4 zones
+				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit99Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+//				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit4Zones, new ControlledProbeDevice(QString(where)+"#4", QString(where)+"#4", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
+			}
 			break;
 		}
 			// TODO implement parsing of not controlled and external probes

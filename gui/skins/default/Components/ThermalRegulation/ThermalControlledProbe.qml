@@ -180,7 +180,7 @@ MenuColumn {
             ControlMinusPlus {
                 title: qsTr("temperature set")
                 text: setpoint / 10 + qsTr("°C")
-                changeable: false
+                changeable: is99zones
             }
 
             ControlUpDown {

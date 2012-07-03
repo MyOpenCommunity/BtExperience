@@ -150,6 +150,8 @@ MenuColumn {
             // 4 zones central units are zones themselves: we must show the
             // temperature of the linked probe in such cases
             visible: (!is99zones)
+            // trick to compute the right height for menu column
+            onVisibleChanged: if (!visible) height = 0
             text: (fixedItem.temperature / 10).toFixed(1) + qsTr("°C")
         }
 

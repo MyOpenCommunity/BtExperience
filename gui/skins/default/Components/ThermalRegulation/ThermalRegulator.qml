@@ -36,46 +36,92 @@ MenuColumn {
                     itemObject.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
         }
 
-        function isCentralModeManual(probeStatus) {
-            return (probeStatus === ThermalControlledProbe.Manual)
+        function isModeManual(mode) {
+            return (mode === ThermalControlledProbe.Manual)
         }
 
-        function isProbeModeManual(localProbeStatus) {
-            return (localProbeStatus === ThermalControlledProbe.Manual)
-        }
-
-        function isProbeOffsetSet(itemObject) {
-            return (itemObject.localOffset !== 0)
+        function isProbeOffsetZero(itemObject) {
+            return (itemObject.localOffset === 0)
         }
 
         function isCentral99Zones(itemObject) {
             return (itemObject.centralType === ThermalControlledProbe.CentralUnit99Zones)
         }
 
+        function getOffsetRepresentation(offset) {
+            // we need to output a '+' sign for positive values
+            var r = offset > 0 ? "+" : ""
+            r += offset
+            return r
+        }
 
+        // this function computes a description for CU and ZONES menu items (it does not consider
+        // the measured temperature because is managed by getBoxInfoText function)
+        // the possible cases are:
+        // CU99Z:
+        //      - in manual mode: set point, offset, mode
+        //      - otherwise: mode, offset
+        // CU4Z:
+        //      - in manual mode: set point, offset, mode
+        //      - otherwise: mode, offset
+        // Z99Z:
+        //      - if CU or Z in manual mode: set point, offset, mode
+        //      - otherwise: mode, offset
+        // Z4Z:
+        //      - in manual mode: set point, offset
+        //      - otherwise: offset
         function getDescription(itemObject, currentModalityId, probeStatus, localProbeStatus) {
-            var descr = "--"
+            var descr = "---"
 
             if (isControlledProbe(itemObject)) {
+                // it is a probe
                 descr = ""
-                if (isCentralModeManual(probeStatus) || isProbeModeManual(localProbeStatus)) {
-                    descr += " " + itemObject.setpoint
-                    if (isProbeOffsetSet(itemObject))
-                        descr += " " + itemObject.localOffset
+                if (isCentral99Zones(itemObject)) {
+                    // Z99Z
+                    if (localProbeStatus === ThermalControlledProbe.Normal && isModeManual(probeStatus)) {
+                        // manual mode
+                        descr += " " + (itemObject.setpoint / 10).toFixed(1) + qsTr("°C")
+                        if (!isProbeOffsetZero(itemObject))
+                            descr += " " + getOffsetRepresentation(itemObject.localOffset)
+                    }
+                    descr += " " + pageObject.names.get('PROBE_STATUS', probeStatus)
+                    if (localProbeStatus === ThermalControlledProbe.Normal && !isModeManual(probeStatus)) {
+                        if (!isProbeOffsetZero(itemObject))
+                            descr += " " + getOffsetRepresentation(itemObject.localOffset)
+                    }
                 }
-                if (isCentral99Zones(itemObject))
-                    descr += " " + pageObject.names.get('PROBE_STATUS', localProbeStatus)
-                if (!isCentralModeManual(probeStatus)) {
-                    descr += " " + itemObject.localOffset
+                else {
+                    // Z4Z
+                    if (localProbeStatus === ThermalControlledProbe.Normal && isModeManual(probeStatus)) {
+                        // manual mode
+                        descr += " " + (itemObject.setpoint / 10).toFixed(1) + qsTr("°C")
+                    }
+                    if (!isProbeOffsetZero(itemObject))
+                        descr += " " + getOffsetRepresentation(itemObject.localOffset)
                 }
             }
+            else {
+                // it is a CU (99Z or 4Z are the same)
+                descr = ""
+                if (isModeManual(probeStatus)) {
+                    descr += " " + itemObject.setpoint
+                    if (!isProbeOffsetZero(itemObject))
+                        if (itemObject.localOffset)
+                            descr += " " + getOffsetRepresentation(itemObject.localOffset)
+                }
+                if (currentModalityId !== undefined && currentModalityId >= 0)
+                    descr += pageObject.names.get('CENTRAL_STATUS', currentModalityId)
+                if (!isModeManual(probeStatus))
+                    if (!isProbeOffsetZero(itemObject))
+                        if (itemObject.localOffset)
+                            descr += " " + getOffsetRepresentation(itemObject.localOffset)
+            }
 
-            if (currentModalityId >= 0)
-                descr = pageObject.names.get('CENTRAL_STATUS', currentModalityId)
             return descr
         }
 
         function getBoxInfoState(itemObject, currentModalityId) {
+            // we need to show the measured temperature for probes and in manual mode
             if (itemObject.objectId === ObjectInterface.IdThermalControlledProbe ||
                     itemObject.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
                 return "info"
@@ -86,12 +132,17 @@ MenuColumn {
         }
 
         function getBoxInfoText(itemObject, currentModalityId, temperature) {
+            // formats the measured temperature in the right format
+            var t = 0
             if (itemObject.objectId === ObjectInterface.IdThermalControlledProbe ||
                     itemObject.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
-                return (temperature / 10).toFixed(1) + qsTr("°C")
-            if (currentModalityId === ThermalControlUnit.IdManual)
-                return (itemObject.currentModality.temperature / 10).toFixed(1) + qsTr("°C")
-            return ""
+                t = (temperature / 10).toFixed(1)
+            if (currentModalityId === ThermalControlUnit.IdManual) {
+                t = (itemObject.currentModality.temperature / 10).toFixed(1)
+            }
+            if (t > 0)
+                return t + qsTr("°C")
+            return "---"
         }
     }
 
