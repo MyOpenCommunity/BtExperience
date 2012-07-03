@@ -276,10 +276,7 @@ MenuColumn {
                     selectedImage: "../../images/common/button_zones_select.svg"
                     shadowImage: "../../images/common/shadow_button_zones.svg"
                     text: itemObject.name
-                    onClicked: {
-                        column.closeChild()
-                        itemObject.selected = !itemObject.selected
-                    }
+                    onClicked: itemObject.selected = !itemObject.selected
                     status: itemObject.selected ? 1 : 0
                 }
 
