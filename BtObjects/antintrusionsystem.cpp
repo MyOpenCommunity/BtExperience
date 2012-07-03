@@ -163,7 +163,7 @@ void AntintrusionZone::setSelected(bool p)
 		emit selectedChanged();
 		// we need the device to request the parzialization when inserting
 		// the system
-		emit requestPartialization(getNumber(), p);
+		emit requestPartialization(getNumber(), !p);
 	}
 }
 

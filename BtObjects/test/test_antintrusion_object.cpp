@@ -100,6 +100,13 @@ void TestAntintrusionSystem::cleanup()
 	delete dev;
 }
 
+void TestAntintrusionSystem::compareClientCommand()
+{
+	flushCompressedFrames(dev);
+	flushCompressedFrames(obj->dev);
+	TestBtObject::compareClientCommand();
+}
+
 void TestAntintrusionSystem::testToggleActivation()
 {
 	obj->toggleActivation("12345");
@@ -272,7 +279,19 @@ void TestAntintrusionSystem::testModifyPartializationWithRightCode()
 	setZonesInserted();
 	unselectFirstTwoZones();
 
+	// some cleanup
+	clearAllClients();
+
+	// partialization request
 	obj->requestPartialization("12345");
+
+	// what we expect
+	dev->partializeZone(1, true);
+	dev->partializeZone(2, true);
+	dev->sendPartializationFrame("12345");
+
+	// checks everything is fine
+	compareClientCommand();
 
 	checkWaitingResponse(true);
 
