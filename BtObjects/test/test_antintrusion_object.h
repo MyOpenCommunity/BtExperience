@@ -78,6 +78,9 @@ private slots:
 	void testPartializationWithoutModification();
 	void testPartializationWithSystemInserted();
 
+protected:
+	void compareClientCommand();
+
 private:
 	void checkAlarmedZones(AlarmZoneList l);
 	void setSystemActive(bool active);
