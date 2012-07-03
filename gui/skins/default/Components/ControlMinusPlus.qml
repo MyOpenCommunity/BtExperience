@@ -12,7 +12,7 @@ SvgImage {
     signal minusClicked
     signal plusClicked
 
-    source: "../images/termo/selettore/bg_selettore.svg"
+    source: "../images/common/panel_212x73.svg"
 
     UbuntuLightText {
         id: title
@@ -42,11 +42,11 @@ SvgImage {
 
     ButtonImageThreeStates {
         visible: control.changeable
-        defaultImageBg: "../images/termo/selettore/btn_frecce.svg"
-        pressedImageBg: "../images/termo/selettore/btn_frecce_P.svg"
-        shadowImage: "../images/termo/selettore/ombra_btn_frecce.svg"
-        defaultImage: "../images/termo/selettore/ico_meno.svg"
-        pressedImage: "../images/termo/selettore/ico_meno_P.svg"
+        defaultImageBg: "../images/common//btn_frecce.svg"
+        pressedImageBg: "../images/common//btn_frecce_P.svg"
+        shadowImage: "../images/common//ombra_btn_frecce.svg"
+        defaultImage: "../images/common/ico_meno.svg"
+        pressedImage: "../images/common/ico_meno_P.svg"
         timerEnabled: true
         onClicked: minusClicked()
         status: 0
@@ -61,11 +61,11 @@ SvgImage {
     ButtonImageThreeStates {
         id: rightButton
         visible: control.changeable
-        defaultImageBg: "../images/termo/selettore/btn_frecce.svg"
-        pressedImageBg: "../images/termo/selettore/btn_frecce_P.svg"
-        shadowImage: "../images/termo/selettore/ombra_btn_frecce.svg"
-        defaultImage: "../images/termo/selettore/ico_piu.svg"
-        pressedImage: "../images/termo/selettore/ico_piu_P.svg"
+        defaultImageBg: "../images/common//btn_frecce.svg"
+        pressedImageBg: "../images/common//btn_frecce_P.svg"
+        shadowImage: "../images/common//ombra_btn_frecce.svg"
+        defaultImage: "../images/common/ico_piu.svg"
+        pressedImage: "../images/common/ico_piu_P.svg"
         timerEnabled: true
         onClicked: plusClicked()
         status: 0
