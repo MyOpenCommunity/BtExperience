@@ -276,8 +276,11 @@ Page {
                     horizontalCenter: parent.horizontalCenter
                 }
                 UbuntuLightText {
+                    property variant currentItem: energyData.getValue(EnergyData.CurrentValue, new Date(), // the Date does not matter
+                                                                      privateProps.showCurrency ? EnergyData.Currency :
+                                                                                                  EnergyData.Consumption)
                     anchors.centerIn: parent
-                    text: "45 w/h"
+                    text: currentItem.value.toFixed(2) + " " + currentItem.measureUnit
                     color: "grey"
                     font.pixelSize: 18
                 }
