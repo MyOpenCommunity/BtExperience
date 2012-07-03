@@ -87,6 +87,7 @@ private:
 	GuiSettings *settings;
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
+	void maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
 
 	Maliit::SettingsManager *maliit_settings;
 	QSharedPointer<Maliit::SettingsEntry> keyboard_layout;

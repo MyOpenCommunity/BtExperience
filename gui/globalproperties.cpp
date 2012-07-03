@@ -140,6 +140,8 @@ void GlobalProperties::pluginSettingsReceived(const QList<QSharedPointer<Maliit:
 	{
 		if (setting->pluginName() == "server")
 			maliitFrameworkSettings(setting);
+		else if (setting->pluginName() == "libmaliit-keyboard-plugin.so")
+			maliitKeyboardSettings(setting);
 	}
 }
 
@@ -161,6 +163,19 @@ void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::Plug
 
 			connect(keyboard_layout.data(), SIGNAL(valueChanged()),
 				this, SIGNAL(keyboardLayoutChanged()));
+		}
+	}
+}
+
+void GlobalProperties::maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings)
+{
+	foreach (const QSharedPointer<Maliit::SettingsEntry> &entry, settings->configurationEntries())
+	{
+		if (entry->key() == "/maliit/pluginsettings/libmaliit-keyboard-plugin.so/current_style")
+		{
+			QString style = QString("maliit-%1x%2").arg(getMainWidth()).arg(getMainHeight());
+
+			entry->set(style);
 		}
 	}
 }
