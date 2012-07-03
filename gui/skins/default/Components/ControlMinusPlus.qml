@@ -42,9 +42,9 @@ SvgImage {
 
     ButtonImageThreeStates {
         visible: control.changeable
-        defaultImageBg: "../images/common//btn_frecce.svg"
-        pressedImageBg: "../images/common//btn_frecce_P.svg"
-        shadowImage: "../images/common//ombra_btn_frecce.svg"
+        defaultImageBg: "../images/common/btn_frecce.svg"
+        pressedImageBg: "../images/common/btn_frecce_P.svg"
+        shadowImage: "../images/common/ombra_btn_frecce.svg"
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         timerEnabled: true
@@ -61,9 +61,9 @@ SvgImage {
     ButtonImageThreeStates {
         id: rightButton
         visible: control.changeable
-        defaultImageBg: "../images/common//btn_frecce.svg"
-        pressedImageBg: "../images/common//btn_frecce_P.svg"
-        shadowImage: "../images/common//ombra_btn_frecce.svg"
+        defaultImageBg: "../images/common/btn_frecce.svg"
+        pressedImageBg: "../images/common/btn_frecce_P.svg"
+        shadowImage: "../images/common/ombra_btn_frecce.svg"
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         timerEnabled: true
