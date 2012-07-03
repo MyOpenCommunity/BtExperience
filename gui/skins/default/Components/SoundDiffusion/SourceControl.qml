@@ -79,7 +79,11 @@ MenuColumn {
     Component {
         id: fmRadio
         Column {
+            id: radioColumn
             property variant objModel: undefined
+            property int maxStations: 15
+
+
             ControlFMRadio {
                 radioName: "radio - " + objModel.rdsText
                 radioFrequency: objModel.currentFrequency
@@ -90,41 +94,46 @@ MenuColumn {
             }
 
             Image {
-                width: 212
-                height: 200
-                source: imagesPath + "sound_diffusion/bg_StazioniMemorizzate.png"
-
-                Row {
+                source: radioColumn.maxStations === 5 ? imagesPath + "sound_diffusion/bg_5stazioni_radio.svg" :
+                                                        imagesPath + "sound_diffusion/bg_15stazioni_radio.svg"
+                Grid {
+                    id: grid
+                    columns: 5
+                    rows: radioColumn.maxStations / columns
+                    spacing: 3
                     anchors {
-                        horizontalCenter: parent.horizontalCenter
                         top: parent.top
-                        topMargin: 5
+                        topMargin: 10
+                        left: parent.left
+                        leftMargin: 7
                     }
 
-                    ButtonFMStation {
-                        stationNumber: 1
-                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
-                        onStationSelected: objModel.currentStation = stationNumber
-                    }
-                    ButtonFMStation {
-                        stationNumber: 2
-                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
-                        onStationSelected: objModel.currentStation = stationNumber
-                    }
-                    ButtonFMStation {
-                        stationNumber: 3
-                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
-                        onStationSelected: objModel.currentStation = stationNumber
-                    }
-                    ButtonFMStation {
-                        stationNumber: 4
-                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
-                        onStationSelected: objModel.currentStation = stationNumber
-                    }
-                    ButtonFMStation {
-                        stationNumber: 5
-                        state: objModel.currentStation === stationNumber ? "playing" : "saved"
-                        onStationSelected: objModel.currentStation = stationNumber
+                    Repeater {
+                        model: grid.rows * grid.columns
+
+                        Item {
+                            height: button.height + 5
+                            width: button.width
+
+                            ButtonThreeStates {
+                                id: button
+                                property int stationNumber: index + 1
+
+                                defaultImage: "../../images/sound_diffusion/btn_37x45.svg"
+                                pressedImage: "../../images/sound_diffusion/btn_37x45_P.svg"
+                                selectedImage: "../../images/sound_diffusion/btn_37x45_S.svg"
+                                shadowImage: "../../images/sound_diffusion/btn_37x45_shadow.svg"
+                                text: stationNumber
+                                status: objModel.currentStation === stationNumber ? 1 : 0
+                                textAnchors.centerIn: null
+                                textAnchors.top: button.top
+                                textAnchors.topMargin: 8
+                                textAnchors.horizontalCenter: button.horizontalCenter
+                                font.pixelSize: 12
+
+                                onClicked: radioColumn.objModel.currentStation = stationNumber
+                            }
+                        }
                     }
                 }
             }

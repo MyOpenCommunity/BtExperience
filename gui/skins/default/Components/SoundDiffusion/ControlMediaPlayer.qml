@@ -4,50 +4,110 @@ import Components.Text 1.0
 import "../../js/logging.js" as Log
 
 
-Image {
+SvgImage {
     id: control
-    width: 212
-    height: 100
-    property string songTitle: "1.45 - Traccia 1 - Artista 1"
-    property string imagesPath: "../../images/"
 
-    source: imagesPath + "common/bg_UnaRegolazione.png"
+    source: "../../images/sound_diffusion/bg_player.svg"
 
-    Row {
+    UbuntuMediumText {
+        id: text1
         anchors {
-            bottom: control.bottom
-            right: control.right
-            rightMargin: 5
-            bottomMargin: 5
-        }
-        ButtonMediaControl {
-            insideImage: imagesPath + "common/precedente.png"
-            onClicked: Log.logDebug("Prev clicked")
+            top: parent.top
+            topMargin: 10
+            left: parent.left
+            leftMargin: 6
         }
 
-        ButtonMediaControl {
-            insideImage: imagesPath + "common/stop.png"
-            onClicked: Log.logDebug("Stop clicked")
+        text: "Media player"
+        font.pixelSize: 14
+        color: "#444546"
+    }
+
+    SvgImage {
+        id: infoBox
+        source: "../../images/sound_diffusion/bg_testo.svg"
+        anchors {
+            top: text1.bottom
+            left: parent.left
+            leftMargin: 6
         }
 
-        ButtonMediaControl {
-            insideImage: imagesPath + "common/play.png"
-            onClicked: Log.logDebug("Play clicked")
+        UbuntuLightText {
+            anchors {
+                top: parent.top
+                topMargin: 6
+                right: parent.right
+                rightMargin: 6
+            }
+            text: "99:59"
+            color: "#656565"
         }
 
-        ButtonMediaControl {
-            insideImage: imagesPath + "common/successivo.png"
-            onClicked: Log.logDebug("Next clicked")
+        Column {
+            anchors {
+                top: parent.top
+                topMargin: 6
+                left: parent.left
+                leftMargin: 6
+            }
+
+            spacing: 5
+
+            UbuntuLightText {
+                text: "This is a very long song title which I like very much"
+                font.pixelSize: 12
+                color: "#656565"
+                width: infoBox.width - 50
+                elide: Text.ElideRight
+            }
+
+            UbuntuLightText {
+                text: "This is a very looong album name, really one of my favorites"
+                font.pixelSize: 16
+                color: "#656565"
+                width: infoBox.width - 35
+                elide: Text.ElideRight
+            }
         }
     }
 
-    UbuntuLightText {
-        id: text1
-        y: 10
-        anchors.horizontalCenter: control.horizontalCenter
-        text: control.songTitle
-        font.bold: true
-        font.pixelSize: 16
-        color: "#444546"
+    Row {
+        spacing: 4
+        anchors {
+            top: infoBox.bottom
+            topMargin: 6
+            left: parent.left
+            leftMargin: 6
+        }
+
+        ButtonImageThreeStates {
+            defaultImageBg: "../../images/sound_diffusion/btn_45x35.svg"
+            pressedImageBg: "../../images/sound_diffusion/btn_45x35_P.svg"
+            shadowImage: "../../images/sound_diffusion/btn_45x35_shadow.svg"
+            defaultImage: "../../images/sound_diffusion/ico_indietro.svg"
+            pressedImage: "../../images/sound_diffusion/ico_indietro_P.svg"
+            onClicked: console.log("Previous track clicked")
+            status: 0
+        }
+
+        ButtonImageThreeStates {
+            defaultImageBg: "../../images/common/btn_99x35.svg"
+            pressedImageBg: "../../images/common/btn_99x35_P.svg"
+            shadowImage: "../../images/common/btn_shadow_99x35.svg"
+            defaultImage: "../../images/sound_diffusion/ico_play.svg"
+            pressedImage: "../../images/sound_diffusion/ico_play_P.svg"
+            onClicked: console.log("Play clicked")
+            status: 0
+        }
+
+        ButtonImageThreeStates {
+            defaultImageBg: "../../images/sound_diffusion/btn_45x35.svg"
+            pressedImageBg: "../../images/sound_diffusion/btn_45x35_P.svg"
+            shadowImage: "../../images/sound_diffusion/btn_45x35_shadow.svg"
+            defaultImage: "../../images/sound_diffusion/ico_avanti.svg"
+            pressedImage: "../../images/sound_diffusion/ico_avanti_P.svg"
+            onClicked: console.log("Next track clicked")
+            status: 0
+        }
     }
 }

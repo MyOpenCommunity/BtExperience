@@ -4,14 +4,11 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: paginator.height
 
     signal sourceSelected(variant object)
 
     PaginatorList {
         id: paginator
-        listHeight: sourceModel.count * 50
         elementsOnPage: 8
         model: sourceModel
         delegate: MenuItem {

@@ -73,7 +73,7 @@ MenuColumn {
             }
         }
 
-        PaginatorAlarms {
+        PaginatorOnBackground {
             id: paginator
             anchors {
                 top: realHeader.bottom
@@ -95,9 +95,6 @@ MenuColumn {
                 property variant itemObject: modelList.getObject(index)
 
                 source: "../../images/" + (index % 2 === 0 ? "common/row_background_01.svg" : "common/row_background_02.svg")
-                anchors.horizontalCenter: parent === null ? undefined : parent.horizontalCenter
-
-                Component.onCompleted: ListView.view.width = itemBackground.width
 
                 Row {
                     anchors.fill: itemBackground

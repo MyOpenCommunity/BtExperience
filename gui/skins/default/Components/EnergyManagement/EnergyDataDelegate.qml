@@ -12,12 +12,8 @@ Column {
 
     signal headerClicked(variant mouse)
 
-        QtObject {
+    QtObject {
         id: privateProps
-        property variant monthConsumptionItem: itemObject.getValue(EnergyData.CumulativeMonthValue,
-                                                                   new Date(), EnergyData.Consumption)
-        property variant goal: monthConsumptionItem !== undefined ? monthConsumptionItem.consumptionGoal : 0.0
-        property variant consumption: monthConsumptionItem !== undefined ? monthConsumptionItem.value : 0.0
 
         function getIcon(energyType) {
             switch (energyType) {
@@ -45,61 +41,6 @@ Column {
             }
             return "---"
         }
-
-        function maxHeight(columnHeight) {
-            return columnHeight * .95
-        }
-
-        function idealGoalHeight(columnHeight) {
-            return columnHeight * .9
-        }
-
-        // the height of goal line. Can be as the "ideal" goal height or less if
-        // the consumption height is greater than the maximum height.
-        function goalHeight(columnHeight) {
-            if (goal === undefined) // the goal line is not shown at all, using hasGoal()
-                return 0.0
-
-            var height = consumption / goal * idealGoalHeight(columnHeight)
-            if (height > maxHeight(columnHeight))
-                return goal / consumption * idealGoalHeight(columnHeight)
-            else
-                return idealGoalHeight(columnHeight)
-        }
-
-        // the height of the consumption bar. It is a value related to the goal
-        // height, and it has a maximum value (in the latter case, the goal height
-        // is decreased proportionally).
-        function getConsumptionHeight(columnHeight) {
-            if (consumption === undefined)
-                return 0
-
-            if (goal !== undefined) {
-                var height = consumption / goal * idealGoalHeight(columnHeight)
-                return Math.min(height, maxHeight(columnHeight))
-            }
-            else {
-                // a very simplified representation of the consumption height,
-                // proportionally to the days elapsed in the month.
-                // TODO: find a better representation!
-                var d = new Date()
-                return d.getDate() / 30 * idealGoalHeight(columnHeight)
-            }
-        }
-
-        // return true if the consumption exceed the goal (and, of course, if both are present)
-        function consumptionExceedGoal() {
-            if (consumption !== undefined && goal !== undefined) {
-                if (consumption > goal)
-                    return true
-            }
-            return false
-        }
-
-        function hasGoal() {
-            return goal !== undefined
-        }
-
     }
 
     spacing: 5
@@ -138,30 +79,35 @@ Column {
         color: "white"
     }
 
-    Column {
+    EnergyConsumptionLogic {
+        id: logic
+        monthConsumptionItem: itemObject.getValue(EnergyData.CumulativeMonthValue,
+                                                  new Date(), EnergyData.Consumption)
+    }
 
+    Column {
         SvgImage {
             source: "../../images/energy/colonna" + (isOverview ? '_overview' : '') + ".svg"
 
             SvgImage {
                 anchors.bottom: parent.bottom
                 source: {
-                    if (privateProps.consumptionExceedGoal()) {
+                    if (logic.consumptionExceedGoal()) {
                         "../../images/energy/colonna_rosso" + (isOverview ? '_overview' : '') + ".svg"
                     }
                     else {
                         "../../images/energy/colonna_verde" + (isOverview ? '_overview' : '') + ".svg"
                     }
                 }
-                height: privateProps.getConsumptionHeight(parent.height)
+                height: logic.getConsumptionSize(parent.height)
             }
             SvgImage {
                 id: goalLine
                 source: "../../images/energy/linea_livello_colonna" + (isOverview ? '_overview' : '') + ".svg"
-                visible: privateProps.hasGoal()
+                visible: logic.hasGoal()
                 width: parent.width
                 anchors.top: parent.top
-                anchors.topMargin: parent.height - privateProps.goalHeight(parent.height)
+                anchors.topMargin: parent.height - logic.goalSize(parent.height)
             }
         }
         SvgImage {

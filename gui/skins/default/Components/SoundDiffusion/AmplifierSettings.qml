@@ -14,9 +14,6 @@ MenuColumn {
         Loudness {}
     }
 
-    width: 212
-    height: paginator.height
-
     onChildDestroyed: privateProps.currentElement = -1
 
     QtObject {
@@ -58,10 +55,7 @@ MenuColumn {
                 hasChild: true
                 state: privateProps.currentElement === 0 ? "selected" : ""
                 onClicked: {
-                    column.loadColumn(
-                                amplifierEqualizer,
-                                qsTr("equalizer"),
-                                column.dataModel)
+                    column.loadColumn(amplifierEqualizer, qsTr("equalizer"), column.dataModel)
                     if (privateProps.currentElement !== 0)
                         privateProps.currentElement = 0
                 }
@@ -73,13 +67,8 @@ MenuColumn {
                 description: column.dataModel.loud ? qsTr("on") : qsTr("off")
                 hasChild: true
                 state: privateProps.currentElement === 1 ? "selected" : ""
-                // TODO: a dirty trick to avoid creating another almost empty file.
-                // This must be linked to the model anyway.
                 onClicked: {
-                    column.loadColumn(
-                                loudness,
-                                qsTr("loud"),
-                                column.dataModel)
+                    column.loadColumn(loudness, qsTr("loud"), column.dataModel)
                     if (privateProps.currentElement !== 1)
                         privateProps.currentElement = 1
                 }

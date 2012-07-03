@@ -1,16 +1,23 @@
 import QtQuick 1.1
 
-
-SvgImage {
+// On/Off control
+// status: -1 no button is down ever, 0 off button is down, 1 on button is down
+Item {
     id: control
 
-    property bool active: false
+    property int status: -1
     property string onText: qsTr("ON")
     property string offText: qsTr("OFF")
 
     signal clicked(bool newStatus)
 
-    source: "../images/common/bg_on-off.svg"
+    width: bg.width
+    height: bg.height
+
+    SvgImage {
+        id: bg
+        source: "../images/common/bg_on-off.svg"
+    }
 
     Row {
         anchors.centerIn: parent // in this way we need no margins
@@ -22,7 +29,7 @@ SvgImage {
             shadowImage: "../images/common/btn_shadow_99x35.svg"
             text: onText
             onClicked: control.clicked(true)
-            status: active ? 1 : 0
+            status: control.status === -1 ? 0 : (control.status ? 1 : 0)
         }
 
         ButtonThreeStates {
@@ -32,7 +39,7 @@ SvgImage {
             shadowImage: "../images/common/btn_shadow_99x35.svg"
             text: offText
             onClicked: control.clicked(false)
-            status: active ? 0 : 1
+            status: control.status === -1 ? 0 : (control.status ? 0 : 1)
         }
     }
 

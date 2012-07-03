@@ -6,13 +6,11 @@ BtObjectsMapping 1.0 BtObjectsMapping.qml
 ButtonBack 1.0 ButtonBack.qml
 ButtonCommand 1.0 ButtonCommand.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
-ButtonImageText 1.0 ButtonImageText.qml
 ButtonImageThreeStates 1.0 ButtonImageThreeStates.qml
 ButtonLeftRight 1.0 ButtonLeftRight.qml
 ButtonMediaControl 1.0 ButtonMediaControl.qml
 ButtonMinusPlus 1.0 ButtonMinusPlus.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
-ButtonOnOff 1.0 ButtonOnOff.qml
 ButtonSystems 1.0 ButtonSystems.qml
 ButtonThreeStates 1.0 ButtonThreeStates.qml
 CameraLink 1.0 CameraLink.qml
@@ -26,8 +24,6 @@ ControlBalance 1.0 ControlBalance.qml
 ControlButton 1.0 ControlButton.qml
 ControlCall 1.0 ControlCall.qml
 ControlChoices 1.0 ControlChoices.qml
-ControlColumnBar 1.0 ControlColumnBar.qml
-ControlColumnValue 1.0 ControlColumnValue.qml
 ControlDateTime 1.0 ControlDateTime.qml
 ControlLeftRight 1.0 ControlLeftRight.qml
 ControlLeftRightWithTitle 1.0 ControlLeftRightWithTitle.qml
@@ -57,6 +53,7 @@ PageAnimation 1.0 PageAnimation.qml
 Paginator 1.0 Paginator.qml
 PaginatorColumn 1.0 PaginatorColumn.qml
 PaginatorList 1.0 PaginatorList.qml
+PaginatorOnBackground 1.0 PaginatorOnBackground.qml
 Pannable 1.0 Pannable.qml
 QuickLink 1.0 QuickLink.qml
 RoomItem 1.0 RoomItem.qml

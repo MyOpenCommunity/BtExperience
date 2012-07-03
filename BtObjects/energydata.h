@@ -489,6 +489,8 @@ public:
 
 	QVariant getMaxValue() const;
 
+	Q_INVOKABLE QObject *getGraphBar(int index) const;
+
 public slots:
 	/*!
 		\brief Can be used to force a graph update for the device

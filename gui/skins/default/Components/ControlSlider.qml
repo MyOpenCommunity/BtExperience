@@ -49,14 +49,15 @@ SvgImage {
             anchors.left: parent.left
             anchors.leftMargin: -2
             radius: 100
+            smooth: true
             gradient: Gradient {
                 GradientStop {
                     position: 0.0
-                    color: "#b1b3b4"
+                    color: "#a9abad"
                 }
                 GradientStop {
                     position: 1.0
-                    color: "#7a797b"
+                    color: "#5c5c5c"
                 }
             }
         }

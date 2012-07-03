@@ -319,27 +319,6 @@ QString EnergyData::getObjectKey() const
 	QStringList result;
 	result << QString("type:%1").arg(static_cast<int>(getEnergyType()));
 
-	// TODO: remove this commented code after the removing of the old energy
-	// interface.
-//	switch (dev->getEnergyType())
-//	{
-//	case 1:
-//		result << "Electricity";
-//		break;
-//	case 2:
-//		result << "Water";
-//		break;
-//	case 3:
-//		result << "Gas";
-//		break;
-//	case 4:
-//		result << "HotWater";
-//		break;
-//	case 5:
-//		result << "Heat";
-//		break;
-//	}
-
 	if (isGeneral())
 		result << "general";
 	else
@@ -547,7 +526,7 @@ void EnergyData::requestUpdate(int type, QDate date, RequestOptions options)
 	case MonthlyAverageValue:
 	{
 		DelayedSlotCaller *caller = new DelayedSlotCaller;
-		caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 500);
+		caller->setSlot(this, SLOT(testValueData(EnergyData::ValueType,QDate)), 0);
 		caller->addArgument(static_cast<ValueType>(type));
 		caller->addArgument(key.date);
 	}
@@ -851,6 +830,7 @@ QVariant EnergyGraphBar::getValue() const
 		return value.toDouble() * rate->getRate();
 }
 
+
 EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph)
 {
 	data = _data;
@@ -928,6 +908,17 @@ void EnergyGraph::setGraph(QList<QObject *> _graph)
 		max_value = max;
 		emit maxValueChanged();
 	}
+}
+
+QObject *EnergyGraph::getGraphBar(int index) const
+{
+	if (index < 0 || index >= graph.size())
+	{
+		qWarning() << "EnergyGraph::getGraphBar() requested an index" << index
+			<< QString("that is not in the limits [0, %1)").arg(graph.size());
+		return 0;
+	}
+	return graph.at(index);
 }
 
 QVariant EnergyGraph::getMaxValue() const
