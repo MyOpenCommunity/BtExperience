@@ -138,26 +138,44 @@ void GlobalProperties::pluginSettingsReceived(const QList<QSharedPointer<Maliit:
 {
 	foreach (const QSharedPointer<Maliit::PluginSettings> &setting, settings)
 	{
-		if (setting->pluginName() != "server")
-			continue;
+		if (setting->pluginName() == "server")
+			maliitFrameworkSettings(setting);
+		else if (setting->pluginName() == "libmaliit-keyboard-plugin.so")
+			maliitKeyboardSettings(setting);
+	}
+}
 
-		foreach (const QSharedPointer<Maliit::SettingsEntry> &entry, setting->configurationEntries())
+void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings)
+{
+	foreach (const QSharedPointer<Maliit::SettingsEntry> &entry, settings->configurationEntries())
+	{
+		if (entry->key() == "/maliit/onscreen/enabled")
 		{
-			if (entry->key() == "/maliit/onscreen/enabled")
-			{
-				foreach (QString value, entry->attributes()[Maliit::SettingEntryAttributes::valueDomain].toStringList())
-					if (allowed_layouts.indexOf(value.section(':', 1)) != -1)
-						language_map[value.section(':', 1)] = value;
+			foreach (QString value, entry->attributes()[Maliit::SettingEntryAttributes::valueDomain].toStringList())
+				if (allowed_layouts.indexOf(value.section(':', 1)) != -1)
+					language_map[value.section(':', 1)] = value;
 
-				entry->set(QStringList() << language_map.values());
-			}
-			else if (entry->key() == "/maliit/onscreen/active")
-			{
-				keyboard_layout = entry;
+			entry->set(QStringList() << language_map.values());
+		}
+		else if (entry->key() == "/maliit/onscreen/active")
+		{
+			keyboard_layout = entry;
 
-				connect(keyboard_layout.data(), SIGNAL(valueChanged()),
-					this, SIGNAL(keyboardLayoutChanged()));
-			}
+			connect(keyboard_layout.data(), SIGNAL(valueChanged()),
+				this, SIGNAL(keyboardLayoutChanged()));
+		}
+	}
+}
+
+void GlobalProperties::maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings)
+{
+	foreach (const QSharedPointer<Maliit::SettingsEntry> &entry, settings->configurationEntries())
+	{
+		if (entry->key() == "/maliit/pluginsettings/libmaliit-keyboard-plugin.so/current_style")
+		{
+			QString style = QString("maliit-%1x%2").arg(getMainWidth()).arg(getMainHeight());
+
+			entry->set(style);
 		}
 	}
 }
