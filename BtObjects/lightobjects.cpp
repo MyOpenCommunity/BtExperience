@@ -485,10 +485,24 @@ int Dimmer100::getStepAmount() const
 
 void Dimmer100::setActive(bool st)
 {
+	// if (on|off)_speed is equal to -1 it means Not Set/Disabled; in this case
+	// we use the turn(On|Off) methods of LightingDevice base class
 	if (st)
-		dev->turnOn(on_speed);
+		if (on_speed > 0)
+			dev->turnOn(on_speed);
+		else
+		{
+			LightingDevice *ldev = static_cast<LightingDevice *>(dev);
+			ldev->turnOn();
+		}
 	else
-		dev->turnOff(off_speed);
+		if (off_speed > 0)
+			dev->turnOff(off_speed);
+		else
+		{
+			LightingDevice *ldev = static_cast<LightingDevice *>(dev);
+			ldev->turnOff();
+		}
 }
 
 void Dimmer100::setActiveWithTiming()

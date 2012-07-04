@@ -280,6 +280,27 @@ void TestDimmer100::testStepAmount()
 	t.checkNoSignals();
 }
 
+void TestDimmer100::testOnSpeedNotUsed()
+{
+	ObjectTester t(obj, SIGNAL(onSpeedChanged()));
+
+	obj->setOnSpeed(-1);
+	QCOMPARE(obj->getOnSpeed(), -1);
+	t.checkSignals();
+
+	obj->setOnSpeed(-1);
+	t.checkNoSignals();
+
+	clearAllClients();
+
+	obj->setActive(true);
+
+	LightingDevice *ldev = static_cast<LightingDevice *>(dev);
+	ldev->turnOn();
+
+	compareClientCommand();
+}
+
 void TestDimmer100::testSetTiming()
 {
 	obj->setOnSpeed(123);

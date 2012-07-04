@@ -90,6 +90,7 @@ private slots:
 	void testOffSpeed();
 	void testStepSpeed();
 	void testStepAmount();
+	void testOnSpeedNotUsed();
 
 private:
 	virtual void testSetStatus();
