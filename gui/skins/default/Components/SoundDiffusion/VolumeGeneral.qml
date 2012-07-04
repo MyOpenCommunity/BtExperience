@@ -32,13 +32,9 @@ Image {
 
     ButtonMinusPlus {
         id: buttons
-        width: parent.width - 10 //margin
-        anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.leftMargin: 5
-        anchors.rightMargin: 5
+        anchors.bottom: parent.bottom
         anchors.bottomMargin: 5
-
         onPlusClicked: buttonSlider.plusClicked()
         onMinusClicked: buttonSlider.minusClicked()
     }

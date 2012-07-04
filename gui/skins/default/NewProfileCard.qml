@@ -122,10 +122,30 @@ BasePage {
             anchors.verticalCenter: zoomControls.verticalCenter
         }
 
-        TwoButtonsSettingsLarge {
+        Row {
             id: zoomControls
-            onLeftClicked: privateProps.zoomOut()
-            onRightClicked: privateProps.zoomIn()
+
+            ButtonImageThreeStates {
+                defaultImageBg: "images/common/button_1-2.svg"
+                pressedImageBg: "images/common/button_1-2_p.svg"
+                shadowImage: "images/common/shadow_button_1-2.svg"
+                defaultImage: "images/common/symbol_minus.svg"
+                pressedImage: "images/common/symbol_minus.svg"
+                status: 0
+                timerEnabled: true
+                onClicked: privateProps.zoomOut()
+            }
+
+            ButtonImageThreeStates {
+                defaultImageBg: "images/common/button_1-2.svg"
+                pressedImageBg: "images/common/button_1-2_p.svg"
+                shadowImage: "images/common/shadow_button_1-2.svg"
+                defaultImage: "images/common/symbol_plus.svg"
+                pressedImage: "images/common/symbol_plus.svg"
+                status: 0
+                timerEnabled: true
+                onClicked: privateProps.zoomIn()
+            }
         }
     }
 

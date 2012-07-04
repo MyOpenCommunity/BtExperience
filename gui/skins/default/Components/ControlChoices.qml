@@ -35,6 +35,7 @@ Image {
         onPlusClicked: control.plusClicked()
         onMinusClicked: control.minusClicked()
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
     }
 }
