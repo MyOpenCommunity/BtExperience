@@ -11,7 +11,7 @@ MenuColumn {
 
     // dimensions
     width: 212
-    height: paginator.height
+    height: preview.height + typeItem.height + screenSaverLoader.height
     property string imagesPath: "../../images/"
 
     Component {
