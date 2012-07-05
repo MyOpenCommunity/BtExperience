@@ -8,13 +8,11 @@ SvgImage {
     id: control
 
     property variant itemObject: undefined
-    property alias isEnabled: privateProps.enabled
 
     source: privateProps.isCustomTime() ? "../../images/common/bg_temporizzatore.svg" : "../../images/common/bg_temporizzatore_fisso.svg"
 
     QtObject {
         id: privateProps
-        property bool enabled: true // in case of fixed timing remains always true
 
         function isCustomTime() {
             var oid = itemObject.objectId
@@ -67,7 +65,7 @@ SvgImage {
                 }
                 font.pixelSize: 13
                 color: "white"
-                text: switchTiming.status === 0 ? qsTr("enabled") : qsTr("disabled")
+                text: itemObject.autoTurnOff ? qsTr("enabled") : qsTr("disabled")
             }
 
             Switch {
@@ -84,8 +82,8 @@ SvgImage {
                     right: parent.right
                     rightMargin: 7
                 }
-                onClicked: privateProps.enabled = !privateProps.enabled
-                status: !privateProps.enabled
+                onClicked: itemObject.autoTurnOff = !itemObject.autoTurnOff
+                status: !itemObject.autoTurnOff
             }
 
             ControlDateTime {
@@ -98,7 +96,7 @@ SvgImage {
                     right: parent.right
                     rightMargin: 7
                 }
-                enabled: privateProps.enabled
+                enabled: itemObject.autoTurnOff
                 itemObject: control.itemObject
             }
         }
@@ -113,17 +111,38 @@ SvgImage {
             anchors.fill: parent
 
             ControlLeftRight {
+                id: fixedTimeControl
+
+                property int currentIndex // 0 means no auto turn off
+
                 anchors.fill: parent
-                text: pageObject.names.get('FIXED_TIMING', itemObject.ftime)
+                text: currentIndex === 0 ? pageObject.names.get('FIXED_TIMING', -1) : pageObject.names.get('FIXED_TIMING', itemObject.ftimes.values[currentIndex - 1])
                 onLeftClicked: {
-                    if (itemObject.ftime <= -1)
+                    if (currentIndex <= 0)
                         return
-                    itemObject.ftime -= 1
+                    currentIndex -= 1
+                    if (currentIndex === 0)
+                        itemObject.autoTurnOff = false
+                    else
+                        itemObject.prevFTime()
                 }
                 onRightClicked: {
-                    if (itemObject.ftime >= 7)
+                    if (currentIndex >= itemObject.ftimes.values.length + 1)
                         return
-                    itemObject.ftime += 1
+                    if (currentIndex === 0)
+                        itemObject.autoTurnOff = true
+                    else
+                        itemObject.nextFTime()
+                    currentIndex += 1
+                }
+                Component.onCompleted: {
+                    currentIndex = 0
+                    var fts = itemObject.ftimes.values
+                    for (var i = 0; i < fts.length; ++i) {
+                        if (itemObject.ftime === fts[i])
+                            currentIndex = i + 1
+                    }
+                    itemObject.autoTurnOff = (currentIndex === 0 ? false : true)
                 }
             }
         }

@@ -36,7 +36,7 @@ class TestLight : public TestBtObject
 	Q_OBJECT
 
 protected:
-	void initObjects(LightingDevice *dev, Light *obj);
+	void initObjects(LightingDevice *dev, Light *obj, Light *obj_ftime);
 
 private slots:
 	void init();
@@ -48,9 +48,11 @@ private slots:
 	void testSetHours();
 	void testSetMinutes();
 	void testSetSeconds();
+	void testTurnOnWithFTimeDisabled();
 
 private:
 	Light *obj;
+	Light *obj_ftime;
 	LightingDevice *dev;
 };
 
@@ -60,18 +62,20 @@ class TestDimmer : public TestLight
 	Q_OBJECT
 
 protected:
-	void initObjects(DimmerDevice *dev, Dimmer *obj);
+	void initObjects(DimmerDevice *dev, Dimmer *obj, Dimmer *obj_ftime);
 
 private slots:
 	void init();
 
 	void testLevelUp();
 	void testLevelDown();
+	void testTurnOnWithFTimeDisabled();
 
 	virtual void testReceiveLevel();
 
 private:
 	Dimmer *obj;
+	Dimmer *obj_ftime;
 	DimmerDevice *dev;
 };
 
@@ -91,6 +95,7 @@ private slots:
 	void testStepSpeed();
 	void testStepAmount();
 	void testOnSpeedNotUsed();
+	void testTurnOnWithFTimeDisabled();
 
 private:
 	virtual void testSetStatus();
@@ -98,6 +103,7 @@ private:
 	virtual void testReceiveLevel();
 
 	Dimmer100 *obj;
+	Dimmer100 *obj_ftime;
 	Dimmer100Device *dev;
 };
 

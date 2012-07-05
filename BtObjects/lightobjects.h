@@ -15,6 +15,7 @@ class DimmerDevice;
 class Dimmer100Device;
 class QDomNode;
 class UiiMapper;
+class ChoiceList;
 
 QList<ObjectPair> parseDimmer100(const QDomNode &obj);
 QList<ObjectPair> parseDimmer(const QDomNode &obj);
@@ -35,9 +36,13 @@ public:
 		return ObjectInterface::IdLightCommand;
 	}
 
+	// manages all the operation related to turn on or off (set timing, for example)
 	virtual void setActive(bool st);
 
 protected:
+	// manages only turn on or off
+	virtual void turn(bool on);
+
 	LightingDevice *dev;
 };
 
@@ -62,29 +67,34 @@ class Light : public LightCommand
 	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
 
 	/*!
-		\brief Time interval for  \ref setActiveWithTiming
+		\brief Sets and gets if automatic turn off is enabled or not
+	*/
+	Q_PROPERTY(bool autoTurnOff READ isAutoTurnOff WRITE setAutoTurnOff NOTIFY autoTurnOffChanged)
+
+	/*!
+		\brief Time interval for  \ref active
 
 		After the specified amount of time, the light will turn off automatically.
 
-		\sa setActiveWithTiming
+		\sa active
 	*/
 	Q_PROPERTY(int hours READ getHours WRITE setHours NOTIFY hoursChanged)
 
 	/*!
-		\brief Time interval for  \ref setActiveWithTiming
+		\brief Time interval for  \ref active
 
 		After the specified amount of time, the light will turn off automatically.
 
-		\sa setActiveWithTiming
+		\sa active
 	*/
 	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
 
 	/*!
-		\brief Time interval for  \ref setActiveWithTiming
+		\brief Time interval for  \ref active
 
 		After the specified amount of time, the light will turn off automatically.
 
-		\sa setActiveWithTiming
+		\sa active
 	*/
 	Q_PROPERTY(int seconds READ getSeconds WRITE setSeconds NOTIFY secondsChanged)
 
@@ -95,7 +105,12 @@ class Light : public LightCommand
 
 		\sa LightingDevice::fixedTiming
 	*/
-	Q_PROPERTY(FixedTimingType ftime READ getFTime WRITE setFTime NOTIFY fTimeChanged)
+	Q_PROPERTY(FixedTimingType ftime READ getFTime NOTIFY fTimeChanged)
+
+	/*!
+		\brief Gets the valid ftime list
+	*/
+	Q_PROPERTY(QObject *ftimes READ getFTimes CONSTANT)
 
 	Q_ENUMS(FixedTimingType)
 
@@ -135,6 +150,8 @@ public:
 	virtual int getObjectId() const;
 	virtual QString getObjectKey() const;
 	virtual bool isActive() const;
+	virtual bool isAutoTurnOff() const;
+	void setAutoTurnOff(bool enabled);
 	void setHours(int h);
 	int getHours();
 	void setMinutes(int m);
@@ -142,12 +159,11 @@ public:
 	void setSeconds(int s);
 	int getSeconds();
 	FixedTimingType getFTime() const;
-	void setFTime(FixedTimingType ftime);
+	QObject *getFTimes() const;
+	virtual void setActive(bool st);
 
-	/*!
-		\brief Turn on the light for a duration specified by \ref hours, \ref minutes and \ref seconds
-	*/
-	Q_INVOKABLE virtual void setActiveWithTiming();
+	Q_INVOKABLE virtual void prevFTime();
+	Q_INVOKABLE virtual void nextFTime();
 
 signals:
 	void activeChanged();
@@ -155,6 +171,7 @@ signals:
 	void minutesChanged();
 	void secondsChanged();
 	void fTimeChanged();
+	void autoTurnOffChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -166,7 +183,8 @@ protected:
 
 private:
 	int hours, minutes, seconds;
-	FixedTimingType ftime;
+	bool autoTurnOff;
+	ChoiceList *ftimes;
 };
 
 
@@ -341,8 +359,6 @@ public:
 	Dimmer100(QString name, QString key, QTime ctime, Light::FixedTimingType ftime, bool ectime, Dimmer100Device *d, int onspeed, int offspeed);
 
 	virtual int getObjectId() const;
-	virtual void setActive(bool st);
-	virtual void setActiveWithTiming();
 
 	void setOnSpeed(int speed);
 	int getOnSpeed() const;
@@ -377,6 +393,8 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
+	virtual void turn(bool on);
+
 	int on_speed, off_speed, step_speed, step_amount;
 
 private:
