@@ -476,10 +476,10 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 			keys << QString::number(i + 1);
 		break;
 	case CumulativeYearGraph:
-		keys << tr("January") << tr("February") << tr("March")
-			 << tr("April") << tr("May") << tr("June")
-			 << tr("July") << tr("August") << tr("September")
-			 << tr("October") << tr("November") << tr("December");
+		keys << tr("Jan") << tr("Feb") << tr("Mar")
+			 << tr("Apr") << tr("May") << tr("Jun")
+			 << tr("Jul") << tr("Aug") << tr("Sep")
+			 << tr("Oct") << tr("Nov") << tr("Dec");
 		break;
 	}
 
