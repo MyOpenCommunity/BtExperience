@@ -110,7 +110,6 @@ Item {
         }
     }
 
-
     Item {
         id: periodAxis
         height: childrenRect.height
@@ -122,42 +121,17 @@ Item {
             topMargin: 5
         }
 
-        ListModel {
-            id: daysModel
-
-            ListElement {
-                value: 1
-            }
-            ListElement {
-                value: 5
-            }
-            ListElement {
-                value: 10
-            }
-            ListElement {
-                value: 15
-            }
-            ListElement {
-                value: 20
-            }
-            ListElement {
-                value: 25
-            }
-            ListElement {
-                value: 30
-            }
-        }
 
         Repeater {
-            model: daysModel
+            model: privateProps.modelGraph.graph
             UbuntuLightText {
-                visible: value <= privateProps.modelGraph.graph.length
-                text: model.value
+                visible: (index + 1) % 5 === 0 || index === 0
+                text: model.modelData.label
                 width: columnPrototype.width
                 color: "white"
                 font.pixelSize: 12
                 horizontalAlignment: Text.AlignHCenter
-                x: (value - 1) * (columnPrototype.width + privateProps.columnSpacing)
+                x: index * (columnPrototype.width + privateProps.columnSpacing)
             }
         }
     }
