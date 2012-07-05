@@ -14,6 +14,8 @@ Item {
     property string page: "Browser.qml"
     property bool editable: true
     property variant itemObject
+    property int refX: -1 // used for sidebar placement, -1 means not used
+    property int refY: -1 // used for sidebar placement, -1 means not used
 
     property int additionalWidth: 10
 
@@ -29,6 +31,31 @@ Item {
 
     QtObject {
         id: privateProps
+
+        function getSidebarPlacement(x, y, rx, ry) {
+            // this function evaluates what selected state is right for the
+            // QuickLink wrt the reference point (refX, refY)
+            // for example, if the QuickLink is on right and below the reference
+            // point, the sidebar will appear on the left and with the bottom
+            // aligned to the QuickLink bottom
+            // please note that x, y are not used, they only serve to bind to QuickLink coordinates changes
+            if ((rx === -1) || ry === -1) // no ref point, returns default selected state
+                return "selected"
+            // rx, ry are absolute coordinates, so converts QuickLink x, y to absolute ones
+            var mov_cx = bgQuick.mapToItem(null, 0, 0).x + 0.5 * bgQuick.width
+            var mov_cy = bgQuick.mapToItem(null, 0, 0).y + 0.5 * bgQuick.height
+            // computes delta wrt the ref point
+            var px = mov_cx - rx
+            var py = mov_cy - ry
+            // analyzes signs and returns the right selected state
+            if ((px >= 0) && (py >= 0))
+                return "selectedBottomLeft"
+            if ((px >= 0) && (py <= 0))
+                return "selectedTopLeft"
+            if ((px <= 0) && (py >= 0))
+                return "selectedBottomRight"
+            return "selectedTopRight"
+        }
 
         function startEdit() {
             labelLoader.sourceComponent = labelInputComponent
@@ -118,8 +145,11 @@ Item {
         id: editColumn
 
         opacity: 0
-        anchors.left: column.right
-        anchors.leftMargin: 1
+        anchors {
+            top: column.top
+            left: column.right
+            leftMargin: 1
+        }
 
         Rectangle {
             width: 48
@@ -234,7 +264,8 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onPressAndHold: parent.state = "selected"
+        // the getSidebarPlacement returns the selected state to use
+        onPressAndHold: parent.state = privateProps.getSidebarPlacement(bgQuick.x, bgQuick.y, bgQuick.refX, bgQuick.refY)
         onPressed: bgQuickPressed.visible = true
         onReleased: bgQuickPressed.visible = false
         onClicked: {
@@ -270,6 +301,70 @@ Item {
             StateChangeScript {
                 // execute selected script when not editable?
                 script: editable ? bgQuick.selected(bgQuick) : ""
+            }
+        },
+        State {
+            name: "selectedTopLeft"
+            extend: "selected"
+            AnchorChanges {
+                target: editColumn
+                anchors.top: column.top
+                anchors.bottom: undefined
+                anchors.left: undefined
+                anchors.right: column.left
+            }
+            PropertyChanges {
+                target: editColumn
+                anchors.leftMargin: 0
+                anchors.rightMargin: 1
+            }
+        },
+        State {
+            name: "selectedTopRight"
+            extend: "selected"
+            AnchorChanges {
+                target: editColumn
+                anchors.top: column.top
+                anchors.bottom: undefined
+                anchors.left: column.right
+                anchors.right: undefined
+            }
+            PropertyChanges {
+                target: editColumn
+                anchors.leftMargin: 1
+                anchors.rightMargin: 0
+            }
+        },
+        State {
+            name: "selectedBottomLeft"
+            extend: "selected"
+            AnchorChanges {
+                target: editColumn
+                anchors.top: undefined
+                anchors.bottom: column.bottom
+                anchors.left: undefined
+                anchors.right: column.left
+            }
+            PropertyChanges {
+                target: editColumn
+                anchors.leftMargin: 0
+                anchors.rightMargin: 1
+            }
+        },
+        State {
+            name: "selectedBottomRight"
+            extend: "selected"
+            AnchorChanges {
+                target: editColumn
+                anchors.top: undefined
+                anchors.bottom: column.bottom
+                anchors.left: column.right
+                anchors.right: undefined
+            }
+            PropertyChanges {
+                target: editColumn
+                anchors.leftMargin: 1
+                anchors.rightMargin: 0
             }
         }
     ]

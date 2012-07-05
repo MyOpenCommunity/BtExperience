@@ -3,6 +3,7 @@
 #include "xml_functions.h"
 #include "devices_cache.h"
 #include "uiimapper.h"
+#include "choicelist.h"
 
 #include <QDebug>
 #include <QStringList>
@@ -202,15 +203,19 @@ LightCommand::LightCommand(LightingDevice *d)
 
 void LightCommand::setActive(bool st)
 {
-	qDebug() << "LightCommand::setActive";
-	if (st)
+	turn(st);
+}
+
+void LightCommand::turn(bool on)
+{
+	if (on)
 		dev->turnOn();
 	else
 		dev->turnOff();
 }
 
 
-Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType _ftime, bool _ectime, LightingDevice *d) : LightCommand(d)
+Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType ftime, bool _ectime, LightingDevice *d) : LightCommand(d)
 {
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
@@ -220,8 +225,17 @@ Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType _ftime, b
 	hours = ctime.hour();
 	minutes = ctime.minute();
 	seconds = ctime.second();
-	ftime = _ftime;
 	ectime = _ectime;
+	autoTurnOff = false;
+	ftimes = new ChoiceList(this);
+	// if enums changes, this has to be modified
+	for (int i = FixedTimingMinutes1; i <= FixedTimingSeconds0_5; ++i)
+		ftimes->add(i);
+	// syncing ftimes to desired value (ftime)
+	int sentinel = ftimes->value();
+	ftimes->next();
+	while ((ftimes->value() != ftime) && (ftimes->value() != sentinel))
+		ftimes->next();
 }
 
 int Light::getObjectId() const
@@ -240,6 +254,19 @@ QString Light::getObjectKey() const
 bool Light::isActive() const
 {
 	return active;
+}
+
+bool Light::isAutoTurnOff() const
+{
+	return autoTurnOff;
+}
+
+void Light::setAutoTurnOff(bool enabled)
+{
+	if (autoTurnOff == enabled)
+		return;
+	autoTurnOff = enabled;
+	emit autoTurnOffChanged();
 }
 
 void Light::setHours(int h)
@@ -286,23 +313,46 @@ int Light::getSeconds()
 
 Light::FixedTimingType Light::getFTime() const
 {
-	return ftime;
+	return static_cast<Light::FixedTimingType>(ftimes->value());
 }
 
-void Light::setFTime(Light::FixedTimingType f)
+QObject *Light::getFTimes() const
 {
-	if (f == ftime)
-		return;
-	ftime = f;
-	emit fTimeChanged();
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ChoiceList *>(ftimes);
 }
 
-void Light::setActiveWithTiming()
+void Light::setActive(bool on)
 {
-	if (ectime)
-		dev->variableTiming(hours, minutes, seconds);
-	else
-		dev->fixedTiming(ftime);
+	// firstly, turn light on or off
+	// here we have a polymorphic call because we may need some additional logic
+	// like timing
+	turn(on);
+
+	// lastly, if we turned light on and autoTurnOff is true, set auto turn off
+	if (on && autoTurnOff)
+	{
+		if (ectime)
+			dev->variableTiming(hours, minutes, seconds);
+		else
+			dev->fixedTiming(getFTime());
+	}
+}
+
+void Light::prevFTime()
+{
+	int old_value = ftimes->value();
+	ftimes->previous();
+	if (old_value != ftimes->value())
+		emit fTimeChanged();
+}
+
+void Light::nextFTime()
+{
+	int old_value = ftimes->value();
+	ftimes->next();
+	if (old_value != ftimes->value())
+		emit fTimeChanged();
 }
 
 void Light::valueReceived(const DeviceValues &values_list)
@@ -483,33 +533,19 @@ int Dimmer100::getStepAmount() const
 	return step_amount;
 }
 
-void Dimmer100::setActive(bool st)
+void Dimmer100::turn(bool on)
 {
-	// if (on|off)_speed is equal to -1 it means Not Set/Disabled; in this case
-	// we use the turn(On|Off) methods of LightingDevice base class
-	if (st)
+	// turn on or off light with speed (if defined)
+	if (on)
 		if (on_speed > 0)
 			dev->turnOn(on_speed);
 		else
-		{
-			LightingDevice *ldev = static_cast<LightingDevice *>(dev);
-			ldev->turnOn();
-		}
+			Dimmer::turn(on);
 	else
 		if (off_speed > 0)
 			dev->turnOff(off_speed);
 		else
-		{
-			LightingDevice *ldev = static_cast<LightingDevice *>(dev);
-			ldev->turnOff();
-		}
-}
-
-void Dimmer100::setActiveWithTiming()
-{
-	// handle both on speed and timing (do not change frame order)
-	setActive(true);
-	Dimmer::setActiveWithTiming();
+			Dimmer::turn(on);
 }
 
 void Dimmer100::increaseLevel100()

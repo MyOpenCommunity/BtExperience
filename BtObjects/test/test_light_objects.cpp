@@ -7,10 +7,11 @@
 #include <QtTest>
 
 
-void TestLight::initObjects(LightingDevice *_dev, Light *_obj)
+void TestLight::initObjects(LightingDevice *_dev, Light *_obj, Light *_obj_ftime)
 {
 	dev = _dev;
 	obj = _obj;
+	obj_ftime = _obj_ftime;
 }
 
 void TestLight::init()
@@ -21,6 +22,7 @@ void TestLight::init()
 	LightingDevice *d = new LightingDevice("3", NOT_PULL);
 
 	obj = new Light("", "", QTime(), Light::FixedTimingDisabled, true, d);
+	obj_ftime = new Light("", "", QTime(), Light::FixedTimingDisabled, false, d);
 	dev = new LightingDevice("3", NOT_PULL, 1);
 }
 
@@ -28,6 +30,7 @@ void TestLight::cleanup()
 {
 	delete obj->dev;
 	delete obj;
+	delete obj_ftime;
 	delete dev;
 
 	delete bt_global::config;
@@ -36,6 +39,7 @@ void TestLight::cleanup()
 
 void TestLight::testSetStatus()
 {
+	obj->setAutoTurnOff(false);
 	obj->setActive(true);
 	dev->turnOn();
 	compareClientCommand();
@@ -61,11 +65,16 @@ void TestLight::testReceiveStatus()
 
 void TestLight::testSetTiming()
 {
+	clearAllClients();
+
 	obj->hours = 15;
 	obj->minutes = 0;
 	obj->seconds = 3;
-	obj->setActiveWithTiming();
+	obj->setAutoTurnOff(true);
+	obj->setActive(true);
+	dev->turnOn();
 	dev->variableTiming(15, 0, 3);
+
 	compareClientCommand();
 }
 
@@ -111,13 +120,25 @@ void TestLight::testSetSeconds()
 	QCOMPARE(obj->seconds, 0);
 }
 
+void TestLight::testTurnOnWithFTimeDisabled()
+{
+	clearAllClients();
 
-void TestDimmer::initObjects(DimmerDevice *_dev, Dimmer *_obj)
+	obj_ftime->setAutoTurnOff(false);
+	obj_ftime->setActive(true);
+	dev->turnOn();
+
+	compareClientCommand();
+}
+
+
+void TestDimmer::initObjects(DimmerDevice *_dev, Dimmer *_obj, Dimmer *_obj_ftime)
 {
 	dev = _dev;
 	obj = _obj;
+	obj_ftime = _obj_ftime;
 
-	TestLight::initObjects(dev, obj);
+	TestLight::initObjects(dev, obj, obj_ftime);
 }
 
 void TestDimmer::init()
@@ -128,15 +149,27 @@ void TestDimmer::init()
 	DimmerDevice *d = new DimmerDevice("3", NOT_PULL);
 
 	obj = new Dimmer("", "", QTime(), Light::FixedTimingDisabled, true, d);
+	obj_ftime = new Dimmer("", "", QTime(), Light::FixedTimingDisabled, false, d);
 	dev = new DimmerDevice("3", NOT_PULL, 1);
 
-	initObjects(dev, obj);
+	initObjects(dev, obj, obj_ftime);
 }
 
 void TestDimmer::testLevelDown()
 {
 	obj->decreaseLevel();
 	dev->decreaseLevel();
+	compareClientCommand();
+}
+
+void TestDimmer::testTurnOnWithFTimeDisabled()
+{
+	clearAllClients();
+
+	obj_ftime->setAutoTurnOff(false);
+	obj_ftime->setActive(true);
+	dev->turnOn();
+
 	compareClientCommand();
 }
 
@@ -175,9 +208,10 @@ void TestDimmer100::init()
 	Dimmer100Device *d = new Dimmer100Device("3", NOT_PULL);
 
 	obj = new Dimmer100("", "", QTime(), Light::FixedTimingDisabled, true, d, 255, 255);
+	obj_ftime = new Dimmer100("", "", QTime(), Light::FixedTimingDisabled, false, d, 255, 255);
 	dev = new Dimmer100Device("3", NOT_PULL, 1);
 
-	initObjects(dev, obj);
+	initObjects(dev, obj, obj_ftime);
 }
 
 void TestDimmer100::testReceiveLevel()
@@ -203,6 +237,7 @@ void TestDimmer100::testReceiveLevel()
 
 void TestDimmer100::testSetStatus()
 {
+	obj->setAutoTurnOff(false);
 	obj->setOnSpeed(47);
 	obj->setActive(true);
 	dev->turnOn(47);
@@ -293,6 +328,7 @@ void TestDimmer100::testOnSpeedNotUsed()
 
 	clearAllClients();
 
+	obj->setAutoTurnOff(false);
 	obj->setActive(true);
 
 	LightingDevice *ldev = static_cast<LightingDevice *>(dev);
@@ -301,14 +337,29 @@ void TestDimmer100::testOnSpeedNotUsed()
 	compareClientCommand();
 }
 
+void TestDimmer100::testTurnOnWithFTimeDisabled()
+{
+	clearAllClients();
+
+	obj_ftime->setAutoTurnOff(false);
+	obj_ftime->setActive(true);
+	dev->turnOn(255);
+
+	compareClientCommand();
+}
+
 void TestDimmer100::testSetTiming()
 {
+	clearAllClients();
+
 	obj->setOnSpeed(123);
 	obj->setHours(15);
 	obj->setMinutes(0);
 	obj->setSeconds(3);
-	obj->setActiveWithTiming();
+	obj->setAutoTurnOff(true);
+	obj->setActive(true);
 	dev->turnOn(123);
 	dev->variableTiming(15, 0, 3);
+
 	compareClientCommand();
 }
