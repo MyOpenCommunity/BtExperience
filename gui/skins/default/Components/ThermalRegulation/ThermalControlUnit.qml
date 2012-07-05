@@ -110,9 +110,6 @@ MenuColumn {
         var properties = {'objModel': obj}
 
         switch (obj.objectId) {
-        case ThermalControlUnit.IdHoliday:
-            itemLoader.setComponent(holidayComponent, properties)
-            break
         case ThermalControlUnit.IdOff:
             itemLoader.setComponent(offComponent, properties)
             break
@@ -125,14 +122,17 @@ MenuColumn {
         case ThermalControlUnit.IdWeeklyPrograms:
             itemLoader.setComponent(programsComponent, properties)
             break
-        case ThermalControlUnit.IdWorking:
-            itemLoader.setComponent(workingComponent, properties)
-            break
         case ThermalControlUnit.IdScenarios:
             itemLoader.setComponent(scenarioComponent, properties)
             break
         case ThermalControlUnit.IdTimedManual:
             itemLoader.setComponent(timedComponent, properties)
+            break
+        case ThermalControlUnit.IdHoliday:
+            itemLoader.setComponent(holidayComponent, properties)
+            break
+        case ThermalControlUnit.IdWeekday:
+            itemLoader.setComponent(weekdayComponent, properties)
             break
         }
     }
@@ -178,50 +178,6 @@ MenuColumn {
                 column.loadColumn(thermalControlUnitModalities, modalityItem.name, column.dataModel)
                 if (privateProps.currentElement !== 2)
                     privateProps.currentElement = 2
-            }
-        }
-
-        Component {
-            id: holidayComponent
-            Column {
-                id: holidayColumn
-                property variant objModel
-
-                Component {
-                    id: dateSelectHoliday
-                    DateSelect {}
-                }
-
-                ControlSetDateTime {
-                    date: DateTime.format(privateProps.getDateTime(objModel))["date"]
-                    time: DateTime.format(privateProps.getDateTime(objModel))["time"]
-                    status: (privateProps.currentElement === 3) ? 1 : 0
-
-                    onEditClicked: {
-                        if (privateProps.currentElement !== 3)
-                            privateProps.currentElement = 3
-                        column.loadColumn(dateSelectHoliday, column.title, objModel)
-                    }
-                }
-
-                ControlLeftRightWithTitle {
-                    title: qsTr("next program")
-                    text: objModel.programDescription
-                    onLeftClicked: objModel.programIndex -= 1
-                    onRightClicked: objModel.programIndex += 1
-                }
-
-                ButtonOkCancel {
-                    onCancelClicked: {
-                        column.cancelClicked()
-                        objModel.reset()
-                    }
-
-                    onOkClicked: {
-                        column.okClicked()
-                        objModel.apply()
-                    }
-                }
             }
         }
 
@@ -347,12 +303,12 @@ MenuColumn {
         }
 
         Component {
-            id: workingComponent
+            id: weekdayComponent
             Column {
                 property variant objModel
 
                 Component {
-                    id: dateSelectWorking
+                    id: dateSelectWeekday
                     DateSelect {}
                 }
 
@@ -364,7 +320,51 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentElement !== 3)
                             privateProps.currentElement = 3
-                        column.loadColumn(dateSelectWorking, column.title, objModel)
+                        column.loadColumn(dateSelectWeekday, column.title, objModel)
+                    }
+                }
+
+                ControlLeftRightWithTitle {
+                    title: qsTr("next program")
+                    text: objModel.programDescription
+                    onLeftClicked: objModel.programIndex -= 1
+                    onRightClicked: objModel.programIndex += 1
+                }
+
+                ButtonOkCancel {
+                    onCancelClicked: {
+                        column.cancelClicked()
+                        objModel.reset()
+                    }
+
+                    onOkClicked: {
+                        column.okClicked()
+                        objModel.apply()
+                    }
+                }
+            }
+        }
+
+        Component {
+            id: holidayComponent
+            Column {
+                id: holidayColumn
+                property variant objModel
+
+                Component {
+                    id: dateSelectHoliday
+                    DateSelect {}
+                }
+
+                ControlSetDateTime {
+                    date: DateTime.format(privateProps.getDateTime(objModel))["date"]
+                    time: DateTime.format(privateProps.getDateTime(objModel))["time"]
+                    status: (privateProps.currentElement === 3) ? 1 : 0
+
+                    onEditClicked: {
+                        if (privateProps.currentElement !== 3)
+                            privateProps.currentElement = 3
+                        column.loadColumn(dateSelectHoliday, column.title, objModel)
                     }
                 }
 

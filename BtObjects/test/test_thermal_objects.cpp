@@ -114,7 +114,7 @@ void TestThermalControlUnit::testModalityProgram()
 
 void TestThermalControlUnit::testModalityVacation()
 {
-	testChangeModality<ThermalControlUnitTimedProgram>(ThermalDevice::ST_WEEKEND, ThermalControlUnit::IdWorking);
+	testChangeModality<ThermalControlUnitTimedProgram>(ThermalDevice::ST_WEEKEND, ThermalControlUnit::IdWeekday);
 }
 
 void TestThermalControlUnit::testModalityHoliday()
@@ -439,7 +439,7 @@ void TestThermalControlUnitTimedProgram::testSetTime()
 
 void TestThermalControlUnitVacation::init()
 {
-	initProgram(ThermalControlUnit::IdWorking);
+	initProgram(ThermalControlUnit::IdWeekday);
 }
 
 void TestThermalControlUnitVacation::testApply()
@@ -453,7 +453,7 @@ void TestThermalControlUnitVacation::testApply()
 	obj->setSeconds(0);
 	obj->apply();
 
-	dev->setHolidayDateTime(QDate(2012, 1, 1), QTime(0, 0, 0), 3);
+	dev->setWeekendDateTime(QDate(2012, 1, 1), QTime(0, 0, 0), 3);
 	compareClientCommand();
 }
 
@@ -474,6 +474,6 @@ void TestThermalControlUnitHoliday::testApply()
 	obj->setSeconds(0);
 	obj->apply();
 
-	dev->setWeekendDateTime(QDate(2012, 1, 1), QTime(0, 0, 0), 3);
+	dev->setHolidayDateTime(QDate(2012, 1, 1), QTime(0, 0, 0), 3);
 	compareClientCommand();
 }

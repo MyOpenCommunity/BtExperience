@@ -31,8 +31,9 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	// The objects list should contain only one item per id
 	// TODO: fix the the timed programs
 	modalities << new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &programs, dev);
-	modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdHoliday, &programs, dev);
-	modalities << new ThermalControlUnitTimedProgram("Working", ThermalControlUnit::IdWorking, &programs, dev);
+	// for unknown reasons these are reverted
+	modalities << new ThermalControlUnitTimedProgram("Weekday", ThermalControlUnit::IdHoliday, &programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdWeekday, &programs, dev);
 	modalities << new ThermalControlUnitAntifreeze("Antifreeze", dev);
 	modalities << new ThermalControlUnitManual("Manual", dev);
 	modalities << new ThermalControlUnitOff("Off", dev);
@@ -123,7 +124,7 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 				id = ThermalControlUnit::IdTimedManual;
 				break;
 			case ThermalDevice::ST_WEEKEND:
-				id = ThermalControlUnit::IdWorking;
+				id = ThermalControlUnit::IdWeekday;
 				break;
 			case ThermalDevice::ST_PROGRAM:
 				id = ThermalControlUnit::IdWeeklyPrograms;
