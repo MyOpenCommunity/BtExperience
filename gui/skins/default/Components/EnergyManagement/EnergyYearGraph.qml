@@ -30,7 +30,7 @@ Item {
             return false
         }
 
-        property real maxValue: modelGraph.maxValue * 1.1
+        property real maxValue: Math.max(modelGraph.maxValue, previousGraph.maxValue) * 1.1
         property int previousYearSpacing: 2
         property int columnSpacing: hasPreviousYear() ? 17 - previousYearPrototype.width - previousYearSpacing : 17
     }
