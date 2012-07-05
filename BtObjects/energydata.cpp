@@ -467,11 +467,11 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 	switch (type)
 	{
 	case DailyAverageGraph:
-	case CumulativeDayGraph:
 		for (int i = 0; i < values.count(); ++i)
 			keys << QString("%1-%2").arg(i).arg(i + 1);
 		break;
 	case CumulativeMonthGraph:
+	case CumulativeDayGraph:
 		for (int i = 0; i < values.count(); ++i)
 			keys << QString::number(i + 1);
 		break;

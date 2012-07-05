@@ -94,7 +94,7 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("day")
                     status: 0
-                    enabled: false // TODO: what are the logics to do that?
+                    enabled: true // TODO: what are the logics to do that?
                     Rectangle {
                         z: 1
                         anchors.fill: parent
@@ -102,7 +102,14 @@ Page {
                         opacity: 0.6
                         visible: parent.enabled === false
                     }
-                    onClicked: {}
+                    onClicked: {
+                        page.state = "dayGraph"
+                        // Change the energy graph is an operation that ideally
+                        // should be put inside the state change, but in this way
+                        // (because is a very slow operation) the user experience
+                        // is better because the ui does not appears blocked.
+                        pageContent.sourceComponent = energyDayGraphComponent
+                    }
                 }
                 ButtonThreeStates {
                     id: monthButton
@@ -232,6 +239,15 @@ Page {
                 EnergyYearGraph {
                     showCurrency: privateProps.showCurrency
                     graphDate: dateSelector.yearDate
+                    energyData: page.energyData
+                }
+            }
+
+            Component {
+                id: energyDayGraphComponent
+                EnergyDayGraph {
+                    showCurrency: privateProps.showCurrency
+                    graphDate: dateSelector.dayDate
                     energyData: page.energyData
                 }
             }
@@ -376,6 +392,13 @@ Page {
             PropertyChanges { target: monthButton; status: 0 }
             PropertyChanges { target: dayButton; status: 0 }
             PropertyChanges { target: dateSelector; state: "year" }
+        },
+        State {
+            name: "dayGraph"
+            PropertyChanges { target: yearButton; status: 0 }
+            PropertyChanges { target: monthButton; status: 0 }
+            PropertyChanges { target: dayButton; status: 1 }
+            PropertyChanges { target: dateSelector; state: "day" }
         }
     ]
 }
