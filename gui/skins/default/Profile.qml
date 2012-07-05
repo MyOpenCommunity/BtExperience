@@ -33,6 +33,11 @@ Page {
 
         property Item actualFavorite: null
         property Item movingObject: null
+        // the following properties are used to compute margins for the moving grid
+        // we have to be sure that elements moved on the bottom and right part of
+        // the grid don't disappear from the screen or don't overlap with other elements
+        property int gridRightMargin: 0
+        property int gridBottomMargin: 0
 
         function selectObj(favorite) {
             unselectObj()
@@ -66,6 +71,14 @@ Page {
 
         function moveEnd() {
             moveGrid.state = ""
+            // moved object goes on top of others
+            var oldz = movingObject.z
+            movingObject.z = Script.container.length - 1
+            for (var index = 0; index < Script.container.length; ++index) {
+                var obj = Script.container[index]
+                if (obj.z > oldz)
+                    obj.z -= 1
+            }
             movingObject = null
         }
 
@@ -104,8 +117,15 @@ Page {
 
                 // x and y are absolute coordinates
                 var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
-                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'text': text, 'address': address, "itemObject": obj})
-
+                // here we compute the ref point for QuickLinks; essentially, this is the center of the moving
+                // grid where QuickLinks will be positioned
+                var refX = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).x + 0.5 * bgMoveGrid.width
+                var refY = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).y + 0.5 * bgMoveGrid.height
+                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'z': i, "refX": refX, "refY": refY, 'text': text, 'address': address, "itemObject": obj})
+                // grid margins are set to maximum quicklink size; this info is used to draw a grid in which
+                // QuickLinks don't overlap with other elements and don't disappear out of screen
+                privateProps.gridRightMargin = privateProps.gridRightMargin < instance.width ? instance.width : privateProps.gridRightMargin
+                privateProps.gridBottomMargin = privateProps.gridBottomMargin < instance.height ? instance.height : privateProps.gridBottomMargin
                 instance.requestEdit.connect(showEditBox)
                 instance.selected.connect(selectObj)
                 instance.requestMove.connect(moveBegin)
@@ -395,9 +415,9 @@ Page {
                 model: userNotes
                 onCurrentPageChanged: privateProps.unselectObj()
             }
-
-            Grid {
-                id: moveGrid
+            Item {
+                id: bgMoveGrid
+                z: bgPannable.z + 2 // must be on top of quicklinks
                 anchors {
                     left: parent.left
                     right: rightArea.left
@@ -405,51 +425,61 @@ Page {
                     bottom: parent.bottom
                 }
 
-                columns: 4
-                rows: 4
-                opacity: 0
+                Grid {
+                    id: moveGrid
+                    // the following values are arbitrary; still waiting for clarification
+                    columns: 18
+                    rows: 14
+                    opacity: 0
+                    anchors {
+                        fill: parent
+                        // for grid margins, subtracts the dimension of bottom right rect to regain some space
+                        rightMargin: privateProps.gridRightMargin - parent.width / moveGrid.columns
+                        bottomMargin: privateProps.gridBottomMargin - parent.height / moveGrid.rows
+                    }
 
-                Repeater {
-                    model: moveGrid.columns * moveGrid.rows
+                    Repeater {
+                        model: moveGrid.columns * moveGrid.rows
 
-                    delegate: Rectangle {
-                        id: rectDelegate
-                        color: "transparent"
-                        width: moveGrid.width / moveGrid.columns
-                        height: moveGrid.height / moveGrid.rows
-                        border {
-                            width: 1
-                            color: "red"
-                        }
+                        delegate: Rectangle {
+                            id: rectDelegate
+                            color: "transparent"
+                            width: moveGrid.width / moveGrid.columns
+                            height: moveGrid.height / moveGrid.rows
+                            border {
+                                width: 1
+                                color: "red"
+                            }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                // map the coordinates to the quicklink's parent
-                                var absPos = parent.mapToItem(null, x, y)
-                                var itemPos = pannableChild.mapFromItem(null, absPos.x, absPos.y)
-                                privateProps.movingObject.x = itemPos.x
-                                privateProps.movingObject.y = itemPos.y
-                                privateProps.movingObject.itemObject.position = Qt.point(absPos.x, absPos.y)
-                                privateProps.moveEnd()
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    // map the coordinates to the quicklink's parent
+                                    var absPos = parent.mapToItem(null, x, y)
+                                    var itemPos = pannableChild.mapFromItem(null, absPos.x, absPos.y)
+                                    privateProps.movingObject.x = itemPos.x
+                                    privateProps.movingObject.y = itemPos.y
+                                    privateProps.movingObject.itemObject.position = Qt.point(absPos.x, absPos.y)
+                                    privateProps.moveEnd()
+                                }
                             }
                         }
                     }
-                }
 
-                Behavior on opacity {
-                    NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-                }
-
-                states: [
-                    State {
-                        name: "shown"
-                        PropertyChanges {
-                            target: moveGrid
-                            opacity: 1
-                        }
+                    Behavior on opacity {
+                        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
-                ]
+
+                    states: [
+                        State {
+                            name: "shown"
+                            PropertyChanges {
+                                target: moveGrid
+                                opacity: 1
+                            }
+                        }
+                    ]
+                }
             }
         }
     }
