@@ -10,7 +10,7 @@ QtObject {
     }
 
     function idealGoalSize(referenceSize) {
-        return referenceSize * .9
+        return referenceSize * .85
     }
 
     // the size of goal line. Can be as the "ideal" goal size or less if
