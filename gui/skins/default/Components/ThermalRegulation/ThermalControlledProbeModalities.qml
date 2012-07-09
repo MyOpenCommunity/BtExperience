@@ -2,10 +2,13 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 
+
 MenuColumn {
     id: column
+
     height: 200
     width: 212
+
     signal modalitySelected(int modality)
 
     ListView {
@@ -24,9 +27,10 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             name: model.name
-            onDelegateClicked: {
+            onClicked: {
                 var clickedItem = modelList.get(index)
                 column.modalitySelected(clickedItem.type)
+                column.closeColumn()
             }
         }
 

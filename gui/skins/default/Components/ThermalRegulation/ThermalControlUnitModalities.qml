@@ -5,6 +5,7 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
     height: Math.max(1, 50 * itemList.count)
     width: 212
 
@@ -28,7 +29,10 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: modalitiesModel.getObject(index)
-            onClicked: column.modalitySelected(itemObject)
+            onClicked: {
+                column.modalitySelected(itemObject)
+                column.closeColumn()
+            }
         }
         model: modalitiesModel
     }
