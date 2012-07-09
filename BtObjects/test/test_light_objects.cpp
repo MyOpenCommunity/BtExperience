@@ -152,6 +152,8 @@ void TestDimmer::init()
 	obj_ftime = new Dimmer("", "", QTime(), Light::FixedTimingDisabled, false, d);
 	dev = new DimmerDevice("3", NOT_PULL, 1);
 
+	QCOMPARE((signed int)(obj_ftime->getFTime()), -1);
+
 	initObjects(dev, obj, obj_ftime);
 }
 

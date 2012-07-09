@@ -226,12 +226,17 @@ Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType ftime, bo
 	minutes = ctime.minute();
 	seconds = ctime.second();
 	ectime = _ectime;
-	autoTurnOff = false;
+	if (ftime == FixedTimingDisabled)
+		autoTurnOff = true;
+	else
+		autoTurnOff = false;
 	ftimes = new ChoiceList(this);
 	// if enums changes, this has to be modified
 	for (int i = FixedTimingMinutes1; i <= FixedTimingSeconds0_5; ++i)
 		ftimes->add(i);
 	// syncing ftimes to desired value (ftime)
+	// please note if ftime is disabled, the value will be FixedTimingMinutes1:
+	// this is what QML expects
 	int sentinel = ftimes->value();
 	ftimes->next();
 	while ((ftimes->value() != ftime) && (ftimes->value() != sentinel))
@@ -313,7 +318,8 @@ int Light::getSeconds()
 
 Light::FixedTimingType Light::getFTime() const
 {
-	return static_cast<Light::FixedTimingType>(ftimes->value());
+	int result = autoTurnOff ? -1 : ftimes->value();
+	return static_cast<Light::FixedTimingType>(result);
 }
 
 QObject *Light::getFTimes() const
