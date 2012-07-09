@@ -291,6 +291,7 @@ AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<Antintrusion
 	initialized = false;
 	status = false;
 	dev = d;
+	zones_to_check = 0;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
@@ -331,7 +332,7 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 			{
 				if (inserted == status)
 				{
-					if (waiting_response)
+					if (waiting_response && (zones_to_check == 0))
 					{
 						emit codeRefused();
 						waiting_response = false;
@@ -374,6 +375,7 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 							emit codeAccepted();
 						else
 							emit codeRefused();
+						waiting_response = false;
 					}
 				}
 			}

@@ -181,6 +181,8 @@ MenuColumn {
                 title: qsTr("temperature set")
                 text: setpoint / 10 + qsTr("°C")
                 changeable: is99zones
+                onMinusClicked: rootManualComponent.setpoint -= 5
+                onPlusClicked: rootManualComponent.setpoint += 5
             }
 
             ControlUpDown {
