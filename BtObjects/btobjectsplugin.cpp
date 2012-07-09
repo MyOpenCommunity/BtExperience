@@ -270,14 +270,14 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			if (fancoil == ControlledProbeDevice::NORMAL)
 			{
 				// TODO remove fake code when parsing is implemented; first fake line is for 99 zones case, last one is for 4 zones
-				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit99Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
-//				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit4Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
+				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit99Zones, bt_global::add_device_to_cache(new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil)));
+//				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit4Zones, bt_global::add_device_to_cache(new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil)));
 			}
 			else
 			{
 				// TODO remove fake code when parsing is implemented; first fake line is for 99 zones case, last one is for 4 zones
-				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit99Zones, new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
-//				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit4Zones, new ControlledProbeDevice(QString(where)+"#4", QString(where)+"#4", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
+				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit99Zones, bt_global::add_device_to_cache(new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil)));
+//				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit4Zones, bt_global::add_device_to_cache(new ControlledProbeDevice(QString(where)+"#4", QString(where)+"#4", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil)));
 			}
 			break;
 		}
