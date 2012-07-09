@@ -87,6 +87,16 @@ public:
 		IdDimmerFixed = 2001, //!< 10-level dimmer
 		IdLightGroup = 2004, //!< A set of lights
 		IdLightCommand = 2005, //!< Command to control the lights for an environment or all the lights
+		// automation
+		IdAutomation2 = 3002, //!< A simple 2-states automation actuator (Fan,watering, controlled socket)
+		IdAutomation3 = 3000, //!< A 3-states automation actuator (Curtain, garage, shutter, gate)
+		IdAutomationVDE = 3001, //!< A 1-state VDE Gate/Door actuator
+		IdAutomationDoor = 3003, //!< A 1-state Door lock actuator
+		IdAutomationContact = 3004, //!< Automation Contact actuator
+		IdAutomationCommand2 = 3007, //!< Automation AMB, GEN, GR
+		IdAutomationCommand3 = 3008, //!< Automation 3-states AMB, GEN, GR
+		IdAutomationGroup2 = 3006, //!< Group of automation 2-state
+		IdAutomationGroup3 = 3005, //!< Group of automation 3-state
 		// antintrusion
 		IdAntintrusionZone = 13001, //!< A signe anti-intrusion zone
 		IdAntintrusionScenario = 13010, //!< Set of anti-intrusion zones

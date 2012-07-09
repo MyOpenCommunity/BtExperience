@@ -31,6 +31,7 @@ HEADERS += \
 	vct.h \
 	devices/airconditioning_device.h \
 	devices/antintrusion_device.h \
+	devices/automation_device.h \
 	devices/device.h \
 	devices/energy_device.h \
 	devices/lighting_device.h \
@@ -54,7 +55,8 @@ HEADERS += \
 	ts/xml_functions.h \
 	ts/xmldevice.h \
 	ts/xmlclient.h \
-	ts/scaleconversion.h
+	ts/scaleconversion.h \
+    automationobjects.h
 
 SOURCES += \
 	antintrusionsystem.cpp \
@@ -88,6 +90,7 @@ SOURCES += \
 	generic_functions.cpp \
 	devices/airconditioning_device.cpp \
 	devices/antintrusion_device.cpp \
+	devices/automation_device.cpp \
 	devices/device.cpp \
 	devices/energy_device.cpp \
 	devices/lighting_device.cpp \
@@ -111,4 +114,5 @@ SOURCES += \
 	ts/xmldevice.cpp \
 	ts/xmlclient.cpp \
 	ts/frame_classes.cpp \
-	ts/scaleconversion.cpp
+	ts/scaleconversion.cpp \
+    automationobjects.cpp

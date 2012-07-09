@@ -51,7 +51,7 @@ Page {
         ListElement {
             image: "images/systems/movimentazione.jpg"
             name: "automation"
-            target: ""
+            target: "Automation.qml"
         }
         ListElement {
             image: "images/systems/messaggi.jpg"

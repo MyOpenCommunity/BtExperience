@@ -11,6 +11,7 @@ import BtObjects 1.0
   */
 QtObject {
     function getComponent(objectId) {
+        //console.log("getComponent(): " + objectId)
         switch (objectId) {
         case ObjectInterface.IdLightCustom:
             return Qt.createComponent("Lighting/Light.qml")
@@ -26,6 +27,20 @@ QtObject {
         case ObjectInterface.IdDimmerGroup:
         case ObjectInterface.IdDimmer100Group:
             return Qt.createComponent("Lighting/LightGroup.qml")
+        case ObjectInterface.IdAutomation2:
+        case ObjectInterface.IdAutomationContact:
+            return Qt.createComponent("Automation/Automation2.qml")
+        case ObjectInterface.IdAutomation3:
+            return Qt.createComponent("Automation/Automation3.qml")
+        case ObjectInterface.IdAutomationVDE:
+        case ObjectInterface.IdAutomationDoor:
+            return Qt.createComponent("Automation/Automation1.qml")
+        //case ObjectInterface.IdAutomationCommand2: //!< Automation AMB, GEN, GR
+        //case ObjectInterface.IdAutomationCommand3: //!< Automation 3-states AMB, GEN, GR
+        case ObjectInterface.IdAutomationGroup2:
+            return Qt.createComponent("Automation/AutomationGroup2.qml")
+        case ObjectInterface.IdAutomationGroup3:
+            return Qt.createComponent("Automation/AutomationGroup3.qml")
         case ObjectInterface.IdThermalControlUnit4:
             return Qt.createComponent("ThermalRegulation/ThermalControlUnit.qml")
         case ObjectInterface.IdThermalControlUnit99:

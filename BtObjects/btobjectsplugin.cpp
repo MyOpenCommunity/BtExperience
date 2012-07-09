@@ -7,6 +7,7 @@
 #include "probe_device.h"
 #include "objectmodel.h"
 #include "lightobjects.h"
+#include "automationobjects.h"
 #include "thermalobjects.h"
 #include "thermalprobes.h"
 #include "antintrusionsystem.h"
@@ -168,6 +169,31 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdLightCommand:
 			obj_list = parseLightCommand(xml_obj);
 			break;
+
+		case ObjectInterface::IdAutomation2:
+		case ObjectInterface::IdAutomationDoor:
+		case ObjectInterface::IdAutomationContact:
+			obj_list = parseAutomation2(xml_obj);
+			break;
+		case ObjectInterface::IdAutomationVDE:
+			obj_list = parseAutomation2(xml_obj);
+			break;
+		case ObjectInterface::IdAutomation3:
+			obj_list = parseAutomation3(xml_obj);
+			break;
+		case ObjectInterface::IdAutomationGroup2:
+			obj_list = parseAutomationGroup2(xml_obj, uii_map);
+			break;
+		case ObjectInterface::IdAutomationGroup3:
+			obj_list = parseAutomationGroup3(xml_obj, uii_map);
+			break;
+		case ObjectInterface::IdAutomationCommand2:
+			obj_list = parseAutomationCommand2(xml_obj);
+			break;
+		case ObjectInterface::IdAutomationCommand3:
+			obj_list = parseAutomationCommand3(xml_obj);
+			break;
+
 		case ObjectInterface::IdAntintrusionZone:
 			obj_list = parseAntintrusionZone(xml_obj);
 			antintrusion_zones = convertObjectPairList<AntintrusionZone *>(obj_list);
@@ -395,6 +421,9 @@ void BtObjectsPlugin::parseConfig()
 			parseFloors(container);
 			break;
 		case Container::IdLights:
+			parseSystem(container);
+			break;
+		case Container::IdAutomation:
 			parseSystem(container);
 			break;
 		}
