@@ -50,11 +50,13 @@ MenuColumn {
     }
 
     Timer {
+        // this timer is useful to let the user see the feedback when
+        // she has inserted a code into the KeyPad
         id: keypadTimer
         repeat: false
         interval: 1000
         running: false
-        onTriggered: privateProps.finalizeAction();
+        onTriggered: pageObject.closeKeyPad()
     }
 
     QtObject {
@@ -93,7 +95,7 @@ MenuColumn {
             popupLoader.item.textInsertedChanged.connect(handleTextInserted)
             model.codeAccepted.connect(handleCodeAccepted)
             model.codeRefused.connect(handleCodeRefused)
-            model.codeTimeout.connect(handleCodeTimeout)
+            model.codeTimeout.connect(pageObject.closeKeyPad())
         }
 
         function handleTextInserted() {
@@ -116,18 +118,6 @@ MenuColumn {
         function handleCodeRefused() {
             popupLoader.item.state = "error"
             keypadTimer.start()
-        }
-
-        function handleCodeTimeout() {
-            pageObject.closeKeyPad()
-        }
-
-        function finalizeAction() {
-            if (popupLoader.item.state === "ok") {
-                pageObject.closeKeyPad()
-            }
-            else
-                pageObject.resetKeyPad()
         }
     }
 
