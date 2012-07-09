@@ -35,6 +35,10 @@ SvgImage {
         visible: bg.enabled
         onPressed: clickTimer.running = timerEnabled
         onReleased: clickTimer.running = false
+        onVisibleChanged: {
+            if (visible === false)
+                clickTimer.running = false
+        }
     }
 
     SvgImage {
