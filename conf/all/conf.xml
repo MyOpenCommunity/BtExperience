@@ -72,6 +72,30 @@
     <where>4</where>
     <fancoil>0</fancoil>
   </item>
+  <item>
+    <id>32</id>
+    <itemID>13</itemID>
+    <descr>Sonda non controllata #1</descr>
+    <where>116</where>
+  </item>
+  <item>
+    <id>32</id>
+    <itemID>14</itemID>
+    <descr>Sonda non controllata #2</descr>
+    <where>117</where>
+  </item>
+  <item>
+    <id>33</id>
+    <itemID>15</itemID>
+    <descr>Sonda esterna #1</descr>
+    <where>118</where>
+  </item>
+  <item>
+    <id>33</id>
+    <itemID>16</itemID>
+    <descr>Sonda esterna #2</descr>
+    <where>119</where>
+  </item>
 	<!-- Antintrusion system -->
 	<obj cid="13001" id="13001" descr="Zone" where="#1" mon="0" >
 		<ist uii="1001" descr="ingresso" where="#1" />
