@@ -45,7 +45,8 @@ public:
 	{
 		IdLights = 1,
 		IdRooms,
-		IdFloors
+		IdFloors,
+		IdAutomation
 	};
 
 	Container(int id, int uii, QString image, QString description);

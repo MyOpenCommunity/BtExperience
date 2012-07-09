@@ -23,6 +23,13 @@
 			<!-- uii 3, 4 not inserted. Only in the archive but not visualized -->
 		</ist>
 	</container>
+	<container id="4" descr="automation"> 
+		<ist uii="4">
+			<link uii="15" />
+			<link uii="16" />
+			<link uii="17" />
+		</ist>
+	</container>
 	<container id="2" > <!-- rooms -->
 		<ist uii="102" descr="living room">
 			<link uii="1" x="0" y="0"/>
