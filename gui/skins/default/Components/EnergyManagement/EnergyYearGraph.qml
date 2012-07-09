@@ -30,9 +30,9 @@ Item {
             return false
         }
 
-        property real maxValue: modelGraph.maxValue * 1.1
+        property real maxValue: Math.max(modelGraph.maxValue, previousGraph.maxValue) * 1.1
         property int previousYearSpacing: 2
-        property int columnSpacing: hasPreviousYear() ? 17 - previousYearPrototype.width - previousYearSpacing : 17
+        property int columnSpacing: 17
     }
 
     SvgImage {
@@ -98,7 +98,7 @@ Item {
             top: parent.top
             left: valuesAxis.right
         }
-        spacing: privateProps.columnSpacing
+        spacing: privateProps.columnSpacing - (privateProps.hasPreviousYear() ? previousYearPrototype.width + privateProps.previousYearSpacing : 0)
         Repeater {
             Item {
                 width: columnGraphBg.width + (previusYearBar.visible ? previusYearBar.width + privateProps.previousYearSpacing : 0)
@@ -154,6 +154,7 @@ Item {
                 }
 
                 SvgImage {
+                    visible: privateProps.hasPreviousYear()
                     source: "../../images/energy/ombra_colonna_previous_year.svg"
                     anchors.top: previusYearBar.bottom
                     anchors.left: previusYearBar.left
@@ -162,4 +163,33 @@ Item {
             model: privateProps.modelGraph.graph
         }
     }
+
+
+    Item {
+        id: periodAxis
+        height: childrenRect.height
+
+        anchors {
+            left: graph.left
+            right: graph.right
+            top: graph.bottom
+            topMargin: 5
+        }
+
+
+        Repeater {
+            model: privateProps.modelGraph.graph
+            UbuntuLightText {
+                text: model.modelData.label
+                font.capitalization: Font.AllUppercase
+                width: columnPrototype.width
+                color: "white"
+                font.pixelSize: 12
+                horizontalAlignment: Text.AlignHCenter
+                x: index * (columnPrototype.width + privateProps.columnSpacing)
+            }
+        }
+    }
+
+
 }

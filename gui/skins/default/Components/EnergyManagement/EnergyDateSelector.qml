@@ -6,6 +6,7 @@ Row {
     id: selector
     property date monthDate: new Date()
     property date yearDate: new Date()
+    property date dayDate: new Date()
 
     spacing: 4
 
@@ -40,7 +41,26 @@ Row {
 
 
     function isEnergyDayValid(d) {
-        // TODO: implement!
+        var currentDate = new Date()
+        if (d.getTime() > currentDate.getTime())
+            return false
+
+        var year = d.getFullYear()
+        var month = d.getMonth()
+        var day = d.getDate()
+
+        var cur_year = currentDate.getFullYear()
+        var cur_month = currentDate.getMonth()
+        var cur_day = currentDate.getDate()
+
+        if (year === cur_year)
+            return true
+        if (year === cur_year -1 && month > cur_month)
+            return true
+
+        if (year === cur_year -1 && month === cur_month && day > cur_day)
+            return true
+
         return false
     }
 
@@ -115,6 +135,48 @@ Row {
             return selector.isEnergyYearValid(_nextYear(selector.yearDate))
         }
 
+
+        // Day functions
+        function previousDay() {
+            selector.dayDate = _previousDay(selector.dayDate)
+        }
+
+        function daysInMonth(month, year) {
+            return new Date(year, month + 1, 0).getDate()
+        }
+
+        function _previousDay(d) {
+            if (d.getDate() === 1) {
+                d = _previousMonth(d)
+                d.setDate(daysInMonth(d.getMonth(), d.getFullYear()))
+            }
+            else
+                d.setDate(d.getDate() - 1)
+            return d
+        }
+
+        function nextDay() {
+            selector.dayDate = _nextDay(selector.dayDate)
+        }
+
+        function _nextDay(d) {
+            var day = d.getDate() + 1
+            if (day > daysInMonth(d.getMonth(), d.getFullYear())) {
+                d.setDate(1)
+                return _nextMonth(d)
+            }
+
+            d.setDate(d.getDate() + 1)
+            return d
+        }
+
+        function previousDayEnabled() {
+            return selector.isEnergyDayValid(_previousDay(selector.dayDate))
+        }
+
+        function nextDayEnabled() {
+            return selector.isEnergyDayValid(_nextDay(selector.dayDate))
+        }
     }
 
     ButtonImageThreeStates {
@@ -200,6 +262,15 @@ Row {
             PropertyChanges { target: previousButton; enabled: privateProps.previousYearEnabled() }
             PropertyChanges { target: nextButton; onClicked: privateProps.nextYear() }
             PropertyChanges { target: nextButton; enabled: privateProps.nextYearEnabled() }
+        },
+        State {
+            name: "day"
+            PropertyChanges { target: textLabel; text: qsTr("day") }
+            PropertyChanges { target: dateLabel; text: Qt.formatDateTime(selector.dayDate, qsTr("dd/MM/yyyy")) }
+            PropertyChanges { target: previousButton; onClicked: privateProps.previousDay() }
+            PropertyChanges { target: previousButton; enabled: privateProps.previousDayEnabled() }
+            PropertyChanges { target: nextButton; onClicked: privateProps.nextDay() }
+            PropertyChanges { target: nextButton; enabled: privateProps.nextDayEnabled() }
         }
     ]
 }

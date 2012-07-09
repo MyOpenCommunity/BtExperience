@@ -10,16 +10,16 @@ Item {
 
     QtObject {
         id: privateProps
-        property variant modelGraph: energyData.getGraph(EnergyData.CumulativeMonthGraph, graphDate,
+        property variant modelGraph: energyData.getGraph(EnergyData.CumulativeDayGraph, graphDate,
                                                          showCurrency ? EnergyData.Currency : EnergyData.Consumption)
         property real maxValue: modelGraph.maxValue * 1.1
-        property int columnSpacing: 6
+        property int columnSpacing: 5
     }
 
     SvgImage {
         id: columnPrototype
         visible: false
-        source: "../../images/energy/colonna_month.svg"
+        source: "../../images/energy/colonna_day.svg"
     }
 
     UbuntuLightText {
@@ -84,12 +84,12 @@ Item {
                 }
 
                 SvgImage {
-                    source: "../../images/energy/ombra_colonna_month.svg"
+                    source: "../../images/energy/ombra_colonna_day.svg"
                     anchors.top: columnGraphBg.bottom
                 }
 
                 SvgImage {
-                    source: "../../images/energy/colonna_month_verde.svg"
+                    source: "../../images/energy/colonna_day_verde.svg"
                     anchors {
                         left: columnGraphBg.left
                         right: columnGraphBg.right
@@ -125,12 +125,18 @@ Item {
         Repeater {
             model: privateProps.modelGraph.graph
             UbuntuLightText {
-                visible: (index + 1) % 5 === 0 || index === 0
-                text: model.modelData.label
+                visible: (index + 1) % 6 === 0 || index === 0
+                text: index === 0 ? 0 : model.modelData.label
                 width: columnPrototype.width
                 color: "white"
                 font.pixelSize: 12
-                horizontalAlignment: Text.AlignHCenter
+                horizontalAlignment: {
+                    if (index === 0)
+                        return Text.AlignLeft
+                    if (index === privateProps.modelGraph.graph.length - 1)
+                        return Text.AlignRight
+                    return Text.AlignHCenter
+                }
                 x: index * (columnPrototype.width + privateProps.columnSpacing)
             }
         }
@@ -143,12 +149,13 @@ Item {
             topMargin: 10
             left: periodAxis.left
         }
-        text: qsTr("day")
+        text: qsTr("hour")
         color: "white"
         font.pixelSize: 12
     }
 
 }
+
 
 
 
