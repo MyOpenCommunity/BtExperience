@@ -105,6 +105,16 @@ class ThermalControlledProbe : public ObjectInterface
 	*/
 	Q_PROPERTY(CentralType centralType READ getCentralType CONSTANT)
 
+	/*!
+		\brief Gets the mimimum allowed temperature for manual mode (in Celsius degrees * 10)
+	*/
+	Q_PROPERTY(int minimumManualTemperature READ getMinimumManualTemperature CONSTANT)
+
+	/*!
+		\brief Gets the maximum allowed temperature for manual mode (in Celsius degrees * 10)
+	*/
+	Q_PROPERTY(int maximumManualTemperature READ getMaximumManualTemperature CONSTANT)
+
 	Q_ENUMS(ProbeStatus CentralType)
 
 public:
@@ -140,6 +150,9 @@ public:
 
 	int getTemperature() const;
 
+	int getMinimumManualTemperature() const;
+	int getMaximumManualTemperature() const;
+
 	int getSetpoint() const;
 	void setSetpoint(int sp);
 
@@ -164,7 +177,7 @@ private:
 	QString key;
 	ProbeStatus plant_status, local_status;
 	int setpoint;
-	int temperature, local_offset;
+	int temperature, local_offset, minimumManualTemperature, maximumManualTemperature;
 	CentralType central_type;
 };
 

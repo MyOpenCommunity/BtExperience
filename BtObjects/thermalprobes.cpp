@@ -1,6 +1,7 @@
 #include "thermalprobes.h"
 #include "scaleconversion.h" // bt2Celsius
 #include "probe_device.h"
+#include "thermal_device.h" // for min/max manual temps
 
 #include <QDebug>
 
@@ -50,8 +51,21 @@ ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, Cent
 	plant_status = Unknown;
 	local_status = Normal;
 	temperature = local_offset = 0;
-	setpoint = 0;
 	central_type = _central_type;
+	// TODO for now, min/max manual temps are retrieved by fake devices
+	if (central_type == CentralUnit99Zones)
+	{
+		ThermalDevice99Zones cu("0");
+		minimumManualTemperature = cu.minimumTemp();
+		maximumManualTemperature = cu.maximumTemp();
+	}
+	else
+	{
+		ThermalDevice4Zones cu("0#1");
+		minimumManualTemperature = cu.minimumTemp();
+		maximumManualTemperature = cu.maximumTemp();
+	}
+	setpoint = (minimumManualTemperature + maximumManualTemperature) / 2;
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
@@ -99,6 +113,8 @@ int ThermalControlledProbe::getSetpoint() const
 
 void ThermalControlledProbe::setSetpoint(int sp)
 {
+	if ((sp < getMinimumManualTemperature()) || (sp > getMaximumManualTemperature()))
+		return;
 	if (celsius2Bt(sp) != static_cast<unsigned>(setpoint))
 		dev->setManual(celsius2Bt(sp));
 }
@@ -116,6 +132,16 @@ ThermalControlledProbe::CentralType ThermalControlledProbe::getCentralType() con
 int ThermalControlledProbe::getTemperature() const
 {
 	return bt2Celsius(temperature);
+}
+
+int ThermalControlledProbe::getMinimumManualTemperature() const
+{
+	return bt2Celsius(minimumManualTemperature);
+}
+
+int ThermalControlledProbe::getMaximumManualTemperature() const
+{
+	return bt2Celsius(maximumManualTemperature);
 }
 
 void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)

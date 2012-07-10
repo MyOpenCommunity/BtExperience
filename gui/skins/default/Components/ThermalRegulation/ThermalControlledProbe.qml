@@ -179,10 +179,18 @@ MenuColumn {
 
             ControlMinusPlus {
                 title: qsTr("temperature set")
-                text: setpoint / 10 + qsTr("°C")
+                text: (setpoint / 10).toFixed(1) + qsTr("°C")
                 changeable: is99zones
-                onMinusClicked: rootManualComponent.setpoint -= 5
-                onPlusClicked: rootManualComponent.setpoint += 5
+                onMinusClicked: {
+                    if (rootManualComponent.setpoint - 5 < column.dataModel.minimumManualTemperature)
+                        return
+                    rootManualComponent.setpoint -= 5
+                }
+                onPlusClicked: {
+                    if (rootManualComponent.setpoint + 5 > column.dataModel.maximumManualTemperature)
+                        return
+                    rootManualComponent.setpoint += 5
+                }
             }
 
             ControlUpDown {

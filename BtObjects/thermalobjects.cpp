@@ -427,7 +427,7 @@ void ThermalControlUnitOff::apply()
 ThermalControlUnitManual::ThermalControlUnitManual(QString name, ThermalDevice *dev) :
 	ThermalControlUnitObject(name, dev)
 {
-	current[TEMPERATURE] = 0;
+	current[TEMPERATURE] = (getMinimumManualTemperature() + getMaximumManualTemperature()) / 2;
 	to_apply = current;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
@@ -439,6 +439,8 @@ int ThermalControlUnitManual::getTemperature() const
 
 void ThermalControlUnitManual::setTemperature(int temp)
 {
+	if ((temp < getMinimumManualTemperature()) || (temp > getMaximumManualTemperature()))
+		return;
 	if (celsius2Bt(temp) != to_apply[TEMPERATURE].toUInt())
 	{
 		to_apply[TEMPERATURE] = celsius2Bt(temp);
@@ -469,7 +471,6 @@ void ThermalControlUnitManual::valueReceived(const DeviceValues &values_list)
 		int val = values_list[ThermalDevice::DIM_TEMPERATURE].toInt();
 		if (val != current[TEMPERATURE].toInt())
 		{
-			qDebug() << "ThermalControlUnitManual temperature received:" << val;
 			current[TEMPERATURE] = val;
 			to_apply = current;
 			emit temperatureChanged();
