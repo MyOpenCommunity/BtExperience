@@ -90,7 +90,7 @@ MenuColumn {
     Connections {
         target: dataModel
         onSeasonChanged: {
-            seasonItem.description = pageObject.names.get('SEASON', season)
+            seasonItem.description = pageObject.names.get('SEASON', dataModel.season)
         }
     }
 
