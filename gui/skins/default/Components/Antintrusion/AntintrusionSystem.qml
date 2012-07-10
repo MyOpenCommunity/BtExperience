@@ -95,7 +95,7 @@ MenuColumn {
             popupLoader.item.textInsertedChanged.connect(handleTextInserted)
             model.codeAccepted.connect(handleCodeAccepted)
             model.codeRefused.connect(handleCodeRefused)
-            model.codeTimeout.connect(pageObject.closeKeyPad())
+            model.codeTimeout.connect(pageObject.closeKeyPad)
         }
 
         function handleTextInserted() {
