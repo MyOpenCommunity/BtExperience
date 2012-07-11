@@ -37,7 +37,7 @@ Page {
                 leftMargin: parent.width / 100 * 5
             }
 
-            font.pixelSize: 24
+            font.pixelSize: 28
             text: qsTr("energy consumption")
             color: "white"
         }
@@ -66,6 +66,7 @@ Page {
                 pressedImage: "images/energy/btn_value_P.svg"
                 selectedImage: "images/energy/btn_value_S.svg"
                 shadowImage: "images/energy/ombra_btn_value.svg"
+                font.pixelSize: 14
                 text: qsTr("€")
                 status: privateProps.showCurrency === true ? 1 : 0
                 onClicked: privateProps.showCurrency = true
@@ -76,6 +77,7 @@ Page {
                 pressedImage: "images/energy/btn_value_P.svg"
                 selectedImage: "images/energy/btn_value_S.svg"
                 shadowImage: "images/energy/ombra_btn_value.svg"
+                font.pixelSize: 14
                 text: qsTr("units")
                 status: privateProps.showCurrency === false ? 1 : 0
                 onClicked: privateProps.showCurrency = false

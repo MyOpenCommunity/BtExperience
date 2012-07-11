@@ -145,7 +145,7 @@ Column {
 
             UbuntuLightText {
                 anchors.centerIn: parent
-                font.pixelSize: 14
+                font.pixelSize: 18
                 text: privateProps.formatValue(EnergyData.CurrentValue)
             }
         }

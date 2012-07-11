@@ -48,7 +48,7 @@ Page {
                 leftMargin: parent.width / 100 * 5
             }
 
-            font.pixelSize: 24
+            font.pixelSize: 28
             text: translations.get("ENERGY_TYPE", energyType)
             color: "white"
         }
@@ -78,6 +78,7 @@ Page {
                 selectedImage: "images/energy/btn_value_S.svg"
                 shadowImage: "images/energy/ombra_btn_value.svg"
                 text: qsTr("€")
+                font.pixelSize: 14
                 status: privateProps.showCurrency === true ? 1 : 0
                 onClicked: privateProps.showCurrency = true
             }
@@ -88,6 +89,7 @@ Page {
                 selectedImage: "images/energy/btn_value_S.svg"
                 shadowImage: "images/energy/ombra_btn_value.svg"
                 text: qsTr("units")
+                font.pixelSize: 14
                 status: privateProps.showCurrency === false ? 1 : 0
                 onClicked: privateProps.showCurrency = false
             }
