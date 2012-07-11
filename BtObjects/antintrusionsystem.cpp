@@ -515,6 +515,7 @@ void AntintrusionSystem::toggleActivation(const QString &password)
 {
 	dev->toggleActivation(password);
 	waiting_response = true;
+	QTimer::singleShot(CODE_TIMEOUT_SECS * 1000, this, SLOT(handleCodeTimeout()));
 }
 
 bool AntintrusionSystem::canPartialize() const
