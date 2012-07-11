@@ -71,6 +71,15 @@ Page {
                 right: divisorLine.right
             }
 
+            UbuntuLightText {
+                text: "value"
+                color: "white"
+                anchors.verticalCenter: moneyButton.verticalCenter
+                font.pixelSize: 14
+                anchors.right: moneyButton.left
+                anchors.rightMargin: 15
+            }
+
             ButtonThreeStates {
                 id: moneyButton
                 defaultImage: "images/energy/btn_value.svg"
