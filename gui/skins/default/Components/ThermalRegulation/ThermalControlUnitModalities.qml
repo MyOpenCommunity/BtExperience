@@ -6,26 +6,24 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    height: Math.max(1, 50 * itemList.count)
-    width: 212
+    property variant idx: -1
 
     signal modalitySelected(variant obj)
+
+    height: Math.max(1, 50 * itemList.count)
+    width: 212
 
     ListView {
         id: itemList
         anchors.fill: parent
-        currentIndex: selectItem()
-        interactive: false
-
-        function selectItem() {
-            if (column.dataModel.currentModality) {
-                for (var i = 0; i < itemList.count; i++) {
-                    if (modalitiesModel.getObject(i).objectId === column.dataModel.currentModality.objectId)
-                        return i;
-                }
+        currentIndex: {
+            for (var i = 0; i < model.count; ++i) {
+                if (model.getObject(i) === column.idx)
+                    return i
             }
             return -1
         }
+        interactive: false
 
         delegate: MenuItemDelegate {
             itemObject: modalitiesModel.getObject(index)

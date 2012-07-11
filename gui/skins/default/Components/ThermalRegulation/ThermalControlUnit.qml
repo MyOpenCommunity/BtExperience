@@ -35,6 +35,7 @@ MenuColumn {
         id: privateProps
         property int currentElement: -1
         property int pendingSeason: -1
+        property variant pendingModality: undefined
 
         function getDateTime(objModel) {
             var m = objModel.months
@@ -58,7 +59,6 @@ MenuColumn {
         closeColumn()
         if (privateProps.pendingSeason !== -1) {
             dataModel.season = privateProps.pendingSeason
-            privateProps.pendingSeason = -1
         }
     }
 
@@ -135,6 +135,7 @@ MenuColumn {
             itemLoader.setComponent(weekdayComponent, properties)
             break
         }
+        privateProps.pendingModality = obj
     }
 
     Item {
@@ -164,7 +165,10 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentElement !== 1)
                     privateProps.currentElement = 1
-                column.loadColumn(thermalControlUnitSeasons, seasonItem.name, column.dataModel)
+                var s = privateProps.pendingSeason
+                if (s === -1)
+                    s = column.dataModel.season
+                column.loadColumn(thermalControlUnitSeasons, seasonItem.name, column.dataModel, {"idx": s})
             }
         }
 
@@ -175,9 +179,12 @@ MenuColumn {
             name: qsTr("mode")
             isSelected: privateProps.currentElement === 2
             onClicked: {
-                column.loadColumn(thermalControlUnitModalities, modalityItem.name, column.dataModel)
                 if (privateProps.currentElement !== 2)
                     privateProps.currentElement = 2
+                var m = privateProps.pendingModality
+                if (m === undefined)
+                    m = column.dataModel.currentModality
+                column.loadColumn(thermalControlUnitModalities, modalityItem.name, column.dataModel, {"idx": m})
             }
         }
 

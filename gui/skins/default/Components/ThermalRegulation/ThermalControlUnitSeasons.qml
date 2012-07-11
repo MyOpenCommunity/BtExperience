@@ -5,29 +5,26 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
+    property int idx: -1
+
+    signal seasonSelected(int season)
+
     height: 100
     width: 212
-    signal seasonSelected(int season)
 
     ListView {
         id: itemList
         anchors.fill: parent
-        currentIndex: selectItem()
+        currentIndex: column.idx
         interactive: false
-
-        function selectItem() {
-            for (var i = 0; i < modelList.count; i++) {
-                if (modelList.get(i).type === dataModel.season)
-                    return i;
-            }
-            return -1
-        }
 
         delegate: MenuItemDelegate {
             name: model.name
-            onDelegateClicked: {
+            onClicked: {
                 var clickedItem = modelList.get(index)
                 column.seasonSelected(clickedItem.type)
+                column.closeColumn()
             }
         }
 
@@ -38,6 +35,9 @@ MenuColumn {
                          ThermalControlUnit.Winter]
                 for (var i = 0; i < l.length; i++)
                     append({"type": l[i], "name": pageObject.names.get('SEASON', l[i])})
+                // restores the right value for the itemList currentIndex property
+                // because the append function changes it
+                itemList.currentIndex = column.idx
             }
         }
     }
