@@ -227,9 +227,9 @@ Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType ftime, bo
 	seconds = ctime.second();
 	ectime = _ectime;
 	if (ftime == FixedTimingDisabled)
-		autoTurnOff = true;
-	else
 		autoTurnOff = false;
+	else
+		autoTurnOff = true;
 	ftimes = new ChoiceList(this);
 	// if enums changes, this has to be modified
 	for (int i = FixedTimingMinutes1; i <= FixedTimingSeconds0_5; ++i)
@@ -318,7 +318,7 @@ int Light::getSeconds()
 
 Light::FixedTimingType Light::getFTime() const
 {
-	int result = autoTurnOff ? -1 : ftimes->value();
+	int result = autoTurnOff ? ftimes->value() : -1;
 	return static_cast<Light::FixedTimingType>(result);
 }
 
@@ -330,19 +330,16 @@ QObject *Light::getFTimes() const
 
 void Light::setActive(bool on)
 {
-	// firstly, turn light on or off
-	// here we have a polymorphic call because we may need some additional logic
-	// like timing
-	turn(on);
-
-	// lastly, if we turned light on and autoTurnOff is true, set auto turn off
 	if (on && autoTurnOff)
 	{
+		// advanced turn on
 		if (ectime)
 			dev->variableTiming(hours, minutes, seconds);
 		else
 			dev->fixedTiming(getFTime());
 	}
+	else // normal turn on
+		turn(on);
 }
 
 void Light::prevFTime()

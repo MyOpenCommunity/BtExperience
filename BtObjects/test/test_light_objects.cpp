@@ -72,7 +72,6 @@ void TestLight::testSetTiming()
 	obj->seconds = 3;
 	obj->setAutoTurnOff(true);
 	obj->setActive(true);
-	dev->turnOn();
 	dev->variableTiming(15, 0, 3);
 
 	compareClientCommand();
@@ -127,6 +126,19 @@ void TestLight::testTurnOnWithFTimeDisabled()
 	obj_ftime->setAutoTurnOff(false);
 	obj_ftime->setActive(true);
 	dev->turnOn();
+
+	compareClientCommand();
+}
+
+void TestLight::testTurnOnWithFTimeEnabled()
+{
+	clearAllClients();
+
+	obj_ftime->setAutoTurnOff(true);
+	obj_ftime->nextFTime();
+	obj_ftime->nextFTime();
+	obj_ftime->setActive(true);
+	dev->fixedTiming(Light::FixedTimingMinutes3);
 
 	compareClientCommand();
 }

@@ -49,6 +49,7 @@ private slots:
 	void testSetMinutes();
 	void testSetSeconds();
 	void testTurnOnWithFTimeDisabled();
+	void testTurnOnWithFTimeEnabled();
 
 private:
 	Light *obj;
