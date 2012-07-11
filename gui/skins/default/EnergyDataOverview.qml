@@ -61,7 +61,7 @@ Page {
             }
 
             UbuntuLightText {
-                text: "value"
+                text: qsTr("value")
                 color: "white"
                 anchors.verticalCenter: moneyButton.verticalCenter
                 font.pixelSize: 14

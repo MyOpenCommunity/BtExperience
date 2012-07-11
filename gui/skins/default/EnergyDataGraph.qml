@@ -76,7 +76,7 @@ Page {
                 }
 
                 UbuntuLightText {
-                    text: "time"
+                    text: qsTr("time")
                     color: "white"
                     anchors.verticalCenter: dayButton.verticalCenter
                     font.pixelSize: 14
@@ -170,7 +170,7 @@ Page {
                 }
 
                 UbuntuLightText {
-                    text: "value"
+                    text: qsTr("value")
                     color: "white"
                     anchors.verticalCenter: moneyButton.verticalCenter
                     font.pixelSize: 14
