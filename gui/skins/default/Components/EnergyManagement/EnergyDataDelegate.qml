@@ -101,10 +101,10 @@ Column {
                 anchors.bottom: parent.bottom
                 source: {
                     if (logic.consumptionExceedGoal()) {
-                        "../../images/energy/colonna_rosso" + (isOverview ? '_overview' : '') + ".svg"
+                        return "../../images/energy/colonna_rosso" + (isOverview ? '_overview' : '') + ".svg"
                     }
                     else {
-                        "../../images/energy/colonna_verde" + (isOverview ? '_overview' : '') + ".svg"
+                        return "../../images/energy/colonna_verde" + (isOverview ? '_overview' : '') + ".svg"
                     }
                 }
                 height: logic.getConsumptionSize(parent.height)
