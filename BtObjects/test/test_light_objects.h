@@ -97,6 +97,7 @@ private slots:
 	void testStepAmount();
 	void testOnSpeedNotUsed();
 	void testTurnOnWithFTimeDisabled();
+	void testTurnOnWithFTimeEnabled();
 
 private:
 	virtual void testSetStatus();

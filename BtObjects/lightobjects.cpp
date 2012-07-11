@@ -536,6 +536,20 @@ int Dimmer100::getStepAmount() const
 	return step_amount;
 }
 
+void Dimmer100::setActive(bool on)
+{
+	// normal turn on
+	turn(on);
+	if (on && autoTurnOff)
+	{
+		// advanced turn on to set timing
+		if (ectime)
+			dev->variableTiming(hours, minutes, seconds);
+		else
+			dev->fixedTiming(getFTime());
+	}
+}
+
 void Dimmer100::turn(bool on)
 {
 	// turn on or off light with speed (if defined)

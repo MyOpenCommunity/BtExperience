@@ -362,6 +362,20 @@ void TestDimmer100::testTurnOnWithFTimeDisabled()
 	compareClientCommand();
 }
 
+void TestDimmer100::testTurnOnWithFTimeEnabled()
+{
+	clearAllClients();
+
+	obj_ftime->setAutoTurnOff(true);
+	obj_ftime->nextFTime();
+	obj_ftime->nextFTime();
+	obj_ftime->setActive(true);
+	dev->turnOn(255);
+	dev->fixedTiming(Light::FixedTimingMinutes3);
+
+	compareClientCommand();
+}
+
 void TestDimmer100::testSetTiming()
 {
 	clearAllClients();
