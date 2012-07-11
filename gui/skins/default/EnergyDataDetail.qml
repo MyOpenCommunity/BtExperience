@@ -106,12 +106,18 @@ Page {
         CardView {
             id: columnView
             anchors {
+                // TODO: I'd like to center the arrows in the 'gray' area on the
+                // left/right of the EnergyDataDelegate items.
+                // However using the current code is too difficult (long), so we
+                // avoid wasting time and we hardocode the left/right margins.
                 bottom: parent.bottom
                 bottomMargin: 20
-                horizontalCenter: parent.horizontalCenter
+                left: parent.left
+                leftMargin: 12
+                right: parent.right
+                rightMargin: 12
             }
             height: 315
-            width: 850
             delegate: EnergyDataDelegate {
                 id: delegate
                 itemObject: energiesCounters.getObject(index)
