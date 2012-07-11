@@ -126,7 +126,7 @@ Column {
     UbuntuLightText {
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: 14
-        text: "may 2012"
+        text: Qt.formatDate(logic.monthConsumptionItem.date, "MMM yyyy")
         color: "white"
     }
 
