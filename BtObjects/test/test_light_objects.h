@@ -49,6 +49,7 @@ private slots:
 	void testSetMinutes();
 	void testSetSeconds();
 	void testTurnOnWithFTimeDisabled();
+	void testTurnOnWithFTimeEnabled();
 
 private:
 	Light *obj;
@@ -96,6 +97,7 @@ private slots:
 	void testStepAmount();
 	void testOnSpeedNotUsed();
 	void testTurnOnWithFTimeDisabled();
+	void testTurnOnWithFTimeEnabled();
 
 private:
 	virtual void testSetStatus();

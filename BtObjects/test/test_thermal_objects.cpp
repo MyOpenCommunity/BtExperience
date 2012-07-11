@@ -224,11 +224,11 @@ void TestThermalControlUnitManual::initObjects(ThermalDevice *_dev, ThermalContr
 void TestThermalControlUnitManual::testSetTemperature()
 {
 	ObjectTester t(obj, SIGNAL(temperatureChanged()));
-	obj->setTemperature(20);
+	obj->setTemperature(30);
 	t.checkSignals();
-	QCOMPARE(obj->getTemperature(), 20);
+	QCOMPARE(obj->getTemperature(), 30);
 
-	obj->setTemperature(20);
+	obj->setTemperature(30);
 	t.checkNoSignals();
 }
 
@@ -248,10 +248,10 @@ void TestThermalControlUnitManual::testReceiveTemperature()
 
 void TestThermalControlUnitManual::testApply()
 {
-	obj->setTemperature(20);
+	obj->setTemperature(30);
 
 	obj->apply();
-	dev->setManualTemp(20);
+	dev->setManualTemp(30);
 	compareClientCommand();
 }
 
@@ -296,10 +296,10 @@ void TestThermalControlUnitTimedManual::testApply()
 	obj->setHours(time.hour());
 	obj->setMinutes(time.minute());
 	obj->setSeconds(time.second());
-	obj->setTemperature(20);
+	obj->setTemperature(30);
 
 	obj->apply();
-	dev->setManualTempTimed(20, time);
+	dev->setManualTempTimed(30, time);
 	compareClientCommand();
 }
 

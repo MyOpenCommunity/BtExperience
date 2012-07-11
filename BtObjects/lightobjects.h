@@ -180,10 +180,10 @@ protected:
 	QString key;
 	bool active;
 	bool ectime;
+	bool autoTurnOff;
+	int hours, minutes, seconds;
 
 private:
-	int hours, minutes, seconds;
-	bool autoTurnOff;
 	ChoiceList *ftimes;
 };
 
@@ -371,6 +371,8 @@ public:
 
 	void setStepAmount(int amount);
 	int getStepAmount() const;
+
+	virtual void setActive(bool on);
 
 public slots:
 	/*!

@@ -89,14 +89,16 @@ void TestThermalControlledProbes::compareClientCommand()
 
 void TestThermalControlledProbes::testSetSetPoint()
 {
+	clearAllClients();
+
 	// test sending the first frame
-	obj->setSetpoint(-10);
-	dev->setManual(1010);
+	obj->setSetpoint(30);
+	dev->setManual(30);
 	compareClientCommand();
 
 	// test sending again with the same set point
-	obj->setSetpoint(-10);
-	dev->setManual(1010);
+	obj->setSetpoint(30);
+	dev->setManual(30);
 	compareClientCommand();
 
 	// TODO check frame not sent if same setpoint
@@ -109,7 +111,7 @@ void TestThermalControlledProbes::testSetProbeStatus()
 	compareClientCommand();
 
 	obj->setProbeStatus(ThermalControlledProbe::Manual);
-	dev->setManual(0);
+	dev->setManual(215);
 	compareClientCommand();
 
 	obj->setProbeStatus(ThermalControlledProbe::Auto);
