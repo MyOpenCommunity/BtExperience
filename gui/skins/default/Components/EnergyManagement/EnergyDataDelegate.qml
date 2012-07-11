@@ -3,14 +3,20 @@ import Components 1.0
 import Components.Text 1.0
 import BtObjects 1.0
 
+
 Column {
     id: delegate
     property alias description: topText.text
     property variant itemObject: undefined
     property int measureType: EnergyData.Consumption
     property bool isOverview: true
+    // for CardView usage
+    property int index: -1
+    property variant view
+    property alias moveAnimationRunning: defaultAnimation.running
 
     signal headerClicked(variant mouse)
+    signal removeAnimationFinished() // for CardView usage
 
     QtObject {
         id: privateProps
@@ -44,6 +50,8 @@ Column {
     }
 
     spacing: 5
+    onHeightChanged: delegate.view.height = height // for CardView usage
+
     ButtonThreeStates {
         defaultImage: "../../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
         pressedImage: "../../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
@@ -145,4 +153,25 @@ Column {
 
     Component.onCompleted: itemObject.requestCurrentUpdateStart()
     Component.onDestruction: itemObject.requestCurrentUpdateStop()
+
+    // for CardView usage
+    states: [
+        State {
+            name: "remove"
+        }
+    ]
+
+    transitions:
+        Transition {
+            from: "*"
+            to: "remove"
+            SequentialAnimation {
+                NumberAnimation { target: delegate; property: "opacity"; to: 0; duration: 200; easing.type: Easing.InSine }
+                ScriptAction { script: delegate.removeAnimationFinished() }
+            }
+        }
+
+    Behavior on x {
+        NumberAnimation { id: defaultAnimation; duration: 300; easing.type: Easing.InSine }
+    }
 }

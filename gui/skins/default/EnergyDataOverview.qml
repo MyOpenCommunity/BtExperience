@@ -92,15 +92,13 @@ Page {
             }
         }
 
-        ListView {
+        CardView {
             id: columnView
-            interactive: false
             anchors {
                 bottom: parent.bottom
                 bottomMargin: 20
                 horizontalCenter: parent.horizontalCenter
             }
-            orientation: ListView.Horizontal
             height: 315
             width: 700
             delegate: EnergyDataDelegate {
@@ -110,7 +108,8 @@ Page {
                 measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
                 onHeaderClicked: Stack.openPage("EnergyDataDetail.qml", {"energyType": itemObject.energyType})
             }
-            spacing: 100
+            delegateSpacing: 100
+            visibleElements: 3
             model: energiesCounters
         }
     }

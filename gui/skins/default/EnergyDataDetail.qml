@@ -103,17 +103,15 @@ Page {
             }
         }
 
-        ListView {
+        CardView {
             id: columnView
-            interactive: false
             anchors {
                 bottom: parent.bottom
                 bottomMargin: 20
                 horizontalCenter: parent.horizontalCenter
             }
-            orientation: ListView.Horizontal
             height: 315
-            width: 700
+            width: 850
             delegate: EnergyDataDelegate {
                 id: delegate
                 itemObject: energiesCounters.getObject(index)
@@ -122,7 +120,8 @@ Page {
                 isOverview: false
                 onHeaderClicked: Stack.openPage("EnergyDataGraph.qml", {"energyData": itemObject})
             }
-            spacing: 40
+            delegateSpacing: 40
+            visibleElements: 4
             model: energiesCounters
         }
     }

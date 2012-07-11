@@ -1,15 +1,17 @@
 import QtQuick 1.1
-import "../js/CardView.js" as Script
 // will contain all created delegates, assume we can index it from 0 to model.count
 import "../js/CustomView.js" as Vars
+import "../js/CardView.js" as CardViewScript
+
 
 Item {
+    id: cardView
+
     property int visibleElements: 3
     property int delegateSpacing: 10
     property variant model
     property Component delegate
-
-    id: cardView
+    property int delegateWidth: CardViewScript.listDelegateWidth
 
     Connections {
         target: model
@@ -77,12 +79,22 @@ Item {
             property int currentPressed: -1
 
             function initDelegates() {
-                var elementNumber = Math.min(visibleElements, model.count)
-                for (var i = 0; i < elementNumber; ++i) {
-                    var delegateX = (Script.listDelegateWidth + delegateSpacing) * i
+                currentIndex = 0
+                var n = Math.min(visibleElements, model.count)
+                if (n === 0) {
+                    return
+                }
+                // firstly, creates the first delegate at x = 0
+                Vars.dict[0] = delegate.createObject(clipView, {"x": 0, "y": 0, "index": 0, "view": clipView})
+                // then, calculates delegate width from first delegate and creates other delegates
+                // please note that some delegates width are computed from CardView.js constants
+                // while others have their own width; to account for both we recompute the delegate width
+                // from the first delegate assuming that the delegate knows its "correct" width
+                cardView.delegateWidth = Vars.dict[0].width
+                for (var i = 1; i < n; ++i) {
+                    var delegateX = (cardView.delegateWidth + delegateSpacing) * i
                     Vars.dict[i] = delegate.createObject(clipView, {"x": delegateX, "y": 0, "index": i, "view": clipView})
                 }
-                currentIndex = 0
             }
 
             function clearDelegates() {
@@ -99,7 +111,7 @@ Item {
             function moveDelegates(direction) {
                 var factor = direction === Vars.DIR_LEFT ? 1 : -1
                 for (var d in Vars.dict) {
-                    Vars.dict[d].x += (Script.listDelegateWidth + delegateSpacing) * factor
+                    Vars.dict[d].x += (cardView.delegateWidth + delegateSpacing) * factor
                 }
             }
 
@@ -113,7 +125,7 @@ Item {
                 // 1. create the new delegate outside on the right
                 var lastIndex = (currentIndex + visibleElements - 1) % model.count
                 var newDelegateIndex = (lastIndex + 1) % model.count
-                var newDelegateX = Vars.dict[lastIndex].x + Script.listDelegateWidth + delegateSpacing
+                var newDelegateX = Vars.dict[lastIndex].x + Vars.dict[lastIndex].width + delegateSpacing
                 Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": 0, "index": newDelegateIndex, "view": clipView})
 
                 // 2. Remove and destroy the leftmost delegate
@@ -130,7 +142,7 @@ Item {
                 if (newDelegateIndex < 0)
                     newDelegateIndex = model.count - 1
 
-                var newDelegateX = Vars.dict[currentIndex].x - Script.listDelegateWidth - delegateSpacing
+                var newDelegateX = Vars.dict[currentIndex].x - Vars.dict[currentIndex].width - delegateSpacing
                 Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": 0, "index": newDelegateIndex, "view": clipView})
 
                 var lastIndex = (currentIndex + visibleElements - 1) % model.count
@@ -144,8 +156,10 @@ Item {
             id: clipView
             clip: true
             width: {
-                var min = Math.min(visibleElements, model.count)
-                return min * Script.listDelegateWidth + (min - 1) * delegateSpacing
+                var n = Math.min(visibleElements, model.count)
+                if (n === 0)
+                    return 0
+                return n * cardView.delegateWidth + (n - 1) * delegateSpacing
             }
             anchors.centerIn: parent
         }
