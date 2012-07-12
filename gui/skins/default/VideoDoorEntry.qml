@@ -6,6 +6,6 @@ SystemPage {
     source: "images/videocitofonia.jpg"
     text: qsTr("video door entry")
     rootColumn: Component { VideoDoorEntryItems {} }
-    names: ThermalNames {}
+    names: VideoDoorEntryNames {}
 }
 
