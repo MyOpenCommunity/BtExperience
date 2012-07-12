@@ -103,12 +103,15 @@ Page {
                         visible: parent.enabled === false
                     }
                     onClicked: {
+                        if (page.state === "dayGraph")
+                            return
+
                         page.state = "dayGraph"
                         // Change the energy graph is an operation that ideally
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        graphLoader.sourceComponent = energyDayGraphComponent
+                        graphLoader.setComponent(energyDayGraphComponent)
                     }
                 }
                 ButtonThreeStates {
@@ -129,8 +132,11 @@ Page {
                         visible: parent.enabled === false
                     }
                     onClicked: {
+                        if (page.state === "")
+                            return
+
                         page.state = ""
-                        graphLoader.sourceComponent = energyMonthGraphComponent
+                        graphLoader.setComponent(energyMonthGraphComponent)
                     }
                 }
                 ButtonThreeStates {
@@ -151,12 +157,15 @@ Page {
                         visible: parent.enabled === false
                     }
                     onClicked: {
+                        if (page.state === "yearGraph")
+                            return
+
                         page.state = "yearGraph"
                         // Change the energy graph is an operation that ideally
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        graphLoader.sourceComponent = energyYearGraphComponent
+                        graphLoader.setComponent(energyYearGraphComponent)
                     }
                 }
             }
@@ -214,7 +223,7 @@ Page {
             }
 
 
-            Loader {
+            AnimatedLoader {
                 id: graphLoader
                 anchors {
                     top: divisorLine.bottom
@@ -222,7 +231,8 @@ Page {
                     left: divisorLine.left
                 }
 
-                sourceComponent: energyMonthGraphComponent
+                duration: 200
+                Component.onCompleted: setComponent(energyMonthGraphComponent)
             }
 
             Component {
