@@ -38,7 +38,7 @@ Item {
                 topMargin: 4
                 horizontalCenter: parent.horizontalCenter
             }
-            source: "../images/common/bg_volume.png"
+            source: "../images/common/bg_volume.svg"
 
             Image {
                 source: "../images/common/dimmer_reg.png"
