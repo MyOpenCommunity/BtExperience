@@ -3,6 +3,7 @@ import QtQuick 1.1
 Item {
     id: itemLoader
     property variant item: undefined
+    property alias duration: opacityanimation.duration
     height: 0
 
     function setComponent(component, properties) {
