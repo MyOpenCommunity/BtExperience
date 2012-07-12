@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="60px" height="50px" viewBox="0 0 60 50" enable-background="new 0 0 60 50" xml:space="preserve">
+<g>
+	<g>
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="32.5254" y1="26.4707" x2="32.5254" y2="11.3047">
+			<stop  offset="0" style="stop-color:#000000"/>
+			<stop  offset="1" style="stop-color:#4C4D4D"/>
+		</linearGradient>
+		<path fill="url(#SVGID_1_)" d="M43.27,17.464c0-3.403-4.811-6.16-10.744-6.16c-5.933,0-10.744,2.757-10.744,6.16
+			c0,2.91,3.524,5.349,8.259,5.992c-0.386,1.089-1.029,2.372-2.038,3.014c1.944,0.002,3.861-1.516,5.175-2.859
+			C38.807,23.419,43.27,20.741,43.27,17.464z"/>
+	</g>
+	<path opacity="0.2" d="M57.113,38.695H38.105c0,0,0.387-3.238,1.334-5.492c0.91-2.16,2.812-3.031,4.562-3.031
+		c2.666,0,2.395,0,3.607,0s0.941,0,3.607,0c1.75,0,3.652,0.871,4.562,3.031C56.727,35.457,57.113,38.695,57.113,38.695z
+		 M47.609,29.127c2.396,0,4.338-1.943,4.338-4.34c0-2.396-1.941-4.339-4.338-4.339s-4.34,1.942-4.34,4.339
+		C43.27,27.184,45.213,29.127,47.609,29.127z"/>
+	<g>
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="12.3906" y1="38.6953" x2="12.3906" y2="20.4482">
+			<stop  offset="0" style="stop-color:#000000"/>
+			<stop  offset="1" style="stop-color:#4C4D4D"/>
+		</linearGradient>
+		<path fill="url(#SVGID_2_)" d="M21.895,38.695H2.886c0,0,0.388-3.238,1.334-5.492c0.91-2.16,2.813-3.031,4.562-3.031
+			c2.666,0,2.396,0,3.608,0c1.212,0,0.941,0,3.607,0c1.749,0,3.652,0.871,4.562,3.031C21.507,35.457,21.895,38.695,21.895,38.695z
+			 M12.391,29.127c2.396,0,4.339-1.943,4.339-4.34c0-2.396-1.942-4.339-4.339-4.339c-2.397,0-4.34,1.942-4.34,4.339
+			C8.051,27.184,9.994,29.127,12.391,29.127z"/>
+	</g>
+</g>
+</svg>
