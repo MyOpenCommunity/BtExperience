@@ -6,20 +6,10 @@ import Components.Text 1.0
 
 MenuColumn {
     id: column
-
-    Component {
-        id: sourceList
-        SourceList {}
-    }
-
-    Component {
-        id: songBrowser
-        SongBrowser {}
-    }
+    property string imagesPath: "../../images/"
 
     width: 212
     height: sourceSelect.height + itemLoader.height
-    property string imagesPath: "../../images/"
 
     MenuItem {
         id: sourceSelect
@@ -40,41 +30,30 @@ MenuColumn {
         anchors.bottom: parent.bottom
     }
 
-    Component.onCompleted: {
-        if (column.dataModel.currentSource)
-            sourceSelected(column.dataModel.currentSource)
-    }
-
-    onChildLoaded: {
-        column.child.sourceSelected.connect(column.sourceSelected)
-    }
-
-    onChildDestroyed: privateProps.currentElement = -1
-
     QtObject {
         id: privateProps
         property int currentElement: -1
-    }
 
-    function sourceSelected(sourceObj) {
-        sourceSelect.description = sourceObj.name
-        var properties = {'objModel': sourceObj.source}
+        function sourceSelected(sourceObj) {
+            sourceSelect.description = sourceObj.name
+            var properties = {'objModel': sourceObj.source}
 
-        switch (sourceObj.source.type)
-        {
-        case SourceBase.Radio:
-            itemLoader.setComponent(fmRadio, properties)
-            break
-        case SourceBase.Aux:
-            itemLoader.setComponent(auxComponent, properties)
-            break
-        default:
-            itemLoader.setComponent(mediaPlayer, properties)
-            break
+            switch (sourceObj.source.type)
+            {
+            case SourceBase.Radio:
+                itemLoader.setComponent(fmRadio, properties)
+                break
+            case SourceBase.Aux:
+                itemLoader.setComponent(auxComponent, properties)
+                break
+            default:
+                itemLoader.setComponent(mediaPlayer, properties)
+                break
+            }
+            sourceObj.setActive(column.dataModel.area)
+
+            column.closeChild()
         }
-        sourceObj.setActive(column.dataModel.area)
-
-        column.closeChild()
     }
 
     Component {
@@ -188,10 +167,9 @@ MenuColumn {
 
         Image {
             id: control
+            property variant objModel: undefined
             width: 212
             height: 100
-            property variant objModel: undefined
-
             source: imagesPath + "common/bg_UnaRegolazione.png"
 
             UbuntuLightText {
@@ -204,4 +182,25 @@ MenuColumn {
 
         }
     }
+
+    Component {
+        id: sourceList
+        SourceList {}
+    }
+
+    Component {
+        id: songBrowser
+        SongBrowser {}
+    }
+
+    Component.onCompleted: {
+        if (column.dataModel.currentSource)
+            privateProps.sourceSelected(column.dataModel.currentSource)
+    }
+
+    onChildLoaded: {
+        column.child.sourceSelected.connect(privateProps.sourceSelected)
+    }
+
+    onChildDestroyed: privateProps.currentElement = -1
 }
