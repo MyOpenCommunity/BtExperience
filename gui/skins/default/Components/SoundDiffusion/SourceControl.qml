@@ -193,13 +193,15 @@ MenuColumn {
         SongBrowser {}
     }
 
+    Connections {
+        target: column.child
+        ignoreUnknownSignals: true
+        onSourceSelected: privateProps.sourceSelected(object)
+    }
+
     Component.onCompleted: {
         if (column.dataModel.currentSource)
             privateProps.sourceSelected(column.dataModel.currentSource)
-    }
-
-    onChildLoaded: {
-        column.child.sourceSelected.connect(privateProps.sourceSelected)
     }
 
     onChildDestroyed: privateProps.currentElement = -1
