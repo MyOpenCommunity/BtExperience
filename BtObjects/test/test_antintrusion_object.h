@@ -62,6 +62,8 @@ private slots:
 	void cleanup();
 
 	void testToggleActivation();
+	void testToggleActivationTimeout();
+	void testPartializationTimeout();
 	void testActivateSystem();
 	void testPasswordFail();
 	void testIntrusionAlarm();

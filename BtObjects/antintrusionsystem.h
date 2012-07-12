@@ -32,6 +32,13 @@
 #include <QString>
 #include <QDateTime>
 
+
+namespace AntintrusionSystemNS
+{
+	const int CODE_TIMEOUT_SECS = 10;
+}
+
+
 class AntintrusionSystem;
 class AntintrusionDevice;
 class AntintrusionZone;
@@ -276,7 +283,7 @@ private:
 */
 class AntintrusionSystem : public ObjectInterface
 {
-friend class TestAntintrusionSystem;
+	friend class TestAntintrusionSystem;
 
 	Q_OBJECT
 
