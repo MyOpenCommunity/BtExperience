@@ -1,4 +1,5 @@
 #include "mediaobjects.h"
+#include "multimediaplayer.h"
 #include "media_device.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
@@ -243,9 +244,57 @@ void SoundGeneralAmbient::setSource(SourceBase * source)
 }
 
 
-SourceBase::SourceBase(SourceDevice *d, QString _name, SourceType t)
+SourceObject::SourceObject(const QString &_name, SourceBase *s)
 {
 	name = _name;
+	source = s;
+}
+
+void SourceObject::scsSourceActiveAreasChanged()
+{
+	emit activeAreasChanged(this);
+}
+
+void SourceObject::setActive(int area)
+{
+	source->setActive(area);
+}
+
+void SourceObject::previousTrack()
+{
+	source->previousTrack();
+}
+
+void SourceObject::nextTrack()
+{
+	source->nextTrack();
+}
+
+
+
+SourceLocalMedia::SourceLocalMedia(const QString &name, SourceBase *s) :
+	SourceObject(name, s)
+{
+	media_player = new MultiMediaPlayer();
+}
+
+void SourceLocalMedia::previousTrack()
+{
+	media_player->setCurrentSource("song");
+}
+
+void SourceLocalMedia::nextTrack()
+{
+	media_player->setCurrentSource("song");
+}
+
+
+
+
+
+
+SourceBase::SourceBase(SourceDevice *d, QString name, SourceType t)
+{
 	dev = d;
 	track = 0;
 	type = t;

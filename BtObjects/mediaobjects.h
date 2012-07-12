@@ -13,9 +13,12 @@ class QDomNode;
 class AmplifierDevice;
 class SourceDevice;
 class RadioSourceDevice;
+class VirtualSourceDevice;
 class Amplifier;
+class SourceObject;
 class SourceBase;
 class PowerAmplifierDevice;
+class MultiMediaPlayer;
 
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id);
@@ -126,6 +129,79 @@ public:
 public slots:
 	void setSource(SourceBase *source);
 };
+
+
+
+
+
+
+
+/*
+  Base class for objects that represent a user visible source, eg. usb, sd,
+  ip radio, rds radio etc.
+
+  Each SourceObject communicates with one SourceBase object, which handles low
+  level communication with the bus.
+*/
+class SourceObject : public ObjectInterface
+{
+	Q_OBJECT
+	Q_PROPERTY(QObject *source READ getSource CONSTANT)
+
+public:
+	SourceObject(const QString &name, SourceBase *s);
+
+	SourceBase *getSource() const
+	{
+		return source;
+	}
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdSoundSource;
+	}
+
+	void scsSourceActiveAreasChanged();
+
+public slots:
+	/*!
+		\brief Activates this source on the specified area
+	*/
+	void setActive(int area);
+
+	/*!
+		\brief Go to the previous track (memorized station for the radio)
+	*/
+	virtual void previousTrack();
+
+	/*!
+		\brief Go to the next track (memorized station for the radio)
+	*/
+	virtual void nextTrack();
+
+signals:
+	void activeAreasChanged(SourceObject *source_object);
+
+private:
+	SourceBase *source;
+};
+
+class SourceLocalMedia : public SourceObject
+{
+	Q_OBJECT
+
+public:
+	SourceLocalMedia(const QString &name, SourceBase *s);
+
+public slots:
+	virtual void previousTrack();
+	virtual void nextTrack();
+
+private:
+	MultiMediaPlayer *media_player;
+};
+
+
 
 
 /*!
