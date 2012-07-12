@@ -108,7 +108,7 @@ Page {
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        pageContent.sourceComponent = energyDayGraphComponent
+                        graphLoader.sourceComponent = energyDayGraphComponent
                     }
                 }
                 ButtonThreeStates {
@@ -130,7 +130,7 @@ Page {
                     }
                     onClicked: {
                         page.state = ""
-                        pageContent.sourceComponent = energyMonthGraphComponent
+                        graphLoader.sourceComponent = energyMonthGraphComponent
                     }
                 }
                 ButtonThreeStates {
@@ -156,7 +156,7 @@ Page {
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        pageContent.sourceComponent = energyYearGraphComponent
+                        graphLoader.sourceComponent = energyYearGraphComponent
                     }
                 }
             }
@@ -215,7 +215,7 @@ Page {
 
 
             Loader {
-                id: pageContent
+                id: graphLoader
                 anchors {
                     top: divisorLine.bottom
                     topMargin: parent.height * 0.1
