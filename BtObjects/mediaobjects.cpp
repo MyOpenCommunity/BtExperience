@@ -1,4 +1,5 @@
 #include "mediaobjects.h"
+#include "multimediaplayer.h"
 #include "media_device.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
@@ -35,7 +36,7 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
 	//      and send sound diffusion initialization frame
 
-	QList<SourceBase *> sources;
+	QList<SourceObject *> sources;
 	foreach (const QDomNode &source, getChildren(getChildWithName(xml_node, "sources"), "item"))
 	{
 		QString name = getTextChild(source, "name");
@@ -45,13 +46,36 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		switch (type)
 		{
 		case SourceBase::Radio:
-			sources << new SourceRadio(bt_global::add_device_to_cache(new RadioSourceDevice(where)), name);
+		{
+			SourceRadio *source = new SourceRadio(bt_global::add_device_to_cache(new RadioSourceDevice(where)));
+			SourceObject *so = new SourceObject(name, source);
+			source->setParent(so);
+			source->setSourceObject(so);
+			sources << so;
+		}
 			break;
 		case SourceBase::Aux:
-			sources << new SourceAux(bt_global::add_device_to_cache(new SourceDevice(where)), name);
+		{
+			SourceAux *source = new SourceAux(bt_global::add_device_to_cache(new SourceDevice(where)));
+			SourceObject *so = new SourceObject(name, source);
+			source->setParent(so);
+			source->setSourceObject(so);
+			sources << so;
+		}
 			break;
 		case SourceBase::MultiMedia:
-			sources << new SourceMultiMedia(bt_global::add_device_to_cache(new SourceDevice(where)), name);
+		{
+			SourceMultiMedia *source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice(where)));
+			SourceObject *ip_radio = new SourceLocalMedia("IP radio", source);
+			sources << ip_radio;
+			sources << new SourceLocalMedia("USB1", source);
+			sources << new SourceLocalMedia("SD card", source);
+			// TODO: where are we going to destroy SourceMultiMedia?
+
+			// use a default
+			source->setSourceObject(ip_radio);
+		}
+			break;
 		}
 	}
 
@@ -110,13 +134,13 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		SoundGeneralAmbient *general = new SoundGeneralAmbient(QObject::tr("special zone"));
 		objects << general;
 
-		foreach(SourceBase *source, sources)
-			QObject::connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceBase *)), general, SLOT(setSource(SourceBase*)));
+//		foreach(SourceBase *source, scs_sources)
+//			QObject::connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceBase *)), general, SLOT(setSource(SourceBase*)));
 	}
 
 	foreach (Amplifier *amplifier, amplifiers)
 		objects << amplifier;
-	foreach (SourceBase *source, sources)
+	foreach (SourceObject *source, sources)
 		objects << source;
 	foreach (SoundAmbient *ambient, ambients)
 		objects << ambient;
@@ -141,7 +165,7 @@ int SoundAmbientBase::getArea() const
 	return area;
 }
 
-void SoundAmbientBase::setCurrentSource(SourceBase *other)
+void SoundAmbientBase::setCurrentSource(SourceObject *other)
 {
 	if (current_source != other)
 	{
@@ -160,10 +184,10 @@ SoundAmbient::SoundAmbient(int _area, QString name, int _object_id) :
 	previous_source = NULL;
 }
 
-void SoundAmbient::connectSources(QList<SourceBase *> sources)
+void SoundAmbient::connectSources(QList<SourceObject *> sources)
 {
-	foreach (SourceBase *source, sources)
-		QObject::connect(source, SIGNAL(activeAreasChanged()), this, SLOT(updateActiveSource()));
+	foreach (SourceObject *source, sources)
+		QObject::connect(source, SIGNAL(activeAreasChanged(SourceObject *)), this, SLOT(updateActiveSource(SourceObject *)));
 }
 
 void SoundAmbient::connectAmplifiers(QList<Amplifier *> amplifiers)
@@ -183,11 +207,10 @@ QObject *SoundAmbient::getPreviousSource() const
 	return previous_source;
 }
 
-void SoundAmbient::updateActiveSource()
+void SoundAmbient::updateActiveSource(SourceObject *source_object)
 {
-	SourceBase *source = static_cast<SourceBase *>(sender());
-
-	SourceBase *current_source = static_cast<SourceBase *>(getCurrentSource());
+	SourceBase *source = source_object->getSource();
+	SourceObject *current_source = static_cast<SourceObject *>(getCurrentSource());
 
 	// there are 3 cases
 	//
@@ -196,13 +219,13 @@ void SoundAmbient::updateActiveSource()
 	// - source is turned off on the area (isActive is false and current_source == source)
 	if (source->isActiveInArea(area))
 	{
-		if (current_source != source)
+		if (current_source != source_object)
 		{
 			previous_source = current_source;
-			setCurrentSource(source);
+			setCurrentSource(source_object);
 		}
 	}
-	else if (source == current_source)
+	else if (source_object == current_source)
 	{
 		previous_source = current_source;
 		setCurrentSource(0);
@@ -237,18 +260,68 @@ SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
 	area = 0;
 }
 
-void SoundGeneralAmbient::setSource(SourceBase * source)
+void SoundGeneralAmbient::setSource(SourceObject * source)
 {
 	setCurrentSource(source);
 }
 
 
-SourceBase::SourceBase(SourceDevice *d, QString _name, SourceType t)
+SourceObject::SourceObject(const QString &_name, SourceBase *s)
 {
 	name = _name;
+	source = s;
+}
+
+void SourceObject::scsSourceActiveAreasChanged()
+{
+	emit activeAreasChanged(this);
+}
+
+void SourceObject::setActive(int area)
+{
+	source->setActive(area);
+	source->setSourceObject(this);
+}
+
+void SourceObject::previousTrack()
+{
+	source->previousTrack();
+}
+
+void SourceObject::nextTrack()
+{
+	source->nextTrack();
+}
+
+
+
+SourceLocalMedia::SourceLocalMedia(const QString &name, SourceBase *s) :
+	SourceObject(name, s)
+{
+	media_player = new MultiMediaPlayer();
+}
+
+void SourceLocalMedia::previousTrack()
+{
+	media_player->setCurrentSource("song");
+}
+
+void SourceLocalMedia::nextTrack()
+{
+	media_player->setCurrentSource("song");
+}
+
+
+
+
+
+
+SourceBase::SourceBase(SourceDevice *d, SourceType t)
+{
 	dev = d;
 	track = 0;
 	type = t;
+	source_object = 0;
 
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 }
@@ -299,6 +372,16 @@ void SourceBase::nextTrack()
 	dev->nextTrack();
 }
 
+SourceObject *SourceBase::getSourceObject()
+{
+	return source_object;
+}
+
+void SourceBase::setSourceObject(SourceObject *so)
+{
+	source_object = so;
+}
+
 void SourceBase::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.constBegin();
@@ -328,6 +411,7 @@ void SourceBase::valueReceived(const DeviceValues &values_list)
 
 				active_areas = val;
 				emit activeAreasChanged();
+				source_object->scsSourceActiveAreasChanged();
 
 				if (active_changed)
 					emit activeChanged();
@@ -338,20 +422,58 @@ void SourceBase::valueReceived(const DeviceValues &values_list)
 }
 
 
-SourceAux::SourceAux(SourceDevice *d, QString name) :
-	SourceBase(d, name, Aux)
+SourceAux::SourceAux(SourceDevice *d) :
+	SourceBase(d, Aux)
 {
 }
 
 
-SourceMultiMedia::SourceMultiMedia(SourceDevice *d, QString name) :
-	SourceBase(d, name, MultiMedia)
+SourceMultiMedia::SourceMultiMedia(VirtualSourceDevice *d) :
+	SourceBase(d, MultiMedia)
 {
+	dev = d;
+}
+
+void SourceMultiMedia::valueReceived(const DeviceValues &values_list)
+{
+	SourceBase::valueReceived(values_list);
+
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+		switch (it.key())
+		{
+		case VirtualSourceDevice::REQ_SOURCE_ON:
+		case VirtualSourceDevice::REQ_SOURCE_OFF:
+			qDebug() << "REQ_SOURCE_ON/OFF";
+			break;
+
+		case SourceDevice::DIM_AREAS_UPDATED:
+		{
+			bool status = dev->isActive();
+
+			// TODO: do something smart here
+//			if (!status)
+//				source_object->pauseLocalPlayback();
+		}
+			break;
+
+		case VirtualSourceDevice::REQ_NEXT_TRACK:
+			source_object->nextTrack();
+			break;
+
+		case VirtualSourceDevice::REQ_PREV_TRACK:
+			source_object->previousTrack();
+			break;
+		}
+
+		++it;
+	}
 }
 
 
-SourceRadio::SourceRadio(RadioSourceDevice *d, QString name) :
-	SourceBase(d, name, Radio)
+SourceRadio::SourceRadio(RadioSourceDevice *d) :
+	SourceBase(d, Radio)
 {
 	dev = d;
 

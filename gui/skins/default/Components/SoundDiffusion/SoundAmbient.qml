@@ -17,18 +17,17 @@ MenuColumn {
     }
 
     Column {
-        SoundSourceItem {
+        MenuItem {
             id: sourceLoader
-            itemObject: column.dataModel.currentSource
-            selected: privateProps.currentIndex === 1
-
-            onItemClicked: {
+            property variant itemObject: column.dataModel.currentSource
+            isSelected: privateProps.currentIndex === 1
+            name: qsTr("source")
+            description: itemObject === undefined ? "" : itemObject.name
+            hasChild: true
+            onClicked: {
                 privateProps.currentIndex = 1
                 itemList.currentIndex = -1
-                column.loadColumn(
-                            sourceControl,
-                            qsTr("source"),
-                            column.dataModel)
+                column.loadColumn(sourceControl, qsTr("source"), column.dataModel)
             }
         }
 
