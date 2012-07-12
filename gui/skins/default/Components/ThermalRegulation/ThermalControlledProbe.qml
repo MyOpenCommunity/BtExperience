@@ -32,7 +32,6 @@ MenuColumn {
     function okClicked() {
         if (privateProps.pendingModality !== dataModel.probeStatus) {
             dataModel.probeStatus = privateProps.pendingModality
-            privateProps.pendingModality = -1
         }
         closeColumn()
     }
@@ -43,7 +42,6 @@ MenuColumn {
 
     onChildDestroyed: {
         modalityItem.state = ""
-        privateProps.pendingModality = -1
     }
 
     onChildLoaded: {
@@ -96,9 +94,12 @@ MenuColumn {
         visible: is99zones
 
         onClicked: {
-            column.loadColumn(thermalControlledProbeModalities, modalityItem.name, dataModel)
             if (modalityItem.state == "")
-                modalityItem.state =  "selected"
+                modalityItem.state = "selected"
+            var m = privateProps.pendingModality
+            if (m === -1)
+                m = column.dataModel.probeStatus
+            column.loadColumn(thermalControlledProbeModalities, modalityItem.name, dataModel, {"idx": m})
         }
     }
 
