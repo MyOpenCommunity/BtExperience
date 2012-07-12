@@ -160,11 +160,13 @@ MenuColumn {
 
             ButtonOkCancel {
                 onCancelClicked: {
-                    rootAutoComponent.speed = column.dataModel.fancoil
+                    if (isFancoil())
+                        rootAutoComponent.speed = column.dataModel.fancoil
                     column.cancelClicked()
                 }
                 onOkClicked: {
-                    column.dataModel.fancoil = rootAutoComponent.speed
+                    if (isFancoil())
+                        column.dataModel.fancoil = rootAutoComponent.speed
                     column.okClicked()
                 }
             }
@@ -214,11 +216,13 @@ MenuColumn {
             ButtonOkCancel {
                 onCancelClicked: {
                     setpoint = dataModel.setpoint
-                    rootManualComponent.speed = column.dataModel.fancoil
+                    if (isFancoil())
+                        rootManualComponent.speed = column.dataModel.fancoil
                     column.cancelClicked()
                 }
                 onOkClicked: {
-                    column.dataModel.fancoil = rootManualComponent.speed
+                    if (isFancoil())
+                        column.dataModel.fancoil = rootManualComponent.speed
                     dataModel.setpoint = setpoint
                     column.okClicked()
                 }

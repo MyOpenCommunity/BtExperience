@@ -18,7 +18,7 @@ MenuColumn {
         anchors.fill: parent
         currentIndex: {
             for (var i = 0; i < modelList.count; ++i) {
-                if (modelList.getObject(i).type === column.idx)
+                if (modelList.get(i).type === column.idx)
                     return i
             }
             return -1
