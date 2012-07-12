@@ -6,24 +6,24 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    height: 200
-    width: 212
+    property int idx: -1
 
     signal modalitySelected(int modality)
+
+    height: 200
+    width: 212
 
     ListView {
         id: itemList
         anchors.fill: parent
-        currentIndex: selectItem()
-        interactive: false
-
-        function selectItem() {
-            for (var i = 0; i < modelList.count; i++) {
-                if (modelList.get(i).type === dataModel.probeStatus)
-                    return i;
+        currentIndex: {
+            for (var i = 0; i < modelList.count; ++i) {
+                if (modelList.get(i).type === column.idx)
+                    return i
             }
             return -1
         }
+        interactive: false
 
         delegate: MenuItemDelegate {
             name: model.name

@@ -114,6 +114,37 @@ void TestAntintrusionSystem::testToggleActivation()
 	compareClientCommand();
 }
 
+void TestAntintrusionSystem::testToggleActivationTimeout()
+{
+	ObjectTester t(obj, SIGNAL(codeTimeout()));
+
+	obj->toggleActivation("12345");
+
+	// creates a secondary event loop and wait for the timeout
+	QEventLoop loop;
+	QTimer::singleShot(AntintrusionSystemNS::CODE_TIMEOUT_SECS * 1000 + 200, &loop, SLOT(quit()) );
+	loop.exec();
+
+	t.checkSignals();
+}
+
+void TestAntintrusionSystem::testPartializationTimeout()
+{
+	setSystemActive(false);
+	setZonesInserted();
+	unselectFirstTwoZones();
+
+	ObjectTester t(obj, SIGNAL(codeTimeout()));
+
+	obj->requestPartialization("12345");
+
+	// creates a secondary event loop and wait for the timeout
+	QEventLoop loop;
+	QTimer::singleShot(AntintrusionSystemNS::CODE_TIMEOUT_SECS * 1000 + 200, &loop, SLOT(quit()) );
+	loop.exec();
+
+	t.checkSignals();
+}
 
 // TODO: Simplify test creation, some points to explore are:
 //  - generic creation of signal spies with variable number of arguments - maybe not needed?

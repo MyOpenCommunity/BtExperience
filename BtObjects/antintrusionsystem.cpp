@@ -8,7 +8,6 @@
 #include <QDebug>
 #include <QStringList>
 
-#define CODE_TIMEOUT_SECS 10
 
 namespace
 {
@@ -508,13 +507,14 @@ void AntintrusionSystem::requestPartialization(const QString &password)
 	code_right = false;
 	dev->setPartialization(password);
 	waiting_response = true;
-	QTimer::singleShot(CODE_TIMEOUT_SECS * 1000, this, SLOT(handleCodeTimeout()));
+	QTimer::singleShot(AntintrusionSystemNS::CODE_TIMEOUT_SECS * 1000, this, SLOT(handleCodeTimeout()));
 }
 
 void AntintrusionSystem::toggleActivation(const QString &password)
 {
 	dev->toggleActivation(password);
 	waiting_response = true;
+	QTimer::singleShot(AntintrusionSystemNS::CODE_TIMEOUT_SECS * 1000, this, SLOT(handleCodeTimeout()));
 }
 
 bool AntintrusionSystem::canPartialize() const
