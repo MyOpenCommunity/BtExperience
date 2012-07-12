@@ -24,7 +24,8 @@ MenuColumn {
     MenuItem {
         id: sourceSelect
         anchors.top: parent.top
-        name: "radio"
+        name: qsTr("source")
+        description: column.dataModel.currentSource === null ? qsTr("no active source") : column.dataModel.currentSource.name
         hasChild: true
         state: privateProps.currentElement === 0 ? "selected" : ""
         onClicked: {
@@ -56,10 +57,10 @@ MenuColumn {
     }
 
     function sourceSelected(sourceObj) {
-        sourceSelect.name = sourceObj.name
-        var properties = {'objModel': sourceObj}
+        sourceSelect.description = sourceObj.name
+        var properties = {'objModel': sourceObj.source}
 
-        switch (sourceObj.type)
+        switch (sourceObj.source.type)
         {
         case SourceBase.Radio:
             itemLoader.setComponent(fmRadio, properties)
