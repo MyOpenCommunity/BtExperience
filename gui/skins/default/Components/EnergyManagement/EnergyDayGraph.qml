@@ -87,21 +87,38 @@ Item {
                     source: "../../images/energy/ombra_colonna_day.svg"
                     anchors.top: columnGraphBg.bottom
                 }
+            }
+            // We draw the graph area with a fixed number of bars to optimize
+            // the drawing operation.
+            // This way, when the underlying model changes the bars are not
+            // redrawn anymore.
+            model: 24
+        }
+    }
+
+    Row {
+        id: greenBars
+        anchors {
+            top: graph.top
+            bottom: graph.bottom
+            left: graph.left
+        }
+        z: 1
+
+        spacing: privateProps.columnSpacing
+        Repeater {
+            Item {
+                width: columnPrototype.width
+                height: columnPrototype.height
 
                 SvgImage {
+                    anchors.bottom: parent.bottom
                     source: "../../images/energy/colonna_day_verde.svg"
-                    anchors {
-                        left: columnGraphBg.left
-                        right: columnGraphBg.right
-                        bottom: columnGraphBg.bottom
-                    }
-                    z: 1
-
                     height: {
                         if (!privateProps.modelGraph.isValid)
                             return 0
                         else {
-                            return model.modelData.value / privateProps.maxValue * columnGraphBg.height
+                            return model.modelData.value / privateProps.maxValue * columnPrototype.height
                         }
                     }
                 }
@@ -110,9 +127,18 @@ Item {
         }
     }
 
+    UbuntuLightText {
+        // We use a "prototype" for the text box to have a fixed height so when
+        // we change the model the periodLabel does not move anymore.
+        id: graphLabelPrototype
+        visible: false
+        text: " "
+        font.pixelSize: 12
+    }
+
     Item {
         id: periodAxis
-        height: childrenRect.height
+        height: graphLabelPrototype.height
 
         anchors {
             left: graph.left
@@ -129,7 +155,7 @@ Item {
                 text: index === 0 ? 0 : model.modelData.label
                 width: columnPrototype.width
                 color: "white"
-                font.pixelSize: 12
+                font.pixelSize: graphLabelPrototype.font.pixelSize
                 horizontalAlignment: {
                     if (index === 0)
                         return Text.AlignLeft
