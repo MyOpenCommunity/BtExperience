@@ -171,13 +171,14 @@ Page {
             rightMargin: 65
         }
 
-        ControlSlider {
+        ControlSliderMute {
             visible: videoCamera.volumeVisible
             description: qsTr("VOLUME")
             percentage: videoCamera.volume
             onPlusClicked: videoCamera.plusVolumeClicked()
             onMinusClicked: videoCamera.minusVolumeClicked()
         }
+
         Image {
             source: "images/common/btn_comando.png"
             width: parent.width
