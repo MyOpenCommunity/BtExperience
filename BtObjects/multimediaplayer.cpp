@@ -100,6 +100,9 @@ void MultiMediaPlayer::playerInfoReceived(QMap<QString, QString> new_track_info)
 
 void MultiMediaPlayer::play()
 {
+	if (player_state == Playing)
+		return;
+
 	player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 }
 
