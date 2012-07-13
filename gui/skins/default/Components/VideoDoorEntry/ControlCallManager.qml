@@ -54,7 +54,11 @@ SvgImage {
 
     states: [
         State {
-            name: "answered"
+            name: "answerReject"
+            extend: ""
+        },
+        State {
+            name: "terminate"
             PropertyChanges { target: buttonLeft; visible: false }
             PropertyChanges {
                 target: buttonRight
@@ -63,6 +67,5 @@ SvgImage {
                 shadowImage: "../../images/common/ombra_btn_rispondi_L.svg"
             }
         }
-
     ]
 }
