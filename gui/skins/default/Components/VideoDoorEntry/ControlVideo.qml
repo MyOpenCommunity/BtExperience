@@ -13,6 +13,7 @@ SvgImage {
     id: bg
 
     property alias label: statusLabel.text
+    property alias nextButtonVisible: nextButton.visible
 
     signal nextClicked
 
@@ -48,6 +49,8 @@ SvgImage {
     }
 
     ButtonImageThreeStates {
+        id: nextButton
+
         defaultImageBg: "../../images/common/btn_cicla.svg"
         pressedImageBg: "../../images/common/btn_cicla_P.svg"
         shadowImage: "../../images/common/ombra_btn_cicla.svg"
