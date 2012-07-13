@@ -162,6 +162,7 @@ public:
 	}
 
 	void scsSourceActiveAreasChanged();
+	void scsSourceForGeneralAmbientChanged();
 
 public slots:
 	/*!
@@ -181,6 +182,7 @@ public slots:
 
 signals:
 	void activeAreasChanged(SourceObject *source_object);
+	void sourceForGeneralAmbientChanged(SourceObject *);
 
 private:
 	SourceBase *source;
@@ -268,7 +270,6 @@ signals:
 	void activeChanged();
 	void activeAreasChanged();
 	void currentTrackChanged();
-	void sourceForGeneralAmbientChanged(SourceBase *);
 
 protected:
 	SourceBase(SourceDevice *d, SourceType t);

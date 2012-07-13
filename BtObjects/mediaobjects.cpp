@@ -134,8 +134,8 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		SoundGeneralAmbient *general = new SoundGeneralAmbient(QObject::tr("special zone"));
 		objects << general;
 
-//		foreach(SourceBase *source, scs_sources)
-//			QObject::connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceBase *)), general, SLOT(setSource(SourceBase*)));
+		foreach(SourceObject *source, sources)
+			QObject::connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceObject *)), general, SLOT(setSource(SourceObject *)));
 	}
 
 	foreach (Amplifier *amplifier, amplifiers)
@@ -277,6 +277,11 @@ void SourceObject::scsSourceActiveAreasChanged()
 	emit activeAreasChanged(this);
 }
 
+void SourceObject::scsSourceForGeneralAmbientChanged()
+{
+	emit sourceForGeneralAmbientChanged(this);
+}
+
 void SourceObject::setActive(int area)
 {
 	source->setActive(area);
@@ -341,7 +346,7 @@ void SourceBase::setActive(int area)
 	if (area == 0)
 	{
 		dev->turnOn(QString::number(area));
-		emit sourceForGeneralAmbientChanged(this);
+		source_object->scsSourceForGeneralAmbientChanged();
 	}
 	else if (!isActiveInArea(area))
 		dev->turnOn(QString::number(area));
