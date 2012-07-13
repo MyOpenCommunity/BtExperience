@@ -171,10 +171,10 @@ Page {
             rightMargin: 65
         }
 
-        ControlSlider2 {
+        ControlSlider {
             visible: videoCamera.volumeVisible
-            title: qsTr("VOLUME")
-            value: videoCamera.volume
+            description: qsTr("VOLUME")
+            percentage: videoCamera.volume
             onPlusClicked: videoCamera.plusVolumeClicked()
             onMinusClicked: videoCamera.minusVolumeClicked()
         }
@@ -195,20 +195,20 @@ Page {
             }
         }
 
-        ControlSlider2 {
+        ControlSlider {
             visible: videoCamera.brightnessVisible
-            title: qsTr("BRIGHTNESS")
-            value: camera.brightness
+            description: qsTr("BRIGHTNESS")
+            percentage: camera.brightness
             onPlusClicked: if (camera.brightness < 100) camera.brightness += 1
-            onMinusClicked: if (camera.brightness > 00) camera.brightness -= 1
+            onMinusClicked: if (camera.brightness > 0) camera.brightness -= 1
         }
 
-        ControlSlider2 {
+        ControlSlider {
             visible: videoCamera.contrastVisible
-            title: qsTr("CONTRAST")
-            value: camera.contrast
+            description: qsTr("CONTRAST")
+            percentage: camera.contrast
             onPlusClicked: if (camera.contrast < 100) camera.contrast += 1
-            onMinusClicked: if (camera.contrast > 00) camera.contrast -= 1
+            onMinusClicked: if (camera.contrast > 0) camera.contrast -= 1
         }
     }
 
