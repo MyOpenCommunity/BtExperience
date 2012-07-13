@@ -487,6 +487,7 @@ SourceRadio::SourceRadio(RadioSourceDevice *d) :
 	request_frequency.setInterval(REQUEST_FREQUENCY_TIME);
 	request_frequency.setSingleShot(true);
 	connect(&request_frequency, SIGNAL(timeout()), this, SLOT(requestFrequency()));
+	frequency = 8750;
 }
 
 void SourceRadio::setCurrentStation(int station)

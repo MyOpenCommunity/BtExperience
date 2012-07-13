@@ -67,10 +67,14 @@ MenuColumn {
             ControlFMRadio {
                 radioName: "radio - " + objModel.rdsText
                 radioFrequency: objModel.currentFrequency
+                stationNumber: objModel.currentStation
 
                 // TODO: assume we only want automatic frequency search
                 onNextTrack: objModel.searchUp()
                 onPreviousTrack: objModel.searchDown()
+
+                Component.onCompleted: objModel.startRdsUpdates()
+                Component.onDestruction: objModel.stopRdsUpdates()
             }
 
             Image {
@@ -112,6 +116,7 @@ MenuColumn {
                                 font.pixelSize: 12
 
                                 onClicked: radioColumn.objModel.currentStation = stationNumber
+                                onPressAndHold: objModel.saveStation(stationNumber)
                             }
                         }
                     }
