@@ -11,6 +11,7 @@ ButtonMinusPlus 1.0 ButtonMinusPlus.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
 ButtonSystems 1.0 ButtonSystems.qml
 ButtonThreeStates 1.0 ButtonThreeStates.qml
+ButtonThreeStatesAutomation 1.0 ButtonThreeStatesAutomation.qml
 ButtonThreeStatesIcon 1.0 ButtonThreeStatesIcon.qml
 CameraLink 1.0 CameraLink.qml
 CardDelegate 1.0 CardDelegate.qml
@@ -32,7 +33,7 @@ ControlOn 1.0 ControlOn.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
 ControlSlider 1.0 ControlSlider.qml
-ControlSlider2 1.0 ControlSlider2.qml
+ControlSliderMute 1.0 ControlSliderMute.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
 ControlUpDown 1.0 ControlUpDown.qml
 EditNote 1.0 EditNote.qml
