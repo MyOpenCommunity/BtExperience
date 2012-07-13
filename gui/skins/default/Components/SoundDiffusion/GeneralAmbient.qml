@@ -5,13 +5,6 @@ import BtObjects 1.0
 MenuColumn {
     id: column
 
-    Component {
-        id: sourceControl
-        SourceControl {}
-    }
-
-    width: 212
-    height: buttonOnOff.height + sourceItem.height + volume.height
     property string imagesPath: "../../images/"
 
     QtObject {
@@ -19,22 +12,19 @@ MenuColumn {
         property int currentIndex: -1
     }
 
-    onChildDestroyed: privateProps.currentIndex = -1
-
     Column {
         id: control
-        SoundSourceItem {
+
+        MenuItem {
             id: sourceItem
-            itemObject: control.dataModel.currentSource
-            selected: privateProps.currentIndex === 1
-
-            onItemClicked: {
+            property variant itemObject: column.dataModel.currentSource
+            isSelected: privateProps.currentIndex === 1
+            name: qsTr("source")
+            description: itemObject === undefined ? "" : itemObject.name
+            hasChild: true
+            onClicked: {
                 privateProps.currentIndex = 1
-                column.loadColumn(sourceControl, qsTr("source"), control.dataModel)
-            }
-
-            Component.onCompleted: {
-                console.log("currentSource: " + itemObject + ", dataModel: " + control.dataModel)
+                column.loadColumn(sourceControl, qsTr("source"), column.dataModel)
             }
         }
 
@@ -50,8 +40,15 @@ MenuColumn {
         }
     }
 
+    Component {
+        id: sourceControl
+        SourceControl {}
+    }
+
     ObjectModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdSoundAmplifierGeneral, objectKey: "0"}]
     }
+
+    onChildDestroyed: privateProps.currentIndex = -1
 }

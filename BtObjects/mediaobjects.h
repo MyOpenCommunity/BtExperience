@@ -13,9 +13,12 @@ class QDomNode;
 class AmplifierDevice;
 class SourceDevice;
 class RadioSourceDevice;
+class VirtualSourceDevice;
 class Amplifier;
+class SourceObject;
 class SourceBase;
 class PowerAmplifierDevice;
+class MultiMediaPlayer;
 
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id);
@@ -42,11 +45,11 @@ signals:
 
 protected:
 	SoundAmbientBase(QString name);
-	void setCurrentSource(SourceBase *other);
+	void setCurrentSource(SourceObject *other);
 	int area;
 
 private:
-	SourceBase *current_source;
+	SourceObject *current_source;
 };
 
 
@@ -88,7 +91,7 @@ public:
 
 	QObject *getPreviousSource() const;
 
-	void connectSources(QList<SourceBase *> sources);
+	void connectSources(QList<SourceObject *> sources);
 	void connectAmplifiers(QList<Amplifier *> amplifiers);
 
 signals:
@@ -96,12 +99,12 @@ signals:
 	void activeAmplifierChanged();
 
 private slots:
-	void updateActiveSource();
+	void updateActiveSource(SourceObject *source_object);
 	void updateActiveAmplifier();
 
 private:
 	int amplifier_count, object_id;
-	SourceBase *previous_source;
+	SourceObject *previous_source;
 };
 
 
@@ -124,8 +127,81 @@ public:
 	}
 
 public slots:
-	void setSource(SourceBase *source);
+	void setSource(SourceObject *source);
 };
+
+
+
+
+
+
+
+/*
+  Base class for objects that represent a user visible source, eg. usb, sd,
+  ip radio, rds radio etc.
+
+  Each SourceObject communicates with one SourceBase object, which handles low
+  level communication with the bus.
+*/
+class SourceObject : public ObjectInterface
+{
+	Q_OBJECT
+	Q_PROPERTY(QObject *source READ getSource CONSTANT)
+
+public:
+	SourceObject(const QString &name, SourceBase *s);
+
+	SourceBase *getSource() const
+	{
+		return source;
+	}
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdSoundSource;
+	}
+
+	void scsSourceActiveAreasChanged();
+
+public slots:
+	/*!
+		\brief Activates this source on the specified area
+	*/
+	void setActive(int area);
+
+	/*!
+		\brief Go to the previous track (memorized station for the radio)
+	*/
+	virtual void previousTrack();
+
+	/*!
+		\brief Go to the next track (memorized station for the radio)
+	*/
+	virtual void nextTrack();
+
+signals:
+	void activeAreasChanged(SourceObject *source_object);
+
+private:
+	SourceBase *source;
+};
+
+class SourceLocalMedia : public SourceObject
+{
+	Q_OBJECT
+
+public:
+	SourceLocalMedia(const QString &name, SourceBase *s);
+
+public slots:
+	virtual void previousTrack();
+	virtual void nextTrack();
+
+private:
+	MultiMediaPlayer *media_player;
+};
+
+
 
 
 /*!
@@ -134,7 +210,7 @@ public slots:
 
 	The object id is \a ObjectInterface::IdSoundSource, object key is empty
 */
-class SourceBase : public ObjectInterface
+class SourceBase : public QObject
 {
 	friend class TestSourceBase;
 	friend class TestSoundAmbient;
@@ -172,11 +248,6 @@ public:
 		MultiMedia,
 	};
 
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdSoundSource;
-	}
-
 	QList<int> getActiveAreas() const;
 
 	SourceType getType() const;
@@ -186,21 +257,12 @@ public:
 
 	int getCurrentTrack() const;
 
-public slots:
-	/*!
-		\brief Activates this source on the specified area
-	*/
 	void setActive(int area);
-
-	/*!
-		\brief Go to the previous track (memorized station for the radio)
-	*/
 	void previousTrack();
-
-	/*!
-		\brief Go to the next track (memorized station for the radio)
-	*/
 	void nextTrack();
+
+	SourceObject *getSourceObject();
+	void setSourceObject(SourceObject *so);
 
 signals:
 	void activeChanged();
@@ -209,7 +271,8 @@ signals:
 	void sourceForGeneralAmbientChanged(SourceBase *);
 
 protected:
-	SourceBase(SourceDevice *d, QString name, SourceType t);
+	SourceBase(SourceDevice *d, SourceType t);
+	SourceObject *source_object;
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -234,17 +297,22 @@ class SourceAux : public SourceBase
 	Q_OBJECT
 
 public:
-	SourceAux(SourceDevice *d, QString name);
+	SourceAux(SourceDevice *d);
 };
 
 
-// Stub class to test media browsing in the GUI
 class SourceMultiMedia : public SourceBase
 {
 	Q_OBJECT
 
 public:
-	SourceMultiMedia(SourceDevice *d, QString name);
+	SourceMultiMedia(VirtualSourceDevice *d);
+
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
+private:
+	VirtualSourceDevice *dev;
 };
 
 
@@ -276,7 +344,7 @@ class SourceRadio : public SourceBase
 	Q_PROPERTY(QString rdsText READ getRdsText NOTIFY rdsTextChanged)
 
 public:
-	SourceRadio(RadioSourceDevice *d, QString name);
+	SourceRadio(RadioSourceDevice *d);
 
 	int getCurrentStation() const { return getCurrentTrack(); }
 	void setCurrentStation(int station);

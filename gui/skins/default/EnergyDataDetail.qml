@@ -72,12 +72,15 @@ Page {
             }
 
             UbuntuLightText {
-                text: "value"
+                text: qsTr("value")
                 color: "white"
                 anchors.verticalCenter: moneyButton.verticalCenter
                 font.pixelSize: 14
-                anchors.right: moneyButton.left
-                anchors.rightMargin: 15
+            }
+
+            Item {
+                width: 15
+                height: moneyButton.height
             }
 
             ButtonThreeStates {

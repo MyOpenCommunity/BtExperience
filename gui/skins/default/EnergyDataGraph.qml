@@ -76,7 +76,7 @@ Page {
                 }
 
                 UbuntuLightText {
-                    text: "time"
+                    text: qsTr("time")
                     color: "white"
                     anchors.verticalCenter: dayButton.verticalCenter
                     font.pixelSize: 14
@@ -103,12 +103,15 @@ Page {
                         visible: parent.enabled === false
                     }
                     onClicked: {
+                        if (page.state === "dayGraph")
+                            return
+
                         page.state = "dayGraph"
                         // Change the energy graph is an operation that ideally
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        pageContent.sourceComponent = energyDayGraphComponent
+                        graphLoader.setComponent(energyDayGraphComponent)
                     }
                 }
                 ButtonThreeStates {
@@ -129,8 +132,11 @@ Page {
                         visible: parent.enabled === false
                     }
                     onClicked: {
+                        if (page.state === "")
+                            return
+
                         page.state = ""
-                        pageContent.sourceComponent = energyMonthGraphComponent
+                        graphLoader.setComponent(energyMonthGraphComponent)
                     }
                 }
                 ButtonThreeStates {
@@ -151,12 +157,15 @@ Page {
                         visible: parent.enabled === false
                     }
                     onClicked: {
+                        if (page.state === "yearGraph")
+                            return
+
                         page.state = "yearGraph"
                         // Change the energy graph is an operation that ideally
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        pageContent.sourceComponent = energyYearGraphComponent
+                        graphLoader.setComponent(energyYearGraphComponent)
                     }
                 }
             }
@@ -170,7 +179,7 @@ Page {
                 }
 
                 UbuntuLightText {
-                    text: "value"
+                    text: qsTr("value")
                     color: "white"
                     anchors.verticalCenter: moneyButton.verticalCenter
                     font.pixelSize: 14
@@ -214,15 +223,16 @@ Page {
             }
 
 
-            Loader {
-                id: pageContent
+            AnimatedLoader {
+                id: graphLoader
                 anchors {
                     top: divisorLine.bottom
                     topMargin: parent.height * 0.1
                     left: divisorLine.left
                 }
 
-                sourceComponent: energyMonthGraphComponent
+                duration: 200
+                Component.onCompleted: setComponent(energyMonthGraphComponent)
             }
 
             Component {
@@ -301,80 +311,131 @@ Page {
 
 
             UbuntuLightText {
+                id: cumulativeConsumptionLabel
                 text: qsTr("month cumulative consumption")
                 color: "white"
                 font.pixelSize: 14
                 wrapMode: Text.WordWrap
                 anchors {
-                    bottom: cumulativeConsumption.top
+                    bottom: cumulativeConsumptionLoader.top
                     bottomMargin: 5
-                    left: cumulativeConsumption.left
-                    right: cumulativeConsumption.right
+                    left: cumulativeConsumptionLoader.left
+                    right: cumulativeConsumptionLoader.right
                 }
                 horizontalAlignment: Text.AlignHCenter
             }
 
-            EnergyConsumptionLogic {
-                id: logic
-                monthConsumptionItem: energyData.getValue(EnergyData.CumulativeMonthValue,
-                                                          dateSelector.monthDate, EnergyData.Consumption)
-            }
-
-            SvgImage {
-                id: cumulativeConsumption
-                source: "images/energy/livello_cumulative_consumption.svg"
+            Loader {
+                id: cumulativeConsumptionLoader
                 anchors {
                     top: instantConsumption.bottom
                     topMargin: parent.height / 100 * 25
                     horizontalCenter: parent.horizontalCenter
                 }
+                sourceComponent: monthCumulativeConsumptionComponent
+                property int valueType: EnergyData.CumulativeMonthValue
+                property date referredDate: dateSelector.monthDate
 
+                property variant consumptionItem: energyData.getValue(valueType,
+                                                                      referredDate, EnergyData.Consumption)
+
+                states: [
+                    State {
+                        name: "year"
+                        PropertyChanges {
+                            target: cumulativeConsumptionLoader
+                            valueType: EnergyData.CumulativeYearValue
+                            referredDate: dateSelector.yearDate
+                            sourceComponent: cumulativeConsumptionComponent
+                        }
+                    },
+                    State {
+                        name: "day"
+                        PropertyChanges {
+                            target: cumulativeConsumptionLoader
+                            valueType: EnergyData.CumulativeDayValue
+                            referredDate: dateSelector.dayDate
+                            sourceComponent: cumulativeConsumptionComponent
+                        }
+                    }
+                ]
+            }
+
+            Component {
+                id: monthCumulativeConsumptionComponent
                 SvgImage {
-                    source:  "images/energy/livello_cumulative_consumption_" + (logic.consumptionExceedGoal() ? "rosso" : "verde") + ".svg"
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    width: logic.getConsumptionSize(parent.width)
+                    source: "images/energy/livello_cumulative_consumption.svg"
+
+                    EnergyConsumptionLogic {
+                        id: logic
+                        monthConsumptionItem: cumulativeConsumptionLoader.consumptionItem
+                    }
+
+                    SvgImage {
+                        source: "images/energy/livello_cumulative_consumption_" + (logic.consumptionExceedGoal() ? "rosso" : "verde") + ".svg"
+                        anchors.left: parent.left
+                        anchors.top: parent.top
+                        width: logic.getConsumptionSize(parent.width)
+                    }
+
+                    SvgImage {
+                        source: "images/energy/linea_livello_cumulative_consumption.svg"
+                        visible: logic.hasGoal()
+                        anchors.left: parent.left
+                        anchors.leftMargin: logic.goalSize(parent.width)
+                        height: parent.height
+                    }
                 }
+            }
+
+            Component {
+                id: cumulativeConsumptionComponent
 
                 SvgImage {
-                    source: "images/energy/linea_livello_cumulative_consumption.svg"
-                    visible: logic.hasGoal()
-                    anchors.left: parent.left
-                    anchors.leftMargin: logic.goalSize(parent.width)
-                    height: parent.height
+                    source: "images/energy/livello_cumulative_consumption.svg"
+                    SvgImage {
+                        source: "images/energy/livello_cumulative_consumption_verde.svg"
+                        anchors.left: parent.left
+                        anchors.top: parent.top
+                        width: consumptionItem.isValid ? parent.width / 100 * 80 : 0 // TODO: calculate the bar length (in some way) from the value property.
+                    }
                 }
             }
 
             SvgImage {
                 source: "images/energy/ombra_livello_cumulative_consumption.svg"
-                anchors.top: cumulativeConsumption.bottom
-                anchors.left: cumulativeConsumption.left
-                anchors.right: cumulativeConsumption.right
+                anchors.top: cumulativeConsumptionLoader.bottom
+                anchors.left: cumulativeConsumptionLoader.left
+                anchors.right: cumulativeConsumptionLoader.right
             }
 
             UbuntuLightText {
-                text: cumulativeConsumptionLabel.monthItem.measureUnit
+                text: cumulativeConsumptionValue.energyItem.measureUnit
                 color: "white"
                 font.pixelSize: 14
                 anchors {
-                    top: cumulativeConsumption.bottom
+                    top: cumulativeConsumptionLoader.bottom
                     topMargin: 5
-                    left: cumulativeConsumption.left
+                    left: cumulativeConsumptionLoader.left
                 }
             }
 
             UbuntuLightText {
-                id: cumulativeConsumptionLabel
-                property variant monthItem: energyData.getValue(EnergyData.CumulativeMonthValue, dateSelector.monthDate,
+                id: cumulativeConsumptionValue
+                // We want not to use the consumptionItem inside the cumulativeConsumptionLoader
+                // component because it never use the currency (because we don't know at this moment
+                // if the goal can be corverted).
+                property variant energyItem: energyData.getValue(cumulativeConsumptionLoader.valueType,
+                                                                 cumulativeConsumptionLoader.referredDate,
                     privateProps.showCurrency ? EnergyData.Currency : EnergyData.Consumption)
 
-                text: monthItem.isValid ? monthItem.value.toFixed(2) : 0
+                text: energyItem.isValid ? energyItem.value.toFixed(2) : 0
                 font.pixelSize: 14
                 color: "white"
                 anchors {
-                    top: cumulativeConsumption.bottom
+                    top: cumulativeConsumptionLoader.bottom
                     topMargin: 5
-                    right: cumulativeConsumption.right
+                    right: cumulativeConsumptionLoader.right
                 }
             }
         }
@@ -392,6 +453,9 @@ Page {
             PropertyChanges { target: monthButton; status: 0 }
             PropertyChanges { target: dayButton; status: 0 }
             PropertyChanges { target: dateSelector; state: "year" }
+            PropertyChanges { target: cumulativeConsumptionLoader; state: "year" }
+            PropertyChanges { target: cumulativeConsumptionLabel; text: qsTr("year cumulative consumption") }
+
         },
         State {
             name: "dayGraph"
@@ -399,6 +463,8 @@ Page {
             PropertyChanges { target: monthButton; status: 0 }
             PropertyChanges { target: dayButton; status: 1 }
             PropertyChanges { target: dateSelector; state: "day" }
+            PropertyChanges { target: cumulativeConsumptionLoader; state: "day" }
+            PropertyChanges { target: cumulativeConsumptionLabel; text: qsTr("day cumulative consumption") }
         }
     ]
 }
