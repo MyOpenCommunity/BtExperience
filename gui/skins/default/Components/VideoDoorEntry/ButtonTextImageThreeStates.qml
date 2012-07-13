@@ -18,6 +18,7 @@ SvgImage {
 
     // the label on the left
     property string text: "premi per parlare"
+    property alias textColor: caption.color
 
     // images for button background
     property url defaultImageBg: ""
@@ -31,6 +32,9 @@ SvgImage {
     property url defaultImage: ""
     property url pressedImage: ""
     property url selectedImage: ""
+
+    // some additional properties
+    property alias imageAnchors: topImage.anchors
 
     property bool enabled: true // button accepts input or not
     property int status: 0 // 0 - up, 1 - down
