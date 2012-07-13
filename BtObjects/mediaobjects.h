@@ -195,6 +195,8 @@ class SourceLocalMedia : public SourceObject
 public:
 	SourceLocalMedia(const QString &name, SourceBase *s);
 
+	Q_INVOKABLE void startPlay(QString path);
+
 public slots:
 	virtual void previousTrack();
 	virtual void nextTrack();

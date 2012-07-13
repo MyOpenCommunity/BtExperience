@@ -1,6 +1,7 @@
 #include "mediaobjects.h"
 #include "multimediaplayer.h"
 #include "media_device.h"
+#include "mediaplayer.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
 
@@ -304,6 +305,13 @@ SourceLocalMedia::SourceLocalMedia(const QString &name, SourceBase *s) :
 	SourceObject(name, s)
 {
 	media_player = new MultiMediaPlayer();
+	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());
+}
+
+void SourceLocalMedia::startPlay(QString path)
+{
+	media_player->setCurrentSource(path);
+	media_player->play();
 }
 
 void SourceLocalMedia::previousTrack()
