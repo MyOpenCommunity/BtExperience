@@ -104,7 +104,7 @@ SvgImage {
             top: imageSlider.bottom
             topMargin: 5
             right: buttonPlus.left
-            rightMargin: 5
+            rightMargin: 4
         }
     }
 
