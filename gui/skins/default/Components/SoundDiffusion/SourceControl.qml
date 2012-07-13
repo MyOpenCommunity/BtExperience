@@ -36,7 +36,7 @@ MenuColumn {
 
         function sourceSelected(sourceObj) {
             sourceSelect.description = sourceObj.name
-            var properties = {'objModel': sourceObj.source}
+            var properties = {'objModel': sourceObj}
 
             switch (sourceObj.source.type)
             {
@@ -65,16 +65,16 @@ MenuColumn {
 
 
             ControlFMRadio {
-                radioName: "radio - " + objModel.rdsText
-                radioFrequency: objModel.currentFrequency
-                stationNumber: objModel.currentStation
+                radioName: "radio - " + objModel.source.rdsText
+                radioFrequency: objModel.source.currentFrequency
+                stationNumber: objModel.source.currentStation
 
                 // TODO: assume we only want automatic frequency search
-                onNextTrack: objModel.searchUp()
-                onPreviousTrack: objModel.searchDown()
+                onNextTrack: objModel.source.searchUp()
+                onPreviousTrack: objModel.source.searchDown()
 
-                Component.onCompleted: objModel.startRdsUpdates()
-                Component.onDestruction: objModel.stopRdsUpdates()
+                Component.onCompleted: objModel.source.startRdsUpdates()
+                Component.onDestruction: objModel.source.stopRdsUpdates()
             }
 
             Image {
@@ -108,15 +108,15 @@ MenuColumn {
                                 selectedImage: "../../images/sound_diffusion/btn_37x45_S.svg"
                                 shadowImage: "../../images/sound_diffusion/btn_37x45_shadow.svg"
                                 text: stationNumber
-                                status: objModel.currentStation === stationNumber ? 1 : 0
+                                status: objModel.source.currentStation === stationNumber ? 1 : 0
                                 textAnchors.centerIn: null
                                 textAnchors.top: button.top
                                 textAnchors.topMargin: 8
                                 textAnchors.horizontalCenter: button.horizontalCenter
                                 font.pixelSize: 12
 
-                                onClicked: radioColumn.objModel.currentStation = stationNumber
-                                onPressAndHold: objModel.saveStation(stationNumber)
+                                onClicked: radioColumn.objModel.source.currentStation = stationNumber
+                                onPressAndHold: objModel.source.saveStation(stationNumber)
                             }
                         }
                     }
@@ -149,6 +149,7 @@ MenuColumn {
     Component {
         id: mediaPlayer
         Column {
+            id: mediaPlayerColumn
             property variant objModel: undefined
             MenuItem {
                 name: qsTr("browse")
@@ -157,7 +158,7 @@ MenuColumn {
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps.currentElement = 1
-                    column.loadColumn(songBrowser, "Browse")
+                    column.loadColumn(songBrowser, name, mediaPlayerColumn.objModel)
                 }
             }
 
@@ -182,7 +183,7 @@ MenuColumn {
                 font.bold: true
                 font.pixelSize: 16
                 anchors.horizontalCenter: control.horizontalCenter
-                text: objModel.currentTrack
+                text: objModel.source.currentTrack
             }
 
         }
