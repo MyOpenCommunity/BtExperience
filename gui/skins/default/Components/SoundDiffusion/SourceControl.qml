@@ -163,7 +163,13 @@ MenuColumn {
             }
 
             ControlMediaPlayer {
+                property variant trackInfo: objModel.mediaPlayer.trackInfo
+                time: trackInfo['current_time']
+                song: trackInfo['meta_title'] === undefined ? qsTr("no title") : trackInfo['meta_title']
+                album: trackInfo['meta_album'] === undefined ? qsTr("no album") : trackInfo['meta_album']
+                playerStatus: objModel.mediaPlayer.playerState
 
+                onPlayClicked: objModel.togglePause()
             }
         }
     }
