@@ -163,7 +163,17 @@ MenuColumn {
 
             ControlMediaPlayer {
                 property variant trackInfo: objModel.mediaPlayer.trackInfo
-                time: trackInfo['current_time']
+                function formatTime(time) {
+                    if (time === undefined)
+                        return "--:--"
+                    // TODO: this way we can't show songs 1h or more long even though
+                    // we support 99 minutes in the GUI.
+                    // I couldn't find a way to access hours and minutes, it doesn't
+                    // seem to be accessible as a JS Date object (it's a QTime in fact)
+                    return Qt.formatTime(time, "mm:ss")
+                }
+
+                time: formatTime(trackInfo['current_time'])
                 song: trackInfo['meta_title'] === undefined ? qsTr("no title") : trackInfo['meta_title']
                 album: trackInfo['meta_album'] === undefined ? qsTr("no album") : trackInfo['meta_album']
                 playerStatus: objModel.mediaPlayer.playerState
