@@ -69,7 +69,6 @@ MenuColumn {
                 radioFrequency: objModel.source.currentFrequency
                 stationNumber: objModel.source.currentStation
 
-                // TODO: assume we only want automatic frequency search
                 onNextTrack: objModel.source.searchUp()
                 onPreviousTrack: objModel.source.searchDown()
 
