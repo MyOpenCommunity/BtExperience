@@ -12,6 +12,7 @@
 #include "thermalprobes.h"
 #include "antintrusionsystem.h"
 #include "mediaobjects.h"
+#include "multimediaplayer.h"
 #include "xml_functions.h"
 #include "hardware.h"
 #include "platform.h"
@@ -620,6 +621,10 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<SourceBase>(
 				uri, 1, 0, "SourceBase",
 				"unable to create an SourceBase instance");
+	qmlRegisterUncreatableType<MultiMediaPlayer>(
+				uri, 1, 0, "MultiMediaPlayer",
+				"unable to create a MultiMediaPlyaer instance");
+	// TODO: this seems to be a good candidate for RegisterUncreatableType...
 	qmlRegisterType<SplitProgram>(uri, 1, 0, "SplitProgram");
 	qmlRegisterUncreatableType<EnergyLoadManagement>(
 				uri, 1, 0, "EnergyLoadDiagnostic",

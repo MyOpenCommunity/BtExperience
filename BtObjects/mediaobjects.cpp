@@ -308,10 +308,27 @@ SourceLocalMedia::SourceLocalMedia(const QString &name, SourceBase *s) :
 	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());
 }
 
+QObject *SourceLocalMedia::getMediaPlayer() const
+{
+	return media_player;
+}
+
 void SourceLocalMedia::startPlay(QString path)
 {
 	media_player->setCurrentSource(path);
 	media_player->play();
+}
+
+void SourceLocalMedia::togglePause()
+{
+	if (media_player->getPlayerState() == MultiMediaPlayer::Playing)
+	{
+		media_player->pause();
+	}
+	else
+	{
+		media_player->resume();
+	}
 }
 
 void SourceLocalMedia::previousTrack()

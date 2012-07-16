@@ -191,11 +191,14 @@ private:
 class SourceLocalMedia : public SourceObject
 {
 	Q_OBJECT
+	Q_PROPERTY(QObject *mediaPlayer READ getMediaPlayer CONSTANT)
 
 public:
 	SourceLocalMedia(const QString &name, SourceBase *s);
+	QObject *getMediaPlayer() const;
 
 	Q_INVOKABLE void startPlay(QString path);
+	Q_INVOKABLE void togglePause();
 
 public slots:
 	virtual void previousTrack();
