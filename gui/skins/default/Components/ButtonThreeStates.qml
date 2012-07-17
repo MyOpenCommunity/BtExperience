@@ -20,6 +20,7 @@ SvgImage {
     property int status: 0 // 0 - up, 1 - down
 
     signal clicked(variant mouse)
+    signal pressAndHold(variant mouse)
 
     source: defaultImage
 
@@ -27,6 +28,7 @@ SvgImage {
         id: area
         anchors.fill: parent
         onClicked: bg.clicked(mouse)
+        onPressAndHold: bg.pressAndHold(mouse)
         // in some cases I have to disable the button to not accept any input
         visible: bg.enabled
     }

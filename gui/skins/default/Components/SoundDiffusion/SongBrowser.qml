@@ -51,10 +51,19 @@ MenuColumn {
                 switch (itemObject.fileType)
                 {
                 case FileObject.Audio:
+                    // we need braces due to bug
+                    // https://bugreports.qt-project.org/browse/QTBUG-17012
+                {
+                    var realPath = "/" + itemObject.path.join("/")
+                    console.log("Audio path: " + realPath);
+                    column.dataModel.startPlay(realPath)
                     break
+                }
                 case FileObject.Directory:
+                {
                     files.enterDirectory(itemObject.name)
                     break
+                }
                 }
             }
         }

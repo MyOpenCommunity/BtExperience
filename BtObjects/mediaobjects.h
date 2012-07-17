@@ -162,6 +162,7 @@ public:
 	}
 
 	void scsSourceActiveAreasChanged();
+	void scsSourceForGeneralAmbientChanged();
 
 public slots:
 	/*!
@@ -181,6 +182,7 @@ public slots:
 
 signals:
 	void activeAreasChanged(SourceObject *source_object);
+	void sourceForGeneralAmbientChanged(SourceObject *);
 
 private:
 	SourceBase *source;
@@ -189,9 +191,14 @@ private:
 class SourceLocalMedia : public SourceObject
 {
 	Q_OBJECT
+	Q_PROPERTY(QObject *mediaPlayer READ getMediaPlayer CONSTANT)
 
 public:
 	SourceLocalMedia(const QString &name, SourceBase *s);
+	QObject *getMediaPlayer() const;
+
+	Q_INVOKABLE void startPlay(QString path);
+	Q_INVOKABLE void togglePause();
 
 public slots:
 	virtual void previousTrack();
@@ -268,7 +275,6 @@ signals:
 	void activeChanged();
 	void activeAreasChanged();
 	void currentTrackChanged();
-	void sourceForGeneralAmbientChanged(SourceBase *);
 
 protected:
 	SourceBase(SourceDevice *d, SourceType t);

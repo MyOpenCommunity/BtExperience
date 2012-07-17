@@ -1,6 +1,7 @@
 #include "mediaobjects.h"
 #include "multimediaplayer.h"
 #include "media_device.h"
+#include "mediaplayer.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
 
@@ -134,8 +135,8 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		SoundGeneralAmbient *general = new SoundGeneralAmbient(QObject::tr("special zone"));
 		objects << general;
 
-//		foreach(SourceBase *source, scs_sources)
-//			QObject::connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceBase *)), general, SLOT(setSource(SourceBase*)));
+		foreach(SourceObject *source, sources)
+			QObject::connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceObject *)), general, SLOT(setSource(SourceObject *)));
 	}
 
 	foreach (Amplifier *amplifier, amplifiers)
@@ -277,6 +278,11 @@ void SourceObject::scsSourceActiveAreasChanged()
 	emit activeAreasChanged(this);
 }
 
+void SourceObject::scsSourceForGeneralAmbientChanged()
+{
+	emit sourceForGeneralAmbientChanged(this);
+}
+
 void SourceObject::setActive(int area)
 {
 	source->setActive(area);
@@ -299,6 +305,30 @@ SourceLocalMedia::SourceLocalMedia(const QString &name, SourceBase *s) :
 	SourceObject(name, s)
 {
 	media_player = new MultiMediaPlayer();
+	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());
+}
+
+QObject *SourceLocalMedia::getMediaPlayer() const
+{
+	return media_player;
+}
+
+void SourceLocalMedia::startPlay(QString path)
+{
+	media_player->setCurrentSource(path);
+	media_player->play();
+}
+
+void SourceLocalMedia::togglePause()
+{
+	if (media_player->getPlayerState() == MultiMediaPlayer::Playing)
+	{
+		media_player->pause();
+	}
+	else
+	{
+		media_player->resume();
+	}
 }
 
 void SourceLocalMedia::previousTrack()
@@ -341,7 +371,7 @@ void SourceBase::setActive(int area)
 	if (area == 0)
 	{
 		dev->turnOn(QString::number(area));
-		emit sourceForGeneralAmbientChanged(this);
+		source_object->scsSourceForGeneralAmbientChanged();
 	}
 	else if (!isActiveInArea(area))
 		dev->turnOn(QString::number(area));
@@ -482,6 +512,7 @@ SourceRadio::SourceRadio(RadioSourceDevice *d) :
 	request_frequency.setInterval(REQUEST_FREQUENCY_TIME);
 	request_frequency.setSingleShot(true);
 	connect(&request_frequency, SIGNAL(timeout()), this, SLOT(requestFrequency()));
+	frequency = 8750;
 }
 
 void SourceRadio::setCurrentStation(int station)
