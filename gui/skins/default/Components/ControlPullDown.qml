@@ -7,6 +7,7 @@
   */
 
 import QtQuick 1.1
+import Components.VideoDoorEntry 1.0
 
 
 Item {
@@ -27,11 +28,11 @@ Item {
             control.state = (control.state === "up") ? "down" : "up"
             control.clicked()
         }
-        defaultImageBg: "../../images/common/btn_impostazioni.svg"
-        pressedImageBg: "../../images/common/btn_impostazioni_P.svg"
-        defaultImage: "../../images/common/ico_apri_impostazioni.svg"
-        pressedImage: "../../images/common/ico_apri_impostazioni_P.svg"
-        shadowImage: "../../images/common/ombra_btn_impostazioni.svg"
+        defaultImageBg: "../images/common/btn_impostazioni.svg"
+        pressedImageBg: "../images/common/btn_impostazioni_P.svg"
+        defaultImage: "../images/common/ico_apri_impostazioni.svg"
+        pressedImage: "../images/common/ico_apri_impostazioni_P.svg"
+        shadowImage: "../images/common/ombra_btn_impostazioni.svg"
         imageAnchors.rightMargin: 7
         anchors.top: parent.top
     }
@@ -53,8 +54,8 @@ Item {
             name: "down"
             PropertyChanges {
                 target: theButton
-                defaultImage: "../../images/common/ico_chiudi_impostazioni.svg"
-                pressedImage: "../../images/common/ico_chiudi_impostazioni.svg"
+                defaultImage: "../images/common/ico_chiudi_impostazioni.svg"
+                pressedImage: "../images/common/ico_chiudi_impostazioni.svg"
             }
             PropertyChanges {
                 target: menuLoader

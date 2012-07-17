@@ -69,7 +69,7 @@ int CCTV::getBrightness() const
 void CCTV::setBrightness(int value)
 {
 	// TODO set value on device
-	if (brightness == value)
+	if (brightness == value || value < 0 || value > 100)
 		return;
 	brightness = value;
 	emit brightnessChanged();
@@ -83,10 +83,24 @@ int CCTV::getContrast() const
 void CCTV::setContrast(int value)
 {
 	// TODO set value on device
-	if (contrast == value)
+	if (contrast == value || value < 0 || value > 100)
 		return;
 	contrast = value;
 	emit contrastChanged();
+}
+
+int CCTV::getSaturation() const
+{
+	return saturation;
+}
+
+void CCTV::setSaturation(int value)
+{
+	// TODO set value on device
+	if (saturation == value || value < 0 || value > 100)
+		return;
+	saturation = value;
+	emit saturationChanged();
 }
 
 ObjectDataModel *CCTV::getExternalPlaces() const

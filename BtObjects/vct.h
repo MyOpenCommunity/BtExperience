@@ -68,6 +68,12 @@ class CCTV : public ObjectInterface
 	*/
 	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
 
+	/*!
+		\brief Sets or gets the saturation level of the display. Saturation must
+		be a value between 0 and 100.
+	*/
+	Q_PROPERTY(int saturation READ getSaturation WRITE setSaturation NOTIFY saturationChanged)
+
 	Q_PROPERTY(ObjectDataModel *externalPlaces READ getExternalPlaces CONSTANT)
 
 public:
@@ -82,6 +88,8 @@ public:
 	void setBrightness(int value);
 	int getContrast() const;
 	void setContrast(int value);
+	int getSaturation() const;
+	void setSaturation(int value);
 	ObjectDataModel *getExternalPlaces() const;
 
 	Q_INVOKABLE void answerCall();
@@ -93,6 +101,7 @@ public slots:
 signals:
 	void brightnessChanged();
 	void contrastChanged();
+	void saturationChanged();
 	void openLock();
 	void releaseLock();
 	void stairLightActivate();
@@ -107,6 +116,7 @@ protected slots:
 protected:
 	int brightness;
 	int contrast;
+	int saturation;
 
 private:
 	void startVideo();
