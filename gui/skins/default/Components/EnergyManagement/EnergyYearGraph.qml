@@ -58,12 +58,30 @@ Item {
         source: "../../images/energy/colonna_previous_year.svg"
     }
 
+    Row {
+        id: columnsHeader
+        anchors {
+            top: parent.top
+            topMargin: 20
+            left: graph.left
+        }
+        spacing: privateProps.columnSpacing
+        Repeater {
+            UbuntuLightText {
+                text: model.modelData.value.toFixed(2)
+                color: "white"
+                font.pixelSize: 12
+                width: columnPrototype.width
+            }
+            model: privateProps.modelGraph.graph
+        }
+    }
+
     UbuntuLightText {
         id: valuesLabel
         anchors {
-            bottom: valuesAxis.top
-            bottomMargin: 15
-            left: valuesAxis.left
+            top: columnsHeader.top
+            left: parent.left
         }
         text: qsTr("units")
         color: "white"
@@ -102,10 +120,13 @@ Item {
         }
     }
 
+
+
     Row {
         id: graph
         anchors {
-            top: parent.top
+            top: columnsHeader.bottom
+            topMargin: 5
             left: valuesAxis.right
         }
         spacing: privateProps.columnSpacing - (privateProps.hasPreviousYear() ? previousYearPrototype.width + privateProps.previousYearSpacing : 0)
@@ -126,6 +147,11 @@ Item {
                 SvgImage {
                     id: columnGraphBg
                     source: columnPrototype.source
+                    anchors {
+                        top: parent.top
+                        topMargin: 5
+                        left: parent.left
+                    }
                 }
 
                 SvgImage {
