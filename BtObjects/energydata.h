@@ -413,12 +413,21 @@ class EnergyGraphBar : public QObject
 	*/
 	Q_PROPERTY(QVariant value READ getValue NOTIFY valueChanged)
 
+	/*!
+		\brief Consumption goal for the bar.
+
+		If a goal is not set this value is invalid.
+	*/
+	Q_PROPERTY(QVariant consumptionGoal READ getConsumptionGoal CONSTANT)
+
 public:
-	EnergyGraphBar(QVariant index, QString label, QVariant value, EnergyRate *rate = 0);
+	EnergyGraphBar(QVariant index, QString label, QVariant value, QVariant goal, EnergyRate *rate = 0);
 
 	QVariant getIndex() const;
 	QString getLabel() const;
 	QVariant getValue() const;
+
+	QVariant getConsumptionGoal() const;
 
 signals:
 	void valueChanged();
@@ -428,6 +437,7 @@ private:
 	QString label;
 	QVariant value;
 	EnergyRate *rate;
+	QVariant consumption_goal;
 };
 
 
@@ -474,6 +484,11 @@ class EnergyGraph : public QObject
 	*/
 	Q_PROPERTY(QVariant maxValue READ getMaxValue NOTIFY maxValueChanged)
 
+	/*!
+		\brief The maximum consumption goal value.
+	*/
+	Q_PROPERTY(QVariant maxConsumptionGoal READ getMaxConsumptionGoal NOTIFY maxConsumptionGoalChanged)
+
 public:
 	EnergyGraph(EnergyData *data, EnergyData::GraphType type, QDate date, QList<QObject*> graph);
 
@@ -488,6 +503,8 @@ public:
 	void setGraph(QList<QObject*> graph);
 
 	QVariant getMaxValue() const;
+
+	QVariant getMaxConsumptionGoal() const;
 
 	Q_INVOKABLE QObject *getGraphBar(int index) const;
 
@@ -504,11 +521,13 @@ signals:
 	void graphChanged();
 	void validChanged();
 	void maxValueChanged();
+	void maxConsumptionGoalChanged();
 
 private:
 	static bool graphEqual(QList<QObject*> first, QList<QObject*> second);
 
 	double max_value;
+	QVariant max_consumption_goal;
 	EnergyData *data;
 	EnergyData::GraphType type;
 	QDate date;

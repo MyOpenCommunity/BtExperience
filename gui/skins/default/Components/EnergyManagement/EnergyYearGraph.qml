@@ -30,7 +30,17 @@ Item {
             return false
         }
 
-        property real maxValue: Math.max(modelGraph.maxValue, previousGraph.maxValue) * 1.1
+        function calculateMaxValue() {
+            var max_data =  Math.max(modelGraph.maxValue, previousGraph.maxValue)
+
+            if (modelGraph.maxConsumptionGoal === undefined)
+                return max_data * 1.1
+            else {
+                return Math.max(max_data, modelGraph.maxConsumptionGoal) * 1.1
+            }
+        }
+
+        property real maxValue: calculateMaxValue()
         property int previousYearSpacing: 2
         property int columnSpacing: 17
     }
@@ -101,6 +111,15 @@ Item {
         spacing: privateProps.columnSpacing - (privateProps.hasPreviousYear() ? previousYearPrototype.width + privateProps.previousYearSpacing : 0)
         Repeater {
             Item {
+//                Component.onCompleted: { // Debug purpose only
+
+//                    if (privateProps.hasPreviousYear() && privateProps.previousGraph.isValid)
+//                        console.log("Current Value: " + model.modelData.value + " Previous Value:" + privateProps.previousGraph.getGraphBar(index).value +
+//                                    " Goal: " + model.modelData.consumptionGoal)
+//                    else
+//                        console.log("Current Value: " + model.modelData.value + " Goal: " + model.modelData.consumptionGoal)
+//                }
+
                 width: columnGraphBg.width + (previusYearBar.visible ? previusYearBar.width + privateProps.previousYearSpacing : 0)
                 height: columnGraphBg.height + columnShadow.height
 
@@ -117,7 +136,11 @@ Item {
                 }
 
                 SvgImage {
-                    source: "../../images/energy/colonna_year_verde.svg"
+                    source: {
+                        if (model.modelData.consumptionGoal !== undefined && model.modelData.value > model.modelData.consumptionGoal)
+                            return "../../images/energy/colonna_year_rosso.svg"
+                        return "../../images/energy/colonna_year_verde.svg"
+                    }
                     anchors {
                         left: columnGraphBg.left
                         right: columnGraphBg.right
@@ -132,6 +155,19 @@ Item {
                             return model.modelData.value / privateProps.maxValue * columnGraphBg.height
                         }
                     }
+                }
+
+                SvgImage {
+                    visible: model.modelData.consumptionGoal !== undefined
+                    source: "../../images/energy/linea_livello_colonna_year.svg"
+
+                    z: 2
+                    anchors {
+                        left: columnGraphBg.left
+                        top: columnGraphBg.top
+                        topMargin: columnGraphBg.height - (model.modelData.consumptionGoal / privateProps.maxValue * columnGraphBg.height)
+                    }
+
                 }
 
                 SvgImage {
