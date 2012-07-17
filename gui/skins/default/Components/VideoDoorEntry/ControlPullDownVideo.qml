@@ -5,8 +5,11 @@ import Components 1.0
 Item {
     id: control
 
+    // we normally pass properties to the caller instead of objects inside other
+    // objects to have reusable components but this control is very specific
+    // to Video Door Entry system; in this case we prefer to pass the camera
+    // object instead of passing 9 properties to the caller because they are really too many
     property variant camera
-    Component.onCompleted: console.log("camera: "+camera)
 
     ControlPullDown {
         menu: videoMenu

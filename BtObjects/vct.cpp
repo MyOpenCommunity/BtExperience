@@ -44,14 +44,10 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
-	connect(this, SIGNAL(stairLightActivate()), dev, SLOT(stairLightActivate()));
-	connect(this, SIGNAL(stairLightRelease()), dev, SLOT(stairLightRelease()));
-	connect(this, SIGNAL(openLock()), dev, SLOT(openLock()));
-	connect(this, SIGNAL(releaseLock()), dev, SLOT(releaseLock()));
-
 	// initial values
 	brightness = 50;
 	contrast = 50;
+	saturation = 50;
 	call_stopped = false;
 
 	foreach (ExternalPlace *ep, list)
@@ -125,6 +121,31 @@ void CCTV::endCall()
 void CCTV::cameraOn(QString where)
 {
 	dev->cameraOn(where);
+}
+
+void CCTV::openLock()
+{
+	dev->openLock();
+}
+
+void CCTV::releaseLock()
+{
+	dev->releaseLock();
+}
+
+void CCTV::stairLightActivate()
+{
+	dev->stairLightActivate();
+}
+
+void CCTV::stairLightRelease()
+{
+	dev->stairLightRelease();
+}
+
+void CCTV::nextCamera()
+{
+	dev->cycleExternalUnits();
 }
 
 void CCTV::valueReceived(const DeviceValues &values_list)
