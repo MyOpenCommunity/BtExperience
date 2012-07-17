@@ -97,15 +97,16 @@ public:
 
 public slots:
 	void cameraOn(QString where);
+	void openLock();
+	void releaseLock();
+	void stairLightActivate();
+	void stairLightRelease();
+	void nextCamera();
 
 signals:
 	void brightnessChanged();
 	void contrastChanged();
 	void saturationChanged();
-	void openLock();
-	void releaseLock();
-	void stairLightActivate();
-	void stairLightRelease();
 	void incomingCall();
 	void callEnded();
 

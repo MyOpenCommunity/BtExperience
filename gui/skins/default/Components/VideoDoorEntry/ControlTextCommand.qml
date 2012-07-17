@@ -16,6 +16,8 @@ SvgImage {
     property alias pressedImage: button.pressedImage
 
     signal clicked
+    signal pressed
+    signal released
 
     source: "../../images/common/bg_automazioni.svg"
 
@@ -41,6 +43,8 @@ SvgImage {
         defaultImage: "../../images/common/ico_cancelletto.svg"
         pressedImage: "../../images/common/ico_cancelletto_P.svg"
         onClicked: control.clicked()
+        onPressed: control.pressed()
+        onReleased: control.released()
         status: 0
         anchors {
             bottom: parent.bottom

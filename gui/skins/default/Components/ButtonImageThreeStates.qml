@@ -24,6 +24,8 @@ SvgImage {
     property bool timerEnabled: false // enable repetion when pressed
 
     signal clicked
+    signal pressed
+    signal released
 
     source: defaultImageBg
 
@@ -33,8 +35,14 @@ SvgImage {
         onClicked: bg.clicked()
         // in some cases I have to disable the button to not accept any input
         visible: bg.enabled
-        onPressed: clickTimer.running = timerEnabled
-        onReleased: clickTimer.running = false
+        onPressed: {
+            bg.pressed()
+            clickTimer.running = timerEnabled
+        }
+        onReleased: {
+            bg.released()
+            clickTimer.running = false
+        }
         onVisibleChanged: {
             if (visible === false)
                 clickTimer.running = false
