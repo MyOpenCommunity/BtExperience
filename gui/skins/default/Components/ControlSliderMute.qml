@@ -130,14 +130,13 @@ SvgImage {
             PropertyChanges { target: darkRect; visible: true }
             PropertyChanges { target: buttonMinus; enabled: false }
             PropertyChanges { target: buttonPlus; enabled: false }
-            // TODO make state changes for buttonMute
             PropertyChanges {
                 target: buttonMute
-                defaultImageBg: "../images/common/btn_mute.svg"
+                defaultImageBg: "../images/common/btn_mute_on.svg"
                 pressedImageBg: "../images/common/btn_mute_P.svg"
                 shadowImage: "../images/common/ombra_btn_mute.svg"
-                defaultImage: "../images/common/ico_mute.svg"
-                pressedImage: "../images/common/ico_mute.svg"
+                defaultImage: "../images/common/ico_mute_on.svg"
+                pressedImage: "../images/common/ico_mute_on.svg"
                 status: 0
             }
         }
