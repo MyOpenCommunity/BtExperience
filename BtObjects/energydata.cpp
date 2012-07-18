@@ -175,6 +175,7 @@ QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 
 	EnergyRate *r1 = new EnergyRate(0.2);
 
+	// TODO: replace the general EnergyData objects with some other objects type.
 	objects << new EnergyData(de, "Electricity", true, r1);
 	objects << new EnergyData(de2, "Lights", false, r1);
 	objects << new EnergyData(de3, "Appliances", false, r1);
@@ -182,6 +183,7 @@ QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
 	objects << new EnergyData(de5, "Garden", false, r1);
 
 	objects << new EnergyData(dw, "Water", true, r1);
+	objects << new EnergyData(dw, "Water", false, r1);
 
 	return objects;
 }
