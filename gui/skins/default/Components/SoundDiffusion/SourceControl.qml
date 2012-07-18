@@ -17,7 +17,7 @@ MenuColumn {
         name: qsTr("source")
         description: column.dataModel.currentSource === null ? qsTr("no active source") : column.dataModel.currentSource.name
         hasChild: true
-        state: privateProps.currentElement === 0 ? "selected" : ""
+        isSelected: privateProps.currentElement === 0
         onClicked: {
             if (privateProps.currentElement !== 0)
                 privateProps.currentElement = 0
@@ -65,7 +65,6 @@ MenuColumn {
             id: radioColumn
             property variant objModel: undefined
             property int maxStations: 15
-
 
             ControlFMRadio {
                 radioName: "radio - " + objModel.source.rdsText
@@ -134,7 +133,7 @@ MenuColumn {
             MenuItem {
                 name: qsTr("saved IP radios")
                 hasChild: true
-                state: privateProps.currentElement === 1 ? "selected" : ""
+                isSelected: privateProps.currentElement === 1
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps = 1
@@ -156,7 +155,7 @@ MenuColumn {
             MenuItem {
                 name: qsTr("browse")
                 hasChild: true
-                state: privateProps.currentElement === 1 ? "selected" : ""
+                isSelected: privateProps.currentElement === 1
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps.currentElement = 1
