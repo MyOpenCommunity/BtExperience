@@ -144,15 +144,31 @@ Item {
                 width: columnGraphBg.width + (previusYearBar.visible ? previusYearBar.width + privateProps.previousYearSpacing : 0)
                 height: columnGraphBg.height + columnShadow.height
 
-                SvgImage {
+                Loader {
                     id: columnGraphBg
-                    source: columnPrototype.source
+                    sourceComponent: (model.modelData.consumptionGoal !== undefined ? columnGraphBgImage : columnGraphBgTransparent)
                     anchors {
                         top: parent.top
                         topMargin: 5
                         left: parent.left
                     }
                 }
+
+                Component {
+                    id: columnGraphBgImage
+                    SvgImage {
+                        source: columnPrototype.source
+                    }
+                }
+
+                Component {
+                    id: columnGraphBgTransparent
+                    Item {
+                        width: columnPrototype.width
+                        height: columnPrototype.height
+                    }
+                }
+
 
                 SvgImage {
                     id: columnShadow

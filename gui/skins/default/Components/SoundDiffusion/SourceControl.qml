@@ -17,7 +17,7 @@ MenuColumn {
         name: qsTr("source")
         description: column.dataModel.currentSource === null ? qsTr("no active source") : column.dataModel.currentSource.name
         hasChild: true
-        state: privateProps.currentElement === 0 ? "selected" : ""
+        isSelected: privateProps.currentElement === 0
         onClicked: {
             if (privateProps.currentElement !== 0)
                 privateProps.currentElement = 0
@@ -38,13 +38,16 @@ MenuColumn {
             sourceSelect.description = sourceObj.name
             var properties = {'objModel': sourceObj}
 
-            switch (sourceObj.source.type)
+            switch (sourceObj.sourceType)
             {
-            case SourceBase.Radio:
+            case SourceObject.RdsRadio:
                 itemLoader.setComponent(fmRadio, properties)
                 break
-            case SourceBase.Aux:
+            case SourceObject.Aux:
                 itemLoader.setComponent(auxComponent, properties)
+                break
+            case SourceObject.IpRadio:
+                itemLoader.setComponent(ipRadio, properties)
                 break
             default:
                 itemLoader.setComponent(mediaPlayer, properties)
@@ -62,7 +65,6 @@ MenuColumn {
             id: radioColumn
             property variant objModel: undefined
             property int maxStations: 15
-
 
             ControlFMRadio {
                 radioName: "radio - " + objModel.source.rdsText
@@ -131,7 +133,7 @@ MenuColumn {
             MenuItem {
                 name: qsTr("saved IP radios")
                 hasChild: true
-                state: privateProps.currentElement === 1 ? "selected" : ""
+                isSelected: privateProps.currentElement === 1
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps = 1
@@ -153,7 +155,7 @@ MenuColumn {
             MenuItem {
                 name: qsTr("browse")
                 hasChild: true
-                state: privateProps.currentElement === 1 ? "selected" : ""
+                isSelected: privateProps.currentElement === 1
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps.currentElement = 1
@@ -163,7 +165,17 @@ MenuColumn {
 
             ControlMediaPlayer {
                 property variant trackInfo: objModel.mediaPlayer.trackInfo
-                time: trackInfo['current_time']
+                function formatTime(time) {
+                    if (time === undefined)
+                        return "--:--"
+                    // TODO: this way we can't show songs 1h or more long even though
+                    // we support 99 minutes in the GUI.
+                    // I couldn't find a way to access hours and minutes, it doesn't
+                    // seem to be accessible as a JS Date object (it's a QTime in fact)
+                    return Qt.formatTime(time, "mm:ss")
+                }
+
+                time: formatTime(trackInfo['current_time'])
                 song: trackInfo['meta_title'] === undefined ? qsTr("no title") : trackInfo['meta_title']
                 album: trackInfo['meta_album'] === undefined ? qsTr("no album") : trackInfo['meta_album']
                 playerStatus: objModel.mediaPlayer.playerState

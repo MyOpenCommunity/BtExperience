@@ -76,17 +76,12 @@ Item {
         spacing: privateProps.columnSpacing
         Repeater {
             Item {
-                width: columnGraphBg.width
-                height: columnGraphBg.height
-
-                SvgImage {
-                    id: columnGraphBg
-                    source: columnPrototype.source
-                }
+                width: columnPrototype.width
+                height: columnPrototype.height
 
                 SvgImage {
                     source: "../../images/energy/ombra_colonna_day.svg"
-                    anchors.top: columnGraphBg.bottom
+                    anchors.top: parent.bottom
                 }
             }
             // We draw the graph area with a fixed number of bars to optimize

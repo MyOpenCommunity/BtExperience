@@ -49,7 +49,7 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		case SourceBase::Radio:
 		{
 			SourceRadio *source = new SourceRadio(bt_global::add_device_to_cache(new RadioSourceDevice(where)));
-			SourceObject *so = new SourceObject(name, source);
+			SourceObject *so = new SourceObject(name, source, SourceObject::RdsRadio);
 			source->setParent(so);
 			source->setSourceObject(so);
 			sources << so;
@@ -58,7 +58,7 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		case SourceBase::Aux:
 		{
 			SourceAux *source = new SourceAux(bt_global::add_device_to_cache(new SourceDevice(where)));
-			SourceObject *so = new SourceObject(name, source);
+			SourceObject *so = new SourceObject(name, source, SourceObject::Aux);
 			source->setParent(so);
 			source->setSourceObject(so);
 			sources << so;
@@ -67,10 +67,11 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		case SourceBase::MultiMedia:
 		{
 			SourceMultiMedia *source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice(where)));
-			SourceObject *ip_radio = new SourceLocalMedia("IP radio", source);
+			SourceObject *ip_radio = new SourceLocalMedia("IP radio", source, SourceObject::IpRadio);
 			sources << ip_radio;
-			sources << new SourceLocalMedia("USB1", source);
-			sources << new SourceLocalMedia("SD card", source);
+			sources << new SourceLocalMedia("USB1", source, SourceObject::FileSystem);
+			sources << new SourceLocalMedia("SD card", source, SourceObject::FileSystem);
+			sources << new SourceLocalMedia("Network shares", source, SourceObject::Upnp);
 			// TODO: where are we going to destroy SourceMultiMedia?
 
 			// use a default
@@ -267,10 +268,11 @@ void SoundGeneralAmbient::setSource(SourceObject * source)
 }
 
 
-SourceObject::SourceObject(const QString &_name, SourceBase *s)
+SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType t)
 {
 	name = _name;
 	source = s;
+	type = t;
 }
 
 void SourceObject::scsSourceActiveAreasChanged()
@@ -301,8 +303,8 @@ void SourceObject::nextTrack()
 
 
 
-SourceLocalMedia::SourceLocalMedia(const QString &name, SourceBase *s) :
-	SourceObject(name, s)
+SourceLocalMedia::SourceLocalMedia(const QString &name, SourceBase *s, SourceObjectType t) :
+	SourceObject(name, s, t)
 {
 	media_player = new MultiMediaPlayer();
 	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());

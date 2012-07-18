@@ -71,9 +71,8 @@ MenuColumn {
         model: files
     }
 
-    DirectoryListModel {
+    UPnPListModel {
         id: files
-        rootPath: ['usr', 'local', 'lottaviano', 'music']
         filter: FileObject.Audio | FileObject.Directory
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }

@@ -76,8 +76,8 @@ Item {
         spacing: privateProps.columnSpacing
         Repeater {
             Item {
-                width: columnGraphBg.width
-                height: columnGraphBg.height
+                width: columnPrototype.width
+                height: columnPrototype.height
                 opacity: {
                     if (privateProps.modelGraph.isValid) {
                         return index < privateProps.modelGraph.graph.length ? 1: 0
@@ -89,13 +89,8 @@ Item {
                 }
 
                 SvgImage {
-                    id: columnGraphBg
-                    source: columnPrototype.source
-                }
-
-                SvgImage {
                     source: "../../images/energy/ombra_colonna_month.svg"
-                    anchors.top: columnGraphBg.bottom
+                    anchors.top: parent.bottom
                 }
             }
             // We draw the graph area with a fixed number of bars to optimize

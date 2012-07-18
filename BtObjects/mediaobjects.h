@@ -147,13 +147,29 @@ class SourceObject : public ObjectInterface
 {
 	Q_OBJECT
 	Q_PROPERTY(QObject *source READ getSource CONSTANT)
+	Q_PROPERTY(SourceObjectType sourceType READ getSourceType CONSTANT)
+	Q_ENUMS(SourceObjectType)
 
 public:
-	SourceObject(const QString &name, SourceBase *s);
+	enum SourceObjectType
+	{
+		RdsRadio,
+		IpRadio,
+		Aux,
+		Upnp,
+		FileSystem,
+	};
+
+	SourceObject(const QString &name, SourceBase *s, SourceObjectType t);
 
 	SourceBase *getSource() const
 	{
 		return source;
+	}
+
+	SourceObjectType getSourceType() const
+	{
+		return type;
 	}
 
 	virtual int getObjectId() const
@@ -186,6 +202,7 @@ signals:
 
 private:
 	SourceBase *source;
+	SourceObjectType type;
 };
 
 class SourceLocalMedia : public SourceObject
@@ -194,7 +211,7 @@ class SourceLocalMedia : public SourceObject
 	Q_PROPERTY(QObject *mediaPlayer READ getMediaPlayer CONSTANT)
 
 public:
-	SourceLocalMedia(const QString &name, SourceBase *s);
+	SourceLocalMedia(const QString &name, SourceBase *s, SourceObjectType t);
 	QObject *getMediaPlayer() const;
 
 	Q_INVOKABLE void startPlay(QString path);
