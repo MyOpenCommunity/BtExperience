@@ -123,7 +123,12 @@ private:
 	void startVideo();
 	void stopVideo();
 	void resumeVideo();
+	void activateCall();
+	void disactivateCall();
+	bool callActive();
+
 	bool call_stopped;
+	bool call_active;
 	QProcess video_grabber;
 	VideoDoorEntryDevice *dev;
 	ObjectDataModel external_places;
@@ -202,7 +207,11 @@ protected:
 
 private:
 	void setTalkerFromWhere(QString where);
+	void activateCall();
+	void disactivateCall();
+	bool callActive();
 
+	bool call_active;
 	VideoDoorEntryDevice *dev;
 	ObjectDataModel external_places;
 	QString talker;
