@@ -7,6 +7,7 @@ SvgImage {
 
     property int percentage: 70
     property string description: qsTr("volume")
+    property alias muteEnabled: buttonMute.enabled
 
     signal plusClicked
     signal minusClicked

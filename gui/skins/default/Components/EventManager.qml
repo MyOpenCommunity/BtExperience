@@ -100,7 +100,7 @@ Item {
             screensaver.isEnabled = false
             Stack.currentPage().installPopup(callPopup)
             Stack.currentPage().popupLoader.item.dataObject = intercomConnection.target
-            Stack.currentPage().popupLoader.item.state = "ringing"
+            Stack.currentPage().popupLoader.item.state = "callFrom"
         }
     }
 

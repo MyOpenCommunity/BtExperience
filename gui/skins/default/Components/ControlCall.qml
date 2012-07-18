@@ -1,403 +1,228 @@
 import QtQuick 1.1
 import Components.Text 1.0
+import Components.VideoDoorEntry 1.0 // some controls are VDE specific
 
 
-Rectangle {
+SvgImage {
     id: control
 
     property variant dataObject: undefined
+    property string where // used only to make calls
 
     signal closePopup
 
-    property string description: qsTr("Start call")
-    property string headerImage: "../images/common/incoming_call.svg"
-    property string place: dataObject.talker
-    property string where // used only to make calls
-
-    property int index: 0
-
-    width: 212
-    height: 50
+    source: "../images/common/bg_btn_rispondi_L.svg"
 
     onDataObjectChanged: {
         if (dataObject !== undefined) {
-            dataObject.callAnswered.connect(callAnswered)
-            dataObject.callEnded.connect(callEnding)
+            dataObject.callAnswered.connect(privateProps.callAnswered)
+            dataObject.callEnded.connect(privateProps.callEnding)
+            connDataObject.target = dataObject
         }
     }
 
-    function callAnswered() {
-        control.state = "speaking"
+    Connections {
+        id: connDataObject
+        target: null
+        onMuteChanged: {
+            if (connDataObject.target.mute) {
+                privateProps.oldState = control.state
+                control.state = "muteOn"
+            }
+            else
+                control.state = privateProps.oldState
+        }
     }
 
-    function callEnding() {
-        control.state = ""
-        // it is useful to call closePopup as the very last function: this
-        // object is destroyed very shortly after the call returns and doing
-        // stuff may lead to random crashes
-        closePopup()
+    ButtonTextImageThreeStates {
+        id: buttonCommand
+
+        text: qsTr("push to talk")
+        defaultImageBg: "../images/common/btn_cercapersone.svg"
+        pressedImageBg: "../images/common/btn_cercapersone_P.svg"
+        shadowImage: "../images/common/ombra_btn_cercapersone.svg"
+        defaultImage: "../images/common/ico_cercapersone.svg"
+        pressedImage: "../images/common/ico_cercapersone_P.svg"
+        anchors {
+            top: parent.top
+            topMargin: 7
+            left: parent.left
+            leftMargin: 7
+        }
+
+        onClicked: {
+            if (dataObject !== undefined) {
+                dataObject.startCall(where)
+                control.state = "callTo"
+            }
+        }
     }
 
-    Image {
-        id: header
+    ControlTextImageCallManager {
+        id: callManager
 
-        height: 50
-        source: "../images/common/bg_DueRegolazioni.png"
+        place: (dataObject === undefined) ? "" : dataObject.talker
+        // this component "appears" when a call is ringing: we may
+        // assume a ringing state; state must be updated during the call
+        // (callAnswered, callEnded, ...)
+        state: "callFrom"
+        visible: false
         anchors {
             top: parent.top
             left: parent.left
-            right: parent.right
         }
-
-        UbuntuLightText {
-            id: textDescription
-
-            anchors {
-                top: parent.top
-                left: parent.left
-                right:imageHeader.left
-                bottom: textPlace.top
+        onLeftClicked: {
+            if (dataObject !== undefined) {
+                dataObject.answerCall()
+                control.state = "activeCall"
             }
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            text: control.description
         }
-
-        UbuntuLightText {
-            id: textPlace
-
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                right: imageHeader.left
-            }
-            height: parent.height / 2
-            color: "white"
-            visible: control.place == "" ? false : true
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            text: control.place
-        }
-
-        SvgImage {
-            id: imageHeader
-
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                right: parent.right
-            }
-            width: parent.width / 4
-            source: control.headerImage
-            visible: control.headerImage == "" ? false : true
-        }
-
-        MouseArea {
-            id: areaHeader
-            anchors.fill: parent
-            onClicked: {
-                state = "calling"
-                dataObject.startCall(where)
-            }
+        onRightClicked: {
+            if (dataObject !== undefined)
+                dataObject.endCall()
+            closePopup()
         }
     }
 
-    Image {
-        id: buttons
+    ControlSliderMute {
+        id: controlVolume
 
-        height: 50
-        visible: false
-        source: "../images/common/bg_DueRegolazioni.png"
-        anchors {
-            top: header.bottom
-            left: parent.left
-            right: parent.right
-        }
-
-        Rectangle {
-            id: answer
-
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                left: parent.left
-            }
-
-            color: "green"
-            width: parent.width / 2
-
-            SvgImage {
-                id: imageAnswer
-
-                anchors {
-                    top: parent.top
-                    topMargin: parent.width / 20
-                    bottom: parent.bottom
-                    bottomMargin: parent.width / 20
-                    left: parent.left
-                    leftMargin: parent.width / 20
-                }
-                width: parent.width / 3
-                source: "../images/common/answer_call.svg"
-            }
-
-            UbuntuLightText {
-                color: "white"
-                anchors {
-                    top: parent.top
-                    bottom: parent.bottom
-                    right: parent.right
-                }
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                text: qsTr("Answer")
-                font {
-                    pixelSize: 12
-                    capitalization: Font.AllUppercase
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (dataObject !== undefined)
-                        dataObject.answerCall()
-                    control.state = "speaking"
-                }
-            }
-        }
-
-        Rectangle {
-            id: end
-
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                right: parent.right
-                left: answer.right
-            }
-
-            color: "red"
-
-            SvgImage {
-                id: imageEnd
-
-                anchors {
-                    top: parent.top
-                    topMargin: parent.width / 20
-                    bottom: parent.bottom
-                    bottomMargin: parent.width / 20
-                    left: parent.left
-                    leftMargin: parent.width / 20
-                }
-                width: parent.width / 3
-                source: "../images/common/end_call.svg"
-            }
-
-            UbuntuLightText {
-                color: "white"
-                anchors {
-                    top: parent.top
-                    bottom: parent.bottom
-                    right: parent.right
-                }
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                text: qsTr("End Call")
-                font {
-                    pixelSize: 12
-                    capitalization: Font.AllUppercase
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (dataObject !== undefined)
-                        dataObject.endCall()
-                    closePopup()
-                }
-            }
-        }
-    }
-
-    ControlSlider {
-        id: volume
-        visible: false
-
-        source: "../images/common/bg_DueRegolazioni.png"
-        anchors {
-            top: buttons.bottom
-            left: parent.left
-            right: parent.right
-        }
         description: qsTr("volume")
-        percentage: 50
-    }
-
-    Image {
-        id: mute
+        percentage: (dataObject === undefined) ? 0 : dataObject.volume
         visible: false
-
-        source: "../images/common/btn_annulla.png"
         anchors {
-            top: volume.bottom
-            left: parent.left
-            right: parent.right
+            top: callManager.bottom
         }
-
-        UbuntuLightText {
-            anchors {
-                fill: parent
-                centerIn: parent
-            }
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            text: qsTr("mute")
-            font {
-                pixelSize: 14
-                capitalization: Font.AllUppercase
-            }
-        }
-    }
-
-    Rectangle {
-        id: inhibitArea
-
-        anchors {
-            top: volume.top
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-        }
-        color: "black"
-        visible: false
-        opacity: 0.7
-        z: 10
-
-        Behavior on opacity {
-            NumberAnimation { duration: constants.alertTransitionDuration }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-        }
-    }
-
-    Constants {
-        id: constants
+        onPlusClicked: if (dataObject) dataObject.volume += 5
+        onMinusClicked: if (dataObject) dataObject.volume -= 5
+        onMuteClicked: if (dataObject) dataObject.mute = !dataObject.mute
     }
 
     states: [
         State {
-            name: "ringing"
-
-            PropertyChanges {
-                target: inhibitArea
-                visible: true
-            }
-
-            PropertyChanges {
-                target: mute
-                visible: true
-            }
-
-            PropertyChanges {
-                target: volume
-                visible: true
-            }
-
-            PropertyChanges {
-                target: buttons
-                visible: true
-            }
-
+            name: "callFrom"
             PropertyChanges {
                 target: control
-                height: 300
-                description: qsTr("Incoming Call From")
+                height: callManager.height + controlVolume.height
             }
-
             PropertyChanges {
-                target: areaHeader
+                target: buttonCommand
                 visible: false
+            }
+            PropertyChanges {
+                target: callManager
+                visible: true
+                state: "callFrom"
+            }
+            PropertyChanges {
+                target: controlVolume
+                visible: true
+                state: "mute"
+                muteEnabled: false
             }
         },
-
         State {
-            name: "calling"
-
-            PropertyChanges {
-                target: inhibitArea
-                visible: true
-            }
-
-            PropertyChanges {
-                target: mute
-                visible: true
-            }
-
-            PropertyChanges {
-                target: volume
-                visible: true
-            }
-
-            PropertyChanges {
-                target: buttons
-                visible: true
-            }
-
+            name: "callTo"
             PropertyChanges {
                 target: control
-                height: 300
-                description: qsTr("Call To")
+                height: callManager.height + controlVolume.height
             }
-
             PropertyChanges {
-                target: areaHeader
+                target: buttonCommand
                 visible: false
             }
-
             PropertyChanges {
-                target: answer
-                width: 0
+                target: callManager
+                visible: true
+                state: "callTo"
+            }
+            PropertyChanges {
+                target: controlVolume
+                visible: true
+                state: "mute"
+                muteEnabled: false
             }
         },
-
         State {
-            name: "speaking"
-
-            PropertyChanges {
-                target: answer
-                width: 0
-            }
-
-            PropertyChanges {
-                target: buttons
-                visible: true
-            }
-
-            PropertyChanges {
-                target: volume
-                visible: true
-            }
-
-            PropertyChanges {
-                target: mute
-                visible: true
-            }
-
+            name: "noAnswer"
             PropertyChanges {
                 target: control
-                height: 300
-                description: qsTr("Call With")
+                height: callManager.height + controlVolume.height
             }
-
             PropertyChanges {
-                target: areaHeader
+                target: buttonCommand
                 visible: false
+            }
+            PropertyChanges {
+                target: callManager
+                visible: true
+                state: "noAnswer"
+            }
+            PropertyChanges {
+                target: controlVolume
+                visible: true
+                state: "mute"
+                muteEnabled: false
+            }
+        },
+        State {
+            name: "activeCall"
+            PropertyChanges {
+                target: control
+                height: callManager.height + controlVolume.height
+            }
+            PropertyChanges {
+                target: buttonCommand
+                visible: false
+            }
+            PropertyChanges {
+                target: callManager
+                visible: true
+                state: "activeCall"
+            }
+            PropertyChanges {
+                target: controlVolume
+                visible: true
+            }
+        },
+        State {
+            name: "muteOn"
+            PropertyChanges {
+                target: control
+                height: callManager.height + controlVolume.height
+            }
+            PropertyChanges {
+                target: buttonCommand
+                visible: false
+            }
+            PropertyChanges {
+                target: callManager
+                visible: true
+                state: "muteOn"
+            }
+            PropertyChanges {
+                target: controlVolume
+                visible: true
+                state: "mute"
             }
         }
     ]
-}
 
+    QtObject {
+        id: privateProps
+
+        property string oldState: ""
+
+        function callAnswered() {
+            control.state = "activeCall"
+        }
+
+        function callEnding() {
+            control.state = ""
+            // it is useful to call closePopup as the very last function: this
+            // object is destroyed very shortly after the call returns and doing
+            // stuff may lead to random crashes
+            closePopup()
+        }
+    }
+}
