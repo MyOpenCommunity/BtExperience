@@ -25,8 +25,8 @@ Item {
     UbuntuLightText {
         id: valuesLabel
         anchors {
-            bottom: valuesAxis.top
-            bottomMargin: 15
+            top: parent.top
+            topMargin: 20
             left: valuesAxis.left
         }
         text: qsTr("units")
@@ -69,7 +69,8 @@ Item {
     Row {
         id: graph
         anchors {
-            top: parent.top
+            top: valuesLabel.bottom
+            topMargin: 15
             left: valuesAxis.right
         }
         spacing: privateProps.columnSpacing

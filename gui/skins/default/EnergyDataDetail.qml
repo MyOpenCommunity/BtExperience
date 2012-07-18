@@ -137,7 +137,6 @@ Page {
                 itemObject: energiesCounters.getObject(index)
                 description: itemObject.general ? qsTr("Overall") : itemObject.name
                 measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
-                isOverview: false
                 onHeaderClicked: Stack.openPage("EnergyDataGraph.qml", {"energyData": itemObject})
             }
             delegateSpacing: 40
@@ -152,6 +151,6 @@ Page {
 
     ObjectModel {
         id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "type:" + energyType}]
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "line,type:" + energyType}]
     }
 }

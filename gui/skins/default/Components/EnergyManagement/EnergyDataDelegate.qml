@@ -53,9 +53,9 @@ Column {
     onHeightChanged: delegate.view.height = height // for CardView usage
 
     ButtonThreeStates {
-        defaultImage: "../../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
-        pressedImage: "../../images/energy/btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
-        shadowImage: "../../images/energy/ombra_btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
+        defaultImage: "../../images/energy/btn_colonna_grafico.svg"
+        pressedImage: "../../images/energy/btn_colonna_grafico.svg"
+        shadowImage: "../../images/energy/ombra_btn_colonna_grafico.svg"
 
         Row {
             anchors {
@@ -95,23 +95,23 @@ Column {
 
     Column {
         SvgImage {
-            source: "../../images/energy/colonna" + (isOverview ? '_overview' : '') + ".svg"
+            source: "../../images/energy/colonna.svg"
 
             SvgImage {
                 anchors.bottom: parent.bottom
                 source: {
                     if (logic.consumptionExceedGoal()) {
-                        return "../../images/energy/colonna_rosso" + (isOverview ? '_overview' : '') + ".svg"
+                        return "../../images/energy/colonna_rosso.svg"
                     }
                     else {
-                        return "../../images/energy/colonna_verde" + (isOverview ? '_overview' : '') + ".svg"
+                        return "../../images/energy/colonna_verde.svg"
                     }
                 }
                 height: logic.getConsumptionSize(parent.height)
             }
             SvgImage {
                 id: goalLine
-                source: "../../images/energy/linea_livello_colonna" + (isOverview ? '_overview' : '') + ".svg"
+                source: "../../images/energy/linea_livello_colonna.svg"
                 visible: logic.hasGoal()
                 width: parent.width
                 anchors.top: parent.top
@@ -119,7 +119,7 @@ Column {
             }
         }
         SvgImage {
-            source: "../../images/energy/ombra_btn_colonna_grafico" + (isOverview ? '_overview' : '') + ".svg"
+            source: "../../images/energy/ombra_btn_colonna_grafico.svg"
         }
     }
 

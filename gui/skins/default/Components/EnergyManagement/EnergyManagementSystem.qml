@@ -13,9 +13,9 @@ MenuColumn {
     }
 
     Component.onCompleted: {
-        listModel.append({"name": qsTr("systems supervision"), "component": supervision, "page": ""})
-        listModel.append({"name": qsTr("consumption/production"), "component": undefined, "page": "EnergyDataOverview.qml"})
-        listModel.append({"name": qsTr("load management"), "component": loadManagement, "page": ""})
+        listModel.append({"name": qsTr("systems supervision"), "component": supervision})
+        listModel.append({"name": qsTr("consumption/production"), "component": energyOverview})
+        listModel.append({"name": qsTr("load management"), "component": loadManagement})
     }
 
     ListView {
@@ -26,15 +26,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             name: model.name
             hasChild: true
-            onClicked: {
-                if (model.component === undefined) {
-                    listView.currentIndex = -1
-                    element.closeChild()
-                    Stack.openPage(model.page)
-                }
-                else
-                    element.loadColumn(model.component, model.name)
-            }
+            onClicked: element.loadColumn(model.component, model.name)
         }
         model: listModel
 
@@ -51,6 +43,12 @@ MenuColumn {
         Component {
             id: loadManagement
             LoadManagement {
+            }
+        }
+
+        Component {
+            id: energyOverview
+            EnergyOverview {
             }
         }
     }

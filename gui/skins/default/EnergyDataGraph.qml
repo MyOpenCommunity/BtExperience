@@ -227,7 +227,6 @@ Page {
                 id: graphLoader
                 anchors {
                     top: divisorLine.bottom
-                    topMargin: parent.height * 0.1
                     left: divisorLine.left
                 }
 
