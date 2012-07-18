@@ -5,6 +5,7 @@ import QtQuick 1.0
 
      property alias image: bg.source
      property alias url: urlText.text
+     property variant view
 
      signal urlEntered(string url)
      signal urlChanged
@@ -21,8 +22,8 @@ import QtQuick 1.0
      Rectangle {
          anchors.bottom: bg.bottom
          x: 18; height: 4; color: "#63b1ed"
-         width: (bg.width - 20) * webView.progress
-         opacity: webView.progress == 1.0 ? 0.0 : 1.0
+         width: (bg.width - 20) * view.progress
+         opacity: view.progress === 1.0 ? 0.0 : 1.0
      }
 
      TextInput {
@@ -33,18 +34,18 @@ import QtQuick 1.0
          onTextChanged: container.urlChanged()
 
          Keys.onEscapePressed: {
-             urlText.text = webView.url
-             webView.focus = true
+             urlText.text = view.url
+             view.focus = true
          }
 
          Keys.onEnterPressed: {
              container.urlEntered(urlText.text)
-             webView.focus = true
+             view.focus = true
          }
 
          Keys.onReturnPressed: {
              container.urlEntered(urlText.text)
-             webView.focus = true
+             view.focus = true
          }
 
          anchors {

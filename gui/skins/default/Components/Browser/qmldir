@@ -1,5 +1,5 @@
 Button 1.0 Button.qml
 FlickableWebView 1.0 FlickableWebView.qml
-HeaderOld 1.0 HeaderOld.qml
+Header 1.0 Header.qml
 ScrollBar 1.0 ScrollBar.qml
 UrlInput 1.0 UrlInput.qml
