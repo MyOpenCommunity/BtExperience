@@ -28,7 +28,10 @@ Page {
             bottom: parent.bottom
             bottomMargin: 22
         }
-        onLeftClicked: videoCamera.camera.answerCall()
+        onLeftClicked: {
+            state = "terminate"
+            videoCamera.camera.answerCall()
+        }
         onRightClicked: privateProps.endCall()
     }
 

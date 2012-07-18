@@ -49,6 +49,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	contrast = 50;
 	saturation = 50;
 	call_stopped = false;
+	call_active = false;
 
 	foreach (ExternalPlace *ep, list)
 		external_places << ep;
@@ -150,6 +151,10 @@ void CCTV::nextCamera()
 
 void CCTV::valueReceived(const DeviceValues &values_list)
 {
+	// if call is not active we have to ignore all frames except:
+	//	VideoDoorEntryDevice::RINGTONE
+	//	VideoDoorEntryDevice::VCT_CALL
+	//	VideoDoorEntryDevice::AUTO_VCT_CALL
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
 	{
@@ -168,20 +173,26 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 				emit incomingCall();
 				startVideo();
 			}
+			activateCall();
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received END_OF_CALL";
 			call_stopped = false;
 			stopVideo();
 			emit callEnded();
+			disactivateCall();
 			break;
 		case VideoDoorEntryDevice::STOP_VIDEO:
 			qDebug() << "Received STOP_VIDEO";
+			if (!callActive()) // ignore
+				break;
 			call_stopped = true;
 			stopVideo();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
 			qDebug() << "Received CALLER_ADDRESS: " << *it;
+			if (!callActive()) // ignore
+				break;
 			break;
 		default:
 			qDebug() << "CCTV::valueReceived, unhandled value" << it.key() << *it;
@@ -207,8 +218,8 @@ void CCTV::stopVideo()
 	if (video_grabber.state() != QProcess::NotRunning)
 	{
 		qDebug() << "terminate grabber";
-                //TODO: fix correctly the kill of this process
-                system ("killall loopback");
+		//TODO: fix correctly the kill of this process
+		system ("killall loopback");
 		video_grabber.terminate();
 	}
 }
@@ -220,6 +231,21 @@ void CCTV::resumeVideo()
 	startVideo();
 }
 
+void CCTV::activateCall()
+{
+	call_active = true;
+}
+
+void CCTV::disactivateCall()
+{
+	call_active = false;
+}
+
+bool CCTV::callActive()
+{
+	return call_active;
+}
+
 
 Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d)
 {
@@ -229,6 +255,7 @@ Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d)
 	// initial values
 	volume = 50;
 	mute = false;
+	call_active = false;
 
 	foreach (ExternalPlace *ep, l) {
 		external_places << ep;
@@ -252,6 +279,7 @@ void Intercom::startCall(QString where)
 {
 	dev->internalIntercomCall(where);
 	setTalkerFromWhere(where);
+	activateCall();
 }
 
 int Intercom::getVolume() const
@@ -262,7 +290,7 @@ int Intercom::getVolume() const
 void Intercom::setVolume(int value)
 {
 	// TODO set value on device
-	if (volume == value)
+	if (volume == value || value < 0 || value > 100)
 		return;
 	volume = value;
 	emit volumeChanged();
@@ -295,6 +323,9 @@ QString Intercom::getTalker() const
 
 void Intercom::valueReceived(const DeviceValues &values_list)
 {
+	// if call is not active we have to ignore all frames except:
+	//	VideoDoorEntryDevice::RINGTONE
+	//	VideoDoorEntryDevice::INTERCOM_CALL
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
 	{
@@ -304,19 +335,27 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			qDebug() << "Received VideoDoorEntryDevice::INTERCOM_CALL";
 			// TODO: many many other things...but this should be enough for now.
 			emit incomingCall();
+			activateCall();
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::END_OF_CALL";
+			if (!callActive()) // ignore
+				break;
 			talker = "";
 			emit callEnded();
 			emit talkerChanged();
+			disactivateCall();
 			break;
 		case VideoDoorEntryDevice::ANSWER_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::ANSWER_CALL: " << *it;
+			if (!callActive()) // ignore
+				break;
 			emit callAnswered();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
 			qDebug() << "Received VideoDoorEntryDevice::CALLER_ADDRESS: " << *it;
+			if (!callActive()) // ignore
+				break;
 			setTalkerFromWhere(it.value().toString());
 			break;
 		case VideoDoorEntryDevice::RINGTONE:
@@ -353,3 +392,17 @@ void Intercom::setTalkerFromWhere(QString where)
 	}
 }
 
+void Intercom::activateCall()
+{
+	call_active = true;
+}
+
+void Intercom::disactivateCall()
+{
+	call_active = false;
+}
+
+bool Intercom::callActive()
+{
+	return call_active;
+}
