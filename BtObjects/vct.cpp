@@ -218,8 +218,8 @@ void CCTV::stopVideo()
 	if (video_grabber.state() != QProcess::NotRunning)
 	{
 		qDebug() << "terminate grabber";
-                //TODO: fix correctly the kill of this process
-                system ("killall loopback");
+		//TODO: fix correctly the kill of this process
+		system ("killall loopback");
 		video_grabber.terminate();
 	}
 }
