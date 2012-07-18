@@ -43,7 +43,7 @@ Page {
         scale: 1
     }
 
-    Header {
+    HeaderOld {
         id: header
         x: 0
         y: 89
