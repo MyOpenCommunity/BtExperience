@@ -38,13 +38,16 @@ MenuColumn {
             sourceSelect.description = sourceObj.name
             var properties = {'objModel': sourceObj}
 
-            switch (sourceObj.source.type)
+            switch (sourceObj.sourceType)
             {
-            case SourceBase.Radio:
+            case SourceObject.RdsRadio:
                 itemLoader.setComponent(fmRadio, properties)
                 break
-            case SourceBase.Aux:
+            case SourceObject.Aux:
                 itemLoader.setComponent(auxComponent, properties)
+                break
+            case SourceObject.IpRadio:
+                itemLoader.setComponent(ipRadio, properties)
                 break
             default:
                 itemLoader.setComponent(mediaPlayer, properties)
