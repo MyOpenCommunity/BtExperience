@@ -290,7 +290,7 @@ int Intercom::getVolume() const
 void Intercom::setVolume(int value)
 {
 	// TODO set value on device
-	if (volume == value)
+	if (volume == value || value < 0 || value > 100)
 		return;
 	volume = value;
 	emit volumeChanged();
