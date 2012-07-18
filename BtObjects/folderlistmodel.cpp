@@ -441,10 +441,8 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 	if (item_count != browser->getNumElements())
 	{
 		item_count = browser->getNumElements();
-
-		emit countChanged();
-
 		reset();
+		emit countChanged();
 	}
 
 	// update the data in item list
@@ -454,6 +452,8 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 		{
 			item_list[current_index - start_index]->setFileInfo(entry, getCurrentPath());
 			++current_index;
+			if (current_index - start_index >= item_list.size())
+				break;
 		}
 	}
 
