@@ -1,18 +1,13 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
-
 import "js/Stack.js" as Stack
+
 
 BasePage {
     id: page
 
-    Rectangle {
-        color: "white"
-        anchors.fill: parent
-    }
-
-    ToolBar { // does not work, it is just for homogeneity with other pages.
+    ToolBar {
         id: toolbar
         anchors {
             top: parent.top
@@ -21,8 +16,292 @@ BasePage {
         }
     }
 
+    SvgImage {
+        id: bgBottomBar
+
+        source: "images/common/bg_bottom.svg"
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: 20
+            right: parent.right
+            rightMargin: 20
+        }
+    }
+
+    Rectangle {
+        id: bgImage
+
+        color: "black"
+        clip: true
+        width: 900
+        height: 427
+        anchors {
+            bottom: bgBottomBar.top
+            bottomMargin: 10
+            right: bgBottomBar.right
+        }
+
+        Image {
+            id: sourceImage
+
+            // TODO load user choosen image
+            source: "images/common/addams.jpg"
+            x: (parent.width - width) / 2
+            y: (parent.height - height) / 2
+        }
+
+        Item {
+            // in reality a placeholder for anchors, the highlight rect is drawn with
+            // 4 dark rects around it, see below
+            id: transparentRect
+
+            x: (parent.width - width) / 2
+            y: (parent.height - height) / 2
+            width: 150
+            height: 208
+        }
+
+        // to highlight cropping region we need to draw a frame around the
+        // cropping rectangle with a dark color; we cannot use a simple rect
+        // below the highlight item because we cannot "remove" a color in a region
+        // so we have to draw 4 rectangular dark regions around the highlighted one
+        // to properly render such a frame
+        Rectangle {
+            id: topDarkRect
+            color: privateProps.darkRectColor
+            opacity: privateProps.darkRectOpacity
+            anchors {
+                top: bgImage.top
+                left: bgImage.left
+                right: bgImage.right
+                bottom: transparentRect.top
+            }
+        }
+
+        Rectangle {
+            id: bottomDarkRect
+            color: privateProps.darkRectColor
+            opacity: privateProps.darkRectOpacity
+            anchors {
+                top: transparentRect.bottom
+                left: bgImage.left
+                right: bgImage.right
+                bottom: bgImage.bottom
+            }
+        }
+
+        Rectangle {
+            id: leftDarkRect
+            color: privateProps.darkRectColor
+            opacity: privateProps.darkRectOpacity
+            anchors {
+                top: topDarkRect.bottom
+                left: bgImage.left
+                right: transparentRect.left
+                bottom: bottomDarkRect.top
+            }
+        }
+
+        Rectangle {
+            id: rightDarkRect
+            color: privateProps.darkRectColor
+            opacity: privateProps.darkRectOpacity
+            anchors {
+                top: topDarkRect.bottom
+                left: transparentRect.right
+                right: bgImage.right
+                bottom: bottomDarkRect.top
+            }
+        }
+    }
+
+    ButtonImageThreeStates {
+        id: buttonZoomOut
+
+        defaultImageBg: "images/common/btn_comando.svg"
+        pressedImageBg: "images/common/btn_comando_P.svg"
+        shadowImage: "images/common/ombra_btn_comando.svg"
+        defaultImage: "images/common/ico_meno.svg"
+        pressedImage: "images/common/ico_meno_P.svg"
+        status: 0
+        timerEnabled: true
+        anchors {
+            top: bgBottomBar.top
+            topMargin: 7
+            left: bgBottomBar.left
+            leftMargin: 7
+        }
+        onClicked: privateProps.zoomOut()
+    }
+
+    ButtonImageThreeStates {
+        id: buttonZoomIn
+
+        defaultImageBg: "images/common/btn_comando.svg"
+        pressedImageBg: "images/common/btn_comando_P.svg"
+        shadowImage: "images/common/ombra_btn_comando.svg"
+        defaultImage: "images/common/ico_piu.svg"
+        pressedImage: "images/common/ico_piu_P.svg"
+        status: 0
+        timerEnabled: true
+        anchors {
+            top: bgBottomBar.top
+            topMargin: 7
+            left: buttonZoomOut.right
+            leftMargin: 4
+        }
+        onClicked: privateProps.zoomIn()
+    }
+
+    ButtonImageThreeStates {
+        id: buttonBrowse
+
+        defaultImageBg: "images/common/btn_comando.svg"
+        pressedImageBg: "images/common/btn_comando_P.svg"
+        shadowImage: "images/common/ombra_btn_comando.svg"
+        defaultImage: "images/common/ico_piu.svg"
+        pressedImage: "images/common/ico_piu_P.svg"
+        status: 0
+        timerEnabled: true
+        anchors {
+            top: bgBottomBar.top
+            topMargin: 7
+            left: buttonZoomIn.right
+            leftMargin: 13
+        }
+        onClicked: console.log("browse to be implemented")
+    }
+
+    // I didn't use the ButtonOkCancel control because it has a background
+    // image; here it is better to use "simple" buttons
+    ButtonThreeStates {
+        id: cancelButton
+
+        defaultImage: "images/common/btn_ok-annulla.svg"
+        pressedImage: "images/common/btn_ok-annulla_P.svg"
+        shadowImage: "images/common/ombra_btn_ok-annulla.svg"
+        text: qsTr("CANCEL")
+        font.pixelSize: 14
+        onClicked: Stack.popPage()
+        anchors {
+            top: bgBottomBar.top
+            topMargin: 7
+            right: bgBottomBar.right
+            rightMargin: 7
+        }
+    }
+
+    ButtonThreeStates {
+        id: okButton
+
+        defaultImage: "images/common/btn_ok-annulla.svg"
+        pressedImage: "images/common/btn_ok-annulla_P.svg"
+        shadowImage: "images/common/ombra_btn_ok-annulla.svg"
+        text: qsTr("OK")
+        font.pixelSize: 14
+        onClicked: {
+            privateProps.saveCard()
+            // Stack.popPage()
+        }
+        anchors {
+            top: bgBottomBar.top
+            topMargin: 7
+            right: cancelButton.left
+        }
+    }
+
+    UbuntuLightText {
+        text: qsTr("Save configuration changes?")
+        color: "white"
+        anchors {
+            verticalCenter: okButton.verticalCenter
+            right: okButton.left
+            rightMargin: 10
+        }
+    }
+
+    // all arrows are rendered with freccia_dx.svg (right arrow) rotating it
+    // properly to render all arrows; I defined a bg_freccia.svg (a transparent
+    // 50x50 image) to give a dimension to the buttons
+    // all anchors are computed assuming buttons have 50x50 dimension
+    ButtonImageThreeStates {
+        id: arrowLeft
+
+        rotation: 180
+        defaultImageBg: "images/common/bg_freccia.svg"
+        pressedImageBg: "images/common/bg_freccia.svg"
+        defaultImage: "images/common/freccia_dx.svg"
+        pressedImage: "images/common/freccia_dx_P.svg"
+        status: 0
+        timerEnabled: true
+        anchors {
+            bottom: bgImage.bottom
+            bottomMargin: 10 + 50 + 10
+            left: bgImage.left
+            leftMargin: 10
+        }
+        onClicked: privateProps.leftArrowClicked()
+    }
+
+    ButtonImageThreeStates {
+        id: arrowDown
+
+        rotation: 90
+        defaultImageBg: "images/common/bg_freccia.svg"
+        pressedImageBg: "images/common/bg_freccia.svg"
+        defaultImage: "images/common/freccia_dx.svg"
+        pressedImage: "images/common/freccia_dx_P.svg"
+        status: 0
+        timerEnabled: true
+        anchors {
+            bottom: bgImage.bottom
+            bottomMargin: 10
+            left: bgImage.left
+            leftMargin: 10 + 50 + 10
+        }
+        onClicked: privateProps.downArrowClicked()
+    }
+
+    ButtonImageThreeStates {
+        id: arrowRight
+
+        rotation: 0
+        defaultImageBg: "images/common/bg_freccia.svg"
+        pressedImageBg: "images/common/bg_freccia.svg"
+        defaultImage: "images/common/freccia_dx.svg"
+        pressedImage: "images/common/freccia_dx_P.svg"
+        status: 0
+        timerEnabled: true
+        anchors {
+            bottom: bgImage.bottom
+            bottomMargin: 10 + 50 + 10
+            left: arrowDown.right
+            leftMargin: 10
+        }
+        onClicked: privateProps.rightArrowClicked()
+    }
+
+    ButtonImageThreeStates {
+        id: arrowUp
+
+        rotation: 270
+        defaultImageBg: "images/common/bg_freccia.svg"
+        pressedImageBg: "images/common/bg_freccia.svg"
+        defaultImage: "images/common/freccia_dx.svg"
+        pressedImage: "images/common/freccia_dx_P.svg"
+        status: 0
+        timerEnabled: true
+        anchors {
+            bottom: arrowLeft.top
+            bottomMargin: 10
+            left: arrowDown.left
+        }
+        onClicked: privateProps.upArrowClicked()
+    }
+
     QtObject {
         id: privateProps
+
         property int zoom: 100
         property int zoomStep: 25
         property variant originalRect: undefined
@@ -42,8 +321,9 @@ BasePage {
             var new_width = originalRect.width * zoom_factor
             sourceImage.x = originalRect.x - (new_width - originalRect.width) / 2
             sourceImage.width = new_width
+
             var new_height = originalRect.height * zoom_factor
-            sourceImage.y = originalRect.y - (new_height- originalRect.height) / 2
+            sourceImage.y = originalRect.y - (new_height - originalRect.height) / 2
             sourceImage.height = new_height
         }
 
@@ -87,202 +367,18 @@ BasePage {
             adjustPosition()
         }
 
-        function topArrowClicked() {
+        function upArrowClicked() {
             transparentRect.y -= movementDelta
             adjustPosition()
         }
 
-        function bottomArrowClicked() {
+        function downArrowClicked() {
             transparentRect.y += movementDelta
             adjustPosition()
         }
 
         function saveCard() {
-            global.takeScreenshot(Qt.rect(transparentRect.x, transparentRect.y,
-                                          transparentRect.width, transparentRect.height), "images/home/newcard.png")
+            global.takeScreenshot(Qt.rect(transparentRect.x, transparentRect.y, transparentRect.width, transparentRect.height), "images/home/newcard.png")
         }
     }
-
-    Row {
-        z: 1
-        spacing: 10
-
-        anchors {
-            right: parent.right
-            rightMargin: 50
-            top: parent.top
-            topMargin: 60
-        }
-
-        UbuntuLightText {
-            id: zoomText
-            text: privateProps.zoom + "%"
-            color: "white"
-            font.pixelSize: 15
-            anchors.verticalCenter: zoomControls.verticalCenter
-        }
-
-        Row {
-            id: zoomControls
-
-            ButtonImageThreeStates {
-                defaultImageBg: "images/common/button_1-2.svg"
-                pressedImageBg: "images/common/button_1-2_p.svg"
-                shadowImage: "images/common/shadow_button_1-2.svg"
-                defaultImage: "images/common/symbol_minus.svg"
-                pressedImage: "images/common/symbol_minus.svg"
-                status: 0
-                timerEnabled: true
-                onClicked: privateProps.zoomOut()
-            }
-
-            ButtonImageThreeStates {
-                defaultImageBg: "images/common/button_1-2.svg"
-                pressedImageBg: "images/common/button_1-2_p.svg"
-                shadowImage: "images/common/shadow_button_1-2.svg"
-                defaultImage: "images/common/symbol_plus.svg"
-                pressedImage: "images/common/symbol_plus.svg"
-                status: 0
-                timerEnabled: true
-                onClicked: privateProps.zoomIn()
-            }
-        }
-    }
-
-    Image {
-        id: sourceImage
-        source: "images/common/addams.jpg"
-        x: (page.width - width) / 2
-        y: (page.height - height) / 2
-    }
-
-    Item {
-        id: transparentRect
-        x: (page.width - width) / 2
-        y: (page.height - height) / 2
-        width: 150
-        height: 208
-    }
-
-    SvgImage {
-        source: "images/common/freccia_dx.svg"
-        anchors {
-            top: parent.top
-            topMargin: privateProps.arrowsMargin
-            horizontalCenter: parent.horizontalCenter
-        }
-        rotation: 270
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: privateProps.topArrowClicked()
-        }
-    }
-
-    SvgImage {
-        source: "images/common/freccia_dx.svg"
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: privateProps.arrowsMargin
-            horizontalCenter: parent.horizontalCenter
-        }
-        rotation: 90
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: privateProps.bottomArrowClicked()
-        }
-    }
-
-    SvgImage {
-        source: "images/common/freccia_dx.svg"
-        anchors {
-            right: parent.right
-            rightMargin: privateProps.arrowsMargin
-            verticalCenter: parent.verticalCenter
-        }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: privateProps.rightArrowClicked()
-        }
-    }
-
-    SvgImage {
-        source: "images/common/freccia_sx.svg"
-        anchors {
-            left: parent.left
-            leftMargin: privateProps.arrowsMargin
-            verticalCenter: parent.verticalCenter
-        }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: privateProps.leftArrowClicked()
-        }
-    }
-
-    ButtonOkCancel {
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: 10
-            horizontalCenter: parent.horizontalCenter
-        }
-
-        z: 1
-
-        onCancelClicked: Stack.popPage()
-        onOkClicked: {
-            privateProps.saveCard()
-            // Stack.popPage()
-        }
-    }
-
-
-    Rectangle {
-        id: topDarkRect
-        color: privateProps.darkRectColor
-        opacity: privateProps.darkRectOpacity
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            bottom: transparentRect.top
-        }
-    }
-
-    Rectangle {
-        id: bottomDarkRect
-        color: privateProps.darkRectColor
-        opacity: privateProps.darkRectOpacity
-        anchors {
-            top: transparentRect.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
-    }
-
-    Rectangle {
-        id: leftDarkRect
-        color: privateProps.darkRectColor
-        opacity: privateProps.darkRectOpacity
-        anchors {
-            top: topDarkRect.bottom
-            left: parent.left
-            right: transparentRect.left
-            bottom: bottomDarkRect.top
-        }
-    }
-
-    Rectangle {
-        id: rightDarkRect
-        color: privateProps.darkRectColor
-        opacity: privateProps.darkRectOpacity
-        anchors {
-            top: topDarkRect.bottom
-            left: transparentRect.right
-            right: parent.right
-            bottom: bottomDarkRect.top
-        }
-    }
-
 }
