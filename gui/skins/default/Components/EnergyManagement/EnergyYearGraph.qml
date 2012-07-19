@@ -157,6 +157,7 @@ Item {
                 Component {
                     id: columnGraphBgImage
                     SvgImage {
+                        opacity: 0.200
                         source: columnPrototype.source
                     }
                 }
