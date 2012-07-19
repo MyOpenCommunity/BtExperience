@@ -111,6 +111,15 @@ Page {
         }
     }
 
+    Rectangle {
+        id: bg_video
+        color: "red"
+        x: 112
+        y: 96
+        width: 640
+        height: 480
+    }
+
     QtObject {
         id: privateProps
 
