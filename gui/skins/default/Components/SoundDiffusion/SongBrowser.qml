@@ -7,6 +7,7 @@ MenuColumn {
     id: column
 
     property variant listModel
+    property alias paginator: paginator
 
     Image {
         id: imageBg
