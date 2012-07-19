@@ -67,11 +67,11 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		case SourceBase::MultiMedia:
 		{
 			SourceMultiMedia *source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice(where)));
-			SourceObject *ip_radio = new SourceLocalMedia("IP radio", source, SourceObject::IpRadio);
+			SourceObject *ip_radio = new SourceLocalMedia("IP radio", "", source, SourceObject::IpRadio);
 			sources << ip_radio;
-			sources << new SourceLocalMedia("USB1", source, SourceObject::FileSystem);
-			sources << new SourceLocalMedia("SD card", source, SourceObject::FileSystem);
-			sources << new SourceLocalMedia("Network shares", source, SourceObject::Upnp);
+			sources << new SourceLocalMedia("USB1", "/media/usb1", source, SourceObject::FileSystem);
+			sources << new SourceLocalMedia("SD card", "/media/sd", source, SourceObject::FileSystem);
+			sources << new SourceLocalMedia("Network shares", "", source, SourceObject::Upnp);
 			// TODO: where are we going to destroy SourceMultiMedia?
 
 			// use a default
@@ -303,10 +303,11 @@ void SourceObject::nextTrack()
 
 
 
-SourceLocalMedia::SourceLocalMedia(const QString &name, SourceBase *s, SourceObjectType t) :
+SourceLocalMedia::SourceLocalMedia(const QString &name, const QString &_root_path, SourceBase *s, SourceObjectType t) :
 	SourceObject(name, s, t)
 {
 	media_player = new MultiMediaPlayer();
+	root_path = _root_path;
 	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());
 }
 
@@ -331,6 +332,17 @@ void SourceLocalMedia::togglePause()
 	{
 		media_player->resume();
 	}
+}
+
+QVariantList SourceLocalMedia::getRootPath() const
+{
+	QVariantList list;
+	foreach (const QString &s, root_path.split("/"))
+	{
+		if (!s.isEmpty())
+			list << s;
+	}
+	return list;
 }
 
 void SourceLocalMedia::previousTrack()
