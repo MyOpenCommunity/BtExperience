@@ -159,7 +159,9 @@ MenuColumn {
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps.currentElement = 1
-                    column.loadColumn(songBrowser, name, mediaPlayerColumn.objModel)
+                    var comp = objModel.sourceType === SourceObject.FileSystem ? directoryBrowser : upnpBrowser
+                    var props = {"rootPath": objModel.rootPath}
+                    column.loadColumn(comp, name, mediaPlayerColumn.objModel, props)
                 }
             }
 
@@ -212,8 +214,13 @@ MenuColumn {
     }
 
     Component {
-        id: songBrowser
-        SongBrowser {}
+        id: upnpBrowser
+        UPnPBrowser {}
+    }
+
+    Component {
+        id: directoryBrowser
+        DirectoryBrowser {}
     }
 
     Connections {
