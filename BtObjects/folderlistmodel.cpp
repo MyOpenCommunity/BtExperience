@@ -47,9 +47,9 @@ FileObject::FileObject(QObject *parent) :
 FileObject::FileObject(const EntryInfo &_entry, QVariantList _path, QObject *parent) :
 	ObjectInterface(parent),
 	entry(_entry),
-	path(_path)
+	logical_path(_path)
 {
-	path << entry.name;
+	logical_path << entry.name;
 	loading = false;
 }
 
@@ -58,9 +58,14 @@ QString FileObject::getName() const
 	return entry.name;
 }
 
-QVariantList FileObject::getPath() const
+QString FileObject::getPath() const
 {
-	return path;
+	return entry.path;
+}
+
+QVariantList FileObject::getLogicalPath() const
+{
+	return logical_path;
 }
 
 FileObject::FileType FileObject::getFileType() const
@@ -87,7 +92,7 @@ void FileObject::setFileInfo(const EntryInfo &_entry, QVariantList _path)
 {
 	QString old_name = entry.name;
 	entry = _entry;
-	path = _path << _entry.name;
+	logical_path = _path << _entry.name;
 	loading = false;
 
 	// we could use a more fine-grained signal, but there is little point in optimizing,

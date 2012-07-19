@@ -16,7 +16,8 @@ class FileObject : public ObjectInterface
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QVariantList path READ getPath CONSTANT)
+	Q_PROPERTY(QString path READ getPath CONSTANT)
+	Q_PROPERTY(QVariantList logicalPath READ getLogicalPath CONSTANT)
 	Q_PROPERTY(FileType fileType READ getFileType NOTIFY loadingComplete)
 	Q_PROPERTY(QVariantMap metadata READ getMetadata NOTIFY loadingComplete)
 	Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingComplete)
@@ -37,7 +38,8 @@ public:
 
 	virtual QString getName() const;
 
-	QVariantList getPath() const;
+	QString getPath() const;
+	QVariantList getLogicalPath() const;
 	FileType getFileType() const;
 	QVariantMap getMetadata() const;
 	bool isLoading() const;
@@ -49,7 +51,7 @@ signals:
 
 private:
 	EntryInfo entry;
-	QVariantList path;
+	QVariantList logical_path;
 	bool loading;
 };
 
