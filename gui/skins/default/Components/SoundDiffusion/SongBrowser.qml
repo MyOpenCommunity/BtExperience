@@ -56,9 +56,7 @@ MenuColumn {
                     // we need braces due to bug
                     // https://bugreports.qt-project.org/browse/QTBUG-17012
                 {
-                    var realPath = "/" + itemObject.path.join("/")
-                    console.log("Audio path: " + realPath);
-                    column.dataModel.startPlay(realPath)
+                    column.dataModel.startPlay(itemObject)
                     break
                 }
                 case FileObject.Directory:

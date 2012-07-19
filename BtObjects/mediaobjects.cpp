@@ -4,6 +4,7 @@
 #include "mediaplayer.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
+#include "folderlistmodel.h"
 
 #include <QDebug>
 #include <QStringList>
@@ -316,9 +317,9 @@ QObject *SourceLocalMedia::getMediaPlayer() const
 	return media_player;
 }
 
-void SourceLocalMedia::startPlay(QString path)
+void SourceLocalMedia::startPlay(FileObject *file)
 {
-	media_player->setCurrentSource(path);
+	media_player->setCurrentSource(file->getPath());
 	media_player->play();
 }
 

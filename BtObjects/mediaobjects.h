@@ -19,6 +19,7 @@ class SourceObject;
 class SourceBase;
 class PowerAmplifierDevice;
 class MultiMediaPlayer;
+class FileObject;
 
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id);
@@ -215,7 +216,7 @@ public:
 	SourceLocalMedia(const QString &name, const QString &root_path, SourceBase *s, SourceObjectType t);
 	QObject *getMediaPlayer() const;
 
-	Q_INVOKABLE void startPlay(QString path);
+	Q_INVOKABLE void startPlay(FileObject *file);
 	Q_INVOKABLE void togglePause();
 
 	QVariantList getRootPath() const;
