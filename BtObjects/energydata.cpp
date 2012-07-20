@@ -493,7 +493,7 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 		double multiplier = ((rand() % 40) + 80) / 100.0;
 		goals.append(values[i] * multiplier);
 #endif
-		bars.append(new EnergyGraphBar(i, keys[i], values[i], goals[i], rate));
+		bars.append(new EnergyGraphBar(i, keys[i], values[i], goals.value(i, QVariant()), rate));
 	}
 
 	return bars;
