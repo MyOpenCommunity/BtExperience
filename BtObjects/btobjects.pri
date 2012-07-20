@@ -29,6 +29,7 @@ HEADERS += \
 	thermalprobes.h \
 	uiimapper.h \
 	vct.h \
+	xmlobject.h \
 	devices/airconditioning_device.h \
 	devices/antintrusion_device.h \
 	devices/automation_device.h \
