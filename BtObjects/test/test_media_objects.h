@@ -62,7 +62,7 @@ class TestSourceBase : public TestBtObject
 	Q_OBJECT
 
 protected:
-	void initObjects(SourceDevice *dev, SourceBase *obj);
+	void initObjects(SourceDevice *dev, SourceBase *obj, SourceObject *so);
 
 private slots:
 	void cleanup();
@@ -77,6 +77,7 @@ private slots:
 private:
 	SourceBase *obj;
 	SourceDevice *dev;
+	SourceObject *so;
 };
 
 
@@ -112,6 +113,7 @@ private slots:
 
 private:
 	SourceRadio *obj;
+	SourceObject *so;
 	RadioSourceDevice *dev;
 };
 
