@@ -72,9 +72,12 @@ QtObject {
         case ObjectInterface.IdSplitAdvancedScenario:
             return Qt.createComponent("ThermalRegulation/AdvancedSplit.qml")
         case ObjectInterface.IdSimpleScenario:
-            return Qt.createComponent("Scenarios/SimpleScenario.qml")
         case ObjectInterface.IdScenarioModule:
             return Qt.createComponent("Scenarios/SimpleScenario.qml")
+        case ObjectInterface.IdScheduledScenario:
+            return Qt.createComponent("Scenarios/ScheduledScenario.qml")
+        case ObjectInterface.IdAdvancedScenario:
+            return Qt.createComponent("Scenarios/AdvancedScenario.qml")
         default:
             console.log("getComponent(): Unknown object id: " + objectId)
             return ""

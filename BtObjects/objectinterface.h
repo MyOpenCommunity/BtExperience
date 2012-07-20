@@ -65,10 +65,8 @@ public:
 		IdMonoChannelSoundAmbient,
 		IdSplitBasicScenario,
 		IdSplitAdvancedScenario,
-		IdScenarioSystem,                       // 20
-		IdSimpleScenario,
-		IdScenarioModule,
-		IdCCTV,
+		IdScenarioSystem,                       // 20 - TO BE REMOVED
+		IdCCTV = 23,
 		IdRoom,
 		IdIntercom,                             // 25
 		IdEnergyLoad,
@@ -110,6 +108,11 @@ public:
 		IdDimmer100Fixed = 10022002, //!< 100-level dimmer with fixed time
 		IdLightCustom = 10012003, //!< A simple light actuator with custom time
 		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
+
+		IdSimpleScenario,
+		IdScenarioModule,
+		IdScheduledScenario,
+		IdAdvancedScenario,
 
 		// the last value + 1, used to check the ids requested from qml
 		// NOTE: always verify is the highest value out there!

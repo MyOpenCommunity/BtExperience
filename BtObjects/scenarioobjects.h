@@ -104,4 +104,81 @@ private:
 	Status status;
 };
 
+
+
+/*!
+	\ingroup Scenarios
+	\brief A scheduled scenario
+
+	The scheduled scenario automatically activates a number of controls at the
+	occurrence of one or more specific actions or at a pre-set time.
+	Call \ref enable() or \ref disable() to active or deactive the scenario, and
+	\ref start() - \ref stop() to force start (or stop) a scenario regardless of
+	the programmed condition.
+*/
+class ScheduledScenario : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	ScheduledScenario(QString name, QString enable, QString start, QString stop, QString disable);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdScheduledScenario;
+	}
+
+public slots:
+	/*!
+		\brief Start the scenario
+	*/
+	void start();
+
+	/*!
+		\brief Stop the scenario
+	*/
+	void stop();
+
+	/*!
+		\brief Enable the scenario
+	*/
+	void enable();
+
+	/*!
+		\brief Disable the scenario
+	*/
+	void disable();
+
+protected:
+	QString enable_frame, start_frame, stop_frame, disable_frame;
+};
+
+
+class AdvancedScenario : public ObjectInterface
+{
+	Q_OBJECT
+	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
+
+public:
+	AdvancedScenario();
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdAdvancedScenario;
+	}
+
+	bool isEnabled() const;
+	void setEnabled(bool enable);
+
+public slots:
+	void start();
+
+signals:
+	void enabledChanged();
+
+private:
+	bool enabled;
+};
+
+
 #endif // SCENARIOOBJECTS_H

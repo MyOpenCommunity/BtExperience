@@ -38,6 +38,8 @@ MenuColumn {
         filters: [
             {objectId: ObjectInterface.IdSimpleScenario},
             {objectId: ObjectInterface.IdScenarioModule},
+            {objectId: ObjectInterface.IdScheduledScenario},
+            {objectId: ObjectInterface.IdAdvancedScenario},
         ]
     }
 }
