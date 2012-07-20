@@ -18,8 +18,10 @@ void TestSoundAmbient::init()
 	obj2 = new SoundAmbient(2, "", ObjectInterface::IdMultiChannelSoundAmbient);
 	obj3 = new SoundAmbient(3, "", ObjectInterface::IdMultiChannelSoundAmbient);
 
-	src1 = new SourceAux(srcd1, "");
-	src2 = new SourceAux(srcd2, "");
+	src1 = new SourceAux(srcd1);
+	srco1 = new SourceObject("", src1, SourceObject::Aux);
+	src2 = new SourceAux(srcd2);
+	srco2 = new SourceObject("", src2, SourceObject::Aux);
 
 	amp22 = new Amplifier(2, "", ampd22);
 	amp23 = new Amplifier(2, "", ampd23);
@@ -27,11 +29,11 @@ void TestSoundAmbient::init()
 
 	QList<SoundAmbient *> ambients;
 	QList<Amplifier *> amplifiers;
-	QList<SourceBase *> sources;
+	QList<SourceObject *> sources;
 
 	ambients << obj2 << obj3;
 	amplifiers << amp22 << amp23 << amp33;
-	sources << src1 << src2;
+	sources << srco1 << srco2;
 
 	foreach (SoundAmbient *ambient, ambients)
 	{
@@ -255,7 +257,7 @@ void TestSourceAux::init()
 {
 	SourceDevice *d = new SourceDevice("3");
 
-	SourceAux *obj = new SourceAux(d, "");
+	SourceAux *obj = new SourceAux(d);
 	SourceDevice *dev = new SourceDevice("3", 1);
 
 	initObjects(dev, obj);
@@ -266,7 +268,7 @@ void TestSourceRadio::init()
 {
 	RadioSourceDevice *d = new RadioSourceDevice("3");
 
-	obj = new SourceRadio(d, "");
+	obj = new SourceRadio(d);
 	dev = new RadioSourceDevice("3", 1);
 
 	initObjects(dev, obj);

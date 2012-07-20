@@ -460,7 +460,7 @@ void TestTreeBrowserListModelBase::testListItems()
 	while (file->isLoading())
 		qApp->processEvents();
 
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getPath(),
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getLogicalPath(),
 		 obj->getRootPath() << "c" << "g");
 
 	enterDirectoryAndWait(obj, "b", isAsync());
@@ -473,7 +473,7 @@ void TestTreeBrowserListModelBase::testListItems()
 	while (file->isLoading())
 		qApp->processEvents();
 
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getPath(),
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(6))->getLogicalPath(),
 		 obj->getRootPath() << "c" << "b" << "g");
 }
 
@@ -491,7 +491,7 @@ void TestTreeBrowserListModelBase::testRange()
 	t.checkSignals();
 	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 4);
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(),
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getLogicalPath(),
 		obj->getRootPath() << "c" << "e");
 
 	setRangeAndWait(obj, QVariantList() << 8 << 12);
@@ -499,7 +499,7 @@ void TestTreeBrowserListModelBase::testRange()
 	t.checkSignals();
 	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 4);
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(),
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getLogicalPath(),
 		 obj->getRootPath() << "c" << "i");
 
 	setRangeAndWait(obj, QVariantList() << 24 << 28);
@@ -507,7 +507,7 @@ void TestTreeBrowserListModelBase::testRange()
 	t.checkSignals();
 	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 2);
-	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getPath(),
+	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getLogicalPath(),
 		 obj->getRootPath() << "c" << "y");
 }
 
@@ -549,6 +549,6 @@ void TestFileObject::testGetters()
 
 	QCOMPARE(fo.isLoading(), false);
 	QCOMPARE(fo.getName(), QString("name"));
-	QCOMPARE(fo.getPath(), QVariantList() << "path" << "to" << "name");
+	QCOMPARE(fo.getLogicalPath(), QVariantList() << "path" << "to" << "name");
 	QCOMPARE(fo.getFileType(), FileObject::Audio);
 }

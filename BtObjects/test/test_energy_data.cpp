@@ -1024,8 +1024,8 @@ void TestEnergyGraph::testSetGraph()
 	ObjectTester tvalue(&graph, SIGNAL(graphChanged()));
 	QList<QObject *> values, new_values;
 
-	values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant());
-	new_values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant(1));
+	values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant(), QVariant());
+	new_values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant(1), QVariant());
 
 	QCOMPARE(graph.isValid(), false);
 
@@ -1048,7 +1048,7 @@ void TestEnergyGraph::testSetGraph()
 void TestEnergyGraph::testRateChanged()
 {
 	EnergyRate rate(0.5);
-	EnergyGraphBar bar(QVariant(), "", QVariant(4), &rate);
+	EnergyGraphBar bar(QVariant(), "", QVariant(4), QVariant(), &rate);
 	ObjectTester t(&bar, SIGNAL(valueChanged()));
 
 	QCOMPARE(bar.getValue(), QVariant(2));

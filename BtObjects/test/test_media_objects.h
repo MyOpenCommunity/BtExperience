@@ -24,6 +24,7 @@
 #include "test_btobject.h"
 
 class SourceBase;
+class SourceObject;
 class SourceDevice;
 class SourceRadio;
 class RadioSourceDevice;
@@ -51,6 +52,7 @@ private:
 
 	SoundAmbient *obj2, *obj3;
 	SourceBase *src1, *src2;
+	SourceObject *srco1, *srco2;
 	Amplifier *amp22, *amp23, *amp33;
 };
 
