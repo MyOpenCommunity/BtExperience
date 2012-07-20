@@ -1,0 +1,17 @@
+<layout>
+	<container id="8" descr="thermal regulation">
+		<ist uii="1">
+			<link uii="3001" />
+			<link uii="3003" />
+			<link uii="3012" />
+			<link uii="3014" />
+			<link uii="3015" />
+			<link uii="3016" />
+			<link uii="3017" />
+			<link uii="3041" />
+			<link uii="3042" />
+			<link uii="3051" />
+			<link uii="3052" />
+		</ist>
+	</container>
+</layout>

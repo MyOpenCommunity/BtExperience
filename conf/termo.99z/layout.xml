@@ -1,0 +1,15 @@
+<layout>
+	<container id="8" descr="thermal regulation">
+		<ist uii="1">
+			<link uii="2001" />
+			<link uii="2011" />
+			<link uii="2012" />
+			<link uii="2013" />
+			<link uii="2014" />
+			<link uii="2041" />
+			<link uii="2042" />
+			<link uii="2051" />
+			<link uii="2052" />
+		</ist>
+	</container>
+</layout>

@@ -16,7 +16,24 @@ class FileObject : public ObjectInterface
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QVariantList path READ getPath CONSTANT)
+	/*!
+		\brief Physical path for the file.
+
+		This is the path to use when playing the file. It is the same as
+		\ref logicalPath when the file is on the file system, it's different
+		when the file is read from an UPnP server.
+	*/
+	Q_PROPERTY(QString path READ getPath CONSTANT)
+
+	/*!
+		\brief User friendly path of a file.
+
+		The logical path can be used when there's the need to know the path of the
+		file which is somewhat user friendly; for example, UPnP paths usually are like
+		http://mediaserverip/custom/path while the logical path in this case would
+		be ["mediaserver name", "path", "to", "file"].
+	*/
+	Q_PROPERTY(QVariantList logicalPath READ getLogicalPath CONSTANT)
 	Q_PROPERTY(FileType fileType READ getFileType NOTIFY loadingComplete)
 	Q_PROPERTY(QVariantMap metadata READ getMetadata NOTIFY loadingComplete)
 	Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingComplete)
@@ -37,7 +54,8 @@ public:
 
 	virtual QString getName() const;
 
-	QVariantList getPath() const;
+	QString getPath() const;
+	QVariantList getLogicalPath() const;
 	FileType getFileType() const;
 	QVariantMap getMetadata() const;
 	bool isLoading() const;
@@ -49,7 +67,7 @@ signals:
 
 private:
 	EntryInfo entry;
-	QVariantList path;
+	QVariantList logical_path;
 	bool loading;
 };
 

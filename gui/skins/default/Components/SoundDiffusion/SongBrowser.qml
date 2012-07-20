@@ -6,6 +6,9 @@ import Components.Text 1.0
 MenuColumn {
     id: column
 
+    property variant listModel
+    property alias paginator: paginator
+
     Image {
         id: imageBg
         source: "../../images/sound_diffusion/bg_elenco_file.svg"
@@ -25,7 +28,7 @@ MenuColumn {
             leftMargin: 10
         }
 
-        onClicked: files.exitDirectory()
+        onClicked: listModel.exitDirectory()
         status: 0
     }
 
@@ -46,7 +49,7 @@ MenuColumn {
         spacing: 5
 
         delegate: SongBrowserDelegate {
-            itemObject: files.getObject(index)
+            itemObject: listModel.getObject(index)
             onDelegateClicked: {
                 switch (itemObject.fileType)
                 {
@@ -54,26 +57,18 @@ MenuColumn {
                     // we need braces due to bug
                     // https://bugreports.qt-project.org/browse/QTBUG-17012
                 {
-                    var realPath = "/" + itemObject.path.join("/")
-                    console.log("Audio path: " + realPath);
-                    column.dataModel.startPlay(realPath)
+                    column.dataModel.startPlay(itemObject)
                     break
                 }
                 case FileObject.Directory:
                 {
-                    files.enterDirectory(itemObject.name)
+                    listModel.enterDirectory(itemObject.name)
                     break
                 }
                 }
             }
         }
 
-        model: files
-    }
-
-    UPnPListModel {
-        id: files
-        filter: FileObject.Audio | FileObject.Directory
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+        model: listModel
     }
 }

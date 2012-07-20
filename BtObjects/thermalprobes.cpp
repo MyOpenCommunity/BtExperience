@@ -2,9 +2,28 @@
 #include "scaleconversion.h" // bt2Celsius
 #include "probe_device.h"
 #include "thermal_device.h" // for min/max manual temps
+#include "xmlobject.h"
+#include "devices_cache.h"
 
 #include <QDebug>
 
+
+QList<ObjectPair> parseExternalNonControlledProbes(const QDomNode &obj, ObjectInterface::ObjectId type)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(obj);
+	NonControlledProbeDevice::ProbeType probe_type = type == ObjectInterface::IdThermalExternalProbe ? NonControlledProbeDevice::EXTERNAL : NonControlledProbeDevice::INTERNAL;
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		NonControlledProbeDevice *d = bt_global::add_device_to_cache(new NonControlledProbeDevice(v.value("where"), probe_type));
+		obj_list << ObjectPair(uii, new ThermalNonControlledProbe(v.value("descr"), "", type, d));
+	}
+	return obj_list;
+}
 
 ThermalNonControlledProbe::ThermalNonControlledProbe(QString _name, QString _key, ObjectId _object_id, NonControlledProbeDevice *_dev)
 {
