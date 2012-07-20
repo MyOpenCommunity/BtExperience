@@ -148,7 +148,8 @@ private:
 	QString key;
 	int temperature;
 	SeasonType season;
-	ObjectDataModel programs;
+	ObjectDataModel summer_programs, winter_programs;
+	ObjectDataModel *programs;
 	ThermalDevice *dev;
 	int current_modality_index;
 };
@@ -170,6 +171,8 @@ public:
 	virtual int getObjectId() const { return program_number; }
 
 	virtual QString getName() const { return program_name; }
+
+	ThermalControlUnit::SeasonType getSeason() const { return season; }
 
 private:
 	int program_number;
@@ -228,7 +231,8 @@ public:
 
 private:
 	ThermalDevice99Zones *dev;
-	ObjectDataModel scenarios;
+	ObjectDataModel summer_scenarios, winter_scenarios;
+	ObjectDataModel *scenarios;
 };
 
 
@@ -307,10 +311,10 @@ class ThermalControlUnitProgram : public ThermalControlUnitObject
 	/*!
 		\brief The list of \ref ThermalRegulationProgram configured for the control unit
 	*/
-	Q_PROPERTY(ObjectDataModel *programs READ getPrograms CONSTANT)
+	Q_PROPERTY(ObjectDataModel *programs READ getPrograms NOTIFY programsChanged)
 
 public:
-	ThermalControlUnitProgram(QString name, int object_id, const ObjectDataModel *_programs, ThermalDevice *dev);
+	ThermalControlUnitProgram(QString name, int object_id, const ObjectDataModel *summer_programs,  const ObjectDataModel *winter_programs, ThermalDevice *dev);
 
 	virtual int getObjectId() const
 	{
@@ -329,12 +333,13 @@ public slots:
 
 signals:
 	void programChanged();
+	void programsChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
-	const ObjectDataModel *programs;
+	const ObjectDataModel *summer_programs, *winter_programs, *programs;
 	int object_id;
 };
 
@@ -380,7 +385,7 @@ class ThermalControlUnitTimedProgram : public ThermalControlUnitProgram
 	Q_PROPERTY(int years READ getYears WRITE setYears NOTIFY yearsChanged)
 
 public:
-	ThermalControlUnitTimedProgram(QString name, int object_id, ObjectDataModel *programs, ThermalDevice *dev);
+	ThermalControlUnitTimedProgram(QString name, int object_id, ObjectDataModel *summer_programs, ObjectDataModel *winter_programs, ThermalDevice *dev);
 
 	int getHours() const;
 	void setHours(int newValue);
@@ -590,10 +595,10 @@ class ThermalControlUnitScenario : public ThermalControlUnitObject
 	/*!
 		\brief The list of \ref ThermalRegulationProgram configured for the control unit
 	*/
-	Q_PROPERTY(ObjectDataModel *scenarios READ getScenarios CONSTANT)
+	Q_PROPERTY(ObjectDataModel *scenarios READ getScenarios NOTIFY scenariosChanged)
 
 public:
-	ThermalControlUnitScenario(QString name, const ObjectDataModel *scenarios, ThermalDevice99Zones *dev);
+	ThermalControlUnitScenario(QString name, const ObjectDataModel *summer_scenarios, const ObjectDataModel *winter_scenarios, ThermalDevice99Zones *dev);
 
 	virtual int getObjectId() const
 	{
@@ -612,6 +617,7 @@ public slots:
 
 signals:
 	void scenarioChanged();
+	void scenariosChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -620,7 +626,7 @@ private:
 	int getScenarioId() const;
 
 	ThermalDevice99Zones *dev;
-	const ObjectDataModel *scenarios;
+	const ObjectDataModel *summer_scenarios, *winter_scenarios, *scenarios;
 };
 
 #endif // THERMALOBJECTS_H

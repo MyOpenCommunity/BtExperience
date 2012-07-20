@@ -106,8 +106,8 @@ protected:
 	void initObjects(ThermalDevice *dev, ThermalControlUnitObject *obj);
 	void cleanup();
 
-	ObjectDataModel test_programs;
-	ObjectDataModel test_scenarios;
+	ObjectDataModel test_summer_programs, test_winter_programs;
+	ObjectDataModel test_summer_scenarios, test_winter_scenarios;
 
 private slots:
 	// this is virtual so it's called only once in derived classes

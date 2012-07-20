@@ -186,14 +186,28 @@ void TestThermalControlUnitObject::initObjects(ThermalDevice *_dev, ThermalContr
 {
 	dev = _dev;
 	obj = _obj;
-	if (!test_programs.getCount())
-		test_programs << new ThermalRegulationProgram(1, QString("P1"))
-			     << new ThermalRegulationProgram(3, QString("P3"))
-			     << new ThermalRegulationProgram(5, QString("P5"));
-	if (!test_scenarios.getCount())
-		test_scenarios << new ThermalRegulationProgram(1, QString("S1"))
-			       << new ThermalRegulationProgram(3, QString("S3"))
-			       << new ThermalRegulationProgram(5, QString("S5"));
+	if (!test_summer_programs.getCount())
+	{
+		test_summer_programs
+			     << new ThermalRegulationProgram(1, ThermalControlUnit::Summer, QString("P1s"))
+			     << new ThermalRegulationProgram(3, ThermalControlUnit::Summer, QString("P3s"))
+			     << new ThermalRegulationProgram(5, ThermalControlUnit::Summer, QString("P5s"));
+		test_winter_programs
+			     << new ThermalRegulationProgram(1, ThermalControlUnit::Summer, QString("P2w"))
+			     << new ThermalRegulationProgram(3, ThermalControlUnit::Summer, QString("P4w"))
+			     << new ThermalRegulationProgram(5, ThermalControlUnit::Summer, QString("P6w"));
+	}
+	if (!test_summer_scenarios.getCount())
+	{
+		test_summer_scenarios
+			       << new ThermalRegulationProgram(1, ThermalControlUnit::Summer, QString("S1s"))
+			       << new ThermalRegulationProgram(3, ThermalControlUnit::Summer, QString("S3s"))
+			       << new ThermalRegulationProgram(5, ThermalControlUnit::Summer, QString("S5s"));
+		test_winter_scenarios
+			       << new ThermalRegulationProgram(1, ThermalControlUnit::Summer, QString("S2w"))
+			       << new ThermalRegulationProgram(3, ThermalControlUnit::Summer, QString("S4w"))
+			       << new ThermalRegulationProgram(5, ThermalControlUnit::Summer, QString("S6w"));
+	}
 }
 
 void TestThermalControlUnitObject::cleanup()
@@ -307,7 +321,7 @@ void TestThermalControlUnitTimedManual::testApply()
 void TestThermalControlUnitScenario::init()
 {
 	ThermalDevice99Zones *d = new ThermalDevice99Zones("0");
-	obj = new ThermalControlUnitScenario("", &test_scenarios, d);
+	obj = new ThermalControlUnitScenario("", &test_summer_scenarios, &test_winter_scenarios,d);
 
 	dev = new ThermalDevice99Zones("0", 1);
 
@@ -329,16 +343,25 @@ void TestThermalControlUnitScenario::testReceiveScenarioId()
 {
 	DeviceValues v;
 	v[ThermalDevice::DIM_SCENARIO] = 5;
+	v[ThermalDevice::DIM_SEASON] = ThermalDevice::SE_WINTER;
 
 	ObjectTester t(obj, SIGNAL(scenarioChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
 	QCOMPARE(obj->getScenarioIndex(), 2);
+	QCOMPARE(obj->getScenarioDescription(), QString("S6w"));
 
 	// emits the signal every time the value is received
 	obj->valueReceived(v);
 	t.checkSignals();
 	QCOMPARE(obj->getScenarioIndex(), 2);
+
+	v[ThermalDevice::DIM_SCENARIO] = 3;
+	v[ThermalDevice::DIM_SEASON] = ThermalDevice::SE_SUMMER;
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getScenarioIndex(), 1);
+	QCOMPARE(obj->getScenarioDescription(), QString("S3s"));
 }
 
 void TestThermalControlUnitScenario::testApply()
@@ -354,7 +377,7 @@ void TestThermalControlUnitScenario::testApply()
 void TestThermalControlUnitProgram::init()
 {
 	ThermalDevice99Zones *d = new ThermalDevice99Zones("0");
-	obj = new ThermalControlUnitProgram("", 0, &test_programs, d);
+	obj = new ThermalControlUnitProgram("", 0, &test_summer_programs, &test_winter_programs, d);
 
 	dev = new ThermalDevice99Zones("0", 1);
 
@@ -376,16 +399,25 @@ void TestThermalControlUnitProgram::testReceiveProgramId()
 {
 	DeviceValues v;
 	v[ThermalDevice::DIM_PROGRAM] = 5;
+	v[ThermalDevice::DIM_SEASON] = ThermalDevice::SE_WINTER;
 
 	ObjectTester t(obj, SIGNAL(programChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
 	QCOMPARE(obj->getProgramIndex(), 2);
+	QCOMPARE(obj->getProgramDescription(), QString("P6w"));
 
 	// emits the signal every time the value is received
 	obj->valueReceived(v);
 	t.checkSignals();
 	QCOMPARE(obj->getProgramIndex(), 2);
+
+	v[ThermalDevice::DIM_PROGRAM] = 3;
+	v[ThermalDevice::DIM_SEASON] = ThermalDevice::SE_SUMMER;
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(obj->getProgramIndex(), 1);
+	QCOMPARE(obj->getProgramDescription(), QString("P3s"));
 }
 
 void TestThermalControlUnitProgram::testApply()
@@ -401,7 +433,7 @@ void TestThermalControlUnitProgram::testApply()
 void TestThermalControlUnitTimedProgram::initProgram(int object_id)
 {
 	ThermalDevice99Zones *d = new ThermalDevice99Zones("0");
-	TestThermalControlUnitProgram::obj = obj = new ThermalControlUnitTimedProgram("", object_id, &test_programs, d);
+	TestThermalControlUnitProgram::obj = obj = new ThermalControlUnitTimedProgram("", object_id, &test_summer_programs, &test_winter_programs, d);
 
 	dev = new ThermalDevice99Zones("0", 1);
 

@@ -151,14 +151,15 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 	season = Summer;
+	programs = &summer_programs;
 	current_modality_index = -1;
 
 	// The objects list should contain only one item per id
 	// TODO: fix the the timed programs
-	modalities << new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &programs, dev);
+	modalities << new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &summer_programs, &winter_programs, dev);
 	// for unknown reasons these are reverted
-	modalities << new ThermalControlUnitTimedProgram("Weekday", ThermalControlUnit::IdHoliday, &programs, dev);
-	modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdWeekday, &programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Weekday", ThermalControlUnit::IdHoliday, &summer_programs, &winter_programs, dev);
+	modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdWeekday, &summer_programs, &winter_programs, dev);
 	modalities << new ThermalControlUnitAntifreeze("Antifreeze", dev);
 	modalities << new ThermalControlUnitManual("Manual", dev);
 	modalities << new ThermalControlUnitOff("Off", dev);
@@ -184,17 +185,23 @@ void ThermalControlUnit::setSeason(SeasonType s)
 
 void ThermalControlUnit::setPrograms(QList<ThermalRegulationProgram *> _programs)
 {
-	programs.clear();
+	// can only be called once during parsing
+	Q_ASSERT(summer_programs.getCount() == 0 && winter_programs.getCount() == 0);
 
 	foreach (ThermalRegulationProgram *p, _programs)
-		programs << p;
+	{
+		if (p->getSeason() == ThermalControlUnit::Summer)
+			summer_programs << p;
+		else
+			winter_programs << p;
+	}
 }
 
 ObjectDataModel *ThermalControlUnit::getPrograms() const
 {
 	// TODO: we remove the const because it produces an error when we export the
 	// type to the qml engine. Find a solution.
-	return const_cast<ObjectDataModel*>(&programs);
+	return const_cast<ObjectDataModel*>(programs);
 }
 
 ObjectDataModel *ThermalControlUnit::getModalities() const
@@ -305,22 +312,29 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 	ThermalControlUnit(_name, _key, d)
 {
 	dev = d;
-	modalities << new ThermalControlUnitScenario("Scenarios", &scenarios, dev);
+	scenarios = &summer_scenarios;
+	modalities << new ThermalControlUnitScenario("Scenarios", &summer_scenarios, &winter_scenarios, dev);
 }
 
 void ThermalControlUnit99Zones::setScenarios(QList<ThermalRegulationProgram *> _scenarios)
 {
-	scenarios.clear();
+	// can only be called once during parsing
+	Q_ASSERT(summer_scenarios.getCount() == 0 && winter_scenarios.getCount() == 0);
 
 	foreach (ThermalRegulationProgram *s, _scenarios)
-		scenarios << s;
+	{
+		if (s->getSeason() == ThermalControlUnit::Summer)
+			summer_scenarios << s;
+		else
+			winter_scenarios << s;
+	}
 }
 
 ObjectDataModel *ThermalControlUnit99Zones::getScenarios() const
 {
 	// TODO: we remove the const because it produces an error when we export the
 	// type to the qml engine. Find a solution.
-	return const_cast<ObjectDataModel*>(&scenarios);
+	return const_cast<ObjectDataModel*>(scenarios);
 }
 
 
@@ -336,11 +350,13 @@ void ThermalControlUnitObject::reset()
 }
 
 
-ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_id, const ObjectDataModel *_programs, ThermalDevice *dev) :
+ThermalControlUnitProgram::ThermalControlUnitProgram(QString name, int _object_id, const ObjectDataModel *_summer_programs, const ObjectDataModel *_winter_programs, ThermalDevice *dev) :
 	ThermalControlUnitObject(name, dev)
 {
 	object_id = _object_id;
-	programs = _programs;
+	summer_programs = _summer_programs;
+	winter_programs = _winter_programs;
+	programs = summer_programs;
 	current[PROGRAM_INDEX] = 0;
 	to_apply = current;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
@@ -385,9 +401,19 @@ void ThermalControlUnitProgram::apply()
 
 void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 {
-	if (values_list.contains(ThermalDevice99Zones::DIM_PROGRAM))
+	if (values_list.contains(ThermalDevice::DIM_SEASON))
 	{
-		int val = values_list[ThermalDevice99Zones::DIM_PROGRAM].toInt();
+		const ObjectDataModel *old_programs = programs;
+
+		ThermalDevice::Season s = static_cast<ThermalDevice::Season>(values_list[ThermalDevice::DIM_SEASON].toInt());
+		programs = s == ThermalDevice::SE_SUMMER ? summer_programs : winter_programs;
+
+		if (old_programs != programs)
+			emit programsChanged();
+	}
+	if (values_list.contains(ThermalDevice::DIM_PROGRAM))
+	{
+		int val = values_list[ThermalDevice::DIM_PROGRAM].toInt();
 		for (int i = 0; i < programs->rowCount(); ++i)
 		{
 			if (programs->getObject(i)->getObjectId() == val)
@@ -403,8 +429,8 @@ void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 }
 
 
-ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ObjectDataModel *programs, ThermalDevice *dev) :
-	ThermalControlUnitProgram(name, _object_id, programs, dev)
+ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ObjectDataModel *summer_programs, ObjectDataModel *winter_programs, ThermalDevice *dev) :
+	ThermalControlUnitProgram(name, _object_id, summer_programs, winter_programs, dev)
 {
 	current[DATE] = QDate::currentDate();
 	current[TIME] = QTime::currentTime();
@@ -707,11 +733,13 @@ void ThermalControlUnitAntifreeze::apply()
 }
 
 
-ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, const ObjectDataModel *_programs, ThermalDevice99Zones *_dev) :
+ThermalControlUnitScenario::ThermalControlUnitScenario(QString name, const ObjectDataModel *_summer_scenarios, const ObjectDataModel *_winter_scenarios, ThermalDevice99Zones *_dev) :
 	ThermalControlUnitObject(name, _dev)
 {
 	dev = _dev;
-	scenarios = _programs;
+	summer_scenarios = _summer_scenarios;
+	winter_scenarios = _winter_scenarios;
+	scenarios = summer_scenarios;
 	current[SCENARIO_INDEX] = 0;
 	to_apply = current;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
@@ -756,6 +784,16 @@ void ThermalControlUnitScenario::apply()
 
 void ThermalControlUnitScenario::valueReceived(const DeviceValues &values_list)
 {
+	if (values_list.contains(ThermalDevice::DIM_SEASON))
+	{
+		const ObjectDataModel *old_scenarios = scenarios;
+
+		ThermalDevice::Season s = static_cast<ThermalDevice::Season>(values_list[ThermalDevice::DIM_SEASON].toInt());
+		scenarios = s == ThermalDevice::SE_SUMMER ? summer_scenarios : winter_scenarios;
+
+		if (old_scenarios != scenarios)
+			emit scenariosChanged();
+	}
 	if (values_list.contains(ThermalDevice99Zones::DIM_SCENARIO))
 	{
 		int val = values_list[ThermalDevice99Zones::DIM_SCENARIO].toInt();
