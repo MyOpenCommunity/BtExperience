@@ -105,6 +105,8 @@ public:
 		IdThermalControlledProbe4Zone4 = 8007, //!< Controlled probe for 4 zones zone 4 (configuration file)
 		IdThermalExternalProbe = 8008, //!< Thermal external probe device
 		IdThermalNonControlledProbe = 8009, //!< Thermal non-controlled probe device
+		IdThermal99ZonesPrograms = 8014, //!< Programs for 99-zones control unit
+		IdThermal99ZonesScenarios = 8015, //!< Scenarios for 99-zones control unit
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file

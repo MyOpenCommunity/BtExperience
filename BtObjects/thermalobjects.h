@@ -22,36 +22,17 @@ class ThermalDevice4Zones;
 class ThermalDevice99Zones;
 class ObjectDataModel;
 class ThermalControlUnitObject;
+class ThermalRegulationProgram;
 class QDomNode;
 
 typedef QHash<int, QVariant> ThermalRegulationState;
 
 
+QList<ThermalRegulationProgram *> parsePrograms(const QDomNode &obj);
+QList<ThermalRegulationProgram *> parseScenarios(const QDomNode &obj);
 QList<ObjectPair> parseControlUnit99(const QDomNode &obj);
 QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNode, QDomNode> > zones);
 QList<ObjectPair> parseZone99(const QDomNode &obj);
-
-
-/*!
-	\ingroup ThermalRegulation
-	\brief Container for a thermal regulation program or scenario
-
-	The program/scenario number is in the object id, the program/scenario name in the object name.
-*/
-class ThermalRegulationProgram : public ObjectInterface
-{
-	Q_OBJECT
-
-public:
-	ThermalRegulationProgram(int number, const QString &name);
-	virtual int getObjectId() const { return program_number; }
-
-	virtual QString getName() const { return program_name; }
-
-private:
-	int program_number;
-	QString program_name;
-};
 
 
 /*!
@@ -143,6 +124,8 @@ public:
 	void setSeason(SeasonType s);
 
 	ObjectDataModel *getModalities() const;
+
+	void setPrograms(QList<ThermalRegulationProgram *> _programs);
 	ObjectDataModel *getPrograms() const;
 
 	QObject* getCurrentModality() const;
@@ -168,6 +151,30 @@ private:
 	ObjectDataModel programs;
 	ThermalDevice *dev;
 	int current_modality_index;
+};
+
+
+/*!
+	\ingroup ThermalRegulation
+	\brief Container for a thermal regulation program or scenario
+
+	The program/scenario number is in the object id, the program/scenario name in the object name.
+*/
+class ThermalRegulationProgram : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	ThermalRegulationProgram(int number, ThermalControlUnit::SeasonType season, const QString &name);
+
+	virtual int getObjectId() const { return program_number; }
+
+	virtual QString getName() const { return program_name; }
+
+private:
+	int program_number;
+	ThermalControlUnit::SeasonType season;
+	QString program_name;
 };
 
 
@@ -216,6 +223,7 @@ public:
 		return ObjectInterface::IdThermalControlUnit99;
 	}
 
+	void setScenarios(QList<ThermalRegulationProgram *> scenarios);
 	ObjectDataModel *getScenarios() const;
 
 private:

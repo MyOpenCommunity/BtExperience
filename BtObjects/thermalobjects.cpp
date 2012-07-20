@@ -40,6 +40,34 @@ QList<ObjectPair> parseZone99(const QDomNode &obj)
 	return obj_list;
 }
 
+QList<ThermalRegulationProgram *> parsePrograms(const QDomNode &obj)
+{
+	QList<ThermalRegulationProgram *> programs;
+	XmlObject v(obj);
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		v.setIst(ist);
+		ThermalControlUnit::SeasonType season = v.intValue("type") == 0 ? ThermalControlUnit::Winter : ThermalControlUnit::Summer;
+		programs << new ThermalRegulationProgram(v.intValue("num"), season, v.value("descr"));
+	}
+	return programs;
+}
+
+QList<ThermalRegulationProgram *> parseScenarios(const QDomNode &obj)
+{
+	QList<ThermalRegulationProgram *> scenarios;
+	XmlObject v(obj);
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		v.setIst(ist);
+		ThermalControlUnit::SeasonType season = v.intValue("type") == 0 ? ThermalControlUnit::Winter : ThermalControlUnit::Summer;
+		scenarios << new ThermalRegulationProgram(v.intValue("num"), season, v.value("descr"));
+	}
+	return scenarios;
+}
+
 QList<ObjectPair> parseControlUnit99(const QDomNode &obj)
 {
 	QList<ObjectPair> obj_list;
@@ -53,6 +81,7 @@ QList<ObjectPair> parseControlUnit99(const QDomNode &obj)
 		ThermalDevice99Zones *d = bt_global::add_device_to_cache(new ThermalDevice99Zones("0"));
 		obj_list << ObjectPair(uii, new ThermalControlUnit99Zones(v.value("descr"), "", d));
 	}
+	Q_ASSERT_X(obj_list.count() == 1, "parseControlUnit99", "Can't have more than one 99-zones control unit");
 	return obj_list;
 }
 
@@ -83,9 +112,21 @@ QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNo
 		v.setIst(ist);
 		int cu_uii = getIntAttribute(ist, "uii");
 		QString cu_where = v.value("where");
+		QList<ThermalRegulationProgram *> programs;
+
+		foreach (const QDomNode &program, getChildren(ist.firstChildElement("programs"), "program"))
+		{
+			ThermalControlUnit::SeasonType season = v.intValue("type") == 0 ? ThermalControlUnit::Winter : ThermalControlUnit::Summer;
+			int num = getIntAttribute(program, "num");
+			QString descr = getAttribute(program, "descr");
+
+			programs << new ThermalRegulationProgram(num, season, descr);
+		}
 
 		ThermalDevice4Zones *d = bt_global::add_device_to_cache(new ThermalDevice4Zones("0#" + cu_where));
-		obj_list << ObjectPair(cu_uii, new ThermalControlUnit4Zones(v.value("descr"), "", d));
+		ThermalControlUnit4Zones *cu = new ThermalControlUnit4Zones(v.value("descr"), "", d);
+		cu->setPrograms(programs);
+		obj_list << ObjectPair(cu_uii, cu);
 
 		foreach (const QDomNode &link, getChildren(ist.firstChildElement("zones"), "link"))
 		{
@@ -110,9 +151,6 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 	season = Summer;
-	programs << new ThermalRegulationProgram(1, QString("P1"));
-	programs << new ThermalRegulationProgram(3, QString("P3"));
-	programs << new ThermalRegulationProgram(5, QString("P5"));
 	current_modality_index = -1;
 
 	// The objects list should contain only one item per id
@@ -142,6 +180,14 @@ void ThermalControlUnit::setSeason(SeasonType s)
 		dev->setSummer();
 	else
 		dev->setWinter();
+}
+
+void ThermalControlUnit::setPrograms(QList<ThermalRegulationProgram *> _programs)
+{
+	programs.clear();
+
+	foreach (ThermalRegulationProgram *p, _programs)
+		programs << p;
 }
 
 ObjectDataModel *ThermalControlUnit::getPrograms() const
@@ -259,10 +305,15 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 	ThermalControlUnit(_name, _key, d)
 {
 	dev = d;
-	scenarios << new ThermalRegulationProgram(1, QString("S1"));
-	scenarios << new ThermalRegulationProgram(3, QString("S3"));
-	scenarios << new ThermalRegulationProgram(5, QString("S5"));
 	modalities << new ThermalControlUnitScenario("Scenarios", &scenarios, dev);
+}
+
+void ThermalControlUnit99Zones::setScenarios(QList<ThermalRegulationProgram *> _scenarios)
+{
+	scenarios.clear();
+
+	foreach (ThermalRegulationProgram *s, _scenarios)
+		scenarios << s;
 }
 
 ObjectDataModel *ThermalControlUnit99Zones::getScenarios() const
@@ -722,8 +773,9 @@ void ThermalControlUnitScenario::valueReceived(const DeviceValues &values_list)
 	}
 }
 
-ThermalRegulationProgram::ThermalRegulationProgram(int number, const QString &name)
+ThermalRegulationProgram::ThermalRegulationProgram(int number, ThermalControlUnit::SeasonType _season, const QString &name)
 {
+	season = _season;
 	program_number = number;
 	program_name = name;
 }
