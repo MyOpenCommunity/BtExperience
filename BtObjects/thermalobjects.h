@@ -17,14 +17,20 @@
 #include <QString>
 #include <QVariant>
 
-
 class ThermalDevice;
 class ThermalDevice4Zones;
 class ThermalDevice99Zones;
 class ObjectDataModel;
 class ThermalControlUnitObject;
+class QDomNode;
 
 typedef QHash<int, QVariant> ThermalRegulationState;
+
+
+QList<ObjectPair> parseControlUnit99(const QDomNode &obj);
+QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNode, QDomNode> > zones);
+QList<ObjectPair> parseZone99(const QDomNode &obj);
+
 
 /*!
 	\ingroup ThermalRegulation

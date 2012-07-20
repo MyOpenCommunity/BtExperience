@@ -3,7 +3,6 @@
 #include "main.h"
 #include "device.h"
 #include "devices_cache.h"
-#include "thermal_device.h"
 #include "probe_device.h"
 #include "objectmodel.h"
 #include "lightobjects.h"
@@ -147,6 +146,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionZone *> antintrusion_zones;
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
+	QHash<int, QPair<QDomNode, QDomNode> > probe4zones;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
@@ -206,6 +206,29 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdAntintrusionScenario:
 			obj_list = parseAntintrusionScenario(xml_obj, uii_map, antintrusion_zones);
 			antintrusion_scenarios = convertObjectPairList<AntintrusionScenario *>(obj_list);
+			break;
+
+		case ObjectInterface::IdThermalControlUnit99:
+			obj_list = parseControlUnit99(xml_obj);
+			break;
+		case ObjectInterface::IdThermalControlUnit4:
+			obj_list = parseControlUnit4(xml_obj, probe4zones);
+			break;
+		case ObjectInterface::IdThermalControlledProbe99:
+			obj_list = parseZone99(xml_obj);
+			break;
+		case ObjectInterface::IdThermalControlledProbe4Zone1:
+		case ObjectInterface::IdThermalControlledProbe4Zone2:
+		case ObjectInterface::IdThermalControlledProbe4Zone3:
+		case ObjectInterface::IdThermalControlledProbe4Zone4:
+			foreach (const QDomNode &ist, getChildren(xml_obj, "ist"))
+				probe4zones[getIntAttribute(ist, "uii")] = qMakePair(xml_obj, ist);
+			break;
+		case ObjectInterface::IdThermalExternalProbe:
+			obj_list = parseExternalNonControlledProbes(xml_obj, ObjectInterface::IdThermalExternalProbe);
+			break;
+		case ObjectInterface::IdThermalNonControlledProbe:
+			obj_list = parseExternalNonControlledProbes(xml_obj, ObjectInterface::IdThermalNonControlledProbe);
 			break;
 		}
 
@@ -284,37 +307,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 
 		switch (id)
 		{
-		case ObjectInterface::IdThermalControlUnit99:
-			obj = new ThermalControlUnit99Zones(descr, "", bt_global::add_device_to_cache(new ThermalDevice99Zones("0")));
-			break;
-		case ObjectInterface::IdThermalControlUnit4:
-			obj = new ThermalControlUnit4Zones(descr, "2", bt_global::add_device_to_cache(new ThermalDevice4Zones("0#4")));
-			break;
-		case ObjectInterface::IdThermalControlledProbe:
-		{
-			ControlledProbeDevice::ProbeType fancoil = getTextChild(item, "fancoil").toInt() == 1 ?
-						ControlledProbeDevice::FANCOIL :  ControlledProbeDevice::NORMAL;
-			if (fancoil == ControlledProbeDevice::NORMAL)
-			{
-				// TODO remove fake code when parsing is implemented; first fake line is for 99 zones case, last one is for 4 zones
-				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit99Zones, bt_global::add_device_to_cache(new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil)));
-//				obj = new ThermalControlledProbe(descr, where, ThermalControlledProbe::CentralUnit4Zones, bt_global::add_device_to_cache(new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil)));
-			}
-			else
-			{
-				// TODO remove fake code when parsing is implemented; first fake line is for 99 zones case, last one is for 4 zones
-				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit99Zones, bt_global::add_device_to_cache(new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil)));
-//				obj = new ThermalControlledProbeFancoil(descr, where, ThermalControlledProbe::CentralUnit4Zones, bt_global::add_device_to_cache(new ControlledProbeDevice(QString(where)+"#4", QString(where)+"#4", where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil)));
-			}
-			break;
-		}
-			// TODO implement parsing of not controlled and external probes
-		case ObjectInterface::IdThermalNonControlledProbe:
-			obj = new ThermalNonControlledProbe(descr, where, ObjectInterface::IdThermalNonControlledProbe, bt_global::add_device_to_cache(new NonControlledProbeDevice(where, NonControlledProbeDevice::INTERNAL)));
-			break;
-		case ObjectInterface::IdThermalExternalProbe:
-			obj = new ThermalNonControlledProbe(descr, where, ObjectInterface::IdThermalExternalProbe, bt_global::add_device_to_cache(new NonControlledProbeDevice(where, NonControlledProbeDevice::EXTERNAL)));
-			break;
 		case ObjectInterface::IdHardwareSettings:
 			obj = new HardwareSettings;
 			break;

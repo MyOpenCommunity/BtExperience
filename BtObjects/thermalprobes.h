@@ -13,6 +13,9 @@
 
 class ControlledProbeDevice;
 class NonControlledProbeDevice;
+class QDomNode;
+
+QList<ObjectPair> parseExternalNonControlledProbes(const QDomNode &obj, ObjectInterface::ObjectId type);
 
 
 /*!

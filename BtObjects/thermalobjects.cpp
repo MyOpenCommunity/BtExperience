@@ -1,7 +1,11 @@
 #include "thermalobjects.h"
+#include "thermalprobes.h"
 #include "thermal_device.h"
+#include "probe_device.h"
 #include "scaleconversion.h" // bt2Celsius
 #include "objectmodel.h"
+#include "devices_cache.h"
+#include "xmlobject.h"
 
 #include <QDebug>
 
@@ -15,6 +19,88 @@ enum ThermalRegulationStateKeys
 	SCENARIO_INDEX
 };
 
+QList<ObjectPair> parseZone99(const QDomNode &obj)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(obj);
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QString where = v.value("where");
+		ControlledProbeDevice::ProbeType fancoil = v.intValue<ControlledProbeDevice::ProbeType>("fancoil");
+		ControlledProbeDevice *d = bt_global::add_device_to_cache(new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
+
+		if (fancoil == ControlledProbeDevice::FANCOIL)
+			obj_list << ObjectPair(uii, new ThermalControlledProbeFancoil(v.value("descr"), "", ThermalControlledProbe::CentralUnit99Zones, d));
+		else
+			obj_list << ObjectPair(uii, new ThermalControlledProbe(v.value("descr"), "", ThermalControlledProbe::CentralUnit99Zones, d));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseControlUnit99(const QDomNode &obj)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(obj);
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		ThermalDevice99Zones *d = bt_global::add_device_to_cache(new ThermalDevice99Zones("0"));
+		obj_list << ObjectPair(uii, new ThermalControlUnit99Zones(v.value("descr"), "", d));
+	}
+	return obj_list;
+}
+
+ObjectPair parseZone4(const QDomNode &obj, const QDomNode &ist, QString control_unit_where)
+{
+	XmlObject v(obj);
+
+	v.setIst(ist);
+	int uii = getIntAttribute(ist, "uii");
+	QString where = v.value("where");
+	ControlledProbeDevice::ProbeType fancoil = v.intValue<ControlledProbeDevice::ProbeType>("fancoil");
+	ControlledProbeDevice *d = bt_global::add_device_to_cache(new ControlledProbeDevice(where + "#" + control_unit_where, "0#" + control_unit_where, where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
+
+	if (fancoil == ControlledProbeDevice::FANCOIL)
+		return ObjectPair(uii, new ThermalControlledProbeFancoil(v.value("descr"), "", ThermalControlledProbe::CentralUnit4Zones, d));
+	else
+		return ObjectPair(uii, new ThermalControlledProbe(v.value("descr"), "", ThermalControlledProbe::CentralUnit4Zones, d));
+}
+
+QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNode, QDomNode> > zones)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(obj);
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QString control_unit_where = v.value("where");
+
+		ThermalDevice4Zones *d = bt_global::add_device_to_cache(new ThermalDevice4Zones("0#" + control_unit_where));
+		obj_list << ObjectPair(uii, new ThermalControlUnit4Zones(v.value("descr"), "", d));
+
+		foreach (const QDomNode &link, getChildren(ist.firstChildElement("zones"), "link"))
+		{
+			int uii = getIntAttribute(link, "uii");
+
+			if (!zones.contains(uii))
+			{
+				qWarning() << "Invalid uii" << uii << "in thermal control unit";
+				continue;
+			}
+
+			obj_list << parseZone4(zones[uii].first, zones[uii].second, control_unit_where);
+		}
+	}
+	return obj_list;
+}
 
 ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d)
 {

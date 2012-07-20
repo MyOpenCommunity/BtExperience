@@ -48,10 +48,7 @@ public:
 	/// Numeric identifier for object type
 	enum ObjectId
 	{
-		IdThermalControlUnit99 = 3,
-		IdThermalControlledProbe,
-		IdThermalControlUnit4,                  // 5
-		IdAntintrusionSystem,
+		IdAntintrusionSystem = 6,
 		IdHardwareSettings,
 		IdMultiChannelSoundDiffusionSystem,
 		IdMultiChannelSoundAmbient,
@@ -76,9 +73,8 @@ public:
 		IdStopAndGoPlus,
 		IdStopAndGoBTest,
 		IdEnergyData,                           // 30
+		IdThermalControlledProbe, //!< Thermal controlled probe
 		IdThermalControlledProbeFancoil, //!< Thermal controlled probe with fancoil
-		IdThermalNonControlledProbe, //!< Thermal non-controlled probe device
-		IdThermalExternalProbe, //!< Thermal external probe device
 		// used internally
 		IdDimmerGroup = 100, //!< Group of lights containing only dimmer objects
 		IdDimmer100Group = 101, //!< group of lights containing only 100-level dimmer objects
@@ -101,6 +97,16 @@ public:
 		IdAntintrusionZone = 13001, //!< A signe anti-intrusion zone
 		IdAntintrusionScenario = 13010, //!< Set of anti-intrusion zones
 		IdAntintrusionAux = 13101, //!< Auxiliary alarm channel (for technical alarms)
+		// thermal regulation
+		IdThermalControlUnit99 = 8001, //!< Control unit for 99 zones
+		IdThermalControlledProbe99 = 8002, //!< Controlled probe for 99 zones (configuration file)
+		IdThermalControlUnit4 = 8003, //!< Control unit for 4 zones
+		IdThermalControlledProbe4Zone1 = 8004, //!< Controlled probe for 4 zones zone 1 (configuration file)
+		IdThermalControlledProbe4Zone2 = 8005, //!< Controlled probe for 4 zones zone 2 (configuration file)
+		IdThermalControlledProbe4Zone3 = 8006, //!< Controlled probe for 4 zones zone 3 (configuration file)
+		IdThermalControlledProbe4Zone4 = 8007, //!< Controlled probe for 4 zones zone 4 (configuration file)
+		IdThermalExternalProbe = 8008, //!< Thermal external probe device
+		IdThermalNonControlledProbe = 8009, //!< Thermal non-controlled probe device
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file
