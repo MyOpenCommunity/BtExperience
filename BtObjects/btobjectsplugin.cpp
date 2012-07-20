@@ -422,9 +422,8 @@ void BtObjectsPlugin::parseConfig()
 			parseFloors(container);
 			break;
 		case Container::IdLights:
-			parseSystem(container);
-			break;
 		case Container::IdAutomation:
+		case Container::IdThermalRegulation:
 			parseSystem(container);
 			break;
 		}
