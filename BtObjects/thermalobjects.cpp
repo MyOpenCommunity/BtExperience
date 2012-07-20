@@ -56,7 +56,7 @@ QList<ObjectPair> parseControlUnit99(const QDomNode &obj)
 	return obj_list;
 }
 
-ObjectPair parseZone4(const QDomNode &obj, const QDomNode &ist, QString control_unit_where)
+ObjectPair parseZone4(const QDomNode &obj, const QDomNode &ist, QString control_unit_where, int control_unit_uii)
 {
 	XmlObject v(obj);
 
@@ -65,11 +65,12 @@ ObjectPair parseZone4(const QDomNode &obj, const QDomNode &ist, QString control_
 	QString where = v.value("where");
 	ControlledProbeDevice::ProbeType fancoil = v.intValue<ControlledProbeDevice::ProbeType>("fancoil");
 	ControlledProbeDevice *d = bt_global::add_device_to_cache(new ControlledProbeDevice(where + "#" + control_unit_where, "0#" + control_unit_where, where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
+	QString cu_uii = QString::number(control_unit_uii);
 
 	if (fancoil == ControlledProbeDevice::FANCOIL)
-		return ObjectPair(uii, new ThermalControlledProbeFancoil(v.value("descr"), "", ThermalControlledProbe::CentralUnit4Zones, d));
+		return ObjectPair(uii, new ThermalControlledProbeFancoil(v.value("descr"), cu_uii, ThermalControlledProbe::CentralUnit4Zones, d));
 	else
-		return ObjectPair(uii, new ThermalControlledProbe(v.value("descr"), "", ThermalControlledProbe::CentralUnit4Zones, d));
+		return ObjectPair(uii, new ThermalControlledProbe(v.value("descr"), cu_uii, ThermalControlledProbe::CentralUnit4Zones, d));
 }
 
 QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNode, QDomNode> > zones)
@@ -81,22 +82,22 @@ QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNo
 	{
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		QString control_unit_where = v.value("where");
+		QString cu_where = v.value("where");
 
-		ThermalDevice4Zones *d = bt_global::add_device_to_cache(new ThermalDevice4Zones("0#" + control_unit_where));
+		ThermalDevice4Zones *d = bt_global::add_device_to_cache(new ThermalDevice4Zones("0#" + cu_where));
 		obj_list << ObjectPair(uii, new ThermalControlUnit4Zones(v.value("descr"), "", d));
 
 		foreach (const QDomNode &link, getChildren(ist.firstChildElement("zones"), "link"))
 		{
-			int uii = getIntAttribute(link, "uii");
+			int zone_uii = getIntAttribute(link, "uii");
 
-			if (!zones.contains(uii))
+			if (!zones.contains(zone_uii))
 			{
-				qWarning() << "Invalid uii" << uii << "in thermal control unit";
+				qWarning() << "Invalid uii" << zone_uii << "in thermal control unit";
 				continue;
 			}
 
-			obj_list << parseZone4(zones[uii].first, zones[uii].second, control_unit_where);
+			obj_list << parseZone4(zones[zone_uii].first, zones[zone_uii].second, cu_where, cu_uii);
 		}
 	}
 	return obj_list;
