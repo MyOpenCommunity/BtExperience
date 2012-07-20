@@ -81,11 +81,11 @@ QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNo
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
 		v.setIst(ist);
-		int uii = getIntAttribute(ist, "uii");
+		int cu_uii = getIntAttribute(ist, "uii");
 		QString cu_where = v.value("where");
 
 		ThermalDevice4Zones *d = bt_global::add_device_to_cache(new ThermalDevice4Zones("0#" + cu_where));
-		obj_list << ObjectPair(uii, new ThermalControlUnit4Zones(v.value("descr"), "", d));
+		obj_list << ObjectPair(cu_uii, new ThermalControlUnit4Zones(v.value("descr"), "", d));
 
 		foreach (const QDomNode &link, getChildren(ist.firstChildElement("zones"), "link"))
 		{
