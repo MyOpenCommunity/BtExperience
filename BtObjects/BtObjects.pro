@@ -7,6 +7,7 @@ include(../config.pri)
 
 DEFINES += OPENSERVER_ADDR=\\\"openserver\\\"
 DEFINES += XML_SERVER_ADDRESS=\\\"openserver\\\"
+DEFINES += BT_EXPERIENCE_TODO_REVIEW_ME
 
 INCLUDEPATH += ./common_files
 DEPENDPATH += . devices ts
