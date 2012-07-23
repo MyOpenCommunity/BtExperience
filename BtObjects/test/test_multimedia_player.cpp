@@ -42,19 +42,19 @@ void TestMultiMediaPlayer::init()
 	d3_info["file_name"] = "d3.mp3";
 	d3_info["meta_album"] = "BTicino tests";
 	d3_info["meta_artist"] = "Sox";
-	d3_info["total_time"] = QTime(0, 0, 14);
+	d3_info["total_time"] = QTime(0, 0, 20);
 
 	f5_info["meta_title"] = "F5 pluck";
 	f5_info["file_name"] = "f5.mp3";
 	f5_info["meta_album"] = "BTicino tests";
 	f5_info["meta_artist"] = "Sox";
-	f5_info["total_time"] = QTime(0, 0, 21);
+	f5_info["total_time"] = QTime(0, 0, 20);
 
 	a4_info["meta_title"] = "A4 pluck";
 	a4_info["file_name"] = "a4.mp3";
 	a4_info["meta_album"] = "BTicino tests";
 	a4_info["meta_artist"] = "Sox";
-	a4_info["total_time"] = QTime(0, 0, 20);
+	a4_info["total_time"] = QTime(0, 0, 22);
 }
 
 void TestMultiMediaPlayer::cleanup()
@@ -105,7 +105,6 @@ void TestMultiMediaPlayer::testSanity()
 
 void TestMultiMediaPlayer::testPlay()
 {
-	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	QVariantMap info;
 	QVariant last_time;
 
@@ -259,7 +258,6 @@ void TestMultiMediaPlayer::testMultiplePauseResume()
 
 void TestMultiMediaPlayer::testSetSource()
 {
-	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	QVariantMap info;
 	QVariant last_time;
 
@@ -312,7 +310,6 @@ void TestMultiMediaPlayer::testSetSource()
 
 void TestMultiMediaPlayer::testSetSourcePaused()
 {
-	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	QVariantMap info;
 	QVariant last_time;
 
@@ -374,7 +371,6 @@ void TestMultiMediaPlayer::testSetSourcePaused()
 
 void TestMultiMediaPlayer::testSetEmptySource()
 {
-	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	player->setCurrentSource("files/audio/d3.mp3");
 	player->play();
 
@@ -411,7 +407,6 @@ void TestMultiMediaPlayer::testSetEmptySource()
 
 void TestMultiMediaPlayer::testSeek()
 {
-	QSKIP("This test should be executed only on the reference machine", SkipSingle);
 	QVariantMap info;
 	QVariant last_time;
 	int delta;

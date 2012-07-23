@@ -7,7 +7,7 @@ A4:
 rec a4.wav synth 2 pluck A4 repeat 10
 
 Wav->MP3:
-lame -V 4 d3.wav d3.mp3
+lame --preset cbr 96 d3.wav d3.mp3
 
 id3v2 --TCOM Sox d3.mp3
 id3v2 --TALB 'BTicino tests' d3.mp3
