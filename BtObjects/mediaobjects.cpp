@@ -2,9 +2,9 @@
 #include "multimediaplayer.h"
 #include "media_device.h"
 #include "mediaplayer.h"
+#include "list_manager.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
-#include "folderlistmodel.h"
 
 #include <QDebug>
 #include <QStringList>
@@ -147,6 +147,8 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		objects << source;
 	foreach (SoundAmbient *ambient, ambients)
 		objects << ambient;
+
+	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());
 
 	return objects;
 }
@@ -303,27 +305,37 @@ void SourceObject::nextTrack()
 }
 
 
-
-SourceLocalMedia::SourceLocalMedia(const QString &name, const QString &_root_path, SourceBase *s, SourceObjectType t) :
+SourceMedia::SourceMedia(const QString &name, SourceBase *s, SourceObjectType t) :
 	SourceObject(name, s, t)
 {
 	media_player = new MultiMediaPlayer();
-	root_path = _root_path;
-	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());
 }
 
-QObject *SourceLocalMedia::getMediaPlayer() const
+void SourceMedia::playlistTrackChanged()
+{
+	media_player->setCurrentSource(playlist->currentFilePath());
+}
+
+QObject *SourceMedia::getMediaPlayer() const
 {
 	return media_player;
 }
 
-void SourceLocalMedia::startPlay(FileObject *file)
+void SourceMedia::previousTrack()
 {
-	media_player->setCurrentSource(file->getPath());
-	media_player->play();
+	playlist->previousFile();
 }
 
-void SourceLocalMedia::togglePause()
+void SourceMedia::nextTrack()
+{
+	playlist->nextFile();
+}
+
+void SourceMedia::startPlay(FileObject *file)
+{
+}
+
+void SourceMedia::togglePause()
 {
 	if (media_player->getPlayerState() == MultiMediaPlayer::Playing)
 	{
@@ -335,25 +347,51 @@ void SourceLocalMedia::togglePause()
 	}
 }
 
+
+SourceLocalMedia::SourceLocalMedia(const QString &name, const QString &_root_path, SourceBase *s, SourceObjectType t) :
+	SourceMedia(name, s, t)
+{
+	root_path = _root_path;
+	model = new DirectoryListModel(this);
+	playlist = new FileListManager;
+	connect(playlist, SIGNAL(currentFileChanged()), this, SLOT(playlistTrackChanged()));
+}
+
+void SourceLocalMedia::startPlay(FileObject *file)
+{
+	// build playlist by recovering state from the FileObject
+	EntryInfoList entry_list;
+	int start_index = 0;
+	for (int i = 0; i < model->getCount(); ++i)
+	{
+		FileObject *fo = static_cast<FileObject *>(model->getObject(i));
+		if (fo->getPath() == file->getPath())
+			start_index = i;
+		entry_list << EntryInfo(fo->getName(), EntryInfo::AUDIO, fo->getPath());
+	}
+
+	FileListManager *list = static_cast<FileListManager *>(playlist);
+	list->setList(entry_list);
+	list->setCurrentIndex(start_index);
+	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(getMediaPlayer());
+	media_player->setCurrentSource(list->currentFilePath());
+	media_player->play();
+}
+
+void SourceLocalMedia::setModel(DirectoryListModel *_model)
+{
+	DirectoryListModelMemento *state = _model->clone();
+	model->restore(state);
+	delete state;
+}
+
 QVariantList SourceLocalMedia::getRootPath() const
 {
 	QVariantList list;
-	foreach (const QString &s, root_path.split("/"))
-	{
-		if (!s.isEmpty())
-			list << s;
-	}
+
+	foreach (const QString &s, root_path.split("/", QString::SkipEmptyParts))
+		list << s;
 	return list;
-}
-
-void SourceLocalMedia::previousTrack()
-{
-	media_player->setCurrentSource("song");
-}
-
-void SourceLocalMedia::nextTrack()
-{
-	media_player->setCurrentSource("song");
 }
 
 
