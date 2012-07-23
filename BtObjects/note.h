@@ -5,6 +5,12 @@
 
 #include <QDateTime>
 
+class Note;
+class MediaDataModel;
+
+bool parseNotes(QString file_path, MediaDataModel *notes);
+bool saveNotes(QString file_path, MediaDataModel *notes);
+
 
 /*!
 	\brief An user-created note
@@ -29,7 +35,7 @@ class Note : public ItemInterface
 	Q_PROPERTY(QDateTime updated READ getUpdated WRITE setUpdated NOTIFY updateChanged)
 
 public:
-	Note(int profile_id, QString text);
+	Note(int profile_id, QString text, QDateTime created = QDateTime::currentDateTime());
 
 	QString getText() const;
 	QDateTime getCreated() const;

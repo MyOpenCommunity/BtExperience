@@ -42,6 +42,7 @@
 
 #define CONF_FILE "conf.xml"
 #define LAYOUT_FILE "layout.xml"
+#define NOTES_FILE "notes.xml"
 
 QHash<GlobalField, QString> *bt_global::config;
 
@@ -114,6 +115,10 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	FrameReceiver::setClientsMonitor(monitors);
 	FrameSender::setClients(clients);
+
+	connect(&note_model, SIGNAL(persistItem(ItemInterface*)), this, SLOT(updateNotes()));
+	connect(&note_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateNotes()));
+	connect(&note_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateNotes()));
 
 	global_models.setParent(this);
 	room_model.setParent(this);
@@ -302,6 +307,11 @@ void BtObjectsPlugin::updateObjectName()
 		qDebug() << "Config file saved";
 }
 
+void BtObjectsPlugin::updateNotes()
+{
+	saveNotes(QFileInfo(QDir(qApp->applicationDirPath()), NOTES_FILE).absoluteFilePath(), &note_model);
+}
+
 void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 {
 	foreach (const QDomNode &item, getChildren(document.documentElement(), "item"))
@@ -429,17 +439,7 @@ void BtObjectsPlugin::parseConfig()
 		}
 	}
 
-	// TODO parse note list file
-	note_model << new Note(903, "portare fuori la spazzatura");
-	note_model << new Note(903, "giocare con le bambole");
-	note_model << new Note(902, "dentista 18/05/2012 ore 14:45");
-	note_model << new Note(904, "appunt. Sig. Mario Monti 18/05/2012 ore 17.00");
-	note_model << new Note(905, "pagare spese condominiali");
-	note_model << new Note(905, "fare cose");
-	note_model << new Note(905, "parlare con persone");
-	note_model << new Note(905, "scrivere e-mail");
-	note_model << new Note(905, "partecipare a riunioni");
-	note_model << new Note(901, "pagare l'affitto");
+	parseNotes(QFileInfo(QDir(qApp->applicationDirPath()), NOTES_FILE).absoluteFilePath(), &note_model);
 
 	// TODO parse profile list file
 	profile_model << new Container(1, 901, "images/home/card_1.png", "famiglia");
