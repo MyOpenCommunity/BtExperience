@@ -16,7 +16,7 @@
 
 namespace
 {
-	QStringList allowed_layouts = QStringList() << "en_gb" << "it" << "fr";
+	QStringList allowed_layouts = QStringList() << "en_gb_bticino" << "it_bticino" << "fr_bticino";
 }
 
 GlobalProperties::GlobalProperties()
