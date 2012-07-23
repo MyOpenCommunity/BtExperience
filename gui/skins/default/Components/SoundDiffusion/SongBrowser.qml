@@ -9,6 +9,10 @@ MenuColumn {
     property variant listModel
     property alias paginator: paginator
 
+    function startPlay(fileObject) {
+        column.dataModel.startPlay(fileObject)
+    }
+
     Image {
         id: imageBg
         source: "../../images/sound_diffusion/bg_elenco_file.svg"
@@ -57,7 +61,7 @@ MenuColumn {
                     // we need braces due to bug
                     // https://bugreports.qt-project.org/browse/QTBUG-17012
                 {
-                    column.dataModel.startPlay(itemObject)
+                    startPlay(itemObject)
                     break
                 }
                 case FileObject.Directory:
