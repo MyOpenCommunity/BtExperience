@@ -7,6 +7,7 @@
 #include <QAbstractListModel>
 
 class TreeBrowser;
+class TreeBrowserMemento;
 class PagedTreeBrowser;
 class XmlDevice;
 
@@ -70,7 +71,6 @@ private:
 	QVariantList logical_path;
 	bool loading;
 };
-
 
 /*!
 	\brief List model for paged navigation on filesystem and UPnP
@@ -208,6 +208,7 @@ protected:
 	virtual void setLoadingIfAsynchronous();
 
 	void setLoading(bool loading);
+	void setCurrentPath(QVariantList cp);
 
 	TreeBrowser *browser;
 	int min_range, max_range;
@@ -291,6 +292,17 @@ private:
 	// start_index <= min_range <= current_index <= max_range
 };
 
+class DirectoryListModelMemento
+{
+friend class DirectoryListModel;
+public:
+	~DirectoryListModelMemento();
+
+private:
+	TreeBrowserMemento *tm;
+	QVariantList range, root_path, current_path;
+	int filter;
+};
 
 class DirectoryListModel : public FolderListModel
 {
@@ -298,6 +310,8 @@ class DirectoryListModel : public FolderListModel
 
 public:
 	DirectoryListModel(QObject *parent = 0);
+	DirectoryListModelMemento *clone();
+	void restore(DirectoryListModelMemento *m);
 };
 
 

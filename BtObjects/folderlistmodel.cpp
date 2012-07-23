@@ -169,6 +169,15 @@ void TreeBrowserListModelBase::setLoading(bool _loading)
 	emit loadingChanged();
 }
 
+void TreeBrowserListModelBase::setCurrentPath(QVariantList cp)
+{
+	if (current_path != cp)
+	{
+		current_path = cp;
+		emit currentPathChanged();
+	}
+}
+
 bool TreeBrowserListModelBase::isLoading() const
 {
 	return loading;
@@ -472,9 +481,35 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 }
 
 
+DirectoryListModelMemento::~DirectoryListModelMemento()
+{
+	delete tm;
+}
+
+
 DirectoryListModel::DirectoryListModel(QObject *parent) :
 	FolderListModel(new DirectoryTreeBrowser, parent)
 {
+}
+
+DirectoryListModelMemento *DirectoryListModel::clone()
+{
+	DirectoryListModelMemento *m = new DirectoryListModelMemento;
+	m->tm = browser->clone();
+	m->filter = getFilter();
+	m->range = getRange();
+	m->root_path = getRootPath();
+	m->current_path = getCurrentPath();
+	return m;
+}
+
+void DirectoryListModel::restore(DirectoryListModelMemento *m)
+{
+	browser->restore(m->tm);
+	setRootPath(m->root_path);
+	setCurrentPath(m->current_path);
+	setRange(m->range);
+	setFilter(m->filter);
 }
 
 
