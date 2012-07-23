@@ -301,8 +301,15 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	EnergyItem *value;
 
 	if (type == CurrentValue)
+	{
 		value = new EnergyItemCurrent(this, type, actual_date, val, measure_unit,
 			decimals, goal, measure == Currency ? rate : 0);
+
+		connect(this, SIGNAL(thresholdLevelChanged(int)),
+			value, SIGNAL(thresholdLevelChanged(int)));
+		connect(this, SIGNAL(thresholdsChanged(QVariantList)),
+			value, SIGNAL(thresholdsChanged(QVariantList)));
+	}
 	else
 		value = new EnergyItem(this, type, actual_date, val, measure_unit,
 			decimals, goal, measure == Currency ? rate : 0);
