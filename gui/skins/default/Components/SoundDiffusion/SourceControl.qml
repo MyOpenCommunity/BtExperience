@@ -183,6 +183,8 @@ MenuColumn {
                 playerStatus: objModel.mediaPlayer.playerState
 
                 onPlayClicked: objModel.togglePause()
+                onPreviousClicked: objModel.previousTrack()
+                onNextClicked: objModel.nextTrack()
             }
         }
     }
