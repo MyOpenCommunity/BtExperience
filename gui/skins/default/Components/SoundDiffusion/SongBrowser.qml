@@ -9,7 +9,7 @@ MenuColumn {
     property variant listModel
     property alias paginator: paginator
 
-    function startPlay(fileObject) {
+    function startPlay(fileObject, objIndex) {
         column.dataModel.startPlay(fileObject)
     }
 
@@ -61,7 +61,7 @@ MenuColumn {
                     // we need braces due to bug
                     // https://bugreports.qt-project.org/browse/QTBUG-17012
                 {
-                    startPlay(itemObject)
+                    startPlay(itemObject, index)
                     break
                 }
                 case FileObject.Directory:

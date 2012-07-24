@@ -68,11 +68,15 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		case SourceBase::MultiMedia:
 		{
 			SourceMultiMedia *source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice(where)));
-			SourceObject *ip_radio = new SourceLocalMedia("IP radio", "", source, SourceObject::IpRadio);
+			SourceObject *ip_radio = new SourceIpRadio(QObject::tr("IP radio"), source);
 			sources << ip_radio;
+			// TODO: create fake radios for now
+			objects << new IpRadio(EntryInfo("Trance", EntryInfo::AUDIO, "http://scfire-dtc-aa02.stream.aol.com:80/stream/1065"));
+			objects << new IpRadio(EntryInfo("Slay radio", EntryInfo::AUDIO, "http://relay.slayradio.org:8000/"));
+
 			sources << new SourceLocalMedia("USB1", "/media/usb1", source, SourceObject::FileSystem);
 			sources << new SourceLocalMedia("SD card", "/media/sd", source, SourceObject::FileSystem);
-			sources << new SourceLocalMedia("Network shares", "", source, SourceObject::Upnp);
+			sources << new SourceUpnpMedia("Network shares", source);
 			// TODO: where are we going to destroy SourceMultiMedia?
 
 			// use a default
@@ -311,6 +315,12 @@ SourceMedia::SourceMedia(const QString &name, SourceBase *s, SourceObjectType t)
 	media_player = new MultiMediaPlayer();
 }
 
+void SourceMedia::play(const QString &song_path)
+{
+	media_player->setCurrentSource(song_path);
+	media_player->play();
+}
+
 void SourceMedia::playlistTrackChanged()
 {
 	media_player->setCurrentSource(playlist->currentFilePath());
@@ -323,16 +333,14 @@ QObject *SourceMedia::getMediaPlayer() const
 
 void SourceMedia::previousTrack()
 {
-	playlist->previousFile();
+	if (playlist)
+		playlist->previousFile();
 }
 
 void SourceMedia::nextTrack()
 {
-	playlist->nextFile();
-}
-
-void SourceMedia::startPlay(FileObject *file)
-{
+	if (playlist)
+		playlist->nextFile();
 }
 
 void SourceMedia::togglePause()
@@ -348,18 +356,28 @@ void SourceMedia::togglePause()
 }
 
 
+SourceIpRadio::SourceIpRadio(const QString &name, SourceBase *s) :
+	SourceMedia(name, s, IpRadio)
+{
+}
+
+void SourceIpRadio::startPlay(FileObject *file)
+{
+	play(file->getPath());
+}
+
+
 SourceLocalMedia::SourceLocalMedia(const QString &name, const QString &_root_path, SourceBase *s, SourceObjectType t) :
 	SourceMedia(name, s, t)
 {
 	root_path = _root_path;
 	model = new DirectoryListModel(this);
 	playlist = new FileListManager;
-	connect(playlist, SIGNAL(currentFileChanged()), this, SLOT(playlistTrackChanged()));
+	connect(playlist, SIGNAL(currentFileChanged()), SLOT(playlistTrackChanged()));
 }
 
 void SourceLocalMedia::startPlay(FileObject *file)
 {
-	// build playlist by recovering state from the FileObject
 	EntryInfoList entry_list;
 	int start_index = 0;
 	for (int i = 0; i < model->getCount(); ++i)
@@ -373,16 +391,19 @@ void SourceLocalMedia::startPlay(FileObject *file)
 	FileListManager *list = static_cast<FileListManager *>(playlist);
 	list->setList(entry_list);
 	list->setCurrentIndex(start_index);
-	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(getMediaPlayer());
-	media_player->setCurrentSource(list->currentFilePath());
-	media_player->play();
+	play(file->getPath());
 }
 
 void SourceLocalMedia::setModel(DirectoryListModel *_model)
 {
-	DirectoryListModelMemento *state = _model->clone();
-	model->restore(state);
-	delete state;
+	if (_model != model)
+	{
+		DirectoryListModelMemento *state = _model->clone();
+		model->restore(state);
+		// remove any range that may be set
+		model->setRange(QVariantList() << 0 << model->getCount());
+		delete state;
+	}
 }
 
 QVariantList SourceLocalMedia::getRootPath() const
@@ -395,6 +416,21 @@ QVariantList SourceLocalMedia::getRootPath() const
 }
 
 
+SourceUpnpMedia::SourceUpnpMedia(const QString &name, SourceBase *s) :
+	SourceMedia(name, s, Upnp)
+{
+	playlist = new UPnpListManager(UPnPListModel::getXmlDevice());
+	connect(playlist, SIGNAL(currentFileChanged()), SLOT(playlistTrackChanged()));
+}
+
+void SourceUpnpMedia::startUpnpPlay(FileObject *file, int current_index, int total_files)
+{
+	UPnpListManager *list = static_cast<UPnpListManager *>(playlist);
+	list->setStartingFile(file->getEntryInfo());
+	list->setCurrentIndex(current_index);
+	list->setTotalFiles(total_files);
+	play(file->getPath());
+}
 
 
 

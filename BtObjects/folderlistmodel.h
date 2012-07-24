@@ -60,6 +60,7 @@ public:
 	FileType getFileType() const;
 	QVariantMap getMetadata() const;
 	bool isLoading() const;
+	EntryInfo getEntryInfo() const;
 
 	void setFileInfo(const EntryInfo &entry, QVariantList path);
 
@@ -321,9 +322,9 @@ class UPnPListModel : public PagedFolderListModel
 
 public:
 	UPnPListModel(QObject *parent = 0);
+	static XmlDevice *getXmlDevice();
 
 private:
-	static XmlDevice *getXmlDevice();
 	static XmlDevice *xml_device;
 };
 

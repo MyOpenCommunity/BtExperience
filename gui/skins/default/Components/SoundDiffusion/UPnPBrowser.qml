@@ -2,7 +2,12 @@ import QtQuick 1.1
 import BtObjects 1.0
 
 SongBrowser {
+    id: column
     property alias rootPath: files.rootPath
+
+    function startPlay(fileObject, objIndex) {
+        column.dataModel.startUpnpPlay(fileObject, objIndex, files.count)
+    }
 
     listModel: files
 

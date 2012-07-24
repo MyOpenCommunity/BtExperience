@@ -122,6 +122,7 @@ public:
 		IdScheduledScenario,
 		IdAdvancedScenario,
 
+		IdIpRadio,
 		// the last value + 1, used to check the ids requested from qml
 		// NOTE: always verify is the highest value out there!
 		IdMax

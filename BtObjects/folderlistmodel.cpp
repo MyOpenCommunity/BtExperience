@@ -88,6 +88,11 @@ bool FileObject::isLoading() const
 	return loading;
 }
 
+EntryInfo FileObject::getEntryInfo() const
+{
+	return entry;
+}
+
 void FileObject::setFileInfo(const EntryInfo &_entry, QVariantList _path)
 {
 	QString old_name = entry.name;
