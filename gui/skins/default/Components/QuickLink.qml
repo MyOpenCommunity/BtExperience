@@ -29,49 +29,6 @@ Item {
     width: column.width + 10
     height: column.height + 10
 
-    QtObject {
-        id: privateProps
-
-        function getSidebarPlacement(x, y, rx, ry) {
-            // this function evaluates what selected state is right for the
-            // QuickLink wrt the reference point (refX, refY)
-            // for example, if the QuickLink is on right and below the reference
-            // point, the sidebar will appear on the left and with the bottom
-            // aligned to the QuickLink bottom
-            // please note that x, y are not used, they only serve to bind to QuickLink coordinates changes
-            if ((rx === -1) || (ry === -1)) // no ref point, returns default selected state
-                return "selected"
-            // rx, ry are absolute coordinates, so converts QuickLink x, y to absolute ones
-            var mov_cx = bgQuick.mapToItem(null, 0, 0).x + 0.5 * bgQuick.width
-            var mov_cy = bgQuick.mapToItem(null, 0, 0).y + 0.5 * bgQuick.height
-            // computes delta wrt the ref point
-            var px = mov_cx - rx
-            var py = mov_cy - ry
-            // analyzes signs and returns the right selected state
-            if ((px >= 0) && (py >= 0))
-                return "selectedBottomLeft"
-            if ((px >= 0) && (py <= 0))
-                return "selectedTopLeft"
-            if ((px <= 0) && (py >= 0))
-                return "selectedBottomRight"
-            return "selectedTopRight"
-        }
-
-        function startEdit() {
-            labelLoader.sourceComponent = labelInputComponent
-            labelLoader.item.forceActiveFocus()
-            labelLoader.item.openSoftwareInputPanel()
-        }
-
-        function editDone() {
-            if (labelLoader.item.text !== bgQuick.text) {
-                bgQuick.editCompleted()
-                bgQuick.text = labelLoader.item.text
-            }
-            labelLoader.sourceComponent = labelComponent
-        }
-    }
-
     Column {
         id: column
 
@@ -145,11 +102,6 @@ Item {
         id: editColumn
 
         opacity: 0
-        anchors {
-            top: column.top
-            left: column.right
-            leftMargin: 1
-        }
 
         Rectangle {
             width: 48
@@ -264,8 +216,7 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        // the getSidebarPlacement returns the selected state to use
-        onPressAndHold: parent.state = privateProps.getSidebarPlacement(bgQuick.x, bgQuick.y, bgQuick.refX, bgQuick.refY)
+        onPressAndHold: bgQuick.state = "selected"
         onPressed: bgQuickPressed.visible = true
         onReleased: bgQuickPressed.visible = false
         onClicked: {
@@ -276,11 +227,110 @@ Item {
     }
 
     Behavior on x {
-        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+        SequentialAnimation {
+            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+            ScriptAction { script: privateProps.computeAnchors() }
+        }
     }
 
     Behavior on y {
-        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+        SequentialAnimation {
+            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+            ScriptAction { script: privateProps.computeAnchors() }
+        }
+    }
+
+    Component.onCompleted: privateProps.computeAnchors()
+
+    QtObject {
+        id: privateProps
+
+        function computeAnchors() {
+            // function to compute and set anchors considering the QuickLink
+            // position and the reference point
+
+            // first of all, resets everything
+            editColumn.anchors.top = undefined
+            editColumn.anchors.bottom = undefined
+            editColumn.anchors.left = undefined
+            editColumn.anchors.right = undefined
+            editColumn.anchors.leftMargin = 0
+            editColumn.anchors.rightMargin = 0
+
+            // checks if ref point is defined, if not default to top right
+            if ((bgQuick.refX === -1) || (bgQuick.refY === -1)) {
+                editColumn.anchors.top = column.top
+                editColumn.anchors.bottom = undefined
+                editColumn.anchors.left = column.right
+                editColumn.anchors.right = undefined
+                editColumn.anchors.leftMargin = 1
+                editColumn.anchors.rightMargin = 0
+                return
+            }
+
+            // bgQuick.refX, bgQuick.refY are absolute coordinates, so converts QuickLink x, y to absolute ones
+            var mov_cx = bgQuick.mapToItem(null, 0, 0).x + 0.5 * bgQuick.width
+            var mov_cy = bgQuick.mapToItem(null, 0, 0).y + 0.5 * bgQuick.height
+
+            // computes delta wrt the ref point
+            var px = mov_cx - bgQuick.refX
+            var py = mov_cy - bgQuick.refY
+
+            // analyzes signs and sets the right anchorings
+            if ((px >= 0) && (py >= 0)) {
+                // bottom left
+                editColumn.anchors.top = undefined
+                editColumn.anchors.bottom = column.bottom
+                editColumn.anchors.left = undefined
+                editColumn.anchors.right = column.left
+                editColumn.anchors.leftMargin = 0
+                editColumn.anchors.rightMargin = 1
+                return
+            }
+            else if ((px >= 0) && (py <= 0)) {
+                // top left
+                editColumn.anchors.top = column.top
+                editColumn.anchors.bottom = undefined
+                editColumn.anchors.left = undefined
+                editColumn.anchors.right = column.left
+                editColumn.anchors.leftMargin = 0
+                editColumn.anchors.rightMargin = 1
+                return
+            }
+            else if ((px <= 0) && (py >= 0)) {
+                // bottom right
+                editColumn.anchors.top = undefined
+                editColumn.anchors.bottom = column.bottom
+                editColumn.anchors.left = column.right
+                editColumn.anchors.right = undefined
+                editColumn.anchors.leftMargin = 1
+                editColumn.anchors.rightMargin = 0
+                return
+            }
+            else {
+                // top right
+                editColumn.anchors.top = column.top
+                editColumn.anchors.bottom = undefined
+                editColumn.anchors.left = column.right
+                editColumn.anchors.right = undefined
+                editColumn.anchors.leftMargin = 1
+                editColumn.anchors.rightMargin = 0
+            }
+        }
+
+        function startEdit() {
+            labelLoader.sourceComponent = labelInputComponent
+            labelLoader.item.forceActiveFocus()
+            labelLoader.item.openSoftwareInputPanel()
+        }
+
+        function editDone() {
+            if (labelLoader.item.text !== bgQuick.text) {
+                bgQuick.editCompleted()
+                bgQuick.text = labelLoader.item.text
+            }
+            labelLoader.sourceComponent = labelComponent
+        }
     }
 
     states: [
@@ -301,70 +351,6 @@ Item {
             StateChangeScript {
                 // execute selected script when not editable?
                 script: editable ? bgQuick.selected(bgQuick) : ""
-            }
-        },
-        State {
-            name: "selectedTopLeft"
-            extend: "selected"
-            AnchorChanges {
-                target: editColumn
-                anchors.top: column.top
-                anchors.bottom: undefined
-                anchors.left: undefined
-                anchors.right: column.left
-            }
-            PropertyChanges {
-                target: editColumn
-                anchors.leftMargin: 0
-                anchors.rightMargin: 1
-            }
-        },
-        State {
-            name: "selectedTopRight"
-            extend: "selected"
-            AnchorChanges {
-                target: editColumn
-                anchors.top: column.top
-                anchors.bottom: undefined
-                anchors.left: column.right
-                anchors.right: undefined
-            }
-            PropertyChanges {
-                target: editColumn
-                anchors.leftMargin: 1
-                anchors.rightMargin: 0
-            }
-        },
-        State {
-            name: "selectedBottomLeft"
-            extend: "selected"
-            AnchorChanges {
-                target: editColumn
-                anchors.top: undefined
-                anchors.bottom: column.bottom
-                anchors.left: undefined
-                anchors.right: column.left
-            }
-            PropertyChanges {
-                target: editColumn
-                anchors.leftMargin: 0
-                anchors.rightMargin: 1
-            }
-        },
-        State {
-            name: "selectedBottomRight"
-            extend: "selected"
-            AnchorChanges {
-                target: editColumn
-                anchors.top: undefined
-                anchors.bottom: column.bottom
-                anchors.left: column.right
-                anchors.right: undefined
-            }
-            PropertyChanges {
-                target: editColumn
-                anchors.leftMargin: 1
-                anchors.rightMargin: 0
             }
         }
     ]
