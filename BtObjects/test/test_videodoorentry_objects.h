@@ -41,6 +41,11 @@ private slots:
 	void testIncomingCallTerminatedByTalker();
 	void testIncomingCallTerminatedByTouch();
 	void testOutgoingCallTerminatedByTalker();
+	void testIgnoringFramesIfNotActive();
+
+	void testCCTVIgnoringFramesIfNotActive();
+	void testCCTVOutgoingCallTerminatedByTouch();
+	void testCCTVOutgoingCallTerminatedByTalker();
 
 protected:
 	void compareClientCommand(int timeout = 0);

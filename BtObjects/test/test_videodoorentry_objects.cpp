@@ -187,3 +187,130 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 	t.checkSignalCount(SIGNAL(talkerChanged()), 2);
 	t.checkSignalCount(SIGNAL(callAnswered()), 1);
 }
+
+void TestVideoDoorEntry::testIgnoringFramesIfNotActive()
+{
+	DeviceValues v;
+	ObjectTester t(intercom, SIGNAL(callEnded()));
+
+	QCOMPARE(false, intercom->callActive());
+
+	// sending a "spurious" VideoDoorEntryDevice::END_OF_CALL signal
+	v[VideoDoorEntryDevice::END_OF_CALL] = QString("21");
+	intercom->valueReceived(v);
+	v.clear();
+
+	QCOMPARE(false, intercom->callActive());
+
+	t.checkNoSignals();
+
+	// sending a "spurious" VideoDoorEntryDevice::ANSWER_CALL signal
+	v[VideoDoorEntryDevice::ANSWER_CALL] = QString("21");
+	intercom->valueReceived(v);
+	v.clear();
+
+	QCOMPARE(false, intercom->callActive());
+
+	t.checkNoSignals();
+
+	// sending a "spurious" VideoDoorEntryDevice::CALLER_ADDRESS signal
+	v[VideoDoorEntryDevice::CALLER_ADDRESS] = QString("21#2");
+	intercom->valueReceived(v);
+	v.clear();
+
+	QCOMPARE(false, intercom->callActive());
+	QCOMPARE(QString(""), intercom->getTalker());
+
+	t.checkNoSignals();
+}
+
+void TestVideoDoorEntry::testCCTVIgnoringFramesIfNotActive()
+{
+	DeviceValues v;
+	ObjectTester t(cctv, SIGNAL(callEnded()));
+
+	QCOMPARE(false, cctv->callActive());
+
+	// sending a "spurious" VideoDoorEntryDevice::STOP_VIDEO signal
+	v[VideoDoorEntryDevice::STOP_VIDEO] = QString("21");
+	cctv->valueReceived(v);
+	v.clear();
+
+	QCOMPARE(false, cctv->callActive());
+
+	t.checkNoSignals();
+
+	// sending a "spurious" VideoDoorEntryDevice::CALLER_ADDRESS signal
+	v[VideoDoorEntryDevice::CALLER_ADDRESS] = QString("21#2");
+	cctv->valueReceived(v);
+	v.clear();
+
+	QCOMPARE(false, cctv->callActive());
+
+	t.checkNoSignals();
+}
+
+void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
+{
+	DeviceValues v;
+	ObjectTester t(cctv, SignalList()
+				   << SIGNAL(incomingCall())
+				   << SIGNAL(callEnded()));
+
+	// starts a call
+	cctv->cameraOn("21");
+	dev->cameraOn("21");
+
+	compareClientCommand();
+
+	// talker answers
+	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	cctv->valueReceived(v);
+	v.clear();
+
+	// protocol for CCTV needs the following
+	cctv->answerCall();
+	dev->answerCall();
+
+	compareClientCommand();
+
+	// caller terminates call
+	cctv->endCall();
+	dev->endCall();
+
+	t.checkSignalCount(SIGNAL(incomingCall()), 1);
+	t.checkSignalCount(SIGNAL(callEnded()), 1);
+}
+
+void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
+{
+	DeviceValues v;
+	ObjectTester t(cctv, SignalList()
+				   << SIGNAL(incomingCall())
+				   << SIGNAL(callEnded()));
+
+	// starts a call
+	cctv->cameraOn("21");
+	dev->cameraOn("21");
+
+	compareClientCommand();
+
+	// talker answers
+	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	cctv->valueReceived(v);
+	v.clear();
+
+	// protocol for CCTV needs the following
+	cctv->answerCall();
+	dev->answerCall();
+
+	compareClientCommand();
+
+	// callee terminates call
+	v[VideoDoorEntryDevice::END_OF_CALL] = QString("21");
+	cctv->valueReceived(v);
+	v.clear();
+
+	t.checkSignalCount(SIGNAL(incomingCall()), 1);
+	t.checkSignalCount(SIGNAL(callEnded()), 1);
+}
