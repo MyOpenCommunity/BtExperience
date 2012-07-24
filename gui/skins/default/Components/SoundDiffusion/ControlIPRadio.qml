@@ -10,6 +10,8 @@ Image {
     property int playerStatus: -1
 
     signal playClicked
+    signal nextClicked
+    signal previousClicked
 
     source: "../../images/sound_diffusion/bg_player.svg"
 
@@ -63,7 +65,7 @@ Image {
             shadowImage: "../../images/sound_diffusion/btn_45x35_shadow.svg"
             defaultImage: "../../images/sound_diffusion/ico_indietro.svg"
             pressedImage: "../../images/sound_diffusion/ico_indietro_P.svg"
-            onClicked: console.log("Previous track clicked")
+            onClicked: control.previousClicked()
             status: 0
         }
 
@@ -84,7 +86,7 @@ Image {
             shadowImage: "../../images/sound_diffusion/btn_45x35_shadow.svg"
             defaultImage: "../../images/sound_diffusion/ico_avanti.svg"
             pressedImage: "../../images/sound_diffusion/ico_avanti_P.svg"
-            onClicked: console.log("Next track clicked")
+            onClicked: control.nextClicked()
             status: 0
         }
     }

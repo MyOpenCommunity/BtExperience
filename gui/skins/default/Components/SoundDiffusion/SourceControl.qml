@@ -129,6 +129,7 @@ MenuColumn {
     Component {
         id: ipRadio
         Column {
+            id: ipRadioColumn
             property variant objModel: undefined
             MenuItem {
                 name: qsTr("saved IP radios")
@@ -137,12 +138,16 @@ MenuColumn {
                 onClicked: {
                     if (privateProps.currentElement !== 1)
                         privateProps = 1
-                    console.log("cliccato su " + name)
+                    column.loadColumn(radioList, name, ipRadioColumn.objModel)
                 }
             }
 
             ControlIPRadio {
+                property variant trackInfo: objModel.mediaPlayer.trackInfo
 
+                radioTitle: trackInfo['stream_title'] === undefined ? qsTr("no title") : trackInfo['stream_title']
+                playerStatus: objModel.mediaPlayer.playerState
+                onPlayClicked: objModel.togglePause()
             }
         }
     }
@@ -223,6 +228,11 @@ MenuColumn {
     Component {
         id: directoryBrowser
         DirectoryBrowser {}
+    }
+
+    Component {
+        id: radioList
+        IpRadioList {}
     }
 
     Connections {
