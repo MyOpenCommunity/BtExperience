@@ -327,12 +327,14 @@ QObject *SourceMedia::getMediaPlayer() const
 
 void SourceMedia::previousTrack()
 {
-	playlist->previousFile();
+	if (playlist)
+		playlist->previousFile();
 }
 
 void SourceMedia::nextTrack()
 {
-	playlist->nextFile();
+	if (playlist)
+		playlist->nextFile();
 }
 
 void SourceMedia::startPlay(FileObject *file)
