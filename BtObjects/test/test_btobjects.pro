@@ -4,6 +4,7 @@ MOC_DIR = moc
 
 DEFINES += QT_QWS_EBX BT_EMBEDDED BTWEB QT_NO_DEBUG_OUTPUT DEBUG
 DEFINES += TEST_ENERGY_DATA=0
+DEFINES += BT_EXPERIENCE_TODO_REVIEW_ME
 
 INCLUDEPATH+= . .. ../.. ../../../common_files ../../../stackopen
 INCLUDEPATH+= ../../../stackopen/common_develer/lib
