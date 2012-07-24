@@ -354,7 +354,7 @@ SourceLocalMedia::SourceLocalMedia(const QString &name, const QString &_root_pat
 	root_path = _root_path;
 	model = new DirectoryListModel(this);
 	playlist = new FileListManager;
-	connect(playlist, SIGNAL(currentFileChanged()), this, SLOT(playlistTrackChanged()));
+	connect(playlist, SIGNAL(currentFileChanged()), SLOT(playlistTrackChanged()));
 }
 
 void SourceLocalMedia::startPlay(FileObject *file)
