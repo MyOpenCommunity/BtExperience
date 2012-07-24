@@ -298,7 +298,20 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	if (measure != Currency)
 		measure_unit = type == CurrentValue ? "kw" : "kwh";
 
-	EnergyItem *value = new EnergyItem(this, type, actual_date, val, measure_unit,
+	EnergyItem *value;
+
+	if (type == CurrentValue)
+	{
+		value = new EnergyItemCurrent(this, type, actual_date, val, measure_unit,
+			decimals, goal, measure == Currency ? rate : 0);
+
+		connect(this, SIGNAL(thresholdLevelChanged(int)),
+			value, SIGNAL(thresholdLevelChanged(int)));
+		connect(this, SIGNAL(thresholdsChanged(QVariantList)),
+			value, SIGNAL(thresholdsChanged(QVariantList)));
+	}
+	else
+		value = new EnergyItem(this, type, actual_date, val, measure_unit,
 			decimals, goal, measure == Currency ? rate : 0);
 
 	item_cache[key] = value;
@@ -610,6 +623,7 @@ void EnergyData::requestCumulativeYear(QDate date, RequestOptions options)
 
 void EnergyData::valueReceived(const DeviceValues &values_list)
 {
+	// TODO parse thresholds
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
 	{
@@ -737,6 +751,24 @@ EnergyRate *EnergyData::getRate() const
 	return rate;
 }
 
+int EnergyData::getThresholdLevel() const
+{
+	return threshold_level;
+}
+
+void EnergyData::setThresholds(QVariantList _thresholds)
+{
+	// TODO do not set values directly: set to device and wait for change notification
+	thresholds = _thresholds;
+	emit thresholdsChanged(thresholds);
+}
+
+QVariantList EnergyData::getThresholds() const
+{
+	return thresholds;
+}
+
+
 EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value,
 		QString _measure_unit, int _decimals, QVariant goal, EnergyRate *_rate)
 {
@@ -808,6 +840,29 @@ QVariant EnergyItem::getConsumptionGoal() const
 int EnergyItem::getDecimals() const
 {
 	return decimals;
+}
+
+
+EnergyItemCurrent::EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
+			QString measure_unit, int decimals, QVariant goal, EnergyRate *rate) :
+	EnergyItem(data, type, date, value, measure_unit, decimals, goal, rate)
+{
+	threshold_level = 0;
+}
+
+int EnergyItemCurrent::getThresholdLevel() const
+{
+	return data->getThresholdLevel();
+}
+
+void EnergyItemCurrent::setThresholds(QVariantList thresholds)
+{
+	data->setThresholds(thresholds);
+}
+
+QVariantList EnergyItemCurrent::getThresholds() const
+{
+	return data->getThresholds();
 }
 
 

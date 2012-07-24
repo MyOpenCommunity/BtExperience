@@ -274,6 +274,9 @@ void TestEnergyData::testReceiveCurrentValue()
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
+	QVERIFY(qobject_cast<EnergyItemCurrent *>(o1));
+	QVERIFY(qobject_cast<EnergyItemCurrent *>(o2));
+
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CURRENT, QDate(), 1234000));
 
 	t1.checkSignals();

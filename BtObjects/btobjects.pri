@@ -51,6 +51,7 @@ HEADERS += \
 	ts/openclient.h \
 	ts/treebrowser.h \
 	ts/frame_functions.h \
+	ts/list_manager.h \
 	ts/mediaplayer.h \
 	ts/devices_cache.h \
 	ts/xml_functions.h \
@@ -109,6 +110,7 @@ SOURCES += \
 	ts/openclient.cpp \
 	ts/treebrowser.cpp \
 	ts/frame_functions.cpp \
+	ts/list_manager.cpp \
 	ts/mediaplayer.cpp \
 	ts/devices_cache.cpp \
 	ts/xml_functions.cpp \
