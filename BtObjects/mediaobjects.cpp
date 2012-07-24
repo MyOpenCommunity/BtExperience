@@ -72,7 +72,7 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 			sources << ip_radio;
 			sources << new SourceLocalMedia("USB1", "/media/usb1", source, SourceObject::FileSystem);
 			sources << new SourceLocalMedia("SD card", "/media/sd", source, SourceObject::FileSystem);
-			sources << new SourceLocalMedia("Network shares", "", source, SourceObject::Upnp);
+			sources << new SourceUpnpMedia("Network shares", source);
 			// TODO: where are we going to destroy SourceMultiMedia?
 
 			// use a default
@@ -395,6 +395,25 @@ QVariantList SourceLocalMedia::getRootPath() const
 }
 
 
+SourceUpnpMedia::SourceUpnpMedia(const QString &name, SourceBase *s) :
+	SourceMedia(name, s, Upnp)
+{
+	playlist = new UPnpListManager(UPnPListModel::getXmlDevice());
+	connect(playlist, SIGNAL(currentFileChanged()), SLOT(playlistTrackChanged()));
+}
+
+void SourceUpnpMedia::startUpnpPlay(FileObject *file, int current_index, int total_files)
+{
+	UPnpListManager *list = static_cast<UPnpListManager *>(playlist);
+	list->setStartingFile(file->getEntryInfo());
+	list->setCurrentIndex(current_index);
+	list->setTotalFiles(total_files);
+
+	// TODO: to be refactored into a protected method of SourceMedia
+	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(getMediaPlayer());
+	media_player->setCurrentSource(list->currentFilePath());
+	media_player->play();
+}
 
 
 

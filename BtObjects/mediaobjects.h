@@ -249,6 +249,14 @@ private:
 	DirectoryListModel *model;
 };
 
+class SourceUpnpMedia : public SourceMedia
+{
+	Q_OBJECT
+public:
+	SourceUpnpMedia(const QString &name, SourceBase *s);
+	Q_INVOKABLE void startUpnpPlay(FileObject *file, int current_index, int total_files);
+};
+
 
 
 
