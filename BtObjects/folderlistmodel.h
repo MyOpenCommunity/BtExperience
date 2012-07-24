@@ -60,6 +60,7 @@ public:
 	FileType getFileType() const;
 	QVariantMap getMetadata() const;
 	bool isLoading() const;
+	EntryInfo getEntryInfo() const;
 
 	void setFileInfo(const EntryInfo &entry, QVariantList path);
 
