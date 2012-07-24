@@ -69,7 +69,7 @@ SvgImage {
         State {
             name: "selected"
             when: status === 1 && !(area.pressed)
-            PropertyChanges { target: bg; source: selectedImage }
+            PropertyChanges { target: bg; source: defaultImage }
             PropertyChanges { target: icon; source: "" }
             PropertyChanges { target: label; text: "STOP" }
         },
