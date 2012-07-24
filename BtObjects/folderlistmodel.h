@@ -7,7 +7,7 @@
 #include <QAbstractListModel>
 
 class TreeBrowser;
-class TreeBrowserMemento;
+class DirectoryBrowserMemento;
 class PagedTreeBrowser;
 class XmlDevice;
 
@@ -299,7 +299,7 @@ public:
 	~DirectoryListModelMemento();
 
 private:
-	TreeBrowserMemento *tm;
+	DirectoryBrowserMemento *tm;
 	QVariantList range, root_path, current_path;
 	int filter;
 };

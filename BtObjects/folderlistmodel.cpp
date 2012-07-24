@@ -495,7 +495,8 @@ DirectoryListModel::DirectoryListModel(QObject *parent) :
 DirectoryListModelMemento *DirectoryListModel::clone()
 {
 	DirectoryListModelMemento *m = new DirectoryListModelMemento;
-	m->tm = browser->clone();
+	DirectoryTreeBrowser *b = static_cast<DirectoryTreeBrowser *>(browser);
+	m->tm = b->clone();
 	m->filter = getFilter();
 	m->range = getRange();
 	m->root_path = getRootPath();
@@ -505,7 +506,8 @@ DirectoryListModelMemento *DirectoryListModel::clone()
 
 void DirectoryListModel::restore(DirectoryListModelMemento *m)
 {
-	browser->restore(m->tm);
+	DirectoryTreeBrowser *b = static_cast<DirectoryTreeBrowser *>(browser);
+	b->restore(m->tm);
 	setRootPath(m->root_path);
 	setCurrentPath(m->current_path);
 	setRange(m->range);
