@@ -68,8 +68,12 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		case SourceBase::MultiMedia:
 		{
 			SourceMultiMedia *source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice(where)));
-			SourceObject *ip_radio = new SourceLocalMedia("IP radio", "", source, SourceObject::IpRadio);
+			SourceObject *ip_radio = new SourceIpRadio(QObject::tr("IP radio"), source);
 			sources << ip_radio;
+			// TODO: create fake radios for now
+			objects << new IpRadio(EntryInfo("Trance", EntryInfo::AUDIO, "http://scfire-dtc-aa02.stream.aol.com:80/stream/1065"));
+			objects << new IpRadio(EntryInfo("Slay radio", EntryInfo::AUDIO, "http://relay.slayradio.org:8000/"));
+
 			sources << new SourceLocalMedia("USB1", "/media/usb1", source, SourceObject::FileSystem);
 			sources << new SourceLocalMedia("SD card", "/media/sd", source, SourceObject::FileSystem);
 			sources << new SourceUpnpMedia("Network shares", source);
@@ -345,6 +349,20 @@ void SourceMedia::togglePause()
 	{
 		media_player->resume();
 	}
+}
+
+
+SourceIpRadio::SourceIpRadio(const QString &name, SourceBase *s) :
+	SourceMedia(name, s, IpRadio)
+{
+}
+
+void SourceIpRadio::startPlay(FileObject *file)
+{
+	qDebug() << "SourceIpRadio::startPlay, object: " << file->getPath();
+	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(getMediaPlayer());
+	media_player->setCurrentSource(file->getPath());
+	media_player->play();
 }
 
 

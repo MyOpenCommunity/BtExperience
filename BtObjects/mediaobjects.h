@@ -233,6 +233,28 @@ private:
 };
 
 
+class IpRadio : public FileObject
+{
+	Q_OBJECT
+
+public:
+	IpRadio(const EntryInfo &info) : FileObject(info, QVariantList()) { }
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdIpRadio;
+	}
+};
+
+
+class SourceIpRadio : public SourceMedia
+{
+	Q_OBJECT
+public:
+	SourceIpRadio(const QString &name, SourceBase *s);
+	virtual void startPlay(FileObject *file);
+};
+
+
 class SourceLocalMedia : public SourceMedia
 {
 	Q_OBJECT
