@@ -43,7 +43,7 @@ bool MediaDataModel::removeRows(int row, int count, const QModelIndex &parent)
 		beginRemoveRows(parent, row, row + count - 1);
 		for (int i = 0; i < count; ++i)
 		{
-			QObject *it = item_list.takeAt(row);
+			ItemInterface *it = item_list.takeAt(row);
 
 			it->deleteLater();
 		}
@@ -67,9 +67,16 @@ void MediaDataModel::insertObject(ItemInterface *obj)
 	// for details.
 	obj->setParent(this);
 
+	connect(obj, SIGNAL(persistItem()), this, SLOT(persistItem()));
+
 	beginInsertRows(QModelIndex(), rowCount(), rowCount());
 	item_list.append(obj);
 	endInsertRows();
+}
+
+void MediaDataModel::persistItem()
+{
+	emit persistItem(static_cast<ItemInterface *>(sender()));
 }
 
 QModelIndex MediaDataModel::indexFromItem(const ItemInterface *item) const

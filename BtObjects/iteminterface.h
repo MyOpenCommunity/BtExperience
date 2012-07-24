@@ -26,6 +26,11 @@ public:
 signals:
 	void containerChanged();
 
+	/*!
+		\brief Emitted when the item must be saved to disk
+	*/
+	void persistItem();
+
 private:
 	int container_id;
 };

@@ -60,8 +60,14 @@ public:
 	void append(ItemInterface *obj);
 	bool remove(ItemInterface *obj);
 
+signals:
+	void persistItem(ItemInterface *item);
+
 protected:
 	void insertObject(ItemInterface *obj);
+
+private slots:
+	void persistItem();
 
 private:
 	QModelIndex indexFromItem(const ItemInterface *item) const;

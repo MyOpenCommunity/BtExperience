@@ -274,6 +274,9 @@ void TestEnergyData::testReceiveCurrentValue()
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
+	QVERIFY(qobject_cast<EnergyItemCurrent *>(o1));
+	QVERIFY(qobject_cast<EnergyItemCurrent *>(o2));
+
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CURRENT, QDate(), 1234000));
 
 	t1.checkSignals();
@@ -1024,8 +1027,8 @@ void TestEnergyGraph::testSetGraph()
 	ObjectTester tvalue(&graph, SIGNAL(graphChanged()));
 	QList<QObject *> values, new_values;
 
-	values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant());
-	new_values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant(1));
+	values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant(), QVariant());
+	new_values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant(1), QVariant());
 
 	QCOMPARE(graph.isValid(), false);
 
@@ -1048,7 +1051,7 @@ void TestEnergyGraph::testSetGraph()
 void TestEnergyGraph::testRateChanged()
 {
 	EnergyRate rate(0.5);
-	EnergyGraphBar bar(QVariant(), "", QVariant(4), &rate);
+	EnergyGraphBar bar(QVariant(), "", QVariant(4), QVariant(), &rate);
 	ObjectTester t(&bar, SIGNAL(valueChanged()));
 
 	QCOMPARE(bar.getValue(), QVariant(2));

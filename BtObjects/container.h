@@ -46,7 +46,8 @@ public:
 		IdLights = 1,
 		IdRooms,
 		IdFloors,
-		IdAutomation
+		IdAutomation,
+		IdThermalRegulation = 8
 	};
 
 	Container(int id, int uii, QString image, QString description);

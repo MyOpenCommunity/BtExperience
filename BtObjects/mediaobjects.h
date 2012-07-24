@@ -8,6 +8,7 @@
 #include "objectinterface.h"
 #include "objectmodel.h"
 #include "device.h" // DeviceValues
+#include "folderlistmodel.h"
 
 class QDomNode;
 class AmplifierDevice;
@@ -19,7 +20,7 @@ class SourceObject;
 class SourceBase;
 class PowerAmplifierDevice;
 class MultiMediaPlayer;
-class FileObject;
+class ListManager;
 
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id);
@@ -206,28 +207,46 @@ private:
 	SourceObjectType type;
 };
 
-class SourceLocalMedia : public SourceObject
+class SourceMedia : public SourceObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QObject *mediaPlayer READ getMediaPlayer CONSTANT)
-	Q_PROPERTY(QVariantList rootPath READ getRootPath CONSTANT)
 
 public:
-	SourceLocalMedia(const QString &name, const QString &root_path, SourceBase *s, SourceObjectType t);
-	QObject *getMediaPlayer() const;
-
-	Q_INVOKABLE void startPlay(FileObject *file);
 	Q_INVOKABLE void togglePause();
-
-	QVariantList getRootPath() const;
+	Q_INVOKABLE virtual void startPlay(FileObject *file);
+	QObject *getMediaPlayer() const;
 
 public slots:
 	virtual void previousTrack();
 	virtual void nextTrack();
 
+protected:
+	SourceMedia(const QString &name, SourceBase *s, SourceObjectType t);
+	ListManager *playlist;
+
+protected slots:
+	void playlistTrackChanged();
+
 private:
 	MultiMediaPlayer *media_player;
+};
+
+
+class SourceLocalMedia : public SourceMedia
+{
+	Q_OBJECT
+	Q_PROPERTY(QVariantList rootPath READ getRootPath CONSTANT)
+
+public:
+	SourceLocalMedia(const QString &name, const QString &root_path, SourceBase *s, SourceObjectType t);
+	QVariantList getRootPath() const;
+	Q_INVOKABLE virtual void startPlay(FileObject *file);
+	Q_INVOKABLE void setModel(DirectoryListModel *_model);
+
+private:
 	QString root_path;
+	DirectoryListModel *model;
 };
 
 

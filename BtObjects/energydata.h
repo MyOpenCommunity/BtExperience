@@ -106,6 +106,18 @@ class EnergyData : public ObjectInterface
 	/// Energy to currency conversion rate
 	Q_PROPERTY(EnergyRate *rate READ getRate CONSTANT)
 
+	/*!
+		\brief Current threshold state
+
+		Returns the number of thresholds that have been exceeded
+	*/
+	Q_PROPERTY(int thresholdLevel READ getThresholdLevel NOTIFY thresholdLevelChanged)
+
+	/*!
+		\brief Returns the thresholds set on the device
+	*/
+	Q_PROPERTY(QVariantList thresholds READ getThresholds WRITE setThresholds NOTIFY thresholdsChanged)
+
 	Q_ENUMS(GraphType ValueType EnergyType MeasureType)
 
 public:
@@ -194,6 +206,11 @@ public:
 	bool isGeneral() const;
 	EnergyRate *getRate() const;
 
+	int getThresholdLevel() const;
+
+	void setThresholds(QVariantList thresholds);
+	QVariantList getThresholds() const;
+
 public slots:
 	/*!
 		\brief Request automatic updates for the current consumption value
@@ -204,6 +221,10 @@ public slots:
 		\brief Stop automatic updates for the current consumption value
 	*/
 	void requestCurrentUpdateStop();
+
+signals:
+	void thresholdsChanged(QVariantList thresholds);
+	void thresholdLevelChanged(int level);
 
 private slots:
 	// remove destroyed objects from graphCache/itemChache
@@ -262,6 +283,10 @@ private:
 	QHash<CacheKey, RequestInfo> requests;
 	QTimer trim_cache;
 	bool general;
+
+	// current consumption thresholds
+	QVariantList thresholds;
+	int threshold_level;
 
 #if TEST_ENERGY_DATA
 private slots:
@@ -369,8 +394,10 @@ signals:
 	void valueChanged();
 	void validChanged();
 
-private:
+protected:
 	EnergyData *data;
+
+private:
 	EnergyData::ValueType type;
 	QDate date;
 	QVariant value;
@@ -378,6 +405,48 @@ private:
 	QString measure_unit;
 	int decimals;
 	QVariant consumption_goal;
+};
+
+
+/*!
+	\ingroup EnergyDataSystem
+	\brief Encapsulates current consumption value
+
+	In addition to the methods for other scalar values, adds properties to
+	retrieve consumption thresholds and notifies when thresholds are exceeded.
+*/
+class EnergyItemCurrent : public EnergyItem
+{
+	Q_OBJECT
+
+	/*!
+		\brief Current threshold state
+
+		Returns the number of thresholds that have been exceeded
+	*/
+	Q_PROPERTY(int thresholdLevel READ getThresholdLevel NOTIFY thresholdLevelChanged)
+
+	/*!
+		\brief Returns the thresholds set on the device
+	*/
+	Q_PROPERTY(QVariantList thresholds READ getThresholds WRITE setThresholds NOTIFY thresholdsChanged)
+
+public:
+	EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
+				QString measure_unit, int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
+
+	int getThresholdLevel() const;
+
+	void setThresholds(QVariantList thresholds);
+	QVariantList getThresholds() const;
+
+signals:
+	void thresholdsChanged(QVariantList thresholds);
+	void thresholdLevelChanged(int level);
+
+private:
+	QVariantList thresholds;
+	int threshold_level;
 };
 
 

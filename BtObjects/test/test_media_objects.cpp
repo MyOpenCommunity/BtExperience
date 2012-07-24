@@ -18,8 +18,12 @@ void TestSoundAmbient::init()
 	obj2 = new SoundAmbient(2, "", ObjectInterface::IdMultiChannelSoundAmbient);
 	obj3 = new SoundAmbient(3, "", ObjectInterface::IdMultiChannelSoundAmbient);
 
-	src1 = new SourceAux(srcd1, "");
-	src2 = new SourceAux(srcd2, "");
+	src1 = new SourceAux(srcd1);
+	srco1 = new SourceObject("", src1, SourceObject::Aux);
+	src1->setSourceObject(srco1);
+	src2 = new SourceAux(srcd2);
+	srco2 = new SourceObject("", src2, SourceObject::Aux);
+	src2->setSourceObject(srco2);
 
 	amp22 = new Amplifier(2, "", ampd22);
 	amp23 = new Amplifier(2, "", ampd23);
@@ -27,11 +31,11 @@ void TestSoundAmbient::init()
 
 	QList<SoundAmbient *> ambients;
 	QList<Amplifier *> amplifiers;
-	QList<SourceBase *> sources;
+	QList<SourceObject *> sources;
 
 	ambients << obj2 << obj3;
 	amplifiers << amp22 << amp23 << amp33;
-	sources << src1 << src2;
+	sources << srco1 << srco2;
 
 	foreach (SoundAmbient *ambient, ambients)
 	{
@@ -120,7 +124,7 @@ void TestSoundAmbient::testActiveSource()
 	src1->valueReceived(v);
 	t2.checkSignals();
 	t3.checkNoSignals();
-	QCOMPARE(obj2->getCurrentSource(), src1);
+	QCOMPARE(obj2->getCurrentSource(), srco1);
 	QCOMPARE(obj2->getPreviousSource(), static_cast<QObject *>(0));
 	QCOMPARE(obj3->getCurrentSource(), static_cast<QObject *>(0));
 	QCOMPARE(obj3->getPreviousSource(), static_cast<QObject *>(0));
@@ -132,8 +136,8 @@ void TestSoundAmbient::testActiveSource()
 	t2.checkSignals();
 	t3.checkSignals();
 	QCOMPARE(obj2->getCurrentSource(), static_cast<QObject *>(0));
-	QCOMPARE(obj2->getPreviousSource(), src1);
-	QCOMPARE(obj3->getCurrentSource(), src1);
+	QCOMPARE(obj2->getPreviousSource(), srco1);
+	QCOMPARE(obj3->getCurrentSource(), srco1);
 	QCOMPARE(obj3->getPreviousSource(), static_cast<QObject *>(0));
 
 	// switch source on in environemnt 4
@@ -142,8 +146,8 @@ void TestSoundAmbient::testActiveSource()
 	t2.checkNoSignals();
 	t3.checkNoSignals();
 	QCOMPARE(obj2->getCurrentSource(), static_cast<QObject *>(0));
-	QCOMPARE(obj2->getPreviousSource(), src1);
-	QCOMPARE(obj3->getCurrentSource(), src1);
+	QCOMPARE(obj2->getPreviousSource(), srco1);
+	QCOMPARE(obj3->getCurrentSource(), srco1);
 	QCOMPARE(obj3->getPreviousSource(), static_cast<QObject *>(0));
 
 	// turn off source on environment 3
@@ -152,20 +156,22 @@ void TestSoundAmbient::testActiveSource()
 	t2.checkNoSignals();
 	t3.checkSignals();
 	QCOMPARE(obj2->getCurrentSource(), static_cast<QObject *>(0));
-	QCOMPARE(obj2->getPreviousSource(), src1);
+	QCOMPARE(obj2->getPreviousSource(), srco1);
 	QCOMPARE(obj3->getCurrentSource(), static_cast<QObject *>(0));
-	QCOMPARE(obj3->getPreviousSource(), src1);
+	QCOMPARE(obj3->getPreviousSource(), srco1);
 }
 
 
-void TestSourceBase::initObjects(SourceDevice *_dev, SourceBase *_obj)
+void TestSourceBase::initObjects(SourceDevice *_dev, SourceBase *_obj, SourceObject *_so)
 {
 	dev = _dev;
 	obj = _obj;
+	so = _so;
 }
 
 void TestSourceBase::cleanup()
 {
+	delete so;
 	delete obj->dev;
 	delete obj;
 	delete dev;
@@ -255,10 +261,12 @@ void TestSourceAux::init()
 {
 	SourceDevice *d = new SourceDevice("3");
 
-	SourceAux *obj = new SourceAux(d, "");
+	SourceAux *obj = new SourceAux(d);
+	SourceObject *so = new SourceObject("", obj, SourceObject::Aux);
+	obj->setSourceObject(so);
 	SourceDevice *dev = new SourceDevice("3", 1);
 
-	initObjects(dev, obj);
+	initObjects(dev, obj, so);
 }
 
 
@@ -266,10 +274,12 @@ void TestSourceRadio::init()
 {
 	RadioSourceDevice *d = new RadioSourceDevice("3");
 
-	obj = new SourceRadio(d, "");
+	obj = new SourceRadio(d);
+	so = new SourceObject("", obj, SourceObject::RdsRadio);
+	obj->setSourceObject(so);
 	dev = new RadioSourceDevice("3", 1);
 
-	initObjects(dev, obj);
+	initObjects(dev, obj, so);
 }
 
 void TestSourceRadio::testSetStation()

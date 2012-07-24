@@ -23,6 +23,7 @@ public:
 
 private slots:
 	void updateObjectName();
+	void updateNotes();
 
 private:
 	ObjectDataModel objmodel;

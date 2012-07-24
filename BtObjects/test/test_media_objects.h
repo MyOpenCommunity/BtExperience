@@ -24,6 +24,7 @@
 #include "test_btobject.h"
 
 class SourceBase;
+class SourceObject;
 class SourceDevice;
 class SourceRadio;
 class RadioSourceDevice;
@@ -51,6 +52,7 @@ private:
 
 	SoundAmbient *obj2, *obj3;
 	SourceBase *src1, *src2;
+	SourceObject *srco1, *srco2;
 	Amplifier *amp22, *amp23, *amp33;
 };
 
@@ -60,7 +62,7 @@ class TestSourceBase : public TestBtObject
 	Q_OBJECT
 
 protected:
-	void initObjects(SourceDevice *dev, SourceBase *obj);
+	void initObjects(SourceDevice *dev, SourceBase *obj, SourceObject *so);
 
 private slots:
 	void cleanup();
@@ -75,6 +77,7 @@ private slots:
 private:
 	SourceBase *obj;
 	SourceDevice *dev;
+	SourceObject *so;
 };
 
 
@@ -110,6 +113,7 @@ private slots:
 
 private:
 	SourceRadio *obj;
+	SourceObject *so;
 	RadioSourceDevice *dev;
 };
 
