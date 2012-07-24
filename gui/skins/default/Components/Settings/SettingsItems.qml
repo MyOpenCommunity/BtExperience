@@ -41,6 +41,7 @@ MenuColumn {
             modelList.append({"name": qsTr("Alarm Clock"), "component": alarmClock})
             modelList.append({"name": qsTr("Notifications"), "component": notifications})
             modelList.append({"name": qsTr("Multimedia"), "component": multimedia})
+            modelList.append({"name": qsTr("Systems"), "component": systems})
         }
     }
 
@@ -72,5 +73,10 @@ MenuColumn {
     Component {
         id: multimedia
         Item {}
+    }
+
+    Component {
+        id: systems
+        SettingsSystems {}
     }
 }
