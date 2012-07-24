@@ -39,7 +39,7 @@ Item {
             // point, the sidebar will appear on the left and with the bottom
             // aligned to the QuickLink bottom
             // please note that x, y are not used, they only serve to bind to QuickLink coordinates changes
-            if ((rx === -1) || ry === -1) // no ref point, returns default selected state
+            if ((rx === -1) || (ry === -1)) // no ref point, returns default selected state
                 return "selected"
             // rx, ry are absolute coordinates, so converts QuickLink x, y to absolute ones
             var mov_cx = bgQuick.mapToItem(null, 0, 0).x + 0.5 * bgQuick.width
