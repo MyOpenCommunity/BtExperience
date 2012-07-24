@@ -315,6 +315,12 @@ SourceMedia::SourceMedia(const QString &name, SourceBase *s, SourceObjectType t)
 	media_player = new MultiMediaPlayer();
 }
 
+void SourceMedia::play(const QString &song_path)
+{
+	media_player->setCurrentSource(song_path);
+	media_player->play();
+}
+
 void SourceMedia::playlistTrackChanged()
 {
 	media_player->setCurrentSource(playlist->currentFilePath());
@@ -337,10 +343,6 @@ void SourceMedia::nextTrack()
 		playlist->nextFile();
 }
 
-void SourceMedia::startPlay(FileObject *file)
-{
-}
-
 void SourceMedia::togglePause()
 {
 	if (media_player->getPlayerState() == MultiMediaPlayer::Playing)
@@ -361,10 +363,7 @@ SourceIpRadio::SourceIpRadio(const QString &name, SourceBase *s) :
 
 void SourceIpRadio::startPlay(FileObject *file)
 {
-	qDebug() << "SourceIpRadio::startPlay, object: " << file->getPath();
-	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(getMediaPlayer());
-	media_player->setCurrentSource(file->getPath());
-	media_player->play();
+	play(file->getPath());
 }
 
 
@@ -393,9 +392,7 @@ void SourceLocalMedia::startPlay(FileObject *file)
 	FileListManager *list = static_cast<FileListManager *>(playlist);
 	list->setList(entry_list);
 	list->setCurrentIndex(start_index);
-	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(getMediaPlayer());
-	media_player->setCurrentSource(list->currentFilePath());
-	media_player->play();
+	play(file->getPath());
 }
 
 void SourceLocalMedia::setModel(DirectoryListModel *_model)
@@ -428,11 +425,7 @@ void SourceUpnpMedia::startUpnpPlay(FileObject *file, int current_index, int tot
 	list->setStartingFile(file->getEntryInfo());
 	list->setCurrentIndex(current_index);
 	list->setTotalFiles(total_files);
-
-	// TODO: to be refactored into a protected method of SourceMedia
-	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(getMediaPlayer());
-	media_player->setCurrentSource(list->currentFilePath());
-	media_player->play();
+	play(file->getPath());
 }
 
 

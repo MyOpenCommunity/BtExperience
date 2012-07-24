@@ -214,7 +214,6 @@ class SourceMedia : public SourceObject
 
 public:
 	Q_INVOKABLE void togglePause();
-	Q_INVOKABLE virtual void startPlay(FileObject *file);
 	QObject *getMediaPlayer() const;
 
 public slots:
@@ -223,6 +222,7 @@ public slots:
 
 protected:
 	SourceMedia(const QString &name, SourceBase *s, SourceObjectType t);
+	void play(const QString &song_path);
 	ListManager *playlist;
 
 protected slots:
@@ -251,7 +251,7 @@ class SourceIpRadio : public SourceMedia
 	Q_OBJECT
 public:
 	SourceIpRadio(const QString &name, SourceBase *s);
-	virtual void startPlay(FileObject *file);
+	Q_INVOKABLE void startPlay(FileObject *file);
 };
 
 
@@ -263,7 +263,7 @@ class SourceLocalMedia : public SourceMedia
 public:
 	SourceLocalMedia(const QString &name, const QString &root_path, SourceBase *s, SourceObjectType t);
 	QVariantList getRootPath() const;
-	Q_INVOKABLE virtual void startPlay(FileObject *file);
+	Q_INVOKABLE void startPlay(FileObject *file);
 	Q_INVOKABLE void setModel(DirectoryListModel *_model);
 
 private:
