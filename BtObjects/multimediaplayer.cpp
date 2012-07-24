@@ -247,7 +247,17 @@ void MultiMediaPlayer::mplayerResumed()
 void MultiMediaPlayer::mplayerDone()
 {
 	playbackStopped();
+	// beware: order is important!
+	// Since setCurrentSource() is empty, it will stop the player and emit a
+	// state change signal.
+	// If someone reacts to player Stopped state, here is what happens:
+	//  - state set to Stopped
+	//  - outside code reacts and plays again
+	//  - setCurrentSource("") will stop the player again
+	//  - state set to Stopped
+	// This will loop forever.
+	// TODO: can we avoid calling setCurrentSource()?
+	setCurrentSource("");
 	setPlayerState(Stopped);
 	setAudioOutputState(AudioOutputStopped);
-	setCurrentSource("");
 }
