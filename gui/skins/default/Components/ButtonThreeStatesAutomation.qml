@@ -57,10 +57,11 @@ SvgImage {
         source: shadowImage
     }
 
+    // for the reasons behind normal state see ButtonThreeStates
     states: [
         State {
             name: "pressed"
-            when: area.pressed && status === 0
+            when: (area.pressed) && (status === 0)
             PropertyChanges { target: bg; source: pressedImage }
             PropertyChanges { target: icon; source: pressedIcon }
             PropertyChanges { target: shadow; visible: false }
@@ -68,10 +69,18 @@ SvgImage {
         },
         State {
             name: "selected"
-            when: status === 1
+            when: (status === 1)
             PropertyChanges { target: bg; source: selectedImage }
             PropertyChanges { target: icon; source: "" }
             PropertyChanges { target: label; text: "STOP" }
+        },
+        State {
+            name: "normal"
+            when: { return true }
+            PropertyChanges { target: bg; source: defaultImage }
+            PropertyChanges { target: icon; source: defaultIcon }
+            PropertyChanges { target: shadow; visible: true }
+            PropertyChanges { target: label; text: "" }
         }
     ]
 }
