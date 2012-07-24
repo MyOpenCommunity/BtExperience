@@ -378,7 +378,6 @@ SourceLocalMedia::SourceLocalMedia(const QString &name, const QString &_root_pat
 
 void SourceLocalMedia::startPlay(FileObject *file)
 {
-	// build playlist by recovering state from the FileObject
 	EntryInfoList entry_list;
 	int start_index = 0;
 	for (int i = 0; i < model->getCount(); ++i)
@@ -397,9 +396,14 @@ void SourceLocalMedia::startPlay(FileObject *file)
 
 void SourceLocalMedia::setModel(DirectoryListModel *_model)
 {
-	DirectoryListModelMemento *state = _model->clone();
-	model->restore(state);
-	delete state;
+	if (_model != model)
+	{
+		DirectoryListModelMemento *state = _model->clone();
+		model->restore(state);
+		// remove any range that may be set
+		model->setRange(QVariantList() << 0 << model->getCount());
+		delete state;
+	}
 }
 
 QVariantList SourceLocalMedia::getRootPath() const
