@@ -393,17 +393,23 @@ void SourceLocalMedia::startPlay(FileObject *file)
 {
 	EntryInfoList entry_list;
 	int start_index = 0;
+	int skipped_entries = 0;
 	for (int i = 0; i < model->getCount(); ++i)
 	{
 		FileObject *fo = static_cast<FileObject *>(model->getObject(i));
 		if (fo->getPath() == file->getPath())
 			start_index = i;
-		entry_list << EntryInfo(fo->getName(), EntryInfo::AUDIO, fo->getPath());
+
+		// skip directories from playlist
+		if (fo->getFileType() == FileObject::Directory)
+			++skipped_entries;
+		else
+			entry_list << fo->getEntryInfo();
 	}
 
 	FileListManager *list = static_cast<FileListManager *>(playlist);
 	list->setList(entry_list);
-	list->setCurrentIndex(start_index);
+	list->setCurrentIndex(start_index - skipped_entries);
 	play(file->getPath());
 }
 
