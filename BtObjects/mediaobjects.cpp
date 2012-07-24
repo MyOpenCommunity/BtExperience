@@ -1,5 +1,4 @@
 #include "mediaobjects.h"
-#include "multimediaplayer.h"
 #include "media_device.h"
 #include "mediaplayer.h"
 #include "list_manager.h"
@@ -313,17 +312,21 @@ SourceMedia::SourceMedia(const QString &name, SourceBase *s, SourceObjectType t)
 	SourceObject(name, s, t)
 {
 	media_player = new MultiMediaPlayer();
+	connect(media_player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
+		SLOT(handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState)));
+	user_track_change_request = false;
 }
 
 void SourceMedia::play(const QString &song_path)
 {
 	media_player->setCurrentSource(song_path);
-	media_player->play();
+	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)
+		media_player->play();
 }
 
 void SourceMedia::playlistTrackChanged()
 {
-	media_player->setCurrentSource(playlist->currentFilePath());
+	play(playlist->currentFilePath());
 }
 
 QObject *SourceMedia::getMediaPlayer() const
@@ -333,12 +336,14 @@ QObject *SourceMedia::getMediaPlayer() const
 
 void SourceMedia::previousTrack()
 {
+	user_track_change_request = true;
 	if (playlist)
 		playlist->previousFile();
 }
 
 void SourceMedia::nextTrack()
 {
+	user_track_change_request = true;
 	if (playlist)
 		playlist->nextFile();
 }
@@ -353,6 +358,14 @@ void SourceMedia::togglePause()
 	{
 		media_player->resume();
 	}
+}
+
+void SourceMedia::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state)
+{
+	if (new_state == MultiMediaPlayer::Stopped && !user_track_change_request)
+		if (playlist)
+			playlist->nextFile();
+	user_track_change_request = false;
 }
 
 
