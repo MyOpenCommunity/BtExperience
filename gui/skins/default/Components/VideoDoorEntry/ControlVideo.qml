@@ -24,6 +24,14 @@ SvgImage {
 
         source: "../../images/common/video.svg"
         anchors.centerIn: parent
+
+        Rectangle {
+            id: bg_video
+            color: "red"
+            width: 640
+            height: 480
+            anchors.centerIn: parent
+        }
     }
 
     SvgImage {
