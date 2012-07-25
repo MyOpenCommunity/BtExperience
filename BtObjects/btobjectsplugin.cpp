@@ -152,7 +152,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones;
-	ThermalControlUnit99Zones *cu_99 = 0;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
@@ -216,7 +215,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 		case ObjectInterface::IdThermalControlUnit99:
 			obj_list = parseControlUnit99(xml_obj);
-			cu_99 = static_cast<ThermalControlUnit99Zones *>(obj_list[0].second);
 			break;
 		case ObjectInterface::IdThermalControlUnit4:
 			obj_list = parseControlUnit4(xml_obj, probe4zones);
