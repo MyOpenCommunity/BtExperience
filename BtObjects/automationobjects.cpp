@@ -297,9 +297,9 @@ void Automation3::valueReceived(const DeviceValues &values_list)
 	{
 		if ((it.key() == AutomationDevice::DIM_UP ) || (it.key() == AutomationDevice::DIM_DOWN ) || (it.key() == AutomationDevice::DIM_STOP ))
 		{
-			if (it.value() != status)
+			if ((it.key() != status) && (it.value().toInt()))
 			{
-				status = it.value().toInt();
+				status = it.key();
 
 				emit statusChanged();
 				break;
