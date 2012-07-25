@@ -243,6 +243,16 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdThermalNonControlledProbe:
 			obj_list = parseExternalNonControlledProbes(xml_obj, ObjectInterface::IdThermalNonControlledProbe);
 			break;
+
+		case ObjectInterface::IdStopAndGo:
+			obj_list = parseStopAndGo(xml_obj);
+			break;
+		case ObjectInterface::IdStopAndGoPlus:
+			obj_list = parseStopAndGoPlus(xml_obj);
+			break;
+		case ObjectInterface::IdStopAndGoBTest:
+			obj_list = parseStopAndGoBTest(xml_obj);
+			break;
 		}
 
 		if (!obj_list.isEmpty())
@@ -433,6 +443,9 @@ void BtObjectsPlugin::parseConfig()
 			break;
 		case Container::IdLights:
 		case Container::IdAutomation:
+		case Container::IdLoadControl:
+		case Container::IdSupervision:
+		case Container::IdEnergyData:
 		case Container::IdThermalRegulation:
 			parseSystem(container);
 			break;

@@ -11,6 +11,12 @@
 class StopAndGoDevice;
 class StopAndGoPlusDevice;
 class StopAndGoBTestDevice;
+class QDomNode;
+
+
+QList<ObjectPair> parseStopAndGo(const QDomNode &obj);
+QList<ObjectPair> parseStopAndGoPlus(const QDomNode &obj);
+QList<ObjectPair> parseStopAndGoBTest(const QDomNode &obj);
 
 
 /*!

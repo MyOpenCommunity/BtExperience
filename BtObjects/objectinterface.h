@@ -67,10 +67,7 @@ public:
 		IdRoom,
 		IdIntercom,                             // 25
 		IdEnergyLoad,
-		IdStopAndGo,
-		IdStopAndGoPlus,
-		IdStopAndGoBTest,
-		IdEnergyData,                           // 30
+		IdEnergyData,
 		IdThermalControlledProbe, //!< Thermal controlled probe
 		IdThermalControlledProbeFancoil, //!< Thermal controlled probe with fancoil
 		// used internally
@@ -107,6 +104,10 @@ public:
 		IdThermalNonControlledProbe = 8009, //!< Thermal non-controlled probe device
 		IdThermal99ZonesPrograms = 8014, //!< Programs for 99-zones control unit
 		IdThermal99ZonesScenarios = 8015, //!< Scenarios for 99-zones control unit
+		// supervision
+		IdStopAndGo = 6101, //!< Stop and go
+		IdStopAndGoPlus = 6102, //!< Stop and go Plus
+		IdStopAndGoBTest = 6103, //!< Stop and go BTest
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file

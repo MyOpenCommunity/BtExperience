@@ -1,5 +1,43 @@
 #include "stopandgoobjects.h"
 #include "stopandgo_device.h"
+#include "xmlobject.h"
+#include "devices_cache.h"
+
+
+namespace
+{
+	template<class Device, class Object>
+	QList<ObjectPair> parseStopAndGo(const QDomNode &obj)
+	{
+		QList<ObjectPair> obj_list;
+		XmlObject v(obj);
+
+		foreach (const QDomNode &ist, getChildren(obj, "ist"))
+		{
+			v.setIst(ist);
+			int uii = getIntAttribute(ist, "uii");
+
+			Device *d = bt_global::add_device_to_cache(new Device(v.value("where")));
+			obj_list << ObjectPair(uii, new Object(d, v.value("descr")));
+		}
+		return obj_list;
+	}
+}
+
+QList<ObjectPair> parseStopAndGo(const QDomNode &obj)
+{
+	return parseStopAndGo<StopAndGoDevice, StopAndGo>(obj);
+}
+
+QList<ObjectPair> parseStopAndGoPlus(const QDomNode &obj)
+{
+	return parseStopAndGo<StopAndGoPlusDevice, StopAndGoPlus>(obj);
+}
+
+QList<ObjectPair> parseStopAndGoBTest(const QDomNode &obj)
+{
+	return parseStopAndGo<StopAndGoBTestDevice, StopAndGoBTest>(obj);
+}
 
 
 StopAndGo::StopAndGo(StopAndGoDevice *_dev, QString _name)
