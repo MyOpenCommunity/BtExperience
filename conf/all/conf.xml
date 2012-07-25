@@ -51,23 +51,24 @@
 		</ist>
 	</obj>
         <obj cid="8001" id="8001" descr="99 Zones Control Unit">
-		<ist uii="2001" descr="unità centrale" />
+		<ist uii="2001" descr="unità centrale">
+			<programs>
+				<program descr="Winter program" type="0" num="2" />
+				<program descr="Christmas program" type="0" num="5" />
+				<program descr="Summer program" type="1" num="3" />
+			</programs>
+			<scenarios>
+				<scenario descr="Winter scenario" type="0" num="2" />
+				<scenario descr="Summer scenario" type="1" num="5" />
+				<scenario descr="Midsummer scenario" type="1" num="6" />
+			</scenarios>
+		</ist>
 	</obj>
 	<obj cid="8002" id="8002" descr="99 Zones" where="1" fancoil="0">
 		<ist uii="2011" descr="zona giorno" where="5" fancoil="1" />
 		<ist uii="2012" descr="zona notte" where="2" />
 		<ist uii="2013" descr="zona taverna" where="3" />
 		<ist uii="2014" descr="zona studio" where="4" />
-	</obj>
-	<obj cid="8014" id="8014" descr="Program" type="0" num="1">
-		<ist uii="2021" descr="Winter program" num="2" />
-		<ist uii="2022" descr="Christmas program" num="5" />
-		<ist uii="2023" descr="Summer program" type="1" num="3" />
-	</obj>
-	<obj cid="8015" id="8015" descr="Scenario" type="0" num="1">
-		<ist uii="2031" descr="Winter scenario" num="2" />
-		<ist uii="2032" descr="Summer scenario" type="1" num="5" />
-		<ist uii="2033" descr="Midsummer scenario" type="1" num="6" />
 	</obj>
 	<obj cid="8008" id="8008" descr="external probes" where="1">
 		<ist uii="2041" descr="Sonda esterna #1" where="118" />

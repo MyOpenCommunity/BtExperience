@@ -28,8 +28,6 @@ class QDomNode;
 typedef QHash<int, QVariant> ThermalRegulationState;
 
 
-QList<ThermalRegulationProgram *> parsePrograms(const QDomNode &obj);
-QList<ThermalRegulationProgram *> parseScenarios(const QDomNode &obj);
 QList<ObjectPair> parseControlUnit99(const QDomNode &obj);
 QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNode, QDomNode> > zones);
 QList<ObjectPair> parseZone99(const QDomNode &obj);
