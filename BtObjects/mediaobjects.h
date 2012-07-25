@@ -9,6 +9,7 @@
 #include "objectmodel.h"
 #include "device.h" // DeviceValues
 #include "folderlistmodel.h"
+#include "multimediaplayer.h"
 
 class QDomNode;
 class AmplifierDevice;
@@ -19,7 +20,6 @@ class Amplifier;
 class SourceObject;
 class SourceBase;
 class PowerAmplifierDevice;
-class MultiMediaPlayer;
 class ListManager;
 
 
@@ -228,8 +228,12 @@ protected:
 protected slots:
 	void playlistTrackChanged();
 
+private slots:
+	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);
+
 private:
 	MultiMediaPlayer *media_player;
+	bool user_track_change_request;
 };
 
 
