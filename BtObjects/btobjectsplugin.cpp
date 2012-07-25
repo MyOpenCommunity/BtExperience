@@ -152,6 +152,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones;
+	int energy_family = 1;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
@@ -244,6 +245,11 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			break;
 		case ObjectInterface::IdStopAndGoBTest:
 			obj_list = parseStopAndGoBTest(xml_obj);
+			break;
+		case ObjectInterface::IdEnergyData:
+			objmodel << new EnergyFamily(getAttribute(xml_obj, "descr"), QString::number(energy_family));
+			obj_list = parseEnergyData(xml_obj, QString::number(energy_family));
+			++energy_family;
 			break;
 		}
 
@@ -390,9 +396,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		}
 		case ObjectInterface::IdScenarioSystem:
 			obj_list = createScenarioSystem(item, id);
-			break;
-		case ObjectInterface::IdEnergyData:
-			obj_list = createEnergyData(item, id);
 			break;
 		case ObjectInterface::IdCCTV:
 			obj = parseCCTV(item);

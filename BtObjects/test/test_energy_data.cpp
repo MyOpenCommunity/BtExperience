@@ -12,7 +12,7 @@ void TestEnergyData::init()
 	EnergyDevice *d = new EnergyDevice("1", 1);
 	EnergyRate *rate = new EnergyRate(0.25);
 
-	obj = new EnergyData(d, "", false, rate);
+	obj = new EnergyData(d, "", "", "Kw", QVariantList(), rate);
 	dev = new EnergyDevice("1", 1, 1);
 
 	rate->setParent(obj);
@@ -948,7 +948,7 @@ void TestEnergyItem::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
-	obj = new EnergyData(d, "", false, 0);
+	obj = new EnergyData(d, "", "", "Kw", QVariantList(), 0);
 	dev = new EnergyDevice("1", 1, 1);
 }
 
@@ -1009,7 +1009,7 @@ void TestEnergyGraph::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
-	obj = new EnergyData(d, "", false, 0);
+	obj = new EnergyData(d, "", "", "Kw", QVariantList(), 0);
 	dev = new EnergyDevice("1", 1, 1);
 }
 

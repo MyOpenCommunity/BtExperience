@@ -67,7 +67,8 @@ public:
 		IdRoom,
 		IdIntercom,                             // 25
 		IdEnergyLoad,
-		IdEnergyData,
+
+		IdEnergyFamily, //!< Group of energy lines
 		IdThermalControlledProbe, //!< Thermal controlled probe
 		IdThermalControlledProbeFancoil, //!< Thermal controlled probe with fancoil
 		// used internally
@@ -102,10 +103,11 @@ public:
 		IdThermalControlledProbe4Zone4 = 8007, //!< Controlled probe for 4 zones zone 4 (configuration file)
 		IdThermalExternalProbe = 8008, //!< Thermal external probe device
 		IdThermalNonControlledProbe = 8009, //!< Thermal non-controlled probe device
-		// supervision
+		// energy management
 		IdStopAndGo = 6101, //!< Stop and go
 		IdStopAndGoPlus = 6102, //!< Stop and go Plus
 		IdStopAndGoBTest = 6103, //!< Stop and go BTest
+		IdEnergyData = 6105, //!< Energy data
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file

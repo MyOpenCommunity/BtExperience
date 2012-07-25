@@ -7,7 +7,7 @@ import BtObjects 1.0
 import "js/Stack.js" as Stack
 
 Page {
-    property int energyType: 0
+    property variant family: null
 
     function systemsButtonClicked() {
         Stack.showPreviousPage(1)
@@ -49,7 +49,7 @@ Page {
             }
 
             font.pixelSize: 28
-            text: translations.get("ENERGY_TYPE", energyType)
+            text: family.name
             color: "white"
         }
     }
@@ -151,6 +151,6 @@ Page {
 
     ObjectModel {
         id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "line,type:" + energyType}]
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: family.objectKey}]
     }
 }

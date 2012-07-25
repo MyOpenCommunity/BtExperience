@@ -31,6 +31,9 @@ class QDomNode;
 #define TEST_ENERGY_DATA 1
 #endif
 
+QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node, QString family);
+
+
 struct CacheKey
 {
 	CacheKey(int _type, const QDate &_date, bool _is_currency = false)
@@ -68,6 +71,31 @@ inline uint qHash(const CacheKey &key)
 
 
 /*!
+	\brief Used to group energy lines
+
+	This object does not correspond to an \c <ist> tag; the \ref objectKey attribute
+	can be used to filter the list of interfaces that belong to the family.
+*/
+class EnergyFamily : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	EnergyFamily(QString _name, QString _key)
+	{
+		name = _name;
+		key = _key;
+	}
+
+	virtual int getObjectId() const { return IdEnergyFamily; }
+	virtual QString getObjectKey() const { return key; }
+
+private:
+	QString key;
+};
+
+
+/*!
 	\ingroup EnergyDataSystem
 	\brief Reads energy consumption data for a monitored object (current and historic data)
 
@@ -100,9 +128,6 @@ class EnergyData : public ObjectInterface
 	/// The type of energy measured by this object
 	Q_PROPERTY(EnergyType energyType READ getEnergyType CONSTANT)
 
-	/// Is this a general or line counter?
-	Q_PROPERTY(bool general READ isGeneral CONSTANT)
-
 	/// Energy to currency conversion rate
 	Q_PROPERTY(EnergyRate *rate READ getRate CONSTANT)
 
@@ -117,6 +142,17 @@ class EnergyData : public ObjectInterface
 		\brief Returns the thresholds set on the device
 	*/
 	Q_PROPERTY(QVariantList thresholds READ getThresholds WRITE setThresholds NOTIFY thresholdsChanged)
+
+	/*!
+		\brief Return the monthly consumption goal
+
+		This can be either a 12-element list where each element is a valid double value,
+		or an empty list.
+	*/
+	Q_PROPERTY(QVariantList goals READ getGoals CONSTANT)
+
+	/// Measure unit symbol
+	Q_PROPERTY(QString unit READ getUnit CONSTANT)
 
 	Q_ENUMS(GraphType ValueType EnergyType MeasureType)
 
@@ -173,7 +209,7 @@ public:
 		Currency    = 1
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, bool general, EnergyRate *rate);
+	EnergyData(EnergyDevice *dev, QString name, QString family, QString unit, QVariantList goals, EnergyRate *rate);
 	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
@@ -203,13 +239,16 @@ public:
 	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, MeasureType measure = Consumption);
 
 	EnergyType getEnergyType() const;
-	bool isGeneral() const;
 	EnergyRate *getRate() const;
 
 	int getThresholdLevel() const;
 
 	void setThresholds(QVariantList thresholds);
 	QVariantList getThresholds() const;
+
+	QVariantList getGoals() const;
+
+	QString getUnit() const;
 
 public slots:
 	/*!
@@ -282,11 +321,20 @@ private:
 	// pending requests (all values) and completed requests (for timespans including today)
 	QHash<CacheKey, RequestInfo> requests;
 	QTimer trim_cache;
-	bool general;
 
 	// current consumption thresholds
 	QVariantList thresholds;
 	int threshold_level;
+
+	QVariantList goals;
+
+	// Unit symbol (es. Kw, dm3, ...)
+	QString energy_unit;
+	// conversion factor from device units to energy_unit
+	// f.e. if unit is yd3, unit_conversion is 0.0013079506
+	double unit_conversion;
+
+	QString family;
 
 #if TEST_ENERGY_DATA
 private slots:
@@ -602,8 +650,6 @@ private:
 	QDate date;
 	QList<QObject*> graph;
 };
-
-QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id);
 
 Q_DECLARE_METATYPE(EnergyData::ValueType)
 Q_DECLARE_METATYPE(EnergyData::GraphType)

@@ -2,6 +2,7 @@
 #include "energyrate.h"
 #include "energy_device.h"
 #include "devices_cache.h"
+#include "xmlobject.h"
 
 #include <stdlib.h> // rand
 
@@ -141,13 +142,6 @@ namespace
 		return date == normalizeDate(type, QDate::currentDate());
 	}
 
-	double conversionFactor(EnergyData::EnergyType type)
-	{
-		// for electricity, the device returns values in watts, but the GUI always
-		// displays kilowatts, so it's easier to do the conversion here
-		return type == EnergyData::Electricity ? 1000.0 : 1.0;
-	}
-
 #if TEST_ENERGY_DATA
 	int valueRange(EnergyData::EnergyType type)
 	{
@@ -155,46 +149,99 @@ namespace
 	}
 #endif
 
+	double unitConversionFactor(EnergyData::EnergyType type, QString unit)
+	{
+		switch (type)
+		{
+		case EnergyData::Electricity:
+			if (unit == "Kw")
+				return 1000;
+			break;
+		case EnergyData::Water:
+		case EnergyData::Gas:
+		case EnergyData::HotWater:
+			if (unit == "m3")
+				return 1000;
+			if (unit == "l")
+				return 1;
+			if (unit == "dal")
+				return 10;
+			if (unit == "hl")
+				return 100;
+			if (unit == "ft3")
+				return 3.048 * 3.048 * 3.048;
+			if (unit == "yd3")
+				return 9.144 * 9.144 * 9.144;
+			if (unit == "galUS")
+				return 3.785411784;
+			if (unit == "galUK")
+				return 4.54609;
+			break;
+		case EnergyData::Heat:
+			if (unit == "Kw")
+				return 1 / 1.163e-6;
+			if (unit == "cal")
+				return 1;
+			break;
+		}
+		qWarning("Invalid measure unit %s", qPrintable(unit));
+		return 0;
+	}
+
+	static QStringList goal_names = QStringList()
+			<< "january" << "february" << "march" << "april" << "may" << "june"
+			<< "july" << "august" << "september" << "october" << "november" << "december";
 }
 
 
-QList<ObjectInterface *> createEnergyData(const QDomNode &xml_node, int id)
+QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
 {
-	Q_UNUSED(xml_node);
-	Q_UNUSED(id);
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
 
-	QList<ObjectInterface *> objects;
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		EnergyDevice *d = bt_global::add_device_to_cache(new EnergyDevice(v.value("where"), v.intValue("mode")));
+		QVariantList goals;
 
-	EnergyDevice *de = bt_global::add_device_to_cache(new EnergyDevice("77", 1));
-	EnergyDevice *de2 = bt_global::add_device_to_cache(new EnergyDevice("79", 1));
-	EnergyDevice *de3 = bt_global::add_device_to_cache(new EnergyDevice("80", 1));
-	EnergyDevice *de4 = bt_global::add_device_to_cache(new EnergyDevice("81", 1));
-	EnergyDevice *de5 = bt_global::add_device_to_cache(new EnergyDevice("82", 1));
+		if (v.intValue("consumption_goal_enabled"))
+		{
+			for (int i = 0; i < 12; ++i)
+				goals.append(QVariant(0));
 
-	EnergyDevice *dw = bt_global::add_device_to_cache(new EnergyDevice("78", 2));
+			QDomNodeList childs = ist.firstChildElement("consumption_goal").childNodes();
 
-	EnergyRate *r1 = new EnergyRate(0.2);
+			for (int i = 0; i < childs.size(); ++i)
+			{
+				const QDomNode &month = childs.at(i);
+				if (!month.isElement())
+					continue;
+				int index = goal_names.indexOf(month.toElement().tagName());
+				if (index != -1)
+					goals[index] = month.toElement().text().toInt();
+			}
+		}
 
-	// TODO: replace the general EnergyData objects with some other objects type.
-	objects << new EnergyData(de, "Electricity", true, r1);
-	objects << new EnergyData(de2, "Lights", false, r1);
-	objects << new EnergyData(de3, "Appliances", false, r1);
-	objects << new EnergyData(de4, "Office", false, r1);
-	objects << new EnergyData(de5, "Garden", false, r1);
-
-	objects << new EnergyData(dw, "Water", true, r1);
-	objects << new EnergyData(dw, "Water", false, r1);
-
-	return objects;
+		// TODO handle rates (after they are specified)
+		// TODO threshold enable flags
+		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("SWmeasure"), goals, 0));
+	}
+	return obj_list;
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, bool _general, EnergyRate *_rate)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QString _unit, QVariantList _goals, EnergyRate *_rate)
 {
 	name = _name;
+	family = _family;
 	dev = _dev;
-	general = _general;
 	rate = _rate;
+	energy_unit = _unit;
+	goals = _goals;
+	unit_conversion = unitConversionFactor(getEnergyType(), _unit);
+
 	value_cache.setMaxCost(VALUE_CACHE_MAX_COST);
 
 	trim_cache.setSingleShot(true);
@@ -219,6 +266,16 @@ EnergyData::~EnergyData()
 		delete value;
 	foreach (EnergyGraph *graph, graph_cache.values())
 		delete graph;
+}
+
+QVariantList EnergyData::getGoals() const
+{
+	return goals;
+}
+
+QString EnergyData::getUnit() const
+{
+	return energy_unit;
 }
 
 QObject *EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
@@ -284,15 +341,19 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	if (cached)
 		val = (*cached)[0];
 
-	// TODO: these must be read from conf.xml
+	// TODO: this must be read from conf.xml
 	int decimals = 2;
-	double goal = 100.;
+	QVariant goal;
 
+	if (type == CumulativeMonthValue)
+	{
+		goal = goals.value(date.month() - 1);
 #if TEST_ENERGY_DATA
-	// We want to test the GUI representation. We set the goal as 70% of the
-	// max value so that we have a good chance to exceed the goal using random values.
-	goal = 0.7 * valueRange(getEnergyType()) / conversionFactor(getEnergyType());
+		// We want to test the GUI representation. We set the goal as 70% of the
+		// max value so that we have a good chance to exceed the goal using random values.
+		goal = 0.7 * valueRange(getEnergyType()) / unit_conversion;
 #endif
+	}
 
 	QString measure_unit = QString::fromUtf8("€");
 	if (measure != Currency)
@@ -331,15 +392,7 @@ int EnergyData::getObjectId() const
 
 QString EnergyData::getObjectKey() const
 {
-	QStringList result;
-	result << QString("type:%1").arg(static_cast<int>(getEnergyType()));
-
-	if (isGeneral())
-		result << "general";
-	else
-		result << "line";
-
-	return result.join(",");
+	return QString("type:%1,%2").arg(static_cast<int>(getEnergyType())).arg(family);
 }
 
 EnergyData::EnergyType EnergyData::getEnergyType() const
@@ -381,29 +434,27 @@ void EnergyData::requestCurrentUpdateStop()
 
 void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 {
-	double conversion = conversionFactor(getEnergyType());
-	value_cache.insert(CacheKey(type, date), new QVector<double>(1, value / conversion), 1);
+	value_cache.insert(CacheKey(type, date), new QVector<double>(1, value / unit_conversion), 1);
 
 	// update values in returned EnergyItem objects
 	if (EnergyItem *item = item_cache.value(CacheKey(type, date, false)))
-		item->setValue(value / conversion);
+		item->setValue(value / unit_conversion);
 	if (EnergyItem *item = item_cache.value(CacheKey(type, date, true)))
-		item->setValue(value / conversion);
+		item->setValue(value / unit_conversion);
 
 	// see comment in valueReceived()
 	if (type == CumulativeMonthValue)
-		cacheYearGraphData(date, value / conversion);
+		cacheYearGraphData(date, value / unit_conversion);
 }
 
 void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph)
 {
-	double conversion = conversionFactor(getEnergyType());
 	QVector<double> *values = new QVector<double>(graph.size());
 
 	value_cache.insert(CacheKey(type, date), values, graph.size());
 
 	for (int i = 0; i < graph.size(); ++i)
-		(*values)[i] = graph[i + 1] / conversion;
+		(*values)[i] = graph[i + 1] / unit_conversion;
 
 	// update values in returned EnergyGraph objects
 	if (EnergyGraph *graph = graph_cache.value(CacheKey(type, date, false)))
@@ -498,15 +549,20 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 		break;
 	}
 
-	QList<QVariant> goals; // TODO: read from the config file
-
 	for (int i = 0; i < values.count(); ++i)
 	{
+		QVariant goal;
+
+		if (type == CumulativeYearGraph)
+		{
+			goal = goals.value(i);
 #if TEST_ENERGY_DATA
-		double multiplier = ((rand() % 40) + 80) / 100.0;
-		goals.append(values[i] * multiplier);
+			double multiplier = ((rand() % 40) + 80) / 100.0;
+			goal = values[i] * multiplier;
 #endif
-		bars.append(new EnergyGraphBar(i, keys[i], values[i], goals.value(i, QVariant()), rate));
+		}
+
+		bars.append(new EnergyGraphBar(i, keys[i], values[i], goal, rate));
 	}
 
 	return bars;
@@ -689,11 +745,6 @@ void EnergyData::itemDestroyed(QObject *obj)
 {
 	// can't use qobject_cast/dynamic_cast on a destroyed object
 	removeValue(item_cache, static_cast<EnergyItem *>(obj));
-}
-
-bool EnergyData::isGeneral() const
-{
-	return general;
 }
 
 #if TEST_ENERGY_DATA
@@ -947,6 +998,8 @@ bool EnergyGraph::graphEqual(QList<QObject*> first, QList<QObject*> second)
 		EnergyGraphBar *sb = qobject_cast<EnergyGraphBar*>(second[i]);
 
 		if (fb->getValue() != sb->getValue())
+			return false;
+		if (fb->getConsumptionGoal() != sb->getConsumptionGoal())
 			return false;
 	}
 

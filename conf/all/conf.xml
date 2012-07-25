@@ -250,8 +250,4 @@
     <where>14</where>
     <mode>0</mode>
   </item>
-  <!-- completely fake energy data object -->
-  <item>
-	  <id>30</id>
-  </item>
 </configuratore>

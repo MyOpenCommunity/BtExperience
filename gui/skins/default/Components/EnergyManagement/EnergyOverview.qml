@@ -12,7 +12,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: energiesCounters.getObject(index)
             hasChild: true
-            onClicked: Stack.openPage("EnergyDataDetail.qml", {"energyType": itemObject.energyType})
+            onClicked: Stack.openPage("EnergyDataDetail.qml", {"family": itemObject})
         }
 
         model: energiesCounters
@@ -20,6 +20,6 @@ MenuColumn {
 
     ObjectModel {
         id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: "general"}]
+        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
     }
 }

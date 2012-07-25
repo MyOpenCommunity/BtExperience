@@ -9,4 +9,55 @@
 	<obj cid="6103" id="6103" descr="Stop and go btest" where="1">
 		<ist uii="4003" descr="Stop and go btest" where="5" />
 	</obj>
+	<obj cid="6104" id="6104" descr="Load diagnostic" where="0" phase="0">
+		<ist uii="4004" descr="Washing machine" where="6" />
+		<ist uii="4005" descr="Dishwasher" where="8" />
+	</obj>
+	<obj cid="6105" id="6105" descr="Electric line" where="1"
+	     SWmeasure="kw" consumption_goal_enabled="0"
+	     threshold_one_enable="0" threshold_two_enable="0"
+	     rate_enable="0" rate_type="0" mode="1">
+		<ist uii="5001" descr="Office" where="2"
+		     consumption_goal_enabled="1" rate_enable="1">
+			<consumption_goal>
+				<january>100</january>
+				<february>120</february>
+				<march>100</march>
+				<april>100</april>
+				<may>100</may>
+				<june>100</june>
+				<july>100</july>
+				<august>100</august>
+				<september>100</september>
+				<october>100</october>
+				<november>90</november>
+				<december>100</december>
+			</consumption_goal>
+			<measure>kw</measure>
+			<rate>
+				<rate_id>2</rate_id>
+				<rate_n_decimal_view>2</rate_n_decimal_view>
+			</rate>
+		</ist>
+		<ist uii="5002" descr="Kitchen" where="2" SWmeasure="Custom">
+			<measure>kw/h</measure>
+		</ist>
+		<ist uii="5003" descr="Box" where="3" rate_enable="1" >
+			<rate>
+				<rate_id>2</rate_id>
+				<rate_n_decimal_view>2</rate_n_decimal_view>
+			</rate>
+		</ist>
+	</obj>
+	<obj cid="6109" id="6105" descr="Heating/Cooling" where="1"
+	     SWmeasure="kw" consumption_goal="0"
+	     rate_enable="0" rate_type="0" mode="5">
+		<ist uii="5004" descr="Living room" where="6" />
+		<ist uii="5005" descr="Bedroom" where="7" rate_enable="1">
+			<rate>
+				<rate_id>5</rate_id>
+				<rate_n_decimal_view>0</rate_n_decimal_view>
+			</rate>
+		</ist>
+	</obj>
 </archive>
