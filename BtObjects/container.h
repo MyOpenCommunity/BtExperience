@@ -47,6 +47,9 @@ public:
 		IdRooms,
 		IdFloors,
 		IdAutomation,
+		IdLoadControl = 5,
+		IdSupervision = 6,
+		IdEnergyData = 7,
 		IdThermalRegulation = 8
 	};
 

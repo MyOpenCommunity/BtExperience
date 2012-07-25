@@ -40,32 +40,19 @@ QList<ObjectPair> parseZone99(const QDomNode &obj)
 	return obj_list;
 }
 
-QList<ThermalRegulationProgram *> parsePrograms(const QDomNode &obj)
+QList<ThermalRegulationProgram *> parsePrograms(const QDomNode &parent, QString tag)
 {
 	QList<ThermalRegulationProgram *> programs;
-	XmlObject v(obj);
 
-	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	foreach (const QDomNode &program, getChildren(parent, tag))
 	{
-		v.setIst(ist);
-		ThermalControlUnit::SeasonType season = v.intValue("type") == 0 ? ThermalControlUnit::Winter : ThermalControlUnit::Summer;
-		programs << new ThermalRegulationProgram(v.intValue("num"), season, v.value("descr"));
+		ThermalControlUnit::SeasonType season = getIntAttribute(program, "type") == 0 ? ThermalControlUnit::Winter : ThermalControlUnit::Summer;
+		int num = getIntAttribute(program, "num");
+		QString descr = getAttribute(program, "descr");
+
+		programs << new ThermalRegulationProgram(num, season, descr);
 	}
 	return programs;
-}
-
-QList<ThermalRegulationProgram *> parseScenarios(const QDomNode &obj)
-{
-	QList<ThermalRegulationProgram *> scenarios;
-	XmlObject v(obj);
-
-	foreach (const QDomNode &ist, getChildren(obj, "ist"))
-	{
-		v.setIst(ist);
-		ThermalControlUnit::SeasonType season = v.intValue("type") == 0 ? ThermalControlUnit::Winter : ThermalControlUnit::Summer;
-		scenarios << new ThermalRegulationProgram(v.intValue("num"), season, v.value("descr"));
-	}
-	return scenarios;
 }
 
 QList<ObjectPair> parseControlUnit99(const QDomNode &obj)
@@ -79,7 +66,10 @@ QList<ObjectPair> parseControlUnit99(const QDomNode &obj)
 		int uii = getIntAttribute(ist, "uii");
 
 		ThermalDevice99Zones *d = bt_global::add_device_to_cache(new ThermalDevice99Zones("0"));
-		obj_list << ObjectPair(uii, new ThermalControlUnit99Zones(v.value("descr"), "0", d));
+		ThermalControlUnit99Zones *cu = new ThermalControlUnit99Zones(v.value("descr"), "0", d);
+		cu->setPrograms(parsePrograms(ist.firstChildElement("programs"), "program"));
+		cu->setScenarios(parsePrograms(ist.firstChildElement("scenarios"), "scenario"));
+		obj_list << ObjectPair(uii, cu);
 	}
 	Q_ASSERT_X(obj_list.count() == 1, "parseControlUnit99", "Can't have more than one 99-zones control unit");
 	return obj_list;
@@ -111,20 +101,10 @@ QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNo
 		v.setIst(ist);
 		int cu_uii = getIntAttribute(ist, "uii");
 		QString cu_where = v.value("where");
-		QList<ThermalRegulationProgram *> programs;
-
-		foreach (const QDomNode &program, getChildren(ist.firstChildElement("programs"), "program"))
-		{
-			ThermalControlUnit::SeasonType season = v.intValue("type") == 0 ? ThermalControlUnit::Winter : ThermalControlUnit::Summer;
-			int num = getIntAttribute(program, "num");
-			QString descr = getAttribute(program, "descr");
-
-			programs << new ThermalRegulationProgram(num, season, descr);
-		}
 
 		ThermalDevice4Zones *d = bt_global::add_device_to_cache(new ThermalDevice4Zones("0#" + cu_where));
 		ThermalControlUnit4Zones *cu = new ThermalControlUnit4Zones(v.value("descr"), cu_where, d);
-		cu->setPrograms(programs);
+		cu->setPrograms(parsePrograms(ist.firstChildElement("programs"), "program"));
 		obj_list << ObjectPair(cu_uii, cu);
 
 		foreach (const QDomNode &link, getChildren(ist.firstChildElement("zones"), "link"))

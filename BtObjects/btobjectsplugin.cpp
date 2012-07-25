@@ -218,12 +218,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseControlUnit99(xml_obj);
 			cu_99 = static_cast<ThermalControlUnit99Zones *>(obj_list[0].second);
 			break;
-		case ObjectInterface::IdThermal99ZonesPrograms:
-			cu_99->setPrograms(parsePrograms(xml_obj));
-			break;
-		case ObjectInterface::IdThermal99ZonesScenarios:
-			cu_99->setScenarios(parseScenarios(xml_obj));
-			break;
 		case ObjectInterface::IdThermalControlUnit4:
 			obj_list = parseControlUnit4(xml_obj, probe4zones);
 			break;
@@ -242,6 +236,16 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			break;
 		case ObjectInterface::IdThermalNonControlledProbe:
 			obj_list = parseExternalNonControlledProbes(xml_obj, ObjectInterface::IdThermalNonControlledProbe);
+			break;
+
+		case ObjectInterface::IdStopAndGo:
+			obj_list = parseStopAndGo(xml_obj);
+			break;
+		case ObjectInterface::IdStopAndGoPlus:
+			obj_list = parseStopAndGoPlus(xml_obj);
+			break;
+		case ObjectInterface::IdStopAndGoBTest:
+			obj_list = parseStopAndGoBTest(xml_obj);
 			break;
 		}
 
@@ -433,6 +437,9 @@ void BtObjectsPlugin::parseConfig()
 			break;
 		case Container::IdLights:
 		case Container::IdAutomation:
+		case Container::IdLoadControl:
+		case Container::IdSupervision:
+		case Container::IdEnergyData:
 		case Container::IdThermalRegulation:
 			parseSystem(container);
 			break;

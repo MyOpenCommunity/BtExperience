@@ -1,0 +1,9 @@
+﻿<layout>
+	<container id="6" descr="supervision">
+		<ist uii="1">
+			<link uii="4001" />
+			<link uii="4002" />
+			<link uii="4003" />
+		</ist>
+	</container>
+</layout>
