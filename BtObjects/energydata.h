@@ -140,8 +140,18 @@ class EnergyData : public ObjectInterface
 
 	/*!
 		\brief Returns the thresholds set on the device
+
+		Returns a two-element array, the values can be invalid when the device does not
+		support thresholds, or the value has not been received yet
 	*/
 	Q_PROPERTY(QVariantList thresholds READ getThresholds WRITE setThresholds NOTIFY thresholdsChanged)
+
+	/*!
+		\brief Set/get whether the corresponding threshold is enabled or not
+
+		Returns a two-element array of booleans
+	*/
+	Q_PROPERTY(QVariantList thresholdEnabled READ getThresholdEnabled WRITE setThresholdEnabled NOTIFY thresholdEnabledChanged)
 
 	/*!
 		\brief Return the monthly consumption goal
@@ -209,7 +219,7 @@ public:
 		Currency    = 1
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, QString family, QString unit, QVariantList goals, EnergyRate *rate);
+	EnergyData(EnergyDevice *dev, QString name, QString family, QString unit, QVariantList goals, QVariantList thresholds_enabled, EnergyRate *rate);
 	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
@@ -250,6 +260,9 @@ public:
 
 	QString getUnit() const;
 
+	void setThresholdEnabled(QVariantList enabled);
+	QVariantList getThresholdEnabled() const;
+
 public slots:
 	/*!
 		\brief Request automatic updates for the current consumption value
@@ -264,6 +277,7 @@ public slots:
 signals:
 	void thresholdsChanged(QVariantList thresholds);
 	void thresholdLevelChanged(int level);
+	void thresholdEnabledChanged(QVariantList enabled);
 
 private slots:
 	// remove destroyed objects from graphCache/itemChache
@@ -327,6 +341,7 @@ private:
 	int threshold_level;
 
 	QVariantList goals;
+	QVariantList thresholds_enabled;
 
 	// Unit symbol (es. Kw, dm3, ...)
 	QString energy_unit;

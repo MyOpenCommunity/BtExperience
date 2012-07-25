@@ -204,7 +204,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
 		EnergyDevice *d = bt_global::add_device_to_cache(new EnergyDevice(v.value("where"), v.intValue("mode")));
-		QVariantList goals;
+		QVariantList goals, thresholds_enabled;
 
 		if (v.intValue("consumption_goal_enabled"))
 		{
@@ -224,15 +224,17 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
 			}
 		}
 
+		thresholds_enabled << bool(v.intValue("threshold_one_enabled"));
+		thresholds_enabled << bool(v.intValue("threshold_two_enabled"));
+
 		// TODO handle rates (after they are specified)
-		// TODO threshold enable flags
-		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("SWmeasure"), goals, 0));
+		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("SWmeasure"), goals, thresholds_enabled, 0));
 	}
 	return obj_list;
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QString _unit, QVariantList _goals, EnergyRate *_rate)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QString _unit, QVariantList _goals, QVariantList _thresholds_enabled, EnergyRate *_rate)
 {
 	name = _name;
 	family = _family;
@@ -241,6 +243,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QStri
 	energy_unit = _unit;
 	goals = _goals;
 	unit_conversion = unitConversionFactor(getEnergyType(), _unit);
+	thresholds_enabled = _thresholds_enabled;
 
 	value_cache.setMaxCost(VALUE_CACHE_MAX_COST);
 
@@ -276,6 +279,19 @@ QVariantList EnergyData::getGoals() const
 QString EnergyData::getUnit() const
 {
 	return energy_unit;
+}
+
+void EnergyData::setThresholdEnabled(QVariantList enabled)
+{
+	if (enabled == thresholds_enabled)
+		return;
+	thresholds_enabled = enabled;
+	emit thresholdEnabledChanged(thresholds_enabled);
+}
+
+QVariantList EnergyData::getThresholdEnabled() const
+{
+	return thresholds_enabled;
 }
 
 QObject *EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
