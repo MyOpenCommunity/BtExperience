@@ -49,9 +49,9 @@ class EnergyLoadTotal : public QObject
 	Q_OBJECT
 
 	/*!
-		\brief Gets total consumption since last counter reset, in Watts
+		\brief Gets total consumption since last counter reset, in Kilowatts
 	*/
-	Q_PROPERTY(int total READ getTotal NOTIFY totalChanged)
+	Q_PROPERTY(double total READ getTotal NOTIFY totalChanged)
 
 	/*!
 		\brief Economic expense, only valid when a rate is set on the \ref EnergyLoad object
@@ -66,8 +66,8 @@ class EnergyLoadTotal : public QObject
 public:
 	EnergyLoadTotal(QObject *parent = 0, EnergyRate *rate = 0);
 
-	int getTotal() const;
-	void setTotal(int total);
+	double getTotal() const;
+	void setTotal(double total);
 
 	double getTotalExpense() const;
 
@@ -113,14 +113,14 @@ class EnergyLoadManagement : public ObjectInterface
 	Q_PROPERTY(LoadStatus loadStatus READ getLoadStatus NOTIFY loadStatusChanged)
 \
 	/*!
-		\brief Electricity consumption, in Watts.
+		\brief Electricity consumption, in Kilowatts.
 
 		Call \ref requestConsumptionUpdateStart() and \ref requestConsumptionUpdateStop()
 		to start/stop automatic consumption updates.
 
 		\sa hasConsumptionMeters
 	*/
-	Q_PROPERTY(int consumption READ getConsumption NOTIFY consumptionChanged)
+	Q_PROPERTY(double consumption READ getConsumption NOTIFY consumptionChanged)
 
 	/*!
 		\brief Economic expense, only valid when a rate is set on the object
@@ -188,7 +188,7 @@ public:
 
 	LoadStatus getLoadStatus() const;
 
-	int getConsumption() const;
+	double getConsumption() const;
 
 	QVariantList getPeriodTotals() const;
 
@@ -241,7 +241,7 @@ protected:
 private:
 	EnergyRate *rate;
 	LoadStatus status;
-	int consumption;
+	double consumption;
 	QList<EnergyLoadTotal *> period_totals;
 };
 

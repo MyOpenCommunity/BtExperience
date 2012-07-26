@@ -89,12 +89,12 @@ EnergyLoadTotal::EnergyLoadTotal(QObject *parent, EnergyRate *_rate) :
 	}
 }
 
-int EnergyLoadTotal::getTotal() const
+double EnergyLoadTotal::getTotal() const
 {
 	return total;
 }
 
-void EnergyLoadTotal::setTotal(int _total)
+void EnergyLoadTotal::setTotal(double _total)
 {
 	if (total == _total)
 		return;
@@ -151,7 +151,7 @@ EnergyLoadManagement::LoadStatus EnergyLoadManagement::getLoadStatus() const
 	return status;
 }
 
-int EnergyLoadManagement::getConsumption() const
+double EnergyLoadManagement::getConsumption() const
 {
 	return consumption;
 }
@@ -222,17 +222,22 @@ void EnergyLoadManagement::valueReceived(const DeviceValues &values_list)
 			QVariant reset = values_list[LoadsDevice::DIM_RESET_DATE];
 			QVariant consumption = values_list[LoadsDevice::DIM_TOTAL];
 
-			period_totals[period]->setTotal(consumption.toInt());
+			period_totals[period]->setTotal(consumption.toInt() / 1000.0);
 			period_totals[period]->setResetDateTime(reset.toDateTime());
 
 			break;
 		}
 		case LoadsDevice::DIM_CURRENT:
-			if (it.value().toInt() != consumption)
+		{
+			double new_value = it.value().toInt() / 1000.0;
+
+			if (new_value != consumption)
 			{
-				consumption = it.value().toInt();
+				consumption = new_value;
 				emit consumptionChanged();
 			}
+		}
+			break;
 		}
 		++it;
 	}

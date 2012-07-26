@@ -89,8 +89,8 @@ void TestEnergyLoadManagement::testReceiveConsumption()
 	obj->valueReceived(v);
 	tc.checkSignals();
 	te.checkSignals();
-	QCOMPARE(obj->getConsumption(), 100);
-	QCOMPARE(obj->getExpense(), 25.0);
+	QCOMPARE(obj->getConsumption(), 0.1);
+	QCOMPARE(obj->getExpense(), 0.025);
 
 	obj->valueReceived(v);
 	tc.checkNoSignals();
@@ -99,8 +99,8 @@ void TestEnergyLoadManagement::testReceiveConsumption()
 	obj->getRate()->setRate(0.50);
 	tc.checkNoSignals();
 	te.checkSignals();
-	QCOMPARE(obj->getConsumption(), 100);
-	QCOMPARE(obj->getExpense(), 50.0);
+	QCOMPARE(obj->getConsumption(), 0.1);
+	QCOMPARE(obj->getExpense(), 0.050);
 }
 
 void TestEnergyLoadManagement::testReceiveTotals()
@@ -122,7 +122,7 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	DeviceValues v;
 
 	v[LoadsDevice::DIM_PERIOD] = 0;
-	v[LoadsDevice::DIM_TOTAL] = 100;
+	v[LoadsDevice::DIM_TOTAL] = 100000;
 	v[LoadsDevice::DIM_RESET_DATE] = reset1;
 
 	obj->valueReceived(v);
@@ -133,11 +133,11 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	tt2.checkNoSignals();
 	te2.checkNoSignals();
 	QCOMPARE(l1->getResetDateTime(), reset1);
-	QCOMPARE(l1->getTotal(), 100);
+	QCOMPARE(l1->getTotal(), 100.0);
 	QCOMPARE(l1->getTotalExpense(), 25.0);
 
 	v[LoadsDevice::DIM_PERIOD] = 1;
-	v[LoadsDevice::DIM_TOTAL] = 100;
+	v[LoadsDevice::DIM_TOTAL] = 100000;
 	v[LoadsDevice::DIM_RESET_DATE] = reset1;
 
 	obj->valueReceived(v);
@@ -148,11 +148,11 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	tt2.checkSignals();
 	te2.checkSignals();
 	QCOMPARE(l2->getResetDateTime(), reset1);
-	QCOMPARE(l2->getTotal(), 100);
+	QCOMPARE(l2->getTotal(), 100.0);
 	QCOMPARE(l2->getTotalExpense(), 25.0);
 
 	v[LoadsDevice::DIM_PERIOD] = 0;
-	v[LoadsDevice::DIM_TOTAL] = 100;
+	v[LoadsDevice::DIM_TOTAL] = 100000;
 	v[LoadsDevice::DIM_RESET_DATE] = reset2;
 
 	obj->valueReceived(v);
@@ -163,11 +163,11 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	tt2.checkNoSignals();
 	te2.checkNoSignals();
 	QCOMPARE(l1->getResetDateTime(), reset2);
-	QCOMPARE(l1->getTotal(), 100);
+	QCOMPARE(l1->getTotal(), 100.0);
 	QCOMPARE(l1->getTotalExpense(), 25.0);
 
 	v[LoadsDevice::DIM_PERIOD] = 1;
-	v[LoadsDevice::DIM_TOTAL] = 101;
+	v[LoadsDevice::DIM_TOTAL] = 101000;
 	v[LoadsDevice::DIM_RESET_DATE] = reset1;
 
 	obj->valueReceived(v);
@@ -178,7 +178,7 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	tt2.checkSignals();
 	te2.checkSignals();
 	QCOMPARE(l2->getResetDateTime(), reset1);
-	QCOMPARE(l2->getTotal(), 101);
+	QCOMPARE(l2->getTotal(), 101.0);
 	QCOMPARE(l2->getTotalExpense(), 25.25);
 
 	obj->getRate()->setRate(0.50);
@@ -188,9 +188,9 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	td2.checkNoSignals();
 	tt2.checkNoSignals();
 	te2.checkSignals();
-	QCOMPARE(l1->getTotal(), 100);
+	QCOMPARE(l1->getTotal(), 100.0);
 	QCOMPARE(l1->getTotalExpense(), 50.0);
-	QCOMPARE(l2->getTotal(), 101);
+	QCOMPARE(l2->getTotal(), 101.0);
 	QCOMPARE(l2->getTotalExpense(), 50.50);
 }
 
