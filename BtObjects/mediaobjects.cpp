@@ -307,6 +307,7 @@ void SourceObject::nextTrack()
 	source->nextTrack();
 }
 
+bool SourceMedia::user_track_change_request = false;
 
 SourceMedia::SourceMedia(const QString &name, SourceBase *s, SourceObjectType t) :
 	SourceObject(name, s, t)
@@ -314,11 +315,11 @@ SourceMedia::SourceMedia(const QString &name, SourceBase *s, SourceObjectType t)
 	media_player = new MultiMediaPlayer();
 	connect(media_player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 		SLOT(handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState)));
-	user_track_change_request = false;
 }
 
 void SourceMedia::play(const QString &song_path)
 {
+	user_track_change_request = true;
 	media_player->setCurrentSource(song_path);
 	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)
 		media_player->play();

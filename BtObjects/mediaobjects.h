@@ -233,7 +233,7 @@ private slots:
 
 private:
 	MultiMediaPlayer *media_player;
-	bool user_track_change_request;
+	static bool user_track_change_request;
 };
 
 
