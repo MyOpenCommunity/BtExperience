@@ -2,6 +2,7 @@ DEFINES += MEDIAPLAYER_DISABLE_HARDWARE_FUNCTIONS
 
 HEADERS += \
 	antintrusionsystem.h \
+	automationobjects.h \
 	choicelist.h \
 	container.h \
 	energydata.h \
@@ -58,10 +59,12 @@ HEADERS += \
 	ts/xmldevice.h \
 	ts/xmlclient.h \
 	ts/scaleconversion.h \
-    automationobjects.h
+	ts/scenevodevicescond.h
+
 
 SOURCES += \
 	antintrusionsystem.cpp \
+	automationobjects.cpp \
 	choicelist.cpp \
 	container.cpp \
 	energydata.cpp \
@@ -118,4 +121,4 @@ SOURCES += \
 	ts/xmlclient.cpp \
 	ts/frame_classes.cpp \
 	ts/scaleconversion.cpp \
-    automationobjects.cpp
+	ts/scenevodevicescond.cpp

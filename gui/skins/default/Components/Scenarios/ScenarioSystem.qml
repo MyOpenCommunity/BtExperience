@@ -42,4 +42,31 @@ MenuColumn {
             {objectId: ObjectInterface.IdAdvancedScenario},
         ]
     }
+
+/*
+    PaginatorList {
+        id: paginator
+        delegate: MenuItemDelegate {
+            editable: true
+            itemObject: objectModel.getObject(index)
+            hasChild: true
+            onClicked:
+                column.loadColumn(
+                    mapping.getComponent(itemObject.objectId),
+                    itemObject.name,
+                    itemObject)
+        }
+
+        model: objectModel
+
+        onCurrentPageChanged: column.closeChild()
+    }
+
+    ObjectModel {
+        id: objectModel
+        source: myHomeModels.myHomeObjects
+        containers: [Container.IdScenarios]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+    */
 }

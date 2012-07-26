@@ -7,6 +7,8 @@ import "js/Stack.js" as Stack
 
 Page {
     id: page
+    property variant scenarioObject: undefined
+
     text: qsTr("Advanced scenario")
     source: "images/bg2.jpg"
 
@@ -30,7 +32,7 @@ Page {
                     }
                     font.pixelSize: 24
                     color: "white"
-                    text: qsTr("Scenario evoluto - ingresso")
+                    text: scenarioObject.name
                 }
             }
 
@@ -48,11 +50,13 @@ Page {
                     }
 
                     AdvancedScenarioTimeCondition {
+                        scenarioObject: page.scenarioObject.timeCondition
                         anchors.left: parent.left
                         anchors.top: parent.top
                     }
 
                     AdvancedScenarioDeviceCondition {
+                        scenarioObject: page.scenarioObject.deviceCondition
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.top: parent.top
                     }
