@@ -21,7 +21,7 @@ MenuColumn {
             hasChild: true
             onClicked: {
                 if (itemObject.type === "object")
-                    column.loadColumn(mapping.getComponent(itemObject.component.objectId), itemObject.component.name, itemObject.component)
+                    column.loadColumn(itemObject.component, itemObject.component.name, itemObject.object)
                 else
                     column.loadColumn(itemObject.component, itemObject.name)
             }
@@ -60,7 +60,7 @@ MenuColumn {
         Component.onCompleted: {
             // adds CUs
             for (var i = 0; i < modelCU.count; i++)
-                Script.container[i] = {"name": modelCU.getObject(i).name, "component": modelCU.getObject(i), "type": "object"}
+                Script.container[i] = {"name": modelCU.getObject(i).name, "component": thermalRegulator, "object": modelCU.getObject(i), "type": "object"}
             // adds additional menus (not contained in the ObjectModel)
             Script.container[modelCU.count] = {"name": qsTr("Air Conditioning"), "component": airConditioning, "type": "component"}
             Script.container[modelCU.count + 1] = {"name": qsTr("Not Controlled Probes"), "component": notControlledProbes, "type": "component"}
@@ -71,14 +71,17 @@ MenuColumn {
         }
     }
 
-    BtObjectsMapping { id: mapping }
-
     ObjectModel {
         id: modelCU
         filters: [
             {objectId: ObjectInterface.IdThermalControlUnit99},
             {objectId: ObjectInterface.IdThermalControlUnit4}
         ]
+    }
+
+    Component {
+        id: thermalRegulator
+        ThermalRegulator {}
     }
 
     Component {

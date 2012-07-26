@@ -7,9 +7,6 @@ MenuColumn {
 
     onChildDestroyed: itemList.currentIndex = -1
 
-    width: 212
-    height: 250
-
     PaginatorList {
         id: itemList
         currentIndex: -1
@@ -151,10 +148,10 @@ MenuColumn {
     ObjectModel {
         id: modelList
         filters: [
-            {objectId: ObjectInterface.IdThermalControlUnit99},
-            {objectId: ObjectInterface.IdThermalControlUnit4},
-            {objectId: ObjectInterface.IdThermalControlledProbe},
-            {objectId: ObjectInterface.IdThermalControlledProbeFancoil}
+            {objectId: ObjectInterface.IdThermalControlUnit99, objectKey: column.dataModel.objectKey},
+            {objectId: ObjectInterface.IdThermalControlUnit4, objectKey: column.dataModel.objectKey},
+            {objectId: ObjectInterface.IdThermalControlledProbe, objectKey: column.dataModel.objectKey},
+            {objectId: ObjectInterface.IdThermalControlledProbeFancoil, objectKey: column.dataModel.objectKey}
         ]
     }
 }
