@@ -49,7 +49,7 @@ QList<ObjectPair> parseAutomation2(const QDomNode &obj)
 	// extract default values
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
-	int def_pul = getIntAttribute(obj, "pul");
+	int def_pul = getIntAttribute(obj, "pul", 0);
 	QTime def_ctime = getTimeAttribute(obj, "ctime");
 	Light::FixedTimingType def_ftime = static_cast<Light::FixedTimingType>(getIntAttribute(obj, "ftime"));
 	int def_ectime = getIntAttribute(obj, "ectime", 0);
@@ -129,7 +129,7 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 	// extract default values
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
-	int def_pul = getIntAttribute(obj, "pul");
+	int def_pul = getIntAttribute(obj, "pul", 0);
 	QString def_mode = getAttribute(obj, "mode");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
