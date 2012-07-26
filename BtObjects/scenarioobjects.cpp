@@ -1,6 +1,8 @@
 #include "scenarioobjects.h"
 #include "scenario_device.h"
 #include "devices_cache.h"
+#include "xml_functions.h"
+#include "xmlobject.h"
 
 #include <QDomNode>
 #include <QDebug>
@@ -17,12 +19,61 @@ QList<ObjectInterface *> createScenarioSystem(const QDomNode &xml_node, int id)
 	objects << new ScenarioModule(1, "cinema", bt_global::add_device_to_cache(new ScenarioDevice("40")));
 	objects << new ScenarioModule(2, "in vacanza", bt_global::add_device_to_cache(new ScenarioDevice("40")));
 	objects << new ScenarioModule(2, "party", bt_global::add_device_to_cache(new ScenarioDevice("41")));
-	objects << new AdvancedScenario(new DeviceConditionObject(DeviceCondition::LIGHT), new TimeConditionObject);
-	objects << new AdvancedScenario(new DeviceConditionObject(DeviceCondition::TEMPERATURE), new TimeConditionObject);
-	objects << new AdvancedScenario(new DeviceConditionObject(DeviceCondition::DIMMING), new TimeConditionObject);
-	objects << new AdvancedScenario(new DeviceConditionObject(DeviceCondition::AMPLIFIER), new TimeConditionObject);
 
 	return objects;
+}
+
+QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		DeviceConditionObject *dc = 0;
+		TimeConditionObject *tc = 0;
+		QDomNode scen = getChildWithName(ist, "scen");
+		QDomNodeList childs = scen.childNodes();
+		QString act_frame, act_descr;
+
+		for (int i = 0; i < childs.size(); ++i)
+		{
+			if (!childs.at(i).isElement())
+				continue;
+			QDomElement child = childs.at(i).toElement();
+
+			if (child.tagName() == "time" && getTextChild(child, "status") == "1")
+			{
+				tc = new TimeConditionObject();
+				tc->setHours(getTextChild(child, "hour").toInt());
+				tc->setMinutes(getTextChild(child, "minute").toInt());
+			}
+			else if (child.tagName() == "device" && getTextChild(child, "status") == "1")
+			{
+				DeviceCondition::Type type = static_cast<DeviceCondition::Type>(getTextChild(child, "objectID").toInt());
+				QString descr = getTextChild(child, "descr");
+				QString trigger = getTextChild(child, "trigger");
+				QString where = getTextChild(child, "where");
+				PullMode pull_mode = getTextChild(child, "pul") == "1" ? PULL : NOT_PULL;
+
+				dc = new DeviceConditionObject(type, descr, trigger, where, pull_mode);
+			}
+			else if (child.tagName() == "action")
+			{
+				act_frame = getTextChild(child, "open");
+				act_descr = getTextChild(child, "descr");
+			}
+		}
+
+		bool status = getTextChild(scen, "status").toInt();
+		int days = getTextChild(scen, "days").toInt();
+
+		obj_list << ObjectPair(uii, new AdvancedScenario(dc, tc, status, days, act_frame, act_descr, v.value("descr")));
+	}
+	return obj_list;
 }
 
 
@@ -178,48 +229,38 @@ int TimeConditionObject::getMinutes() const
 }
 
 
-DeviceConditionObject::DeviceConditionObject(DeviceCondition::Type type)
+DeviceConditionObject::DeviceConditionObject(DeviceCondition::Type type, QString _description, QString trigger, QString where, PullMode pull_mode)
 {
-	// TODO: read the condition type, trigger, description and other stuff from the
-	// configuration file
+	description = _description;
 	condition_type = type;
 	on_off = false;
 	device_cond = 0;
 
-	QString trigger = "0"; // trigger
-	QString w = "0"; // where
-	int oid = 0; // openserver id
 	bool external = false;
 
 	switch (condition_type)
 	{
 	case DeviceCondition::LIGHT:
-		description = "Light";
-		device_cond = new DeviceConditionLight(this, trigger, w, oid, NOT_PULL);
+		device_cond = new DeviceConditionLight(this, trigger, where, 0, pull_mode);
 		break;
 	case DeviceCondition::DIMMING:
-		description = "Dimmer";
-		device_cond = new DeviceConditionDimming(this, trigger, w, oid, NOT_PULL, false);
+		device_cond = new DeviceConditionDimming(this, trigger, where, 0, pull_mode, false);
 		break;
 	case DeviceCondition::EXTERNAL_PROBE:
 		external = true;
-		w += "00";
+		where += "00";
 	case DeviceCondition::PROBE:
 	case DeviceCondition::TEMPERATURE:
-		description = "Temperature";
-		device_cond = new DeviceConditionTemperature(this, trigger, w, external, oid);
+		device_cond = new DeviceConditionTemperature(this, trigger, where, external, 0);
 		break;
 	case DeviceCondition::AUX:
-		description = "Aux";
-		device_cond = new DeviceConditionAux(this, trigger, w);
+		device_cond = new DeviceConditionAux(this, trigger, where);
 		break;
 	case DeviceCondition::AMPLIFIER:
-		description = "Amplifier";
-		device_cond = new DeviceConditionVolume(this, "-1", w, false);
+		device_cond = new DeviceConditionVolume(this, trigger, where, false);
 		break;
 	case DeviceCondition::DIMMING100:
-		description = "Dimmer";
-		device_cond = new DeviceConditionDimming100(this, trigger, w, oid, NOT_PULL, false);
+		device_cond = new DeviceConditionDimming100(this, trigger, where, 0, pull_mode, false);
 		break;
 	default:
 		qFatal("Unknown device condition: %d", condition_type);
@@ -278,7 +319,7 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 
 		if (min_condition_value == 0 && max_condition_value == 31)
 		{
-			 new_range_description = QString();
+			new_range_description = QString();
 		}
 		else
 		{
@@ -297,6 +338,7 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 		Q_UNUSED(max_condition_value)
 		// TODO: what is the right locale to use for BtExperience?
 		QLocale loc(QLocale::Italian);
+		new_on_off = true;
 		new_range_description = loc.toString(min_condition_value / 10.0, 'f', 1) + TEMP_DEGREES"C \2611"TEMP_DEGREES"C";
 		break;
 	}
@@ -369,15 +411,20 @@ void DeviceConditionObject::conditionDown()
 }
 
 
-AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time)
+AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, bool _enabled, int _days, QString _action_frame, QString _action_description, QString description)
 {
-	// TODO: implement :)
-	name = "Advanced scenario";
-	enabled = true;
+	name = description;
+	enabled = _enabled;
+	days = _days;
+	action_frame = _action_frame;
+	action_description = _action_description;
 	device_obj = device;
-	device_obj->setParent(this);
 	time_obj = time;
-	time_obj->setParent(this);
+
+	if (device_obj)
+		device_obj->setParent(this);
+	if (time_obj)
+		time_obj->setParent(this);
 }
 
 bool AdvancedScenario::isEnabled() const
@@ -392,6 +439,36 @@ void AdvancedScenario::setEnabled(bool enable)
 
 	enabled = enable;
 	emit enabledChanged();
+}
+
+bool AdvancedScenario::isDayEnabled(int day)
+{
+	// map to 0-6 -> monday-sunday
+	if (day == 0)
+		day = 6;
+	else
+		day -= 1;
+
+	return days & (1 << day);
+}
+
+void AdvancedScenario::setDayEnabled(int day, bool enabled)
+{
+	if (isDayEnabled(day) == enabled)
+		return;
+
+	// map to 0-6 -> monday-sunday
+	if (day == 0)
+		day = 6;
+	else
+		day -= 1;
+
+	if (enabled)
+		days |= (1 << day);
+	else
+		days &= ~(1 << day);
+
+	emit daysChanged();
 }
 
 QObject *AdvancedScenario::getDeviceCondition() const

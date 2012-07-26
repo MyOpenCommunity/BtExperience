@@ -1,0 +1,10 @@
+﻿<layout>
+	<container id="1" descr="scenarios">
+		<ist uii="1">
+			<link uii="6001" />
+			<link uii="6002" />
+			<link uii="6003" />
+			<link uii="6004" />
+		</ist>
+	</container>
+</layout>

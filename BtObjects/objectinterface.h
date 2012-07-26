@@ -112,6 +112,8 @@ public:
 		IdLoadDiagnostic = 6104, //!< Load diagnostic
 		IdLoadWithControlUnit = 6111, //!< Energy load with control unit
 		IdLoadWithoutControlUnit = 6112, //!< Energy load without control unit
+		// scenarios
+		IdAdvancedScenario = 9001,
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file
@@ -125,7 +127,6 @@ public:
 		IdSimpleScenario,
 		IdScenarioModule,
 		IdScheduledScenario,
-		IdAdvancedScenario,
 
 		IdIpRadio,
 		// the last value + 1, used to check the ids requested from qml

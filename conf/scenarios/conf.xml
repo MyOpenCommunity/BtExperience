@@ -1,0 +1,134 @@
+<archive>
+	<obj cid="9001" id="9001" descr="Advanced Scenario">
+		<ist uii="6001" descr="Dimmer cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>2</objectID>
+					<descr>Dimmer 10</descr>
+					<where>10</where>
+					<pul>0</pul>
+					<trigger>2-4</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6002" descr="Amplifier cond, no time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>0</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>4</objectID>
+					<descr>Amplifier 21</descr>
+					<where>21</where>
+					<pul>0</pul>
+					<trigger>13-22</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6003" descr="Temperature cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>3</objectID>
+					<descr>Controlled zone 16</descr>
+					<where>16</where>
+					<pul>0</pul>
+					<trigger>210</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6004" descr="Light cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>1</objectID>
+					<descr>Light 17</descr>
+					<where>17</where>
+					<pul>0</pul>
+					<trigger>1</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6005" descr="Dimmer 100 cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>6</objectID>
+					<descr>Dimmer 100</descr>
+					<where>100</where>
+					<pul>0</pul>
+					<trigger>50-70</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+	</obj>
+</archive>

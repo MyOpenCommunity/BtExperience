@@ -13,6 +13,7 @@ class ScenarioDevice;
 class QDomNode;
 
 QList<ObjectInterface *> createScenarioSystem(const QDomNode &xml_node, int id);
+QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node);
 
 
 /*!
@@ -187,7 +188,7 @@ class DeviceConditionObject : public QObject, DeviceConditionDisplayInterface
 	Q_PROPERTY(QVariant range READ getRange NOTIFY rangeChanged)
 
 public:
-	DeviceConditionObject(DeviceCondition::Type type);
+	DeviceConditionObject(DeviceCondition::Type type, QString description, QString trigger, QString where, PullMode pull_mode);
 	QString getDescription() const;
 	QVariant getOnOff() const;
 	QVariant getRange() const;
@@ -224,7 +225,7 @@ class AdvancedScenario : public ObjectInterface
 	Q_PROPERTY(QObject *timeCondition READ getTimeCondition CONSTANT)
 
 public:
-	AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time);
+	AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, bool enabled, int days, QString action_frame, QString action_description, QString description);
 
 	virtual int getObjectId() const
 	{
@@ -234,6 +235,10 @@ public:
 	bool isEnabled() const;
 	void setEnabled(bool enable);
 
+	// 1-6 -> monday-saturday, 0 = 7 -> sunday, to work with both JavaScript and QDate
+	bool isDayEnabled(int day);
+	void setDayEnabled(int day, bool enabled);
+
 	QObject *getDeviceCondition() const;
 	QObject *getTimeCondition() const;
 
@@ -242,11 +247,15 @@ public slots:
 
 signals:
 	void enabledChanged();
+	void daysChanged();
 
 private:
 	bool enabled;
+	int days;
 	DeviceConditionObject *device_obj;
 	TimeConditionObject *time_obj;
+	QString action_frame;
+	QString action_description;
 };
 
 
