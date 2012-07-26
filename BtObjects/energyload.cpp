@@ -1,6 +1,7 @@
 #include "energyload.h"
-
+#include "xmlobject.h"
 #include "loads_device.h"
+#include "devices_cache.h"
 
 namespace
 {
@@ -18,6 +19,55 @@ namespace
 			return EnergyLoadManagement::Unknown;
 		}
 	}
+}
+
+
+QList<ObjectPair> parseLoadDiagnostic(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr")));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
+		obj_list << ObjectPair(uii, new EnergyLoadManagementWithControlUnit(d, v.intValue("advanced"), v.value("descr")));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr")));
+	}
+	return obj_list;
 }
 
 

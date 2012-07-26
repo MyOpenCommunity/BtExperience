@@ -29,6 +29,11 @@
 #include <QDateTime>
 
 class LoadsDevice;
+class QDomNode;
+
+QList<ObjectPair> parseLoadDiagnostic(const QDomNode &xml_node);
+QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node);
+QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node);
 
 
 /*!

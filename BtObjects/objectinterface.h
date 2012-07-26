@@ -66,9 +66,9 @@ public:
 		IdCCTV = 23,
 		IdRoom,
 		IdIntercom,                             // 25
-		IdEnergyLoad,
 
 		IdEnergyFamily, //!< Group of energy lines
+		IdEnergyLoad, //!< Energy load object
 		IdThermalControlledProbe, //!< Thermal controlled probe
 		IdThermalControlledProbeFancoil, //!< Thermal controlled probe with fancoil
 		// used internally
@@ -108,6 +108,10 @@ public:
 		IdStopAndGoPlus = 6102, //!< Stop and go Plus
 		IdStopAndGoBTest = 6103, //!< Stop and go BTest
 		IdEnergyData = 6105, //!< Energy data
+		// note that the follwoing three types are all parsed into an IdEnergyLoad object
+		IdLoadDiagnostic = 6104, //!< Load diagnostic
+		IdLoadWithControlUnit = 6111, //!< Energy load with control unit
+		IdLoadWithoutControlUnit = 6112, //!< Energy load without control unit
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file
