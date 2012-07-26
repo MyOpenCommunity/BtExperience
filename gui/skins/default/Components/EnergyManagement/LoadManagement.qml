@@ -18,7 +18,7 @@ MenuColumn {
                              "status": 0,
                              "boxInfoState": "info",
                              "boxInfoText": "32 W",
-                             "component": applianceLoad})
+                             "component": appliance})
         listModel.append({"name": "oven",
                              "description": "control enabled",
                              "status": 1,
@@ -45,11 +45,6 @@ MenuColumn {
     Component {
         id: appliance
         Appliance {}
-    }
-
-    Component {
-        id: applianceLoad
-        ApplianceLoad {}
     }
 
     Component {

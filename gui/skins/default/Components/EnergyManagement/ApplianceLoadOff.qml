@@ -3,8 +3,13 @@ import Components 1.0
 
 MenuColumn {
     id: element
-    width: 212
-    height: 50
 
-    ControlButton { }
+    Column {
+        ControlMinusPlus {
+            title: qsTr("force load")
+            text: qsTr("180 minutes")
+        }
+
+        ButtonOkCancel { }
+    }
 }
