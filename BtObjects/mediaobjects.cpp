@@ -76,10 +76,11 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 			sources << new SourceLocalMedia("USB1", "/media/usb1", source, SourceObject::FileSystem);
 			sources << new SourceLocalMedia("SD card", "/media/sd", source, SourceObject::FileSystem);
 			sources << new SourceUpnpMedia("Network shares", source);
-			// TODO: where are we going to destroy SourceMultiMedia?
 
 			// use a default
 			source->setSourceObject(ip_radio);
+			// one of the above, used to destroy the object
+			source->setParent(ip_radio);
 		}
 			break;
 		}
