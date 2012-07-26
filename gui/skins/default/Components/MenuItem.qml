@@ -53,7 +53,9 @@ Item {
         else if (menuItem.status === 1)
             return base + "menu_column_item_active_led.svg"
         else if (menuItem.status === 2)
-            return base + "menu_column_item_warning_led.svg" // TODO warning image is missing
+            return base + "menu_column_item_warning_led.svg"
+        else if (menuItem.status === 3)
+            return base + "menu_column_item_alarm_led.svg"
     }
 
     SvgImage {

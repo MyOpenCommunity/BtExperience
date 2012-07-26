@@ -27,7 +27,7 @@ MenuColumn {
                              "component": appliance})
         listModel.append({"name": "microwave oven",
                              "description": "detached",
-                             "status": 2,
+                             "status": 3,
                              "boxInfoState": "",
                              "boxInfoText": "",
                              "component": applianceLoadOff})

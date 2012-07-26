@@ -9,10 +9,10 @@
 	 xml:space="preserve">
 <defs>
 </defs>
-<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-13006.1738" y1="-13538.3154" x2="-13007.9033" y2="-13548.124" gradientTransform="matrix(-1 0 0 -1 -13002 -13538)">
-	<stop  offset="0" style="stop-color:#D9EB00"/>
-	<stop  offset="1" style="stop-color:#57821E"/>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="5.9062" y1="10.1406" x2="4.0931" y2="-0.1422">
+	<stop  offset="0" style="stop-color:#730000"/>
+	<stop  offset="1" style="stop-color:#FF0000"/>
 </linearGradient>
-<path fill="url(#SVGID_1_)" d="M10,6.389C10,8.383,8.383,10,6.389,10H3.611C1.617,10,0,8.383,0,6.389V3.611C0,1.617,1.617,0,3.611,0
-	h2.777C8.383,0,10,1.617,10,3.611V6.389z"/>
+<path fill="url(#SVGID_1_)" d="M10,6.389C10,8.383,8.383,10,6.389,10H3.611C1.617,10,0,8.383,0,6.389V3.611C0,1.618,1.617,0,3.611,0
+	h2.777C8.383,0,10,1.618,10,3.611V6.389z"/>
 </svg>
