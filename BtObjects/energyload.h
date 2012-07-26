@@ -163,6 +163,24 @@ class EnergyLoadManagement : public ObjectInterface
 	/// Energy to currency conversion rate
 	Q_PROPERTY(EnergyRate *rate READ getRate CONSTANT)
 
+	/*!
+		\brief Measure unit symbol, as specified in configuration file
+
+		\sa currentUnit
+		\sa cumulativeUnit
+	*/
+	Q_PROPERTY(QString unit READ getUnit CONSTANT)
+
+	/*!
+		\brief Measure unit symbol for current consumption/production
+	*/
+	Q_PROPERTY(QString currentUnit READ getCurrentUnit CONSTANT)
+
+	/*!
+		\brief Measure unit symbol for cumulative consumption/production
+	*/
+	Q_PROPERTY(QString cumulativeUnit READ getCumulativeUnit CONSTANT)
+
 	Q_ENUMS(LoadStatus)
 
 public:
@@ -195,6 +213,10 @@ public:
 	EnergyRate *getRate() const;
 
 	double getExpense() const;
+
+	QString getUnit() const;
+	QString getCurrentUnit() const;
+	QString getCumulativeUnit() const;
 
 	virtual bool getHasControlUnit() const { return false; }
 	virtual bool getHasConsumptionMeters() const { return true; }

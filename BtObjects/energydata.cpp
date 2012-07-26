@@ -281,6 +281,25 @@ QString EnergyData::getUnit() const
 	return energy_unit;
 }
 
+QString EnergyData::getCurrentUnit() const
+{
+	// it's more correct to do this per-unit rather than per-energy type; for
+	// example heating/cooling can have Kw and cal in the configuration
+	if (energy_unit == "Kw")
+		return energy_unit;
+	else
+		return energy_unit + "/h";
+}
+
+QString EnergyData::getCumulativeUnit() const
+{
+	// see comment in getCurrentUnit()
+	if (energy_unit == "Kw")
+		return "Kwh";
+	else
+		return energy_unit;
+}
+
 void EnergyData::setThresholdEnabled(QVariantList enabled)
 {
 	if (enabled == thresholds_enabled)

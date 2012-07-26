@@ -161,8 +161,25 @@ class EnergyData : public ObjectInterface
 	*/
 	Q_PROPERTY(QVariantList goals READ getGoals CONSTANT)
 
-	/// Measure unit symbol
+	/*!
+		\brief Measure unit symbol, as specified in configuration file
+
+		This can be either an istantaneous or cumulative measure.
+
+		\sa currentUnit
+		\sa cumulativeUnit
+	*/
 	Q_PROPERTY(QString unit READ getUnit CONSTANT)
+
+	/*!
+		\brief Measure unit symbol for current consumption/production
+	*/
+	Q_PROPERTY(QString currentUnit READ getCurrentUnit CONSTANT)
+
+	/*!
+		\brief Measure unit symbol for cumulative consumption/production
+	*/
+	Q_PROPERTY(QString cumulativeUnit READ getCumulativeUnit CONSTANT)
 
 	Q_ENUMS(GraphType ValueType EnergyType MeasureType)
 
@@ -259,6 +276,8 @@ public:
 	QVariantList getGoals() const;
 
 	QString getUnit() const;
+	QString getCurrentUnit() const;
+	QString getCumulativeUnit() const;
 
 	void setThresholdEnabled(QVariantList enabled);
 	QVariantList getThresholdEnabled() const;
