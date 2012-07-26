@@ -1,9 +1,22 @@
 ﻿<layout>
+	<container id="6" descr="load management">
+		<ist uii="1">
+			<link uii="4004" />
+			<link uii="4005" />
+			<link uii="4006" />
+		</ist>
+	</container>
 	<container id="6" descr="supervision">
 		<ist uii="1">
+			<!-- Stop & go -->
 			<link uii="4001" />
 			<link uii="4002" />
 			<link uii="4003" />
+			<!-- load diagnostic -->
+			<link uii="4007" />
+			<link uii="4008" />
+			<!-- also in load management -->
+			<link uii="4006" />
 		</ist>
 	</container>
 	<container id="7" descr="supervision">

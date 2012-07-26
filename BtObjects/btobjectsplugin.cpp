@@ -251,6 +251,15 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdStopAndGoBTest:
 			obj_list = parseStopAndGoBTest(xml_obj);
 			break;
+		case ObjectInterface::IdLoadDiagnostic:
+			obj_list = parseLoadDiagnostic(xml_obj);
+			break;
+		case ObjectInterface::IdLoadWithControlUnit:
+			obj_list = parseLoadWithCU(xml_obj);
+			break;
+		case ObjectInterface::IdLoadWithoutControlUnit:
+			obj_list = parseLoadWithoutCU(xml_obj);
+			break;
 		case ObjectInterface::IdEnergyData:
 			objmodel << new EnergyFamily(getAttribute(xml_obj, "descr"), QString::number(energy_family));
 			obj_list = parseEnergyData(xml_obj, QString::number(energy_family));

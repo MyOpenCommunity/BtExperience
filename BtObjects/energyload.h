@@ -29,6 +29,12 @@
 #include <QDateTime>
 
 class LoadsDevice;
+class QDomNode;
+class EnergyRate;
+
+QList<ObjectPair> parseLoadDiagnostic(const QDomNode &xml_node);
+QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node);
+QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node);
 
 
 /*!
@@ -48,25 +54,34 @@ class EnergyLoadTotal : public QObject
 	Q_PROPERTY(int total READ getTotal NOTIFY totalChanged)
 
 	/*!
+		\brief Economic expense, only valid when a rate is set on the \ref EnergyLoad object
+	*/
+	Q_PROPERTY(double totalExpense READ getTotalExpense NOTIFY totalExpenseChanged)
+
+	/*!
 		\brief Gets date/time of the last counter reset
 	*/
 	Q_PROPERTY(QDateTime resetDateTime READ getResetDateTime NOTIFY resetDateTimeChanged)
 
 public:
-	EnergyLoadTotal(QObject *parent = 0);
+	EnergyLoadTotal(QObject *parent = 0, EnergyRate *rate = 0);
 
 	int getTotal() const;
 	void setTotal(int total);
+
+	double getTotalExpense() const;
 
 	QDateTime getResetDateTime() const;
 	void setResetDateTime(QDateTime reset);
 
 signals:
 	void totalChanged();
+	void totalExpenseChanged();
 	void resetDateTimeChanged();
 
 private:
 	int total;
+	EnergyRate *rate;
 	QDateTime reset_date_time;
 };
 
@@ -108,6 +123,16 @@ class EnergyLoadManagement : public ObjectInterface
 	Q_PROPERTY(int consumption READ getConsumption NOTIFY consumptionChanged)
 
 	/*!
+		\brief Economic expense, only valid when a rate is set on the object
+
+		Call \ref requestConsumptionUpdateStart() and \ref requestConsumptionUpdateStop()
+		to start/stop automatic consumption updates.
+
+		\sa hasConsumptionMeters
+	*/
+	Q_PROPERTY(double expense READ getExpense NOTIFY expenseChanged)
+
+	/*!
 		\brief Information about period totals and reset time.
 
 		Returns a 2-element array where each element is a \ref EnergyLoadTotal instance,
@@ -135,6 +160,9 @@ class EnergyLoadManagement : public ObjectInterface
 	*/
 	Q_PROPERTY(bool hasConsumptionMeters READ getHasConsumptionMeters CONSTANT)
 
+	/// Energy to currency conversion rate
+	Q_PROPERTY(EnergyRate *rate READ getRate CONSTANT)
+
 	Q_ENUMS(LoadStatus)
 
 public:
@@ -151,7 +179,7 @@ public:
 		Critical
 	};
 
-	EnergyLoadManagement(LoadsDevice *dev, QString name);
+	EnergyLoadManagement(LoadsDevice *dev, QString name, EnergyRate *rate = 0);
 
 	virtual int getObjectId() const
 	{
@@ -163,6 +191,10 @@ public:
 	int getConsumption() const;
 
 	QVariantList getPeriodTotals() const;
+
+	EnergyRate *getRate() const;
+
+	double getExpense() const;
 
 	virtual bool getHasControlUnit() const { return false; }
 	virtual bool getHasConsumptionMeters() const { return true; }
@@ -198,6 +230,7 @@ signals:
 	void loadStatusChanged();
 	void periodTotalsChanged();
 	void consumptionChanged();
+	void expenseChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -206,6 +239,7 @@ protected:
 	LoadsDevice *dev;
 
 private:
+	EnergyRate *rate;
 	LoadStatus status;
 	int consumption;
 	QList<EnergyLoadTotal *> period_totals;
@@ -252,7 +286,7 @@ class EnergyLoadManagementWithControlUnit : public EnergyLoadManagement
 	Q_PROPERTY(bool loadForced READ getLoadForced NOTIFY loadForcedChanged)
 
 public:
-	EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool is_advanced, QString name);
+	EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool is_advanced, QString name, EnergyRate *rate = 0);
 
 	virtual bool getHasControlUnit() const { return true; }
 	virtual bool getHasConsumptionMeters() const;
