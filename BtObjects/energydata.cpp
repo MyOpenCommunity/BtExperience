@@ -228,7 +228,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
 		thresholds_enabled << bool(v.intValue("threshold_two_enabled"));
 
 		// TODO handle rates (after they are specified)
-		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("SWmeasure"), goals, thresholds_enabled, 0));
+		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, thresholds_enabled, 0));
 	}
 	return obj_list;
 }
