@@ -36,6 +36,7 @@ namespace
 
 QList<ObjectPair> parseAutomationVDE(const QDomNode &obj)
 {
+	Q_UNUSED(obj);
 	// TODO VDE door object
 	QList<ObjectPair> obj_list;
 	return obj_list;
@@ -100,7 +101,6 @@ QList<ObjectPair> parseAutomationGroup2(const QDomNode &obj, const UiiMapper &ui
 		int uii = getIntAttribute(ist, "uii");
 		QString descr = getAttribute(ist, "descr", def_descr);
 		QList<ObjectInterface *> items;
-		int dumber_type = ObjectInterface::IdDimmer100Fixed;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
