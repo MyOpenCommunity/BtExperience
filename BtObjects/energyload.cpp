@@ -2,6 +2,7 @@
 #include "xmlobject.h"
 #include "loads_device.h"
 #include "devices_cache.h"
+#include "energyrate.h"
 
 namespace
 {
@@ -48,6 +49,7 @@ QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node)
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
 
+		// TODO rate handling
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
 		obj_list << ObjectPair(uii, new EnergyLoadManagementWithControlUnit(d, v.intValue("advanced"), v.value("descr")));
 	}
@@ -64,6 +66,7 @@ QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node)
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
 
+		// TODO rate handling
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
 		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr")));
 	}
@@ -71,10 +74,19 @@ QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node)
 }
 
 
-EnergyLoadTotal::EnergyLoadTotal(QObject *parent) :
+EnergyLoadTotal::EnergyLoadTotal(QObject *parent, EnergyRate *_rate) :
 	QObject(parent)
 {
 	total = 0;
+	rate = _rate;
+
+	if (rate)
+	{
+		connect(this, SIGNAL(totalChanged()),
+			this, SIGNAL(totalExpenseChanged()));
+		connect(rate, SIGNAL(rateChanged()),
+			this, SIGNAL(totalExpenseChanged()));
+	}
 }
 
 int EnergyLoadTotal::getTotal() const
@@ -89,6 +101,11 @@ void EnergyLoadTotal::setTotal(int _total)
 
 	total = _total;
 	emit totalChanged();
+}
+
+double EnergyLoadTotal::getTotalExpense() const
+{
+	return rate ? total * rate->getRate() : 0;
 }
 
 QDateTime EnergyLoadTotal::getResetDateTime() const
@@ -106,18 +123,27 @@ void EnergyLoadTotal::setResetDateTime(QDateTime reset)
 }
 
 
-EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name)
+EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, EnergyRate *_rate)
 {
 	dev = _dev;
 	name = _name;
+	rate = _rate;
 	status = Unknown;
 	consumption = 0;
 
-	period_totals.append(new EnergyLoadTotal(this));
-	period_totals.append(new EnergyLoadTotal(this));
+	period_totals.append(new EnergyLoadTotal(this, rate));
+	period_totals.append(new EnergyLoadTotal(this, rate));
 
 	connect(dev, SIGNAL(valueReceived(DeviceValues)),
 		this, SLOT(valueReceived(DeviceValues)));
+
+	if (rate)
+	{
+		connect(this, SIGNAL(consumptionChanged()),
+			this, SIGNAL(expenseChanged()));
+		connect(rate, SIGNAL(rateChanged()),
+			this, SIGNAL(expenseChanged()));
+	}
 }
 
 EnergyLoadManagement::LoadStatus EnergyLoadManagement::getLoadStatus() const
@@ -128,6 +154,16 @@ EnergyLoadManagement::LoadStatus EnergyLoadManagement::getLoadStatus() const
 int EnergyLoadManagement::getConsumption() const
 {
 	return consumption;
+}
+
+EnergyRate *EnergyLoadManagement::getRate() const
+{
+	return rate;
+}
+
+double EnergyLoadManagement::getExpense() const
+{
+	return rate ? consumption * rate->getRate() : 0;
 }
 
 QVariantList EnergyLoadManagement::getPeriodTotals() const
@@ -203,8 +239,8 @@ void EnergyLoadManagement::valueReceived(const DeviceValues &values_list)
 }
 
 
-EnergyLoadManagementWithControlUnit::EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool advanced, QString name) :
-	EnergyLoadManagement(dev, name)
+EnergyLoadManagementWithControlUnit::EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool advanced, QString name, EnergyRate *_rate) :
+	EnergyLoadManagement(dev, name, _rate)
 {
 	load_enabled = load_forced = false;
 	is_advanced = advanced;

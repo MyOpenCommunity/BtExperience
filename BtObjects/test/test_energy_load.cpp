@@ -24,6 +24,7 @@
 #include "energy_device.h" // AutomaticUpdates
 #include "energyload.h"
 #include "objecttester.h"
+#include "energyrate.h"
 
 #include <QtTest>
 
@@ -37,8 +38,9 @@ void TestEnergyLoadManagement::initObjects(LoadsDevice *_dev, EnergyLoadManageme
 void TestEnergyLoadManagement::init()
 {
 	LoadsDevice *d = new LoadsDevice("1");
+	EnergyRate *rate = new EnergyRate(0.25);
 
-	obj = new EnergyLoadManagement(d, "");
+	obj = new EnergyLoadManagement(d, "", rate);
 	dev = new LoadsDevice("1", 1);
 }
 
@@ -79,16 +81,26 @@ void TestEnergyLoadManagement::testReceiveLoadStatus()
 void TestEnergyLoadManagement::testReceiveConsumption()
 {
 	DeviceValues v;
-	ObjectTester t(obj, SIGNAL(consumptionChanged()));
+	ObjectTester tc(obj, SIGNAL(consumptionChanged()));
+	ObjectTester te(obj, SIGNAL(expenseChanged()));
 
 	v[LoadsDevice::DIM_CURRENT] = 100;
 
 	obj->valueReceived(v);
-	t.checkSignals();
+	tc.checkSignals();
+	te.checkSignals();
 	QCOMPARE(obj->getConsumption(), 100);
+	QCOMPARE(obj->getExpense(), 25.0);
 
 	obj->valueReceived(v);
-	t.checkNoSignals();
+	tc.checkNoSignals();
+	te.checkNoSignals();
+
+	obj->getRate()->setRate(0.50);
+	tc.checkNoSignals();
+	te.checkSignals();
+	QCOMPARE(obj->getConsumption(), 100);
+	QCOMPARE(obj->getExpense(), 50.0);
 }
 
 void TestEnergyLoadManagement::testReceiveTotals()
@@ -101,6 +113,8 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	ObjectTester td2(l2, SIGNAL(resetDateTimeChanged()));
 	ObjectTester tt1(l1, SIGNAL(totalChanged()));
 	ObjectTester tt2(l2, SIGNAL(totalChanged()));
+	ObjectTester te1(l1, SIGNAL(totalExpenseChanged()));
+	ObjectTester te2(l2, SIGNAL(totalExpenseChanged()));
 
 	QDateTime reset1 = QDateTime::currentDateTime();
 	QDateTime reset2 = QDateTime::currentDateTime().addDays(-1);
@@ -114,10 +128,13 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	obj->valueReceived(v);
 	td1.checkSignals();
 	tt1.checkSignals();
+	te1.checkSignals();
 	td2.checkNoSignals();
 	tt2.checkNoSignals();
+	te2.checkNoSignals();
 	QCOMPARE(l1->getResetDateTime(), reset1);
 	QCOMPARE(l1->getTotal(), 100);
+	QCOMPARE(l1->getTotalExpense(), 25.0);
 
 	v[LoadsDevice::DIM_PERIOD] = 1;
 	v[LoadsDevice::DIM_TOTAL] = 100;
@@ -126,10 +143,13 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	obj->valueReceived(v);
 	td1.checkNoSignals();
 	tt1.checkNoSignals();
+	te1.checkNoSignals();
 	td2.checkSignals();
 	tt2.checkSignals();
+	te2.checkSignals();
 	QCOMPARE(l2->getResetDateTime(), reset1);
 	QCOMPARE(l2->getTotal(), 100);
+	QCOMPARE(l2->getTotalExpense(), 25.0);
 
 	v[LoadsDevice::DIM_PERIOD] = 0;
 	v[LoadsDevice::DIM_TOTAL] = 100;
@@ -138,10 +158,13 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	obj->valueReceived(v);
 	td1.checkSignals();
 	tt1.checkNoSignals();
+	te1.checkNoSignals();
 	td2.checkNoSignals();
 	tt2.checkNoSignals();
+	te2.checkNoSignals();
 	QCOMPARE(l1->getResetDateTime(), reset2);
 	QCOMPARE(l1->getTotal(), 100);
+	QCOMPARE(l1->getTotalExpense(), 25.0);
 
 	v[LoadsDevice::DIM_PERIOD] = 1;
 	v[LoadsDevice::DIM_TOTAL] = 101;
@@ -150,10 +173,25 @@ void TestEnergyLoadManagement::testReceiveTotals()
 	obj->valueReceived(v);
 	td1.checkNoSignals();
 	tt1.checkNoSignals();
+	te1.checkNoSignals();
 	td2.checkNoSignals();
 	tt2.checkSignals();
+	te2.checkSignals();
 	QCOMPARE(l2->getResetDateTime(), reset1);
 	QCOMPARE(l2->getTotal(), 101);
+	QCOMPARE(l2->getTotalExpense(), 25.25);
+
+	obj->getRate()->setRate(0.50);
+	td1.checkNoSignals();
+	tt1.checkNoSignals();
+	te1.checkSignals();
+	td2.checkNoSignals();
+	tt2.checkNoSignals();
+	te2.checkSignals();
+	QCOMPARE(l1->getTotal(), 100);
+	QCOMPARE(l1->getTotalExpense(), 50.0);
+	QCOMPARE(l2->getTotal(), 101);
+	QCOMPARE(l2->getTotalExpense(), 50.50);
 }
 
 void TestEnergyLoadManagement::testRequestLoadStatus()
@@ -197,8 +235,9 @@ void TestEnergyLoadManagement::testResetTotal()
 void TestEnergyLoadManagementWithControlUnit::init()
 {
 	LoadsDevice *d = new LoadsDevice("1");
+	EnergyRate *rate = new EnergyRate(0.25);
 
-	obj = new EnergyLoadManagementWithControlUnit(d, true, "");
+	obj = new EnergyLoadManagementWithControlUnit(d, true, "", rate);
 	dev = new LoadsDevice("1", 1);
 
 	initObjects(dev, obj);
