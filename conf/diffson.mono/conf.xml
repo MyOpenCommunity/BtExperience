@@ -54,6 +54,12 @@
 			  <where>4</where>
 			  <type>2</type>
 		  </item>
+		  <item>
+			  <id>14</id>
+			  <name>Media server</name>
+			  <where>5</where>
+			  <type>3</type>
+		  </item>
 	  </sources>
   </item>
 </configuratore>
