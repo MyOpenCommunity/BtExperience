@@ -23,7 +23,7 @@
 			<!-- uii 3, 4 not inserted. Only in the archive but not visualized -->
 		</ist>
 	</container>
-	<container id="4" descr="automation"> 
+	<container id="4" descr="automation">
 		<ist uii="4">
 			<link uii="15" />
 			<link uii="16" />
@@ -31,7 +31,7 @@
 		</ist>
 	</container>
 	<container id="8" descr="thermal regulation">
-		<ist uii="1">
+		<ist uii="8">
 			<link uii="2001" />
 			<link uii="2011" />
 			<link uii="2012" />
