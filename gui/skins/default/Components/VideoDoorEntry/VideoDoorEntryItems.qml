@@ -5,18 +5,14 @@ import "../../js/logging.js" as Log
 
 MenuColumn {
     id: column
-    height: Math.max(1, 50 * itemList.count)
-    width: 212
 
     onChildDestroyed: {
         itemList.currentIndex = -1
     }
 
-    ListView {
+    PaginatorList {
         id: itemList
-        anchors.fill: parent
         currentIndex: -1
-        interactive: false
 
         delegate: MenuItemDelegate {
             name: model.name

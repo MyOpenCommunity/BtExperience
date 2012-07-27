@@ -159,12 +159,14 @@ protected:
 
 class TimeConditionObject : public QObject
 {
+	friend class TestScenarioAdvancedTime;
+
 	Q_OBJECT
 	Q_PROPERTY(int hours READ getHours WRITE setHours NOTIFY hoursChanged)
 	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
 
 public:
-	TimeConditionObject();
+	TimeConditionObject(int hours, int minutes);
 
 	void setHours(int h);
 	int getHours() const;
@@ -174,14 +176,21 @@ public:
 signals:
 	void hoursChanged();
 	void minutesChanged();
+	void satisfied();
+
+private slots:
+	void resetTimer();
 
 private:
 	int hours, minutes;
+	QTimer timer;
 };
 
 
 class DeviceConditionObject : public QObject, DeviceConditionDisplayInterface
 {
+	friend class TestScenarioAdvancedDeviceEdit;
+
 	Q_OBJECT
 	Q_PROPERTY(QString description READ getDescription CONSTANT)
 	Q_PROPERTY(QVariant onOff READ getOnOff WRITE setOnOff NOTIFY onOffChanged)
@@ -195,6 +204,8 @@ public:
 
 	void setOnOff(QVariant value);
 
+	bool isSatisfied();
+
 public slots:
 	void conditionUp();
 	void conditionDown();
@@ -202,6 +213,7 @@ public slots:
 signals:
 	void onOffChanged();
 	void rangeChanged();
+	void satisfied();
 
 protected:
 	virtual void updateText(int min_condition_value, int max_condition_value);
@@ -219,6 +231,8 @@ private:
 
 class AdvancedScenario : public ObjectInterface
 {
+	friend class TestScenarioAdvanced;
+
 	Q_OBJECT
 	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
 	Q_PROPERTY(QObject *deviceCondition READ getDeviceCondition CONSTANT)
@@ -247,6 +261,11 @@ public slots:
 signals:
 	void enabledChanged();
 	void daysChanged();
+	void started();
+
+private slots:
+	void timeConditionSatisfied();
+	void deviceConditionSatisfied();
 
 private:
 	bool enabled;
