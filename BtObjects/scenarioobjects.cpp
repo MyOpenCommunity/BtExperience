@@ -197,16 +197,27 @@ void ScheduledScenario::disable()
 
 TimeConditionObject::TimeConditionObject(int _hours, int _minutes)
 {
-	hours = _hours;
-	minutes = _minutes;
+	hours = condition_hours = _hours;
+	minutes = condition_minutes = _minutes;
 	timer.setSingleShot(true);
 
-	connect(this, SIGNAL(hoursChanged()), this, SLOT(resetTimer()));
-	connect(this, SIGNAL(minutesChanged()), this, SLOT(resetTimer()));
 	connect(&timer, SIGNAL(timeout()), this, SIGNAL(satisfied()));
 	connect(&timer, SIGNAL(timeout()), this, SLOT(resetTimer()));
 
 	resetTimer();
+}
+
+void TimeConditionObject::save()
+{
+	condition_hours = hours;
+	condition_minutes = minutes;
+	resetTimer();
+}
+
+void TimeConditionObject::reset()
+{
+	setHours(condition_hours);
+	setMinutes(condition_minutes);
 }
 
 int TimeConditionObject::getHours() const
@@ -438,6 +449,16 @@ void DeviceConditionObject::conditionDown()
 	device_cond->Down();
 }
 
+void DeviceConditionObject::save()
+{
+	device_cond->save();
+}
+
+void DeviceConditionObject::reset()
+{
+	device_cond->reset();
+}
+
 bool DeviceConditionObject::isSatisfied()
 {
 	return device_cond->isTrue();
@@ -532,6 +553,24 @@ void AdvancedScenario::start()
 	qDebug() << "START the advanced scenario" << action_frame;
 	// TODO: implement :)
 	emit started();
+}
+
+void AdvancedScenario::save()
+{
+	if (time_obj)
+		time_obj->save();
+	if (device_obj)
+		device_obj->save();
+
+	// TODO save to configuration file
+}
+
+void AdvancedScenario::reset()
+{
+	if (time_obj)
+		time_obj->reset();
+	if (device_obj)
+		device_obj->reset();
 }
 
 void AdvancedScenario::timeConditionSatisfied()

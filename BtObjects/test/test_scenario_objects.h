@@ -106,6 +106,8 @@ private slots:
 	void testDimmerConditionOnOff();
 	void testDimmer100ConditionOnOff();
 	void testAmplifierConditionOnOff();
+
+	void testConditionReset();
 };
 
 #endif // TEST_SCENARIO_OBJECTS_H
