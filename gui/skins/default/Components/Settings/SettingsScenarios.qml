@@ -20,19 +20,31 @@ MenuColumn {
             hasChild: true
 
             onClicked: {
-                itemObject.reset()
-                Stack.openPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
+                if (itemObject.objectId === ObjectInterface.IdAdvancedScenario) {
+                    itemObject.reset()
+                    Stack.openPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
+                }
+                else
+                    loadColumn(scenario, name, itemObject)
             }
         }
 
         model: objectModel
+
+        onCurrentPageChanged: closeChild()
     }
 
     ObjectModel {
         id: objectModel
         filters: [
             {objectId: ObjectInterface.IdAdvancedScenario},
+            {objectId: ObjectInterface.IdScenarioModule}
         ]
         range: itemList.computePageRange(itemList.currentPage, itemList.elementsOnPage)
+    }
+
+    Component {
+        id: scenario
+        ScenarioModuleSettings {}
     }
 }
