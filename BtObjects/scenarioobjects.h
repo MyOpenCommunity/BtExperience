@@ -97,6 +97,11 @@ public slots:
 	*/
 	void stopProgramming();
 
+	/*!
+		\brief Delete all the commands stored for this scenario
+	*/
+	void deleteScenario();
+
 signals:
 	void statusChanged();
 

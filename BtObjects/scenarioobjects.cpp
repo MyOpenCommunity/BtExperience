@@ -112,6 +112,11 @@ void ScenarioModule::stopProgramming()
 	dev->stopProgramming(scenario_number);
 }
 
+void ScenarioModule::deleteScenario()
+{
+	dev->deleteScenario(scenario_number);
+}
+
 void ScenarioModule::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it;
