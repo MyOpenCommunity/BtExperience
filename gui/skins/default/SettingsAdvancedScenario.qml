@@ -96,6 +96,11 @@ Page {
                         verticalCenter: parent.verticalCenter
                         right: cancelButton.left
                     }
+                    onClicked: {
+                        scenarioObject.save()
+                        Stack.popPage()
+                    }
+
                 }
 
                 ButtonThreeStates {
@@ -107,11 +112,17 @@ Page {
                     shadowImage: "images/common/btn_shadow_99x35.svg"
                     text: qsTr("CANCEL")
                     font.pixelSize: 14
-                    onClicked: Stack.popPage()
+
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
                         rightMargin: 7
+                    }
+                    onClicked: {
+                        // The reset must be called outside the page, before showing it
+                        // otherwise the user can see the value changing during the
+                        // transition effect.
+                        Stack.popPage()
                     }
                 }
             }

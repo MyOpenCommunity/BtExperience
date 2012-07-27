@@ -20,6 +20,7 @@ MenuColumn {
             hasChild: true
 
             onClicked: {
+                itemObject.reset()
                 Stack.openPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
             }
         }
