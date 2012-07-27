@@ -208,7 +208,7 @@ public:
 
 	void setOnOff(QVariant value);
 
-	bool isSatisfied();
+	bool isSatisfied() const;
 
 	void save();
 	void reset();
@@ -265,7 +265,7 @@ public slots:
 	void reset();
 
 	// 1-6 -> monday-saturday, 0 = 7 -> sunday, to work with both JavaScript and QDate
-	bool isDayEnabled(int day);
+	bool isDayEnabled(int day) const;
 	void setDayEnabled(int day, bool enabled);
 
 signals:

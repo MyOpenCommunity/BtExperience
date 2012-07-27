@@ -459,7 +459,7 @@ void DeviceConditionObject::reset()
 	device_cond->reset();
 }
 
-bool DeviceConditionObject::isSatisfied()
+bool DeviceConditionObject::isSatisfied() const
 {
 	return device_cond->isTrue();
 }
@@ -503,7 +503,7 @@ void AdvancedScenario::setEnabled(bool enable)
 	emit enabledChanged();
 }
 
-bool AdvancedScenario::isDayEnabled(int day)
+bool AdvancedScenario::isDayEnabled(int day) const
 {
 	// map to 0-6 -> monday-sunday
 	if (day == 0)
