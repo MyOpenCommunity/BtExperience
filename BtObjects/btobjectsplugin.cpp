@@ -610,71 +610,50 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "ObjectModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
-	qmlRegisterUncreatableType<ItemInterface>(
-				uri, 1, 0, "ItemInterface",
-				"unable to create an ItemInterface instance");
-	qmlRegisterUncreatableType<Container>(
-				uri, 1, 0, "Container",
-				"unable to create an Container instance");
-	qmlRegisterUncreatableType<Note>(
-				uri, 1, 0, "Note",
-				"unable to create a Note instance");
-	qmlRegisterUncreatableType<MediaLink>(
-				uri, 1, 0, "MediaLink",
-				"unable to create a MediaLink instance");
-	qmlRegisterUncreatableType<ObjectInterface>(
-				uri, 1, 0, "ObjectInterface",
-				"unable to create an ObjectInterface instance");
-	qmlRegisterUncreatableType<ThermalControlUnit99Zones>(
-				uri, 1, 0, "ThermalControlUnit99Zones",
-				"unable to create a ThermalControlUnit99Zones instance");
-	qmlRegisterUncreatableType<ThermalControlUnit>(
-				uri, 1, 0, "ThermalControlUnit",
-				"unable to create a ThermalControlUnit instance");
-	qmlRegisterUncreatableType<ThermalControlledProbe>(
-				uri, 1, 0, "ThermalControlledProbe",
-				"unable to create a ThermalControlledProbe instance");
-	qmlRegisterUncreatableType<ThermalControlledProbeFancoil>(
-				uri, 1, 0, "ThermalControlledProbeFancoil",
-				"unable to create a ThermalControlledProbeFancoil instance");
-	qmlRegisterUncreatableType<PlatformSettings>(
-				uri, 1, 0, "PlatformSettings",
-				"unable to create a PlatformSettings instance");
-	qmlRegisterUncreatableType<HardwareSettings>(
-				uri, 1, 0, "HardwareSettings",
-				"unable to create a HardwareSettings instance");
-	qmlRegisterUncreatableType<AntintrusionAlarm>(
-				uri, 1, 0, "AntintrusionAlarm",
-				"unable to create an AntintrusionAlarm instance");
-	qmlRegisterUncreatableType<FileObject>(
-				uri, 1, 0, "FileObject",
-				"unable to create an FileObject instance");
-	qmlRegisterUncreatableType<SourceBase>(
-				uri, 1, 0, "SourceBase",
-				"unable to create an SourceBase instance");
-	qmlRegisterUncreatableType<SourceObject>(
-				uri, 1, 0, "SourceObject",
-				"unable to create an SourceObject instance");
-	qmlRegisterUncreatableType<MultiMediaPlayer>(
-				uri, 1, 0, "MultiMediaPlayer",
-				"unable to create a MultiMediaPlyaer instance");
+	qmlRegisterUncreatableType<ItemInterface>(uri, 1, 0, "ItemInterface",
+		"unable to create an ItemInterface instance");
+	qmlRegisterUncreatableType<Container>(uri, 1, 0, "Container",
+		"unable to create an Container instance");
+	qmlRegisterUncreatableType<Note>(uri, 1, 0, "Note",
+		"unable to create a Note instance");
+	qmlRegisterUncreatableType<MediaLink>(uri, 1, 0, "MediaLink",
+		"unable to create a MediaLink instance");
+	qmlRegisterUncreatableType<ObjectInterface>(uri, 1, 0, "ObjectInterface",
+		"unable to create an ObjectInterface instance");
+	qmlRegisterUncreatableType<ThermalControlUnit99Zones>(uri, 1, 0, "ThermalControlUnit99Zones",
+		"unable to create a ThermalControlUnit99Zones instance");
+	qmlRegisterUncreatableType<ThermalControlUnit>(uri, 1, 0, "ThermalControlUnit",
+		"unable to create a ThermalControlUnit instance");
+	qmlRegisterUncreatableType<ThermalControlledProbe>(uri, 1, 0, "ThermalControlledProbe",
+		"unable to create a ThermalControlledProbe instance");
+	qmlRegisterUncreatableType<ThermalControlledProbeFancoil>(uri, 1, 0, "ThermalControlledProbeFancoil",
+		"unable to create a ThermalControlledProbeFancoil instance");
+	qmlRegisterUncreatableType<PlatformSettings>(uri, 1, 0, "PlatformSettings",
+		"unable to create a PlatformSettings instance");
+	qmlRegisterUncreatableType<HardwareSettings>(uri, 1, 0, "HardwareSettings",
+		"unable to create a HardwareSettings instance");
+	qmlRegisterUncreatableType<AntintrusionAlarm>(uri, 1, 0, "AntintrusionAlarm",
+		"unable to create an AntintrusionAlarm instance");
+	qmlRegisterUncreatableType<FileObject>(uri, 1, 0, "FileObject",
+		"unable to create an FileObject instance");
+	qmlRegisterUncreatableType<SourceBase>(uri, 1, 0, "SourceBase",
+		"unable to create an SourceBase instance");
+	qmlRegisterUncreatableType<SourceObject>(uri, 1, 0, "SourceObject",
+		"unable to create an SourceObject instance");
+	qmlRegisterUncreatableType<MultiMediaPlayer>(uri, 1, 0, "MultiMediaPlayer",
+		"unable to create a MultiMediaPlyaer instance");
 	// TODO: this seems to be a good candidate for RegisterUncreatableType...
 	qmlRegisterType<SplitProgram>(uri, 1, 0, "SplitProgram");
-	qmlRegisterUncreatableType<EnergyLoadManagement>(
-				uri, 1, 0, "EnergyLoadDiagnostic",
-				"unable to create an EnergyLoadDiagnostic instance");
-	qmlRegisterUncreatableType<StopAndGo>(
-				uri, 1, 0, "StopAndGo",
-				"unable to create an StopAndGo instance");
-	qmlRegisterUncreatableType<EnergyData>(
-				uri, 1, 0, "EnergyData",
-				"unable to create an EnergyData instance");
-	qmlRegisterUncreatableType<Light>(
-				uri, 1, 0, "Light",
-				"unable to create an Light instance");
-	qmlRegisterUncreatableType<ChoiceList>(
-				uri, 1, 0, "ChoiceList",
-				"unable to create an ChoiceList instance");
+	qmlRegisterUncreatableType<EnergyLoadManagement>(uri, 1, 0, "EnergyLoadDiagnostic",
+		"unable to create an EnergyLoadDiagnostic instance");
+	qmlRegisterUncreatableType<StopAndGo>(uri, 1, 0, "StopAndGo",
+		"unable to create an StopAndGo instance");
+	qmlRegisterUncreatableType<EnergyData>(uri, 1, 0, "EnergyData",
+		"unable to create an EnergyData instance");
+	qmlRegisterUncreatableType<Light>(uri, 1, 0, "Light",
+		"unable to create an Light instance");
+	qmlRegisterUncreatableType<ChoiceList>(uri, 1, 0, "ChoiceList",
+		"unable to create an ChoiceList instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
