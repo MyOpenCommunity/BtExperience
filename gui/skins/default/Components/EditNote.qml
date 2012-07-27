@@ -41,6 +41,7 @@ Rectangle {
             anchors.fill: parent
             contentWidth: edit.paintedWidth
             contentHeight: edit.paintedHeight
+            interactive: false
             clip: true
 
             function ensureVisible(r)
