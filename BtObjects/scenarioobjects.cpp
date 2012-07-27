@@ -341,9 +341,15 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 			new_on_off = true;
 
 		if (condition_type == DeviceCondition::DIMMING)
+		{
+			range_values = QVariantList() << min_condition_value * 10 << max_condition_value * 10;
 			new_range_description = QString("%1% - %2%").arg(min_condition_value * 10).arg(max_condition_value * 10);
+		}
 		else
+		{
+			range_values = QVariantList() << min_condition_value << max_condition_value;
 			new_range_description = QString("%1% - %2%").arg(min_condition_value).arg(max_condition_value);
+		}
 		break;
 
 	case DeviceCondition::AMPLIFIER:
@@ -358,6 +364,7 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 
 		if (min_condition_value == 0 && max_condition_value == 31)
 		{
+			range_values = QVariantList() << 1 << 100;
 			new_range_description = QString();
 		}
 		else
@@ -366,6 +373,7 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 			int val_max = max_condition_value;
 			int vmin = (val_min == 0 ? 0 : (10 * (val_min <= 15 ? val_min/3 : (val_min-1)/3) + 1));
 			int vmax = 10 * (val_max <= 15 ? val_max/3 : (val_max-1)/3);
+			range_values = QVariantList() << vmin << vmax;
 			new_range_description = QString("%1% - %2%").arg(vmin).arg(vmax);
 		}
 		break;
@@ -378,6 +386,7 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 		// TODO: what is the right locale to use for BtExperience?
 		QLocale loc(QLocale::Italian);
 		new_on_off = true;
+		range_values = QVariantList() << min_condition_value / 10.0;
 		new_range_description = loc.toString(min_condition_value / 10.0, 'f', 1) + TEMP_DEGREES"C \2611"TEMP_DEGREES"C";
 		break;
 	}
@@ -412,6 +421,11 @@ QVariant DeviceConditionObject::getRange() const
 		condition_type == DeviceCondition::AUX)
 		return QVariant();
 	return range_description;
+}
+
+QVariantList DeviceConditionObject::getRangeValues() const
+{
+	return range_values;
 }
 
 QVariant DeviceConditionObject::getOnOff() const
@@ -459,7 +473,7 @@ void DeviceConditionObject::reset()
 	device_cond->reset();
 }
 
-bool DeviceConditionObject::isSatisfied()
+bool DeviceConditionObject::isSatisfied() const
 {
 	return device_cond->isTrue();
 }
@@ -503,7 +517,7 @@ void AdvancedScenario::setEnabled(bool enable)
 	emit enabledChanged();
 }
 
-bool AdvancedScenario::isDayEnabled(int day)
+bool AdvancedScenario::isDayEnabled(int day) const
 {
 	// map to 0-6 -> monday-sunday
 	if (day == 0)

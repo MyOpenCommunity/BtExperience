@@ -199,16 +199,18 @@ class DeviceConditionObject : public QObject, DeviceConditionDisplayInterface
 	Q_PROPERTY(QString description READ getDescription CONSTANT)
 	Q_PROPERTY(QVariant onOff READ getOnOff WRITE setOnOff NOTIFY onOffChanged)
 	Q_PROPERTY(QVariant range READ getRange NOTIFY rangeChanged)
+	Q_PROPERTY(QVariantList rangeValues READ getRangeValues NOTIFY rangeChanged)
 
 public:
 	DeviceConditionObject(DeviceCondition::Type type, QString description, QString trigger, QString where, PullMode pull_mode);
 	QString getDescription() const;
 	QVariant getOnOff() const;
 	QVariant getRange() const;
+	QVariantList getRangeValues() const;
 
 	void setOnOff(QVariant value);
 
-	bool isSatisfied();
+	bool isSatisfied() const;
 
 	void save();
 	void reset();
@@ -229,6 +231,7 @@ private:
 	bool on_off;
 	QString range_description;
 	QString description;
+	QVariantList range_values;
 	DeviceCondition *device_cond;
 	DeviceCondition::Type condition_type;
 	DeviceCondition::ConditionState on_state;
@@ -265,7 +268,7 @@ public slots:
 	void reset();
 
 	// 1-6 -> monday-saturday, 0 = 7 -> sunday, to work with both JavaScript and QDate
-	bool isDayEnabled(int day);
+	bool isDayEnabled(int day) const;
 	void setDayEnabled(int day, bool enabled);
 
 signals:
