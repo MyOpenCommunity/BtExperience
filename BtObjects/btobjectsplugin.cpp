@@ -657,7 +657,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create an Light instance");
 	qmlRegisterUncreatableType<ChoiceList>(uri, 1, 0, "ChoiceList",
 		"unable to create an ChoiceList instance");
-
+	qmlRegisterUncreatableType<ScenarioModule>(uri, 1, 0, "ScenarioModule",
+		"unable to create an ScenarioModuleinstance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

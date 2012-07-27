@@ -63,6 +63,8 @@ friend class TestScenarioModule;
 	*/
 	Q_PROPERTY(Status status READ getStatus NOTIFY statusChanged)
 
+	Q_ENUMS(Status)
+
 public:
 	ScenarioModule(int scenario, QString _name, ScenarioDevice *d);
 
