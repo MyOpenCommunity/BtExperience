@@ -24,10 +24,11 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             SvgImage {
                 source: "images/common/bg_scenevo_titolo.svg"
+
                 UbuntuLightText {
                     anchors {
                         left: parent.left
-                        leftMargin: 22
+                        leftMargin: parent.width / 100 * 3
                         verticalCenter: parent.verticalCenter
                     }
                     font.pixelSize: 24
@@ -36,40 +37,58 @@ Page {
                 }
             }
 
-            SvgImage {
-                source: "images/common/bg_scenevo.svg"
+            Item {
+                width: bodyImage.width
+                height: bodyImage.height
+
+                SvgImage {
+                    id: bodyImage
+                    source: "images/common/bg_scenevo.svg"
+                }
 
                 Item {
                     anchors {
-                        leftMargin: 22
+                        leftMargin: parent.width / 100 * 3
                         left: parent.left
                         right: parent.right
-                        rightMargin: 22
+                        rightMargin: parent.width / 100 * 3
                         top: parent.top
-                        topMargin: 20
+                        topMargin: parent.height / 100 * 6
                     }
 
                     AdvancedScenarioDateTimeCondition {
                         scenarioObject: page.scenarioObject
-                        anchors.left: parent.left
-                        anchors.top: parent.top
+                        anchors {
+                            left: parent.left
+                            top: parent.top
+                        }
                     }
 
                     AdvancedScenarioDeviceCondition {
                         scenarioDeviceObject: page.scenarioObject.deviceCondition
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: parent.top
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: parent.top
+                        }
                     }
 
                     AdvancedScenarioAction {
-                        anchors.right: parent.right
-                        anchors.top: parent.top
+                        anchors {
+                            right: parent.right
+                            top: parent.top
+                        }
                     }
                 }
             }
 
-            SvgImage {
-                source: "images/common/bg_scenevo_ok_annulla.svg"
+            Item {
+                width: bottomImage.width
+                height: bottomImage.height
+
+                SvgImage {
+                    id: bottomImage
+                    source: "images/common/bg_scenevo_ok_annulla.svg"
+                }
 
 
                 UbuntuLightText {
@@ -79,7 +98,7 @@ Page {
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: okButton.left
-                        rightMargin: 10
+                        rightMargin: parent.width / 100 * 1
                     }
                 }
 
@@ -116,7 +135,7 @@ Page {
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
-                        rightMargin: 7
+                        rightMargin: parent.width / 100 * 1
                     }
                     onClicked: {
                         // The reset must be called outside the page, before showing it
