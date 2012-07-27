@@ -202,6 +202,8 @@ public:
 
 	void setOnOff(QVariant value);
 
+	bool isSatisfied();
+
 public slots:
 	void conditionUp();
 	void conditionDown();
@@ -209,6 +211,7 @@ public slots:
 signals:
 	void onOffChanged();
 	void rangeChanged();
+	void satisfied();
 
 protected:
 	virtual void updateText(int min_condition_value, int max_condition_value);
@@ -256,6 +259,11 @@ public slots:
 signals:
 	void enabledChanged();
 	void daysChanged();
+	void started();
+
+private slots:
+	void timeConditionSatisfied();
+	void deviceConditionSatisfied();
 
 private:
 	bool enabled;

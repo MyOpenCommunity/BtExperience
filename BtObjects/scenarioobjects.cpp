@@ -287,6 +287,8 @@ DeviceConditionObject::DeviceConditionObject(DeviceCondition::Type type, QString
 		qFatal("Unknown device condition: %d", condition_type);
 	}
 
+	connect(device_cond, SIGNAL(condSatisfied()), this, SIGNAL(satisfied()));
+
 	if (on_off)
 		on_state = device_cond->getState();
 	else
@@ -431,6 +433,11 @@ void DeviceConditionObject::conditionDown()
 	device_cond->Down();
 }
 
+bool DeviceConditionObject::isSatisfied()
+{
+	return device_cond->isTrue();
+}
+
 
 AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, bool _enabled, int _days, QString _action_frame, QString _action_description, QString description)
 {
@@ -443,9 +450,17 @@ AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionO
 	time_obj = time;
 
 	if (device_obj)
+	{
 		device_obj->setParent(this);
+		connect(device_obj, SIGNAL(satisfied()),
+			this, SLOT(deviceConditionSatisfied()));
+	}
 	if (time_obj)
+	{
 		time_obj->setParent(this);
+		connect(time_obj, SIGNAL(satisfied()),
+			this, SLOT(timeConditionSatisfied()));
+	}
 }
 
 bool AdvancedScenario::isEnabled() const
@@ -504,7 +519,48 @@ QObject *AdvancedScenario::getTimeCondition() const
 
 void AdvancedScenario::start()
 {
-	qDebug() << "START the advanced scenario";
+	if (action_frame.isEmpty())
+	{
+		qDebug("Action frame not set for scenario");
+		return;
+	}
+	qDebug() << "START the advanced scenario" << action_frame;
 	// TODO: implement :)
+	emit started();
 }
 
+void AdvancedScenario::timeConditionSatisfied()
+{
+	if (!enabled)
+	{
+		qDebug("time condition satisfied but scenario disabled");
+		return;
+	}
+	if (!isDayEnabled(QDate::currentDate().dayOfWeek()))
+	{
+		qDebug("condition disabled on this week day");
+		return;
+	}
+	if (device_obj && !device_obj->isSatisfied())
+	{
+		qDebug("time condition satisfied but device condition not satisfied");
+		return;
+	}
+
+	start();
+}
+
+void AdvancedScenario::deviceConditionSatisfied()
+{
+	if (!enabled)
+	{
+		qDebug("device condition satisfied but scenario disabled");
+		return;
+	}
+	// if time condition is set, the device condition is checked again
+	// when the timeout expires
+	if (time_obj)
+		return;
+
+	start();
+}
