@@ -110,17 +110,17 @@ Page {
         ListElement {
             name: "meteo"
             index: 0
-            image: "images/profiles/meteo.png"
+            image: "images/profiles/meteo.jpg"
         }
         ListElement {
             name: "rss"
             index: 1
-            image: "images/profiles/news.png"
+            image: "images/profiles/news.jpg"
         }
         ListElement {
             name: "weblink"
             index: 2
-            image: "images/profiles/web.png"
+            image: "images/profiles/web.jpg"
         }
     }
 

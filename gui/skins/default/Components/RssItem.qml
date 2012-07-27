@@ -5,5 +5,5 @@ QuickLink {
     id: favoriteItem
 
     page: "RssPage.qml"
-    imageSource: "../images/profiles/news.png"
+    imageSource: "../images/profiles/news.jpg"
 }
