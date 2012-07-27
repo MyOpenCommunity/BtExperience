@@ -107,8 +107,7 @@ Item {
 
     SvgImage {
         id: bg
-        source: "../images/common/date_panel_inner_background.svg"
-        height: 32
+        source: "../images/common/bg_datetime.svg"
         anchors {
             top: buttonLeftPlus.bottom
             left: parent.left
