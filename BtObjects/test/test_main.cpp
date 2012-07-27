@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
 	ADD_TEST(TestScenarioModule);
 	ADD_TEST(TestScenarioAdvanced);
 	ADD_TEST(TestScenarioAdvancedTime);
+	ADD_TEST(TestScenarioAdvancedDeviceEdit);
 	ADD_TEST(TestVideoDoorEntry);
 	ADD_TEST(TestEnergyLoadManagement);
 	ADD_TEST(TestEnergyLoadManagementWithControlUnit);

@@ -87,4 +87,25 @@ private:
 	TimeConditionObject *obj;
 };
 
+
+class TestScenarioAdvancedDeviceEdit : public TestBtObject
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+	void cleanup();
+
+	void testLightConditionInit();
+	void testDimmerConditionInit();
+	void testDimmer100ConditionInit();
+	void testAmplifierConditionInit();
+	void testTemperatureConditionInit();
+
+	void testLightConditionOnOff();
+	void testDimmerConditionOnOff();
+	void testDimmer100ConditionOnOff();
+	void testAmplifierConditionOnOff();
+};
+
 #endif // TEST_SCENARIO_OBJECTS_H

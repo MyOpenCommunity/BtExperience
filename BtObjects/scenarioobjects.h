@@ -189,6 +189,8 @@ private:
 
 class DeviceConditionObject : public QObject, DeviceConditionDisplayInterface
 {
+	friend class TestScenarioAdvancedDeviceEdit;
+
 	Q_OBJECT
 	Q_PROPERTY(QString description READ getDescription CONSTANT)
 	Q_PROPERTY(QVariant onOff READ getOnOff WRITE setOnOff NOTIFY onOffChanged)
