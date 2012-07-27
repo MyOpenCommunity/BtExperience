@@ -133,10 +133,10 @@ SvgImage {
         State {
             name: "normal"
             when: { return true }
-            PropertyChanges { target: bg; source: selectedImageBg }
-            PropertyChanges { target: shadow; visible: false }
-            PropertyChanges { target: topImage; source: selectedImage }
-            PropertyChanges { target: caption; color: "white" }
+            PropertyChanges { target: bg; source: defaultImageBg }
+            PropertyChanges { target: shadow; visible: true }
+            PropertyChanges { target: topImage; source: defaultImage }
+            PropertyChanges { target: caption; color: "gray" }
         }
     ]
 }
