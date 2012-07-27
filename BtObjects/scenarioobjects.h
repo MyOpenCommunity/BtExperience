@@ -219,6 +219,8 @@ private:
 
 class AdvancedScenario : public ObjectInterface
 {
+	friend class TestScenarioAdvanced;
+
 	Q_OBJECT
 	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
 	Q_PROPERTY(QObject *deviceCondition READ getDeviceCondition CONSTANT)

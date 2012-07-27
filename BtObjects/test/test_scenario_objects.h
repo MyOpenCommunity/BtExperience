@@ -25,6 +25,7 @@
 
 class ScenarioModule;
 class ScenarioDevice;
+class AdvancedScenario;
 
 class TestScenarioModule : public TestBtObject
 {
@@ -52,6 +53,21 @@ private:
 	void checkMethod();
 	ScenarioModule *scen;
 	ScenarioDevice *dev;
+};
+
+
+class TestScenarioAdvanced: public TestBtObject
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+	void cleanup();
+
+	void testWeekdays();
+
+private:
+	AdvancedScenario *obj;
 };
 
 #endif // TEST_SCENARIO_OBJECTS_H

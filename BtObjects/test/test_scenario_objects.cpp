@@ -227,3 +227,35 @@ void TestScenarioModule::checkMethod()
 	t.checkSignalCount(SIGNAL(statusChanged()), signals_emitted);
 	QCOMPARE(scen->status, end_status);
 }
+
+void TestScenarioAdvanced::init()
+{
+	obj = new AdvancedScenario(0, 0, false, 0, "", "", "");
+}
+
+void TestScenarioAdvanced::cleanup()
+{
+	delete obj;
+}
+
+void TestScenarioAdvanced::testWeekdays()
+{
+	ObjectTester t(obj, SIGNAL(daysChanged()));
+
+	for (int i = 0; i < 8; ++i)
+	{
+		QVERIFY(!obj->isDayEnabled(i));
+
+		obj->setDayEnabled(i, true);
+		t.checkSignals();
+		QVERIFY(obj->isDayEnabled(i));
+
+		obj->setDayEnabled(i, false);
+		t.checkSignals();
+		QVERIFY(!obj->isDayEnabled(i));
+	}
+
+	obj->days = 64; // sunday
+	QVERIFY(obj->isDayEnabled(0));
+	QVERIFY(obj->isDayEnabled(7));
+}
