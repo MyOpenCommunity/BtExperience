@@ -49,14 +49,14 @@ Page {
                         topMargin: 20
                     }
 
-                    AdvancedScenarioTimeCondition {
-                        scenarioObject: page.scenarioObject.timeCondition
+                    AdvancedScenarioDateTimeCondition {
+                        scenarioObject: page.scenarioObject
                         anchors.left: parent.left
                         anchors.top: parent.top
                     }
 
                     AdvancedScenarioDeviceCondition {
-                        scenarioObject: page.scenarioObject.deviceCondition
+                        scenarioDeviceObject: page.scenarioObject.deviceCondition
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.top: parent.top
                     }
@@ -114,9 +114,6 @@ Page {
                         rightMargin: 7
                     }
                 }
-
-
-
             }
         }
     }

@@ -4,7 +4,7 @@ import Components.Text 1.0
 
 Column {
     id: column
-    property variant scenarioObject
+    property variant scenarioDeviceObject
 
     width: line.width
     spacing: 10
@@ -22,31 +22,41 @@ Column {
 
     UbuntuLightText {
         id: deviceDescription
-        text: qsTr("device description")
+        text: scenarioDeviceObject.description
         font.pixelSize: 14
         color: "white"
     }
 
     Loader {
-        sourceComponent: scenarioObject.onOff !== undefined ? controlOnOff : undefined
+        sourceComponent: scenarioDeviceObject.onOff !== undefined ? controlOnOffComponent : undefined
+        height: controlRadioPrototype.height
+        width: line.width
+    }
+
+
+    ControlRadio {
+        id: controlRadioPrototype
+        visible: false
+        text: qsTr("ON")
     }
 
     Component {
-        id: controlOnOff
+        id: controlOnOffComponent
         Row {
             spacing: 13
-            height: childrenRect.height
-
             Repeater {
                 model: ListModel {
-                    ListElement { text: "ON"; value: true }
-                    ListElement { text: "OFF"; value: false }
+                    id: statusModel
+                    Component.onCompleted: {
+                        statusModel.append({"text": qsTr("ON"), "value": true})
+                        statusModel.append({"text": qsTr("OFF"), "value": false})
+                    }
                 }
 
                 ControlRadio {
-                   status: scenarioObject.onOff === model.value
+                   status: scenarioDeviceObject.onOff === model.value
                    text: model.text
-                   onClicked: scenarioObject.onOff = model.value
+                   onClicked: scenarioDeviceObject.onOff = model.value
                 }
             }
         }
@@ -58,17 +68,25 @@ Column {
         width: line.width
     }
 
-    UbuntuLightText {
-        visible: scenarioObject.range !== undefined
-        text: scenarioObject.description
-        font.pixelSize: 14
-        color: "white"
+    Loader {
+        sourceComponent: scenarioDeviceObject.range !== undefined ? controlSpinComponent : undefined
     }
 
-    ControlSpin {
-        visible: scenarioObject.range !== undefined
-        text: scenarioObject.range
-        onMinusClicked: scenarioObject.conditionDown()
-        onPlusClicked: scenarioObject.conditionUp()
+    Component {
+        id: controlSpinComponent
+        Column {
+            spacing: column.spacing
+            UbuntuLightText {
+                text: qsTr("Intensity")
+                font.pixelSize: 14
+                color: "white"
+            }
+
+            ControlSpin {
+                text: scenarioDeviceObject.range
+                onMinusClicked: scenarioDeviceObject.conditionDown()
+                onPlusClicked: scenarioDeviceObject.conditionUp()
+            }
+        }
     }
 }

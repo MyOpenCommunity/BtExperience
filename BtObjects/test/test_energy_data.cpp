@@ -999,7 +999,7 @@ void TestEnergyItem::cleanup()
 
 void TestEnergyItem::testSetValue()
 {
-	EnergyItem item(obj, EnergyData::CurrentValue, QDate(2012, 05, 16), QVariant(), QString());
+	EnergyItem item(obj, EnergyData::CurrentValue, QDate(2012, 05, 16), QVariant());
 	ObjectTester tvalid(&item, SIGNAL(validChanged()));
 	ObjectTester tvalue(&item, SIGNAL(valueChanged()));
 
@@ -1024,7 +1024,7 @@ void TestEnergyItem::testSetValue()
 void TestEnergyItem::testRateChanged()
 {
 	EnergyRate rate(0.5);
-	EnergyItem item(obj, EnergyData::CurrentValue, QDate(2012, 05, 16), QVariant(4), "kw", 0, QVariant(), &rate);
+	EnergyItem item(obj, EnergyData::CurrentValue, QDate(2012, 05, 16), QVariant(4), 0, QVariant(), &rate);
 	ObjectTester t(&item, SIGNAL(valueChanged()));
 
 	QCOMPARE(item.getValue(), QVariant(2));
@@ -1036,7 +1036,7 @@ void TestEnergyItem::testRateChanged()
 
 void TestEnergyItem::testRequestUpdate()
 {
-	EnergyItem item(obj, EnergyData::MonthlyAverageValue, QDate(2012, 05, 16), QVariant(), "kw");
+	EnergyItem item(obj, EnergyData::MonthlyAverageValue, QDate(2012, 05, 16), QVariant());
 
 	item.requestUpdate();
 	dev->requestMontlyAverage(QDate(2012, 05, 16));

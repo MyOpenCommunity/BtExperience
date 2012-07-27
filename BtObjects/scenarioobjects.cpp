@@ -47,9 +47,10 @@ QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node)
 
 			if (child.tagName() == "time" && getTextChild(child, "status") == "1")
 			{
-				tc = new TimeConditionObject();
-				tc->setHours(getTextChild(child, "hour").toInt());
-				tc->setMinutes(getTextChild(child, "minute").toInt());
+				int hour = getTextChild(child, "hour").toInt();
+				int minute = getTextChild(child, "minute").toInt();
+
+				tc = new TimeConditionObject(hour, minute);
 			}
 			else if (child.tagName() == "device" && getTextChild(child, "status") == "1")
 			{
@@ -194,10 +195,17 @@ void ScheduledScenario::disable()
 }
 
 
-TimeConditionObject::TimeConditionObject()
+TimeConditionObject::TimeConditionObject(int _hours, int _minutes)
 {
-	hours = 0;
-	minutes = 10;
+	hours = _hours;
+	minutes = _minutes;
+	timer.setSingleShot(true);
+
+	connect(this, SIGNAL(hoursChanged()), this, SLOT(resetTimer()));
+	connect(this, SIGNAL(minutesChanged()), this, SLOT(resetTimer()));
+	connect(&timer, SIGNAL(timeout()), this, SIGNAL(satisfied()));
+
+	resetTimer();
 }
 
 int TimeConditionObject::getHours() const
@@ -226,6 +234,19 @@ void TimeConditionObject::setMinutes(int m)
 int TimeConditionObject::getMinutes() const
 {
 	return minutes;
+}
+
+void TimeConditionObject::resetTimer()
+{
+	const int MSECS_DAY = 24 * 60 * 60 * 1000;
+	QTime now = QTime::currentTime();
+	int msecsto = now.msecsTo(QTime(hours, minutes));
+
+	// make it positive and < MSECS_DAY
+	msecsto = (msecsto % MSECS_DAY + MSECS_DAY) % MSECS_DAY;
+
+	qDebug("(re)starting timer with interval = %d", msecsto);
+	timer.start(msecsto);
 }
 
 
@@ -265,6 +286,8 @@ DeviceConditionObject::DeviceConditionObject(DeviceCondition::Type type, QString
 	default:
 		qFatal("Unknown device condition: %d", condition_type);
 	}
+
+	connect(device_cond, SIGNAL(condSatisfied()), this, SIGNAL(satisfied()));
 
 	if (on_off)
 		on_state = device_cond->getState();
@@ -410,6 +433,11 @@ void DeviceConditionObject::conditionDown()
 	device_cond->Down();
 }
 
+bool DeviceConditionObject::isSatisfied()
+{
+	return device_cond->isTrue();
+}
+
 
 AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, bool _enabled, int _days, QString _action_frame, QString _action_description, QString description)
 {
@@ -422,9 +450,17 @@ AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionO
 	time_obj = time;
 
 	if (device_obj)
+	{
 		device_obj->setParent(this);
+		connect(device_obj, SIGNAL(satisfied()),
+			this, SLOT(deviceConditionSatisfied()));
+	}
 	if (time_obj)
+	{
 		time_obj->setParent(this);
+		connect(time_obj, SIGNAL(satisfied()),
+			this, SLOT(timeConditionSatisfied()));
+	}
 }
 
 bool AdvancedScenario::isEnabled() const
@@ -483,7 +519,48 @@ QObject *AdvancedScenario::getTimeCondition() const
 
 void AdvancedScenario::start()
 {
-	qDebug() << "START the advanced scenario";
+	if (action_frame.isEmpty())
+	{
+		qDebug("Action frame not set for scenario");
+		return;
+	}
+	qDebug() << "START the advanced scenario" << action_frame;
 	// TODO: implement :)
+	emit started();
 }
 
+void AdvancedScenario::timeConditionSatisfied()
+{
+	if (!enabled)
+	{
+		qDebug("time condition satisfied but scenario disabled");
+		return;
+	}
+	if (!isDayEnabled(QDate::currentDate().dayOfWeek()))
+	{
+		qDebug("condition disabled on this week day");
+		return;
+	}
+	if (device_obj && !device_obj->isSatisfied())
+	{
+		qDebug("time condition satisfied but device condition not satisfied");
+		return;
+	}
+
+	start();
+}
+
+void AdvancedScenario::deviceConditionSatisfied()
+{
+	if (!enabled)
+	{
+		qDebug("device condition satisfied but scenario disabled");
+		return;
+	}
+	// if time condition is set, the device condition is checked again
+	// when the timeout expires
+	if (time_obj)
+		return;
+
+	start();
+}
