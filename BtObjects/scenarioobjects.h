@@ -164,7 +164,7 @@ class TimeConditionObject : public QObject
 	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
 
 public:
-	TimeConditionObject();
+	TimeConditionObject(int hours, int minutes);
 
 	void setHours(int h);
 	int getHours() const;

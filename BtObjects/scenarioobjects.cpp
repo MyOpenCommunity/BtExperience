@@ -47,9 +47,10 @@ QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node)
 
 			if (child.tagName() == "time" && getTextChild(child, "status") == "1")
 			{
-				tc = new TimeConditionObject();
-				tc->setHours(getTextChild(child, "hour").toInt());
-				tc->setMinutes(getTextChild(child, "minute").toInt());
+				int hour = getTextChild(child, "hour").toInt();
+				int minute = getTextChild(child, "minute").toInt();
+
+				tc = new TimeConditionObject(hour, minute);
 			}
 			else if (child.tagName() == "device" && getTextChild(child, "status") == "1")
 			{
@@ -194,10 +195,10 @@ void ScheduledScenario::disable()
 }
 
 
-TimeConditionObject::TimeConditionObject()
+TimeConditionObject::TimeConditionObject(int _hours, int _minutes)
 {
-	hours = 0;
-	minutes = 10;
+	hours = _hours;
+	minutes = _minutes;
 }
 
 int TimeConditionObject::getHours() const
