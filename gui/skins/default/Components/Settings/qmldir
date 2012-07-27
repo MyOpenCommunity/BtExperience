@@ -1,6 +1,6 @@
 AdvancedScenarioAction 1.0 AdvancedScenarioAction.qml
+AdvancedScenarioDateTimeCondition 1.0 AdvancedScenarioDateTimeCondition.qml
 AdvancedScenarioDeviceCondition 1.0 AdvancedScenarioDeviceCondition.qml
-AdvancedScenarioTimeCondition 1.0 AdvancedScenarioTimeCondition.qml
 Brightness 1.0 Brightness.qml
 DaylightSavingTime 1.0 DaylightSavingTime.qml
 Floor 1.0 Floor.qml

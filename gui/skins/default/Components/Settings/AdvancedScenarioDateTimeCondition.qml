@@ -32,18 +32,24 @@ Column {
         Repeater {
             model: ListModel {
                 id: daysModel
-                ListElement { day: "M" }
-                ListElement { day: "T" }
-                ListElement { day: "W" }
-                ListElement { day: "T" }
-                ListElement { day: "F" }
-                ListElement { day: "S" }
-                ListElement { day: "S" }
+                Component.onCompleted: {
+                    daysModel.append({"day": qsTr("M"), "numDay": 1})
+                    daysModel.append({"day": qsTr("T"), "numDay": 2})
+                    daysModel.append({"day": qsTr("W"), "numDay": 3})
+                    daysModel.append({"day": qsTr("T"), "numDay": 4})
+                    daysModel.append({"day": qsTr("F"), "numDay": 5})
+                    daysModel.append({"day": qsTr("S"), "numDay": 6})
+                    daysModel.append({"day": qsTr("S"), "numDay": 7})
+                }
             }
 
             ControlRadio {
                 text: day
-                onClicked: status = !status
+                onClicked: {
+                    column.scenarioObject.setDayEnabled(numDay, !column.scenarioObject.isDayEnabled(numDay))
+                    status = column.scenarioObject.isDayEnabled(numDay) // force the status update of the day
+                }
+                status: column.scenarioObject.isDayEnabled(numDay)
             }
         }
     }
@@ -59,9 +65,8 @@ Column {
         color: "white"
     }
 
-
     ControlDateTime {
-        itemObject: column.scenarioObject
+        itemObject: column.scenarioObject.timeCondition
         twoFields: true
     }
 }

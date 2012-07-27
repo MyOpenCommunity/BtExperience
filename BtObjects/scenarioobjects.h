@@ -235,15 +235,14 @@ public:
 	bool isEnabled() const;
 	void setEnabled(bool enable);
 
-	// 1-6 -> monday-saturday, 0 = 7 -> sunday, to work with both JavaScript and QDate
-	bool isDayEnabled(int day);
-	void setDayEnabled(int day, bool enabled);
-
 	QObject *getDeviceCondition() const;
 	QObject *getTimeCondition() const;
 
 public slots:
 	void start();
+	// 1-6 -> monday-saturday, 0 = 7 -> sunday, to work with both JavaScript and QDate
+	bool isDayEnabled(int day);
+	void setDayEnabled(int day, bool enabled);
 
 signals:
 	void enabledChanged();
