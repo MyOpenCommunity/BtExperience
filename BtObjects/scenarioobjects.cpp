@@ -295,8 +295,12 @@ DeviceConditionObject::DeviceConditionObject(DeviceCondition::Type type, QString
 	else
 		on_state = device_cond->getDefaultState();
 
-	// force update
-	device_cond->setState(device_cond->getState());
+	// hack to force label update; the problem is that
+	// the first updateText() is called when on_state is not set yet,
+	// and we do not have a DeviceConditon pointer to query the
+	// default value
+	if (!on_off)
+		device_cond->setState(device_cond->getState());
 }
 
 
