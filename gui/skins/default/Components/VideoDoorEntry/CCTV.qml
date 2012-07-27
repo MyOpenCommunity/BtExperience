@@ -5,8 +5,6 @@ import "../../js/Stack.js" as Stack
 
 MenuColumn {
     id: column
-    width: 212
-    height: paginator.height
 
     onChildDestroyed: paginator.currentIndex = -1
 
@@ -17,8 +15,6 @@ MenuColumn {
 
     PaginatorList {
         id: paginator
-        width: parent.width
-        listHeight: model.count * 50
         delegate: MenuItemDelegate {
             itemObject: extPlaceModel.getObject(index)
             selectOnClick: false

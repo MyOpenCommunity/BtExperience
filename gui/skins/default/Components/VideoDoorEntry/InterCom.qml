@@ -4,8 +4,6 @@ import BtObjects 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: paginator.height
 
     onChildDestroyed: paginator.currentIndex = -1
 
@@ -16,8 +14,6 @@ MenuColumn {
 
     PaginatorList {
         id: paginator
-        width: parent.width
-        listHeight: modelList.count * 50
 
         delegate: MenuItemDelegate {
             editable: true
