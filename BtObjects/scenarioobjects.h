@@ -173,6 +173,9 @@ public:
 	void setMinutes(int m);
 	int getMinutes() const;
 
+	void save();
+	void reset();
+
 signals:
 	void hoursChanged();
 	void minutesChanged();
@@ -183,6 +186,7 @@ private slots:
 
 private:
 	int hours, minutes;
+	int condition_hours, condition_minutes;
 	QTimer timer;
 };
 
@@ -205,6 +209,9 @@ public:
 	void setOnOff(QVariant value);
 
 	bool isSatisfied();
+
+	void save();
+	void reset();
 
 public slots:
 	void conditionUp();
@@ -254,6 +261,9 @@ public:
 
 public slots:
 	void start();
+	void save();
+	void reset();
+
 	// 1-6 -> monday-saturday, 0 = 7 -> sunday, to work with both JavaScript and QDate
 	bool isDayEnabled(int day);
 	void setDayEnabled(int day, bool enabled);

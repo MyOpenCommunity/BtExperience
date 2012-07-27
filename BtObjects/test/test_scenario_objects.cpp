@@ -277,6 +277,7 @@ void TestScenarioAdvancedTime::testTimeoutFuture()
 
 	obj->setHours(timeout.hour());
 	obj->setMinutes(timeout.minute());
+	obj->save();
 
 	int expected = (60 * 5 - now.second()) * 1000;
 
@@ -290,6 +291,7 @@ void TestScenarioAdvancedTime::testTimeoutPast()
 
 	obj->setHours(timeout.hour());
 	obj->setMinutes(timeout.minute());
+	obj->save();
 
 	int expected = (24 * 60 * 60 - 60 * 5 - now.second()) * 1000;
 
@@ -458,4 +460,33 @@ void TestScenarioAdvancedDeviceEdit::testAmplifierConditionOnOff()
 	QCOMPARE(objon.getOnOff(), QVariant(true));
 	QCOMPARE(objon.getRange(), QVariant("41% - 70%"));
 	QCOMPARE(objon.device_cond->getState(), qMakePair(13, 22));
+}
+
+void TestScenarioAdvancedDeviceEdit::testConditionReset()
+{
+	// only tests one object type because updates go through
+	// the code already tested aobve
+	DeviceConditionObject objon(DeviceCondition::DIMMING, "", "5-7", "3", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.device_cond->getState(), qMakePair(5, 7));
+
+	objon.conditionDown();
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("20% - 40%"));
+	QCOMPARE(objon.device_cond->getState(), qMakePair(2, 4));
+
+	objon.reset();
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.device_cond->getState(), qMakePair(5, 7));
+
+	objon.reset();
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.device_cond->getState(), qMakePair(5, 7));
 }
