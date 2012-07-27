@@ -33,18 +33,34 @@ MenuColumn {
             text: qsTr("enabled")
         }
 
-        Switch {
-            id: enableControl
-            bgImage: "../../images/common/bg_cursore.svg"
-            leftImageBg: "../../images/common/btn_temporizzatore_abilitato.svg"
-            leftImage: "../../images/common/ico_temporizzatore_abilitato.svg"
-            arrowImage: "../../images/common/ico_sposta_dx.svg"
-            rightImageBg: "../../images/common/btn_temporizzatore_disabilitato.svg"
-            rightImage: "../../images/common/ico_temporizzatore_disabilitato.svg"
-            anchors {
-                verticalCenter: parent.verticalCenter
-                right: parent.right
-                rightMargin: 7
+        SvgImage {
+            source: "../../images/common/bg_on-off.svg"
+
+            Row {
+                anchors.centerIn: parent // in this way we need no margins
+
+                ButtonImageThreeStates {
+                    defaultImageBg: "../../images/common/btn_99x35.svg"
+                    pressedImageBg: "../../images/common/btn_99x35_P.svg"
+                    selectedImageBg: "../../images/common/btn_99x35_S.svg"
+                    shadowImage: "../../images/common/btn_shadow_99x35.svg"
+                    defaultImage: "../../images/common/icon_disabled.svg"
+                    pressedImage: "../../images/common/icon_disabled_P.svg"
+                    selectedImage: "../../images/common/icon_disabled_P.svg"
+
+                    onClicked: column.dataModel.disable()
+                }
+
+                ButtonImageThreeStates {
+                    defaultImageBg: "../../images/common/btn_99x35.svg"
+                    pressedImageBg: "../../images/common/btn_99x35_P.svg"
+                    selectedImageBg: "../../images/common/btn_99x35_S.svg"
+                    shadowImage: "../../images/common/btn_shadow_99x35.svg"
+                    defaultImage: "../../images/common/icon_enabled.svg"
+                    pressedImage: "../../images/common/icon_enabled_P.svg"
+                    selectedImage: "../../images/common/icon_enabled_P.svg"
+                    onClicked: column.dataModel.enable()
+                }
             }
         }
     }
