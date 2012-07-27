@@ -204,6 +204,7 @@ TimeConditionObject::TimeConditionObject(int _hours, int _minutes)
 	connect(this, SIGNAL(hoursChanged()), this, SLOT(resetTimer()));
 	connect(this, SIGNAL(minutesChanged()), this, SLOT(resetTimer()));
 	connect(&timer, SIGNAL(timeout()), this, SIGNAL(satisfied()));
+	connect(&timer, SIGNAL(timeout()), this, SLOT(resetTimer()));
 
 	resetTimer();
 }
