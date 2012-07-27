@@ -641,9 +641,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<SourceObject>(uri, 1, 0, "SourceObject",
 		"unable to create an SourceObject instance");
 	qmlRegisterUncreatableType<MultiMediaPlayer>(uri, 1, 0, "MultiMediaPlayer",
-		"unable to create a MultiMediaPlyaer instance");
-	// TODO: this seems to be a good candidate for RegisterUncreatableType...
-	qmlRegisterType<SplitProgram>(uri, 1, 0, "SplitProgram");
+		"unable to create a MultiMediaPlayer instance");
+	qmlRegisterUncreatableType<SplitProgram>(uri, 1, 0, "SplitProgram",
+		"unable to create a SplitProgram instance");
 	qmlRegisterUncreatableType<EnergyLoadManagement>(uri, 1, 0, "EnergyLoadDiagnostic",
 		"unable to create an EnergyLoadDiagnostic instance");
 	qmlRegisterUncreatableType<StopAndGo>(uri, 1, 0, "StopAndGo",
