@@ -198,6 +198,14 @@ Page {
                     text: qsTr("€")
                     status: privateProps.showCurrency === true ? 1 : 0
                     onClicked: privateProps.showCurrency = true
+                    enabled: energyData.rate !== null
+                    Rectangle {
+                        z: 1
+                        anchors.fill: parent
+                        color: "silver"
+                        opacity: 0.6
+                        visible: parent.enabled === false
+                    }
                 }
                 ButtonThreeStates {
                     id: consumptionButton

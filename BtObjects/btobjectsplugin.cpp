@@ -29,6 +29,7 @@
 #include "medialink.h"
 #include "note.h"
 #include "choicelist.h"
+#include "energyrate.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -650,10 +651,13 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create an StopAndGo instance");
 	qmlRegisterUncreatableType<EnergyData>(uri, 1, 0, "EnergyData",
 		"unable to create an EnergyData instance");
+	qmlRegisterUncreatableType<EnergyRate>(uri, 1, 0, "EnergyRate",
+		"unable to create an EnergyRate instance");
 	qmlRegisterUncreatableType<Light>(uri, 1, 0, "Light",
 		"unable to create an Light instance");
 	qmlRegisterUncreatableType<ChoiceList>(uri, 1, 0, "ChoiceList",
 		"unable to create an ChoiceList instance");
+
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
