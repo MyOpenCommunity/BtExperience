@@ -7,11 +7,13 @@
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
+#include "scenevodevicescond.h"
 
 class ScenarioDevice;
 class QDomNode;
 
 QList<ObjectInterface *> createScenarioSystem(const QDomNode &xml_node, int id);
+QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node);
 
 
 /*!
@@ -154,13 +156,76 @@ protected:
 };
 
 
+
+class TimeConditionObject : public QObject
+{
+	Q_OBJECT
+	Q_PROPERTY(int hours READ getHours WRITE setHours NOTIFY hoursChanged)
+	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
+
+public:
+	TimeConditionObject();
+
+	void setHours(int h);
+	int getHours() const;
+	void setMinutes(int m);
+	int getMinutes() const;
+
+signals:
+	void hoursChanged();
+	void minutesChanged();
+
+private:
+	int hours, minutes;
+};
+
+
+class DeviceConditionObject : public QObject, DeviceConditionDisplayInterface
+{
+	Q_OBJECT
+	Q_PROPERTY(QString description READ getDescription CONSTANT)
+	Q_PROPERTY(QVariant onOff READ getOnOff WRITE setOnOff NOTIFY onOffChanged)
+	Q_PROPERTY(QVariant range READ getRange NOTIFY rangeChanged)
+
+public:
+	DeviceConditionObject(DeviceCondition::Type type, QString description, QString trigger, QString where, PullMode pull_mode);
+	QString getDescription() const;
+	QVariant getOnOff() const;
+	QVariant getRange() const;
+
+	void setOnOff(QVariant value);
+
+public slots:
+	void conditionUp();
+	void conditionDown();
+
+signals:
+	void onOffChanged();
+	void rangeChanged();
+
+protected:
+	virtual void updateText(int min_condition_value, int max_condition_value);
+
+private:
+	bool on_off;
+	QString range_description;
+	QString description;
+	DeviceCondition *device_cond;
+	DeviceCondition::Type condition_type;
+	DeviceCondition::ConditionState on_state;
+};
+
+
+
 class AdvancedScenario : public ObjectInterface
 {
 	Q_OBJECT
 	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
+	Q_PROPERTY(QObject *deviceCondition READ getDeviceCondition CONSTANT)
+	Q_PROPERTY(QObject *timeCondition READ getTimeCondition CONSTANT)
 
 public:
-	AdvancedScenario();
+	AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, bool enabled, int days, QString action_frame, QString action_description, QString description);
 
 	virtual int getObjectId() const
 	{
@@ -170,14 +235,27 @@ public:
 	bool isEnabled() const;
 	void setEnabled(bool enable);
 
+	// 1-6 -> monday-saturday, 0 = 7 -> sunday, to work with both JavaScript and QDate
+	bool isDayEnabled(int day);
+	void setDayEnabled(int day, bool enabled);
+
+	QObject *getDeviceCondition() const;
+	QObject *getTimeCondition() const;
+
 public slots:
 	void start();
 
 signals:
 	void enabledChanged();
+	void daysChanged();
 
 private:
 	bool enabled;
+	int days;
+	DeviceConditionObject *device_obj;
+	TimeConditionObject *time_obj;
+	QString action_frame;
+	QString action_description;
 };
 
 

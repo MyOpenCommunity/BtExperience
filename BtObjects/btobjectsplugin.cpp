@@ -265,6 +265,10 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseEnergyData(xml_obj, QString::number(energy_family));
 			++energy_family;
 			break;
+
+		case ObjectInterface::IdAdvancedScenario:
+			obj_list = parseAdvancedScenario(xml_obj);
+			break;
 		}
 
 		if (!obj_list.isEmpty())

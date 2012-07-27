@@ -3,8 +3,10 @@ import Components 1.0
 import Components.Text 1.0
 
 Column {
+    id: column
     width: line.width
     spacing: 10
+    property variant scenarioObject
 
     UbuntuMediumText {
         text: qsTr("activation")
@@ -59,6 +61,7 @@ Column {
 
 
     ControlDateTime {
+        itemObject: column.scenarioObject
         twoFields: true
     }
 }

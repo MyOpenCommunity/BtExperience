@@ -3,6 +3,9 @@ import Components 1.0
 import Components.Text 1.0
 
 Column {
+    id: column
+    property variant scenarioObject
+
     width: line.width
     spacing: 10
 
@@ -18,27 +21,37 @@ Column {
     }
 
     UbuntuLightText {
+        id: deviceDescription
         text: qsTr("device description")
         font.pixelSize: 14
         color: "white"
     }
 
-    Row {
-        spacing: 13
-        height: childrenRect.height
+    Loader {
+        sourceComponent: scenarioObject.onOff !== undefined ? controlOnOff : undefined
+    }
 
-        Repeater {
-            model: ListModel {
-                ListElement { status: "ON" }
-                ListElement { status: "OFF" }
-            }
+    Component {
+        id: controlOnOff
+        Row {
+            spacing: 13
+            height: childrenRect.height
 
-            ControlRadio {
-                text: model.status
-                onClicked: status = !status
+            Repeater {
+                model: ListModel {
+                    ListElement { text: "ON"; value: true }
+                    ListElement { text: "OFF"; value: false }
+                }
+
+                ControlRadio {
+                   status: scenarioObject.onOff === model.value
+                   text: model.text
+                   onClicked: scenarioObject.onOff = model.value
+                }
             }
         }
     }
+
 
     Item { // a spacer
         height: 10
@@ -46,20 +59,16 @@ Column {
     }
 
     UbuntuLightText {
-        text: qsTr("intensity")
+        visible: scenarioObject.range !== undefined
+        text: scenarioObject.description
         font.pixelSize: 14
         color: "white"
     }
 
     ControlSpin {
-        text: "80%"
-        onMinusClicked: {
-
-        }
-
-        onPlusClicked: {
-
-        }
-
+        visible: scenarioObject.range !== undefined
+        text: scenarioObject.range
+        onMinusClicked: scenarioObject.conditionDown()
+        onPlusClicked: scenarioObject.conditionUp()
     }
 }

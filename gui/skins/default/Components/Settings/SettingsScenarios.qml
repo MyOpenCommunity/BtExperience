@@ -1,5 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
+
 import "../../js/Stack.js" as Stack
 
 MenuColumn {
@@ -18,22 +20,21 @@ MenuColumn {
         interactive: false
 
         delegate: MenuItemDelegate {
-            name: model.name
+            itemObject: objectModel.getObject(index)
             hasChild: true
 
             onClicked: {
-                Stack.openPage("SettingsAdvancedScenario.qml")
+                Stack.openPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
             }
         }
 
-        model: modelList
+        model: objectModel
     }
 
-    ListModel {
-        id: modelList
-        Component.onCompleted: {
-            modelList.append({"name": qsTr("Advanced Scenario 1")})
-            modelList.append({"name": qsTr("Advanced Scenario 2")})
-        }
+    ObjectModel {
+        id: objectModel
+        filters: [
+            {objectId: ObjectInterface.IdAdvancedScenario},
+        ]
     }
 }
