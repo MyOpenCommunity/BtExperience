@@ -259,3 +259,39 @@ void TestScenarioAdvanced::testWeekdays()
 	QVERIFY(obj->isDayEnabled(0));
 	QVERIFY(obj->isDayEnabled(7));
 }
+
+void TestScenarioAdvancedTime::init()
+{
+	obj = new TimeConditionObject(0, 0);
+}
+
+void TestScenarioAdvancedTime::cleanup()
+{
+	delete obj;
+}
+
+void TestScenarioAdvancedTime::testTimeoutFuture()
+{
+	QTime now = QTime::currentTime();
+	QTime timeout = now.addSecs(60 * 5);
+
+	obj->setHours(timeout.hour());
+	obj->setMinutes(timeout.minute());
+
+	int expected = (60 * 5 - now.second()) * 1000;
+
+	QVERIFY(abs(obj->timer.interval() - expected) < 1000);
+}
+
+void TestScenarioAdvancedTime::testTimeoutPast()
+{
+	QTime now = QTime::currentTime();
+	QTime timeout = now.addSecs(-60 * 5);
+
+	obj->setHours(timeout.hour());
+	obj->setMinutes(timeout.minute());
+
+	int expected = (24 * 60 * 60 - 60 * 5 - now.second()) * 1000;
+
+	QVERIFY(abs(obj->timer.interval() - expected) < 1000);
+}

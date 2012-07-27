@@ -199,6 +199,13 @@ TimeConditionObject::TimeConditionObject(int _hours, int _minutes)
 {
 	hours = _hours;
 	minutes = _minutes;
+	timer.setSingleShot(true);
+
+	connect(this, SIGNAL(hoursChanged()), this, SLOT(resetTimer()));
+	connect(this, SIGNAL(minutesChanged()), this, SLOT(resetTimer()));
+	connect(&timer, SIGNAL(timeout()), this, SIGNAL(satisfied()));
+
+	resetTimer();
 }
 
 int TimeConditionObject::getHours() const
@@ -227,6 +234,19 @@ void TimeConditionObject::setMinutes(int m)
 int TimeConditionObject::getMinutes() const
 {
 	return minutes;
+}
+
+void TimeConditionObject::resetTimer()
+{
+	const int MSECS_DAY = 24 * 60 * 60 * 1000;
+	QTime now = QTime::currentTime();
+	int msecsto = now.msecsTo(QTime(hours, minutes));
+
+	// make it positive and < MSECS_DAY
+	msecsto = (msecsto % MSECS_DAY + MSECS_DAY) % MSECS_DAY;
+
+	qDebug("(re)starting timer with interval = %d", msecsto);
+	timer.start(msecsto);
 }
 
 

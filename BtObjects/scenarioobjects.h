@@ -159,6 +159,8 @@ protected:
 
 class TimeConditionObject : public QObject
 {
+	friend class TestScenarioAdvancedTime;
+
 	Q_OBJECT
 	Q_PROPERTY(int hours READ getHours WRITE setHours NOTIFY hoursChanged)
 	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
@@ -174,9 +176,14 @@ public:
 signals:
 	void hoursChanged();
 	void minutesChanged();
+	void satisfied();
+
+private slots:
+	void resetTimer();
 
 private:
 	int hours, minutes;
+	QTimer timer;
 };
 
 

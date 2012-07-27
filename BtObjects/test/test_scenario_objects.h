@@ -26,6 +26,7 @@
 class ScenarioModule;
 class ScenarioDevice;
 class AdvancedScenario;
+class TimeConditionObject;
 
 class TestScenarioModule : public TestBtObject
 {
@@ -68,6 +69,22 @@ private slots:
 
 private:
 	AdvancedScenario *obj;
+};
+
+
+class TestScenarioAdvancedTime : public TestBtObject
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+	void cleanup();
+
+	void testTimeoutFuture();
+	void testTimeoutPast();
+
+private:
+	TimeConditionObject *obj;
 };
 
 #endif // TEST_SCENARIO_OBJECTS_H
