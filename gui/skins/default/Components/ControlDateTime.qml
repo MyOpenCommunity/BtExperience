@@ -10,7 +10,7 @@ Item {
     property variant itemObject: undefined
     property int leftColumnValue: itemObject === undefined ? 0 : mode === 0 ? itemObject.hours : itemObject.days
     property int centerColumnValue: itemObject === undefined ? 0 : mode === 0 ? itemObject.minutes : itemObject.months
-    property int rightColumnValue: itemObject === undefined ? 0 : mode === 0 ? itemObject.seconds : itemObject.years
+    property int rightColumnValue:  privateProps.getRightValue()
     property string separator: ":"
     property bool twoFields: false // if true right disappears
     property int mode: 0 // 0 - hms, 1 - dmy
@@ -25,6 +25,15 @@ Item {
         id: privateProps
         property int textBottomMargin: 1
         property int separatorOffset: -3
+
+        function getRightValue() {
+            if (itemObject === undefined || twoFields === true) {
+                return 0
+            }
+            else {
+                return mode === 0 ? itemObject.seconds : itemObject.years
+            }
+        }
     }
 
     function formatNumberLength(num, length) {
