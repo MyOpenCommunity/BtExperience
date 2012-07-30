@@ -30,6 +30,8 @@
 Q_DECLARE_METATYPE(DeviceValues)
 Q_DECLARE_METATYPE(ScenarioModule::Status)
 
+#define TEST_COMMAND "*1*1*1##"
+
 
 static const int SCENARIO_NUMBER = 1;
 
@@ -255,9 +257,10 @@ void TestScenarioAdvanced::testWeekdays()
 void TestScenarioAdvanced::testDeviceCondition()
 {
 	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
-	AdvancedScenario obj(&dc, 0, true, 127, "*1##", "", "");
+	AdvancedScenario obj(&dc, 0, true, 127, TEST_COMMAND, "", "");
 	ObjectTester ts(&obj, SIGNAL(started()));
 	OpenMsg off("*9*0*3##"), on("*9*1*3##");
+	RawDevice dev(1);
 
 	dc.setParent(0);
 
@@ -266,6 +269,9 @@ void TestScenarioAdvanced::testDeviceCondition()
 
 	dc.device_cond->dev->manageFrame(on);
 	ts.checkSignals();
+
+	dev.sendCommand(TEST_COMMAND);
+	compareClientCommand();
 }
 
 void TestScenarioAdvanced::testWeekdayCondition()
@@ -274,9 +280,10 @@ void TestScenarioAdvanced::testWeekdayCondition()
 	int not_today_mask = (~today_mask) & 127;
 
 	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
-	AdvancedScenario obj1(&dc, 0, true, today_mask, "*1##", "", "");
+	AdvancedScenario obj1(&dc, 0, true, today_mask, TEST_COMMAND, "", "");
 	ObjectTester ts1(&obj1, SIGNAL(started()));
 	OpenMsg off("*9*0*3##"), on("*9*1*3##");
+	RawDevice dev(1);
 
 	dc.setParent(0);
 
@@ -286,7 +293,10 @@ void TestScenarioAdvanced::testWeekdayCondition()
 	dc.device_cond->dev->manageFrame(on);
 	ts1.checkSignals();
 
-	AdvancedScenario obj2(&dc, 0, true, not_today_mask, "*1##", "", "");
+	dev.sendCommand(TEST_COMMAND);
+	compareClientCommand();
+
+	AdvancedScenario obj2(&dc, 0, true, not_today_mask, TEST_COMMAND, "", "");
 	ObjectTester ts2(&obj2, SIGNAL(started()));
 
 	dc.setParent(0);
@@ -301,23 +311,28 @@ void TestScenarioAdvanced::testWeekdayCondition()
 void TestScenarioAdvanced::testTimeCondition()
 {
 	TimeConditionObject tc(0, 0);
-	AdvancedScenario obj(0, &tc, true, 127, "*1##", "", "");
+	AdvancedScenario obj(0, &tc, true, 127, TEST_COMMAND, "", "");
 	ObjectTester ts(&obj, SIGNAL(started()));
+	RawDevice dev(1);
 
 	tc.setParent(0);
 
 	tc.timer.setInterval(500);
 
 	QVERIFY(ts.waitForSignal(1000));
+
+	dev.sendCommand(TEST_COMMAND);
+	compareClientCommand();
 }
 
 void TestScenarioAdvanced::testTimeDeviceCondition()
 {
 	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
 	TimeConditionObject tc(0, 0);
-	AdvancedScenario obj(&dc, &tc, true, 127, "*1##", "", "");
+	AdvancedScenario obj(&dc, &tc, true, 127, TEST_COMMAND, "", "");
 	ObjectTester ts(&obj, SIGNAL(started()));
 	OpenMsg off("*9*0*3##"), on("*9*1*3##");
+	RawDevice dev(1);
 
 	tc.setParent(0);
 	dc.setParent(0);
@@ -332,6 +347,9 @@ void TestScenarioAdvanced::testTimeDeviceCondition()
 
 	QVERIFY(dc.isSatisfied());
 	QVERIFY(ts.waitForSignal(1000));
+
+	dev.sendCommand(TEST_COMMAND);
+	compareClientCommand();
 }
 
 void TestScenarioAdvancedTime::init()

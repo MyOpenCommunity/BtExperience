@@ -6,7 +6,7 @@
 */
 
 #include "objectinterface.h"
-#include "device.h" // DeviceValues
+#include "device.h" // DeviceValues, RawDevice
 #include "scenevodevicescond.h"
 
 class ScenarioDevice;
@@ -296,6 +296,7 @@ private:
 	TimeConditionObject *time_obj;
 	QString action_frame;
 	QString action_description;
+	RawDevice *dev;
 };
 
 

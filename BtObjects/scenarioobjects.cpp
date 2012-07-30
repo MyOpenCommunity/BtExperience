@@ -493,6 +493,7 @@ AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionO
 	action_description = _action_description;
 	device_obj = device;
 	time_obj = time;
+	dev = bt_global::add_device_to_cache(new RawDevice, NO_INIT);
 
 	if (device_obj)
 	{
@@ -570,7 +571,7 @@ void AdvancedScenario::start()
 		return;
 	}
 	qDebug() << "START the advanced scenario" << action_frame;
-	// TODO: implement :)
+	dev->sendCommand(action_frame);
 	emit started();
 }
 
