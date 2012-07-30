@@ -625,5 +625,11 @@ void AdvancedScenario::deviceConditionSatisfied()
 	if (time_obj)
 		return;
 
+	if (!isDayEnabled(QDate::currentDate().dayOfWeek()))
+	{
+		qDebug("condition disabled on this week day");
+		return;
+	}
+
 	start();
 }
