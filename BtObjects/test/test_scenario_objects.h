@@ -62,13 +62,12 @@ class TestScenarioAdvanced: public TestBtObject
 	Q_OBJECT
 
 private slots:
-	void init();
-	void cleanup();
-
 	void testWeekdays();
 
-private:
-	AdvancedScenario *obj;
+	void testDeviceCondition();
+	void testTimeCondition();
+	void testTimeDeviceCondition();
+	void testWeekdayCondition();
 };
 
 

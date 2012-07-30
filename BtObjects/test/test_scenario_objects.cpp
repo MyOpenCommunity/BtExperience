@@ -23,6 +23,7 @@
 #include "objecttester.h"
 #include "scenario_device.h"
 #include "scenarioobjects.h"
+#include "openmsg.h"
 
 #include <QtTest>
 
@@ -228,36 +229,109 @@ void TestScenarioModule::checkMethod()
 	QCOMPARE(scen->status, end_status);
 }
 
-void TestScenarioAdvanced::init()
-{
-	obj = new AdvancedScenario(0, 0, false, 0, "", "", "");
-}
-
-void TestScenarioAdvanced::cleanup()
-{
-	delete obj;
-}
-
 void TestScenarioAdvanced::testWeekdays()
 {
-	ObjectTester t(obj, SIGNAL(daysChanged()));
+	AdvancedScenario obj(0, 0, false, 0, "", "", "");
+	ObjectTester t(&obj, SIGNAL(daysChanged()));
 
 	for (int i = 0; i < 8; ++i)
 	{
-		QVERIFY(!obj->isDayEnabled(i));
+		QVERIFY(!obj.isDayEnabled(i));
 
-		obj->setDayEnabled(i, true);
+		obj.setDayEnabled(i, true);
 		t.checkSignals();
-		QVERIFY(obj->isDayEnabled(i));
+		QVERIFY(obj.isDayEnabled(i));
 
-		obj->setDayEnabled(i, false);
+		obj.setDayEnabled(i, false);
 		t.checkSignals();
-		QVERIFY(!obj->isDayEnabled(i));
+		QVERIFY(!obj.isDayEnabled(i));
 	}
 
-	obj->days = 64; // sunday
-	QVERIFY(obj->isDayEnabled(0));
-	QVERIFY(obj->isDayEnabled(7));
+	obj.days = 64; // sunday
+	QVERIFY(obj.isDayEnabled(0));
+	QVERIFY(obj.isDayEnabled(7));
+}
+
+void TestScenarioAdvanced::testDeviceCondition()
+{
+	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
+	AdvancedScenario obj(&dc, 0, true, 127, "*1##", "", "");
+	ObjectTester ts(&obj, SIGNAL(started()));
+	OpenMsg off("*9*0*3##"), on("*9*1*3##");
+
+	dc.setParent(0);
+
+	dc.device_cond->dev->manageFrame(off);
+	ts.checkNoSignals();
+
+	dc.device_cond->dev->manageFrame(on);
+	ts.checkSignals();
+}
+
+void TestScenarioAdvanced::testWeekdayCondition()
+{
+	int today_mask = 1 << (QDate::currentDate().dayOfWeek() - 1);
+	int not_today_mask = (~today_mask) & 127;
+
+	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
+	AdvancedScenario obj1(&dc, 0, true, today_mask, "*1##", "", "");
+	ObjectTester ts1(&obj1, SIGNAL(started()));
+	OpenMsg off("*9*0*3##"), on("*9*1*3##");
+
+	dc.setParent(0);
+
+	dc.device_cond->dev->manageFrame(off);
+	ts1.checkNoSignals();
+
+	dc.device_cond->dev->manageFrame(on);
+	ts1.checkSignals();
+
+	AdvancedScenario obj2(&dc, 0, true, not_today_mask, "*1##", "", "");
+	ObjectTester ts2(&obj2, SIGNAL(started()));
+
+	dc.setParent(0);
+
+	dc.device_cond->dev->manageFrame(off);
+	ts2.checkNoSignals();
+
+	dc.device_cond->dev->manageFrame(on);
+	ts2.checkNoSignals();
+}
+
+void TestScenarioAdvanced::testTimeCondition()
+{
+	TimeConditionObject tc(0, 0);
+	AdvancedScenario obj(0, &tc, true, 127, "*1##", "", "");
+	ObjectTester ts(&obj, SIGNAL(started()));
+
+	tc.setParent(0);
+
+	tc.timer.setInterval(500);
+
+	QVERIFY(ts.waitForSignal(1000));
+}
+
+void TestScenarioAdvanced::testTimeDeviceCondition()
+{
+	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
+	TimeConditionObject tc(0, 0);
+	AdvancedScenario obj(&dc, &tc, true, 127, "*1##", "", "");
+	ObjectTester ts(&obj, SIGNAL(started()));
+	OpenMsg off("*9*0*3##"), on("*9*1*3##");
+
+	tc.setParent(0);
+	dc.setParent(0);
+
+	tc.timer.setInterval(500);
+
+	dc.device_cond->dev->manageFrame(off);
+	ts.checkNoSignals();
+
+	dc.device_cond->dev->manageFrame(on);
+	ts.checkNoSignals();
+
+	QVERIFY(dc.isSatisfied());
+	QVERIFY(ts.waitForSignal(1000));
 }
 
 void TestScenarioAdvancedTime::init()

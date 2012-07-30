@@ -166,6 +166,7 @@ protected:
 
 class TimeConditionObject : public QObject
 {
+	friend class TestScenarioAdvanced;
 	friend class TestScenarioAdvancedTime;
 
 	Q_OBJECT
@@ -200,6 +201,7 @@ private:
 
 class DeviceConditionObject : public QObject, DeviceConditionDisplayInterface
 {
+	friend class TestScenarioAdvanced;
 	friend class TestScenarioAdvancedDeviceEdit;
 
 	Q_OBJECT
