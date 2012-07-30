@@ -160,6 +160,7 @@ public slots:
 
 protected:
 	QString enable_frame, start_frame, stop_frame, disable_frame;
+	RawDevice *dev;
 };
 
 

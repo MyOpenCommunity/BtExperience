@@ -173,30 +173,31 @@ ScheduledScenario::ScheduledScenario(QString _name, QString enable, QString star
 	start_frame = start;
 	stop_frame = stop;
 	disable_frame = disable;
+	dev = bt_global::add_device_to_cache(new RawDevice, NO_INIT);
 }
 
 void ScheduledScenario::start()
 {
-	qDebug() << "ScheduledScenario::start()";
-	// TODO: implement :)
+	if (!start_frame.isEmpty())
+		dev->sendCommand(start_frame);
 }
 
 void ScheduledScenario::stop()
 {
-	qDebug() << "ScheduledScenario::stop()";
-	// TODO: implement :)
+	if (!stop_frame.isEmpty())
+		dev->sendCommand(stop_frame);
 }
 
 void ScheduledScenario::enable()
 {
-	qDebug() << "ScheduledScenario::enable()";
-	// TODO: implement :)
+	if (!enable_frame.isEmpty())
+		dev->sendCommand(enable_frame);
 }
 
 void ScheduledScenario::disable()
 {
-	qDebug() << "ScheduledScenario::disable()";
-	// TODO: implement :)
+	if (!disable_frame.isEmpty())
+		dev->sendCommand(disable_frame);
 }
 
 
