@@ -60,8 +60,6 @@ public:
 		IdPlatformSettings,                     // 15
 		IdMonoChannelSoundDiffusionSystem,
 		IdMonoChannelSoundAmbient,
-		IdSplitBasicScenario,
-		IdSplitAdvancedScenario,
 
 		IdCCTV = 23,
 		IdRoom,
@@ -119,6 +117,11 @@ public:
 		// advanced/scheduled scenarios
 		IdAdvancedScenario = 9001,
 		IdScheduledScenario = 9002,
+		// air conditioning
+		IdSplitBasicScenario = 8010,
+		IdSplitAdvancedScenario = 8014,
+		IdSplitBasicCommand = 8011,
+		IdSplitAdvancedCommand = 8015,
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file

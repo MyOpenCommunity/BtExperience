@@ -16,6 +16,11 @@
 
 class NonControlledProbeDevice;
 class ChoiceList;
+class QDomNode;
+class UiiMapper;
+
+QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node);
+void parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_map);
 
 
 /*!
@@ -170,9 +175,8 @@ public:
 	explicit SplitAdvancedScenario(QString name,
 								   QString key,
 								   AdvancedAirConditioningDevice *d,
-								   QString command,
+								   QString off_command,
 								   NonControlledProbeDevice *d_probe,
-								   QList<SplitAdvancedProgram *> programs,
 								   QList<int> modes,
 								   QList<int> speeds,
 								   QList<int> swings,
@@ -209,6 +213,8 @@ public:
 	Q_INVOKABLE void nextSwing();
 	Q_INVOKABLE void resetProgram();
 
+	void addProgram(SplitAdvancedProgram *program);
+
 signals:
 	void modeChanged();
 	void programChanged();
@@ -229,7 +235,7 @@ protected slots:
 private:
 	void sync();
 
-	QString command;
+	QString off_command;
 	AdvancedAirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
 	QString key;

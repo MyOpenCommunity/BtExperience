@@ -2,6 +2,9 @@
 #include "probe_device.h"
 #include "scaleconversion.h"
 #include "choicelist.h"
+#include "devices_cache.h"
+#include "xmlobject.h"
+#include "uiimapper.h"
 
 #include <QDebug>
 
@@ -13,6 +16,101 @@ namespace
 		SPLIT_SPEED,
 		SPLIT_SWING
 	};
+
+	QStringList mode_strings = QStringList() << "mode_off" << "mode_heating" << "mode_cooling" << "mode_fan" << "mode_dry" << "mode_auto";
+	QStringList speed_strings = QStringList() << "speed_auto" << "speed_low" << "speed_medium" << "speed_high" << "speed_silent";
+
+	QList<int> parseEnumeration(const QDomNode &node, QStringList names)
+	{
+		QDomNamedNodeMap attributes = node.attributes();
+		QList<int> res;
+		int index = 0;
+
+		foreach (QString name, names)
+		{
+			if (attributes.contains("name") && attributes.namedItem(name).toAttr().value() != "-1")
+				res.append(index);
+			++index;
+		}
+
+		return res;
+	}
+
+	QList<int> parseEnumeration(const XmlObject &node, QStringList names)
+	{
+		QList<int> res;
+		int index = 0;
+
+		foreach (QString name, names)
+		{
+			if (node.intValue(name) != -1)
+				res.append(index);
+			++index;
+		}
+
+		return res;
+	}
+}
+
+QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QString off_command = v.intValue("off_presence") ? v.value("off_cmd") : QString();
+		NonControlledProbeDevice *probe = 0;
+		AdvancedAirConditioningDevice *d = new AdvancedAirConditioningDevice(v.value("where"));
+		QList<int> modes, speeds, swings;
+
+		if (v.intValue("eprobe"))
+		{
+			QString where = getAttribute(getChildWithName(ist, "probe"), "where_probe");
+
+			probe = bt_global::add_device_to_cache(new NonControlledProbeDevice(where, NonControlledProbeDevice::INTERNAL));
+		}
+
+		modes = parseEnumeration(v, mode_strings);
+
+		if (v.intValue("speed_presence"))
+			speeds = parseEnumeration(getChildWithName(ist, "speeds"), speed_strings);
+
+		if (v.intValue("swing_presence"))
+			swings << SplitAdvancedProgram::SwingOff << SplitAdvancedProgram::SwingOn;
+
+		obj_list << ObjectPair(uii, new SplitAdvancedScenario(v.value("descr"), "", d, off_command, probe, modes, speeds, swings));
+	}
+	return obj_list;
+}
+
+void parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_map)
+{
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int uii = getIntAttribute(link, "uii");
+			SplitAdvancedScenario *s = uii_map.value<SplitAdvancedScenario>(uii);
+
+			if (!s)
+			{
+				qWarning() << "Invalid split uii" << uii << "in command";
+				continue;
+			}
+
+			SplitAdvancedProgram *p = new SplitAdvancedProgram(v.value("descr"), SplitAdvancedProgram::int2Mode(v.intValue("mode")),
+									   v.intValue("setpoint"), SplitAdvancedProgram::int2Speed(v.intValue("speed")),
+									   SplitAdvancedProgram::int2Swing(v.intValue("fan_swing")));
+			s->addProgram(p);
+		}
+	}
 }
 
 SplitAdvancedProgram::SplitAdvancedProgram(QObject *parent) :
@@ -25,27 +123,26 @@ SplitAdvancedProgram::SplitAdvancedProgram(QObject *parent) :
 {}
 
 SplitAdvancedProgram::SplitAdvancedProgram(
-		QString name,
+		QString _name,
 		Mode mode,
-		int temperature,
+		int _temperature,
 		Speed speed,
 		Swing swing,
 		QObject *parent) : QObject(parent), mode(mode), speed(speed), swing(swing)
 {
-	Q_ASSERT_X(!name.isEmpty(), "SplitAdvancedProgram::SplitAdvancedProgram", "name cannot be empty.");
-	Q_ASSERT_X(temperature >= 160, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be less than 16°C.");
-	Q_ASSERT_X(temperature <= 300, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be more than 30°C.");
-	this->name = name;
-	this->temperature = temperature;
+	Q_ASSERT_X(!_name.isEmpty(), "SplitAdvancedProgram::SplitAdvancedProgram", "name cannot be empty.");
+	Q_ASSERT_X(_temperature >= 160, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be less than 16°C.");
+	Q_ASSERT_X(_temperature <= 300, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be more than 30°C.");
+	name = _name;
+	temperature = _temperature;
 }
 
 
-SplitAdvancedScenario::SplitAdvancedScenario(QString name,
-											 QString key,
+SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
+											 QString _key,
 											 AdvancedAirConditioningDevice *d,
-											 QString command,
+											 QString _off_command,
 											 NonControlledProbeDevice *d_probe,
-											 QList<SplitAdvancedProgram *> programs,
 											 QList<int> _modes,
 											 QList<int> _speeds,
 											 QList<int> _swings,
@@ -55,32 +152,29 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 	dev = d;
 	dev_probe = d_probe;
 	if (dev_probe)
-	{
 		connect(dev_probe, SIGNAL(valueReceived(DeviceValues)),
 				SLOT(valueReceived(DeviceValues)));
-	}
 
 	modes = new ChoiceList(this);
-	foreach (int mode, _modes) {
+	foreach (int mode, _modes)
 		modes->add(mode);
-	}
+
 	speeds = new ChoiceList(this);
-	foreach (int speed, _speeds) {
+	foreach (int speed, _speeds)
 		speeds->add(speed);
-	}
+
 	swings = new ChoiceList(this);
-	foreach (int swing, _swings) {
+	foreach (int swing, _swings)
 		swings->add(swing);
-	}
-	this->command = command;
-	this->key = key;
-	this->name = name;
-	program_list = programs;
+
+	off_command = _off_command;
+	key = _key;
+	name = _name;
 	actual_program.name = QString();
 	actual_program.mode = static_cast<SplitAdvancedProgram::Mode>(modes->value());
-	current[SPLIT_SWING] = static_cast<SplitAdvancedProgram::Swing>(swings->value());
+	current[SPLIT_SWING] = static_cast<SplitAdvancedProgram::Swing>(swings->value(SplitAdvancedProgram::SwingInvalid));
 	actual_program.temperature = 200;
-	current[SPLIT_SPEED] = static_cast<SplitAdvancedProgram::Speed>(speeds->value());
+	current[SPLIT_SPEED] = static_cast<SplitAdvancedProgram::Speed>(speeds->value(SplitAdvancedProgram::SpeedInvalid));
 	temperature = 200;
 	reset();
 	sync();
@@ -88,9 +182,9 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString name,
 
 void SplitAdvancedScenario::sync()
 {
-	while (speeds->value() != to_apply[SPLIT_SPEED].toInt())
+	while (speeds->value(SplitAdvancedProgram::SpeedInvalid) != to_apply[SPLIT_SPEED].toInt())
 		speeds->next();
-	while (swings->value() != to_apply[SPLIT_SWING].toInt())
+	while (swings->value(SplitAdvancedProgram::SwingInvalid) != to_apply[SPLIT_SWING].toInt())
 		swings->next();
 }
 
@@ -110,6 +204,11 @@ QStringList SplitAdvancedScenario::getPrograms() const
 int SplitAdvancedScenario::getCount() const
 {
 	return program_list.size();
+}
+
+void SplitAdvancedScenario::addProgram(SplitAdvancedProgram *program)
+{
+	program_list.append(program);
 }
 
 void SplitAdvancedScenario::setProgram(QString program)
@@ -143,11 +242,9 @@ void SplitAdvancedScenario::setProgram(QString program)
 	}
 
 	// sets the choosen program
-	if (actual_program.name != program_list.at(p)->name)
-	{
-		actual_program.name = program_list.at(p)->name;
-		emit programChanged();
-	}
+	actual_program.name = program_list.at(p)->name;
+	emit programChanged();
+
 	setMode(program_list.at(p)->mode);
 	setSetPoint(program_list.at(p)->temperature);
 	if (to_apply[SPLIT_SPEED] != program_list.at(p)->speed)
@@ -216,6 +313,9 @@ void SplitAdvancedScenario::resetProgram()
 
 void SplitAdvancedScenario::nextSpeed()
 {
+	if (speeds->size() == 0)
+		return;
+
 	resetProgram();
 	SplitAdvancedProgram::Speed old_value = static_cast<SplitAdvancedProgram::Speed>(to_apply[SPLIT_SPEED].toInt());
 	speeds->next();
@@ -226,6 +326,9 @@ void SplitAdvancedScenario::nextSpeed()
 
 void SplitAdvancedScenario::prevSpeed()
 {
+	if (speeds->size() == 0)
+		return;
+
 	resetProgram();
 	SplitAdvancedProgram::Speed old_value = static_cast<SplitAdvancedProgram::Speed>(to_apply[SPLIT_SPEED].toInt());
 	speeds->previous();
@@ -234,9 +337,11 @@ void SplitAdvancedScenario::prevSpeed()
 		emit speedChanged();
 }
 
-#include <iostream>
 void SplitAdvancedScenario::nextSwing()
 {
+	if (speeds->size() == 0)
+		return;
+
 	resetProgram();
 	SplitAdvancedProgram::Swing old_value = static_cast<SplitAdvancedProgram::Swing>(to_apply[SPLIT_SWING].toInt());
 	swings->next();
@@ -247,6 +352,9 @@ void SplitAdvancedScenario::nextSwing()
 
 void SplitAdvancedScenario::prevSwing()
 {
+	if (speeds->size() == 0)
+		return;
+
 	resetProgram();
 	SplitAdvancedProgram::Swing old_value = static_cast<SplitAdvancedProgram::Swing>(to_apply[SPLIT_SWING].toInt());
 	swings->previous();

@@ -15,6 +15,11 @@ int ChoiceList::value() const
 	return values.at(choice);
 }
 
+int ChoiceList::value(int def) const
+{
+	return choice == -1 ? def : value();
+}
+
 void ChoiceList::next()
 {
 	if (++choice >= values.size())
@@ -34,4 +39,9 @@ QVariantList ChoiceList::getValues() const
 		result.append(choice);
 	}
 	return result;
+}
+
+int ChoiceList::size() const
+{
+	return values.size();
 }

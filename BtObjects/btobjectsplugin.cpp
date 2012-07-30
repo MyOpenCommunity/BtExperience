@@ -243,6 +243,21 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseExternalNonControlledProbes(xml_obj, ObjectInterface::IdThermalNonControlledProbe);
 			break;
 
+		case ObjectInterface::IdSplitBasicScenario:
+			obj_list = parseSplitBasicScenario(xml_obj);
+			break;
+		case ObjectInterface::IdSplitAdvancedScenario:
+			obj_list = parseSplitAdvancedScenario(xml_obj);
+			break;
+		case ObjectInterface::IdSplitBasicCommand:
+			// updates program list in basic split
+			parseSplitBasicCommand(xml_obj, uii_map);
+			break;
+		case ObjectInterface::IdSplitAdvancedCommand:
+			// updates program list in advanced split
+			parseSplitAdvancedCommand(xml_obj, uii_map);
+			break;
+
 		case ObjectInterface::IdStopAndGo:
 			obj_list = parseStopAndGo(xml_obj);
 			break;
@@ -370,58 +385,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		case ObjectInterface::IdMonoChannelSoundDiffusionSystem:
 			obj_list = createSoundDiffusionSystem(item, id);
 			break;
-		case ObjectInterface::IdSplitBasicScenario:
-		{
-			QStringList programs;
-			foreach (const QDomNode &programs_node, getChildrenExact(item, "programs"))
-				foreach (const QDomNode &program_node, getChildrenExact(programs_node, "program"))
-					programs << program_node.toElement().text();
-			obj = new SplitBasicScenario(descr,
-										 where,
-										 bt_global::add_device_to_cache(
-											 new AirConditioningDevice(where)),
-										 getTextChild(item, "command"),
-										 getTextChild(item, "off_command"),
-										 createNonControlledProbeDevice(item),
-										 programs);
-			break;
-		}
-		case ObjectInterface::IdSplitAdvancedScenario:
-		{
-			QList<SplitAdvancedProgram *> programs;
-			foreach (const QDomNode &programs_node, getChildrenExact(item, "programs"))
-				foreach (const QDomNode &program_node, getChildrenExact(programs_node, "program"))
-					programs << new SplitAdvancedProgram(getTextChild(program_node, "name"), SplitAdvancedProgram::int2Mode(getTextChild(program_node, "mode").toInt()),
-												 getTextChild(program_node, "set_point").toInt(), SplitAdvancedProgram::int2Speed(getTextChild(program_node, "speed").toInt()),
-												 SplitAdvancedProgram::int2Swing(getTextChild(program_node, "swing").toInt()));
-			QList<int> modes;
-			modes << SplitAdvancedProgram::ModeOff
-				  << SplitAdvancedProgram::ModeWinter
-				  << SplitAdvancedProgram::ModeSummer
-				  << SplitAdvancedProgram::ModeFan
-				  << SplitAdvancedProgram::ModeDehumidification
-				  << SplitAdvancedProgram::ModeAuto;
-			QList<int> speeds;
-			speeds << SplitAdvancedProgram::SpeedAuto
-				   << SplitAdvancedProgram::SpeedMin
-				   << SplitAdvancedProgram::SpeedMed
-				   << SplitAdvancedProgram::SpeedMax
-				   << SplitAdvancedProgram::SpeedSilent;
-			QList<int> swings;
-			swings << SplitAdvancedProgram::SwingOff
-				   << SplitAdvancedProgram::SwingOn;
-			obj = new SplitAdvancedScenario(descr,
-											where,
-											bt_global::add_device_to_cache(
-												new AdvancedAirConditioningDevice(where)),
-											getTextChild(item, "command"),
-											createNonControlledProbeDevice(item),
-											programs,
-											modes,
-											speeds,
-											swings);
-			break;
-		}
 		case ObjectInterface::IdCCTV:
 			obj = parseCCTV(item);
 			break;

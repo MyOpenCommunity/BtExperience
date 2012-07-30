@@ -14,6 +14,32 @@
 
 class AirConditioningDevice;
 class NonControlledProbeDevice;
+class QDomNode;
+class UiiMapper;
+class ObjectDataModel;
+
+QList<ObjectPair> parseSplitBasicScenario(const QDomNode &xml_node);
+void parseSplitBasicCommand(const QDomNode &xml_node, const UiiMapper &uii_map);
+
+
+/*!
+	\ingroup AirConditioning
+	\brief Container for basic aplit program
+
+	The program number is in the object id, the program name in the object name.
+*/
+class SplitBasicProgram : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	SplitBasicProgram(const QString &name, int number);
+
+	virtual int getObjectId() const { return program_number; }
+
+private:
+	int program_number;
+};
 
 
 /*!
@@ -54,10 +80,8 @@ public:
 	explicit SplitBasicScenario(QString name,
 								QString key,
 								AirConditioningDevice *d,
-								QString command,
 								QString off_command,
 								NonControlledProbeDevice *d_probe,
-								QStringList programs,
 								QObject *parent = 0);
 
 	virtual int getObjectId() const
@@ -78,6 +102,8 @@ public:
 
 	Q_INVOKABLE void apply();
 
+	void addProgram(SplitBasicProgram *program);
+
 signals:
 	void programChanged();
 	void temperatureChanged();
@@ -85,17 +111,12 @@ signals:
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
-protected:
-	void sendScenarioCommand();
-	void sendOffCommand();
-
 private:
-	QString command;
 	AirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
 	QString key;
-	QString actual_program;
-	QStringList program_list;
+	SplitBasicProgram *actual_program;
+	QList<SplitBasicProgram *> program_list;
 	int temperature;
 };
 

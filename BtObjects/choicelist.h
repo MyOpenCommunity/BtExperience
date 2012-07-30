@@ -34,9 +34,11 @@ public:
 	*/
 	void add(int value);
 	int value() const;
+	int value(int def) const;
 	void next();
 	void previous();
 	QVariantList getValues() const;
+	int size() const;
 
 private:
 	QList<int> values;
