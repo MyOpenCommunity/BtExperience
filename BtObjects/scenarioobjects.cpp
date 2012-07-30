@@ -7,20 +7,65 @@
 #include <QDomNode>
 #include <QDebug>
 
-QList<ObjectInterface *> createScenarioSystem(const QDomNode &xml_node, int id)
+
+QList<ObjectPair> parseScenarioUnit(const QDomNode &xml_node)
 {
-	Q_UNUSED(xml_node);
-	Q_UNUSED(id);
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
 
-	QList<ObjectInterface *> objects;
-	objects << new ScheduledScenario("scheduled scenario", "enable", "start", "stop", "disable");
-	objects << new SimpleScenario(3, "mattino", bt_global::add_device_to_cache(new ScenarioDevice("39")));
-	objects << new SimpleScenario(1, "sera", bt_global::add_device_to_cache(new ScenarioDevice("39")));
-	objects << new ScenarioModule(1, "cinema", bt_global::add_device_to_cache(new ScenarioDevice("40")));
-	objects << new ScenarioModule(2, "in vacanza", bt_global::add_device_to_cache(new ScenarioDevice("40")));
-	objects << new ScenarioModule(2, "party", bt_global::add_device_to_cache(new ScenarioDevice("41")));
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
 
-	return objects;
+		obj_list << ObjectPair(uii, new SimpleScenario(v.intValue("what"), v.value("descr"), bt_global::add_device_to_cache(new ScenarioDevice(v.value("where")))));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseScenarioModule(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		obj_list << ObjectPair(uii, new ScenarioModule(v.intValue("what"), v.value("descr"), bt_global::add_device_to_cache(new ScenarioDevice(v.value("where")))));
+	}
+	return obj_list;
+}
+
+QString parseSchedCommand(const QDomNode &xml_node, QString name)
+{
+	QDomNode scen = getChildWithName(xml_node, "schedscen");
+	QDomNode cmd = getChildWithName(scen, name);
+
+	if (!getTextChild(cmd, "presence").toInt())
+		return QString();
+
+	return getTextChild(cmd, "open");
+}
+
+QList<ObjectPair> parseScheduledScenario(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QString enable = parseSchedCommand(ist, "enable");
+		QString start = parseSchedCommand(ist, "start");
+		QString stop = parseSchedCommand(ist, "stop");
+		QString disable = parseSchedCommand(ist, "disable");
+
+		obj_list << ObjectPair(uii, new ScheduledScenario(v.value("descr"), enable, start, stop, disable));
+	}
+	return obj_list;
 }
 
 QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node)

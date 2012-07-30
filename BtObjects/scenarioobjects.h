@@ -12,7 +12,9 @@
 class ScenarioDevice;
 class QDomNode;
 
-QList<ObjectInterface *> createScenarioSystem(const QDomNode &xml_node, int id);
+QList<ObjectPair> parseScenarioUnit(const QDomNode &xml_node);
+QList<ObjectPair> parseScenarioModule(const QDomNode &xml_node);
+QList<ObjectPair> parseScheduledScenario(const QDomNode &xml_node);
 QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node);
 
 

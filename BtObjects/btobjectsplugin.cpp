@@ -267,6 +267,15 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			++energy_family;
 			break;
 
+		case ObjectInterface::IdSimpleScenario:
+			obj_list = parseScenarioUnit(xml_obj);
+			break;
+		case ObjectInterface::IdScenarioModule:
+			obj_list = parseScenarioModule(xml_obj);
+			break;
+		case ObjectInterface::IdScheduledScenario:
+			obj_list = parseScheduledScenario(xml_obj);
+			break;
 		case ObjectInterface::IdAdvancedScenario:
 			obj_list = parseAdvancedScenario(xml_obj);
 			break;
@@ -413,9 +422,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 											swings);
 			break;
 		}
-		case ObjectInterface::IdScenarioSystem:
-			obj_list = createScenarioSystem(item, id);
-			break;
 		case ObjectInterface::IdCCTV:
 			obj = parseCCTV(item);
 			break;

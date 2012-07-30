@@ -62,7 +62,7 @@ public:
 		IdMonoChannelSoundAmbient,
 		IdSplitBasicScenario,
 		IdSplitAdvancedScenario,
-		IdScenarioSystem,                       // 20 - TO BE REMOVED
+
 		IdCCTV = 23,
 		IdRoom,
 		IdIntercom,                             // 25
@@ -75,6 +75,10 @@ public:
 		IdDimmerGroup = 100, //!< Group of lights containing only dimmer objects
 		IdDimmer100Group = 101, //!< group of lights containing only 100-level dimmer objects
 		// from configuration file
+		// scenarios
+		IdSimpleScenario = 1001, //!< Scenario unit
+		IdScenarioModule = 1002, //!< Scenario module
+		IdScenarioPlus = 1003, //!< Scenario plus
 		// lights
 		IdDimmerFixed = 2001, //!< 10-level dimmer
 		IdLightGroup = 2004, //!< A set of lights
@@ -112,8 +116,9 @@ public:
 		IdLoadDiagnostic = 6104, //!< Load diagnostic
 		IdLoadWithControlUnit = 6111, //!< Energy load with control unit
 		IdLoadWithoutControlUnit = 6112, //!< Energy load without control unit
-		// scenarios
+		// advanced/scheduled scenarios
 		IdAdvancedScenario = 9001,
+		IdScheduledScenario = 9002,
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file
@@ -123,10 +128,6 @@ public:
 		IdDimmer100Fixed = 10022002, //!< 100-level dimmer with fixed time
 		IdLightCustom = 10012003, //!< A simple light actuator with custom time
 		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
-
-		IdSimpleScenario,
-		IdScenarioModule,
-		IdScheduledScenario,
 
 		IdIpRadio,
 		// the last value + 1, used to check the ids requested from qml
