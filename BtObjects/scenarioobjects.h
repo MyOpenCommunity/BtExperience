@@ -129,6 +129,11 @@ class ScheduledScenario : public ObjectInterface
 {
 	Q_OBJECT
 
+	Q_PROPERTY(bool hasStart READ hasStart CONSTANT)
+	Q_PROPERTY(bool hasStop READ hasStop CONSTANT)
+	Q_PROPERTY(bool hasEnable READ hasEnable CONSTANT)
+	Q_PROPERTY(bool hasDisable READ hasDisable CONSTANT)
+
 public:
 	ScheduledScenario(QString name, QString enable, QString start, QString stop, QString disable);
 
@@ -136,6 +141,11 @@ public:
 	{
 		return ObjectInterface::IdScheduledScenario;
 	}
+
+	bool hasStart() const;
+	bool hasStop() const;
+	bool hasEnable() const;
+	bool hasDisable() const;
 
 public slots:
 	/*!
