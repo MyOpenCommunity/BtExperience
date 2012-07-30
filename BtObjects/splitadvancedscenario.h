@@ -28,7 +28,7 @@ class ChoiceList;
 	string property to hold the program name. Redfines some enums so they can
 	be exported to QML.
 */
-class SplitProgram : public QObject
+class SplitAdvancedProgram : public QObject
 {
 	Q_OBJECT
 
@@ -79,7 +79,7 @@ public:
 		return static_cast<Swing>(v);
 	}
 
-	explicit SplitProgram(
+	explicit SplitAdvancedProgram(
 			QString name,
 			Mode mode,
 			int temperature,
@@ -87,7 +87,7 @@ public:
 			Swing swing,
 			QObject *parent=0);
 
-	explicit SplitProgram(QObject *parent=0);
+	explicit SplitAdvancedProgram(QObject *parent=0);
 
 	QString name;
 	Mode mode;
@@ -114,12 +114,12 @@ class SplitAdvancedScenario : public ObjectInterface
 	/*!
 		\brief Gets or sets the split mode
 	*/
-	Q_PROPERTY(SplitProgram::Mode mode READ getMode WRITE setMode NOTIFY modeChanged)
+	Q_PROPERTY(SplitAdvancedProgram::Mode mode READ getMode WRITE setMode NOTIFY modeChanged)
 
 	/*!
 		\brief Gets the split swing
 	*/
-	Q_PROPERTY(SplitProgram::Swing swing READ getSwing NOTIFY swingChanged)
+	Q_PROPERTY(SplitAdvancedProgram::Swing swing READ getSwing NOTIFY swingChanged)
 
 	/*!
 		\brief Gets or sets the split temperature set point
@@ -129,7 +129,7 @@ class SplitAdvancedScenario : public ObjectInterface
 	/*!
 		\brief Gets the split fan speed
 	*/
-	Q_PROPERTY(SplitProgram::Speed speed READ getSpeed NOTIFY speedChanged)
+	Q_PROPERTY(SplitAdvancedProgram::Speed speed READ getSpeed NOTIFY speedChanged)
 
 	/*!
 		\brief Gets or sets the actual program
@@ -172,7 +172,7 @@ public:
 								   AdvancedAirConditioningDevice *d,
 								   QString command,
 								   NonControlledProbeDevice *d_probe,
-								   QList<SplitProgram *> programs,
+								   QList<SplitAdvancedProgram *> programs,
 								   QList<int> modes,
 								   QList<int> speeds,
 								   QList<int> swings,
@@ -188,15 +188,15 @@ public:
 		return key;
 	}
 
-	SplitProgram::Mode getMode() const;
-	void setMode(SplitProgram::Mode mode);
+	SplitAdvancedProgram::Mode getMode() const;
+	void setMode(SplitAdvancedProgram::Mode mode);
 	QString getProgram() const;
 	void setProgram(QString program);
 	QStringList getPrograms() const;
-	SplitProgram::Swing getSwing() const;
+	SplitAdvancedProgram::Swing getSwing() const;
 	int getSetPoint() const;
 	void setSetPoint(int setPoint);
-	SplitProgram::Speed getSpeed() const;
+	SplitAdvancedProgram::Speed getSpeed() const;
 	int getCount() const;
 	int getTemperature() const;
 	QObject *getModes() const;
@@ -233,8 +233,8 @@ private:
 	AdvancedAirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
 	QString key;
-	SplitProgram actual_program; // name empty means custom programming
-	QList<SplitProgram *> program_list;
+	SplitAdvancedProgram actual_program; // name empty means custom programming
+	QList<SplitAdvancedProgram *> program_list;
 	int temperature;
 	ChoiceList *modes;
 	ChoiceList *speeds;

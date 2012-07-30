@@ -388,28 +388,28 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		}
 		case ObjectInterface::IdSplitAdvancedScenario:
 		{
-			QList<SplitProgram *> programs;
+			QList<SplitAdvancedProgram *> programs;
 			foreach (const QDomNode &programs_node, getChildrenExact(item, "programs"))
 				foreach (const QDomNode &program_node, getChildrenExact(programs_node, "program"))
-					programs << new SplitProgram(getTextChild(program_node, "name"), SplitProgram::int2Mode(getTextChild(program_node, "mode").toInt()),
-												 getTextChild(program_node, "set_point").toInt(), SplitProgram::int2Speed(getTextChild(program_node, "speed").toInt()),
-												 SplitProgram::int2Swing(getTextChild(program_node, "swing").toInt()));
+					programs << new SplitAdvancedProgram(getTextChild(program_node, "name"), SplitAdvancedProgram::int2Mode(getTextChild(program_node, "mode").toInt()),
+												 getTextChild(program_node, "set_point").toInt(), SplitAdvancedProgram::int2Speed(getTextChild(program_node, "speed").toInt()),
+												 SplitAdvancedProgram::int2Swing(getTextChild(program_node, "swing").toInt()));
 			QList<int> modes;
-			modes << SplitProgram::ModeOff
-				  << SplitProgram::ModeWinter
-				  << SplitProgram::ModeSummer
-				  << SplitProgram::ModeFan
-				  << SplitProgram::ModeDehumidification
-				  << SplitProgram::ModeAuto;
+			modes << SplitAdvancedProgram::ModeOff
+				  << SplitAdvancedProgram::ModeWinter
+				  << SplitAdvancedProgram::ModeSummer
+				  << SplitAdvancedProgram::ModeFan
+				  << SplitAdvancedProgram::ModeDehumidification
+				  << SplitAdvancedProgram::ModeAuto;
 			QList<int> speeds;
-			speeds << SplitProgram::SpeedAuto
-				   << SplitProgram::SpeedMin
-				   << SplitProgram::SpeedMed
-				   << SplitProgram::SpeedMax
-				   << SplitProgram::SpeedSilent;
+			speeds << SplitAdvancedProgram::SpeedAuto
+				   << SplitAdvancedProgram::SpeedMin
+				   << SplitAdvancedProgram::SpeedMed
+				   << SplitAdvancedProgram::SpeedMax
+				   << SplitAdvancedProgram::SpeedSilent;
 			QList<int> swings;
-			swings << SplitProgram::SwingOff
-				   << SplitProgram::SwingOn;
+			swings << SplitAdvancedProgram::SwingOff
+				   << SplitAdvancedProgram::SwingOn;
 			obj = new SplitAdvancedScenario(descr,
 											where,
 											bt_global::add_device_to_cache(
@@ -649,8 +649,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create an SourceObject instance");
 	qmlRegisterUncreatableType<MultiMediaPlayer>(uri, 1, 0, "MultiMediaPlayer",
 		"unable to create a MultiMediaPlayer instance");
-	qmlRegisterUncreatableType<SplitProgram>(uri, 1, 0, "SplitProgram",
-		"unable to create a SplitProgram instance");
+	qmlRegisterUncreatableType<SplitAdvancedProgram>(uri, 1, 0, "SplitAdvancedProgram",
+		"unable to create a SplitAdvancedProgram instance");
 	qmlRegisterUncreatableType<EnergyLoadManagement>(uri, 1, 0, "EnergyLoadDiagnostic",
 		"unable to create an EnergyLoadDiagnostic instance");
 	qmlRegisterUncreatableType<StopAndGo>(uri, 1, 0, "StopAndGo",
