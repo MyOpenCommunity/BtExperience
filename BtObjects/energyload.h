@@ -307,6 +307,16 @@ class EnergyLoadManagementWithControlUnit : public EnergyLoadManagement
 	*/
 	Q_PROPERTY(bool loadForced READ getLoadForced NOTIFY loadForcedChanged)
 
+	/*!
+		\brief The duration to be used when forcing the load.
+
+		A property to record the duration set by the user to force the load on.
+		Call \ref increaseForceDuration and \ref decreaseForceDuration to change
+		the force duration value. Those methods automatically step through all
+		possible values.
+	*/
+	Q_PROPERTY(int forceDuration READ getForceDuration NOTIFY forceDurationChanged)
+
 public:
 	EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool is_advanced, QString name, EnergyRate *rate = 0);
 
@@ -316,6 +326,8 @@ public:
 	bool getLoadEnabled() const;
 
 	bool getLoadForced() const;
+
+	int getForceDuration() const;
 
 public slots:
 	/*!
@@ -341,15 +353,20 @@ public slots:
 	*/
 	void stopForcing();
 
+	void decreaseForceDuration();
+	void increaseForceDuration();
+
 signals:
 	void loadEnabledChanged();
 	void loadForcedChanged();
+	void forceDurationChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
 	bool load_enabled, load_forced, is_advanced;
+	int force_duration;
 };
 
 #endif

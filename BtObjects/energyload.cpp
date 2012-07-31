@@ -4,6 +4,9 @@
 #include "devices_cache.h"
 #include "energyrate.h"
 
+#include <QDebug>
+
+
 namespace
 {
 	EnergyLoadManagement::LoadStatus mapLoad(int level)
@@ -264,6 +267,7 @@ EnergyLoadManagementWithControlUnit::EnergyLoadManagementWithControlUnit(LoadsDe
 {
 	load_enabled = load_forced = false;
 	is_advanced = advanced;
+	force_duration = 150; // default value is 2h 30m
 }
 
 bool EnergyLoadManagementWithControlUnit::getHasConsumptionMeters() const
@@ -281,6 +285,11 @@ bool EnergyLoadManagementWithControlUnit::getLoadForced() const
 	return load_forced;
 }
 
+int EnergyLoadManagementWithControlUnit::getForceDuration() const
+{
+	return force_duration;
+}
+
 void EnergyLoadManagementWithControlUnit::forceOn()
 {
 	dev->enable();
@@ -294,6 +303,22 @@ void EnergyLoadManagementWithControlUnit::forceOn(int minutes)
 void EnergyLoadManagementWithControlUnit::stopForcing()
 {
 	dev->forceOn();
+}
+
+void EnergyLoadManagementWithControlUnit::decreaseForceDuration()
+{
+	if (force_duration - LoadsDevice::FORCE_DURATION_STEP < LoadsDevice::FORCE_DURATION_MIN)
+		return;
+	force_duration -= LoadsDevice::FORCE_DURATION_STEP;
+	emit forceDurationChanged();
+}
+
+void EnergyLoadManagementWithControlUnit::increaseForceDuration()
+{
+	if (force_duration + LoadsDevice::FORCE_DURATION_STEP > LoadsDevice::FORCE_DURATION_MAX)
+		return;
+	force_duration += LoadsDevice::FORCE_DURATION_STEP;
+	emit forceDurationChanged();
 }
 
 void EnergyLoadManagementWithControlUnit::valueReceived(const DeviceValues &values_list)
