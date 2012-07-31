@@ -29,6 +29,7 @@
 #include "medialink.h"
 #include "note.h"
 #include "choicelist.h"
+#include "energyrate.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -242,6 +243,21 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseExternalNonControlledProbes(xml_obj, ObjectInterface::IdThermalNonControlledProbe);
 			break;
 
+		case ObjectInterface::IdSplitBasicScenario:
+			obj_list = parseSplitBasicScenario(xml_obj);
+			break;
+		case ObjectInterface::IdSplitAdvancedScenario:
+			obj_list = parseSplitAdvancedScenario(xml_obj);
+			break;
+		case ObjectInterface::IdSplitBasicCommand:
+			// updates program list in basic split
+			parseSplitBasicCommand(xml_obj, uii_map);
+			break;
+		case ObjectInterface::IdSplitAdvancedCommand:
+			// updates program list in advanced split
+			parseSplitAdvancedCommand(xml_obj, uii_map);
+			break;
+
 		case ObjectInterface::IdStopAndGo:
 			obj_list = parseStopAndGo(xml_obj);
 			break;
@@ -264,6 +280,19 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			objmodel << new EnergyFamily(getAttribute(xml_obj, "descr"), QString::number(energy_family));
 			obj_list = parseEnergyData(xml_obj, QString::number(energy_family));
 			++energy_family;
+			break;
+
+		case ObjectInterface::IdSimpleScenario:
+			obj_list = parseScenarioUnit(xml_obj);
+			break;
+		case ObjectInterface::IdScenarioModule:
+			obj_list = parseScenarioModule(xml_obj);
+			break;
+		case ObjectInterface::IdScheduledScenario:
+			obj_list = parseScheduledScenario(xml_obj);
+			break;
+		case ObjectInterface::IdAdvancedScenario:
+			obj_list = parseAdvancedScenario(xml_obj);
 			break;
 		}
 
@@ -355,61 +384,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			break;
 		case ObjectInterface::IdMonoChannelSoundDiffusionSystem:
 			obj_list = createSoundDiffusionSystem(item, id);
-			break;
-		case ObjectInterface::IdSplitBasicScenario:
-		{
-			QStringList programs;
-			foreach (const QDomNode &programs_node, getChildrenExact(item, "programs"))
-				foreach (const QDomNode &program_node, getChildrenExact(programs_node, "program"))
-					programs << program_node.toElement().text();
-			obj = new SplitBasicScenario(descr,
-										 where,
-										 bt_global::add_device_to_cache(
-											 new AirConditioningDevice(where)),
-										 getTextChild(item, "command"),
-										 getTextChild(item, "off_command"),
-										 createNonControlledProbeDevice(item),
-										 programs);
-			break;
-		}
-		case ObjectInterface::IdSplitAdvancedScenario:
-		{
-			QList<SplitProgram *> programs;
-			foreach (const QDomNode &programs_node, getChildrenExact(item, "programs"))
-				foreach (const QDomNode &program_node, getChildrenExact(programs_node, "program"))
-					programs << new SplitProgram(getTextChild(program_node, "name"), SplitProgram::int2Mode(getTextChild(program_node, "mode").toInt()),
-												 getTextChild(program_node, "set_point").toInt(), SplitProgram::int2Speed(getTextChild(program_node, "speed").toInt()),
-												 SplitProgram::int2Swing(getTextChild(program_node, "swing").toInt()));
-			QList<int> modes;
-			modes << SplitProgram::ModeOff
-				  << SplitProgram::ModeWinter
-				  << SplitProgram::ModeSummer
-				  << SplitProgram::ModeFan
-				  << SplitProgram::ModeDehumidification
-				  << SplitProgram::ModeAuto;
-			QList<int> speeds;
-			speeds << SplitProgram::SpeedAuto
-				   << SplitProgram::SpeedMin
-				   << SplitProgram::SpeedMed
-				   << SplitProgram::SpeedMax
-				   << SplitProgram::SpeedSilent;
-			QList<int> swings;
-			swings << SplitProgram::SwingOff
-				   << SplitProgram::SwingOn;
-			obj = new SplitAdvancedScenario(descr,
-											where,
-											bt_global::add_device_to_cache(
-												new AdvancedAirConditioningDevice(where)),
-											getTextChild(item, "command"),
-											createNonControlledProbeDevice(item),
-											programs,
-											modes,
-											speeds,
-											swings);
-			break;
-		}
-		case ObjectInterface::IdScenarioSystem:
-			obj_list = createScenarioSystem(item, id);
 			break;
 		case ObjectInterface::IdCCTV:
 			obj = parseCCTV(item);
@@ -606,71 +580,54 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "ObjectModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
-	qmlRegisterUncreatableType<ItemInterface>(
-				uri, 1, 0, "ItemInterface",
-				"unable to create an ItemInterface instance");
-	qmlRegisterUncreatableType<Container>(
-				uri, 1, 0, "Container",
-				"unable to create an Container instance");
-	qmlRegisterUncreatableType<Note>(
-				uri, 1, 0, "Note",
-				"unable to create a Note instance");
-	qmlRegisterUncreatableType<MediaLink>(
-				uri, 1, 0, "MediaLink",
-				"unable to create a MediaLink instance");
-	qmlRegisterUncreatableType<ObjectInterface>(
-				uri, 1, 0, "ObjectInterface",
-				"unable to create an ObjectInterface instance");
-	qmlRegisterUncreatableType<ThermalControlUnit99Zones>(
-				uri, 1, 0, "ThermalControlUnit99Zones",
-				"unable to create a ThermalControlUnit99Zones instance");
-	qmlRegisterUncreatableType<ThermalControlUnit>(
-				uri, 1, 0, "ThermalControlUnit",
-				"unable to create a ThermalControlUnit instance");
-	qmlRegisterUncreatableType<ThermalControlledProbe>(
-				uri, 1, 0, "ThermalControlledProbe",
-				"unable to create a ThermalControlledProbe instance");
-	qmlRegisterUncreatableType<ThermalControlledProbeFancoil>(
-				uri, 1, 0, "ThermalControlledProbeFancoil",
-				"unable to create a ThermalControlledProbeFancoil instance");
-	qmlRegisterUncreatableType<PlatformSettings>(
-				uri, 1, 0, "PlatformSettings",
-				"unable to create a PlatformSettings instance");
-	qmlRegisterUncreatableType<HardwareSettings>(
-				uri, 1, 0, "HardwareSettings",
-				"unable to create a HardwareSettings instance");
-	qmlRegisterUncreatableType<AntintrusionAlarm>(
-				uri, 1, 0, "AntintrusionAlarm",
-				"unable to create an AntintrusionAlarm instance");
-	qmlRegisterUncreatableType<FileObject>(
-				uri, 1, 0, "FileObject",
-				"unable to create an FileObject instance");
-	qmlRegisterUncreatableType<SourceBase>(
-				uri, 1, 0, "SourceBase",
-				"unable to create an SourceBase instance");
-	qmlRegisterUncreatableType<SourceObject>(
-				uri, 1, 0, "SourceObject",
-				"unable to create an SourceObject instance");
-	qmlRegisterUncreatableType<MultiMediaPlayer>(
-				uri, 1, 0, "MultiMediaPlayer",
-				"unable to create a MultiMediaPlyaer instance");
-	// TODO: this seems to be a good candidate for RegisterUncreatableType...
-	qmlRegisterType<SplitProgram>(uri, 1, 0, "SplitProgram");
-	qmlRegisterUncreatableType<EnergyLoadManagement>(
-				uri, 1, 0, "EnergyLoadDiagnostic",
-				"unable to create an EnergyLoadDiagnostic instance");
-	qmlRegisterUncreatableType<StopAndGo>(
-				uri, 1, 0, "StopAndGo",
-				"unable to create an StopAndGo instance");
-	qmlRegisterUncreatableType<EnergyData>(
-				uri, 1, 0, "EnergyData",
-				"unable to create an EnergyData instance");
-	qmlRegisterUncreatableType<Light>(
-				uri, 1, 0, "Light",
-				"unable to create an Light instance");
-	qmlRegisterUncreatableType<ChoiceList>(
-				uri, 1, 0, "ChoiceList",
-				"unable to create an ChoiceList instance");
+	qmlRegisterUncreatableType<ItemInterface>(uri, 1, 0, "ItemInterface",
+		"unable to create an ItemInterface instance");
+	qmlRegisterUncreatableType<Container>(uri, 1, 0, "Container",
+		"unable to create an Container instance");
+	qmlRegisterUncreatableType<Note>(uri, 1, 0, "Note",
+		"unable to create a Note instance");
+	qmlRegisterUncreatableType<MediaLink>(uri, 1, 0, "MediaLink",
+		"unable to create a MediaLink instance");
+	qmlRegisterUncreatableType<ObjectInterface>(uri, 1, 0, "ObjectInterface",
+		"unable to create an ObjectInterface instance");
+	qmlRegisterUncreatableType<ThermalControlUnit99Zones>(uri, 1, 0, "ThermalControlUnit99Zones",
+		"unable to create a ThermalControlUnit99Zones instance");
+	qmlRegisterUncreatableType<ThermalControlUnit>(uri, 1, 0, "ThermalControlUnit",
+		"unable to create a ThermalControlUnit instance");
+	qmlRegisterUncreatableType<ThermalControlledProbe>(uri, 1, 0, "ThermalControlledProbe",
+		"unable to create a ThermalControlledProbe instance");
+	qmlRegisterUncreatableType<ThermalControlledProbeFancoil>(uri, 1, 0, "ThermalControlledProbeFancoil",
+		"unable to create a ThermalControlledProbeFancoil instance");
+	qmlRegisterUncreatableType<PlatformSettings>(uri, 1, 0, "PlatformSettings",
+		"unable to create a PlatformSettings instance");
+	qmlRegisterUncreatableType<HardwareSettings>(uri, 1, 0, "HardwareSettings",
+		"unable to create a HardwareSettings instance");
+	qmlRegisterUncreatableType<AntintrusionAlarm>(uri, 1, 0, "AntintrusionAlarm",
+		"unable to create an AntintrusionAlarm instance");
+	qmlRegisterUncreatableType<FileObject>(uri, 1, 0, "FileObject",
+		"unable to create an FileObject instance");
+	qmlRegisterUncreatableType<SourceBase>(uri, 1, 0, "SourceBase",
+		"unable to create an SourceBase instance");
+	qmlRegisterUncreatableType<SourceObject>(uri, 1, 0, "SourceObject",
+		"unable to create an SourceObject instance");
+	qmlRegisterUncreatableType<MultiMediaPlayer>(uri, 1, 0, "MultiMediaPlayer",
+		"unable to create a MultiMediaPlayer instance");
+	qmlRegisterUncreatableType<SplitAdvancedProgram>(uri, 1, 0, "SplitAdvancedProgram",
+		"unable to create a SplitAdvancedProgram instance");
+	qmlRegisterUncreatableType<EnergyLoadManagement>(uri, 1, 0, "EnergyLoadDiagnostic",
+		"unable to create an EnergyLoadDiagnostic instance");
+	qmlRegisterUncreatableType<StopAndGo>(uri, 1, 0, "StopAndGo",
+		"unable to create an StopAndGo instance");
+	qmlRegisterUncreatableType<EnergyData>(uri, 1, 0, "EnergyData",
+		"unable to create an EnergyData instance");
+	qmlRegisterUncreatableType<EnergyRate>(uri, 1, 0, "EnergyRate",
+		"unable to create an EnergyRate instance");
+	qmlRegisterUncreatableType<Light>(uri, 1, 0, "Light",
+		"unable to create an Light instance");
+	qmlRegisterUncreatableType<ChoiceList>(uri, 1, 0, "ChoiceList",
+		"unable to create an ChoiceList instance");
+	qmlRegisterUncreatableType<ScenarioModule>(uri, 1, 0, "ScenarioModule",
+		"unable to create an ScenarioModuleinstance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

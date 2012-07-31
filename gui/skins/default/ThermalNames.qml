@@ -29,25 +29,25 @@ QtObject {
         container['PROBE_STATUS'][ThermalControlledProbe.Unknown] = qsTr("--")
 
         container['MODE'] = []
-        container['MODE'][SplitProgram.ModeOff] = qsTr("Off")
-        container['MODE'][SplitProgram.ModeWinter] = qsTr("Heating")
-        container['MODE'][SplitProgram.ModeSummer] = qsTr("Cooling")
-        container['MODE'][SplitProgram.ModeFan] = qsTr("Fan")
-        container['MODE'][SplitProgram.ModeDehumidification] = qsTr("Dry")
-        container['MODE'][SplitProgram.ModeAuto] = qsTr("Automatic")
+        container['MODE'][SplitAdvancedProgram.ModeOff] = qsTr("Off")
+        container['MODE'][SplitAdvancedProgram.ModeWinter] = qsTr("Heating")
+        container['MODE'][SplitAdvancedProgram.ModeSummer] = qsTr("Cooling")
+        container['MODE'][SplitAdvancedProgram.ModeFan] = qsTr("Fan")
+        container['MODE'][SplitAdvancedProgram.ModeDehumidification] = qsTr("Dry")
+        container['MODE'][SplitAdvancedProgram.ModeAuto] = qsTr("Automatic")
 
         container['SPEED'] = []
-        container['SPEED'][SplitProgram.SpeedAuto] = qsTr("Automatic")
-        container['SPEED'][SplitProgram.SpeedMin] = qsTr("Low")
-        container['SPEED'][SplitProgram.SpeedMed] = qsTr("Medium")
-        container['SPEED'][SplitProgram.SpeedMax] = qsTr("High")
-        container['SPEED'][SplitProgram.SpeedSilent] = qsTr("Silent")
-        container['SPEED'][SplitProgram.SpeedInvalid] = qsTr("")
+        container['SPEED'][SplitAdvancedProgram.SpeedAuto] = qsTr("Automatic")
+        container['SPEED'][SplitAdvancedProgram.SpeedMin] = qsTr("Low")
+        container['SPEED'][SplitAdvancedProgram.SpeedMed] = qsTr("Medium")
+        container['SPEED'][SplitAdvancedProgram.SpeedMax] = qsTr("High")
+        container['SPEED'][SplitAdvancedProgram.SpeedSilent] = qsTr("Silent")
+        container['SPEED'][SplitAdvancedProgram.SpeedInvalid] = qsTr("")
 
         container['SWING'] = []
-        container['SWING'][SplitProgram.SwingOff] = qsTr("Off")
-        container['SWING'][SplitProgram.SwingOn] = qsTr("On")
-        container['SWING'][SplitProgram.SwingInvalid] = qsTr("")
+        container['SWING'][SplitAdvancedProgram.SwingOff] = qsTr("Off")
+        container['SWING'][SplitAdvancedProgram.SwingOn] = qsTr("On")
+        container['SWING'][SplitAdvancedProgram.SwingInvalid] = qsTr("")
 
         container['FANCOIL_SPEED'] = []
         container['FANCOIL_SPEED'][0] = ""

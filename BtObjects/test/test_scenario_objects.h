@@ -25,6 +25,8 @@
 
 class ScenarioModule;
 class ScenarioDevice;
+class AdvancedScenario;
+class TimeConditionObject;
 
 class TestScenarioModule : public TestBtObject
 {
@@ -52,6 +54,59 @@ private:
 	void checkMethod();
 	ScenarioModule *scen;
 	ScenarioDevice *dev;
+};
+
+
+class TestScenarioAdvanced: public TestBtObject
+{
+	Q_OBJECT
+
+private slots:
+	void testWeekdays();
+
+	void testDeviceCondition();
+	void testTimeCondition();
+	void testTimeDeviceCondition();
+	void testWeekdayCondition();
+};
+
+
+class TestScenarioAdvancedTime : public TestBtObject
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+	void cleanup();
+
+	void testTimeoutFuture();
+	void testTimeoutPast();
+
+private:
+	TimeConditionObject *obj;
+};
+
+
+class TestScenarioAdvancedDeviceEdit : public TestBtObject
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+	void cleanup();
+
+	void testLightConditionInit();
+	void testDimmerConditionInit();
+	void testDimmer100ConditionInit();
+	void testAmplifierConditionInit();
+	void testTemperatureConditionInit();
+
+	void testLightConditionOnOff();
+	void testDimmerConditionOnOff();
+	void testDimmer100ConditionOnOff();
+	void testAmplifierConditionOnOff();
+
+	void testConditionReset();
 };
 
 #endif // TEST_SCENARIO_OBJECTS_H

@@ -12,6 +12,7 @@ Column {
     ButtonImageThreeStates {
         id: buttonPlus
 
+        z: 1
         defaultImageBg: "../images/common/btn_99x35.svg"
         pressedImageBg: "../images/common/btn_99x35_P.svg"
         shadowImage: "../images/common/btn_shadow_99x35.svg"
@@ -23,12 +24,12 @@ Column {
 
     SvgImage {
         id: bg
-        source: "../images/common/date_panel_inner_background.svg"
-        height: 32
+        source: "../images/common/bg_datetime.svg"
         anchors {
             left: buttonPlus.left
             right: buttonPlus.right
         }
+
 
         UbuntuLightText {
             id: leftText
@@ -43,6 +44,7 @@ Column {
     ButtonImageThreeStates {
         id: buttonMinus
 
+        z: 1
         defaultImageBg: "../images/common/btn_99x35.svg"
         pressedImageBg: "../images/common/btn_99x35_P.svg"
         shadowImage: "../images/common/btn_shadow_99x35.svg"

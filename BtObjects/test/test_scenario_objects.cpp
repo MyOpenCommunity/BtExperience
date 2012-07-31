@@ -23,11 +23,14 @@
 #include "objecttester.h"
 #include "scenario_device.h"
 #include "scenarioobjects.h"
+#include "openmsg.h"
 
 #include <QtTest>
 
 Q_DECLARE_METATYPE(DeviceValues)
 Q_DECLARE_METATYPE(ScenarioModule::Status)
+
+#define TEST_COMMAND "*1*1*1##"
 
 
 static const int SCENARIO_NUMBER = 1;
@@ -226,4 +229,381 @@ void TestScenarioModule::checkMethod()
 	scen->valueReceived(value);
 	t.checkSignalCount(SIGNAL(statusChanged()), signals_emitted);
 	QCOMPARE(scen->status, end_status);
+}
+
+void TestScenarioAdvanced::testWeekdays()
+{
+	AdvancedScenario obj(0, 0, false, 0, "", "", "");
+	ObjectTester t(&obj, SIGNAL(daysChanged()));
+
+	for (int i = 0; i < 8; ++i)
+	{
+		QVERIFY(!obj.isDayEnabled(i));
+
+		obj.setDayEnabled(i, true);
+		t.checkSignals();
+		QVERIFY(obj.isDayEnabled(i));
+
+		obj.setDayEnabled(i, false);
+		t.checkSignals();
+		QVERIFY(!obj.isDayEnabled(i));
+	}
+
+	obj.days = 64; // sunday
+	QVERIFY(obj.isDayEnabled(0));
+	QVERIFY(obj.isDayEnabled(7));
+}
+
+void TestScenarioAdvanced::testDeviceCondition()
+{
+	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
+	AdvancedScenario obj(&dc, 0, true, 127, TEST_COMMAND, "", "");
+	ObjectTester ts(&obj, SIGNAL(started()));
+	OpenMsg off("*9*0*3##"), on("*9*1*3##");
+	RawDevice dev(1);
+
+	dc.setParent(0);
+
+	dc.device_cond->dev->manageFrame(off);
+	ts.checkNoSignals();
+
+	dc.device_cond->dev->manageFrame(on);
+	ts.checkSignals();
+
+	dev.sendCommand(TEST_COMMAND);
+	compareClientCommand();
+}
+
+void TestScenarioAdvanced::testWeekdayCondition()
+{
+	int today_mask = 1 << (QDate::currentDate().dayOfWeek() - 1);
+	int not_today_mask = (~today_mask) & 127;
+
+	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
+	AdvancedScenario obj1(&dc, 0, true, today_mask, TEST_COMMAND, "", "");
+	ObjectTester ts1(&obj1, SIGNAL(started()));
+	OpenMsg off("*9*0*3##"), on("*9*1*3##");
+	RawDevice dev(1);
+
+	dc.setParent(0);
+
+	dc.device_cond->dev->manageFrame(off);
+	ts1.checkNoSignals();
+
+	dc.device_cond->dev->manageFrame(on);
+	ts1.checkSignals();
+
+	dev.sendCommand(TEST_COMMAND);
+	compareClientCommand();
+
+	AdvancedScenario obj2(&dc, 0, true, not_today_mask, TEST_COMMAND, "", "");
+	ObjectTester ts2(&obj2, SIGNAL(started()));
+
+	dc.setParent(0);
+
+	dc.device_cond->dev->manageFrame(off);
+	ts2.checkNoSignals();
+
+	dc.device_cond->dev->manageFrame(on);
+	ts2.checkNoSignals();
+}
+
+void TestScenarioAdvanced::testTimeCondition()
+{
+	TimeConditionObject tc(0, 0);
+	AdvancedScenario obj(0, &tc, true, 127, TEST_COMMAND, "", "");
+	ObjectTester ts(&obj, SIGNAL(started()));
+	RawDevice dev(1);
+
+	tc.setParent(0);
+
+	tc.timer.setInterval(500);
+
+	QVERIFY(ts.waitForSignal(1000));
+
+	dev.sendCommand(TEST_COMMAND);
+	compareClientCommand();
+}
+
+void TestScenarioAdvanced::testTimeDeviceCondition()
+{
+	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
+	TimeConditionObject tc(0, 0);
+	AdvancedScenario obj(&dc, &tc, true, 127, TEST_COMMAND, "", "");
+	ObjectTester ts(&obj, SIGNAL(started()));
+	OpenMsg off("*9*0*3##"), on("*9*1*3##");
+	RawDevice dev(1);
+
+	tc.setParent(0);
+	dc.setParent(0);
+
+	tc.timer.setInterval(500);
+
+	dc.device_cond->dev->manageFrame(off);
+	ts.checkNoSignals();
+
+	dc.device_cond->dev->manageFrame(on);
+	ts.checkNoSignals();
+
+	QVERIFY(dc.isSatisfied());
+	QVERIFY(ts.waitForSignal(1000));
+
+	dev.sendCommand(TEST_COMMAND);
+	compareClientCommand();
+}
+
+void TestScenarioAdvancedTime::init()
+{
+	obj = new TimeConditionObject(0, 0);
+}
+
+void TestScenarioAdvancedTime::cleanup()
+{
+	delete obj;
+}
+
+void TestScenarioAdvancedTime::testTimeoutFuture()
+{
+	QTime now = QTime::currentTime();
+	QTime timeout = now.addSecs(60 * 5);
+
+	obj->setHours(timeout.hour());
+	obj->setMinutes(timeout.minute());
+	obj->save();
+
+	int expected = (60 * 5 - now.second()) * 1000;
+
+	QVERIFY(abs(obj->timer.interval() - expected) < 1000);
+}
+
+void TestScenarioAdvancedTime::testTimeoutPast()
+{
+	QTime now = QTime::currentTime();
+	QTime timeout = now.addSecs(-60 * 5);
+
+	obj->setHours(timeout.hour());
+	obj->setMinutes(timeout.minute());
+	obj->save();
+
+	int expected = (24 * 60 * 60 - 60 * 5 - now.second()) * 1000;
+
+	QVERIFY(abs(obj->timer.interval() - expected) < 1000);
+}
+
+void TestScenarioAdvancedDeviceEdit::init()
+{
+	bt_global::config = new QHash<GlobalField, QString>();
+}
+
+void TestScenarioAdvancedDeviceEdit::cleanup()
+{
+	delete bt_global::config;
+	bt_global::config = 0;
+}
+
+void TestScenarioAdvancedDeviceEdit::testLightConditionInit()
+{
+	DeviceConditionObject objon(DeviceCondition::LIGHT, "", "1", "2", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant());
+	QCOMPARE(objon.getRangeValues(), QVariantList());
+	QCOMPARE(objon.device_cond->getState(), qMakePair(1, 1));
+
+	DeviceConditionObject objoff(DeviceCondition::LIGHT, "", "0", "2", NOT_PULL);
+
+	QCOMPARE(objoff.getOnOff(), QVariant(false));
+	QCOMPARE(objoff.getRange(), QVariant());
+	QCOMPARE(objoff.getRangeValues(), QVariantList());
+	QCOMPARE(objoff.device_cond->getState(), qMakePair(0, 0));
+}
+
+void TestScenarioAdvancedDeviceEdit::testDimmerConditionInit()
+{
+	DeviceConditionObject objon(DeviceCondition::DIMMING, "", "5-7", "3", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 50 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(5, 7));
+
+	DeviceConditionObject objoff(DeviceCondition::DIMMING, "", "0", "3", NOT_PULL);
+
+	QCOMPARE(objoff.getOnOff(), QVariant(false));
+	QCOMPARE(objoff.getRange(), QVariant("20% - 40%"));
+	QCOMPARE(objoff.getRangeValues(), QVariantList() << 20 << 40);
+	QCOMPARE(objoff.device_cond->getState(), qMakePair(0, 0));
+}
+
+void TestScenarioAdvancedDeviceEdit::testDimmer100ConditionInit()
+{
+	DeviceConditionObject objon(DeviceCondition::DIMMING100, "", "41-70", "4", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("41% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 41 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(41, 70));
+
+	DeviceConditionObject objoff(DeviceCondition::DIMMING100, "", "0", "4", NOT_PULL);
+
+	QCOMPARE(objoff.getOnOff(), QVariant(false));
+	QCOMPARE(objoff.getRange(), QVariant("1% - 20%"));
+	QCOMPARE(objoff.getRangeValues(), QVariantList() << 1 << 20);
+	QCOMPARE(objoff.device_cond->getState(), qMakePair(0, 0));
+}
+
+void TestScenarioAdvancedDeviceEdit::testAmplifierConditionInit()
+{
+	DeviceConditionObject objon(DeviceCondition::AMPLIFIER, "", "13-22", "21", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("41% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 41 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(13, 22));
+
+	DeviceConditionObject objoff(DeviceCondition::AMPLIFIER, "", "-1", "21", NOT_PULL);
+
+	QCOMPARE(objoff.getOnOff(), QVariant(false));
+	QCOMPARE(objoff.getRange(), QVariant(""));
+	QCOMPARE(objoff.getRangeValues(), QVariantList() << 1 << 100);
+	QCOMPARE(objoff.device_cond->getState(), qMakePair(-1, -1));
+}
+
+void TestScenarioAdvancedDeviceEdit::testTemperatureConditionInit()
+{
+	DeviceConditionObject objon(DeviceCondition::TEMPERATURE, "", "220", "16", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant());
+	QCOMPARE(objon.getRange(), QVariant("22,0"TEMP_DEGREES"C \2611"TEMP_DEGREES"C"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 22.0);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(220, 220));
+}
+
+void TestScenarioAdvancedDeviceEdit::testLightConditionOnOff()
+{
+	DeviceConditionObject objon(DeviceCondition::LIGHT, "", "1", "2", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant());
+	QCOMPARE(objon.getRangeValues(), QVariantList());
+	QCOMPARE(objon.device_cond->getState(), qMakePair(1, 1));
+
+	objon.setOnOff(QVariant(false));
+
+	QCOMPARE(objon.getOnOff(), QVariant(false));
+	QCOMPARE(objon.getRange(), QVariant());
+	QCOMPARE(objon.getRangeValues(), QVariantList());
+	QCOMPARE(objon.device_cond->getState(), qMakePair(0, 0));
+
+	objon.setOnOff(QVariant(true));
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant());
+	QCOMPARE(objon.getRangeValues(), QVariantList());
+	QCOMPARE(objon.device_cond->getState(), qMakePair(1, 1));
+}
+
+void TestScenarioAdvancedDeviceEdit::testDimmerConditionOnOff()
+{
+	DeviceConditionObject objon(DeviceCondition::DIMMING, "", "5-7", "3", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 50 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(5, 7));
+
+	objon.setOnOff(QVariant(false));
+
+	QCOMPARE(objon.getOnOff(), QVariant(false));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 50 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(0, 0));
+
+	objon.setOnOff(QVariant(true));
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 50 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(5, 7));
+}
+
+void TestScenarioAdvancedDeviceEdit::testDimmer100ConditionOnOff()
+{
+	DeviceConditionObject objon(DeviceCondition::DIMMING100, "", "41-70", "4", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("41% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 41 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(41, 70));
+
+	objon.setOnOff(QVariant(false));
+
+	QCOMPARE(objon.getOnOff(), QVariant(false));
+	QCOMPARE(objon.getRange(), QVariant("41% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 41 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(0, 0));
+
+	objon.setOnOff(QVariant(true));
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("41% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 41 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(41, 70));
+}
+
+void TestScenarioAdvancedDeviceEdit::testAmplifierConditionOnOff()
+{
+	DeviceConditionObject objon(DeviceCondition::AMPLIFIER, "", "13-22", "21", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("41% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 41 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(13, 22));
+
+	objon.setOnOff(QVariant(false));
+
+	QCOMPARE(objon.getOnOff(), QVariant(false));
+	QCOMPARE(objon.getRange(), QVariant("41% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 41 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(-1, -1));
+
+	objon.setOnOff(QVariant(true));
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("41% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 41 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(13, 22));
+}
+
+void TestScenarioAdvancedDeviceEdit::testConditionReset()
+{
+	// only tests one object type because updates go through
+	// the code already tested aobve
+	DeviceConditionObject objon(DeviceCondition::DIMMING, "", "5-7", "3", NOT_PULL);
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 50 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(5, 7));
+
+	objon.conditionDown();
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("20% - 40%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 20 << 40);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(2, 4));
+
+	objon.reset();
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 50 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(5, 7));
+
+	objon.reset();
+
+	QCOMPARE(objon.getOnOff(), QVariant(true));
+	QCOMPARE(objon.getRange(), QVariant("50% - 70%"));
+	QCOMPARE(objon.getRangeValues(), QVariantList() << 50 << 70);
+	QCOMPARE(objon.device_cond->getState(), qMakePair(5, 7));
 }

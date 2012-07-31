@@ -36,6 +36,9 @@ Item {
             setCursorRect(cursor)
             setKeyboardVisible(region.height !== 0)
         }
+        // We silent the warnings because the signal inputMethodAreaChanged exist only
+        // when Mailiit is installed as input context.
+        ignoreUnknownSignals: true
     }
 
     // sets the area covered by the keyboard, in screen coordinates

@@ -198,6 +198,14 @@ Page {
                     text: qsTr("€")
                     status: privateProps.showCurrency === true ? 1 : 0
                     onClicked: privateProps.showCurrency = true
+                    enabled: energyData.rate !== null
+                    Rectangle {
+                        z: 1
+                        anchors.fill: parent
+                        color: "silver"
+                        opacity: 0.6
+                        visible: parent.enabled === false
+                    }
                 }
                 ButtonThreeStates {
                     id: consumptionButton
@@ -301,6 +309,7 @@ Page {
                     property variant currentItem: energyData.getValue(EnergyData.CurrentValue, new Date(), // the Date does not matter
                                                                       privateProps.showCurrency ? EnergyData.Currency :
                                                                                                   EnergyData.Consumption)
+
                     anchors.centerIn: parent
                     text: currentItem.value.toFixed(2) + " " + currentItem.measureUnit
                     color: "grey"

@@ -1,39 +1,50 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
+
 import "../../js/Stack.js" as Stack
 
 MenuColumn {
     id: column
-    height: Math.max(1, 50 * itemList.count)
-    width: 212
 
     onChildDestroyed: {
         itemList.currentIndex = -1
     }
 
-    ListView {
+    PaginatorList {
         id: itemList
-        anchors.fill: parent
         currentIndex: -1
-        interactive: false
 
         delegate: MenuItemDelegate {
-            name: model.name
+            itemObject: objectModel.getObject(index)
             hasChild: true
 
             onClicked: {
-                Stack.openPage("SettingsAdvancedScenario.qml")
+                if (itemObject.objectId === ObjectInterface.IdAdvancedScenario) {
+                    itemObject.reset()
+                    Stack.openPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
+                }
+                else
+                    loadColumn(scenario, name, itemObject)
             }
         }
 
-        model: modelList
+        model: objectModel
+
+        onCurrentPageChanged: closeChild()
     }
 
-    ListModel {
-        id: modelList
-        Component.onCompleted: {
-            modelList.append({"name": qsTr("Advanced Scenario 1")})
-            modelList.append({"name": qsTr("Advanced Scenario 2")})
-        }
+    ObjectModel {
+        id: objectModel
+        filters: [
+            {objectId: ObjectInterface.IdAdvancedScenario},
+            {objectId: ObjectInterface.IdScenarioModule}
+        ]
+        range: itemList.computePageRange(itemList.currentPage, itemList.elementsOnPage)
+    }
+
+    Component {
+        id: scenario
+        ScenarioModuleSettings {}
     }
 }

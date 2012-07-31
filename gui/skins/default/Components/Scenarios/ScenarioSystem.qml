@@ -4,18 +4,14 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: Math.max(1, 50 * itemList.count)
 
     onChildDestroyed: {
         itemList.currentIndex = -1
     }
 
-    ListView {
+    PaginatorList {
         id: itemList
-        anchors.fill: parent
         currentIndex: -1
-        interactive: false
 
         delegate: MenuItemDelegate {
             editable: true
@@ -41,5 +37,33 @@ MenuColumn {
             {objectId: ObjectInterface.IdScheduledScenario},
             {objectId: ObjectInterface.IdAdvancedScenario},
         ]
+        range: itemList.computePageRange(itemList.currentPage, itemList.elementsOnPage)
     }
+
+/*
+    PaginatorList {
+        id: paginator
+        delegate: MenuItemDelegate {
+            editable: true
+            itemObject: objectModel.getObject(index)
+            hasChild: true
+            onClicked:
+                column.loadColumn(
+                    mapping.getComponent(itemObject.objectId),
+                    itemObject.name,
+                    itemObject)
+        }
+
+        model: objectModel
+
+        onCurrentPageChanged: column.closeChild()
+    }
+
+    ObjectModel {
+        id: objectModel
+        source: myHomeModels.myHomeObjects
+        containers: [Container.IdScenarios]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+    */
 }

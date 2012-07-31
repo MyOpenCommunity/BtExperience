@@ -7,6 +7,8 @@ import "js/Stack.js" as Stack
 
 Page {
     id: page
+    property variant scenarioObject: undefined
+
     text: qsTr("Advanced scenario")
     source: "images/bg2.jpg"
 
@@ -22,50 +24,71 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             SvgImage {
                 source: "images/common/bg_scenevo_titolo.svg"
+
                 UbuntuLightText {
                     anchors {
                         left: parent.left
-                        leftMargin: 22
+                        leftMargin: parent.width / 100 * 3
                         verticalCenter: parent.verticalCenter
                     }
                     font.pixelSize: 24
                     color: "white"
-                    text: qsTr("Scenario evoluto - ingresso")
+                    text: scenarioObject.name
                 }
             }
 
-            SvgImage {
-                source: "images/common/bg_scenevo.svg"
+            Item {
+                width: bodyImage.width
+                height: bodyImage.height
+
+                SvgImage {
+                    id: bodyImage
+                    source: "images/common/bg_scenevo.svg"
+                }
 
                 Item {
                     anchors {
-                        leftMargin: 22
+                        leftMargin: parent.width / 100 * 3
                         left: parent.left
                         right: parent.right
-                        rightMargin: 22
+                        rightMargin: parent.width / 100 * 3
                         top: parent.top
-                        topMargin: 20
+                        topMargin: parent.height / 100 * 6
                     }
 
-                    AdvancedScenarioTimeCondition {
-                        anchors.left: parent.left
-                        anchors.top: parent.top
+                    AdvancedScenarioDateTimeCondition {
+                        scenarioObject: page.scenarioObject
+                        anchors {
+                            left: parent.left
+                            top: parent.top
+                        }
                     }
 
                     AdvancedScenarioDeviceCondition {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: parent.top
+                        scenarioDeviceObject: page.scenarioObject.deviceCondition
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: parent.top
+                        }
                     }
 
                     AdvancedScenarioAction {
-                        anchors.right: parent.right
-                        anchors.top: parent.top
+                        anchors {
+                            right: parent.right
+                            top: parent.top
+                        }
                     }
                 }
             }
 
-            SvgImage {
-                source: "images/common/bg_scenevo_ok_annulla.svg"
+            Item {
+                width: bottomImage.width
+                height: bottomImage.height
+
+                SvgImage {
+                    id: bottomImage
+                    source: "images/common/bg_scenevo_ok_annulla.svg"
+                }
 
 
                 UbuntuLightText {
@@ -75,7 +98,7 @@ Page {
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: okButton.left
-                        rightMargin: 10
+                        rightMargin: parent.width / 100 * 1
                     }
                 }
 
@@ -92,6 +115,11 @@ Page {
                         verticalCenter: parent.verticalCenter
                         right: cancelButton.left
                     }
+                    onClicked: {
+                        scenarioObject.save()
+                        Stack.popPage()
+                    }
+
                 }
 
                 ButtonThreeStates {
@@ -103,16 +131,19 @@ Page {
                     shadowImage: "images/common/btn_shadow_99x35.svg"
                     text: qsTr("CANCEL")
                     font.pixelSize: 14
-                    onClicked: Stack.popPage()
+
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
-                        rightMargin: 7
+                        rightMargin: parent.width / 100 * 1
+                    }
+                    onClicked: {
+                        // The reset must be called outside the page, before showing it
+                        // otherwise the user can see the value changing during the
+                        // transition effect.
+                        Stack.popPage()
                     }
                 }
-
-
-
             }
         }
     }

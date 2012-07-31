@@ -445,7 +445,7 @@ class EnergyItem : public QObject
 
 public:
 	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-			QString measure_unit, int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
+			int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
 
 	QVariant getValue() const;
 
@@ -457,7 +457,7 @@ public:
 
 	void setValue(QVariant value);
 
-	QString getMeasureUnit() const;
+	virtual QString getMeasureUnit() const;
 
 	QVariant getConsumptionGoal() const;
 
@@ -515,20 +515,18 @@ class EnergyItemCurrent : public EnergyItem
 
 public:
 	EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-				QString measure_unit, int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
+				int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
 
 	int getThresholdLevel() const;
 
 	void setThresholds(QVariantList thresholds);
 	QVariantList getThresholds() const;
 
+	virtual QString getMeasureUnit() const;
+
 signals:
 	void thresholdsChanged(QVariantList thresholds);
 	void thresholdLevelChanged(int level);
-
-private:
-	QVariantList thresholds;
-	int threshold_level;
 };
 
 

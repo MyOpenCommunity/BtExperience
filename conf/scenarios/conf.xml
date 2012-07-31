@@ -1,0 +1,195 @@
+<archive>
+	<obj cid="9001" id="9001" descr="Advanced Scenario">
+		<ist uii="6001" descr="Dimmer cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>2</objectID>
+					<descr>Dimmer 10</descr>
+					<where>10</where>
+					<pul>0</pul>
+					<trigger>2-4</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6002" descr="Amplifier cond, no time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>0</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>4</objectID>
+					<descr>Amplifier 21</descr>
+					<where>21</where>
+					<pul>0</pul>
+					<trigger>13-22</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6003" descr="Temperature cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>3</objectID>
+					<descr>Controlled zone 16</descr>
+					<where>16</where>
+					<pul>0</pul>
+					<trigger>210</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6004" descr="Light cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>1</objectID>
+					<descr>Light 17</descr>
+					<where>17</where>
+					<pul>0</pul>
+					<trigger>1</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6005" descr="Dimmer 100 cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>6</objectID>
+					<descr>Dimmer 100</descr>
+					<where>100</where>
+					<pul>0</pul>
+					<trigger>50-70</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+	</obj>
+        <obj cid="9002" id="9002" descr="Scheduled scenario">
+		<ist uii="6101" descr="Scheduled scenario 3">
+			<schedscen>
+				<enable>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*01*11##</open>
+				</enable>
+				<disable>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*02*11##</open>
+				</disable>
+				<start>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*03*11##</open>
+				</start>
+				<stop>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*04*11##</open>
+				</stop>
+			</schedscen>
+		</ist>
+		<ist uii="6102" descr="Scheduled scenario 4">
+			<schedscen>
+				<enable>
+					<presence>0</presence>
+					<cmdType>0</cmdType>
+					<open>*15*01*11##</open>
+				</enable>
+				<disable>
+					<presence>0</presence>
+					<cmdType>0</cmdType>
+					<open>*15*02*11##</open>
+				</disable>
+				<start>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*03*12##</open>
+				</start>
+				<stop>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*04*12##</open>
+				</stop>
+			</schedscen>
+		</ist>
+	</obj>
+	<obj cid="1001" id="1001" descr="Scenario unit" where="11" what="1">
+		<ist uii="6201" descr="Scenario 1" where="12" what="1" />
+		<ist uii="6202" descr="Scenario 2" where="21" what="2" />
+		<ist uii="6203" descr="Scenario 3" where="22" what="3" />
+	</obj>
+	<obj cid="1002" id="1002" descr="Scenario module" where="11" what="1">
+		<ist uui="6204" descr="Scenario 4" where="11#4#01" what="4" />
+	</obj>
+	<obj cid="1003" id="1003" descr="Scenario plus" where="1">
+		<ist uui="6205" descr="Scenario Plus" where="10" />
+	</obj>
+</archive>
