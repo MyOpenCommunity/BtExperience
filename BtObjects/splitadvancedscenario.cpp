@@ -81,7 +81,8 @@ QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node)
 		if (v.intValue("swing_presence"))
 			swings << SplitAdvancedProgram::SwingOff << SplitAdvancedProgram::SwingOn;
 
-		obj_list << ObjectPair(uii, new SplitAdvancedScenario(v.value("descr"), "", d, off_command, probe, modes, speeds, swings));
+		obj_list << ObjectPair(uii, new SplitAdvancedScenario(v.value("descr"), "", d, off_command, probe, modes, speeds, swings,
+								      v.intValue("setpoint_min"), v.intValue("setpoint_max")));
 	}
 	return obj_list;
 }
@@ -131,7 +132,7 @@ SplitAdvancedProgram::SplitAdvancedProgram(
 		QObject *parent) : QObject(parent), mode(mode), speed(speed), swing(swing)
 {
 	Q_ASSERT_X(!_name.isEmpty(), "SplitAdvancedProgram::SplitAdvancedProgram", "name cannot be empty.");
-	Q_ASSERT_X(_temperature >= 160, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be less than 16°C.");
+	Q_ASSERT_X(_temperature >= 150, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be less than 15°C.");
 	Q_ASSERT_X(_temperature <= 300, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be more than 30°C.");
 	name = _name;
 	temperature = _temperature;
@@ -146,6 +147,7 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 											 QList<int> _modes,
 											 QList<int> _speeds,
 											 QList<int> _swings,
+											 int _setpoint_min, int _setpoint_max,
 											 QObject *parent) :
 	ObjectInterface(parent)
 {
@@ -170,6 +172,8 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 	off_command = _off_command;
 	key = _key;
 	name = _name;
+	setpoint_min = _setpoint_min;
+	setpoint_max = _setpoint_max;
 	actual_program.name = QString();
 	actual_program.mode = static_cast<SplitAdvancedProgram::Mode>(modes->value());
 	current[SPLIT_SWING] = static_cast<SplitAdvancedProgram::Swing>(swings->value(SplitAdvancedProgram::SwingInvalid));
@@ -285,13 +289,25 @@ int SplitAdvancedScenario::getSetPoint() const
 	return actual_program.temperature;
 }
 
-void SplitAdvancedScenario::setSetPoint(int setPoint)
+int SplitAdvancedScenario::getSetPointMin() const
 {
+	return setpoint_min;
+}
+
+int SplitAdvancedScenario::getSetPointMax() const
+{
+	return setpoint_max;
+}
+
+void SplitAdvancedScenario::setSetPoint(int setpoint)
+{
+	if (setpoint < setpoint_min || setpoint > setpoint_max)
+		return;
 	// TODO save value somewhere
-	if (actual_program.temperature == setPoint)
+	if (actual_program.temperature == setpoint)
 		// nothing to do
 		return;
-	actual_program.temperature = setPoint;
+	actual_program.temperature = setpoint;
 	emit setPointChanged();
 	sync();
 }
