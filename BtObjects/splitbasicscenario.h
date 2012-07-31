@@ -20,6 +20,7 @@ class ObjectDataModel;
 
 QList<ObjectPair> parseSplitBasicScenario(const QDomNode &xml_node);
 void parseSplitBasicCommand(const QDomNode &xml_node, const UiiMapper &uii_map);
+QList<ObjectPair> parseSplitBasicCommandGroup(const QDomNode &xml_node, QHash<int, QPair<QDomNode, QDomNode> > programs);
 
 
 /*!
@@ -118,6 +119,24 @@ private:
 	SplitBasicProgram *actual_program;
 	QList<SplitBasicProgram *> program_list;
 	int temperature;
+};
+
+
+/*!
+	\ingroup AirConditioning
+	\brief Sends commands to multiple splits
+*/
+class SplitBasicCommandGroup : public ObjectInterface
+{
+public:
+	SplitBasicCommandGroup(QString name, QList<QPair<QString, SplitBasicProgram *> > commands);
+
+	virtual int getObjectId() const { return IdSplitBasicGenericCommandGroup; }
+
+	Q_INVOKABLE void apply();
+
+private:
+	QList<QPair<AirConditioningDevice *, SplitBasicProgram *> > commands;
 };
 
 #endif // SPLITBASICSCENARIO_H

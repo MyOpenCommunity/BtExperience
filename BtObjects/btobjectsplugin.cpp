@@ -2,8 +2,6 @@
 #include "openclient.h"
 #include "main.h"
 #include "device.h"
-#include "devices_cache.h"
-#include "probe_device.h"
 #include "objectmodel.h"
 #include "lightobjects.h"
 #include "automationobjects.h"
@@ -50,19 +48,6 @@ QHash<GlobalField, QString> *bt_global::config;
 
 namespace
 {
-	NonControlledProbeDevice *createNonControlledProbeDevice(const QDomNode &item_node)
-	{
-		NonControlledProbeDevice *dev = 0;
-		QString where_probe = getTextChild(item_node, "where_probe");
-		if (where_probe != "000")
-		{
-			dev = new NonControlledProbeDevice(where_probe, NonControlledProbeDevice::INTERNAL,
-											   getTextChild(item_node, "openserver_id_probe").toInt());
-			dev = bt_global::add_device_to_cache(dev);
-		}
-		return dev;
-	}
-
 	template<class Tr>
 	QList<Tr> convertObjectPairList(QList<ObjectPair> pairs)
 	{
@@ -157,7 +142,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionZone *> antintrusion_zones;
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
-	QHash<int, QPair<QDomNode, QDomNode> > probe4zones;
+	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
 	int energy_family = 1;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
@@ -256,6 +241,17 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdSplitAdvancedCommand:
 			// updates program list in advanced split
 			parseSplitAdvancedCommand(xml_obj, uii_map);
+			break;
+		case ObjectInterface::IdSplitBasicGenericCommand:
+		case ObjectInterface::IdSplitAdvancedGenericCommand:
+			foreach (const QDomNode &ist, getChildren(xml_obj, "ist"))
+				splitcommands[getIntAttribute(ist, "uii")] = qMakePair(xml_obj, ist);
+			break;
+		case ObjectInterface::IdSplitBasicGenericCommandGroup:
+			obj_list = parseSplitBasicCommandGroup(xml_obj, splitcommands);
+			break;
+		case ObjectInterface::IdSplitAdvancedGenericCommandGroup:
+			obj_list = parseSplitAdvancedCommandGroup(xml_obj, splitcommands);
 			break;
 
 		case ObjectInterface::IdStopAndGo:

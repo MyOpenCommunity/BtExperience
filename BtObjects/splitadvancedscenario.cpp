@@ -52,6 +52,42 @@ namespace
 	}
 }
 
+QList<ObjectPair> parseSplitAdvancedCommandGroup(const QDomNode &xml_node, QHash<int, QPair<QDomNode, QDomNode> > programs)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QList<QPair<QString, SplitAdvancedProgram *> > commands;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+
+			if (!programs.contains(object_uii))
+			{
+				qWarning() << "Invalid command uii" << object_uii << "in command group";
+				continue;
+			}
+
+			QPair<QDomNode, QDomNode> obj_ist = programs[object_uii];
+			XmlObject pv(obj_ist.first);
+
+			pv.setIst(obj_ist.second);
+
+			SplitAdvancedProgram *p = new SplitAdvancedProgram(pv.value("descr"), SplitAdvancedProgram::int2Mode(pv.intValue("mode")),
+									   pv.intValue("setpoint"), SplitAdvancedProgram::int2Speed(pv.intValue("speed")),
+									   SplitAdvancedProgram::int2Swing(pv.intValue("fan_swing")));
+			commands.append(qMakePair(pv.value("where"), p));
+		}
+		obj_list << ObjectPair(uii, new SplitAdvancedCommandGroup(v.value("descr"), commands));
+	}
+	return obj_list;
+}
+
 QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node)
 {
 	QList<ObjectPair> obj_list;
@@ -97,12 +133,12 @@ void parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_ma
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
-			int uii = getIntAttribute(link, "uii");
-			SplitAdvancedScenario *s = uii_map.value<SplitAdvancedScenario>(uii);
+			int object_uii = getIntAttribute(link, "uii");
+			SplitAdvancedScenario *s = uii_map.value<SplitAdvancedScenario>(object_uii);
 
 			if (!s)
 			{
-				qWarning() << "Invalid split uii" << uii << "in command";
+				qWarning() << "Invalid split uii" << object_uii << "in command";
 				continue;
 			}
 
@@ -449,4 +485,29 @@ QObject *SplitAdvancedScenario::getSwings() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
 	return const_cast<ChoiceList *>(swings);
+}
+
+SplitAdvancedCommandGroup::SplitAdvancedCommandGroup(QString _name, QList<QPair<QString, SplitAdvancedProgram *> > _commands)
+{
+	typedef QPair<QString, SplitAdvancedProgram *> Command;
+
+	name = _name;
+
+	foreach (Command command, _commands)
+	{
+		AdvancedAirConditioningDevice *d = bt_global::add_device_to_cache(new AdvancedAirConditioningDevice(command.first));
+
+		commands.append(qMakePair(d, command.second));
+	}
+}
+
+void SplitAdvancedCommandGroup::apply()
+{
+	typedef QPair<AdvancedAirConditioningDevice *, SplitAdvancedProgram *> Command;
+
+	foreach (Command command, commands)
+		command.first->setStatus(static_cast<AdvancedAirConditioningDevice::Mode>(command.second->mode),
+					 command.second->temperature,
+					 static_cast<AdvancedAirConditioningDevice::Velocity>(command.second->speed),
+					 static_cast<AdvancedAirConditioningDevice::Swing>(command.second->swing));
 }

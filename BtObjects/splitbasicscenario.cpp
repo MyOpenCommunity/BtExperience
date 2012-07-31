@@ -11,6 +11,40 @@
 #include <QDebug>
 
 
+QList<ObjectPair> parseSplitBasicCommandGroup(const QDomNode &xml_node, QHash<int, QPair<QDomNode, QDomNode> > programs)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QList<QPair<QString, SplitBasicProgram *> > commands;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+
+			if (!programs.contains(object_uii))
+			{
+				qWarning() << "Invalid command uii" << object_uii << "in command group";
+				continue;
+			}
+
+			QPair<QDomNode, QDomNode> obj_ist = programs[object_uii];
+			XmlObject pv(obj_ist.first);
+
+			pv.setIst(obj_ist.second);
+
+			SplitBasicProgram *p = new SplitBasicProgram(pv.value("descr"), pv.intValue("command"));
+			commands.append(qMakePair(pv.value("where"), p));
+		}
+		obj_list << ObjectPair(uii, new SplitBasicCommandGroup(v.value("descr"), commands));
+	}
+	return obj_list;
+}
+
 QList<ObjectPair> parseSplitBasicScenario(const QDomNode &xml_node)
 {
 	QList<ObjectPair> obj_list;
@@ -46,12 +80,12 @@ void parseSplitBasicCommand(const QDomNode &xml_node, const UiiMapper &uii_map)
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
-			int uii = getIntAttribute(link, "uii");
-			SplitBasicScenario *s = uii_map.value<SplitBasicScenario>(uii);
+			int object_uii = getIntAttribute(link, "uii");
+			SplitBasicScenario *s = uii_map.value<SplitBasicScenario>(object_uii);
 
 			if (!s)
 			{
-				qWarning() << "Invalid split uii" << uii << "in command";
+				qWarning() << "Invalid split uii" << object_uii << "in command";
 				continue;
 			}
 
@@ -182,4 +216,26 @@ void SplitBasicScenario::apply()
 int SplitBasicScenario::getTemperature() const
 {
 	return bt2Celsius(temperature);
+}
+
+SplitBasicCommandGroup::SplitBasicCommandGroup(QString _name, QList<QPair<QString, SplitBasicProgram *> > _commands)
+{
+	typedef QPair<QString, SplitBasicProgram *> Command;
+
+	name = _name;
+
+	foreach (Command command, _commands)
+	{
+		AirConditioningDevice *d = bt_global::add_device_to_cache(new AirConditioningDevice(command.first));
+
+		commands.append(qMakePair(d, command.second));
+	}
+}
+
+void SplitBasicCommandGroup::apply()
+{
+	typedef QPair<AirConditioningDevice *, SplitBasicProgram *> Command;
+
+	foreach (Command command, commands)
+		command.first->activateScenario(QString::number(command.second->getObjectId()));
 }
