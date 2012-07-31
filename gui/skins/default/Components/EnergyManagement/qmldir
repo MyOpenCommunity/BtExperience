@@ -1,5 +1,4 @@
 Appliance 1.0 Appliance.qml
-ApplianceLoadOff 1.0 ApplianceLoadOff.qml
 ControlUpDownReset 1.0 ControlUpDownReset.qml
 DisableLoadPopup 1.0 DisableLoadPopup.qml
 EnergyConsumptionLogic 1.0 EnergyConsumptionLogic.qml

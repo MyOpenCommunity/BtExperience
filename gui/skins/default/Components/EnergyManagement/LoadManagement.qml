@@ -4,42 +4,58 @@ import Components 1.0
 
 MenuColumn {
     id: element
-    width: 212
-    height: Math.max(1, listView.height)
 
-    onChildDestroyed: {
-        listView.currentIndex = -1
-        privateProps.currentIndex = -1
-    }
-
-    Component.onCompleted: {
-        listModel.append({"name": "washing machine",
-                             "description": "control disabled",
-                             "status": 0,
-                             "boxInfoState": "info",
-                             "boxInfoText": "32 W",
-                             "component": appliance})
-        listModel.append({"name": "oven",
-                             "description": "control enabled",
-                             "status": 1,
-                             "boxInfoState": "",
-                             "boxInfoText": "",
-                             "component": appliance})
-        listModel.append({"name": "microwave oven",
-                             "description": "detached",
-                             "status": 3,
-                             "boxInfoState": "",
-                             "boxInfoText": "",
-                             "component": applianceLoadOff})
+    Column {
+        PaginatorList {
+            id: listView
+            delegate: MenuItemDelegate {
+                itemObject: listModel.getObject(index)
+                name: itemObject.name
+                description: boxInfoText === "0" ? qsTr("Disabled") : itemObject.consumption
+                boxInfoState: privateProps.infoState(itemObject)
+                boxInfoText: privateProps.infoText(itemObject)
+                status: privateProps.loadStatus(itemObject)
+                hasChild: true
+                onDelegateClicked: element.loadColumn(appliance, itemObject.name, itemObject)
+                Component.onCompleted: {
+                    itemObject.requestLoadStatus()
+                    itemObject.requestConsumptionUpdateStart()
+                }
+                Component.onDestruction: itemObject.requestConsumptionUpdateStop()
+            }
+            model: listModel
+        }
     }
 
     QtObject {
         id: privateProps
-        property int currentIndex: -1
-    }
 
-    ListModel {
-        id: listModel
+        function infoState(obj) {
+            if (!obj.hasControlUnit)
+                return ""
+            if (obj.loadEnabled)
+                return "info"
+            return "warning"
+        }
+
+        function infoText(obj) {
+            if (!obj.hasControlUnit)
+                return ""
+            if (obj.loadEnabled)
+                return "1"
+            return "0"
+        }
+
+        function loadStatus(obj) {
+            if (obj.loadStatus === EnergyLoadDiagnostic.Unknown)
+                return 0
+            else if (obj.loadStatus === EnergyLoadDiagnostic.Ok)
+                return 1
+            else if (obj.loadStatus === EnergyLoadDiagnostic.Warning)
+                return 2
+            else if (obj.loadStatus === EnergyLoadDiagnostic.Critical)
+                return 3
+        }
     }
 
     Component {
@@ -47,30 +63,10 @@ MenuColumn {
         Appliance {}
     }
 
-    Component {
-        id: applianceLoadOff
-        ApplianceLoadOff {}
-    }
-
-    Column {
-        PaginatorList {
-            id: listView
-            currentIndex: -1
-            width: element.width
-            listHeight: Math.max(1, 50 * listModel.count)
-            delegate: MenuItemDelegate {
-                name: model.name
-                description: model.description
-                boxInfoState: model.boxInfoState
-                boxInfoText: model.boxInfoText
-                status: model.status
-                hasChild: true
-                onDelegateClicked: {
-                    privateProps.currentIndex = -1
-                    element.loadColumn(model.component, name)
-                }
-            }
-            model: listModel
-        }
+    ObjectModel {
+        id: listModel
+        filters: [
+            {objectId: ObjectInterface.IdEnergyLoad}
+        ]
     }
 }
