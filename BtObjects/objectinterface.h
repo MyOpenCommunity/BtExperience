@@ -122,6 +122,10 @@ public:
 		IdSplitAdvancedScenario = 8014,
 		IdSplitBasicCommand = 8011,
 		IdSplitAdvancedCommand = 8015,
+		IdSplitBasicGenericCommand = 8012,
+		IdSplitAdvancedGenericCommand = 8016,
+		IdSplitBasicGenericCommandGroup = 8013,
+		IdSplitAdvancedGenericCommandGroup = 8017,
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file

@@ -157,7 +157,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionZone *> antintrusion_zones;
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
-	QHash<int, QPair<QDomNode, QDomNode> > probe4zones;
+	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
 	int energy_family = 1;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
@@ -256,6 +256,17 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdSplitAdvancedCommand:
 			// updates program list in advanced split
 			parseSplitAdvancedCommand(xml_obj, uii_map);
+			break;
+		case ObjectInterface::IdSplitBasicGenericCommand:
+		case ObjectInterface::IdSplitAdvancedGenericCommand:
+			foreach (const QDomNode &ist, getChildren(xml_obj, "ist"))
+				splitcommands[getIntAttribute(ist, "uii")] = qMakePair(xml_obj, ist);
+			break;
+		case ObjectInterface::IdSplitBasicGenericCommandGroup:
+			obj_list = parseSplitBasicCommandGroup(xml_obj, splitcommands);
+			break;
+		case ObjectInterface::IdSplitAdvancedGenericCommandGroup:
+			obj_list = parseSplitAdvancedCommandGroup(xml_obj, splitcommands);
 			break;
 
 		case ObjectInterface::IdStopAndGo:

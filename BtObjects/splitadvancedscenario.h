@@ -21,6 +21,7 @@ class UiiMapper;
 
 QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node);
 void parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_map);
+QList<ObjectPair> parseSplitAdvancedCommandGroup(const QDomNode &xml_node, QHash<int, QPair<QDomNode, QDomNode> > programs);
 
 
 /*!
@@ -260,6 +261,24 @@ private:
 	ChoiceList *swings;
 
 	QHash<int, QVariant> current, to_apply;
+};
+
+
+/*!
+	\ingroup AirConditioning
+	\brief Sends commands to multiple splits
+*/
+class SplitAdvancedCommandGroup : public ObjectInterface
+{
+public:
+	SplitAdvancedCommandGroup(QString name, QList<QPair<QString, SplitAdvancedProgram *> > commands);
+
+	virtual int getObjectId() const { return IdSplitAdvancedGenericCommandGroup; }
+
+	Q_INVOKABLE void apply();
+
+private:
+	QList<QPair<AdvancedAirConditioningDevice *, SplitAdvancedProgram *> > commands;
 };
 
 #endif // SPLITADVANCEDSCENARIO_H
