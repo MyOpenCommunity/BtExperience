@@ -97,12 +97,12 @@ void parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_ma
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
-			int uii = getIntAttribute(link, "uii");
-			SplitAdvancedScenario *s = uii_map.value<SplitAdvancedScenario>(uii);
+			int object_uii = getIntAttribute(link, "uii");
+			SplitAdvancedScenario *s = uii_map.value<SplitAdvancedScenario>(object_uii);
 
 			if (!s)
 			{
-				qWarning() << "Invalid split uii" << uii << "in command";
+				qWarning() << "Invalid split uii" << object_uii << "in command";
 				continue;
 			}
 
