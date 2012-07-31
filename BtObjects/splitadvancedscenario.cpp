@@ -131,7 +131,7 @@ SplitAdvancedProgram::SplitAdvancedProgram(
 		QObject *parent) : QObject(parent), mode(mode), speed(speed), swing(swing)
 {
 	Q_ASSERT_X(!_name.isEmpty(), "SplitAdvancedProgram::SplitAdvancedProgram", "name cannot be empty.");
-	Q_ASSERT_X(_temperature >= 160, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be less than 16°C.");
+	Q_ASSERT_X(_temperature >= 150, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be less than 15°C.");
 	Q_ASSERT_X(_temperature <= 300, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be more than 30°C.");
 	name = _name;
 	temperature = _temperature;
