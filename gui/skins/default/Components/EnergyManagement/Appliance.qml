@@ -140,7 +140,7 @@ MenuColumn {
                     arrowImage: "../../images/common/ico_sposta_dx.svg"
                     rightImageBg: "../../images/common/btn_temporizzatore_disabilitato.svg"
                     rightImage: "../../images/common/ico_temporizzatore_disabilitato.svg"
-                    status: 0
+                    status: !(privateProps.loadEnabled() && element.dataModel.loadForced)
                     anchors {
                         right: parent.right
                         rightMargin: width / 100 * 8
