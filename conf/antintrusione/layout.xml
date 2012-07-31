@@ -1,15 +1,5 @@
-﻿<!-- layout -->
-
-<!-- The layout defines containers -->
-<!-- A container is a section of the graphic that can shows objects of archive and: -->
-<!-- it has a politic of showing objects (fixed position, free position) -->
-<!-- it could have limitation in objects ID (e.g. only objs with id 200x -->
-<!-- More instances of containers can be on the devices but some can be limtated to one (e.g. systems) -->
-<!-- All instances of a container with the same ID share this behaviours -->
-<!-- The list of link to the instances of archive is an ordered list -->
-
-<layout>
-	<container id="2" > <!-- rooms -->
+﻿<layout>
+	<container id="100" > <!-- rooms -->
 		<ist uii="102" descr="living room">
 		</ist>
 		<ist uii="103" descr="bathroom">
@@ -22,7 +12,7 @@
 		<ist uii="106" descr="kitchen">
 		</ist>
 	</container>
-	<container id="3" descr="floor" img="floor.png"> <!-- floor -->
+	<container id="13" descr="floor" img="floor.png"> <!-- floor -->
 		<ist uii="201" descr="ground" >
 			<link uii="102" />
 			<link uii="103" />

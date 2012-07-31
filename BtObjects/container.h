@@ -43,14 +43,22 @@ class Container : public ItemInterface
 public:
 	enum ContainerId
 	{
-		IdLights = 1,
-		IdRooms,
-		IdFloors,
-		IdAutomation,
+		IdScenarios = 1,
+		IdLights = 2,
+		IdAutomation = 3,
+		IdAirConditioning = 4,
 		IdLoadControl = 5,
 		IdSupervision = 6,
 		IdEnergyData = 7,
-		IdThermalRegulation = 8
+		IdThermalRegulation = 8,
+		IdVideoDoorEntry = 9,
+		IdSoundDiffusion = 10,
+		IdAntintrusion = 11,
+		IdSettings = 12,
+		IdFloors = 13,
+		IdAmbient = 14,
+		IdRooms = 100,
+		IdProfile = 101
 	};
 
 	Container(int id, int uii, QString image, QString description);
