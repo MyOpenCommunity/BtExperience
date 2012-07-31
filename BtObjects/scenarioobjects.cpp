@@ -198,6 +198,13 @@ void ScenarioModule::valueReceived(const DeviceValues &values_list)
 				if (programming_scenario != scenario_number && status == Unlocked)
 					changeStatus(Locked);
 			}
+			else
+			{
+				// Change the value on STOP since the device won't warn us
+				// if an UNLOCK frame arrives while the device is in unlock state.
+				if (status != Unlocked)
+					changeStatus(Unlocked);
+			}
 		}
 			break;
 		}
