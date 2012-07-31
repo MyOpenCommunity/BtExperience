@@ -122,6 +122,36 @@
 			<link uii="1008" />
 		</ist>
 	</obj>
+	<obj cid="6101" id="6101" descr="Stop and go" where="1">
+		<ist uii="4001" descr="Stop and Go" where="2" />
+	</obj>
+	<obj cid="6102" id="6102" descr="Stop and go plus" where="1">
+		<ist uii="4002" descr="Stop and go plus" where="3" />
+	</obj>
+	<obj cid="6103" id="6103" descr="Stop and go btest" where="1">
+		<ist uii="4003" descr="Stop and go btest" where="5" />
+	</obj>
+	<obj cid="6104" id="6104" descr="Load diagnostic" where="0" phase="0">
+		<ist uii="4007" descr="Washing machine" where="6" />
+		<ist uii="4008" descr="Dishwasher" where="8" />
+	</obj>
+	<obj cid="6111" id="6111" descr="Load with CU" where="1" phase="0" advanced="0" mode="1" measure="Kw" rate_enabled="0" rate_type="0">
+		<ist uii="4004" descr="Load 1 w/ CU advanced" where="2" advanced="1" rate_enabled="1">
+			<rate>
+				<rate_id>5</rate_id>
+				<rate_n_decimal_view>0</rate_n_decimal_view>
+			</rate>
+		</ist>
+		<ist uii="4005" descr="Load 2 w/ CU base" where="3" />
+	</obj>
+	<obj cid="6111" id="6112" descr="Load without CU" where="1" phase="0" advanced="1" mode="1" measure="Kw" rate_enabled="0" rate_type="0">
+		<ist uii="4006" descr="Load 3 w/o CU" where="2" advanced="1" rate_enabled="1">
+			<rate>
+				<rate_id>5</rate_id>
+				<rate_n_decimal_view>0</rate_n_decimal_view>
+			</rate>
+		</ist>
+	</obj>
 	<obj cid="6105" id="6105" descr="Electric line" where="1"
 	     SWmeasure="Kw" measure="Kw" consumption_goal_enabled="0"
 	     threshold_one_enable="0" threshold_two_enable="0"
@@ -235,45 +265,6 @@
 			  <type>2</type>
 		  </item>
 	  </sources>
-  </item>
-  <item>
-    <id>18</id>
-    <descr>Ac Basic 1</descr>
-    <where>11</where>
-    <command>4</command>
-    <off_command>18</off_command>
-    <where_probe>6</where_probe>
-    <programs>
-        <program>manual</program>
-        <program>command 1</program>
-        <program>command 2</program>
-    </programs>
-  </item>
-  <item>
-    <id>19</id>
-    <descr>Ac Advanced 1</descr>
-    <where>12</where>
-    <command>4</command>
-    <where_probe>6</where_probe>
-    <programs>
-        <program>
-            <name>night</name>
-            <mode>4</mode>
-            <set_point>210</set_point>
-            <speed>1</speed>
-            <swing>0</swing>
-        </program>
-        <program>
-            <name>day</name>
-            <mode>5</mode>
-            <set_point>210</set_point>
-            <speed>0</speed>
-            <swing>0</swing>
-        </program>
-    </programs>
-  </item>
-  <item>
-	  <id>20</id>    <!-- Scenario system -->
   </item>
   <item>
     <id>23</id>
