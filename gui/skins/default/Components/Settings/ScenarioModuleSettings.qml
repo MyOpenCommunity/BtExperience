@@ -5,29 +5,16 @@ import BtObjects 1.0
 
 MenuColumn {
     id: column
-    width: 212
 
-    PaginatorList {
-        id: paginator
-        currentIndex: -1
-        width: column.width
-        listHeight: Math.max(1, 50 * objectModel.count)
-
-        delegate: MenuItemDelegate {
-            name: model.name
-            selectOnClick: false
-            onClicked: {
-                if (model.action === 1)
-                    privateProps.startProgramming()
-                else
-                    privateProps.deleteProgram()
-            }
+    Column {
+        MenuItem {
+            name: qsTr("start programming")
+            onClicked: privateProps.startProgramming()
         }
 
-        model: objectModel
-
-        ListModel {
-            id: objectModel
+        MenuItem {
+            name: qsTr("reset program")
+            onClicked: privateProps.deleteProgram()
         }
     }
 
@@ -218,10 +205,5 @@ CANCEL if you wish to abort the operation.")
                 }
             }
         }
-    }
-
-    Component.onCompleted: {
-        objectModel.append({"name": qsTr("start programming"), "action": 1})
-        objectModel.append({"name": qsTr("delete program"), "action": 2})
     }
 }
