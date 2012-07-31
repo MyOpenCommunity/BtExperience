@@ -456,6 +456,26 @@
 			</rate>
 		</ist>
 	</obj>
+	<obj cid="16000" id="16000" descr="Web radio" title="Radio" url="http://">
+		<ist uii="8001" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
+	</obj>
+	<obj cid="16001" id="16001" descr="Webcam" url="http://">
+		<ist uii="8002" descr="Webcam" url="http://www.meteowbcam.itredirect_europa.php?id=2240" />
+	</obj>
+	<obj cid="16002" id="16002" descr="Rss info" url="http://">
+		<ist uii="8003" descr="News" url="http://news.bbc.co.uk/rss" />
+		<ist uii="8010" descr="News" url="http://news.bbc.co.uk/rss" />
+		<ist uii="8004" descr="Science" url="http://feeds.wired.com/wiredscience" />
+		<ist uii="8009" descr="XKCD" url="http://xkcd.com/rss.xml" />
+	</obj>
+	<obj cid="16003" id="16002" descr="" url="http://">
+		<ist uii="8005" descr="Weather" url="http://weather.yahooapis.com/" />
+	</obj>
+	<obj cid="16004" id="16003" descr="Weblink" url="http://">
+		<ist uii="8006" descr="Corriere della sera" url="http://www.corriere.it" />
+		<ist uii="8007" descr="La gazzetta dello sport" url="http://www.gazzetta.it" />
+		<ist uii="8008" descr="La Repubblica" url="http://www.repubblica.it" />
+	</obj>
   <item>
 	  <id>8</id> <!-- Sound diffusion system -->
 	  <amplifiers>

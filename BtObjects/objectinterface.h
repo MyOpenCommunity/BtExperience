@@ -127,6 +127,8 @@ public:
 		IdSplitBasicGenericCommandGroup = 8013,
 		IdSplitAdvancedGenericCommandGroup = 8017,
 
+		IdIpRadio = 16000,
+
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file
 		// are defined inside the anonymous namespace contained in
@@ -136,7 +138,6 @@ public:
 		IdLightCustom = 10012003, //!< A simple light actuator with custom time
 		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
 
-		IdIpRadio,
 		// the last value + 1, used to check the ids requested from qml
 		// NOTE: always verify is the highest value out there!
 		IdMax

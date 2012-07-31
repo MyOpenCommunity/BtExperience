@@ -41,9 +41,10 @@ public:
 	/// Media link type
 	enum MediaType
 	{
-		Web = 1, //!< Web link, address is an URL
-		Rss,  //!< RSS link, address is an URL
-		Camera  //!< Video-surveillance camera link, address is the SCS where of the camera
+		Web = 16003, //!< Web link, address is an URL
+		Rss = 16002,  //!< RSS link, address is an URL
+		Webcam = 16001,  //!< Webcam link, address is an URL
+		Camera = 3 //!< Video-surveillance camera link, address is the SCS where of the camera
 	};
 
 	MediaLink(int container_id, MediaType type, QString name, QString address, QPoint position);
