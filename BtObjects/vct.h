@@ -17,6 +17,7 @@ class QDomNode;
 
 ObjectInterface *parseCCTV(const QDomNode &n);
 ObjectInterface *parseIntercom(const QDomNode &n);
+QList<ObjectPair> parseVdeCamera(const QDomNode &xml_node);
 
 
 /*!
@@ -41,6 +42,30 @@ private:
 	QString where;
 };
 
+
+/*!
+	\ingroup VideoDoorEntry
+	\brief Contains address and description for a single surveillance camera
+*/
+class SurveillanceCamera : public ObjectInterface
+{
+	Q_OBJECT
+
+	Q_PROPERTY(QString where READ getWhere CONSTANT)
+
+public:
+	SurveillanceCamera(const QString &_name, const QString &_where);
+
+	virtual int getObjectId() const { return IdSurveillanceCamera; }
+
+	QString getWhere() const
+	{
+		return where;
+	}
+
+private:
+	QString where;
+};
 
 /*!
 	\ingroup VideoDoorEntry

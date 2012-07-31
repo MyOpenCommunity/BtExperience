@@ -565,4 +565,8 @@
     <where>14</where>
     <mode>0</mode>
   </item>
+	<obj id="10051" cid="10051" descr="Camera" where="0" device="2">
+		<ist uii="9004" descr="Camera 1" where="124" />
+		<ist uii="9005" descr="Camera 2" where="125" />
+	</obj>
 </configuratore>

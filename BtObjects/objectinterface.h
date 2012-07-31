@@ -127,6 +127,8 @@ public:
 		IdSplitBasicGenericCommandGroup = 8013,
 		IdSplitAdvancedGenericCommandGroup = 8017,
 
+		IdSurveillanceCamera = 10051,
+
 		IdIpRadio = 16000,
 
 		// the following constants don't have a correspondence 1-to-1 with

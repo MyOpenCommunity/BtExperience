@@ -2,6 +2,7 @@
 #include "videodoorentry_device.h"
 #include "xml_functions.h"
 #include "devices_cache.h"
+#include "xmlobject.h"
 
 #include <QDebug>
 
@@ -31,8 +32,30 @@ ObjectInterface *parseIntercom(const QDomNode &n)
 	return new Intercom(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice("11", "0")));
 }
 
+QList<ObjectPair> parseVdeCamera(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		obj_list << ObjectPair(uii, new SurveillanceCamera(v.value("descr"), v.value("where")));
+	}
+	return obj_list;
+}
+
 
 ExternalPlace::ExternalPlace(const QString &_name, const QString &_where)
+{
+	name = _name;
+	where = _where;
+}
+
+
+SurveillanceCamera::SurveillanceCamera(const QString &_name, const QString &_where)
 {
 	name = _name;
 	where = _where;

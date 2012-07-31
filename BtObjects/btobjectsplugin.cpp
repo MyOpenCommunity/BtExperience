@@ -292,6 +292,11 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseAdvancedScenario(xml_obj);
 			break;
 
+		case ObjectInterface::IdSurveillanceCamera:
+			// TODO add therm to CCTV object?
+			obj_list = parseVdeCamera(xml_obj);
+			break;
+
 		case ObjectInterface::IdIpRadio:
 			obj_list = parseIpRadio(xml_obj);
 			break;
