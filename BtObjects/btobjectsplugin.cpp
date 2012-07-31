@@ -440,12 +440,18 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdProfile:
 			parseProfiles(container);
 			break;
+		case Container::IdScenarios:
 		case Container::IdLights:
 		case Container::IdAutomation:
+		case Container::IdAirConditioning:
 		case Container::IdLoadControl:
 		case Container::IdSupervision:
 		case Container::IdEnergyData:
 		case Container::IdThermalRegulation:
+		case Container::IdVideoDoorEntry:
+		case Container::IdSoundDiffusion:
+		case Container::IdAntintrusion:
+		case Container::IdSettings:
 			parseSystem(container);
 			break;
 		}
