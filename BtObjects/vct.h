@@ -25,8 +25,6 @@ ObjectInterface *parseIntercom(const QDomNode &n);
 */
 class ExternalPlace : public ObjectInterface
 {
-	friend class Intercom; // to access the where field
-
 	Q_OBJECT
 
 	Q_PROPERTY(QString where READ getWhere() CONSTANT)

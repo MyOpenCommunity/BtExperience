@@ -383,9 +383,9 @@ void Intercom::setTalkerFromWhere(QString where)
 	{
 		ObjectInterface *obj = external_places.getObject(i);
 		ExternalPlace *ep = static_cast<ExternalPlace *>(obj);
-		if (ep->where == where)
+		if (ep->getWhere() == where)
 		{
-			talker = ep->name;
+			talker = ep->getName();
 			emit talkerChanged();
 			break;
 		}
