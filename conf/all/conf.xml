@@ -50,6 +50,199 @@
 			<link uii="6" />
 		</ist>
 	</obj>
+	<obj cid="9001" id="9001" descr="Advanced Scenario">
+		<ist uii="6001" descr="Dimmer cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>2</objectID>
+					<descr>Dimmer 10</descr>
+					<where>10</where>
+					<pul>0</pul>
+					<trigger>2-4</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6002" descr="Amplifier cond, no time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>0</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>4</objectID>
+					<descr>Amplifier 21</descr>
+					<where>21</where>
+					<pul>0</pul>
+					<trigger>13-22</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6003" descr="Temperature cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>3</objectID>
+					<descr>Controlled zone 16</descr>
+					<where>16</where>
+					<pul>0</pul>
+					<trigger>210</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6004" descr="Light cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>1</objectID>
+					<descr>Light 17</descr>
+					<where>17</where>
+					<pul>0</pul>
+					<trigger>1</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6005" descr="Dimmer 100 cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>6</objectID>
+					<descr>Dimmer 100</descr>
+					<where>100</where>
+					<pul>0</pul>
+					<trigger>50-70</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+	</obj>
+        <obj cid="9002" id="9002" descr="Scheduled scenario">
+		<ist uii="6101" descr="Scheduled scenario 3">
+			<schedscen>
+				<enable>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*01*11##</open>
+				</enable>
+				<disable>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*02*11##</open>
+				</disable>
+				<start>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*03*11##</open>
+				</start>
+				<stop>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*04*11##</open>
+				</stop>
+			</schedscen>
+		</ist>
+		<ist uii="6102" descr="Scheduled scenario 4">
+			<schedscen>
+				<enable>
+					<presence>0</presence>
+					<cmdType>0</cmdType>
+					<open>*15*01*11##</open>
+				</enable>
+				<disable>
+					<presence>0</presence>
+					<cmdType>0</cmdType>
+					<open>*15*02*11##</open>
+				</disable>
+				<start>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*03*12##</open>
+				</start>
+				<stop>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*04*12##</open>
+				</stop>
+			</schedscen>
+		</ist>
+	</obj>
+	<obj cid="1001" id="1001" descr="Scenario unit" where="11" what="1">
+		<ist uii="6201" descr="Scenario 1" where="12" what="1" />
+		<ist uii="6202" descr="Scenario 2" where="21" what="2" />
+		<ist uii="6203" descr="Scenario 3" where="22" what="3" />
+	</obj>
+	<obj cid="1002" id="1002" descr="Scenario module" where="11" what="1">
+		<ist uii="6204" descr="Scenario 4" where="11#4#01" what="4" />
+	</obj>
+	<obj cid="1003" id="1003" descr="Scenario plus" where="1">
+		<ist uii="6205" descr="Scenario Plus" where="10" />
+	</obj>
         <obj cid="8001" id="8001" descr="99 Zones Control Unit">
 		<ist uii="2001" descr="unità centrale">
 			<programs>
@@ -62,6 +255,73 @@
 				<scenario descr="Summer scenario" type="1" num="5" />
 				<scenario descr="Midsummer scenario" type="1" num="6" />
 			</scenarios>
+		</ist>
+	</obj>
+	<!-- basic AC -->
+	<obj cid="8010" id="8010" descr="Basic AC Unit" where="11" eprobe="0" off_cmd="1" off_presence="0" command="1">
+		<ist uii="7001" descr="Living room Base" where="12" />
+		<ist uii="7002" descr="Bedroom Base" where="22" eprobe="1" off_cmd = "2" off_presence = "1" command="2">
+			<probe where_probe="112" />
+		</ist>
+	</obj>
+	<obj cid="8011" id="8011" descr="Command" command="1">
+		<ist uii="7003" descr="Command 1">
+			<link uii="7001" />
+		</ist>
+		<ist uii="7004" descr="Command 2" command="2">
+			<link uii="7001" />
+		</ist>
+		<ist uii="7005" descr="Command 3" command="3">
+			<link uii="7002" />
+		</ist>
+	</obj>
+	<obj cid="8012" id="8012" descr="Generic command" where="11" command="1">
+		<ist uii="7006" descr="Generic command 1" where="12" />
+		<ist uii="7007" descr="Generic command 2" where="13" command="2" />
+		<ist uii="7008" descr="Generic command 3" where="14" command="3" />
+	</obj>
+	<obj cid="8013" id="8013" descr="Group of commands">
+		<ist uii="7009" descr="Group of generic command 1-2">
+			<link uii="7006" />
+			<link uii="7007" />
+		</ist>
+		<ist uii="7010" descr="Group of generic command 3">
+			<link uii="7008" />
+		</ist>
+	</obj>
+	<!-- advanced AC -->
+	<obj cid="8014" id="8014" descr="AC Unit advanced" where="3#11#1" eprobe="0" off_cmd="0" setpoint_min="160" setpoint_max="260" setpoint_step="1" mode_auto="5" mode_cooling="-1" mode_heating="-1" mode_dry="-1" mode_fan="-1" speed_presence="0" swing_presence="-1">
+		<ist uii="7101" descr="Living room Adv" where="3#11#2" eprobe="1" setpoint_min="200" setpoint_max="250" mode_cooling="2" mode_heating="1" speed_presence="1" swing_presence="1">
+			<probe where_probe="000" />
+			<speed speed_auto="-1" speed_highe="-1" speed_medium="2" speed_low="-1" speed_silent="-1" />
+		</ist>
+		<ist uii="7102" descr="Bedroom Adv" where="3#11#2" setpoint_min="200" setpoint_max="250" mode_cooling="2" mode_heating="1" />
+	</obj>
+	<obj cid="8015" id="8015" descr="Command" setpoint="200" mode="5" speed=" " fan_swing=" ">
+		<ist uii="7103" descr="Living room - cooling" setpoint="200" mode="2" speed="2">
+			<link uii="7101" />
+		</ist>
+		<ist uii="7104" descr="Living room - Heating" setpoint="250" mode="1">
+			<link uii="7101" />
+		</ist>
+		<ist uii="7105" descr="Bedroom heating" setpoint="250" mode="1">
+			<link uii="7102" />
+		</ist>
+	</obj>
+	<obj cid="8016" id="8016" descr="Generic Command" where="11#1" setpoint="180" mode="1" speed="1" fan_swing="1">
+		<ist uii="7106" descr="Generic Commnad 1" where="11#2" setpoint="190" mode="2" />
+		<ist uii="7107" descr="Generic Commnad 2" where="11#3" setpoint="200" mode="3" speed="2" />
+		<ist uii="7108" descr="Generic Commnad 3" where="11#4" />
+		<ist uii="7109" descr="Generic Commnad 4" where="11#5" />
+	</obj>
+	<obj cid="8017" id="8017" descr="Group of commands">
+		<ist uii="7110" descr="Group of commands 1-2">
+			<link uii="7106" />
+			<link uii="7107" />
+		</ist>
+		<ist uii="7111" descr="Group of commands 3-4">
+			<link uii="7108" />
+			<link uii="7109" />
 		</ist>
 	</obj>
 	<obj cid="8002" id="8002" descr="99 Zones" where="1" fancoil="0">

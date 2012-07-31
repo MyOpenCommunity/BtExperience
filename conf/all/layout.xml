@@ -1,4 +1,19 @@
 ﻿<layout>
+	<container id="1" descr="scenarios">
+		<ist uii="1">
+			<link uii="6001" />
+			<link uii="6002" />
+			<link uii="6003" />
+			<link uii="6004" />
+			<link uii="6101" />
+			<link uii="6102" />
+			<link uii="6201" />
+			<link uii="6202" />
+			<link uii="6203" />
+			<link uii="6204" />
+			<!-- not parsed yet <link uii="6205" /> -->
+		</ist>
+	</container>
 	<container id="2" descr="lights"> <!-- lights system container -->
 		<ist uii="2">
 			<link uii="12" />
@@ -14,10 +29,22 @@
 		</ist>
 	</container>
 	<container id="3" descr="automation">
-		<ist uii="4">
+		<ist uii="3">
 			<link uii="15" />
 			<link uii="16" />
 			<link uii="17" />
+		</ist>
+	</container>
+	<container id="4" descr="air conditioning">
+		<ist uii="4">
+			<link uii="7001" />
+			<link uii="7002" />
+			<link uii="7101" />
+			<link uii="7102" />
+			<link uii="7009" />
+			<link uii="7010" />
+			<link uii="7110" />
+			<link uii="7111" />
 		</ist>
 	</container>
 	<container id="8" descr="thermal regulation">
