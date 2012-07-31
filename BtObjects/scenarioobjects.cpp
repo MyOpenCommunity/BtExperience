@@ -140,6 +140,7 @@ ScenarioModule::ScenarioModule(int scenario, QString _name, ScenarioDevice *d) :
 	SimpleScenario(scenario, _name, d)
 {
 	status = Locked;
+	connect(d, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
 ScenarioModule::Status ScenarioModule::getStatus()
