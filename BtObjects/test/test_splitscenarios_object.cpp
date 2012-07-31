@@ -87,7 +87,7 @@ void TestSplitScenarios::init()
 				new NonControlledProbeDevice("11", NonControlledProbeDevice::INTERNAL),
 				modes,
 				speeds,
-				swings);
+				swings, 150, 300);
 	obj_adv->addProgram(&PROGRAM_DAY_A);
 	obj_adv->addProgram(&PROGRAM_NIGHT_A);
 }
@@ -122,7 +122,7 @@ void TestSplitScenarios::testCreationWithNullProbe()
 				0,
 				modes,
 				speeds,
-				swings);
+				swings, 150, 300);
 	delete obj_adv_tmp;
 }
 
