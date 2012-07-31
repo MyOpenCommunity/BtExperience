@@ -2,8 +2,6 @@
 #include "openclient.h"
 #include "main.h"
 #include "device.h"
-#include "devices_cache.h"
-#include "probe_device.h"
 #include "objectmodel.h"
 #include "lightobjects.h"
 #include "automationobjects.h"
@@ -50,19 +48,6 @@ QHash<GlobalField, QString> *bt_global::config;
 
 namespace
 {
-	NonControlledProbeDevice *createNonControlledProbeDevice(const QDomNode &item_node)
-	{
-		NonControlledProbeDevice *dev = 0;
-		QString where_probe = getTextChild(item_node, "where_probe");
-		if (where_probe != "000")
-		{
-			dev = new NonControlledProbeDevice(where_probe, NonControlledProbeDevice::INTERNAL,
-											   getTextChild(item_node, "openserver_id_probe").toInt());
-			dev = bt_global::add_device_to_cache(dev);
-		}
-		return dev;
-	}
-
 	template<class Tr>
 	QList<Tr> convertObjectPairList(QList<ObjectPair> pairs)
 	{
