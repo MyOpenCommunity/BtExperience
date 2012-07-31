@@ -8,8 +8,8 @@ MenuColumn {
 
     Column {
         MenuItem {
-            name: qsTr("start programming")
-            onClicked: privateProps.startProgramming()
+            name: privateProps.isProgramming ? qsTr("stop programming") : qsTr("start programming")
+            onClicked: privateProps.startClicked()
         }
 
         MenuItem {
@@ -22,12 +22,22 @@ MenuColumn {
         id: privateProps
 
         property int errorTimeout: 2000
+        property int isProgramming: column.dataModel.status === ScenarioModule.Editing ?
+                                        true : false
 
-        function startProgramming() {
-            if (column.dataModel.status === ScenarioModule.Locked)
+        function startClicked() {
+            switch (column.dataModel.status)
+            {
+            case ScenarioModule.Locked:
                 pageObject.installPopup(scenarioLocked)
-            else
+                break
+            case ScenarioModule.Unlocked:
                 pageObject.installPopup(scenarioProgramming)
+                break
+            case ScenarioModule.Editing:
+                column.dataModel.stopProgramming()
+                break
+            }
         }
 
         function deleteProgram() {
