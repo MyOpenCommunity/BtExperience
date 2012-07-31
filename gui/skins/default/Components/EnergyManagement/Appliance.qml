@@ -2,11 +2,11 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
+import "../../js/datetime.js" as DateTime
 
 
 MenuColumn {
     id: element
-
 
     AnimatedLoader {
         id: applianceLoader
@@ -22,6 +22,26 @@ MenuColumn {
         }
     }
 
+    QtObject {
+        id: privateProps
+
+        function loadEnabled() {
+            return element.dataModel.hasControlUnit && element.dataModel.loadEnabled
+        }
+
+        function computeSince(period) {
+            // datetime returned from resetDateTime may be invalid; in this
+            // case we have to compare it with empty string, but using the
+            // == operator (and not === operator) because dt is not a string
+            var dt = period.resetDateTime
+            var d = DateTime.format(dt)["date"]
+            if (d == "")
+                return ""
+            var t = DateTime.format(dt)["time"]
+            return qsTr("since ") + d + " - " + t
+        }
+    }
+
     Component.onCompleted: {
         element.dataModel.requestConsumptionUpdateStart()
         element.dataModel.requestLoadStatus()
@@ -30,9 +50,7 @@ MenuColumn {
     }
     Component.onDestruction: element.dataModel.requestConsumptionUpdateStop()
 
-    state: {
-        return element.dataModel.hasControlUnit && element.dataModel.loadEnabled ? "forced" : "normal"
-    }
+    state: privateProps.loadEnabled() ? "forced" : "normal"
 
     states: [
         State {
@@ -48,13 +66,33 @@ MenuColumn {
     Component {
         id: applianceForced
 
+        // in this Component we assume a CU is available for the load (if a CU
+        // is not present this submenu is a nosense)
         Column {
             ControlMinusPlus {
                 title: qsTr("force load")
-                text: qsTr("180 minutes")
+                text: element.dataModel.forceDuration + qsTr(" minutes")
+                onMinusClicked: element.dataModel.decreaseForceDuration()
+                onPlusClicked: element.dataModel.increaseForceDuration()
             }
 
-            ButtonOkCancel { }
+            SvgImage {
+                source: "../../images/common/bg_on-off.svg"
+
+                ButtonThreeStates {
+                    id: buttonForce
+
+                    defaultImage: "../../images/common/btn_apriporta_ok_on.svg"
+                    pressedImage: "../../images/common/btn_apriporta_ok_on_P.svg"
+                    shadowImage: "../../images/common/ombra_btn_apriporta_ok_on.svg"
+                    text: qsTr("force load")
+                    font.capitalization: Font.AllUppercase
+                    font.pixelSize: 15
+                    onClicked: element.dataModel.forceOn(element.dataModel.forceDuration)
+                    status: 0
+                    anchors.centerIn: parent
+                }
+            }
         }
     }
 
@@ -63,6 +101,7 @@ MenuColumn {
 
         Column {
             SvgImage {
+                visible: element.dataModel.hasControlUnit
                 source: "../../images/common/bg_on-off.svg"
 
                 UbuntuLightText {
@@ -79,7 +118,10 @@ MenuColumn {
                 }
 
                 UbuntuLightText {
-                    text: qsTr("enabled")
+                    // the following test is "simplified" because the switch is
+                    // visible only if the load has a CU: if CU is not present
+                    // the switch is not visible
+                    text: privateProps.loadEnabled() ? qsTr("enabled") : qsTr("disabled")
                     color: "white"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignLeft
@@ -104,7 +146,9 @@ MenuColumn {
                         rightMargin: width / 100 * 8
                         verticalCenter: parent.verticalCenter
                     }
-                    onClicked: status === 0 ? status = 1 : status = 0
+                    onClicked: privateProps.loadEnabled() && element.dataModel.loadForced ?
+                                   element.dataModel.stopForcing() :
+                                   element.dataModel.forceOn()
                 }
             }
 
@@ -125,7 +169,7 @@ MenuColumn {
                 }
 
                 UbuntuLightText {
-                    text: qsTr("23.2 kW")
+                    text: element.dataModel.consumption + " " + element.dataModel.currentUnit
                     color: "white"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignLeft
@@ -138,19 +182,20 @@ MenuColumn {
                 }
             }
 
-            Partial {}
-            Partial {}
+            Partial {
+                partialId: 0 // expects periodTotals are zero-based
+                visible: element.dataModel.hasConsumptionMeters
+                text: element.dataModel.periodTotals[partialId].total + " " + element.dataModel.cumulativeUnit
+                since: privateProps.computeSince(element.dataModel.periodTotals[partialId])
+                onClicked: element.dataModel.resetTotal(partialId)
+            }
 
-            ButtonOkCancel {
-                onOkClicked: {
-                    if (element.choice === 0) {
-                        pageObject.installPopup(disableLoadPopup)
-                    }
-                }
-                Component {
-                    id: disableLoadPopup
-                    DisableLoadPopup {}
-                }
+            Partial {
+                partialId: 1
+                visible: element.dataModel.hasConsumptionMeters
+                text: element.dataModel.periodTotals[partialId].total + " " + element.dataModel.cumulativeUnit
+                since: privateProps.computeSince(element.dataModel.periodTotals[partialId])
+                onClicked: element.dataModel.resetTotal(partialId)
             }
         }
     }

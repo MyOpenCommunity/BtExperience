@@ -4,12 +4,20 @@ import Components.Text 1.0
 
 
 SvgImage {
+    id: element
+
+    property int partialId: 1
+    property alias text: consumption.text
+    property alias since: since.text
+
+    signal clicked
+
     source: "../../images/common/bg_impostazioni.svg"
 
     UbuntuLightText {
         id: firstLine
 
-        text: qsTr("partial 1")
+        text: qsTr("partial ") + (element.partialId + 1) // expects periodTotals are zero-based
         color: "gray"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
@@ -22,6 +30,8 @@ SvgImage {
     }
 
     UbuntuLightText {
+        id: since
+
         text: qsTr("since 24/07/2012 18:35")
         color: "gray"
         verticalAlignment: Text.AlignVCenter
@@ -34,6 +44,8 @@ SvgImage {
     }
 
     UbuntuLightText {
+        id: consumption
+
         text: qsTr("45.51 kWh")
         color: "white"
         verticalAlignment: Text.AlignVCenter
@@ -53,7 +65,7 @@ SvgImage {
         text: qsTr("reset")
         font.capitalization: Font.AllUppercase
         font.pixelSize: 15
-        onClicked: console.log("reset to be implemented")
+        onClicked: element.clicked()
         status: 0
         anchors {
             bottom: parent.bottom

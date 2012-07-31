@@ -11,7 +11,7 @@ MenuColumn {
             delegate: MenuItemDelegate {
                 itemObject: listModel.getObject(index)
                 name: itemObject.name
-                description: boxInfoText === "0" ? qsTr("Disabled") : itemObject.consumption
+                description: boxInfoText === "0" ? qsTr("Disabled") : itemObject.consumption + " " + itemObject.currentUnit
                 boxInfoState: privateProps.infoState(itemObject)
                 boxInfoText: privateProps.infoText(itemObject)
                 status: privateProps.loadStatus(itemObject)
