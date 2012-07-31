@@ -568,16 +568,27 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 		{
 			int link_uii = getIntAttribute(link, "uii");
 			MediaLink *l = uii_map.value<MediaLink>(link_uii);
+			SurveillanceCamera *c = uii_map.value<SurveillanceCamera>(link_uii);
+			QPoint pos(getIntAttribute(link, "x"), getIntAttribute(link, "y"));
 
-			if (!l)
+			if (l)
+			{
+				l->setContainerId(profile_uii);
+				l->setPosition(pos);
+			}
+			else if (c)
+			{
+				// for surveillance cameras, create a media link object on the fly using
+				// the data from the camera object (we could add a proxy class, but this is simpler)
+				l = new MediaLink(profile_uii, MediaLink::Camera, c->getName(), c->getWhere(), pos);
+				media_link_model << l;
+			}
+			else
 			{
 				qWarning() << "Invalid uii" << link_uii << "in profile";
 				Q_ASSERT_X(false, "parseProfiles", "Invalid uii");
 				continue;
 			}
-
-			l->setContainerId(profile_uii);
-			l->setPosition(QPoint(getIntAttribute(link, "x"), getIntAttribute(link, "y")));
 		}
 	}
 }
