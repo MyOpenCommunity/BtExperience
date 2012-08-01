@@ -4,17 +4,16 @@ import BtObjects 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: paginator.height
 
     signal modeChanged(int mode)
+
+    width: 212 // needed for menu shadow
 
     onChildDestroyed: paginator.currentIndex = -1
 
     PaginatorList {
         id: paginator
-        width: parent.width
-        listHeight: dataModel.count * 50
+
         delegate: MenuItemDelegate {
             itemObject: modelData
             name: modelData
@@ -26,5 +25,8 @@ MenuColumn {
             }
         }
         model: dataModel.programs
+        Component.onCompleted: {
+            paginator.listHeight = column.height = 50 * model.length
+        }
     }
 }

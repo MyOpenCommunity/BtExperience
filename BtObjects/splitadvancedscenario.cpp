@@ -286,18 +286,21 @@ void SplitAdvancedScenario::setProgram(QString program)
 	actual_program.name = program_list.at(p)->name;
 	emit programChanged();
 
-	setMode(program_list.at(p)->mode);
+	if (program_list.at(p)->mode != -1) // a mode must be defined
+		setMode(program_list.at(p)->mode);
 	setSetPoint(program_list.at(p)->temperature);
-	if (to_apply[SPLIT_SPEED] != program_list.at(p)->speed)
-	{
-		to_apply[SPLIT_SPEED] = program_list.at(p)->speed;
-		emit speedChanged();
-	}
-	if (to_apply[SPLIT_SWING] != program_list.at(p)->swing)
-	{
-		to_apply[SPLIT_SWING] = program_list.at(p)->swing;
-		emit swingChanged();
-	}
+	if (program_list.at(p)->speed != -1) // a speed must exist
+		if (to_apply[SPLIT_SPEED] != program_list.at(p)->speed)
+		{
+			to_apply[SPLIT_SPEED] = program_list.at(p)->speed;
+			emit speedChanged();
+		}
+	if (program_list.at(p)->swing != -1) // a swing must exist
+		if (to_apply[SPLIT_SWING] != program_list.at(p)->swing)
+		{
+			to_apply[SPLIT_SWING] = program_list.at(p)->swing;
+			emit swingChanged();
+		}
 	sync();
 }
 
