@@ -28,6 +28,7 @@ MenuColumn {
             state: privateProps.currentIndex === 1 ? "selected" : ""
             hasChild: true
             onClicked: {
+                listView.currentIndex = -1
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 element.loadColumn(component, name)
@@ -40,7 +41,10 @@ MenuColumn {
         }
     }
 
-    onChildDestroyed: privateProps.currentIndex = -1
+    onChildDestroyed: {
+        listView.currentIndex = -1
+        privateProps.currentIndex = -1
+    }
 
     QtObject {
         id: privateProps
