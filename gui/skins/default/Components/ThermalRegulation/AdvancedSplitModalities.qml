@@ -4,10 +4,10 @@ import BtObjects 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: 300
 
     signal modeChanged(int mode)
+
+    width: 212 // needed for menu shadow
 
     ListView {
         id: view
@@ -25,6 +25,7 @@ MenuColumn {
                 var l = dataModel.modes.values
                 for (var i = 0; i < l.length; i++)
                     append({"type": l[i], "name": pageObject.names.get('MODE', l[i])})
+                column.height = l.length * 50
             }
         }
     }
