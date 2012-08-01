@@ -181,6 +181,16 @@ class EnergyData : public ObjectInterface
 	*/
 	Q_PROPERTY(QString cumulativeUnit READ getCumulativeUnit CONSTANT)
 
+	/*!
+		\brief Whether this is and advanced energy device
+
+		Advanced devices store more than 12 months of data and (for electricity)
+		can have consumption thresholds.
+
+		The property starts \c false and can change state at most once, becoming \c true.
+	*/
+	Q_PROPERTY(bool advanced READ getAdvanced NOTIFY advancedChanged)
+
 	Q_ENUMS(GraphType ValueType EnergyType MeasureType)
 
 public:
@@ -282,6 +292,8 @@ public:
 	void setThresholdEnabled(QVariantList enabled);
 	QVariantList getThresholdEnabled() const;
 
+	bool getAdvanced() const;
+
 public slots:
 	/*!
 		\brief Request automatic updates for the current consumption value
@@ -297,6 +309,7 @@ signals:
 	void thresholdsChanged(QVariantList thresholds);
 	void thresholdLevelChanged(int level);
 	void thresholdEnabledChanged(QVariantList enabled);
+	void advancedChanged();
 
 private slots:
 	// remove destroyed objects from graphCache/itemChache
