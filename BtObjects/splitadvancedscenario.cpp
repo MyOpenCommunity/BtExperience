@@ -28,7 +28,7 @@ namespace
 
 		foreach (QString name, names)
 		{
-			if (attributes.contains("name") && attributes.namedItem(name).toAttr().value() != "-1")
+			if (attributes.contains(name) && attributes.namedItem(name).toAttr().value() != "-1")
 				res.append(index);
 			++index;
 		}
@@ -112,7 +112,7 @@ QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node)
 		modes = parseEnumeration(v, mode_strings);
 
 		if (v.intValue("speed_presence"))
-			speeds = parseEnumeration(getChildWithName(ist, "speeds"), speed_strings);
+			speeds = parseEnumeration(getChildWithName(ist, "speed"), speed_strings);
 
 		if (v.intValue("swing_presence"))
 			swings << SplitAdvancedProgram::SwingOff << SplitAdvancedProgram::SwingOn;
