@@ -38,8 +38,8 @@ void TestVideoDoorEntry::init()
 	// for tests we use the same list of external places, in real code we
 	// expect to have different lists
 	QList<ExternalPlace *> l;
-	l << new ExternalPlace("portone", "21");
-	l << new ExternalPlace("garage", "21#2");
+	l << new ExternalPlace("portone", ObjectInterface::IdExternalPlace, "21");
+	l << new ExternalPlace("garage", ObjectInterface::IdExternalPlace, "21#2");
 
 	cctv = new CCTV(l, new VideoDoorEntryDevice("11", "0"));
 
