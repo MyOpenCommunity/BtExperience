@@ -133,12 +133,12 @@ class SplitAdvancedScenario : public ObjectInterface
 	Q_PROPERTY(int setPoint READ getSetPoint WRITE setSetPoint NOTIFY setPointChanged)
 
 	/*!
-		\brief Gets or sets the split temperature set point
+		\brief Gets the split temperature minimum set point value
 	*/
 	Q_PROPERTY(int setPointMin READ getSetPointMin CONSTANT)
 
 	/*!
-		\brief Gets or sets the split temperature set point
+		\brief Gets the split temperature maximum set point value
 	*/
 	Q_PROPERTY(int setPointMax READ getSetPointMax CONSTANT)
 
