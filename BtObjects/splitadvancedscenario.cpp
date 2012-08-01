@@ -118,7 +118,7 @@ QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node)
 			swings << SplitAdvancedProgram::SwingOff << SplitAdvancedProgram::SwingOn;
 
 		obj_list << ObjectPair(uii, new SplitAdvancedScenario(v.value("descr"), "", d, off_command, probe, modes, speeds, swings,
-								      v.intValue("setpoint_min"), v.intValue("setpoint_max")));
+								      v.intValue("setpoint_min"), v.intValue("setpoint_max"), v.intValue("setpoint_step")));
 	}
 	return obj_list;
 }
@@ -183,7 +183,7 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 											 QList<int> _modes,
 											 QList<int> _speeds,
 											 QList<int> _swings,
-											 int _setpoint_min, int _setpoint_max,
+											 int _setpoint_min, int _setpoint_max, int _setpoint_step,
 											 QObject *parent) :
 	ObjectInterface(parent)
 {
@@ -210,6 +210,7 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 	name = _name;
 	setpoint_min = _setpoint_min;
 	setpoint_max = _setpoint_max;
+	setpoint_step = _setpoint_step;
 	actual_program.name = QString();
 	actual_program.mode = static_cast<SplitAdvancedProgram::Mode>(modes->value());
 	current[SPLIT_SWING] = static_cast<SplitAdvancedProgram::Swing>(swings->value(SplitAdvancedProgram::SwingInvalid));
@@ -333,6 +334,11 @@ int SplitAdvancedScenario::getSetPointMin() const
 int SplitAdvancedScenario::getSetPointMax() const
 {
 	return setpoint_max;
+}
+
+int SplitAdvancedScenario::getSetPointStep() const
+{
+	return setpoint_step;
 }
 
 void SplitAdvancedScenario::setSetPoint(int setpoint)

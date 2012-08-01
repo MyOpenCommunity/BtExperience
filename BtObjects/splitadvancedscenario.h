@@ -143,6 +143,11 @@ class SplitAdvancedScenario : public ObjectInterface
 	Q_PROPERTY(int setPointMax READ getSetPointMax CONSTANT)
 
 	/*!
+		\brief Gets the split temperature set point increment step
+	*/
+	Q_PROPERTY(int setPointStep READ getSetPointStep CONSTANT)
+
+	/*!
 		\brief Gets the split fan speed
 	*/
 	Q_PROPERTY(SplitAdvancedProgram::Speed speed READ getSpeed NOTIFY speedChanged)
@@ -191,7 +196,7 @@ public:
 								   QList<int> modes,
 								   QList<int> speeds,
 								   QList<int> swings,
-								   int setpoint_min, int setpoint_max,
+								   int setpoint_min, int setpoint_max, int setpoint_step,
 								   QObject *parent = 0);
 
 	virtual int getObjectId() const
@@ -214,6 +219,7 @@ public:
 	void setSetPoint(int setPoint);
 	int getSetPointMin() const;
 	int getSetPointMax() const;
+	int getSetPointStep() const;
 	SplitAdvancedProgram::Speed getSpeed() const;
 	int getCount() const;
 	int getTemperature() const;
@@ -255,7 +261,7 @@ private:
 	QString key;
 	SplitAdvancedProgram actual_program; // name empty means custom programming
 	QList<SplitAdvancedProgram *> program_list;
-	int temperature, setpoint_min, setpoint_max;
+	int temperature, setpoint_min, setpoint_max, setpoint_step;
 	ChoiceList *modes;
 	ChoiceList *speeds;
 	ChoiceList *swings;
