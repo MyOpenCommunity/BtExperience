@@ -191,6 +191,10 @@ signals:
 	void autoTestChanged();
 	void autoTestFrequencyChanged();
 
+public slots:
+	void increaseAutoTestFrequency();
+	void decreaseAutoTestFrequency();
+
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 

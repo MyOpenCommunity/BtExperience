@@ -181,6 +181,20 @@ void StopAndGoBTest::setAutoTestFrequency(int frequency)
 	dev->sendSelftestFreq(frequency);
 }
 
+void StopAndGoBTest::increaseAutoTestFrequency()
+{
+	if (auto_test_frequency >= StopAndGoBTestDevice::SELF_TEST_FREQ_MAX)
+		return;
+	setAutoTestFrequency(auto_test_frequency + 1);
+}
+
+void StopAndGoBTest::decreaseAutoTestFrequency()
+{
+	if (auto_test_frequency <= StopAndGoBTestDevice::SELF_TEST_FREQ_MIN)
+		return;
+	setAutoTestFrequency(auto_test_frequency - 1);
+}
+
 void StopAndGoBTest::valueReceived(const DeviceValues &values_list)
 {
 	StopAndGo::valueReceived(values_list);
