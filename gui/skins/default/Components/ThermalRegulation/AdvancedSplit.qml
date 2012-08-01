@@ -66,7 +66,11 @@ MenuColumn {
         MenuItem {
             id: modalityItem
             name: qsTr("modality")
-            description: pageObject.names.get('MODE', dataModel.mode)
+            description: {
+                if (dataModel.mode === -1)
+                    return ""
+                return pageObject.names.get('MODE', dataModel.mode)
+            }
             hasChild: true
             state: privateProps.currentIndex === 2 ? "selected" : ""
             onClicked: {
@@ -101,40 +105,67 @@ MenuColumn {
 
     Component {
         id: temperature
-        // TODO how to manage temperatures formats?
+
         Column {
+            id: tempColumn
+            property int setpoint
+
+            Component.onCompleted: {
+                tempColumn.setpoint = dataModel.setPoint // we want an assignment, not a binding
+            }
+
+            Connections {
+                target: dataModel
+                onSetPointChanged: {
+                    tempColumn.setpoint = dataModel.setPoint
+                }
+            }
+
             ControlMinusPlus {
                 id: temp
                 title: qsTr("temperature")
-                property int currentTemp: dataModel.setPoint / 10
-                text: currentTemp + " " + qsTr("°C")
+                text: (tempColumn.setpoint / 10).toFixed(1) + qsTr("°C")
                 onMinusClicked: {
+                    if (tempColumn.setpoint - dataModel.setPointStep < dataModel.setPointMin)
+                        return
                     dataModel.resetProgram()
-                    --currentTemp
+                    tempColumn.setpoint -= dataModel.setPointStep
                 }
                 onPlusClicked: {
+                    if (tempColumn.setpoint + dataModel.setPointStep > dataModel.setPointMax)
+                        return
                     dataModel.resetProgram()
-                    ++currentTemp
+                    tempColumn.setpoint += dataModel.setPointStep
                 }
             }
             ControlLeftRightWithTitle {
                 id: fancoilMode
+                visible: dataModel.speeds.values.length > 0
                 title: qsTr("fancoil")
-                text: pageObject.names.get('SPEED', dataModel.speed)
+                text:  {
+                    if (dataModel.speed === -1)
+                        return ""
+                    return pageObject.names.get('SPEED', dataModel.speed)
+                }
                 onLeftClicked: dataModel.prevSpeed()
                 onRightClicked: dataModel.nextSpeed()
             }
             ControlLeftRightWithTitle {
                 id: swing
+                visible: dataModel.swings.values.length > 0
                 title: qsTr("swing")
-                text: pageObject.names.get('SWING', dataModel.swing)
+                text: {
+                    if (dataModel.swing === -1)
+                        return ""
+                    return pageObject.names.get('SWING', dataModel.swing)
+                }
                 onLeftClicked: dataModel.prevSwing()
                 onRightClicked: dataModel.nextSwing()
             }
             ButtonOkCancel {
                 onCancelClicked: column.closeColumn()
                 onOkClicked: {
-                    dataModel.setPoint = temp.currentTemp * 10
+                    dataModel.setPoint = tempColumn.setpoint
                     dataModel.apply()
                     column.closeColumn()
                 }
@@ -148,15 +179,25 @@ MenuColumn {
         Column {
             ControlLeftRightWithTitle {
                 id: fancoilMode
+                visible: dataModel.speeds.values.length > 0
                 title: qsTr("fancoil")
-                text: pageObject.names.get('SPEED', dataModel.speed)
+                text:  {
+                    if (dataModel.speed === -1)
+                        return ""
+                    return pageObject.names.get('SPEED', dataModel.speed)
+                }
                 onLeftClicked: dataModel.prevSpeed()
                 onRightClicked: dataModel.nextSpeed()
             }
             ControlLeftRightWithTitle {
                 id: swing
+                visible: dataModel.swings.values.length > 0
                 title: qsTr("swing")
-                text: pageObject.names.get('SWING', dataModel.swing)
+                text: {
+                    if (dataModel.swing === -1)
+                        return ""
+                    return pageObject.names.get('SWING', dataModel.swing)
+                }
                 onLeftClicked: dataModel.prevSwing()
                 onRightClicked: dataModel.nextSwing()
             }
