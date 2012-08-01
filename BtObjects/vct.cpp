@@ -14,7 +14,7 @@ ObjectInterface *parseCCTV(const QDomNode &n)
 	QList<ExternalPlace *> list;
 	foreach (const QDomNode &obj, getChildren(n, "obj"))
 	{
-		list.append(new ExternalPlace(getTextChild(obj, "descr"), getTextChild(obj, "where")));
+		list.append(new ExternalPlace(getTextChild(obj, "descr"), ObjectInterface::IdExternalPlace, getTextChild(obj, "where")));
 	}
 
 	return new CCTV(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice("11", "0")));
@@ -26,8 +26,8 @@ ObjectInterface *parseIntercom(const QDomNode &n)
 	Q_UNUSED(n);
 
 	QList<ExternalPlace *> list;
-	list.append(new ExternalPlace("Portone", "14"));
-	list.append(new ExternalPlace("Garage", "14#2"));
+	list.append(new ExternalPlace("Portone", ObjectInterface::IdExternalPlace, "14"));
+	list.append(new ExternalPlace("Garage", ObjectInterface::IdExternalPlace, "14#2"));
 
 	return new Intercom(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice("11", "0")));
 }
@@ -42,22 +42,16 @@ QList<ObjectPair> parseVdeCamera(const QDomNode &xml_node)
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
 
-		obj_list << ObjectPair(uii, new SurveillanceCamera(v.value("descr"), v.value("where")));
+		obj_list << ObjectPair(uii, new ExternalPlace(v.value("descr"), ObjectInterface::IdSurveillanceCamera, v.value("where")));
 	}
 	return obj_list;
 }
 
 
-ExternalPlace::ExternalPlace(const QString &_name, const QString &_where)
+ExternalPlace::ExternalPlace(const QString &_name, int _object_id, const QString &_where)
 {
 	name = _name;
-	where = _where;
-}
-
-
-SurveillanceCamera::SurveillanceCamera(const QString &_name, const QString &_where)
-{
-	name = _name;
+	object_id = _object_id;
 	where = _where;
 }
 

@@ -22,7 +22,7 @@ QList<ObjectPair> parseVdeCamera(const QDomNode &xml_node);
 
 /*!
 	\ingroup VideoDoorEntry
-	\brief Contains address and description for a single external place
+	\brief Contains address and description for a single external place/surveillance camera
 */
 class ExternalPlace : public ObjectInterface
 {
@@ -31,7 +31,9 @@ class ExternalPlace : public ObjectInterface
 	Q_PROPERTY(QString where READ getWhere() CONSTANT)
 
 public:
-	ExternalPlace(const QString &_name, const QString &_where);
+	ExternalPlace(const QString &name, int object_id, const QString &where);
+
+	virtual int getObjectId() const { return object_id; }
 
 	QString getWhere() const
 	{
@@ -40,32 +42,9 @@ public:
 
 private:
 	QString where;
+	int object_id;
 };
 
-
-/*!
-	\ingroup VideoDoorEntry
-	\brief Contains address and description for a single surveillance camera
-*/
-class SurveillanceCamera : public ObjectInterface
-{
-	Q_OBJECT
-
-	Q_PROPERTY(QString where READ getWhere CONSTANT)
-
-public:
-	SurveillanceCamera(const QString &_name, const QString &_where);
-
-	virtual int getObjectId() const { return IdSurveillanceCamera; }
-
-	QString getWhere() const
-	{
-		return where;
-	}
-
-private:
-	QString where;
-};
 
 /*!
 	\ingroup VideoDoorEntry

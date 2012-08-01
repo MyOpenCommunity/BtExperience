@@ -293,7 +293,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			break;
 
 		case ObjectInterface::IdSurveillanceCamera:
-			// TODO add therm to CCTV object?
+			// TODO this needs to be added to the list in CCTV object, but it can only be done once
+			//      VCT configuration is finalized; surveillance cameras must be in UII map because
+			//      they can be linked in profile page
 			obj_list = parseVdeCamera(xml_obj);
 			break;
 
@@ -568,7 +570,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 		{
 			int link_uii = getIntAttribute(link, "uii");
 			MediaLink *l = uii_map.value<MediaLink>(link_uii);
-			SurveillanceCamera *c = uii_map.value<SurveillanceCamera>(link_uii);
+			ExternalPlace *c = uii_map.value<ExternalPlace>(link_uii);
 			QPoint pos(getIntAttribute(link, "x"), getIntAttribute(link, "y"));
 
 			if (l)

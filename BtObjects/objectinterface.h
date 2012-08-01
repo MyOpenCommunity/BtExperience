@@ -127,6 +127,7 @@ public:
 		IdSplitBasicGenericCommandGroup = 8013,
 		IdSplitAdvancedGenericCommandGroup = 8017,
 
+		IdExternalPlace = 10050,
 		IdSurveillanceCamera = 10051,
 
 		IdIpRadio = 16000,
