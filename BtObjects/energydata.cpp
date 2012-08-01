@@ -314,6 +314,11 @@ QVariantList EnergyData::getThresholdEnabled() const
 	return thresholds_enabled;
 }
 
+bool EnergyData::getAdvanced() const
+{
+	return dev->isAdvanced();
+}
+
 QObject *EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
 {
 	if (measure == Currency && !rate)
@@ -717,6 +722,8 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 	{
 		switch (it.key())
 		{
+		case EnergyDevice::DIM_ADVANCED_DEVICE:
+			emit advancedChanged();
 		case EnergyDevice::DIM_CURRENT:
 		case EnergyDevice::DIM_CUMULATIVE_DAY:
 		case EnergyDevice::DIM_CUMULATIVE_MONTH:
