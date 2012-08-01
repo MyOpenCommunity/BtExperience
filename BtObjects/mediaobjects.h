@@ -24,6 +24,8 @@ class ListManager;
 
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id);
+QList<ObjectPair> parseIpRadio(const QDomNode &xml_node);
+
 
 // internal class
 class SoundAmbientBase : public ObjectInterface

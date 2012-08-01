@@ -187,9 +187,9 @@
 		<ist uii="6203" descr="Scenario 3" where="22" what="3" />
 	</obj>
 	<obj cid="1002" id="1002" descr="Scenario module" where="11" what="1">
-		<ist uui="6204" descr="Scenario 4" where="11#4#01" what="4" />
+		<ist uii="6204" descr="Scenario 4" where="11#4#01" what="4" />
 	</obj>
 	<obj cid="1003" id="1003" descr="Scenario plus" where="1">
-		<ist uui="6205" descr="Scenario Plus" where="10" />
+		<ist uii="6205" descr="Scenario Plus" where="10" />
 	</obj>
 </archive>

@@ -5,29 +5,16 @@ import BtObjects 1.0
 
 MenuColumn {
     id: column
-    width: 212
 
-    PaginatorList {
-        id: paginator
-        currentIndex: -1
-        width: column.width
-        listHeight: Math.max(1, 50 * objectModel.count)
-
-        delegate: MenuItemDelegate {
-            name: model.name
-            selectOnClick: false
-            onClicked: {
-                if (model.action === 1)
-                    privateProps.startProgramming()
-                else
-                    privateProps.deleteProgram()
-            }
+    Column {
+        MenuItem {
+            name: privateProps.isProgramming ? qsTr("stop programming") : qsTr("start programming")
+            onClicked: privateProps.startClicked()
         }
 
-        model: objectModel
-
-        ListModel {
-            id: objectModel
+        MenuItem {
+            name: qsTr("reset program")
+            onClicked: privateProps.deleteProgram()
         }
     }
 
@@ -35,12 +22,22 @@ MenuColumn {
         id: privateProps
 
         property int errorTimeout: 2000
+        property int isProgramming: column.dataModel.status === ScenarioModule.Editing ?
+                                        true : false
 
-        function startProgramming() {
-            if (column.dataModel.status === ScenarioModule.Locked)
+        function startClicked() {
+            switch (column.dataModel.status)
+            {
+            case ScenarioModule.Locked:
                 pageObject.installPopup(scenarioLocked)
-            else
+                break
+            case ScenarioModule.Unlocked:
                 pageObject.installPopup(scenarioProgramming)
+                break
+            case ScenarioModule.Editing:
+                column.dataModel.stopProgramming()
+                break
+            }
         }
 
         function deleteProgram() {
@@ -218,10 +215,5 @@ CANCEL if you wish to abort the operation.")
                 }
             }
         }
-    }
-
-    Component.onCompleted: {
-        objectModel.append({"name": qsTr("start programming"), "action": 1})
-        objectModel.append({"name": qsTr("delete program"), "action": 2})
     }
 }

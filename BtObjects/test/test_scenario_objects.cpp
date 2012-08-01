@@ -167,8 +167,6 @@ void TestScenarioModule::testReceiveStop()
 
 void TestScenarioModule::testReceiveStop_data()
 {
-	// Receiving a STOP frame shouldn't trigger a state change, we should receive
-	// a frame afterwards from the scenario module
 	QTest::addColumn<DeviceValues>("value");
 	QTest::addColumn<ScenarioModule::Status>("start_status");
 	QTest::addColumn<ScenarioModule::Status>("end_status");
@@ -178,21 +176,21 @@ void TestScenarioModule::testReceiveStop_data()
 	DeviceValues v = packStartValues(false, SCENARIO_NUMBER);
 
 	QTest::newRow("Locked") <<
-		v << ScenarioModule::Locked << ScenarioModule::Locked << 0;
+		v << ScenarioModule::Locked << ScenarioModule::Unlocked << 1;
 	QTest::newRow("Unlocked") <<
 		v << ScenarioModule::Unlocked << ScenarioModule::Unlocked << 0;
 	QTest::newRow("Editing") <<
-		v << ScenarioModule::Editing << ScenarioModule::Editing << 0;
+		v << ScenarioModule::Editing << ScenarioModule::Unlocked << 1;
 
 	// Receive Stop on another scenario
 	v = packStartValues(false, SCENARIO_NUMBER + 1);
 
 	QTest::newRow("LockedOther") <<
-		v << ScenarioModule::Locked << ScenarioModule::Locked << 0;
+		v << ScenarioModule::Locked << ScenarioModule::Unlocked << 1;
 	QTest::newRow("UnlockedOther") <<
 		v << ScenarioModule::Unlocked << ScenarioModule::Unlocked << 0;
 	QTest::newRow("EditingOther") <<
-		v << ScenarioModule::Editing << ScenarioModule::Editing << 0;
+		v << ScenarioModule::Editing << ScenarioModule::Unlocked << 1;
 }
 
 void TestScenarioModule::testActivateScenario()

@@ -1,16 +1,21 @@
-﻿<!-- layout -->
-
-<!-- The layout defines containers -->
-<!-- A container is a section of the graphic that can shows objects of archive and: -->
-<!-- it has a politic of showing objects (fixed position, free position) -->
-<!-- it could have limitation in objects ID (e.g. only objs with id 200x -->
-<!-- More instances of containers can be on the devices but some can be limtated to one (e.g. systems) -->
-<!-- All instances of a container with the same ID share this behaviours -->
-<!-- The list of link to the instances of archive is an ordered list -->
-
-<layout>
-	<container id="1" descr="lights"> <!-- lights system container -->
+﻿<layout>
+	<container id="1" descr="scenarios">
 		<ist uii="1">
+			<link uii="6001" />
+			<link uii="6002" />
+			<link uii="6003" />
+			<link uii="6004" />
+			<link uii="6101" />
+			<link uii="6102" />
+			<link uii="6201" />
+			<link uii="6202" />
+			<link uii="6203" />
+			<link uii="6204" />
+			<!-- not parsed yet <link uii="6205" /> -->
+		</ist>
+	</container>
+	<container id="2" descr="lights"> <!-- lights system container -->
+		<ist uii="2">
 			<link uii="12" />
 			<link uii="1" />
 			<link uii="2" />
@@ -23,11 +28,23 @@
 			<!-- uii 3, 4 not inserted. Only in the archive but not visualized -->
 		</ist>
 	</container>
-	<container id="4" descr="automation">
-		<ist uii="4">
+	<container id="3" descr="automation">
+		<ist uii="3">
 			<link uii="15" />
 			<link uii="16" />
 			<link uii="17" />
+		</ist>
+	</container>
+	<container id="4" descr="air conditioning">
+		<ist uii="4">
+			<link uii="7001" />
+			<link uii="7002" />
+			<link uii="7101" />
+			<link uii="7102" />
+			<link uii="7009" />
+			<link uii="7010" />
+			<link uii="7110" />
+			<link uii="7111" />
 		</ist>
 	</container>
 	<container id="8" descr="thermal regulation">
@@ -43,7 +60,7 @@
 			<link uii="2052" />
 		</ist>
 	</container>
-	<container id="2" > <!-- rooms -->
+	<container id="100" > <!-- rooms -->
 		<ist uii="102" descr="living room">
 			<link uii="1" x="0" y="0"/>
 			<!-- x,y can be absolute (pixel) or percentual -->
@@ -71,7 +88,7 @@
 			<link uii="4" x="200" y="350" />
 		</ist>
 	</container>
-	<container id="3" descr="floor" img="floor.png"> <!-- floor -->
+	<container id="13" descr="floor" img="floor.png"> <!-- floor -->
 		<ist uii="201" descr="ground" >
 			<link uii="102" />
 			<link uii="103" />
@@ -109,6 +126,27 @@
 			<link uii="5003" />
 			<link uii="5004" />
 			<link uii="5005" />
+		</ist>
+	</container>
+	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
+		<ist uii="901" descr="famiglia" img="images/home/card_1.png" >
+			<link uii="8006" x="250" y="100" />
+			<link uii="8003" x="250" y="300" />
+		</ist>
+		<ist uii="902" descr="mattia" img="images/home/card_2.png" >
+			<link uii="8009" x="250" y="100" />
+			<link uii="9005" x="250" y="300" />
+		</ist>
+		<ist uii="903" descr="camilla" img="images/home/card_3.png" >
+			<link uii="8004" x="150" y="100" />
+			<link uii="8008" x="350" y="100" />
+			<link uii="9004" x="250" y="300" />
+		</ist>
+		<ist uii="904" descr="mamma" img="images/home/card_4.png" >
+			<link uii="8007" x="250" y="100" />
+		</ist>
+		<ist uii="905" descr="papà" img="images/home/card_5.png" >
+			<link uii="8010" x="250" y="100" />
 		</ist>
 	</container>
 </layout>

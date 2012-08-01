@@ -4,6 +4,7 @@
 #include "list_manager.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
+#include "xmlobject.h"
 
 #include <QDebug>
 #include <QStringList>
@@ -25,6 +26,21 @@ const char *PowerAmplifier::standard_presets[] =
 };
 #define standard_presets_size int(sizeof(standard_presets) / sizeof(standard_presets[0]))
 
+
+QList<ObjectPair> parseIpRadio(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		obj_list << ObjectPair(uii, new IpRadio(EntryInfo(v.value("descr"), EntryInfo::AUDIO, v.value("url"))));
+	}
+	return obj_list;
+}
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id)
 {

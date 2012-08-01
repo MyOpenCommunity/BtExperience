@@ -28,6 +28,7 @@
 #include "note.h"
 #include "choicelist.h"
 #include "energyrate.h"
+#include "xmlobject.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -290,6 +291,21 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		case ObjectInterface::IdAdvancedScenario:
 			obj_list = parseAdvancedScenario(xml_obj);
 			break;
+
+		case ObjectInterface::IdSurveillanceCamera:
+			// TODO add therm to CCTV object?
+			obj_list = parseVdeCamera(xml_obj);
+			break;
+
+		case ObjectInterface::IdIpRadio:
+			obj_list = parseIpRadio(xml_obj);
+			break;
+
+		case MediaLink::Rss:
+		case MediaLink::Web:
+		case MediaLink::Webcam:
+			parseMediaLinks(xml_obj);
+			break;
 		}
 
 		if (!obj_list.isEmpty())
@@ -426,48 +442,56 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdFloors:
 			parseFloors(container);
 			break;
+		case Container::IdProfile:
+			parseProfiles(container);
+			break;
+		case Container::IdScenarios:
 		case Container::IdLights:
 		case Container::IdAutomation:
+		case Container::IdAirConditioning:
 		case Container::IdLoadControl:
 		case Container::IdSupervision:
 		case Container::IdEnergyData:
 		case Container::IdThermalRegulation:
+		case Container::IdVideoDoorEntry:
+		case Container::IdSoundDiffusion:
+		case Container::IdAntintrusion:
+		case Container::IdSettings:
 			parseSystem(container);
 			break;
 		}
 	}
 
 	parseNotes(QFileInfo(QDir(qApp->applicationDirPath()), NOTES_FILE).absoluteFilePath(), &note_model);
+}
 
-	// TODO parse profile list file
-	profile_model << new Container(1, 901, "images/home/card_1.png", "famiglia");
-	profile_model << new Container(1, 902, "images/home/card_2.png", "mattia");
-	profile_model << new Container(1, 903, "images/home/card_3.png", "camilla");
-	profile_model << new Container(1, 904, "images/home/card_4.png", "mamma");
-	profile_model << new Container(1, 905, "images/home/card_5.png", QString::fromUtf8("papà"));
+void BtObjectsPlugin::parseMediaLinks(const QDomNode &xml_obj)
+{
+	XmlObject v(xml_obj);
+	int id = getIntAttribute(xml_obj, "id");
 
-	media_link_model << new MediaLink(901, MediaLink::Rss, "news - Corriere della Sera", "http://www.corriere.it", QPoint(100, 100));
-	media_link_model << new MediaLink(901, MediaLink::Camera, "camera #0", "7", QPoint(500, 220));
-	media_link_model << new MediaLink(901, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(450, 120));
-	media_link_model << new MediaLink(901, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(300, 250));
-	media_link_model << new MediaLink(902, MediaLink::Web, "Repubblica.it - Il sito web di Repubblica", "http://www.repubblica.it", QPoint(300, 250));
-	media_link_model << new MediaLink(903, MediaLink::Web, "Corriere.it - Il sito web del Corriere della Sera", "http://www.corriere.it", QPoint(600, 250));
-	media_link_model << new MediaLink(904, MediaLink::Rss, "news - Corriere della Sera", "http://www.corriere.it", QPoint(400, 100));
-	media_link_model << new MediaLink(905, MediaLink::Camera, "camera #0", "7", QPoint(500, 220));
+	foreach (const QDomNode &ist, getChildren(xml_obj, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		// container and position are filled in when parsing containers
+		MediaLink *l = new MediaLink(-1, static_cast<MediaLink::MediaType>(id), v.value("descr"), v.value("url"), QPoint());
+
+		media_link_model << l;
+		uii_map.insert(uii, l);
+	}
 }
 
 void BtObjectsPlugin::parseRooms(const QDomNode &container)
 {
+	XmlObject v(container);
 	int room_id = getIntAttribute(container, "id");
-	QString def_room_name = getAttribute(container, "descr");
-	QString def_room_img = getAttribute(container, "img");
 
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
-		QString room_name = getAttribute(instance, "descr", def_room_name);
-		QString room_img = getAttribute(instance, "img", def_room_img);
+		v.setIst(instance);
 		int room_uii = getIntAttribute(instance, "uii");
-		Container *room = new Container(room_id, room_uii, room_img, room_name);
+		Container *room = new Container(room_id, room_uii, v.value("img"), v.value("descr"));
 
 		room_model << room;
 		uii_map.insert(room_uii, room);
@@ -497,16 +521,14 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 
 void BtObjectsPlugin::parseFloors(const QDomNode &container)
 {
-	QString def_floor_name = getAttribute(container, "descr");
-	QString def_floor_img = getAttribute(container, "img");
+	XmlObject v(container);
 	int floor_id = getIntAttribute(container, "id");
 
 	foreach (const QDomNode &instance, getChildren(container, "ist"))
 	{
-		QString floor_name = getAttribute(instance, "descr", def_floor_name);
-		QString floor_img = getAttribute(instance, "img", def_floor_img);
+		v.setIst(instance);
 		int floor_uii = getIntAttribute(instance, "uii");
-		Container *floor = new Container(floor_id, floor_uii, floor_img, floor_name);
+		Container *floor = new Container(floor_id, floor_uii, v.value("img"), v.value("descr"));
 
 		floor_model << floor;
 		uii_map.insert(floor_uii, floor);
@@ -528,18 +550,59 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 	}
 }
 
+void BtObjectsPlugin::parseProfiles(const QDomNode &container)
+{
+	XmlObject v(container);
+	int profile_id = getIntAttribute(container, "id");
+
+	foreach (const QDomNode &ist, getChildren(container, "ist"))
+	{
+		v.setIst(ist);
+		int profile_uii = getIntAttribute(ist, "uii");
+		Container *profile = new Container(profile_id, profile_uii, v.value("img"), v.value("descr"));
+
+		profile_model << profile;
+		uii_map.insert(profile_uii, profile);
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int link_uii = getIntAttribute(link, "uii");
+			MediaLink *l = uii_map.value<MediaLink>(link_uii);
+			SurveillanceCamera *c = uii_map.value<SurveillanceCamera>(link_uii);
+			QPoint pos(getIntAttribute(link, "x"), getIntAttribute(link, "y"));
+
+			if (l)
+			{
+				l->setContainerId(profile_uii);
+				l->setPosition(pos);
+			}
+			else if (c)
+			{
+				// for surveillance cameras, create a media link object on the fly using
+				// the data from the camera object (we could add a proxy class, but this is simpler)
+				l = new MediaLink(profile_uii, MediaLink::Camera, c->getName(), c->getWhere(), pos);
+				media_link_model << l;
+			}
+			else
+			{
+				qWarning() << "Invalid uii" << link_uii << "in profile";
+				Q_ASSERT_X(false, "parseProfiles", "Invalid uii");
+				continue;
+			}
+		}
+	}
+}
+
 void BtObjectsPlugin::parseSystem(const QDomNode &container)
 {
-	QString def_system_name = getAttribute(container, "descr");
-	QString def_system_img = getAttribute(container, "img");
+	XmlObject v(container);
 	int system_id = getIntAttribute(container, "id");
 
 	foreach (const QDomNode &ist, getChildren(container, "ist"))
 	{
-		QString system_name = getAttribute(ist, "descr", def_system_name);
-		QString system_img = getAttribute(ist, "img", def_system_img);
+		v.setIst(ist);
 		int system_uii = getIntAttribute(ist, "uii");
-		Container *system = new Container(system_id, system_uii, system_img, system_name);
+		Container *system = new Container(system_id, system_uii, v.value("img"), v.value("descr"));
 
 		systems_model << system;
 
