@@ -90,6 +90,11 @@ private slots:
 	void testDuplicateGraphRequests4();
 	void testDuplicateGraphRequests5();
 
+	// test thresholds
+	void testSetEnableThresholds();
+	void testReceiveThresholdValue();
+	void testReceiveThresholdLevel();
+
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, EnergyData::MeasureType measure = EnergyData::Consumption);
 	EnergyGraph *getGraph(EnergyData::GraphType type, QDate date, EnergyData::MeasureType measure = EnergyData::Consumption);
