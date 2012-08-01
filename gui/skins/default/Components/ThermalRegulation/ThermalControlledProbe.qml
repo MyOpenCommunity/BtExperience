@@ -141,17 +141,15 @@ MenuColumn {
                 rootAutoComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
             }
 
-            ControlUpDown {
-                title: qsTr("fan coil speed")
+            ControlLeftRightWithTitle {
+                title: qsTr("fancoil speed")
                 text: pageObject.names.get('FANCOIL_SPEED', rootAutoComponent.speed)
-                // fancoil panel is visible only for fancoil probes
-                visible: isFancoil()
-                onDownClicked: {
+                onLeftClicked: {
                     if (rootAutoComponent.speed <= 1)
                         return
                     rootAutoComponent.speed -= 1
                 }
-                onUpClicked: {
+                onRightClicked: {
                     if (rootAutoComponent.speed >= 4)
                         return
                     rootAutoComponent.speed += 1
@@ -196,17 +194,15 @@ MenuColumn {
                 }
             }
 
-            ControlUpDown {
-                title: qsTr("fan coil speed")
+            ControlLeftRightWithTitle {
+                title: qsTr("fancoil speed")
                 text: pageObject.names.get('FANCOIL_SPEED', rootManualComponent.speed)
-                // fancoil panel is visible only for fancoil probes
-                visible: isFancoil()
-                onDownClicked: {
+                onLeftClicked: {
                     if (rootManualComponent.speed <= 1)
                         return
                     rootManualComponent.speed -= 1
                 }
-                onUpClicked: {
+                onRightClicked: {
                     if (rootManualComponent.speed >= 4)
                         return
                     rootManualComponent.speed += 1
