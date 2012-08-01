@@ -57,25 +57,25 @@ MenuColumn {
         }
 
         function getDescription(obj) {
-            if (obj.status === stopAndGo.Closed)
+            if (obj.status === StopAndGo.Closed)
                 return qsTr("Closed")
-            else if (obj.status === stopAndGo.Opened)
+            else if (obj.status === StopAndGo.Opened)
                 return qsTr("Open")
-            else if (obj.status === stopAndGo.Locked)
+            else if (obj.status === StopAndGo.Locked)
                 return qsTr("Open - Block")
-            else if (obj.status === stopAndGo.ShortCircuit)
+            else if (obj.status === StopAndGo.ShortCircuit)
                 return qsTr("Open - Short Circuit")
-            else if (obj.status === stopAndGo.GroundFail)
+            else if (obj.status === StopAndGo.GroundFail)
                 return qsTr("Open - Earth Fault")
-            else if (obj.status === stopAndGo.Overtension)
+            else if (obj.status === StopAndGo.Overtension)
                 return qsTr("Open - Over Current")
             return qsTr("Unknown")
         }
 
         function loadStatus(obj) {
-            if (obj.status === stopAndGo.Closed)
+            if (obj.status === StopAndGo.Closed)
                 return 1
-            if (obj.status === stopAndGo.Unknown)
+            if (obj.status === StopAndGo.Unknown)
                 return 0
             return 3
         }
