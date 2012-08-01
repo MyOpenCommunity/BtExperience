@@ -391,7 +391,7 @@ void SplitAdvancedScenario::prevSpeed()
 
 void SplitAdvancedScenario::nextSwing()
 {
-	if (speeds->size() == 0)
+	if (swings->size() == 0)
 		return;
 
 	resetProgram();
@@ -404,7 +404,7 @@ void SplitAdvancedScenario::nextSwing()
 
 void SplitAdvancedScenario::prevSwing()
 {
-	if (speeds->size() == 0)
+	if (swings->size() == 0)
 		return;
 
 	resetProgram();
