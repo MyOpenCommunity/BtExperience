@@ -5,5 +5,5 @@ QuickLink {
     id: favoriteItem
 
     page: "Browser.qml"
-    imageSource: "../images/profiles/web.png"
+    imageSource: "../images/profiles/web.jpg"
 }

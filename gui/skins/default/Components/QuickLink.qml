@@ -9,15 +9,13 @@ Item {
 
     property alias imageSource: icon.source
     property string text: ""
-    property color color: "white"
+    property color color: "black"
     property string address: "www.corriere.it"
     property string page: "Browser.qml"
     property bool editable: true
     property variant itemObject
     property int refX: -1 // used for sidebar placement, -1 means not used
     property int refY: -1 // used for sidebar placement, -1 means not used
-
-    property int additionalWidth: 10
 
     signal selected(variant favorite)
     signal requestEdit(variant favorite)
@@ -31,32 +29,16 @@ Item {
 
     Column {
         id: column
-
-        spacing: 10
-        Rectangle {
-            id: highlight
-            width: icon.width + additionalWidth
-            height: icon.height + additionalWidth
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.00;
-                    color: "#b7b7b7";
-                }
-                GradientStop {
-                    position: 1.00;
-                    color: "#ffffff";
-                }
-            }
-            Behavior on width {
-                NumberAnimation { target: highlight; property: "width"; duration: 200; easing.type: Easing.InOutQuad }
-            }
-            Behavior on height {
-                NumberAnimation { target: highlight; property: "height"; duration: 200; easing.type: Easing.InOutQuad }
-            }
+        anchors.centerIn: parent
+  
+     Image {
+            id: container
+            source: "../images/profiles/scheda_preferiti.svg"
 
             Image {
                 id: icon
-                anchors.centerIn: parent
+                anchors.centerIn: container
+                anchors.verticalCenterOffset: -9
 
                 Rectangle {
                     id: bgQuickPressed
@@ -65,6 +47,107 @@ Item {
                     visible: false
                     anchors.fill: parent
                 }
+            }
+
+            Image
+            {
+                id: containerPressed
+                anchors.fill: container
+                source: "../images/profiles/scheda_preferiti_P.svg"
+                visible: false
+                anchors.left: container.left
+                anchors.bottom: container.bottom
+                anchors.right: container.right
+            }
+
+            Image
+            {
+                id: shadow_top
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 87
+                anchors.leftMargin: 9
+                source: "../images/profiles/alto.png"
+            }
+
+            Image
+            {
+                id: shadow_top_left
+                anchors.top: parent.top
+                anchors.topMargin: -10
+                anchors.left: parent.left
+                anchors.leftMargin: -10
+                anchors.rightMargin: 0
+                anchors.right: shadow_top.left
+                source: "../images/profiles/alto_sx.png"
+            }
+
+            Image
+            {
+                id: shadow_top_right
+                anchors.top: parent.top
+                anchors.topMargin: -10
+                anchors.left: parent.left
+                anchors.leftMargin: 114
+                source: "../images/profiles/alto_dx.png"
+            }
+
+            Image
+            {
+                id: shadow_left
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 9
+                anchors.left: parent.left
+                anchors.leftMargin: -10
+                anchors.topMargin: 0
+                anchors.top: shadow_top_left.bottom
+                source: "../images/profiles/sx.png"
+            }
+
+            Image
+            {
+                id: shadow_right
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 9
+                anchors.topMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 114
+                anchors.top: shadow_top_right.bottom
+                source: "../images/profiles/dx.png"
+            }
+
+            Image
+            {
+                id: shadow_buttom_left
+                anchors.left: parent.left
+                anchors.leftMargin: -10
+                anchors.topMargin: 0
+                anchors.top: shadow_left.bottom
+                source: "../images/profiles/basso_sx.png"
+            }
+
+            Image
+            {
+                id: shadow_buttom_right
+                anchors.left: parent.left
+                anchors.leftMargin: 114
+                anchors.topMargin: 0
+                anchors.top: shadow_right.bottom
+                source: "../images/profiles/basso_dx.png"
+            }
+
+            Image
+            {
+                id: shadow_bottom
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: -10
+                anchors.leftMargin: 0
+                anchors.left: shadow_buttom_left.right
+                source: "../images/profiles/basso.png"
             }
         }
 
@@ -83,6 +166,8 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 13
                 elide: Text.ElideRight
+                anchors.top: parent.top
+                anchors.topMargin: -18
             }
         }
 
@@ -93,6 +178,8 @@ Item {
                 color: bgQuick.color
                 horizontalAlignment: Text.AlignHCenter
                 activeFocusOnPress: false
+                anchors.top: parent.top
+                anchors.topMargin: -18
                 onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
             }
         }
@@ -102,6 +189,11 @@ Item {
         id: editColumn
 
         opacity: 0
+        anchors {
+            top: column.top
+            left: column.right
+            leftMargin: 1
+        }
 
         Rectangle {
             width: 48
@@ -217,8 +309,14 @@ Item {
         id: mouseArea
         anchors.fill: parent
         onPressAndHold: bgQuick.state = "selected"
-        onPressed: bgQuickPressed.visible = true
-        onReleased: bgQuickPressed.visible = false
+        onPressed:  {
+            bgQuickPressed.visible = true
+            containerPressed.visible = true
+        }
+        onReleased: {
+            bgQuickPressed.visible = false
+            containerPressed.visible = false
+        }
         onClicked: {
             if (page !== "")
                 Stack.openPage(page, {'urlString': address})
@@ -339,10 +437,6 @@ Item {
             PropertyChanges {
                 target: column
                 anchors.margins: editable ? 0 : column.margins
-            }
-            PropertyChanges {
-                target: bgQuick
-                additionalWidth: editable ? 20 : bgQuick.additionalWidth
             }
             PropertyChanges {
                 target: editColumn

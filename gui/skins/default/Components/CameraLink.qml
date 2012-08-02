@@ -6,7 +6,7 @@ QuickLink {
     id: favoriteItem
 
     page: ""
-    imageSource: "../images/profiles/webcam.png"
+    imageSource: "../images/profiles/webcam.jpg"
 
     onClicked: {
         cctvModel.getObject(0).cameraOn(address)
