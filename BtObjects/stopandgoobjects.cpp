@@ -6,6 +6,11 @@
 
 namespace
 {
+	enum ToApplyKeys
+	{
+		AUTO_TEST_FREQUENCY
+	};
+
 	template<class Device, class Object>
 	QList<ObjectPair> parseStopAndGo(const QDomNode &obj)
 	{
@@ -155,12 +160,13 @@ StopAndGoBTest::StopAndGoBTest(StopAndGoBTestDevice *_dev, QString name) :
 {
 	dev = _dev;
 	auto_test = false;
-	auto_test_frequency = -1;
+	current[AUTO_TEST_FREQUENCY] = -1;
+	reset();
 }
 
 bool StopAndGoBTest::getAutoTest() const
 {
-	return auto_test && auto_test_frequency != -1;
+	return auto_test && current[AUTO_TEST_FREQUENCY] != -1;
 }
 
 void StopAndGoBTest::setAutoTest(bool active)
@@ -173,26 +179,30 @@ void StopAndGoBTest::setAutoTest(bool active)
 
 int StopAndGoBTest::getAutoTestFrequency() const
 {
-	return auto_test_frequency;
+	return to_apply[AUTO_TEST_FREQUENCY].toInt();
 }
 
 void StopAndGoBTest::setAutoTestFrequency(int frequency)
 {
-	dev->sendSelftestFreq(frequency);
+	if (to_apply[AUTO_TEST_FREQUENCY] != frequency)
+	{
+		to_apply[AUTO_TEST_FREQUENCY] = frequency;
+		emit autoTestFrequencyChanged();
+	}
 }
 
 void StopAndGoBTest::increaseAutoTestFrequency()
 {
-	if (auto_test_frequency >= StopAndGoBTestDevice::SELF_TEST_FREQ_MAX)
+	if (getAutoTestFrequency() >= StopAndGoBTestDevice::SELF_TEST_FREQ_MAX)
 		return;
-	setAutoTestFrequency(auto_test_frequency + 1);
+	setAutoTestFrequency(getAutoTestFrequency() + 1);
 }
 
 void StopAndGoBTest::decreaseAutoTestFrequency()
 {
-	if (auto_test_frequency <= StopAndGoBTestDevice::SELF_TEST_FREQ_MIN)
+	if (getAutoTestFrequency() <= StopAndGoBTestDevice::SELF_TEST_FREQ_MIN)
 		return;
-	setAutoTestFrequency(auto_test_frequency - 1);
+	setAutoTestFrequency(getAutoTestFrequency() - 1);
 }
 
 void StopAndGoBTest::valueReceived(const DeviceValues &values_list)
@@ -202,11 +212,12 @@ void StopAndGoBTest::valueReceived(const DeviceValues &values_list)
 	if (values_list.contains(StopAndGoBTestDevice::DIM_AUTOTEST_FREQ))
 	{
 		int freq = values_list[StopAndGoBTestDevice::DIM_AUTOTEST_FREQ].toInt();
-		if (freq != auto_test_frequency)
+		if (freq != current[AUTO_TEST_FREQUENCY])
 		{
 			bool enabled = getAutoTest();
 
-			auto_test_frequency = freq;
+			current[AUTO_TEST_FREQUENCY] = freq;
+			reset();
 			emit autoTestFrequencyChanged();
 
 			if (!enabled && getAutoTest())
@@ -227,4 +238,15 @@ void StopAndGoBTest::valueReceived(const DeviceValues &values_list)
 		if (enabled != getAutoTest())
 			emit autoTestChanged();
 	}
+}
+
+void StopAndGoBTest::apply()
+{
+	current = to_apply;
+	dev->sendSelftestFreq(current[AUTO_TEST_FREQUENCY].toInt());
+}
+
+void StopAndGoBTest::reset()
+{
+	to_apply = current;
 }

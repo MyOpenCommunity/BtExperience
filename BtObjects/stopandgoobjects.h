@@ -194,6 +194,8 @@ signals:
 public slots:
 	void increaseAutoTestFrequency();
 	void decreaseAutoTestFrequency();
+	void apply();
+	void reset();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -201,7 +203,7 @@ protected slots:
 private:
 	StopAndGoBTestDevice *dev;
 	bool auto_test;
-	int auto_test_frequency;
+	QHash<int, QVariant> current, to_apply;
 };
 
 #endif // STOPANDGO_OBJECTS_H

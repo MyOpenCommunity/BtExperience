@@ -9,7 +9,7 @@ MenuColumn {
 
     Column {
         SvgImage {
-            source: "../../images/common/bg_impostazioni.svg"
+            source: "../../images/common/bg_on-off.svg"
 
             UbuntuLightText {
                 id: firstLine
@@ -53,24 +53,6 @@ MenuColumn {
                     rightMargin: width / 100 * 8
                 }
                 onClicked: element.dataModel.autoReset = !element.dataModel.autoReset
-            }
-
-            ButtonThreeStates {
-                id: buttonForce
-
-                defaultImage: "../../images/common/btn_apriporta_ok_on.svg"
-                pressedImage: "../../images/common/btn_apriporta_ok_on_P.svg"
-                shadowImage: "../../images/common/ombra_btn_apriporta_ok_on.svg"
-                text: qsTr("reset")
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: 15
-                onClicked: console.log("Force clicked!")
-                status: 0
-                anchors {
-                    bottom: parent.bottom
-                    bottomMargin: parent.height / 100 * 7
-                    horizontalCenter: parent.horizontalCenter
-                }
             }
         }
 
@@ -127,6 +109,19 @@ MenuColumn {
             onMinusClicked: element.dataModel.decreaseAutoTestFrequency()
             onPlusClicked: element.dataModel.increaseAutoTestFrequency()
             anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        ButtonOkCancel {
+            id: confirmationButtons
+
+            onOkClicked: {
+                element.dataModel.apply()
+                element.closeColumn()
+            }
+            onCancelClicked: {
+                element.dataModel.reset()
+                element.closeColumn()
+            }
         }
     }
 }
