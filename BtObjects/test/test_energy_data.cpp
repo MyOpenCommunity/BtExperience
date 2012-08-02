@@ -16,7 +16,7 @@ void TestEnergyData::init()
 	for (int i = 0; i < 12; ++i)
 		goals.append(i + 11);
 
-	obj = new EnergyData(d, "", "", "Kw", goals, QVariantList(), rate);
+	obj = new EnergyData(d, "", "", "Kw", goals, QVariantList() << false << false, rate);
 	dev = new EnergyDevice("1", 1, 1);
 
 	rate->setParent(obj);
@@ -980,6 +980,67 @@ void TestEnergyData::testDuplicateGraphRequests5()
 	compareClientCommand();
 
 	QCOMPARE(currency->getGraph().count(), 0);
+}
+
+void TestEnergyData::testSetEnableThresholds()
+{
+	obj->setThresholds(QVariantList() << 0.250 << 0.125);
+	// nothing sent (initial state is disabled)
+	compareClientCommand();
+
+	obj->setThresholdEnabled(QVariantList() << false << true);
+	dev->setThresholdValue(1, 125);
+	compareClientCommand();
+
+	obj->setThresholds(QVariantList() << 0.250 << 0.500);
+	dev->setThresholdValue(1, 500);
+	compareClientCommand();
+
+	obj->setThresholdEnabled(QVariantList() << true << true);
+	dev->setThresholdValue(0, 250);
+	compareClientCommand();
+}
+
+void TestEnergyData::testReceiveThresholdValue()
+{
+	ObjectTester t(obj, SIGNAL(thresholdsChanged(QVariantList)));
+	DeviceValues v;
+
+	v[EnergyDevice::DIM_THRESHOLD_INDEX] = 0;
+	v[EnergyDevice::DIM_THRESHOLD_VALUE] = 500;
+
+	obj->valueReceived(v);
+	t.checkSignals();
+
+	QCOMPARE(obj->getThresholds(), QVariantList() << 0.500 << 0.0);
+}
+
+void TestEnergyData::testReceiveThresholdLevel()
+{
+	ObjectTester te(obj, SIGNAL(thresholdEnabledChanged(QVariantList)));
+	ObjectTester tl(obj, SIGNAL(thresholdLevelChanged(int)));
+	DeviceValues v;
+	QVariant s;
+
+	s.setValue(QList<int>() << EnergyDevice::THRESHOLD_ENABLED << EnergyDevice::THRESHOLD_DISABLED);
+	v[EnergyDevice::DIM_THRESHOLD_STATE] = s;
+
+	obj->valueReceived(v);
+	te.checkSignals();
+	tl.checkNoSignals();
+
+	QCOMPARE(obj->getThresholdEnabled(), QVariantList() << true << false);
+	QCOMPARE(obj->getThresholdLevel(), 0);
+
+	s.setValue(QList<int>() << EnergyDevice::THRESHOLD_EXCEEDED << EnergyDevice::THRESHOLD_DISABLED);
+	v[EnergyDevice::DIM_THRESHOLD_STATE] = s;
+
+	obj->valueReceived(v);
+	te.checkNoSignals();
+	tl.checkSignals();
+
+	QCOMPARE(obj->getThresholdEnabled(), QVariantList() << true << false);
+	QCOMPARE(obj->getThresholdLevel(), 1);
 }
 
 void TestEnergyItem::init()

@@ -244,6 +244,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QStri
 	goals = _goals;
 	unit_conversion = unitConversionFactor(getEnergyType(), _unit);
 	thresholds_enabled = _thresholds_enabled;
+	thresholds = QVariantList() << 0.0 << 0.0;
 	threshold_level = 0;
 
 	value_cache.setMaxCost(VALUE_CACHE_MAX_COST);
@@ -305,6 +306,12 @@ void EnergyData::setThresholdEnabled(QVariantList enabled)
 {
 	if (enabled == thresholds_enabled)
 		return;
+
+	// update device thresholds
+	for (int i = 0; i < 2; ++i)
+		if (enabled[i] != thresholds_enabled[i])
+			dev->setThresholdValue(i, enabled[i].toBool() ? thresholds[i].toDouble() * unit_conversion : 0);
+
 	thresholds_enabled = enabled;
 	emit thresholdEnabledChanged(thresholds_enabled);
 }
@@ -724,6 +731,43 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 		{
 		case EnergyDevice::DIM_ADVANCED_DEVICE:
 			emit advancedChanged();
+		case EnergyDevice::DIM_THRESHOLD_STATE:
+		{
+			QList<int> state = it.value().value<QList<int> >();
+			QVariantList enabled;
+			int exceeded_count = 0;
+
+			for (int i = 0; i < 2; ++i)
+			{
+				if (state[i] == EnergyDevice::THRESHOLD_EXCEEDED)
+					exceeded_count += 1;
+				enabled.append(state[i] != EnergyDevice::THRESHOLD_DISABLED);
+			}
+
+			if (enabled != thresholds_enabled)
+			{
+				thresholds_enabled = enabled;
+				emit thresholdEnabledChanged(thresholds_enabled);
+			}
+			if (exceeded_count != threshold_level)
+			{
+				threshold_level = exceeded_count;
+				emit thresholdLevelChanged(threshold_level);
+			}
+		}
+			break;
+		case EnergyDevice::DIM_THRESHOLD_INDEX:
+		{
+			int index = it.value().toInt();
+			double value = values_list[EnergyDevice::DIM_THRESHOLD_VALUE].toInt() / unit_conversion;
+
+			if (thresholds[index] != value)
+			{
+				thresholds[index] = value;
+				emit thresholdsChanged(thresholds);
+			}
+		}
+			break;
 		case EnergyDevice::DIM_CURRENT:
 		case EnergyDevice::DIM_CUMULATIVE_DAY:
 		case EnergyDevice::DIM_CUMULATIVE_MONTH:
@@ -848,7 +892,14 @@ int EnergyData::getThresholdLevel() const
 
 void EnergyData::setThresholds(QVariantList _thresholds)
 {
-	// TODO do not set values directly: set to device and wait for change notification
+	if (_thresholds == thresholds)
+		return;
+
+	// set to device
+	for (int i = 0; i < 2; ++i)
+		if (thresholds_enabled[i].toBool())
+			dev->setThresholdValue(i, _thresholds[i].toDouble() * 1000);
+
 	thresholds = _thresholds;
 	emit thresholdsChanged(thresholds);
 }
