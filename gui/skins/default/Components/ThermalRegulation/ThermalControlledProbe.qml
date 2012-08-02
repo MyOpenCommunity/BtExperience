@@ -143,6 +143,8 @@ MenuColumn {
 
             ControlLeftRightWithTitle {
                 title: qsTr("fancoil speed")
+                // fancoil panel is visible only for fancoil probes
+                visible: isFancoil()
                 text: pageObject.names.get('FANCOIL_SPEED', rootAutoComponent.speed)
                 onLeftClicked: {
                     if (rootAutoComponent.speed <= 1)
@@ -196,6 +198,8 @@ MenuColumn {
 
             ControlLeftRightWithTitle {
                 title: qsTr("fancoil speed")
+                // fancoil panel is visible only for fancoil probes
+                visible: isFancoil()
                 text: pageObject.names.get('FANCOIL_SPEED', rootManualComponent.speed)
                 onLeftClicked: {
                     if (rootManualComponent.speed <= 1)
