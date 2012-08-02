@@ -224,6 +224,7 @@ void TestStopAndGoBTest::testSendAutoTest()
 void TestStopAndGoBTest::testSendAutoTestFrequency()
 {
 	obj->setAutoTestFrequency(12);
+	obj->apply();
 	dev->sendSelftestFreq(12);
 	compareClientCommand();
 }
@@ -241,7 +242,7 @@ void TestStopAndGoBTest::testReceiveAutoTest()
 	QCOMPARE(obj->getAutoTest(), false);
 
 	obj->auto_test = false;
-	obj->auto_test_frequency = 12;
+	obj->current[StopAndGoBTest::AUTO_TEST_FREQUENCY] = obj->to_apply[StopAndGoBTest::AUTO_TEST_FREQUENCY] = 12;
 
 	obj->valueReceived(v);
 	t.checkSignals();
@@ -273,7 +274,7 @@ void TestStopAndGoBTest::testReceiveAutoTestFrequency()
 	QCOMPARE(obj->getAutoTestFrequency(), 12);
 
 	obj->auto_test = true;
-	obj->auto_test_frequency = -1;
+	obj->current[StopAndGoBTest::AUTO_TEST_FREQUENCY] = obj->to_apply[StopAndGoBTest::AUTO_TEST_FREQUENCY] = -1;
 
 	obj->valueReceived(v);
 	tf.checkSignals();

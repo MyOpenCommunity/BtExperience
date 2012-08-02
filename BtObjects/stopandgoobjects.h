@@ -204,6 +204,11 @@ private:
 	StopAndGoBTestDevice *dev;
 	bool auto_test;
 	QHash<int, QVariant> current, to_apply;
+
+	enum
+	{
+		AUTO_TEST_FREQUENCY
+	};
 };
 
 #endif // STOPANDGO_OBJECTS_H

@@ -6,11 +6,6 @@
 
 namespace
 {
-	enum ToApplyKeys
-	{
-		AUTO_TEST_FREQUENCY
-	};
-
 	template<class Device, class Object>
 	QList<ObjectPair> parseStopAndGo(const QDomNode &obj)
 	{
