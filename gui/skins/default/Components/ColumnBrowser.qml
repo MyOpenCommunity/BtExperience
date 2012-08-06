@@ -8,11 +8,8 @@ MenuColumn {
     id: column
 
     property alias paginator: paginator
+    property alias rootPath: listModel.rootPath
     property int flags: 0
-
-    function startPlay(fileObject, objIndex) {
-        column.dataModel.startPlay(fileObject)
-    }
 
     Image {
         id: imageBg
@@ -163,7 +160,13 @@ MenuColumn {
                     // we need braces due to bug
                     // https://bugreports.qt-project.org/browse/QTBUG-17012
                 {
-                    startPlay(itemObject, index)
+                    privateProps.startPlay(itemObject, index)
+                    break
+                }
+                case FileObject.Image:
+                {
+                    // TODO load a page with photo player
+                    console.log("+++++++++++++++++++++++++++++++++++++ "+itemObject.name)
                     break
                 }
                 case FileObject.Directory:
@@ -182,5 +185,13 @@ MenuColumn {
         id: listModel
         filter: column.flags
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    QtObject {
+        id: privateProps
+
+        function startPlay(fileObject, objIndex) {
+            column.dataModel.startPlay(fileObject)
+        }
     }
 }
