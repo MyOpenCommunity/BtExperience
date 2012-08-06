@@ -10,8 +10,22 @@ SystemPage {
     names: MultimediaNames {}
 
     onRootObjectChanged: {
-        if (rootObject)
+        if (rootObject) {
             rootObject.flags = FileObject.Image | FileObject.Directory
+            // TODO load right root path
+            rootObject.rootPath = [
+                        "home",
+                        "roberto",
+                        "work",
+                        "bticino",
+                        "repos",
+                        "bt_experience",
+                        "gui",
+                        "skins",
+                        "default",
+                        "images",
+                        "common"
+                    ]
+        }
     }
 }
-
