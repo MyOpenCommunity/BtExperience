@@ -59,14 +59,24 @@ Column {
         width: line.width
     }
 
-    UbuntuLightText {
-        text: qsTr("time")
-        font.pixelSize: 14
-        color: "white"
+    Loader {
+        sourceComponent: column.scenarioObject.timeCondition !== null ? controlTimeComponent : undefined
     }
 
-    ControlDateTime {
-        itemObject: column.scenarioObject.timeCondition
-        twoFields: true
+    Component {
+        id: controlTimeComponent
+        Column {
+            spacing: column.spacing
+            UbuntuLightText {
+                text: qsTr("time")
+                font.pixelSize: 14
+                color: "white"
+            }
+
+            ControlDateTime {
+                itemObject: column.scenarioObject.timeCondition
+                twoFields: true
+            }
+        }
     }
 }

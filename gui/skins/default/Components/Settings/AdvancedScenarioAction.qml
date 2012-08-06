@@ -6,6 +6,7 @@ Column {
     property variant scenarioAction
     width: line.width
     spacing: 10
+    opacity: 0.5
 
     UbuntuMediumText {
         text: qsTr("action")
@@ -29,5 +30,5 @@ Column {
         font.pixelSize: 14
         color: "white"
     }
-
 }
+

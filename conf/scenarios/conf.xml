@@ -130,6 +130,24 @@
 				</action>
 			</scen>
 		</ist>
+		<ist uii="6006" descr="time without device">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<action>
+					<descr>Thermal control unit</descr>
+					<open>*1*1*11##</open>
+					<objectID>18</objectID>
+					<commandID>29</commandID>
+				</action>
+			</scen>
+		</ist>
 	</obj>
         <obj cid="9002" id="9002" descr="Scheduled scenario">
 		<ist uii="6101" descr="Scheduled scenario 3">

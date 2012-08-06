@@ -83,7 +83,6 @@ QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node)
 		ActionObject *ao = 0;
 		QDomNode scen = getChildWithName(ist, "scen");
 		QDomNodeList childs = scen.childNodes();
-		QString act_frame, act_descr;
 
 		for (int i = 0; i < childs.size(); ++i)
 		{
