@@ -398,7 +398,7 @@ DeviceConditionObject::DeviceConditionObject(DeviceCondition::Type type, QString
 void DeviceConditionObject::updateText(int min_condition_value, int max_condition_value)
 {
 	bool new_on_off;
-	QString new_range_description;
+	QVariantList new_range_values;
 
 	switch (condition_type)
 	{
@@ -420,15 +420,9 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 			new_on_off = true;
 
 		if (condition_type == DeviceCondition::DIMMING)
-		{
-			range_values = QVariantList() << min_condition_value * 10 << max_condition_value * 10;
-			new_range_description = QString("%1% - %2%").arg(min_condition_value * 10).arg(max_condition_value * 10);
-		}
+			new_range_values = QVariantList() << min_condition_value * 10 << max_condition_value * 10;
 		else
-		{
-			range_values = QVariantList() << min_condition_value << max_condition_value;
-			new_range_description = QString("%1% - %2%").arg(min_condition_value).arg(max_condition_value);
-		}
+			new_range_values = QVariantList() << min_condition_value << max_condition_value;
 		break;
 
 	case DeviceCondition::AMPLIFIER:
@@ -442,18 +436,14 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 			new_on_off = true;
 
 		if (min_condition_value == 0 && max_condition_value == 31)
-		{
-			range_values = QVariantList() << 1 << 100;
-			new_range_description = QString();
-		}
+			new_range_values = QVariantList() << 1 << 100;
 		else
 		{
 			int val_min = min_condition_value;
 			int val_max = max_condition_value;
 			int vmin = (val_min == 0 ? 0 : (10 * (val_min <= 15 ? val_min/3 : (val_min-1)/3) + 1));
 			int vmax = 10 * (val_max <= 15 ? val_max/3 : (val_max-1)/3);
-			range_values = QVariantList() << vmin << vmax;
-			new_range_description = QString("%1% - %2%").arg(vmin).arg(vmax);
+			new_range_values = QVariantList() << vmin << vmax;
 		}
 		break;
 
@@ -462,11 +452,8 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 	case DeviceCondition::TEMPERATURE:
 	{
 		Q_UNUSED(max_condition_value)
-		// TODO: what is the right locale to use for BtExperience?
-		QLocale loc(QLocale::Italian);
 		new_on_off = true;
-		range_values = QVariantList() << min_condition_value / 10.0;
-		new_range_description = loc.toString(min_condition_value / 10.0, 'f', 1) + TEMP_DEGREES"C \2611"TEMP_DEGREES"C";
+		new_range_values = QVariantList() << min_condition_value / 10.0;
 		break;
 	}
 	default:
@@ -482,9 +469,9 @@ void DeviceConditionObject::updateText(int min_condition_value, int max_conditio
 	if (new_on_off && device_cond)
 		on_state = device_cond->getState();
 
-	if (new_range_description != range_description)
+	if (new_range_values != range_values)
 	{
-		range_description = new_range_description;
+		range_values = new_range_values;
 		emit rangeChanged();
 	}
 }
@@ -494,17 +481,14 @@ QString DeviceConditionObject::getDescription() const
 	return description;
 }
 
-QVariant DeviceConditionObject::getRange() const
-{
-	if (condition_type == DeviceCondition::LIGHT ||
-		condition_type == DeviceCondition::AUX)
-		return QVariant();
-	return range_description;
-}
-
 QVariantList DeviceConditionObject::getRangeValues() const
 {
 	return range_values;
+}
+
+DeviceConditionObject::Type DeviceConditionObject::getConditionType() const
+{
+	return static_cast<Type>(condition_type);
 }
 
 QVariant DeviceConditionObject::getOnOff() const

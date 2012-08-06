@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
+import BtObjects 1.0
 
 Column {
     id: column
@@ -69,21 +70,64 @@ Column {
     }
 
     Loader {
-        sourceComponent: scenarioDeviceObject.range !== undefined ? controlSpinComponent : undefined
+        sourceComponent: scenarioDeviceObject.rangeValues.length > 0 ? controlSpinComponent : undefined
     }
 
     Component {
         id: controlSpinComponent
-        Column {
-            spacing: column.spacing
+        Item {
+            id: spinItem
+
+            function rangeDescription(type) {
+                if (type === DeviceConditionObject.Dimming || type === DeviceConditionObject.Dimming100)
+                    return qsTr("Intensity")
+
+                if (type === DeviceConditionObject.Amplifier)
+                    return qsTr("Volume")
+
+                if (type === DeviceConditionObject.Probe || type === DeviceConditionObject.ExternalProbe || type === DeviceConditionObject.Temperature)
+                    return qsTr("Temperature")
+            }
+
+            function representValues(values, type) {
+
+                if (type === DeviceConditionObject.Dimming || type === DeviceConditionObject.Dimming100 || type === DeviceConditionObject.Amplifier)
+                    return values[0] + ' - ' + values[1] + qsTr("%")
+
+                if (type === DeviceConditionObject.Probe || type === DeviceConditionObject.ExternalProbe || type === DeviceConditionObject.Temperature)
+                    return values[0] + qsTr("\272C")
+
+                return ''
+            }
+
+            width: controlSpin.width
+            height: rangeText.height + controlSpin.height
+            Rectangle {
+                z: 1
+                anchors.fill: controlSpin
+                color: "silver"
+                opacity: 0.6
+                visible: scenarioDeviceObject.onOff === false
+                MouseArea {
+                    anchors.fill: parent // blocks events
+                }
+            }
+
             UbuntuLightText {
-                text: qsTr("Intensity")
+                id: rangeText
+                text: spinItem.rangeDescription(scenarioDeviceObject.type)
                 font.pixelSize: 14
                 color: "white"
             }
 
             ControlSpin {
-                text: scenarioDeviceObject.range
+                id: controlSpin
+                anchors {
+                    top: rangeText.bottom
+                    topMargin: column.spacing
+                }
+
+                text: spinItem.representValues(scenarioDeviceObject.rangeValues, scenarioDeviceObject.type)
                 onMinusClicked: scenarioDeviceObject.conditionDown()
                 onPlusClicked: scenarioDeviceObject.conditionUp()
             }

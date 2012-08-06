@@ -666,9 +666,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<AntintrusionAlarm>(uri, 1, 0, "AntintrusionAlarm",
 		"unable to create an AntintrusionAlarm instance");
 	qmlRegisterUncreatableType<FileObject>(uri, 1, 0, "FileObject",
-		"unable to create an FileObject instance");
+		"unable to create a FileObject instance");
 	qmlRegisterUncreatableType<SourceBase>(uri, 1, 0, "SourceBase",
-		"unable to create an SourceBase instance");
+		"unable to create a SourceBase instance");
 	qmlRegisterUncreatableType<SourceObject>(uri, 1, 0, "SourceObject",
 		"unable to create an SourceObject instance");
 	qmlRegisterUncreatableType<MultiMediaPlayer>(uri, 1, 0, "MultiMediaPlayer",
@@ -678,17 +678,19 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<EnergyLoadManagement>(uri, 1, 0, "EnergyLoadDiagnostic",
 		"unable to create an EnergyLoadDiagnostic instance");
 	qmlRegisterUncreatableType<StopAndGo>(uri, 1, 0, "StopAndGo",
-		"unable to create an StopAndGo instance");
+		"unable to create a StopAndGo instance");
 	qmlRegisterUncreatableType<EnergyData>(uri, 1, 0, "EnergyData",
 		"unable to create an EnergyData instance");
 	qmlRegisterUncreatableType<EnergyRate>(uri, 1, 0, "EnergyRate",
 		"unable to create an EnergyRate instance");
 	qmlRegisterUncreatableType<Light>(uri, 1, 0, "Light",
-		"unable to create an Light instance");
+		"unable to create a Light instance");
 	qmlRegisterUncreatableType<ChoiceList>(uri, 1, 0, "ChoiceList",
-		"unable to create an ChoiceList instance");
+		"unable to create a ChoiceList instance");
 	qmlRegisterUncreatableType<ScenarioModule>(uri, 1, 0, "ScenarioModule",
-		"unable to create an ScenarioModuleinstance");
+		"unable to create a ScenarioModule instance");
+	qmlRegisterUncreatableType<DeviceConditionObject>(uri, 1, 0, "DeviceConditionObject",
+		"unable to create a DeviceConditionObject instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
