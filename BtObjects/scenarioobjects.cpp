@@ -546,7 +546,7 @@ void TimeConditionObject::resetTimer()
 	// make it positive and < MSECS_DAY
 	msecsto = (msecsto % MSECS_DAY + MSECS_DAY) % MSECS_DAY;
 
-	qDebug("(re)starting timer with interval = %d", msecsto);
+	qDebug("(re)starting timer with interval of msecs = %d", msecsto);
 	timer.start(msecsto);
 }
 
