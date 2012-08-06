@@ -18,6 +18,8 @@ CardDelegate 1.0 CardDelegate.qml
 CardGridDelegate 1.0 CardGridDelegate.qml
 CardGridView 1.0 CardGridView.qml
 CardView 1.0 CardView.qml
+ColumnBrowser 1.0 ColumnBrowser.qml
+ColumnBrowserDelegate 1.0 ColumnBrowserDelegate.qml
 Constants 1.0 Constants.qml
 Control3LinesButton 1.0 Control3LinesButton.qml
 ControlBalance 1.0 ControlBalance.qml
