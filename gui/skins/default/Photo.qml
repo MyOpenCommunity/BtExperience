@@ -1,6 +1,6 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
-import Components.SoundDiffusion 1.0
 
 
 SystemPage {
@@ -9,9 +9,9 @@ SystemPage {
     rootColumn: Component { ColumnBrowser {} }
     names: MultimediaNames {}
 
-    onRootColumnChanged: {
-        if (rootColumn)
-            rootColumn.flags = FileObject.Image | FileObject.Directory
+    onRootObjectChanged: {
+        if (rootObject)
+            rootObject.flags = FileObject.Image | FileObject.Directory
     }
 }
 
