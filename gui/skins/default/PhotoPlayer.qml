@@ -6,6 +6,7 @@ Page {
     id: player
 
     property variant model
+    property int index
     property variant item
 
     source: "images/multimedia.jpg"
@@ -76,26 +77,69 @@ Page {
             leftMargin: 17
         }
 
-        onClicked: console.log("previous photo")
+        onClicked: privateProps.goPrevTrack()
         status: 0
     }
 
-    ButtonImageThreeStates {
-        id: playButton
+    Item {
+        // I used an Item to define some specific states for the playButton
+        // please note that playButton is a ButtonImageThreeStates so it defines
+        // its internal states, it is neither possible nor desirable to redefine
+        // these internal states
+        id: playButtonItem
 
-        defaultImageBg: "images/common/btn_play_pause.svg"
-        pressedImageBg: "images/common/btn_play_pause_P.svg"
-        shadowImage: "images/common/ombra_btn_play_pause.svg"
-        defaultImage: "images/common/ico_play.svg"
-        pressedImage: "images/common/ico_play_P.svg"
+        width: playButton.width
+        height: playButton.height
+
         anchors {
             verticalCenter: bottomBarBg.verticalCenter
             left: prevButton.right
             leftMargin: 4
         }
 
-        onClicked: console.log("play photo")
-        status: 0
+        ButtonImageThreeStates {
+            id: playButton
+
+            defaultImageBg: "images/common/btn_play_pause.svg"
+            pressedImageBg: "images/common/btn_play_pause_P.svg"
+            shadowImage: "images/common/ombra_btn_play_pause.svg"
+            defaultImage: "images/common/ico_play.svg"
+            pressedImage: "images/common/ico_play_P.svg"
+            anchors.centerIn: parent
+
+            onClicked: {
+                if (playButtonItem.state === "")
+                    playButtonItem.state = "slideshow"
+                else
+                    playButtonItem.state = ""
+            }
+
+            status: 0
+
+            Timer {
+                id: slideshowTimer
+
+                interval: 4000 // TODO where to take this value?
+                running: false
+                repeat: true
+                onTriggered: privateProps.goNextTrack()
+            }
+        }
+
+        states: [
+            State {
+                name: "slideshow"
+                PropertyChanges {
+                    target: slideshowTimer
+                    running: true
+                }
+                PropertyChanges {
+                    target: playButton
+                    defaultImage: "images/common/ico_stop.svg"
+                    pressedImage: "images/common/ico_stop_P.svg"
+                }
+            }
+        ]
     }
 
     ButtonImageThreeStates {
@@ -108,11 +152,12 @@ Page {
         pressedImage: "images/common/ico_next_track_P.svg"
         anchors {
             verticalCenter: bottomBarBg.verticalCenter
-            left: playButton.right
+            left: playButtonItem.right
             leftMargin: 4
         }
 
-        onClicked: console.log("next photo")
+        onClicked: privateProps.goNextTrack()
+
         status: 0
     }
 
@@ -158,6 +203,38 @@ Page {
                 player.state = ""
         }
         status: 0
+    }
+
+    QtObject {
+        id: privateProps
+
+        function goNextTrack() {
+            var n = player.model.count
+            // note we start from 1, not 0
+            for (var i = 1; i < n; ++i) {
+                var k = (player.index + i) % n
+                var obj = player.model.getObject(k)
+                if (obj.fileType === player.item.fileType) {
+                    player.item = obj
+                    player.index = k
+                    break
+                }
+            }
+        }
+
+        function goPrevTrack() {
+            var n = player.model.count
+            // note we start from 1, not 0
+            for (var i = 1; i < n; ++i) {
+                var k = (player.index - i + n) % n
+                var obj = player.model.getObject(k)
+                if (obj.fileType === player.item.fileType) {
+                    player.item = obj
+                    player.index = k
+                    break
+                }
+            }
+        }
     }
 
     states: [
