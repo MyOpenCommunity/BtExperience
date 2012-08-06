@@ -73,6 +73,7 @@ Page {
                     }
 
                     AdvancedScenarioAction {
+                        scenarioAction: page.scenarioObject.action
                         anchors {
                             right: parent.right
                             top: parent.top

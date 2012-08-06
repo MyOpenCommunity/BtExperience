@@ -176,6 +176,62 @@ protected:
 };
 
 
+class ActionObject : public QObject
+{
+	Q_OBJECT
+	Q_PROPERTY(QString target READ getTarget CONSTANT)
+	Q_PROPERTY(QString description READ getDescription CONSTANT)
+
+public:
+	enum Type
+	{
+		ActionLight = 1,
+		ActionDimmer,
+		ActionTimedLights,
+		ActionDimmer100,
+		ActionShutter = 5,
+		ActionCurtain,
+		ActionAutomationGate,
+		ActionLightinGate,
+		ActionVideoDoorEntryGate,
+		ActionTilting = 10,
+		ActionFan,
+		ActionWatering,
+		ActionControlledSocket,
+		ActionAutomationDoorLock,
+		ActionVideoDoorEntryLock = 15,
+		ActionScenarioUnit,
+		ActionScenarioModule,
+		ActionControlUnit3550,
+		ActionZone3550,
+		ActionAmplifier = 20,
+		ActionControlUnit4695,
+		ActionZone3550Fan,
+		ActionCen,
+		ActionCenPlus,
+		ActionScenarioPlus = 25,
+		ActionAux
+	};
+
+
+	ActionObject(QString target, QString frame, Type type, int command_id);
+
+	void sendFrame();
+
+	QString getTarget() const;
+	QString getDescription() const;
+
+private:
+	void buildDescriptionMap();
+
+	QString frame;
+	QString target;
+	RawDevice *dev;
+	Type type;
+	int command_id;
+	QHash<int, QString> id_to_descr;
+};
+
 
 class TimeConditionObject : public QObject
 {
@@ -247,8 +303,6 @@ public:
 	QVariant getOnOff() const;
 	QVariantList getRangeValues() const;
 
-
-
 	void setOnOff(QVariant value);
 
 	bool isSatisfied() const;
@@ -287,9 +341,10 @@ class AdvancedScenario : public ObjectInterface
 	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
 	Q_PROPERTY(QObject *deviceCondition READ getDeviceCondition CONSTANT)
 	Q_PROPERTY(QObject *timeCondition READ getTimeCondition CONSTANT)
+	Q_PROPERTY(QObject *action READ getAction CONSTANT)
 
 public:
-	AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, bool enabled, int days, QString action_frame, QString action_description, QString description);
+	AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, ActionObject *action, bool _enabled, int _days, QString description);
 
 	virtual int getObjectId() const
 	{
@@ -301,6 +356,7 @@ public:
 
 	QObject *getDeviceCondition() const;
 	QObject *getTimeCondition() const;
+	QObject *getAction() const;
 
 public slots:
 	void start();
@@ -325,9 +381,7 @@ private:
 	int days;
 	DeviceConditionObject *device_obj;
 	TimeConditionObject *time_obj;
-	QString action_frame;
-	QString action_description;
-	RawDevice *dev;
+	ActionObject *action_obj;
 };
 
 
