@@ -689,6 +689,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a ChoiceList instance");
 	qmlRegisterUncreatableType<ScenarioModule>(uri, 1, 0, "ScenarioModule",
 		"unable to create a ScenarioModule instance");
+	qmlRegisterUncreatableType<DeviceConditionObject>(uri, 1, 0, "DeviceConditionObject",
+		"unable to create a DeviceConditionObject instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
