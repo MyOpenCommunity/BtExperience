@@ -272,6 +272,7 @@ void TreeBrowserListModelBase::setRange(QVariantList range)
 	max_range = max;
 
 	emit rangeChanged();
+	emit directoryChanged(); // causing a refresh to load root dir
 }
 
 
