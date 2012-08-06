@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
+import "../js/Stack.js" as Stack
 
 
 MenuColumn {
@@ -165,8 +166,7 @@ MenuColumn {
                 }
                 case FileObject.Image:
                 {
-                    // TODO load a page with photo player
-                    console.log("+++++++++++++++++++++++++++++++++++++ "+itemObject.name)
+                    Stack.openPage("PhotoPlayer.qml", {"model": listModel, "item": itemObject})
                     break
                 }
                 case FileObject.Directory:
