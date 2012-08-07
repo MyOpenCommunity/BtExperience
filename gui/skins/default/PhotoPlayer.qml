@@ -196,7 +196,6 @@ Page {
         }
 
         onClicked: {
-            console.log("full screen photo")
             if (player.state === "")
                 player.state = "fullscreen"
             else
