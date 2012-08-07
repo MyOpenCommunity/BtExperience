@@ -135,7 +135,8 @@ public:
 		DateTime,
 		Text,
 		Image,
-		Rectangles
+		Rectangles,
+		Slideshow
 	};
 
 	enum TemperatureUnit

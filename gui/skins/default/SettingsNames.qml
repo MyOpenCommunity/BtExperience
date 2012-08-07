@@ -20,6 +20,7 @@ QtObject {
         container['SCREEN_SAVER_TYPE'][GuiSettings.Text] = qsTr("Text")
         container['SCREEN_SAVER_TYPE'][GuiSettings.DateTime] = qsTr("Date and Time")
         container['SCREEN_SAVER_TYPE'][GuiSettings.Rectangles] = qsTr("Rectangles")
+        container['SCREEN_SAVER_TYPE'][GuiSettings.Slideshow] = qsTr("Slideshow")
 
         container['TURN_OFF_DISPLAY_LIST'] = []
         container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Seconds_15] = qsTr("15 sec")

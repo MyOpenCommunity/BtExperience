@@ -53,6 +53,11 @@ MenuColumn {
         ScreenSaverRectangles {}
     }
 
+    Component {
+        id: slideshow
+        ScreensaverSlideshow {}
+    }
+
     // slot to manage the change of IP configuration type
     function screenSaverTypesChanged(type) {
         var screensaver = bouncingLogo
@@ -68,6 +73,11 @@ MenuColumn {
         {
             screensaver = flashyRectangles
             screenSaverLoader.setComponent(rectanglesItem)
+        }
+        else if (type === GuiSettings.Slideshow)
+        {
+            screensaver = slideshow
+            screenSaverLoader.setComponent(slideshowItem)
         }
         else
         {
@@ -160,6 +170,53 @@ MenuColumn {
                 source: imagesPath + "common/menu_column_item_bg.svg"
                 UbuntuLightText {
                     // TODO implementation of browsing/setting of an image
+                    text: qsTr("Browse")
+                    anchors.fill: parent
+                }
+                UbuntuLightText {
+                    id: screensaverImage
+                    text: global.guiSettings.screensaverImage
+                    anchors.fill: parent
+                }
+            }
+            ControlChoices {
+                id: screensaverTimeout
+                description: qsTr("screen saver time out")
+                choice: pageObject.names.get('SCREEN_SAVER_TIMEOUT', currentIndex)
+                property int currentIndex: global.guiSettings.timeOut
+                onPlusClicked: if (currentIndex < 7) ++currentIndex
+                onMinusClicked: if (currentIndex > 0)--currentIndex
+            }
+            ControlChoices {
+                id: turnOffTime
+                description: qsTr("turn off display")
+                choice: pageObject.names.get('TURN_OFF_DISPLAY_LIST', currentIndex)
+                property int currentIndex: global.guiSettings.turnOffTime
+                onPlusClicked: if (currentIndex < 8) ++currentIndex
+                onMinusClicked: if (currentIndex > 0)--currentIndex
+            }
+            ButtonOkCancel {
+                onOkClicked: {
+                    global.guiSettings.screensaverType = privateProps.type
+                    global.guiSettings.screensaverImage = screensaverImage.text
+                    global.guiSettings.timeOut = screensaverTimeout.currentIndex
+                    global.guiSettings.turnOffTime = turnOffTime.currentIndex
+                    column.okClicked()
+
+                }
+            }
+        }
+    }
+
+    Component {
+        id: slideshowItem
+        Column {
+            Image {
+                width: 212
+                height: 50
+                source: imagesPath + "common/menu_column_item_bg.svg"
+                UbuntuLightText {
+                    // TODO implementation of browsing/setting of a directory
                     text: qsTr("Browse")
                     anchors.fill: parent
                 }
