@@ -5,7 +5,7 @@ import Components 1.0
 
 SystemPage {
     source: "images/multimedia.jpg"
-    text: qsTr("video")
+    text: qsTr("Video")
     rootColumn: Component { ColumnBrowser {
             text: qsTr("Video folder")
         } }

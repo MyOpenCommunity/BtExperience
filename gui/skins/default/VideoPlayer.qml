@@ -13,6 +13,7 @@ Page {
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
+    text: qsTr("Video")
 
     SvgImage {
         id: frameBg

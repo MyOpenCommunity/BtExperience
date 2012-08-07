@@ -11,6 +11,7 @@ Page {
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
+    text: qsTr("Photo")
 
     SvgImage {
         id: frameBg
