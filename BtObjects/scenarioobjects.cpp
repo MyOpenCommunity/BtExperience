@@ -80,9 +80,9 @@ QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node)
 
 		DeviceConditionObject *dc = 0;
 		TimeConditionObject *tc = 0;
+		ActionObject *ao = 0;
 		QDomNode scen = getChildWithName(ist, "scen");
 		QDomNodeList childs = scen.childNodes();
-		QString act_frame, act_descr;
 
 		for (int i = 0; i < childs.size(); ++i)
 		{
@@ -109,15 +109,15 @@ QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node)
 			}
 			else if (child.tagName() == "action")
 			{
-				act_frame = getTextChild(child, "open");
-				act_descr = getTextChild(child, "descr");
+				ActionObject::Type type = static_cast<ActionObject::Type>(getTextChild(child, "objectID").toInt());
+				ao = new ActionObject(getTextChild(child, "descr"), getTextChild(child, "open"), type, getTextChild(child, "commandID").toInt());
 			}
 		}
 
 		bool status = getTextChild(scen, "status").toInt();
 		int days = getTextChild(scen, "days").toInt();
 
-		obj_list << ObjectPair(uii, new AdvancedScenario(dc, tc, status, days, act_frame, act_descr, v.value("descr")));
+		obj_list << ObjectPair(uii, new AdvancedScenario(dc, tc, ao, status, days, v.value("descr")));
 	}
 	return obj_list;
 }
@@ -274,6 +274,216 @@ bool ScheduledScenario::hasDisable() const
 }
 
 
+ActionObject::ActionObject(QString _target, QString _frame, Type _type, int _command_id)
+{
+	target = _target;
+	frame = _frame;
+	dev = bt_global::add_device_to_cache(new RawDevice, NO_INIT);
+	type = _type;
+	command_id = _command_id;
+	buildDescriptionMap();
+}
+
+void ActionObject::sendFrame()
+{
+	if (frame.isEmpty())
+	{
+		qDebug("Action frame not set for ActionObject: %s", qPrintable(target));
+		return;
+	}
+	dev->sendCommand(frame);
+}
+
+QString ActionObject::getTarget() const
+{
+	return target;
+}
+
+QString ActionObject::getDescription() const
+{
+	if (id_to_descr.contains(command_id))
+		return id_to_descr[command_id];
+
+	return id_to_descr[-1]; // contains the default
+}
+
+void ActionObject::buildDescriptionMap()
+{
+	switch (type)
+	{
+	case ActionLight:
+	case ActionFan:
+	case ActionWatering:
+	case ActionControlledSocket:
+		id_to_descr[0] = tr("OFF");
+		id_to_descr[1] = tr("ON");
+		id_to_descr[-1] = id_to_descr[0];
+		break;
+
+	case ActionDimmer:
+		id_to_descr[0] = tr("OFF");
+		id_to_descr[1] = tr("ON");
+		id_to_descr[2] = tr("20%");
+		id_to_descr[3] = tr("30%");
+		id_to_descr[4] = tr("40%");
+		id_to_descr[5] = tr("50%");
+		id_to_descr[6] = tr("60%");
+		id_to_descr[7] = tr("70%");
+		id_to_descr[8] = tr("80%");
+		id_to_descr[9] = tr("90%");
+		id_to_descr[10] = tr("100%");
+		id_to_descr[-1] = id_to_descr[0];
+		break;
+
+	case ActionTimedLights:
+		id_to_descr[11] = tr("1 min.");
+		id_to_descr[12] = tr("2 min.");
+		id_to_descr[13] = tr("3 min.");
+		id_to_descr[15] = tr("4 min.");
+		id_to_descr[16] = tr("5 min.");
+		id_to_descr[17] = tr("15 min.");
+		id_to_descr[-1] = id_to_descr[11];
+		break;
+
+	case ActionDimmer100:
+		id_to_descr[18] = tr("OFF");
+		id_to_descr[19] = tr("ON");
+		id_to_descr[20] = tr("Level");
+		id_to_descr[-1] = id_to_descr[18];
+		break;
+
+	case ActionShutter:
+	case ActionTilting:
+		id_to_descr[21] = tr("Up");
+		id_to_descr[22] = tr("Down");
+		id_to_descr[23] = tr("Stop");
+		id_to_descr[-1] = id_to_descr[21];
+		break;
+
+	case ActionCurtain:
+	case ActionAutomationGate:
+		id_to_descr[21] = tr("Open");
+		id_to_descr[22] = tr("Close");
+		id_to_descr[23] = tr("Stop");
+		id_to_descr[-1] = id_to_descr[21];
+		break;
+
+	case ActionLightinGate:
+		id_to_descr[1] = tr("On 1 sec.");
+		id_to_descr[2] = tr("On 2 sec.");
+		id_to_descr[-1] = id_to_descr[1];
+		break;
+
+	case ActionVideoDoorEntryGate:
+	case ActionVideoDoorEntryLock:
+		id_to_descr[24] = tr("ON");
+		id_to_descr[-1] = id_to_descr[24];
+		break;
+
+	case ActionAutomationDoorLock:
+		id_to_descr[90] = tr("ON");
+		id_to_descr[-1] = id_to_descr[90];
+		break;
+
+	case ActionScenarioUnit:
+		id_to_descr[25] = tr("Scenario 1.4");
+		id_to_descr[-1] = id_to_descr[25];
+		break;
+
+	case ActionScenarioModule:
+		id_to_descr[25] = tr("Scenario 1.16");
+		id_to_descr[-1] = id_to_descr[25];
+		break;
+
+	case ActionControlUnit3550:
+		id_to_descr[26] = tr("Antifreeze/thermal protection");
+		id_to_descr[27] = tr("OFF");
+		id_to_descr[28] = tr("Manual Temperature");
+		id_to_descr[29] = tr("Heating scenario");
+		id_to_descr[45] = tr("Air-conditioning scenario");
+		id_to_descr[61] = tr("Heating Program");
+		id_to_descr[64] = tr("Air-conditioning program");
+		id_to_descr[67] = tr("Last program");
+		id_to_descr[86] = tr("Set the air conditioning mode");
+		id_to_descr[87] = tr("Set the heating mode");
+		id_to_descr[88] = tr("Last scenario");
+		id_to_descr[-1] = id_to_descr[27];
+		break;
+
+	case ActionZone3550:
+		id_to_descr[26] = tr("Antifreeze/thermal protection");
+		id_to_descr[27] = tr("OFF");
+		id_to_descr[28] = tr("Manual Temperature");
+		id_to_descr[68] = tr("Automatic");
+		id_to_descr[-1] = id_to_descr[27];
+		break;
+
+	case ActionAmplifier:
+		id_to_descr[70] = tr("OFF");
+		id_to_descr[71] = tr("ON");
+		id_to_descr[72] = tr("Volume");
+		id_to_descr[-1] = id_to_descr[70];
+		break;
+
+	case ActionControlUnit4695:
+		id_to_descr[73] = tr("Antifreeze/thermal protection");
+		id_to_descr[74] = tr("OFF");
+		id_to_descr[75] = tr("Manual Temperature");
+		id_to_descr[76] = tr("Timed manual Temperature");
+		id_to_descr[77] = tr("Heating Program");
+		id_to_descr[80] = tr("Air-conditioning program");
+		id_to_descr[83] = tr("Last program");
+		id_to_descr[84] = tr("Set the air conditioning mode");
+		id_to_descr[85] = tr("Set the heating mode");
+		id_to_descr[-1] = id_to_descr[74];
+		break;
+
+	case ActionZone3550Fan:
+		id_to_descr[26] = tr("Antifreeze/thermal protection");
+		id_to_descr[27] = tr("OFF");
+		id_to_descr[28] = tr("Manual Temperature");
+		id_to_descr[68] = tr("Automatic");
+		id_to_descr[89] = tr("Set the fan-coil speed");
+		id_to_descr[-1] = id_to_descr[27];
+		break;
+
+	case ActionCen:
+		id_to_descr[94] = tr("Start pressure button");
+		id_to_descr[95] = tr("Short pressure button");
+		id_to_descr[96] = tr("Release after extended pressure button");
+		id_to_descr[97] = tr("Extended pressure button");
+		id_to_descr[-1] = id_to_descr[94];
+		break;
+
+	case ActionCenPlus:
+		id_to_descr[98] = tr("Short pressure button");
+		id_to_descr[99] = tr("Start pressure button");
+		id_to_descr[100] = tr("Release after extended pressure button");
+		id_to_descr[101] = tr("Extended pressure button");
+		id_to_descr[-1] = id_to_descr[98];
+		break;
+
+	case ActionScenarioPlus:
+		id_to_descr[102] = tr("Activate Scenarios");
+		id_to_descr[103] = tr("Scenario OFF");
+		id_to_descr[104] = tr("Increase level");
+		id_to_descr[105] = tr("Decrease level");
+		id_to_descr[106] = tr("Stop");
+		id_to_descr[-1] = id_to_descr[103];
+		break;
+
+	case ActionAux:
+		id_to_descr[109] = tr("OFF");
+		id_to_descr[110] = tr("ON");
+		id_to_descr[-1] = id_to_descr[109];
+		break;
+
+	default:
+		qFatal("Unknown type: %d", type);
+	}
+}
+
+
 TimeConditionObject::TimeConditionObject(int _hours, int _minutes)
 {
 	hours = condition_hours = _hours;
@@ -336,7 +546,7 @@ void TimeConditionObject::resetTimer()
 	// make it positive and < MSECS_DAY
 	msecsto = (msecsto % MSECS_DAY + MSECS_DAY) % MSECS_DAY;
 
-	qDebug("(re)starting timer with interval = %d", msecsto);
+	qDebug("(re)starting timer with interval of msecs = %d", msecsto);
 	timer.start(msecsto);
 }
 
@@ -542,16 +752,14 @@ bool DeviceConditionObject::isSatisfied() const
 }
 
 
-AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, bool _enabled, int _days, QString _action_frame, QString _action_description, QString description)
+AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, ActionObject *action, bool _enabled, int _days, QString description)
 {
 	name = description;
 	enabled = _enabled;
 	days = _days;
-	action_frame = _action_frame;
-	action_description = _action_description;
+	action_obj = action;
 	device_obj = device;
 	time_obj = time;
-	dev = bt_global::add_device_to_cache(new RawDevice, NO_INIT);
 
 	if (device_obj)
 	{
@@ -565,6 +773,9 @@ AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionO
 		connect(time_obj, SIGNAL(satisfied()),
 			this, SLOT(timeConditionSatisfied()));
 	}
+
+	Q_ASSERT_X(action_obj, "AdvancedScenario::AdvancedScenario", "The action object is mandatory!");
+	action_obj->setParent(this);
 }
 
 bool AdvancedScenario::isEnabled() const
@@ -621,15 +832,15 @@ QObject *AdvancedScenario::getTimeCondition() const
 	return time_obj;
 }
 
+QObject *AdvancedScenario::getAction() const
+{
+	return action_obj;
+}
+
 void AdvancedScenario::start()
 {
-	if (action_frame.isEmpty())
-	{
-		qDebug("Action frame not set for scenario");
-		return;
-	}
-	qDebug() << "START the advanced scenario" << action_frame;
-	dev->sendCommand(action_frame);
+	qDebug() << "START the advanced scenario";
+	action_obj->sendFrame();
 	emit started();
 }
 
@@ -692,3 +903,4 @@ void AdvancedScenario::deviceConditionSatisfied()
 
 	start();
 }
+

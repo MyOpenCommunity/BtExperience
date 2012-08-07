@@ -45,10 +45,10 @@
 					<trigger>13-22</trigger>
 				</device>
 				<action>
-					<descr>Dimmer 10</descr>
+					<descr>Temporized light</descr>
 					<open>*1*1*11##</open>
-					<objectID>1</objectID>
-					<commandID>1</commandID>
+					<objectID>3</objectID>
+					<commandID>12</commandID>
 				</action>
 			</scen>
 		</ist>
@@ -71,10 +71,10 @@
 					<trigger>210</trigger>
 				</device>
 				<action>
-					<descr>Dimmer 10</descr>
+					<descr>The gate of hell</descr>
 					<open>*1*1*11##</open>
-					<objectID>1</objectID>
-					<commandID>1</commandID>
+					<objectID>6</objectID>
+					<commandID>21</commandID>
 				</action>
 			</scen>
 		</ist>
@@ -97,10 +97,10 @@
 					<trigger>1</trigger>
 				</device>
 				<action>
-					<descr>Dimmer 10</descr>
+					<descr>Thermal control unit</descr>
 					<open>*1*1*11##</open>
-					<objectID>1</objectID>
-					<commandID>1</commandID>
+					<objectID>18</objectID>
+					<commandID>29</commandID>
 				</action>
 			</scen>
 		</ist>
@@ -123,10 +123,28 @@
 					<trigger>50-70</trigger>
 				</device>
 				<action>
-					<descr>Dimmer 10</descr>
+					<descr>Super Scenario Plus</descr>
 					<open>*1*1*11##</open>
-					<objectID>1</objectID>
-					<commandID>1</commandID>
+					<objectID>25</objectID>
+					<commandID>102</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6006" descr="time without device">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<action>
+					<descr>Thermal control unit</descr>
+					<open>*1*1*11##</open>
+					<objectID>18</objectID>
+					<commandID>29</commandID>
 				</action>
 			</scen>
 		</ist>

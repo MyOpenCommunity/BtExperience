@@ -231,7 +231,8 @@ void TestScenarioModule::checkMethod()
 
 void TestScenarioAdvanced::testWeekdays()
 {
-	AdvancedScenario obj(0, 0, false, 0, "", "", "");
+	ActionObject ao("", TEST_COMMAND, ActionObject::ActionLight, 1);
+	AdvancedScenario obj(0, 0, &ao, false, 0, "");
 	ObjectTester t(&obj, SIGNAL(daysChanged()));
 
 	for (int i = 0; i < 8; ++i)
@@ -250,16 +251,19 @@ void TestScenarioAdvanced::testWeekdays()
 	obj.days = 64; // sunday
 	QVERIFY(obj.isDayEnabled(0));
 	QVERIFY(obj.isDayEnabled(7));
+	ao.setParent(0);
 }
 
 void TestScenarioAdvanced::testDeviceCondition()
 {
 	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
-	AdvancedScenario obj(&dc, 0, true, 127, TEST_COMMAND, "", "");
+	ActionObject ao("", TEST_COMMAND, ActionObject::ActionLight, 1);
+	AdvancedScenario obj(&dc, 0, &ao, true, 127, "");
 	ObjectTester ts(&obj, SIGNAL(started()));
 	OpenMsg off("*9*0*3##"), on("*9*1*3##");
 	RawDevice dev(1);
 
+	ao.setParent(0);
 	dc.setParent(0);
 
 	dc.device_cond->dev->manageFrame(off);
@@ -277,13 +281,15 @@ void TestScenarioAdvanced::testWeekdayCondition()
 	int today_mask = 1 << (QDate::currentDate().dayOfWeek() - 1);
 	int not_today_mask = (~today_mask) & 127;
 
+	ActionObject ao("", TEST_COMMAND, ActionObject::ActionLight, 1);
 	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
-	AdvancedScenario obj1(&dc, 0, true, today_mask, TEST_COMMAND, "", "");
+	AdvancedScenario obj1(&dc, 0, &ao, true, today_mask, "");
 	ObjectTester ts1(&obj1, SIGNAL(started()));
 	OpenMsg off("*9*0*3##"), on("*9*1*3##");
 	RawDevice dev(1);
 
 	dc.setParent(0);
+	ao.setParent(0);
 
 	dc.device_cond->dev->manageFrame(off);
 	ts1.checkNoSignals();
@@ -294,10 +300,11 @@ void TestScenarioAdvanced::testWeekdayCondition()
 	dev.sendCommand(TEST_COMMAND);
 	compareClientCommand();
 
-	AdvancedScenario obj2(&dc, 0, true, not_today_mask, TEST_COMMAND, "", "");
+	AdvancedScenario obj2(&dc, 0, &ao, true, not_today_mask, "");
 	ObjectTester ts2(&obj2, SIGNAL(started()));
 
 	dc.setParent(0);
+	ao.setParent(0);
 
 	dc.device_cond->dev->manageFrame(off);
 	ts2.checkNoSignals();
@@ -309,11 +316,13 @@ void TestScenarioAdvanced::testWeekdayCondition()
 void TestScenarioAdvanced::testTimeCondition()
 {
 	TimeConditionObject tc(0, 0);
-	AdvancedScenario obj(0, &tc, true, 127, TEST_COMMAND, "", "");
+	ActionObject ao("", TEST_COMMAND, ActionObject::ActionLight, 1);
+	AdvancedScenario obj(0, &tc, &ao, true, 127, "");
 	ObjectTester ts(&obj, SIGNAL(started()));
 	RawDevice dev(1);
 
 	tc.setParent(0);
+	ao.setParent(0);
 
 	tc.timer.setInterval(500);
 
@@ -327,13 +336,15 @@ void TestScenarioAdvanced::testTimeDeviceCondition()
 {
 	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
 	TimeConditionObject tc(0, 0);
-	AdvancedScenario obj(&dc, &tc, true, 127, TEST_COMMAND, "", "");
+	ActionObject ao("", TEST_COMMAND, ActionObject::ActionLight, 1);
+	AdvancedScenario obj(&dc, &tc, &ao, true, 127, "");
 	ObjectTester ts(&obj, SIGNAL(started()));
 	OpenMsg off("*9*0*3##"), on("*9*1*3##");
 	RawDevice dev(1);
 
 	tc.setParent(0);
 	dc.setParent(0);
+	ao.setParent(0);
 
 	tc.timer.setInterval(500);
 

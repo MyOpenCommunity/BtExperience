@@ -46,37 +46,38 @@ Page {
                     source: "images/common/bg_scenevo.svg"
                 }
 
-                Item {
+                Row {
+                    spacing: 3.5 / 100 * parent.width
                     anchors {
                         leftMargin: parent.width / 100 * 3
                         left: parent.left
-                        right: parent.right
-                        rightMargin: parent.width / 100 * 3
                         top: parent.top
                         topMargin: parent.height / 100 * 6
                     }
 
                     AdvancedScenarioDateTimeCondition {
+                        id: timeCondition
                         scenarioObject: page.scenarioObject
-                        anchors {
-                            left: parent.left
-                            top: parent.top
-                        }
+                        anchors.top: parent.top
                     }
 
-                    AdvancedScenarioDeviceCondition {
-                        scenarioDeviceObject: page.scenarioObject.deviceCondition
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            top: parent.top
+                    Loader {
+                        sourceComponent: page.scenarioObject.deviceCondition !== null ? deviceConditionComponent : undefined
+                        Component {
+                            id: deviceConditionComponent
+                            AdvancedScenarioDeviceCondition {
+                                id: deviceCondition
+                                scenarioDeviceObject: page.scenarioObject.deviceCondition
+                                anchors.top: parent.top
+                            }
                         }
+
                     }
 
                     AdvancedScenarioAction {
-                        anchors {
-                            right: parent.right
-                            top: parent.top
-                        }
+                        id: action
+                        scenarioAction: page.scenarioObject.action
+                        anchors.top: parent.top
                     }
                 }
             }

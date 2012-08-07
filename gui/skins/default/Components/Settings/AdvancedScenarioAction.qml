@@ -3,64 +3,32 @@ import Components 1.0
 import Components.Text 1.0
 
 Column {
+    property variant scenarioAction
     width: line.width
     spacing: 10
+    opacity: 0.5
 
     UbuntuMediumText {
         text: qsTr("action")
         font.pixelSize: 18
         color: "white"
-
     }
+
     SvgImage {
         id: line
         source: "../../images/common/linea.svg"
     }
 
     UbuntuLightText {
-        text: qsTr("action description")
+        text: scenarioAction.target
         font.pixelSize: 14
         color: "white"
-    }
-
-    Row {
-        spacing: 13
-        height: childrenRect.height
-
-        Repeater {
-            model: ListModel {
-                ListElement { status: "ON" }
-                ListElement { status: "OFF" }
-            }
-
-            ControlRadio {
-                text: model.status
-                onClicked: status = !status
-            }
-        }
-    }
-
-    Item { // a spacer
-        height: 10
-        width: line.width
     }
 
     UbuntuLightText {
-        text: qsTr("intensity")
+        text: scenarioAction.description
         font.pixelSize: 14
         color: "white"
     }
-
-    ControlSpin {
-        text: "80%"
-        onMinusClicked: {
-
-        }
-
-        onPlusClicked: {
-
-        }
-
-    }
-
 }
+
