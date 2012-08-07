@@ -603,8 +603,6 @@ DeviceConditionObject::DeviceConditionObject(DeviceCondition::Type type, QString
 		device_cond->setState(device_cond->getState());
 }
 
-
-
 void DeviceConditionObject::updateText(int min_condition_value, int max_condition_value)
 {
 	bool new_on_off;
