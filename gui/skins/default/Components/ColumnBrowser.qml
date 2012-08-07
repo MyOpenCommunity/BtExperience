@@ -12,7 +12,7 @@ MenuColumn {
     property alias rootPath: listModel.rootPath
     property int flags: 0
 
-    Image {
+    SvgImage {
         id: imageBg
         source: "../images/common/bg_browse.svg"
     }
