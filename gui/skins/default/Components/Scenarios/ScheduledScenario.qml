@@ -23,11 +23,7 @@ MenuColumn {
         UbuntuLightText {
             id: timing
 
-            anchors {
-                verticalCenter: enableControl.verticalCenter
-                left: parent.left
-                leftMargin: 7
-            }
+            anchors.centerIn: parent
             font.pixelSize: 14
             color: "white"
             text: qsTr("enabled")
