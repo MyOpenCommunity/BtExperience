@@ -8,6 +8,7 @@ import "../js/Stack.js" as Stack
 MenuColumn {
     id: column
 
+    property alias text: caption.text
     property alias paginator: paginator
     property alias rootPath: listModel.rootPath
     property int flags: 0
@@ -167,6 +168,11 @@ MenuColumn {
                 case FileObject.Image:
                 {
                     Stack.openPage("PhotoPlayer.qml", {"model": listModel, "item": itemObject, "index": index})
+                    break
+                }
+                case FileObject.Video:
+                {
+                    Stack.openPage("VideoPlayer.qml", {"model": listModel, "item": itemObject, "index": index})
                     break
                 }
                 case FileObject.Directory:
