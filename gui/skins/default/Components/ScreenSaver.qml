@@ -72,6 +72,8 @@ Item {
         {
         case GuiSettings.Rectangles:
             return flashyRectangles
+        case GuiSettings.Slideshow:
+            return slideshow
         default:
             return bouncingLogo
         }
@@ -138,5 +140,10 @@ Item {
     Component {
         id: flashyRectangles
         ScreenSaverRectangles {}
+    }
+
+    Component {
+        id: slideshow
+        ScreensaverSlideshow {}
     }
 }

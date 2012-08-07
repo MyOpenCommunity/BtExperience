@@ -25,7 +25,8 @@ MenuColumn {
                             GuiSettings.DateTime,
                             GuiSettings.Text,
                             GuiSettings.Image,
-                            GuiSettings.Rectangles
+                            GuiSettings.Rectangles,
+                            GuiSettings.Slideshow
                         ]
                 for (var i = 0; i < l.length; i++)
                     append({
