@@ -172,12 +172,70 @@ Item {
             anchors.leftMargin: boxInfo.visible ? 5 : 0
             verticalAlignment: Text.AlignBottom
         }
+
+        Column {
+            id: sidebar
+
+            opacity: 0
+            anchors {
+                top: parent.top
+                left: parent.right
+            }
+
+            Rectangle {
+                width: 48
+                height: 48
+                gradient: Gradient {
+                    GradientStop {
+                        position: 0.00;
+                        color: "#b7b7b7";
+                    }
+                    GradientStop {
+                        position: 1.00;
+                        color: "#ffffff";
+                    }
+                }
+                Image {
+                    source: "../images/icon_pencil.png"
+                    anchors.fill: parent
+                    anchors.margins: 10
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: privateProps.startEdit()
+                }
+            }
+
+            Rectangle {
+                width: 48
+                height: 48
+                gradient: Gradient {
+                    GradientStop {
+                        position: 0.00;
+                        color: "#b7b7b7";
+                    }
+                    GradientStop {
+                        position: 1.00;
+                        color: "#ffffff";
+                    }
+                }
+                Image {
+                    source: "../images/icon_move.png"
+                    anchors.fill: parent
+                    anchors.margins: 10
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: console.log("move element to be implemented")
+                }
+            }
+        }
     }
 
     MouseArea {
         id: mousearea
         anchors.fill: parent
-        onPressAndHold: if (menuItem.editable) { privateProps.startEdit() }
+        onPressAndHold: if (menuItem.editable) { menuItem.state = "toolbar" }
         onClicked: menuItem.clicked(menuItem)
         onPressed: menuItem.pressed(menuItem)
         onReleased: menuItem.released(menuItem)
@@ -199,6 +257,10 @@ Item {
             PropertyChanges { target: textDescription; color: "#ffffff" }
             PropertyChanges { target: arrowRight; source: "../images/common/menu_column_item_arrow_white.svg" }
             PropertyChanges { target: background; source: "../images/common/menu_column_item_bg_pressed.svg" }
+        },
+        State {
+            name: "toolbar"
+            PropertyChanges { target: sidebar; opacity: 1 }
         }
     ]
 }
