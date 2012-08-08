@@ -36,7 +36,7 @@ Page {
         id: fullScreenBg
 
         color: "black"
-        visible: false
+        opacity: 0
         anchors {
             top: player.toolbar.bottom
             left: parent.left
@@ -240,7 +240,7 @@ Page {
     states: [
         State {
             name: "fullscreen"
-            PropertyChanges { target: fullScreenBg; visible: true }
+            PropertyChanges { target: fullScreenBg; opacity: 1 }
             PropertyChanges { target: fullScreenToggle; status: 1 }
             PropertyChanges {
                 target: bottomBarBg
@@ -256,6 +256,21 @@ Page {
             PropertyChanges {
                 target: thePhoto
                 anchors.fill: fullScreenBg
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            ParallelAnimation {
+                NumberAnimation {
+                    target: fullScreenBg
+                    property: "opacity"
+                    duration: 400
+                }
+                AnchorAnimation {
+                    duration: 400
+                }
             }
         }
     ]
