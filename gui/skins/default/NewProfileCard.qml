@@ -57,8 +57,8 @@ BasePage {
 
             x: (parent.width - width) / 2
             y: (parent.height - height) / 2
-            width: 150
-            height: 208
+            width: Math.min(150, sourceImage.width)
+            height: Math.min(208, sourceImage.height)
         }
 
         // to highlight cropping region we need to draw a frame around the
@@ -159,8 +159,8 @@ BasePage {
         defaultImageBg: "images/common/btn_comando.svg"
         pressedImageBg: "images/common/btn_comando_P.svg"
         shadowImage: "images/common/ombra_btn_comando.svg"
-        defaultImage: "images/common/ico_piu.svg"
-        pressedImage: "images/common/ico_piu_P.svg"
+        defaultImage: "images/common/ico_browse.svg"
+        pressedImage: "images/common/ico_browse_P.svg"
         status: 0
         timerEnabled: true
         anchors {
@@ -303,7 +303,7 @@ BasePage {
         id: privateProps
 
         property int zoom: 100
-        property int zoomStep: 25
+        property int zoomStep: 10
         property variant originalRect: undefined
 
         property real darkRectOpacity: 0.5
@@ -378,7 +378,12 @@ BasePage {
         }
 
         function saveCard() {
-            global.takeScreenshot(Qt.rect(transparentRect.x, transparentRect.y, transparentRect.width, transparentRect.height), "images/home/newcard.png")
+            // mapping item coordinates to global coordinates
+            var x = transparentRect.mapToItem(null, 0, 0).x
+            var y = transparentRect.mapToItem(null, 0, 0).y
+            var w = transparentRect.width
+            var h = transparentRect.height
+            global.takeScreenshot(Qt.rect(x, y, w, h), "images/home/newcard.png")
         }
     }
 }
