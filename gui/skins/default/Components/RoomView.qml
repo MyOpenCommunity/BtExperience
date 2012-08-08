@@ -12,6 +12,7 @@ Item {
 
     signal menuOpened
     signal menuClosed
+    signal focusLost
 
     function closeMenu() {
         if (privateProps.currentMenu !== undefined)
@@ -27,7 +28,14 @@ Item {
     /* private implementation */
     Component {
         id: roomItem
-        RoomItem {}
+        RoomItem {
+            Connections {
+                target: roomView
+                onFocusLost: focusLost()
+            }
+            // calls focusLost on RoomView to make sidebars disappear
+            onPressed: roomView.focusLost()
+        }
     }
 
     Component {
@@ -175,6 +183,11 @@ Item {
                 }
             }
         }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: focusLost()
     }
 
     states: [

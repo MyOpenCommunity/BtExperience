@@ -241,6 +241,11 @@ Item {
         onReleased: menuItem.released(menuItem)
     }
 
+    function focusLost() {
+        if (menuItem.state === "toolbar")
+            menuItem.state = ""
+    }
+
     states: [
         State {
             name: "selected"

@@ -4,7 +4,12 @@ import BtObjects 1.0
 
 MenuColumn {
     id: column
+
+    signal pressed
+
     MenuItem {
+        id: theMenu
+
         name: dataModel.name
         status: dataModel.active === true ? 1 : 0
         hasChild: true
@@ -15,13 +20,15 @@ MenuColumn {
 
         onClicked: {
             column.columnClicked()
-            column.loadColumn(
-                        mapping.getComponent(dataModel.objectId),
-                        "",
-                        dataModel)
+            column.loadColumn(mapping.getComponent(dataModel.objectId), "", dataModel)
         }
+        onPressed: column.pressed()
     }
 
     BtObjectsMapping { id: mapping }
+
+    function focusLost() {
+        theMenu.focusLost()
+    }
 }
 
