@@ -23,6 +23,8 @@ SvgImage {
                 return "../images/common/ico_video_P.svg"
             else if (itemObject.fileType === FileObject.Image)
                 return "../images/common/ico_foto_P.svg"
+            else if (itemObject.fileType === FileObject.Unknown)
+                return "../images/common/ico_file_P.svg"
             return ""
         }
 
@@ -33,6 +35,8 @@ SvgImage {
                 return "../images/common/ico_video.svg"
             else if (itemObject.fileType === FileObject.Image)
                 return "../images/common/ico_foto.svg"
+            else if (itemObject.fileType === FileObject.Unknown)
+                return "../images/common/ico_file.svg"
             return ""
         }
     }
