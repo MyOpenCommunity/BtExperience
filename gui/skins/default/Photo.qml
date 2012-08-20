@@ -9,7 +9,6 @@ SystemPage {
     rootColumn: Component {
         ColumnBrowser {
             rootPath: ["media", "photos"]
-            flags: FileObject.Image | FileObject.Directory
         }
     }
     names: MultimediaNames {}

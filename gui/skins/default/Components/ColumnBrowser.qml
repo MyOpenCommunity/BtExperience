@@ -11,7 +11,6 @@ MenuColumn {
     property alias text: caption.text
     property alias paginator: paginator
     property alias rootPath: listModel.rootPath
-    property int flags: 0
 
     SvgImage {
         id: imageBg
@@ -54,12 +53,15 @@ MenuColumn {
             rightMargin: 10
         }
 
-        onClicked: status = !status
-        status: 0
+        onClicked: {
+            privateProps.activeButton = 3
+            listModel.filter = FileObject.Image | FileObject.Directory
+        }
+        status: privateProps.activeButton === 3
     }
 
     ButtonImageThreeStates {
-        id: cameraButton
+        id: videoButton
 
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
@@ -74,8 +76,11 @@ MenuColumn {
             right: photoButton.left
         }
 
-        onClicked: status = !status
-        status: 0
+        onClicked: {
+            privateProps.activeButton = 2
+            listModel.filter = FileObject.Video | FileObject.Directory
+        }
+        status: privateProps.activeButton === 2
     }
 
     ButtonImageThreeStates {
@@ -91,11 +96,14 @@ MenuColumn {
         anchors {
             top: imageBg.top
             topMargin: 6
-            right: cameraButton.left
+            right: videoButton.left
         }
 
-        onClicked: status = !status
-        status: 0
+        onClicked: {
+            privateProps.activeButton = 1
+            listModel.filter = FileObject.Audio | FileObject.Directory
+        }
+        status: privateProps.activeButton === 1
     }
 
     ButtonImageThreeStates {
@@ -114,8 +122,16 @@ MenuColumn {
             right: audioButton.left
         }
 
-        onClicked: status = !status
-        status: 0
+        onClicked: {
+            privateProps.activeButton = 0
+            listModel.filter = FileObject.All
+        }
+        status: privateProps.activeButton === 0
+    }
+
+    QtObject {
+        id: privateProps
+        property int activeButton: 0
     }
 
     UbuntuMediumText {
@@ -194,7 +210,7 @@ MenuColumn {
     
     DirectoryListModel {
         id: listModel
-        filter: column.flags
+        filter: FileObject.All
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }
