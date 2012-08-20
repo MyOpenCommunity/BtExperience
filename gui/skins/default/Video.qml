@@ -8,19 +8,13 @@ SystemPage {
     text: qsTr("Video")
     rootColumn: Component { ColumnBrowser {
             text: qsTr("Video folder")
+            rootPath: [
+                "net",
+                "stuff",
+                "video",
+                "movies"
+            ]
+            flags: FileObject.Video | FileObject.Directory
         } }
     names: MultimediaNames {}
-
-    onRootObjectChanged: {
-        if (rootObject) {
-            rootObject.flags = FileObject.Video | FileObject.Directory
-            // TODO load right root path
-            rootObject.rootPath = [
-                        "net",
-                        "stuff",
-                        "video",
-                        "movies"
-                    ]
-        }
-    }
 }
