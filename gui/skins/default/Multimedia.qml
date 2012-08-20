@@ -54,25 +54,27 @@ BasePage {
 
         model: multimediaModel
         delegate: CardDelegate {
-            source: cardView.selectImage(cardView.model.get(index).itemText)
-            label: cardView.model.get(index).itemText
+            property variant itemObject: cardView.model.get(index)
+            source: cardView.selectImage(itemObject.itemText)
+            label: itemObject.itemText
 
-            onClicked: Stack.openPage("Photo.qml")
+            onClicked: Stack.openPage(itemObject.target, itemObject.props)
         }
         delegateSpacing: 20
         visibleElements: 4
+    }
 
-        ListModel {
-            id: multimediaModel
-            ListElement {
-                itemText: "usb"
-            }
-            ListElement {
-                itemText: "rss"
-            }
-            ListElement {
-                itemText: "weblink"
-            }
-        }
+    ListModel {
+        id: multimediaModel
+    }
+
+    Component.onCompleted: {
+        multimediaModel.append({"itemText": qsTr("usb"),
+                                "target": "FileBrowser.qml",
+                                "props": {"rootPath": ["media", "usb1"],
+                                       "text": qsTr("usb")}
+                               })
+        multimediaModel.append({"itemText": qsTr("rss"), "target": "Photo.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("weblink"), "target": "Photo.qml", "props": {}})
     }
 }
