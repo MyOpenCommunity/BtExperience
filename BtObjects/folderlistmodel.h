@@ -51,6 +51,7 @@ public:
 		Audio     = 0x04, /*!< Audio filetype */
 		Video     = 0x08, /*!< Video filetype */
 		Image     = 0x10, /*!< Image filetype */
+		All       = Unknown | Directory | Audio | Video | Image
 	};
 
 	virtual QString getName() const;
