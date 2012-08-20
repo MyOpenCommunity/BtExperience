@@ -191,6 +191,7 @@ MenuColumn {
         model: listModel
     }
 
+    
     DirectoryListModel {
         id: listModel
         filter: column.flags
