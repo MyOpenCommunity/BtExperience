@@ -8,12 +8,14 @@ import Components 1.0
 SystemPage {
     id: fileBrowserPage
     property variant rootPath
+    property string browserText: "file browser"
 
     source: "images/multimedia.jpg"
     text: qsTr("Photo")
     rootColumn: Component {
         ColumnBrowser {
             rootPath: fileBrowserPage.rootPath
+            text: browserText
         }
     }
     names: MultimediaNames {}
