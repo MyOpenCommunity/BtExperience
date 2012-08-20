@@ -221,6 +221,7 @@ void TreeBrowserListModelBase::setFilter(int mask)
 	// TODO should reload?
 	browser->setFilter(mask);
 	filter = mask;
+	browser->getFileList();
 	emit filterChanged();
 }
 
