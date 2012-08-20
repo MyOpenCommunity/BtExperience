@@ -241,6 +241,10 @@ Item {
         onReleased: menuItem.released(menuItem)
     }
 
+    /**
+      * function to be called when the menu item has lost focus; it is used in
+      * rooms when sidebars have to appear and disappear
+      */
     function focusLost() {
         if (menuItem.state === "toolbar")
             menuItem.state = ""

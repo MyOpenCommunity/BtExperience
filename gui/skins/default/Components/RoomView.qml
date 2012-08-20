@@ -12,7 +12,7 @@ Item {
 
     signal menuOpened
     signal menuClosed
-    signal focusLost
+    signal focusLost // to signal to menu when menu focus is lost
 
     function closeMenu() {
         if (privateProps.currentMenu !== undefined)
@@ -29,11 +29,12 @@ Item {
     Component {
         id: roomItem
         RoomItem {
+            // if I click on the background around the menu item, focus is lost
             Connections {
                 target: roomView
                 onFocusLost: focusLost()
             }
-            // calls focusLost on RoomView to make sidebars disappear
+            // if I click on this menu item, other menu items must lose focus
             onPressed: roomView.focusLost()
         }
     }

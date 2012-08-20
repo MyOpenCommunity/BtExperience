@@ -27,6 +27,7 @@ MenuColumn {
 
     BtObjectsMapping { id: mapping }
 
+    /* simply forwarding to the menu builtin focusLost function */
     function focusLost() {
         theMenu.focusLost()
     }
