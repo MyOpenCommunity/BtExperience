@@ -162,7 +162,7 @@ MenuColumn {
                     // we need braces due to bug
                     // https://bugreports.qt-project.org/browse/QTBUG-17012
                 {
-                    privateProps.startPlay(itemObject, index)
+                    console.log("Navigation to AudioPlayer to be implemented")
                     break
                 }
                 case FileObject.Image:
@@ -180,6 +180,10 @@ MenuColumn {
                     listModel.enterDirectory(itemObject.name)
                     break
                 }
+                default:
+                {
+                    console.log("Unexpected file type: " + itemObject.fileType + " for index: " + index)
+                }
                 }
             }
         }
@@ -191,13 +195,5 @@ MenuColumn {
         id: listModel
         filter: column.flags
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-    }
-
-    QtObject {
-        id: privateProps
-
-        function startPlay(fileObject, objIndex) {
-            column.dataModel.startPlay(fileObject)
-        }
     }
 }
