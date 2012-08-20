@@ -14,17 +14,8 @@ SystemPage {
             rootObject.flags = FileObject.Image | FileObject.Directory
             // TODO load right root path
             rootObject.rootPath = [
-                        "home",
-                        "roberto",
-                        "work",
-                        "bticino",
-                        "repos",
-                        "bt_experience",
-                        "gui",
-                        "skins",
-                        "default",
-                        "images",
-                        "common"
+                        "media",
+                        "photos"
                     ]
         }
     }

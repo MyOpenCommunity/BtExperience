@@ -1,6 +1,7 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
+import BtObjects 1.0
 import Components 1.0
+import "js/Stack.js" as Stack
 
 Page {
     id: systems
@@ -8,7 +9,7 @@ Page {
 
     function pageSkip() {
         if (systemsModel.count === 1) {
-            return {"page": systemsModel.get(0).target, "properties": {}}
+            return {"page": privateProps.getTarget(systemsModel.getObject(0).id), "properties": {}}
         }
         return {"page": "", "properties": {}}
     }
@@ -16,52 +17,39 @@ Page {
     text: qsTr("systems")
     showSystemsButton: false
 
-    ListModel {
+    ObjectModel {
         id: systemsModel
-        ListElement {
-            image: "images/systems/carichi.jpg"
-            name: "energy management"
-            target: "EnergyManagement.qml"
-        }
-        ListElement {
-            image: "images/systems/carichi.jpg"
-            name: "antintrusion"
-            target: "Antintrusion.qml"
-        }
-        ListElement {
-            image: "images/systems/scenari.jpg"
-            name: "scenari"
-            target: "Scenarios.qml"
-        }
-        ListElement {
-            image: "images/systems/termo.jpg"
-            name: "temperature control"
-            target: "ThermalRegulation.qml"
-        }
-        ListElement {
-            image: "images/systems/illuminazione.jpg"
-            name: "lighting"
-            target: "Lighting.qml"
-        }
-        ListElement {
-            image: "images/systems/diffusione-sonora.jpg"
-            name: "sound diffusion system"
-            target: "SoundDiffusion.qml"
-        }
-        ListElement {
-            image: "images/systems/movimentazione.jpg"
-            name: "automation"
-            target: "Automation.qml"
-        }
-        ListElement {
-            image: "images/systems/messaggi.jpg"
-            name: "message"
-            target: ""
-        }
-        ListElement {
-            image: "images/systems/videocitofonia.jpg"
-            name: "video door entry"
-            target: "VideoDoorEntry.qml"
+        source: myHomeModels.systems
+    }
+
+    QtObject {
+        id: privateProps
+
+        // TODO: find a way to squash together related subsystems (eg. air
+        // conditioning and thermal regulation)
+        // Also, we need to add things like messages.
+        function getTarget(systemId) {
+            switch (systemId) {
+            case Container.IdScenarios:
+                return "Scenarios.qml"
+            case Container.IdLights:
+                return "Lighting.qml"
+            case Container.IdAutomation:
+                return "Automation.qml"
+            case Container.IdAirConditioning:
+            case Container.IdThermalRegulation:
+                return "ThermalRegulation.qml"
+            case Container.IdLoadControl:
+            case Container.IdSupervision:
+            case Container.IdEnergyData:
+                return "EnergyManagement.qml"
+            case Container.IdVideoDoorEntry:
+                return "VideoDoorEntry.qml"
+            case Container.IdSoundDiffusion:
+                return "SoundDiffusion.qml"
+            case Container.IdAntintrusion:
+                return "Antintrusion.qml"
+            }
         }
     }
 
@@ -87,14 +75,11 @@ Page {
         id: cardList
         CardView {
             delegate: CardDelegate {
-                property variant itemObject: systemsModel.get(index)
+                property variant itemObject: systemsModel.getObject(index)
                 source: itemObject.image
-                label: itemObject.name
+                label: itemObject.description
 
-                onClicked: {
-                    if (itemObject.target !== "")
-                        Stack.openPage(itemObject.target)
-                }
+                onClicked: Stack.openPage(privateProps.getTarget(itemObject.id))
             }
 
             delegateSpacing: 20
@@ -109,13 +94,11 @@ Page {
 
         CardGridView {
             delegate: CardGridDelegate {
-                source: image
-                label: name
+                property variant itemObject: systemsModel.getObject(index)
+                source: itemObject.image
+                label: itemObject.description
 
-                onClicked: {
-                    if (target !== "")
-                        Stack.openPage(target)
-                }
+                onClicked: Stack.openPage(privateProps.getTarget(itemObject.id))
             }
 
             model: systemsModel

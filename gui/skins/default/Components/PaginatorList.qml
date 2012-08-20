@@ -59,6 +59,34 @@ Item {
         currentIndex: -1
     }
 
+    QtObject {
+        // Due to QML scoping rules [1], it's better to use a different name from
+        // 'privateProps';  otherwise delegates cannot use functions defined in
+        // outer Component's 'privateProps' object. See for example note delegate in Profile.qml.
+        //
+        // [1] http://doc.qt.nokia.com/4.7-snapshot/qdeclarativescope.html
+        id: paglistPrivateProps
+
+        function computeDelegateHeight() {
+            if (internalList.children.length === 1 &&
+                    internalList.children[0].children.length > 0) {
+                // We need to set the width of PaginatorList looking at the delegates;
+                // this way, we avoid to use magic numbers (bottom-up approach).
+                // See MenuContainer docs to know why we need to set the width
+                // Items that may go into a MenuColumn.
+                internalList.delegateWidth = internalList.children[0].children[0].width
+                internalList.delegateHeight = internalList.children[0].children[0].height
+            }
+        }
+    }
+
+    // Necessary when the notes view is shown and initially empty, otherwise the
+    // delegateWidth property is never updated
+    Connections {
+        target: model
+        onCountChanged: paglistPrivateProps.computeDelegateHeight()
+    }
+
     Paginator {
         id: paginator
         totalPages: computePagesFromModelSize(internalList.model.count, elementsOnPage)
@@ -67,16 +95,6 @@ Item {
         anchors.right: internalList.right
     }
 
-    Component.onCompleted: {
-        if (internalList.children.length === 1 &&
-                internalList.children[0].children.length > 0) {
-            // We need to set the width of PaginatorList looking at the delegates;
-            // this way, we avoid to use magic numbers (bottom-up approach).
-            // See MenuContainer docs to know why we need to set the width
-            // Items that may go into a MenuColumn.
-            internalList.delegateWidth = internalList.children[0].children[0].width
-            internalList.delegateHeight = internalList.children[0].children[0].height
-        }
-    }
+    Component.onCompleted: paglistPrivateProps.computeDelegateHeight()
 }
 
