@@ -32,7 +32,6 @@ Page {
         id: privateProps
 
         property Item actualFavorite: null
-        property Item movingObject: null
         // the following properties are used to compute margins for the moving grid
         // we have to be sure that elements moved on the bottom and right part of
         // the grid don't disappear from the screen or don't overlap with other elements
@@ -65,21 +64,21 @@ Page {
 
         function moveBegin(favorite) {
             unselectObj()
-            movingObject = favorite
+            privateProps.actualFavorite = favorite
             moveGrid.state = "shown"
         }
 
         function moveEnd() {
             moveGrid.state = ""
             // moved object goes on top of others
-            var oldz = movingObject.z
-            movingObject.z = Script.container.length - 1
+            var oldz = privateProps.actualFavorite.z
+            privateProps.actualFavorite.z = Script.container.length - 1
             for (var index = 0; index < Script.container.length; ++index) {
                 var obj = Script.container[index]
                 if (obj.z > oldz)
                     obj.z -= 1
             }
-            movingObject = null
+            privateProps.actualFavorite = null
         }
 
         function clearProfileObjects() {
@@ -457,9 +456,9 @@ Page {
                                     // map the coordinates to the quicklink's parent
                                     var absPos = parent.mapToItem(null, x, y)
                                     var itemPos = pannableChild.mapFromItem(null, absPos.x, absPos.y)
-                                    privateProps.movingObject.x = itemPos.x
-                                    privateProps.movingObject.y = itemPos.y
-                                    privateProps.movingObject.itemObject.position = Qt.point(absPos.x, absPos.y)
+                                    privateProps.actualFavorite.x = itemPos.x
+                                    privateProps.actualFavorite.y = itemPos.y
+                                    privateProps.actualFavorite.itemObject.position = Qt.point(absPos.x, absPos.y)
                                     privateProps.moveEnd()
                                 }
                             }
