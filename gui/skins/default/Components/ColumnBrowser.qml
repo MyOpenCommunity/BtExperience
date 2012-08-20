@@ -79,7 +79,7 @@ MenuColumn {
     }
 
     ButtonImageThreeStates {
-        id: noteButton
+        id: audioButton
 
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
@@ -111,7 +111,7 @@ MenuColumn {
         anchors {
             top: imageBg.top
             topMargin: 6
-            right: noteButton.left
+            right: audioButton.left
         }
 
         onClicked: status = !status
