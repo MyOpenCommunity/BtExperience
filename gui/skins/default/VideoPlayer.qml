@@ -84,7 +84,7 @@ Page {
     UbuntuLightText {
         id: duration
 
-        text: privateProps.getDuration()
+        text: global.audioVideoPlayer.currentTime + " / " + global.audioVideoPlayer.totalTime
         color: "gray"
         horizontalAlignment: Text.AlignRight
         font.pixelSize: 14
@@ -144,7 +144,7 @@ Page {
             leftMargin: 17
         }
 
-        onClicked: privateProps.goPrevTrack()
+        onClicked: global.audioVideoPlayer.prevTrack()
         status: 0
     }
 
@@ -175,27 +175,24 @@ Page {
             anchors.centerIn: parent
 
             onClicked: {
-                if (playButtonItem.state === "")
-                    playButtonItem.state = "slideshow"
-                else
+                if (playButtonItem.state === "") {
+                    playButtonItem.state = "play"
+                    global.audioVideoPlayer.mediaPlayer.resume()
+                }
+                else {
                     playButtonItem.state = ""
+                    global.audioVideoPlayer.mediaPlayer.pause()
+                }
             }
 
             status: 0
-
-            Timer {
-                id: slideshowTimer
-
-                interval: 4000 // TODO where to take this value?
-                running: false
-                repeat: true
-                onTriggered: privateProps.goNextTrack()
-            }
         }
+
+        state: "play"
 
         states: [
             State {
-                name: "slideshow"
+                name: "play"
                 PropertyChanges {
                     target: slideshowTimer
                     running: true
@@ -223,7 +220,7 @@ Page {
             leftMargin: 4
         }
 
-        onClicked: privateProps.goNextTrack()
+        onClicked: global.audioVideoPlayer.nextTrack()
 
         status: 0
     }
@@ -400,53 +397,8 @@ Page {
         }
     }
 
-    Component.onCompleted: {
-        global.audioVideoPlayer.generatePlaylist(player.model, player.index)
-    }
-
-    QtObject {
-        id: privateProps
-
-        function goNextTrack() {
-            var n = player.model.count
-            // note we start from 1, not 0
-            for (var i = 1; i < n; ++i) {
-                var k = (player.index + i) % n
-                var obj = player.model.getObject(k)
-                if (obj.fileType === player.item.fileType) {
-                    player.item = obj
-                    player.index = k
-                    break
-                }
-            }
-        }
-
-        function goPrevTrack() {
-            var n = player.model.count
-            // note we start from 1, not 0
-            for (var i = 1; i < n; ++i) {
-                var k = (player.index - i + n) % n
-                var obj = player.model.getObject(k)
-                if (obj.fileType === player.item.fileType) {
-                    player.item = obj
-                    player.index = k
-                    break
-                }
-            }
-        }
-
-        function getDuration() {
-            var total = "--:--"
-            var duration = "--:--"
-            if (player.item.metadata) {
-                if (player.item.metadata["current_time"])
-                    duration = player.item.metadata["current_time"]
-                if (player.item.metadata["total_time"])
-                    total = player.item.metadata["total_time"]
-            }
-            return duration + " / " + total
-        }
-    }
+    Component.onCompleted: global.audioVideoPlayer.generatePlaylist(player.model, player.index)
+    Component.onDestruction: global.audioVideoPlayer.terminate()
 
     states: [
         State {

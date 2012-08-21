@@ -225,9 +225,10 @@ void MultiMediaPlayer::mplayerStopped()
 		return;
 
 	playbackStopped();
+	// for instructions order see comment in mplayerDone
+	setCurrentSource("");
 	setPlayerState(Stopped);
 	setAudioOutputState(AudioOutputStopped);
-	setCurrentSource("");
 }
 
 void MultiMediaPlayer::mplayerPaused()
