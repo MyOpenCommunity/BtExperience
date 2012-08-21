@@ -88,6 +88,7 @@ Page {
         }
 
         orientation: ListView.Horizontal
+        interactive: false
         delegate: Image {
             property variant itemObject: roomsModel.getObject(index)
             id: listDelegate
