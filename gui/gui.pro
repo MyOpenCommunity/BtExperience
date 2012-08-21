@@ -66,6 +66,7 @@ SOURCES += \
     guisettings.cpp \
     imagereader.cpp \
     inputcontextwrapper.cpp \
+    audiovideoplayer.cpp
 
 HEADERS += \
     eventfilters.h \
@@ -73,6 +74,7 @@ HEADERS += \
     guisettings.h \
     imagereader.h \
     inputcontextwrapper.h \
+    audiovideoplayer.h
 
 TRANSLATIONS += locale/bt_experience_it.ts
 
