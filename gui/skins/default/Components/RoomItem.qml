@@ -6,6 +6,7 @@ MenuColumn {
     id: column
 
     signal pressed
+    signal requestMove
 
     /* simply forwarding to the menu builtin focusLost function */
     function focusLost() {
@@ -87,7 +88,7 @@ MenuColumn {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: console.log("move element to be implemented")
+                    onClicked: column.requestMove()
                 }
             }
         }
