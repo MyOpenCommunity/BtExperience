@@ -148,6 +148,7 @@ void TreeBrowserListModelBase::setRootPath(QVariantList _path)
 	emit rootPathChanged();
 	if (old_current != current_path)
 		emit currentPathChanged();
+	browser->getFileList();
 }
 
 QVariantList TreeBrowserListModelBase::getRootPath() const

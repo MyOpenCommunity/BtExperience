@@ -188,7 +188,7 @@ MenuColumn {
                 }
                 case FileObject.Video:
                 {
-                    Stack.openPage("VideoPlayer.qml", {"model": listModel, "item": itemObject, "index": index})
+                    Stack.openPage("VideoPlayer.qml", {"model": listModel, "index": index})
                     break
                 }
                 case FileObject.Directory:

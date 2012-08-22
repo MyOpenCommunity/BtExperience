@@ -103,6 +103,9 @@ void MultiMediaPlayer::play()
 	if (player_state == Playing)
 		return;
 
+	if (current_source.isEmpty())
+		return;
+
 	player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 }
 
@@ -153,18 +156,21 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 
 	bool had_track_info = track_info.size() != 0;
 
-	current_source = source;
-	track_info.clear();
-
 	// if playing, start playing new track right now (which automatically gets
 	// track info), otherwise request track info separately
-	if (current_source.isEmpty())
+	if (source.isEmpty())
 	{
+		// player->stop() emits mplayerStopped which needs the new source to
+		// work properly, sets new value now; please note that play may need
+		// the new value, too, if empty to avoid running MPlayer with an empty
+		// source
+		current_source = source;
+		track_info.clear();
 		player->stop();
 	}
 	else if (player->isPlaying())
 	{
-		player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
+		player->play(source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 	}
 	else if (player->isPaused())
 	{
@@ -172,8 +178,11 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 		// it does not, so we call quit() here to force a restart when resume() is called
 		player->quit();
 		// TODO maybe request after some time, in case we start playing
-		player->requestInitialPlayingInfo(current_source);
+		player->requestInitialPlayingInfo(source);
 	}
+
+	current_source = source;
+	track_info.clear();
 
 	if (had_track_info)
 		emit trackInfoChanged(track_info);
@@ -225,9 +234,10 @@ void MultiMediaPlayer::mplayerStopped()
 		return;
 
 	playbackStopped();
+	// for instructions order see comment in mplayerDone
+	setCurrentSource("");
 	setPlayerState(Stopped);
 	setAudioOutputState(AudioOutputStopped);
-	setCurrentSource("");
 }
 
 void MultiMediaPlayer::mplayerPaused()

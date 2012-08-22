@@ -136,6 +136,21 @@ function popPage() {
         showPreviousPage(stack.length - 2)
 }
 
+// tries to remove count pages from the stack
+// if count is bigger than the number of stack pages, removes all except the home
+// if count is less or equal to zero does nothing
+function popPages(count) {
+    if (count <= 0) // nothing to do
+        return
+
+    if (count >= stack.length) {
+        backToHome()
+        return
+    }
+
+    showPreviousPage(stack.length - count - 1)
+}
+
 function backToHome() {
     showPreviousPage(0)
 }

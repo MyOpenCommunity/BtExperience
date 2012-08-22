@@ -1,6 +1,9 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
+
+import "js/Stack.js" as Stack
 
 
 Page {
@@ -8,7 +11,6 @@ Page {
 
     property variant model
     property int index
-    property variant item
     property int percentage: 50
 
     source: "images/multimedia.jpg"
@@ -48,14 +50,6 @@ Page {
     }
 
     SvgImage {
-        id: theVideo // TODO the real video player
-
-        source: item.path
-        fillMode: Image.PreserveAspectFit
-        anchors.fill: frame
-    }
-
-    SvgImage {
         id: bottomBarBg
 
         source: "images/common/video_player_bg_box.svg"
@@ -69,7 +63,7 @@ Page {
     UbuntuLightText {
         id: title
 
-        text: item.name
+        text: global.audioVideoPlayer.trackName
         color: "white"
         font.pixelSize: 14
         anchors {
@@ -83,7 +77,7 @@ Page {
     UbuntuLightText {
         id: duration
 
-        text: privateProps.getDuration()
+        text: global.audioVideoPlayer.currentTime + " / " + global.audioVideoPlayer.totalTime
         color: "gray"
         horizontalAlignment: Text.AlignRight
         font.pixelSize: 14
@@ -143,7 +137,7 @@ Page {
             leftMargin: 17
         }
 
-        onClicked: privateProps.goPrevTrack()
+        onClicked: global.audioVideoPlayer.prevTrack()
         status: 0
     }
 
@@ -174,31 +168,24 @@ Page {
             anchors.centerIn: parent
 
             onClicked: {
-                if (playButtonItem.state === "")
-                    playButtonItem.state = "slideshow"
-                else
+                if (playButtonItem.state === "") {
+                    playButtonItem.state = "play"
+                    global.audioVideoPlayer.mediaPlayer.resume()
+                }
+                else {
                     playButtonItem.state = ""
+                    global.audioVideoPlayer.mediaPlayer.pause()
+                }
             }
 
             status: 0
-
-            Timer {
-                id: slideshowTimer
-
-                interval: 4000 // TODO where to take this value?
-                running: false
-                repeat: true
-                onTriggered: privateProps.goNextTrack()
-            }
         }
+
+        state: "play"
 
         states: [
             State {
-                name: "slideshow"
-                PropertyChanges {
-                    target: slideshowTimer
-                    running: true
-                }
+                name: "play"
                 PropertyChanges {
                     target: playButton
                     defaultImage: "images/common/ico_stop.svg"
@@ -222,7 +209,7 @@ Page {
             leftMargin: 4
         }
 
-        onClicked: privateProps.goNextTrack()
+        onClicked: global.audioVideoPlayer.nextTrack()
 
         status: 0
     }
@@ -241,7 +228,7 @@ Page {
             leftMargin: 13
         }
 
-        onClicked: console.log("folder photo")
+        onClicked: Stack.popPage()
         status: 0
     }
 
@@ -399,49 +386,12 @@ Page {
         }
     }
 
-    QtObject {
-        id: privateProps
-
-        function goNextTrack() {
-            var n = player.model.count
-            // note we start from 1, not 0
-            for (var i = 1; i < n; ++i) {
-                var k = (player.index + i) % n
-                var obj = player.model.getObject(k)
-                if (obj.fileType === player.item.fileType) {
-                    player.item = obj
-                    player.index = k
-                    break
-                }
-            }
-        }
-
-        function goPrevTrack() {
-            var n = player.model.count
-            // note we start from 1, not 0
-            for (var i = 1; i < n; ++i) {
-                var k = (player.index - i + n) % n
-                var obj = player.model.getObject(k)
-                if (obj.fileType === player.item.fileType) {
-                    player.item = obj
-                    player.index = k
-                    break
-                }
-            }
-        }
-
-        function getDuration() {
-            var total = "--:--"
-            var duration = "--:--"
-            if (player.item.metadata) {
-                if (player.item.metadata["current_time"])
-                    duration = player.item.metadata["current_time"]
-                if (player.item.metadata["total_time"])
-                    total = player.item.metadata["total_time"]
-            }
-            return duration + " / " + total
-        }
+    function backButtonClicked() {
+        Stack.popPages(2)
     }
+
+    Component.onCompleted: global.audioVideoPlayer.generatePlaylist(player.model, player.index)
+    Component.onDestruction: global.audioVideoPlayer.terminate()
 
     states: [
         State {
