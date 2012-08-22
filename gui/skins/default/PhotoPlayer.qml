@@ -178,7 +178,7 @@ Page {
             leftMargin: 13
         }
 
-        onClicked: Stack.popPages(2)
+        onClicked: Stack.popPage()
         status: 0
     }
 
@@ -205,6 +205,10 @@ Page {
                 player.state = ""
         }
         status: 0
+    }
+
+    function backButtonClicked() {
+        Stack.popPages(2)
     }
 
     QtObject {
