@@ -1,6 +1,8 @@
 import QtQuick 1.1
 import Components 1.0
 
+import "js/Stack.js" as Stack
+
 
 Page {
     id: player
@@ -176,7 +178,7 @@ Page {
             leftMargin: 13
         }
 
-        onClicked: console.log("folder photo")
+        onClicked: Stack.popPages(2)
         status: 0
     }
 
