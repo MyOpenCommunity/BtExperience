@@ -30,6 +30,11 @@ class AudioVideoPlayer : public QObject
 	*/
 	Q_PROPERTY(QString totalTime READ getTotalTime NOTIFY totalTimeChanged)
 
+	/*!
+		\brief Returns actual track name
+	*/
+	Q_PROPERTY(QString trackName READ getTrackName NOTIFY trackNameChanged)
+
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
@@ -41,10 +46,12 @@ public:
 	QObject *getMediaPlayer() const;
 	QString getCurrentTime() const;
 	QString getTotalTime() const;
+	QString getTrackName() const;
 
 signals:
 	void currentTimeChanged();
 	void totalTimeChanged();
+	void trackNameChanged();
 
 private slots:
 	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);

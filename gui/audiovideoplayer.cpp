@@ -18,6 +18,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SIGNAL(totalTimeChanged()));
 	play_list = new FileListManager;
 	connect(play_list, SIGNAL(currentFileChanged()), SLOT(playListTrackChanged()));
+	connect(play_list, SIGNAL(currentFileChanged()), SLOT(trackNameChanged()));
 }
 
 QObject *AudioVideoPlayer::getMediaPlayer() const
@@ -91,7 +92,7 @@ QString AudioVideoPlayer::getTimeString(const QString &key) const
 	{
 		format = "mm:" + format;
 		if (t.hour() > 0)
-			format = "hh:" + format;
+			format = "h:" + format;
 	}
 	return t.toString(format);
 }
@@ -112,4 +113,9 @@ QString AudioVideoPlayer::getCurrentTime() const
 QString AudioVideoPlayer::getTotalTime() const
 {
 	return getTimeString("total_time");
+}
+
+QString AudioVideoPlayer::getTrackName() const
+{
+	return media_player->getCurrentSource();
 }

@@ -9,7 +9,6 @@ Page {
 
     property variant model
     property int index
-    property variant item
     property int percentage: 50
 
     source: "images/multimedia.jpg"
@@ -49,14 +48,6 @@ Page {
     }
 
     SvgImage {
-        id: theVideo // TODO the real video player
-
-        source: item.path
-        fillMode: Image.PreserveAspectFit
-        anchors.fill: frame
-    }
-
-    SvgImage {
         id: bottomBarBg
 
         source: "images/common/video_player_bg_box.svg"
@@ -70,7 +61,7 @@ Page {
     UbuntuLightText {
         id: title
 
-        text: item.name
+        text: global.audioVideoPlayer.trackName
         color: "white"
         font.pixelSize: 14
         anchors {
@@ -193,10 +184,6 @@ Page {
         states: [
             State {
                 name: "play"
-                PropertyChanges {
-                    target: slideshowTimer
-                    running: true
-                }
                 PropertyChanges {
                     target: playButton
                     defaultImage: "images/common/ico_stop.svg"
