@@ -37,5 +37,15 @@ defineTest(isArm) {
     LIBS += -L$${_PRO_FILE_PWD_}/common_files -lcommon -lexpat
 }
 
+CONFIG(debug,debug|release) {
+	message(*** Debug build)
+	DEFINES += DEBUG
+}
+
+CONFIG(release,debug|release) {
+	message(*** Release build)
+	DEFINES += NO_QT_DEBUG_OUTPUT
+}
+
 #INSTALL_CMD = cp -LR
 INSTALL_CMD = ln -sf

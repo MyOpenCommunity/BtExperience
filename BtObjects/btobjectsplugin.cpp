@@ -604,6 +604,13 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 	{
 		v.setIst(ist);
 		int system_uii = getIntAttribute(ist, "uii");
+
+#if DEBUG
+		Q_ASSERT_X(!uui_cache.contains(system_uii), "BtObjectsPlugin::parseSystem",
+			qPrintable(QString("There are two systems with the same uii %1").arg(system_uii)));
+		uui_cache << system_uii;
+#endif
+
 		Container *system = new Container(system_id, system_uii, v.value("img"), v.value("descr"));
 
 		systems_model << system;

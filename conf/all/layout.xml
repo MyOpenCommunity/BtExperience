@@ -101,15 +101,15 @@
 			<link uii="105" />
 		</ist>
 	</container>
-	<container id="6" descr="load management">
-		<ist uii="1" img="images/systems/carichi.jpg">
+	<container id="5" descr="load management">
+		<ist uii="5" img="images/systems/carichi.jpg">
 			<link uii="4004" />
 			<link uii="4005" />
 			<link uii="4006" />
 		</ist>
 	</container>
 	<container id="6" descr="supervision">
-		<ist uii="1" img="images/systems/carichi.jpg">
+		<ist uii="" img="images/systems/carichi.jpg">
 			<!-- Stop & go -->
 			<link uii="4001" />
 			<link uii="4002" />
@@ -122,7 +122,7 @@
 		</ist>
 	</container>
 	<container id="7" descr="supervision">
-		<ist uii="2" img="images/systems/carichi.jpg">
+		<ist uii="7" img="images/systems/carichi.jpg">
 			<link uii="5001" />
 			<link uii="5002" />
 			<link uii="5003" />
