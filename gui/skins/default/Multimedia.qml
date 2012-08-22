@@ -32,11 +32,11 @@ BasePage {
     CardView {
         id: cardView
         function selectImage(item) {
-            if (item === "usb")
+            if (item === qsTr("Devices"))
                 return "images/multimedia/usb.png"
-            else if (item === "rss")
+            else if (item === qsTr("rss"))
                 return "images/multimedia/rss.png"
-            else if (item === "weblink")
+            else if (item === qsTr("web link"))
                 return "images/multimedia/weblink.png"
             console.log("Unknown item, default to usb")
             return "images/multimedia/usb.png"
@@ -69,21 +69,14 @@ BasePage {
     }
 
     Component.onCompleted: {
-        /*
-          devices, browser, rss, ip radio, weather, web browser, web link
-          */
-        multimediaModel.append({
-                                   "itemText": qsTr("usb"),
-                                    "target": "FileBrowser.qml",
-                                    "props": {
-                                       "rootPath": ["media", "usb1"],
-                                       "text": qsTr("usb"),
-                                       "browserText": qsTr("usb")}
-                               })
+        multimediaModel.append({"itemText": qsTr("Devices"), "target": "Devices.qml", "props": {} })
 
-        // TODO next items to be implemented
+        // TODO to be implemented
+        multimediaModel.append({"itemText": qsTr("browser"), "target": "Photo.qml", "props": {}})
         multimediaModel.append({"itemText": qsTr("rss"), "target": "Photo.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("rss"), "target": "Photo.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("weblink"), "target": "Photo.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("ip radio"), "target": "Photo.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("weather"), "target": "Photo.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("web browser"), "target": "Photo.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("web link"), "target": "Photo.qml", "props": {}})
     }
 }

@@ -6,4 +6,5 @@ SystemPage {
     source: "images/multimedia.jpg"
     text: qsTr("Devices")
     rootColumn: Component { DevicesSystem {} }
+    names: MultimediaNames {}
 }
