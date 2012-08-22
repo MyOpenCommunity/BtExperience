@@ -69,12 +69,20 @@ BasePage {
     }
 
     Component.onCompleted: {
-        multimediaModel.append({"itemText": qsTr("usb"),
-                                "target": "FileBrowser.qml",
-                                "props": {"rootPath": ["media", "usb1"],
+        /*
+          devices, browser, rss, ip radio, weather, web browser, web link
+          */
+        multimediaModel.append({
+                                   "itemText": qsTr("usb"),
+                                    "target": "FileBrowser.qml",
+                                    "props": {
+                                       "rootPath": ["media", "usb1"],
                                        "text": qsTr("usb"),
                                        "browserText": qsTr("usb")}
                                })
+
+        // TODO next items to be implemented
+        multimediaModel.append({"itemText": qsTr("rss"), "target": "Photo.qml", "props": {}})
         multimediaModel.append({"itemText": qsTr("rss"), "target": "Photo.qml", "props": {}})
         multimediaModel.append({"itemText": qsTr("weblink"), "target": "Photo.qml", "props": {}})
     }
