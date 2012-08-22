@@ -10,14 +10,16 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	QObject(parent)
 {
 	user_track_change_request = false;
+
 	media_player = new MultiMediaPlayer();
 	connect(media_player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 			SLOT(handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState)));
 	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SIGNAL(currentTimeChanged()));
 	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SIGNAL(totalTimeChanged()));
+	connect(media_player, SIGNAL(currentSourceChanged(QString)), SIGNAL(trackNameChanged()));
+
 	play_list = new FileListManager;
 	connect(play_list, SIGNAL(currentFileChanged()), SLOT(playListTrackChanged()));
-	connect(play_list, SIGNAL(currentSourceChanged(QString)), SLOT(trackNameChanged()));
 }
 
 QObject *AudioVideoPlayer::getMediaPlayer() const
