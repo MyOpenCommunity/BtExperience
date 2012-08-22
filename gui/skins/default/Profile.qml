@@ -65,11 +65,11 @@ Page {
         function moveBegin(favorite) {
             unselectObj()
             privateProps.actualFavorite = favorite
-            moveGrid.state = "shown"
+            bgMoveGrid.state = "shown"
         }
 
         function moveEnd() {
-            moveGrid.state = ""
+            bgMoveGrid.state = ""
             // moved object goes on top of others
             var oldz = privateProps.actualFavorite.z
             privateProps.actualFavorite.z = Script.container.length - 1
@@ -414,8 +414,19 @@ Page {
                 model: userNotes
                 onCurrentPageChanged: privateProps.unselectObj()
             }
-            Item {
+
+            MoveGrid {
                 id: bgMoveGrid
+
+                function moveTo(absX, absY) {
+                    var itemPos = pannableChild.mapFromItem(null, absX, absY)
+                    privateProps.actualFavorite.x = itemPos.x
+                    privateProps.actualFavorite.y = itemPos.y
+                    privateProps.actualFavorite.itemObject.position = Qt.point(absX, absY)
+                }
+                gridRightMargin: 90 //TODO: privateProps.gridRightMargin - parent.width / moveGrid.columns
+                gridBottomMargin: 90 //privateProps.gridBottomMargin - parent.height / moveGrid.rows
+
                 z: bgPannable.z + 2 // must be on top of quicklinks
                 anchors {
                     left: parent.left
@@ -424,61 +435,7 @@ Page {
                     bottom: parent.bottom
                 }
 
-                Grid {
-                    id: moveGrid
-                    // the following values are arbitrary; still waiting for clarification
-                    columns: 18
-                    rows: 14
-                    opacity: 0
-                    anchors {
-                        fill: parent
-                        // for grid margins, subtracts the dimension of bottom right rect to regain some space
-                        rightMargin: privateProps.gridRightMargin - parent.width / moveGrid.columns
-                        bottomMargin: privateProps.gridBottomMargin - parent.height / moveGrid.rows
-                    }
-
-                    Repeater {
-                        model: moveGrid.columns * moveGrid.rows
-
-                        delegate: Rectangle {
-                            id: rectDelegate
-                            color: "transparent"
-                            width: moveGrid.width / moveGrid.columns
-                            height: moveGrid.height / moveGrid.rows
-                            border {
-                                width: 1
-                                color: "red"
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    // map the coordinates to the quicklink's parent
-                                    var absPos = parent.mapToItem(null, x, y)
-                                    var itemPos = pannableChild.mapFromItem(null, absPos.x, absPos.y)
-                                    privateProps.actualFavorite.x = itemPos.x
-                                    privateProps.actualFavorite.y = itemPos.y
-                                    privateProps.actualFavorite.itemObject.position = Qt.point(absPos.x, absPos.y)
-                                    privateProps.moveEnd()
-                                }
-                            }
-                        }
-                    }
-
-                    Behavior on opacity {
-                        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-                    }
-
-                    states: [
-                        State {
-                            name: "shown"
-                            PropertyChanges {
-                                target: moveGrid
-                                opacity: 1
-                            }
-                        }
-                    ]
-                }
+                onMoveEnd: privateProps.moveEnd()
             }
         }
     }
