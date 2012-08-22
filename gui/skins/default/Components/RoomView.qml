@@ -62,7 +62,7 @@ Item {
     function startMove(container) {
         container.rootObject.focusLost()
         bgMoveGrid.selectedItem = container
-        moveGrid.state = "shown"
+        bgMoveGrid.state = "shown"
     }
 
     /* private implementation */
@@ -170,24 +170,8 @@ Item {
         id: constants
     }
 
-    // This is to test the API of the move grid
-    Connections {
-        target: bgMoveGrid
-        onMoveEnd: {
-            moveGrid.state = ""
-        }
-    }
-
-
-
-    Item {
+    MoveGrid {
         id: bgMoveGrid
-
-        property int gridRightMargin: 250 // TODO: roomItem.width + edit column
-        property int gridBottomMargin: 50 // TODO: roomItem.height
-        property Item selectedItem: null
-
-        signal moveEnd
 
         function moveTo(absX, absY) {
             // we want the MenuContainer to go exactly on the top-left corner
@@ -198,68 +182,16 @@ Item {
             bgMoveGrid.selectedItem.yAnimation.to = itemPos.y
             bgMoveGrid.selectedItem.xAnimation.start()
             bgMoveGrid.selectedItem.yAnimation.start()
-            // save the new position in the model
-//                            bgMoveGrid.selectedItem.itemObject.position = Qt.point(absPos.x, absPos.y)
-            bgMoveGrid.moveEnd()
-            bgMoveGrid.selectedItem = null
+            // TODO: save the new position in the model
+            //                            bgMoveGrid.selectedItem.itemObject.position = Qt.point(absPos.x, absPos.y)
         }
 
-        z: roomView.z + 2 // must be on top of quicklinks
+        gridRightMargin: 250 // TODO: roomItem.width + edit column
+        gridBottomMargin: 50 // TODO: roomItem.height
         anchors.fill: parent
-
-        Grid {
-            id: moveGrid
-            // the following values are arbitrary; still waiting for clarification
-            columns: 18
-            rows: 14
-            opacity: 0
-            anchors {
-                fill: parent
-                rightMargin: bgMoveGrid.gridRightMargin
-                bottomMargin: bgMoveGrid.gridBottomMargin
-            }
-
-            Repeater {
-                model: moveGrid.columns * moveGrid.rows
-
-                delegate: Rectangle {
-                    id: rectDelegate
-                    color: "transparent"
-                    width: moveGrid.width / moveGrid.columns
-                    height: moveGrid.height / moveGrid.rows
-                    border {
-                        width: 1
-                        color: "cyan"
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            // map the coordinates to the RoomItem's parent
-                            var absPos = parent.mapToItem(null, x, y)
-                            bgMoveGrid.moveTo(absPos.x, absPos.y)
-                        }
-                    }
-                }
-            }
-
-            Behavior on opacity {
-                NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-            }
-
-            states: [
-                State {
-                    name: "shown"
-                    PropertyChanges {
-                        target: moveGrid
-                        opacity: 1
-                    }
-                }
-            ]
-        }
+        z: roomView.z + 2 // must be on top of quicklinks
+        onMoveEnd: bgMoveGrid.state = ""
     }
-
-
 
     QtObject {
         id: privateProps
