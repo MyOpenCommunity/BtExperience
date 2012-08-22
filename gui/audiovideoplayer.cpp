@@ -10,7 +10,6 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	QObject(parent)
 {
 	user_track_change_request = false;
-	is_terminating = false;
 	media_player = new MultiMediaPlayer();
 	connect(media_player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 			SLOT(handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState)));
@@ -18,7 +17,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SIGNAL(totalTimeChanged()));
 	play_list = new FileListManager;
 	connect(play_list, SIGNAL(currentFileChanged()), SLOT(playListTrackChanged()));
-	connect(play_list, SIGNAL(currentFileChanged()), SLOT(trackNameChanged()));
+	connect(play_list, SIGNAL(currentSourceChanged(QString)), SLOT(trackNameChanged()));
 }
 
 QObject *AudioVideoPlayer::getMediaPlayer() const
@@ -58,7 +57,7 @@ void AudioVideoPlayer::nextTrack()
 
 void AudioVideoPlayer::terminate()
 {
-	is_terminating = true;
+	user_track_change_request = true;
 	media_player->stop();
 }
 
@@ -71,10 +70,9 @@ void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerStat
 
 void AudioVideoPlayer::playListTrackChanged()
 {
-	if (is_terminating)
+	if (play_list->currentFilePath().isEmpty())
 	{
-		is_terminating = false;
-		// if I'm terminating the player I don't want to play anything more
+		// nothing to play
 		return;
 	}
 	play(play_list->currentFilePath());

@@ -64,7 +64,6 @@ private:
 	MultiMediaPlayer *media_player;
 	ListManager *play_list;
 	bool user_track_change_request;
-	bool is_terminating;
 };
 
 #endif // AUDIOVIDEOPLAYER_H
