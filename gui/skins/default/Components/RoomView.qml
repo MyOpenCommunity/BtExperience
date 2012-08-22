@@ -11,8 +11,6 @@ Item {
     property variant model: undefined
     property variant pageObject: undefined
 
-    signal menuOpened
-    signal menuClosed
     signal focusLost // to signal to menu when menu focus is lost
 
     Rectangle {
@@ -52,10 +50,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    privateProps.closeMenu()
-                    roomView.menuClosed()
-                }
+                onClicked: privateProps.closeMenu()
             }
         }
     }
@@ -97,7 +92,6 @@ Item {
                 container.state = "selected"
                 roomView.state = "menuSelected"
                 privateProps.currentMenu = container
-                roomView.menuOpened()
             }
 
             states: [
