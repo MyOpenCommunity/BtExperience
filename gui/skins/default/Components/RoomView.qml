@@ -4,7 +4,6 @@ import Components.Text 1.0
 import "../js/RoomView.js" as Script
 
 
-// Implementation of custom room view
 Item {
     id: roomView
 
@@ -60,6 +59,12 @@ Item {
         onClicked: roomView.focusLost()
     }
 
+    function startMove(container) {
+        container.rootObject.focusLost()
+        bgMoveGrid.selectedItem = container
+        moveGrid.state = "shown"
+    }
+
     /* private implementation */
     Component {
         id: roomItemComponent
@@ -86,6 +91,9 @@ Item {
         MenuContainer {
             id: container
 
+            property alias xAnimation: xAnim
+            property alias yAnimation: yAnim
+
             width: 500
             rootColumn: roomItemComponent
             onRootColumnClicked: {
@@ -93,6 +101,17 @@ Item {
                 roomView.state = "menuSelected"
                 privateProps.currentMenu = container
             }
+
+            Connections {
+                target: container.rootObject
+                onRequestMove: {
+                    startMove(container)
+                }
+                ignoreUnknownSignals: true
+            }
+
+            NumberAnimation { id: xAnim; target: container; property: "x"; duration: 400; easing.type: Easing.InSine }
+            NumberAnimation { id: yAnim; target: container; property: "y"; duration: 400; easing.type: Easing.InSine }
 
             states: [
                 State {
@@ -146,6 +165,101 @@ Item {
             }
         }
     }
+
+    Constants {
+        id: constants
+    }
+
+    // This is to test the API of the move grid
+    Connections {
+        target: bgMoveGrid
+        onMoveEnd: {
+            moveGrid.state = ""
+        }
+    }
+
+
+
+    Item {
+        id: bgMoveGrid
+
+        property int gridRightMargin: 250 // TODO: roomItem.width + edit column
+        property int gridBottomMargin: 50 // TODO: roomItem.height
+        property Item selectedItem: null
+
+        signal moveEnd
+
+        function moveTo(absX, absY) {
+            // we want the MenuContainer to go exactly on the top-left corner
+            // of the rectangle we clicked, so we need to exclude the title height
+            // from the container.
+            var itemPos = roomView.mapFromItem(null, absX, absY - constants.navbarTopMargin)
+            bgMoveGrid.selectedItem.xAnimation.to = itemPos.x
+            bgMoveGrid.selectedItem.yAnimation.to = itemPos.y
+            bgMoveGrid.selectedItem.xAnimation.start()
+            bgMoveGrid.selectedItem.yAnimation.start()
+            // save the new position in the model
+//                            bgMoveGrid.selectedItem.itemObject.position = Qt.point(absPos.x, absPos.y)
+            bgMoveGrid.moveEnd()
+            bgMoveGrid.selectedItem = null
+        }
+
+        z: roomView.z + 2 // must be on top of quicklinks
+        anchors.fill: parent
+
+        Grid {
+            id: moveGrid
+            // the following values are arbitrary; still waiting for clarification
+            columns: 18
+            rows: 14
+            opacity: 0
+            anchors {
+                fill: parent
+                rightMargin: bgMoveGrid.gridRightMargin
+                bottomMargin: bgMoveGrid.gridBottomMargin
+            }
+
+            Repeater {
+                model: moveGrid.columns * moveGrid.rows
+
+                delegate: Rectangle {
+                    id: rectDelegate
+                    color: "transparent"
+                    width: moveGrid.width / moveGrid.columns
+                    height: moveGrid.height / moveGrid.rows
+                    border {
+                        width: 1
+                        color: "cyan"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            // map the coordinates to the RoomItem's parent
+                            var absPos = parent.mapToItem(null, x, y)
+                            bgMoveGrid.moveTo(absPos.x, absPos.y)
+                        }
+                    }
+                }
+            }
+
+            Behavior on opacity {
+                NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+            }
+
+            states: [
+                State {
+                    name: "shown"
+                    PropertyChanges {
+                        target: moveGrid
+                        opacity: 1
+                    }
+                }
+            ]
+        }
+    }
+
+
 
     QtObject {
         id: privateProps
