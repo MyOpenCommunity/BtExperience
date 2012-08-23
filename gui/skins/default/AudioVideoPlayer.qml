@@ -193,8 +193,8 @@ Page {
                 name: "play"
                 PropertyChanges {
                     target: playButton
-                    defaultImage: "images/common/ico_stop.svg"
-                    pressedImage: "images/common/ico_stop_P.svg"
+                    defaultImage: "images/common/ico_pause.svg"
+                    pressedImage: "images/common/ico_pause_P.svg"
                 }
             }
         ]
