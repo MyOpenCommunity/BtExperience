@@ -121,6 +121,9 @@ Page {
                     color: "#5c5c5c"
                 }
             }
+            Behavior on width {
+                NumberAnimation { duration: 200 }
+            }
         }
     }
 
@@ -386,6 +389,9 @@ Page {
                         position: 1.0
                         color: "#5c5c5c"
                     }
+                }
+                Behavior on width {
+                    NumberAnimation { duration: 200 }
                 }
             }
         }
