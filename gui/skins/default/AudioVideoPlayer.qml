@@ -103,7 +103,7 @@ Page {
 
         Rectangle {
             height: imageSlider.height + 2
-            width: imageSlider.width * (global.audioVideoPlayer.volume < 10 ? 10 : global.audioVideoPlayer.volume) / 100 + 4
+            width: imageSlider.width * (global.audioVideoPlayer.volume < 1 ? 1 : global.audioVideoPlayer.volume) / 100 + 4
             radius: 100
             smooth: true
             anchors {
@@ -369,7 +369,7 @@ Page {
 
             Rectangle {
                 height: parent.height + 2
-                width: parent.width * (global.audioVideoPlayer.volume < 10 ? 10 : global.audioVideoPlayer.volume) / 100 + 4
+                width: parent.width * (global.audioVideoPlayer.volume < 1 ? 1 : global.audioVideoPlayer.volume) / 100 + 4
                 radius: 100
                 smooth: true
                 anchors {
