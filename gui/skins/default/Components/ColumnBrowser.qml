@@ -178,7 +178,10 @@ MenuColumn {
                     // we need braces due to bug
                     // https://bugreports.qt-project.org/browse/QTBUG-17012
                 {
-                    Stack.openPage("AudioVideoPlayer.qml", {"model": listModel, "index": index, "isVideo": false})
+                    // the index we need is the absolute index in the unfiltered model;
+                    // the delegate index property is relative to actual page, so let's
+                    // make some math to compute the right value
+                    Stack.openPage("AudioVideoPlayer.qml", {"model": listModel, "index": (index + listModel.range[0]), "isVideo": false})
                     break
                 }
                 case FileObject.Image:

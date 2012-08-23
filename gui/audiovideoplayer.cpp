@@ -31,8 +31,15 @@ QObject *AudioVideoPlayer::getMediaPlayer() const
 
 void AudioVideoPlayer::generatePlaylist(DirectoryListModel *model, int index)
 {
+	// saves old range to restore it later
+	QVariantList oldRange = model->getRange();
+	// here, index is absolute, so removes range
+	model->setRange(QVariantList() << -1 << -1);
+
+	// needs file to know file type (needs to select files of the same type)
 	FileObject *file = static_cast<FileObject *>(model->getObject(index));
 
+	// creates list of files to play
 	EntryInfoList entry_list;
 	for (int i = 0; i < model->getCount(); ++i)
 	{
@@ -41,10 +48,16 @@ void AudioVideoPlayer::generatePlaylist(DirectoryListModel *model, int index)
 			entry_list << fo->getEntryInfo();
 	}
 
+	// saves retrieved data in internal play_list and seeks to actual selected file
 	FileListManager *list = static_cast<FileListManager *>(play_list);
 	list->setList(entry_list);
 	list->setCurrentIndex(index);
+
+	// plays the file
 	play(file->getPath());
+
+	// restores range (model belongs to QML!)
+	model->setRange(oldRange);
 }
 
 void AudioVideoPlayer::prevTrack()
