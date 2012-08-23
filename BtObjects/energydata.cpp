@@ -732,6 +732,7 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 		{
 		case EnergyDevice::DIM_ADVANCED_DEVICE:
 			emit advancedChanged();
+			break;
 		case EnergyDevice::DIM_THRESHOLD_STATE:
 		{
 			QList<int> state = it.value().value<QList<int> >();
