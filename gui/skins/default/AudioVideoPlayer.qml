@@ -315,7 +315,7 @@ Page {
         id: volumePopup
 
         source: "images/common/regola_volume/bg_regola_volume.svg"
-        visible: false
+        opacity: 0
         anchors {
             bottom: bottomBarBg.top
             bottomMargin: 11
@@ -387,6 +387,21 @@ Page {
                         color: "#5c5c5c"
                     }
                 }
+            }
+        }
+
+        Timer {
+            id: hidingTimer
+
+            interval: 2000
+            onTriggered: volumePopup.opacity = 0
+        }
+
+        Connections {
+            target: global.audioVideoPlayer
+            onVolumeChanged: {
+                volumePopup.opacity = 1
+                hidingTimer.restart()
             }
         }
     }
