@@ -199,7 +199,7 @@ Row {
 
     ButtonImageThreeStates {
         id: previousButton
-        repetionOnHold: true
+        repetitionOnHold: true
         defaultImageBg: "../../images/energy/btn_freccia.svg"
         pressedImageBg: "../../images/energy/btn_freccia_P.svg"
         shadowImage: "../../images/energy/ombra_btn_freccia.svg"
@@ -254,7 +254,7 @@ Row {
 
     ButtonImageThreeStates {
         id: nextButton
-        repetionOnHold: true
+        repetitionOnHold: true
         defaultImageBg: "../../images/energy/btn_freccia.svg"
         pressedImageBg: "../../images/energy/btn_freccia_P.svg"
         shadowImage: "../../images/energy/ombra_btn_freccia.svg"

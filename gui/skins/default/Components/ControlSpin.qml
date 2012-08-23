@@ -18,7 +18,7 @@ Column {
         shadowImage: "../images/common/btn_shadow_99x35.svg"
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
-        repetionOnHold: true
+        repetitionOnHold: true
         onClicked: control.plusClicked()
     }
 
@@ -50,7 +50,7 @@ Column {
         shadowImage: "../images/common/btn_shadow_99x35.svg"
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
-        repetionOnHold: true
+        repetitionOnHold: true
         onClicked: control.minusClicked()
     }
 }
