@@ -394,16 +394,33 @@ Page {
             id: hidingTimer
 
             interval: 2000
-            onTriggered: volumePopup.opacity = 0
+            onTriggered: volumePopup.state = ""
         }
 
         Connections {
             target: global.audioVideoPlayer
             onVolumeChanged: {
-                volumePopup.opacity = 1
-                hidingTimer.restart()
+                volumePopup.state = "volumeChanged"
+                hidingTimer.restart() // don't use start or popup will blink when pressedAndHold
             }
         }
+
+        states: [
+            State {
+                name: "volumeChanged"
+                PropertyChanges { target: volumePopup; opacity: 1 }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                NumberAnimation {
+                    target: volumePopup
+                    property: "opacity"
+                    duration: 400
+                }
+            }
+        ]
     }
 
     function backButtonClicked() {
