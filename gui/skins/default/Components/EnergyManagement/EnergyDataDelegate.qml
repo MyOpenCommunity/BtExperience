@@ -94,9 +94,15 @@ Column {
     }
 
     Column {
-        SvgImage {
-            source: "../../images/energy/colonna.svg"
-
+        Item {
+            width: columnBg.width
+            height: columnBg.height
+            SvgImage {
+                id: columnBg
+                opacity: 0.2
+                source: "../../images/energy/colonna.svg"
+                visible: logic.hasGoal()
+            }
             SvgImage {
                 anchors.bottom: parent.bottom
                 source: {
@@ -118,6 +124,7 @@ Column {
                 anchors.topMargin: parent.height - logic.goalSize(parent.height)
             }
         }
+
         SvgImage {
             source: "../../images/energy/ombra_btn_colonna_grafico.svg"
         }
