@@ -26,6 +26,14 @@ Page {
         id: mediaLinks
         source: myHomeModels.mediaLinks
         containers: [profile.uii]
+        onModelReset: {
+            // TODO: maybe we can optimize performance by setting opacity to 0
+            // for items that we don't want to show, thus avoiding a whole
+            // createObject()/destroy() cycle each time
+            // Anyway, this needs a more complex management and performance gains
+            // must be measurable.
+            privateProps.updateProfileView()
+        }
     }
 
     QtObject {
@@ -220,28 +228,6 @@ Page {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: privateProps.unselectObj()
-                }
-            }
-
-            Item {
-                id: profileView
-
-                property variant model: mediaLinks
-
-                anchors.fill: parent
-
-                Component.onCompleted:privateProps.createProfileObjects()
-
-                Connections {
-                    target: profileView.model
-                    onModelReset: {
-                        // TODO: maybe we can optimize performance by setting opacity to 0
-                        // for items that we don't want to show, thus avoiding a whole
-                        // createObject()/destroy() cycle each time
-                        // Anyway, this needs a more complex management and performance gains
-                        // must be measurable.
-                        privateProps.updateProfileView()
-                    }
                 }
             }
 
@@ -449,4 +435,6 @@ Page {
             }
         }
     ]
+
+    Component.onCompleted: privateProps.createProfileObjects()
 }
