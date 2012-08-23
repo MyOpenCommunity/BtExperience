@@ -40,6 +40,11 @@ class AudioVideoPlayer : public QObject
 	*/
 	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
 
+	/*!
+		\brief Set and/or get volume of player (it must be between 0 and 100)
+	*/
+	Q_PROPERTY(int percentage READ getPercentage NOTIFY percentageChanged)
+
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
@@ -56,25 +61,29 @@ public:
 	QString getTrackName() const;
 	int getVolume() const { return volume; }
 	void setVolume(int newValue);
+	int getPercentage() const { return percentage; }
 
 signals:
 	void currentTimeChanged();
 	void totalTimeChanged();
 	void trackNameChanged();
 	void volumeChanged();
+	void percentageChanged();
 
 private slots:
 	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);
 	void playListTrackChanged();
+	void trackInfoChanged();
 
 private:
-	QString getTimeString(const QString &key) const;
+	QString getTimeString(const QVariant &value) const;
 	void play(const QString &file_path);
 
 	MultiMediaPlayer *media_player;
 	ListManager *play_list;
 	bool user_track_change_request;
-	int volume;
+	int volume, percentage;
+	QVariant current_time_s, total_time_s;
 };
 
 #endif // AUDIOVIDEOPLAYER_H

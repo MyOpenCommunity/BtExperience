@@ -11,12 +11,12 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 {
 	user_track_change_request = false;
 	volume = 100;
+	current_time_s = total_time_s = percentage = 0;
 
 	media_player = new MultiMediaPlayer();
 	connect(media_player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 			SLOT(handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState)));
-	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SIGNAL(currentTimeChanged()));
-	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SIGNAL(totalTimeChanged()));
+	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SLOT(trackInfoChanged()));
 	connect(media_player, SIGNAL(currentSourceChanged(QString)), SIGNAL(trackNameChanged()));
 
 	play_list = new FileListManager;
@@ -101,13 +101,24 @@ void AudioVideoPlayer::playListTrackChanged()
 	play(play_list->currentFilePath());
 }
 
-QString AudioVideoPlayer::getTimeString(const QString &key) const
+void AudioVideoPlayer::play(const QString &file_path)
 {
-	QVariantMap track_info = media_player->getTrackInfo();
-	if (!track_info.contains(key))
-		return "--:--";
-	QVariant v = track_info[key];
-	QTime t = v.toTime();
+	user_track_change_request = true;
+	media_player->setCurrentSource(file_path);
+	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)
+		media_player->play();
+}
+
+QString AudioVideoPlayer::getTrackName() const
+{
+	return media_player->getCurrentSource();
+}
+
+QString AudioVideoPlayer::getTimeString(const QVariant& value) const
+{
+	QTime t = value.toTime();
+	if (!t.isValid())
+		return "--:--:--";
 	QString format = "ss";
 	if (t.minute() > 0 || t.hour() > 0)
 	{
@@ -118,25 +129,60 @@ QString AudioVideoPlayer::getTimeString(const QString &key) const
 	return t.toString(format);
 }
 
-void AudioVideoPlayer::play(const QString &file_path)
-{
-	user_track_change_request = true;
-	media_player->setCurrentSource(file_path);
-	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)
-		media_player->play();
-}
-
 QString AudioVideoPlayer::getCurrentTime() const
 {
-	return getTimeString("current_time");
+	return getTimeString(current_time_s);
 }
 
 QString AudioVideoPlayer::getTotalTime() const
 {
-	return getTimeString("total_time");
+	return getTimeString(total_time_s);
 }
 
-QString AudioVideoPlayer::getTrackName() const
+void AudioVideoPlayer::trackInfoChanged()
 {
-	return media_player->getCurrentSource();
+	QVariantMap track_info = media_player->getTrackInfo();
+
+	int total = 0;
+	int current = 0;
+
+	if (track_info.contains("total_time"))
+	{
+		QVariant t = track_info["total_time"];
+		QTime v = t.toTime();
+		if (v.isValid())
+		{
+			if (total_time_s != t)
+			{
+				total_time_s = t;
+				emit totalTimeChanged();
+			}
+			total = v.second() + 60 * v.minute() + 60 * 60 * v.hour();
+		}
+	}
+
+	if (track_info.contains("current_time"))
+	{
+		QVariant c = track_info["current_time"];
+		QTime v = c.toTime();
+		if (v.isValid())
+		{
+			if (current_time_s != c)
+			{
+				current_time_s = c;
+				emit currentTimeChanged();
+			}
+			current = v.second() + 60 * v.minute() + 60 * 60 * v.hour();
+		}
+	}
+
+	if (total == 0)
+		return;
+
+	int p = 100 * current / total;
+	if (percentage != p)
+	{
+		percentage = p;
+		emit percentageChanged();
+	}
 }

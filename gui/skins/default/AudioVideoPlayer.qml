@@ -103,7 +103,7 @@ Page {
 
         Rectangle {
             height: imageSlider.height + 2
-            width: imageSlider.width * (global.audioVideoPlayer.volume < 1 ? 1 : global.audioVideoPlayer.volume) / 100 + 4
+            width: imageSlider.width * (global.audioVideoPlayer.percentage < 1 ? 1 : global.audioVideoPlayer.percentage) / 100 + 4
             radius: 100
             smooth: true
             anchors {
