@@ -1,6 +1,6 @@
 ﻿<layout>
 	<container id="1" descr="scenarios">
-		<ist uii="1">
+		<ist uii="1" img="images/systems/scenari.jpg">
 			<link uii="6001" />
 			<link uii="6002" />
 			<link uii="6003" />
@@ -14,6 +14,18 @@
 			<link uii="6203" />
 			<link uii="6204" />
 			<!-- not parsed yet <link uii="6205" /> -->
+		</ist>
+	</container>
+	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
+		<ist uii="901" descr="famiglia" img="images/home/card_1.png" >
+		</ist>
+		<ist uii="902" descr="mattia" img="images/home/card_2.png" >
+		</ist>
+		<ist uii="903" descr="camilla" img="images/home/card_3.png" >
+		</ist>
+		<ist uii="904" descr="mamma" img="images/home/card_4.png" >
+		</ist>
+		<ist uii="905" descr="papà" img="images/home/card_5.png" >
 		</ist>
 	</container>
 </layout>
