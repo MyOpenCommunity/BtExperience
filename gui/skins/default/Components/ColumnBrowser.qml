@@ -178,7 +178,7 @@ MenuColumn {
                     // we need braces due to bug
                     // https://bugreports.qt-project.org/browse/QTBUG-17012
                 {
-                    console.log("Navigation to AudioPlayer to be implemented")
+                    Stack.openPage("AudioVideoPlayer.qml", {"model": listModel, "index": index, "isVideo": false})
                     break
                 }
                 case FileObject.Image:

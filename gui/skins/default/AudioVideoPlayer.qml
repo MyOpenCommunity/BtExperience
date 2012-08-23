@@ -12,15 +12,17 @@ Page {
     property variant model
     property int index
     property int percentage: 50
+    property bool isVideo: true
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
-    text: qsTr("Video")
+    text: player.isVideo ? qsTr("Video") : qsTr("Audio")
 
     SvgImage {
         id: frameBg
 
         source: "images/common/video_player_bg_frame.svg"
+        visible: player.isVideo
         anchors {
             top: player.toolbar.bottom
             topMargin: 15
@@ -33,6 +35,7 @@ Page {
         id: frame
 
         source: "images/common/video_player_frame.svg"
+        visible: player.isVideo
         anchors.centerIn: frameBg
     }
 
@@ -276,8 +279,8 @@ Page {
         status: 0
         anchors {
             top: prevButton.top
-            right: fullScreenToggle.left
-            rightMargin: 13
+            right: player.isVideo ? fullScreenToggle.left : bottomBarBg.right
+            rightMargin: player.isVideo ? 13 : 17
         }
     }
 
@@ -291,6 +294,7 @@ Page {
         defaultImage: "images/common/ico_fullscreen.svg"
         pressedImage: "images/common/ico_fullscreen.svg"
         selectedImage: "images/common/ico_chiudi_fullscreen.svg"
+        visible: player.isVideo
         anchors {
             top: prevButton.top
             right: bottomBarBg.right
@@ -391,7 +395,7 @@ Page {
     }
 
     Component.onCompleted: global.audioVideoPlayer.generatePlaylist(player.model, player.index)
-    Component.onDestruction: global.audioVideoPlayer.terminate()
+    Component.onDestruction: if (player.isVideo) global.audioVideoPlayer.terminate()
 
     states: [
         State {
