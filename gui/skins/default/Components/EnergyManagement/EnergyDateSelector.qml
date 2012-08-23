@@ -10,6 +10,16 @@ Row {
 
     spacing: 4
 
+    Timer {
+        id: updateTimer
+        interval: 600
+        repeat: false
+        onTriggered: {
+            selector.monthDate = privateProps.monthDate
+            selector.yearDate = privateProps.yearDate
+            selector.dayDate = privateProps.dayDate
+        }
+    }
 
     function isEnergyMonthValid(d) {
         var year = d.getFullYear()
@@ -65,9 +75,14 @@ Row {
     QtObject {
         id: privateProps
 
+        property date monthDate: new Date()
+        property date yearDate: new Date()
+        property date dayDate: new Date()
+
         // Month functions
         function previousMonth() {
-            selector.monthDate = _previousMonth(selector.monthDate)
+            privateProps.monthDate = _previousMonth(privateProps.monthDate)
+            updateTimer.restart()
         }
 
         function _previousMonth(d) {
@@ -83,7 +98,8 @@ Row {
         }
 
         function nextMonth() {
-            selector.monthDate = _nextMonth(selector.monthDate)
+            privateProps.monthDate = _nextMonth(privateProps.monthDate)
+            updateTimer.restart()
         }
 
         function _nextMonth(d) {
@@ -99,16 +115,17 @@ Row {
         }
 
         function previousMonthEnabled() {
-            return selector.isEnergyMonthValid(_previousMonth(selector.monthDate))
+            return selector.isEnergyMonthValid(_previousMonth(privateProps.monthDate))
         }
 
         function nextMonthEnabled(){
-            return selector.isEnergyMonthValid(_nextMonth(selector.monthDate))
+            return selector.isEnergyMonthValid(_nextMonth(privateProps.monthDate))
         }
 
         // Year functions
         function previousYear() {
-            selector.yearDate = _previousYear(selector.yearDate)
+            privateProps.yearDate = _previousYear(privateProps.yearDate)
+            updateTimer.restart()
         }
 
         function _previousYear(d) {
@@ -117,7 +134,8 @@ Row {
         }
 
         function nextYear() {
-            selector.yearDate = _nextYear(selector.yearDate)
+            privateProps.yearDate = _nextYear(privateProps.yearDate)
+            updateTimer.restart()
         }
 
         function _nextYear(d) {
@@ -126,17 +144,18 @@ Row {
         }
 
         function previousYearEnabled() {
-            return selector.isEnergyYearValid(_previousYear(selector.yearDate))
+            return selector.isEnergyYearValid(_previousYear(privateProps.yearDate))
         }
 
         function nextYearEnabled() {
-            return selector.isEnergyYearValid(_nextYear(selector.yearDate))
+            return selector.isEnergyYearValid(_nextYear(privateProps.yearDate))
         }
 
 
         // Day functions
         function previousDay() {
-            selector.dayDate = _previousDay(selector.dayDate)
+            privateProps.dayDate = _previousDay(privateProps.dayDate)
+            updateTimer.restart()
         }
 
         function daysInMonth(month, year) {
@@ -154,7 +173,8 @@ Row {
         }
 
         function nextDay() {
-            selector.dayDate = _nextDay(selector.dayDate)
+            privateProps.dayDate = _nextDay(privateProps.dayDate)
+            updateTimer.restart()
         }
 
         function _nextDay(d) {
@@ -169,11 +189,11 @@ Row {
         }
 
         function previousDayEnabled() {
-            return selector.isEnergyDayValid(_previousDay(selector.dayDate))
+            return selector.isEnergyDayValid(_previousDay(privateProps.dayDate))
         }
 
         function nextDayEnabled() {
-            return selector.isEnergyDayValid(_nextDay(selector.dayDate))
+            return selector.isEnergyDayValid(_nextDay(privateProps.dayDate))
         }
     }
 
@@ -214,7 +234,7 @@ Row {
         UbuntuLightText {
             id: dateLabel
             font.pixelSize: 14
-            text: Qt.formatDateTime(selector.monthDate, qsTr("MM/yyyy"))
+            text: Qt.formatDateTime(privateProps.monthDate, qsTr("MM/yyyy"))
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: textLabel.bottom
@@ -257,7 +277,7 @@ Row {
         State {
             name: "year"
             PropertyChanges { target: textLabel; text: qsTr("year") }
-            PropertyChanges { target: dateLabel; text: Qt.formatDateTime(selector.yearDate, qsTr("yyyy")) }
+            PropertyChanges { target: dateLabel; text: Qt.formatDateTime(privateProps.yearDate, qsTr("yyyy")) }
             PropertyChanges { target: previousButton; onClicked: privateProps.previousYear() }
             PropertyChanges { target: previousButton; enabled: privateProps.previousYearEnabled() }
             PropertyChanges { target: nextButton; onClicked: privateProps.nextYear() }
@@ -266,7 +286,7 @@ Row {
         State {
             name: "day"
             PropertyChanges { target: textLabel; text: qsTr("day") }
-            PropertyChanges { target: dateLabel; text: Qt.formatDateTime(selector.dayDate, qsTr("dd/MM/yyyy")) }
+            PropertyChanges { target: dateLabel; text: Qt.formatDateTime(privateProps.dayDate, qsTr("dd/MM/yyyy")) }
             PropertyChanges { target: previousButton; onClicked: privateProps.previousDay() }
             PropertyChanges { target: previousButton; enabled: privateProps.previousDayEnabled() }
             PropertyChanges { target: nextButton; onClicked: privateProps.nextDay() }
