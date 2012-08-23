@@ -260,7 +260,7 @@ Page {
         pressedImage: "images/common/ico_meno_P.svg"
         onClicked: global.audioVideoPlayer.decrementVolume()
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         anchors {
             top: prevButton.top
             right: buttonPlus.left
@@ -277,7 +277,7 @@ Page {
         pressedImage: "images/common/ico_piu_P.svg"
         onClicked: global.audioVideoPlayer.incrementVolume()
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         anchors {
             top: prevButton.top
             right: player.isVideo ? fullScreenToggle.left : bottomBarBg.right

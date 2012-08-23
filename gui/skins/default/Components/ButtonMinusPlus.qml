@@ -16,7 +16,7 @@ Item {
         defaultImage: "../images/common/symbol_minus.svg"
         pressedImage: "../images/common/symbol_minus.svg"
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         onClicked: button.minusClicked()
         anchors {
             left: parent.left
@@ -33,7 +33,7 @@ Item {
         defaultImage: "../images/common/symbol_plus.svg"
         pressedImage: "../images/common/symbol_plus.svg"
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         onClicked: button.plusClicked()
         anchors {
             right: parent.right
