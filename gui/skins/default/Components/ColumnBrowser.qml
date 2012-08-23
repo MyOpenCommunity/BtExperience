@@ -186,12 +186,12 @@ MenuColumn {
                 }
                 case FileObject.Image:
                 {
-                    Stack.openPage("PhotoPlayer.qml", {"model": listModel, "item": itemObject, "index": index})
+                    Stack.openPage("PhotoPlayer.qml", {"model": listModel, "item": itemObject, "index": (index + listModel.range[0])})
                     break
                 }
                 case FileObject.Video:
                 {
-                    Stack.openPage("AudioVideoPlayer.qml", {"model": listModel, "index": index})
+                    Stack.openPage("AudioVideoPlayer.qml", {"model": listModel, "index": (index + listModel.range[0])})
                     break
                 }
                 case FileObject.Directory:
@@ -201,7 +201,7 @@ MenuColumn {
                 }
                 default:
                 {
-                    console.log("Unexpected file type: " + itemObject.fileType + " for index: " + index)
+                    console.log("Unexpected file type: " + itemObject.fileType + " for index: " + (index + listModel.range[0]))
                 }
                 }
             }
