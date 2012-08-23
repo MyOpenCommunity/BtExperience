@@ -11,16 +11,17 @@ Page {
 
     property variant model
     property int index
-    property int percentage: 50
+    property bool isVideo: true
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
-    text: qsTr("Video")
+    text: player.isVideo ? qsTr("Video") : qsTr("Audio")
 
     SvgImage {
         id: frameBg
 
         source: "images/common/video_player_bg_frame.svg"
+        visible: player.isVideo
         anchors {
             top: player.toolbar.bottom
             topMargin: 15
@@ -33,6 +34,7 @@ Page {
         id: frame
 
         source: "images/common/video_player_frame.svg"
+        visible: player.isVideo
         anchors.centerIn: frameBg
     }
 
@@ -101,7 +103,7 @@ Page {
 
         Rectangle {
             height: imageSlider.height + 2
-            width: imageSlider.width * (player.percentage < 10 ? 10 : player.percentage) / 100 + 4
+            width: imageSlider.width * (global.audioVideoPlayer.percentage < 1 ? 1 : global.audioVideoPlayer.percentage) / 100 + 4
             radius: 100
             smooth: true
             anchors {
@@ -118,6 +120,9 @@ Page {
                     position: 1.0
                     color: "#5c5c5c"
                 }
+            }
+            Behavior on width {
+                NumberAnimation { duration: 200 }
             }
         }
     }
@@ -188,8 +193,8 @@ Page {
                 name: "play"
                 PropertyChanges {
                     target: playButton
-                    defaultImage: "images/common/ico_stop.svg"
-                    pressedImage: "images/common/ico_stop_P.svg"
+                    defaultImage: "images/common/ico_pause.svg"
+                    pressedImage: "images/common/ico_pause_P.svg"
                 }
             }
         ]
@@ -234,19 +239,34 @@ Page {
 
     ButtonImageThreeStates {
         id: buttonMute
-        z: 2 // must always be enabled
         defaultImageBg: "images/common/btn_player_comando.svg"
         pressedImageBg: "images/common/btn_player_comando_P.svg"
         shadowImage: "images/common/ombra_btn_mute.svg"
         defaultImage: "images/common/ico_mute.svg"
         pressedImage: "images/common/ico_mute.svg"
-        onClicked: console.log("click mute")
+        onClicked: global.audioVideoPlayer.mute = !global.audioVideoPlayer.mute
         status: 0
         anchors {
             top: prevButton.top
             right: buttonMinus.left
             rightMargin: 13
         }
+        state: global.audioVideoPlayer.mute ? "mute" : ""
+
+        states: [
+            State {
+                name: "mute"
+                PropertyChanges {
+                    target: buttonMute
+                    defaultImageBg: "images/common/btn_player_comando.svg"
+                    pressedImageBg: "images/common/btn_player_comando_P.svg"
+                    shadowImage: "images/common/ombra_btn_mute.svg"
+                    defaultImage: "images/common/ico_mute_on.svg"
+                    pressedImage: "images/common/ico_mute_on.svg"
+                    status: 0
+                }
+            }
+        ]
     }
 
     ButtonImageThreeStates {
@@ -256,8 +276,9 @@ Page {
         shadowImage: "images/common/ombra_btn_piu_meno.svg"
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
-        onClicked: console.log("click meno")
+        onClicked: global.audioVideoPlayer.decrementVolume()
         status: 0
+        repetionOnHold: true
         anchors {
             top: prevButton.top
             right: buttonPlus.left
@@ -272,12 +293,13 @@ Page {
         shadowImage: "images/common/ombra_btn_piu_meno.svg"
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
-        onClicked: console.log("click più")
+        onClicked: global.audioVideoPlayer.incrementVolume()
         status: 0
+        repetionOnHold: true
         anchors {
             top: prevButton.top
-            right: fullScreenToggle.left
-            rightMargin: 13
+            right: player.isVideo ? fullScreenToggle.left : bottomBarBg.right
+            rightMargin: player.isVideo ? 13 : 17
         }
     }
 
@@ -291,6 +313,7 @@ Page {
         defaultImage: "images/common/ico_fullscreen.svg"
         pressedImage: "images/common/ico_fullscreen.svg"
         selectedImage: "images/common/ico_chiudi_fullscreen.svg"
+        visible: player.isVideo
         anchors {
             top: prevButton.top
             right: bottomBarBg.right
@@ -310,7 +333,7 @@ Page {
         id: volumePopup
 
         source: "images/common/regola_volume/bg_regola_volume.svg"
-        visible: false
+        opacity: 0
         anchors {
             bottom: bottomBarBg.top
             bottomMargin: 11
@@ -331,7 +354,7 @@ Page {
         }
 
         UbuntuLightText {
-            text: player.percentage
+            text: global.audioVideoPlayer.volume
             color: "white"
             font.pixelSize: 14
             anchors {
@@ -345,7 +368,7 @@ Page {
         SvgImage {
             id: muteIcon
 
-            source: "images/common/regola_volume/ico_volume.svg"
+            source: global.audioVideoPlayer.mute ? "images/common/regola_volume/ico_mute.svg" : "images/common/regola_volume/ico_volume.svg"
             anchors {
                 top: volumePopup.top
                 topMargin: 36
@@ -364,7 +387,7 @@ Page {
 
             Rectangle {
                 height: parent.height + 2
-                width: parent.width * (player.percentage < 10 ? 10 : player.percentage) / 100 + 4
+                width: parent.width * (global.audioVideoPlayer.volume < 1 ? 1 : global.audioVideoPlayer.volume) / 100 + 4
                 radius: 100
                 smooth: true
                 anchors {
@@ -382,8 +405,47 @@ Page {
                         color: "#5c5c5c"
                     }
                 }
+                Behavior on width {
+                    NumberAnimation { duration: 200 }
+                }
             }
         }
+
+        Timer {
+            id: hidingTimer
+
+            interval: 2000
+            onTriggered: volumePopup.state = ""
+        }
+
+        Connections {
+            target: global.audioVideoPlayer
+            onVolumeChanged: {
+                volumePopup.state = "volumeChanged"
+                hidingTimer.restart() // don't use start or popup will blink when pressedAndHold
+            }
+            onMuteChanged: {
+                volumePopup.state = "volumeChanged"
+                hidingTimer.restart() // don't use start or popup will blink when pressedAndHold
+            }
+        }
+
+        states: [
+            State {
+                name: "volumeChanged"
+                PropertyChanges { target: volumePopup; opacity: 1 }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                NumberAnimation {
+                    target: volumePopup
+                    property: "opacity"
+                    duration: 400
+                }
+            }
+        ]
     }
 
     function backButtonClicked() {
@@ -391,7 +453,7 @@ Page {
     }
 
     Component.onCompleted: global.audioVideoPlayer.generatePlaylist(player.model, player.index)
-    Component.onDestruction: global.audioVideoPlayer.terminate()
+    Component.onDestruction: if (player.isVideo) global.audioVideoPlayer.terminate()
 
     states: [
         State {

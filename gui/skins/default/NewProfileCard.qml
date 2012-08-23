@@ -124,7 +124,7 @@ BasePage {
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         anchors {
             top: bgBottomBar.top
             topMargin: 7
@@ -143,7 +143,7 @@ BasePage {
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         anchors {
             top: bgBottomBar.top
             topMargin: 7
@@ -162,7 +162,7 @@ BasePage {
         defaultImage: "images/common/ico_browse.svg"
         pressedImage: "images/common/ico_browse_P.svg"
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         anchors {
             top: bgBottomBar.top
             topMargin: 7
@@ -233,7 +233,7 @@ BasePage {
         defaultImage: "images/common/freccia_dx.svg"
         pressedImage: "images/common/freccia_dx_P.svg"
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         anchors {
             bottom: bgImage.bottom
             bottomMargin: 10 + 50 + 10
@@ -252,7 +252,7 @@ BasePage {
         defaultImage: "images/common/freccia_dx.svg"
         pressedImage: "images/common/freccia_dx_P.svg"
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         anchors {
             bottom: bgImage.bottom
             bottomMargin: 10
@@ -271,7 +271,7 @@ BasePage {
         defaultImage: "images/common/freccia_dx.svg"
         pressedImage: "images/common/freccia_dx_P.svg"
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         anchors {
             bottom: bgImage.bottom
             bottomMargin: 10 + 50 + 10
@@ -290,7 +290,7 @@ BasePage {
         defaultImage: "images/common/freccia_dx.svg"
         pressedImage: "images/common/freccia_dx_P.svg"
         status: 0
-        timerEnabled: true
+        repetionOnHold: true
         anchors {
             bottom: arrowLeft.top
             bottomMargin: 10

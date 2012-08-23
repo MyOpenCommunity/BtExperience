@@ -47,7 +47,7 @@ SvgImage {
         shadowImage: "../images/common/ombra_btn_frecce.svg"
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
-        timerEnabled: true
+        repetionOnHold: true
         onClicked: minusClicked()
         status: 0
         anchors {
@@ -66,7 +66,7 @@ SvgImage {
         shadowImage: "../images/common/ombra_btn_frecce.svg"
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
-        timerEnabled: true
+        repetionOnHold: true
         onClicked: plusClicked()
         status: 0
         anchors {

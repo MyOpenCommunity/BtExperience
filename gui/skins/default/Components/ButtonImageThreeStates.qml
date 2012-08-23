@@ -21,7 +21,7 @@ SvgImage {
 
     property bool enabled: true // button accepts input or not
     property int status: 0 // 0 - up, 1 - down
-    property bool timerEnabled: false // enable repetion when pressed
+    property bool repetionOnHold: false // enable repetion when pressed
 
     signal clicked
     signal pressed
@@ -37,7 +37,7 @@ SvgImage {
         visible: bg.enabled
         onPressed: {
             bg.pressed()
-            clickTimer.running = timerEnabled
+            clickTimer.running = repetionOnHold
         }
         onReleased: {
             bg.released()

@@ -72,11 +72,11 @@ BasePage {
         multimediaModel.append({"itemText": qsTr("Devices"), "target": "Devices.qml", "props": {} })
 
         // TODO to be implemented
-        multimediaModel.append({"itemText": qsTr("browser"), "target": "Photo.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("rss"), "target": "Photo.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("ip radio"), "target": "Photo.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("weather"), "target": "Photo.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("web browser"), "target": "Photo.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("web link"), "target": "Photo.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("browser"), "target": "Devices.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("rss"), "target": "Devices.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("ip radio"), "target": "Devices.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("weather"), "target": "Devices.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("web browser"), "target": "Devices.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("web link"), "target": "Devices.qml", "props": {}})
     }
 }

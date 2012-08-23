@@ -35,6 +35,21 @@ class AudioVideoPlayer : public QObject
 	*/
 	Q_PROPERTY(QString trackName READ getTrackName NOTIFY trackNameChanged)
 
+	/*!
+		\brief Set and/or get volume of player (it must be between 0 and 100)
+	*/
+	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
+
+	/*!
+		\brief Get elapsed time in percentage
+	*/
+	Q_PROPERTY(int percentage READ getPercentage NOTIFY percentageChanged)
+
+	/*!
+		\brief Set and/or get if player is muted or not
+	*/
+	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
+
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
@@ -42,28 +57,42 @@ public:
 	Q_INVOKABLE void prevTrack();
 	Q_INVOKABLE void nextTrack();
 	Q_INVOKABLE void terminate();
+	Q_INVOKABLE void incrementVolume();
+	Q_INVOKABLE void decrementVolume();
 
 	QObject *getMediaPlayer() const;
 	QString getCurrentTime() const;
 	QString getTotalTime() const;
 	QString getTrackName() const;
+	int getVolume() const { return volume; }
+	void setVolume(int newValue);
+	int getPercentage() const { return percentage; }
+	bool getMute() const { return mute; }
+	void setMute(bool newValue);
 
 signals:
 	void currentTimeChanged();
 	void totalTimeChanged();
 	void trackNameChanged();
+	void volumeChanged();
+	void percentageChanged();
+	void muteChanged();
 
 private slots:
 	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);
 	void playListTrackChanged();
+	void trackInfoChanged();
 
 private:
-	QString getTimeString(const QString &key) const;
+	QString getTimeString(const QVariant &value) const;
 	void play(const QString &file_path);
 
 	MultiMediaPlayer *media_player;
 	ListManager *play_list;
 	bool user_track_change_request;
+	int volume, percentage;
+	QVariant current_time_s, total_time_s;
+	bool mute;
 };
 
 #endif // AUDIOVIDEOPLAYER_H
