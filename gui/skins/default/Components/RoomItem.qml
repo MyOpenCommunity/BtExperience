@@ -6,9 +6,20 @@ MenuColumn {
     id: column
 
     signal pressed
+    signal requestMove
+
+    /* simply forwarding to the menu builtin focusLost function */
+    function focusLost() {
+        if (theMenu.state === "toolbar")
+            theMenu.state = ""
+    }
 
     MenuItem {
         id: theMenu
+
+        function startEdit() {
+            theMenu.state = "toolbar"
+        }
 
         name: dataModel.name
         status: dataModel.active === true ? 1 : 0
@@ -23,13 +34,73 @@ MenuColumn {
             column.loadColumn(mapping.getComponent(dataModel.objectId), "", dataModel)
         }
         onPressed: column.pressed()
+
+        Column {
+            id: sidebar
+
+            opacity: 0
+            anchors {
+                top: parent.top
+                left: parent.right
+            }
+
+            Rectangle {
+                width: 48
+                height: 48
+                gradient: Gradient {
+                    GradientStop {
+                        position: 0.00;
+                        color: "#b7b7b7";
+                    }
+                    GradientStop {
+                        position: 1.00;
+                        color: "#ffffff";
+                    }
+                }
+                Image {
+                    source: "../images/icon_pencil.png"
+                    anchors.fill: parent
+                    anchors.margins: 10
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: theMenu.editMenuItem()
+                }
+            }
+
+            Rectangle {
+                width: 48
+                height: 48
+                gradient: Gradient {
+                    GradientStop {
+                        position: 0.00;
+                        color: "#b7b7b7";
+                    }
+                    GradientStop {
+                        position: 1.00;
+                        color: "#ffffff";
+                    }
+                }
+                Image {
+                    source: "../images/icon_move.png"
+                    anchors.fill: parent
+                    anchors.margins: 10
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: column.requestMove()
+                }
+            }
+        }
+
+        states: [
+            State {
+                name: "toolbar"
+                PropertyChanges { target: sidebar; opacity: 1 }
+            }
+        ]
     }
 
     BtObjectsMapping { id: mapping }
-
-    /* simply forwarding to the menu builtin focusLost function */
-    function focusLost() {
-        theMenu.focusLost()
-    }
 }
 

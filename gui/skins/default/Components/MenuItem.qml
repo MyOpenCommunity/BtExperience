@@ -22,14 +22,20 @@ Item {
     signal released(variant itemReleased)
     signal editCompleted()
 
+    // 'virtual' function to reimplement pressAndHold behaviour in derived components
+    function startEdit() {
+        editMenuItem()
+    }
+
+    // This function actually starts menu item editing
+    function editMenuItem() {
+        labelLoader.sourceComponent = labelInputComponent
+        labelLoader.item.forceActiveFocus()
+        labelLoader.item.openSoftwareInputPanel()
+    }
+
     QtObject {
         id: privateProps
-
-        function startEdit() {
-            labelLoader.sourceComponent = labelInputComponent
-            labelLoader.item.forceActiveFocus()
-            labelLoader.item.openSoftwareInputPanel()
-        }
 
         function editDone() {
             if (labelLoader.item.text !== menuItem.name) {
@@ -172,82 +178,15 @@ Item {
             anchors.leftMargin: boxInfo.visible ? 5 : 0
             verticalAlignment: Text.AlignBottom
         }
-
-        Column {
-            id: sidebar
-
-            opacity: 0
-            anchors {
-                top: parent.top
-                left: parent.right
-            }
-
-            Rectangle {
-                width: 48
-                height: 48
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0.00;
-                        color: "#b7b7b7";
-                    }
-                    GradientStop {
-                        position: 1.00;
-                        color: "#ffffff";
-                    }
-                }
-                Image {
-                    source: "../images/icon_pencil.png"
-                    anchors.fill: parent
-                    anchors.margins: 10
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: privateProps.startEdit()
-                }
-            }
-
-            Rectangle {
-                width: 48
-                height: 48
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0.00;
-                        color: "#b7b7b7";
-                    }
-                    GradientStop {
-                        position: 1.00;
-                        color: "#ffffff";
-                    }
-                }
-                Image {
-                    source: "../images/icon_move.png"
-                    anchors.fill: parent
-                    anchors.margins: 10
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: console.log("move element to be implemented")
-                }
-            }
-        }
     }
 
     MouseArea {
         id: mousearea
         anchors.fill: parent
-        onPressAndHold: if (menuItem.editable) { menuItem.state = "toolbar" }
+        onPressAndHold: if (menuItem.editable) { startEdit() }
         onClicked: menuItem.clicked(menuItem)
         onPressed: menuItem.pressed(menuItem)
         onReleased: menuItem.released(menuItem)
-    }
-
-    /**
-      * function to be called when the menu item has lost focus; it is used in
-      * rooms when sidebars have to appear and disappear
-      */
-    function focusLost() {
-        if (menuItem.state === "toolbar")
-            menuItem.state = ""
     }
 
     states: [
@@ -266,10 +205,6 @@ Item {
             PropertyChanges { target: textDescription; color: "#ffffff" }
             PropertyChanges { target: arrowRight; source: "../images/common/menu_column_item_arrow_white.svg" }
             PropertyChanges { target: background; source: "../images/common/menu_column_item_bg_pressed.svg" }
-        },
-        State {
-            name: "toolbar"
-            PropertyChanges { target: sidebar; opacity: 1 }
         }
     ]
 }

@@ -36,19 +36,6 @@ Page {
         containers: [floorUii]
     }
 
-    MouseArea {
-        id: outerClickableArea
-        visible: false
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: toolbar.bottom
-            bottom: roomView.top
-        }
-
-        onClicked: page.closeCurrentMenu()
-    }
-
     RoomView {
         id: roomCustomView
         anchors {
@@ -61,8 +48,6 @@ Page {
         }
         pageObject: page
         model: roomModel
-        onMenuOpened: page.state = "menuSelected"
-        onMenuClosed: page.state = ""
     }
 
     ListView {
@@ -88,6 +73,7 @@ Page {
         }
 
         orientation: ListView.Horizontal
+        interactive: false
         delegate: Image {
             property variant itemObject: roomsModel.getObject(index)
             id: listDelegate
@@ -103,7 +89,6 @@ Page {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        console.log("Clicked on room: " + listDelegate.itemObject.description)
                         roomView.currentIndex = index
                         roomName = listDelegate.itemObject.description
                     }
@@ -119,11 +104,6 @@ Page {
         model: roomsModel
     }
 
-    function closeCurrentMenu() {
-        page.state = ""
-        roomCustomView.closeMenu()
-    }
-
     function findCurrentIndex() {
         for (var i = 0; i < roomsModel.count; ++i)
             if (roomsModel.getObject(i).uii == roomUii)
@@ -131,14 +111,4 @@ Page {
 
         return 0;
     }
-
-    states: [
-        State {
-            name: "menuSelected"
-            PropertyChanges {
-                target: outerClickableArea
-                visible: true
-            }
-        }
-    ]
 }

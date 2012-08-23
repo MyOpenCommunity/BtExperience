@@ -33,6 +33,10 @@ private:
 	QHash<int, int> uii_to_id;
 	QDomDocument document;
 
+#if DEBUG
+	QList<int> uui_cache; // to verify that the xml layout config file does not contains ist with the same uii
+#endif
+
 	// used to parse the made-up configuration we use for testing, remove after switching
 	// to the new configuration
 	void createObjectsFakeConfig(QDomDocument document);

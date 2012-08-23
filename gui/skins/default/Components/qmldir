@@ -53,6 +53,7 @@ MenuItem 1.0 MenuItem.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 MenuShadow 1.0 MenuShadow.qml
 MenuTitle 1.0 MenuTitle.qml
+MoveGrid 1.0 MoveGrid.qml
 NavigationBar 1.0 NavigationBar.qml
 NoteActions 1.0 NoteActions.qml
 PageAnimation 1.0 PageAnimation.qml
