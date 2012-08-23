@@ -10,6 +10,7 @@ Row {
 
     spacing: 4
 
+
     function isEnergyMonthValid(d) {
         var year = d.getFullYear()
         var month = d.getMonth()
@@ -20,10 +21,8 @@ Row {
 
         if (year === cur_year && month <= cur_month)
             return true
-        if (year === cur_year - 1)
-            return true
 
-        if (year === cur_year - 2 && month > cur_month)
+        if (year === cur_year - 1 && month > cur_month)
             return true
 
         return false
@@ -38,7 +37,6 @@ Row {
 
         return false
     }
-
 
     function isEnergyDayValid(d) {
         var currentDate = new Date()
