@@ -11,6 +11,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 {
 	user_track_change_request = false;
 	volume = 100;
+	mute = false;
 	current_time_s = total_time_s = percentage = 0;
 
 	media_player = new MultiMediaPlayer();
@@ -74,13 +75,25 @@ void AudioVideoPlayer::setVolume(int newValue)
 	emit volumeChanged();
 }
 
+void AudioVideoPlayer::setMute(bool newValue)
+{
+	if (mute == newValue)
+		return; // nothing to do
+
+	// TODO mute/unmute the device
+	mute = newValue;
+	emit muteChanged();
+}
+
 void AudioVideoPlayer::incrementVolume()
 {
+	setMute(false);
 	setVolume(getVolume() + 1);
 }
 
 void AudioVideoPlayer::decrementVolume()
 {
+	setMute(false);
 	setVolume(getVolume() - 1);
 }
 

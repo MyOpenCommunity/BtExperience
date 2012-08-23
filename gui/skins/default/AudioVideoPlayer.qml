@@ -239,19 +239,34 @@ Page {
 
     ButtonImageThreeStates {
         id: buttonMute
-        z: 2 // must always be enabled
         defaultImageBg: "images/common/btn_player_comando.svg"
         pressedImageBg: "images/common/btn_player_comando_P.svg"
         shadowImage: "images/common/ombra_btn_mute.svg"
         defaultImage: "images/common/ico_mute.svg"
         pressedImage: "images/common/ico_mute.svg"
-        onClicked: console.log("click mute")
+        onClicked: global.audioVideoPlayer.mute = !global.audioVideoPlayer.mute
         status: 0
         anchors {
             top: prevButton.top
             right: buttonMinus.left
             rightMargin: 13
         }
+        state: global.audioVideoPlayer.mute ? "mute" : ""
+
+        states: [
+            State {
+                name: "mute"
+                PropertyChanges {
+                    target: buttonMute
+                    defaultImageBg: "images/common/btn_player_comando.svg"
+                    pressedImageBg: "images/common/btn_player_comando_P.svg"
+                    shadowImage: "images/common/ombra_btn_mute.svg"
+                    defaultImage: "images/common/ico_mute_on.svg"
+                    pressedImage: "images/common/ico_mute_on.svg"
+                    status: 0
+                }
+            }
+        ]
     }
 
     ButtonImageThreeStates {
@@ -353,7 +368,7 @@ Page {
         SvgImage {
             id: muteIcon
 
-            source: "images/common/regola_volume/ico_volume.svg"
+            source: global.audioVideoPlayer.mute ? "images/common/regola_volume/ico_mute.svg" : "images/common/regola_volume/ico_volume.svg"
             anchors {
                 top: volumePopup.top
                 topMargin: 36
@@ -406,6 +421,10 @@ Page {
         Connections {
             target: global.audioVideoPlayer
             onVolumeChanged: {
+                volumePopup.state = "volumeChanged"
+                hidingTimer.restart() // don't use start or popup will blink when pressedAndHold
+            }
+            onMuteChanged: {
                 volumePopup.state = "volumeChanged"
                 hidingTimer.restart() // don't use start or popup will blink when pressedAndHold
             }
