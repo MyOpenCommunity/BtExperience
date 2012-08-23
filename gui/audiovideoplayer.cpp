@@ -10,6 +10,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	QObject(parent)
 {
 	user_track_change_request = false;
+	volume = 100;
 
 	media_player = new MultiMediaPlayer();
 	connect(media_player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
@@ -61,6 +62,26 @@ void AudioVideoPlayer::terminate()
 {
 	user_track_change_request = true;
 	media_player->stop();
+}
+
+void AudioVideoPlayer::setVolume(int newValue)
+{
+	if (volume == newValue || newValue < 0 || newValue > 100)
+		return; // nothing to do
+
+	// TODO set new volume value on device
+	volume = newValue;
+	emit volumeChanged();
+}
+
+void AudioVideoPlayer::incrementVolume()
+{
+	setVolume(getVolume() + 1);
+}
+
+void AudioVideoPlayer::decrementVolume()
+{
+	setVolume(getVolume() - 1);
 }
 
 void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state)

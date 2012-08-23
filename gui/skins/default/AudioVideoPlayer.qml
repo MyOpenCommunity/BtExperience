@@ -11,7 +11,6 @@ Page {
 
     property variant model
     property int index
-    property int percentage: 50
     property bool isVideo: true
 
     source: "images/multimedia.jpg"
@@ -104,7 +103,7 @@ Page {
 
         Rectangle {
             height: imageSlider.height + 2
-            width: imageSlider.width * (player.percentage < 10 ? 10 : player.percentage) / 100 + 4
+            width: imageSlider.width * (global.audioVideoPlayer.volume < 10 ? 10 : global.audioVideoPlayer.volume) / 100 + 4
             radius: 100
             smooth: true
             anchors {
@@ -259,8 +258,9 @@ Page {
         shadowImage: "images/common/ombra_btn_piu_meno.svg"
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
-        onClicked: console.log("click meno")
+        onClicked: global.audioVideoPlayer.decrementVolume()
         status: 0
+        timerEnabled: true
         anchors {
             top: prevButton.top
             right: buttonPlus.left
@@ -275,8 +275,9 @@ Page {
         shadowImage: "images/common/ombra_btn_piu_meno.svg"
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
-        onClicked: console.log("click più")
+        onClicked: global.audioVideoPlayer.incrementVolume()
         status: 0
+        timerEnabled: true
         anchors {
             top: prevButton.top
             right: player.isVideo ? fullScreenToggle.left : bottomBarBg.right
@@ -335,7 +336,7 @@ Page {
         }
 
         UbuntuLightText {
-            text: player.percentage
+            text: global.audioVideoPlayer.volume
             color: "white"
             font.pixelSize: 14
             anchors {
@@ -368,7 +369,7 @@ Page {
 
             Rectangle {
                 height: parent.height + 2
-                width: parent.width * (player.percentage < 10 ? 10 : player.percentage) / 100 + 4
+                width: parent.width * (global.audioVideoPlayer.volume < 10 ? 10 : global.audioVideoPlayer.volume) / 100 + 4
                 radius: 100
                 smooth: true
                 anchors {
