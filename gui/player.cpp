@@ -211,7 +211,7 @@ void AudioVideoPlayer::trackInfoChanged()
 	QVariantMap track_info = media_player->getTrackInfo();
 
 	int total = 0;
-	int current = 0;
+	QVariant actual_total = 0;
 
 	if (track_info.contains("total_time"))
 	{
@@ -219,14 +219,20 @@ void AudioVideoPlayer::trackInfoChanged()
 		QTime v = t.toTime();
 		if (v.isValid())
 		{
-			if (total_time_s != t)
-			{
-				total_time_s = t;
-				emit totalTimeChanged();
-			}
+			if (actual_total != t)
+				actual_total = t;
 			total = v.second() + 60 * v.minute() + 60 * 60 * v.hour();
 		}
 	}
+
+	if (total_time_s != actual_total)
+	{
+		total_time_s = actual_total;
+		emit totalTimeChanged();
+	}
+
+	int current = 0;
+	QVariant actual_current = 0;
 
 	if (track_info.contains("current_time"))
 	{
@@ -234,13 +240,16 @@ void AudioVideoPlayer::trackInfoChanged()
 		QTime v = c.toTime();
 		if (v.isValid())
 		{
-			if (current_time_s != c)
-			{
-				current_time_s = c;
-				emit currentTimeChanged();
-			}
+			if (actual_current != c)
+				actual_current = c;
 			current = v.second() + 60 * v.minute() + 60 * 60 * v.hour();
 		}
+	}
+
+	if (current_time_s != actual_current)
+	{
+		current_time_s = actual_current;
+		emit currentTimeChanged();
 	}
 
 	if (total == 0)
