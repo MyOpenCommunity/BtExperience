@@ -5,6 +5,8 @@ import BtObjects 1.0
 Rectangle {
     id: screensaver
 
+    property bool ok: false
+
     width: 1024
     height: 600
     color: "black"
@@ -12,7 +14,7 @@ Rectangle {
     SvgImage {
         id: thePhoto
 
-        source: privateProps.item.path
+        source: ok ? global.photoPlayer.fileName : ""
         fillMode: Image.PreserveAspectFit
         anchors.fill: parent
         anchors.margins: 4
@@ -22,48 +24,22 @@ Rectangle {
         id: slideshowTimer
 
         interval: 4000 // TODO where to take this value?
-        running: true
+        running: ok
         repeat: true
-        onTriggered: privateProps.goNextImage()
+        onTriggered: global.photoPlayer.nextPhoto()
     }
 
     DirectoryListModel {
         id: model
-        filter: FileObject.Image | FileObject.Directory
+        filter: FileObject.Image
         // TODO load right root path
-        rootPath: [
-            "home",
-            "roberto",
-            "work",
-            "bticino",
-            "repos",
-            "bt_experience",
-            "gui",
-            "skins",
-            "default",
-            "images",
-            "common"
-        ]
+        rootPath: ["media", "usb1"]
     }
 
-    QtObject {
-        id: privateProps
-
-        property variant item: model.getObject(0)
-        property int index: 0
-
-        function goNextImage() {
-            var n = model.count
-            // note we start from 1, not 0
-            for (var i = 1; i < n; ++i) {
-                var k = (privateProps.index + i) % n
-                var obj = model.getObject(k)
-                if (obj.fileType === privateProps.item.fileType) {
-                    privateProps.item = obj
-                    privateProps.index = k
-                    break
-                }
-            }
+    Component.onCompleted: {
+        if (model.count > 0) {
+            ok = true
+            global.photoPlayer.generatePlaylist(model, 0)
         }
     }
 }
