@@ -25,7 +25,7 @@ MenuColumn {
         MenuItem {
             id: loadDiagnostic
             name: qsTr("load diagnostic")
-            state: privateProps.currentIndex === 1 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 1
             hasChild: true
             onClicked: {
                 listView.currentIndex = -1

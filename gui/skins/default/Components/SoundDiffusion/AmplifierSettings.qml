@@ -14,11 +14,11 @@ MenuColumn {
         Loudness {}
     }
 
-    onChildDestroyed: privateProps.currentElement = -1
+    onChildDestroyed: privateProps.currentIndex = -1
 
     QtObject {
         id: privateProps
-        property int currentElement: -1
+        property int currentIndex: -1
     }
 
     PaginatorColumn {
@@ -53,11 +53,11 @@ MenuColumn {
                 name: qsTr("equalizer")
                 description: column.dataModel.presetDescription
                 hasChild: true
-                state: privateProps.currentElement === 0 ? "selected" : ""
+                isSelected: privateProps.currentIndex === 0
                 onClicked: {
                     column.loadColumn(amplifierEqualizer, qsTr("equalizer"), column.dataModel)
-                    if (privateProps.currentElement !== 0)
-                        privateProps.currentElement = 0
+                    if (privateProps.currentIndex !== 0)
+                        privateProps.currentIndex = 0
                 }
             }
 
@@ -66,11 +66,11 @@ MenuColumn {
                 name: qsTr("loud")
                 description: column.dataModel.loud ? qsTr("on") : qsTr("off")
                 hasChild: true
-                state: privateProps.currentElement === 1 ? "selected" : ""
+                isSelected: privateProps.currentIndex === 1
                 onClicked: {
                     column.loadColumn(loudness, qsTr("loud"), column.dataModel)
-                    if (privateProps.currentElement !== 1)
-                        privateProps.currentElement = 1
+                    if (privateProps.currentIndex !== 1)
+                        privateProps.currentIndex = 1
                 }
             }
         }

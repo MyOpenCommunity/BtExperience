@@ -126,7 +126,7 @@ MenuColumn {
             name: qsTr("type")
             description: pageObject.names.get('SCREEN_SAVER_TYPE', global.guiSettings.screensaverType)
             hasChild: true
-            state: privateProps.currentIndex === 2 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 2
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2

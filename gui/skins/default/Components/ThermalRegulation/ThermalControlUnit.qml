@@ -33,7 +33,7 @@ MenuColumn {
 
     QtObject {
         id: privateProps
-        property int currentElement: -1
+        property int currentIndex: -1
         property int pendingSeason: -1
         property variant pendingModality: undefined
 
@@ -77,7 +77,7 @@ MenuColumn {
             child.seasonSelected.connect(seasonSelected)
     }
 
-    onChildDestroyed: privateProps.currentElement = -1
+    onChildDestroyed: privateProps.currentIndex = -1
 
     Connections {
         target: dataModel
@@ -161,10 +161,10 @@ MenuColumn {
             hasChild: true
             anchors.top: fixedItem.bottom
             name: qsTr("season")
-            isSelected: privateProps.currentElement === 1
+            isSelected: privateProps.currentIndex === 1
             onClicked: {
-                if (privateProps.currentElement !== 1)
-                    privateProps.currentElement = 1
+                if (privateProps.currentIndex !== 1)
+                    privateProps.currentIndex = 1
                 var s = privateProps.pendingSeason
                 if (s === -1)
                     s = column.dataModel.season
@@ -177,10 +177,10 @@ MenuColumn {
             hasChild: true
             anchors.top: seasonItem.bottom
             name: qsTr("mode")
-            isSelected: privateProps.currentElement === 2
+            isSelected: privateProps.currentIndex === 2
             onClicked: {
-                if (privateProps.currentElement !== 2)
-                    privateProps.currentElement = 2
+                if (privateProps.currentIndex !== 2)
+                    privateProps.currentIndex = 2
                 var m = privateProps.pendingModality
                 if (m === undefined)
                     m = column.dataModel.currentModality
@@ -279,11 +279,11 @@ MenuColumn {
                     source: "../../images/termo/4-zone_temporizzato/bg_imposta-ora.svg"
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
-                    status: (privateProps.currentElement === 3) ? 1 : 0
+                    status: (privateProps.currentIndex === 3) ? 1 : 0
 
                     onEditClicked: {
-                        if (privateProps.currentElement !== 3)
-                            privateProps.currentElement = 3
+                        if (privateProps.currentIndex !== 3)
+                            privateProps.currentIndex = 3
                         // I don't know why, but here we need only ../ and not ../../
                         column.loadColumn(dateSelectTimed, column.title, objModel, {dateVisible: false, source: "../images/termo/4-zone_temporizzato/bg_comando-ora.svg"})
                     }
@@ -322,11 +322,11 @@ MenuColumn {
                 ControlSetDateTime {
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
-                    status: (privateProps.currentElement === 3) ? 1 : 0
+                    status: (privateProps.currentIndex === 3) ? 1 : 0
 
                     onEditClicked: {
-                        if (privateProps.currentElement !== 3)
-                            privateProps.currentElement = 3
+                        if (privateProps.currentIndex !== 3)
+                            privateProps.currentIndex = 3
                         column.loadColumn(dateSelectWeekday, column.title, objModel)
                     }
                 }
@@ -366,11 +366,11 @@ MenuColumn {
                 ControlSetDateTime {
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
-                    status: (privateProps.currentElement === 3) ? 1 : 0
+                    status: (privateProps.currentIndex === 3) ? 1 : 0
 
                     onEditClicked: {
-                        if (privateProps.currentElement !== 3)
-                            privateProps.currentElement = 3
+                        if (privateProps.currentIndex !== 3)
+                            privateProps.currentIndex = 3
                         column.loadColumn(dateSelectHoliday, column.title, objModel)
                     }
                 }

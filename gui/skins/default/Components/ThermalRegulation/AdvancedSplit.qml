@@ -55,7 +55,7 @@ MenuColumn {
             name: qsTr("program")
             description: dataModel.program
             hasChild: true
-            state: privateProps.currentIndex === 1 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 1
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
@@ -72,7 +72,7 @@ MenuColumn {
                 return pageObject.names.get('MODE', dataModel.mode)
             }
             hasChild: true
-            state: privateProps.currentIndex === 2 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 2
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
