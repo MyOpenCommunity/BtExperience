@@ -452,7 +452,7 @@ Page {
         Stack.popPages(2)
     }
 
-    Component.onCompleted: global.audioVideoPlayer.generatePlaylist(player.model, player.index)
+    Component.onCompleted: global.audioVideoPlayer.generatePlaylist(player.model, player.index, player.model.count)
     Component.onDestruction: if (player.isVideo) global.audioVideoPlayer.terminate()
 
     states: [
