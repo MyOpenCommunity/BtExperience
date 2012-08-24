@@ -399,7 +399,8 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 #if TEST_ENERGY_DATA
 		// We want to test the GUI representation. We set the goal as 70% of the
 		// max value so that we have a good chance to exceed the goal using random values.
-		goal = 0.7 * valueRange(getEnergyType()) / unit_conversion;
+		if (!goal.isNull())
+			goal = 0.7 * valueRange(getEnergyType()) / unit_conversion;
 #endif
 	}
 
@@ -731,6 +732,7 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 		{
 		case EnergyDevice::DIM_ADVANCED_DEVICE:
 			emit advancedChanged();
+			break;
 		case EnergyDevice::DIM_THRESHOLD_STATE:
 		{
 			QList<int> state = it.value().value<QList<int> >();

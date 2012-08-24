@@ -26,6 +26,14 @@ Page {
         id: mediaLinks
         source: myHomeModels.mediaLinks
         containers: [profile.uii]
+        onModelReset: {
+            // TODO: maybe we can optimize performance by setting opacity to 0
+            // for items that we don't want to show, thus avoiding a whole
+            // createObject()/destroy() cycle each time
+            // Anyway, this needs a more complex management and performance gains
+            // must be measurable.
+            privateProps.updateProfileView()
+        }
     }
 
     QtObject {
@@ -70,14 +78,6 @@ Page {
 
         function moveEnd() {
             bgMoveGrid.state = ""
-            // moved object goes on top of others
-            var oldz = privateProps.actualFavorite.z
-            privateProps.actualFavorite.z = Script.container.length - 1
-            for (var index = 0; index < Script.container.length; ++index) {
-                var obj = Script.container[index]
-                if (obj.z > oldz)
-                    obj.z -= 1
-            }
             privateProps.actualFavorite = null
         }
 
@@ -120,7 +120,7 @@ Page {
                 // grid where QuickLinks will be positioned
                 var refX = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).x + 0.5 * bgMoveGrid.width
                 var refY = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).y + 0.5 * bgMoveGrid.height
-                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, 'z': i, "refX": refX, "refY": refY, 'text': text, 'address': address, "itemObject": obj})
+                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, 'text': text, 'address': address, "itemObject": obj})
                 // grid margins are set to maximum quicklink size; this info is used to draw a grid in which
                 // QuickLinks don't overlap with other elements and don't disappear out of screen
                 privateProps.gridRightMargin = privateProps.gridRightMargin < instance.width ? instance.width : privateProps.gridRightMargin
@@ -220,28 +220,6 @@ Page {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: privateProps.unselectObj()
-                }
-            }
-
-            Item {
-                id: profileView
-
-                property variant model: mediaLinks
-
-                anchors.fill: parent
-
-                Component.onCompleted:privateProps.createProfileObjects()
-
-                Connections {
-                    target: profileView.model
-                    onModelReset: {
-                        // TODO: maybe we can optimize performance by setting opacity to 0
-                        // for items that we don't want to show, thus avoiding a whole
-                        // createObject()/destroy() cycle each time
-                        // Anyway, this needs a more complex management and performance gains
-                        // must be measurable.
-                        privateProps.updateProfileView()
-                    }
                 }
             }
 
@@ -449,4 +427,6 @@ Page {
             }
         }
     ]
+
+    Component.onCompleted: privateProps.createProfileObjects()
 }

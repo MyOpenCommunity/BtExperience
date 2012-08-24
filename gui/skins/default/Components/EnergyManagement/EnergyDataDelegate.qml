@@ -21,21 +21,20 @@ Column {
     QtObject {
         id: privateProps
 
-        function getIcon(energyType) {
+        function getIcon(energyType, state) {
             switch (energyType) {
-            case EnergyData.Electricity:
-                return "../../images/energy/ico_electricity.svg"
             case EnergyData.Water:
-                return "../../images/energy/ico_water.svg"
+                return state === "pressed" ? "../../images/energy/ico_water_p.svg" : "../../images/energy/ico_water.svg"
             case EnergyData.Gas:
-                return "../../images/energy/ico_gas.svg"
+                return state === "pressed" ? "../../images/energy/ico_gas_p.svg" : "../../images/energy/ico_gas.svg"
             case EnergyData.HotWater:
-                return "../../images/energy/ico_hot_water.svg"
+                return state === "pressed" ? "../../images/energy/ico_hot_water_p.svg" : "../../images/energy/ico_hot_water.svg"
             case EnergyData.Heat:
-                return "../../images/energy/ico_heating.svg"
+                return state === "pressed" ? "../../images/energy/ico_heating_p.svg" : "../../images/energy/ico_heating.svg"
             default:
-                console.log("EnergyDataDelegate, unknown energy type (" + energyType + "), use default icon")
-                return "../../images/energy/ico_electricity.svg"
+                if (energyType !== EnergyData.Electricity)
+                    console.log("EnergyDataDelegate, unknown energy type (" + energyType + "), use default icon")
+                return state === "pressed" ?  "../../images/energy/ico_electricity_p.svg" : "../../images/energy/ico_electricity.svg"
             }
         }
 
@@ -53,8 +52,9 @@ Column {
     onHeightChanged: delegate.view.height = height // for CardView usage
 
     ButtonThreeStates {
+        id: headerButton
         defaultImage: "../../images/energy/btn_colonna_grafico.svg"
-        pressedImage: "../../images/energy/btn_colonna_grafico.svg"
+        pressedImage: "../../images/energy/btn_colonna_grafico_p.svg"
         shadowImage: "../../images/energy/ombra_btn_colonna_grafico.svg"
 
         Row {
@@ -67,14 +67,14 @@ Column {
 
             SvgImage {
                 id: energyIcon
-                source: privateProps.getIcon(itemObject.energyType)
+                source: privateProps.getIcon(itemObject.energyType, headerButton.state)
             }
 
             UbuntuLightText {
                 id: topText
                 font.pixelSize: 14
                 text: "electricity"
-                color: "#5A5A5A"
+                color: headerButton.state === "pressed" ? "white" : "#5A5A5A"
             }
         }
         onClicked: delegate.headerClicked(mouse)
@@ -94,9 +94,15 @@ Column {
     }
 
     Column {
-        SvgImage {
-            source: "../../images/energy/colonna.svg"
-
+        Item {
+            width: columnBg.width
+            height: columnBg.height
+            SvgImage {
+                id: columnBg
+                opacity: 0.2
+                source: "../../images/energy/colonna.svg"
+                visible: logic.hasGoal()
+            }
             SvgImage {
                 anchors.bottom: parent.bottom
                 source: {
@@ -118,6 +124,7 @@ Column {
                 anchors.topMargin: parent.height - logic.goalSize(parent.height)
             }
         }
+
         SvgImage {
             source: "../../images/energy/ombra_btn_colonna_grafico.svg"
         }
