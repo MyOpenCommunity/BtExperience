@@ -21,7 +21,7 @@ MenuColumn {
             hasChild: true
             onClicked: {
                 if (itemObject.type === "object")
-                    column.loadColumn(itemObject.component, itemObject.component.name, itemObject.object)
+                    column.loadColumn(itemObject.component, itemObject.name, itemObject.object)
                 else
                     column.loadColumn(itemObject.component, itemObject.name)
             }
