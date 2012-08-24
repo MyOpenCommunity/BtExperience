@@ -5,8 +5,8 @@ import BtObjects 1.0
 MenuColumn {
     id: column
 
-    signal pressed
     signal requestMove
+    signal selected
 
     /* simply forwarding to the menu builtin focusLost function */
     function focusLost() {
@@ -19,6 +19,7 @@ MenuColumn {
 
         function startEdit() {
             theMenu.state = "toolbar"
+            column.selected()
         }
 
         name: dataModel.name
@@ -33,7 +34,6 @@ MenuColumn {
             column.columnClicked()
             column.loadColumn(mapping.getComponent(dataModel.objectId), "", dataModel)
         }
-        onPressed: column.pressed()
 
         Column {
             id: sidebar
@@ -64,7 +64,10 @@ MenuColumn {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: theMenu.editMenuItem()
+                    onClicked: {
+                        theMenu.editMenuItem()
+                        theMenu.state = ""
+                    }
                 }
             }
 

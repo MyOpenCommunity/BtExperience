@@ -80,8 +80,6 @@ Item {
                 // defined here
                 onFocusLost: roomItem.focusLost()
             }
-            // if I click on this menu item, other menu items must lose focus
-            onPressed: roomView.focusLost()
         }
     }
 
