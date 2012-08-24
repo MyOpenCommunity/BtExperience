@@ -7,7 +7,17 @@ Item {
     height: background.height
     width: background.width
 
+
+    // Use this property instead of settings the state. This is required because
+    // there are tree states: the default "", "pressed" and "selected". When the item
+    // is in the logical selected status, if the user clicks on the item we want
+    // to pass in the pressed status. For how the qml states works, when the user
+    // releases the clicked item, the status of the item will go in the default status,
+    // even if the starting state is the selected one. To avoid this behaviour, we
+    // expose the property isSelected and "block" the use of the states from the
+    // external of the item.
     property bool isSelected: false
+
     property bool editable: false
     property string name
     property alias description: textDescription.text
@@ -191,7 +201,8 @@ Item {
 
     states: [
         State {
-            name: "selected"
+            // Designed for internal use, not set from the extern of MenuItem. See comment on isSelected
+            name: "_selected"
             when: isSelected && !mousearea.pressed
             PropertyChanges { target: labelLoader; textColor: "#ffffff" }
             PropertyChanges { target: textDescription; color: "#ffffff" }
@@ -199,7 +210,8 @@ Item {
             PropertyChanges { target: background; source: "../images/common/menu_column_item_bg_selected.svg" }
         },
         State {
-            name: "pressed"
+            // Designed for internal use, not set from the extern of MenuItem. See comment on isSelected
+            name: "_pressed"
             when: mousearea.pressed
             PropertyChanges { target: labelLoader; textColor: "#ffffff" }
             PropertyChanges { target: textDescription; color: "#ffffff" }
