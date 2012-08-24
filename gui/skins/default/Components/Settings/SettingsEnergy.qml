@@ -50,6 +50,12 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
+                column.loadColumn(thresholdsComponent, name)
+            }
+        }
+        Component {
+            id: thresholdsComponent
+            SettingsEnergyThresholds {
             }
         }
     }
