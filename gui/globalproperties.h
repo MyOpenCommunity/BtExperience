@@ -11,6 +11,7 @@ class QDeclarativeView;
 class GuiSettings;
 class InputContextWrapper;
 class AudioVideoPlayer;
+class PhotoPlayer;
 
 #ifdef BT_MALIIT
 #include <QSharedPointer>
@@ -44,6 +45,8 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(GuiSettings *guiSettings READ getGuiSettings CONSTANT)
 	// The object to manage MPlayer from QML
 	Q_PROPERTY(AudioVideoPlayer *audioVideoPlayer READ getAudioVideoPlayer CONSTANT)
+	// The object to manage image lists
+	Q_PROPERTY(PhotoPlayer *photoPlayer READ getPhotoPlayer CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
 	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
@@ -58,6 +61,7 @@ public:
 	QObject *getInputWrapper() const;
 	GuiSettings *getGuiSettings() const;
 	AudioVideoPlayer *getAudioVideoPlayer() const;
+	PhotoPlayer *getPhotoPlayer() const;
 	QString getBasePath() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
@@ -90,6 +94,7 @@ private:
 	QDateTime last_press;
 	GuiSettings *settings;
 	AudioVideoPlayer *audioVideoPlayer;
+	PhotoPlayer *photoPlayer;
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
 	void maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings);

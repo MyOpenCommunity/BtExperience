@@ -9,7 +9,6 @@ Page {
 
     property variant model
     property int index
-    property variant item
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
@@ -50,7 +49,7 @@ Page {
     SvgImage {
         id: thePhoto
 
-        source: item.path
+        source: global.photoPlayer.fileName
         fillMode: Image.PreserveAspectFit
         anchors.fill: frame
     }
@@ -80,7 +79,7 @@ Page {
             leftMargin: 17
         }
 
-        onClicked: privateProps.goPrevTrack()
+        onClicked: global.photoPlayer.prevPhoto()
         status: 0
     }
 
@@ -125,7 +124,7 @@ Page {
                 interval: 4000 // TODO where to take this value?
                 running: false
                 repeat: true
-                onTriggered: privateProps.goNextTrack()
+                onTriggered: global.photoPlayer.nextPhoto()
             }
         }
 
@@ -159,7 +158,7 @@ Page {
             leftMargin: 4
         }
 
-        onClicked: privateProps.goNextTrack()
+        onClicked: global.photoPlayer.nextPhoto()
 
         status: 0
     }
@@ -211,37 +210,7 @@ Page {
         Stack.popPages(2)
     }
 
-    QtObject {
-        id: privateProps
-
-        function goNextTrack() {
-            var n = player.model.count
-            // note we start from 1, not 0
-            for (var i = 1; i < n; ++i) {
-                var k = (player.index + i) % n
-                var obj = player.model.getObject(k)
-                if (obj.fileType === player.item.fileType) {
-                    player.item = obj
-                    player.index = k
-                    break
-                }
-            }
-        }
-
-        function goPrevTrack() {
-            var n = player.model.count
-            // note we start from 1, not 0
-            for (var i = 1; i < n; ++i) {
-                var k = (player.index - i + n) % n
-                var obj = player.model.getObject(k)
-                if (obj.fileType === player.item.fileType) {
-                    player.item = obj
-                    player.index = k
-                    break
-                }
-            }
-        }
-    }
+    Component.onCompleted: global.photoPlayer.generatePlaylist(player.model, player.index)
 
     states: [
         State {

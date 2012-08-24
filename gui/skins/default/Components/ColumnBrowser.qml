@@ -186,7 +186,7 @@ MenuColumn {
                 }
                 case FileObject.Image:
                 {
-                    Stack.openPage("PhotoPlayer.qml", {"model": listModel, "item": itemObject, "index": (index + listModel.range[0])})
+                    Stack.openPage("PhotoPlayer.qml", {"model": listModel, "index": (index + listModel.range[0])})
                     break
                 }
                 case FileObject.Video:

@@ -1,7 +1,7 @@
 #include "globalproperties.h"
 #include "guisettings.h"
 #include "inputcontextwrapper.h"
-#include "audiovideoplayer.h"
+#include "player.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -26,8 +26,10 @@ GlobalProperties::GlobalProperties()
 	main_widget = NULL;
 	qmlRegisterUncreatableType<GuiSettings>("BtExperience", 1, 0, "GuiSettings", "");
 	qmlRegisterUncreatableType<AudioVideoPlayer>("BtExperience", 1, 0, "AudioVideoPlayer", "");
+	qmlRegisterUncreatableType<PhotoPlayer>("BtExperience", 1, 0, "PhotoPlayer", "");
 	settings = new GuiSettings(this);
 	audioVideoPlayer = new AudioVideoPlayer(this);
+	photoPlayer = new PhotoPlayer(this);
 
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -91,6 +93,11 @@ GuiSettings *GlobalProperties::getGuiSettings() const
 AudioVideoPlayer *GlobalProperties::getAudioVideoPlayer() const
 {
 	return audioVideoPlayer;
+}
+
+PhotoPlayer *GlobalProperties::getPhotoPlayer() const
+{
+	return photoPlayer;
 }
 
 QObject *GlobalProperties::getInputWrapper() const
