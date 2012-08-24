@@ -8,19 +8,43 @@ class DirectoryListModel;
 class ListManager;
 
 
-// TODO do we need a common ancestor?
+/*!
+	\brief A common ancestor for players. Contains logic for playlist management.
+*/
+class PlayListPlayer : public QObject
+{
+	Q_OBJECT
+
+protected:
+	explicit PlayListPlayer(QObject *parent = 0);
+
+	QString getCurrent() const { return current; }
+	void previous();
+	void next();
+	void generate(DirectoryListModel *model, int index);
+
+signals:
+	void currentChanged();
+
+protected slots:
+	virtual void updateCurrent();
+
+private:
+	ListManager *play_list;
+	QString current;
+};
 
 /*!
 	\brief A model to encapsulate logic for photo player
 */
-class PhotoPlayer : public QObject
+class PhotoPlayer : public PlayListPlayer
 {
 	Q_OBJECT
 
 	/*!
 		\brief The name of the image file to be rendered in QML
 	*/
-	Q_PROPERTY(QString fileName READ getFileName NOTIFY fileNameChanged)
+	Q_PROPERTY(QString fileName READ getCurrent NOTIFY fileNameChanged)
 
 public:
 	explicit PhotoPlayer(QObject *parent = 0);
@@ -29,23 +53,15 @@ public:
 	Q_INVOKABLE void prevPhoto();
 	Q_INVOKABLE void nextPhoto();
 
-	QString getFileName() const { return fileName; }
-
 signals:
+	// the following is needed because I didn't manage to compile if using currentChanged directly
 	void fileNameChanged();
-
-private slots:
-	void playedFileChanged();
-
-private:
-	ListManager *play_list;
-	QString fileName;
 };
 
 /*!
 	\brief A model to interface with MPlayer for audio and video players
 */
-class AudioVideoPlayer : public QObject
+class AudioVideoPlayer : public PlayListPlayer
 {
 	Q_OBJECT
 
@@ -94,7 +110,7 @@ public:
 	Q_INVOKABLE void incrementVolume();
 	Q_INVOKABLE void decrementVolume();
 
-	QObject *getMediaPlayer() const;
+	QObject *getMediaPlayer() const { return media_player; }
 	QString getCurrentTime() const;
 	QString getTotalTime() const;
 	QString getTrackName() const;
@@ -114,15 +130,13 @@ signals:
 
 private slots:
 	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);
-	void playListTrackChanged();
+	void play();
 	void trackInfoChanged();
 
 private:
 	QString getTimeString(const QVariant &value) const;
-	void play(const QString &file_path);
 
 	MultiMediaPlayer *media_player;
-	ListManager *play_list;
 	bool user_track_change_request;
 	int volume, percentage;
 	QVariant current_time_s, total_time_s;
