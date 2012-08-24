@@ -34,7 +34,8 @@ MenuColumn {
         name: qsTr("settings")
         hasChild: true
         onClicked: {
-            state = "selected"
+            if (!isSelected)
+                isSelected = true
             column.loadColumn(amplifierSettings, qsTr("settings"), column.dataModel)
         }
     }

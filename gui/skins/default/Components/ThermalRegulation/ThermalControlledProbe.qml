@@ -41,7 +41,7 @@ MenuColumn {
     }
 
     onChildDestroyed: {
-        modalityItem.state = ""
+        modalityItem.isSelected = false
     }
 
     onChildLoaded: {
@@ -94,8 +94,8 @@ MenuColumn {
         visible: is99zones
 
         onClicked: {
-            if (modalityItem.state == "")
-                modalityItem.state = "selected"
+            if (!modalityItem.isSelected)
+                modalityItem.isSelected = true
             var m = privateProps.pendingModality
             if (m === -1)
                 m = column.dataModel.probeStatus
