@@ -90,6 +90,9 @@ Item {
             width: 500
             rootColumn: roomItemComponent
             onRootColumnClicked: {
+                if (container.state === "highlight")
+                    return
+
                 container.state = "opened"
                 roomView.state = "menuOpened"
                 privateProps.currentMenu = container
@@ -100,10 +103,14 @@ Item {
                 onRequestMove: {
                     startMove(container)
                 }
-                onSelected: {
+                onRequestSelect: {
+                    if (container.state === "opened")
+                        return
+
                     privateProps.currentMenu = container
                     roomView.state = "menuHightlighted"
                     container.state = "highlight"
+                    container.rootObject.select()
                 }
                 ignoreUnknownSignals: true
             }
