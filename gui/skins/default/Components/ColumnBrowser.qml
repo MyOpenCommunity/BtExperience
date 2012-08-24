@@ -10,7 +10,9 @@ MenuColumn {
 
     property alias text: caption.text
     property alias paginator: paginator
-    property alias rootPath: listModel.rootPath
+    property alias rootPath: localModel.rootPath // not meaningful for UPnP
+    property bool upnp: false
+    property variant theModel: upnp ? upnpModel : localModel
 
     SvgImage {
         id: imageBg
@@ -32,7 +34,7 @@ MenuColumn {
             leftMargin: 10
         }
 
-        onClicked: listModel.exitDirectory()
+        onClicked: theModel.exitDirectory()
         status: 0
     }
 
@@ -55,7 +57,7 @@ MenuColumn {
 
         onClicked: {
             privateProps.activeButton = 3
-            listModel.filter = FileObject.Image | FileObject.Directory
+            theModel.filter = FileObject.Image | FileObject.Directory
         }
         status: privateProps.activeButton === 3
     }
@@ -78,7 +80,7 @@ MenuColumn {
 
         onClicked: {
             privateProps.activeButton = 2
-            listModel.filter = FileObject.Video | FileObject.Directory
+            theModel.filter = FileObject.Video | FileObject.Directory
         }
         status: privateProps.activeButton === 2
     }
@@ -101,7 +103,7 @@ MenuColumn {
 
         onClicked: {
             privateProps.activeButton = 1
-            listModel.filter = FileObject.Audio | FileObject.Directory
+            theModel.filter = FileObject.Audio | FileObject.Directory
         }
         status: privateProps.activeButton === 1
     }
@@ -124,7 +126,7 @@ MenuColumn {
 
         onClicked: {
             privateProps.activeButton = 0
-            listModel.filter = FileObject.All
+            theModel.filter = FileObject.All
         }
         status: privateProps.activeButton === 0
     }
@@ -170,7 +172,7 @@ MenuColumn {
         spacing: 5
 
         delegate: ColumnBrowserDelegate {
-            itemObject: listModel.getObject(index)
+            itemObject: theModel.getObject(index)
             onDelegateClicked: {
                 switch (itemObject.fileType)
                 {
@@ -181,38 +183,43 @@ MenuColumn {
                     // the index we need is the absolute index in the unfiltered model;
                     // the delegate index property is relative to actual page, so let's
                     // make some math to compute the right value
-                    Stack.openPage("AudioVideoPlayer.qml", {"model": listModel, "index": (index + listModel.range[0]), "isVideo": false})
+                    Stack.openPage("AudioVideoPlayer.qml", {"model": theModel, "index": (index + theModel.range[0]), "isVideo": false})
                     break
                 }
                 case FileObject.Image:
                 {
-                    Stack.openPage("PhotoPlayer.qml", {"model": listModel, "index": (index + listModel.range[0])})
+                    Stack.openPage("PhotoPlayer.qml", {"model": theModel, "index": (index + theModel.range[0])})
                     break
                 }
                 case FileObject.Video:
                 {
-                    Stack.openPage("AudioVideoPlayer.qml", {"model": listModel, "index": (index + listModel.range[0])})
+                    Stack.openPage("AudioVideoPlayer.qml", {"model": theModel, "index": (index + theModel.range[0])})
                     break
                 }
                 case FileObject.Directory:
                 {
-                    listModel.enterDirectory(itemObject.name)
+                    theModel.enterDirectory(itemObject.name)
                     break
                 }
                 default:
                 {
-                    console.log("Unexpected file type: " + itemObject.fileType + " for index: " + (index + listModel.range[0]))
+                    console.log("Unexpected file type: " + itemObject.fileType + " for index: " + (index + theModel.range[0]))
                 }
                 }
             }
         }
 
-        model: listModel
+        model: theModel
     }
 
-    
     DirectoryListModel {
-        id: listModel
+        id: localModel
+        filter: FileObject.All
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    UPnPListModel {
+        id: upnpModel
         filter: FileObject.All
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }

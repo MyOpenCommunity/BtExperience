@@ -39,7 +39,7 @@ MenuColumn {
             modelList.append({
                                  "itemText": qsTr("media server"),
                                  "props": {
-                                     "rootPath": ["media", "server1"],
+                                     "upnp": true,
                                      "text": qsTr("media server")}
                              })
             modelList.append({
