@@ -1,5 +1,5 @@
-#ifndef AUDIOVIDEOPLAYER_H
-#define AUDIOVIDEOPLAYER_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 
 #include "multimediaplayer.h"
@@ -7,6 +7,40 @@
 class DirectoryListModel;
 class ListManager;
 
+
+// TODO do we need a common ancestor?
+
+/*!
+	\brief A model to encapsulate logic for photo player
+*/
+class PhotoPlayer : public QObject
+{
+	Q_OBJECT
+
+	/*!
+		\brief The name of the image file to be rendered in QML
+	*/
+	Q_PROPERTY(QString fileName READ getFileName NOTIFY fileNameChanged)
+
+public:
+	explicit PhotoPlayer(QObject *parent = 0);
+
+	Q_INVOKABLE void generatePlaylist(DirectoryListModel *model, int index);
+	Q_INVOKABLE void prevPhoto();
+	Q_INVOKABLE void nextPhoto();
+
+	QString getFileName() const { return fileName; }
+
+signals:
+	void fileNameChanged();
+
+private slots:
+	void playedFileChanged();
+
+private:
+	ListManager *play_list;
+	QString fileName;
+};
 
 /*!
 	\brief A model to interface with MPlayer for audio and video players
@@ -95,4 +129,4 @@ private:
 	bool mute;
 };
 
-#endif // AUDIOVIDEOPLAYER_H
+#endif // PLAYER_H
