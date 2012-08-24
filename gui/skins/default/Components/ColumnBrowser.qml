@@ -174,6 +174,9 @@ MenuColumn {
         delegate: ColumnBrowserDelegate {
             itemObject: theModel.getObject(index)
             onDelegateClicked: {
+                var i = index;
+                if (!column.upnp) // local model uses absolute indexes
+                    i += theModel.range[0];
                 switch (itemObject.fileType)
                 {
                 case FileObject.Audio:
@@ -183,17 +186,17 @@ MenuColumn {
                     // the index we need is the absolute index in the unfiltered model;
                     // the delegate index property is relative to actual page, so let's
                     // make some math to compute the right value
-                    Stack.openPage("AudioVideoPlayer.qml", {"model": theModel, "index": (index + theModel.range[0]), "isVideo": false})
+                    Stack.openPage("AudioVideoPlayer.qml", {"model": theModel, "index": i, "isVideo": false})
                     break
                 }
                 case FileObject.Image:
                 {
-                    Stack.openPage("PhotoPlayer.qml", {"model": theModel, "index": (index + theModel.range[0])})
+                    Stack.openPage("PhotoPlayer.qml", {"model": theModel, "index": i})
                     break
                 }
                 case FileObject.Video:
                 {
-                    Stack.openPage("AudioVideoPlayer.qml", {"model": theModel, "index": (index + theModel.range[0])})
+                    Stack.openPage("AudioVideoPlayer.qml", {"model": theModel, "index": i})
                     break
                 }
                 case FileObject.Directory:
@@ -203,7 +206,7 @@ MenuColumn {
                 }
                 default:
                 {
-                    console.log("Unexpected file type: " + itemObject.fileType + " for index: " + (index + theModel.range[0]))
+                    console.log("Unexpected file type: " + itemObject.fileType + " for index: " + i + " (upnp: " + column.upnp + ")")
                 }
                 }
             }
