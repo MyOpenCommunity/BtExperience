@@ -43,7 +43,7 @@ Item {
                 }
             },
             State {
-                name: "menuSelected"
+                name: "menuOpened"
                 extend: "shown"
             },
             State {
@@ -90,8 +90,8 @@ Item {
             width: 500
             rootColumn: roomItemComponent
             onRootColumnClicked: {
-                container.state = "selected"
-                roomView.state = "menuSelected"
+                container.state = "opened"
+                roomView.state = "menuOpened"
                 privateProps.currentMenu = container
             }
 
@@ -113,7 +113,7 @@ Item {
 
             states: [
                 State {
-                    name: "selected"
+                    name: "opened"
                     PropertyChanges {
                         target: container
                         x: 0
@@ -136,11 +136,11 @@ Item {
             transitions: [
                 Transition {
                     from: ""
-                    to: "selected"
+                    to: "opened"
                     NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
                 },
                 Transition {
-                    from: "selected"
+                    from: "opened"
                     to: ""
                     SequentialAnimation {
                         NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
@@ -258,10 +258,10 @@ Item {
 
     states: [
         State {
-            name: "menuSelected"
+            name: "menuOpened"
             PropertyChanges {
                 target: darkRect
-                state: "menuSelected"
+                state: "menuOpened"
                 z: 9
             }
         },
