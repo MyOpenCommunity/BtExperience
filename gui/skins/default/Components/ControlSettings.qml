@@ -26,6 +26,7 @@ SvgImage {
         text: control.upperLabel
         font.pixelSize: 13
         anchors {
+            // TODO: use margins in percentage!
             top: parent.top
             topMargin: 5
             left: parent.left
