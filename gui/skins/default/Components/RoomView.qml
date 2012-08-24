@@ -22,45 +22,40 @@ Item {
 
         MouseArea {
             anchors.fill: parent
+            onClicked: {
+                if (darkRect.state === "menuHighlighted")
+                    privateProps.unselectObj()
+                else
+                    privateProps.closeMenu()
+            }
         }
 
         Behavior on opacity {
             NumberAnimation { duration: 200 }
         }
 
-        Rectangle {
-            border.color: "white"
-            border.width: 2
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            width: 30
-            height: 30
-            radius: 30
-            color: parent.color
-
-            UbuntuLightText {
-                anchors.centerIn: parent
-                text: "X"
-                color: "white"
-                font.pixelSize: 16
+        states: [
+            State {
+                name: "shown"
+                PropertyChanges {
+                    target: darkRect
+                    opacity: 0.6
+                }
+            },
+            State {
+                name: "menuSelected"
+                extend: "shown"
+            },
+            State {
+                name: "menuHighlighted"
+                extend: "shown"
             }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: privateProps.closeMenu()
-            }
-        }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: roomView.focusLost()
+        ]
     }
 
     function startMove(container) {
-        container.rootObject.focusLost()
+        privateProps.unselectObj()
+
         bgMoveGrid.selectedItem = container
         bgMoveGrid.state = "shown"
     }
@@ -105,6 +100,11 @@ Item {
                 onRequestMove: {
                     startMove(container)
                 }
+                onSelected: {
+                    privateProps.currentMenu = container
+                    roomView.state = "menuHightlighted"
+                    container.state = "highlight"
+                }
                 ignoreUnknownSignals: true
             }
 
@@ -122,6 +122,13 @@ Item {
                         // TODO: hardcoded and copied from SystemPage, to be fixed
                         width: 893 //- backButton.width - containerLeftMargin
                         height: 530
+                    }
+                },
+                State {
+                    name: "highlight"
+                    PropertyChanges {
+                        target: container
+                        z: 10
                     }
                 }
             ]
@@ -188,13 +195,23 @@ Item {
         gridBottomMargin: 50 // TODO: roomItem.height
         anchors.fill: parent
         z: roomView.z + 2 // must be on top of quicklinks
-        onMoveEnd: bgMoveGrid.state = ""
+        onMoveEnd: {
+            bgMoveGrid.selectedItem.state = ""
+            bgMoveGrid.state = ""
+        }
     }
 
     QtObject {
         id: privateProps
 
         property variant currentMenu: undefined
+
+        function unselectObj() {
+            privateProps.currentMenu.state = ""
+            privateProps.currentMenu = undefined
+            roomView.state = ""
+            roomView.focusLost()
+        }
 
         function closeMenu() {
             if (privateProps.currentMenu !== undefined)
@@ -244,7 +261,15 @@ Item {
             name: "menuSelected"
             PropertyChanges {
                 target: darkRect
-                opacity: 0.6
+                state: "menuSelected"
+                z: 9
+            }
+        },
+        State {
+            name: "menuHightlighted"
+            PropertyChanges {
+                target: darkRect
+                state: "menuHighlighted"
                 z: 9
             }
         }
