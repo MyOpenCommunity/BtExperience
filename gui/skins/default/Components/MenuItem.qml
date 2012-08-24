@@ -1,12 +1,10 @@
 import QtQuick 1.1
 import Components.Text 1.0
 
-
 Item {
     id: menuItem
     height: background.height
     width: background.width
-
 
     // Use this property instead of settings the state. This is required because
     // there are tree states: the default "", "pressed" and "selected". When the item
@@ -197,6 +195,18 @@ Item {
         onClicked: menuItem.clicked(menuItem)
         onPressed: menuItem.pressed(menuItem)
         onReleased: menuItem.released(menuItem)
+    }
+
+
+    onStateChanged: {
+        if (state === "")
+            return
+
+        for (var i = 0; i < states.length; ++i)
+            if (state === states[i].name)
+                return
+
+        console.log("Warning: the state -> " + state + " <- is not allowed!")
     }
 
     states: [
