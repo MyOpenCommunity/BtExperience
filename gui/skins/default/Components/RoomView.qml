@@ -172,8 +172,14 @@ Item {
                 privateProps.updateView()
             }
             else {
-                privateProps.closeMenu()
-                Script.modelChanged = true
+                if (roomView.state === "menuOpened") {
+                    privateProps.closeMenu()
+                    Script.modelChanged = true
+                }
+                else {
+                    privateProps.unselectObj()
+                    privateProps.updateView()
+                }
             }
         }
     }
