@@ -3,6 +3,12 @@ import Components 1.0
 import Components.Text 1.0
 
 MenuColumn {
+    id: column
+
+    onChildDestroyed: {
+        controlPanel.status = 0
+    }
+
     Column {
         SvgImage {
             source: "../../images/common/panel_switch.svg";
@@ -41,10 +47,23 @@ MenuColumn {
         }
 
         ControlSettings {
+            id: controlPanel
             upperLabel: qsTr("threshold 1")
             upperText: "2,20 kw"
             bottomLabel: qsTr("threshold 2")
             bottomText: "2,95 kw"
+            onEditClicked: {
+                column.loadColumn(panelComponent, dataModel.name, dataModel)
+                status = status === 0 ? 1 : 0
+            }
+
+            Component {
+                id: panelComponent
+                SettingsEnergySetThresholdsPanel {
+
+                }
+            }
+
         }
 
         SvgImage {

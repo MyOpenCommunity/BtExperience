@@ -27,6 +27,7 @@ ControlButton 1.0 ControlButton.qml
 ControlCall 1.0 ControlCall.qml
 ControlChoices 1.0 ControlChoices.qml
 ControlDateTime 1.0 ControlDateTime.qml
+ControlDoubleSpin 1.0 ControlDoubleSpin.qml
 ControlLeftRight 1.0 ControlLeftRight.qml
 ControlLeftRightWithTitle 1.0 ControlLeftRightWithTitle.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
