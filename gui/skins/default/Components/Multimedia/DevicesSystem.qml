@@ -34,6 +34,7 @@ MenuColumn {
                                  "itemText": qsTr("USB"),
                                  "model": columnBrowserDirectory,
                                  "props": {
+                                     "upnp": false,
                                      "rootPath": ["media", "usb1"],
                                      "text": qsTr("USB")}
                              })
@@ -48,6 +49,7 @@ MenuColumn {
                                  "itemText": qsTr("SD"),
                                  "model": columnBrowserDirectory,
                                  "props": {
+                                     "upnp": false,
                                      "rootPath": ["media", "sd1"],
                                      "text": qsTr("SD")}
                              })

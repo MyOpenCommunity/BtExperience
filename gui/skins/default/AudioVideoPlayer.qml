@@ -12,6 +12,7 @@ Page {
     property variant model
     property int index
     property bool isVideo: true
+    property bool upnp
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
@@ -449,7 +450,9 @@ Page {
         Stack.popPages(2)
     }
 
-    Component.onCompleted: global.audioVideoPlayer.generatePlaylist(player.model, player.index, player.model.count)
+    Component.onCompleted: player.upnp ?
+                               global.audioVideoPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count) :
+                               global.audioVideoPlayer.generatePlaylistLocal(player.model, player.index, player.model.count)
     Component.onDestruction: if (player.isVideo) global.audioVideoPlayer.terminate()
 
     states: [

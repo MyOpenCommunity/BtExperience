@@ -141,12 +141,12 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(this, SIGNAL(currentChanged()), SLOT(play()));
 }
 
-void AudioVideoPlayer::generatePlaylist(DirectoryListModel *model, int index, int total_files)
+void AudioVideoPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files)
 {
 	generate(model, index, total_files);
 }
 
-void AudioVideoPlayer::generatePlaylist(UPnPListModel *model, int index, int total_files)
+void AudioVideoPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files)
 {
 	generate(model, index, total_files);
 }
