@@ -3,6 +3,12 @@
 
 #include <QtDebug>
 
+
+namespace
+{
+	PagedFolderListModel *activeModel = 0;
+}
+
 XmlDevice *UPnPListModel::xml_device = NULL;
 
 
@@ -348,6 +354,7 @@ void FolderListModel::directoryChanged()
 PagedFolderListModel::PagedFolderListModel(PagedTreeBrowser *_browser, QObject *parent) :
 	TreeBrowserListModelBase(_browser, parent)
 {
+	activeModel = this;
 	start_index = item_count = current_index = 0;
 	browser = _browser;
 	pending_operation = discard_pending = false;
@@ -456,6 +463,9 @@ void PagedFolderListModel::directoryChanged()
 
 void PagedFolderListModel::gotFileList(EntryInfoList list)
 {
+	if (this != activeModel)
+		return;
+
 	pending_operation = false;
 
 	// update list size
