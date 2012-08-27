@@ -258,9 +258,6 @@ Page {
                 name: "mute"
                 PropertyChanges {
                     target: buttonMute
-                    defaultImageBg: "images/common/btn_player_comando.svg"
-                    pressedImageBg: "images/common/btn_player_comando_P.svg"
-                    shadowImage: "images/common/ombra_btn_mute.svg"
                     defaultImage: "images/common/ico_mute_on.svg"
                     pressedImage: "images/common/ico_mute_on.svg"
                     status: 0
