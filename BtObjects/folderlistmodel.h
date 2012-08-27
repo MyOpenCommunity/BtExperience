@@ -254,6 +254,8 @@ class PagedFolderListModel : public TreeBrowserListModelBase
 {
 	Q_OBJECT
 
+	Q_PROPERTY(int filter READ getFilter WRITE setFilter NOTIFY filterChanged)
+
 public:
 	PagedFolderListModel(PagedTreeBrowser *browser, QObject *parent = 0);
 
@@ -264,6 +266,10 @@ public:
 	virtual void setRange(QVariantList range);
 	virtual void setRootPath(QVariantList path);
 	virtual QVariantList getRootPath() const;
+	void setFilter(int mask);
+
+signals:
+	void filterChanged();
 
 protected:
 	virtual void setLoadingIfAsynchronous();
