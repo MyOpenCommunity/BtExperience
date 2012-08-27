@@ -190,7 +190,7 @@ MenuColumn {
                 }
                 case FileObject.Image:
                 {
-                    Stack.openPage("PhotoPlayer.qml", {"model": theModel, "index": i})
+                    Stack.openPage("PhotoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
                     break
                 }
                 case FileObject.Video:

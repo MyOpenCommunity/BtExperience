@@ -103,12 +103,12 @@ PhotoPlayer::PhotoPlayer(QObject *parent) :
 	connect(this, SIGNAL(currentChanged()), SIGNAL(fileNameChanged()));
 }
 
-void PhotoPlayer::generatePlaylist(DirectoryListModel *model, int index, int total_files)
+void PhotoPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files)
 {
 	generate(model, index, total_files);
 }
 
-void PhotoPlayer::generatePlaylist(UPnPListModel *model, int index, int total_files)
+void PhotoPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files)
 {
 	generate(model, index, total_files);
 }

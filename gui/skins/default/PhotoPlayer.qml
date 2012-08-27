@@ -9,6 +9,7 @@ Page {
 
     property variant model
     property int index
+    property bool upnp
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
@@ -210,7 +211,9 @@ Page {
         Stack.popPages(2)
     }
 
-    Component.onCompleted: global.photoPlayer.generatePlaylist(player.model, player.index, player.model.count)
+    Component.onCompleted: player.upnp ?
+                               global.photoPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count) :
+                               global.photoPlayer.generatePlaylistLocal(player.model, player.index, player.model.count)
 
     states: [
         State {

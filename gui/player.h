@@ -51,8 +51,12 @@ class PhotoPlayer : public PlayListPlayer
 public:
 	explicit PhotoPlayer(QObject *parent = 0);
 
-	Q_INVOKABLE void generatePlaylist(DirectoryListModel *model, int index, int total_files);
-	Q_INVOKABLE void generatePlaylist(UPnPListModel *model, int index, int total_files);
+	// as stated in documentation, it is possible to overload invokable methods
+	// to be used in QML with same name, but different arguments; of course it
+	// turned out to be a urban tale, so I changed names to be different: pay
+	// attention when using them in QML code
+	Q_INVOKABLE void generatePlaylistLocal(DirectoryListModel *model, int index, int total_files);
+	Q_INVOKABLE void generatePlaylistUPnP(UPnPListModel *model, int index, int total_files);
 	Q_INVOKABLE void prevPhoto();
 	Q_INVOKABLE void nextPhoto();
 
