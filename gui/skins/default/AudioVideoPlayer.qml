@@ -25,7 +25,7 @@ Page {
         visible: player.isVideo
         anchors {
             top: player.toolbar.bottom
-            topMargin: 15
+            topMargin: frameBg.height / 100 * 3.89
             horizontalCenter: parent.horizontalCenter
             horizontalCenterOffset: player.navigationBar.width / 2
         }
@@ -58,7 +58,7 @@ Page {
         source: "images/common/video_player_bg_box.svg"
         anchors {
             top: frameBg.bottom
-            topMargin: 10
+            topMargin: frameBg.height / 100 * 2.59
             horizontalCenter: frameBg.horizontalCenter
         }
     }
@@ -68,12 +68,12 @@ Page {
 
         text: global.audioVideoPlayer.trackName
         color: "white"
-        font.pixelSize: 14
+        font.pixelSize: frameBg.height / 100 * 3.63
         anchors {
             top: bottomBarBg.top
-            topMargin: 7
+            topMargin: frameBg.height / 100 * 1.81
             left: bottomBarBg.left
-            leftMargin: 17
+            leftMargin: frameBg.width / 100 * 2.48
         }
     }
 
@@ -83,12 +83,12 @@ Page {
         text: global.audioVideoPlayer.currentTime + " / " + global.audioVideoPlayer.totalTime
         color: "gray"
         horizontalAlignment: Text.AlignRight
-        font.pixelSize: 14
+        font.pixelSize: frameBg.height / 100 * 3.63
         anchors {
             top: bottomBarBg.top
-            topMargin: 7
+            topMargin: frameBg.height / 100 * 1.81
             right: bottomBarBg.right
-            rightMargin: 17
+            rightMargin: frameBg.width / 100 * 2.48
         }
     }
 
@@ -98,7 +98,7 @@ Page {
         source: "images/common/bg_tempo.svg"
         anchors {
             top: bottomBarBg.top
-            topMargin: 32
+            topMargin: frameBg.height / 100 * 8.29
             horizontalCenter: bottomBarBg.horizontalCenter
         }
 
@@ -138,9 +138,9 @@ Page {
         pressedImage: "images/common/ico_previous_track_P.svg"
         anchors {
             top: imageSlider.bottom
-            topMargin: 7
+            topMargin: frameBg.height / 100 * 1.81
             left: bottomBarBg.left
-            leftMargin: 17
+            leftMargin: frameBg.width / 100 * 2.48
         }
 
         onClicked: global.audioVideoPlayer.prevTrack()
@@ -160,7 +160,7 @@ Page {
         anchors {
             top: prevButton.top
             left: prevButton.right
-            leftMargin: 4
+            leftMargin: frameBg.width / 100 * 0.58
         }
 
         ButtonImageThreeStates {
@@ -212,7 +212,7 @@ Page {
         anchors {
             top: prevButton.top
             left: playButtonItem.right
-            leftMargin: 4
+            leftMargin: frameBg.width / 100 * 0.58
         }
 
         onClicked: global.audioVideoPlayer.nextTrack()
@@ -231,7 +231,7 @@ Page {
         anchors {
             top: prevButton.top
             left: nextButton.right
-            leftMargin: 13
+            leftMargin: frameBg.width / 100 * 1.90
         }
 
         onClicked: Stack.popPage()
@@ -250,7 +250,7 @@ Page {
         anchors {
             top: prevButton.top
             right: buttonMinus.left
-            rightMargin: 13
+            rightMargin: frameBg.width / 100 * 1.90
         }
         state: global.audioVideoPlayer.mute ? "mute" : ""
 
@@ -280,7 +280,7 @@ Page {
         anchors {
             top: prevButton.top
             right: buttonPlus.left
-            rightMargin: 4
+            rightMargin: frameBg.width / 100 * 0.58
         }
     }
 
@@ -297,7 +297,7 @@ Page {
         anchors {
             top: prevButton.top
             right: player.isVideo ? fullScreenToggle.left : bottomBarBg.right
-            rightMargin: player.isVideo ? 13 : 17
+            rightMargin: player.isVideo ? frameBg.width / 100 * 1.90 : frameBg.width / 100 * 2.48
         }
     }
 
@@ -315,7 +315,7 @@ Page {
         anchors {
             top: prevButton.top
             right: bottomBarBg.right
-            rightMargin: 17
+            rightMargin: frameBg.width / 100 * 2.48
         }
 
         onClicked: {
@@ -334,32 +334,32 @@ Page {
         opacity: 0
         anchors {
             bottom: bottomBarBg.top
-            bottomMargin: 11
+            bottomMargin: frameBg.height / 100 * 2.85
             right: bottomBarBg.right
         }
 
         UbuntuLightText {
             text: qsTr("mute")
             color: "white"
-            font.pixelSize: 14
+            font.pixelSize: frameBg.height / 100 * 3.63
             font.capitalization: Font.AllUppercase
             anchors {
                 top: volumePopup.top
-                topMargin: 7
+                topMargin: frameBg.height / 100 * 1.81
                 left: volumePopup.left
-                leftMargin: 17
+                leftMargin: frameBg.width / 100 * 2.48
             }
         }
 
         UbuntuLightText {
             text: global.audioVideoPlayer.volume
             color: "white"
-            font.pixelSize: 14
+            font.pixelSize: frameBg.height / 100 * 3.63
             anchors {
                 top: volumePopup.top
-                topMargin: 7
+                topMargin: frameBg.height / 100 * 1.81
                 right: volumePopup.right
-                rightMargin: 17
+                rightMargin: frameBg.width / 100 * 2.48
             }
         }
 
@@ -369,9 +369,9 @@ Page {
             source: global.audioVideoPlayer.mute ? "images/common/regola_volume/ico_mute.svg" : "images/common/regola_volume/ico_volume.svg"
             anchors {
                 top: volumePopup.top
-                topMargin: 36
+                topMargin: frameBg.height / 100 * 9.33
                 left: volumePopup.left
-                leftMargin: 17
+                leftMargin: frameBg.width / 100 * 2.48
             }
         }
 
@@ -380,7 +380,7 @@ Page {
             anchors {
                 verticalCenter: muteIcon.verticalCenter
                 left: muteIcon.right
-                leftMargin: 4
+                leftMargin: frameBg.width / 100 * 0.58
             }
 
             Rectangle {
@@ -475,8 +475,8 @@ Page {
                 target: imageSlider
                 source: "images/common/bg_tempo_fullscreen.svg"
                 anchors.topMargin: 0
-                anchors.leftMargin: 26
-                anchors.rightMargin: 128
+                anchors.leftMargin: frameBg.width / 100 * 3.80
+                anchors.rightMargin: frameBg.width / 100 * 18.69
             }
             AnchorChanges {
                 target: imageSlider
@@ -502,7 +502,7 @@ Page {
                 target: duration
                 anchors.topMargin: 0
                 anchors.rightMargin: 0
-                anchors.leftMargin: 7
+                anchors.leftMargin: frameBg.width / 100 * 1.02
             }
             AnchorChanges {
                 target: duration
