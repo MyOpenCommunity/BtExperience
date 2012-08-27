@@ -39,7 +39,7 @@ Rectangle {
     Component.onCompleted: {
         if (model.count > 0) {
             ok = true
-            global.photoPlayer.generatePlaylist(model, 0)
+            global.photoPlayer.generatePlaylist(model, 0, model.count)
         }
     }
 }

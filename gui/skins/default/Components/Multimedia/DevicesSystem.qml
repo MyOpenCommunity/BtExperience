@@ -20,7 +20,7 @@ MenuColumn {
             hasChild: true
             onDelegateClicked: {
                 var clickedItem = modelList.get(index)
-                column.loadColumn(columnBrowser, clickedItem.itemText, clickedItem, clickedItem.props)
+                column.loadColumn(clickedItem.model, clickedItem.itemText, clickedItem, clickedItem.props)
             }
         }
 
@@ -32,18 +32,21 @@ MenuColumn {
         Component.onCompleted: {
             modelList.append({
                                  "itemText": qsTr("USB"),
+                                 "model": columnBrowserDirectory,
                                  "props": {
                                      "rootPath": ["media", "usb1"],
                                      "text": qsTr("USB")}
                              })
             modelList.append({
                                  "itemText": qsTr("media server"),
+                                 "model": columnBrowserUpnpModel,
                                  "props": {
                                      "upnp": true,
                                      "text": qsTr("media server")}
                              })
             modelList.append({
                                  "itemText": qsTr("SD"),
+                                 "model": columnBrowserDirectory,
                                  "props": {
                                      "rootPath": ["media", "sd1"],
                                      "text": qsTr("SD")}
@@ -52,7 +55,12 @@ MenuColumn {
     }
 
     Component {
-        id: columnBrowser
-        ColumnBrowser {}
+        id: columnBrowserDirectory
+        ColumnBrowserDirectoryModel {}
+    }
+
+    Component {
+        id: columnBrowserUpnpModel
+        ColumnBrowserUpnpModel {}
     }
 }

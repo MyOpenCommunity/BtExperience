@@ -210,7 +210,7 @@ Page {
         Stack.popPages(2)
     }
 
-    Component.onCompleted: global.photoPlayer.generatePlaylist(player.model, player.index)
+    Component.onCompleted: global.photoPlayer.generatePlaylist(player.model, player.index, player.model.count)
 
     states: [
         State {

@@ -5,6 +5,7 @@
 #include "multimediaplayer.h"
 
 class DirectoryListModel;
+class UPnPListModel;
 class ListManager;
 
 
@@ -21,7 +22,8 @@ protected:
 	QString getCurrent() const { return current; }
 	void previous();
 	void next();
-	void generate(DirectoryListModel *model, int index);
+	void generate(DirectoryListModel *model, int index, int total_files);
+	void generate(UPnPListModel *model, int index, int total_files);
 
 signals:
 	void currentChanged();
@@ -30,7 +32,7 @@ protected slots:
 	virtual void updateCurrent();
 
 private:
-	ListManager *play_list;
+	ListManager *local_list, *upnp_list, *actual_list;
 	QString current;
 };
 
@@ -49,7 +51,8 @@ class PhotoPlayer : public PlayListPlayer
 public:
 	explicit PhotoPlayer(QObject *parent = 0);
 
-	Q_INVOKABLE void generatePlaylist(DirectoryListModel *model, int index);
+	Q_INVOKABLE void generatePlaylist(DirectoryListModel *model, int index, int total_files);
+	Q_INVOKABLE void generatePlaylist(UPnPListModel *model, int index, int total_files);
 	Q_INVOKABLE void prevPhoto();
 	Q_INVOKABLE void nextPhoto();
 
@@ -103,7 +106,8 @@ class AudioVideoPlayer : public PlayListPlayer
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
-	Q_INVOKABLE void generatePlaylist(DirectoryListModel *model, int index);
+	Q_INVOKABLE void generatePlaylist(DirectoryListModel *model, int index, int total_files);
+	Q_INVOKABLE void generatePlaylist(UPnPListModel *model, int index, int total_files);
 	Q_INVOKABLE void prevTrack();
 	Q_INVOKABLE void nextTrack();
 	Q_INVOKABLE void terminate();

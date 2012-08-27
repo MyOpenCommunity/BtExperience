@@ -9,22 +9,32 @@
 PlayListPlayer::PlayListPlayer(QObject *parent) :
 	QObject(parent)
 {
-	play_list = new FileListManager;
-	connect(play_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
+	actual_list = 0;
+	local_list = new FileListManager;
+	connect(local_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
+	upnp_list = new UPnpListManager(UPnPListModel::getXmlDevice());
+	connect(upnp_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
 }
 
 void PlayListPlayer::previous()
 {
-	play_list->previousFile();
+	if (actual_list)
+		actual_list->previousFile();
 }
 
 void PlayListPlayer::next()
 {
-	play_list->nextFile();
+	if (actual_list)
+		actual_list->nextFile();
 }
 
-void PlayListPlayer::generate(DirectoryListModel *model, int index)
+void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_files)
 {
+	Q_UNUSED(total_files);
+
+	// sets list to use since now
+	actual_list = local_list;
+
 	// saves old range to restore it later
 	QVariantList oldRange = model->getRange();
 
@@ -44,7 +54,7 @@ void PlayListPlayer::generate(DirectoryListModel *model, int index)
 	}
 
 	// saves retrieved data in internal play_list and seeks to actual selected file
-	FileListManager *list = static_cast<FileListManager *>(play_list);
+	FileListManager *list = static_cast<FileListManager *>(local_list);
 	list->setList(entry_list);
 	list->setCurrentIndex(index);
 
@@ -55,9 +65,29 @@ void PlayListPlayer::generate(DirectoryListModel *model, int index)
 	updateCurrent();
 }
 
+void PlayListPlayer::generate(UPnPListModel *model, int index, int total_files)
+{
+	// sets list to use since now
+	actual_list = upnp_list;
+
+	// needs file for setting starting file
+	FileObject *file = static_cast<FileObject *>(model->getObject(index));
+
+	// saves retrieved data in internal play_list and seeks to actual selected file
+	UPnpListManager *list = static_cast<UPnpListManager *>(upnp_list);
+	list->setStartingFile(file->getEntryInfo());
+	list->setCurrentIndex(index);
+	list->setTotalFiles(total_files);
+
+	// updates reference to current (emits currentChanged)
+	updateCurrent();
+}
+
 void PlayListPlayer::updateCurrent()
 {
-	QString candidate = play_list->currentFilePath();
+	if (!actual_list)
+		return;
+	QString candidate = actual_list->currentFilePath();
 	if (candidate == current)
 		return;
 	if (candidate.isEmpty())
@@ -73,9 +103,14 @@ PhotoPlayer::PhotoPlayer(QObject *parent) :
 	connect(this, SIGNAL(currentChanged()), SIGNAL(fileNameChanged()));
 }
 
-void PhotoPlayer::generatePlaylist(DirectoryListModel *model, int index)
+void PhotoPlayer::generatePlaylist(DirectoryListModel *model, int index, int total_files)
 {
-	generate(model, index);
+	generate(model, index, total_files);
+}
+
+void PhotoPlayer::generatePlaylist(UPnPListModel *model, int index, int total_files)
+{
+	generate(model, index, total_files);
 }
 
 void PhotoPlayer::prevPhoto()
@@ -106,9 +141,14 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(this, SIGNAL(currentChanged()), SLOT(play()));
 }
 
-void AudioVideoPlayer::generatePlaylist(DirectoryListModel *model, int index)
+void AudioVideoPlayer::generatePlaylist(DirectoryListModel *model, int index, int total_files)
 {
-	generate(model, index);
+	generate(model, index, total_files);
+}
+
+void AudioVideoPlayer::generatePlaylist(UPnPListModel *model, int index, int total_files)
+{
+	generate(model, index, total_files);
 }
 
 void AudioVideoPlayer::prevTrack()
