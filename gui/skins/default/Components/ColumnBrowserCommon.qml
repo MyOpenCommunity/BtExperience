@@ -10,9 +10,8 @@ MenuColumn {
 
     property alias text: caption.text
     property alias paginator: paginator
-    property alias rootPath: localModel.rootPath // not meaningful for UPnP
     property bool upnp: false
-    property variant theModel: upnp ? upnpModel : localModel
+    property variant theModel
 
     SvgImage {
         id: imageBg
@@ -213,17 +212,5 @@ MenuColumn {
         }
 
         model: theModel
-    }
-
-    DirectoryListModel {
-        id: localModel
-        filter: FileObject.All
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-    }
-
-    UPnPListModel {
-        id: upnpModel
-        filter: FileObject.All
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }
