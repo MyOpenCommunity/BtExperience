@@ -17,11 +17,9 @@ Item {
         target: model
         ignoreUnknownSignals: true
         onCountChanged: {
-            console.log("Model count changed")
             clipView.modelReset()
         }
         onContainersChanged: {
-            console.log("Model containers changed")
             clipView.modelReset()
         }
     }

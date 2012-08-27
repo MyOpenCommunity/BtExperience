@@ -5,8 +5,8 @@ import BtObjects 1.0
 MenuColumn {
     id: column
 
-    signal pressed
     signal requestMove
+    signal requestSelect
 
     /* simply forwarding to the menu builtin focusLost function */
     function focusLost() {
@@ -14,11 +14,15 @@ MenuColumn {
             theMenu.state = ""
     }
 
+    function select() {
+        theMenu.state = "toolbar"
+    }
+
     MenuItem {
         id: theMenu
 
         function startEdit() {
-            theMenu.state = "toolbar"
+            column.requestSelect()
         }
 
         name: dataModel.name
@@ -30,10 +34,12 @@ MenuColumn {
         onEditCompleted: dataModel.name = name
 
         onClicked: {
+            if (theMenu.state === "toolbar")
+                return
+
             column.columnClicked()
             column.loadColumn(mapping.getComponent(dataModel.objectId), "", dataModel)
         }
-        onPressed: column.pressed()
 
         Column {
             id: sidebar
@@ -42,6 +48,10 @@ MenuColumn {
             anchors {
                 top: parent.top
                 left: parent.right
+            }
+
+            Behavior on opacity {
+                NumberAnimation { target: sidebar; property: "opacity"; duration: 200;}
             }
 
             Rectangle {
@@ -93,10 +103,24 @@ MenuColumn {
             }
         }
 
+        // We rely on the state to be "toolbar" when the toolbar is open, but
+        // the MenuItem automatically changes state to "pressed".
+        // This hack is used to block interaction with the MenuItem and make
+        // things work.
+        MouseArea {
+            id: blockMouseInteractionOnToolbarState
+            anchors.fill: parent
+            visible: false
+        }
+
         states: [
             State {
                 name: "toolbar"
                 PropertyChanges { target: sidebar; opacity: 1 }
+                PropertyChanges {
+                    target: blockMouseInteractionOnToolbarState
+                    visible: true
+                }
             }
         ]
     }

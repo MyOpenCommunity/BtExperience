@@ -17,10 +17,10 @@ MenuColumn {
         name: qsTr("source")
         description: column.dataModel.currentSource === null ? qsTr("no active source") : column.dataModel.currentSource.name
         hasChild: true
-        isSelected: privateProps.currentElement === 0
+        isSelected: privateProps.currentIndex === 0
         onClicked: {
-            if (privateProps.currentElement !== 0)
-                privateProps.currentElement = 0
+            if (privateProps.currentIndex !== 0)
+                privateProps.currentIndex = 0
             column.loadColumn(sourceList, qsTr("source change"))
         }
     }
@@ -32,7 +32,7 @@ MenuColumn {
 
     QtObject {
         id: privateProps
-        property int currentElement: -1
+        property int currentIndex: -1
 
         function sourceSelected(sourceObj) {
             sourceSelect.description = sourceObj.name
@@ -134,9 +134,9 @@ MenuColumn {
             MenuItem {
                 name: qsTr("saved IP radios")
                 hasChild: true
-                isSelected: privateProps.currentElement === 1
+                isSelected: privateProps.currentIndex === 1
                 onClicked: {
-                    if (privateProps.currentElement !== 1)
+                    if (privateProps.currentIndex !== 1)
                         privateProps = 1
                     column.loadColumn(radioList, name, ipRadioColumn.objModel)
                 }
@@ -160,10 +160,10 @@ MenuColumn {
             MenuItem {
                 name: qsTr("browse")
                 hasChild: true
-                isSelected: privateProps.currentElement === 1
+                isSelected: privateProps.currentIndex === 1
                 onClicked: {
-                    if (privateProps.currentElement !== 1)
-                        privateProps.currentElement = 1
+                    if (privateProps.currentIndex !== 1)
+                        privateProps.currentIndex = 1
                     var comp = objModel.sourceType === SourceObject.FileSystem ? directoryBrowser : upnpBrowser
                     var props = {"rootPath": objModel.rootPath}
                     column.loadColumn(comp, name, mediaPlayerColumn.objModel, props)
@@ -246,5 +246,5 @@ MenuColumn {
             privateProps.sourceSelected(column.dataModel.currentSource)
     }
 
-    onChildDestroyed: privateProps.currentElement = -1
+    onChildDestroyed: privateProps.currentIndex = -1
 }

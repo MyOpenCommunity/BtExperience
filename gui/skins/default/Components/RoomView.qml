@@ -22,45 +22,40 @@ Item {
 
         MouseArea {
             anchors.fill: parent
+            onClicked: {
+                if (darkRect.state === "menuHighlighted")
+                    privateProps.unselectObj()
+                else
+                    privateProps.closeMenu()
+            }
         }
 
         Behavior on opacity {
             NumberAnimation { duration: 200 }
         }
 
-        Rectangle {
-            border.color: "white"
-            border.width: 2
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            width: 30
-            height: 30
-            radius: 30
-            color: parent.color
-
-            UbuntuLightText {
-                anchors.centerIn: parent
-                text: "X"
-                color: "white"
-                font.pixelSize: 16
+        states: [
+            State {
+                name: "shown"
+                PropertyChanges {
+                    target: darkRect
+                    opacity: 0.6
+                }
+            },
+            State {
+                name: "menuOpened"
+                extend: "shown"
+            },
+            State {
+                name: "menuHighlighted"
+                extend: "shown"
             }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: privateProps.closeMenu()
-            }
-        }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: roomView.focusLost()
+        ]
     }
 
     function startMove(container) {
-        container.rootObject.focusLost()
+        privateProps.unselectObj()
+
         bgMoveGrid.selectedItem = container
         bgMoveGrid.state = "shown"
     }
@@ -80,8 +75,6 @@ Item {
                 // defined here
                 onFocusLost: roomItem.focusLost()
             }
-            // if I click on this menu item, other menu items must lose focus
-            onPressed: roomView.focusLost()
         }
     }
 
@@ -97,8 +90,11 @@ Item {
             width: 500
             rootColumn: roomItemComponent
             onRootColumnClicked: {
-                container.state = "selected"
-                roomView.state = "menuSelected"
+                if (container.state === "highlight")
+                    return
+
+                container.state = "opened"
+                roomView.state = "menuOpened"
                 privateProps.currentMenu = container
             }
 
@@ -106,6 +102,15 @@ Item {
                 target: container.rootObject
                 onRequestMove: {
                     startMove(container)
+                }
+                onRequestSelect: {
+                    if (container.state === "opened")
+                        return
+
+                    privateProps.currentMenu = container
+                    roomView.state = "menuHightlighted"
+                    container.state = "highlight"
+                    container.rootObject.select()
                 }
                 ignoreUnknownSignals: true
             }
@@ -115,7 +120,7 @@ Item {
 
             states: [
                 State {
-                    name: "selected"
+                    name: "opened"
                     PropertyChanges {
                         target: container
                         x: 0
@@ -125,17 +130,24 @@ Item {
                         width: 893 //- backButton.width - containerLeftMargin
                         height: 530
                     }
+                },
+                State {
+                    name: "highlight"
+                    PropertyChanges {
+                        target: container
+                        z: 10
+                    }
                 }
             ]
 
             transitions: [
                 Transition {
                     from: ""
-                    to: "selected"
+                    to: "opened"
                     NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
                 },
                 Transition {
-                    from: "selected"
+                    from: "opened"
                     to: ""
                     SequentialAnimation {
                         NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
@@ -160,8 +172,14 @@ Item {
                 privateProps.updateView()
             }
             else {
-                privateProps.closeMenu()
-                Script.modelChanged = true
+                if (roomView.state === "menuOpened") {
+                    privateProps.closeMenu()
+                    Script.modelChanged = true
+                }
+                else {
+                    privateProps.unselectObj()
+                    privateProps.updateView()
+                }
             }
         }
     }
@@ -190,13 +208,23 @@ Item {
         gridBottomMargin: 50 // TODO: roomItem.height
         anchors.fill: parent
         z: roomView.z + 2 // must be on top of quicklinks
-        onMoveEnd: bgMoveGrid.state = ""
+        onMoveEnd: {
+            bgMoveGrid.selectedItem.state = ""
+            bgMoveGrid.state = ""
+        }
     }
 
     QtObject {
         id: privateProps
 
         property variant currentMenu: undefined
+
+        function unselectObj() {
+            privateProps.currentMenu.state = ""
+            privateProps.currentMenu = undefined
+            roomView.state = ""
+            roomView.focusLost()
+        }
 
         function closeMenu() {
             if (privateProps.currentMenu !== undefined)
@@ -243,10 +271,18 @@ Item {
 
     states: [
         State {
-            name: "menuSelected"
+            name: "menuOpened"
             PropertyChanges {
                 target: darkRect
-                opacity: 0.6
+                state: "menuOpened"
+                z: 9
+            }
+        },
+        State {
+            name: "menuHightlighted"
+            PropertyChanges {
+                target: darkRect
+                state: "menuHighlighted"
                 z: 9
             }
         }

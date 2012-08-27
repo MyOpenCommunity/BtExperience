@@ -129,7 +129,7 @@ MenuColumn {
             name: qsTr("text language")
             description: pageObject.names.get('LANGUAGE', global.guiSettings.language)
             hasChild: true
-            state: privateProps.currentIndex === 1 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 1
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
@@ -141,7 +141,7 @@ MenuColumn {
             name: qsTr("keyboard language")
             description: pageObject.names.get('LANGUAGE', 0)
             hasChild: true
-            state: privateProps.currentIndex === 2 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 2
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
@@ -153,7 +153,7 @@ MenuColumn {
             name: qsTr("temperature")
             description: "°C"
             hasChild: true
-            state: privateProps.currentIndex === 3 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 3
             onClicked: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
@@ -165,7 +165,7 @@ MenuColumn {
             name: qsTr("unit system")
             description: "metric"
             hasChild: true
-            state: privateProps.currentIndex === 4 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 4
             onClicked: {
                 if (privateProps.currentIndex !== 4)
                     privateProps.currentIndex = 4
@@ -177,7 +177,7 @@ MenuColumn {
             name: qsTr("currency")
             description: "euro €"
             hasChild: true
-            state: privateProps.currentIndex === 5 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 5
             onClicked: {
                 if (privateProps.currentIndex !== 5)
                     privateProps.currentIndex = 5
@@ -189,7 +189,7 @@ MenuColumn {
             name: qsTr("number separator")
             description: "0.000,00"
             hasChild: true
-            state: privateProps.currentIndex === 6 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 6
             onClicked: {
                 if (privateProps.currentIndex !== 6)
                     privateProps.currentIndex = 6

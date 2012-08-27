@@ -90,7 +90,7 @@ MenuColumn {
             name: qsTr("network state")
             description: qsTr("connected")
             hasChild: true
-            state: privateProps.currentIndex === 1 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 1
             status: privateProps.model.lanStatus ? 1 : 0
             onClicked: {
                 if (privateProps.currentIndex !== 1)
@@ -105,7 +105,7 @@ MenuColumn {
             name: qsTr("IP configuration")
             description: qsTr("DHCP")
             hasChild: true
-            state: privateProps.currentIndex === 2 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 2
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2

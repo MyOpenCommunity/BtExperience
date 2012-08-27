@@ -22,9 +22,10 @@ MenuItem {
         itemDelegate.delegateClicked(model.index)
     }
 
+    // See the comment on MenuItem about the states use.
     states: State {
-        name: "delegateselected"
-        extend: "selected"
+        name: "_delegateselected"
+        extend: "_selected"
         when: itemDelegate.ListView.isCurrentItem
     }
 }

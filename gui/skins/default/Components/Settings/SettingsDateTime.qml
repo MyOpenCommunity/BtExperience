@@ -93,7 +93,7 @@ MenuColumn {
             name: qsTr("date")
             description: privateProps.model.date
             hasChild: true
-            state: privateProps.currentIndex === 1 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 1
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
@@ -107,7 +107,7 @@ MenuColumn {
             name: qsTr("time")
             description: privateProps.model.time
             hasChild: true
-            state: privateProps.currentIndex === 2 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 2
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
@@ -121,7 +121,7 @@ MenuColumn {
             name: qsTr("timezone")
             description: pageObject.names.get('TIMEZONE', global.guiSettings.timezone)
             hasChild: true
-            state: privateProps.currentIndex === 3 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 3
             onClicked: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
@@ -135,7 +135,7 @@ MenuColumn {
             name: qsTr("daylight saving time")
             description: pageObject.names.get('SUMMER_TIME', privateProps.model.summerTime)
             hasChild: true
-            state: privateProps.currentIndex === 4 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 4
             onClicked: {
                 if (privateProps.currentIndex !== 4)
                     privateProps.currentIndex = 4

@@ -45,6 +45,6 @@ MenuColumn {
 
     Component {
         id: settingsEnergy
-        Item {}
+        SettingsEnergy {}
     }
 }

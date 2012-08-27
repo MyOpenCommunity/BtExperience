@@ -36,6 +36,7 @@ ControlOnOff 1.0 ControlOnOff.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
 ControlPullDown 1.0 ControlPullDown.qml
 ControlRadio 1.0 ControlRadio.qml
+ControlSettings 1.0 ControlSettings.qml
 ControlSlider 1.0 ControlSlider.qml
 ControlSliderMute 1.0 ControlSliderMute.qml
 ControlSpin 1.0 ControlSpin.qml

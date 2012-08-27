@@ -33,8 +33,8 @@ MenuColumn {
 
     function showAlarmLog(name) {
         column.loadColumn(antintrusionAlarms, column.alarmLogTitle, privateProps.model.alarms)
-        if (privateProps.currentElement != 1) {
-            privateProps.currentElement = 1
+        if (privateProps.currentIndex != 1) {
+            privateProps.currentIndex = 1
         }
     }
 
@@ -46,7 +46,7 @@ MenuColumn {
     }
 
     onChildDestroyed: {
-        privateProps.currentElement = -1
+        privateProps.currentIndex = -1
     }
 
     Timer {
@@ -65,7 +65,7 @@ MenuColumn {
 
         property bool actionPartialize: false
 
-        property int currentElement: -1
+        property int currentIndex: -1
 
         // 'Public' API
         function scenarioSelected(obj) {
@@ -151,7 +151,7 @@ MenuColumn {
         }
         MenuItem {
             property int numberOfAlarms: alarmsModel.count
-            state: privateProps.currentElement == 1 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 1
             name: column.alarmLogTitle
             hasChild: true
             onClicked: showAlarmLog()
@@ -175,13 +175,13 @@ MenuColumn {
         }
         MenuItem {
             id: scenarioItem
-            state: privateProps.currentElement == 2 ? "selected" : ""
+            isSelected: privateProps.currentIndex === 2
             name: qsTr("scenario")
             hasChild: true
             onClicked: {
                 column.loadColumn(antinstrusionScenarios, name, privateProps.model.scenarios)
-                if (privateProps.currentElement != 2)
-                    privateProps.currentElement = 2
+                if (privateProps.currentIndex != 2)
+                    privateProps.currentIndex = 2
             }
 
             // disabling rect for scenarios when system is enabled
