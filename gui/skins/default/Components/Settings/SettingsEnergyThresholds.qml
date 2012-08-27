@@ -2,10 +2,12 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 
-import "../../js/Stack.js" as Stack
-
 MenuColumn {
     id: column
+
+    onChildDestroyed: {
+        paginator.currentIndex = -1
+    }
 
     PaginatorList {
         id: paginator

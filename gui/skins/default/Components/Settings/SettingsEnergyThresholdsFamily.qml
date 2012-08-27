@@ -6,6 +6,10 @@ import Components 1.0
 MenuColumn {
     id: column
 
+    onChildDestroyed: {
+        paginator.currentIndex = -1
+    }
+
     PaginatorList {
         id: paginator
         delegate: MenuItemDelegate {
