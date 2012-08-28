@@ -29,6 +29,12 @@ function _deletePages(list) {
         list[i].destroy()
 }
 
+function _skipperFilename(filename) {
+    filename = "../Skippers/" + filename
+    var dotPos = filename.lastIndexOf('.')
+    return filename.slice(0, dotPos) + "Skipper.qml"
+}
+
 // Create a QML object from a given filename and push it on the stack
 function _openPage(filename, properties) {
     if (changing_page == true)
@@ -38,55 +44,88 @@ function _openPage(filename, properties) {
         changing_page = true
 
     var page = undefined
-    var deletingPages = []
+    var deletingObjects = []
     var parachute = 0
+
+    // Implement the "page skip" functionality.
+    //
+    // We want to avoid creating the full page, which may be very complex, and
+    // also the page skip functionality wasn't working before: we created the
+    // page with a parent, so it was shown for a short time frame.
+    //
+    // When a page load is requested, we check for the corresponding Skipper
+    // component in the Skippers/ subdirectory. This will create a temporary (and
+    // simple) object with only one interface function: pageSkip().
+    //
+    // The returned object must have two properties: 'page' and 'properties'.
+    //  "page": the filename of the page to be loaded instead. It must be a valid
+    //     file path, in the same format accepted by Stack.openPage().
+    //  "properties": the properties to set into the new page
     while (filename !== "") {
-        // now, Stack.js is in a js subdir so we have to trick the filename
-        var page_component = Qt.createComponent("../" + filename)
-        // The component status (like the Component.Ready that has 1 as value) is not currently
-        // available on js files that uses .pragma library declaration.
-        // This should be fixed in the future:
-        // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
-        if (page_component.status === 1) {
-            page = page_component.createObject(mainContainer, typeof properties !== 'undefined' ? properties : {})
-            if (page === null) {
-                logError('Error on creating the object for the page: ' + filename)
-                logError('Properties:')
-                for (var k in properties)
-                    logError('    ' + k + ": " + properties[k])
-                changePageDone()
-                _deletePages(deletingPages)
-                return null
+        var page_filename = filename
+        logDebug("Trying to get skipper: " + _skipperFilename(filename))
+        var skipper_component = Qt.createComponent(_skipperFilename(filename))
+        deletingObjects.push(skipper_component)
+        if (skipper_component.status === 1) {
+            // the skipper is present and ready, use it
+            var skipper = skipper_component.createObject(null)
+            if (skipper === null) {
+                logWarning("Could not create skipper object for page: " + filename)
+                // terminate the loop anyway
+                filename = ""
             }
 
-            var ret = page.pageSkip()
+            var ret = skipper.pageSkip()
             filename = ret["page"]
-            // remember to destroy all the pages we have created in the meanwhile
-            if (filename !== "") {
-                deletingPages.push(page)
-            }
+            deletingObjects.push(skipper)
             properties = ret["properties"]
         }
-        // Component.Error
-        else if (page_component.status === 3) {
-            logError("Error in creating page component: ")
-            logError(page_component.errorString())
-            changePageDone()
-            _deletePages(deletingPages)
-            return null
+        else {
+            logDebug("Page skipper not found: " + skipper_component.errorString())
+            // terminate the loop
+            filename = ""
         }
 
         ++parachute
         if (parachute >= 20) {
             logError("Maximum number skip pages reached, aborting")
             changePageDone()
-            _deletePages(deletingPages)
+            _deletePages(deletingObjects)
             return null
         }
     }
 
+    // now, Stack.js is in a js subdir so we have to trick the filename
+    logDebug("Trying to load page: " + "../" + page_filename)
+    var page_component = Qt.createComponent("../" + page_filename)
+    deletingObjects.push(page_component)
+    // The component status (like the Component.Ready that has 1 as value) is not currently
+    // available on js files that uses .pragma library declaration.
+    // This should be fixed in the future:
+    // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
+    if (page_component.status === 1) {
+        page = page_component.createObject(mainContainer, typeof properties !== 'undefined' ? properties : {})
+        if (page === null) {
+            logError('Error on creating the object for the page: ' + filename)
+            logError('Properties:')
+            for (var k in properties)
+                logError('    ' + k + ": " + properties[k])
+            changePageDone()
+            _deletePages(deletingObjects)
+            return null
+        }
+    }
+    // Component.Error
+    else if (page_component.status === 3) {
+        logError("Error in creating page component: ")
+        logError(page_component.errorString())
+        changePageDone()
+        _deletePages(deletingObjects)
+        return null
+    }
+
     pushPage(page)
-    _deletePages(deletingPages)
+    _deletePages(deletingObjects)
     return page
 }
 
