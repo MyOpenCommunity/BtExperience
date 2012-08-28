@@ -133,8 +133,8 @@ int ThermalControlledProbe::getSetpoint() const
 void ThermalControlledProbe::setSetpoint(int sp)
 {
 	if ((sp < getMinimumManualTemperature()) || (sp > getMaximumManualTemperature()))
-		return;
-	if (celsius2Bt(sp) != static_cast<unsigned>(setpoint))
+		dev->setManual(setpoint);
+	else
 		dev->setManual(celsius2Bt(sp));
 }
 

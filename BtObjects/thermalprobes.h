@@ -201,6 +201,8 @@ class ThermalControlledProbeFancoil : public ThermalControlledProbe
 		\brief Sets or gets the fancoil status (only for probes associated with a fancoil)
 	*/
 	Q_PROPERTY(FancoilSpeed fancoil READ getFancoil WRITE setFancoil NOTIFY fancoilChanged)
+	Q_PROPERTY(FancoilSpeed fancoilMinValue READ fancoilMinValue CONSTANT)
+	Q_PROPERTY(FancoilSpeed fancoilMaxValue READ fancoilMaxValue CONSTANT)
 
 	Q_ENUMS(FancoilSpeed)
 
@@ -208,10 +210,10 @@ public:
 	enum FancoilSpeed
 	{
 		// these values are the same of the ControlledProbeDevice
-		FancoilMin = 1,  /*!< Minimum speed */
+		FancoilAuto = 0, /*!< Automatic speed */
+		FancoilMin,      /*!< Minimum speed */
 		FancoilMed,      /*!< Medium speed */
-		FancoilMax,      /*!< Maximum speed */
-		FancoilAuto      /*!< Automatic speed */
+		FancoilMax       /*!< Maximum speed */
 	};
 
 	ThermalControlledProbeFancoil(QString name, QString key, CentralType centralType, ControlledProbeDevice *d);
@@ -222,6 +224,8 @@ public:
 	}
 
 	FancoilSpeed getFancoil() const;
+	FancoilSpeed fancoilMinValue() const { return FancoilAuto; }
+	FancoilSpeed fancoilMaxValue() const { return FancoilMax; }
 	void setFancoil(FancoilSpeed s);
 
 signals:

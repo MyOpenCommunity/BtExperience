@@ -9,6 +9,7 @@ Page {
 
     property variant model
     property int index
+    property bool upnp
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
@@ -20,7 +21,7 @@ Page {
         source: "images/common/bordo_finestra.svg"
         anchors {
             top: player.toolbar.bottom
-            topMargin: 15
+            topMargin: frameBg.height / 100 * 3.67
             horizontalCenter: parent.horizontalCenter
             horizontalCenterOffset: player.navigationBar.width / 2
         }
@@ -60,7 +61,7 @@ Page {
         source: "images/common/bg_player.svg"
         anchors {
             top: frameBg.bottom
-            topMargin: 10
+            topMargin: frameBg.height / 100 * 2.44
             horizontalCenter: frameBg.horizontalCenter
         }
     }
@@ -76,7 +77,7 @@ Page {
         anchors {
             verticalCenter: bottomBarBg.verticalCenter
             left: bottomBarBg.left
-            leftMargin: 17
+            leftMargin: frameBg.height / 100 * 2.81
         }
 
         onClicked: global.photoPlayer.prevPhoto()
@@ -96,7 +97,7 @@ Page {
         anchors {
             verticalCenter: bottomBarBg.verticalCenter
             left: prevButton.right
-            leftMargin: 4
+            leftMargin: frameBg.height / 100 * 0.67
         }
 
         ButtonImageThreeStates {
@@ -155,7 +156,7 @@ Page {
         anchors {
             verticalCenter: bottomBarBg.verticalCenter
             left: playButtonItem.right
-            leftMargin: 4
+            leftMargin: frameBg.height / 100 * 0.67
         }
 
         onClicked: global.photoPlayer.nextPhoto()
@@ -174,7 +175,7 @@ Page {
         anchors {
             verticalCenter: bottomBarBg.verticalCenter
             left: nextButton.right
-            leftMargin: 13
+            leftMargin: frameBg.height / 100 * 2.15
         }
 
         onClicked: Stack.popPage()
@@ -194,7 +195,7 @@ Page {
         anchors {
             verticalCenter: bottomBarBg.verticalCenter
             right: bottomBarBg.right
-            rightMargin: 17
+            rightMargin: frameBg.height / 100 * 2.81
         }
 
         onClicked: {
@@ -210,7 +211,9 @@ Page {
         Stack.popPages(2)
     }
 
-    Component.onCompleted: global.photoPlayer.generatePlaylist(player.model, player.index)
+    Component.onCompleted: player.upnp ?
+                               global.photoPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count) :
+                               global.photoPlayer.generatePlaylistLocal(player.model, player.index, player.model.count)
 
     states: [
         State {

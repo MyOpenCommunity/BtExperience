@@ -3,6 +3,12 @@
 
 #include <QtDebug>
 
+
+namespace
+{
+	PagedFolderListModel *activeModel = 0;
+}
+
 XmlDevice *UPnPListModel::xml_device = NULL;
 
 
@@ -348,6 +354,7 @@ void FolderListModel::directoryChanged()
 PagedFolderListModel::PagedFolderListModel(PagedTreeBrowser *_browser, QObject *parent) :
 	TreeBrowserListModelBase(_browser, parent)
 {
+	activeModel = this;
 	start_index = item_count = current_index = 0;
 	browser = _browser;
 	pending_operation = discard_pending = false;
@@ -420,6 +427,15 @@ QVariantList PagedFolderListModel::getRootPath() const
 	return QVariantList();
 }
 
+void PagedFolderListModel::setFilter(int mask)
+{
+	activeModel = this;
+	start_index = item_count = current_index = 0;
+	pending_operation = discard_pending = false;
+
+	TreeBrowserListModelBase::setFilter(mask);
+}
+
 int PagedFolderListModel::rowCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent);
@@ -456,9 +472,13 @@ void PagedFolderListModel::directoryChanged()
 
 void PagedFolderListModel::gotFileList(EntryInfoList list)
 {
+	if (this != activeModel)
+		return;
+
 	pending_operation = false;
 
 	// update list size
+	item_count = 0;
 	if (item_count != browser->getNumElements())
 	{
 		item_count = browser->getNumElements();
@@ -480,9 +500,15 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 
 	// if we need more entries, request them, otherwise signal completion
 	if (current_index < qMin(max_range, getCount()))
+	{
 		browser->getNextFileList();
+	}
 	else
+	{
 		setLoading(false);
+		reset();
+		emit countChanged();
+	}
 
 	discard_pending = false;
 }

@@ -6,24 +6,45 @@
 #include <QTime>
 
 
-PhotoPlayer::PhotoPlayer(QObject *parent) :
+PlayListPlayer::PlayListPlayer(QObject *parent) :
 	QObject(parent)
 {
-	play_list = new FileListManager;
-	connect(play_list, SIGNAL(currentFileChanged()), SLOT(playedFileChanged()));
+	actual_list = 0;
+	local_list = new FileListManager;
+	connect(local_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
+	upnp_list = new UPnpListManager(UPnPListModel::getXmlDevice());
+	connect(upnp_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
 }
 
-void PhotoPlayer::generatePlaylist(DirectoryListModel *model, int index)
+void PlayListPlayer::previous()
 {
+	if (actual_list)
+		actual_list->previousFile();
+}
+
+void PlayListPlayer::next()
+{
+	if (actual_list)
+		actual_list->nextFile();
+}
+
+void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_files)
+{
+	Q_UNUSED(total_files);
+
+	// sets list to use since now
+	actual_list = local_list;
+
 	// saves old range to restore it later
 	QVariantList oldRange = model->getRange();
+
 	// here, index is absolute, so removes range
 	model->setRange(QVariantList() << -1 << -1);
 
 	// needs file to know file type (needs to select files of the same type)
 	FileObject *file = static_cast<FileObject *>(model->getObject(index));
 
-	// creates list of files to play
+	// creates list of files (of the same type) to play
 	EntryInfoList entry_list;
 	for (int i = 0; i < model->getCount(); ++i)
 	{
@@ -33,46 +54,78 @@ void PhotoPlayer::generatePlaylist(DirectoryListModel *model, int index)
 	}
 
 	// saves retrieved data in internal play_list and seeks to actual selected file
-	FileListManager *list = static_cast<FileListManager *>(play_list);
+	FileListManager *list = static_cast<FileListManager *>(local_list);
 	list->setList(entry_list);
 	list->setCurrentIndex(index);
-
-	// saves the photo to show
-	fileName = play_list->currentFilePath();
 
 	// restores range (model belongs to QML!)
 	model->setRange(oldRange);
 
-	// now, shows the photo
-	emit fileNameChanged();
+	// updates reference to current (emits currentChanged)
+	updateCurrent();
+}
+
+void PlayListPlayer::generate(UPnPListModel *model, int index, int total_files)
+{
+	// sets list to use since now
+	actual_list = upnp_list;
+
+	// needs file for setting starting file
+	FileObject *file = static_cast<FileObject *>(model->getObject(index));
+
+	// saves retrieved data in internal play_list and seeks to actual selected file
+	UPnpListManager *list = static_cast<UPnpListManager *>(upnp_list);
+	list->setStartingFile(file->getEntryInfo());
+	list->setCurrentIndex(index);
+	list->setTotalFiles(total_files);
+
+	// updates reference to current (emits currentChanged)
+	updateCurrent();
+}
+
+void PlayListPlayer::updateCurrent()
+{
+	if (!actual_list)
+		return;
+	QString candidate = actual_list->currentFilePath();
+	if (candidate == current)
+		return;
+	if (candidate.isEmpty())
+		return;
+	current = candidate;
+	emit currentChanged();
+}
+
+
+PhotoPlayer::PhotoPlayer(QObject *parent) :
+	PlayListPlayer(parent)
+{
+	connect(this, SIGNAL(currentChanged()), SIGNAL(fileNameChanged()));
+}
+
+void PhotoPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files)
+{
+	generate(model, index, total_files);
+}
+
+void PhotoPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files)
+{
+	generate(model, index, total_files);
 }
 
 void PhotoPlayer::prevPhoto()
 {
-	play_list->previousFile();
+	previous();
 }
 
 void PhotoPlayer::nextPhoto()
 {
-	play_list->nextFile();
-}
-
-void PhotoPlayer::playedFileChanged()
-{
-	QString current = play_list->currentFilePath();
-
-	if (current.isEmpty() || current == fileName)
-	{
-		// nothing to play
-		return;
-	}
-	fileName = current;
-	emit fileNameChanged();
+	next();
 }
 
 
 AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
-	QObject(parent)
+	PlayListPlayer(parent)
 {
 	user_track_change_request = false;
 	volume = 100;
@@ -85,56 +138,29 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SLOT(trackInfoChanged()));
 	connect(media_player, SIGNAL(currentSourceChanged(QString)), SIGNAL(trackNameChanged()));
 
-	play_list = new FileListManager;
-	connect(play_list, SIGNAL(currentFileChanged()), SLOT(playListTrackChanged()));
+	connect(this, SIGNAL(currentChanged()), SLOT(play()));
 }
 
-QObject *AudioVideoPlayer::getMediaPlayer() const
+void AudioVideoPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files)
 {
-	return media_player;
+	generate(model, index, total_files);
 }
 
-void AudioVideoPlayer::generatePlaylist(DirectoryListModel *model, int index)
+void AudioVideoPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files)
 {
-	// saves old range to restore it later
-	QVariantList oldRange = model->getRange();
-	// here, index is absolute, so removes range
-	model->setRange(QVariantList() << -1 << -1);
-
-	// needs file to know file type (needs to select files of the same type)
-	FileObject *file = static_cast<FileObject *>(model->getObject(index));
-
-	// creates list of files to play
-	EntryInfoList entry_list;
-	for (int i = 0; i < model->getCount(); ++i)
-	{
-		FileObject *fo = static_cast<FileObject *>(model->getObject(i));
-		if (file->getFileType() == fo->getFileType())
-			entry_list << fo->getEntryInfo();
-	}
-
-	// saves retrieved data in internal play_list and seeks to actual selected file
-	FileListManager *list = static_cast<FileListManager *>(play_list);
-	list->setList(entry_list);
-	list->setCurrentIndex(index);
-
-	// plays the file
-	play(file->getPath());
-
-	// restores range (model belongs to QML!)
-	model->setRange(oldRange);
+	generate(model, index, total_files);
 }
 
 void AudioVideoPlayer::prevTrack()
 {
 	user_track_change_request = true;
-	play_list->previousFile();
+	previous();
 }
 
 void AudioVideoPlayer::nextTrack()
 {
 	user_track_change_request = true;
-	play_list->nextFile();
+	next();
 }
 
 void AudioVideoPlayer::terminate()
@@ -178,24 +204,14 @@ void AudioVideoPlayer::decrementVolume()
 void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state)
 {
 	if (new_state == MultiMediaPlayer::Stopped && !user_track_change_request)
-		play_list->nextFile();
+		next();
 	user_track_change_request = false;
 }
 
-void AudioVideoPlayer::playListTrackChanged()
-{
-	if (play_list->currentFilePath().isEmpty())
-	{
-		// nothing to play
-		return;
-	}
-	play(play_list->currentFilePath());
-}
-
-void AudioVideoPlayer::play(const QString &file_path)
+void AudioVideoPlayer::play()
 {
 	user_track_change_request = true;
-	media_player->setCurrentSource(file_path);
+	media_player->setCurrentSource(getCurrent());
 	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)
 		media_player->play();
 }
@@ -235,7 +251,7 @@ void AudioVideoPlayer::trackInfoChanged()
 	QVariantMap track_info = media_player->getTrackInfo();
 
 	int total = 0;
-	int current = 0;
+	QVariant actual_total = 0;
 
 	if (track_info.contains("total_time"))
 	{
@@ -243,14 +259,20 @@ void AudioVideoPlayer::trackInfoChanged()
 		QTime v = t.toTime();
 		if (v.isValid())
 		{
-			if (total_time_s != t)
-			{
-				total_time_s = t;
-				emit totalTimeChanged();
-			}
+			if (actual_total != t)
+				actual_total = t;
 			total = v.second() + 60 * v.minute() + 60 * 60 * v.hour();
 		}
 	}
+
+	if (total_time_s != actual_total)
+	{
+		total_time_s = actual_total;
+		emit totalTimeChanged();
+	}
+
+	int current = 0;
+	QVariant actual_current = 0;
 
 	if (track_info.contains("current_time"))
 	{
@@ -258,13 +280,16 @@ void AudioVideoPlayer::trackInfoChanged()
 		QTime v = c.toTime();
 		if (v.isValid())
 		{
-			if (current_time_s != c)
-			{
-				current_time_s = c;
-				emit currentTimeChanged();
-			}
+			if (actual_current != c)
+				actual_current = c;
 			current = v.second() + 60 * v.minute() + 60 * 60 * v.hour();
 		}
+	}
+
+	if (current_time_s != actual_current)
+	{
+		current_time_s = actual_current;
+		emit currentTimeChanged();
 	}
 
 	if (total == 0)

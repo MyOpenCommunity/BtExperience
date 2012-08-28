@@ -30,9 +30,6 @@ MenuColumn {
     }
 
     function okClicked() {
-        if (privateProps.pendingModality !== dataModel.probeStatus) {
-            dataModel.probeStatus = privateProps.pendingModality
-        }
         closeColumn()
     }
 
@@ -115,7 +112,12 @@ MenuColumn {
             visible: is99zones
             onVisibleChanged: if (!visible) height = 0
             onCancelClicked: column.cancelClicked()
-            onOkClicked: column.okClicked()
+            onOkClicked: {
+                if (dataModel.probeStatus !== privateProps.pendingModality) {
+                    dataModel.probeStatus = privateProps.pendingModality
+                }
+                column.okClicked()
+            }
         }
     }
 
@@ -126,7 +128,12 @@ MenuColumn {
             visible: is99zones
             onVisibleChanged: if (!visible) height = 0
             onCancelClicked: column.cancelClicked()
-            onOkClicked: column.okClicked()
+            onOkClicked:  {
+                if (dataModel.probeStatus !== privateProps.pendingModality) {
+                    dataModel.probeStatus = privateProps.pendingModality
+                }
+                column.okClicked()
+            }
         }
     }
 
@@ -147,12 +154,12 @@ MenuColumn {
                 visible: isFancoil()
                 text: pageObject.names.get('FANCOIL_SPEED', rootAutoComponent.speed)
                 onLeftClicked: {
-                    if (rootAutoComponent.speed <= 1)
+                    if (rootAutoComponent.speed <= dataModel.fancoilMinValue)
                         return
                     rootAutoComponent.speed -= 1
                 }
                 onRightClicked: {
-                    if (rootAutoComponent.speed >= 4)
+                    if (rootAutoComponent.speed >= dataModel.fancoilMaxValue)
                         return
                     rootAutoComponent.speed += 1
                 }
@@ -167,6 +174,9 @@ MenuColumn {
                 onOkClicked: {
                     if (isFancoil())
                         column.dataModel.fancoil = rootAutoComponent.speed
+                    if (dataModel.probeStatus !== privateProps.pendingModality) {
+                        dataModel.probeStatus = privateProps.pendingModality
+                    }
                     column.okClicked()
                 }
             }
@@ -202,12 +212,12 @@ MenuColumn {
                 visible: isFancoil()
                 text: pageObject.names.get('FANCOIL_SPEED', rootManualComponent.speed)
                 onLeftClicked: {
-                    if (rootManualComponent.speed <= 1)
+                    if (rootManualComponent.speed <= dataModel.fancoilMinValue)
                         return
                     rootManualComponent.speed -= 1
                 }
                 onRightClicked: {
-                    if (rootManualComponent.speed >= 4)
+                    if (rootManualComponent.speed >= dataModel.fancoilMaxValue)
                         return
                     rootManualComponent.speed += 1
                 }
@@ -223,7 +233,7 @@ MenuColumn {
                 onOkClicked: {
                     if (isFancoil())
                         column.dataModel.fancoil = rootManualComponent.speed
-                    dataModel.setpoint = setpoint
+                    dataModel.setpoint = setpoint // sets manual mode, too
                     column.okClicked()
                 }
             }
