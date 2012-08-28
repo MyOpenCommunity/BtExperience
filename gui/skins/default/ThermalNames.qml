@@ -50,7 +50,6 @@ QtObject {
         container['SWING'][SplitAdvancedProgram.SwingInvalid] = qsTr("")
 
         container['FANCOIL_SPEED'] = []
-        container['FANCOIL_SPEED'][0] = ""
         container['FANCOIL_SPEED'][ThermalControlledProbeFancoil.FancoilMin] = qsTr("min")
         container['FANCOIL_SPEED'][ThermalControlledProbeFancoil.FancoilMed] = qsTr("med")
         container['FANCOIL_SPEED'][ThermalControlledProbeFancoil.FancoilMax] = qsTr("max")
