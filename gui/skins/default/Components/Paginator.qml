@@ -64,12 +64,8 @@ Item {
     }
 
     // Needed when the model changes, eg. in antintrusion the alarms may be
-    // removed from the model
-    onTotalPagesChanged: {
-        if (privateProps.currentPage > paginator.totalPages && paginator.totalPages > 0)
-            privateProps.currentPage = paginator.totalPages
-    }
-
+    // removed from the model; moving to first page
+    onTotalPagesChanged: privateProps.currentPage = privateProps.offset = 1
 
     Row {
         id: buttonRow
