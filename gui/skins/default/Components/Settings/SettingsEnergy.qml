@@ -34,12 +34,20 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("energy consumption goals")
+            name: qsTr("consumption goals")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
+
+                column.loadColumn(goalsComponent, name)
+            }
+
+            Component {
+                id: goalsComponent
+                SettingsEnergyGoals {
+                }
             }
         }
 
@@ -52,10 +60,11 @@ MenuColumn {
                     privateProps.currentIndex = 3
                 column.loadColumn(thresholdsComponent, name)
             }
-        }
-        Component {
-            id: thresholdsComponent
-            SettingsEnergyThresholds {
+
+            Component {
+                id: thresholdsComponent
+                SettingsEnergyThresholds {
+                }
             }
         }
     }

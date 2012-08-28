@@ -1,6 +1,8 @@
 import QtQuick 1.1
 
 Item {
+    // TODO: we need to insert a background, and take care of it in the calculation
+    // below (because the background will be a child of this item).
     id: column
     width: 212
     height: paginator.height * paginator.visible + privateProps.currentPageSize
