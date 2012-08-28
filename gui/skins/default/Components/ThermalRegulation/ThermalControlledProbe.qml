@@ -30,9 +30,6 @@ MenuColumn {
     }
 
     function okClicked() {
-        if (privateProps.pendingModality !== dataModel.probeStatus) {
-            dataModel.probeStatus = privateProps.pendingModality
-        }
         closeColumn()
     }
 
@@ -115,7 +112,12 @@ MenuColumn {
             visible: is99zones
             onVisibleChanged: if (!visible) height = 0
             onCancelClicked: column.cancelClicked()
-            onOkClicked: column.okClicked()
+            onOkClicked: {
+                if (dataModel.probeStatus !== privateProps.pendingModality) {
+                    dataModel.probeStatus = privateProps.pendingModality
+                }
+                column.okClicked()
+            }
         }
     }
 
@@ -126,7 +128,12 @@ MenuColumn {
             visible: is99zones
             onVisibleChanged: if (!visible) height = 0
             onCancelClicked: column.cancelClicked()
-            onOkClicked: column.okClicked()
+            onOkClicked:  {
+                if (dataModel.probeStatus !== privateProps.pendingModality) {
+                    dataModel.probeStatus = privateProps.pendingModality
+                }
+                column.okClicked()
+            }
         }
     }
 
@@ -167,6 +174,9 @@ MenuColumn {
                 onOkClicked: {
                     if (isFancoil())
                         column.dataModel.fancoil = rootAutoComponent.speed
+                    if (dataModel.probeStatus !== privateProps.pendingModality) {
+                        dataModel.probeStatus = privateProps.pendingModality
+                    }
                     column.okClicked()
                 }
             }
@@ -223,7 +233,7 @@ MenuColumn {
                 onOkClicked: {
                     if (isFancoil())
                         column.dataModel.fancoil = rootManualComponent.speed
-                    dataModel.setpoint = setpoint
+                    dataModel.setpoint = setpoint // sets manual mode, too
                     column.okClicked()
                 }
             }
