@@ -67,7 +67,7 @@ Item {
     // removed from the model
     onTotalPagesChanged: {
         // if totalPages is less than currentPage sets currentPage to totalPages
-        if (privateProps.totalPages < privateProps.currentPage)
+        if (privateProps.totalPages < privateProps.currentPage && privateProps.totalPages > 0)
             privateProps.currentPage = privateProps.totalPages
 
         // now we need to adjust the offset
@@ -91,6 +91,7 @@ Item {
             privateProps.offset = privateProps.currentPage + privateProps.numSlots - privateProps.totalPages
             return
         }
+
     }
 
     Row {
