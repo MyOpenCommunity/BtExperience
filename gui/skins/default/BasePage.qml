@@ -30,20 +30,6 @@ Image {
         page.state = "alert"
     }
 
-    // Hook to implement the "page skip" functionality.
-    //
-    // This function is called each time a new page is created and before it is
-    // shown; in case the 'page' field is not empty, then that page is loaded
-    // instead of the current one.
-    // The 'page' field should be a valid file path, in the same format accepted
-    // by Stack.openPage().
-    //
-    // \return JS dictionary with two fields: 'page' the page to be loaded,
-    // 'properties' the properties to be passed to the new page
-    function pageSkip() {
-        return {"page": "", "properties": {}}
-    }
-
     function closeAlert() {
         closePopup()
     }

@@ -7,13 +7,6 @@ Page {
     id: systems
     source: "images/bg2.jpg"
 
-    function pageSkip() {
-        if (systemsModel.count === 1) {
-            return {"page": privateProps.getTarget(systemsModel.getObject(0).id), "properties": {}}
-        }
-        return {"page": "", "properties": {}}
-    }
-
     text: qsTr("systems")
     showSystemsButton: false
 
