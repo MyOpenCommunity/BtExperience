@@ -20,13 +20,11 @@ Item {
     function showPage(requestedPage) {
         var pageSize = 0
         var pageNumber = 1
-        for (var i = 1; i < column.children.length; i++)
-        {
+        for (var i = 1; i < column.children.length; i++) {
             var child = column.children[i]
             var y = pageSize
             pageSize = pageSize + child.height
-            if (pageSize > column.maxHeight)
-            {
+            if (pageSize > column.maxHeight) {
                 // current item led to overflow, account to next page
                 y = 0
                 pageSize = child.height
