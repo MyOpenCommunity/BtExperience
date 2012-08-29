@@ -96,6 +96,10 @@ Page {
         }
 
         function createProfileObjects() {
+            // here we compute the ref point for QuickLinks; essentially, this is the center of the moving
+            // grid where QuickLinks will be positioned
+            var refX = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).x + 0.5 * bgMoveGrid.width
+            var refY = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).y + 0.5 * bgMoveGrid.height
             for (var i = 0; i < mediaLinks.count; ++i) {
                 var obj = mediaLinks.getObject(i);
                 var text = obj.name
@@ -116,10 +120,6 @@ Page {
 
                 // x and y are absolute coordinates
                 var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
-                // here we compute the ref point for QuickLinks; essentially, this is the center of the moving
-                // grid where QuickLinks will be positioned
-                var refX = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).x + 0.5 * bgMoveGrid.width
-                var refY = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).y + 0.5 * bgMoveGrid.height
                 var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, 'text': text, 'address': address, "itemObject": obj})
                 // grid margins are set to maximum quicklink size; this info is used to draw a grid in which
                 // QuickLinks don't overlap with other elements and don't disappear out of screen
@@ -428,5 +428,7 @@ Page {
         }
     ]
 
-    Component.onCompleted: privateProps.createProfileObjects()
+    // we need update instead of create because model is reset a couple of times
+    // before Component completes loading
+    Component.onCompleted: privateProps.updateProfileView()
 }
