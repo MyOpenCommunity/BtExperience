@@ -72,7 +72,6 @@ function _openPage(filename, properties) {
     while (filename !== "") {
         var page_filename = filename
         var skipper_component = Qt.createComponent(_skipperFilename(filename))
-        deletingObjects.push(skipper_component)
         if (skipper_component.status === 1) {
             logDebug("Found page skipper: " + _skipperFilename(filename))
             // the skipper is present and ready, use it
@@ -104,7 +103,6 @@ function _openPage(filename, properties) {
 
     // now, Stack.js is in a js subdir so we have to trick the filename
     var page_component = Qt.createComponent("../" + page_filename)
-    deletingObjects.push(page_component)
     // The component status (like the Component.Ready that has 1 as value) is not currently
     // available on js files that uses .pragma library declaration.
     // This should be fixed in the future:
