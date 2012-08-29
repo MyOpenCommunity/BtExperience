@@ -27,7 +27,7 @@ function _addPageName(props, filename) {
         props['_pageName'] = page_name
 }
 
-function _deletePages(list) {
+function _deleteObjects(list) {
     for (var i = 0; i < list.length; ++i)
         list[i].destroy()
 }
@@ -96,7 +96,7 @@ function _openPage(filename, properties) {
         if (parachute >= 20) {
             logError("Maximum number skip pages reached, aborting")
             changePageDone()
-            _deletePages(deletingObjects)
+            _deleteObjects(deletingObjects)
             return null
         }
     }
@@ -117,7 +117,7 @@ function _openPage(filename, properties) {
             for (var k in properties)
                 logError('    ' + k + ": " + properties[k])
             changePageDone()
-            _deletePages(deletingObjects)
+            _deleteObjects(deletingObjects)
             return null
         }
     }
@@ -126,12 +126,12 @@ function _openPage(filename, properties) {
         logError("Error in creating page component: ")
         logError(page_component.errorString())
         changePageDone()
-        _deletePages(deletingObjects)
+        _deleteObjects(deletingObjects)
         return null
     }
 
     pushPage(page)
-    _deletePages(deletingObjects)
+    _deleteObjects(deletingObjects)
     return page
 }
 
