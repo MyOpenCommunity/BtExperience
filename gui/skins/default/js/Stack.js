@@ -14,14 +14,17 @@ var changing_page = false
 
 // Create a QML object from a given filename and push it on the stack
 function openPage(filename, properties) {
-    // automatically set _pageName from component filename
-    var page_name = filename.split('.')[0]
     if (properties === undefined)
         properties = {}
-    if (properties['_pageName'] === undefined)
-        properties['_pageName'] = page_name
-
+    // automatically set _pageName from component filename
+    _addPageName(properties, filename)
     return _openPage(filename, properties)
+}
+
+function _addPageName(props, filename) {
+    var page_name = filename.split('.')[0]
+    if (props['_pageName'] === undefined)
+        props['_pageName'] = page_name
 }
 
 function _deletePages(list) {
@@ -104,7 +107,9 @@ function _openPage(filename, properties) {
     // This should be fixed in the future:
     // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
     if (page_component.status === 1) {
-        page = page_component.createObject(mainContainer, typeof properties !== 'undefined' ? properties : {})
+        // Properly set _pageName
+        _addPageName(properties, page_filename)
+        page = page_component.createObject(mainContainer, properties)
         if (page === null) {
             logError('Error on creating the object for the page: ' + filename)
             logError('Properties:')
