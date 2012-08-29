@@ -258,6 +258,8 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QStri
 	connect(&trim_cache, SIGNAL(timeout()), this, SLOT(trimCache()));
 
 #if TEST_ENERGY_DATA
+	thresholds = QVariantList() << 2.2 << 3.80;
+
 	automatic_updates.setInterval(5000);
 	connect(&automatic_updates, SIGNAL(timeout()), this, SLOT(testAutomaticUpdates()));
 #endif

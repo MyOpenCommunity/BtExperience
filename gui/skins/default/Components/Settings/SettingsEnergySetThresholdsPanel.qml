@@ -3,6 +3,8 @@ import Components 1.0
 import Components.Text 1.0
 import BtObjects 1.0
 
+import "../../js/formatting.js" as Formatting
+
 MenuColumn {
     id: column
     Item {
@@ -14,11 +16,10 @@ MenuColumn {
             source: "../../images/termo/comando_data-ora/bg_comando_data-ora.svg"
         }
 
-
         UbuntuLightText {
             id: labelThreshold1
             color: "black"
-            text: qsTr("threshold 1")
+            text: qsTr("threshold 1") + " ("  + dataModel.currentUnit + ")"
             font.pixelSize: 13
             anchors {
                 top: parent.top
@@ -30,8 +31,36 @@ MenuColumn {
 
         ControlDoubleSpin {
             id: spinThreshold1
-            leftText: "2"
-            rightText: "20"
+            property int intPart: Math.floor(dataModel.thresholds[0])
+            property int decPart: (dataModel.thresholds[0] - Math.floor(dataModel.thresholds[0])) * 100
+
+            leftText: Formatting.padNumber(intPart, 2)
+            rightText: Formatting.padNumber(decPart, 2)
+            onLeftMinusClicked: {
+                if (intPart > 0)
+                    intPart -= 1
+            }
+            onLeftPlusClicked: {
+                intPart += 1
+            }
+            onRightMinusClicked: {
+                if (decPart > 0)
+                    decPart -= 1
+                else if (decPart == 0 && intPart > 0) {
+                    decPart = 99
+                    intPart -= 1
+                }
+            }
+
+            onRightPlusClicked: {
+                if (decPart < 99) {
+                    decPart += 1
+                }
+                else if (decPart === 99) {
+                    decPart = 0
+                    intPart += 1
+                }
+            }
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: labelThreshold1.bottom
@@ -42,7 +71,7 @@ MenuColumn {
         UbuntuLightText {
             id: labelThreshold2
             color: "black"
-            text: qsTr("threshold 2")
+            text: qsTr("threshold 2") + " ("  + dataModel.currentUnit + ")"
             font.pixelSize: 13
             anchors {
                 top: spinThreshold1.bottom
@@ -54,8 +83,37 @@ MenuColumn {
 
         ControlDoubleSpin {
             id: spinThreshold2
-            leftText: "2"
-            rightText: "95"
+            property int intPart: Math.floor(dataModel.thresholds[1])
+            property int decPart: (dataModel.thresholds[1] - Math.floor(dataModel.thresholds[1])) * 100
+
+            leftText: Formatting.padNumber(intPart, 2)
+            rightText: Formatting.padNumber(decPart, 2)
+            onLeftMinusClicked: {
+                if (intPart > 0)
+                    intPart -= 1
+            }
+            onLeftPlusClicked: {
+                intPart += 1
+            }
+            onRightMinusClicked: {
+                if (decPart > 0)
+                    decPart -= 1
+                else if (decPart == 0 && intPart > 0) {
+                    decPart = 99
+                    intPart -= 1
+                }
+            }
+
+            onRightPlusClicked: {
+                if (decPart < 99) {
+                    decPart += 1
+                }
+                else if (decPart === 99) {
+                    decPart = 0
+                    intPart += 1
+                }
+            }
+
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: labelThreshold2.bottom
@@ -72,7 +130,11 @@ MenuColumn {
         }
 
         onCancelClicked: column.closeColumn()
-        onOkClicked: column.closeColumn()
+        onOkClicked: {
+            dataModel.thresholds = [spinThreshold1.intPart + spinThreshold1.decPart / 100,
+                                    spinThreshold2.intPart + spinThreshold2.decPart / 100]
+            column.closeColumn()
+        }
     }
 
 }

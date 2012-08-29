@@ -49,9 +49,9 @@ MenuColumn {
         ControlSettings {
             id: controlPanel
             upperLabel: qsTr("threshold 1")
-            upperText: "2,20 kw"
+            upperText: dataModel.thresholds[0] + " " + dataModel.currentUnit
             bottomLabel: qsTr("threshold 2")
-            bottomText: "2,95 kw"
+            bottomText: dataModel.thresholds[1] + " " + dataModel.currentUnit
             onEditClicked: {
                 column.loadColumn(panelComponent, dataModel.name, dataModel)
                 status = status === 0 ? 1 : 0
