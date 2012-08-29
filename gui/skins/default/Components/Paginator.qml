@@ -66,10 +66,33 @@ Item {
     // Needed when the model changes, eg. in antintrusion the alarms may be
     // removed from the model
     onTotalPagesChanged: {
-        if (privateProps.currentPage > paginator.totalPages && paginator.totalPages > 0)
-            privateProps.currentPage = paginator.totalPages
-    }
+        // if totalPages is less than currentPage sets currentPage to totalPages
+        if (privateProps.totalPages < privateProps.currentPage && privateProps.totalPages > 0)
+            privateProps.currentPage = privateProps.totalPages
 
+        // now we need to adjust the offset
+        if (privateProps.totalPages <= privateProps.numSlots) {
+            privateProps.offset = privateProps.currentPage
+            return
+        }
+
+        // computes window center
+        var center = Math.ceil(privateProps.numSlots / 2)
+
+        // checks if left window side is valid, if not adjusts offset
+        if (privateProps.currentPage < center) {
+            // moves window to the right
+            privateProps.offset = privateProps.currentPage
+            return
+        }
+
+        // checks if right window side is valid, if not adjusts offset
+        if (privateProps.currentPage + privateProps.numSlots - center > privateProps.totalPages) {
+            privateProps.offset = privateProps.currentPage + privateProps.numSlots - privateProps.totalPages
+            return
+        }
+
+    }
 
     Row {
         id: buttonRow
