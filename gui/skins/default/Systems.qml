@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import "js/Stack.js" as Stack
+import "js/Systems.js" as Script
 
 Page {
     id: systems
@@ -15,36 +16,9 @@ Page {
         source: myHomeModels.systems
     }
 
-    QtObject {
-        id: privateProps
-
-        // TODO: find a way to squash together related subsystems (eg. air
-        // conditioning and thermal regulation)
-        // Also, we need to add things like messages.
-        function getTarget(systemId) {
-            switch (systemId) {
-            case Container.IdScenarios:
-                return "Scenarios.qml"
-            case Container.IdLights:
-                return "Lighting.qml"
-            case Container.IdAutomation:
-                return "Automation.qml"
-            case Container.IdAirConditioning:
-            case Container.IdThermalRegulation:
-                return "ThermalRegulation.qml"
-            case Container.IdLoadControl:
-            case Container.IdSupervision:
-            case Container.IdEnergyData:
-                return "EnergyManagement.qml"
-            case Container.IdVideoDoorEntry:
-                return "VideoDoorEntry.qml"
-            case Container.IdSoundDiffusion:
-                return "SoundDiffusion.qml"
-            case Container.IdAntintrusion:
-                return "Antintrusion.qml"
-            }
-        }
-    }
+    // TODO: find a way to squash together related subsystems (eg. air
+    // conditioning and thermal regulation)
+    // Also, we need to add things like messages.
 
     Loader {
         id: viewLoader
@@ -72,7 +46,7 @@ Page {
                 source: itemObject.image
                 label: itemObject.description
 
-                onClicked: Stack.openPage(privateProps.getTarget(itemObject.id))
+                onClicked: Stack.openPage(Script.getTarget(itemObject.id))
             }
 
             delegateSpacing: 20
@@ -91,7 +65,7 @@ Page {
                 source: itemObject.image
                 label: itemObject.description
 
-                onClicked: Stack.openPage(privateProps.getTarget(itemObject.id))
+                onClicked: Stack.openPage(Script.getTarget(itemObject.id))
             }
 
             model: systemsModel
