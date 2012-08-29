@@ -66,10 +66,10 @@ function _openPage(filename, properties) {
     //  "properties": the properties to set into the new page
     while (filename !== "") {
         var page_filename = filename
-        logDebug("Trying to get skipper: " + _skipperFilename(filename))
         var skipper_component = Qt.createComponent(_skipperFilename(filename))
         deletingObjects.push(skipper_component)
         if (skipper_component.status === 1) {
+            logDebug("Found page skipper: " + _skipperFilename(filename))
             // the skipper is present and ready, use it
             var skipper = skipper_component.createObject(null)
             if (skipper === null) {
@@ -84,7 +84,6 @@ function _openPage(filename, properties) {
             properties = ret["properties"]
         }
         else {
-            logDebug("Page skipper not found: " + skipper_component.errorString())
             // terminate the loop
             filename = ""
         }
@@ -99,7 +98,6 @@ function _openPage(filename, properties) {
     }
 
     // now, Stack.js is in a js subdir so we have to trick the filename
-    logDebug("Trying to load page: " + "../" + page_filename)
     var page_component = Qt.createComponent("../" + page_filename)
     deletingObjects.push(page_component)
     // The component status (like the Component.Ready that has 1 as value) is not currently
@@ -200,6 +198,10 @@ function backToHome() {
 }
 
 function changePageDone() {
+    // This function is called twice on each page change, small optimization
+    if (!changing_page)
+        return
+
     for (var i = 0; i < stack.length; i++) {
         if (i !== current_index)
             stack[i].visible = false
@@ -209,5 +211,5 @@ function changePageDone() {
     }
     stack.length = current_index + 1
     changing_page = false
+    logDebug("Opening page: " + stack[current_index]._pageName)
 }
-
