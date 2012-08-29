@@ -2,6 +2,7 @@ import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
 
+import "../js/formatting.js" as Formatting
 
 Item {
     id: control
@@ -33,14 +34,6 @@ Item {
         }
     }
 
-    function formatNumberLength(num, length) {
-        var r = "" + num;
-        while (r.length < length) {
-            r = "0" + r;
-        }
-        return r;
-    }
-
     Loader {
         id: loader
         sourceComponent: twoFields ? twoFieldsComponent : threeFieldsComponent
@@ -60,8 +53,8 @@ Item {
             onRightPlusClicked: itemObject.minutes += 1
             onLeftMinusClicked: itemObject.hours -= 1
             onRightMinusClicked: itemObject.minutes -= 1
-            leftText: formatNumberLength(leftColumnValue, 2)
-            rightText: formatNumberLength(centerColumnValue, 2)
+            leftText: Formatting.padNumber(leftColumnValue, 2)
+            rightText: Formatting.padNumber(centerColumnValue, 2)
         }
     }
 
@@ -193,7 +186,7 @@ Item {
             UbuntuLightText {
                 id: leftText
 
-                text: formatNumberLength(leftColumnValue, 2)
+                text: Formatting.padNumber(leftColumnValue, 2)
                 color: "#5b5b5b"
                 font.pixelSize: 22
                 anchors.horizontalCenter: buttonLeftMinus.horizontalCenter
@@ -214,7 +207,7 @@ Item {
             UbuntuLightText {
                 id: centerText
 
-                text: formatNumberLength(centerColumnValue, 2) + (mode === 1 ? "" : "'")
+                text: Formatting.padNumber(centerColumnValue, 2) + (mode === 1 ? "" : "'")
                 color: "#5b5b5b"
                 font.pixelSize: 22
                 anchors.horizontalCenter: buttonCenterMinus.horizontalCenter
@@ -235,7 +228,7 @@ Item {
             UbuntuLightText {
                 id: rightText
 
-                text: formatNumberLength(rightColumnValue, 2) + (mode === 1 ? "" : "\"")
+                text: Formatting.padNumber(rightColumnValue, 2) + (mode === 1 ? "" : "\"")
                 color: "#5b5b5b"
                 font.pixelSize: 22
                 anchors.horizontalCenter: buttonRightMinus.horizontalCenter
