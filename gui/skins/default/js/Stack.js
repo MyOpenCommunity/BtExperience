@@ -32,6 +32,11 @@ function _deletePages(list) {
         list[i].destroy()
 }
 
+// Retrieve the Skipper file path
+//
+// Conventionally, Skipper components are located in the Skippers/ directory
+// and the 'Skipper' suffix is added to the given page file name.
+// Example: The page skipper for 'Systems.qml' page is called 'SystemsSkipper.qml'
 function _skipperFilename(filename) {
     filename = "../Skippers/" + filename
     var dotPos = filename.lastIndexOf('.')
