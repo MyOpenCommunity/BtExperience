@@ -71,4 +71,73 @@ Page {
             model: systemsModel
         }
     }
+
+    Component.onCompleted: {
+        var containers = {}
+        var objKeys = function (obj) {
+            var keys = [];
+
+            for(var key in obj)
+                if(obj.hasOwnProperty(key))
+                    keys.push(key);
+
+            return keys;
+        }
+
+        for (var i = 0; i < systemsModel.count; ++i) {
+            var obj = systemsModel.getObject(i)
+            // Squash together similar systems. Since they may have different
+            // images and descriptions, we need to give a priority in case there
+            // are multiple items.
+            //
+            // These are the items in order of priority as implemented right now:
+            //  * Thermal regulation - Air conditioning
+            //  * Energy data - Load control - Supervision
+            switch (obj.containerId) {
+            case Container.IdThermalRegulation:
+            {
+                delete containers[Container.IdAirConditioning]
+                containers[Container.IdThermalRegulation] = undefined
+                break
+            }
+
+            case Container.IdAirConditioning:
+            {
+                if (!(Container.IdThermalRegulation in containers))
+                    containers[Container.IdAirConditioning] = undefined
+                break
+            }
+
+            case Container.IdEnergyData:
+            {
+                delete containers[Container.IdSupervision]
+                delete containers[Container.IdLoadControl]
+                containers[Container.IdEnergyData] = undefined
+                break
+            }
+
+            case Container.IdLoadControl:
+            {
+                if (!(Container.IdEnergyData in containers)) {
+                    delete containers[Container.IdSupervision]
+                    containers[Container.IdLoadControl] = undefined
+                }
+
+                break
+            }
+
+            case Container.IdSupervision:
+            {
+                if (!(Container.IdEnergyData in containers || Container.IdLoadControl in containers)) {
+                    containers[Container.IdSupervision] = undefined
+                }
+                break
+            }
+
+            default:
+                containers[obj.containerId] = undefined
+            }
+        }
+        systemsModel.containers = objKeys(containers)
+    }
 }
