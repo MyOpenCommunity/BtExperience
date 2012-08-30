@@ -19,5 +19,9 @@ function getTarget(systemId) {
         return "SoundDiffusion.qml"
     case Container.IdAntintrusion:
         return "Antintrusion.qml"
+    case Container.IdMessages:
+        return "Messages.qml"
+    default:
+        return ""
     }
 }
