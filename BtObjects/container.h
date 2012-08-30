@@ -50,6 +50,7 @@ public:
 		IdSettings = 12,
 		IdFloors = 13,
 		IdAmbient = 14,
+		IdMessages = 15,
 		IdRooms = 100,
 		IdProfile = 101
 	};

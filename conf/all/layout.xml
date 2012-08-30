@@ -70,6 +70,10 @@
 		<ist uii="11" img="images/systems/carichi.jpg">
 		</ist>
 	</container>
+	<container id="15" descr="messages">
+		<ist uii="15" img="images/systems/messaggi.jpg">
+		</ist>
+	</container>
 	<container id="100" > <!-- rooms -->
 		<ist uii="102" descr="living room">
 			<link uii="1" x="0" y="0"/>

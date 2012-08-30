@@ -459,6 +459,7 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdSoundDiffusion:
 		case Container::IdAntintrusion:
 		case Container::IdSettings:
+		case Container::IdMessages:
 			parseSystem(container);
 			break;
 		}
