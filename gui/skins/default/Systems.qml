@@ -16,10 +16,6 @@ Page {
         source: myHomeModels.systems
     }
 
-    // TODO: find a way to squash together related subsystems (eg. air
-    // conditioning and thermal regulation)
-    // Also, we need to add things like messages.
-
     Loader {
         id: viewLoader
         anchors {
@@ -72,6 +68,7 @@ Page {
         }
     }
 
+    // TODO: add messages system
     Component.onCompleted: {
         var containers = {}
         var objKeys = function (obj) {
