@@ -5,7 +5,7 @@ import "../js/Systems.js" as Script
 Item {
     function pageSkip() {
         if (systemsModel.count === 1) {
-            return {"page": Script.getTarget(systemsModel.getObject(0).id), "properties": {}}
+            return {"page": Script.getTarget(systemsModel.getObject(0).containerId), "properties": {}}
         }
         return {"page": "", "properties": {}}
     }
