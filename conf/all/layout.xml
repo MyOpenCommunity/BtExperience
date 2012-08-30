@@ -98,7 +98,7 @@
 			<link uii="4" x="200" y="350" />
 		</ist>
 	</container>
-	<container id="13" descr="floor" img="floor.png"> <!-- floor -->
+	<container id="13" descr="floor" img="floor.png">
 		<ist uii="201" descr="ground" >
 			<link uii="102" />
 			<link uii="103" />
@@ -117,7 +117,7 @@
 		</ist>
 	</container>
 	<container id="6" descr="supervision">
-		<ist uii="" img="images/systems/carichi.jpg">
+		<ist uii="6" img="images/systems/carichi.jpg">
 			<!-- Stop & go -->
 			<link uii="4001" />
 			<link uii="4002" />
@@ -129,7 +129,7 @@
 			<link uii="4006" />
 		</ist>
 	</container>
-	<container id="7" descr="supervision">
+	<container id="7" descr="energy data">
 		<ist uii="7" img="images/systems/carichi.jpg">
 			<link uii="5001" />
 			<link uii="5002" />
