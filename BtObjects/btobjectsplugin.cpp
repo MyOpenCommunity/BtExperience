@@ -9,6 +9,7 @@
 #include "thermalprobes.h"
 #include "antintrusionsystem.h"
 #include "mediaobjects.h"
+#include "messagessystem.h"
 #include "multimediaplayer.h"
 #include "xml_functions.h"
 #include "hardware.h"
@@ -301,6 +302,10 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 		case ObjectInterface::IdIpRadio:
 			obj_list = parseIpRadio(xml_obj);
+			break;
+
+		case ObjectInterface::IdMessages:
+			objmodel << parseMessageObject(xml_obj);
 			break;
 
 		case MediaLink::Rss:
