@@ -411,8 +411,8 @@ void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ObjectDataModel *summer_programs, ObjectDataModel *winter_programs, ThermalDevice *dev) :
 	ThermalControlUnitProgram(name, _object_id, summer_programs, winter_programs, dev)
 {
-	current[DATE] = QDate::currentDate();
-	current[TIME] = QTime::currentTime();
+	current[DATE] = QDate(0, 0, 0);
+	current[TIME] = QTime(0, 0);
 	to_apply = current;
 }
 
@@ -482,6 +482,13 @@ void ThermalControlUnitTimedProgram::setSeconds(int newValue)
 
 void ThermalControlUnitTimedProgram::emitDateSignals(QDate oldDate, QDate newDate)
 {
+	if (!oldDate.isValid() && newDate.isValid())
+	{
+		emit daysChanged();
+		emit monthsChanged();
+		emit yearsChanged();
+		return;
+	}
 	if (oldDate.day() != newDate.day())
 		emit daysChanged();
 	if (oldDate.month() != newDate.month())
@@ -536,7 +543,7 @@ void ThermalControlUnitTimedProgram::setYears(int newValue)
 	int oldValue = date.year();
 	if ((newValue - oldValue) == 0)
 		return;
-	QDate newDate = date.addYears(newValue - oldValue);
+	QDate newDate = date.isValid() ? date.addYears(newValue - oldValue) : QDate(newValue, 1, 1);
 	to_apply[DATE] = newDate;
 	emitDateSignals(date, newDate);
 }
@@ -553,6 +560,34 @@ void ThermalControlUnitTimedProgram::apply()
 		dev->setHolidayDateTime(date, time, program_id);
 	else
 		dev->setWeekendDateTime(date, time, program_id);
+}
+
+void ThermalControlUnitTimedProgram::valueReceived(const DeviceValues &values_list)
+{
+	ThermalControlUnitProgram::valueReceived(values_list);
+
+	if (values_list.contains(ThermalDevice::DIM_DATE))
+	{
+		QDate val = values_list[ThermalDevice::DIM_DATE].toDate();
+		if (val.isValid())
+		{
+			QDate old = current[DATE].toDate();
+			current[DATE] = val;
+			to_apply = current;
+			emitDateSignals(old, val);
+		}
+	}
+	if (values_list.contains(ThermalDevice::DIM_TIME))
+	{
+		QTime val = values_list[ThermalDevice::DIM_TIME].toTime();
+		if (val.isValid())
+		{
+			QTime old = current[TIME].toTime();
+			current[TIME] = val;
+			to_apply = current;
+			emitTimeSignals(old, val);
+		}
+	}
 }
 
 
@@ -626,78 +661,150 @@ ThermalControlUnitTimedManual::ThermalControlUnitTimedManual(QString name, Therm
 	ThermalControlUnitManual(name, _dev)
 {
 	dev = _dev;
-	current[TIME] = QTime::currentTime();
+	QVariant v;
+	BtTime bt;
+	bt.setMaxHours(25);
+	v.setValue(bt);
+	current[TIME] = v;
 	to_apply = current;
 }
 
-void ThermalControlUnitTimedManual::emitTimeSignals(QTime oldTime, QTime newTime)
+void ThermalControlUnitTimedManual::emitTimeSignals(QVariant oldTime, QVariant newTime)
 {
-	if (oldTime.hour() != newTime.hour())
+	BtTime oldBtTime, newBtTime;
+
+	if (oldTime.canConvert<BtTime>())
+		oldBtTime = oldTime.value<BtTime>();
+
+	if (newTime.canConvert<BtTime>())
+		newBtTime = newTime.value<BtTime>();
+
+	if (oldBtTime.hour() != newBtTime.hour())
 		emit hoursChanged();
-	if (oldTime.minute() != newTime.minute())
+	if (oldBtTime.minute() != newBtTime.minute())
 		emit minutesChanged();
-	if (oldTime.second() != newTime.second())
+	if (oldBtTime.second() != newBtTime.second())
 		emit secondsChanged();
+}
+
+int ThermalControlUnitTimedManual::toHours(const QVariant &btTime) const
+{
+	BtTime t;
+
+	if (!btTime.canConvert<BtTime>())
+		return 0;
+
+	t = btTime.value<BtTime>();
+	return t.hour();
+}
+
+int ThermalControlUnitTimedManual::toMinutes(const QVariant &btTime) const
+{
+	BtTime t;
+
+	if (!btTime.canConvert<BtTime>())
+		return 0;
+
+	t = btTime.value<BtTime>();
+	return t.minute();
+}
+
+int ThermalControlUnitTimedManual::toSeconds(const QVariant &btTime) const
+{
+	BtTime t;
+
+	if (!btTime.canConvert<BtTime>())
+		return 0;
+
+	t = btTime.value<BtTime>();
+	return t.second();
 }
 
 int ThermalControlUnitTimedManual::getHours() const
 {
-	const QTime &time = to_apply[TIME].toTime();
-	return time.hour();
+	return toHours(to_apply[TIME]);
 }
 
 void ThermalControlUnitTimedManual::setHours(int newValue)
 {
-	QTime time = to_apply[TIME].toTime();
-	int oldValue = time.hour();
+	int oldValue = getHours();
 	int diff = newValue - oldValue;
 	if (newValue == oldValue)
 		return;
-	QTime newTime = time.addSecs(diff * 60 * 60);
-	to_apply[TIME] = newTime;
-	emitTimeSignals(time, newTime);
+
+	if (!to_apply[TIME].canConvert<BtTime>())
+		return;
+
+	QVariant time = to_apply[TIME];
+	to_apply[TIME].setValue(to_apply[TIME].value<BtTime>().addSecond(diff * 60 * 60));
+
+	emitTimeSignals(time, to_apply[TIME]);
 }
 
 int ThermalControlUnitTimedManual::getMinutes() const
 {
-	const QTime &time = to_apply[TIME].toTime();
-	return time.minute();
+	return toMinutes(to_apply[TIME]);
 }
 
 void ThermalControlUnitTimedManual::setMinutes(int newValue)
 {
-	QTime time = to_apply[TIME].toTime();
-	int oldValue = time.minute();
+	int oldValue = getMinutes();
 	int diff = newValue - oldValue;
 	if (newValue == oldValue)
 		return;
-	QTime newTime = time.addSecs(diff * 60);
-	to_apply[TIME] = newTime;
-	emitTimeSignals(time, newTime);
+
+	if (!to_apply[TIME].canConvert<BtTime>())
+		return;
+
+	QVariant time = to_apply[TIME];
+	to_apply[TIME].setValue(to_apply[TIME].value<BtTime>().addSecond(diff * 60));
+
+	emitTimeSignals(time, to_apply[TIME]);
 }
 
 int ThermalControlUnitTimedManual::getSeconds() const
 {
-	const QTime &time = to_apply[TIME].toTime();
-	return time.second();
+	return toSeconds(to_apply[TIME]);
 }
 
 void ThermalControlUnitTimedManual::setSeconds(int newValue)
 {
-	QTime time = to_apply[TIME].toTime();
-	int oldValue = time.second();
+	int oldValue = getSeconds();
 	int diff = newValue - oldValue;
 	if (newValue == oldValue)
 		return;
-	QTime newTime = time.addSecs(diff);
-	to_apply[TIME] = newTime;
-	emitTimeSignals(time, newTime);
+
+	if (!to_apply[TIME].canConvert<BtTime>())
+		return;
+
+	QVariant time = to_apply[TIME];
+	to_apply[TIME].setValue(to_apply[TIME].value<BtTime>().addSecond(diff));
+
+	emitTimeSignals(time, to_apply[TIME]);
 }
 
 void ThermalControlUnitTimedManual::apply()
 {
 	current = to_apply;
 	dev->setManualTempTimed(getTemperature(), to_apply[TIME].toTime());
+}
+
+void ThermalControlUnitTimedManual::valueReceived(const DeviceValues &values_list)
+{
+	ThermalControlUnitManual::valueReceived(values_list);
+
+	if (values_list.contains(ThermalDevice::DIM_DURATION))
+	{
+		QVariant val = values_list[ThermalDevice::DIM_DURATION];
+		if (val.canConvert<BtTime>())
+		{
+			val.value<BtTime>().setMaxHours(25);
+			QVariant old = current[TIME];
+			current[TIME] = val;
+			to_apply = current;
+			emitTimeSignals(old, val);
+		}
+	}
 }
 
 

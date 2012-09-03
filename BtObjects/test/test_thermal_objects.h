@@ -52,6 +52,9 @@ private slots:
 	void testSetSeason();
 
 	void testReceiveSeason();
+	void testReceiveEndDate();
+	void testReceiveEndTime();
+	void testReceiveEndDuration();
 
 	void testModalityManual();
 	void testModalityOff();
@@ -149,6 +152,7 @@ private slots:
 	void init();
 
 	void testSetTime();
+	void testReceiveEndDuration();
 
 private:
 	virtual void testApply();
@@ -201,6 +205,9 @@ class TestThermalControlUnitTimedProgram : public TestThermalControlUnitProgram
 private slots:
 	void testSetDate();
 	void testSetTime();
+
+	void testReceiveEndDate();
+	void testReceiveEndTime();
 
 protected:
 	void initProgram(int object_id);

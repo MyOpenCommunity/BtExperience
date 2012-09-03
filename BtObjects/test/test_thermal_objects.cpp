@@ -57,6 +57,38 @@ void TestThermalControlUnit::testReceiveSeason()
 	t.checkNoSignals();
 }
 
+void TestThermalControlUnit::testReceiveEndDate()
+{
+	DeviceValues v;
+	v[ThermalDevice::DIM_DATE] = QDate(2012, 8, 30);
+
+	ObjectTester t(obj, SIGNAL(seasonChanged()));
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+void TestThermalControlUnit::testReceiveEndTime()
+{
+	DeviceValues v;
+	v[ThermalDevice::DIM_TIME] = QTime(12, 3);
+
+	ObjectTester t(obj, SIGNAL(seasonChanged()));
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+void TestThermalControlUnit::testReceiveEndDuration()
+{
+	DeviceValues v;
+	QVariant var;
+	var.setValue(BtTime(24, 59, 59));
+	v[ThermalDevice::DIM_DURATION] = var;
+
+	ObjectTester t(obj, SIGNAL(seasonChanged()));
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
 template<class T>
 void TestThermalControlUnit::testChangeModality(ThermalDevice::Status status, int object_id, T **result)
 {
@@ -303,6 +335,29 @@ void TestThermalControlUnitTimedManual::testSetTime()
 	t.checkNoSignals();
 }
 
+void TestThermalControlUnitTimedManual::testReceiveEndDuration()
+{
+	DeviceValues v;
+	QVariant var;
+	BtTime bt = BtTime(24, 59, 59);
+	bt.setMaxHours(25);
+	var.setValue(bt);
+	v[ThermalDevice::DIM_DURATION] = var;
+
+	ObjectTester t(obj, SignalList()
+				   << SIGNAL(hoursChanged())
+				   << SIGNAL(minutesChanged())
+				   << SIGNAL(secondsChanged()));
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(24, obj->getHours());
+	QCOMPARE(59, obj->getMinutes());
+	QCOMPARE(59, obj->getSeconds());
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
 void TestThermalControlUnitTimedManual::testApply()
 {
 	QTime time = QTime::currentTime();
@@ -466,6 +521,48 @@ void TestThermalControlUnitTimedProgram::testSetTime()
 
 	obj->setSeconds(-1);
 	t.checkSignals();
+}
+
+void TestThermalControlUnitTimedProgram::testReceiveEndDate()
+{
+	DeviceValues v;
+	v[ThermalDevice::DIM_DATE] = QDate(2012, 8, 30);
+
+	ObjectTester t(obj, SignalList()
+				   << SIGNAL(yearsChanged())
+				   << SIGNAL(monthsChanged())
+				   << SIGNAL(daysChanged()));
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(2012, obj->getYears());
+	QCOMPARE(8, obj->getMonths());
+	QCOMPARE(30, obj->getDays());
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+}
+
+void TestThermalControlUnitTimedProgram::testReceiveEndTime()
+{
+	obj->setHours(0);
+	obj->setMinutes(0);
+	obj->setSeconds(0);
+
+	DeviceValues v;
+	v[ThermalDevice::DIM_TIME] = QTime(12, 3, 7);
+
+	ObjectTester t(obj, SignalList()
+				   << SIGNAL(hoursChanged())
+				   << SIGNAL(minutesChanged())
+				   << SIGNAL(secondsChanged()));
+	obj->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(12, obj->getHours());
+	QCOMPARE(3, obj->getMinutes());
+	QCOMPARE(7, obj->getSeconds());
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
 }
 
 
