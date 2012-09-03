@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import "js/Stack.js" as Stack
+import "js/Systems.js" as Script
 
 Page {
     id: systems
@@ -13,37 +14,6 @@ Page {
     ObjectModel {
         id: systemsModel
         source: myHomeModels.systems
-    }
-
-    QtObject {
-        id: privateProps
-
-        // TODO: find a way to squash together related subsystems (eg. air
-        // conditioning and thermal regulation)
-        // Also, we need to add things like messages.
-        function getTarget(systemId) {
-            switch (systemId) {
-            case Container.IdScenarios:
-                return "Scenarios.qml"
-            case Container.IdLights:
-                return "Lighting.qml"
-            case Container.IdAutomation:
-                return "Automation.qml"
-            case Container.IdAirConditioning:
-            case Container.IdThermalRegulation:
-                return "ThermalRegulation.qml"
-            case Container.IdLoadControl:
-            case Container.IdSupervision:
-            case Container.IdEnergyData:
-                return "EnergyManagement.qml"
-            case Container.IdVideoDoorEntry:
-                return "VideoDoorEntry.qml"
-            case Container.IdSoundDiffusion:
-                return "SoundDiffusion.qml"
-            case Container.IdAntintrusion:
-                return "Antintrusion.qml"
-            }
-        }
     }
 
     Loader {
@@ -72,7 +42,7 @@ Page {
                 source: itemObject.image
                 label: itemObject.description
 
-                onClicked: Stack.openPage(privateProps.getTarget(itemObject.id))
+                onClicked: Stack.openPage(Script.getTarget(itemObject.containerId))
             }
 
             delegateSpacing: 20
@@ -91,10 +61,80 @@ Page {
                 source: itemObject.image
                 label: itemObject.description
 
-                onClicked: Stack.openPage(privateProps.getTarget(itemObject.id))
+                onClicked: Stack.openPage(Script.getTarget(itemObject.containerId))
             }
 
             model: systemsModel
         }
+    }
+
+    // TODO: add messages system
+    Component.onCompleted: {
+        var containers = {}
+        var objKeys = function (obj) {
+            var keys = [];
+
+            for(var key in obj)
+                if(obj.hasOwnProperty(key))
+                    keys.push(key);
+
+            return keys;
+        }
+
+        for (var i = 0; i < systemsModel.count; ++i) {
+            var obj = systemsModel.getObject(i)
+            // Squash together similar systems. Since they may have different
+            // images and descriptions, we need to give a priority in case there
+            // are multiple items.
+            //
+            // These are the items in order of priority as implemented right now:
+            //  * Thermal regulation - Air conditioning
+            //  * Energy data - Load control - Supervision
+            switch (obj.containerId) {
+            case Container.IdThermalRegulation:
+            {
+                delete containers[Container.IdAirConditioning]
+                containers[Container.IdThermalRegulation] = undefined
+                break
+            }
+
+            case Container.IdAirConditioning:
+            {
+                if (!(Container.IdThermalRegulation in containers))
+                    containers[Container.IdAirConditioning] = undefined
+                break
+            }
+
+            case Container.IdEnergyData:
+            {
+                delete containers[Container.IdSupervision]
+                delete containers[Container.IdLoadControl]
+                containers[Container.IdEnergyData] = undefined
+                break
+            }
+
+            case Container.IdLoadControl:
+            {
+                if (!(Container.IdEnergyData in containers)) {
+                    delete containers[Container.IdSupervision]
+                    containers[Container.IdLoadControl] = undefined
+                }
+
+                break
+            }
+
+            case Container.IdSupervision:
+            {
+                if (!(Container.IdEnergyData in containers || Container.IdLoadControl in containers)) {
+                    containers[Container.IdSupervision] = undefined
+                }
+                break
+            }
+
+            default:
+                containers[obj.containerId] = undefined
+            }
+        }
+        systemsModel.containers = objKeys(containers)
     }
 }

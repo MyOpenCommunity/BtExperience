@@ -9,7 +9,7 @@ MenuColumn {
         privateProps.currentIndex = -1
     }
 
-    SvgImage {
+    Image {
         id: background
         source: "../../images/common/bg_paginazione.png"
         width: parent.width

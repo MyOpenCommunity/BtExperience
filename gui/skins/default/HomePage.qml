@@ -249,12 +249,7 @@ BasePage {
                 sourcePressed: "images/home/home_menu_bg_top_left_pressed.svg"
                 icon: "images/home/home_menu_icon_rooms.svg"
                 text: qsTr("rooms")
-                onClicked: {
-                    if (roomModel.count > 1)
-                        Stack.openPage("Rooms.qml")
-                    else
-                        Stack.openPage("Room.qml")
-                }
+                onClicked: Stack.openPage("Rooms.qml")
             }
 
             ButtonHomePageLink {

@@ -16,6 +16,7 @@ HEADERS += \
 	medialink.h \
 	mediamodel.h \
 	mediaobjects.h \
+	messagessystem.h \
 	multimediaplayer.h \
 	note.h \
 	objectinterface.h \
@@ -39,6 +40,7 @@ HEADERS += \
 	devices/lighting_device.h \
 	devices/loads_device.h \
 	devices/media_device.h \
+	devices/message_device.h \
 	devices/platform_device.h \
 	devices/probe_device.h \
 	devices/pulldevice.h \
@@ -78,6 +80,7 @@ SOURCES += \
 	medialink.cpp \
 	mediamodel.cpp \
 	mediaobjects.cpp \
+	messagessystem.cpp \
 	multimediaplayer.cpp \
 	note.cpp \
 	objectinterface.cpp \
@@ -101,6 +104,7 @@ SOURCES += \
 	devices/lighting_device.cpp \
 	devices/loads_device.cpp \
 	devices/media_device.cpp \
+	devices/message_device.cpp \
 	devices/platform_device.cpp \
 	devices/probe_device.cpp \
 	devices/pulldevice.cpp \

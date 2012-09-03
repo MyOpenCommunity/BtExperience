@@ -3,15 +3,10 @@
 
 Container::Container(int _id, int _uii, QString _image, QString _description)
 {
-	id = _id;
+	setContainerId(_id);
 	uii = _uii;
 	image = _image;
 	description = _description;
-}
-
-int Container::getId() const
-{
-	return id;
 }
 
 int Container::getUii() const
