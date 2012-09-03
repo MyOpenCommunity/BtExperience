@@ -7,7 +7,7 @@ SvgImage {
     property alias status: switchId.status
     signal clicked
 
-    source: "../images/common/panel_switch.svg";
+    source: "../images/common/panel_212x50.svg";
 
     UbuntuLightText {
         id: textId

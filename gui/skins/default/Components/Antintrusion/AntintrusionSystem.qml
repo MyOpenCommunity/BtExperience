@@ -126,7 +126,7 @@ MenuColumn {
         MenuItem {
             id: systemItem
 
-            backgroundImage: "../../images/common/panel_switch.svg"
+            backgroundImage: "../../images/common/panel_212x50.svg"
             name: qsTr("system")
             description: privateProps.model.status === true ? qsTr("enabled") : qsTr("disabled")
             hasChild: false
