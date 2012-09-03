@@ -3,7 +3,6 @@
 
 // returns a dict with date and time fields correctly formatted; the dateTime
 // parameter is optional: if not passed in it formats now as date and time
-
 function format(dateTime) {
     // checks if a dateTime was passed in and initializes dt
     var dt = typeof dateTime !== 'undefined' ? dateTime : new Date();

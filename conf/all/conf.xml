@@ -304,9 +304,9 @@
 	</obj>
 	<!-- advanced AC -->
 	<obj cid="8014" id="8014" descr="AC Unit advanced" where="3#11#1" eprobe="0" off_cmd="0" setpoint_min="160" setpoint_max="260" setpoint_step="1" mode_auto="5" mode_cooling="-1" mode_heating="-1" mode_dry="-1" mode_fan="-1" speed_presence="0" swing_presence="-1">
-		<ist uii="7101" descr="Living room Adv" where="3#11#2" eprobe="1" setpoint_min="200" setpoint_max="250" mode_cooling="2" mode_heating="1" speed_presence="1" swing_presence="1">
+		<ist uii="7101" descr="Living room Adv" where="3#11#2" eprobe="1" setpoint_min="200" setpoint_max="250" mode_cooling="2" mode_heating="1" speed_presence="1" swing_presence="1" mode_dry="4" mode_fan="3" >
 			<probe where_probe="000" />
-			<speed speed_auto="-1" speed_highe="-1" speed_medium="2" speed_low="-1" speed_silent="-1" />
+			<speed speed_auto="-1" speed_high="3" speed_medium="2" speed_low="-1" speed_silent="-1" />
 		</ist>
 		<ist uii="7102" descr="Bedroom Adv" where="3#11#2" setpoint_min="200" setpoint_max="250" mode_cooling="2" mode_heating="1" />
 	</obj>

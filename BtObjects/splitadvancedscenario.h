@@ -191,7 +191,6 @@ public:
 	explicit SplitAdvancedScenario(QString name,
 								   QString key,
 								   AdvancedAirConditioningDevice *d,
-								   QString off_command,
 								   NonControlledProbeDevice *d_probe,
 								   QList<int> modes,
 								   QList<int> speeds,
@@ -255,7 +254,6 @@ protected slots:
 private:
 	void sync();
 
-	QString off_command;
 	AdvancedAirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
 	QString key;
