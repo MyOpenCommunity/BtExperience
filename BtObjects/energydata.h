@@ -156,10 +156,14 @@ class EnergyData : public ObjectInterface
 	/*!
 		\brief Return the monthly consumption goal
 
-		This can be either a 12-element list where each element is a valid double value,
-		or an empty list.
+		This is a 12-element list where each element is a valid double value.
 	*/
-	Q_PROPERTY(QVariantList goals READ getGoals CONSTANT)
+	Q_PROPERTY(QVariantList goals READ getGoals WRITE setGoals NOTIFY goalsChanged)
+
+	/*!
+		\brief Set/get whether the goals are enabled or not
+	*/
+	Q_PROPERTY(bool goalsEnabled READ getGoalsEnabled WRITE setGoalsEnabled NOTIFY goalsEnabledChanged)
 
 	/*!
 		\brief Measure unit symbol, as specified in configuration file
@@ -246,7 +250,7 @@ public:
 		Currency    = 1
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, QString family, QString unit, QVariantList goals, QVariantList thresholds_enabled, EnergyRate *rate);
+	EnergyData(EnergyDevice *dev, QString name, QString family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate);
 	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
@@ -283,7 +287,12 @@ public:
 	void setThresholds(QVariantList thresholds);
 	QVariantList getThresholds() const;
 
+	void setGoals(QVariantList goals);
 	QVariantList getGoals() const;
+
+	void setGoalsEnabled(bool enabled);
+	bool getGoalsEnabled() const;
+
 
 	QString getUnit() const;
 	QString getCurrentUnit() const;
@@ -310,6 +319,8 @@ signals:
 	void thresholdLevelChanged(int level);
 	void thresholdEnabledChanged(QVariantList enabled);
 	void advancedChanged();
+	void goalsChanged();
+	void goalsEnabledChanged();
 
 private slots:
 	// remove destroyed objects from graphCache/itemChache
@@ -371,9 +382,11 @@ private:
 	// current consumption thresholds
 	QVariantList thresholds;
 	int threshold_level;
-
-	QVariantList goals;
 	QVariantList thresholds_enabled;
+
+	// Consumption goals
+	QVariantList goals;
+	bool goals_enabled;
 
 	// Unit symbol (es. Kw, dm3, ...)
 	QString energy_unit;

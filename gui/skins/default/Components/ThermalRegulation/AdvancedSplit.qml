@@ -38,9 +38,10 @@ MenuColumn {
         dataModel.mode = mode
         if (mode === SplitAdvancedProgram.ModeFan)
             options.setComponent(fancoil)
-        else if (mode === SplitAdvancedProgram.ModeOff ||
-                 mode === SplitAdvancedProgram.ModeDehumidification)
+        else if (mode === SplitAdvancedProgram.ModeOff)
             options.setComponent(off)
+        else if (mode === SplitAdvancedProgram.ModeDehumidification)
+            options.setComponent(dehum)
         else
             options.setComponent(temperature)
     }
@@ -99,6 +100,32 @@ MenuColumn {
             onOkClicked: {
                 dataModel.apply()
                 column.closeColumn()
+            }
+        }
+    }
+
+    Component {
+        id: dehum
+
+        Column {
+            ControlLeftRightWithTitle {
+                id: swing
+                visible: dataModel.swings.values.length > 0
+                title: qsTr("swing")
+                text: {
+                    if (dataModel.swing === -1)
+                        return ""
+                    return pageObject.names.get('SWING', dataModel.swing)
+                }
+                onLeftClicked: dataModel.prevSwing()
+                onRightClicked: dataModel.nextSwing()
+            }
+            ButtonOkCancel {
+                onCancelClicked: column.closeColumn()
+                onOkClicked: {
+                    dataModel.apply()
+                    column.closeColumn()
+                }
             }
         }
     }

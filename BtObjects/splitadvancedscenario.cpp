@@ -17,7 +17,7 @@ namespace
 		SPLIT_SWING
 	};
 
-	QStringList mode_strings = QStringList() << "mode_off" << "mode_heating" << "mode_cooling" << "mode_fan" << "mode_dry" << "mode_auto";
+	QStringList mode_strings = QStringList() << "off_cmd" << "mode_heating" << "mode_cooling" << "mode_fan" << "mode_dry" << "mode_auto";
 	QStringList speed_strings = QStringList() << "speed_auto" << "speed_low" << "speed_medium" << "speed_high" << "speed_silent";
 
 	QList<int> parseEnumeration(const QDomNode &node, QStringList names)
@@ -97,7 +97,6 @@ QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node)
 	{
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		QString off_command = v.intValue("off_presence") ? v.value("off_cmd") : QString();
 		NonControlledProbeDevice *probe = 0;
 		AdvancedAirConditioningDevice *d = new AdvancedAirConditioningDevice(v.value("where"));
 		QList<int> modes, speeds, swings;
@@ -117,7 +116,7 @@ QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node)
 		if (v.intValue("swing_presence"))
 			swings << SplitAdvancedProgram::SwingOff << SplitAdvancedProgram::SwingOn;
 
-		obj_list << ObjectPair(uii, new SplitAdvancedScenario(v.value("descr"), "", d, off_command, probe, modes, speeds, swings,
+		obj_list << ObjectPair(uii, new SplitAdvancedScenario(v.value("descr"), "", d, probe, modes, speeds, swings,
 								      v.intValue("setpoint_min"), v.intValue("setpoint_max"), v.intValue("setpoint_step")));
 	}
 	return obj_list;
@@ -178,7 +177,6 @@ SplitAdvancedProgram::SplitAdvancedProgram(
 SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 											 QString _key,
 											 AdvancedAirConditioningDevice *d,
-											 QString _off_command,
 											 NonControlledProbeDevice *d_probe,
 											 QList<int> _modes,
 											 QList<int> _speeds,
@@ -205,7 +203,6 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 	foreach (int swing, _swings)
 		swings->add(swing);
 
-	off_command = _off_command;
 	key = _key;
 	name = _name;
 	setpoint_min = _setpoint_min;

@@ -64,7 +64,8 @@
 		</ist>
 	</obj>
 	<obj cid="6109" id="6105" descr="Heating/Cooling" where="1"
-	     SWmeasure="Kw" measure="Kw" consumption_goal="0"
+	     SWmeasure="Kw" measure="Kw" consumption_goal="0" consumption_goal_enabled="0"
+	     threshold_one_enable="0" threshold_two_enable="0"
 	     rate_enable="0" rate_type="0" mode="5">
 		<ist uii="5004" descr="Living room" where="6" />
 		<ist uii="5005" descr="Bedroom" where="7" rate_enable="1">

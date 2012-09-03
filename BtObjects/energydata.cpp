@@ -206,35 +206,34 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
 		EnergyDevice *d = bt_global::add_device_to_cache(new EnergyDevice(v.value("where"), v.intValue("mode")));
 		QVariantList goals, thresholds_enabled;
 
-		if (v.intValue("consumption_goal_enabled"))
+		bool goals_enabled = v.intValue("consumption_goal_enabled");
+
+		for (int i = 0; i < 12; ++i)
+			goals.append(QVariant(0));
+
+		QDomNodeList childs = ist.firstChildElement("consumption_goal").childNodes();
+
+		for (int i = 0; i < childs.size(); ++i)
 		{
-			for (int i = 0; i < 12; ++i)
-				goals.append(QVariant(0));
-
-			QDomNodeList childs = ist.firstChildElement("consumption_goal").childNodes();
-
-			for (int i = 0; i < childs.size(); ++i)
-			{
-				const QDomNode &month = childs.at(i);
-				if (!month.isElement())
-					continue;
-				int index = goal_names.indexOf(month.toElement().tagName());
-				if (index != -1)
-					goals[index] = month.toElement().text().toInt();
-			}
+			const QDomNode &month = childs.at(i);
+			if (!month.isElement())
+				continue;
+			int index = goal_names.indexOf(month.toElement().tagName());
+			if (index != -1)
+				goals[index] = month.toElement().text().toInt();
 		}
 
-		thresholds_enabled << bool(v.intValue("threshold_one_enabled"));
-		thresholds_enabled << bool(v.intValue("threshold_two_enabled"));
+		thresholds_enabled << bool(v.intValue("threshold_one_enable"));
+		thresholds_enabled << bool(v.intValue("threshold_two_enable"));
 
 		// TODO handle rates (after they are specified)
-		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, thresholds_enabled, 0));
+		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, goals_enabled, thresholds_enabled, 0));
 	}
 	return obj_list;
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QString _unit, QVariantList _goals, QVariantList _thresholds_enabled, EnergyRate *_rate)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate)
 {
 	name = _name;
 	family = _family;
@@ -244,6 +243,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QStri
 	goals = _goals;
 	unit_conversion = unitConversionFactor(getEnergyType(), _unit);
 	thresholds_enabled = _thresholds_enabled;
+	goals_enabled = _goals_enabled;
 	thresholds = QVariantList() << 0.0 << 0.0;
 	threshold_level = 0;
 
@@ -278,6 +278,29 @@ EnergyData::~EnergyData()
 QVariantList EnergyData::getGoals() const
 {
 	return goals;
+}
+
+void EnergyData::setGoals(QVariantList _goals)
+{
+	if (_goals == goals)
+		return;
+
+	goals = _goals;
+	emit goalsChanged();
+}
+
+bool EnergyData::getGoalsEnabled() const
+{
+	return goals_enabled;
+}
+
+void EnergyData::setGoalsEnabled(bool enabled)
+{
+	if (enabled == goals_enabled)
+		return;
+
+	goals_enabled = enabled;
+	emit goalsEnabledChanged();
 }
 
 QString EnergyData::getUnit() const

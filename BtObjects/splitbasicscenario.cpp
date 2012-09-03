@@ -54,7 +54,7 @@ QList<ObjectPair> parseSplitBasicScenario(const QDomNode &xml_node)
 	{
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		QString off_command = v.intValue("off_presence") ? v.value("off_comd") : QString();
+		QString off_command = v.intValue("off_presence") ? v.value("off_cmd") : QString();
 		NonControlledProbeDevice *probe = 0;
 		AirConditioningDevice *d = new AirConditioningDevice(v.value("where"));
 
