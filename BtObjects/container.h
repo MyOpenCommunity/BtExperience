@@ -25,13 +25,6 @@ class Container : public ItemInterface
 	Q_PROPERTY(QString image READ getImage WRITE setImage NOTIFY imageChanged)
 
 	/*!
-		\brief Numeric identifier for the container type
-
-		Matches the \c id attribute defined in \c layout.xml
-	*/
-	Q_PROPERTY(int id READ getId CONSTANT)
-
-	/*!
 		\brief Unique identifier for this container instance.
 
 		Can be used as a filter criterium for MediaModel.
@@ -57,13 +50,12 @@ public:
 		IdSettings = 12,
 		IdFloors = 13,
 		IdAmbient = 14,
+		IdMessages = 15,
 		IdRooms = 100,
 		IdProfile = 101
 	};
 
 	Container(int id, int uii, QString image, QString description);
-
-	int getId() const;
 
 	int getUii() const;
 

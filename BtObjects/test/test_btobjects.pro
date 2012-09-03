@@ -34,6 +34,7 @@ HEADERS += test_antintrusion_object.h \
 	test_light_objects.h \
 	test_media_models.h \
 	test_media_objects.h \
+	test_messages_system.h \
 	test_multimedia_player.h \
 	test_myhome_models.h \
 	test_scenario_objects.h \
@@ -56,6 +57,7 @@ SOURCES += test_main.cpp \
 	test_light_objects.cpp \
 	test_media_models.cpp \
 	test_media_objects.cpp \
+	test_messages_system.cpp \
 	test_multimedia_player.cpp \
 	test_myhome_models.cpp \
 	test_scenario_objects.cpp \

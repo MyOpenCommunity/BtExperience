@@ -132,6 +132,8 @@ public:
 
 		IdIpRadio = 16000,
 
+		IdMessages = 16004,
+
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file
 		// are defined inside the anonymous namespace contained in
