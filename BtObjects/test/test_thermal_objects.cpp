@@ -526,7 +526,7 @@ void TestThermalControlUnitTimedProgram::testSetTime()
 void TestThermalControlUnitTimedProgram::testReceiveEndDate()
 {
 	DeviceValues v;
-	v[ThermalDevice::DIM_DATE] = QDate(2012, 8, 30);
+	v[ThermalDevice::DIM_DATE] = QDate(2001, 8, 30);
 
 	ObjectTester t(obj, SignalList()
 				   << SIGNAL(yearsChanged())
@@ -534,7 +534,7 @@ void TestThermalControlUnitTimedProgram::testReceiveEndDate()
 				   << SIGNAL(daysChanged()));
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(2012, obj->getYears());
+	QCOMPARE(2001, obj->getYears());
 	QCOMPARE(8, obj->getMonths());
 	QCOMPARE(30, obj->getDays());
 

@@ -16,7 +16,8 @@ enum ThermalRegulationStateKeys
 	DATE,
 	TIME,
 	TEMPERATURE,
-	SCENARIO_INDEX
+	SCENARIO_INDEX,
+	DURATION
 };
 
 QList<ObjectPair> parseZone99(const QDomNode &obj)
@@ -207,7 +208,9 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
 	{
-		if (it.key() == ThermalDevice::DIM_SEASON)
+		switch (it.key())
+		{
+		case ThermalDevice::DIM_SEASON:
 		{
 			ThermalDevice::Season s = static_cast<ThermalDevice::Season>(it.value().toInt());
 			if (s == ThermalDevice::SE_SUMMER && season != Summer)
@@ -220,8 +223,10 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 				season = Winter;
 				emit seasonChanged();
 			}
+			break;
 		}
-		else if (it.key() == ThermalDevice::DIM_STATUS)
+
+		case ThermalDevice::DIM_STATUS:
 		{
 			ThermalDevice::Status status = static_cast<ThermalDevice::Status>(it.value().toInt());
 			int id = -1;
@@ -273,7 +278,10 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 					break;
 				}
 			}
+			break;
 		}
+		}
+
 		++it;
 	}
 }
@@ -380,30 +388,40 @@ void ThermalControlUnitProgram::apply()
 
 void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 {
-	if (values_list.contains(ThermalDevice::DIM_SEASON))
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
 	{
-		const ObjectDataModel *old_programs = programs;
-
-		ThermalDevice::Season s = static_cast<ThermalDevice::Season>(values_list[ThermalDevice::DIM_SEASON].toInt());
-		programs = s == ThermalDevice::SE_SUMMER ? summer_programs : winter_programs;
-
-		if (old_programs != programs)
-			emit programsChanged();
-	}
-	if (values_list.contains(ThermalDevice::DIM_PROGRAM))
-	{
-		int val = values_list[ThermalDevice::DIM_PROGRAM].toInt();
-		for (int i = 0; i < programs->rowCount(); ++i)
+		switch (it.key())
 		{
-			if (programs->getObject(i)->getObjectId() == val)
-			{
-				qDebug() << "ThermalControlUnitProgram program changed:" << val;
-				current[PROGRAM_INDEX] = i;
-				to_apply = current;
-				emit programChanged();
-				break;
-			}
+		case ThermalDevice::DIM_SEASON:
+		{
+			const ObjectDataModel *old_programs = programs;
+
+			ThermalDevice::Season s = static_cast<ThermalDevice::Season>(values_list[ThermalDevice::DIM_SEASON].toInt());
+			programs = s == ThermalDevice::SE_SUMMER ? summer_programs : winter_programs;
+
+			if (old_programs != programs)
+				emit programsChanged();
+			break;
 		}
+
+		case ThermalDevice::DIM_PROGRAM:
+		{
+			int val = values_list[ThermalDevice::DIM_PROGRAM].toInt();
+			for (int i = 0; i < programs->rowCount(); ++i)
+			{
+				if (programs->getObject(i)->getObjectId() == val)
+				{
+					current[PROGRAM_INDEX] = i;
+					to_apply = current;
+					emit programChanged();
+					break;
+				}
+			}
+			break;
+		}
+		}
+		++it;
 	}
 }
 
@@ -411,8 +429,8 @@ void ThermalControlUnitProgram::valueReceived(const DeviceValues &values_list)
 ThermalControlUnitTimedProgram::ThermalControlUnitTimedProgram(QString name, int _object_id, ObjectDataModel *summer_programs, ObjectDataModel *winter_programs, ThermalDevice *dev) :
 	ThermalControlUnitProgram(name, _object_id, summer_programs, winter_programs, dev)
 {
-	current[DATE] = QDate(0, 0, 0);
-	current[TIME] = QTime(0, 0);
+	current[DATE] = QDate::currentDate();
+	current[TIME] = QTime::currentTime();
 	to_apply = current;
 }
 
@@ -566,27 +584,38 @@ void ThermalControlUnitTimedProgram::valueReceived(const DeviceValues &values_li
 {
 	ThermalControlUnitProgram::valueReceived(values_list);
 
-	if (values_list.contains(ThermalDevice::DIM_DATE))
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
 	{
-		QDate val = values_list[ThermalDevice::DIM_DATE].toDate();
-		if (val.isValid())
+		switch (it.key())
 		{
-			QDate old = current[DATE].toDate();
-			current[DATE] = val;
-			to_apply = current;
-			emitDateSignals(old, val);
-		}
-	}
-	if (values_list.contains(ThermalDevice::DIM_TIME))
-	{
-		QTime val = values_list[ThermalDevice::DIM_TIME].toTime();
-		if (val.isValid())
+		case ThermalDevice::DIM_DATE:
 		{
-			QTime old = current[TIME].toTime();
-			current[TIME] = val;
-			to_apply = current;
-			emitTimeSignals(old, val);
+			QDate val = values_list[ThermalDevice::DIM_DATE].toDate();
+			if (val.isValid())
+			{
+				QDate old = current[DATE].toDate();
+				current[DATE] = val;
+				to_apply = current;
+				emitDateSignals(old, val);
+			}
+			break;
 		}
+
+		case ThermalDevice::DIM_TIME:
+		{
+			QTime val = values_list[ThermalDevice::DIM_TIME].toTime();
+			if (val.isValid())
+			{
+				QTime old = current[TIME].toTime();
+				current[TIME] = val;
+				to_apply = current;
+				emitTimeSignals(old, val);
+			}
+			break;
+		}
+		}
+		++it;
 	}
 }
 
@@ -644,15 +673,24 @@ void ThermalControlUnitManual::apply()
 
 void ThermalControlUnitManual::valueReceived(const DeviceValues &values_list)
 {
-	if (values_list.contains(ThermalDevice::DIM_TEMPERATURE))
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
 	{
-		int val = values_list[ThermalDevice::DIM_TEMPERATURE].toInt();
-		if (val != current[TEMPERATURE].toInt())
+		switch (it.key())
 		{
-			current[TEMPERATURE] = val;
-			to_apply = current;
-			emit temperatureChanged();
+		case ThermalDevice::DIM_TEMPERATURE:
+		{
+			int val = values_list[ThermalDevice::DIM_TEMPERATURE].toInt();
+			if (val != current[TEMPERATURE].toInt())
+			{
+				current[TEMPERATURE] = val;
+				to_apply = current;
+				emit temperatureChanged();
+			}
+			break;
 		}
+		}
+		++it;
 	}
 }
 
@@ -665,19 +703,15 @@ ThermalControlUnitTimedManual::ThermalControlUnitTimedManual(QString name, Therm
 	BtTime bt;
 	bt.setMaxHours(25);
 	v.setValue(bt);
-	current[TIME] = v;
+	current[DURATION] = v;
 	to_apply = current;
 }
 
 void ThermalControlUnitTimedManual::emitTimeSignals(QVariant oldTime, QVariant newTime)
 {
 	BtTime oldBtTime, newBtTime;
-
-	if (oldTime.canConvert<BtTime>())
-		oldBtTime = oldTime.value<BtTime>();
-
-	if (newTime.canConvert<BtTime>())
-		newBtTime = newTime.value<BtTime>();
+	oldBtTime = oldTime.value<BtTime>();
+	newBtTime = newTime.value<BtTime>();
 
 	if (oldBtTime.hour() != newBtTime.hour())
 		emit hoursChanged();
@@ -690,10 +724,6 @@ void ThermalControlUnitTimedManual::emitTimeSignals(QVariant oldTime, QVariant n
 int ThermalControlUnitTimedManual::toHours(const QVariant &btTime) const
 {
 	BtTime t;
-
-	if (!btTime.canConvert<BtTime>())
-		return 0;
-
 	t = btTime.value<BtTime>();
 	return t.hour();
 }
@@ -701,10 +731,6 @@ int ThermalControlUnitTimedManual::toHours(const QVariant &btTime) const
 int ThermalControlUnitTimedManual::toMinutes(const QVariant &btTime) const
 {
 	BtTime t;
-
-	if (!btTime.canConvert<BtTime>())
-		return 0;
-
 	t = btTime.value<BtTime>();
 	return t.minute();
 }
@@ -712,17 +738,13 @@ int ThermalControlUnitTimedManual::toMinutes(const QVariant &btTime) const
 int ThermalControlUnitTimedManual::toSeconds(const QVariant &btTime) const
 {
 	BtTime t;
-
-	if (!btTime.canConvert<BtTime>())
-		return 0;
-
 	t = btTime.value<BtTime>();
 	return t.second();
 }
 
 int ThermalControlUnitTimedManual::getHours() const
 {
-	return toHours(to_apply[TIME]);
+	return toHours(to_apply[DURATION]);
 }
 
 void ThermalControlUnitTimedManual::setHours(int newValue)
@@ -732,18 +754,15 @@ void ThermalControlUnitTimedManual::setHours(int newValue)
 	if (newValue == oldValue)
 		return;
 
-	if (!to_apply[TIME].canConvert<BtTime>())
-		return;
+	QVariant time = to_apply[DURATION];
+	to_apply[DURATION].setValue(to_apply[DURATION].value<BtTime>().addSecond(diff * 60 * 60));
 
-	QVariant time = to_apply[TIME];
-	to_apply[TIME].setValue(to_apply[TIME].value<BtTime>().addSecond(diff * 60 * 60));
-
-	emitTimeSignals(time, to_apply[TIME]);
+	emitTimeSignals(time, to_apply[DURATION]);
 }
 
 int ThermalControlUnitTimedManual::getMinutes() const
 {
-	return toMinutes(to_apply[TIME]);
+	return toMinutes(to_apply[DURATION]);
 }
 
 void ThermalControlUnitTimedManual::setMinutes(int newValue)
@@ -753,18 +772,15 @@ void ThermalControlUnitTimedManual::setMinutes(int newValue)
 	if (newValue == oldValue)
 		return;
 
-	if (!to_apply[TIME].canConvert<BtTime>())
-		return;
+	QVariant time = to_apply[DURATION];
+	to_apply[DURATION].setValue(to_apply[DURATION].value<BtTime>().addSecond(diff * 60));
 
-	QVariant time = to_apply[TIME];
-	to_apply[TIME].setValue(to_apply[TIME].value<BtTime>().addSecond(diff * 60));
-
-	emitTimeSignals(time, to_apply[TIME]);
+	emitTimeSignals(time, to_apply[DURATION]);
 }
 
 int ThermalControlUnitTimedManual::getSeconds() const
 {
-	return toSeconds(to_apply[TIME]);
+	return toSeconds(to_apply[DURATION]);
 }
 
 void ThermalControlUnitTimedManual::setSeconds(int newValue)
@@ -774,36 +790,47 @@ void ThermalControlUnitTimedManual::setSeconds(int newValue)
 	if (newValue == oldValue)
 		return;
 
-	if (!to_apply[TIME].canConvert<BtTime>())
-		return;
+	QVariant time = to_apply[DURATION];
+	to_apply[DURATION].setValue(to_apply[DURATION].value<BtTime>().addSecond(diff));
 
-	QVariant time = to_apply[TIME];
-	to_apply[TIME].setValue(to_apply[TIME].value<BtTime>().addSecond(diff));
-
-	emitTimeSignals(time, to_apply[TIME]);
+	emitTimeSignals(time, to_apply[DURATION]);
 }
 
 void ThermalControlUnitTimedManual::apply()
 {
 	current = to_apply;
-	dev->setManualTempTimed(getTemperature(), to_apply[TIME].toTime());
+	dev->setManualTempTimed(getTemperature(), to_apply[DURATION].toTime());
 }
 
 void ThermalControlUnitTimedManual::valueReceived(const DeviceValues &values_list)
 {
 	ThermalControlUnitManual::valueReceived(values_list);
 
-	if (values_list.contains(ThermalDevice::DIM_DURATION))
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
 	{
-		QVariant val = values_list[ThermalDevice::DIM_DURATION];
-		if (val.canConvert<BtTime>())
+		switch (it.key())
 		{
-			val.value<BtTime>().setMaxHours(25);
-			QVariant old = current[TIME];
-			current[TIME] = val;
-			to_apply = current;
-			emitTimeSignals(old, val);
+		case ThermalDevice::DIM_DURATION:
+		{
+			QVariant val = values_list[ThermalDevice::DIM_DURATION];
+			if (val.canConvert<BtTime>())
+			{
+				// we need to convert to BtTime and again to QVariant to
+				// correctly set max hours (device uses standard values)
+				BtTime tmpBtTime = val.value<BtTime>();
+				tmpBtTime.setMaxHours(25);
+				QVariant tmpVariant;
+				tmpVariant.setValue(tmpBtTime);
+				QVariant old = current[DURATION];
+				current[DURATION] = tmpVariant;
+				to_apply = current;
+				emitTimeSignals(old, tmpVariant);
+			}
+			break;
 		}
+		}
+		++it;
 	}
 }
 
@@ -870,30 +897,41 @@ void ThermalControlUnitScenario::apply()
 
 void ThermalControlUnitScenario::valueReceived(const DeviceValues &values_list)
 {
-	if (values_list.contains(ThermalDevice::DIM_SEASON))
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
 	{
-		const ObjectDataModel *old_scenarios = scenarios;
-
-		ThermalDevice::Season s = static_cast<ThermalDevice::Season>(values_list[ThermalDevice::DIM_SEASON].toInt());
-		scenarios = s == ThermalDevice::SE_SUMMER ? summer_scenarios : winter_scenarios;
-
-		if (old_scenarios != scenarios)
-			emit scenariosChanged();
-	}
-	if (values_list.contains(ThermalDevice99Zones::DIM_SCENARIO))
-	{
-		int val = values_list[ThermalDevice99Zones::DIM_SCENARIO].toInt();
-		for (int i = 0; i < scenarios->getCount(); ++i)
+		switch (it.key())
 		{
-			if (scenarios->getObject(i)->getObjectId() == val)
-			{
-				qDebug() << "ThermalControlUnitScenario scenario changed:" << val;
-				current[SCENARIO_INDEX] = i;
-				to_apply = current;
-				emit scenarioChanged();
-				break;
-			}
+		case ThermalDevice::DIM_SEASON:
+		{
+			const ObjectDataModel *old_scenarios = scenarios;
+
+			ThermalDevice::Season s = static_cast<ThermalDevice::Season>(values_list[ThermalDevice::DIM_SEASON].toInt());
+			scenarios = s == ThermalDevice::SE_SUMMER ? summer_scenarios : winter_scenarios;
+
+			if (old_scenarios != scenarios)
+				emit scenariosChanged();
+			break;
 		}
+
+		case ThermalDevice::DIM_SCENARIO:
+		{
+			int val = values_list[ThermalDevice99Zones::DIM_SCENARIO].toInt();
+			for (int i = 0; i < scenarios->getCount(); ++i)
+			{
+				if (scenarios->getObject(i)->getObjectId() == val)
+				{
+					current[SCENARIO_INDEX] = i;
+					to_apply = current;
+					emit scenarioChanged();
+					break;
+				}
+			}
+			break;
+		}
+		}
+
+		++it;
 	}
 }
 

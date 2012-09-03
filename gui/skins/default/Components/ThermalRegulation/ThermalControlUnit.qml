@@ -53,6 +53,14 @@ MenuColumn {
             dt.setSeconds(objModel.seconds)
             return dt
         }
+
+        function getBtTime(objModel) {
+            var h = objModel.hours
+            var m = objModel.minutes
+            var result = h < 10 ? "0" + h : h
+            result += m < 10 ? ":0" + m : ":" + m
+            return result
+        }
     }
 
     function okClicked() {
@@ -277,8 +285,8 @@ MenuColumn {
                 ControlSetDateTime {
                     dateVisible: false
                     source: "../../images/termo/4-zone_temporizzato/bg_imposta-ora.svg"
-                    date: DateTime.format(privateProps.getDateTime(objModel))["date"]
-                    time: DateTime.format(privateProps.getDateTime(objModel))["time"]
+                    date: ""
+                    time: privateProps.getBtTime(objModel)
                     status: (privateProps.currentIndex === 3) ? 1 : 0
 
                     onEditClicked: {
