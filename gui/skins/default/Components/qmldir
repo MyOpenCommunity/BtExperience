@@ -43,6 +43,7 @@ ControlSettings 1.0 ControlSettings.qml
 ControlSlider 1.0 ControlSlider.qml
 ControlSliderMute 1.0 ControlSliderMute.qml
 ControlSpin 1.0 ControlSpin.qml
+ControlSwitch 1.0 ControlSwitch.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
 ControlUpDown 1.0 ControlUpDown.qml
 EditNote 1.0 EditNote.qml
