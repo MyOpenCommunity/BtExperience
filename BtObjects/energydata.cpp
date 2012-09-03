@@ -223,8 +223,8 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
 				goals[index] = month.toElement().text().toInt();
 		}
 
-		thresholds_enabled << bool(v.intValue("threshold_one_enabled"));
-		thresholds_enabled << bool(v.intValue("threshold_two_enabled"));
+		thresholds_enabled << bool(v.intValue("threshold_one_enable"));
+		thresholds_enabled << bool(v.intValue("threshold_two_enable"));
 
 		// TODO handle rates (after they are specified)
 		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, goals_enabled, thresholds_enabled, 0));
