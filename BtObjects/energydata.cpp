@@ -194,7 +194,7 @@ namespace
 }
 
 
-QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
+QList<ObjectPair> parseEnergyData(const QDomNode &xml_node)
 {
 	QList<ObjectPair> obj_list;
 	XmlObject v(xml_node);
@@ -227,16 +227,15 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
 		thresholds_enabled << bool(v.intValue("threshold_two_enable"));
 
 		// TODO handle rates (after they are specified)
-		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, goals_enabled, thresholds_enabled, 0));
+		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), v.value("measure"), goals, goals_enabled, thresholds_enabled, 0));
 	}
 	return obj_list;
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate)
 {
 	name = _name;
-	family = _family;
 	dev = _dev;
 	rate = _rate;
 	energy_unit = _unit;
@@ -462,7 +461,7 @@ int EnergyData::getObjectId() const
 
 QString EnergyData::getObjectKey() const
 {
-	return QString("type:%1,%2").arg(static_cast<int>(getEnergyType())).arg(family);
+	return QString::number(getEnergyType());
 }
 
 EnergyData::EnergyType EnergyData::getEnergyType() const
