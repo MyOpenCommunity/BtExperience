@@ -144,7 +144,6 @@ protected:
 
 private:
 	QString key;
-	int temperature;
 	SeasonType season;
 	ObjectDataModel summer_programs, winter_programs;
 	ObjectDataModel *programs;
@@ -355,6 +354,8 @@ private:
 */
 class ThermalControlUnitTimedProgram : public ThermalControlUnitProgram
 {
+	friend class TestThermalControlUnitTimedProgram;
+
 	Q_OBJECT
 
 	/*!
@@ -408,6 +409,9 @@ signals:
 	void daysChanged();
 	void monthsChanged();
 	void yearsChanged();
+
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
 	void emitDateSignals(QDate oldDate, QDate newDate);
@@ -561,8 +565,14 @@ signals:
 	void minutesChanged();
 	void secondsChanged();
 
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
 private:
-	void emitTimeSignals(QTime oldTime, QTime newTime);
+	void emitTimeSignals(QVariant oldTime, QVariant newTime);
+	int toHours(const QVariant &btTime) const;
+	int toMinutes(const QVariant &btTime) const;
+	int toSeconds(const QVariant &btTime) const;
 
 	ThermalDevice4Zones *dev;
 };
