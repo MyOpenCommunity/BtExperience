@@ -150,13 +150,10 @@ Item {
             ButtonImageThreeStates {
                 id: alertsButton
 
-                width: 51
-                height: toolbar_top.height
-
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                defaultImage: "../images/toolbar/icon_alert.svg"
-                pressedImage: "../images/toolbar/icon_alert_P.svg"
+                defaultImage: "../images/toolbar/icon_alarm.svg"
+                pressedImage: "../images/toolbar/icon_alarm_p.svg"
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     verticalCenter: parent.verticalCenter
