@@ -246,7 +246,7 @@ Item {
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
                 defaultImage: "../images/toolbar/icon_vde-auto-open.svg"
-                pressedImage: "../images/toolbar/icon_vde-auto-open_P.svg"
+                pressedImage: "../images/toolbar/icon_vde-auto-open_p.svg"
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     verticalCenter: parent.verticalCenter
