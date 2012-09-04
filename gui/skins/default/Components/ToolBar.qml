@@ -185,9 +185,6 @@ Item {
             ButtonImageThreeStates {
                 id: antintrusionButton
 
-                width: 51
-                height: toolbar_top.height
-
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
                 defaultImage: "../images/toolbar/icon_antintrusion.svg"
@@ -217,9 +214,6 @@ Item {
             ButtonImageThreeStates {
                 id: clockButton
 
-                width: 51
-                height: toolbar_top.height
-
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
                 defaultImage: "../images/toolbar/icon_clock.svg"
@@ -248,9 +242,6 @@ Item {
 
             ButtonImageThreeStates {
                 id: autoOpenButton
-
-                width: 51
-                height: toolbar_top.height
 
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
