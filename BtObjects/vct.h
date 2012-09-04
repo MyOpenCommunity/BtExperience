@@ -76,6 +76,11 @@ class CCTV : public ObjectInterface
 	*/
 	Q_PROPERTY(int saturation READ getSaturation WRITE setSaturation NOTIFY saturationChanged)
 
+	/*!
+		\brief Sets or gets the if door must automatically open when a call arrives.
+	*/
+	Q_PROPERTY(bool autoOpen READ getAutoOpen WRITE setAutoOpen NOTIFY autoOpenChanged)
+
 	Q_PROPERTY(ObjectDataModel *externalPlaces READ getExternalPlaces CONSTANT)
 
 public:
@@ -93,6 +98,8 @@ public:
 	int getSaturation() const;
 	void setSaturation(int value);
 	ObjectDataModel *getExternalPlaces() const;
+	bool getAutoOpen() const { return prof_studio; }
+	void setAutoOpen(bool newValue);
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
@@ -104,6 +111,7 @@ public slots:
 	void stairLightActivate();
 	void stairLightRelease();
 	void nextCamera();
+	void callerAddress(QString address);
 
 signals:
 	void brightnessChanged();
@@ -111,6 +119,7 @@ signals:
 	void saturationChanged();
 	void incomingCall();
 	void callEnded();
+	void autoOpenChanged();
 
 
 protected slots:
@@ -131,6 +140,7 @@ private:
 
 	bool call_stopped;
 	bool call_active;
+	bool prof_studio;
 	QProcess video_grabber;
 	VideoDoorEntryDevice *dev;
 	ObjectDataModel external_places;

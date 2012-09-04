@@ -67,6 +67,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	saturation = 50;
 	call_stopped = false;
 	call_active = false;
+	prof_studio = false;
 
 	foreach (ExternalPlace *ep, list)
 		external_places << ep;
@@ -123,6 +124,15 @@ ObjectDataModel *CCTV::getExternalPlaces() const
 	return const_cast<ObjectDataModel*>(&external_places);
 }
 
+void CCTV::setAutoOpen(bool newValue)
+{
+	if (newValue == prof_studio)
+		return;
+
+	prof_studio = newValue;
+	emit autoOpenChanged();
+}
+
 void CCTV::answerCall()
 {
 	dev->answerCall();
@@ -166,6 +176,25 @@ void CCTV::nextCamera()
 	dev->cycleExternalUnits();
 }
 
+void CCTV::callerAddress(QString address)
+{
+	QString addr = address;
+	bool is_autoswitch = false;
+
+	if (address.at(0) == '@')
+	{
+		addr = addr.mid(1);
+		is_autoswitch = true;
+	}
+
+	// we want to open the door (only if the call does not come from an autoswitch)
+	if (prof_studio && !is_autoswitch)
+	{
+		dev->openLock();
+		dev->releaseLock();
+	}
+}
+
 void CCTV::valueReceived(const DeviceValues &values_list)
 {
 	// if call is not active we have to ignore all frames except:
@@ -191,6 +220,8 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 				startVideo();
 			}
 			activateCall();
+			if (values_list.contains(VideoDoorEntryDevice::CALLER_ADDRESS))
+				callerAddress(values_list[VideoDoorEntryDevice::CALLER_ADDRESS].toString());
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received END_OF_CALL";
@@ -210,6 +241,9 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			qDebug() << "Received CALLER_ADDRESS: " << *it;
 			if (!callActive()) // ignore
 				break;
+			if (!values_list.contains(VideoDoorEntryDevice::VCT_CALL) &&
+				!values_list.contains(VideoDoorEntryDevice::AUTO_VCT_CALL))
+				callerAddress(it.value().toString());
 			break;
 		default:
 			qDebug() << "CCTV::valueReceived, unhandled value" << it.key() << *it;

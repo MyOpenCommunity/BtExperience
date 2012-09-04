@@ -152,7 +152,6 @@ Item {
 
                 width: 51
                 height: toolbar_top.height + 10
-                visible: EventManager.eventManager.alarms > 0
 
                 defaultImageBg: "../images/toolbar/bg_icon.svg"
                 pressedImageBg: "../images/toolbar/bg_icon_P.svg"
@@ -192,7 +191,6 @@ Item {
 
                 width: 51
                 height: toolbar_top.height + 10
-                visible: EventManager.eventManager.alarms > 0
 
                 defaultImageBg: "../images/toolbar/bg_icon.svg"
                 pressedImageBg: "../images/toolbar/bg_icon_P.svg"
@@ -226,7 +224,6 @@ Item {
 
                 width: 51
                 height: toolbar_top.height + 10
-                visible: EventManager.eventManager.clocks > 0
 
                 defaultImageBg: "../images/toolbar/bg_icon.svg"
                 pressedImageBg: "../images/toolbar/bg_icon_P.svg"
@@ -243,8 +240,40 @@ Item {
             }
         }
 
-        // auto answer
         // auto open
+        SvgImage {
+            visible: EventManager.eventManager.autoOpen
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
+        }
+
+        Item {
+            visible: EventManager.eventManager.autoOpen > 0
+            width: 51
+            height: toolbar_top.height + 10
+
+            ButtonImageThreeStates {
+                id: autoOpenButton
+
+                width: 51
+                height: toolbar_top.height + 10
+
+                defaultImageBg: "../images/toolbar/bg_icon.svg"
+                pressedImageBg: "../images/toolbar/bg_icon_P.svg"
+                shadowImage: "../images/toolbar/icon_vde-auto-open_shadow.svg"
+                defaultImage: "../images/toolbar/icon_vde-auto-open.svg"
+                pressedImage: "../images/toolbar/icon_vde-auto-open_P.svg"
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+
+                onClicked: console.log("autoOpenButton clicked")
+                status: 0
+            }
+        }
+
+        // auto answer
         // vde mute
         // volume (and mute)
         // play

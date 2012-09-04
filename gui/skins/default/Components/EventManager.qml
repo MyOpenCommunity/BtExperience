@@ -11,6 +11,7 @@ Item {
     property int alarms: alarmsModel.count
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property int clocks: 1
+    property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
 
     anchors.fill: parent
 
@@ -72,6 +73,7 @@ Item {
                 switch (obj.objectId) {
                 case ObjectInterface.IdCCTV:
                     vctConnection.target = obj
+                    privateProps.vctModel = obj
                     break
                 case ObjectInterface.IdIntercom:
                     intercomConnection.target = obj
@@ -128,5 +130,6 @@ Item {
         id: privateProps
 
         property variant antintrusionModel: undefined
+        property variant vctModel: undefined
     }
 }
