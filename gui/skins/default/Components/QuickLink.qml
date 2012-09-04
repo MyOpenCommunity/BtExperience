@@ -9,7 +9,6 @@ Item {
 
     property alias imageSource: icon.source
     property string text: ""
-    property color color: "black"
     property string address: "www.corriere.it"
     property string page: "Browser.qml"
     property bool editable: true
@@ -33,7 +32,8 @@ Item {
   
      Image {
             id: container
-            source: "../images/profiles/scheda_preferiti.svg"
+            source: global.guiSettings.skin === 0 ? "../images/profiles/scheda_preferiti.svg" :
+                                                    "../images/profiles/scheda_preferiti_P.svg"
 
             Image {
                 id: icon
@@ -53,7 +53,8 @@ Item {
             {
                 id: containerPressed
                 anchors.fill: container
-                source: "../images/profiles/scheda_preferiti_P.svg"
+                source: global.guiSettings.skin === 0 ? "../images/profiles/scheda_preferiti_P.svg" :
+                                                        "../images/profiles/scheda_preferiti.svg"
                 visible: false
                 anchors.left: container.left
                 anchors.bottom: container.bottom
@@ -162,7 +163,8 @@ Item {
             id: labelComponent
             UbuntuLightText {
                 text: bgQuick.text
-                color: bgQuick.color
+                color: global.guiSettings.skin === 0 ? "black":
+                                                       "white"
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 13
                 elide: Text.ElideRight
@@ -175,7 +177,8 @@ Item {
             id: labelInputComponent
             TextInput {
                 text: bgQuick.text
-                color: bgQuick.color
+                color: global.guiSettings.skin === 0 ? "black":
+                                                       "white"
                 horizontalAlignment: Text.AlignHCenter
                 activeFocusOnPress: false
                 anchors.top: parent.top
