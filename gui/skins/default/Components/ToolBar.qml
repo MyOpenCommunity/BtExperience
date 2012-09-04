@@ -155,7 +155,6 @@ Item {
 
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                shadowImage: "../images/toolbar/icon_alert_shadow.svg"
                 defaultImage: "../images/toolbar/icon_alert.svg"
                 pressedImage: "../images/toolbar/icon_alert_P.svg"
                 anchors {
@@ -194,7 +193,6 @@ Item {
 
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                shadowImage: "../images/toolbar/icon_antintrusion_shadow.svg"
                 defaultImage: "../images/toolbar/icon_antintrusion.svg"
                 pressedImage: "../images/toolbar/icon_antintrusion_P.svg"
                 anchors {
@@ -227,7 +225,6 @@ Item {
 
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                shadowImage: "../images/toolbar/icon_clock_shadow.svg"
                 defaultImage: "../images/toolbar/icon_clock.svg"
                 pressedImage: "../images/toolbar/icon_clock_P.svg"
                 anchors {
@@ -260,7 +257,6 @@ Item {
 
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                shadowImage: "../images/toolbar/icon_vde-auto-open_shadow.svg"
                 defaultImage: "../images/toolbar/icon_vde-auto-open.svg"
                 pressedImage: "../images/toolbar/icon_vde-auto-open_P.svg"
                 anchors {
