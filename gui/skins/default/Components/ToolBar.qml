@@ -1,9 +1,12 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 import "../js/datetime.js" as DateTime
 import "../js/EventManager.js" as EventManager
+import "../js/Stack.js" as Stack
+import "../js/Systems.js" as Script
 
 
 Item {
@@ -161,7 +164,13 @@ Item {
                     verticalCenter: parent.verticalCenter
                 }
 
-                onClicked: console.log("alertsButton clicked")
+                onClicked: {
+                    var currentPage = Stack.currentPage()
+                    if (currentPage._pageName !== "Antintrusion")
+                        currentPage = Stack.openPage("Antintrusion.qml")
+                    currentPage.showLog()
+                }
+
                 status: 0
             }
         }
@@ -195,7 +204,7 @@ Item {
                     verticalCenter: parent.verticalCenter
                 }
 
-                onClicked: console.log("antintrusionButton clicked")
+                onClicked: Stack.openPage(Script.getTarget(Container.IdAntintrusion))
                 status: 0
             }
         }
