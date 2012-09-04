@@ -187,8 +187,8 @@ Item {
 
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                defaultImage: "../images/toolbar/icon_antintrusion.svg"
-                pressedImage: "../images/toolbar/icon_antintrusion_P.svg"
+                defaultImage: "../images/toolbar/icon_burlgar alarm-on.svg"
+                pressedImage: "../images/toolbar/icon_burlgar alarm-on_p.svg"
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     verticalCenter: parent.verticalCenter
