@@ -1,8 +1,9 @@
 import QtQuick 1.1
 import BtExperience 1.0
+import Components 1.0
 import Components.Text 1.0
 import "../js/datetime.js" as DateTime
-import Components 1.0
+import "../js/EventManager.js" as EventManager
 
 
 Item {
@@ -131,53 +132,116 @@ Item {
         anchors.right: toolbar_top.right
         anchors.verticalCenter: toolbar_top.verticalCenter
 
+        // alerts
         SvgImage {
+            visible: EventManager.eventManager.alarms > 0
             source: imagesPath + "toolbar/toolbar_separator.svg"
             height: toolbar_top.height
         }
 
         Item {
+            visible: EventManager.eventManager.alarms > 0
             width: 51
             height: toolbar_top.height + 10
-            SvgImage {
-                source: imagesPath + "toolbar/icon_alert.svg"
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
 
+            ButtonImageThreeStates {
+                id: alertsButton
+
+                width: 51
+                height: toolbar_top.height + 10
+                visible: EventManager.eventManager.alarms > 0
+
+                defaultImageBg: "../images/toolbar/bg_icon.svg"
+                pressedImageBg: "../images/toolbar/bg_icon_P.svg"
+                shadowImage: "../images/toolbar/icon_alert_shadow.svg"
+                defaultImage: "../images/toolbar/icon_alert.svg"
+                pressedImage: "../images/toolbar/icon_alert_P.svg"
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+
+                onClicked: console.log("alertsButton clicked")
+                status: 0
             }
         }
 
+        // antintrusion
         SvgImage {
+            visible: EventManager.eventManager.isAntintrusionInserted
             source: imagesPath + "toolbar/toolbar_separator.svg"
             height: toolbar_top.height
         }
 
         Item {
+            visible: EventManager.eventManager.isAntintrusionInserted
             width: 51
             height: toolbar_top.height + 10
-            SvgImage {
-                source: imagesPath + "toolbar/icon_antintrusion.svg"
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
 
+            ButtonImageThreeStates {
+                id: antintrusionButton
+
+                width: 51
+                height: toolbar_top.height + 10
+                visible: EventManager.eventManager.alarms > 0
+
+                defaultImageBg: "../images/toolbar/bg_icon.svg"
+                pressedImageBg: "../images/toolbar/bg_icon_P.svg"
+                shadowImage: "../images/toolbar/icon_antintrusion_shadow.svg"
+                defaultImage: "../images/toolbar/icon_antintrusion.svg"
+                pressedImage: "../images/toolbar/icon_antintrusion_P.svg"
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+
+                onClicked: console.log("antintrusionButton clicked")
+                status: 0
             }
         }
 
+        // alarm clock
         SvgImage {
+            visible: EventManager.eventManager.clocks > 0
             source: imagesPath + "toolbar/toolbar_separator.svg"
             height: toolbar_top.height
         }
 
         Item {
+            visible: EventManager.eventManager.clocks > 0
             width: 51
             height: toolbar_top.height + 10
-            SvgImage {
-                source: imagesPath + "toolbar/icon_clock.svg"
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
 
+            ButtonImageThreeStates {
+                id: clockButton
+
+                width: 51
+                height: toolbar_top.height + 10
+                visible: EventManager.eventManager.clocks > 0
+
+                defaultImageBg: "../images/toolbar/bg_icon.svg"
+                pressedImageBg: "../images/toolbar/bg_icon_P.svg"
+                shadowImage: "../images/toolbar/icon_clock_shadow.svg"
+                defaultImage: "../images/toolbar/icon_clock.svg"
+                pressedImage: "../images/toolbar/icon_clock_P.svg"
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+
+                onClicked: console.log("clockButton clicked")
+                status: 0
             }
         }
+
+        // auto answer
+        // auto open
+        // vde mute
+        // volume (and mute)
+        // play
+        // message
+        // recording
+
     }
 
     SvgImage {

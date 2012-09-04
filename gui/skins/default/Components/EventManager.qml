@@ -8,6 +8,10 @@ import "../js/ScreenSaver.js" as ScreenSaver
 Item {
     id: eventManager
 
+    property int alarms: alarmsModel.count
+    property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
+    property int clocks: 1
+
     anchors.fill: parent
 
     ScreenSaver {
@@ -74,6 +78,7 @@ Item {
                     break
                 case ObjectInterface.IdAntintrusionSystem:
                     antintrusionConnection.target = obj
+                    privateProps.antintrusionModel = obj
                     break
                 }
             }
@@ -112,5 +117,16 @@ Item {
             eventManager.screensaverEvent()
             Stack.currentPage().showAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
         }
+    }
+
+    ObjectModel {
+        id: alarmsModel
+        source: privateProps.antintrusionModel.alarms
+    }
+
+    QtObject {
+        id: privateProps
+
+        property variant antintrusionModel: undefined
     }
 }
