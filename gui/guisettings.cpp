@@ -26,6 +26,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 	timeOut = Minutes_1;
 	timezone = 0;
 	turnOffTime = Minutes_10;
+        skin = Clear;
 }
 
 void GuiSettings::sendCommand(const QString &cmd)
@@ -46,6 +47,19 @@ QString GuiSettings::getLanguageString() const
 	default:
 		return QString("it");
 	}
+}
+
+QString GuiSettings::getSkinString() const
+{
+        switch(skin)
+        {
+        case Clear:
+                return QString("clear");
+        case Dark:
+                return QString("dark");
+        default:
+                return QString("clear");
+        }
 }
 
 int GuiSettings::getBrightness() const
@@ -123,6 +137,18 @@ void GuiSettings::setLanguage(Language l)
 	// TODO save value somewhere
 	language = l;
 	emit languageChanged();
+}
+
+GuiSettings::Skin GuiSettings::getSkin() const
+{
+        return skin;
+}
+
+void GuiSettings::setSkin(Skin s)
+{
+        // TODO save value somewhere
+        skin = s;
+        emit skinChanged();
 }
 
 GuiSettings::MeasurementSystem GuiSettings::getMeasurementSystem() const
