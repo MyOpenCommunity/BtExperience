@@ -1,80 +1,34 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
-import Components.Text 1.0
 
 MenuColumn {
     id: column
 
     onChildDestroyed: {
-        privateProps.currentIndex = -1
+        paginator.currentIndex = -1
     }
 
-    Image {
-        id: background
-        source: "../../images/common/bg_paginazione.png"
-        width: parent.width
-        height: parent.height
+    PaginatorList {
+        id: paginator
+        delegate: MenuItemDelegate {
+            itemObject: energiesCounters.getObject(index)
+            hasChild: true
+            onClicked: column.loadColumn(goalsLineComponent, itemObject.name, itemObject)
+        }
+
+        model: energiesCounters
     }
 
-    QtObject {
-        id: privateProps
-        function getMonthName(index) {
-            switch (index) {
-            case 0:
-                return qsTr("January")
-            case 1:
-                return qsTr("February")
-            case 2:
-                return qsTr("March")
-            case 3:
-                return qsTr("April")
-            case 4:
-                return qsTr("May")
-            case 5:
-                return qsTr("June")
-            case 6:
-                return qsTr("July")
-            case 7:
-                return qsTr("August")
-            case 8:
-                return qsTr("September")
-            case 9:
-                return qsTr("October")
-            case 10:
-                return qsTr("November")
-            case 11:
-                return qsTr("December")
-            }
-        }
-        property int currentIndex: -1
+    ObjectModel {
+        id: energiesCounters
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: EnergyData.Electricity}]
     }
 
-    Column {
-        ControlSwitch {
-            text: qsTr("goals enabled")
-        }
+    Component {
+        id: goalsLineComponent
+        SettingsEnergyGoalsLine {
 
-        Component {
-            id: panelComponent
-            SettingsEnergyGoalPanel {
-            }
-        }
-
-        PaginatorColumn {
-            maxHeight: 300
-            Repeater {
-                MenuItem {
-                    name: privateProps.getMonthName(index)
-                    description: "140kwh"
-                    hasChild: true
-                    isSelected: privateProps.currentIndex === index
-                    onClicked: {
-                        privateProps.currentIndex = index
-                        column.loadColumn(panelComponent, privateProps.getMonthName(index))
-                    }
-                }
-                model: 12
-            }
         }
     }
 }
