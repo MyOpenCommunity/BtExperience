@@ -267,7 +267,7 @@ void TestThermalControlledProbesFancoil::testSetFancoilSpeed()
 	compareClientCommand();
 
 	obj->setFancoil(ThermalControlledProbeFancoil::FancoilAuto);
-	dev->setFancoilSpeed(4);
+	dev->setFancoilSpeed(0);
 	compareClientCommand();
 }
 
@@ -290,5 +290,5 @@ void TestThermalControlledProbesFancoil::testReceiveFancoilSpeed()
 	testReceiveFancoilSpeed(1, ThermalControlledProbeFancoil::FancoilMin);
 	testReceiveFancoilSpeed(2, ThermalControlledProbeFancoil::FancoilMed);
 	testReceiveFancoilSpeed(3, ThermalControlledProbeFancoil::FancoilMax);
-	testReceiveFancoilSpeed(4, ThermalControlledProbeFancoil::FancoilAuto);
+	testReceiveFancoilSpeed(0, ThermalControlledProbeFancoil::FancoilAuto);
 }
