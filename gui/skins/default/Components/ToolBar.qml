@@ -216,8 +216,8 @@ Item {
 
                 defaultImageBg: "../images/toolbar/_bg_alert.svg"
                 pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                defaultImage: "../images/toolbar/icon_clock.svg"
-                pressedImage: "../images/toolbar/icon_clock_P.svg"
+                defaultImage: "../images/toolbar/icon_alarm-clock.svg"
+                pressedImage: "../images/toolbar/icon_alarm-clock_p.svg"
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     verticalCenter: parent.verticalCenter
