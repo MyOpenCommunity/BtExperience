@@ -21,7 +21,8 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        source: imagesPath + "toolbar/toolbar_bg_top.svg"
+        source: global.guiSettings.skin === 0 ? imagesPath + "toolbar/toolbar_bg_top.svg":
+                                                imagesPath + "toolbar/toolbar_bg_top_dark.svg"
         width: parent.width
     }
 
@@ -37,8 +38,10 @@ Item {
             ButtonImageThreeStates {
                 defaultImageBg: imagesPath + "toolbar/bg_home.svg"
                 pressedImageBg: imagesPath + "toolbar/bg_home_pressed.svg"
-                defaultImage: imagesPath + "toolbar/icon_home.svg"
-                pressedImage: imagesPath + "toolbar/icon_home_pressed.svg"
+                defaultImage: global.guiSettings.skin === 0 ? imagesPath + "toolbar/icon_home.svg":
+                                                              imagesPath + "toolbar/icon_home_pressed.svg"
+                pressedImage: global.guiSettings.skin === 0 ? imagesPath + "toolbar/icon_home_pressed.svg":
+                                                              imagesPath + "toolbar/icon_home.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: toolbar.homeClicked() //doStuff()
@@ -57,6 +60,8 @@ Item {
             UbuntuLightText {
                 id: temperature
                 text: "19°C"
+                color: global.guiSettings.skin === 0 ? "black":
+                                                       "white"
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -74,6 +79,8 @@ Item {
 
             UbuntuLightText {
                 id: date
+                color: global.guiSettings.skin === 0 ? "black":
+                                                       "white"
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -95,6 +102,8 @@ Item {
 
             UbuntuLightText {
                 id: time
+                color: global.guiSettings.skin === 0 ? "black":
+                                                       "white"
                 text: DateTime.format()["time"]
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
@@ -121,7 +130,8 @@ Item {
     }
 
     SvgImage {
-        source: imagesPath + "toolbar/toolbar_logo_black.svg"
+        source: global.guiSettings.skin === 0 ? imagesPath + "toolbar/toolbar_logo_black.svg" :
+                                                imagesPath + "toolbar/toolbar_logo_white.svg"
         anchors.verticalCenter: toolbar_top.verticalCenter
         anchors.horizontalCenter: toolbar_top.horizontalCenter
     }
@@ -140,7 +150,8 @@ Item {
             width: 51
             height: toolbar_top.height + 10
             SvgImage {
-                source: imagesPath + "toolbar/icon_alert.svg"
+                source: global.guiSettings.skin === 0 ? imagesPath + "toolbar/icon_alert.svg":
+                                                        imagesPath + "toolbar/icon_alert_pressed.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
@@ -156,7 +167,8 @@ Item {
             width: 51
             height: toolbar_top.height + 10
             SvgImage {
-                source: imagesPath + "toolbar/icon_antintrusion.svg"
+                source: global.guiSettings.skin === 0 ? imagesPath + "toolbar/icon_antintrusion.svg":
+                                                        imagesPath + "toolbar/icon_antintrusion_pressed.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
@@ -172,7 +184,8 @@ Item {
             width: 51
             height: toolbar_top.height + 10
             SvgImage {
-                source: imagesPath + "toolbar/icon_clock.svg"
+                source: global.guiSettings.skin === 0 ? imagesPath + "toolbar/icon_clock.svg":
+                                                        imagesPath + "toolbar/icon_clock_pressed.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
