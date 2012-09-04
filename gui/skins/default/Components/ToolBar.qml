@@ -145,16 +145,16 @@ Item {
         Item {
             visible: EventManager.eventManager.alarms > 0
             width: 51
-            height: toolbar_top.height + 10
+            height: toolbar_top.height
 
             ButtonImageThreeStates {
                 id: alertsButton
 
                 width: 51
-                height: toolbar_top.height + 10
+                height: toolbar_top.height
 
-                defaultImageBg: "../images/toolbar/bg_icon.svg"
-                pressedImageBg: "../images/toolbar/bg_icon_P.svg"
+                defaultImageBg: "../images/toolbar/_bg_alert.svg"
+                pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
                 shadowImage: "../images/toolbar/icon_alert_shadow.svg"
                 defaultImage: "../images/toolbar/icon_alert.svg"
                 pressedImage: "../images/toolbar/icon_alert_P.svg"
@@ -184,16 +184,16 @@ Item {
         Item {
             visible: EventManager.eventManager.isAntintrusionInserted
             width: 51
-            height: toolbar_top.height + 10
+            height: toolbar_top.height
 
             ButtonImageThreeStates {
                 id: antintrusionButton
 
                 width: 51
-                height: toolbar_top.height + 10
+                height: toolbar_top.height
 
-                defaultImageBg: "../images/toolbar/bg_icon.svg"
-                pressedImageBg: "../images/toolbar/bg_icon_P.svg"
+                defaultImageBg: "../images/toolbar/_bg_alert.svg"
+                pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
                 shadowImage: "../images/toolbar/icon_antintrusion_shadow.svg"
                 defaultImage: "../images/toolbar/icon_antintrusion.svg"
                 pressedImage: "../images/toolbar/icon_antintrusion_P.svg"
@@ -217,16 +217,16 @@ Item {
         Item {
             visible: EventManager.eventManager.clocks > 0
             width: 51
-            height: toolbar_top.height + 10
+            height: toolbar_top.height
 
             ButtonImageThreeStates {
                 id: clockButton
 
                 width: 51
-                height: toolbar_top.height + 10
+                height: toolbar_top.height
 
-                defaultImageBg: "../images/toolbar/bg_icon.svg"
-                pressedImageBg: "../images/toolbar/bg_icon_P.svg"
+                defaultImageBg: "../images/toolbar/_bg_alert.svg"
+                pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
                 shadowImage: "../images/toolbar/icon_clock_shadow.svg"
                 defaultImage: "../images/toolbar/icon_clock.svg"
                 pressedImage: "../images/toolbar/icon_clock_P.svg"
@@ -250,16 +250,16 @@ Item {
         Item {
             visible: EventManager.eventManager.autoOpen > 0
             width: 51
-            height: toolbar_top.height + 10
+            height: toolbar_top.height
 
             ButtonImageThreeStates {
                 id: autoOpenButton
 
                 width: 51
-                height: toolbar_top.height + 10
+                height: toolbar_top.height
 
-                defaultImageBg: "../images/toolbar/bg_icon.svg"
-                pressedImageBg: "../images/toolbar/bg_icon_P.svg"
+                defaultImageBg: "../images/toolbar/_bg_alert.svg"
+                pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
                 shadowImage: "../images/toolbar/icon_vde-auto-open_shadow.svg"
                 defaultImage: "../images/toolbar/icon_vde-auto-open.svg"
                 pressedImage: "../images/toolbar/icon_vde-auto-open_P.svg"
