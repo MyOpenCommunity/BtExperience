@@ -452,7 +452,9 @@ void TestTreeBrowserListModelBase::testListItems()
 
 	setRangeAndWait(obj, QVariantList() << 0 << 8);
 
-	t.checkSignals();
+	t.checkSignalCount(SIGNAL(modelReset()), reset_counter);
+	t.clearSignals();
+
 	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 8);
 
@@ -465,7 +467,7 @@ void TestTreeBrowserListModelBase::testListItems()
 
 	enterDirectoryAndWait(obj, "b", isAsync());
 
-	t.checkSignals();
+	t.checkSignalCount(SIGNAL(modelReset()), reset_counter);
 	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 8);
 
@@ -488,7 +490,9 @@ void TestTreeBrowserListModelBase::testRange()
 
 	setRangeAndWait(obj, QVariantList() << 4 << 8);
 
-	t.checkSignals();
+	t.checkSignalCount(SIGNAL(modelReset()), range_reset_counter);
+	t.clearSignals();
+
 	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 4);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getLogicalPath(),
@@ -496,7 +500,9 @@ void TestTreeBrowserListModelBase::testRange()
 
 	setRangeAndWait(obj, QVariantList() << 8 << 12);
 
-	t.checkSignals();
+	t.checkSignalCount(SIGNAL(modelReset()), range_reset_counter);
+	t.clearSignals();
+
 	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 4);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getLogicalPath(),
@@ -504,7 +510,9 @@ void TestTreeBrowserListModelBase::testRange()
 
 	setRangeAndWait(obj, QVariantList() << 24 << 28);
 
-	t.checkSignals();
+	t.checkSignalCount(SIGNAL(modelReset()), range_reset_counter);
+	t.clearSignals();
+
 	QCOMPARE(obj->getCount(), 26);
 	QCOMPARE(obj->rowCount(), 2);
 	QCOMPARE(qobject_cast<FileObject *>(obj->getObject(0))->getLogicalPath(),
@@ -517,6 +525,7 @@ void TestFolderListModel::init()
 	TreeBrowser *browser = new MockTreeBrowser();
 
 	initObjects(new FolderListModel(browser), new MockTreeBrowser);
+	range_reset_counter = reset_counter = 1;
 }
 
 void TestFolderListModel::testSetRoot()
@@ -539,6 +548,8 @@ void TestPagedFolderListModel::init()
 	PagedTreeBrowser *browser = new MockPagedTreeBrowser();
 
 	initObjects(new PagedFolderListModel(browser), new MockPagedTreeBrowser);
+	reset_counter = 4;
+	range_reset_counter = 3;
 }
 
 

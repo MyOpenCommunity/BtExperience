@@ -58,6 +58,7 @@ private slots:
 protected:
 	TreeBrowserListModelBase *obj;
 	TreeBrowser *dev;
+	int reset_counter, range_reset_counter;
 };
 
 
