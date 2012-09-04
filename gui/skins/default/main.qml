@@ -3,21 +3,24 @@ import Components 1.0
 import Components.Text 1.0
 import "js/MainContainer.js" as Container
 import "js/Stack.js" as Stack
+import "js/EventManager.js" as EventManagerContainer
 
 
 Item {
     id: container
-    width: 1024
-    height: 600
-    transform: Scale { origin.x: 0; origin.y: 0; xScale: global.mainWidth / 1024; yScale: global.mainHeight / 600 }
+
     property alias animation: animationManager.animation
     property alias animationType: animationManager.type
     property alias ubuntuLight: ubuntuLightLoader
     property alias ubuntuMedium: ubuntuMediumLoader
 
+    width: 1024
+    height: 600
+    transform: Scale { origin.x: 0; origin.y: 0; xScale: global.mainWidth / 1024; yScale: global.mainHeight / 600 }
 
     Component.onCompleted: {
         Container.mainContainer = container
+        EventManagerContainer.eventManager = eventManagerId
         // We need to update the reference in Stack because it includes MainContainer
         // but it doesn't get the updates to it. Seems like that Qt.include()
         // in a JS file operates a literal inclusion, not a real variable
@@ -41,6 +44,7 @@ Item {
     }
 
     EventManager {
+        id: eventManagerId
         anchors.fill: parent
         transform: Scale { origin.x: 0; origin.y: 0; xScale: 1024 / global.mainWidth; yScale: 600 / global.mainHeight }
         // the EventManager must show some pages on top of everything else:
