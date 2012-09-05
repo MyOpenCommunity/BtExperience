@@ -136,186 +136,84 @@ Item {
         anchors.verticalCenter: toolbar_top.verticalCenter
 
         // alerts
-        SvgImage {
-            visible: EventManager.eventManager.alarms > 0
-            source: imagesPath + "toolbar/toolbar_separator.svg"
+        ToolbarButton {
             height: toolbar_top.height
-        }
-
-        ButtonImageThreeStates {
-            id: alertsButton
-
             visible: EventManager.eventManager.alarms > 0
-            defaultImageBg: "../images/toolbar/_bg_alert.svg"
-            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
             defaultImage: "../images/toolbar/icon_alarm.svg"
             pressedImage: "../images/toolbar/icon_alarm_p.svg"
-
             onClicked: {
                 var currentPage = Stack.currentPage()
                 if (currentPage._pageName !== "Antintrusion")
                     currentPage = Stack.openPage("Antintrusion.qml")
                 currentPage.showLog()
             }
-
-            status: 0
         }
 
         // antintrusion
-        SvgImage {
-            visible: EventManager.eventManager.isAntintrusionInserted
-            source: imagesPath + "toolbar/toolbar_separator.svg"
+        ToolbarButton {
             height: toolbar_top.height
-        }
-
-        ButtonImageThreeStates {
-            id: antintrusionButton
-
             visible: EventManager.eventManager.isAntintrusionInserted
-            defaultImageBg: "../images/toolbar/_bg_alert.svg"
-            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
             defaultImage: "../images/toolbar/icon_burlgar alarm-on.svg"
             pressedImage: "../images/toolbar/icon_burlgar alarm-on_p.svg"
-
             onClicked: Stack.openPage(Script.getTarget(Container.IdAntintrusion))
-            status: 0
         }
 
         // alarm clock
-        SvgImage {
-            visible: EventManager.eventManager.clocks > 0
-            source: imagesPath + "toolbar/toolbar_separator.svg"
+        ToolbarButton {
             height: toolbar_top.height
-        }
-
-        ButtonImageThreeStates {
-            id: clockButton
-
             visible: EventManager.eventManager.clocks > 0
-            defaultImageBg: "../images/toolbar/_bg_alert.svg"
-            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
             defaultImage: "../images/toolbar/icon_alarm-clock.svg"
             pressedImage: "../images/toolbar/icon_alarm-clock_p.svg"
-
             onClicked: console.log("clockButton clicked")
-            status: 0
         }
 
         // auto open
-        SvgImage {
-            visible: EventManager.eventManager.autoOpen
-            source: imagesPath + "toolbar/toolbar_separator.svg"
+        ToolbarButton {
             height: toolbar_top.height
-        }
-
-        ButtonImageThreeStates {
-            id: autoOpenButton
-
             visible: EventManager.eventManager.autoOpen
-            defaultImageBg: "../images/toolbar/_bg_alert.svg"
-            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
             defaultImage: "../images/toolbar/icon_vde-auto-open.svg"
             pressedImage: "../images/toolbar/icon_vde-auto-open_p.svg"
-
             onClicked: console.log("autoOpenButton clicked")
-            status: 0
         }
 
         // auto answer
-        SvgImage {
-            visible: EventManager.eventManager.autoAnswer
-            source: imagesPath + "toolbar/toolbar_separator.svg"
+        ToolbarButton {
             height: toolbar_top.height
-        }
-
-        ButtonImageThreeStates {
-            id: autoAnswerButton
-
             visible: EventManager.eventManager.autoAnswer
-            defaultImageBg: "../images/toolbar/_bg_alert.svg"
-            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
             defaultImage: "../images/toolbar/icon_vde-auto-answer.svg"
             pressedImage: "../images/toolbar/icon_vde-auto-answer_p.svg"
-
             onClicked: console.log("autoAnswerButton clicked")
-            status: 0
         }
 
         // message
-        SvgImage {
-            visible: EventManager.eventManager.messages > 0
-            source: imagesPath + "toolbar/toolbar_separator.svg"
+        ToolbarButton {
             height: toolbar_top.height
-        }
-
-        ButtonImageThreeStates {
-            id: messagesButton
-
             visible: EventManager.eventManager.messages > 0
-            defaultImageBg: "../images/toolbar/_bg_alert.svg"
-            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
             defaultImage: "../images/toolbar/icon_new-message.svg"
             pressedImage: "../images/toolbar/icon_new-message_p.svg"
-
             onClicked: Stack.openPage(Script.getTarget(Container.IdMessages))
-            status: 0
         }
 
         // vde mute
-        SvgImage {
-            visible: EventManager.eventManager.vdeMute
-            source: imagesPath + "toolbar/toolbar_separator.svg"
+        ToolbarButton {
             height: toolbar_top.height
-        }
-
-        ButtonImageThreeStates {
-            id: vdeMuteButton
-
             visible: EventManager.eventManager.vdeMute
-            defaultImageBg: "../images/toolbar/_bg_alert.svg"
-            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
             defaultImage: "../images/toolbar/icon_vde-mute.svg"
             pressedImage: "../images/toolbar/icon_vde-mute_p.svg"
-
             onClicked: console.log("vdeMuteButton clicked")
-            status: 0
         }
 
         // volume (and mute)
         // play
 
         // recording
-        SvgImage {
-            visible: EventManager.eventManager.scenarioRecording
-            source: imagesPath + "toolbar/toolbar_separator.svg"
+        ToolbarButton {
             height: toolbar_top.height
-        }
-
-        ButtonImageThreeStates {
-            id: scenarioRecordingButton
-
             visible: EventManager.eventManager.scenarioRecording
-            defaultImageBg: "../images/toolbar/_bg_alert.svg"
+            blinking: EventManager.eventManager.scenarioRecording
+            blinkingInterval: 500
             defaultImage: "../images/toolbar/icon_vde-mute.svg" // TODO use the right icon here
-
-            onClicked: console.log("scenarioRecordingButton clicked")
-            status: 0
             enabled: false
-
-            Behavior on opacity {
-                NumberAnimation { duration: 500 }
-            }
-
-            // blinking is managed externally (we still don't have blinking buttons),
-            // but it can be a button feature if used more
-            Timer {
-                running: scenarioRecordingButton.visible
-                interval: 500
-                repeat: true
-                onTriggered: scenarioRecordingButton.opacity === 1 ?
-                                 scenarioRecordingButton.opacity = 0 :
-                                 scenarioRecordingButton.opacity = 1
-            }
         }
 
     }
