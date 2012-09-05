@@ -147,6 +147,10 @@ MenuColumn {
                 // we want an assignment, not a binding
                 rootAutoComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
             }
+            Connections {
+                target: column.dataModel
+                onFancoilChanged: rootAutoComponent.speed = column.dataModel.fancoil
+            }
 
             ControlLeftRightWithTitle {
                 title: qsTr("fancoil speed")
@@ -241,6 +245,10 @@ MenuColumn {
             Component.onCompleted: {
                 rootManualComponent.setpoint = dataModel.setpoint // we want an assignment, not a binding
                 rootManualComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
+            }
+            Connections {
+                target: column.dataModel
+                onFancoilChanged: rootManualComponent.speed = column.dataModel.fancoil
             }
             Connections {
                 target: dataModel
