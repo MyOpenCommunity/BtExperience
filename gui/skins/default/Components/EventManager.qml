@@ -10,8 +10,9 @@ Item {
 
     property int alarms: alarmsModel.count
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
-    property int clocks: 1
+    property int clocks: 1 // TODO link to C++ model!
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
+    property int messages: 1 // TODO link to C++ model!
 
     anchors.fill: parent
 

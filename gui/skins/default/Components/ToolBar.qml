@@ -221,12 +221,31 @@ Item {
             status: 0
         }
 
+        // message
+        SvgImage {
+            visible: EventManager.eventManager.messages > 0
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
+        }
+
+        ButtonImageThreeStates {
+            id: messagesButton
+
+            visible: EventManager.eventManager.messages > 0
+            defaultImageBg: "../images/toolbar/_bg_alert.svg"
+            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
+            defaultImage: "../images/toolbar/icon_new-message.svg"
+            pressedImage: "../images/toolbar/icon_new-message_p.svg"
+
+            onClicked: Stack.openPage(Script.getTarget(Container.IdMessages))
+            status: 0
+        }
+
         // auto answer
         // vde mute
         // volume (and mute)
         // play
-        // message
-        // recording
+        // recording (blinking and not enabled)
 
     }
 

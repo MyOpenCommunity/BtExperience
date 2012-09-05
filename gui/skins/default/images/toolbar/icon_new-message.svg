@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">
+]>
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+	 x="0px" y="0px" width="33px" height="25px" viewBox="0 0 33 25" overflow="visible" enable-background="new 0 0 33 25"
+	 xml:space="preserve">
+<defs>
+</defs>
+<path d="M33,25H1V1h32V25z M3,23h28V3H3V23z"/>
+<polygon points="17.047,17.424 0.322,3.834 1.678,2.166 16.953,14.576 30.269,2.212 31.731,3.788 "/>
+<rect x="8.002" y="10.468" transform="matrix(0.6734 0.7393 -0.7393 0.6734 16.0392 -0.3904)" width="0.919" height="14.98"/>
+<rect x="20.108" y="17.997" transform="matrix(0.745 0.667 -0.667 0.745 19.1736 -13.2528)" width="13.629" height="0.916"/>
+<path fill="#FFFFFF" d="M32,24H0V0h32V24z M2,22h28V2H2V22z"/>
+<polygon fill="#FFFFFF" points="16,16.423 0.296,2.812 1.704,1.188 16,13.577 30.296,1.188 31.704,2.812 "/>
+<rect x="7.079" y="9.552" transform="matrix(0.6734 0.7393 -0.7393 0.6734 15.0602 -0.0075)" fill="#FFFFFF" width="0.919" height="14.979"/>
+<rect x="18.077" y="17.542" transform="matrix(0.7423 0.6701 -0.6701 0.7423 18.6437 -12.4742)" fill="#FFFFFF" width="14.923" height="0.915"/>
+</svg>
