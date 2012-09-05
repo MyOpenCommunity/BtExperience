@@ -27,6 +27,7 @@ QList<ObjectPair> parseExternalNonControlledProbes(const QDomNode &obj, ObjectIn
 
 ThermalNonControlledProbe::ThermalNonControlledProbe(QString _name, QString _key, ObjectId _object_id, NonControlledProbeDevice *_dev)
 {
+	temperature = 0;
 	name = _name;
 	key = _key;
 	object_id = _object_id;

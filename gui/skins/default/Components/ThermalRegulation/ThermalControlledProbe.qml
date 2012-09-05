@@ -148,7 +148,7 @@ MenuColumn {
                 rootAutoComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
             }
             Connections {
-                target: column.dataModel
+                target: isFancoil() ? column.dataModel : null
                 onFancoilChanged: rootAutoComponent.speed = column.dataModel.fancoil
             }
 
@@ -247,7 +247,7 @@ MenuColumn {
                 rootManualComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
             }
             Connections {
-                target: column.dataModel
+                target: isFancoil() ? column.dataModel : null
                 onFancoilChanged: rootManualComponent.speed = column.dataModel.fancoil
             }
             Connections {
