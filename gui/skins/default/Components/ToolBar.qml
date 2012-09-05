@@ -142,32 +142,23 @@ Item {
             height: toolbar_top.height
         }
 
-        Item {
+        ButtonImageThreeStates {
+            id: alertsButton
+
             visible: EventManager.eventManager.alarms > 0
-            width: 51
-            height: toolbar_top.height
+            defaultImageBg: "../images/toolbar/_bg_alert.svg"
+            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
+            defaultImage: "../images/toolbar/icon_alarm.svg"
+            pressedImage: "../images/toolbar/icon_alarm_p.svg"
 
-            ButtonImageThreeStates {
-                id: alertsButton
-
-                defaultImageBg: "../images/toolbar/_bg_alert.svg"
-                pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                defaultImage: "../images/toolbar/icon_alarm.svg"
-                pressedImage: "../images/toolbar/icon_alarm_p.svg"
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
-
-                onClicked: {
-                    var currentPage = Stack.currentPage()
-                    if (currentPage._pageName !== "Antintrusion")
-                        currentPage = Stack.openPage("Antintrusion.qml")
-                    currentPage.showLog()
-                }
-
-                status: 0
+            onClicked: {
+                var currentPage = Stack.currentPage()
+                if (currentPage._pageName !== "Antintrusion")
+                    currentPage = Stack.openPage("Antintrusion.qml")
+                currentPage.showLog()
             }
+
+            status: 0
         }
 
         // antintrusion
@@ -177,26 +168,17 @@ Item {
             height: toolbar_top.height
         }
 
-        Item {
+        ButtonImageThreeStates {
+            id: antintrusionButton
+
             visible: EventManager.eventManager.isAntintrusionInserted
-            width: 51
-            height: toolbar_top.height
+            defaultImageBg: "../images/toolbar/_bg_alert.svg"
+            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
+            defaultImage: "../images/toolbar/icon_burlgar alarm-on.svg"
+            pressedImage: "../images/toolbar/icon_burlgar alarm-on_p.svg"
 
-            ButtonImageThreeStates {
-                id: antintrusionButton
-
-                defaultImageBg: "../images/toolbar/_bg_alert.svg"
-                pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                defaultImage: "../images/toolbar/icon_burlgar alarm-on.svg"
-                pressedImage: "../images/toolbar/icon_burlgar alarm-on_p.svg"
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
-
-                onClicked: Stack.openPage(Script.getTarget(Container.IdAntintrusion))
-                status: 0
-            }
+            onClicked: Stack.openPage(Script.getTarget(Container.IdAntintrusion))
+            status: 0
         }
 
         // alarm clock
@@ -206,26 +188,17 @@ Item {
             height: toolbar_top.height
         }
 
-        Item {
+        ButtonImageThreeStates {
+            id: clockButton
+
             visible: EventManager.eventManager.clocks > 0
-            width: 51
-            height: toolbar_top.height
+            defaultImageBg: "../images/toolbar/_bg_alert.svg"
+            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
+            defaultImage: "../images/toolbar/icon_alarm-clock.svg"
+            pressedImage: "../images/toolbar/icon_alarm-clock_p.svg"
 
-            ButtonImageThreeStates {
-                id: clockButton
-
-                defaultImageBg: "../images/toolbar/_bg_alert.svg"
-                pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                defaultImage: "../images/toolbar/icon_alarm-clock.svg"
-                pressedImage: "../images/toolbar/icon_alarm-clock_p.svg"
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
-
-                onClicked: console.log("clockButton clicked")
-                status: 0
-            }
+            onClicked: console.log("clockButton clicked")
+            status: 0
         }
 
         // auto open
@@ -235,26 +208,17 @@ Item {
             height: toolbar_top.height
         }
 
-        Item {
-            visible: EventManager.eventManager.autoOpen > 0
-            width: 51
-            height: toolbar_top.height
+        ButtonImageThreeStates {
+            id: autoOpenButton
 
-            ButtonImageThreeStates {
-                id: autoOpenButton
+            visible: EventManager.eventManager.autoOpen
+            defaultImageBg: "../images/toolbar/_bg_alert.svg"
+            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
+            defaultImage: "../images/toolbar/icon_vde-auto-open.svg"
+            pressedImage: "../images/toolbar/icon_vde-auto-open_p.svg"
 
-                defaultImageBg: "../images/toolbar/_bg_alert.svg"
-                pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-                defaultImage: "../images/toolbar/icon_vde-auto-open.svg"
-                pressedImage: "../images/toolbar/icon_vde-auto-open_p.svg"
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
-
-                onClicked: console.log("autoOpenButton clicked")
-                status: 0
-            }
+            onClicked: console.log("autoOpenButton clicked")
+            status: 0
         }
 
         // auto answer
