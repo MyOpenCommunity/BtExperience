@@ -18,6 +18,7 @@ Item {
     property bool scenarioRecording: true // TODO link to C++ model and check if property exists!
     property bool playing: true // TODO link to C++ model and check if property exists!
     property bool mute: true // TODO link to C++ model and check if property exists!
+    property bool danger: true // TODO link to C++ model and check if property exists!
 
     anchors.fill: parent
 

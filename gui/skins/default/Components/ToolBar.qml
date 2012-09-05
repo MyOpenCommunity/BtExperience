@@ -135,20 +135,6 @@ Item {
         anchors.right: toolbar_top.right
         anchors.verticalCenter: toolbar_top.verticalCenter
 
-        // alerts
-        ToolbarButton {
-            height: toolbar_top.height
-            visible: EventManager.eventManager.alarms > 0
-            defaultImage: "../images/toolbar/icon_alarm.svg"
-            pressedImage: "../images/toolbar/icon_alarm_p.svg"
-            onClicked: {
-                var currentPage = Stack.currentPage()
-                if (currentPage._pageName !== "Antintrusion")
-                    currentPage = Stack.openPage("Antintrusion.qml")
-                currentPage.showLog()
-            }
-        }
-
         // antintrusion
         ToolbarButton {
             height: toolbar_top.height
@@ -185,15 +171,6 @@ Item {
             onClicked: console.log("autoAnswerButton clicked")
         }
 
-        // message
-        ToolbarButton {
-            height: toolbar_top.height
-            visible: EventManager.eventManager.messages > 0
-            defaultImage: "../images/toolbar/icon_new-message.svg"
-            pressedImage: "../images/toolbar/icon_new-message_p.svg"
-            onClicked: Stack.openPage(Script.getTarget(Container.IdMessages))
-        }
-
         // vde mute
         ToolbarButton {
             height: toolbar_top.height
@@ -201,6 +178,20 @@ Item {
             defaultImage: "../images/toolbar/icon_vde-mute.svg"
             pressedImage: "../images/toolbar/icon_vde-mute_p.svg"
             onClicked: console.log("vdeMuteButton clicked")
+        }
+
+        // alerts
+        ToolbarButton {
+            height: toolbar_top.height
+            visible: EventManager.eventManager.alarms > 0
+            defaultImage: "../images/toolbar/icon_alarm.svg"
+            pressedImage: "../images/toolbar/icon_alarm_p.svg"
+            onClicked: {
+                var currentPage = Stack.currentPage()
+                if (currentPage._pageName !== "Antintrusion")
+                    currentPage = Stack.openPage("Antintrusion.qml")
+                currentPage.showLog()
+            }
         }
 
         // volume (and mute)
@@ -223,14 +214,32 @@ Item {
             onClicked: console.log("playButton clicked")
         }
 
+        // message
+        ToolbarButton {
+            height: toolbar_top.height
+            visible: EventManager.eventManager.messages > 0
+            defaultImage: "../images/toolbar/icon_new-message.svg"
+            pressedImage: "../images/toolbar/icon_new-message_p.svg"
+            onClicked: Stack.openPage(Script.getTarget(Container.IdMessages))
+        }
+
         // recording
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.scenarioRecording
             blinking: EventManager.eventManager.scenarioRecording
             blinkingInterval: 500
-            defaultImage: "../images/toolbar/icon_vde-mute.svg" // TODO use the right icon here
+            defaultImage: "../images/toolbar/icon_scenario-recording.svg"
             enabled: false
+        }
+
+        // energy, stop&go danger
+        ToolbarButton {
+            height: toolbar_top.height
+            visible: EventManager.eventManager.danger
+            defaultImage: "../images/toolbar/icon_energy.svg"
+            pressedImage: "../images/toolbar/icon_energy_p.svg"
+            onClicked: console.log("dangerButton clicked")
         }
 
     }
