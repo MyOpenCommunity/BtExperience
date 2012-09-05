@@ -16,6 +16,8 @@ Item {
     property bool autoAnswer: true // TODO link to C++ model!
     property bool vdeMute: true // TODO link to C++ model!
     property bool scenarioRecording: true // TODO link to C++ model and check if property exists!
+    property bool playing: true // TODO link to C++ model and check if property exists!
+    property bool mute: true // TODO link to C++ model and check if property exists!
 
     anchors.fill: parent
 

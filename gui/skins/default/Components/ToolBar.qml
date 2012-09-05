@@ -204,7 +204,24 @@ Item {
         }
 
         // volume (and mute)
+        ToolbarButton {
+            height: toolbar_top.height
+            visible: EventManager.eventManager.playing
+            defaultImage: EventManager.eventManager.mute ? "../images/toolbar/icon_audio-source-on.svg" : "../images/toolbar/icon_source-audio-mute.svg"
+            pressedImage: EventManager.eventManager.mute ? "../images/toolbar/icon_audio-source-on_p.svg" : "../images/toolbar/icon_source-audio-mute_p.svg"
+            // TODO come recuperare il modello da usare (local, upnp) e come impostare rootPath e index corretti?
+            onClicked: console.log("volumeButton clicked")
+        }
+
         // play
+        ToolbarButton {
+            height: toolbar_top.height
+            visible: EventManager.eventManager.playing
+            defaultImage: "../images/toolbar/icon_source-play.svg"
+            pressedImage: "../images/toolbar/icon_source-play_p.svg"
+            // TODO come recuperare il modello da usare (local, upnp) e come impostare rootPath e index corretti?
+            onClicked: console.log("playButton clicked")
+        }
 
         // recording
         ToolbarButton {
