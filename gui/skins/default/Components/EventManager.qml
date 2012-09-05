@@ -13,6 +13,9 @@ Item {
     property int clocks: 1 // TODO link to C++ model!
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
     property int messages: 1 // TODO link to C++ model!
+    property bool autoAnswer: true // TODO link to C++ model!
+    property bool vdeMute: true // TODO link to C++ model!
+    property bool scenarioRecording: true // TODO link to C++ model and check if property exists!
 
     anchors.fill: parent
 

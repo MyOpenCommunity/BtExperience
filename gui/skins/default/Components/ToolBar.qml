@@ -221,6 +221,26 @@ Item {
             status: 0
         }
 
+        // auto answer
+        SvgImage {
+            visible: EventManager.eventManager.autoAnswer
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
+        }
+
+        ButtonImageThreeStates {
+            id: autoAnswerButton
+
+            visible: EventManager.eventManager.autoAnswer
+            defaultImageBg: "../images/toolbar/_bg_alert.svg"
+            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
+            defaultImage: "../images/toolbar/icon_vde-auto-answer.svg"
+            pressedImage: "../images/toolbar/icon_vde-auto-answer_p.svg"
+
+            onClicked: console.log("autoAnswerButton clicked")
+            status: 0
+        }
+
         // message
         SvgImage {
             visible: EventManager.eventManager.messages > 0
@@ -241,11 +261,62 @@ Item {
             status: 0
         }
 
-        // auto answer
         // vde mute
+        SvgImage {
+            visible: EventManager.eventManager.vdeMute
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
+        }
+
+        ButtonImageThreeStates {
+            id: vdeMuteButton
+
+            visible: EventManager.eventManager.vdeMute
+            defaultImageBg: "../images/toolbar/_bg_alert.svg"
+            pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
+            defaultImage: "../images/toolbar/icon_vde-mute.svg"
+            pressedImage: "../images/toolbar/icon_vde-mute_p.svg"
+
+            onClicked: console.log("vdeMuteButton clicked")
+            status: 0
+        }
+
         // volume (and mute)
         // play
-        // recording (blinking and not enabled)
+
+        // recording
+        SvgImage {
+            visible: EventManager.eventManager.scenarioRecording
+            source: imagesPath + "toolbar/toolbar_separator.svg"
+            height: toolbar_top.height
+        }
+
+        ButtonImageThreeStates {
+            id: scenarioRecordingButton
+
+            visible: EventManager.eventManager.scenarioRecording
+            defaultImageBg: "../images/toolbar/_bg_alert.svg"
+            defaultImage: "../images/toolbar/icon_vde-mute.svg" // TODO use the right icon here
+
+            onClicked: console.log("scenarioRecordingButton clicked")
+            status: 0
+            enabled: false
+
+            Behavior on opacity {
+                NumberAnimation { duration: 500 }
+            }
+
+            // blinking is managed externally (we still don't have blinking buttons),
+            // but it can be a button feature if used more
+            Timer {
+                running: scenarioRecordingButton.visible
+                interval: 500
+                repeat: true
+                onTriggered: scenarioRecordingButton.opacity === 1 ?
+                                 scenarioRecordingButton.opacity = 0 :
+                                 scenarioRecordingButton.opacity = 1
+            }
+        }
 
     }
 
