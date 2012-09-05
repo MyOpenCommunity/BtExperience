@@ -279,7 +279,9 @@ MenuColumn {
 
                 Component {
                     id: dateSelectTimed
-                    DateSelect {}
+                    DateSelect {
+                        timeText: qsTr("duration")
+                    }
                 }
 
                 ControlSetDateTime {
@@ -288,6 +290,7 @@ MenuColumn {
                     date: ""
                     time: privateProps.getBtTime(objModel)
                     status: (privateProps.currentIndex === 3) ? 1 : 0
+                    bottomLabel: qsTr("duration")
 
                     onEditClicked: {
                         if (privateProps.currentIndex !== 3)

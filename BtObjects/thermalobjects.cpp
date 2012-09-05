@@ -799,7 +799,7 @@ void ThermalControlUnitTimedManual::setSeconds(int newValue)
 void ThermalControlUnitTimedManual::apply()
 {
 	current = to_apply;
-	dev->setManualTempTimed(getTemperature(), to_apply[DURATION].toTime());
+	dev->setManualTempTimed(getTemperature(), to_apply[DURATION].value<BtTime>());
 }
 
 void ThermalControlUnitTimedManual::valueReceived(const DeviceValues &values_list)

@@ -108,102 +108,105 @@ MenuColumn {
     Component {
         id: offComponent
 
-        property int speed
-
-        ControlLeftRightWithTitle {
-            title: qsTr("fancoil speed")
-            // fancoil panel is visible only for fancoil probes
-            visible: isFancoil()
-            text: pageObject.names.get('FANCOIL_SPEED', offComponent.speed)
-            onLeftClicked: {
-                if (offComponent.speed <= dataModel.fancoilMinValue)
-                    return
-                offComponent.speed -= 1
-            }
-            onRightClicked: {
-                if (offComponent.speed >= dataModel.fancoilMaxValue)
-                    return
-                offComponent.speed += 1
-            }
-        }
-
-        ButtonOkCancel {
-            // a trick to avoid wrong menu column height computation
-            visible: is99zones
-            onVisibleChanged: if (!visible) height = 0
-            onCancelClicked: {
-                if (isFancoil())
-                    offComponent.speed = column.dataModel.fancoil
-                column.cancelClicked()
-            }
-            onOkClicked: {
-                if (isFancoil())
-                    column.dataModel.fancoil = offComponent.speed
-                if (dataModel.probeStatus !== privateProps.pendingModality) {
-                    dataModel.probeStatus = privateProps.pendingModality
+        Column {
+            id: rootOffComponent
+            ControlLeftRightWithTitle {
+                property int speed
+                title: qsTr("fancoil speed")
+                // fancoil panel is visible only for fancoil probes
+                visible: isFancoil()
+                text: pageObject.names.get('FANCOIL_SPEED', rootOffComponent.speed)
+                onLeftClicked: {
+                    if (rootOffComponent.speed <= dataModel.fancoilMinValue)
+                        return
+                    rootOffComponent.speed -= 1
                 }
-                column.okClicked()
-            }
-        }
+                onRightClicked: {
+                    if (rootOffComponent.speed >= dataModel.fancoilMaxValue)
+                        return
+                    rootOffComponent.speed += 1
+                }
 
-        Component.onCompleted: {
-            // we want an assignment, not a binding
-            offComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
-        }
-        Connections {
-            target: isFancoil() ? column.dataModel : null
-            onFancoilChanged: offComponent.speed = column.dataModel.fancoil
+                Component.onCompleted: {
+                    // we want an assignment, not a binding
+                    rootOffComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
+                }
+                Connections {
+                    target: isFancoil() ? column.dataModel : null
+                    onFancoilChanged: rootOffComponent.speed = column.dataModel.fancoil
+                }
+            }
+
+            ButtonOkCancel {
+                // a trick to avoid wrong menu column height computation
+                visible: is99zones
+                onVisibleChanged: if (!visible) height = 0
+                onCancelClicked: {
+                    if (isFancoil())
+                        rootOffComponent.speed = column.dataModel.fancoil
+                    column.cancelClicked()
+                }
+                onOkClicked: {
+                    if (isFancoil())
+                        column.dataModel.fancoil = rootOffComponent.speed
+                    if (dataModel.probeStatus !== privateProps.pendingModality) {
+                        dataModel.probeStatus = privateProps.pendingModality
+                    }
+                    column.okClicked()
+                }
+            }
         }
     }
 
     Component {
         id: antifreezeComponent
-
-        property int speed
-
-        ControlLeftRightWithTitle {
-            title: qsTr("fancoil speed")
-            // fancoil panel is visible only for fancoil probes
-            visible: isFancoil()
-            text: pageObject.names.get('FANCOIL_SPEED', antifreezeComponent.speed)
-            onLeftClicked: {
-                if (antifreezeComponent.speed <= dataModel.fancoilMinValue)
-                    return
-                antifreezeComponent.speed -= 1
-            }
-            onRightClicked: {
-                if (antifreezeComponent.speed >= dataModel.fancoilMaxValue)
-                    return
-                antifreezeComponent.speed += 1
-            }
-        }
-
-        ButtonOkCancel {
-            // a trick to avoid wrong menu column height computation
-            visible: is99zones
-            onVisibleChanged: if (!visible) height = 0
-            onCancelClicked: {
-                if (isFancoil())
-                    antifreezeComponent.speed = column.dataModel.fancoil
-                column.cancelClicked()
-            }
-            onOkClicked: {
-                if (isFancoil())
-                    column.dataModel.fancoil = antifreezeComponent.speed
-                if (dataModel.probeStatus !== privateProps.pendingModality) {
-                    dataModel.probeStatus = privateProps.pendingModality
+        Column {
+            id: rootAntifreezeComponent
+            ControlLeftRightWithTitle {
+                property int speed
+                title: qsTr("fancoil speed")
+                // fancoil panel is visible only for fancoil probes
+                visible: isFancoil()
+                text: pageObject.names.get('FANCOIL_SPEED', rootAntifreezeComponent.speed)
+                onLeftClicked: {
+                    if (rootAntifreezeComponent.speed <= dataModel.fancoilMinValue)
+                        return
+                    rootAntifreezeComponent.speed -= 1
                 }
-                column.okClicked()
-            }
-        }
+                onRightClicked: {
+                    if (rootAntifreezeComponent.speed >= dataModel.fancoilMaxValue)
+                        return
+                    rootAntifreezeComponent.speed += 1
+                }
 
-        Component.onCompleted: {
-            // we want an assignment, not a binding
-            antifreezeComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
-        }
-        Connections {
-            target: isFancoil() ? column.dataModel : null
-            onFancoilChanged: antifreezeComponent.speed = column.dataModel.fancoil
+                Component.onCompleted: {
+                    // we want an assignment, not a binding
+                    rootAntifreezeComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
+                }
+                Connections {
+                    target: isFancoil() ? column.dataModel : null
+                    onFancoilChanged: rootAntifreezeComponent.speed = column.dataModel.fancoil
+                }
+            }
+
+            ButtonOkCancel {
+                // a trick to avoid wrong menu column height computation
+                visible: is99zones
+                onVisibleChanged: if (!visible) height = 0
+                onCancelClicked: {
+                    if (isFancoil())
+                        rootAntifreezeComponent.speed = column.dataModel.fancoil
+                    column.cancelClicked()
+                }
+                onOkClicked: {
+                    if (isFancoil())
+                        column.dataModel.fancoil = rootAntifreezeComponent.speed
+                    if (dataModel.probeStatus !== privateProps.pendingModality) {
+                        dataModel.probeStatus = privateProps.pendingModality
+                    }
+                    column.okClicked()
+                }
+            }
         }
     }
 
