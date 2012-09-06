@@ -56,11 +56,12 @@ MenuColumn {
                 shadowImage: "../../images/common/ombra_btn_nuovo_messaggio.svg"
                 defaultImage: "../../images/common/ico_nuovo_messaggio.svg"
                 pressedImage: "../../images/common/ico_nuovo_messaggio_P.svg"
-                status: 0
+                selectedImage: "../../images/common/ico_nuovo_messaggio_P.svg"
+                status: (privateProps.currentIndex === 2) ? 1 : 0
                 onClicked: {
-                    privateProps.currentIndex = -1
-                    column.closeChild()
-                    console.log("compose message")
+                    if (privateProps.currentIndex !== 2)
+                        privateProps.currentIndex = 2
+                    column.loadColumn(messageEdit, qsTr("New message"))
                 }
             }
         }
@@ -69,6 +70,11 @@ MenuColumn {
     Component {
         id: columnMessages
         ColumnMessages {}
+    }
+
+    Component {
+        id: messageEdit
+        MessageEdit {}
     }
 
     QtObject {
