@@ -28,13 +28,41 @@ MenuColumn {
             boxInfoState: numberOfMessages > 0 ? "info" : ""
             boxInfoText: numberOfMessages
 
-            onClicked: column.loadColumn(columnMessages, qsTr("Received messages"))
+            onClicked: {
+                if (privateProps.currentIndex !== 1)
+                    privateProps.currentIndex = 1
+                column.loadColumn(columnMessages, qsTr("Received messages"))
+            }
         }
 
         MenuItem {
             name: qsTr("new message")
+            backgroundImage: "../../images/common/bg_automazioni.svg"
+            MouseArea { // to avoid pressed effect
+                anchors.fill: parent
+            }
+            ButtonImageThreeStates {
+                id: newButton
+                anchors {
+                    right: parent.right
+                    rightMargin: 7
+                    top: parent.top
+                    topMargin: 7
+                }
 
-            onClicked: console.log("compose message")
+                defaultImageBg: "../../images/common/btn_nuovo_messaggio.svg"
+                pressedImageBg: "../../images/common/btn_nuovo_messaggio_P.svg"
+                selectedImageBg: "../../images/common/btn_nuovo_messaggio_S.svg"
+                shadowImage: "../../images/common/ombra_btn_nuovo_messaggio.svg"
+                defaultImage: "../../images/common/ico_nuovo_messaggio.svg"
+                pressedImage: "../../images/common/ico_nuovo_messaggio_P.svg"
+                status: 0
+                onClicked: {
+                    privateProps.currentIndex = -1
+                    column.closeChild()
+                    console.log("compose message")
+                }
+            }
         }
     }
 
