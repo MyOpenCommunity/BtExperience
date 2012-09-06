@@ -60,8 +60,15 @@ MenuColumn {
 
         delegate: ColumnMessagesDelegate {
             itemObject: theModel.getObject(index)
+
+            onDelegateClicked: column.loadColumn(messageRead, itemObject.sender, itemObject)
         }
 
         model: theModel
+    }
+
+    Component {
+        id: messageRead
+        MessageRead {}
     }
 }

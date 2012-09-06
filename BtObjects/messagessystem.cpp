@@ -16,11 +16,12 @@ ObjectInterface *parseMessageObject(const QDomNode &xml_node)
 	return new MessagesSystem(bt_global::add_device_to_cache(new MessageDevice));
 }
 
-MessageItem::MessageItem(QString _text, QDateTime date, bool _is_read)
+MessageItem::MessageItem(QString _text, QDateTime date, bool _is_read, QString _sender)
 {
 	text = _text;
 	date_time = date;
 	is_read = _is_read;
+	sender = _sender;
 }
 
 QDateTime MessageItem::getDateTime() const

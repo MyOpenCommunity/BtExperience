@@ -20,14 +20,17 @@ class MessageItem : public ItemInterface
 
 	Q_PROPERTY(QString text READ getText CONSTANT)
 
+	Q_PROPERTY(QString sender READ getSender CONSTANT)
+
 	Q_PROPERTY(bool isRead READ isRead WRITE setRead NOTIFY readChanged)
 
 public:
-	MessageItem(QString _text, QDateTime date, bool _is_read = false);
+	MessageItem(QString _text, QDateTime date, bool _is_read = false, QString _sender = QString());
 
 	QDateTime getDateTime() const;
 
 	QString getText() const;
+	QString getSender() const { return sender; }
 
 	bool isRead() const;
 	void setRead(bool read);
@@ -37,7 +40,7 @@ signals:
 
 private:
 	QDateTime date_time;
-	QString text;
+	QString text, sender;
 	bool is_read;
 };
 

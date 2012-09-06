@@ -16,7 +16,7 @@ Item {
     ButtonTextImageThreeStates {
         id: bg
 
-        text: itemObject.text
+        text: itemObject.sender
         defaultImageBg: itemObject.isRead ? "../../images/common/btn_messaggio.svg" : "../../images/common/btn_messaggio_non_letto.svg"
         pressedImageBg: "../../images/common/btn_messaggio_P.svg"
         selectedImageBg: "../../images/common/btn_messaggio_S.svg"
