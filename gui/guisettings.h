@@ -37,10 +37,10 @@ class GuiSettings : public QObject
 	*/
 	Q_PROPERTY(Language language READ getLanguage WRITE setLanguage NOTIFY languageChanged)
 
-        /*!
-                \brief Sets or gets the skin for the interface.
-        */
-        Q_PROPERTY(Skin skin READ getSkin WRITE setSkin NOTIFY skinChanged)
+	/*!
+		\brief Sets or gets the skin for the interface.
+	*/
+	Q_PROPERTY(Skin skin READ getSkin WRITE setSkin NOTIFY skinChanged)
 
 	/*!
 		\brief Sets or gets the system of measurement.
@@ -102,7 +102,7 @@ class GuiSettings : public QObject
 	Q_ENUMS(TemperatureUnit)
 	Q_ENUMS(TimeChoice)
 	Q_ENUMS(TimeFormat)
-        Q_ENUMS(Skin)
+	Q_ENUMS(Skin)
 
 public:
 	explicit GuiSettings(QObject *parent = 0);
@@ -122,11 +122,11 @@ public:
 		Italian
 	};
 
-        enum Skin
-        {
-                Clear,
-                Dark
-        };
+	enum Skin
+	{
+		Clear,
+		Dark
+	};
 
 	enum MeasurementSystem
 	{
@@ -209,11 +209,11 @@ public:
 	void setTimezone(int z);
 	TimeChoice getTurnOffTime() const;
 	void setTurnOffTime(TimeChoice tc);
-        Skin getSkin() const;
-        void setSkin(Skin s);
+	Skin getSkin() const;
+	void setSkin(Skin s);
 
 	QString getLanguageString() const;
-        QString getSkinString() const;
+	QString getSkinString() const;
 
 signals:
 	void brightnessChanged();
@@ -231,7 +231,7 @@ signals:
 	void timeOutChanged();
 	void timezoneChanged();
 	void turnOffTimeChanged();
-        void skinChanged();
+	void skinChanged();
 
 protected:
 	int brightness;
@@ -249,7 +249,7 @@ protected:
 	TimeChoice timeOut;
 	int timezone;
 	TimeChoice turnOffTime;
-        Skin skin;
+	Skin skin;
 
 private:
 	void sendCommand(const QString &cmd);
