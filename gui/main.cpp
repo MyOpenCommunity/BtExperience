@@ -112,7 +112,7 @@ void setLanguage(QString language)
 #endif
 
 	QString lf = QFileInfo(QDir(path.canonicalFilePath()),
-			       QString("gui/locale/bt_experience_%1").arg(language.toAscii().constData())).absoluteFilePath();
+		QString("gui/locale/bt_experience_%1").arg(language.toAscii().constData())).absoluteFilePath();
 
 	// tries to install new translation
 	actual_translator = new QTranslator();
@@ -126,18 +126,18 @@ void setLanguage(QString language)
 }
 
 // Sets a skin on the GUI; the GUI must be restarted for changes to have effect
-void setSkin (QString skin)
+void setSkin(QString skin)
 {
-        // computes new skin file name
-        QFileInfo path = qApp->applicationDirPath();
+	// computes new skin file name
+	QFileInfo path = qApp->applicationDirPath();
 
 #ifdef Q_WS_MAC
-        path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
+	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
 #endif
 
-        QString sf;
-        sf = QFileInfo(QDir(path.canonicalFilePath()),
-                       QString("gui/locale/%1").arg(skin.toAscii().constData())).absoluteFilePath();
+	QString sf;
+	sf = QFileInfo(QDir(path.canonicalFilePath()),
+		QString("gui/locale/%1").arg(skin.toAscii().constData())).absoluteFilePath();
 }
 
 // Manage the boot (or reboot) of the gui part
@@ -163,7 +163,7 @@ public:
 	void boot()
 	{
 		setLanguage(global->getGuiSettings()->getLanguageString());
-                setSkin(global->getGuiSettings()->getSkinString());
+//		setSkin(global->getGuiSettings()->getSkinString());
 
 		viewer = new QmlApplicationViewer;
 	#if USE_OPENGL
@@ -276,9 +276,9 @@ int main(int argc, char *argv[])
 	// their, we have to install the event filter in the QApplication
 	app.installEventFilter(last_click);
 
-        //Set user-agent of the application in order to see the Mobile version of the web sites
-        app.setApplicationName(QString("Nokia"));
-        app.setApplicationVersion(QString("Mobile"));
+	//Set user-agent of the application in order to see the Mobile version of the web sites
+	app.setApplicationName(QString("Nokia"));
+	app.setApplicationVersion(QString("Mobile"));
 
 	GlobalProperties global;
 	ImageReader::setBasePath(global.getBasePath());
