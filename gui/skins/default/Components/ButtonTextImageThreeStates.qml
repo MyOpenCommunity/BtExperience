@@ -34,6 +34,7 @@ SvgImage {
     property url selectedImage: ""
 
     // some additional properties
+    property alias textAnchors: caption.anchors
     property alias imageAnchors: topImage.anchors
 
     property bool enabled: true // button accepts input or not

@@ -10,6 +10,7 @@ ButtonMediaControl 1.0 ButtonMediaControl.qml
 ButtonMinusPlus 1.0 ButtonMinusPlus.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
 ButtonSystems 1.0 ButtonSystems.qml
+ButtonTextImageThreeStates 1.0 ButtonTextImageThreeStates.qml
 ButtonThreeStates 1.0 ButtonThreeStates.qml
 ButtonThreeStatesAutomation 1.0 ButtonThreeStatesAutomation.qml
 ButtonThreeStatesIcon 1.0 ButtonThreeStatesIcon.qml
