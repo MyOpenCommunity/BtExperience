@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="66px" height="35px" viewBox="0 0 66 35" enable-background="new 0 0 66 35" xml:space="preserve">
+<g id="dimmer_-_397_">
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="8187.9863" y1="3927.3828" x2="8180.0107" y2="3972.6147" gradientTransform="matrix(-1 0 0 1 8217 -3932.5)">
+		<stop  offset="0" style="stop-color:#282828"/>
+		<stop  offset="0.06" style="stop-color:#333333"/>
+		<stop  offset="0.1646" style="stop-color:#434343"/>
+		<stop  offset="0.2786" style="stop-color:#515151"/>
+		<stop  offset="0.4034" style="stop-color:#5C5C5C"/>
+		<stop  offset="0.5445" style="stop-color:#646464"/>
+		<stop  offset="0.7156" style="stop-color:#686868"/>
+		<stop  offset="1" style="stop-color:#6A6A6A"/>
+	</linearGradient>
+	<rect fill="url(#SVGID_1_)" width="66" height="35"/>
+</g>
+</svg>
