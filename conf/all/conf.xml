@@ -490,6 +490,9 @@
 		<ist uii="8007" descr="La gazzetta dello sport" url="http://www.gazzetta.it" />
 		<ist uii="8008" descr="La Repubblica" url="http://www.repubblica.it" />
 	</obj>
+	<obj cid="16005" id="16004">
+		<ist uii="16004"/>
+	</obj>
   <item>
 	  <id>8</id> <!-- Sound diffusion system -->
 	  <amplifiers>

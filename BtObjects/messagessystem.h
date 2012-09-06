@@ -46,7 +46,7 @@ class MessagesSystem : public ObjectInterface
 friend class TestMessagesSystem;
 	Q_OBJECT
 
-	Q_PROPERTY(MediaDataModel *messages READ getMessages CONSTANT)
+	Q_PROPERTY(MediaDataModel *messages READ getMessages NOTIFY messagesChanged)
 
 public:
 	MessagesSystem(MessageDevice *d);
@@ -57,6 +57,9 @@ public:
 	}
 
 	MediaDataModel *getMessages() const;
+
+signals:
+	void messagesChanged();
 
 private slots:
 	virtual void valueReceived(const DeviceValues &values_list);

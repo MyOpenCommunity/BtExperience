@@ -64,6 +64,7 @@ void MessagesSystem::valueReceived(const DeviceValues &values_list)
 	// TODO: popup pages in GUI must be closed if a message is removed this way.
 
 	message_list << new MessageItem(message.text, message.datetime);
+	emit messagesChanged();
 	// TODO: save messages
 }
 

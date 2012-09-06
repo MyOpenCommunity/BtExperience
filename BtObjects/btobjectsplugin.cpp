@@ -702,6 +702,7 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a ScenarioModule instance");
 	qmlRegisterUncreatableType<DeviceConditionObject>(uri, 1, 0, "DeviceConditionObject",
 		"unable to create a DeviceConditionObject instance");
+	qmlRegisterUncreatableType<MessagesSystem>(uri, 1, 0, "MessagesSystem", "");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
