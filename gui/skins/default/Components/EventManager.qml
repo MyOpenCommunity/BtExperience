@@ -10,15 +10,16 @@ Item {
 
     property int alarms: alarmsModel.count
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
-    property int clocks: 1 // TODO link to C++ model!
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
-    property int messages: 1 // TODO link to C++ model!
-    property bool autoAnswer: true // TODO link to C++ model!
-    property bool vdeMute: true // TODO link to C++ model!
-    property bool scenarioRecording: true // TODO link to C++ model and check if property exists!
-    property bool playing: true // TODO link to C++ model and check if property exists!
-    property bool mute: true // TODO link to C++ model and check if property exists!
-    property bool danger: true // TODO link to C++ model and check if property exists!
+
+    property int clocks: 0 // TODO link to C++ model!
+    property int messages: 0 // TODO link to C++ model!
+    property bool autoAnswer: false // TODO link to C++ model!
+    property bool vdeMute: false // TODO link to C++ model!
+    property bool scenarioRecording: false // TODO link to C++ model and check if property exists!
+    property bool playing: false // TODO link to C++ model and check if property exists!
+    property bool mute: false // TODO link to C++ model and check if property exists!
+    property bool danger: false // TODO link to C++ model and check if property exists!
 
     anchors.fill: parent
 
