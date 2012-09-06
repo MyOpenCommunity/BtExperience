@@ -125,6 +125,21 @@ void setLanguage(QString language)
 	}
 }
 
+// Sets a skin on the GUI; the GUI must be restarted for changes to have effect
+void setSkin (QString skin)
+{
+        // computes new skin file name
+        QFileInfo path = qApp->applicationDirPath();
+
+#ifdef Q_WS_MAC
+        path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
+#endif
+
+        QString sf;
+        sf = QFileInfo(QDir(path.canonicalFilePath()),
+                       QString("gui/locale/%1").arg(skin.toAscii().constData())).absoluteFilePath();
+}
+
 // Manage the boot (or reboot) of the gui part
 class BootManager : public QObject
 {
@@ -148,6 +163,7 @@ public:
 	void boot()
 	{
 		setLanguage(global->getGuiSettings()->getLanguageString());
+                setSkin(global->getGuiSettings()->getSkinString());
 
 		viewer = new QmlApplicationViewer;
 	#if USE_OPENGL

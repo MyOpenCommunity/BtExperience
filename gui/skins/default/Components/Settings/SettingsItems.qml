@@ -35,6 +35,7 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
+            modelList.append({"name": qsTr("Home"), "component": settingsHome})
             modelList.append({"name": qsTr("General"), "component": settingsGenerals})
             modelList.append({"name": qsTr("Profiles"), "component": profiles})
             modelList.append({"name": qsTr("Rooms"), "component": rooms})
@@ -43,6 +44,11 @@ MenuColumn {
             modelList.append({"name": qsTr("Multimedia"), "component": multimedia})
             modelList.append({"name": qsTr("Systems"), "component": systems})
         }
+    }
+
+    Component {
+        id: settingsHome
+        SettingsHome {}
     }
 
     Component {

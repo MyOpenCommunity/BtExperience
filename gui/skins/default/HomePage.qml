@@ -6,7 +6,8 @@ import Components.Text 1.0
 
 BasePage {
     id: mainarea
-    source: "images/home/home.jpg"
+    source : global.guiSettings.skin === 0 ? "images/home/home.bmp" :
+                                             "images/home/home_dark.jpg"
 
     ToolBar {
         id: toolbar
@@ -110,7 +111,6 @@ BasePage {
                     onLoaded: {
                         item.text = model.name
                         item.address = model.address
-                        item.color = "black"
                     }
                 }
             }
@@ -159,7 +159,8 @@ BasePage {
 
                 SvgImage {
                     id: rectPressed
-                    source: "images/common/profilo_p.svg"
+                    source: global.guiSettings.skin === 0 ? "images/common/profilo_p.svg" :
+                                                            "images/home_dark/home.jpg"
                     visible: false
                     anchors {
                         centerIn: imageDelegate
@@ -245,32 +246,40 @@ BasePage {
             spacing: 5
             columns: 2
             ButtonHomePageLink {
-                source: "images/home/home_menu_bg_top_left.svg"
-                sourcePressed: "images/home/home_menu_bg_top_left_pressed.svg"
+                source: global.guiSettings.skin === 0 ? "images/home/home_menu_bg_top_left.svg" :
+                                                        "images/home/home_menu_bg_top_left_pressed.svg"
+                sourcePressed: global.guiSettings.skin === 0 ? "images/home/home_menu_bg_top_left_pressed.svg" :
+                                                               "images/home/home_menu_bg_top_left.svg"
                 icon: "images/home/home_menu_icon_rooms.svg"
                 text: qsTr("rooms")
                 onClicked: Stack.openPage("Rooms.qml")
             }
 
             ButtonHomePageLink {
-                source: "images/home/home_menu_bg_top_right.svg"
-                sourcePressed: "images/home/home_menu_bg_top_right_pressed.svg"
+                source: global.guiSettings.skin === 0 ? "images/home/home_menu_bg_top_right.svg" :
+                                                        "images/home/home_menu_bg_top_right_pressed.svg"
+                sourcePressed: global.guiSettings.skin === 0 ? "images/home/home_menu_bg_top_right_pressed.svg" :
+                                                               "images/home/home_menu_bg_top_right.svg"
                 icon: "images/home/home_menu_icon_systems.svg"
                 text: qsTr("systems")
                 onClicked: Stack.openPage("Systems.qml")
             }
 
             ButtonHomePageLink {
-                source: "images/home/home_menu_bg_bottom_left.svg"
-                sourcePressed: "images/home/home_menu_bg_bottom_left_pressed.svg"
+                source: global.guiSettings.skin === 0 ? "images/home/home_menu_bg_bottom_left.svg" :
+                                                        "images/home/home_menu_bg_bottom_left_pressed.svg"
+                sourcePressed: global.guiSettings.skin === 0 ? "images/home/home_menu_bg_bottom_left_pressed.svg" :
+                                                               "images/home/home_menu_bg_bottom_left.svg"
                 icon: "images/home/home_menu_icon_options.svg"
                 text: qsTr("options")
                 onClicked: Stack.openPage("Settings.qml")
             }
 
             ButtonHomePageLink {
-                source: "images/home/home_menu_bg_bottom_right.svg"
-                sourcePressed: "images/home/home_menu_bg_bottom_right_pressed.svg"
+                source: global.guiSettings.skin === 0 ? "images/home/home_menu_bg_bottom_right.svg":
+                                                        "images/home/home_menu_bg_bottom_right_pressed.svg"
+                sourcePressed: global.guiSettings.skin === 0 ? "images/home/home_menu_bg_bottom_right_pressed.svg" :
+                                                               "images/home/home_menu_bg_bottom_right.svg"
                 icon: "images/home/home_menu_icon_multimedia.svg"
                 text: qsTr("multimedia")
                 onClicked: Stack.openPage("Multimedia.qml")

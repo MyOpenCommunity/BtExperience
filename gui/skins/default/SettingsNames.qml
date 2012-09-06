@@ -67,6 +67,10 @@ QtObject {
         container['CURRENCY'][GuiSettings.JPY] = qsTr("JPY")
         container['CURRENCY'][GuiSettings.USD] = qsTr("USD")
 
+        container['SKIN'] = []
+        container['SKIN'][GuiSettings.Clear] = qsTr("Clear")
+        container['SKIN'][GuiSettings.Dark] = qsTr("Dark")
+
         // TODO from here on, change  wrt to model developments
 
         container['PASSWORD'] = []
