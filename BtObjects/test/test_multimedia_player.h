@@ -21,6 +21,9 @@ private slots:
 	// test playback, track info updates and current playback time updates
 	void testPlay();
 
+	// test playback of multiple fiiles
+	void testPlayMulti();
+
 	// test pause/resume sequences
 	void testPauseResume();
 	void testMultiplePauseResume();

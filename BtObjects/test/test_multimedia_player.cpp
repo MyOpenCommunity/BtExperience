@@ -132,6 +132,52 @@ void TestMultiMediaPlayer::testPlay()
 	QCOMPARE(QString("files/audio/d3.mp3"), player->getCurrentSource());
 }
 
+void TestMultiMediaPlayer::testPlayMulti()
+{
+	MultiMediaPlayer player1;
+	MultiMediaPlayer player2;
+
+	ObjectTester ti1(&player1, SIGNAL(trackInfoChanged(QVariantMap)));
+	ObjectTester ti2(&player2, SIGNAL(trackInfoChanged(QVariantMap)));
+
+	QVariantMap info1, info2;
+	QVariant last_time1, last_time2;
+
+	player1.mediaplayer_output_mode = MediaPlayer::OutputStdout;
+	player2.mediaplayer_output_mode = MediaPlayer::OutputStdout;
+
+	player1.setCurrentSource("files/audio/d3.mp3");
+	player2.setCurrentSource("files/audio/f5.mp3");
+
+	player1.play();
+	player2.play();
+
+	// wait for first track info update
+	QVERIFY(ti1.waitForSignal(TIMEOUT));
+	QVERIFY(ti2.waitForSignal(TIMEOUT));
+
+	info1 = player1.getTrackInfo();
+	QVERIFY(compareInfo(info1, d3_info));
+	last_time1 = info1["current_time"];
+
+	info2 = player2.getTrackInfo();
+	QVERIFY(compareInfo(info2, f5_info));
+	last_time2 = info2["current_time"];
+
+	// wait for next track info update and check current time has changed
+	QVERIFY(ti1.waitForSignal(TIMEOUT));
+	info1 = player1.getTrackInfo();
+
+	QVERIFY(ti2.waitForSignal(TIMEOUT));
+	info2 = player2.getTrackInfo();
+
+	QVERIFY(compareInfo(info1, d3_info));
+	QVERIFY(last_time1 != info1["current_time"]);
+
+	QVERIFY(compareInfo(info2, f5_info));
+	QVERIFY(last_time2 != info2["current_time"]);
+}
+
 void TestMultiMediaPlayer::testPauseResume()
 {
 	player->setCurrentSource("files/audio/d3.mp3");
