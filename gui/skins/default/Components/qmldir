@@ -38,6 +38,7 @@ ControlMinusPlusOld 1.0 ControlMinusPlusOld.qml
 ControlOn 1.0 ControlOn.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
+ControlPopup 1.0 ControlPopup.qml
 ControlPullDown 1.0 ControlPullDown.qml
 ControlRadio 1.0 ControlRadio.qml
 ControlSettings 1.0 ControlSettings.qml
