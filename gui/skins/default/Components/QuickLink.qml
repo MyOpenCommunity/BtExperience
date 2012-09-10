@@ -163,8 +163,8 @@ Item {
             id: labelComponent
             UbuntuLightText {
                 text: bgQuick.text
-                color: global.guiSettings.skin === 0 ? "black":
-                                                       "white"
+                color: global.guiSettings.skin === 0 ? "#434343":
+                                                       "#FFFFFF"
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 13
                 elide: Text.ElideRight
@@ -177,8 +177,8 @@ Item {
             id: labelInputComponent
             TextInput {
                 text: bgQuick.text
-                color: global.guiSettings.skin === 0 ? "black":
-                                                       "white"
+                color: global.guiSettings.skin === 0 ? "#434343":
+                                                       "#FFFFFF"
                 horizontalAlignment: Text.AlignHCenter
                 activeFocusOnPress: false
                 anchors.top: parent.top
