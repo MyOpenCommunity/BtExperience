@@ -33,13 +33,13 @@ BasePage {
         id: cardView
         function selectImage(item) {
             if (item === qsTr("Devices"))
-                return "images/multimedia/usb.png"
+                return "images/multimedia/devices_card.jpg"
             else if (item === qsTr("rss"))
-                return "images/multimedia/rss.png"
+                return "images/multimedia/rss_card.jpg"
             else if (item === qsTr("web link"))
-                return "images/multimedia/weblink.png"
+                return "images/multimedia/weblink_card.jpg"
             console.log("Unknown item, default to usb")
-            return "images/multimedia/usb.png"
+            return "images/multimedia/devices_card.jpg"
         }
 
         anchors {
