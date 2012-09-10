@@ -7,7 +7,7 @@ import BtExperience 1.0
 
 BasePage {
     id: mainarea
-    source : global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.bmp" :
+    source : global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
                                                              "images/home/home_dark.jpg"
 
     ToolBar {
