@@ -50,7 +50,7 @@ MenuColumn {
     }
 
     ButtonImageThreeStates {
-        id: replayButton
+        id: replyButton
 
         defaultImageBg: "../../images/common/messaggio_ricevuto/btn_elimina.svg"
         pressedImageBg: "../../images/common/messaggio_ricevuto/btn_elimina_P.svg"
@@ -65,7 +65,7 @@ MenuColumn {
         }
 
         onClicked: {
-            console.log("replay pressed")
+            console.log("reply pressed")
             column.closeColumn()
         }
         status: 0
