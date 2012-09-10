@@ -17,6 +17,8 @@ MenuColumn {
         source: objectModel.getObject(0).messages
     }
 
+    onChildDestroyed: privateProps.currentIndex = -1
+
     Column {
         // in a MenuColumn we need a Column... :(
         MenuItem {
@@ -63,6 +65,7 @@ MenuColumn {
                         privateProps.currentIndex = 2
                     column.loadColumn(messageEdit, qsTr("New message"))
                 }
+
             }
         }
     }
