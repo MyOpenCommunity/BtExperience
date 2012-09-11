@@ -42,6 +42,7 @@ private:
 	void createObjectsFakeConfig(QDomDocument document);
 	void createObjects(QDomDocument document);
 	void parseConfig();
+	void parseDevice();
 	void parseRooms(const QDomNode &container);
 	void parseFloors(const QDomNode &container);
 	void parseProfiles(const QDomNode &container);

@@ -42,6 +42,7 @@
 #include <QDomNode>
 
 
+#define DEVICE_FILE "device.xml"
 #define CONF_FILE "conf.xml"
 #define LAYOUT_FILE "layout.xml"
 #define NOTES_FILE "notes.xml"
@@ -92,7 +93,8 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	}
 
 	bt_global::config = new QHash<GlobalField, QString>();
-	(*bt_global::config)[TS_NUMBER] = QString::number(0);
+
+	parseDevice();
 
 	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());
 
@@ -140,6 +142,43 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	createObjects(document);
 	parseConfig();
 	device::initDevices();
+}
+
+void BtObjectsPlugin::parseDevice()
+{
+	QDomDocument device;
+	// for logging
+	QString errorMsg;
+	int errorLine, errorColumn;
+	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), DEVICE_FILE).absoluteFilePath());
+	if (!fh.exists() || !device.setContent(&fh, &errorMsg, &errorLine, &errorColumn)) {
+		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
+		qFatal(qPrintable(msg));
+	}
+
+	QHash<QString, QString> values;
+
+	foreach (QDomNode category, getChildren(device.documentElement(), "category"))
+	{
+		QString category_name = getAttribute(category, "name");
+
+		foreach (QDomNode par, getChildren(category, "par"))
+		{
+			QString par_name = getAttribute(par, "name");
+
+			values[category_name + "/" + par_name] = par.toElement().text().trimmed();
+		}
+	}
+
+	(*bt_global::config)[SOURCE_ADDRESS] = values.value("scs/mymmaddress", "-1");
+	(*bt_global::config)[AMPLIFIER_ADDRESS] = values.value("scs/myaaddress", "-1");
+	// TODO check par name
+	(*bt_global::config)[TS_NUMBER] = values.value("scs/diag_addr", "0");
+
+	if ((*bt_global::config)[SOURCE_ADDRESS] == "-1")
+		(*bt_global::config)[SOURCE_ADDRESS] = "";
+	if ((*bt_global::config)[AMPLIFIER_ADDRESS] == "-1")
+		(*bt_global::config)[AMPLIFIER_ADDRESS] = "";
 }
 
 void BtObjectsPlugin::createObjects(QDomDocument document)

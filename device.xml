@@ -1,0 +1,10 @@
+<device>
+	<category name="clock">
+		<par name="master">0</par>
+		<par name="dateformat">0</par>
+		<par name="timezone">001</par>
+	</category>
+	<category name="scs">
+		<par name="mymmaddress">3</par>
+	</category>
+</device>
