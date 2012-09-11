@@ -93,7 +93,7 @@ public:
 		AudioOutputStopped = 2
 	};
 
-	MultiMediaPlayer();
+	MultiMediaPlayer(QObject *parent = 0);
 
 	QString getCurrentSource() const;
 	QVariantMap getTrackInfo() const;

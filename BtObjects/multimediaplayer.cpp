@@ -8,7 +8,8 @@
 #define SEEK_TICK_TIMEOUT 4
 
 
-MultiMediaPlayer::MultiMediaPlayer()
+MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
+	QObject(parent)
 {
 	player = new MediaPlayer(this);
 	player_state = Stopped;
