@@ -27,6 +27,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 	timezone = 0;
 	turnOffTime = Minutes_10;
 	skin = Clear;
+	beep = false;
 }
 
 void GuiSettings::sendCommand(const QString &cmd)
@@ -149,6 +150,17 @@ void GuiSettings::setSkin(Skin s)
 	// TODO save value somewhere
 	skin = s;
 	emit skinChanged();
+}
+
+bool GuiSettings::getBeep() const
+{
+	return beep;
+}
+
+void GuiSettings::setBeep(bool b)
+{
+	beep = b;
+	emit beepChanged();
 }
 
 GuiSettings::MeasurementSystem GuiSettings::getMeasurementSystem() const

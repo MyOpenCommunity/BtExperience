@@ -94,6 +94,11 @@ class GuiSettings : public QObject
 	*/
 	Q_PROPERTY(TimeChoice turnOffTime READ getTurnOffTime WRITE setTurnOffTime NOTIFY turnOffTimeChanged)
 
+	/*!
+		\brief Sets or gets the beep status.
+	*/
+	Q_PROPERTY(bool beep READ getBeep WRITE setBeep NOTIFY beepChanged)
+
 	Q_ENUMS(Currency)
 	Q_ENUMS(Language)
 	Q_ENUMS(MeasurementSystem)
@@ -211,6 +216,8 @@ public:
 	void setTurnOffTime(TimeChoice tc);
 	Skin getSkin() const;
 	void setSkin(Skin s);
+	bool getBeep() const;
+	void setBeep(bool beep);
 
 	QString getLanguageString() const;
 	QString getSkinString() const;
@@ -232,6 +239,7 @@ signals:
 	void timezoneChanged();
 	void turnOffTimeChanged();
 	void skinChanged();
+	void beepChanged();
 
 protected:
 	int brightness;
@@ -250,6 +258,7 @@ protected:
 	int timezone;
 	TimeChoice turnOffTime;
 	Skin skin;
+	bool beep;
 
 private:
 	void sendCommand(const QString &cmd);

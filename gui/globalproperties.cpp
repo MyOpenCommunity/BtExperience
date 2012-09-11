@@ -34,10 +34,15 @@ GlobalProperties::GlobalProperties()
 	settings = new GuiSettings(this);
 	audioVideoPlayer = new AudioVideoPlayer(this);
 	photoPlayer = new PhotoPlayer(this);
+	sound_player = new MultiMediaPlayer(this);
 
 	audio_state = new AudioState(this);
 	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(audioVideoPlayer->getMediaPlayer()));
+	audio_state->registerSoundPlayer(sound_player);
 	audio_state->enableState(AudioState::Idle);
+
+	connect(settings, SIGNAL(beepChanged()),
+		this, SLOT(beepChanged()));
 
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -159,6 +164,25 @@ void GlobalProperties::takeScreenshot(QRect rect, QString filename)
 
 	QImage image = QPixmap::grabWidget(viewport, rect).toImage();
 	image.save(getBasePath() + "/" + filename);
+}
+
+void GlobalProperties::beep()
+{
+	QString path = getExtraPath() + "10/beep.wav";
+
+	if (QFile::exists(path) && audio_state->getState() == AudioState::Beep)
+	{
+		sound_player->setCurrentSource(path);
+		sound_player->play();
+	}
+}
+
+void GlobalProperties::beepChanged()
+{
+	if (settings->getBeep())
+		audio_state->enableState(AudioState::Beep);
+	else
+		audio_state->disableState(AudioState::Beep);
 }
 
 QString GlobalProperties::getKeyboardLayout() const

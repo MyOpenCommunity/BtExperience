@@ -13,6 +13,7 @@ class InputContextWrapper;
 class AudioVideoPlayer;
 class PhotoPlayer;
 class AudioState;
+class MultiMediaPlayer;
 
 #ifdef BT_MALIIT
 #include <QSharedPointer>
@@ -77,6 +78,8 @@ public:
 		emit requestReboot();
 	}
 
+	Q_INVOKABLE void beep();
+
 	QString getKeyboardLayout() const;
 	void setKeyboardLayout(QString layout);
 
@@ -92,6 +95,7 @@ private slots:
 #ifdef BT_MALIIT
 	void pluginSettingsReceived(const QList<QSharedPointer<Maliit::PluginSettings> > &settings);
 #endif
+	void beepChanged();
 
 private:
 	InputContextWrapper *wrapper;
@@ -101,6 +105,7 @@ private:
 	AudioVideoPlayer *audioVideoPlayer;
 	PhotoPlayer *photoPlayer;
 	AudioState *audio_state;
+	MultiMediaPlayer *sound_player;
 
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
