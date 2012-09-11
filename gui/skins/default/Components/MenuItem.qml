@@ -188,7 +188,7 @@ Item {
         }
     }
 
-    MouseArea {
+    BeepingMouseArea {
         id: mousearea
         anchors.fill: parent
         onPressAndHold: if (menuItem.editable) { startEdit() }

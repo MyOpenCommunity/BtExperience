@@ -39,6 +39,7 @@ MenuColumn {
             modelList.append({"name": qsTr("Display"), "component": settingsDisplay})
             modelList.append({"name": qsTr("International"), "component": settingsInternational})
             modelList.append({"name": qsTr("Password"), "component": settingsPassword})
+            modelList.append({"name": qsTr("Beep"), "component": settingsBeep})
         }
     }
 
@@ -70,5 +71,10 @@ MenuColumn {
     Component {
         id: settingsPassword
         SettingsPassword {}
+    }
+
+    Component {
+        id: settingsBeep
+        SettingsBeep {}
     }
 }

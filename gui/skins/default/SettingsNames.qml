@@ -77,6 +77,10 @@ QtObject {
         container['PASSWORD'][0] = qsTr("Enable")
         container['PASSWORD'][1] = qsTr("Disable")
 
+        container['BEEP'] = []
+        container['BEEP'][0] = qsTr("Enable")
+        container['BEEP'][1] = qsTr("Disable")
+
         container['TIMEZONE'] = []
         container['TIMEZONE'][-2] = qsTr("GMT -2")
         container['TIMEZONE'][-1] = qsTr("GMT -1")
