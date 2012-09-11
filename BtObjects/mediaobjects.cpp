@@ -168,8 +168,6 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 	foreach (SoundAmbient *ambient, ambients)
 		objects << ambient;
 
-	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());
-
 	return objects;
 }
 
