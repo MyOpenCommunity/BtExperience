@@ -62,6 +62,7 @@ target.commands += true
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += \
     main.cpp \
+    audiostate.cpp \
     eventfilters.cpp \
     globalproperties.cpp \
     guisettings.cpp \
@@ -70,6 +71,7 @@ SOURCES += \
     player.cpp
 
 HEADERS += \
+    audiostate.h \
     eventfilters.h \
     globalproperties.h \
     guisettings.h \
