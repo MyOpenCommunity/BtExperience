@@ -9,11 +9,11 @@ Item {
     property alias line1: line1.text
     property alias line2: line2.text
     property alias line3: line3.text
-    property alias leftButtonText: buttonLeft.text
-    property alias rightButtonText: buttonRight.text
+    property alias confirmText: buttonConfirm.text
+    property alias dismissText: buttonDismiss.text
 
-    signal leftClicked
-    signal rightClicked
+    signal confirmClicked
+    signal dismissClicked
 
     width: bgTitle.width
     height: bgTitle.height + bgBody.height + bgBottom.height
@@ -97,15 +97,15 @@ Item {
     }
 
     ButtonThreeStates {
-        id: buttonRight
+        id: buttonDismiss
         defaultImage: "../images/common/btn_alert.svg"
         pressedImage: "../images/common/btn_alert.svg"
         selectedImage: "../images/common/btn_alert.svg"
         shadowImage: "../images/common/shadow_btn_alert.svg"
-        text: qsTr("discard")
+        text: qsTr("dismiss")
         font.capitalization: Font.AllUppercase
         font.pixelSize: 14
-        onClicked: control.rightClicked()
+        onClicked: dismissClicked()
         status: 0
         anchors {
             right: bgBottom.right
@@ -116,18 +116,18 @@ Item {
     }
 
     ButtonThreeStates {
-        id: buttonLeft
+        id: buttonConfirm
         defaultImage: "../images/common/btn_alert.svg"
         pressedImage: "../images/common/btn_alert.svg"
         selectedImage: "../images/common/btn_alert.svg"
         shadowImage: "../images/common/shadow_btn_alert.svg"
-        text: qsTr("show")
+        text: qsTr("confirm")
         font.capitalization: Font.AllUppercase
         font.pixelSize: 14
-        onClicked: control.leftClicked()
+        onClicked: confirmClicked()
         status: 0
         anchors {
-            right: buttonRight.left
+            right: buttonDismiss.left
             bottom: bgBottom.bottom
             bottomMargin: bgTitle.height / 100 * 11.24
         }
