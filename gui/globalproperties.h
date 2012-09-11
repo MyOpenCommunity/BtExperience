@@ -63,6 +63,7 @@ public:
 	AudioVideoPlayer *getAudioVideoPlayer() const;
 	PhotoPlayer *getPhotoPlayer() const;
 	QString getBasePath() const;
+	QString getExtraPath() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE void takeScreenshot(QRect rect, QString filename);

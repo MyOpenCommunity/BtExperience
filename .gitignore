@@ -13,4 +13,5 @@ obj/
 /bin/
 /dist/
 /doc/
+/extra
 build_arm/

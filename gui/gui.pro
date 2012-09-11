@@ -112,6 +112,7 @@ mac {
         QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/libcommon.so.0 $${DESTDIR}/ &&
     } else {
         QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/common_files/lib/x86/libcommon.so.0 $${DESTDIR}/ &&
+        QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../extra $${DESTDIR}/ &&
     }
     QMAKE_POST_LINK += true
 }

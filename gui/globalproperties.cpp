@@ -67,6 +67,22 @@ QString GlobalProperties::getBasePath() const
 		   .canonicalFilePath() + "/";
 }
 
+QString GlobalProperties::getExtraPath() const
+{
+	QFileInfo path = qApp->applicationDirPath();
+
+#ifdef Q_WS_MAC
+	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
+#endif
+
+#if defined(Q_WS_MAC) || defined(Q_WS_X11)
+	return QFileInfo(QDir(path.absoluteFilePath()), "extra")
+		   .canonicalFilePath() + "/";
+#else
+	#error "Implement for ARM"
+#endif
+}
+
 int GlobalProperties::getMainWidth() const
 {
 #ifdef Q_WS_QWS
