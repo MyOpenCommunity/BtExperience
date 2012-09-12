@@ -29,19 +29,94 @@ BasePage {
         }
     }
 
-    CardView {
+    PathView {
         id: cardView
-        function selectImage(item) {
-            if (item === qsTr("Devices"))
-                return "images/multimedia/usb.png"
-            else if (item === qsTr("rss"))
-                return "images/multimedia/rss.png"
-            else if (item === qsTr("web link"))
-                return "images/multimedia/weblink.png"
-            console.log("Unknown item, default to usb")
-            return "images/multimedia/usb.png"
+
+        property int currentPressed: -1
+
+        model: multimediaModel
+        delegate: multimediaDelegate
+
+        Component {
+            id: multimediaDelegate
+            Item {
+                id: itemDelegate
+
+                property variant itemObject: multimediaModel.get(index)
+
+                width: imageDelegate.sourceSize.width
+                height: imageDelegate.sourceSize.height + textDelegate.height
+
+                z: PathView.elementZ
+                scale: PathView.elementScale
+
+                Image {
+                    id: imageDelegate
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    source: itemObject.itemImage
+                }
+
+                UbuntuLightText {
+                    id: textDelegate
+                    text: itemObject.itemText
+                    font.pixelSize: 22
+                    anchors.top: imageDelegate.bottom
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.topMargin: 8
+                    horizontalAlignment: Text.AlignHCenter
+                }
+
+                SvgImage {
+                    id: rectPressed
+                    source: global.guiSettings.skin === 0 ? "images/common/profilo_p.svg" :
+                                                            "images/home_dark/home.jpg"
+                    visible: false
+                    anchors {
+                        centerIn: imageDelegate
+                        fill: imageDelegate
+                    }
+                    width: imageDelegate.width
+                    height: imageDelegate.height
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Stack.openPage(itemObject.target, itemObject.props)
+                    onPressed: itemDelegate.PathView.view.currentPressed = index
+                    onReleased: itemDelegate.PathView.view.currentPressed = -1
+                }
+
+                states: State {
+                    when: itemDelegate.PathView.view.currentPressed === index
+                    PropertyChanges {
+                        target: rectPressed
+                        visible: true
+                    }
+                }
+            }
         }
 
+        path: Path {
+            startX: multimediaModel.count < 5 ? 200 : 150; startY: cardView.height / 2
+            PathAttribute { name: "elementScale"; value: 0.5 }
+            PathAttribute { name: "elementZ"; value: 0.5 }
+            PathLine { x: cardView.width / 2; y: cardView.height / 2 - 50 }
+            PathAttribute { name: "elementScale"; value: 1.1 }
+            PathAttribute { name: "elementZ"; value: 1 }
+            PathLine { x: multimediaModel.count < 5 ? cardView.width - 200 : cardView.width - 150; y: cardView.height / 2 }
+            PathAttribute { name: "elementScale"; value: 0.5 }
+            PathAttribute { name: "elementZ"; value: 0.5 }
+        }
+
+        pathItemCount: multimediaModel.count < 5 ? 3 : 5
+        highlightRangeMode: PathView.StrictlyEnforceRange
+        preferredHighlightBegin: 0.5
+        preferredHighlightEnd: 0.5
+        onFlickStarted: currentPressed = -1
+        onMovementEnded: currentPressed = -1
         anchors {
             right: parent.right
             rightMargin: 30
@@ -51,17 +126,6 @@ BasePage {
             topMargin: 50
             bottom: parent.bottom
         }
-
-        model: multimediaModel
-        delegate: CardDelegate {
-            property variant itemObject: cardView.model.get(index)
-            source: cardView.selectImage(itemObject.itemText)
-            label: itemObject.itemText
-
-            onClicked: Stack.openPage(itemObject.target, itemObject.props)
-        }
-        delegateSpacing: 20
-        visibleElements: 4
     }
 
     ListModel {
@@ -69,14 +133,14 @@ BasePage {
     }
 
     Component.onCompleted: {
-        multimediaModel.append({"itemText": qsTr("Devices"), "target": "Devices.qml", "props": {} })
+        multimediaModel.append({"itemText": qsTr("Devices"), "target": "Devices.qml", "itemImage": "images/multimedia/usb.png", "props": {} })
 
         // TODO to be implemented
-        multimediaModel.append({"itemText": qsTr("browser"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("rss"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("ip radio"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("weather"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("web browser"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("web link"), "target": "Devices.qml", "props": {}})
+        multimediaModel.append({"itemText": qsTr("browser"), "target": "Devices.qml", "itemImage": "images/multimedia/usb.png", "props": {}})
+        multimediaModel.append({"itemText": qsTr("rss"), "target": "Devices.qml", "itemImage": "images/multimedia/rss.png", "props": {}})
+        multimediaModel.append({"itemText": qsTr("ip radio"), "target": "Devices.qml", "itemImage": "images/multimedia/usb.png", "props": {}})
+        multimediaModel.append({"itemText": qsTr("weather"), "target": "Devices.qml", "itemImage": "images/multimedia/usb.png", "props": {}})
+        multimediaModel.append({"itemText": qsTr("web browser"), "target": "Devices.qml", "itemImage": "images/multimedia/usb.png", "props": {}})
+        multimediaModel.append({"itemText": qsTr("web link"), "target": "Devices.qml", "itemImage": "images/multimedia/weblink.png", "props": {}})
     }
 }
