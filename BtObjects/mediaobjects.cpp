@@ -1,6 +1,5 @@
 #include "mediaobjects.h"
 #include "media_device.h"
-#include "mediaplayer.h"
 #include "list_manager.h"
 #include "devices_cache.h"
 #include "xml_functions.h"

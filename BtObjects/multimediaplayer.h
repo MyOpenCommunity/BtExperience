@@ -100,6 +100,20 @@ public:
 	PlayerState getPlayerState() const;
 	AudioOutputState getAudioOutputState() const;
 
+	/*!
+		\brief Set the global template for command line arguments
+
+		The special values "<FILE_NAME>" and "<SEEK_TIME>" are replaced with file name and seek time (in seconds).
+	*/
+	static void setGlobalCommandLineArguments(QString executable, QStringList audio, QStringList video);
+
+	/*!
+		\brief Set the template for command line arguments
+
+		The special values "<FILE_NAME>" and "<SEEK_TIME>" are replaced with file name and seek time (in seconds).
+	*/
+	void setCommandLineArguments(QStringList audio, QStringList video);
+
 public slots:
 	/*!
 		\brief Start reporducing current source

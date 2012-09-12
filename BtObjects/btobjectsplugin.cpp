@@ -30,7 +30,6 @@
 #include "choicelist.h"
 #include "energyrate.h"
 #include "xmlobject.h"
-#include "mediaplayer.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -96,7 +95,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	parseDevice();
 
-	MediaPlayer::setCommandLineArguments("mplayer", QStringList(), QStringList());
+	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList(), QStringList());
 
 	ClientWriter::setDelay((*bt_global::config)[TS_NUMBER].toInt() * TS_NUMBER_FRAME_DELAY);
 

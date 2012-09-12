@@ -1,7 +1,6 @@
 #include "test_multimedia_player.h"
 #include "multimediaplayer.h"
 #include "objecttester.h"
-#include "mediaplayer.h"
 
 #include <QtTest>
 
@@ -29,7 +28,7 @@ namespace
 
 void TestMultiMediaPlayer::init()
 {
-	MediaPlayer::setCommandLineArguments("mplayer", QStringList() << "-ao" << "null", QStringList());
+	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList() << "-ao" << "null", QStringList());
 
 	player = new MultiMediaPlayer();
 	player->mediaplayer_output_mode = MediaPlayer::OutputStdout;

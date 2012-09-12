@@ -34,6 +34,16 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	qRegisterMetaType<MultiMediaPlayer::AudioOutputState>();
 }
 
+void MultiMediaPlayer::setGlobalCommandLineArguments(QString executable, QStringList audio, QStringList video)
+{
+	MediaPlayer::setGlobalCommandLineArguments(executable, audio, video);
+}
+
+void MultiMediaPlayer::setCommandLineArguments(QStringList audio, QStringList video)
+{
+	player->setCommandLineArguments(audio, video);
+}
+
 QString MultiMediaPlayer::getCurrentSource() const
 {
 	return current_source;
