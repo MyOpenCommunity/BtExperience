@@ -12,9 +12,9 @@ namespace
 		"Invalid",
 		"Idle",
 		"Beep",
+		"Screensaver",
 		"LocalPlayback",
 		"Ringtone",
-		"Screensaver"
 	};
 }
 

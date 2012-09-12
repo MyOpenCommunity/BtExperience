@@ -22,9 +22,9 @@ public:
 		Invalid = -1,
 		Idle,
 		Beep,
+		Screensaver,
 		LocalPlayback,
 		Ringtone,
-		Screensaver,
 		// this must be last
 		StateCount
 	};
