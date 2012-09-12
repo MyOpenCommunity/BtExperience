@@ -58,17 +58,24 @@ private slots:
 	void checkDirectAudioAccess();
 
 private:
+	enum PlayerType
+	{
+		MultiMedia,
+		SoundEffect
+	};
+
 	struct PlayerInfo
 	{
-		explicit PlayerInfo(MultiMediaPlayer *_player, bool _is_sound)
+		explicit PlayerInfo(MultiMediaPlayer *_player, PlayerType _type)
 		{
 			player = _player;
 			temporary_pause = false;
-			is_sound = _is_sound;
+			type = _type;
 		}
 
 		MultiMediaPlayer *player;
-		bool temporary_pause, is_sound;
+		bool temporary_pause;
+		PlayerType type;
 	};
 
 	bool pauseActivePlayer();

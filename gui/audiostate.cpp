@@ -7,8 +7,9 @@
 
 namespace
 {
-	const char *descriptions[AudioState::StateCount] =
+	const char *descriptions[AudioState::StateCount + 1] =
 	{
+		"Invalid",
 		"Idle",
 		"Beep",
 		"LocalPlayback",
@@ -96,7 +97,7 @@ int AudioState::getVolume() const
 
 void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
 {
-	players.append(PlayerInfo(player, false));
+	players.append(PlayerInfo(player, MultiMedia));
 
 	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 		this, SLOT(checkDirectAudioAccess()));
@@ -104,7 +105,7 @@ void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
 
 void AudioState::registerSoundPlayer(MultiMediaPlayer *player)
 {
-	players.append(PlayerInfo(player, true));
+	players.append(PlayerInfo(player, SoundEffect));
 
 	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 		this, SLOT(checkDirectAudioAccess()));
@@ -124,13 +125,29 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 {
 	pending_state = Invalid;
 
-	qDebug() << "Leaving state" << descriptions[old_state];
+	qDebug() << "Leaving state" << descriptions[old_state + 1];
 
-	// TODO actually disable audio state
+	switch (old_state)
+	{
+	default:
+		qWarning("Add code to leave old state");
+		break;
+	case Invalid:
+		// nothing to do
+		break;
+	}
 
-	qDebug() << "Entering state" << descriptions[new_state];
+	qDebug() << "Entering state" << descriptions[new_state + 1];
 
-	// TODO actually enable audio state
+	switch (new_state)
+	{
+	default:
+		qWarning("Add code to enter new state");
+		break;
+	case Invalid:
+		Q_ASSERT_X(false, "AudioState::updateAudioPaths", "Entering invalid audio state");
+		break;
+	}
 
 	current_state = new_state;
 	emit stateChanged(old_state, new_state);
@@ -157,7 +174,7 @@ void AudioState::checkDirectAudioAccess()
 	{
 		if (info.player->getPlayerState() == MultiMediaPlayer::Playing)
 		{
-			if (!info.is_sound)
+			if (info.type == MultiMedia)
 				is_playback = true;
 			new_state = true;
 		}
@@ -188,7 +205,7 @@ bool AudioState::pauseActivePlayer()
 
 		if (info.player->getAudioOutputState() == MultiMediaPlayer::AudioOutputActive)
 		{
-			if (info.is_sound)
+			if (info.type == SoundEffect)
 			{
 				qDebug() << "Stopping sound player";
 
