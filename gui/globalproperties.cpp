@@ -3,6 +3,7 @@
 #include "inputcontextwrapper.h"
 #include "player.h"
 #include "audiostate.h"
+#include "ts/main.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -32,17 +33,11 @@ GlobalProperties::GlobalProperties()
 	qmlRegisterUncreatableType<AudioState>("BtExperience", 1, 0, "AudioState", "");
 
 	settings = new GuiSettings(this);
-	audioVideoPlayer = new AudioVideoPlayer(this);
 	photoPlayer = new PhotoPlayer(this);
-	sound_player = new MultiMediaPlayer(this);
-
-	audio_state = new AudioState(this);
-	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(audioVideoPlayer->getMediaPlayer()));
-	audio_state->registerSoundPlayer(sound_player);
-	audio_state->enableState(AudioState::Idle);
-
-	connect(settings, SIGNAL(beepChanged()),
-		this, SLOT(beepChanged()));
+	videoPlayer = 0;
+	audioPlayer = 0;
+	audio_state = 0;
+	sound_player = 0;
 
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -63,6 +58,42 @@ GlobalProperties::GlobalProperties()
 
 GlobalProperties::~GlobalProperties()
 {
+}
+
+void GlobalProperties::initAudio()
+{
+	if (audio_state)
+		return;
+
+	Q_ASSERT_X(bt_global::config, "GlobalProperties::initAudio", "BtObjects plugin not initialized yet");
+
+	videoPlayer = new AudioVideoPlayer(this);
+
+	sound_player = new MultiMediaPlayer(this);
+
+	audio_state = new AudioState(this);
+	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(videoPlayer->getMediaPlayer()));
+	audio_state->registerSoundPlayer(sound_player);
+	audio_state->enableState(AudioState::Idle);
+
+	connect(settings, SIGNAL(beepChanged()),
+		this, SLOT(beepChanged()));
+
+	bool sound_diffusion_enabled = !(*bt_global::config)[SOURCE_ADDRESS].isEmpty();
+
+	if (sound_diffusion_enabled)
+	{
+		audioPlayer = new AudioVideoPlayer(this);
+
+		MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audioPlayer->getMediaPlayer());
+
+		player->setCommandLineArguments(QStringList(), QStringList());
+		audio_state->registerSoundDiffusionPlayer(player);
+	}
+	else
+	{
+		audioPlayer = videoPlayer;
+	}
 }
 
 QString GlobalProperties::getBasePath() const
@@ -119,9 +150,14 @@ GuiSettings *GlobalProperties::getGuiSettings() const
 	return settings;
 }
 
-AudioVideoPlayer *GlobalProperties::getAudioVideoPlayer() const
+AudioVideoPlayer *GlobalProperties::getVideoPlayer() const
 {
-	return audioVideoPlayer;
+	return videoPlayer;
+}
+
+AudioVideoPlayer *GlobalProperties::getAudioPlayer() const
+{
+	return audioPlayer;
 }
 
 PhotoPlayer *GlobalProperties::getPhotoPlayer() const

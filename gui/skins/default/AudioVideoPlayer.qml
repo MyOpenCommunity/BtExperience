@@ -13,6 +13,7 @@ Page {
     property int index
     property bool isVideo: true
     property bool upnp
+    property variant mediaPlayer: isVideo ? global.videoPlayer : global.audioPlayer
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
@@ -66,7 +67,7 @@ Page {
     UbuntuLightText {
         id: title
 
-        text: global.audioVideoPlayer.trackName
+        text: player.mediaPlayer.trackName
         color: "white"
         font.pixelSize: frameBg.height / 100 * 3.63
         anchors {
@@ -80,7 +81,7 @@ Page {
     UbuntuLightText {
         id: duration
 
-        text: global.audioVideoPlayer.currentTime + " / " + global.audioVideoPlayer.totalTime
+        text: player.mediaPlayer.currentTime + " / " + player.mediaPlayer.totalTime
         color: "gray"
         horizontalAlignment: Text.AlignRight
         font.pixelSize: frameBg.height / 100 * 3.63
@@ -104,7 +105,7 @@ Page {
 
         Rectangle {
             height: imageSlider.height + 2
-            width: imageSlider.width * (global.audioVideoPlayer.percentage < 1 ? 1 : global.audioVideoPlayer.percentage) / 100 + 4
+            width: imageSlider.width * (player.mediaPlayer.percentage < 1 ? 1 : player.mediaPlayer.percentage) / 100 + 4
             radius: 100
             smooth: true
             anchors {
@@ -143,7 +144,7 @@ Page {
             leftMargin: frameBg.width / 100 * 2.48
         }
 
-        onClicked: global.audioVideoPlayer.prevTrack()
+        onClicked: player.mediaPlayer.prevTrack()
         status: 0
     }
 
@@ -176,11 +177,11 @@ Page {
             onClicked: {
                 if (playButtonItem.state === "") {
                     playButtonItem.state = "play"
-                    global.audioVideoPlayer.mediaPlayer.resume()
+                    player.mediaPlayer.mediaPlayer.resume()
                 }
                 else {
                     playButtonItem.state = ""
-                    global.audioVideoPlayer.mediaPlayer.pause()
+                    player.mediaPlayer.mediaPlayer.pause()
                 }
             }
 
@@ -215,7 +216,7 @@ Page {
             leftMargin: frameBg.width / 100 * 0.58
         }
 
-        onClicked: global.audioVideoPlayer.nextTrack()
+        onClicked: player.mediaPlayer.nextTrack()
 
         status: 0
     }
@@ -245,14 +246,14 @@ Page {
         shadowImage: "images/common/ombra_btn_mute.svg"
         defaultImage: "images/common/ico_mute.svg"
         pressedImage: "images/common/ico_mute.svg"
-        onClicked: global.audioVideoPlayer.mute = !global.audioVideoPlayer.mute
+        onClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
         status: 0
         anchors {
             top: prevButton.top
             right: buttonMinus.left
             rightMargin: frameBg.width / 100 * 1.90
         }
-        state: global.audioVideoPlayer.mute ? "mute" : ""
+        state: player.mediaPlayer.mute ? "mute" : ""
 
         states: [
             State {
@@ -274,7 +275,7 @@ Page {
         shadowImage: "images/common/ombra_btn_piu_meno.svg"
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
-        onClicked: global.audioVideoPlayer.decrementVolume()
+        onClicked: player.mediaPlayer.decrementVolume()
         status: 0
         repetitionOnHold: true
         anchors {
@@ -291,7 +292,7 @@ Page {
         shadowImage: "images/common/ombra_btn_piu_meno.svg"
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
-        onClicked: global.audioVideoPlayer.incrementVolume()
+        onClicked: player.mediaPlayer.incrementVolume()
         status: 0
         repetitionOnHold: true
         anchors {
@@ -352,7 +353,7 @@ Page {
         }
 
         UbuntuLightText {
-            text: global.audioVideoPlayer.volume
+            text: player.mediaPlayer.volume
             color: "white"
             font.pixelSize: frameBg.height / 100 * 3.63
             anchors {
@@ -366,7 +367,7 @@ Page {
         SvgImage {
             id: muteIcon
 
-            source: global.audioVideoPlayer.mute ? "images/common/regola_volume/ico_mute.svg" : "images/common/regola_volume/ico_volume.svg"
+            source: player.mediaPlayer.mute ? "images/common/regola_volume/ico_mute.svg" : "images/common/regola_volume/ico_volume.svg"
             anchors {
                 top: volumePopup.top
                 topMargin: frameBg.height / 100 * 9.33
@@ -385,7 +386,7 @@ Page {
 
             Rectangle {
                 height: parent.height + 2
-                width: parent.width * (global.audioVideoPlayer.volume < 1 ? 1 : global.audioVideoPlayer.volume) / 100 + 4
+                width: parent.width * (player.mediaPlayer.volume < 1 ? 1 : player.mediaPlayer.volume) / 100 + 4
                 radius: 100
                 smooth: true
                 anchors {
@@ -417,7 +418,7 @@ Page {
         }
 
         Connections {
-            target: global.audioVideoPlayer
+            target: player.mediaPlayer
             onVolumeChanged: {
                 volumePopup.state = "volumeChanged"
                 hidingTimer.restart() // don't use start or popup will blink when pressedAndHold
@@ -450,10 +451,10 @@ Page {
         Stack.popPages(2)
     }
 
-    Component.onCompleted: player.upnp ?
-                               global.audioVideoPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count) :
-                               global.audioVideoPlayer.generatePlaylistLocal(player.model, player.index, player.model.count)
-    Component.onDestruction: if (player.isVideo) global.audioVideoPlayer.terminate()
+    Component.onCompleted: player.mediaPlayer.upnp ?
+                               player.mediaPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count) :
+                               player.mediaPlayer.generatePlaylistLocal(player.model, player.index, player.model.count)
+    Component.onDestruction: if (player.isVideo) player.mediaPlayer.terminate()
 
     states: [
         State {

@@ -46,7 +46,9 @@ class GlobalProperties : public QObject
 	// The object to manage the GUI settings
 	Q_PROPERTY(GuiSettings *guiSettings READ getGuiSettings CONSTANT)
 	// The object to manage MPlayer from QML
-	Q_PROPERTY(AudioVideoPlayer *audioVideoPlayer READ getAudioVideoPlayer CONSTANT)
+	Q_PROPERTY(AudioVideoPlayer *videoPlayer READ getVideoPlayer CONSTANT)
+	// The object to manage MPlayer from QML
+	Q_PROPERTY(AudioVideoPlayer *audioPlayer READ getAudioPlayer CONSTANT)
 	// The object to manage image lists
 	Q_PROPERTY(PhotoPlayer *photoPlayer READ getPhotoPlayer CONSTANT)
 	// The object to manage audio/video playback state from QML
@@ -64,7 +66,8 @@ public:
 	int getLastTimePress() const;
 	QObject *getInputWrapper() const;
 	GuiSettings *getGuiSettings() const;
-	AudioVideoPlayer *getAudioVideoPlayer() const;
+	AudioVideoPlayer *getVideoPlayer() const;
+	AudioVideoPlayer *getAudioPlayer() const;
 	PhotoPlayer *getPhotoPlayer() const;
 	QObject *getAudioState() const;
 	QString getBasePath() const;
@@ -79,6 +82,7 @@ public:
 	}
 
 	Q_INVOKABLE void beep();
+	Q_INVOKABLE void initAudio();
 
 	QString getKeyboardLayout() const;
 	void setKeyboardLayout(QString layout);
@@ -102,7 +106,8 @@ private:
 	QDeclarativeView *main_widget;
 	QDateTime last_press;
 	GuiSettings *settings;
-	AudioVideoPlayer *audioVideoPlayer;
+	AudioVideoPlayer *videoPlayer;
+	AudioVideoPlayer *audioPlayer;
 	PhotoPlayer *photoPlayer;
 	AudioState *audio_state;
 	MultiMediaPlayer *sound_player;

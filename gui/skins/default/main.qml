@@ -19,6 +19,8 @@ Item {
     transform: Scale { origin.x: 0; origin.y: 0; xScale: global.mainWidth / 1024; yScale: global.mainHeight / 600 }
 
     Component.onCompleted: {
+        global.initAudio()
+
         Container.mainContainer = container
         EventManagerContainer.eventManager = eventManagerId
         // We need to update the reference in Stack because it includes MainContainer

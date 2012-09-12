@@ -40,6 +40,7 @@ public:
 
 	void registerMediaPlayer(MultiMediaPlayer *player);
 	void registerSoundPlayer(MultiMediaPlayer *player);
+	void registerSoundDiffusionPlayer(MultiMediaPlayer *player);
 
 	bool isDirectAudioAccess() const;
 	bool isDirectVideoAccess() const;
@@ -56,12 +57,14 @@ signals:
 private slots:
 	void completeTransition(bool state);
 	void checkDirectAudioAccess();
+	void changeSoundDiffusionAccess();
 
 private:
 	enum PlayerType
 	{
 		MultiMedia,
-		SoundEffect
+		SoundEffect,
+		SoundDiffusion
 	};
 
 	struct PlayerInfo
@@ -87,6 +90,7 @@ private:
 	State current_state, pending_state;
 	bool direct_audio_access, direct_video_access;
 	bool states[StateCount];
+	bool sound_diffusion;
 	QList<PlayerInfo> players;
 };
 

@@ -26,7 +26,7 @@ AudioState::AudioState(QObject *parent) :
 		states[i] = false;
 
 	current_state = pending_state = Invalid;
-	direct_audio_access = direct_video_access = false;
+	direct_audio_access = direct_video_access = sound_diffusion = false;
 
 	connect(this, SIGNAL(directAudioAccessChanged(bool)),
 		this, SLOT(completeTransition(bool)));
@@ -111,6 +111,14 @@ void AudioState::registerSoundPlayer(MultiMediaPlayer *player)
 		this, SLOT(checkDirectAudioAccess()));
 }
 
+void AudioState::registerSoundDiffusionPlayer(MultiMediaPlayer *player)
+{
+	players.append(PlayerInfo(player, SoundDiffusion));
+
+	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
+		this, SLOT(changeSoundDiffusionAccess()));
+}
+
 bool AudioState::isDirectAudioAccess() const
 {
 	return direct_audio_access;
@@ -172,6 +180,9 @@ void AudioState::checkDirectAudioAccess()
 
 	foreach (PlayerInfo info, players)
 	{
+		if (info.type == SoundDiffusion)
+			continue;
+
 		if (info.player->getPlayerState() == MultiMediaPlayer::Playing)
 		{
 			if (info.type == MultiMedia)
@@ -197,6 +208,27 @@ void AudioState::checkDirectAudioAccess()
 		disableState(LocalPlayback);
 }
 
+void AudioState::changeSoundDiffusionAccess()
+{
+	bool new_sound_diffusion = false;
+
+	for (int i = 0; i < players.count(); ++i)
+	{
+		PlayerInfo &info = players[i];
+
+		if (info.type == SoundDiffusion && info.player->getPlayerState() == MultiMediaPlayer::Playing)
+			new_sound_diffusion = true;
+	}
+
+	if (new_sound_diffusion == sound_diffusion)
+		return;
+
+	if (new_sound_diffusion)
+		qWarning("Add code to enable sound diffusion");
+	else
+		qWarning("Add code to disable sound diffusion");
+}
+
 bool AudioState::pauseActivePlayer()
 {
 	for (int i = 0; i < players.count(); ++i)
@@ -205,6 +237,9 @@ bool AudioState::pauseActivePlayer()
 
 		if (info.player->getAudioOutputState() == MultiMediaPlayer::AudioOutputActive)
 		{
+			if (info.type == SoundDiffusion)
+				continue;
+
 			if (info.type == SoundEffect)
 			{
 				qDebug() << "Stopping sound player";
