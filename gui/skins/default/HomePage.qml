@@ -127,12 +127,14 @@ BasePage {
             id: usersDelegate
             Item {
                 id: itemDelegate
+
                 property variant itemObject: usersModel.getObject(index)
+
                 width: imageDelegate.sourceSize.width
                 height: imageDelegate.sourceSize.height + textDelegate.height
 
-                z: PathView.z
-                scale: PathView.iconScale + 0.1
+                z: PathView.elementZ
+                scale: PathView.elementScale
 
                 Image {
                     id: imageDelegate
@@ -152,10 +154,6 @@ BasePage {
                     anchors.topMargin: 8
                     horizontalAlignment: Text.AlignHCenter
                 }
-
-                //Component.onCompleted: {
-                //console.log('icon scale: ' + PathView.iconScale + ' x:' + itemDelegate.x)
-                //}
 
                 SvgImage {
                     id: rectPressed
@@ -192,23 +190,23 @@ BasePage {
         model: usersModel
         delegate: usersDelegate
 
-        path:  Path {
-            startX: 100; startY: 250
-            PathAttribute { name: "iconScale"; value: 0.4 }
-            PathAttribute { name: "z"; value: 0.1 }
-            PathLine { x: 160; y: 250; }
-            PathAttribute { name: "iconScale"; value: 0.5 }
-            PathLine { x: 310; y: 210; }
-            PathAttribute { name: "iconScale"; value: 1.0 }
-            PathAttribute { name: "z"; value: 1.0 }
-            PathLine { x: 420; y: 243; }
-            PathAttribute { name: "iconScale"; value: 0.6 }
-            PathLine { x: 560; y: 252; }
-            PathAttribute { name: "iconScale"; value: 0.35 }
-            PathLine { x: 630; y: 250; }
+        path: Path {
+            startX: usersModel.count < 5 ? 160 : 100; startY: usersModel.count < 5 ? 220 : 220
+            PathAttribute { name: "elementScale"; value: 0.5 }
+            PathAttribute { name: "elementZ"; value: 0.5 }
+            PathLine { x: 370; y: 200 }
+            PathAttribute { name: "elementScale"; value: 1.1 }
+            PathAttribute { name: "elementZ"; value: 1 }
+            PathLine { x: usersModel.count < 5 ? 580 : 640; y: usersModel.count < 5 ? 220 : 220 }
+            PathAttribute { name: "elementScale"; value: 0.5 }
+            PathAttribute { name: "elementZ"; value: 0.5 }
         }
-        width: 620
-        pathItemCount: 5
+
+        width: 740
+        pathItemCount: usersModel.count < 5 ? 3 : 5
+        highlightRangeMode: PathView.StrictlyEnforceRange
+        preferredHighlightBegin: 0.5
+        preferredHighlightEnd: 0.5
         anchors.bottom: favourites.top
         anchors.bottomMargin: 0
         anchors.top: toolbar.bottom
