@@ -31,8 +31,9 @@ public:
 
 	AudioState(QObject *parent);
 
-	void disableState(State state);
-	void enableState(State state);
+	Q_INVOKABLE void disableState(State state);
+	Q_INVOKABLE void enableState(State state);
+
 	State getState() const;
 
 	Q_INVOKABLE void setVolume(int volume);

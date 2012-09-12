@@ -132,6 +132,13 @@ Item {
         }
     ]
 
+    onStateChanged: {
+        if (state === "running")
+            global.audioState.enableState(AudioState.Screensaver)
+        else
+            global.audioState.disableState(AudioState.Screensaver)
+    }
+
     Component {
         id: bouncingLogo
         ScreenSaverBouncingImage {}
