@@ -117,104 +117,18 @@ BasePage {
         }
     }
 
-    PathView {
+    ControlPathView {
         ObjectModel {
             id: usersModel
             source: myHomeModels.profiles
         }
-
-        Component {
-            id: usersDelegate
-            Item {
-                id: itemDelegate
-
-                property variant itemObject: usersModel.getObject(index)
-
-                width: imageDelegate.sourceSize.width
-                height: imageDelegate.sourceSize.height + textDelegate.height
-
-                z: PathView.elementZ
-                scale: PathView.elementScale
-
-                Image {
-                    id: imageDelegate
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    source: itemObject.image
-                }
-
-                UbuntuLightText {
-                    id: textDelegate
-                    text: itemObject.description
-                    font.pixelSize: 22
-                    anchors.top: imageDelegate.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.topMargin: 8
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                SvgImage {
-                    id: rectPressed
-                    source: global.guiSettings.skin === 0 ? "images/common/profilo_p.svg" :
-                                                            "images/home_dark/home.jpg"
-                    visible: false
-                    anchors {
-                        centerIn: imageDelegate
-                        fill: imageDelegate
-                    }
-                    width: imageDelegate.width
-                    height: imageDelegate.height
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: Stack.openPage('Profile.qml', {'profile': itemDelegate.itemObject})
-                    onPressed: itemDelegate.PathView.view.currentPressed = index
-                    onReleased: itemDelegate.PathView.view.currentPressed = -1
-                }
-
-                states: State {
-                    when: itemDelegate.PathView.view.currentPressed === index
-                    PropertyChanges {
-                        target: rectPressed
-                        visible: true
-                    }
-                }
-            }
-        }
-
-        id: users
-        property int currentPressed: -1
         model: usersModel
-        delegate: usersDelegate
-
-        path: Path {
-            startX: usersModel.count < 5 ? 160 : 100; startY: 220
-            PathAttribute { name: "elementScale"; value: 0.5 }
-            PathAttribute { name: "elementZ"; value: 0.5 }
-            PathLine { x: 370; y: 200 }
-            PathAttribute { name: "elementScale"; value: 1.1 }
-            PathAttribute { name: "elementZ"; value: 1 }
-            PathLine { x: usersModel.count < 5 ? 580 : 640; y: 220 }
-            PathAttribute { name: "elementScale"; value: 0.5 }
-            PathAttribute { name: "elementZ"; value: 0.5 }
-        }
-
         width: 740
-        pathItemCount: usersModel.count < 5 ? 3 : 5
-        highlightRangeMode: PathView.StrictlyEnforceRange
-        preferredHighlightBegin: 0.5
-        preferredHighlightEnd: 0.5
-        anchors.bottom: favourites.top
-        anchors.bottomMargin: 0
-        anchors.top: toolbar.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        onFlickStarted: currentPressed = -1
-        onMovementEnded: currentPressed = -1
+        anchors {
+            bottom: favourites.top
+            top: toolbar.bottom
+            left: parent.left
+        }
     }
 
     MediaModel {
