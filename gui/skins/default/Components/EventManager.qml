@@ -39,22 +39,6 @@ Item {
         ScreenSaver.updateLast()
     }
 
-    function vctIncomingCall(vctObject) {
-        console.log("EventManager::vctIncomingCall")
-        screensaver.stopScreensaver()
-        screensaver.isEnabled = false
-        console.log("Opening call page with object: " + vctObject)
-        Stack.openPage("VideoCamera.qml", {"camera": vctObject})
-    }
-
-    function intercomIncomingCall(obj) {
-        screensaver.stopScreensaver()
-        screensaver.isEnabled = false
-        Stack.currentPage().installPopup(callPopup)
-        Stack.currentPage().popupLoader.item.dataObject = obj
-        Stack.currentPage().popupLoader.item.state = "ringing"
-    }
-
     Component {
         id: callPopup
         ControlCall {
