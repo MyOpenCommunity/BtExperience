@@ -3,6 +3,7 @@
 #include "inputcontextwrapper.h"
 #include "player.h"
 #include "audiostate.h"
+#include "ringtonemanager.h"
 #include "ts/main.h"
 
 #include <QTimer>
@@ -22,6 +23,7 @@ namespace
 	QStringList allowed_layouts = QStringList() << "en_gb_bticino" << "it_bticino" << "fr_bticino";
 }
 
+
 GlobalProperties::GlobalProperties()
 {
 	wrapper = new InputContextWrapper(this);
@@ -31,6 +33,7 @@ GlobalProperties::GlobalProperties()
 	qmlRegisterUncreatableType<AudioVideoPlayer>("BtExperience", 1, 0, "AudioVideoPlayer", "");
 	qmlRegisterUncreatableType<PhotoPlayer>("BtExperience", 1, 0, "PhotoPlayer", "");
 	qmlRegisterUncreatableType<AudioState>("BtExperience", 1, 0, "AudioState", "");
+	qmlRegisterUncreatableType<RingtoneManager>("BtExperience", 1, 0, "RingtoneManager", "");
 
 	settings = new GuiSettings(this);
 	photoPlayer = new PhotoPlayer(this);
@@ -38,6 +41,7 @@ GlobalProperties::GlobalProperties()
 	audioPlayer = 0;
 	audio_state = 0;
 	sound_player = 0;
+	ringtone_manager = 0;
 
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -76,6 +80,11 @@ void GlobalProperties::initAudio()
 	audio_state->registerSoundPlayer(sound_player);
 	audio_state->enableState(AudioState::Idle);
 
+	MultiMediaPlayer *player = new MultiMediaPlayer(this);
+
+	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", player, audio_state, this);
+	audio_state->registerSoundPlayer(player);
+
 	connect(settings, SIGNAL(beepChanged()),
 		this, SLOT(beepChanged()));
 
@@ -94,6 +103,9 @@ void GlobalProperties::initAudio()
 	{
 		audioPlayer = videoPlayer;
 	}
+
+	// TODO remove after configuration parsing is complete
+	ringtone_manager->setRingtone(RingtoneManager::Alarm, 6);
 }
 
 QString GlobalProperties::getBasePath() const
@@ -168,6 +180,11 @@ PhotoPlayer *GlobalProperties::getPhotoPlayer() const
 QObject *GlobalProperties::getAudioState() const
 {
 	return audio_state;
+}
+
+QObject *GlobalProperties::getRingtoneManager() const
+{
+	return ringtone_manager;
 }
 
 QObject *GlobalProperties::getInputWrapper() const

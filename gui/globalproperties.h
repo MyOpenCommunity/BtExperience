@@ -14,6 +14,7 @@ class AudioVideoPlayer;
 class PhotoPlayer;
 class AudioState;
 class MultiMediaPlayer;
+class RingtoneManager;
 
 #ifdef BT_MALIIT
 #include <QSharedPointer>
@@ -53,6 +54,8 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(PhotoPlayer *photoPlayer READ getPhotoPlayer CONSTANT)
 	// The object to manage audio/video playback state from QML
 	Q_PROPERTY(QObject *audioState READ getAudioState CONSTANT)
+	// The object to play ringtones from QML
+	Q_PROPERTY(QObject *ringtoneManager READ getRingtoneManager CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
 	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
@@ -70,6 +73,7 @@ public:
 	AudioVideoPlayer *getAudioPlayer() const;
 	PhotoPlayer *getPhotoPlayer() const;
 	QObject *getAudioState() const;
+	QObject *getRingtoneManager() const;
 	QString getBasePath() const;
 	QString getExtraPath() const;
 
@@ -111,6 +115,7 @@ private:
 	PhotoPlayer *photoPlayer;
 	AudioState *audio_state;
 	MultiMediaPlayer *sound_player;
+	RingtoneManager *ringtone_manager;
 
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);

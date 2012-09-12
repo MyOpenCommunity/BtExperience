@@ -30,7 +30,7 @@ maliit {
     DEFINES += BT_MALIIT
 }
 
-QT += opengl
+QT += opengl xml
 
 DESTDIR = ../bin/$${HARDWARE}
 
@@ -68,7 +68,8 @@ SOURCES += \
     guisettings.cpp \
     imagereader.cpp \
     inputcontextwrapper.cpp \
-    player.cpp
+    player.cpp \
+    ringtonemanager.cpp
 
 HEADERS += \
     audiostate.h \
@@ -77,7 +78,8 @@ HEADERS += \
     guisettings.h \
     imagereader.h \
     inputcontextwrapper.h \
-    player.h
+    player.h \
+    ringtonemanager.h
 
 TRANSLATIONS += locale/bt_experience_it.ts
 
