@@ -191,13 +191,13 @@ BasePage {
         delegate: usersDelegate
 
         path: Path {
-            startX: usersModel.count < 5 ? 160 : 100; startY: usersModel.count < 5 ? 220 : 220
+            startX: usersModel.count < 5 ? 160 : 100; startY: 220
             PathAttribute { name: "elementScale"; value: 0.5 }
             PathAttribute { name: "elementZ"; value: 0.5 }
             PathLine { x: 370; y: 200 }
             PathAttribute { name: "elementScale"; value: 1.1 }
             PathAttribute { name: "elementZ"; value: 1 }
-            PathLine { x: usersModel.count < 5 ? 580 : 640; y: usersModel.count < 5 ? 220 : 220 }
+            PathLine { x: usersModel.count < 5 ? 580 : 640; y: 220 }
             PathAttribute { name: "elementScale"; value: 0.5 }
             PathAttribute { name: "elementZ"; value: 0.5 }
         }
