@@ -50,6 +50,7 @@ BasePage {
             topMargin: 50
             bottom: parent.bottom
         }
+        onClicked: Stack.openPage(delegate.target, delegate.props)
     }
 
     ListModel {

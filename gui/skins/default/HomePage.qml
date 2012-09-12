@@ -117,11 +117,12 @@ BasePage {
         }
     }
 
+    ObjectModel {
+        id: usersModel
+        source: myHomeModels.profiles
+    }
+
     ControlPathView {
-        ObjectModel {
-            id: usersModel
-            source: myHomeModels.profiles
-        }
         model: usersModel
         width: 740
         anchors {
@@ -129,6 +130,7 @@ BasePage {
             top: toolbar.bottom
             left: parent.left
         }
+        onClicked: Stack.openPage('Profile.qml', {'profile': delegate})
     }
 
     MediaModel {

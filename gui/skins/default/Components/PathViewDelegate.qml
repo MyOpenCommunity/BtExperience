@@ -9,7 +9,7 @@ Item {
     // properties
     property variant itemObject: undefined
 
-    signal delegateClicked
+    signal delegateClicked(variant delegate)
 
     width: imageDelegate.sourceSize.width
     height: imageDelegate.sourceSize.height + textDelegate.height
@@ -52,7 +52,7 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: pathViewDelegate.delegateClicked()
+        onClicked: pathViewDelegate.delegateClicked(itemObject)
         onPressed: pathViewDelegate.PathView.view.currentPressed = index
         onReleased: pathViewDelegate.PathView.view.currentPressed = -1
     }

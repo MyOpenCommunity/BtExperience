@@ -17,10 +17,13 @@ PathView {
 
     property int currentPressed: -1
 
+    signal clicked(variant delegate)
+
     delegate: PathViewDelegate {
         itemObject: control.model.getObject(index)
         z: PathView.elementZ
         scale: PathView.elementScale
+        onDelegateClicked: control.clicked(delegate)
     }
 
     path: Path {

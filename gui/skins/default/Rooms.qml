@@ -52,6 +52,7 @@ BasePage {
             topMargin: 50
             bottom: floorView.top
         }
+        onClicked: Stack.openPage("Room.qml", {'roomName': delegate.description, 'roomUii': delegate.uii, 'floorUii': mainarea.floorUii})
     }
 
     ListView {
