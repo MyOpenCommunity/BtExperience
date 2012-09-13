@@ -20,7 +20,7 @@ Page {
     }
 
     function systemsButtonClicked() {
-        container.closed()
+        container.closeAll()
     }
 
     Pannable {
