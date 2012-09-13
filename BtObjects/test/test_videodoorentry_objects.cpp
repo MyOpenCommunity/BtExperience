@@ -249,6 +249,24 @@ void TestVideoDoorEntry::testRingtone()
 	QCOMPARE(intercom->getRingtone(), Intercom::External);
 }
 
+void TestVideoDoorEntry::testFloorCall()
+{
+	DeviceValues v;
+	ObjectTester tr(intercom, SIGNAL(ringtoneChanged()));
+	ObjectTester tfc(intercom, SIGNAL(incomingFloorCall()));
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::FLOORCALL;
+	intercom->valueReceived(v);
+	tr.checkSignals();
+	tfc.checkSignals();
+	QCOMPARE(intercom->getRingtone(), Intercom::Floorcall);
+
+	intercom->valueReceived(v);
+	tr.checkNoSignals();
+	tfc.checkSignals();
+	QCOMPARE(intercom->getRingtone(), Intercom::Floorcall);
+}
+
 void TestVideoDoorEntry::testCCTVIgnoringFramesIfNotActive()
 {
 	DeviceValues v;
