@@ -39,7 +39,7 @@ Item {
     UbuntuLightText {
         id: textDelegate
         text: "prova microfono"
-        color: "#434343"
+        color: global.guiSettings.skin === 0 ? "#434343" : "white"
         font.pixelSize: 14
         horizontalAlignment: Text.AlignHCenter
         anchors {
@@ -65,6 +65,10 @@ Item {
                 source: global.guiSettings.skin === 0 ?
                             "../images/profiles/scheda_profili_P.svg" :
                             "../images/profiles/scheda_profili_dark_P.svg"
+            }
+            PropertyChanges {
+                target: textDelegate
+                color: global.guiSettings.skin === 0 ? "white" : "#434343"
             }
         },
         State {
