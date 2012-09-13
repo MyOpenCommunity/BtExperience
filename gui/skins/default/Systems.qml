@@ -32,7 +32,7 @@ Page {
         //
         // I'm leaving the CardGridView below just in case we want to enable
         // it again.
-        sourceComponent: cardPathView
+        sourceComponent: systemsModel.count >= 3 ? cardPathView : cardList
     }
 
     Component {
@@ -51,7 +51,6 @@ Page {
         }
     }
 
-
     Component {
         id: cardList
         CardView {
@@ -63,8 +62,8 @@ Page {
                 onClicked: Stack.openPage(Script.getTarget(itemObject.containerId))
             }
 
-            delegateSpacing: 20
-            visibleElements: 4
+            delegateSpacing: 40
+            visibleElements: 2
 
             model: systemsModel
         }

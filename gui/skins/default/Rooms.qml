@@ -29,7 +29,13 @@ BasePage {
         anchors.leftMargin: 20
     }
 
+    ObjectModel {
+        id: usersModel
+        source: myHomeModels.rooms
+    }
+
     ControlPathView {
+        visible: usersModel.count >= 3
         x0FiveElements: 180
         x0ThreeElements: 250
         y0: 155
@@ -37,11 +43,6 @@ BasePage {
         y1: 105
         x2FiveElements: 784
         x2ThreeElements: 714
-
-        ObjectModel {
-            id: usersModel
-            source: myHomeModels.rooms
-        }
         model: usersModel
         anchors {
             right: parent.right
@@ -53,6 +54,34 @@ BasePage {
             bottom: floorView.top
         }
         onClicked: Stack.openPage("Room.qml", {'roomName': delegate.description, 'roomUii': delegate.uii, 'floorUii': mainarea.floorUii})
+    }
+
+    Item { // needed to properly center the CardView
+        anchors {
+            right: parent.right
+            rightMargin: 30
+            left: parent.left
+            leftMargin: 30
+            top: pageTitle.bottom
+            topMargin: 50
+            bottom: floorView.top
+        }
+        CardView {
+            visible: model.count < 3
+            delegate: CardDelegate {
+                property variant itemObject: usersModel.getObject(index)
+                source: itemObject.image
+                label: itemObject.description
+
+                onClicked: Stack.openPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
+            }
+
+            delegateSpacing: 40
+            visibleElements: 2
+
+            model: usersModel
+            anchors.centerIn: parent
+        }
     }
 
     ListView {

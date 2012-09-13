@@ -123,6 +123,7 @@ BasePage {
     }
 
     ControlPathView {
+        visible: model.count >= 3
         model: usersModel
         width: 740
         anchors {
@@ -131,6 +132,32 @@ BasePage {
             left: parent.left
         }
         onClicked: Stack.openPage('Profile.qml', {'profile': delegate})
+    }
+
+    Item { // needed to properly center the CardView
+        anchors {
+            bottom: favourites.top
+            top: toolbar.bottom
+            left: parent.left
+            right: parent.right
+        }
+        CardView {
+            visible: model.count < 3
+            delegate: CardDelegate {
+                property variant itemObject: usersModel.getObject(index)
+                source: itemObject.image
+                label: itemObject.description
+
+                onClicked: Stack.openPage('Profile.qml', {'profile': itemObject})
+            }
+
+            delegateSpacing: 40
+            visibleElements: 2
+
+            model: usersModel
+            anchors.centerIn: parent
+            anchors.horizontalCenterOffset: -140
+        }
     }
 
     MediaModel {

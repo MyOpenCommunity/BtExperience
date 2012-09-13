@@ -32,6 +32,7 @@ BasePage {
     ControlPathView {
         id: cardView
 
+        visible: multimediaModel.count >= 3
         x0FiveElements: 150
         x0ThreeElements: 200
         y0: 200
@@ -51,6 +52,34 @@ BasePage {
             bottom: parent.bottom
         }
         onClicked: Stack.openPage(delegate.target, delegate.props)
+    }
+
+    Item { // needed to properly center the CardView
+        anchors {
+            right: parent.right
+            rightMargin: 30
+            left: parent.left
+            leftMargin: 30
+            top: pageTitle.bottom
+            topMargin: 50
+            bottom: parent.bottom
+        }
+        CardView {
+            visible: model.count < 3
+            delegate: CardDelegate {
+                property variant itemObject: multimediaModel.getObject(index)
+                source: itemObject.image
+                label: itemObject.description
+
+                onClicked: Stack.openPage(itemObject.target, itemObject.props)
+            }
+
+            delegateSpacing: 40
+            visibleElements: 2
+
+            model: multimediaModel
+            anchors.centerIn: parent
+        }
     }
 
     ListModel {
