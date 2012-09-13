@@ -50,6 +50,7 @@ Item {
                 global.audioState.disableState(AudioState.VdeRingtone)
                 global.audioState.disableState(AudioState.ScsIntercomCall)
                 global.audioState.disableState(AudioState.IpIntercomCall)
+                global.audioState.disableState(AudioState.Mute)
             }
         }
     }
@@ -111,6 +112,7 @@ Item {
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsVideoCall)
             global.audioState.disableState(AudioState.IpVideoCall)
+            global.audioState.disableState(AudioState.Mute)
         }
     }
 

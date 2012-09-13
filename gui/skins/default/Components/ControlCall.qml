@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 import Components.VideoDoorEntry 1.0 // some controls are VDE specific
@@ -27,11 +28,14 @@ SvgImage {
         target: null
         onMuteChanged: {
             if (connDataObject.target.mute) {
+                global.audioState.enableState(AudioState.Mute)
                 privateProps.oldState = control.state
                 control.state = "muteOn"
             }
-            else
+            else {
+                global.audioState.disableState(AudioState.Mute)
                 control.state = privateProps.oldState
+            }
         }
     }
 
