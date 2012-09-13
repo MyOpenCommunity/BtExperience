@@ -28,6 +28,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 	turnOffTime = Minutes_10;
 	skin = Clear;
 	beep = false;
+	ring_exclusion = false;
 }
 
 void GuiSettings::sendCommand(const QString &cmd)
@@ -161,6 +162,17 @@ void GuiSettings::setBeep(bool b)
 {
 	beep = b;
 	emit beepChanged();
+}
+
+bool GuiSettings::getRingExclusion() const
+{
+	return ring_exclusion;
+}
+
+void GuiSettings::setRingExclusion(bool re)
+{
+	ring_exclusion = re;
+	emit ringExclusionChanged();
 }
 
 GuiSettings::MeasurementSystem GuiSettings::getMeasurementSystem() const
