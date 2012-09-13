@@ -35,7 +35,7 @@ PathView {
             x: x1
             y: y1
         }
-        PathAttribute { name: "elementScale"; value: 1.1 }
+        PathAttribute { name: "elementScale"; value: 1.0 }
         PathAttribute { name: "elementZ"; value: 1 }
         PathLine {
             x: control.model.count < 5 ? x2ThreeElements : x2FiveElements
