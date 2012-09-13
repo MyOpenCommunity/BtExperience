@@ -71,6 +71,7 @@ Page {
         orientation: ListView.Horizontal
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: 32
         height: 100
         width: 140 * floorsModel.count
         delegate: Image {
