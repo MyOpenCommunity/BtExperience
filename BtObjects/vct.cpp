@@ -237,6 +237,12 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			call_stopped = true;
 			stopVideo();
 			break;
+		case VideoDoorEntryDevice::ANSWER_CALL:
+			qDebug() << "Received ANSWER_CALL";
+			if (!callActive()) // ignore
+				break;
+			emit callAnswered();
+			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
 			qDebug() << "Received CALLER_ADDRESS: " << *it;
 			if (!callActive()) // ignore

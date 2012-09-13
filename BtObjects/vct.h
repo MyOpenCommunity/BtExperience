@@ -120,6 +120,7 @@ signals:
 	void incomingCall();
 	void callEnded();
 	void autoOpenChanged();
+	void callAnswered();
 
 
 protected slots:

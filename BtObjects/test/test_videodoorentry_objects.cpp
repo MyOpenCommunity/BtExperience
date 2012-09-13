@@ -255,6 +255,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	DeviceValues v;
 	ObjectTester t(cctv, SignalList()
 				   << SIGNAL(incomingCall())
+				   << SIGNAL(callAnswered())
 				   << SIGNAL(callEnded()));
 
 	// starts a call
@@ -274,11 +275,17 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 
 	compareClientCommand();
 
+	// answer confirmation
+	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
+	cctv->valueReceived(v);
+	v.clear();
+
 	// caller terminates call
 	cctv->endCall();
 	dev->endCall();
 
 	t.checkSignalCount(SIGNAL(incomingCall()), 1);
+	t.checkSignalCount(SIGNAL(callAnswered()), 1);
 	t.checkSignalCount(SIGNAL(callEnded()), 1);
 }
 
@@ -287,6 +294,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	DeviceValues v;
 	ObjectTester t(cctv, SignalList()
 				   << SIGNAL(incomingCall())
+				   << SIGNAL(callAnswered())
 				   << SIGNAL(callEnded()));
 
 	// starts a call
@@ -306,11 +314,17 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 
 	compareClientCommand();
 
+	// answer confirmation
+	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
+	cctv->valueReceived(v);
+	v.clear();
+
 	// callee terminates call
 	v[VideoDoorEntryDevice::END_OF_CALL] = true;
 	cctv->valueReceived(v);
 	v.clear();
 
 	t.checkSignalCount(SIGNAL(incomingCall()), 1);
+	t.checkSignalCount(SIGNAL(callAnswered()), 1);
 	t.checkSignalCount(SIGNAL(callEnded()), 1);
 }
