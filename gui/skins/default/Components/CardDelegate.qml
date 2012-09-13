@@ -5,8 +5,10 @@ import "../js/CardView.js" as CardViewScript
 
 
 Item {
+    id: itemDelegate
+
     property alias source: imageDelegate.source
-    property alias label: labelText.text
+    property alias label: textDelegate.text
     property int index: -1
     property variant view
     property alias moveAnimationRunning: defaultAnimation.running
@@ -14,66 +16,42 @@ Item {
     signal clicked
     signal removeAnimationFinished()
 
-    id: itemDelegate
-    width: delegateBackground.width
-    height: textDelegate.height + delegateBackground.height + delegateShadow.height + delegateShadow.anchors.topMargin
-    onHeightChanged: itemDelegate.view.height = height
+    width: bg.width
+    height: bg.height
+    onHeightChanged: itemDelegate.view.height = height // needed to correctly dimension the view
 
-    Rectangle {
-        id: delegateBackground
-        width: CardViewScript.listDelegateWidth
-        height: CardViewScript.listDelegateWidth / 100 * 139
-
-        color: Qt.rgba(230, 230, 230)
-        opacity: 0.5
-    }
-
-    Image {
+    Image { // placed here because the background must mask part of the image
         id: imageDelegate
-        width: CardViewScript.listDelegateWidth / 100 * 97
-        height: CardViewScript.listDelegateWidth / 100 * 136
-        anchors {
-            bottom: delegateBackground.bottom
-            bottomMargin: CardViewScript.listDelegateWidth / 100 * 3
-            horizontalCenter: delegateBackground.horizontalCenter
-        }
+        // the up-navigation is needed because images are referred to project
+        // top folder
+        anchors.fill: bg
+        source: ""
     }
 
-    Rectangle {
+    SvgImage {
+        id: bg
+
+        source: global.guiSettings.skin === 0 ?
+                    "../images/profiles/scheda_profili.svg" :
+                    "../images/profiles/scheda_profili_dark.svg"
+    }
+
+    UbuntuLightText {
         id: textDelegate
-        width: CardViewScript.listDelegateWidth
-        height: CardViewScript.listDelegateWidth / 100 * 11
-        anchors.top: delegateBackground.bottom
-        color: Qt.rgba(230, 230, 230)
-        opacity: 0.5
-        UbuntuLightText {
-            id: labelText
-            font.pixelSize: CardViewScript.listDelegateWidth / 100 * 7
-            anchors.fill: parent
-            horizontalAlignment: Text.AlignHCenter
-        }
-    }
-
-    SvgImage {
-        id: delegateShadow
-        source: "../images/home/pager_shadow.svg"
+        text: "prova microfono"
+        color: "#434343"
+        font.pixelSize: 14
+        horizontalAlignment: Text.AlignHCenter
         anchors {
-            top: textDelegate.bottom
-            topMargin: CardViewScript.listDelegateWidth / 100 * 3
-            horizontalCenter: delegateBackground.horizontalCenter
+            bottom: bg.bottom
+            bottomMargin: 10
+            left: bg.left
+            right: bg.right
         }
-    }
-
-    SvgImage {
-        id: rectPressed
-        source: "../images/common/profilo_p.svg"
-        visible: false
-        anchors.fill: imageDelegate
     }
 
     MouseArea {
         anchors.fill: parent
-
         onClicked: itemDelegate.clicked()
         onPressed: itemDelegate.view.currentPressed = index
         onReleased: itemDelegate.view.currentPressed = -1
@@ -83,8 +61,10 @@ Item {
         State {
             when: itemDelegate.view.currentPressed === index
             PropertyChanges {
-                target: rectPressed
-                visible: true
+                target: bg
+                source: global.guiSettings.skin === 0 ?
+                            "../images/profiles/scheda_profili_P.svg" :
+                            "../images/profiles/scheda_profili_dark_P.svg"
             }
         },
         State {
@@ -94,13 +74,13 @@ Item {
 
     transitions:
         Transition {
-            from: "*"
-            to: "remove"
-            SequentialAnimation {
-                NumberAnimation { target: itemDelegate; property: "opacity"; to: 0; duration: 200; easing.type: Easing.InSine }
-                ScriptAction { script: itemDelegate.removeAnimationFinished() }
-            }
+        from: "*"
+        to: "remove"
+        SequentialAnimation {
+            NumberAnimation { target: itemDelegate; property: "opacity"; to: 0; duration: 200; easing.type: Easing.InSine }
+            ScriptAction { script: itemDelegate.removeAnimationFinished() }
         }
+    }
 
     Behavior on x {
         NumberAnimation { id: defaultAnimation; duration: 300; easing.type: Easing.InSine }
