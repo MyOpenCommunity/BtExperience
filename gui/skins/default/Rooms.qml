@@ -5,29 +5,13 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
-BasePage {
+Page {
     id: mainarea
-    source: "images/home/home.jpg"
+
     property int floorUii
 
-    ToolBar {
-        id: toolbar
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        onHomeClicked: Stack.backToHome()
-    }
-
-    UbuntuLightText {
-        id: pageTitle
-        text: qsTr("Rooms")
-        font.pixelSize: 50
-        anchors.top: toolbar.bottom
-        anchors.left: parent.left
-        anchors.leftMargin: 20
-    }
+    source: "images/home/home.jpg"
+    text: qsTr("rooms")
 
     MediaModel {
         source: myHomeModels.rooms
@@ -48,9 +32,9 @@ BasePage {
         anchors {
             right: parent.right
             rightMargin: 30
-            left: parent.left
+            left: navigationBar.right
             leftMargin: 30
-            top: pageTitle.bottom
+            top: toolbar.bottom
             topMargin: 50
             bottom: floorView.top
         }
@@ -61,9 +45,9 @@ BasePage {
         anchors {
             right: parent.right
             rightMargin: 30
-            left: parent.left
+            left: navigationBar.right
             leftMargin: 30
-            top: pageTitle.bottom
+            top: toolbar.bottom
             topMargin: 50
             bottom: floorView.top
         }

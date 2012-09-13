@@ -4,30 +4,11 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
-BasePage {
+Page {
     id: multimedia
+
     source: "images/multimedia.jpg"
-
-    ToolBar {
-        id: toolbar
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        onHomeClicked: Stack.backToHome()
-    }
-
-    UbuntuLightText {
-        id: pageTitle
-        text: qsTr("Multimedia")
-        font.pixelSize: 50
-        anchors {
-            top: toolbar.bottom
-            left: parent.left
-            leftMargin: 20
-        }
-    }
+    text: qsTr("multimedia")
 
     ControlPathView {
         id: cardView
@@ -45,9 +26,9 @@ BasePage {
         anchors {
             right: parent.right
             rightMargin: 30
-            left: parent.left
+            left: navigationBar.right
             leftMargin: 30
-            top: pageTitle.bottom
+            top: toolbar.bottom
             topMargin: 50
             bottom: parent.bottom
         }
@@ -58,9 +39,9 @@ BasePage {
         anchors {
             right: parent.right
             rightMargin: 30
-            left: parent.left
+            left: navigationBar.right
             leftMargin: 30
-            top: pageTitle.bottom
+            top: toolbar.bottom
             topMargin: 50
             bottom: parent.bottom
         }

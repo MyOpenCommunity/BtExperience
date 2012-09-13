@@ -7,10 +7,9 @@ import "js/Systems.js" as Script
 
 Page {
     id: systems
-    source: "images/bg2.jpg"
 
+    source: "images/bg2.jpg"
     text: qsTr("systems")
-    showSystemsButton: false
 
     ObjectModel {
         id: systemsModel

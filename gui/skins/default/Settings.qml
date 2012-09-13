@@ -4,7 +4,7 @@ import Components.Settings 1.0
 
 SystemPage {
     source: "images/illuminazione.jpg"
-    text: qsTr("Settings")
+    text: qsTr("options")
     rootColumn: Component { SettingsItems {} }
     names: SettingsNames {}
 }
