@@ -89,9 +89,11 @@ Item {
         id: vctConnection
         target: null
         onIncomingCall: {
-            global.audioState.enableState(AudioState.VdeRingtone)
-            // TODO ring exclusion, ringtone map
-            global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.VdeRingtone)
+            // VdeRingtone state should always be enabled to stop multimedia playback during call
+            if (!global.guiSettings.ringExclusion)
+                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(vctConnection.target.ringtone), AudioState.VdeRingtone)
+            else
+                global.audioState.enableState(AudioState.VdeRingtone)
 
             console.log("EventManager::vctIncomingCall")
             screensaver.stopScreensaver()
@@ -116,9 +118,11 @@ Item {
         id: intercomConnection
         target: null
         onIncomingCall: {
-            global.audioState.enableState(AudioState.VdeRingtone)
-            // TODO ring exclusion, ringtone map
-            global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.VdeRingtone)
+            // VdeRingtone state should always be enabled to stop multimedia playback during call
+            if (!global.guiSettings.ringExclusion)
+                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.VdeRingtone)
+            else
+                global.audioState.enableState(AudioState.VdeRingtone)
 
             screensaver.stopScreensaver()
             screensaver.isEnabled = false

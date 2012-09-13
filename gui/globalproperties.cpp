@@ -105,7 +105,14 @@ void GlobalProperties::initAudio()
 	}
 
 	// TODO remove after configuration parsing is complete
-	ringtone_manager->setRingtone(RingtoneManager::Alarm, 6);
+	ringtone_manager->setRingtone(RingtoneManager::Alarm, 1);
+	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace1, 4);
+	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace2, 4);
+	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace3, 4);
+	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace4, 4);
+	ringtone_manager->setRingtone(RingtoneManager::InternalIntercom, 5);
+	ringtone_manager->setRingtone(RingtoneManager::ExternalIntercom, 5);
+	ringtone_manager->setRingtone(RingtoneManager::IntercomFloorcall, 5);
 }
 
 QString GlobalProperties::getBasePath() const

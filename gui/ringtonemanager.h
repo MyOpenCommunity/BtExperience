@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QHash>
 
+#include "vct.h"
+
 class MultiMediaPlayer;
 class AudioState;
 
@@ -17,7 +19,16 @@ class RingtoneManager : public QObject
 public:
 	enum Ringtone
 	{
-		Alarm
+		Alarm,
+		// VCT
+		CCTVExternalPlace1 = CCTV::ExternalPlace1,
+		CCTVExternalPlace2 = CCTV::ExternalPlace2,
+		CCTVExternalPlace3 = CCTV::ExternalPlace3,
+		CCTVExternalPlace4 = CCTV::ExternalPlace4,
+		// Intercom
+		InternalIntercom = Intercom::Internal,
+		ExternalIntercom = Intercom::External,
+		IntercomFloorcall = Intercom::Floorcall
 	};
 
 	RingtoneManager(QString ringtone_file, MultiMediaPlayer *player, AudioState *audio_state, QObject *parent);
