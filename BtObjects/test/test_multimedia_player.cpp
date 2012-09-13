@@ -1,6 +1,7 @@
 #include "test_multimedia_player.h"
 #include "multimediaplayer.h"
 #include "objecttester.h"
+#include "mediaplayer.h"
 
 #include <QtTest>
 
