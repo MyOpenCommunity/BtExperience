@@ -174,7 +174,7 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 	compareClientCommand();
 
 	// talker answers
-	v[VideoDoorEntryDevice::ANSWER_CALL] = QString("21");
+	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
 	intercom->valueReceived(v);
 	v.clear();
 
@@ -196,7 +196,7 @@ void TestVideoDoorEntry::testIgnoringFramesIfNotActive()
 	QCOMPARE(false, intercom->callActive());
 
 	// sending a "spurious" VideoDoorEntryDevice::END_OF_CALL signal
-	v[VideoDoorEntryDevice::END_OF_CALL] = QString("21");
+	v[VideoDoorEntryDevice::END_OF_CALL] = true;
 	intercom->valueReceived(v);
 	v.clear();
 
@@ -205,7 +205,7 @@ void TestVideoDoorEntry::testIgnoringFramesIfNotActive()
 	t.checkNoSignals();
 
 	// sending a "spurious" VideoDoorEntryDevice::ANSWER_CALL signal
-	v[VideoDoorEntryDevice::ANSWER_CALL] = QString("21");
+	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
 	intercom->valueReceived(v);
 	v.clear();
 
@@ -232,7 +232,7 @@ void TestVideoDoorEntry::testCCTVIgnoringFramesIfNotActive()
 	QCOMPARE(false, cctv->callActive());
 
 	// sending a "spurious" VideoDoorEntryDevice::STOP_VIDEO signal
-	v[VideoDoorEntryDevice::STOP_VIDEO] = QString("21");
+	v[VideoDoorEntryDevice::STOP_VIDEO] = true;
 	cctv->valueReceived(v);
 	v.clear();
 
@@ -307,7 +307,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	compareClientCommand();
 
 	// callee terminates call
-	v[VideoDoorEntryDevice::END_OF_CALL] = QString("21");
+	v[VideoDoorEntryDevice::END_OF_CALL] = true;
 	cctv->valueReceived(v);
 	v.clear();
 
