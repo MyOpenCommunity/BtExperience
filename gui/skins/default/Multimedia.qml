@@ -54,7 +54,7 @@ BasePage {
         onClicked: Stack.openPage(delegate.target, delegate.props)
     }
 
-    Item { // needed to properly center the CardView
+    CardView {
         anchors {
             right: parent.right
             rightMargin: 30
@@ -64,22 +64,19 @@ BasePage {
             topMargin: 50
             bottom: parent.bottom
         }
-        CardView {
-            visible: model.count < 3
-            delegate: CardDelegate {
-                property variant itemObject: multimediaModel.getObject(index)
-                source: itemObject.image
-                label: itemObject.description
+        visible: model.count < 3
+        delegate: CardDelegate {
+            property variant itemObject: multimediaModel.getObject(index)
+            source: itemObject.image
+            label: itemObject.description
 
-                onClicked: Stack.openPage(itemObject.target, itemObject.props)
-            }
-
-            delegateSpacing: 40
-            visibleElements: 2
-
-            model: multimediaModel
-            anchors.centerIn: parent
+            onClicked: Stack.openPage(itemObject.target, itemObject.props)
         }
+
+        delegateSpacing: 40
+        visibleElements: 2
+
+        model: multimediaModel
     }
 
     ListModel {
@@ -91,7 +88,7 @@ BasePage {
     }
 
     Component.onCompleted: {
-        multimediaModel.append({"description": qsTr("Devices"), "target": "Devices.qml", "image": "images/multimedia/usb.png", "props": {} })
+        multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "image": "images/multimedia/usb.png", "props": {} })
 
         // TODO to be implemented
         multimediaModel.append({"description": qsTr("browser"), "target": "Devices.qml", "image": "images/multimedia/usb.png", "props": {}})

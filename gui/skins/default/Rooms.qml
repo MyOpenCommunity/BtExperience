@@ -29,9 +29,10 @@ BasePage {
         anchors.leftMargin: 20
     }
 
-    ObjectModel {
-        id: roomsModel
+    MediaModel {
         source: myHomeModels.rooms
+        id: roomsModel
+        containers: [floorUii]
     }
 
     ControlPathView {
@@ -56,7 +57,7 @@ BasePage {
         onClicked: Stack.openPage("Room.qml", {'roomName': delegate.description, 'roomUii': delegate.uii, 'floorUii': mainarea.floorUii})
     }
 
-    Item { // needed to properly center the CardView
+    CardView {
         anchors {
             right: parent.right
             rightMargin: 30
@@ -66,22 +67,19 @@ BasePage {
             topMargin: 50
             bottom: floorView.top
         }
-        CardView {
-            visible: model.count < 3
-            delegate: CardDelegate {
-                property variant itemObject: roomsModel.getObject(index)
-                source: itemObject.image
-                label: itemObject.description
+        visible: model.count < 3
+        delegate: CardDelegate {
+            property variant itemObject: roomsModel.getObject(index)
+            source: itemObject.image
+            label: itemObject.description
 
-                onClicked: Stack.openPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
-            }
-
-            delegateSpacing: 40
-            visibleElements: 2
-
-            model: roomsModel
-            anchors.centerIn: parent
+            onClicked: Stack.openPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
         }
+
+        delegateSpacing: 40
+        visibleElements: 2
+
+        model: roomsModel
     }
 
     ListView {

@@ -134,30 +134,26 @@ BasePage {
         onClicked: Stack.openPage('Profile.qml', {'profile': delegate})
     }
 
-    Item { // needed to properly center the CardView
-        anchors {
+    CardView {
+        anchors { // we need a little different anchoring here to center the CardView
             bottom: favourites.top
             top: toolbar.bottom
-            left: parent.left
-            right: parent.right
+            horizontalCenter: parent.horizontalCenter
+            horizontalCenterOffset: -140
         }
-        CardView {
-            visible: model.count < 3
-            delegate: CardDelegate {
-                property variant itemObject: profilesModel.getObject(index)
-                source: itemObject.image
-                label: itemObject.description
+        visible: model.count < 3
+        delegate: CardDelegate {
+            property variant itemObject: profilesModel.getObject(index)
+            source: itemObject.image
+            label: itemObject.description
 
-                onClicked: Stack.openPage('Profile.qml', {'profile': itemObject})
-            }
-
-            delegateSpacing: 40
-            visibleElements: 2
-
-            model: profilesModel
-            anchors.centerIn: parent
-            anchors.horizontalCenterOffset: -140
+            onClicked: Stack.openPage('Profile.qml', {'profile': itemObject})
         }
+
+        delegateSpacing: 40
+        visibleElements: 2
+
+        model: profilesModel
     }
 
     MediaModel {
