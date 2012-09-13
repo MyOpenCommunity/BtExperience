@@ -20,29 +20,61 @@ PathView {
     signal clicked(variant delegate)
 
     delegate: PathViewDelegate {
+        property real cardAngle: PathView.elementAngle
         itemObject: control.model.getObject(index)
         z: PathView.elementZ
         scale: PathView.elementScale
+        opacity: PathView.elementOpacity
         onDelegateClicked: control.clicked(delegate)
+        transform: Rotation {
+            axis.x: 0
+            axis.y: 1
+            axis.z: 0
+            angle: cardAngle
+        }
     }
 
     path: Path {
-        startX: control.model.count < 5 ? x0ThreeElements : x0FiveElements
-        startY: y0
+        startX: firstSegment.x - 5
+        startY: firstSegment.y
         PathAttribute { name: "elementScale"; value: 0.5 }
         PathAttribute { name: "elementZ"; value: 0.5 }
+        PathAttribute { name: "elementAngle"; value: 90 }
+        PathAttribute { name: "elementOpacity"; value: 1 }
+        PathLine {
+            id: firstSegment
+            x: control.model.count < 5 ? x0ThreeElements : x0FiveElements
+            y: y0
+        }
+        PathAttribute { name: "elementScale"; value: 0.5 }
+        PathAttribute { name: "elementZ"; value: 0.5 }
+        PathAttribute { name: "elementAngle"; value: 0 }
+        PathAttribute { name: "elementOpacity"; value: 1 }
         PathLine {
             x: x1
             y: y1
         }
         PathAttribute { name: "elementScale"; value: 1.0 }
         PathAttribute { name: "elementZ"; value: 1 }
+        PathAttribute { name: "elementAngle"; value: 0 }
+        PathAttribute { name: "elementOpacity"; value: 1 }
         PathLine {
+            id: lastSegment
             x: control.model.count < 5 ? x2ThreeElements : x2FiveElements
             y: y2
         }
         PathAttribute { name: "elementScale"; value: 0.5 }
         PathAttribute { name: "elementZ"; value: 0.5 }
+        PathAttribute { name: "elementAngle"; value: 0 }
+        PathAttribute { name: "elementOpacity"; value: 1 }
+        PathLine {
+            x: lastSegment.x + 5
+            y: lastSegment.y
+        }
+        PathAttribute { name: "elementScale"; value: 0.5 }
+        PathAttribute { name: "elementZ"; value: 0.5 }
+        PathAttribute { name: "elementAngle"; value: 0 }
+        PathAttribute { name: "elementOpacity"; value: 0 }
     }
 
     pathItemCount: control.model.count < 5 ? 3 : 5
