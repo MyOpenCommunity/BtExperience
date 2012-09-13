@@ -118,13 +118,13 @@ BasePage {
     }
 
     ObjectModel {
-        id: usersModel
+        id: profilesModel
         source: myHomeModels.profiles
     }
 
     ControlPathView {
         visible: model.count >= 3
-        model: usersModel
+        model: profilesModel
         width: 740
         anchors {
             bottom: favourites.top
@@ -144,7 +144,7 @@ BasePage {
         CardView {
             visible: model.count < 3
             delegate: CardDelegate {
-                property variant itemObject: usersModel.getObject(index)
+                property variant itemObject: profilesModel.getObject(index)
                 source: itemObject.image
                 label: itemObject.description
 
@@ -154,7 +154,7 @@ BasePage {
             delegateSpacing: 40
             visibleElements: 2
 
-            model: usersModel
+            model: profilesModel
             anchors.centerIn: parent
             anchors.horizontalCenterOffset: -140
         }

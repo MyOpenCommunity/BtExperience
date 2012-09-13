@@ -30,12 +30,12 @@ BasePage {
     }
 
     ObjectModel {
-        id: usersModel
+        id: roomsModel
         source: myHomeModels.rooms
     }
 
     ControlPathView {
-        visible: usersModel.count >= 3
+        visible: roomsModel.count >= 3
         x0FiveElements: 180
         x0ThreeElements: 250
         y0: 155
@@ -43,7 +43,7 @@ BasePage {
         y1: 105
         x2FiveElements: 784
         x2ThreeElements: 714
-        model: usersModel
+        model: roomsModel
         anchors {
             right: parent.right
             rightMargin: 30
@@ -69,7 +69,7 @@ BasePage {
         CardView {
             visible: model.count < 3
             delegate: CardDelegate {
-                property variant itemObject: usersModel.getObject(index)
+                property variant itemObject: roomsModel.getObject(index)
                 source: itemObject.image
                 label: itemObject.description
 
@@ -79,7 +79,7 @@ BasePage {
             delegateSpacing: 40
             visibleElements: 2
 
-            model: usersModel
+            model: roomsModel
             anchors.centerIn: parent
         }
     }
