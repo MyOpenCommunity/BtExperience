@@ -51,4 +51,58 @@ PathView {
     preferredHighlightEnd: 0.5
     onFlickStarted: currentPressed = -1
     onMovementEnded: currentPressed = -1
+
+    SvgImage {
+        id: prevArrow
+        source: "../images/common/freccia_sx.svg"
+        anchors {
+            left: parent.left
+            leftMargin: 10
+            verticalCenter: parent.verticalCenter
+        }
+
+        MouseArea {
+            id: mouseAreaSx
+            anchors.fill: parent
+            onClicked: control.decrementCurrentIndex()
+        }
+
+        states: [
+            State {
+                name: "pressed"
+                when: mouseAreaSx.pressed === true
+                PropertyChanges {
+                    target: prevArrow
+                    source: "../images/common/freccia_sx_P.svg"
+                }
+            }
+        ]
+    }
+
+    SvgImage {
+        id: nextArrow
+        source: "../images/common/freccia_dx.svg"
+        anchors {
+            right: parent.right
+            rightMargin: 10
+            verticalCenter: parent.verticalCenter
+        }
+
+        MouseArea {
+            id: mouseAreaDx
+            anchors.fill: parent
+            onClicked: control.incrementCurrentIndex()
+        }
+
+        states: [
+            State {
+                name: "pressed"
+                when: mouseAreaDx.pressed === true
+                PropertyChanges {
+                    target: nextArrow
+                    source: "../images/common/freccia_dx_P.svg"
+                }
+            }
+        ]
+    }
 }
