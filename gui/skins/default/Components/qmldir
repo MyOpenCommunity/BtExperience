@@ -2,6 +2,7 @@ AlarmPopup 1.0 AlarmPopup.qml
 Alert 1.0 Alert.qml
 AnimatedLoader 1.0 AnimatedLoader.qml
 AnimationManager 1.0 AnimationManager.qml
+BeepingMouseArea 1.0 BeepingMouseArea.qml
 BtObjectsMapping 1.0 BtObjectsMapping.qml
 ButtonBack 1.0 ButtonBack.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
