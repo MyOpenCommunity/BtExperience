@@ -68,6 +68,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	call_stopped = false;
 	call_active = false;
 	prof_studio = false;
+	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
 
 	foreach (ExternalPlace *ep, list)
 		external_places << ep;
@@ -131,6 +132,11 @@ void CCTV::setAutoOpen(bool newValue)
 
 	prof_studio = newValue;
 	emit autoOpenChanged();
+}
+
+bool CCTV::isIpCall() const
+{
+	return ip_mode;
 }
 
 void CCTV::answerCall()
@@ -197,6 +203,12 @@ void CCTV::callerAddress(QString address)
 
 void CCTV::valueReceived(const DeviceValues &values_list)
 {
+	if (dev->ipCall() != ip_mode)
+	{
+		ip_mode = dev->ipCall();
+		emit isIpCallChanged();
+	}
+
 	// if call is not active we have to ignore all frames except:
 	//	VideoDoorEntryDevice::RINGTONE
 	//	VideoDoorEntryDevice::VCT_CALL
@@ -313,6 +325,7 @@ Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d)
 	volume = 50;
 	mute = false;
 	call_active = false;
+	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
 
 	foreach (ExternalPlace *ep, l) {
 		external_places << ep;
@@ -367,6 +380,11 @@ void Intercom::setMute(bool value)
 	emit muteChanged();
 }
 
+bool Intercom::isIpCall() const
+{
+	return ip_mode;
+}
+
 ObjectDataModel *Intercom::getExternalPlaces() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
@@ -380,6 +398,12 @@ QString Intercom::getTalker() const
 
 void Intercom::valueReceived(const DeviceValues &values_list)
 {
+	if (dev->ipCall() != ip_mode)
+	{
+		ip_mode = dev->ipCall();
+		emit isIpCallChanged();
+	}
+
 	// if call is not active we have to ignore all frames except:
 	//	VideoDoorEntryDevice::RINGTONE
 	//	VideoDoorEntryDevice::INTERCOM_CALL

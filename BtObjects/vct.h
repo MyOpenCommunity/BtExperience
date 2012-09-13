@@ -83,6 +83,11 @@ class CCTV : public ObjectInterface
 
 	Q_PROPERTY(ObjectDataModel *externalPlaces READ getExternalPlaces CONSTANT)
 
+	/*!
+		\brief Whether the current call is SCS or IP
+	*/
+	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
+
 public:
 	explicit CCTV(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
@@ -100,6 +105,7 @@ public:
 	ObjectDataModel *getExternalPlaces() const;
 	bool getAutoOpen() const { return prof_studio; }
 	void setAutoOpen(bool newValue);
+	bool isIpCall() const;
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
@@ -121,6 +127,7 @@ signals:
 	void callEnded();
 	void autoOpenChanged();
 	void callAnswered();
+	void isIpCallChanged();
 
 
 protected slots:
@@ -142,6 +149,7 @@ private:
 	bool call_stopped;
 	bool call_active;
 	bool prof_studio;
+	bool ip_mode;
 	QProcess video_grabber;
 	VideoDoorEntryDevice *dev;
 	ObjectDataModel external_places;
@@ -178,6 +186,11 @@ class Intercom : public ObjectInterface
 	*/
 	Q_PROPERTY(QString talker READ getTalker NOTIFY talkerChanged)
 
+	/*!
+		\brief Whether the current call is SCS or IP
+	*/
+	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
+
 public:
 	explicit Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
@@ -201,6 +214,7 @@ public:
 	void setMute(bool value);
 	ObjectDataModel *getExternalPlaces() const;
 	QString getTalker() const;
+	bool isIpCall() const;
 
 signals:
 	void volumeChanged();
@@ -209,6 +223,8 @@ signals:
 	void callEnded();
 	void talkerChanged();
 	void callAnswered();
+	void isIpCallChanged();
+
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -225,6 +241,7 @@ private:
 	bool callActive();
 
 	bool call_active;
+	bool ip_mode;
 	VideoDoorEntryDevice *dev;
 	ObjectDataModel external_places;
 	QString talker;
