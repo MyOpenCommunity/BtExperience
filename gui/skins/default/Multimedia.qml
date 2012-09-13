@@ -15,12 +15,10 @@ Page {
 
         visible: multimediaModel.count >= 3
         x0FiveElements: 150
-        x0ThreeElements: 200
-        y0: 200
-        x1: 482
-        y1: 150
-        x2FiveElements: 814
-        x2ThreeElements: 764
+        x0ThreeElements: 250
+        x1: 445
+        x2FiveElements: 740
+        x2ThreeElements: 640
 
         model: multimediaModel
         anchors {

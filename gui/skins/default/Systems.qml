@@ -40,9 +40,9 @@ Page {
         ControlPathView {
             x0FiveElements: 150
             x0ThreeElements: 250
-            y0: 310
+            y0: 270
             x1: 445
-            y1: 260
+            y1: 250
             x2FiveElements: 740
             x2ThreeElements: 640
             model: systemsModel

@@ -21,13 +21,13 @@ Page {
 
     ControlPathView {
         visible: roomsModel.count >= 3
-        x0FiveElements: 180
+        x0FiveElements: 150
         x0ThreeElements: 250
-        y0: 155
-        x1: 497
-        y1: 105
-        x2FiveElements: 784
-        x2ThreeElements: 714
+        y0: 180
+        x1: 445
+        y1: 160
+        x2FiveElements: 740
+        x2ThreeElements: 640
         model: roomsModel
         anchors {
             right: parent.right
@@ -48,7 +48,6 @@ Page {
             left: navigationBar.right
             leftMargin: 30
             top: toolbar.bottom
-            topMargin: 50
             bottom: floorView.top
         }
         visible: model.count < 3
