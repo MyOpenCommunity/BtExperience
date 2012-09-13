@@ -30,6 +30,7 @@ public:
 		IpVideoCall,
 		ScsIntercomCall,
 		IpIntercomCall,
+		FloorCall,
 		// this must be last
 		StateCount
 	};

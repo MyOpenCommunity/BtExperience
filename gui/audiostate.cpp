@@ -20,6 +20,7 @@ namespace
 		"IpVideoCall",
 		"ScsIntercomCall",
 		"IpIntercomCall",
+		"FloorCall",
 	};
 }
 

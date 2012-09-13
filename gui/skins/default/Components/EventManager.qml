@@ -136,6 +136,10 @@ Item {
             else
                 global.audioState.enableState(AudioState.ScsIntercomCall)
         }
+        onIncomingFloorCall: {
+            if (!global.guiSettings.ringExclusion)
+                global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.FloorCall)
+        }
     }
 
     Connections {
