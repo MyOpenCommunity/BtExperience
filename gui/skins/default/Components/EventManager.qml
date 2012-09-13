@@ -45,7 +45,12 @@ Item {
             // it is useful to call enableScreensaver here because attaching
             // it to callEnded signal may lead to unpredictable behavior in
             // some cases (see comment inside callEnding function in ControlCall.qml)
-            onClosePopup: enableScreensaver()
+            onClosePopup: {
+                enableScreensaver()
+                global.audioState.disableState(AudioState.VdeRingtone)
+                global.audioState.disableState(AudioState.ScsIntercomCall)
+                global.audioState.disableState(AudioState.IpIntercomCall)
+            }
         }
     }
 
@@ -84,23 +89,48 @@ Item {
         id: vctConnection
         target: null
         onIncomingCall: {
+            global.audioState.enableState(AudioState.VdeRingtone)
+            // TODO ring exclusion, ringtone map
+            global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.VdeRingtone)
+
             console.log("EventManager::vctIncomingCall")
             screensaver.stopScreensaver()
             screensaver.isEnabled = false
             Stack.openPage("VideoCamera.qml", {"camera": vctConnection.target})
         }
-        onCallEnded: enableScreensaver()
+        onCallAnswered: {
+            if (vctConnection.target.isIpCall)
+                global.audioState.enableState(AudioState.IpVideoCall)
+            else
+                global.audioState.enableState(AudioState.ScsVideoCall)
+        }
+        onCallEnded: {
+            enableScreensaver()
+            global.audioState.disableState(AudioState.VdeRingtone)
+            global.audioState.disableState(AudioState.ScsVideoCall)
+            global.audioState.disableState(AudioState.IpVideoCall)
+        }
     }
 
     Connections {
         id: intercomConnection
         target: null
         onIncomingCall: {
+            global.audioState.enableState(AudioState.VdeRingtone)
+            // TODO ring exclusion, ringtone map
+            global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.VdeRingtone)
+
             screensaver.stopScreensaver()
             screensaver.isEnabled = false
             Stack.currentPage().installPopup(callPopup)
             Stack.currentPage().popupLoader.item.dataObject = intercomConnection.target
             Stack.currentPage().popupLoader.item.state = "callFrom"
+        }
+        onCallAnswered: {
+            if (intercomConnection.target.isIpCall)
+                global.audioState.enableState(AudioState.IpIntercomCall)
+            else
+                global.audioState.enableState(AudioState.ScsIntercomCall)
         }
     }
 

@@ -15,6 +15,11 @@ namespace
 		"Screensaver",
 		"LocalPlayback",
 		"Ringtone",
+		"VdeRingtone",
+		"ScsVideoCall",
+		"IpVideoCall",
+		"ScsIntercomCall",
+		"IpIntercomCall",
 	};
 }
 

@@ -25,6 +25,11 @@ public:
 		Screensaver,
 		LocalPlayback,
 		Ringtone,
+		VdeRingtone,
+		ScsVideoCall,
+		IpVideoCall,
+		ScsIntercomCall,
+		IpIntercomCall,
 		// this must be last
 		StateCount
 	};
