@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import Components 1.0
 import Components.Text 1.0
 
 
@@ -54,7 +55,7 @@ Image {
                 source: "../../images/common/freccia_up.png"
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 id: mouse_area1
                 anchors.fill: parent
                 onClicked: control.upClicked()
@@ -74,7 +75,7 @@ Image {
                 source: "../../images/common/freccia_dw.png"
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 id: mouse_area2
                 anchors.fill: parent
                 onClicked: control.downClicked()
@@ -101,7 +102,7 @@ Image {
             anchors.centerIn: parent
         }
 
-        MouseArea {
+        BeepingMouseArea {
             anchors.fill: parent
             onClicked: control.resetClicked()
         }

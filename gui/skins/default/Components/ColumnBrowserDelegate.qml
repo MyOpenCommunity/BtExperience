@@ -93,7 +93,7 @@ SvgImage {
         source: "../images/common/ombra_btn_file.svg"
     }
 
-    MouseArea {
+    BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
         onClicked: delegateClicked()

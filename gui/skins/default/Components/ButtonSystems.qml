@@ -9,7 +9,7 @@ Image {
         source: "../images/common/icon_systems.svg"
         anchors.centerIn: parent
     }
-    MouseArea {
+    BeepingMouseArea {
         id: mousearea
         anchors.fill: parent
         onClicked: button.clicked()

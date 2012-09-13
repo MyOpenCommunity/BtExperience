@@ -89,7 +89,7 @@ Rectangle {
                 text: qsTr("ok")
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: {
                     bg.okClicked()
@@ -107,7 +107,7 @@ Rectangle {
                 text: qsTr("cancel")
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: {
                     bg.cancelClicked()

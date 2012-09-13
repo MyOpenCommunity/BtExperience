@@ -15,7 +15,7 @@ Image {
         source: "../images/common/successivo.png"
     }
 
-    MouseArea {
+    BeepingMouseArea {
         anchors.fill: parent
         onClicked: button.clicked()
     }

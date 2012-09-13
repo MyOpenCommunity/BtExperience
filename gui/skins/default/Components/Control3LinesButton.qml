@@ -89,7 +89,7 @@ Image {
             font.capitalization: Font.AllUppercase
         }
 
-        MouseArea {
+        BeepingMouseArea {
             anchors.fill: parent
             onClicked: control.clicked()
         }

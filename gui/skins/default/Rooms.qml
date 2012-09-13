@@ -93,7 +93,7 @@ BasePage {
                 color: index === floorView.currentIndex === true ? "white" : "black"
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: floorView.currentIndex = index
             }

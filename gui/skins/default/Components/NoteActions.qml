@@ -29,7 +29,7 @@ Column {
             anchors.margins: 10
         }
 
-        MouseArea {
+        BeepingMouseArea {
             anchors.fill: parent
             onClicked: column.editClicked()
         }
@@ -54,7 +54,7 @@ Column {
             anchors.margins: 10
         }
 
-        MouseArea {
+        BeepingMouseArea {
             anchors.fill: parent
             onClicked: column.deleteClicked()
         }

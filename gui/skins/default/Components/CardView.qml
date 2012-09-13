@@ -32,7 +32,7 @@ Item {
             verticalCenter: parent.verticalCenter
         }
 
-        MouseArea {
+        BeepingMouseArea {
             id: mouseAreaSx
             anchors.fill: parent
             onClicked: {
@@ -171,7 +171,7 @@ Item {
             verticalCenter: parent.verticalCenter
         }
 
-        MouseArea {
+        BeepingMouseArea {
             id: mouseAreaDx
             anchors.fill: parent
             onClicked: {

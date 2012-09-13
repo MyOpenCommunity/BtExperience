@@ -54,7 +54,7 @@ Image {
                 anchors.centerIn: parent
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: {
                     alarmAlert.alarmLogClicked();
@@ -71,7 +71,7 @@ Image {
                 text: qsTr("ignore")
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: {
                     alarmAlert.ignoreClicked();

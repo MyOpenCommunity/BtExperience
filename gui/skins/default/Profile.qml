@@ -300,7 +300,7 @@ Page {
                             topMargin:  parent.height / 100 * 10
                         }
                     }
-                    MouseArea {
+                    BeepingMouseArea {
                         anchors.fill: parent
                         onClicked: privateProps.addNote()
                     }

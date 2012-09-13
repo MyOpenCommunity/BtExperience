@@ -71,7 +71,7 @@ Item {
         anchors.fill: imageDelegate
     }
 
-    MouseArea {
+    BeepingMouseArea {
         anchors.fill: parent
 
         onClicked: itemDelegate.clicked()

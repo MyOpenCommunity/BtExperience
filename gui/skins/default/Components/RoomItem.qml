@@ -72,7 +72,7 @@ MenuColumn {
                     anchors.fill: parent
                     anchors.margins: 10
                 }
-                MouseArea {
+                BeepingMouseArea {
                     anchors.fill: parent
                     onClicked: theMenu.editMenuItem()
                 }
@@ -96,7 +96,7 @@ MenuColumn {
                     anchors.fill: parent
                     anchors.margins: 10
                 }
-                MouseArea {
+                BeepingMouseArea {
                     anchors.fill: parent
                     onClicked: column.requestMove()
                 }

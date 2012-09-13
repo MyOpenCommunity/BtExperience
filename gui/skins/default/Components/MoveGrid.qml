@@ -43,7 +43,7 @@ Item {
                     color: "cyan"
                 }
 
-                MouseArea {
+                BeepingMouseArea {
                     anchors.fill: parent
                     onClicked: {
                         // map the coordinates to the RoomItem's parent

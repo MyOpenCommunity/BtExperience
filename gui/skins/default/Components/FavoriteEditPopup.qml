@@ -123,7 +123,7 @@ Item {
                 text: qsTr("ok")
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: {
                     console.log("Confirm editing")
@@ -143,7 +143,7 @@ Item {
                 text: qsTr("cancel")
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: {
                     console.log("Discard editing")

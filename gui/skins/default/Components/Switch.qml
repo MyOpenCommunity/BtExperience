@@ -17,7 +17,7 @@ SvgImage {
 
     source: "../images/common/option_switch_background.svg"
 
-    MouseArea {
+    BeepingMouseArea {
         anchors.fill: parent
         onClicked: systemIcon.clicked()
     }

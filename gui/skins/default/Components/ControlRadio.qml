@@ -33,7 +33,7 @@ Item {
             anchors.centerIn: parent
         }
 
-        MouseArea {
+        BeepingMouseArea {
             anchors.fill: parent
             onClicked: control.clicked()
         }

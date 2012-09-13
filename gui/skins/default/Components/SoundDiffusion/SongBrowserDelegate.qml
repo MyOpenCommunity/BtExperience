@@ -80,7 +80,7 @@ SvgImage {
         source: "../../images/sound_diffusion/btn_file_shadow.svg"
     }
 
-    MouseArea {
+    BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
         onClicked: delegateClicked()

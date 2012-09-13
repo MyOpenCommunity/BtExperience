@@ -49,7 +49,7 @@ Image {
             source: "../images/common/meno.png"
         }
 
-        MouseArea {
+        BeepingMouseArea {
             id: minusMouseArea
             anchors.fill: parent
             onClicked: control.minusClicked()
@@ -73,7 +73,7 @@ Image {
             source: "../images/common/piu.png"
         }
 
-        MouseArea {
+        BeepingMouseArea {
             id: plusMouseArea
             anchors.fill: parent
             onClicked: control.plusClicked()

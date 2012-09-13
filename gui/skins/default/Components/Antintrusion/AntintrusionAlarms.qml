@@ -150,7 +150,7 @@ MenuColumn {
 
                         SvgImage {
                             source: "../../images/common/icon_delete.svg"
-                            MouseArea {
+                            BeepingMouseArea {
                                 id: btnArea
                                 anchors.fill: parent
                                 onClicked: modelList.remove(index)

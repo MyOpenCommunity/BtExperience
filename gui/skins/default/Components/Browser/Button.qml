@@ -1,4 +1,5 @@
 import QtQuick 1.0
+import Components 1.0
 
  Item {
      property alias image: icon.source
@@ -13,7 +14,7 @@ import QtQuick 1.0
         opacity: if (action != undefined) { action.enabled ? 1.0 : 0.4 } else 1
      }
 
-     MouseArea {
+     BeepingMouseArea {
          anchors { fill: parent; topMargin: -10; bottomMargin: -10 }
          onClicked: {
              if (action != undefined)

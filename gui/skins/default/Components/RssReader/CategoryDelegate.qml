@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
+import Components 1.0
 import Components.Text 1.0
 
 
@@ -74,7 +75,7 @@ Item {
         visible: delegate.ListView.isCurrentItem ? false : true
     }
 
-    MouseArea {
+    BeepingMouseArea {
         anchors.fill: delegate
         onClicked: {
             delegate.ListView.view.currentIndex = index

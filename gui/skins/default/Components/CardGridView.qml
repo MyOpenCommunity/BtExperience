@@ -71,7 +71,7 @@ Item {
             verticalCenter: parent.verticalCenter
         }
 
-        MouseArea {
+        BeepingMouseArea {
             anchors.fill: parent
             onClicked: {
                 var newPos = gridView.currentIndex + privateProps.visibleColumns * privateProps.rows
@@ -91,7 +91,7 @@ Item {
             verticalCenter: parent.verticalCenter
         }
 
-        MouseArea {
+        BeepingMouseArea {
             anchors.fill: parent
             onClicked: {
                 var newPos = gridView.currentIndex - privateProps.visibleColumns * privateProps.rows

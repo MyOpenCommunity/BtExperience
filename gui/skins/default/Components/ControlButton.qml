@@ -22,7 +22,7 @@ Image {
         text: control.label
     }
 
-    MouseArea {
+    BeepingMouseArea {
         id: areaHeader
         anchors.fill: parent
         onClicked: control.clicked()

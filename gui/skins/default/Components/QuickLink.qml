@@ -216,7 +216,7 @@ Item {
                 anchors.fill: parent
                 anchors.margins: 10
             }
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: privateProps.startEdit()
             }
@@ -241,7 +241,7 @@ Item {
                 anchors.margins: 10
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: {
                     bgQuick.requestEdit(bgQuick)
@@ -268,7 +268,7 @@ Item {
                 anchors.margins: 10
             }
 
-            MouseArea {
+            BeepingMouseArea {
                 anchors.fill: parent
                 onClicked: {
                     bgQuick.requestMove(bgQuick)
@@ -294,7 +294,7 @@ Item {
                 anchors.fill: parent
                 anchors.margins: 10
 
-                MouseArea {
+                BeepingMouseArea {
                     anchors.fill: parent
                     onClicked: {
                         bgQuick.requestDelete(bgQuick)
@@ -308,7 +308,7 @@ Item {
         }
     }
 
-    MouseArea {
+    BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
         onPressAndHold: bgQuick.state = "selected"

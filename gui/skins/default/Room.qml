@@ -86,7 +86,7 @@ Page {
                 height: parent.height - (roomView.currentIndex === index ? 30 : 20)
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                MouseArea {
+                BeepingMouseArea {
                     anchors.fill: parent
                     onClicked: {
                         roomView.currentIndex = index

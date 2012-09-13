@@ -45,7 +45,7 @@ SvgImage {
 
     source: defaultImageBg
 
-    MouseArea {
+    BeepingMouseArea {
         id: area
         anchors.fill: parent
         onClicked: bg.clicked()

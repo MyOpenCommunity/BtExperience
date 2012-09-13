@@ -30,7 +30,7 @@ Image {
             source: "../images/common/freccia_up.png"
         }
 
-        MouseArea {
+        BeepingMouseArea {
             id: mouse_area1
             anchors.fill: parent
             onClicked: control.upClicked()
@@ -76,7 +76,7 @@ Image {
             source: "../images/common/freccia_dw.png"
         }
 
-        MouseArea {
+        BeepingMouseArea {
             id: mouse_area2
             anchors.fill: parent
             onClicked: control.downClicked()

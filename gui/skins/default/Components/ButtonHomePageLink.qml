@@ -10,7 +10,7 @@ SvgImage {
 
     signal clicked
 
-    MouseArea {
+    BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
         onClicked: button.clicked()

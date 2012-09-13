@@ -170,7 +170,7 @@ BasePage {
                     height: imageDelegate.height
                 }
 
-                MouseArea {
+                BeepingMouseArea {
                     anchors.fill: parent
                     onClicked: Stack.openPage('Profile.qml', {'profile': itemDelegate.itemObject})
                     onPressed: itemDelegate.PathView.view.currentPressed = index
