@@ -24,14 +24,14 @@ PathView {
         itemObject: control.model.getObject(index)
         z: PathView.elementZ
         scale: PathView.elementScale
-        opacity: PathView.elementOpacity
+//        opacity: PathView.elementOpacity
         onDelegateClicked: control.clicked(delegate)
-        transform: Rotation {
-            axis.x: 0
-            axis.y: 1
-            axis.z: 0
-            angle: cardAngle
-        }
+//        transform: Rotation {
+//            axis.x: 0
+//            axis.y: 1
+//            axis.z: 0
+//            angle: cardAngle
+//        }
     }
 
     path: Path {
@@ -96,7 +96,7 @@ PathView {
         MouseArea {
             id: mouseAreaSx
             anchors.fill: parent
-            onClicked: control.decrementCurrentIndex()
+            onClicked: control.incrementCurrentIndex()
         }
 
         states: [
@@ -123,7 +123,7 @@ PathView {
         MouseArea {
             id: mouseAreaDx
             anchors.fill: parent
-            onClicked: control.incrementCurrentIndex()
+            onClicked: control.decrementCurrentIndex()
         }
 
         states: [
