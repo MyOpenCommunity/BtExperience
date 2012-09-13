@@ -11,42 +11,36 @@ Item {
 
     signal delegateClicked(variant delegate)
 
-    width: imageDelegate.sourceSize.width
-    height: imageDelegate.sourceSize.height + textDelegate.height
+    width: bg.width
+    height: bg.height
 
-    Image {
+    Image { // placed here because the background must mask part of the image
         id: imageDelegate
+        // the up-navigation is needed because images are referred to project
+        // top folder
         source: "../" + itemObject.image
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
+        anchors.fill: bg
+    }
+
+    SvgImage {
+        id: bg
+
+        source: global.guiSettings.skin === 0 ?
+                    "../images/profiles/scheda_profili.svg" :
+                    "../images/profiles/scheda_profili_dark.svg"
     }
 
     UbuntuLightText {
         id: textDelegate
         text: itemObject.description
-        font.pixelSize: 22
+        color: "#434343"
+        font.pixelSize: 14
         horizontalAlignment: Text.AlignHCenter
         anchors {
-            top: imageDelegate.bottom
-            left: parent.left
-            right: parent.right
-            topMargin: 8
-        }
-    }
-
-    SvgImage {
-        id: rectPressed
-        source: global.guiSettings.skin === 0 ? "../images/common/profilo_p.svg" :
-                                                "../images/home_dark/home.jpg"
-        visible: false
-        width: imageDelegate.width
-        height: imageDelegate.height
-        anchors {
-            centerIn: imageDelegate
-            fill: imageDelegate
+            bottom: bg.bottom
+            bottomMargin: 10
+            left: bg.left
+            right: bg.right
         }
     }
 
@@ -60,8 +54,10 @@ Item {
     states: State {
         when: pathViewDelegate.PathView.view.currentPressed === index
         PropertyChanges {
-            target: rectPressed
-            visible: true
+            target: bg
+            source: global.guiSettings.skin === 0 ?
+                        "../images/profiles/scheda_profili_P.svg" :
+                        "../images/profiles/scheda_profili_dark_P.svg"
         }
     }
 }
