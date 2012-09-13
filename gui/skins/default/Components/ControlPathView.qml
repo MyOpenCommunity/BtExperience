@@ -6,6 +6,7 @@ PathView {
     id: control
 
     // defaults are related to home page
+    property bool sevenCards: false
     property int x0FiveElements: 100
     property int x0ThreeElements: 160
     property int x1: 370
@@ -20,18 +21,11 @@ PathView {
     signal clicked(variant delegate)
 
     delegate: PathViewDelegate {
-        property real cardAngle: PathView.elementAngle
         itemObject: control.model.getObject(index)
         z: PathView.elementZ
         scale: PathView.elementScale
-//        opacity: PathView.elementOpacity
+        opacity: PathView.elementOpacity
         onDelegateClicked: control.clicked(delegate)
-//        transform: Rotation {
-//            axis.x: 0
-//            axis.y: 1
-//            axis.z: 0
-//            angle: cardAngle
-//        }
     }
 
     path: Path {
@@ -39,8 +33,7 @@ PathView {
         startY: firstSegment.y
         PathAttribute { name: "elementScale"; value: 0.5 }
         PathAttribute { name: "elementZ"; value: 0.5 }
-        PathAttribute { name: "elementAngle"; value: 90 }
-        PathAttribute { name: "elementOpacity"; value: 1 }
+        PathAttribute { name: "elementOpacity"; value: 0 }
         PathLine {
             id: firstSegment
             x: control.model.count < 5 ? x0ThreeElements : x0FiveElements
@@ -48,7 +41,6 @@ PathView {
         }
         PathAttribute { name: "elementScale"; value: 0.5 }
         PathAttribute { name: "elementZ"; value: 0.5 }
-        PathAttribute { name: "elementAngle"; value: 0 }
         PathAttribute { name: "elementOpacity"; value: 1 }
         PathLine {
             x: x1
@@ -56,7 +48,6 @@ PathView {
         }
         PathAttribute { name: "elementScale"; value: 1.0 }
         PathAttribute { name: "elementZ"; value: 1 }
-        PathAttribute { name: "elementAngle"; value: 0 }
         PathAttribute { name: "elementOpacity"; value: 1 }
         PathLine {
             id: lastSegment
@@ -65,7 +56,6 @@ PathView {
         }
         PathAttribute { name: "elementScale"; value: 0.5 }
         PathAttribute { name: "elementZ"; value: 0.5 }
-        PathAttribute { name: "elementAngle"; value: 0 }
         PathAttribute { name: "elementOpacity"; value: 1 }
         PathLine {
             x: lastSegment.x + 5
@@ -73,11 +63,20 @@ PathView {
         }
         PathAttribute { name: "elementScale"; value: 0.5 }
         PathAttribute { name: "elementZ"; value: 0.5 }
-        PathAttribute { name: "elementAngle"; value: 0 }
         PathAttribute { name: "elementOpacity"; value: 0 }
     }
 
-    pathItemCount: control.model.count < 5 ? 3 : 5
+    function visibleItems() {
+        if (control.model.count < 5)
+            return 3
+        if (!sevenCards)
+            return 5
+        if (control.model.count < 7)
+            return 5
+        return 7
+    }
+
+    pathItemCount: control.visibleItems()
     highlightRangeMode: PathView.StrictlyEnforceRange
     preferredHighlightBegin: 0.5
     preferredHighlightEnd: 0.5
