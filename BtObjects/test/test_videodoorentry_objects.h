@@ -42,10 +42,12 @@ private slots:
 	void testIncomingCallTerminatedByTouch();
 	void testOutgoingCallTerminatedByTalker();
 	void testIgnoringFramesIfNotActive();
+	void testRingtone();
 
 	void testCCTVIgnoringFramesIfNotActive();
 	void testCCTVOutgoingCallTerminatedByTouch();
 	void testCCTVOutgoingCallTerminatedByTalker();
+	void testCCTVRingtone();
 
 protected:
 	void compareClientCommand(int timeout = 0);

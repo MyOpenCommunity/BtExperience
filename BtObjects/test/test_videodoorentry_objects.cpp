@@ -224,6 +224,31 @@ void TestVideoDoorEntry::testIgnoringFramesIfNotActive()
 	t.checkNoSignals();
 }
 
+void TestVideoDoorEntry::testRingtone()
+{
+	DeviceValues v;
+	ObjectTester t(intercom, SIGNAL(ringtoneChanged()));
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::FLOORCALL;
+	intercom->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(intercom->getRingtone(), Intercom::Floorcall);
+
+	intercom->valueReceived(v);
+	t.checkNoSignals();
+	QCOMPARE(intercom->getRingtone(), Intercom::Floorcall);
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PI_INTERCOM;
+	intercom->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(intercom->getRingtone(), Intercom::Internal);
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE_INTERCOM;
+	intercom->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(intercom->getRingtone(), Intercom::External);
+}
+
 void TestVideoDoorEntry::testCCTVIgnoringFramesIfNotActive()
 {
 	DeviceValues v;
@@ -327,4 +352,34 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	t.checkSignalCount(SIGNAL(incomingCall()), 1);
 	t.checkSignalCount(SIGNAL(callAnswered()), 1);
 	t.checkSignalCount(SIGNAL(callEnded()), 1);
+}
+
+void TestVideoDoorEntry::testCCTVRingtone()
+{
+	DeviceValues v;
+	ObjectTester t(cctv, SIGNAL(ringtoneChanged()));
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE4;
+	cctv->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace4);
+
+	cctv->valueReceived(v);
+	t.checkNoSignals();
+	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace4);
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE1;
+	cctv->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace1);
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE2;
+	cctv->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace2);
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE3;
+	cctv->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace3);
 }

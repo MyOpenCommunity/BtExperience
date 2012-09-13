@@ -88,7 +88,22 @@ class CCTV : public ObjectInterface
 	*/
 	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
 
+	/*!
+		\brief Logical event (as reported by the device) for which a ringtone should be played
+	*/
+	Q_PROPERTY(Ringtone ringtone READ getRingtone NOTIFY ringtoneChanged)
+
+	Q_ENUMS(Ringtone)
+
 public:
+	enum Ringtone
+	{
+		ExternalPlace1 = 10,
+		ExternalPlace2,
+		ExternalPlace3,
+		ExternalPlace4
+	};
+
 	explicit CCTV(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
 	virtual int getObjectId() const
@@ -106,6 +121,7 @@ public:
 	bool getAutoOpen() const { return prof_studio; }
 	void setAutoOpen(bool newValue);
 	bool isIpCall() const;
+	Ringtone getRingtone() const;
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
@@ -128,6 +144,7 @@ signals:
 	void autoOpenChanged();
 	void callAnswered();
 	void isIpCallChanged();
+	void ringtoneChanged();
 
 
 protected slots:
@@ -139,6 +156,7 @@ protected:
 	int saturation;
 
 private:
+	void setRingtone(int vde_ringtone);
 	void startVideo();
 	void stopVideo();
 	void resumeVideo();
@@ -150,6 +168,7 @@ private:
 	bool call_active;
 	bool prof_studio;
 	bool ip_mode;
+	Ringtone ringtone;
 	QProcess video_grabber;
 	VideoDoorEntryDevice *dev;
 	ObjectDataModel external_places;
@@ -191,7 +210,21 @@ class Intercom : public ObjectInterface
 	*/
 	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
 
+	/*!
+		\brief Logical event (as reported by the device) for which a ringtone should be played
+	*/
+	Q_PROPERTY(Ringtone ringtone READ getRingtone NOTIFY ringtoneChanged)
+
+	Q_ENUMS(Ringtone)
+
 public:
+	enum Ringtone
+	{
+		Internal = 20,
+		External,
+		Floorcall
+	};
+
 	explicit Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
 	virtual int getObjectId() const
@@ -215,6 +248,7 @@ public:
 	ObjectDataModel *getExternalPlaces() const;
 	QString getTalker() const;
 	bool isIpCall() const;
+	Ringtone getRingtone() const;
 
 signals:
 	void volumeChanged();
@@ -224,6 +258,7 @@ signals:
 	void talkerChanged();
 	void callAnswered();
 	void isIpCallChanged();
+	void ringtoneChanged();
 
 
 protected slots:
@@ -235,6 +270,7 @@ protected:
 	bool mute;
 
 private:
+	void setRingtone(int vde_ringtone);
 	void setTalkerFromWhere(QString where);
 	void activateCall();
 	void disactivateCall();
@@ -242,6 +278,7 @@ private:
 
 	bool call_active;
 	bool ip_mode;
+	Ringtone ringtone;
 	VideoDoorEntryDevice *dev;
 	ObjectDataModel external_places;
 	QString talker;

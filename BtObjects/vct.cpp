@@ -69,6 +69,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	call_active = false;
 	prof_studio = false;
 	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
+	ringtone = ExternalPlace1;
 
 	foreach (ExternalPlace *ep, list)
 		external_places << ep;
@@ -139,6 +140,11 @@ bool CCTV::isIpCall() const
 	return ip_mode;
 }
 
+CCTV::Ringtone CCTV::getRingtone() const
+{
+	return ringtone;
+}
+
 void CCTV::answerCall()
 {
 	dev->answerCall();
@@ -201,6 +207,35 @@ void CCTV::callerAddress(QString address)
 	}
 }
 
+void CCTV::setRingtone(int vde_ringtone)
+{
+	Ringtone new_ringtone = ringtone;
+
+	switch (vde_ringtone)
+	{
+	case VideoDoorEntryDevice::PE1:
+		new_ringtone = ExternalPlace1;
+		break;
+	case VideoDoorEntryDevice::PE2:
+		new_ringtone = ExternalPlace2;
+		break;
+	case VideoDoorEntryDevice::PE3:
+		new_ringtone = ExternalPlace3;
+		break;
+	case VideoDoorEntryDevice::PE4:
+		new_ringtone = ExternalPlace4;
+		break;
+	default:
+		break;
+	}
+
+	if (new_ringtone != ringtone)
+	{
+		ringtone = new_ringtone;
+		emit ringtoneChanged();
+	}
+}
+
 void CCTV::valueReceived(const DeviceValues &values_list)
 {
 	if (dev->ipCall() != ip_mode)
@@ -221,6 +256,8 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::VCT_CALL:
 		case VideoDoorEntryDevice::AUTO_VCT_CALL:
 			qDebug() << "Received VCT_(AUTO)_CALL";
+			if (values_list.contains(VideoDoorEntryDevice::RINGTONE))
+				setRingtone(values_list[VideoDoorEntryDevice::RINGTONE].toInt());
 			// TODO: many many other things...but this should be enough for now.
 			if (call_stopped && it.key() == VideoDoorEntryDevice::VCT_CALL)
 			{
@@ -262,6 +299,10 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			if (!values_list.contains(VideoDoorEntryDevice::VCT_CALL) &&
 				!values_list.contains(VideoDoorEntryDevice::AUTO_VCT_CALL))
 				callerAddress(it.value().toString());
+			break;
+		case VideoDoorEntryDevice::RINGTONE:
+			qDebug() << "Received VideoDoorEntryDevice::RINGTONE" << *it;
+			setRingtone(it.value().toInt());
 			break;
 		default:
 			qDebug() << "CCTV::valueReceived, unhandled value" << it.key() << *it;
@@ -326,6 +367,7 @@ Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d)
 	mute = false;
 	call_active = false;
 	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
+	ringtone = Internal;
 
 	foreach (ExternalPlace *ep, l) {
 		external_places << ep;
@@ -385,6 +427,11 @@ bool Intercom::isIpCall() const
 	return ip_mode;
 }
 
+Intercom::Ringtone Intercom::getRingtone() const
+{
+	return ringtone;
+}
+
 ObjectDataModel *Intercom::getExternalPlaces() const
 {
 	// TODO: See the comment on ThermalControlUnit::getModalities
@@ -394,6 +441,32 @@ ObjectDataModel *Intercom::getExternalPlaces() const
 QString Intercom::getTalker() const
 {
 	return talker;
+}
+
+void Intercom::setRingtone(int vde_ringtone)
+{
+	Ringtone new_ringtone = ringtone;
+
+	switch (vde_ringtone)
+	{
+	case VideoDoorEntryDevice::PI_INTERCOM:
+		new_ringtone = Internal;
+		break;
+	case VideoDoorEntryDevice::PE_INTERCOM:
+		new_ringtone = External;
+		break;
+	case VideoDoorEntryDevice::FLOORCALL:
+		new_ringtone = Floorcall;
+		break;
+	default:
+		break;
+	}
+
+	if (new_ringtone != ringtone)
+	{
+		ringtone = new_ringtone;
+		emit ringtoneChanged();
+	}
 }
 
 void Intercom::valueReceived(const DeviceValues &values_list)
@@ -414,6 +487,8 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 		{
 		case VideoDoorEntryDevice::INTERCOM_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::INTERCOM_CALL";
+			if (values_list.contains(VideoDoorEntryDevice::RINGTONE))
+				setRingtone(values_list[VideoDoorEntryDevice::RINGTONE].toInt());
 			// TODO: many many other things...but this should be enough for now.
 			emit incomingCall();
 			activateCall();
@@ -440,8 +515,8 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			setTalkerFromWhere(it.value().toString());
 			break;
 		case VideoDoorEntryDevice::RINGTONE:
-			// TODO gestire la suoneria?
-			qDebug() << "Received VideoDoorEntryDevice::RINGTONE";
+			qDebug() << "Received VideoDoorEntryDevice::RINGTONE" << *it;
+			setRingtone(it.value().toInt());
 			break;
 		default:
 			qDebug() << "Intercom::valueReceived, unhandled value" << it.key() << *it;
