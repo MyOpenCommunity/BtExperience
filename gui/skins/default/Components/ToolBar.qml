@@ -148,6 +148,7 @@ Item {
         // antintrusion
         ToolbarButton {
             height: toolbar_top.height
+            visible: true
             defaultImage: EventManager.eventManager.isAntintrusionInserted ?
                               (global.guiSettings.skin === 0 ?
                                    "../images/toolbar/icon_burlgar alarm-on.svg" :
@@ -168,7 +169,7 @@ Item {
         // alarm clock
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.clocks > 0
+            quantity: EventManager.eventManager.clocks
             defaultImage: global.guiSettings.skin === 0 ?
                               "../images/toolbar/icon_alarm-clock.svg" :
                               "../images/toolbar/icon_alarm-clock_p.svg"
@@ -220,7 +221,7 @@ Item {
         // alerts
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.alarms > 0
+            quantity: EventManager.eventManager.alarms
             defaultImage: global.guiSettings.skin === 0 ?
                               "../images/toolbar/icon_alarm.svg" :
                               "../images/toolbar/icon_alarm_p.svg"
@@ -274,7 +275,7 @@ Item {
         // message
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.messages > 0
+            quantity: EventManager.eventManager.messages
             defaultImage: global.guiSettings.skin === 0 ?
                               "../images/toolbar/icon_new-message.svg" :
                               "../images/toolbar/icon_new-message_p.svg"
@@ -299,7 +300,7 @@ Item {
         // energy, stop&go danger
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.danger
+            quantity: EventManager.eventManager.dangers
             defaultImage: global.guiSettings.skin === 0 ?
                               "../images/toolbar/icon_energy.svg" :
                               "../images/toolbar/icon_energy_p.svg"
