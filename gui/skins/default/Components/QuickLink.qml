@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 import "../js/Stack.js" as Stack
@@ -32,7 +33,7 @@ Item {
   
      Image {
             id: container
-            source: global.guiSettings.skin === 0 ? "../images/profiles/scheda_preferiti.svg" :
+            source: global.guiSettings.skin === GuiSettings.Clear ? "../images/profiles/scheda_preferiti.svg" :
                                                     "../images/profiles/scheda_preferiti_P.svg"
 
             Image {
@@ -53,7 +54,7 @@ Item {
             {
                 id: containerPressed
                 anchors.fill: container
-                source: global.guiSettings.skin === 0 ? "../images/profiles/scheda_preferiti_P.svg" :
+                source: global.guiSettings.skin === GuiSettings.Clear ? "../images/profiles/scheda_preferiti_P.svg" :
                                                         "../images/profiles/scheda_preferiti.svg"
                 visible: false
                 anchors.left: container.left
@@ -163,7 +164,7 @@ Item {
             id: labelComponent
             UbuntuLightText {
                 text: bgQuick.text
-                color: global.guiSettings.skin === 0 ? "black":
+                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
                                                        "white"
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 13
@@ -177,7 +178,7 @@ Item {
             id: labelInputComponent
             TextInput {
                 text: bgQuick.text
-                color: global.guiSettings.skin === 0 ? "black":
+                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
                                                        "white"
                 horizontalAlignment: Text.AlignHCenter
                 activeFocusOnPress: false

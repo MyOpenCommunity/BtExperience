@@ -25,7 +25,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        source: global.guiSettings.skin === 0 ? imagesPath + "toolbar/toolbar_bg_top.svg":
+        source: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/toolbar_bg_top.svg":
                                                 imagesPath + "toolbar/toolbar_bg_top_dark.svg"
         width: parent.width
     }
@@ -42,9 +42,9 @@ Item {
             ButtonImageThreeStates {
                 defaultImageBg: imagesPath + "toolbar/bg_home.svg"
                 pressedImageBg: imagesPath + "toolbar/bg_home_pressed.svg"
-                defaultImage: global.guiSettings.skin === 0 ? imagesPath + "toolbar/icon_home.svg":
+                defaultImage: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/icon_home.svg":
                                                               imagesPath + "toolbar/icon_home_pressed.svg"
-                pressedImage: global.guiSettings.skin === 0 ? imagesPath + "toolbar/icon_home_pressed.svg":
+                pressedImage: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/icon_home_pressed.svg":
                                                               imagesPath + "toolbar/icon_home.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -64,7 +64,7 @@ Item {
             UbuntuLightText {
                 id: temperature
                 text: "19°C"
-                color: global.guiSettings.skin === 0 ? "black":
+                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
                                                        "white"
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
@@ -83,7 +83,7 @@ Item {
 
             UbuntuLightText {
                 id: date
-                color: global.guiSettings.skin === 0 ? "black":
+                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
                                                        "white"
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
@@ -106,7 +106,7 @@ Item {
 
             UbuntuLightText {
                 id: time
-                color: global.guiSettings.skin === 0 ? "black":
+                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
                                                        "white"
                 text: DateTime.format()["time"]
                 font.pixelSize: toolbar.fontSize
@@ -134,7 +134,7 @@ Item {
     }
 
     SvgImage {
-        source: global.guiSettings.skin === 0 ? imagesPath + "toolbar/toolbar_logo_black.svg" :
+        source: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/toolbar_logo_black.svg" :
                                                 imagesPath + "toolbar/toolbar_logo_white.svg"
         anchors.verticalCenter: toolbar_top.verticalCenter
         anchors.horizontalCenter: toolbar_top.horizontalCenter
@@ -150,17 +150,17 @@ Item {
             height: toolbar_top.height
             visible: true
             defaultImage: EventManager.eventManager.isAntintrusionInserted ?
-                              (global.guiSettings.skin === 0 ?
+                              (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_burlgar alarm-on.svg" :
                                    "../images/toolbar/icon_burlgar alarm-on_p.svg") :
-                              (global.guiSettings.skin === 0 ?
+                              (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_alarm-disabled.svg" :
                                    "../images/toolbar/icon_alarm-disabled_p.svg")
             pressedImage:  EventManager.eventManager.isAntintrusionInserted ?
-                               (global.guiSettings.skin === 0 ?
+                               (global.guiSettings.skin === GuiSettings.Clear ?
                                     "../images/toolbar/icon_burlgar alarm-on_p.svg" :
                                     "../images/toolbar/icon_burlgar alarm-on.svg") :
-                               (global.guiSettings.skin === 0 ?
+                               (global.guiSettings.skin === GuiSettings.Clear ?
                                     "../images/toolbar/icon_alarm-disabled_p.svg" :
                                     "../images/toolbar/icon_alarm-disabled.svg")
             onClicked: Stack.openPage(Script.getTarget(Container.IdAntintrusion))
@@ -170,10 +170,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             quantity: EventManager.eventManager.clocks
-            defaultImage: global.guiSettings.skin === 0 ?
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm-clock.svg" :
                               "../images/toolbar/icon_alarm-clock_p.svg"
-            pressedImage: global.guiSettings.skin === 0 ?
+            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm-clock_p.svg" :
                               "../images/toolbar/icon_alarm-clock.svg"
             onClicked: console.log("clockButton clicked")
@@ -183,10 +183,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.autoOpen
-            defaultImage: global.guiSettings.skin === 0 ?
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-open.svg" :
                               "../images/toolbar/icon_vde-auto-open_p.svg"
-            pressedImage: global.guiSettings.skin === 0 ?
+            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-open_p.svg" :
                               "../images/toolbar/icon_vde-auto-open.svg"
             onClicked: console.log("autoOpenButton clicked")
@@ -196,10 +196,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.autoAnswer
-            defaultImage: global.guiSettings.skin === 0 ?
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-answer.svg" :
                               "../images/toolbar/icon_vde-auto-answer_p.svg"
-            pressedImage: global.guiSettings.skin === 0 ?
+            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-answer_p.svg" :
                               "../images/toolbar/icon_vde-auto-answer.svg"
             onClicked: console.log("autoAnswerButton clicked")
@@ -209,10 +209,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.vdeMute
-            defaultImage: global.guiSettings.skin === 0 ?
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-mute.svg" :
                               "../images/toolbar/icon_vde-mute_p.svg"
-            pressedImage: global.guiSettings.skin === 0 ?
+            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-mute_p.svg" :
                               "../images/toolbar/icon_vde-mute.svg"
             onClicked: console.log("vdeMuteButton clicked")
@@ -222,10 +222,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             quantity: EventManager.eventManager.alarms
-            defaultImage: global.guiSettings.skin === 0 ?
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm.svg" :
                               "../images/toolbar/icon_alarm_p.svg"
-            pressedImage: global.guiSettings.skin === 0 ?
+            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm_p.svg" :
                               "../images/toolbar/icon_alarm.svg"
             onClicked: {
@@ -241,17 +241,17 @@ Item {
             height: toolbar_top.height
             visible: EventManager.eventManager.playing
             defaultImage: EventManager.eventManager.mute ?
-                              (global.guiSettings.skin === 0 ?
+                              (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_audio-source-on.svg" :
                                    "../images/toolbar/icon_audio-source-on_p.svg") :
-                              (global.guiSettings.skin === 0 ?
+                              (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_source-audio-mute.svg" :
                                    "../images/toolbar/icon_source-audio-mute_p.svg")
             pressedImage: EventManager.eventManager.mute ?
-                              (global.guiSettings.skin === 0 ?
+                              (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_audio-source-on_p.svg" :
                                    "../images/toolbar/icon_audio-source-on.svg") :
-                              (global.guiSettings.skin === 0 ?
+                              (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_source-audio-mute_p.svg" :
                                    "../images/toolbar/icon_source-audio-mute.svg")
             // TODO come recuperare il modello da usare (local, upnp) e come impostare rootPath e index corretti?
@@ -262,10 +262,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.playing
-            defaultImage: global.guiSettings.skin === 0 ?
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_source-play.svg" :
                               "../images/toolbar/icon_source-play_p.svg"
-            pressedImage: global.guiSettings.skin === 0 ?
+            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_source-play_p.svg" :
                               "../images/toolbar/icon_source-play.svg"
             // TODO come recuperare il modello da usare (local, upnp) e come impostare rootPath e index corretti?
@@ -276,10 +276,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             quantity: EventManager.eventManager.messages
-            defaultImage: global.guiSettings.skin === 0 ?
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_new-message.svg" :
                               "../images/toolbar/icon_new-message_p.svg"
-            pressedImage: global.guiSettings.skin === 0 ?
+            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_new-message_p.svg" :
                               "../images/toolbar/icon_new-message.svg"
             onClicked: Stack.openPage(Script.getTarget(Container.IdMessages))
@@ -291,7 +291,7 @@ Item {
             visible: EventManager.eventManager.scenarioRecording
             blinking: EventManager.eventManager.scenarioRecording
             blinkingInterval: 500
-            defaultImage: global.guiSettings.skin === 0 ?
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_scenario-recording.svg" :
                               "../images/toolbar/icon_scenario-recording_p.svg"
             enabled: false
@@ -301,10 +301,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             quantity: EventManager.eventManager.dangers
-            defaultImage: global.guiSettings.skin === 0 ?
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_energy.svg" :
                               "../images/toolbar/icon_energy_p.svg"
-            pressedImage: global.guiSettings.skin === 0 ?
+            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_energy_p.svg" :
                               "../images/toolbar/icon_energy.svg"
             onClicked: console.log("dangerButton clicked")
