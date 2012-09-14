@@ -1,6 +1,9 @@
 #include "audiostate.h"
 
 #include "multimediaplayer.h"
+#include "generic_functions.h"
+
+#include <QStringList>
 
 #include <QtDebug>
 
@@ -23,7 +26,28 @@ namespace
 		"Mute",
 		"FloorCall",
 	};
+
+	AudioState::Volume volume_map[AudioState::StateCount + 1] =
+	{
+		AudioState::InvalidVolume,
+		AudioState::InvalidVolume,
+		AudioState::BeepVolume,
+		AudioState::InvalidVolume,
+		AudioState::LocalPlaybackVolume,
+		AudioState::RingtoneVolume,
+		AudioState::RingtoneVolume,
+		AudioState::VdeCallVolume,
+		AudioState::VdeCallVolume,
+		AudioState::IntercomCallVolume,
+		AudioState::IntercomCallVolume,
+		AudioState::InvalidVolume,
+		AudioState::RingtoneVolume,
+	};
 }
+
+#define VOLUME_MIN 0
+#define VOLUME_MAX 100
+#define VOLUME_DEFAULT 70
 
 
 AudioState::AudioState(QObject *parent) :
@@ -31,8 +55,11 @@ AudioState::AudioState(QObject *parent) :
 {
 	for (int i = 0; i < StateCount; ++i)
 		states[i] = false;
+	for (int i = 0; i < VolumeCount; ++i)
+		volumes[i] = VOLUME_DEFAULT;
 
 	current_state = pending_state = Invalid;
+	current_volume = InvalidVolume;
 	direct_audio_access = direct_video_access = sound_diffusion = false;
 
 	connect(this, SIGNAL(directAudioAccessChanged(bool)),
@@ -92,14 +119,50 @@ AudioState::State AudioState::getState() const
 	return current_state;
 }
 
+void AudioState::setVolume(Volume state, int volume)
+{
+	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
+	Q_ASSERT_X(volume >= VOLUME_MIN && volume <= VOLUME_MAX, "AudioState::setVolume",
+		qPrintable(QString("Volume value %1 out of range for volume %2!").arg(volume).arg(state)));
+
+	volumes[state] = volume;
+	if (state == current_volume)
+	{
+		int scaled_volume = volume * 30 / 100;
+
+		smartExecute("amixer", QStringList() << "-c" << "0" << "sset" << "TPA2016D2 Gain" << QString::number(scaled_volume));
+	}
+}
+
+int AudioState::getVolume(Volume state) const
+{
+	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
+
+	return volumes[state];
+}
+
 void AudioState::setVolume(int volume)
 {
-	// TODO
+	if (current_volume == InvalidVolume)
+	{
+		qWarning() << "Can't set volume in audio state" << descriptions[current_state + 1];
+		return;
+	}
+
+	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't set volume in current audio state");
+	setVolume(current_volume, volume);
 }
 
 int AudioState::getVolume() const
 {
-	// TODO
+	if (current_volume == InvalidVolume)
+	{
+		qWarning() << "Can't get volume in audio state" << descriptions[current_state + 1];
+		return 0;
+	}
+
+	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't get volume in current audio state");
+	return getVolume(current_volume);;
 }
 
 void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
@@ -164,6 +227,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 		break;
 	}
 
+	current_volume = volume_map[new_state + 1];
 	current_state = new_state;
 	emit stateChanged(old_state, new_state);
 

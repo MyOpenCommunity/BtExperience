@@ -36,6 +36,18 @@ public:
 		StateCount
 	};
 
+	enum Volume
+	{
+		InvalidVolume = -1,
+		BeepVolume,
+		LocalPlaybackVolume,
+		RingtoneVolume,
+		VdeCallVolume,
+		IntercomCallVolume,
+		// this must be last
+		VolumeCount
+	};
+
 	AudioState(QObject *parent);
 
 	Q_INVOKABLE void disableState(State state);
@@ -45,6 +57,10 @@ public:
 
 	Q_INVOKABLE void setVolume(int volume);
 	Q_INVOKABLE int getVolume() const;
+
+	// typically used for settings loading/saving
+	void setVolume(Volume state, int volume);
+	int getVolume(Volume state) const;
 
 	void registerMediaPlayer(MultiMediaPlayer *player);
 	void registerSoundPlayer(MultiMediaPlayer *player);
@@ -96,8 +112,10 @@ private:
 	void updateAudioPaths(State old_state, State new_state);
 
 	State current_state, pending_state;
+	Volume current_volume;
 	bool direct_audio_access, direct_video_access;
 	bool states[StateCount];
+	int volumes[VolumeCount];
 	bool sound_diffusion;
 	QList<PlayerInfo> players;
 };
