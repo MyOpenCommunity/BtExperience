@@ -517,6 +517,9 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::RINGTONE:
 			qDebug() << "Received VideoDoorEntryDevice::RINGTONE" << *it;
 			setRingtone(it.value().toInt());
+
+			if (it.value().toInt() == VideoDoorEntryDevice::FLOORCALL)
+				emit incomingFloorCall();
 			break;
 		default:
 			qDebug() << "Intercom::valueReceived, unhandled value" << it.key() << *it;

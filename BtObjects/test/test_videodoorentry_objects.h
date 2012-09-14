@@ -42,6 +42,7 @@ private slots:
 	void testIncomingCallTerminatedByTouch();
 	void testOutgoingCallTerminatedByTalker();
 	void testIgnoringFramesIfNotActive();
+	void testFloorCall();
 	void testRingtone();
 
 	void testCCTVIgnoringFramesIfNotActive();

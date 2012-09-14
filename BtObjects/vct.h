@@ -254,6 +254,7 @@ signals:
 	void volumeChanged();
 	void muteChanged();
 	void incomingCall();
+	void incomingFloorCall();
 	void callEnded();
 	void talkerChanged();
 	void callAnswered();

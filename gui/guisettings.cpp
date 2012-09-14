@@ -71,6 +71,9 @@ int GuiSettings::getBrightness() const
 
 void GuiSettings::setBrightness(int b)
 {
+	if (brightness == b)
+		return;
+
 	qDebug() << QString("GuiSettings::setBrightness(%1)").arg(b);
 	// TODO: perform the proper conversion
 	sendCommand(QString("i2cset -y 1 0x4a 0xf0 0x") + QString::number(b, 16));
@@ -87,6 +90,9 @@ int GuiSettings::getContrast() const
 
 void GuiSettings::setContrast(int c)
 {
+	if (contrast == c)
+		return;
+
 	qDebug() << QString("GuiSettings::setContrast(%1)").arg(c);
 	// TODO save value somewhere
 	contrast = c;
@@ -100,6 +106,9 @@ GuiSettings::Currency GuiSettings::getCurrency() const
 
 void GuiSettings::setCurrency(Currency c)
 {
+	if (currency == c)
+		return;
+
 	// TODO save value somewhere
 	currency = c;
 	emit currencyChanged();
@@ -112,6 +121,9 @@ GuiSettings::TimeFormat GuiSettings::getFormat() const
 
 void GuiSettings::setFormat(TimeFormat f)
 {
+	if (timeFormat == f)
+		return;
+
 	// TODO save value somewhere
 	timeFormat = f;
 	emit formatChanged();
@@ -124,6 +136,9 @@ QString GuiSettings::getKeyboardLayout() const
 
 void GuiSettings::setKeyboardLayout(QString l)
 {
+	if (keyboardLayout == l)
+		return;
+
 	// TODO save value somewhere
 	keyboardLayout = l;
 	emit keyboardLayoutChanged();
@@ -136,6 +151,9 @@ GuiSettings::Language GuiSettings::getLanguage() const
 
 void GuiSettings::setLanguage(Language l)
 {
+	if (language == l)
+		return;
+
 	// TODO save value somewhere
 	language = l;
 	emit languageChanged();
@@ -148,6 +166,9 @@ GuiSettings::Skin GuiSettings::getSkin() const
 
 void GuiSettings::setSkin(Skin s)
 {
+	if (skin == s)
+		return;
+
 	// TODO save value somewhere
 	skin = s;
 	emit skinChanged();
@@ -160,6 +181,9 @@ bool GuiSettings::getBeep() const
 
 void GuiSettings::setBeep(bool b)
 {
+	if (beep == b)
+		return;
+
 	beep = b;
 	emit beepChanged();
 }
@@ -171,6 +195,9 @@ bool GuiSettings::getRingExclusion() const
 
 void GuiSettings::setRingExclusion(bool re)
 {
+	if (ring_exclusion == re)
+		return;
+
 	ring_exclusion = re;
 	emit ringExclusionChanged();
 }
@@ -182,6 +209,9 @@ GuiSettings::MeasurementSystem GuiSettings::getMeasurementSystem() const
 
 void GuiSettings::setMeasurementSystem(MeasurementSystem m)
 {
+	if (measurementSystem == m)
+		return;
+
 	// TODO save value somewhere
 	measurementSystem = m;
 	emit measurementSystemChanged();
@@ -194,6 +224,9 @@ GuiSettings::NumberSeparators GuiSettings::getNumberSeparators() const
 
 void GuiSettings::setNumberSeparators(NumberSeparators s)
 {
+	if (numberSeparators == s)
+		return;
+
 	// TODO save value somewhere
 	numberSeparators = s;
 	emit numberSeparatorsChanged();
@@ -206,6 +239,9 @@ QString GuiSettings::getScreensaverImage() const
 
 void GuiSettings::setScreensaverImage(QString i)
 {
+	if (screensaverImage == i)
+		return;
+
 	// TODO save value somewhere
 	screensaverImage = i;
 	emit screensaverImageChanged();
@@ -218,6 +254,9 @@ QString GuiSettings::getScreensaverText() const
 
 void GuiSettings::setScreensaverText(QString t)
 {
+	if (screensaverText == t)
+		return;
+
 	// TODO save value somewhere
 	screensaverText = t;
 	emit screensaverTextChanged();
@@ -230,6 +269,9 @@ GuiSettings::ScreensaverType GuiSettings::getScreensaverType() const
 
 void GuiSettings::setScreensaverType(ScreensaverType st)
 {
+	if (screensaverType == st)
+		return;
+
 	// TODO save value somewhere
 	screensaverType = st;
 	emit screensaverTypeChanged();
@@ -242,6 +284,9 @@ GuiSettings::TemperatureUnit GuiSettings::getTemperatureUnit() const
 
 void GuiSettings::setTemperatureUnit(TemperatureUnit u)
 {
+	if (temperatureUnit == u)
+		return;
+
 	// TODO save value somewhere
 	temperatureUnit = u;
 	emit temperatureUnitChanged();
@@ -254,6 +299,9 @@ GuiSettings::TimeChoice GuiSettings::getTimeOut() const
 
 void GuiSettings::setTimeOut(TimeChoice tc)
 {
+	if (timeOut == tc)
+		return;
+
 	// TODO save value somewhere
 	timeOut = tc;
 	emit timeOutChanged();
@@ -293,6 +341,9 @@ int GuiSettings::getTimezone() const
 
 void GuiSettings::setTimezone(int z)
 {
+	if (timezone == z)
+		return;
+
 	// TODO save value somewhere
 	timezone = z;
 	emit timezoneChanged();
@@ -305,6 +356,9 @@ GuiSettings::TimeChoice GuiSettings::getTurnOffTime() const
 
 void GuiSettings::setTurnOffTime(TimeChoice tc)
 {
+	if (turnOffTime == tc)
+		return;
+
 	// TODO save value somewhere
 	turnOffTime = tc;
 	emit turnOffTimeChanged();

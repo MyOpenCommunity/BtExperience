@@ -126,8 +126,12 @@ QString GlobalProperties::getBasePath() const
 	// use canonicalFilePath to resolve symlinks, otherwise some files
 	// will be loaded with the symlinked path and some with the canonical
 	// path, and this confuses the code that handles ".pragma library"
-	return QFileInfo(QDir(path.absoluteFilePath()), "gui/skins/default/")
-		   .canonicalFilePath() + "/";
+	QFileInfo base(QDir(path.absoluteFilePath()), "gui/skins/default/");
+
+	if (!base.exists())
+		qFatal("Unable to find path for skin files");
+
+	return base.canonicalFilePath() + "/";
 }
 
 QString GlobalProperties::getExtraPath() const
@@ -139,11 +143,15 @@ QString GlobalProperties::getExtraPath() const
 #endif
 
 #if defined(Q_WS_MAC) || defined(Q_WS_X11)
-	return QFileInfo(QDir(path.absoluteFilePath()), "extra")
-		   .canonicalFilePath() + "/";
+	QFileInfo extra(QDir(path.absoluteFilePath()), "extra");
 #else
 	#error "Implement for ARM"
 #endif
+
+	if (!extra.exists())
+		qFatal("Unable to find path for extra files");
+
+	return extra.canonicalFilePath() + "/";
 }
 
 int GlobalProperties::getMainWidth() const
