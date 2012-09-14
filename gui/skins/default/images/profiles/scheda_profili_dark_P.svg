@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="154px" height="225px" viewBox="0 0 154 225" enable-background="new 0 0 154 225" xml:space="preserve">
-<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="121.002" y1="233.3955" x2="32.9976" y2="-8.3946">
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+]>
+<svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="209.559px"
+	 height="302.771px" viewBox="0 0 209.559 302.771" enable-background="new 0 0 209.559 302.771" xml:space="preserve">
+<metadata>
+	<sfw  xmlns="&ns_sfw;">
+		<slices></slices>
+		<sliceSourceBounds  y="149.114" x="406.722" width="209.557" height="302.771" bottomLeftOrigin="true"></sliceSourceBounds>
+	</sfw>
+</metadata>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-153.9617" y1="-361.2136" x2="-332.4767" y2="-52.0166" gradientTransform="matrix(1 0 0 -1 348 -55.229)">
 	<stop  offset="0" style="stop-color:#FFFFFF"/>
-	<stop  offset="0.5" style="stop-color:#C6C7C7"/>
+	<stop  offset="0.1336" style="stop-color:#FAFAFA"/>
+	<stop  offset="0.2956" style="stop-color:#EBEBEB"/>
+	<stop  offset="0.4717" style="stop-color:#D3D4D4"/>
+	<stop  offset="0.5" style="stop-color:#CECFCF"/>
+	<stop  offset="0.6662" style="stop-color:#DADBDB"/>
+	<stop  offset="0.9691" style="stop-color:#FBFBFB"/>
 	<stop  offset="1" style="stop-color:#FFFFFF"/>
 </linearGradient>
-<path fill="url(#SVGID_1_)" d="M141.945,0H12.054C5.424,0,0,5.408,0,12.019v200.962C0,219.591,5.424,225,12.054,225h129.892
-	c6.631,0,12.055-5.409,12.055-12.019V12.019C154,5.408,148.576,0,141.945,0z M150,177.638c0,5.699-4.678,10.362-10.393,10.362
-	H14.393C8.677,188,4,183.337,4,177.638V14.363C4,8.663,8.677,4,14.393,4h125.215C145.322,4,150,8.663,150,14.363V177.638z"/>
+<path fill="url(#SVGID_1_)" d="M195.953,0H13.609C6.093,0,0.001,6.093,0.001,13.607v275.558c0,7.517,6.092,13.606,13.608,13.606
+	h182.344c7.515,0,13.604-6.091,13.604-13.606V13.607C209.559,6.093,203.468,0,195.953,0z M204.118,242.898
+	c0,6.013-4.874,10.886-10.887,10.886l-177.233-0.042c-6.013,0-10.553-4.831-10.553-10.844V15.649
+	c0-6.015,4.542-10.563,10.553-10.563L193.231,4.76c6.013,0,10.887,4.874,10.887,10.889V242.898z"/>
 </svg>

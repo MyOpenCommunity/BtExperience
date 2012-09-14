@@ -34,7 +34,7 @@ Item {
         id: textDelegate
         text: itemObject.description
         color: global.guiSettings.skin === 0 ? "#434343" : "white"
-        font.pixelSize: 14
+        font.pixelSize: 18
         horizontalAlignment: Text.AlignHCenter
         anchors {
             bottom: bg.bottom
