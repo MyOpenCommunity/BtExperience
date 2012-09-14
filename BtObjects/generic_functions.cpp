@@ -1,5 +1,10 @@
 #include "generic_functions.h"
 
+#include <QProcess>
+#include <QTime>
+
+#include <QtDebug>
+
 
 namespace
 {
@@ -57,4 +62,24 @@ QStringList getFileExtensions(EntryInfo::Type type)
 	}
 
 	return exts;
+}
+
+
+bool smartExecute(const QString &program, QStringList args)
+{
+#if DEBUG
+	QTime t;
+	t.start();
+	bool ret = QProcess::execute(program, args);
+	qDebug() << "Executed:" << program << args.join(" ") << "in:" << t.elapsed() << "ms";
+	return ret;
+#else
+	return QProcess::execute(program, args);
+#endif
+}
+
+bool silentExecute(const QString &program, QStringList args)
+{
+	args << "> /dev/null" << "2>&1";
+	return smartExecute(program, args);
 }

@@ -48,11 +48,73 @@ private:
 
 /*!
 	\ingroup VideoDoorEntry
+	\brief Common base ofr CCTV and Intercom
+
+	The object id is \a ObjectInterface::IdCCTV.
+*/
+class VDEBase : public ObjectInterface
+{
+	friend class TestVideoDoorEntry;
+
+	Q_OBJECT
+
+	/*!
+		\brief Sets or gets the volume level for the call. Volume must be a
+		value between 0 and 100.
+	*/
+	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
+
+	/*!
+		\brief Mute or unmute an active intercom call.
+	*/
+	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
+
+	/*!
+		\brief The list of external places associated with this object
+	*/
+	Q_PROPERTY(ObjectDataModel *externalPlaces READ getExternalPlaces CONSTANT)
+
+	/*!
+		\brief Whether the current call is SCS or IP
+	*/
+	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
+
+public:
+	ObjectDataModel *getExternalPlaces() const;
+
+	bool isIpCall() const;
+
+	int getVolume() const;
+	void setVolume(int value);
+	bool getMute() const;
+	void setMute(bool value);
+
+signals:
+	void volumeChanged();
+	void muteChanged();
+	void isIpCallChanged();
+
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list) = 0;
+
+protected:
+	explicit VDEBase(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
+
+	int volume;
+	bool mute;
+	bool ip_mode;
+	ObjectDataModel external_places;
+	VideoDoorEntryDevice *dev;
+};
+
+
+/*!
+	\ingroup VideoDoorEntry
 	\brief Class to manage a CCTV spot.
 
 	The object id is \a ObjectInterface::IdCCTV.
 */
-class CCTV : public ObjectInterface
+class CCTV : public VDEBase
 {
 	friend class TestVideoDoorEntry;
 
@@ -80,13 +142,6 @@ class CCTV : public ObjectInterface
 		\brief Sets or gets the if door must automatically open when a call arrives.
 	*/
 	Q_PROPERTY(bool autoOpen READ getAutoOpen WRITE setAutoOpen NOTIFY autoOpenChanged)
-
-	Q_PROPERTY(ObjectDataModel *externalPlaces READ getExternalPlaces CONSTANT)
-
-	/*!
-		\brief Whether the current call is SCS or IP
-	*/
-	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
 
 	/*!
 		\brief Logical event (as reported by the device) for which a ringtone should be played
@@ -117,10 +172,8 @@ public:
 	void setContrast(int value);
 	int getSaturation() const;
 	void setSaturation(int value);
-	ObjectDataModel *getExternalPlaces() const;
 	bool getAutoOpen() const { return prof_studio; }
 	void setAutoOpen(bool newValue);
-	bool isIpCall() const;
 	Ringtone getRingtone() const;
 
 	Q_INVOKABLE void answerCall();
@@ -167,11 +220,8 @@ private:
 	bool call_stopped;
 	bool call_active;
 	bool prof_studio;
-	bool ip_mode;
 	Ringtone ringtone;
 	QProcess video_grabber;
-	VideoDoorEntryDevice *dev;
-	ObjectDataModel external_places;
 };
 
 
@@ -181,34 +231,16 @@ private:
 
 	The object id is \a ObjectInterface::IdIntercom.
 */
-class Intercom : public ObjectInterface
+class Intercom : public VDEBase
 {
 	friend class TestVideoDoorEntry;
 
 	Q_OBJECT
 
 	/*!
-		\brief Sets or gets the volume level for the call. Volume must be a
-		value between 0 and 100.
-	*/
-	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
-
-	/*!
-		\brief Mute or unmute an active intercom call.
-	*/
-	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
-
-	Q_PROPERTY(ObjectDataModel *externalPlaces READ getExternalPlaces CONSTANT)
-
-	/*!
 		\brief Retrieves a description for the device on the other side of the call.
 	*/
 	Q_PROPERTY(QString talker READ getTalker NOTIFY talkerChanged)
-
-	/*!
-		\brief Whether the current call is SCS or IP
-	*/
-	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
 
 	/*!
 		\brief Logical event (as reported by the device) for which a ringtone should be played
@@ -241,24 +273,15 @@ public:
 	Q_INVOKABLE void endCall();
 	Q_INVOKABLE void startCall(QString where);
 
-	int getVolume() const;
-	void setVolume(int value);
-	bool getMute() const;
-	void setMute(bool value);
-	ObjectDataModel *getExternalPlaces() const;
 	QString getTalker() const;
-	bool isIpCall() const;
 	Ringtone getRingtone() const;
 
 signals:
-	void volumeChanged();
-	void muteChanged();
 	void incomingCall();
 	void incomingFloorCall();
 	void callEnded();
 	void talkerChanged();
 	void callAnswered();
-	void isIpCallChanged();
 	void ringtoneChanged();
 
 
@@ -267,8 +290,6 @@ protected slots:
 
 protected:
 	QString key;
-	int volume;
-	bool mute;
 
 private:
 	void setRingtone(int vde_ringtone);
@@ -278,10 +299,7 @@ private:
 	bool callActive();
 
 	bool call_active;
-	bool ip_mode;
 	Ringtone ringtone;
-	VideoDoorEntryDevice *dev;
-	ObjectDataModel external_places;
 	QString talker;
 };
 

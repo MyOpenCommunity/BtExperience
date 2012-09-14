@@ -56,11 +56,61 @@ ExternalPlace::ExternalPlace(const QString &_name, int _object_id, const QString
 }
 
 
-CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
+VDEBase::VDEBase(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 {
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
+	volume = 50;
+	mute = false;
+	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
+
+	foreach (ExternalPlace *ep, list)
+		external_places << ep;
+}
+
+int VDEBase::getVolume() const
+{
+	return volume;
+}
+
+void VDEBase::setVolume(int value)
+{
+	// TODO set value on device
+	if (volume == value || value < 0 || value > 100)
+		return;
+	volume = value;
+	emit volumeChanged();
+}
+
+bool VDEBase::getMute() const
+{
+	return mute;
+}
+
+void VDEBase::setMute(bool value)
+{
+	// TODO set value on device
+	if (mute == value)
+		return;
+	mute = value;
+	emit muteChanged();
+}
+
+ObjectDataModel *VDEBase::getExternalPlaces() const
+{
+	// TODO: See the comment on ThermalControlUnit::getModalities
+	return const_cast<ObjectDataModel*>(&external_places);
+}
+
+bool VDEBase::isIpCall() const
+{
+	return ip_mode;
+}
+
+
+CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list, d)
+{
 	// initial values
 	brightness = 50;
 	contrast = 50;
@@ -68,11 +118,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	call_stopped = false;
 	call_active = false;
 	prof_studio = false;
-	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
 	ringtone = ExternalPlace1;
-
-	foreach (ExternalPlace *ep, list)
-		external_places << ep;
 
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
@@ -120,12 +166,6 @@ void CCTV::setSaturation(int value)
 	emit saturationChanged();
 }
 
-ObjectDataModel *CCTV::getExternalPlaces() const
-{
-	// TODO: See the comment on ThermalControlUnit::getModalities
-	return const_cast<ObjectDataModel*>(&external_places);
-}
-
 void CCTV::setAutoOpen(bool newValue)
 {
 	if (newValue == prof_studio)
@@ -133,11 +173,6 @@ void CCTV::setAutoOpen(bool newValue)
 
 	prof_studio = newValue;
 	emit autoOpenChanged();
-}
-
-bool CCTV::isIpCall() const
-{
-	return ip_mode;
 }
 
 CCTV::Ringtone CCTV::getRingtone() const
@@ -357,21 +392,11 @@ bool CCTV::callActive()
 }
 
 
-Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d)
+Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d) : VDEBase(l, d)
 {
-	dev = d;
-	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
-
 	// initial values
-	volume = 50;
-	mute = false;
 	call_active = false;
-	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
 	ringtone = Internal;
-
-	foreach (ExternalPlace *ep, l) {
-		external_places << ep;
-	}
 }
 
 void Intercom::answerCall()
@@ -394,48 +419,9 @@ void Intercom::startCall(QString where)
 	activateCall();
 }
 
-int Intercom::getVolume() const
-{
-	return volume;
-}
-
-void Intercom::setVolume(int value)
-{
-	// TODO set value on device
-	if (volume == value || value < 0 || value > 100)
-		return;
-	volume = value;
-	emit volumeChanged();
-}
-
-bool Intercom::getMute() const
-{
-	return mute;
-}
-
-void Intercom::setMute(bool value)
-{
-	// TODO set value on device
-	if (mute == value)
-		return;
-	mute = value;
-	emit muteChanged();
-}
-
-bool Intercom::isIpCall() const
-{
-	return ip_mode;
-}
-
 Intercom::Ringtone Intercom::getRingtone() const
 {
 	return ringtone;
-}
-
-ObjectDataModel *Intercom::getExternalPlaces() const
-{
-	// TODO: See the comment on ThermalControlUnit::getModalities
-	return const_cast<ObjectDataModel*>(&external_places);
 }
 
 QString Intercom::getTalker() const
