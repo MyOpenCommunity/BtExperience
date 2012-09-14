@@ -148,13 +148,20 @@ Item {
         // antintrusion
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.isAntintrusionInserted
-            defaultImage: global.guiSettings.skin === 0 ?
-                              "../images/toolbar/icon_burlgar alarm-on.svg" :
-                              "../images/toolbar/icon_burlgar alarm-on_p.svg"
-            pressedImage:  global.guiSettings.skin === 0 ?
-                               "../images/toolbar/icon_burlgar alarm-on_p.svg" :
-                               "../images/toolbar/icon_burlgar alarm-on.svg"
+            defaultImage: EventManager.eventManager.isAntintrusionInserted ?
+                              (global.guiSettings.skin === 0 ?
+                                   "../images/toolbar/icon_burlgar alarm-on.svg" :
+                                   "../images/toolbar/icon_burlgar alarm-on_p.svg") :
+                              (global.guiSettings.skin === 0 ?
+                                   "../images/toolbar/icon_alarm-disabled.svg" :
+                                   "../images/toolbar/icon_alarm-disabled_p.svg")
+            pressedImage:  EventManager.eventManager.isAntintrusionInserted ?
+                               (global.guiSettings.skin === 0 ?
+                                    "../images/toolbar/icon_burlgar alarm-on_p.svg" :
+                                    "../images/toolbar/icon_burlgar alarm-on.svg") :
+                               (global.guiSettings.skin === 0 ?
+                                    "../images/toolbar/icon_alarm-disabled_p.svg" :
+                                    "../images/toolbar/icon_alarm-disabled.svg")
             onClicked: Stack.openPage(Script.getTarget(Container.IdAntintrusion))
         }
 
