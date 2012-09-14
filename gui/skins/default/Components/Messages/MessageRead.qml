@@ -1,10 +1,23 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 
 
 MenuColumn {
     id: column
+
+    ObjectModel {
+        // this must stay here otherwise theModel cannot be constructed properly
+        id: objectModel
+        filters: [{objectId: ObjectInterface.IdMessages}]
+    }
+
+    MediaModel {
+        id: theModel
+        source: objectModel.getObject(0).messages
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
 
     SvgImage {
         id: imageBg
@@ -43,7 +56,7 @@ MenuColumn {
         }
 
         onClicked: {
-            console.log("delete pressed")
+            theModel.remove(column.dataModel)
             column.closeColumn()
         }
         status: 0

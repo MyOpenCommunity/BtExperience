@@ -16,13 +16,13 @@ Item {
     ButtonTextImageThreeStates {
         id: bg
 
-        text: itemObject.sender
-        defaultImageBg: itemObject.isRead ? "../../images/common/btn_messaggio.svg" : "../../images/common/btn_messaggio_non_letto.svg"
+        text: itemObject === undefined ? "" : itemObject.sender
+        defaultImageBg: itemObject === undefined ? "../../images/common/btn_messaggio.svg" : (itemObject.isRead ? "../../images/common/btn_messaggio.svg" : "../../images/common/btn_messaggio_non_letto.svg")
         pressedImageBg: "../../images/common/btn_messaggio_P.svg"
         selectedImageBg: "../../images/common/btn_messaggio_S.svg"
         shadowImage: "../../images/common/ombra_btn_messaggio.svg"
-        defaultImage: itemObject.isRead ? "../../images/common/ico_messaggio_letto.svg" : "../../images/common/ico_messaggio_non_letto.svg"
-        pressedImage: itemObject.isRead ? "../../images/common/ico_messaggio_letto.svg" : "../../images/common/ico_messaggio_non_letto.svg"
+        defaultImage: itemObject === undefined ? "../../images/common/ico_messaggio_letto.svg" : (itemObject.isRead ? "../../images/common/ico_messaggio_letto.svg" : "../../images/common/ico_messaggio_non_letto.svg")
+        pressedImage: itemObject === undefined ? "../../images/common/ico_messaggio_letto.svg" : (itemObject.isRead ? "../../images/common/ico_messaggio_letto.svg" : "../../images/common/ico_messaggio_non_letto.svg")
         imageAnchors.right: undefined
         textAnchors.leftMargin: bg.width / 100 * 8.70
 
