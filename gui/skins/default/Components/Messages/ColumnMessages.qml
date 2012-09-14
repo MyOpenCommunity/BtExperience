@@ -67,6 +67,7 @@ MenuColumn {
             }
         }
 
+        onButtonClicked: theModel.clear()
         model: theModel
     }
 
