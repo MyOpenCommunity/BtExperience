@@ -21,6 +21,7 @@
 #include "test_messages_system.h"
 #include "messagessystem.h"
 #include "../devices/message_device.h"
+#include "objecttester.h"
 
 #include <QtTest/QtTest>
 
@@ -49,11 +50,24 @@ void TestMessagesSystem::testNewMessage()
 	DeviceValues v;
 	v[MessageDevice::DIM_MESSAGE].setValue(message);
 
+	ObjectTester t(obj, SignalList()
+				   << SIGNAL(messagesChanged())
+				   << SIGNAL(unreadMessagesChanged()));
 	obj->valueReceived(v);
+	t.checkSignals();
 
 	QCOMPARE(obj->message_list.getCount(), 1);
 	MessageItem *it = static_cast<MessageItem *>(obj->message_list.getObject(0));
 	QCOMPARE(it->getText(), message.text);
 	QCOMPARE(it->getDateTime(), message.datetime);
 	QCOMPARE(it->isRead(), false);
+	QCOMPARE(it->getSender(), QString());
+
+	QCOMPARE(obj->getUnreadMessages(), 1);
+
+	ObjectTester t2(obj, SIGNAL(unreadMessagesChanged()));
+	it->setRead();
+	t2.checkSignals();
+
+	QCOMPARE(obj->getUnreadMessages(), 0);
 }

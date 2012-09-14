@@ -64,9 +64,31 @@ void MessagesSystem::valueReceived(const DeviceValues &values_list)
 	// TODO: limit message number to MESSAGES_MAX
 	// TODO: popup pages in GUI must be closed if a message is removed this way.
 
-	message_list << new MessageItem(message.text, message.datetime);
+	// TODO add isRead and sender info!
+	MessageItem *newMessage = new MessageItem(message.text, message.datetime);
+	connect(newMessage, SIGNAL(readChanged()), SLOT(updateUnreadMessagesIfChanged()));
+	message_list << newMessage;
 	emit messagesChanged();
+
+	updateUnreadMessagesIfChanged();
+
 	// TODO: save messages
+}
+
+void MessagesSystem::updateUnreadMessagesIfChanged()
+{
+	int unreads = 0;
+	for (int i = 0; i < message_list.getCount(); ++i)
+	{
+		MessageItem *pMsg = static_cast<MessageItem *>(message_list.getObject(i));
+		if (!pMsg->isRead())
+			++unreads;
+	}
+	if (unreads != unreadMessages)
+	{
+		unreadMessages = unreads;
+		emit unreadMessagesChanged();
+	}
 }
 
 MediaDataModel *MessagesSystem::getMessages() const

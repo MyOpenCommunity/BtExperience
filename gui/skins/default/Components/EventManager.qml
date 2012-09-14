@@ -12,9 +12,9 @@ Item {
     property int alarms: privateProps.alarmsModel === undefined ? 0 : alarmsModel.count
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
+    property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
 
     property int clocks: 0 // TODO link to C++ model!
-    property int messages: 0 // TODO link to C++ model!
     property bool autoAnswer: false // TODO link to C++ model!
     property bool vdeMute: false // TODO link to C++ model!
     property bool scenarioRecording: false // TODO link to C++ model and check if property exists!
@@ -64,7 +64,8 @@ Item {
         filters: [
             {objectId: ObjectInterface.IdCCTV},
             {objectId: ObjectInterface.IdIntercom},
-            {objectId: ObjectInterface.IdAntintrusionSystem}
+            {objectId: ObjectInterface.IdAntintrusionSystem},
+            {objectId: ObjectInterface.IdMessages}
         ]
         Component.onCompleted: {
             for (var i = 0; i < listModel.count; ++i) {
@@ -81,6 +82,9 @@ Item {
                     antintrusionConnection.target = obj
                     privateProps.antintrusionModel = obj
                     privateProps.alarmsModel = obj.alarms
+                    break
+                case ObjectInterface.IdMessages:
+                    privateProps.messagesModel = obj
                     break
                 }
             }
@@ -161,6 +165,7 @@ Item {
 
         property variant alarmsModel: undefined
         property variant antintrusionModel: undefined
+        property variant messagesModel: undefined
         property variant vctModel: undefined
     }
 }

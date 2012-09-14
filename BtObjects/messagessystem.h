@@ -33,7 +33,7 @@ public:
 	QString getSender() const { return sender; }
 
 	bool isRead() const;
-	void setRead(bool read);
+	void setRead(bool read = true);
 
 signals:
 	void readChanged();
@@ -46,8 +46,10 @@ private:
 
 class MessagesSystem : public ObjectInterface
 {
-friend class TestMessagesSystem;
+	friend class TestMessagesSystem;
 	Q_OBJECT
+
+	Q_PROPERTY(int unreadMessages READ getUnreadMessages NOTIFY unreadMessagesChanged)
 
 	Q_PROPERTY(MediaDataModel *messages READ getMessages NOTIFY messagesChanged)
 
@@ -60,16 +62,20 @@ public:
 	}
 
 	MediaDataModel *getMessages() const;
+	int getUnreadMessages() const { return unreadMessages; }
 
 signals:
 	void messagesChanged();
+	void unreadMessagesChanged();
 
 private slots:
 	virtual void valueReceived(const DeviceValues &values_list);
+	void updateUnreadMessagesIfChanged();
 
 private:
 	MessageDevice *dev;
 	MediaDataModel message_list;
+	int unreadMessages;
 };
 
 #endif // MESSAGESOBJECTS_H

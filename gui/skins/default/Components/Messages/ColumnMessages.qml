@@ -61,7 +61,10 @@ MenuColumn {
         delegate: ColumnMessagesDelegate {
             itemObject: theModel.getObject(index)
 
-            onDelegateClicked: column.loadColumn(messageRead, itemObject.sender, itemObject)
+            onDelegateClicked: {
+                itemObject.isRead = true
+                column.loadColumn(messageRead, itemObject.sender, itemObject)
+            }
         }
 
         model: theModel
