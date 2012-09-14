@@ -249,7 +249,7 @@ signals:
 	void beepChanged();
 	void ringExclusionChanged();
 
-protected:
+private:
 	int brightness;
 	int contrast;
 	Currency currency;
