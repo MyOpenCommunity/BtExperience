@@ -29,6 +29,8 @@ RingtoneManager::RingtoneManager(QString ringtone_file, MultiMediaPlayer *_playe
 				QFileInfo(dirname, filename).absoluteFilePath();
 		}
 	}
+	else
+		qFatal("Failed to load ringtone file %s", qPrintable(ringtone_file));
 }
 
 QString RingtoneManager::ringtoneFromIndex(int index) const
