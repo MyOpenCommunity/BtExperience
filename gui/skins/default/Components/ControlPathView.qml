@@ -67,23 +67,20 @@ PathView {
     }
 
     function visibleItems() {
-        if (control.model.count < 4)
+        var result = control.model.count
+        if (result <= 3)
             return 3
-        if (control.model.count < 5)
-            return 4
-        if (!sevenCards)
-            return 5
-        if (control.model.count < 7)
-            return 5
-        return 7
+        if (result > 7)
+            return 7
+        return result
     }
 
     pathItemCount: control.visibleItems()
     highlightRangeMode: PathView.StrictlyEnforceRange
-    // 4 cards is a special case; we need to change to 0.49 to make the 4th
+    // 4 and 6 cards are special cases; we need to change to 0.49 to make the 4th (6th)
     // card visible
-    preferredHighlightBegin: control.model.count === 4 ? 0.49 : 0.5
-    preferredHighlightEnd: control.model.count === 4 ? 0.49 : 0.5
+    preferredHighlightBegin: (pathItemCount % 2) === 0 ? 0.49 : 0.5
+    preferredHighlightEnd: (pathItemCount % 2) === 0 ? 0.49 : 0.5
     onFlickStarted: currentPressed = -1
     onMovementEnded: currentPressed = -1
 
