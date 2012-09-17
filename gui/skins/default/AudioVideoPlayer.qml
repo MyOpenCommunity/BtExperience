@@ -248,6 +248,7 @@ Page {
         pressedImage: "images/common/ico_mute.svg"
         onClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
         status: 0
+        visible: player.isVideo
         anchors {
             top: prevButton.top
             right: buttonMinus.left
