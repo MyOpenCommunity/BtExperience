@@ -126,10 +126,10 @@ public:
 	QString getCurrentTime() const;
 	QString getTotalTime() const;
 	QString getTrackName() const;
-	int getVolume() const { return volume; }
+	int getVolume() const;
 	void setVolume(int newValue);
 	int getPercentage() const { return percentage; }
-	bool getMute() const { return mute; }
+	bool getMute() const;
 	void setMute(bool newValue);
 
 signals:
@@ -150,9 +150,8 @@ private:
 
 	MultiMediaPlayer *media_player;
 	bool user_track_change_request;
-	int volume, percentage;
+	int percentage;
 	QVariant current_time_s, total_time_s;
-	bool mute;
 };
 
 #endif // PLAYER_H

@@ -16,6 +16,8 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	output_state = AudioOutputStopped;
 	mediaplayer_output_mode = MediaPlayer::OutputAll;
 	seek_tick_count = 0;
+	volume = 100;
+	mute = false;
 
 	connect(player, SIGNAL(mplayerStarted()), SLOT(mplayerStarted()));
 	connect(player, SIGNAL(mplayerResumed()), SLOT(mplayerResumed()));
@@ -62,6 +64,26 @@ MultiMediaPlayer::PlayerState MultiMediaPlayer::getPlayerState() const
 MultiMediaPlayer::AudioOutputState MultiMediaPlayer::getAudioOutputState() const
 {
 	return output_state;
+}
+
+void MultiMediaPlayer::setVolume(int newValue)
+{
+	if (volume == newValue || newValue < 0 || newValue > 100)
+		return; // nothing to do
+
+	// TODO set new volume value on device
+	volume = newValue;
+	emit volumeChanged(volume);
+}
+
+void MultiMediaPlayer::setMute(bool newValue)
+{
+	if (mute == newValue)
+		return; // nothing to do
+
+	// TODO mute/unmute the device
+	mute = newValue;
+	emit muteChanged(mute);
 }
 
 void MultiMediaPlayer::readPlayerInfo()

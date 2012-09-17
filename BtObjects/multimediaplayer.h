@@ -68,6 +68,16 @@ class MultiMediaPlayer : public QObject
 	*/
 	Q_PROPERTY(AudioOutputState audioOutputState READ getAudioOutputState NOTIFY audioOutputStateChanged)
 
+	/*!
+		\brief Set and/or get volume of player (it must be between 0 and 100)
+	*/
+	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
+
+	/*!
+		\brief Set and/or get if player is muted or not
+	*/
+	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
+
 	Q_ENUMS(PlayerState AudioOutputState)
 
 public:
@@ -99,6 +109,10 @@ public:
 	QVariantMap getTrackInfo() const;
 	PlayerState getPlayerState() const;
 	AudioOutputState getAudioOutputState() const;
+	int getVolume() const { return volume; }
+	void setVolume(int newValue);
+	bool getMute() const { return mute; }
+	void setMute(bool newValue);
 
 	/*!
 		\brief Set the global template for command line arguments
@@ -157,6 +171,8 @@ signals:
 	void trackInfoChanged(QVariantMap info);
 	void playerStateChanged(MultiMediaPlayer::PlayerState state);
 	void audioOutputStateChanged(MultiMediaPlayer::AudioOutputState state);
+	void volumeChanged(int volume);
+	void muteChanged(bool mute);
 
 private slots:
 	void readPlayerInfo();
@@ -184,6 +200,8 @@ private:
 	AudioOutputState output_state;
 	int seek_tick_count;
 	int mediaplayer_output_mode;
+	int volume;
+	bool mute;
 };
 
 Q_DECLARE_METATYPE(MultiMediaPlayer::PlayerState)
