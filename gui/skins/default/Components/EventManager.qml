@@ -155,11 +155,9 @@ Item {
         onNewAlarm: {
             // we generate a screensaver "event" every time an alarm arrives
             eventManager.screensaverEvent()
-            Stack.currentPage().showAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
+            var p = privateProps.getPopupPage()
+            p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
             global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
-
-            Stack.openPage("PopupPage.qml")
-            Stack.currentPage().addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
         }
     }
 
@@ -170,5 +168,18 @@ Item {
         property variant antintrusionModel: undefined
         property variant messagesModel: undefined
         property variant vctModel: undefined
+
+        function getPopupPage() {
+            // gets current page
+            var p = Stack.currentPage()
+            // if current page is vct, pops it
+            if (p._pageName === "VideoCamera")
+                Stack.popPage()
+            // if actual page is not popup one, pushes it
+            if (p._pageName !== "PopupPage")
+                Stack.openPage("PopupPage.qml")
+            // now, popup page is on top of the stack, returns it
+            return Stack.currentPage()
+        }
     }
 }

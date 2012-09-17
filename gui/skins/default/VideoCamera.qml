@@ -114,7 +114,10 @@ Page {
     QtObject {
         id: privateProps
 
+        property bool normalEndCall: false
+
         function endCall(callback) {
+            normalEndCall = true
             if (callback)
                 camera.callEnded.disconnect(Stack.popPage)
             camera.endCall()
@@ -138,5 +141,13 @@ Page {
         camera.callEnded.connect(Stack.popPage)
         toolbar.z = 1
         navigationBar.z = 1
+    }
+
+    Component.onDestruction: {
+        if (privateProps.normalEndCall)
+            return
+
+        camera.callEnded.disconnect(Stack.popPage)
+        camera.endCall()
     }
 }

@@ -56,7 +56,8 @@ BasePage {
         popupLoader.item.line3 = data.line3
         popupLoader.item.confirmText = data.confirmText
         popupLoader.item.dismissText = data.dismissText
-        page.opacity = 1
+        if (page.opacity === 0)
+            page.opacity = 1
     }
 
     // needed to translate antintrusion names in alarm popups
