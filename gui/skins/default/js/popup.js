@@ -36,3 +36,31 @@ function addAlarmPopup(type, zone, dateTime) {
 
     return data
 }
+
+/**
+  * Confirms the current popup.
+  *
+  * Confirms the current popup. Based on popup type navigates to the right
+  * application page.
+  */
+function confirm() {
+    // TODO to be implemented
+}
+
+/**
+  * Dismisses the current popup.
+  *
+  * Dismisses the current popup. Based on popup type this may mean several things:
+  *     - pass to the next popup of the same type
+  *     - pass to first popup of different type
+  *     - close popup page
+  *
+  * Returns data to show when a popup must be shown, otherwise returns undefined
+  */
+function dismiss() {
+    if (_alarmPopups.length > 0) {
+        _alarmPopups.pop()
+        return _alarmPopups[_alarmPopups.length - 1]
+    }
+    return undefined
+}

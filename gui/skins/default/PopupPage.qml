@@ -20,10 +20,8 @@ BasePage {
         ControlPopup {
             id: popupControl
 
-            onDismissClicked: {
-                popupLoader.sourceComponent = undefined
-                Stack.popPage()
-            }
+            onDismissClicked: privateProps.updatePopup(PopupLogic.dismiss())
+            onConfirmClicked: privateProps.updatePopup(PopupLogic.confirm())
         }
     }
 
@@ -38,7 +36,9 @@ BasePage {
 
     function addAlarmPopup(type, zone, number, dateTime) {
         var dt = DateTime.format(dateTime)["time"] + " - " + DateTime.format(dateTime)["date"]
+
         var t = privateProps.antintrusionNames.get('ALARM_TYPE', type)
+
         var z = ""
         // computes zone description
         if (type === AntintrusionAlarm.Technical)
@@ -47,22 +47,35 @@ BasePage {
             z = qsTr("zone") + " " + zone.name
         else
             z = qsTr("zone") + " " + number
-        var data = PopupLogic.addAlarmPopup(t, z, dt)
-        if (page.opacity === 1)
-            page.opacity = 0
-        popupLoader.item.title = data.title
-        popupLoader.item.line1 = data.line1
-        popupLoader.item.line2 = data.line2
-        popupLoader.item.line3 = data.line3
-        popupLoader.item.confirmText = data.confirmText
-        popupLoader.item.dismissText = data.dismissText
-        if (page.opacity === 0)
-            page.opacity = 1
+
+        privateProps.updatePopup(PopupLogic.addAlarmPopup(t, z, dt))
     }
 
     // needed to translate antintrusion names in alarm popups
     QtObject {
         id: privateProps
-        property QtObject antintrusionNames: AntintrusionNames { }
+
+        property QtObject antintrusionNames: AntintrusionNames {}
+
+        function updatePopup(data) {
+            if (data === undefined) {
+                popupLoader.sourceComponent = undefined
+                Stack.popPage()
+                return
+            }
+
+//            if (page.opacity > 0)
+//                page.opacity = 0
+
+            popupLoader.item.title = data.title
+            popupLoader.item.line1 = data.line1
+            popupLoader.item.line2 = data.line2
+            popupLoader.item.line3 = data.line3
+            popupLoader.item.confirmText = data.confirmText
+            popupLoader.item.dismissText = data.dismissText
+
+            if (page.opacity < 1)
+                page.opacity = 1
+        }
     }
 }
