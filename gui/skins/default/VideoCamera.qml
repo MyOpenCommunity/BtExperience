@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 import Components.VideoDoorEntry 1.0 // some controls are VDE specific
@@ -14,6 +15,20 @@ Page {
 
     source: "images/videocitofonia.jpg"
     showSystemsButton: true
+
+    Connections {
+        id: connDataObject
+        target: videoCamera.camera
+        onMuteChanged: {
+            if (connDataObject.target.mute)
+                global.audioState.enableState(AudioState.Mute)
+            else
+                global.audioState.disableState(AudioState.Mute)
+        }
+        onVolumeChanged: {
+            global.audioState.setVolume(connDataObject.target.volume)
+        }
+    }
 
     ControlCallManager {
         id: controlCallManager
@@ -81,6 +96,7 @@ Page {
     ControlSliderMute {
         id: controlVolume
 
+        property variant dataObject: videoCamera.camera
         description: qsTr("volume")
         percentage: 50
         anchors {
@@ -92,9 +108,9 @@ Page {
             top: controlVideo.top
             topMargin: 35 + 10
         }
-        onPlusClicked: console.log("onVolume+ to be implemented")
-        onMinusClicked: console.log("onVolume- to be implemented")
-        onMuteClicked: console.log("onMute to be implemented")
+        onPlusClicked: if (dataObject) dataObject.volume += 5
+        onMinusClicked: if (dataObject) dataObject.volume -= 5
+        onMuteClicked: if (dataObject) dataObject.mute = !dataObject.mute
     }
 
     ControlPullDownVideo {

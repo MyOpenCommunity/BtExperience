@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 
@@ -538,4 +539,17 @@ Page {
             }
         }
     ]
+
+    Connections {
+        target: mediaPlayer
+        onVolumeChanged: {
+            global.audioState.setVolume(mediaPlayer.volume)
+        }
+        onMuteChanged: {
+            if (mediaPlayer.mute)
+                global.audioState.enableState(AudioState.LocalPlaybackMute)
+            else
+                global.audioState.disableState(AudioState.LocalPlaybackMute)
+        }
+    }
 }
