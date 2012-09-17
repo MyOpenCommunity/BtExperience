@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QTime>
 
+#define VOLUME_INCREMENT 5
+
 
 PlayListPlayer::PlayListPlayer(QObject *parent) :
 	QObject(parent)
@@ -192,13 +194,13 @@ void AudioVideoPlayer::setMute(bool newValue)
 void AudioVideoPlayer::incrementVolume()
 {
 	setMute(false);
-	setVolume(getVolume() + 1);
+	setVolume(getVolume() + VOLUME_INCREMENT);
 }
 
 void AudioVideoPlayer::decrementVolume()
 {
 	setMute(false);
-	setVolume(getVolume() - 1);
+	setVolume(getVolume() - VOLUME_INCREMENT);
 }
 
 void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state)
