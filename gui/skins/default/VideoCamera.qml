@@ -6,7 +6,7 @@ import "js/Stack.js" as Stack
 
 
 Page {
-    id: videoCamera
+    id: control
 
     property QtObject camera: null
 
@@ -30,9 +30,9 @@ Page {
         }
         onLeftClicked: {
             state = "terminate"
-            videoCamera.camera.answerCall()
+            control.camera.answerCall()
         }
-        onRightClicked: privateProps.endCall()
+        onRightClicked: control.endCall()
     }
 
     ControlVideo {
@@ -102,7 +102,7 @@ Page {
         // menu pulls down
         id: controlPullDownVideo
 
-        camera: videoCamera.camera
+        camera: control.camera
         anchors {
             // anchors are set considering that ControlPullDownVideo contains
             // a loader, so its dimensions are not well defined
@@ -111,43 +111,28 @@ Page {
         }
     }
 
-    QtObject {
-        id: privateProps
-
-        property bool normalEndCall: false
-
-        function endCall(callback) {
-            normalEndCall = true
-            if (callback)
-                camera.callEnded.disconnect(Stack.popPage)
-            camera.endCall()
-            if (callback)
-                callback()
-        }
+    function endCall(callback) {
+        if (callback)
+            camera.callEnded.disconnect(Stack.popPage)
+        camera.endCall()
+        if (callback)
+            callback()
     }
 
     // the following functions overwrite the ones in Page to terminate the
     // call when home and back buttons are clicked: this is the reason they
     // are "public"
     function homeButtonClicked() {
-        privateProps.endCall(Stack.backToHome)
+        control.endCall(Stack.backToHome)
     }
 
     function backButtonClicked() {
-        privateProps.endCall(Stack.popPage)
+        control.endCall(Stack.popPage)
     }
 
     Component.onCompleted: {
         camera.callEnded.connect(Stack.popPage)
         toolbar.z = 1
         navigationBar.z = 1
-    }
-
-    Component.onDestruction: {
-        if (privateProps.normalEndCall)
-            return
-
-        camera.callEnded.disconnect(Stack.popPage)
-        camera.endCall()
     }
 }

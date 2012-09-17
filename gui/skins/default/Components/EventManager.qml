@@ -173,8 +173,10 @@ Item {
             // gets current page
             var p = Stack.currentPage()
             // if current page is vct, pops it
-            if (p._pageName === "VideoCamera")
+            if (p._pageName === "VideoCamera") {
+                p.endCall()
                 Stack.popPage()
+            }
             // if actual page is not popup one, pushes it
             if (p._pageName !== "PopupPage")
                 Stack.openPage("PopupPage.qml")
