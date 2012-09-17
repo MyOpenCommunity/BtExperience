@@ -157,6 +157,9 @@ Item {
             eventManager.screensaverEvent()
             Stack.currentPage().showAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
             global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
+
+            Stack.openPage("PopupPage.qml")
+            Stack.currentPage().addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
         }
     }
 
