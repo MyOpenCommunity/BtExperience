@@ -17,6 +17,7 @@ namespace
 		"Beep",
 		"Screensaver",
 		"LocalPlayback",
+		"LocalPlaybackMute",
 		"Ringtone",
 		"VdeRingtone",
 		"ScsVideoCall",
@@ -34,6 +35,7 @@ namespace
 		AudioState::BeepVolume,
 		AudioState::InvalidVolume,
 		AudioState::LocalPlaybackVolume,
+		AudioState::InvalidVolume,
 		AudioState::RingtoneVolume,
 		AudioState::RingtoneVolume,
 		AudioState::VdeCallVolume,
@@ -231,7 +233,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	current_state = new_state;
 	emit stateChanged(old_state, new_state);
 
-	if (new_state == LocalPlayback)
+	if (new_state == LocalPlayback || new_state == LocalPlaybackMute)
 		resumeActivePlayer();
 }
 
@@ -247,7 +249,7 @@ void AudioState::completeTransition(bool state)
 
 void AudioState::checkDirectAudioAccess()
 {
-	bool new_state = false, is_playback = false;
+	bool new_state = false, is_playback = false, is_mute = false;
 
 	foreach (PlayerInfo info, players)
 	{
@@ -257,15 +259,21 @@ void AudioState::checkDirectAudioAccess()
 		if (info.player->getPlayerState() == MultiMediaPlayer::Playing)
 		{
 			if (info.type == MultiMedia)
+			{
 				is_playback = true;
+				is_mute = info.player->getMute();
+			}
 			new_state = true;
 		}
 		else if (info.player->getPlayerState() != MultiMediaPlayer::Stopped && info.temporary_pause)
 		{
 			is_playback = true;
+			is_mute = info.player->getMute();
 		}
 	}
 
+	if (is_mute)
+		enableState(LocalPlaybackMute);
 	if (is_playback)
 		enableState(LocalPlayback);
 
@@ -277,6 +285,8 @@ void AudioState::checkDirectAudioAccess()
 
 	if (!is_playback)
 		disableState(LocalPlayback);
+	if (!is_mute)
+		disableState(LocalPlaybackMute);
 }
 
 void AudioState::changeSoundDiffusionAccess()
@@ -319,7 +329,7 @@ bool AudioState::pauseActivePlayer()
 			}
 			else
 			{
-				if (pending_state == LocalPlayback)
+				if (pending_state == LocalPlayback || pending_state == LocalPlaybackMute)
 					return true;
 
 				qDebug() << "Media player entering temporary pause";

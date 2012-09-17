@@ -24,6 +24,7 @@ public:
 		Beep,
 		Screensaver,
 		LocalPlayback,
+		LocalPlaybackMute,
 		Ringtone,
 		VdeRingtone,
 		ScsVideoCall,
