@@ -12,7 +12,7 @@ Page {
     property int floorUii
 
     function systemsButtonClicked() {
-        Stack.popPage()
+        Stack.backToRoom()
     }
 
     text: roomName

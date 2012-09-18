@@ -163,7 +163,7 @@ Item {
                                (global.guiSettings.skin === GuiSettings.Clear ?
                                     "../images/toolbar/icon_alarm-disabled_p.svg" :
                                     "../images/toolbar/icon_alarm-disabled.svg")
-            onClicked: Stack.pushPage(Script.getTarget(Container.IdAntintrusion))
+            onClicked: Stack.goToPage(Script.getTarget(Container.IdAntintrusion))
         }
 
         // alarm clock

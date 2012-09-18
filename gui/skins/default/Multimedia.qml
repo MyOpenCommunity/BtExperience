@@ -58,7 +58,7 @@ BasePage {
             source: cardView.selectImage(itemObject.itemText)
             label: itemObject.itemText
 
-            onClicked: Stack.pushPage(itemObject.target, itemObject.props)
+            onClicked: Stack.goToPage(itemObject.target, itemObject.props)
         }
         delegateSpacing: 20
         visibleElements: 4

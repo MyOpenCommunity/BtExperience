@@ -235,7 +235,7 @@ Page {
             leftMargin: frameBg.width / 100 * 1.90
         }
 
-        onClicked: Stack.popPage()
+        onClicked: Stack.popPage() // TODO backToPage(pagina folder)
         status: 0
     }
 
