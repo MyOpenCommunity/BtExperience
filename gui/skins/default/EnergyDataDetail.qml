@@ -10,7 +10,7 @@ Page {
     property variant family: null
 
     function systemsButtonClicked() {
-        Stack.showPreviousPage(1)
+        Stack.backToSystem()
     }
 
     showSystemsButton: true

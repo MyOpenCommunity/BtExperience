@@ -12,7 +12,7 @@ Page {
     property variant energyData: undefined
 
     function systemsButtonClicked() {
-        Stack.showPreviousPage(1)
+        Stack.backToSystem()
     }
 
     showSystemsButton: true

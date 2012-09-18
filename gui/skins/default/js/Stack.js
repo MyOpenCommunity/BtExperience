@@ -139,7 +139,7 @@ function currentPage() {
     return stack[stack.length - 1]
 }
 
-function transitionAfterPush() {
+function _transitionAfterPush() {
     var out_index = stack.length - 2
     var in_index = stack.length - 1
     if (out_index >= 0)
@@ -148,7 +148,7 @@ function transitionAfterPush() {
         stack[in_index].pushInStart()
 }
 
-function transitionBeforePop(target_index) {
+function _transitionBeforePop(target_index) {
     var out_index = stack.length - 1
     var in_index = target_index
 
@@ -162,23 +162,23 @@ function _pushPage(page) {
     stack.push(page)
     current_index = stack.length - 1;
     if (stack.length > 1)
-        transitionAfterPush()
+        _transitionAfterPush()
 }
 
-function showPreviousPage(index) {
+function _showPreviousPage(index) {
     if (changing_page == true)
         return
 
     changing_page = true
 
     stack[index].visible = true
-    transitionBeforePop(index)
+    _transitionBeforePop(index)
     current_index = index
 }
 
 function popPage() {
     if (stack.length > 1)
-        showPreviousPage(stack.length - 2)
+        _showPreviousPage(stack.length - 2)
 }
 
 // tries to remove count pages from the stack
@@ -193,11 +193,15 @@ function popPages(count) {
         return
     }
 
-    showPreviousPage(stack.length - count - 1)
+    _showPreviousPage(stack.length - count - 1)
 }
 
 function backToHome() {
-    showPreviousPage(0)
+    _showPreviousPage(0)
+}
+
+function backToSystem() {
+    _showPreviousPage(1)
 }
 
 function changePageDone() {
