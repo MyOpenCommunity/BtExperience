@@ -88,7 +88,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath());
 	if (!fh.exists() || !document.setContent(&fh, &errorMsg, &errorLine, &errorColumn)) {
 		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
-		qFatal(qPrintable(msg));
+		qFatal("%s", qPrintable(msg));
 	}
 
 	bt_global::config = new QHash<GlobalField, QString>();
@@ -152,7 +152,7 @@ void BtObjectsPlugin::parseDevice()
 	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), DEVICE_FILE).absoluteFilePath());
 	if (!fh.exists() || !device.setContent(&fh, &errorMsg, &errorLine, &errorColumn)) {
 		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
-		qFatal(qPrintable(msg));
+		qFatal("%s", qPrintable(msg));
 	}
 
 	QHash<QString, QString> values;
@@ -473,7 +473,7 @@ void BtObjectsPlugin::parseConfig()
 	QDomDocument document;
 	if (!fh.exists() || !document.setContent(&fh, &errorMsg, &errorLine, &errorColumn)) {
 		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
-		qFatal(qPrintable(msg));
+		qFatal("%s", qPrintable(msg));
 	}
 
 	foreach (const QDomNode &container, getChildren(document.documentElement(), "container"))
