@@ -22,6 +22,9 @@ var current_index = -1
 // are we changing page?
 var changing_page = false
 
+// entering page (used as temp if there is a page to be destroyed)
+var entering_page = undefined
+
 
 /*****************************************************************************
   *
@@ -134,6 +137,13 @@ function changePageDone() {
     if (!changing_page)
         return
 
+    if (entering_page) {
+        stack[0].visible = false
+        stack[0].destroy()
+        stack[0] = entering_page
+        entering_page = undefined
+    }
+
     for (var i = 0; i < stack.length; i++) {
         if (i !== current_index)
             stack[i].visible = false
@@ -168,13 +178,10 @@ function _goPage(filename, properties) {
 
     var page = _createPage(filename, properties)
 
-    if (page === undefined)
+    if (!page)
         return current
 
-    if (stack.length === 0)
-        stack.push(page)
-    else
-        stack[0] = page
+    entering_page = page
 
     page.visible = true
     current_index = 0
@@ -214,8 +221,10 @@ function _openPage(filename, properties) {
         return
     }
 
-    page.visible = true
-    _pushPage(page)
+    if (page) {
+        page.visible = true
+        _pushPage(page)
+    }
 
     return page
 }

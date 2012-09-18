@@ -28,7 +28,7 @@ Item {
         // in a JS file operates a literal inclusion, not a real variable
         // sharing
         Stack.mainContainer = container
-        Stack.goToPage("HomePage.qml")
+        Stack.pushPage("HomePage.qml")
     }
 
     FontLoader {

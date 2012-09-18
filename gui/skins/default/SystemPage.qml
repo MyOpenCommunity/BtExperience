@@ -10,7 +10,10 @@ Page {
     property alias currentObject: container.currentObject
     property QtObject names: null
 
+    signal closed
+
     showSystemsButton: true
+    onClosed: systemsButtonClicked()
 
     // The spacing between the buttons on the left and the MenuContainer
     property int containerLeftMargin: systemPage.width / 100 * 2
@@ -42,7 +45,7 @@ Page {
             id: container
             rootColumn: systemPage.rootColumn
             pageObject: systemPage
-            onClosed: Stack.popPage()
+            onClosed: systemPage.closed()
         }
     }
 }
