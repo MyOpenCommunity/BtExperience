@@ -181,6 +181,8 @@ Item {
             if (p._pageName === "VideoCamera") {
                 p.endCall()
                 Stack.popPage()
+                // regets current page
+                p = Stack.currentPage()
             }
             // if actual page is not popup one, pushes it
             if (p._pageName !== "PopupPage")
