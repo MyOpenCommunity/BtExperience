@@ -31,7 +31,7 @@ private:
 	GlobalModels global_models;
 	UiiMapper uii_map;
 	QHash<int, int> uii_to_id;
-	QDomDocument archive;
+	QDomDocument archive, layout;
 
 #if DEBUG
 	QList<int> uui_cache; // to verify that the xml layout config file does not contains ist with the same uii
