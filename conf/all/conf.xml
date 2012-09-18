@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<configuratore>
+<archive>
   <item>
     <id>7</id> <!-- Hardware settings -->
   </item>
@@ -586,4 +586,4 @@
 		<ist uii="9004" descr="Camera 1" where="124" />
 		<ist uii="9005" descr="Camera 2" where="125" />
 	</obj>
-</configuratore>
+</archive>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<configuratore>
+<archive>
 	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="2">
 		<ist uii="1" descr="lamp downstair" where="11#4#01" />
 		<ist uii="2" descr="lamp upstair"  where="12" pul="1" />
@@ -36,5 +36,5 @@
 			<link uii="6" />
 		</ist>
 	</obj>
-</configuratore>
+</archive>
 
