@@ -9,7 +9,7 @@ import "../js/ScreenSaver.js" as ScreenSaver
 Item {
     id: eventManager
 
-    property int alarms: privateProps.alarmsModel === undefined ? 0 : privateProps.alarmsModel.count
+    property int alarms: privateProps.alarmsModel === undefined ? 0 : alarmsObjModel.count
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
@@ -159,6 +159,11 @@ Item {
             p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
             global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
         }
+    }
+
+    ObjectModel {
+        id: alarmsObjModel
+        source: privateProps.alarmsModel
     }
 
     QtObject {
