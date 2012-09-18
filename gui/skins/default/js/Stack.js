@@ -12,13 +12,15 @@ Qt.include("MainContainer.js")
   * variables
   *
   ***************************************************************************/
+
+// stack of pages (when used)
 var stack = []
 
+// stack index of current page
 var current_index = -1
 
+// are we changing page?
 var changing_page = false
-
-var entering_page = undefined
 
 
 /*****************************************************************************
@@ -30,7 +32,7 @@ var entering_page = undefined
 // Create a QML object from a given filename and pushes it on the stack
 function pushPage(filename, properties) {
     if (properties === undefined)
-        properties = {}
+        properties = {"visible": false}
     // automatically set _pageName from component filename
     _addPageName(filename, properties)
     return _openPage(filename, properties)
@@ -65,27 +67,35 @@ function popPages(count) {
 // empties the stack and opens the page passed in; plays push animations
 function goToPage(filename, properties) {
     if (properties === undefined)
-        properties = {}
+        properties = {"visible": false}
+
     var current = currentPage()
-    _goPage(filename, properties)
-    if (current)
+    var entering = _goPage(filename, properties)
+
+    if (current && (entering === undefined || entering._pageName !== current._pageName))
         current.pushOutStart()
-    if (entering_page)
-        entering_page.pushInStart()
-    return entering_page
+
+    if (entering && (current === undefined || entering._pageName !== current._pageName))
+        entering.pushInStart()
+
+    return entering
 }
 
 // empties the stack and opens the page passed in; plays pop animations
 function backToPage(filename, properties) {
     if (properties === undefined)
-        properties = {}
+        properties = {"visible": false}
+
     var current = currentPage()
-    _goPage(filename, properties)
-    if (current)
+    var entering = _goPage(filename, properties)
+
+    if (current && (entering === undefined || entering._pageName !== current._pageName))
         current.popOutStart()
-    if (entering_page)
-        entering_page.popInStart()
-    return entering_page
+
+    if (entering && (current === undefined || entering._pageName !== current._pageName))
+        entering.popInStart()
+
+    return entering
 }
 
 // returns a reference to current page
@@ -124,21 +134,17 @@ function changePageDone() {
     if (!changing_page)
         return
 
-    // if entering_page is undefined we are in push/pop case
-    if (entering_page === undefined) {
-        for (var i = 0; i < stack.length; i++) {
-            if (i !== current_index)
-                stack[i].visible = false
+    for (var i = 0; i < stack.length; i++) {
+        if (i !== current_index)
+            stack[i].visible = false
 
-            if (i > current_index)
-                stack[i].destroy()
-        }
-
-        stack.length = current_index + 1
+        if (i > current_index)
+            stack[i].destroy()
     }
 
+    stack.length = current_index + 1
+
     changing_page = false
-    entering_page = undefined
 
     logDebug("Opening page: " + stack[current_index]._pageName)
 }
@@ -152,30 +158,32 @@ function changePageDone() {
 
 // goes to a page (without animations
 function _goPage(filename, properties) {
+    var current = currentPage()
+
+    if (current && current._pageName === _getName(filename)) {
+        if (current.closeAll) // closes all menus if closeAll is defined on page
+            current.closeAll()
+        return current
+    }
+
     var page = _createPage(filename, properties)
 
     if (page === undefined)
-        return
+        return current
 
-    var current = currentPage()
-
-    if (current && current._pageName === page._pageName) {
-        if (page.closeAll) // closes all menus if closeAll is defined on page
-            page.closeAll()
-        return
-    }
-
-    if (current)
-        stack[0] = page
-    else
+    if (stack.length === 0)
         stack.push(page)
+    else
+        stack[0] = page
 
+    page.visible = true
     current_index = 0
-    entering_page = page
+
+    return page
 }
 
 function _addPageName(filename, properties) {
-    var page_name = filename.split('.')[0]
+    var page_name = _getName(filename)
     if (properties['_pageName'] === undefined)
         properties['_pageName'] = page_name
 }
@@ -201,10 +209,12 @@ function _openPage(filename, properties) {
     var current = currentPage()
     var page = _createPage(filename, properties)
 
-    if (current && current._pageName === page._pageName) {
+    if (current && page && current._pageName === page._pageName) {
+        page.destroy()
         return
     }
 
+    page.visible = true
     _pushPage(page)
 
     return page
@@ -337,4 +347,17 @@ function _showPreviousPage(index) {
     stack[index].visible = true
     _transitionBeforePop(index)
     current_index = index
+}
+
+function _getName(filename) {
+    return filename.split('.')[0]
+}
+
+function __logStack__() {
+    console.log("__________________________ __logStack__ _____________________________")
+    console.log("stack: "+stack)
+    console.log("length: "+stack.length)
+    for (var i = 0; i < stack.length; ++i) {
+        console.log(i+": "+stack[i])
+    }
 }
