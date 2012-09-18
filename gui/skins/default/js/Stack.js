@@ -153,6 +153,10 @@ function changePageDone() {
 // goes to a page (without animations
 function _goPage(filename, properties) {
     var page = _createPage(filename, properties)
+
+    if (page === undefined)
+        return
+
     var current = currentPage()
 
     if (current && current._pageName === page._pageName) {
@@ -194,7 +198,12 @@ function _skipperFilename(filename) {
 
 // Create a QML object from a given filename and push it on the stack
 function _openPage(filename, properties) {
+    var current = currentPage()
     var page = _createPage(filename, properties)
+
+    if (current && current._pageName === page._pageName) {
+        return
+    }
 
     _pushPage(page)
 
