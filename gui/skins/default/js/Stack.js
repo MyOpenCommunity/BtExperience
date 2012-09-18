@@ -130,7 +130,7 @@ function _openPage(filename, properties) {
         return null
     }
 
-    pushPage(page)
+    _pushPage(page)
     _deleteObjects(deletingObjects)
     return page
 }
@@ -158,7 +158,7 @@ function transitionBeforePop(target_index) {
         stack[in_index].popInStart()
 }
 
-function pushPage(page) {
+function _pushPage(page) {
     stack.push(page)
     current_index = stack.length - 1;
     if (stack.length > 1)
