@@ -27,7 +27,7 @@ MenuColumn {
                 if (model.component === undefined) {
                     itemList.currentIndex = -1
                     column.closeChild()
-                    Stack.openPage(model.target)
+                    Stack.pushPage(model.target)
                 }
                 else
                     column.loadColumn(model.component, model.name)

@@ -22,7 +22,7 @@ MenuColumn {
             onClicked: {
                 if (itemObject.objectId === ObjectInterface.IdAdvancedScenario) {
                     itemObject.reset()
-                    Stack.openPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
+                    Stack.pushPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
                 }
                 else
                     loadColumn(scenario, name, itemObject)

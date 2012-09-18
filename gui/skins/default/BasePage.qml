@@ -74,9 +74,7 @@ Image {
 
     function closeAlarmAndShowLog() {
         closePopup()
-        var currentPage = Stack.currentPage()
-        if (currentPage._pageName !== "Antintrusion")
-            currentPage = Stack.openPage("Antintrusion.qml")
+        var currentPage = Stack.goToPage("Antintrusion.qml")
         currentPage.showLog()
     }
 

@@ -9,7 +9,7 @@ import "../js/ScreenSaver.js" as ScreenSaver
 Item {
     id: eventManager
 
-    property int alarms: privateProps.alarmsModel === undefined ? 0 : alarmsModel.count
+    property int alarms: privateProps.alarmsModel === undefined ? 0 : privateProps.alarmsModel.count
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
@@ -104,7 +104,7 @@ Item {
             console.log("EventManager::vctIncomingCall")
             screensaver.stopScreensaver()
             screensaver.isEnabled = false
-            Stack.openPage("VideoCamera.qml", {"camera": vctConnection.target})
+            Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
         }
         onCallAnswered: {
             if (vctConnection.target.isIpCall)
@@ -179,7 +179,7 @@ Item {
             }
             // if actual page is not popup one, pushes it
             if (p._pageName !== "PopupPage")
-                Stack.openPage("PopupPage.qml")
+                Stack.pushPage("PopupPage.qml")
             // now, popup page is on top of the stack, returns it
             return Stack.currentPage()
         }

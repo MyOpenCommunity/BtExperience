@@ -323,7 +323,7 @@ Item {
         }
         onClicked: {
             if (page !== "")
-                Stack.openPage(page, {'urlString': address})
+                Stack.pushPage(page, {'urlString': address})
             bgQuick.clicked()
         }
     }

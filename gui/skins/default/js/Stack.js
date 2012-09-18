@@ -1,30 +1,179 @@
 // This declaration makes the javascript code share the execution context between
 // different qml files.
-
 .pragma library
+
+
 Qt.include("logging.js")
 Qt.include("MainContainer.js")
 
+
+/*****************************************************************************
+  *
+  * variables
+  *
+  ***************************************************************************/
 var stack = []
 
 var current_index = -1
 
 var changing_page = false
 
+var entering_page = undefined
 
-// Create a QML object from a given filename and push it on the stack
-function openPage(filename, properties) {
+
+/*****************************************************************************
+  *
+  * public API
+  *
+  ***************************************************************************/
+
+// Create a QML object from a given filename and pushes it on the stack
+function pushPage(filename, properties) {
     if (properties === undefined)
         properties = {}
     // automatically set _pageName from component filename
-    _addPageName(properties, filename)
+    _addPageName(filename, properties)
     return _openPage(filename, properties)
 }
 
-function _addPageName(props, filename) {
+// pops a page from the stack; if only one page remains, returns to home page
+function popPage() {
+    if (stack.length > 1) {
+        _showPreviousPage(stack.length - 2)
+        return
+    }
+
+    if (stack.length === 1)
+        backToHome()
+}
+
+// tries to remove count pages from the stack
+// if count is bigger than the number of stack pages, removes all except the home
+// if count is less or equal to zero does nothing
+function popPages(count) {
+    if (count <= 0) // nothing to do
+        return
+
+    if (count >= stack.length) {
+        backToHome()
+        return
+    }
+
+    _showPreviousPage(stack.length - count - 1)
+}
+
+// empties the stack and opens the page passed in; plays push animations
+function goToPage(filename, properties) {
+    if (properties === undefined)
+        properties = {}
+    var current = currentPage()
+    _goPage(filename, properties)
+    if (current)
+        current.pushOutStart()
+    if (entering_page)
+        entering_page.pushInStart()
+    return entering_page
+}
+
+// empties the stack and opens the page passed in; plays pop animations
+function backToPage(filename, properties) {
+    if (properties === undefined)
+        properties = {}
+    var current = currentPage()
+    _goPage(filename, properties)
+    if (current)
+        current.popOutStart()
+    if (entering_page)
+        entering_page.popInStart()
+    return entering_page
+}
+
+// returns a reference to current page
+function currentPage() {
+    return stack[stack.length - 1]
+}
+
+// returns to home page
+function backToHome() {
+    backToPage("HomePage.qml")
+}
+
+// returns to systems page
+function backToSystem() {
+    backToPage("Systems.qml")
+}
+
+// returns to rooms page
+function backToRoom() {
+    backToPage("Rooms.qml")
+}
+
+// returns to multimedia page
+function backToMultimedia() {
+    backToPage("Multimedia.qml")
+}
+
+// returns to options page
+function backToOptions() {
+    backToPage("Settings.qml")
+}
+
+// called when transitions end, it must set right stack state
+function changePageDone() {
+    // This function is called twice on each page change, small optimization
+    if (!changing_page)
+        return
+
+    // if entering_page is undefined we are in push/pop case
+    if (entering_page === undefined) {
+        for (var i = 0; i < stack.length; i++) {
+            if (i !== current_index)
+                stack[i].visible = false
+
+            if (i > current_index)
+                stack[i].destroy()
+        }
+
+        stack.length = current_index + 1
+    }
+
+    changing_page = false
+    entering_page = undefined
+
+    logDebug("Opening page: " + stack[current_index]._pageName)
+}
+
+
+/*****************************************************************************
+  *
+  * private API
+  *
+  ***************************************************************************/
+
+// goes to a page (without animations
+function _goPage(filename, properties) {
+    var page = _createPage(filename, properties)
+    var current = currentPage()
+
+    if (current && current._pageName === page._pageName) {
+        if (page.closeAll) // closes all menus if closeAll is defined on page
+            page.closeAll()
+        return
+    }
+
+    if (current)
+        stack[0] = page
+    else
+        stack.push(page)
+
+    current_index = 0
+    entering_page = page
+}
+
+function _addPageName(filename, properties) {
     var page_name = filename.split('.')[0]
-    if (props['_pageName'] === undefined)
-        props['_pageName'] = page_name
+    if (properties['_pageName'] === undefined)
+        properties['_pageName'] = page_name
 }
 
 function _deleteObjects(list) {
@@ -45,6 +194,15 @@ function _skipperFilename(filename) {
 
 // Create a QML object from a given filename and push it on the stack
 function _openPage(filename, properties) {
+    var page = _createPage(filename, properties)
+
+    _pushPage(page)
+
+    return page
+}
+
+// Create a QML object from a given filename
+function _createPage(filename, properties) {
     if (changing_page == true)
         return
 
@@ -109,7 +267,7 @@ function _openPage(filename, properties) {
     // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
     if (page_component.status === 1) {
         // Properly set _pageName
-        _addPageName(properties, page_filename)
+        _addPageName(page_filename, properties)
         page = page_component.createObject(mainContainer, properties)
         if (page === null) {
             logError('Error on creating the object for the page: ' + filename)
@@ -130,13 +288,9 @@ function _openPage(filename, properties) {
         return null
     }
 
-    _pushPage(page)
     _deleteObjects(deletingObjects)
-    return page
-}
 
-function currentPage() {
-    return stack[stack.length - 1]
+    return page
 }
 
 function _transitionAfterPush() {
@@ -174,49 +328,4 @@ function _showPreviousPage(index) {
     stack[index].visible = true
     _transitionBeforePop(index)
     current_index = index
-}
-
-function popPage() {
-    if (stack.length > 1)
-        _showPreviousPage(stack.length - 2)
-}
-
-// tries to remove count pages from the stack
-// if count is bigger than the number of stack pages, removes all except the home
-// if count is less or equal to zero does nothing
-function popPages(count) {
-    if (count <= 0) // nothing to do
-        return
-
-    if (count >= stack.length) {
-        backToHome()
-        return
-    }
-
-    _showPreviousPage(stack.length - count - 1)
-}
-
-function backToHome() {
-    _showPreviousPage(0)
-}
-
-function backToSystem() {
-    _showPreviousPage(1)
-}
-
-function changePageDone() {
-    // This function is called twice on each page change, small optimization
-    if (!changing_page)
-        return
-
-    for (var i = 0; i < stack.length; i++) {
-        if (i !== current_index)
-            stack[i].visible = false
-
-        if (i > current_index)
-            stack[i].destroy()
-    }
-    stack.length = current_index + 1
-    changing_page = false
-    logDebug("Opening page: " + stack[current_index]._pageName)
 }

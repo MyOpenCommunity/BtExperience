@@ -12,7 +12,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: energiesCounters.getObject(index)
             hasChild: true
-            onClicked: Stack.openPage("EnergyDataDetail.qml", {"family": itemObject})
+            onClicked: Stack.pushPage("EnergyDataDetail.qml", {"family": itemObject})
         }
 
         model: energiesCounters

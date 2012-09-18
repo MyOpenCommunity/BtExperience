@@ -163,7 +163,7 @@ Item {
                                (global.guiSettings.skin === GuiSettings.Clear ?
                                     "../images/toolbar/icon_alarm-disabled_p.svg" :
                                     "../images/toolbar/icon_alarm-disabled.svg")
-            onClicked: Stack.openPage(Script.getTarget(Container.IdAntintrusion))
+            onClicked: Stack.pushPage(Script.getTarget(Container.IdAntintrusion))
         }
 
         // alarm clock
@@ -229,9 +229,7 @@ Item {
                               "../images/toolbar/icon_alarm_p.svg" :
                               "../images/toolbar/icon_alarm.svg"
             onClicked: {
-                var currentPage = Stack.currentPage()
-                if (currentPage._pageName !== "Antintrusion")
-                    currentPage = Stack.openPage("Antintrusion.qml")
+                var currentPage = Stack.goToPage("Antintrusion.qml")
                 currentPage.showLog()
             }
         }
@@ -282,7 +280,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_new-message_p.svg" :
                               "../images/toolbar/icon_new-message.svg"
-            onClicked: Stack.openPage(Script.getTarget(Container.IdMessages))
+            onClicked: Stack.goToPage(Script.getTarget(Container.IdMessages))
         }
 
         // recording

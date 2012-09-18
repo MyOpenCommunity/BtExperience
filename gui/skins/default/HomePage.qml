@@ -173,7 +173,7 @@ BasePage {
 
                 BeepingMouseArea {
                     anchors.fill: parent
-                    onClicked: Stack.openPage('Profile.qml', {'profile': itemDelegate.itemObject})
+                    onClicked: Stack.goToPage('Profile.qml', {'profile': itemDelegate.itemObject})
                     onPressed: itemDelegate.PathView.view.currentPressed = index
                     onReleased: itemDelegate.PathView.view.currentPressed = -1
                 }
@@ -253,7 +253,7 @@ BasePage {
                                                                "images/home/home_menu_bg_top_left.svg"
                 icon: "images/home/home_menu_icon_rooms.svg"
                 text: qsTr("rooms")
-                onClicked: Stack.openPage("Rooms.qml")
+                onClicked: Stack.goToPage("Rooms.qml")
             }
 
             ButtonHomePageLink {
@@ -263,7 +263,7 @@ BasePage {
                                                                "images/home/home_menu_bg_top_right.svg"
                 icon: "images/home/home_menu_icon_systems.svg"
                 text: qsTr("systems")
-                onClicked: Stack.openPage("Systems.qml")
+                onClicked: Stack.goToPage("Systems.qml")
             }
 
             ButtonHomePageLink {
@@ -273,7 +273,7 @@ BasePage {
                                                                "images/home/home_menu_bg_bottom_left.svg"
                 icon: "images/home/home_menu_icon_options.svg"
                 text: qsTr("options")
-                onClicked: Stack.openPage("Settings.qml")
+                onClicked: Stack.goToPage("Settings.qml")
             }
 
             ButtonHomePageLink {
@@ -283,7 +283,7 @@ BasePage {
                                                                "images/home/home_menu_bg_bottom_right.svg"
                 icon: "images/home/home_menu_icon_multimedia.svg"
                 text: qsTr("multimedia")
-                onClicked: Stack.openPage("Multimedia.qml")
+                onClicked: Stack.goToPage("Multimedia.qml")
             }
         }
     }

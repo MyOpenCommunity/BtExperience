@@ -54,7 +54,7 @@ BasePage {
             property variant itemObject: roomsModel.getObject(index)
             label: itemObject.description
 
-            onClicked: Stack.openPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
+            onClicked: Stack.pushPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
         }
         delegateSpacing: 20
         visibleElements: 4

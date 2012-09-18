@@ -185,17 +185,17 @@ MenuColumn {
                     // the index we need is the absolute index in the unfiltered model;
                     // the delegate index property is relative to actual page, so let's
                     // make some math to compute the right value
-                    Stack.openPage("AudioVideoPlayer.qml", {"model": theModel, "index": i, "isVideo": false, "upnp": column.upnp})
+                    Stack.pushPage("AudioVideoPlayer.qml", {"model": theModel, "index": i, "isVideo": false, "upnp": column.upnp})
                     break
                 }
                 case FileObject.Image:
                 {
-                    Stack.openPage("PhotoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
+                    Stack.pushPage("PhotoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
                     break
                 }
                 case FileObject.Video:
                 {
-                    Stack.openPage("AudioVideoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
+                    Stack.pushPage("AudioVideoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
                     break
                 }
                 case FileObject.Directory:

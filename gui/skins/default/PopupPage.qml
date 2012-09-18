@@ -65,15 +65,8 @@ BasePage {
             }
 
             if (data === "Antintrusion") {
-                // navigate to Antintrusion page
-                // TODO write new code
                 closePopup()
-                var currentPage = Stack.currentPage()
-                console.log("page: "+currentPage)
-                while (currentPage._pageName === "PopupPage")
-                    currentPage = Stack.currentPage()
-                if (currentPage._pageName !== "Antintrusion")
-                    currentPage = Stack.openPage("Antintrusion.qml")
+                var currentPage = Stack.goToPage("Antintrusion.qml")
                 currentPage.showLog()
             }
         }

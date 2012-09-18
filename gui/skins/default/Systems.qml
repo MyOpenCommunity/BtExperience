@@ -42,7 +42,7 @@ Page {
                 source: itemObject.image
                 label: itemObject.description
 
-                onClicked: Stack.openPage(Script.getTarget(itemObject.containerId))
+                onClicked: Stack.pushPage(Script.getTarget(itemObject.containerId))
             }
 
             delegateSpacing: 20
@@ -61,7 +61,7 @@ Page {
                 source: itemObject.image
                 label: itemObject.description
 
-                onClicked: Stack.openPage(Script.getTarget(itemObject.containerId))
+                onClicked: Stack.pushPage(Script.getTarget(itemObject.containerId))
             }
 
             model: systemsModel
