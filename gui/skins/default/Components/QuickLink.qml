@@ -9,8 +9,8 @@ Item {
     id: bgQuick
 
     property alias imageSource: icon.source
-    property string text: ""
-    property string address: "www.corriere.it"
+    property string text: itemObject.name
+    property string address: itemObject.address
     property string page: "Browser.qml"
     property bool editable: true
     property variant itemObject
