@@ -20,8 +20,8 @@ BasePage {
         ControlPopup {
             id: popupControl
 
-            onDismissClicked: privateProps.updatePopup(PopupLogic.dismiss())
-            onConfirmClicked: privateProps.updatePopup(PopupLogic.confirm())
+            onDismissClicked: privateProps.update(PopupLogic.dismiss())
+            onConfirmClicked: privateProps.navigate(PopupLogic.confirm())
         }
     }
 
@@ -48,7 +48,7 @@ BasePage {
         else
             z = qsTr("zone") + " " + number
 
-        privateProps.updatePopup(PopupLogic.addAlarmPopup(t, z, dt))
+        privateProps.update(PopupLogic.addAlarmPopup(t, z, dt))
     }
 
     // needed to translate antintrusion names in alarm popups
@@ -57,10 +57,31 @@ BasePage {
 
         property QtObject antintrusionNames: AntintrusionNames {}
 
-        function updatePopup(data) {
+        function navigate(data) {
+            if (data === "") {
+                // no navigation data, simply closes the popup page
+                closePopup()
+                return
+            }
+
+            if (data === "Antintrusion") {
+                // navigate to Antintrusion page
+                // TODO write new code
+                closePopup()
+                var currentPage = Stack.currentPage()
+                console.log("page: "+currentPage)
+                while (currentPage._pageName === "PopupPage")
+                    currentPage = Stack.currentPage()
+                if (currentPage._pageName !== "Antintrusion")
+                    currentPage = Stack.openPage("Antintrusion.qml")
+                currentPage.showLog()
+            }
+        }
+
+        function update(data) {
             if (data === undefined) {
-                popupLoader.sourceComponent = undefined
-                Stack.popPage()
+                // no data to show, we can pop the page
+                closePopup()
                 return
             }
 
@@ -76,6 +97,11 @@ BasePage {
 
             if (page.opacity < 1)
                 page.opacity = 1
+        }
+
+        function closePopup() {
+            popupLoader.sourceComponent = undefined
+            Stack.popPage()
         }
     }
 }

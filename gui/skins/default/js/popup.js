@@ -42,9 +42,18 @@ function addAlarmPopup(type, zone, dateTime) {
   *
   * Confirms the current popup. Based on popup type navigates to the right
   * application page.
+  *
+  * Returns a string to navigate on the correct application page.
   */
 function confirm() {
-    // TODO to be implemented
+    var p = _alarmPopups.pop() // last popup gives me info on what to do next
+
+    if (p["_kind"] === "alarm") {
+        _alarmPopups = []
+        return "Antintrusion"
+    }
+
+    return ""
 }
 
 /**
@@ -62,5 +71,6 @@ function dismiss() {
         _alarmPopups.pop()
         return _alarmPopups[_alarmPopups.length - 1]
     }
+
     return undefined
 }
