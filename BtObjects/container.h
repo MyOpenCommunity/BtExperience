@@ -3,6 +3,12 @@
 
 #include "iteminterface.h"
 
+class QDomNode;
+class Container;
+
+
+void updateContainerNameImage(QDomNode node, Container *item);
+
 
 /*!
 	\ingroup Core

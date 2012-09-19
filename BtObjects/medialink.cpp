@@ -1,4 +1,22 @@
 #include "medialink.h"
+#include "xml_functions.h"
+
+
+void updateMediaNameAddress(QDomNode node, MediaLink *item)
+{
+	if (!setAttribute(node, "descr", item->getName()))
+		qWarning("Attribute descr not found in XML node");
+	if (!setAttribute(node, "url", item->getAddress()))
+		qWarning("Attribute url not found in XML node");
+}
+
+void updateMediaPosition(QDomNode node, MediaLink *item)
+{
+	if (!setAttribute(node, "x", QString::number(item->getPosition().x())))
+		qWarning("Attribute x not found in XML node");
+	if (!setAttribute(node, "y", QString::number(item->getPosition().y())))
+		qWarning("Attribute y not found in XML node");
+}
 
 
 MediaLink::MediaLink(int container_id, MediaType _type, QString _name, QString _address, QPoint _position)
@@ -8,6 +26,10 @@ MediaLink::MediaLink(int container_id, MediaType _type, QString _name, QString _
 	name = _name;
 	address = _address;
 	position = _position;
+
+	connect(this, SIGNAL(nameChanged(QString)), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(addressChanged(QString)), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(positionChanged(QPointF)), this, SIGNAL(persistItem()));
 }
 
 MediaLink::MediaType MediaLink::getType() const

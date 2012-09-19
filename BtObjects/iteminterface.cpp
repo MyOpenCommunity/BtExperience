@@ -1,4 +1,5 @@
 #include "iteminterface.h"
+#include "xml_functions.h"
 
 
 ItemInterface::ItemInterface(QObject *parent) :

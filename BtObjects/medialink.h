@@ -5,6 +5,13 @@
 
 #include <QPoint>
 
+class QDomNode;
+class MediaLink;
+
+
+void updateMediaNameAddress(QDomNode node, MediaLink *item);
+void updateMediaPosition(QDomNode node, MediaLink *item);
+
 
 /*!
 	\ingroup Core
