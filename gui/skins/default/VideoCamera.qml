@@ -127,34 +127,41 @@ Page {
         }
     }
 
-    function endCall(callback, page) {
-        if (callback)
-            camera.callEnded.disconnect(Stack.popPage)
+    function endCall() {
+        privateProps.homeClicked = false
         camera.endCall()
-        if (callback) {
-            if (page)
-                callback(page)
-            else
-                callback()
-        }
     }
 
     // the following functions overwrite the ones in Page to terminate the
     // call when home and back buttons are clicked: this is the reason they
     // are "public"
     function homeButtonClicked() {
-        control.endCall(Stack.backToHome)
+        privateProps.homeClicked = true
+        control.endCall()
     }
 
     function backButtonClicked() {
-        if (control.camera.autoSwitch)
-            control.endCall(Stack.goToPage, "VideoDoorEntry.qml")
+        privateProps.homeClicked = false
+        control.endCall()
+    }
+
+    function callEndedCallback() {
+        if (privateProps.homeClicked)
+            Stack.backToHome()
+        else if (control.camera.autoSwitch)
+            Stack.goToPage("VideoDoorEntry.qml")
         else
-            control.endCall(Stack.popPage)
+            Stack.popPage()
+    }
+
+    QtObject {
+        id: privateProps
+
+        property bool homeClicked: false
     }
 
     Component.onCompleted: {
-        camera.callEnded.connect(Stack.popPage)
+        camera.callEnded.connect(control.callEndedCallback)
         toolbar.z = 1
         navigationBar.z = 1
     }
