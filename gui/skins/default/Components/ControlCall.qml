@@ -37,6 +37,9 @@ SvgImage {
                 control.state = privateProps.oldState
             }
         }
+        onVolumeChanged: {
+            global.audioState.setVolume(connDataObject.target.volume)
+        }
     }
 
     ButtonTextImageThreeStates {

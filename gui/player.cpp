@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QTime>
 
+#define VOLUME_INCREMENT 5
+
 
 PlayListPlayer::PlayListPlayer(QObject *parent) :
 	QObject(parent)
@@ -128,8 +130,6 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	PlayListPlayer(parent)
 {
 	user_track_change_request = false;
-	volume = 100;
-	mute = false;
 	current_time_s = total_time_s = percentage = 0;
 
 	media_player = new MultiMediaPlayer();
@@ -137,6 +137,8 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 			SLOT(handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState)));
 	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SLOT(trackInfoChanged()));
 	connect(media_player, SIGNAL(currentSourceChanged(QString)), SIGNAL(trackNameChanged()));
+	connect(media_player, SIGNAL(volumeChanged(int)), SIGNAL(volumeChanged()));
+	connect(media_player, SIGNAL(muteChanged(bool)), SIGNAL(muteChanged()));
 
 	connect(this, SIGNAL(currentChanged()), SLOT(play()));
 }
@@ -169,36 +171,36 @@ void AudioVideoPlayer::terminate()
 	media_player->stop();
 }
 
+int AudioVideoPlayer::getVolume() const
+{
+	return media_player->getVolume();
+}
+
 void AudioVideoPlayer::setVolume(int newValue)
 {
-	if (volume == newValue || newValue < 0 || newValue > 100)
-		return; // nothing to do
+	media_player->setVolume(newValue);
+}
 
-	// TODO set new volume value on device
-	volume = newValue;
-	emit volumeChanged();
+bool AudioVideoPlayer::getMute() const
+{
+	return media_player->getMute();
 }
 
 void AudioVideoPlayer::setMute(bool newValue)
 {
-	if (mute == newValue)
-		return; // nothing to do
-
-	// TODO mute/unmute the device
-	mute = newValue;
-	emit muteChanged();
+	media_player->setMute(newValue);
 }
 
 void AudioVideoPlayer::incrementVolume()
 {
 	setMute(false);
-	setVolume(getVolume() + 1);
+	setVolume(getVolume() + VOLUME_INCREMENT);
 }
 
 void AudioVideoPlayer::decrementVolume()
 {
 	setMute(false);
-	setVolume(getVolume() - 1);
+	setVolume(getVolume() - VOLUME_INCREMENT);
 }
 
 void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state)

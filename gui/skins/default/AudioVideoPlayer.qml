@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 
@@ -248,11 +249,15 @@ Page {
         pressedImage: "images/common/ico_mute.svg"
         onClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
         status: 0
+        visible: player.isVideo
         anchors {
             top: prevButton.top
             right: buttonMinus.left
             rightMargin: frameBg.width / 100 * 1.90
         }
+        // this binding does not work when loading the page (the button is always in default state)
+        // this is not a problem because player.mediaPlayer.mute should always be false when entering the page)
+        // see playButtonItem if it's necessary to work around this
         state: player.mediaPlayer.mute ? "mute" : ""
 
         states: [
@@ -454,7 +459,12 @@ Page {
     Component.onCompleted: player.mediaPlayer.upnp ?
                                player.mediaPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count) :
                                player.mediaPlayer.generatePlaylistLocal(player.model, player.index, player.model.count)
-    Component.onDestruction: if (player.isVideo) player.mediaPlayer.terminate()
+    Component.onDestruction: {
+        if (player.isVideo) {
+            player.mediaPlayer.terminate()
+            player.mediaPlayer.mute = false
+        }
+    }
 
     states: [
         State {
@@ -529,4 +539,17 @@ Page {
             }
         }
     ]
+
+    Connections {
+        target: mediaPlayer
+        onVolumeChanged: {
+            global.audioState.setVolume(mediaPlayer.volume)
+        }
+        onMuteChanged: {
+            if (mediaPlayer.mute)
+                global.audioState.enableState(AudioState.LocalPlaybackMute)
+            else
+                global.audioState.disableState(AudioState.LocalPlaybackMute)
+        }
+    }
 }
