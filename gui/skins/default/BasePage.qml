@@ -40,42 +40,10 @@ Image {
         }
     }
 
-    // Alarm Popup management and API
-    Component {
-        id: alarmComponent
-        AlarmPopup {
-        }
-    }
-
     function installPopup(sourceComponent) {
         popupLoader.sourceComponent = sourceComponent
         popupLoader.item.closePopup.connect(closePopup)
         page.state = "popup"
-    }
-
-    function showAlarmPopup(type, zone, number, time) {
-        popupLoader.sourceComponent = alarmComponent
-        popupLoader.item.alarmDateTime = DateTime.format(time)["time"] + " - " + DateTime.format(time)["date"]
-        // for location, firstly we have alarm type
-        var location = privateProps.antintrusionNames.get('ALARM_TYPE', type)
-        location += ": "
-        // lastly, we have zone and description (or number if it lacks)
-        if (type === AntintrusionAlarm.Technical)
-            location += qsTr("aux") + " " + number
-        else if (number >= 1 && number <= 8 && zone !== null)
-            location += qsTr("zone") + " " + zone.name
-        else
-            location += qsTr("zone") + " " + number
-        popupLoader.item.alarmLocation = location
-        popupLoader.item.ignoreClicked.connect(closePopup)
-        popupLoader.item.alarmLogClicked.connect(closeAlarmAndShowLog)
-        page.state = "popup"
-    }
-
-    function closeAlarmAndShowLog() {
-        closePopup()
-        var currentPage = Stack.goToPage("Antintrusion.qml")
-        currentPage.showLog()
     }
 
     // needed to translate antintrusion names in popup
