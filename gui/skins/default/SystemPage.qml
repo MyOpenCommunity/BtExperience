@@ -5,6 +5,7 @@ import "js/Stack.js" as Stack
 
 Page {
     id: systemPage
+
     property QtObject rootColumn
     property alias rootObject: container.rootObject
     property alias currentObject: container.currentObject

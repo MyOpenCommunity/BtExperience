@@ -44,6 +44,9 @@ Item {
     property bool enableAnimation: true
     property bool animationRunning: defaultanimation.running
 
+    // menu navigation
+    property string what: pageObject === undefined ? "" : pageObject.what
+
     // Needed to properly set the shadow (MenuShadow) size.
     width: childrenRect.width
     height: childrenRect.height

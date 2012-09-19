@@ -8,14 +8,16 @@ import "js/datetime.js" as DateTime
 
 Image {
     id: page
+
+    property alias popupLoader: popupLoader
+    property alias constants: constants
+    property string what: "" // used for menu navigation
+
     width: 1024
     height: 600
     asynchronous: true
     sourceSize.width: 1024
     sourceSize.height: 600
-
-    property alias popupLoader: popupLoader
-    property alias constants: constants
 
     // Warning: this property is an internal detail, it's not part of the public
     // interface
