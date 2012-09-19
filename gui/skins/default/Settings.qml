@@ -9,9 +9,12 @@ SystemPage {
     text: qsTr("Settings")
     rootColumn: Component { SettingsItems {} }
     names: SettingsNames {}
-    onClosed: Stack.popPage()
 
     function systemsButtonClicked() {
         Stack.backToOptions()
+    }
+
+    function systemPageClosed() {
+        Stack.popPage()
     }
 }

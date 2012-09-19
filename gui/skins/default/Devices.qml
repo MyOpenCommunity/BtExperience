@@ -13,4 +13,8 @@ SystemPage {
     function systemsButtonClicked() {
         Stack.backToMultimedia()
     }
+
+    function systemPageClosed() {
+        Stack.backToMultimedia()
+    }
 }
