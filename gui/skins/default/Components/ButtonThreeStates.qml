@@ -29,8 +29,14 @@ SvgImage {
         anchors.fill: parent
         onClicked: bg.clicked(mouse)
         onPressAndHold: bg.pressAndHold(mouse)
-        // in some cases I have to disable the button to not accept any input
-        visible: bg.enabled
+    }
+
+    Rectangle {
+        z: 1
+        anchors.fill: parent
+        color: "silver"
+        opacity: 0.6
+        visible: bg.enabled === false
     }
 
     UbuntuLightText {

@@ -18,12 +18,63 @@ Item {
         console.log("Implement me.")
     }
 
+    Rectangle {
+        id: gridRect
+        anchors {
+            fill: parent
+            rightMargin: parent.gridRightMargin
+            bottomMargin: parent.gridBottomMargin
+        }
+        color: "black"
+        opacity: 0.6
+        visible: false
+        radius: 10
+
+        Row {
+            anchors.left: parent.left
+            anchors.leftMargin: spacing
+            anchors.top: parent.top
+            height: parent.height
+            Repeater {
+                delegate: SvgImage {
+                    height: parent.height
+                    source: "../images/dashline.svg"
+                    fillMode: Image.Tile
+                }
+                model: moveGrid.columns
+            }
+            spacing: (moveGrid.width / moveGrid.columns) - 2
+        }
+
+        Item {
+            anchors.left: parent.left
+            anchors.top: parent.top
+            width: moveGrid.width
+            height: moveGrid.height
+
+            Repeater {
+                model: moveGrid.rows - 1
+                SvgImage {
+                    width: 1
+                    height: parent.width
+                    rotation: 270
+                    transformOrigin: Item.TopLeft
+                    anchors.top: parent.top
+                    anchors.topMargin: width + (moveGrid.height / moveGrid.rows) * (index + 1)
+                    anchors.left: parent.left
+                    source: "../images/dashline.svg"
+                    fillMode: Image.Tile
+                }
+            }
+        }
+    }
+
     Grid {
         id: moveGrid
         // TODO: do these need to be exposed?
         columns: 18
         rows: 14
-        opacity: 0
+        visible: false
         anchors {
             fill: parent
             rightMargin: bgMoveGrid.gridRightMargin
@@ -33,15 +84,9 @@ Item {
         Repeater {
             model: moveGrid.columns * moveGrid.rows
 
-            delegate: Rectangle {
-                id: rectDelegate
-                color: "transparent"
+            delegate: Item {
                 width: moveGrid.width / moveGrid.columns
                 height: moveGrid.height / moveGrid.rows
-                border {
-                    width: 1
-                    color: "cyan"
-                }
 
                 BeepingMouseArea {
                     anchors.fill: parent
@@ -54,6 +99,7 @@ Item {
                     }
                 }
             }
+
         }
 
         Behavior on opacity {
@@ -61,12 +107,20 @@ Item {
         }
     }
 
+
+
+
     states: [
         State {
             name: "shown"
             PropertyChanges {
                 target: moveGrid
-                opacity: 1
+                visible: true
+            }
+            PropertyChanges {
+                target: gridRect
+                visible: true
+
             }
         }
     ]

@@ -6,27 +6,16 @@ MenuColumn {
     id: column
 
     Column {
-    ControlOnOff {
-        id: button
-        onText: qsTr("start")
-        offText: qsTr("stop")
-        onClicked: {
-            if (newStatus)
-                column.dataModel.start()
-            else
-                column.dataModel.stop()
-        }
-    }
-
-    SvgImage {
-        source: "../../images/common/panel_212x50.svg"
-        UbuntuLightText {
-            id: timing
-
-            anchors.centerIn: parent
-            font.pixelSize: 14
-            color: "white"
-            text: qsTr("enabled")
+        ControlOnOff {
+            id: button
+            onText: qsTr("start")
+            offText: qsTr("stop")
+            onClicked: {
+                if (newStatus)
+                    column.dataModel.start()
+                else
+                    column.dataModel.stop()
+            }
         }
 
         SvgImage {
@@ -59,7 +48,5 @@ MenuColumn {
                 }
             }
         }
-    }
-
     }
 }
