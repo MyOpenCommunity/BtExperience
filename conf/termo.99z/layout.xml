@@ -1,6 +1,6 @@
 <layout>
 	<container id="8" descr="thermal regulation">
-		<ist uii="1">
+		<ist uii="301">
 			<link uii="2001" />
 			<link uii="2011" />
 			<link uii="2012" />

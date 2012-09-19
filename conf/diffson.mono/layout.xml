@@ -10,7 +10,7 @@
 
 <layout>
 	<container id="10" descr="sound diffusion">
-		<ist uii="10" img="images/systems/diffusione-sonora.jpg">
+		<ist uii="310" img="images/systems/diffusione-sonora.jpg">
 		</ist>
 	</container>
 </layout>

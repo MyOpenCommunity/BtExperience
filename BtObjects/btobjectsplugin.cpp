@@ -525,6 +525,7 @@ void BtObjectsPlugin::parseMediaLinks(const QDomNode &xml_obj)
 
 		media_link_model << l;
 		uii_map.insert(uii, l);
+		uii_to_id[uii] = id;
 	}
 }
 
@@ -541,6 +542,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 
 		room_model << room;
 		uii_map.insert(room_uii, room);
+		uii_to_id[room_uii] = room_id;
 
 		foreach (const QDomNode &link, getChildren(instance, "link"))
 		{
@@ -578,6 +580,7 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 
 		floor_model << floor;
 		uii_map.insert(floor_uii, floor);
+		uii_to_id[floor_uii] = floor_id;
 
 		foreach (const QDomNode &link, getChildren(instance, "link"))
 		{
@@ -609,6 +612,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 
 		profile_model << profile;
 		uii_map.insert(profile_uii, profile);
+		uii_to_id[profile_uii] = profile_id;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
@@ -658,6 +662,8 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 		Container *system = new Container(system_id, system_uii, v.value("img"), v.value("descr"));
 
 		systems_model << system;
+		uii_map.insert(system_uii, system);
+		uii_to_id[system_uii] = system_id;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
