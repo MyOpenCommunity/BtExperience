@@ -1,6 +1,6 @@
 ﻿<layout>
 	<container id="15" descr="messages">
-		<ist uii="15" img="images/systems/messaggi.jpg">
+		<ist uii="315" img="images/systems/messaggi.jpg">
 		</ist>
 	</container>
 	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
