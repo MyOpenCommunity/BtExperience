@@ -26,7 +26,7 @@ Item {
         anchors.right: parent.right
 
         source: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/toolbar_bg_top.svg":
-                                                imagesPath + "toolbar/toolbar_bg_top_dark.svg"
+                                                                imagesPath + "toolbar/toolbar_bg_top_dark.svg"
         width: parent.width
     }
 
@@ -43,9 +43,9 @@ Item {
                 defaultImageBg: imagesPath + "toolbar/bg_home.svg"
                 pressedImageBg: imagesPath + "toolbar/bg_home_pressed.svg"
                 defaultImage: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/icon_home.svg":
-                                                              imagesPath + "toolbar/icon_home_pressed.svg"
+                                                                              imagesPath + "toolbar/icon_home_pressed.svg"
                 pressedImage: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/icon_home_pressed.svg":
-                                                              imagesPath + "toolbar/icon_home.svg"
+                                                                              imagesPath + "toolbar/icon_home.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: toolbar.homeClicked() //doStuff()
@@ -65,7 +65,7 @@ Item {
                 id: temperature
                 text: "19°C"
                 color: global.guiSettings.skin === GuiSettings.Clear ? "black":
-                                                       "white"
+                                                                       "white"
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -84,7 +84,7 @@ Item {
             UbuntuLightText {
                 id: date
                 color: global.guiSettings.skin === GuiSettings.Clear ? "black":
-                                                       "white"
+                                                                       "white"
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -107,7 +107,7 @@ Item {
             UbuntuLightText {
                 id: time
                 color: global.guiSettings.skin === GuiSettings.Clear ? "black":
-                                                       "white"
+                                                                       "white"
                 text: DateTime.format()["time"]
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
@@ -135,7 +135,7 @@ Item {
 
     SvgImage {
         source: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/toolbar_logo_black.svg" :
-                                                imagesPath + "toolbar/toolbar_logo_white.svg"
+                                                                imagesPath + "toolbar/toolbar_logo_white.svg"
         anchors.verticalCenter: toolbar_top.verticalCenter
         anchors.horizontalCenter: toolbar_top.horizontalCenter
     }
@@ -285,16 +285,45 @@ Item {
             onClicked: Stack.openPage(Script.getTarget(Container.IdMessages))
         }
 
-        // recording
-        ToolbarButton {
+        Row {
+            id: recording
+
             height: toolbar_top.height
             visible: EventManager.eventManager.scenarioRecording
-            blinking: EventManager.eventManager.scenarioRecording
-            blinkingInterval: 500
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
-                              "../images/toolbar/icon_scenario-recording.svg" :
-                              "../images/toolbar/icon_scenario-recording_p.svg"
-            enabled: false
+
+            // separator
+            SvgImage {
+                source: "../images/toolbar/toolbar_separator.svg"
+                height: toolbar_top.height
+            }
+
+            SvgImage {
+                source: "../images/toolbar/_bg_alert.svg"
+
+                SvgImage {
+                    id: recordingImg
+
+                    source: global.guiSettings.skin === GuiSettings.Clear ?
+                                "../images/toolbar/icon_scenario-recording.svg" :
+                                "../images/toolbar/icon_scenario-recording_p.svg"
+                    anchors.centerIn: parent
+
+                    Behavior on opacity {
+                        NumberAnimation { duration: blinkingTimer.interval }
+                    }
+                }
+
+                // blinking is managed externally (we still don't have blinking buttons),
+                // but it can be a button feature if used more
+                Timer {
+                    id: blinkingTimer
+
+                    running: recording.visible
+                    interval: 500
+                    repeat: true
+                    onTriggered: recordingImg.opacity === 1 ? recordingImg.opacity = 0 : recordingImg.opacity = 1
+                }
+            }
         }
 
         // energy, stop&go danger
