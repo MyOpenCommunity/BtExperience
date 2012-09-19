@@ -227,15 +227,18 @@ void CCTV::nextCamera()
 void CCTV::callerAddress(QString address)
 {
 	QString addr = address;
+	bool autoswitch = false;
 
 	if (address.at(0) == '@')
 	{
 		addr = addr.mid(1);
-		if (!is_autoswitch)
-		{
-			is_autoswitch = true;
-			emit autoSwitchChanged();
-		}
+		autoswitch = true;
+	}
+
+	if (autoswitch != is_autoswitch)
+	{
+		is_autoswitch = autoswitch;
+		emit autoSwitchChanged();
 	}
 
 	// we want to open the door (only if the call does not come from an autoswitch)
