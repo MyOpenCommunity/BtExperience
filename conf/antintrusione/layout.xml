@@ -1,6 +1,6 @@
 ﻿<layout>
 	<container id="11" descr="antintrusion">
-		<ist uii="11" img="images/systems/carichi.jpg">
+		<ist uii="311" img="images/systems/carichi.jpg">
 		</ist>
 	</container>
 	<container id="100" > <!-- rooms -->

@@ -1,6 +1,6 @@
 ﻿<layout>
 	<container id="4" descr="air conditioning"> <!-- lights system container -->
-		<ist uii="1">
+		<ist uii="301">
 			<link uii="7001" />
 			<link uii="7002" />
 			<link uii="7101" />
