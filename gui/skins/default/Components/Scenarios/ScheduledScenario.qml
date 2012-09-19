@@ -19,47 +19,34 @@ MenuColumn {
         }
 
         SvgImage {
-            source: "../../images/common/panel_212x50.svg"
-            UbuntuLightText {
-                id: timing
+            source: "../../images/common/bg_on-off.svg"
 
-                anchors.centerIn: parent
-                font.pixelSize: 14
-                color: "white"
-                text: qsTr("enabled")
-            }
+            Row {
+                anchors.centerIn: parent // in this way we need no margins
 
-            SvgImage {
-                source: "../../images/common/bg_on-off.svg"
+                ButtonImageThreeStates {
+                    defaultImageBg: "../../images/common/btn_99x35.svg"
+                    pressedImageBg: "../../images/common/btn_99x35_P.svg"
+                    selectedImageBg: "../../images/common/btn_99x35_S.svg"
+                    shadowImage: "../../images/common/btn_shadow_99x35.svg"
+                    defaultImage: "../../images/common/icon_disabled.svg"
+                    pressedImage: "../../images/common/icon_disabled_P.svg"
+                    selectedImage: "../../images/common/icon_disabled_P.svg"
 
-                Row {
-                    anchors.centerIn: parent // in this way we need no margins
+                    onClicked: column.dataModel.disable()
+                }
 
-                    ButtonImageThreeStates {
-                        defaultImageBg: "../../images/common/btn_99x35.svg"
-                        pressedImageBg: "../../images/common/btn_99x35_P.svg"
-                        selectedImageBg: "../../images/common/btn_99x35_S.svg"
-                        shadowImage: "../../images/common/btn_shadow_99x35.svg"
-                        defaultImage: "../../images/common/icon_disabled.svg"
-                        pressedImage: "../../images/common/icon_disabled_P.svg"
-                        selectedImage: "../../images/common/icon_disabled_P.svg"
-
-                        onClicked: column.dataModel.disable()
-                    }
-
-                    ButtonImageThreeStates {
-                        defaultImageBg: "../../images/common/btn_99x35.svg"
-                        pressedImageBg: "../../images/common/btn_99x35_P.svg"
-                        selectedImageBg: "../../images/common/btn_99x35_S.svg"
-                        shadowImage: "../../images/common/btn_shadow_99x35.svg"
-                        defaultImage: "../../images/common/icon_enabled.svg"
-                        pressedImage: "../../images/common/icon_enabled_P.svg"
-                        selectedImage: "../../images/common/icon_enabled_P.svg"
-                        onClicked: column.dataModel.enable()
-                    }
+                ButtonImageThreeStates {
+                    defaultImageBg: "../../images/common/btn_99x35.svg"
+                    pressedImageBg: "../../images/common/btn_99x35_P.svg"
+                    selectedImageBg: "../../images/common/btn_99x35_S.svg"
+                    shadowImage: "../../images/common/btn_shadow_99x35.svg"
+                    defaultImage: "../../images/common/icon_enabled.svg"
+                    pressedImage: "../../images/common/icon_enabled_P.svg"
+                    selectedImage: "../../images/common/icon_enabled_P.svg"
+                    onClicked: column.dataModel.enable()
                 }
             }
         }
-
     }
 }
