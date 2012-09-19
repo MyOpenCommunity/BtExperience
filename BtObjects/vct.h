@@ -148,6 +148,11 @@ class CCTV : public VDEBase
 	*/
 	Q_PROPERTY(Ringtone ringtone READ getRingtone NOTIFY ringtoneChanged)
 
+	/*!
+		\brief Gets if it is an autoswitch call.
+	*/
+	Q_PROPERTY(bool autoSwitch READ getAutoSwitch NOTIFY autoSwitchChanged)
+
 	Q_ENUMS(Ringtone)
 
 public:
@@ -175,6 +180,7 @@ public:
 	bool getAutoOpen() const { return prof_studio; }
 	void setAutoOpen(bool newValue);
 	Ringtone getRingtone() const;
+	bool getAutoSwitch() const { return is_autoswitch; }
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
@@ -198,6 +204,7 @@ signals:
 	void callAnswered();
 	void isIpCallChanged();
 	void ringtoneChanged();
+	void autoSwitchChanged();
 
 
 protected slots:
@@ -220,6 +227,7 @@ private:
 	bool call_stopped;
 	bool call_active;
 	bool prof_studio;
+	bool is_autoswitch;
 	Ringtone ringtone;
 	QProcess video_grabber;
 };

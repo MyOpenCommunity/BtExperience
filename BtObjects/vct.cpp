@@ -119,6 +119,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	call_active = false;
 	prof_studio = false;
 	ringtone = ExternalPlace1;
+	is_autoswitch = false;
 
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
@@ -226,12 +227,15 @@ void CCTV::nextCamera()
 void CCTV::callerAddress(QString address)
 {
 	QString addr = address;
-	bool is_autoswitch = false;
 
 	if (address.at(0) == '@')
 	{
 		addr = addr.mid(1);
-		is_autoswitch = true;
+		if (!is_autoswitch)
+		{
+			is_autoswitch = true;
+			emit autoSwitchChanged();
+		}
 	}
 
 	// we want to open the door (only if the call does not come from an autoswitch)
