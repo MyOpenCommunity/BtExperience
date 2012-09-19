@@ -57,11 +57,12 @@ MenuColumn {
     }
 
     BtObjectsMapping { id: mapping }
+    SystemsModel { id: systemsModel; systemId: Container.IdLights }
 
     ObjectModel {
         id: objectModel
         source: myHomeModels.myHomeObjects
-        containers: [Container.IdLights]
+        containers: [systemsModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }
