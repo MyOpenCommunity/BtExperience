@@ -95,13 +95,6 @@ Page {
                     text: qsTr("day")
                     status: 0
                     enabled: true // TODO: what are the logics to do that?
-                    Rectangle {
-                        z: 1
-                        anchors.fill: parent
-                        color: "silver"
-                        opacity: 0.6
-                        visible: parent.enabled === false
-                    }
                     onClicked: {
                         if (page.state === "dayGraph")
                             return
@@ -124,13 +117,6 @@ Page {
                     text: qsTr("month")
                     status: 1
                     enabled: true // TODO: what are the logics to do that?
-                    Rectangle {
-                        z: 1
-                        anchors.fill: parent
-                        color: "silver"
-                        opacity: 0.6
-                        visible: parent.enabled === false
-                    }
                     onClicked: {
                         if (page.state === "")
                             return
@@ -149,13 +135,6 @@ Page {
                     text: qsTr("year")
                     status: 0
                     enabled: true // TODO: what are the logics to do that?
-                    Rectangle {
-                        z: 1
-                        anchors.fill: parent
-                        color: "silver"
-                        opacity: 0.6
-                        visible: parent.enabled === false
-                    }
                     onClicked: {
                         if (page.state === "yearGraph")
                             return
@@ -199,13 +178,6 @@ Page {
                     status: privateProps.showCurrency === true ? 1 : 0
                     onClicked: privateProps.showCurrency = true
                     enabled: energyData.rate !== null
-                    Rectangle {
-                        z: 1
-                        anchors.fill: parent
-                        color: "silver"
-                        opacity: 0.6
-                        visible: parent.enabled === false
-                    }
                 }
                 ButtonThreeStates {
                     id: consumptionButton
