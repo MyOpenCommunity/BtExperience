@@ -46,6 +46,11 @@ void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_fi
 	// needs file to know file type (needs to select files of the same type)
 	FileObject *file = static_cast<FileObject *>(model->getObject(index));
 
+	// counts how many dir we have; this is needed because folders may be present
+	// in the model, but FileListManager manages only files, so we have to
+	// correct the index value subtracting the number of folders
+	// of course, we suppose dirs are at the beginning...
+	int folder_counter = 0;
 	// creates list of files (of the same type) to play
 	EntryInfoList entry_list;
 	for (int i = 0; i < model->getCount(); ++i)
@@ -53,12 +58,14 @@ void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_fi
 		FileObject *fo = static_cast<FileObject *>(model->getObject(i));
 		if (file->getFileType() == fo->getFileType())
 			entry_list << fo->getEntryInfo();
+		else if (FileObject::Directory == fo->getFileType())
+			++folder_counter;
 	}
 
 	// saves retrieved data in internal play_list and seeks to actual selected file
 	FileListManager *list = static_cast<FileListManager *>(local_list);
 	list->setList(entry_list);
-	list->setCurrentIndex(index);
+	list->setCurrentIndex(index - folder_counter);
 
 	// restores range (model belongs to QML!)
 	model->setRange(oldRange);
