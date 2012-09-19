@@ -65,7 +65,7 @@ BasePage {
             }
 
             if (data === "Antintrusion") {
-                closePopup()
+                popupLoader.sourceComponent = undefined
                 var currentPage = Stack.goToPage("Antintrusion.qml")
                 currentPage.showLog()
             }
@@ -77,9 +77,6 @@ BasePage {
                 closePopup()
                 return
             }
-
-//            if (page.opacity > 0)
-//                page.opacity = 0
 
             popupLoader.item.title = data.title
             popupLoader.item.line1 = data.line1
