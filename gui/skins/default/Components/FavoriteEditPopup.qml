@@ -13,7 +13,7 @@ Item {
         if (favoriteItem !== undefined)
         {
             addressInput.text = favoriteItem.address
-            descriptionInput.text = favoriteItem.text
+            descriptionInput.text = favoriteItem.name
         }
     }
 
@@ -127,7 +127,7 @@ Item {
                 anchors.fill: parent
                 onClicked: {
                     console.log("Confirm editing")
-                    favoriteItem.text = descriptionInput.text
+                    favoriteItem.name = descriptionInput.text
                     favoriteItem.address = addressInput.text
                     closePopup()
                 }

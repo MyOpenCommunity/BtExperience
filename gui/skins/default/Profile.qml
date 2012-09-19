@@ -120,7 +120,7 @@ Page {
 
                 // x and y are absolute coordinates
                 var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
-                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, 'text': text, 'address': address, "itemObject": obj})
+                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": obj})
                 // grid margins are set to maximum quicklink size; this info is used to draw a grid in which
                 // QuickLinks don't overlap with other elements and don't disappear out of screen
                 privateProps.gridRightMargin = privateProps.gridRightMargin < instance.width ? instance.width : privateProps.gridRightMargin
@@ -135,7 +135,7 @@ Page {
 
         function showEditBox(favorite) {
             installPopup(popup)
-            popupLoader.item.favoriteItem = favorite
+            popupLoader.item.favoriteItem = favorite.itemObject
         }
 
         function addNote() {

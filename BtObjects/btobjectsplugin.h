@@ -31,7 +31,7 @@ private:
 	GlobalModels global_models;
 	UiiMapper uii_map;
 	QHash<int, int> uii_to_id;
-	QDomDocument document;
+	QDomDocument archive, layout;
 
 #if DEBUG
 	QList<int> uui_cache; // to verify that the xml layout config file does not contains ist with the same uii
@@ -39,8 +39,8 @@ private:
 
 	// used to parse the made-up configuration we use for testing, remove after switching
 	// to the new configuration
-	void createObjectsFakeConfig(QDomDocument document);
-	void createObjects(QDomDocument document);
+	void createObjectsFakeConfig(QDomDocument archive);
+	void createObjects(QDomDocument archive);
 	void parseConfig();
 	void parseDevice();
 	void parseRooms(const QDomNode &container);

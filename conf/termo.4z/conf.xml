@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<configuratore>
+<archive>
   <item>
     <id>7</id> <!-- Hardware settings -->
   </item>
@@ -47,4 +47,4 @@
 		<ist uii="3051" descr="Sonda non controllata #1" where="116" />
 		<ist uii="3052" descr="Sonda non controllata #2" where="116" />
 	</obj>
-</configuratore>
+</archive>
