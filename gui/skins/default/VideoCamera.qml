@@ -18,7 +18,7 @@ Page {
 
     Connections {
         id: connDataObject
-        target: videoCamera.camera
+        target: control.camera
         onMuteChanged: {
             if (connDataObject.target.mute)
                 global.audioState.enableState(AudioState.Mute)
@@ -96,7 +96,7 @@ Page {
     ControlSliderMute {
         id: controlVolume
 
-        property variant dataObject: videoCamera.camera
+        property variant dataObject: control.camera
         description: qsTr("volume")
         percentage: 50
         anchors {
@@ -127,12 +127,16 @@ Page {
         }
     }
 
-    function endCall(callback) {
+    function endCall(callback, page) {
         if (callback)
             camera.callEnded.disconnect(Stack.popPage)
         camera.endCall()
-        if (callback)
-            callback()
+        if (callback) {
+            if (page)
+                callback(page)
+            else
+                callback()
+        }
     }
 
     // the following functions overwrite the ones in Page to terminate the
@@ -143,7 +147,10 @@ Page {
     }
 
     function backButtonClicked() {
-        control.endCall(Stack.popPage)
+        if (control.camera.autoSwitch)
+            control.endCall(Stack.goToPage, "VideoDoorEntry.qml")
+        else
+            control.endCall(Stack.popPage)
     }
 
     Component.onCompleted: {
