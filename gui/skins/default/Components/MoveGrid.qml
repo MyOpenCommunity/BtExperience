@@ -32,16 +32,18 @@ Item {
 
         Row {
             anchors.left: parent.left
+            anchors.leftMargin: spacing
             anchors.top: parent.top
             height: parent.height
             Repeater {
                 delegate: SvgImage {
                     height: parent.height
                     source: "../images/dashline.svg"
+                    fillMode: Image.Tile
                 }
-                model: moveGrid.columns + 1
+                model: moveGrid.columns
             }
-            spacing: (moveGrid.width / moveGrid.columns) -2
+            spacing: (moveGrid.width / moveGrid.columns) - 2
         }
 
         Item {
@@ -51,16 +53,17 @@ Item {
             height: moveGrid.height
 
             Repeater {
-                model: moveGrid.rows
+                model: moveGrid.rows - 1
                 SvgImage {
                     width: 1
                     height: parent.width
                     rotation: 270
                     transformOrigin: Item.TopLeft
                     anchors.top: parent.top
-                    anchors.topMargin: width + (moveGrid.height / moveGrid.rows) * index
+                    anchors.topMargin: width + (moveGrid.height / moveGrid.rows) * (index + 1)
                     anchors.left: parent.left
                     source: "../images/dashline.svg"
+                    fillMode: Image.Tile
                 }
             }
         }
