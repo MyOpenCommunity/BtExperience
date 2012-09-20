@@ -110,8 +110,7 @@ BasePage {
                         item.editable = false
                     }
                     onLoaded: {
-                        item.text = model.name
-                        item.address = model.address
+                        item.itemObject = model
                     }
                 }
             }

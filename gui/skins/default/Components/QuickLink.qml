@@ -10,7 +10,6 @@ Item {
 
     property alias imageSource: icon.source
     property string text: itemObject.name
-    property string address: itemObject.address
     property string page: "Browser.qml"
     property bool editable: true
     property variant itemObject
@@ -323,7 +322,7 @@ Item {
         }
         onClicked: {
             if (page !== "")
-                Stack.openPage(page, {'urlString': address})
+                Stack.openPage(page, {'urlString': itemObject.address})
             bgQuick.clicked()
         }
     }

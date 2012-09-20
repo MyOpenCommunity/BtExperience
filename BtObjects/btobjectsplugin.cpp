@@ -545,6 +545,7 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 	ObjectInterface *obj_int = qobject_cast<ObjectInterface *>(obj);
 	Container *obj_cont = qobject_cast<Container *>(obj);
 	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
+	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
 
 	if (obj_int)
 	{
@@ -557,13 +558,16 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 	}
 	else if (obj_media)
 	{
-		// TODO special case for cameras (need to update link UII using where as search key)
 		QPair<QDomNode, QString> archive_path = findNodeForUii(findLinkedUiiForObject(obj));
 
 		updateMediaNameAddress(archive_path.first, obj_media);
-		updateMediaPosition(node_path.first, obj_media);
+		updateLinkPosition(node_path.first, obj_media);
 
 		saveConfigFile(archive, archive_path.second);
+	}
+	else if (obj_link)
+	{
+		updateLinkPosition(node_path.first, obj_link);
 	}
 	else
 	{
@@ -582,8 +586,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
 	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
 
-	// TODO camera links need special treatment to map SCS address to camera UII
-	if (obj_media && obj_media->getType() != MediaLink::Camera)
+	if (obj_media)
 	{
 		uii = uii_map.nextUii();
 		uii_map.insert(uii, obj_media);
@@ -620,7 +623,7 @@ void BtObjectsPlugin::removeObject(ItemInterface *obj)
 	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
 
 	// profile media links need to be removed both in archive.xml and in layout.xml
-	if (obj_media && obj_media->getType() != MediaLink::Camera)
+	if (obj_media)
 	{
 		QPair<QDomNode, QString> ist_path = findNodeForUii(uii);
 
@@ -808,7 +811,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 				continue;
 			}
 
-			ObjectLink *item = new ObjectLink(o, x, y);
+			ObjectLink *item = new ObjectLink(o, ObjectLink::BtObject, x, y);
 
 			item->setContainerId(room_uii);
 
@@ -879,9 +882,10 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 			else if (c)
 			{
 				// for surveillance cameras, create a media link object on the fly using
-				// the data from the camera object (we could add a proxy class, but this is simpler)
-				l = new MediaLink(profile_uii, MediaLink::Camera, c->getName(), c->getWhere(), pos);
-				media_link_model << l;
+				// the data from the camera object
+				ObjectLink *o = new ObjectLink(c, ObjectLink::Camera, pos.x(), pos.y());
+				o->setContainerId(profile_uii);
+				media_link_model << o;
 			}
 			else
 			{
@@ -943,6 +947,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
 	qmlRegisterUncreatableType<ItemInterface>(uri, 1, 0, "ItemInterface",
 		"unable to create an ItemInterface instance");
+	qmlRegisterUncreatableType<LinkInterface>(uri, 1, 0, "LinkInterface",
+		"unable to create an LinkInterface instance");
 	qmlRegisterUncreatableType<Container>(uri, 1, 0, "Container",
 		"unable to create an Container instance");
 	qmlRegisterUncreatableType<Note>(uri, 1, 0, "Note",
