@@ -46,7 +46,7 @@ public:
 		BtObject = 4 //!< Generic BtObject link
 	};
 
-	LinkInterface(int container_id, MediaType type, QPoint position);
+	LinkInterface(int container_uii, MediaType type, QPoint position);
 
 	MediaType getType() const;
 	QPointF getPosition() const;

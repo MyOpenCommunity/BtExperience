@@ -14,7 +14,7 @@ void updateLinkPosition(QDomNode node, LinkInterface *item)
 
 LinkInterface::LinkInterface(int container_id, MediaType _type, QPoint _position)
 {
-	setContainerId(container_id);
+	setContainerUii(container_id);
 	type = _type;
 	position = _position;
 

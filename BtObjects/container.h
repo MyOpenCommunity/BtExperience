@@ -37,6 +37,13 @@ class Container : public ItemInterface
 	*/
 	Q_PROPERTY(int uii READ getUii CONSTANT)
 
+	/*!
+		\brief Identifier for this container type.
+
+		Can be used as a filter criterium for MediaModel.
+	*/
+	Q_PROPERTY(int containerId READ getContainerId CONSTANT)
+
 	Q_ENUMS(ContainerId)
 
 public:
@@ -70,6 +77,8 @@ public:
 
 	void setDescription(QString description);
 	QString getDescription() const;
+
+	int getContainerId() const;
 
 signals:
 	void descriptionChanged();

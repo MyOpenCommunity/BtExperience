@@ -441,7 +441,7 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForObject(ItemInterface *item)
 
 	if (obj_media || obj_link)
 	{
-		QPair<QDomNode, QString> container_path = findNodeForUii(item->getContainerId());
+		QPair<QDomNode, QString> container_path = findNodeForUii(item->getContainerUii());
 		int uii = findLinkedUiiForObject(item);
 
 		if (uii == -1)
@@ -581,7 +581,7 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 void BtObjectsPlugin::insertObject(ItemInterface *obj)
 {
 	qDebug() << "BtObjectsPlugin::insertObject" << obj;
-	QPair<QDomNode, QString> container_path = findNodeForUii(obj->getContainerId());
+	QPair<QDomNode, QString> container_path = findNodeForUii(obj->getContainerUii());
 	int uii = -1;
 
 	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
@@ -615,7 +615,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 void BtObjectsPlugin::removeObject(ItemInterface *obj)
 {
 	qDebug() << "BtObjectsPlugin::removeObject" << obj;
-	QPair<QDomNode, QString> container_path = findNodeForUii(obj->getContainerId());
+	QPair<QDomNode, QString> container_path = findNodeForUii(obj->getContainerUii());
 	int uii = findLinkedUiiForObject(obj);
 
 	if (uii == -1 || container_path.first.isNull())
@@ -814,7 +814,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 
 			ObjectLink *item = new ObjectLink(o, ObjectLink::BtObject, x, y);
 
-			item->setContainerId(room_uii);
+			item->setContainerUii(room_uii);
 
 			object_link_model << item;
 		}
@@ -848,7 +848,7 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 				continue;
 			}
 
-			room->setContainerId(floor_uii);
+			room->setContainerUii(floor_uii);
 		}
 	}
 }
@@ -877,7 +877,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 
 			if (l)
 			{
-				l->setContainerId(profile_uii);
+				l->setContainerUii(profile_uii);
 				l->setPosition(pos);
 			}
 			else if (c)
@@ -885,7 +885,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 				// for surveillance cameras, create a media link object on the fly using
 				// the data from the camera object
 				ObjectLink *o = new ObjectLink(c, ObjectLink::Camera, pos.x(), pos.y());
-				o->setContainerId(profile_uii);
+				o->setContainerUii(profile_uii);
 				media_link_model << o;
 			}
 			else
@@ -913,6 +913,9 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 		uii_map.insert(system_uii, system);
 		uii_to_id[system_uii] = system_id;
 
+		// TODO this is a temporary workaround to allow the code in Systems.qml to work
+		system->setContainerUii(system_id);
+
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
@@ -925,7 +928,7 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 				continue;
 			}
 
-			o->setContainerId(system_uii);
+			o->setContainerUii(system_uii);
 		}
 	}
 }

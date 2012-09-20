@@ -13,13 +13,18 @@ void updateContainerNameImage(QDomNode node, Container *item)
 
 Container::Container(int _id, int _uii, QString _image, QString _description)
 {
-	setContainerId(_id);
+	id = _id;
 	uii = _uii;
 	image = _image;
 	description = _description;
 
 	connect(this, SIGNAL(descriptionChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(imageChanged()), this, SIGNAL(persistItem()));
+}
+
+int Container::getContainerId() const
+{
+	return id;
 }
 
 int Container::getUii() const

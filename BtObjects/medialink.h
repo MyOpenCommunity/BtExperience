@@ -31,7 +31,7 @@ class MediaLink : public LinkInterface
 	Q_PROPERTY(QString address READ getAddress WRITE setAddress NOTIFY addressChanged)
 
 public:
-	MediaLink(int container_id, MediaType type, QString name, QString address, QPoint position);
+	MediaLink(int container_uii, MediaType type, QString name, QString address, QPoint position);
 
 	virtual QString getName() const;
 	QString getAddress() const;
