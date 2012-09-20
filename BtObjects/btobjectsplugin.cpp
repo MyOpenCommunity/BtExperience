@@ -87,6 +87,24 @@ namespace
 		}
 	}
 
+	void createContainer(QDomDocument layout, int uii, Container *obj_container)
+	{
+		foreach (QDomNode xml_obj, getChildren(layout.documentElement(), "container"))
+		{
+			if (getIntAttribute(xml_obj, "id") == obj_container->getContainerId())
+			{
+				QDomElement obj_node = layout.createElement("ist");
+
+				obj_node.setAttribute("uii", uii);
+				obj_node.setAttribute("descr", obj_container->getDescription());
+				obj_node.setAttribute("img", obj_container->getImage());
+
+				xml_obj.appendChild(obj_node);
+				break;
+			}
+		}
+	}
+
 	QDomElement createLink(QDomNode parent, int uii)
 	{
 		QDomElement link_node = parent.ownerDocument().createElement("link");
@@ -586,6 +604,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 
 	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
 	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
+	Container *obj_container = qobject_cast<Container *>(obj);
 
 	if (obj_media)
 	{
@@ -595,6 +614,17 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 
 		createMediaLink(archive, uii, obj_media);
 		saveConfigFile(archive, CONF_FILE);
+	}
+	else if (obj_container)
+	{
+		uii = uii_map.nextUii();
+		uii_map.insert(uii, obj_container);
+		uii_to_id[uii] = obj_container->getContainerId();
+
+		createContainer(layout, uii, obj_container);
+
+		if (obj->getContainerUii() == -1)
+			saveConfigFile(layout, LAYOUT_FILE);
 	}
 	else
 		uii = findLinkedUiiForObject(obj);
@@ -616,12 +646,28 @@ void BtObjectsPlugin::removeObject(ItemInterface *obj)
 {
 	qDebug() << "BtObjectsPlugin::removeObject" << obj;
 	QPair<QDomNode, QString> container_path = findNodeForUii(obj->getContainerUii());
-	int uii = findLinkedUiiForObject(obj);
+	int uii = -1;
+
+	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
+	Container *obj_container = qobject_cast<Container *>(obj);
+
+	if (obj_container)
+	{
+		// TODO and what about contained objects?
+		QPair<QDomNode, QString> ist_path = findNodeForUii(obj_container->getUii());
+
+		if (ist_path.first.isNull())
+			qFatal("Can't find item node for uii %d", obj_container->getUii());
+
+		ist_path.first.parentNode().removeChild(ist_path.first);
+
+		saveConfigFile(ist_path.first.ownerDocument(), ist_path.second);
+	}
+	else
+		uii = findLinkedUiiForObject(obj);
 
 	if (uii == -1 || container_path.first.isNull())
 		return;
-
-	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
 
 	// profile media links need to be removed both in archive.xml and in layout.xml
 	if (obj_media)
