@@ -9,7 +9,9 @@ MenuColumn {
         ControlOnOff {
             id: button
             onText: qsTr("start")
+            onEnabled: column.dataModel.hasStart
             offText: qsTr("stop")
+            offEnabled: column.dataModel.hasStop
             onClicked: {
                 if (newStatus)
                     column.dataModel.start()
@@ -32,7 +34,7 @@ MenuColumn {
                     defaultImage: "../../images/common/icon_disabled.svg"
                     pressedImage: "../../images/common/icon_disabled_P.svg"
                     selectedImage: "../../images/common/icon_disabled_P.svg"
-
+                    enabled: column.dataModel.hasDisable
                     onClicked: column.dataModel.disable()
                 }
 
@@ -44,6 +46,7 @@ MenuColumn {
                     defaultImage: "../../images/common/icon_enabled.svg"
                     pressedImage: "../../images/common/icon_enabled_P.svg"
                     selectedImage: "../../images/common/icon_enabled_P.svg"
+                    enabled: column.dataModel.hasEnable
                     onClicked: column.dataModel.enable()
                 }
             }
