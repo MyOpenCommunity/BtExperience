@@ -12,6 +12,7 @@
 #include <QString>
 
 class ControlledProbeDevice;
+class ThermalControlUnit;
 class NonControlledProbeDevice;
 class QDomNode;
 
@@ -118,6 +119,11 @@ class ThermalControlledProbe : public ObjectInterface
 	*/
 	Q_PROPERTY(int maximumManualTemperature READ getMaximumManualTemperature CONSTANT)
 
+	/*!
+		\brief Gets the control unit for this probe
+	*/
+	Q_PROPERTY(ThermalControlUnit *controlUnit READ getControlUnit CONSTANT)
+
 	Q_ENUMS(ProbeStatus CentralType)
 
 public:
@@ -137,7 +143,7 @@ public:
 		CentralUnit4Zones = 1,  /*!< Probe associated to a 4-zone central. */
 	};
 
-	ThermalControlledProbe(QString name, QString key, CentralType centralType, ControlledProbeDevice *d);
+	ThermalControlledProbe(QString name, QString key, ThermalControlUnit *control_unit, ControlledProbeDevice *d);
 
 	virtual int getObjectId() const
 	{
@@ -163,6 +169,8 @@ public:
 
 	CentralType getCentralType() const;
 
+	ThermalControlUnit *getControlUnit() const;
+
 signals:
 	void probeStatusChanged();
 	void temperatureChanged();
@@ -180,8 +188,8 @@ private:
 	QString key;
 	ProbeStatus plant_status, local_status;
 	int setpoint;
-	int temperature, local_offset, minimumManualTemperature, maximumManualTemperature;
-	CentralType central_type;
+	int temperature, local_offset;
+	ThermalControlUnit *control_unit;
 };
 
 
@@ -216,7 +224,7 @@ public:
 		FancoilMax       /*!< Maximum speed */
 	};
 
-	ThermalControlledProbeFancoil(QString name, QString key, CentralType centralType, ControlledProbeDevice *d);
+	ThermalControlledProbeFancoil(QString name, QString key, ThermalControlUnit *control_unit, ControlledProbeDevice *d);
 
 	virtual int getObjectId() const
 	{
