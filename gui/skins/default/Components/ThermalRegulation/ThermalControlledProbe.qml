@@ -110,8 +110,9 @@ MenuColumn {
 
         Column {
             id: rootOffComponent
+            property int speed
+
             ControlLeftRightWithTitle {
-                property int speed
                 title: qsTr("fancoil speed")
                 // fancoil panel is visible only for fancoil probes
                 visible: isFancoil()
@@ -162,8 +163,9 @@ MenuColumn {
         id: antifreezeComponent
         Column {
             id: rootAntifreezeComponent
+            property int speed
+
             ControlLeftRightWithTitle {
-                property int speed
                 title: qsTr("fancoil speed")
                 // fancoil panel is visible only for fancoil probes
                 visible: isFancoil()
