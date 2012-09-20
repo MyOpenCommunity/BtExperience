@@ -11,7 +11,6 @@ Image {
 
     property alias popupLoader: popupLoader
     property alias constants: constants
-    property string what: "" // used for menu navigation
 
     width: 1024
     height: 600
