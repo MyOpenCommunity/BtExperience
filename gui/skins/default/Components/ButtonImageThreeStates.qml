@@ -53,6 +53,9 @@ SvgImage {
         color: "silver"
         opacity: 0.6
         visible: parent.enabled === false
+        MouseArea {
+            anchors.fill: parent
+        }
     }
 
     SvgImage {
