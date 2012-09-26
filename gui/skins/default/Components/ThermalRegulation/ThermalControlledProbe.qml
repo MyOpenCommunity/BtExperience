@@ -56,17 +56,13 @@ MenuColumn {
     function modalitySelected(modality) {
         privateProps.pendingModality = modality
         switch (modality) {
-        case ThermalControlledProbe.Auto:
-            itemLoader.setComponent(autoComponent)
-            break
-        case ThermalControlledProbe.Antifreeze:
-            itemLoader.setComponent(antifreezeComponent)
-            break
         case ThermalControlledProbe.Manual:
             itemLoader.setComponent(manualComponent)
             break
         case ThermalControlledProbe.Off:
-            itemLoader.setComponent(offComponent)
+        case ThermalControlledProbe.Antifreeze:
+        case ThermalControlledProbe.Auto:
+            itemLoader.setComponent(automaticComponent)
             break
         case ThermalControlledProbe.Unknown:
             return
@@ -106,153 +102,50 @@ MenuColumn {
     }
 
     Component {
-        id: offComponent
+        id: automaticComponent
 
         Column {
-            id: rootOffComponent
+            id: rootAutomaticComponent
             property int speed
 
             ControlLeftRightWithTitle {
                 title: qsTr("fancoil speed")
                 // fancoil panel is visible only for fancoil probes
                 visible: isFancoil()
-                text: pageObject.names.get('FANCOIL_SPEED', rootOffComponent.speed)
+                text: pageObject.names.get('FANCOIL_SPEED', rootAutomaticComponent.speed)
                 onLeftClicked: {
-                    if (rootOffComponent.speed <= dataModel.fancoilMinValue)
+                    if (rootAutomaticComponent.speed <= dataModel.fancoilMinValue)
                         return
-                    rootOffComponent.speed -= 1
+                    rootAutomaticComponent.speed -= 1
                 }
                 onRightClicked: {
-                    if (rootOffComponent.speed >= dataModel.fancoilMaxValue)
+                    if (rootAutomaticComponent.speed >= dataModel.fancoilMaxValue)
                         return
-                    rootOffComponent.speed += 1
+                    rootAutomaticComponent.speed += 1
                 }
 
                 Component.onCompleted: {
                     // we want an assignment, not a binding
-                    rootOffComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
+                    rootAutomaticComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
                 }
                 Connections {
                     target: isFancoil() ? column.dataModel : null
-                    onFancoilChanged: rootOffComponent.speed = column.dataModel.fancoil
+                    onFancoilChanged: rootAutomaticComponent.speed = column.dataModel.fancoil
                 }
             }
 
             ButtonOkCancel {
                 // a trick to avoid wrong menu column height computation
-                visible: is99zones
+                visible: is99zones || isFancoil()
                 onVisibleChanged: if (!visible) height = 0
                 onCancelClicked: {
                     if (isFancoil())
-                        rootOffComponent.speed = column.dataModel.fancoil
+                        rootAutomaticComponent.speed = column.dataModel.fancoil
                     column.cancelClicked()
                 }
                 onOkClicked: {
                     if (isFancoil())
-                        column.dataModel.fancoil = rootOffComponent.speed
-                    if (dataModel.probeStatus !== privateProps.pendingModality) {
-                        dataModel.probeStatus = privateProps.pendingModality
-                    }
-                    column.okClicked()
-                }
-            }
-        }
-    }
-
-    Component {
-        id: antifreezeComponent
-        Column {
-            id: rootAntifreezeComponent
-            property int speed
-
-            ControlLeftRightWithTitle {
-                title: qsTr("fancoil speed")
-                // fancoil panel is visible only for fancoil probes
-                visible: isFancoil()
-                text: pageObject.names.get('FANCOIL_SPEED', rootAntifreezeComponent.speed)
-                onLeftClicked: {
-                    if (rootAntifreezeComponent.speed <= dataModel.fancoilMinValue)
-                        return
-                    rootAntifreezeComponent.speed -= 1
-                }
-                onRightClicked: {
-                    if (rootAntifreezeComponent.speed >= dataModel.fancoilMaxValue)
-                        return
-                    rootAntifreezeComponent.speed += 1
-                }
-
-                Component.onCompleted: {
-                    // we want an assignment, not a binding
-                    rootAntifreezeComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
-                }
-                Connections {
-                    target: isFancoil() ? column.dataModel : null
-                    onFancoilChanged: rootAntifreezeComponent.speed = column.dataModel.fancoil
-                }
-            }
-
-            ButtonOkCancel {
-                // a trick to avoid wrong menu column height computation
-                visible: is99zones
-                onVisibleChanged: if (!visible) height = 0
-                onCancelClicked: {
-                    if (isFancoil())
-                        rootAntifreezeComponent.speed = column.dataModel.fancoil
-                    column.cancelClicked()
-                }
-                onOkClicked: {
-                    if (isFancoil())
-                        column.dataModel.fancoil = rootAntifreezeComponent.speed
-                    if (dataModel.probeStatus !== privateProps.pendingModality) {
-                        dataModel.probeStatus = privateProps.pendingModality
-                    }
-                    column.okClicked()
-                }
-            }
-        }
-    }
-
-    Component {
-        id: autoComponent
-        Column {
-            id: rootAutoComponent
-            property int speed
-
-            Component.onCompleted: {
-                // we want an assignment, not a binding
-                rootAutoComponent.speed = isFancoil() ? column.dataModel.fancoil : 0
-            }
-            Connections {
-                target: isFancoil() ? column.dataModel : null
-                onFancoilChanged: rootAutoComponent.speed = column.dataModel.fancoil
-            }
-
-            ControlLeftRightWithTitle {
-                title: qsTr("fancoil speed")
-                // fancoil panel is visible only for fancoil probes
-                visible: isFancoil()
-                text: pageObject.names.get('FANCOIL_SPEED', rootAutoComponent.speed)
-                onLeftClicked: {
-                    if (rootAutoComponent.speed <= dataModel.fancoilMinValue)
-                        return
-                    rootAutoComponent.speed -= 1
-                }
-                onRightClicked: {
-                    if (rootAutoComponent.speed >= dataModel.fancoilMaxValue)
-                        return
-                    rootAutoComponent.speed += 1
-                }
-            }
-
-            ButtonOkCancel {
-                onCancelClicked: {
-                    if (isFancoil())
-                        rootAutoComponent.speed = column.dataModel.fancoil
-                    column.cancelClicked()
-                }
-                onOkClicked: {
-                    if (isFancoil())
-                        column.dataModel.fancoil = rootAutoComponent.speed
+                        column.dataModel.fancoil = rootAutomaticComponent.speed
                     if (dataModel.probeStatus !== privateProps.pendingModality) {
                         dataModel.probeStatus = privateProps.pendingModality
                     }
