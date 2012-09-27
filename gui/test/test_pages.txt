@@ -1,0 +1,11 @@
+Test: page skip
+
+* Use a configuration with only Lighting system defined.
+* In home page, click on Systems button.
+* You are now in the Lighting system page.
+
+Test: back from a system with page skip
+
+* Use a configuration with only Lighting system defined.
+* In home page, click on Systems button. You are now in the Lighting system.
+* Click back: you should go back to home page.
