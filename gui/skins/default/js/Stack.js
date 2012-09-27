@@ -232,7 +232,7 @@ function _openPage(filename, properties) {
 // Create a QML object from a given filename
 function _createPage(filename, properties) {
     if (changing_page == true)
-        return
+        return null
 
     if (stack.length > 0)
         changing_page = true
