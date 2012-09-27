@@ -178,7 +178,7 @@ Page {
             leftMargin: frameBg.height / 100 * 2.15
         }
 
-        onClicked: Stack.popPage() // TODO backToPage(pagina folder)
+        onClicked: Stack.backToPage("Devices.qml")
         status: 0
     }
 

@@ -190,12 +190,12 @@ MenuColumn {
                 }
                 case FileObject.Image:
                 {
-                    Stack.pushPage("PhotoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
+                    Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
                     break
                 }
                 case FileObject.Video:
                 {
-                    Stack.pushPage("AudioVideoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
+                    Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
                     break
                 }
                 case FileObject.Directory:
