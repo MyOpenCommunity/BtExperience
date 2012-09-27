@@ -101,8 +101,17 @@ function backToHome() {
 }
 
 // returns to systems page
-function backToSystem() {
-    backToPage("Systems.qml")
+function backToSystemOrHome() {
+    var ret = _findTargetPage("Systems.qml")
+    if (!ret)
+        return
+
+    // Handle the case of page skippers. If we only have one system and we
+    // press back, using backToPage() will bring us to the same system.
+    if (ret.filename === "Systems.qml")
+        backToPage("Systems.qml")
+    else
+        backToHome()
 }
 
 // returns to rooms page
