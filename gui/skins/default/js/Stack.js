@@ -75,11 +75,12 @@ function goToPage(filename, properties) {
     var current = currentPage()
     var entering = _goPage(filename, properties)
 
-    if (current && (entering === undefined || entering._pageName !== current._pageName))
+    if (current._pageName !== entering._pageName) {
         current.pushOutStart()
-
-    if (entering && (current === undefined || entering._pageName !== current._pageName))
         entering.pushInStart()
+    }
+    else
+        changePageDone()
 
     return entering
 }
@@ -92,11 +93,12 @@ function backToPage(filename, properties) {
     var current = currentPage()
     var entering = _goPage(filename, properties)
 
-    if (current && (entering === undefined || entering._pageName !== current._pageName))
+    if (current._pageName !== entering._pageName) {
         current.popOutStart()
-
-    if (entering && (current === undefined || entering._pageName !== current._pageName))
         entering.popInStart()
+    }
+    else
+        changePageDone()
 
     return entering
 }
@@ -170,6 +172,7 @@ function changePageDone() {
 function _goPage(filename, properties) {
     var current = currentPage()
 
+    logDebug("_goPage(), new page name: " + _getName(filename))
     if (current && current._pageName === _getName(filename)) {
         if (current.closeAll) // closes all menus if closeAll is defined on page
             current.closeAll()
@@ -306,6 +309,7 @@ function _createPage(filename, properties) {
             _deleteObjects(deletingObjects)
             return null
         }
+        logDebug("_createPage(), created page: " + page._pageName)
     }
     // Component.Error
     else if (page_component.status === 3) {
