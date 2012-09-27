@@ -9,3 +9,9 @@ Test: back from a system with page skip
 * Use a configuration with only Lighting system defined.
 * In home page, click on Systems button. You are now in the Lighting system.
 * Click back: you should go back to home page.
+
+Test: back to home from a system with page skip
+
+* Use a configuration with only Lighting system defined.
+* In home page, click on Systems button. You are now in the Lighting system.
+* Click back to Home on the toolbar: you should be in home page now.
