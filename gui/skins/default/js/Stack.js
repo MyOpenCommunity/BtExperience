@@ -219,17 +219,16 @@ function _openPage(filename, properties) {
     return page
 }
 
-// Create a QML object from a given filename
-function _createPage(filename, properties) {
-    if (changing_page == true)
-        return null
+// Find the name of the page to open, considering any skippers
+//
+// \return Undefined if maximum skip steps was reached or an object with the following properties:
+//      - "filename": the path of the page to open
+//      - "properties": the properties to pass to the page
 
-    if (stack.length > 0)
-        changing_page = true
-
-    var page = undefined
+function _findTargetPage(filename, properties) {
     var deletingObjects = []
     var parachute = 0
+    var page_filename = ""
 
     // Implement the "page skip" functionality.
     //
@@ -246,7 +245,7 @@ function _createPage(filename, properties) {
     //     file path, in the same format accepted by Stack.openPage().
     //  "properties": the properties to set into the new page
     while (filename !== "") {
-        var page_filename = filename
+        page_filename = filename
         var skipper_component = Qt.createComponent(_skipperFilename(filename))
         if (skipper_component.status === 1) {
             logDebug("Found page skipper: " + _skipperFilename(filename))
@@ -273,27 +272,44 @@ function _createPage(filename, properties) {
             logError("Maximum number skip pages reached, aborting")
             changePageDone()
             _deleteObjects(deletingObjects)
-            return null
+            return undefined
         }
     }
 
+    _deleteObjects(deletingObjects)
+    return {'filename': page_filename, 'properties': properties}
+}
+
+// Create a QML object from a given filename
+function _createPage(filename, properties) {
+    if (changing_page == true)
+        return null
+
+    if (stack.length > 0)
+        changing_page = true
+
+    var ret = _findTargetPage(filename, properties)
+    if (!ret)
+        return null
+    filename = ret.filename
+    properties = ret.properties
+
     // now, Stack.js is in a js subdir so we have to trick the filename
-    var page_component = Qt.createComponent("../" + page_filename)
+    var page_component = Qt.createComponent("../" + filename)
     // The component status (like the Component.Ready that has 1 as value) is not currently
     // available on js files that uses .pragma library declaration.
     // This should be fixed in the future:
     // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
     if (page_component.status === 1) {
         // Properly set _pageName
-        _addPageName(page_filename, properties)
-        page = page_component.createObject(mainContainer, properties)
+        _addPageName(filename, properties)
+        var page = page_component.createObject(mainContainer, properties)
         if (page === null) {
             logError('Error on creating the object for the page: ' + filename)
             logError('Properties:')
             for (var k in properties)
                 logError('    ' + k + ": " + properties[k])
             changePageDone()
-            _deleteObjects(deletingObjects)
             return null
         }
         logDebug("_createPage(), created page: " + page._pageName)
@@ -303,11 +319,8 @@ function _createPage(filename, properties) {
         logError("Error in creating page component: ")
         logError(page_component.errorString())
         changePageDone()
-        _deleteObjects(deletingObjects)
         return null
     }
-
-    _deleteObjects(deletingObjects)
 
     return page
 }
