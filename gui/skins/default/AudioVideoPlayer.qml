@@ -76,7 +76,10 @@ Page {
             topMargin: frameBg.height / 100 * 1.81
             left: bottomBarBg.left
             leftMargin: frameBg.width / 100 * 2.48
+            right: duration.left
+            rightMargin: 20
         }
+        elide: Text.ElideLeft
     }
 
     UbuntuLightText {
