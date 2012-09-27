@@ -20,7 +20,7 @@ enum ThermalRegulationStateKeys
 	DURATION
 };
 
-QList<ObjectPair> parseZone99(const QDomNode &obj)
+QList<ObjectPair> parseZone99(const QDomNode &obj, ThermalControlUnit *control_unit)
 {
 	QList<ObjectPair> obj_list;
 	XmlObject v(obj);
@@ -34,9 +34,9 @@ QList<ObjectPair> parseZone99(const QDomNode &obj)
 		ControlledProbeDevice *d = bt_global::add_device_to_cache(new ControlledProbeDevice(where, "0", where, ControlledProbeDevice::CENTRAL_99ZONES, fancoil));
 
 		if (fancoil == ControlledProbeDevice::FANCOIL)
-			obj_list << ObjectPair(uii, new ThermalControlledProbeFancoil(v.value("descr"), "0", ThermalControlledProbe::CentralUnit99Zones, d));
+			obj_list << ObjectPair(uii, new ThermalControlledProbeFancoil(v.value("descr"), "0", control_unit, d));
 		else
-			obj_list << ObjectPair(uii, new ThermalControlledProbe(v.value("descr"), "0", ThermalControlledProbe::CentralUnit99Zones, d));
+			obj_list << ObjectPair(uii, new ThermalControlledProbe(v.value("descr"), "0", control_unit, d));
 	}
 	return obj_list;
 }
@@ -56,10 +56,11 @@ QList<ThermalRegulationProgram *> parsePrograms(const QDomNode &parent, QString 
 	return programs;
 }
 
-QList<ObjectPair> parseControlUnit99(const QDomNode &obj)
+QList<ObjectPair> parseControlUnit99(const QDomNode &obj, const QDomNode &zones)
 {
 	QList<ObjectPair> obj_list;
 	XmlObject v(obj);
+	ThermalControlUnit99Zones *cu = 0;
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -67,16 +68,19 @@ QList<ObjectPair> parseControlUnit99(const QDomNode &obj)
 		int uii = getIntAttribute(ist, "uii");
 
 		ThermalDevice99Zones *d = bt_global::add_device_to_cache(new ThermalDevice99Zones("0"));
-		ThermalControlUnit99Zones *cu = new ThermalControlUnit99Zones(v.value("descr"), "0", d);
+		cu = new ThermalControlUnit99Zones(v.value("descr"), "0", d);
 		cu->setPrograms(parsePrograms(ist.firstChildElement("programs"), "program"));
 		cu->setScenarios(parsePrograms(ist.firstChildElement("scenarios"), "scenario"));
 		obj_list << ObjectPair(uii, cu);
 	}
 	Q_ASSERT_X(obj_list.count() == 1, "parseControlUnit99", "Can't have more than one 99-zones control unit");
+
+	obj_list.append(parseZone99(zones, cu));
+
 	return obj_list;
 }
 
-ObjectPair parseZone4(const QDomNode &obj, const QDomNode &ist, QString control_unit_where)
+ObjectPair parseZone4(const QDomNode &obj, const QDomNode &ist, QString control_unit_where, ThermalControlUnit *control_unit)
 {
 	XmlObject v(obj);
 
@@ -87,9 +91,9 @@ ObjectPair parseZone4(const QDomNode &obj, const QDomNode &ist, QString control_
 	ControlledProbeDevice *d = bt_global::add_device_to_cache(new ControlledProbeDevice(where + "#" + control_unit_where, "0#" + control_unit_where, where, ControlledProbeDevice::CENTRAL_4ZONES, fancoil));
 
 	if (fancoil == ControlledProbeDevice::FANCOIL)
-		return ObjectPair(uii, new ThermalControlledProbeFancoil(v.value("descr"), control_unit_where, ThermalControlledProbe::CentralUnit4Zones, d));
+		return ObjectPair(uii, new ThermalControlledProbeFancoil(v.value("descr"), control_unit_where, control_unit, d));
 	else
-		return ObjectPair(uii, new ThermalControlledProbe(v.value("descr"), control_unit_where, ThermalControlledProbe::CentralUnit4Zones, d));
+		return ObjectPair(uii, new ThermalControlledProbe(v.value("descr"), control_unit_where, control_unit, d));
 }
 
 QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNode, QDomNode> > zones)
@@ -118,7 +122,7 @@ QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNo
 				continue;
 			}
 
-			obj_list << parseZone4(zones[zone_uii].first, zones[zone_uii].second, cu_where);
+			obj_list << parseZone4(zones[zone_uii].first, zones[zone_uii].second, cu_where, cu);
 		}
 	}
 	return obj_list;
@@ -201,6 +205,16 @@ ThermalControlUnit::ThermalControlUnitId ThermalControlUnit::getCurrentModalityI
 	return current_modality_index == -1 ?
 				static_cast<ThermalControlUnitId>(-1) :
 				static_cast<ThermalControlUnitId>(modalities.getObject(current_modality_index)->getObjectId());
+}
+
+int ThermalControlUnit::getMinimumManualTemperature() const
+{
+	return bt2Celsius(dev->minimumTemp());
+}
+
+int ThermalControlUnit::getMaximumManualTemperature() const
+{
+	return bt2Celsius(dev->maximumTemp());
 }
 
 void ThermalControlUnit::valueReceived(const DeviceValues &values_list)

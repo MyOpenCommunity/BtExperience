@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
-	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
-	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
-	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
-	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
-	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
-	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
-	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
-	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+	<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">
 ]>
-<svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="33px" height="25px"
-	 viewBox="0 0 33 25" enable-background="new 0 0 33 25" xml:space="preserve">
-<metadata>
-	<sfw  xmlns="&ns_sfw;">
-		<slices></slices>
-		<sliceSourceBounds  width="33" height="25" y="288" x="495" bottomLeftOrigin="true"></sliceSourceBounds>
-	</sfw>
-</metadata>
-<path fill="#FFFFFF" d="M1,1v2L0.322,3.834L1,4.385V25h32V1H1z M29.421,3L16.953,14.576L3,3.24V3H29.421z M12.458,13.695L3,22.311
-	V6.01L12.458,13.695z M3.608,23l9.571-8.719l3.867,3.143L31,4.466v17.025l-8.85-7.925l-0.611,0.684L31,22.719V23H3.608z"/>
-<path d="M0,0v24h32V0H0z M2.641,2h26.718L16,13.577L2.641,2z M11.662,12.663L2,21.464V4.289L11.662,12.663z M12.361,13.27L16,16.423
-	l4.188-3.63l-0.494,0.547L29.287,22H2.776L12.361,13.27z M20.324,12.675L30,4.289V21.41L20.324,12.675z"/>
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+	 x="0px" y="0px" width="20px" height="15px" viewBox="0 0 20 15" overflow="visible" enable-background="new 0 0 20 15"
+	 xml:space="preserve">
+<defs>
+</defs>
+<path fill="#FFFFFF" d="M0,0v15h20V0H0z M18.945,1l-8.621,7.473L1.703,1H18.945z M7.653,7.91L1,13.917V2.144L7.653,7.91z M1.753,14
+	l6.331-5.717l2.24,1.941L12.9,7.992l-0.303,0.334L18.885,14H1.753z M19,13.344l-6.012-5.428L19,2.705V13.344z"/>
 </svg>

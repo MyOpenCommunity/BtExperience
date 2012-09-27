@@ -10,6 +10,7 @@ MenuColumn {
     }
 
     BtObjectsMapping { id: mapping }
+    SystemsModel { id: systemsModel; systemId: Container.IdScenarios }
 
     PaginatorList {
         id: paginator
@@ -32,7 +33,7 @@ MenuColumn {
     ObjectModel {
         id: objectModel
         source: myHomeModels.myHomeObjects
-        containers: [Container.IdScenarios]
+        containers: [systemsModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 

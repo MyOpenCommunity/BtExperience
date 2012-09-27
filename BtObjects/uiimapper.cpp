@@ -10,6 +10,9 @@ void UiiMapper::insert(int uii, QObject *value)
 	connect(value, SIGNAL(destroyed(QObject*)),
 		this, SLOT(elementDestroyed(QObject*)));
 
+	if (uii >= next_uii)
+		next_uii = uii + 1;
+
 	items.insert(uii, value);
 }
 

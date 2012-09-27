@@ -255,22 +255,22 @@ void ScheduledScenario::disable()
 
 bool ScheduledScenario::hasStart() const
 {
-	return start_frame.isEmpty();
+	return !start_frame.isEmpty();
 }
 
 bool ScheduledScenario::hasStop() const
 {
-	return stop_frame.isEmpty();
+	return !stop_frame.isEmpty();
 }
 
 bool ScheduledScenario::hasEnable() const
 {
-	return enable_frame.isEmpty();
+	return !enable_frame.isEmpty();
 }
 
 bool ScheduledScenario::hasDisable() const
 {
-	return disable_frame.isEmpty();
+	return !disable_frame.isEmpty();
 }
 
 

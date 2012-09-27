@@ -3,10 +3,12 @@ import BtObjects 1.0
 import Components 1.0
 import "js/Stack.js" as Stack
 import "js/Systems.js" as Script
+import BtExperience 1.0
 
 Page {
     id: systems
-    source: "images/bg2.jpg"
+    source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
+                                                            "images/home/home_dark.jpg"
 
     text: qsTr("systems")
     showSystemsButton: false

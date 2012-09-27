@@ -1,4 +1,5 @@
 #include "thermalprobes.h"
+#include "thermalobjects.h"
 #include "scaleconversion.h" // bt2Celsius
 #include "probe_device.h"
 #include "thermal_device.h" // for min/max manual temps
@@ -64,28 +65,15 @@ void ThermalNonControlledProbe::valueReceived(const DeviceValues &values_list)
 }
 
 
-ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, CentralType _central_type, ControlledProbeDevice *d)
+ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, ThermalControlUnit *_control_unit, ControlledProbeDevice *d)
 {
 	name = _name;
 	key = _key;
 	plant_status = Unknown;
 	local_status = Normal;
 	temperature = local_offset = 0;
-	central_type = _central_type;
-	// TODO for now, min/max manual temps are retrieved by fake devices
-	if (central_type == CentralUnit99Zones)
-	{
-		ThermalDevice99Zones cu("0");
-		minimumManualTemperature = cu.minimumTemp();
-		maximumManualTemperature = cu.maximumTemp();
-	}
-	else
-	{
-		ThermalDevice4Zones cu("0#1");
-		minimumManualTemperature = cu.minimumTemp();
-		maximumManualTemperature = cu.maximumTemp();
-	}
-	setpoint = (minimumManualTemperature + maximumManualTemperature) / 2;
+	control_unit = _control_unit;
+	setpoint = (getMinimumManualTemperature() + getMaximumManualTemperature()) / 2;
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
@@ -146,7 +134,12 @@ int ThermalControlledProbe::getLocalOffset() const
 
 ThermalControlledProbe::CentralType ThermalControlledProbe::getCentralType() const
 {
-	return central_type;
+	return control_unit->getObjectId() == IdThermalControlUnit4 ? CentralUnit4Zones : CentralUnit99Zones;
+}
+
+ThermalControlUnit *ThermalControlledProbe::getControlUnit() const
+{
+	return control_unit;
 }
 
 int ThermalControlledProbe::getTemperature() const
@@ -156,12 +149,12 @@ int ThermalControlledProbe::getTemperature() const
 
 int ThermalControlledProbe::getMinimumManualTemperature() const
 {
-	return bt2Celsius(minimumManualTemperature);
+	return control_unit->getMinimumManualTemperature();
 }
 
 int ThermalControlledProbe::getMaximumManualTemperature() const
 {
-	return bt2Celsius(maximumManualTemperature);
+	return control_unit->getMaximumManualTemperature();
 }
 
 void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
@@ -221,8 +214,8 @@ void ThermalControlledProbe::valueReceived(const DeviceValues &values_list)
 }
 
 
-ThermalControlledProbeFancoil::ThermalControlledProbeFancoil(QString _name, QString _key, CentralType central_type, ControlledProbeDevice *d) :
-	ThermalControlledProbe(_name, _key, central_type, d)
+ThermalControlledProbeFancoil::ThermalControlledProbeFancoil(QString _name, QString _key, ThermalControlUnit *control_unit, ControlledProbeDevice *d) :
+	ThermalControlledProbe(_name, _key, control_unit, d)
 {
 	fancoil_speed = FancoilAuto;
 }

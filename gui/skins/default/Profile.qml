@@ -103,7 +103,6 @@ Page {
             for (var i = 0; i < mediaLinks.count; ++i) {
                 var obj = mediaLinks.getObject(i);
                 var text = obj.name
-                var address = obj.address
 
                 var component;
                 switch (obj.type) {

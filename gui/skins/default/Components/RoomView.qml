@@ -200,8 +200,7 @@ Item {
             bgMoveGrid.selectedItem.yAnimation.to = itemPos.y
             bgMoveGrid.selectedItem.xAnimation.start()
             bgMoveGrid.selectedItem.yAnimation.start()
-            // TODO: save the new position in the model
-            //                            bgMoveGrid.selectedItem.itemObject.position = Qt.point(absPos.x, absPos.y)
+            bgMoveGrid.selectedItem.itemObject.position = Qt.point(absPos.x, absPos.y)
         }
 
         gridRightMargin: 250 // TODO: roomItem.width + edit column

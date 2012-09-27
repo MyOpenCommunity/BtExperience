@@ -227,7 +227,7 @@ bool MediaModel::acceptsRow(int source_row) const
 
 	ItemInterface *item = getSource()->getObject(source_row);
 
-	return containers.contains(item->getContainerId());
+	return containers.contains(item->getContainerUii());
 }
 
 bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)

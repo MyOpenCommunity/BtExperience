@@ -4,7 +4,7 @@ import Components.SoundDiffusion 1.0
 
 SystemPage {
     id: sounddiffusion
-    source: "images/sound_diffusion.jpg"
+    source: "images/sound-diffusion.jpg"
     text: qsTr("Sound System")
     rootColumn: Component { SoundDiffusionSystem {} }
 }

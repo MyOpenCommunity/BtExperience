@@ -19,7 +19,7 @@ SvgImage {
     property url pressedImage: ""
     property url selectedImage: ""
 
-    property bool enabled: true // button accepts input or not
+    property bool enabled: true
     property int status: 0 // 0 - up, 1 - down
     property bool repetitionOnHold: false // enable repetition when pressed
 
@@ -33,8 +33,6 @@ SvgImage {
         id: area
         anchors.fill: parent
         onClicked: bg.clicked()
-        // in some cases I have to disable the button to not accept any input
-        visible: bg.enabled
         onPressed: {
             bg.pressed()
             clickTimer.running = repetitionOnHold
@@ -46,6 +44,17 @@ SvgImage {
         onVisibleChanged: {
             if (visible === false)
                 clickTimer.running = false
+        }
+    }
+
+    Rectangle {
+        z: 1
+        anchors.fill: parent
+        color: "silver"
+        opacity: 0.6
+        visible: parent.enabled === false
+        MouseArea {
+            anchors.fill: parent
         }
     }
 

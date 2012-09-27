@@ -10,7 +10,6 @@ Item {
 
     property alias imageSource: icon.source
     property string text: itemObject.name
-    property string address: itemObject.address
     property string page: "Browser.qml"
     property bool editable: true
     property variant itemObject
@@ -164,8 +163,8 @@ Item {
             id: labelComponent
             UbuntuLightText {
                 text: bgQuick.text
-                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
-                                                       "white"
+                color: global.guiSettings.skin === GuiSettings.Clear ? "#434343":
+                                                       "#FFFFFF"
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 13
                 elide: Text.ElideRight
@@ -178,8 +177,8 @@ Item {
             id: labelInputComponent
             TextInput {
                 text: bgQuick.text
-                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
-                                                       "white"
+                color: global.guiSettings.skin === GuiSettings.Clear ? "#434343":
+                                                       "#FFFFFF"
                 horizontalAlignment: Text.AlignHCenter
                 activeFocusOnPress: false
                 anchors.top: parent.top
@@ -323,7 +322,8 @@ Item {
         }
         onClicked: {
             if (page !== "")
-                Stack.pushPage(page, {'urlString': address})
+                Stack.pushPage(page, {'urlString': itemObject.address})
+
             bgQuick.clicked()
         }
     }

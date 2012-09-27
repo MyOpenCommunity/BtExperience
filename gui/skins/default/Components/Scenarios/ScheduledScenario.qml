@@ -6,27 +6,18 @@ MenuColumn {
     id: column
 
     Column {
-    ControlOnOff {
-        id: button
-        onText: qsTr("start")
-        offText: qsTr("stop")
-        onClicked: {
-            if (newStatus)
-                column.dataModel.start()
-            else
-                column.dataModel.stop()
-        }
-    }
-
-    SvgImage {
-        source: "../../images/common/panel_212x50.svg"
-        UbuntuLightText {
-            id: timing
-
-            anchors.centerIn: parent
-            font.pixelSize: 14
-            color: "white"
-            text: qsTr("enabled")
+        ControlOnOff {
+            id: button
+            onText: qsTr("start")
+            onEnabled: column.dataModel.hasStart
+            offText: qsTr("stop")
+            offEnabled: column.dataModel.hasStop
+            onClicked: {
+                if (newStatus)
+                    column.dataModel.start()
+                else
+                    column.dataModel.stop()
+            }
         }
 
         SvgImage {
@@ -43,7 +34,7 @@ MenuColumn {
                     defaultImage: "../../images/common/icon_disabled.svg"
                     pressedImage: "../../images/common/icon_disabled_P.svg"
                     selectedImage: "../../images/common/icon_disabled_P.svg"
-
+                    enabled: column.dataModel.hasDisable
                     onClicked: column.dataModel.disable()
                 }
 
@@ -55,11 +46,10 @@ MenuColumn {
                     defaultImage: "../../images/common/icon_enabled.svg"
                     pressedImage: "../../images/common/icon_enabled_P.svg"
                     selectedImage: "../../images/common/icon_enabled_P.svg"
+                    enabled: column.dataModel.hasEnable
                     onClicked: column.dataModel.enable()
                 }
             }
         }
-    }
-
     }
 }

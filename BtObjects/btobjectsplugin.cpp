@@ -69,6 +69,61 @@ namespace
 		return res;
 	}
 
+	void createMediaLink(QDomDocument archive, int uii, MediaLink *obj_media)
+	{
+		foreach (QDomNode xml_obj, getChildren(archive.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == obj_media->getType())
+			{
+				QDomElement obj_node = archive.createElement("ist");
+
+				obj_node.setAttribute("uii", uii);
+				obj_node.setAttribute("descr", obj_media->getName());
+				obj_node.setAttribute("url", obj_media->getAddress());
+
+				xml_obj.appendChild(obj_node);
+				break;
+			}
+		}
+	}
+
+	void createContainer(QDomDocument layout, int uii, Container *obj_container)
+	{
+		foreach (QDomNode xml_obj, getChildren(layout.documentElement(), "container"))
+		{
+			if (getIntAttribute(xml_obj, "id") == obj_container->getContainerId())
+			{
+				QDomElement obj_node = layout.createElement("ist");
+
+				obj_node.setAttribute("uii", uii);
+				obj_node.setAttribute("descr", obj_container->getDescription());
+				obj_node.setAttribute("img", obj_container->getImage());
+
+				xml_obj.appendChild(obj_node);
+				break;
+			}
+		}
+	}
+
+	QDomElement createLink(QDomNode parent, int uii)
+	{
+		QDomElement link_node = parent.ownerDocument().createElement("link");
+
+		link_node.setAttribute("uii", uii);
+		parent.appendChild(link_node);
+
+		return link_node;
+	}
+
+	template<class T>
+	void createLink(QDomNode parent, int uii, T *obj)
+	{
+		QDomElement link_node = createLink(parent, uii);
+
+		link_node.setAttribute("x", obj->getPosition().x());
+		link_node.setAttribute("y", obj->getPosition().y());
+	}
+
 	// these are defined here because there is no 1-to-1 correspondence
 	// between used in QML (the ones in objectinterface.h file) and the ones
 	// used in configuration file (defined here)
@@ -113,19 +168,8 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameReceiver::setClientsMonitor(monitors);
 	FrameSender::setClients(clients);
 
-	connect(&note_model, SIGNAL(persistItem(ItemInterface*)), this, SLOT(updateNotes()));
-	connect(&note_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateNotes()));
-	connect(&note_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateNotes()));
-
 	global_models.setParent(this);
-	room_model.setParent(this);
-	floor_model.setParent(this);
-	object_link_model.setParent(this);
-	systems_model.setParent(this);
-	objmodel.setParent(this);
 	note_model.setParent(this);
-	profile_model.setParent(this);
-	media_link_model.setParent(this);
 
 	global_models.setFloors(&floor_model);
 	global_models.setRooms(&room_model);
@@ -140,6 +184,23 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	createObjectsFakeConfig(archive);
 	createObjects(archive);
 	parseConfig();
+
+	QList<MediaDataModel *> models = QList<MediaDataModel *>()
+			<< &room_model << &floor_model << &object_link_model << &systems_model
+			<< &objmodel << &profile_model << &media_link_model;
+
+	foreach (MediaDataModel *model, models)
+	{
+		model->setParent(this);
+		connect(model, SIGNAL(persistItem(ItemInterface*)), this, SLOT(updateObject(ItemInterface*)));
+		connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(insertObjects(QModelIndex,int,int)));
+		connect(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)), this, SLOT(removeObjects(QModelIndex,int,int)));
+	}
+
+	connect(&note_model, SIGNAL(persistItem(ItemInterface*)), this, SLOT(updateNotes()));
+	connect(&note_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateNotes()));
+	connect(&note_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateNotes()));
+
 	device::initDevices();
 }
 
@@ -186,6 +247,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
+	QDomNode cu99zones;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
@@ -248,13 +310,13 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			break;
 
 		case ObjectInterface::IdThermalControlUnit99:
-			obj_list = parseControlUnit99(xml_obj);
+			cu99zones = xml_obj;
 			break;
 		case ObjectInterface::IdThermalControlUnit4:
 			obj_list = parseControlUnit4(xml_obj, probe4zones);
 			break;
 		case ObjectInterface::IdThermalControlledProbe99:
-			obj_list = parseZone99(xml_obj);
+			obj_list = parseControlUnit99(cu99zones, xml_obj);
 			break;
 		case ObjectInterface::IdThermalControlledProbe4Zone1:
 		case ObjectInterface::IdThermalControlledProbe4Zone2:
@@ -358,7 +420,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		{
 			foreach (ObjectPair p, obj_list)
 			{
-				connect(p.second, SIGNAL(nameChanged()), SLOT(updateObjectName()));
 				uii_map.insert(p.first, p.second);
 				uii_to_id[p.first] = id;
 				objmodel << p.second;
@@ -370,50 +431,289 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		objmodel << createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios);
 }
 
-void BtObjectsPlugin::updateObjectName()
+int BtObjectsPlugin::findLinkedUiiForObject(ItemInterface *item) const
 {
-	ObjectInterface *obj = qobject_cast<ObjectInterface *>(sender());
-	if (!obj)
-	{
-		qWarning() << "Try to update the name for an object" << obj << "that is not an ObjectInterface";
-		return;
-	}
+	MediaLink *obj_media = qobject_cast<MediaLink *>(item);
+	ObjectLink *obj_link = qobject_cast<ObjectLink *>(item);
+	QObject *key = 0;
 
-	int uii = uii_map.findUii(obj);
+	Q_ASSERT_X(obj_media || obj_link, "BtObjectsPlugin::findLinkedUiiForObject",
+		   "Can only find linked UII for link-type objects");
+
+	if (obj_link)
+		key = obj_link->getBtObject();
+	else
+		key = obj_media;
+
+	int uii = uii_map.findUii(key);
 	if (uii == -1)
-	{
-		qWarning() << "The object " << obj << "is not in the uii_map";
-		return;
-	}
+		qWarning() << "Can't get link UII from object" << item;
 
+	return uii;
+}
+
+QPair<QDomNode, QString> BtObjectsPlugin::findNodeForObject(ItemInterface *item) const
+{
+	MediaLink *obj_media = qobject_cast<MediaLink *>(item);
+	ObjectLink *obj_link = qobject_cast<ObjectLink *>(item);
+
+	if (obj_media || obj_link)
+	{
+		QPair<QDomNode, QString> container_path = findNodeForUii(item->getContainerUii());
+		int uii = findLinkedUiiForObject(item);
+
+		if (uii == -1)
+			return QPair<QDomNode, QString>();
+
+		foreach (QDomNode child, getChildren(container_path.first, "link"))
+		{
+			if (getAttribute(child, "uii", "-1").toInt() == uii)
+				return QPair<QDomNode, QString>(child, LAYOUT_FILE);
+		}
+
+		qWarning() << "Could not find XML link node for uii" << uii << "in document" << container_path.second;
+
+		return QPair<QDomNode, QString>();
+	}
+	else
+	{
+		int uii = uii_map.findUii(item);
+		if (uii == -1)
+		{
+			qWarning() << "Object" << item << "is not in uii_map";
+			return QPair<QDomNode, QString>();
+		}
+
+		return findNodeForUii(uii);
+	}
+}
+
+QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
+{
+	switch (id)
+	{
+	case Container::IdRooms:
+	case Container::IdFloors:
+	case Container::IdProfile:
+	case Container::IdScenarios:
+	case Container::IdLights:
+	case Container::IdAutomation:
+	case Container::IdAirConditioning:
+	case Container::IdLoadControl:
+	case Container::IdSupervision:
+	case Container::IdEnergyData:
+	case Container::IdThermalRegulation:
+	case Container::IdVideoDoorEntry:
+	case Container::IdSoundDiffusion:
+	case Container::IdAntintrusion:
+	case Container::IdSettings:
+	case Container::IdMessages:
+		return layout;
+	default:
+		return archive;
+	}
+}
+
+QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
+{
 	if (!uii_to_id.contains(uii))
 	{
-		qWarning() << "Unknown id for the uii:" << uii;
-		return;
+		qWarning() << "Unknown id for uii:" << uii;
+		return QPair<QDomNode, QString>();
 	}
 
-	QString attribute_name = "descr"; // for the property "name"
-	foreach (QDomNode xml_obj, getChildren(archive.documentElement(), "obj"))
+	int id = uii_to_id[uii];
+	QDomDocument document = findDocumentForId(id);
+	QString conf_name = document.documentElement().tagName() == "archive" ? CONF_FILE : LAYOUT_FILE;
+	QString child_name = document.documentElement().tagName() == "archive" ? "obj" : "container";
+
+	foreach (QDomNode xml_obj, getChildren(document.documentElement(), child_name))
 	{
-		if (uii_to_id[uii] == getIntAttribute(xml_obj, "id"))
+		if (getIntAttribute(xml_obj, "id") == id)
 		{
 			foreach (QDomNode xml_ist, getChildren(xml_obj, "ist"))
 			{
 				if (uii == getIntAttribute(xml_ist, "uii"))
-				{
-					if (!setAttribute(xml_ist, attribute_name, obj->getName()))
-						qWarning() << "Attribute" << attribute_name << "not found for the node with uii:" << uii;
-					break;
-				}
+					return QPair<QDomNode, QString>(xml_ist, conf_name);
 			}
 		}
 	}
 
-	QString filename = QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath();
-	if (!saveXml(archive, filename))
+	qWarning() << "Could not find XML node for uii" << uii << "in document" << conf_name;
+
+	return QPair<QDomNode, QString>();
+}
+
+void BtObjectsPlugin::saveConfigFile(QDomDocument document, QString name)
+{
+	QString filename = QFileInfo(QDir(qApp->applicationDirPath()), name).absoluteFilePath();
+	if (!saveXml(document, filename))
 		qWarning() << "Error saving the config file" << filename;
 	else
-		qDebug() << "Config file saved";
+		qDebug() << "Config file" << filename << "saved";
+}
+
+void BtObjectsPlugin::updateObject(ItemInterface *obj)
+{
+	qDebug() << "BtObjectsPlugin::updateObject" << obj;
+	QPair<QDomNode, QString> node_path = findNodeForObject(obj);
+
+	if (node_path.first.isNull())
+		return;
+
+	ObjectInterface *obj_int = qobject_cast<ObjectInterface *>(obj);
+	Container *obj_cont = qobject_cast<Container *>(obj);
+	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
+	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
+
+	if (obj_int)
+	{
+		// TODO energy, scenarios, other specialized systems
+		updateObjectName(node_path.first, obj_int);
+	}
+	else if (obj_cont)
+	{
+		updateContainerNameImage(node_path.first, obj_cont);
+	}
+	else if (obj_media)
+	{
+		QPair<QDomNode, QString> archive_path = findNodeForUii(findLinkedUiiForObject(obj));
+
+		updateMediaNameAddress(archive_path.first, obj_media);
+		updateLinkPosition(node_path.first, obj_media);
+
+		saveConfigFile(archive, archive_path.second);
+	}
+	else if (obj_link)
+	{
+		updateLinkPosition(node_path.first, obj_link);
+	}
+	else
+	{
+		qWarning() << "Unknown object type" << obj;
+	}
+
+	saveConfigFile(node_path.first.ownerDocument(), node_path.second);
+}
+
+void BtObjectsPlugin::insertObject(ItemInterface *obj)
+{
+	qDebug() << "BtObjectsPlugin::insertObject" << obj;
+	QPair<QDomNode, QString> container_path = findNodeForUii(obj->getContainerUii());
+	int uii = -1;
+
+	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
+	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
+	Container *obj_container = qobject_cast<Container *>(obj);
+
+	if (obj_media)
+	{
+		uii = uii_map.nextUii();
+		uii_map.insert(uii, obj_media);
+		uii_to_id[uii] = obj_media->getType();
+
+		createMediaLink(archive, uii, obj_media);
+		saveConfigFile(archive, CONF_FILE);
+	}
+	else if (obj_container)
+	{
+		uii = uii_map.nextUii();
+		uii_map.insert(uii, obj_container);
+		uii_to_id[uii] = obj_container->getContainerId();
+
+		createContainer(layout, uii, obj_container);
+
+		if (obj->getContainerUii() == -1)
+			saveConfigFile(layout, LAYOUT_FILE);
+	}
+	else
+		uii = findLinkedUiiForObject(obj);
+
+	if (uii == -1 || container_path.first.isNull())
+		return;
+
+	if (obj_link)
+		createLink(container_path.first, uii, obj_link);
+	else if (obj_media)
+		createLink(container_path.first, uii, obj_media);
+	else
+		createLink(container_path.first, uii);
+
+	saveConfigFile(container_path.first.ownerDocument(), container_path.second);
+}
+
+void BtObjectsPlugin::removeObject(ItemInterface *obj)
+{
+	qDebug() << "BtObjectsPlugin::removeObject" << obj;
+	QPair<QDomNode, QString> container_path = findNodeForUii(obj->getContainerUii());
+	int uii = -1;
+
+	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
+	Container *obj_container = qobject_cast<Container *>(obj);
+
+	if (obj_container)
+	{
+		// TODO and what about contained objects?
+		QPair<QDomNode, QString> ist_path = findNodeForUii(obj_container->getUii());
+
+		if (ist_path.first.isNull())
+			qFatal("Can't find item node for uii %d", obj_container->getUii());
+
+		ist_path.first.parentNode().removeChild(ist_path.first);
+
+		saveConfigFile(ist_path.first.ownerDocument(), ist_path.second);
+	}
+	else
+		uii = findLinkedUiiForObject(obj);
+
+	if (uii == -1 || container_path.first.isNull())
+		return;
+
+	// profile media links need to be removed both in archive.xml and in layout.xml
+	if (obj_media)
+	{
+		QPair<QDomNode, QString> ist_path = findNodeForUii(uii);
+
+		if (ist_path.first.isNull())
+			qFatal("Can't find item node for uii %d", uii);
+
+		ist_path.first.parentNode().removeChild(ist_path.first);
+
+		saveConfigFile(ist_path.first.ownerDocument(), ist_path.second);
+	}
+
+	foreach (QDomNode child, getChildren(container_path.first, "link"))
+	{
+		if (getAttribute(child, "uii", "-1").toInt() == uii)
+		{
+			container_path.first.removeChild(child);
+			break;
+		}
+	}
+
+	saveConfigFile(container_path.first.ownerDocument(), container_path.second);
+}
+
+void BtObjectsPlugin::insertObjects(QModelIndex parent, int start, int end)
+{
+	Q_UNUSED(parent);
+
+	const MediaDataModel *model = qobject_cast<const MediaDataModel *>(sender());
+	Q_ASSERT_X(model, "BtObjectsPlugin::insertObjects", "Invalid model instance");
+
+	for (int i = start; i <= end; ++i)
+		insertObject(model->getObject(i));
+}
+
+void BtObjectsPlugin::removeObjects(QModelIndex parent, int start, int end)
+{
+	Q_UNUSED(parent);
+
+	const MediaDataModel *model = qobject_cast<const MediaDataModel *>(sender());
+	Q_ASSERT_X(model, "BtObjectsPlugin::removeObjects", "Invalid model instance");
+
+	for (int i = start; i <= end; ++i)
+		removeObject(model->getObject(i));
 }
 
 void BtObjectsPlugin::updateNotes()
@@ -558,9 +858,9 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 				continue;
 			}
 
-			ObjectLink *item = new ObjectLink(o, x, y);
+			ObjectLink *item = new ObjectLink(o, ObjectLink::BtObject, x, y);
 
-			item->setContainerId(room_uii);
+			item->setContainerUii(room_uii);
 
 			object_link_model << item;
 		}
@@ -594,7 +894,7 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 				continue;
 			}
 
-			room->setContainerId(floor_uii);
+			room->setContainerUii(floor_uii);
 		}
 	}
 }
@@ -623,15 +923,16 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 
 			if (l)
 			{
-				l->setContainerId(profile_uii);
+				l->setContainerUii(profile_uii);
 				l->setPosition(pos);
 			}
 			else if (c)
 			{
 				// for surveillance cameras, create a media link object on the fly using
-				// the data from the camera object (we could add a proxy class, but this is simpler)
-				l = new MediaLink(profile_uii, MediaLink::Camera, c->getName(), c->getWhere(), pos);
-				media_link_model << l;
+				// the data from the camera object
+				ObjectLink *o = new ObjectLink(c, ObjectLink::Camera, pos.x(), pos.y());
+				o->setContainerUii(profile_uii);
+				media_link_model << o;
 			}
 			else
 			{
@@ -652,18 +953,14 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 	{
 		v.setIst(ist);
 		int system_uii = getIntAttribute(ist, "uii");
-
-#if DEBUG
-		Q_ASSERT_X(!uui_cache.contains(system_uii), "BtObjectsPlugin::parseSystem",
-			qPrintable(QString("There are two systems with the same uii %1").arg(system_uii)));
-		uui_cache << system_uii;
-#endif
-
 		Container *system = new Container(system_id, system_uii, v.value("img"), v.value("descr"));
 
 		systems_model << system;
 		uii_map.insert(system_uii, system);
 		uii_to_id[system_uii] = system_id;
+
+		// TODO this is a temporary workaround to allow the code in Systems.qml to work
+		system->setContainerUii(system_id);
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
@@ -677,7 +974,7 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 				continue;
 			}
 
-			o->setContainerId(system_uii);
+			o->setContainerUii(system_uii);
 		}
 	}
 }
@@ -700,6 +997,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
 	qmlRegisterUncreatableType<ItemInterface>(uri, 1, 0, "ItemInterface",
 		"unable to create an ItemInterface instance");
+	qmlRegisterUncreatableType<LinkInterface>(uri, 1, 0, "LinkInterface",
+		"unable to create an LinkInterface instance");
 	qmlRegisterUncreatableType<Container>(uri, 1, 0, "Container",
 		"unable to create an Container instance");
 	qmlRegisterUncreatableType<Note>(uri, 1, 0, "Note",

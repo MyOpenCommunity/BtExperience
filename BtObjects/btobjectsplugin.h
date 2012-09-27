@@ -10,6 +10,7 @@
 #include <QHash>
 
 class QDomNode;
+class QDomDocument;
 
 
 class BtObjectsPlugin : public QDeclarativeExtensionPlugin
@@ -22,8 +23,12 @@ public:
 	void registerTypes(const char *uri);
 
 private slots:
-	void updateObjectName();
 	void updateNotes();
+	void updateObject(ItemInterface *obj);
+	void insertObject(ItemInterface *obj);
+	void removeObject(ItemInterface *obj);
+	void insertObjects(QModelIndex parent, int start, int end);
+	void removeObjects(QModelIndex parent, int start, int end);
 
 private:
 	ObjectDataModel objmodel;
@@ -32,10 +37,6 @@ private:
 	UiiMapper uii_map;
 	QHash<int, int> uii_to_id;
 	QDomDocument archive, layout;
-
-#if DEBUG
-	QList<int> uui_cache; // to verify that the xml layout config file does not contains ist with the same uii
-#endif
 
 	// used to parse the made-up configuration we use for testing, remove after switching
 	// to the new configuration
@@ -48,6 +49,14 @@ private:
 	void parseProfiles(const QDomNode &container);
 	void parseSystem(const QDomNode &container);
 	void parseMediaLinks(const QDomNode &xml_obj);
+
+	QDomDocument findDocumentForId(int id) const;
+
+	int findLinkedUiiForObject(ItemInterface *item) const;
+	QPair<QDomNode, QString> findNodeForObject(ItemInterface *item) const;
+	QPair<QDomNode, QString> findNodeForUii(int uii) const;
+
+	void saveConfigFile(QDomDocument document, QString name);
 };
 
 

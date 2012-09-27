@@ -9,7 +9,7 @@ QuickLink {
     imageSource: "../images/profiles/webcam.jpg"
 
     onClicked: {
-        cctvModel.getObject(0).cameraOn(address)
+        cctvModel.getObject(0).cameraOn(itemObject.btObject.where)
     }
 
     ObjectModel {

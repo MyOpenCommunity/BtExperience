@@ -35,7 +35,7 @@ class Note : public ItemInterface
 	Q_PROPERTY(QDateTime updated READ getUpdated WRITE setUpdated NOTIFY updateChanged)
 
 public:
-	Note(int profile_id, QString text, QDateTime created = QDateTime::currentDateTime());
+	Note(int profile_uii, QString text, QDateTime created = QDateTime::currentDateTime());
 
 	QString getText() const;
 	QDateTime getCreated() const;

@@ -208,14 +208,6 @@ Row {
 
         onClicked: privateProps.previousMonth()
         enabled: privateProps.previousMonthEnabled()
-
-        Rectangle {
-            z: 1
-            anchors.fill: parent
-            color: "silver"
-            opacity: 0.6
-            visible: parent.enabled === false
-        }
     }
 
     SvgImage {
@@ -263,14 +255,6 @@ Row {
 
         onClicked: privateProps.nextMonth()
         enabled: privateProps.nextMonthEnabled()
-
-        Rectangle {
-            z: 1
-            anchors.fill: parent
-            color: "silver"
-            opacity: 0.6
-            visible: parent.enabled === false
-        }
     }
 
     states: [

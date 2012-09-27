@@ -1,18 +1,24 @@
 #include "medialink.h"
+#include "xml_functions.h"
 
 
-MediaLink::MediaLink(int container_id, MediaType _type, QString _name, QString _address, QPoint _position)
+void updateMediaNameAddress(QDomNode node, MediaLink *item)
 {
-	setContainerId(container_id);
-	type = _type;
-	name = _name;
-	address = _address;
-	position = _position;
+	if (!setAttribute(node, "descr", item->getName()))
+		qWarning("Attribute descr not found in XML node");
+	if (!setAttribute(node, "url", item->getAddress()))
+		qWarning("Attribute url not found in XML node");
 }
 
-MediaLink::MediaType MediaLink::getType() const
+
+MediaLink::MediaLink(int container_id, MediaType type, QString _name, QString _address, QPoint position) :
+	LinkInterface(container_id, type, position)
 {
-	return type;
+	name = _name;
+	address = _address;
+
+	connect(this, SIGNAL(nameChanged(QString)), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(addressChanged(QString)), this, SIGNAL(persistItem()));
 }
 
 QString MediaLink::getName() const
@@ -23,11 +29,6 @@ QString MediaLink::getName() const
 QString MediaLink::getAddress() const
 {
 	return address;
-}
-
-QPointF MediaLink::getPosition() const
-{
-	return position;
 }
 
 void MediaLink::setName(QString _name)
@@ -44,13 +45,4 @@ void MediaLink::setAddress(QString _address)
 		return;
 	address = _address;
 	emit addressChanged(address);
-}
-
-void MediaLink::setPosition(QPointF _position)
-{
-	QPoint p = _position.toPoint();
-	if (position == p)
-		return;
-	position = p;
-	emit positionChanged(position);
 }

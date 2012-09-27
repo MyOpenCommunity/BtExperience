@@ -45,7 +45,7 @@ bool saveNotes(QString file_path, MediaDataModel *notes)
 		Note *note = static_cast<Note *>(notes->getObject(i));
 		QDomElement note_node = document.createElement("note");
 
-		note_node.setAttribute("profile", note->getContainerId());
+		note_node.setAttribute("profile", note->getContainerUii());
 		note_node.setAttribute("text", note->getText());
 		note_node.setAttribute("created", note->getCreated().toString(DATE_FORMAT_AS_STRING));
 		note_node.setAttribute("updated", note->getUpdated().toString(DATE_FORMAT_AS_STRING));
@@ -64,9 +64,9 @@ bool saveNotes(QString file_path, MediaDataModel *notes)
 }
 
 
-Note::Note(int profile_id, QString _text, QDateTime _created)
+Note::Note(int profile_uii, QString _text, QDateTime _created)
 {
-	setContainerId(profile_id);
+	setContainerUii(profile_uii);
 
 	connect(this, SIGNAL(updateChanged(QDateTime)), this, SIGNAL(persistItem()));
 

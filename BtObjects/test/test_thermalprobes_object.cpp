@@ -20,7 +20,9 @@
 
 #include "test_thermalprobes_object.h"
 #include "../devices/probe_device.h"
+#include "../devices/thermal_device.h"
 #include "thermalprobes.h"
+#include "thermalobjects.h"
 #include "openserver_mock.h"
 #include "openclient.h"
 #include "objecttester.h"
@@ -68,8 +70,13 @@ void TestThermalControlledProbes::initObjects(ControlledProbeDevice *_dev, Therm
 void TestThermalControlledProbes::init()
 {
 	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL);
+	ThermalDevice99Zones *cud = new ThermalDevice99Zones("0");
+	ThermalControlUnit *cu = new ThermalControlUnit99Zones("", "", cud);
 
-	obj = new ThermalControlledProbe("", "", ThermalControlledProbe::CentralUnit99Zones, d);
+	cud->setParent(this);
+	cu->setParent(this);
+
+	obj = new ThermalControlledProbe("", "", cu, d);
 	dev = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL, 1);
 }
 
@@ -245,8 +252,13 @@ void TestThermalControlledProbes::testReceiveLocalOffset()
 void TestThermalControlledProbesFancoil::init()
 {
 	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL);
+	ThermalDevice99Zones *cud = new ThermalDevice99Zones("0");
+	ThermalControlUnit *cu = new ThermalControlUnit99Zones("", "", cud);
 
-	obj = new ThermalControlledProbeFancoil("", "", ThermalControlledProbe::CentralUnit99Zones, d);
+	cud->setParent(this);
+	cu->setParent(this);
+
+	obj = new ThermalControlledProbeFancoil("", "", cu, d);
 	dev = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL, 1);
 
 	initObjects(dev, obj);

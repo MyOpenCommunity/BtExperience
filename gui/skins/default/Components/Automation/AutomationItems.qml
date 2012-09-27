@@ -66,11 +66,12 @@ MenuColumn {
     }
 
     BtObjectsMapping { id: mapping }
+    SystemsModel { id: systemsModel; systemId: Container.IdAutomation }
 
     ObjectModel {
         id: objectModel
         source: myHomeModels.myHomeObjects
-        containers: [Container.IdAutomation]
+        containers: [systemsModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }
