@@ -52,21 +52,6 @@ function popPage() {
         backToHome()
 }
 
-// tries to remove count pages from the stack
-// if count is bigger than the number of stack pages, removes all except the home
-// if count is less or equal to zero does nothing
-function popPages(count) {
-    if (count <= 0) // nothing to do
-        return
-
-    if (count >= stack.length) {
-        backToHome()
-        return
-    }
-
-    _showPreviousPage(stack.length - count - 1)
-}
-
 // empties the stack and opens the page passed in; plays push animations
 function goToPage(filename, properties) {
     if (properties === undefined)

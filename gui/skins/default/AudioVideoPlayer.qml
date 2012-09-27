@@ -453,7 +453,7 @@ Page {
     }
 
     function backButtonClicked() {
-        Stack.popPages(2)
+        Stack.backToMultimedia()
     }
 
     Component.onCompleted: player.mediaPlayer.upnp ?
