@@ -55,7 +55,8 @@ function popPage() {
 // empties the stack and opens the page passed in; plays push animations
 function goToPage(filename, properties) {
     if (properties === undefined)
-        properties = {"visible": false}
+        properties = {}
+    properties.visible = false
 
     var current = currentPage()
     var entering = _goPage(filename, properties)
@@ -73,7 +74,8 @@ function goToPage(filename, properties) {
 // empties the stack and opens the page passed in; plays pop animations
 function backToPage(filename, properties) {
     if (properties === undefined)
-        properties = {"visible": false}
+        properties = {}
+    properties.visible = false
 
     var current = currentPage()
     var entering = _goPage(filename, properties)
