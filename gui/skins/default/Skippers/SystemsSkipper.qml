@@ -14,4 +14,6 @@ Item {
         id: systemsModel
         source: myHomeModels.systems
     }
+
+    Component.onCompleted: systemsModel.containers = Script.systemsModelContainers(systemsModel)
 }
