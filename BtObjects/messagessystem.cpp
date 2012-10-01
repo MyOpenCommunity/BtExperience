@@ -4,7 +4,7 @@
 #include <QFile>
 #include <QDebug>
 
-#if BT_HARDWARE_X11
+#if defined(BT_HARDWARE_X11)
 #define MESSAGES_FILENAME "messages.xml"
 #else
 #define MESSAGES_FILENAME "cfg/extra/4/messages.xml"
