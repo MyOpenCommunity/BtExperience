@@ -15,6 +15,7 @@ Page {
 
     // The spacing between the buttons on the left and the MenuContainer
     property int containerLeftMargin: systemPage.width / 100 * 2
+    property int _path: 0
 
     function backButtonClicked() {
         container.closeLastColumn()
@@ -48,7 +49,7 @@ Page {
             rootColumn: systemPage.rootColumn
             pageObject: systemPage
             onClosed: systemPage.systemPageClosed()
+            onLoadNextColumn: currentObject.navigate()
         }
     }
 }
-

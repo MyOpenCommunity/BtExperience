@@ -8,6 +8,7 @@ import Components 1.0
 import "js/Stack.js" as Stack
 import "js/datetime.js" as DateTime
 import "js/popup.js" as PopupLogic
+import "js/navigation.js" as Navigation
 
 
 BasePage {
@@ -66,8 +67,7 @@ BasePage {
 
             if (data === "Antintrusion") {
                 popupLoader.sourceComponent = undefined
-                var currentPage = Stack.goToPage("Antintrusion.qml")
-                currentPage.showLog()
+                Stack.goToPage("Antintrusion.qml", {"_path": Navigation.ALARM_LOG})
             }
         }
 

@@ -7,6 +7,7 @@ import "../js/datetime.js" as DateTime
 import "../js/EventManager.js" as EventManager
 import "../js/Stack.js" as Stack
 import "../js/Systems.js" as Script
+import "../js/navigation.js" as Navigation
 
 
 Item {
@@ -228,10 +229,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm_p.svg" :
                               "../images/toolbar/icon_alarm.svg"
-            onClicked: {
-                var currentPage = Stack.goToPage("Antintrusion.qml")
-                currentPage.showLog()
-            }
+            onClicked: Stack.goToPage("Antintrusion.qml", {"_path": Navigation.ALARM_LOG})
         }
 
         // volume (and mute)

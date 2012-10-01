@@ -31,6 +31,7 @@ Item {
 
     signal closed
     signal rootColumnClicked
+    signal loadNextColumn
 
     function closeLastColumn() {
         Script.closeLastItem()
@@ -109,6 +110,7 @@ Item {
     Component.onCompleted: {
         Script.loadComponent(-1, mainContainer.rootColumn, "", rootData)
         mainContainer.rootObject.columnClicked.connect(rootColumnClicked)
+        mainContainer.loadNextColumn()
     }
 }
 

@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
+import "../../js/navigation.js" as Navigation
 
 
 MenuColumn {
@@ -29,6 +30,12 @@ MenuColumn {
     Connections {
         target: privateProps.model
         onCurrentScenarioChanged: privateProps.setScenarioDescription()
+    }
+
+    function navigate() {
+        var p = Navigation.get(pageObject._path, column.menuLevel)
+        if (p === "AlarmLog")
+            showAlarmLog()
     }
 
     function showAlarmLog(name) {

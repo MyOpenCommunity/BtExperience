@@ -1,4 +1,6 @@
 import QtQuick 1.1
+import "../js/navigation.js" as Navigation
+
 
 Item {
     id: column
@@ -19,11 +21,15 @@ Item {
         column.closeItem(menuLevel + 1)
     }
 
+    function navigate() {
+    }
+
     // The signals captured from the MenuContainer to create/close child or the element
     // itself.
     signal closeItem(int menuLevel)
     signal columnClicked()
     signal loadComponent(int menuLevel, variant component, string title, variant dataModel, variant properties)
+    signal loadComponentFinished
 
     // the page where the element is placed
     property variant pageObject: undefined
@@ -47,6 +53,11 @@ Item {
     // Needed to properly set the shadow (MenuShadow) size.
     width: childrenRect.width
     height: childrenRect.height
+
+    onAnimationRunningChanged: {
+        if (animationRunning === false)
+            column.loadComponentFinished()
+    }
 
     Constants {
         id: constants
