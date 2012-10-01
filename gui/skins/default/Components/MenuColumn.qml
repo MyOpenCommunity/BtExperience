@@ -1,5 +1,4 @@
 import QtQuick 1.1
-import "../js/navigation.js" as Navigation
 
 
 Item {
