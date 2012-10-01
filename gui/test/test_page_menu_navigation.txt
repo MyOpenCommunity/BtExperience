@@ -1,0 +1,11 @@
+Test: navigation to menu on opened page
+
+* Use a configuration with, at least, Antinstrusion system defined.
+* In home page, click on Systems button.
+* If needed, click on Antintrusion system
+* You are now in the Antitrusion system page with alarm log menu closed.
+* Send some alarms to application.
+* Dismiss popup window.
+* Click on alarms icon.
+=> Alarm log menu must open
+
