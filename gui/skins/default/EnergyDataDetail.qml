@@ -137,7 +137,7 @@ Page {
                 itemObject: energiesCounters.getObject(index)
                 description: itemObject.general ? qsTr("Overall") : itemObject.name
                 measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
-                onHeaderClicked: Stack.pushPage("EnergyDataGraph.qml", {"energyData": itemObject})
+                onHeaderClicked: Stack.goToPage("EnergyDataGraph.qml", {"energyData": itemObject})
             }
             delegateSpacing: 40
             visibleElements: 4
