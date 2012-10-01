@@ -41,10 +41,17 @@
 #include <QDomNode>
 
 
+#if defined(BT_HARDWARE_X11)
 #define DEVICE_FILE "conf.xml"
 #define CONF_FILE "archive.xml"
 #define LAYOUT_FILE "layout.xml"
 #define NOTES_FILE "notes.xml"
+#else
+#define DEVICE_FILE "/home/bticino/cfg/extra/0/conf.xml"
+#define CONF_FILE "/home/bticino/cfg/extra/0/archive.xml"
+#define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
+#define NOTES_FILE "/home/bticino/cfg/extra/0/notes.xml"
+#endif
 
 QHash<GlobalField, QString> *bt_global::config;
 
