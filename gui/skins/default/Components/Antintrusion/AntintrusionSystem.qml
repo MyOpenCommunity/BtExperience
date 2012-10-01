@@ -33,7 +33,7 @@ MenuColumn {
     }
 
     function navigate() {
-        var p = Navigation.get(pageObject._path, column.menuLevel)
+        var p = Navigation.getNavigationTarget(pageObject._path, column.menuLevel)
         if (p === "AlarmLog")
             showAlarmLog()
     }

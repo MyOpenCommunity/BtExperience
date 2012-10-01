@@ -12,43 +12,16 @@ function _init(paths) {
 }
 
 // returns a string indicating where to navigate
-function get(current_path, menuLevel) {
+function getNavigationTarget(current_path, menuLevel) {
     // init, if needed
     if (_paths.length === 0)
         _init(_paths)
 
-    var result = ""
+    var result = undefined
 
     if (current_path > 0) // 0 means no menu navigation
         result = _paths[current_path][menuLevel]
 
     return result
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
