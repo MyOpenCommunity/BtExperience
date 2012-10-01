@@ -42,7 +42,7 @@
 
 
 #define DEVICE_FILE "device.xml"
-#define CONF_FILE "conf.xml"
+#define CONF_FILE "archive.xml"
 #define LAYOUT_FILE "layout.xml"
 #define NOTES_FILE "notes.xml"
 
