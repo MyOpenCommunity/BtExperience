@@ -108,6 +108,7 @@ void GlobalProperties::initAudio()
 
 	// TODO remove after configuration parsing is complete
 	ringtone_manager->setRingtone(RingtoneManager::Alarm, 1);
+	ringtone_manager->setRingtone(RingtoneManager::Message, 1);
 	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace1, 4);
 	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace2, 4);
 	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace3, 4);
