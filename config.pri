@@ -24,6 +24,7 @@ defineTest(isArm) {
 
     OBJECTS_DIR = obj/x86
     MOC_DIR = moc/x86
+    DEFINES += BT_HARDWARE_X11
 
     LIBS += -L$${_PRO_FILE_PWD_}/common_files/lib/x86 -lcommon -lexpat
 } else {
@@ -33,6 +34,7 @@ defineTest(isArm) {
 
     OBJECTS_DIR = obj/arm
     MOC_DIR = moc/arm
+    DEFINES += BT_HARDWARE_DM3730
 
     LIBS += -L$${_PRO_FILE_PWD_}/common_files -lcommon -lexpat
 }
