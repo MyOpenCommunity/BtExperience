@@ -36,9 +36,5 @@ SystemPage {
             helperLabel: qsTr("enter code")
         }
     }
-
-    function showLog() {
-        antintrusion.rootObject.showAlarmLog()
-    }
 }
 
