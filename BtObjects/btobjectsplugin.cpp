@@ -41,7 +41,7 @@
 #include <QDomNode>
 
 
-#define DEVICE_FILE "device.xml"
+#define DEVICE_FILE "conf.xml"
 #define CONF_FILE "archive.xml"
 #define LAYOUT_FILE "layout.xml"
 #define NOTES_FILE "notes.xml"
@@ -51,6 +51,16 @@ QHash<GlobalField, QString> *bt_global::config;
 
 namespace
 {
+	QString getDeviceValue(QDomNode conf, QString path, QString def_value = QString())
+	{
+		QDomElement n = getElement(conf, path);
+
+		if (n.isNull())
+			return def_value;
+		else
+			return n.text();
+	}
+
 	template<class Tr>
 	QList<Tr> convertObjectPairList(QList<ObjectPair> pairs)
 	{
@@ -216,29 +226,43 @@ void BtObjectsPlugin::parseDevice()
 		qFatal("%s", qPrintable(msg));
 	}
 
-	QHash<QString, QString> values;
+	QDomElement root = getElement(device.documentElement(), "setup");
+	QHash<GlobalField, QString> &config = *bt_global::config;
 
-	foreach (QDomNode category, getChildren(device.documentElement(), "category"))
+	Q_ASSERT_X(!root.isNull(), "BtObjectsPlugin::parseDevice", "Invalid device configuration file");
+
+	config[TEMPERATURE_SCALE] = getDeviceValue(root, "generale/temperature/format", QString::number(CELSIUS));
+	config[LANGUAGE] = getDeviceValue(root, "generale/language", DEFAULT_LANGUAGE);
+	config[DATE_FORMAT] = getDeviceValue(root, "generale/clock/dateformat", QString::number(EUROPEAN_DATE));
+	config[MODEL] = getDeviceValue(root, "generale/modello");
+	config[NAME] = getDeviceValue(root, "generale/nome");
+
+	config[SOURCE_ADDRESS] = getDeviceValue(root, "scs/coordinate_scs/my_mmaddress");
+	config[AMPLIFIER_ADDRESS] = getDeviceValue(root, "scs/coordinate_scs/my_aaddress");
+	config[TS_NUMBER] = getDeviceValue(root, "scs/coordinate_scs/diag_addr", "0");
+
+	if (config[SOURCE_ADDRESS] == "-1")
+		config[SOURCE_ADDRESS] = "";
+	if (config[AMPLIFIER_ADDRESS] == "-1")
+		config[AMPLIFIER_ADDRESS] = "";
+
+	QString guard_addr = getDeviceValue(root, "vdes/guardunits/item");
+	if (!guard_addr.isEmpty())
+		config[GUARD_UNIT_ADDRESS] = "3" + guard_addr;
+
+	QDomElement vde_node = getElement(root, "vdes");
+	QDomNode vde_pi_node = getChildWithName(vde_node, "communication");
+	if (!vde_pi_node.isNull())
 	{
-		QString category_name = getAttribute(category, "name");
+		QString address = getTextChild(vde_pi_node, "address");
+		QString dev = getTextChild(vde_pi_node, "dev");
+		if (!address.isNull() && address != "-1")
+			config[PI_ADDRESS] = dev + address;
 
-		foreach (QDomNode par, getChildren(category, "par"))
-		{
-			QString par_name = getAttribute(par, "name");
-
-			values[category_name + "/" + par_name] = par.toElement().text().trimmed();
-		}
+		config[PI_MODE] = getTextChild(vde_pi_node, "mode");
 	}
-
-	(*bt_global::config)[SOURCE_ADDRESS] = values.value("scs/mymmaddress", "-1");
-	(*bt_global::config)[AMPLIFIER_ADDRESS] = values.value("scs/myaaddress", "-1");
-	// TODO check par name
-	(*bt_global::config)[TS_NUMBER] = values.value("scs/diag_addr", "0");
-
-	if ((*bt_global::config)[SOURCE_ADDRESS] == "-1")
-		(*bt_global::config)[SOURCE_ADDRESS] = "";
-	if ((*bt_global::config)[AMPLIFIER_ADDRESS] == "-1")
-		(*bt_global::config)[AMPLIFIER_ADDRESS] = "";
+	else
+		config[PI_MODE] = QString();
 }
 
 void BtObjectsPlugin::createObjects(QDomDocument document)

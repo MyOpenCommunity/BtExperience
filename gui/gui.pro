@@ -46,7 +46,7 @@ target.commands += cp -LR $${PWD}/skins $${target.path}/gui/ &&
 target.commands += (if ls $${PWD}/locale/*.qm 2>/dev/null; then cp -LR $${PWD}/locale/*.qm $${target.path}/gui/locale; else true; fi) &&
 target.commands += cp -L $${PWD}/../layout.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../archive.xml $${target.path}/ &&
-target.commands += cp -L $${PWD}/../device.xml $${target.path}/ &&
+target.commands += cp -L $${PWD}/../conf.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../BtObjects/qmldir $${target.path}/BtObjects/ &&
 target.commands += cp -L $${DESTDIR}/$${TARGET} $${target.path}/ &&
 isArm() {
@@ -96,7 +96,7 @@ mac {
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/locale $${APP_DIR}/Resources/gui/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../layout.xml $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../archive.xml $${APP_DIR}/MacOS/ &&
-    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../device.xml $${APP_DIR}/MacOS/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += cp -L $${DESTDIR}/BtObjects/libbtobjects$${DEBUG_SUFFIX}.dylib $${APP_DIR}/MacOS/BtObjects/libbtobjects.dylib &&
     QMAKE_POST_LINK += cp -L $${PWD}/../BtObjects/qmldir $${APP_DIR}/MacOS/BtObjects/ &&
     QMAKE_POST_LINK += cp -L $${PWD}/common_files/lib/x86/libcommon.dylib.0 $${APP_DIR}/MacOS/ &&
@@ -109,7 +109,7 @@ mac {
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/locale $${DESTDIR}/gui/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../layout.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../archive.xml $${DESTDIR}/ &&
-    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../device.xml $${DESTDIR}/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../BtObjects/qmldir $${DESTDIR}/BtObjects/ &&
 
     isArm() {
