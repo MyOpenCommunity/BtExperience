@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "../js/navigation.js" as Navigation
 
 
 Item {
@@ -20,7 +21,23 @@ Item {
         column.closeItem(menuLevel + 1)
     }
 
+    // checks if the need for opening a menu arose
     function navigate() {
+        var navigationTarget = Navigation.getNavigationTarget(pageObject._path, column.menuLevel)
+
+        if (navigationTarget === undefined)
+            return
+
+        if (openMenu(navigationTarget))
+            return
+
+        console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + " unknown.")
+    }
+
+    // hook to open a menu; receives a string to identify menu to be opened
+    // returns true if target is managed, otherwise false
+    function openMenu(navigationTarget) {
+        return false // by default returns false
     }
 
     // The signals captured from the MenuContainer to create/close child or the element

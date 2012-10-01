@@ -32,10 +32,11 @@ MenuColumn {
         onCurrentScenarioChanged: privateProps.setScenarioDescription()
     }
 
-    function navigate() {
-        var p = Navigation.getNavigationTarget(pageObject._path, column.menuLevel)
-        if (p === "AlarmLog")
+    function openMenu(navigationTarget) {
+        if (navigationTarget === "AlarmLog") {
             showAlarmLog()
+            return true
+        }
     }
 
     function showAlarmLog(name) {
