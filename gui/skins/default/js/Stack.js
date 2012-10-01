@@ -65,8 +65,10 @@ function goToPage(filename, properties) {
         current.pushOutStart()
         entering.pushInStart()
     }
-    else
+    else {
+        primeMenuNavigation(current, properties)
         changePageDone()
+    }
 
     return entering
 }
@@ -84,8 +86,10 @@ function backToPage(filename, properties) {
         current.popOutStart()
         entering.popInStart()
     }
-    else
+    else {
+        primeMenuNavigation(current, properties)
         changePageDone()
+    }
 
     return entering
 }
@@ -163,6 +167,15 @@ function changePageDone() {
   * private API
   *
   ***************************************************************************/
+
+// when _path property is defined on page, checks if menu navigation is needed
+// and eventually primes menu navigation
+function primeMenuNavigation(current, properties) {
+    if ("_path" in properties) {
+        current._path = properties._path
+        current.currentObject.navigate()
+    }
+}
 
 // goes to a page (without animations
 function _goPage(filename, properties) {
