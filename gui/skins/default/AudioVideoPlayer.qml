@@ -76,7 +76,10 @@ Page {
             topMargin: frameBg.height / 100 * 1.81
             left: bottomBarBg.left
             leftMargin: frameBg.width / 100 * 2.48
+            right: duration.left
+            rightMargin: 20
         }
+        elide: Text.ElideLeft
     }
 
     UbuntuLightText {
@@ -236,7 +239,7 @@ Page {
             leftMargin: frameBg.width / 100 * 1.90
         }
 
-        onClicked: Stack.popPage() // TODO backToPage(pagina folder)
+        onClicked: Stack.backToPage("Devices.qml")
         status: 0
     }
 
@@ -453,7 +456,7 @@ Page {
     }
 
     function backButtonClicked() {
-        Stack.popPages(2)
+        Stack.backToMultimedia()
     }
 
     Component.onCompleted: player.mediaPlayer.upnp ?

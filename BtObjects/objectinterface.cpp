@@ -1,5 +1,18 @@
 #include "objectinterface.h"
+#include "xml_functions.h"
 
+
+void updateObjectName(QDomNode node, ObjectInterface *item)
+{
+	if (!setAttribute(node, "descr", item->getName()))
+		qWarning("Attribute descr not found in XML node");
+}
+
+
+ObjectInterface::ObjectInterface(QObject *parent) : ItemInterface(parent)
+{
+	connect(this, SIGNAL(nameChanged()), this, SIGNAL(persistItem()));
+}
 
 int ObjectInterface::getObjectId() const
 {

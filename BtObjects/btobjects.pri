@@ -13,6 +13,7 @@ HEADERS += \
 	hardware.h \
 	iteminterface.h \
 	lightobjects.h \
+	linkinterface.h \
 	medialink.h \
 	mediamodel.h \
 	mediaobjects.h \
@@ -77,6 +78,7 @@ SOURCES += \
 	hardware.cpp \
 	iteminterface.cpp \
 	lightobjects.cpp \
+	linkinterface.cpp \
 	medialink.cpp \
 	mediamodel.cpp \
 	mediaobjects.cpp \

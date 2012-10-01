@@ -3,7 +3,7 @@ import Components.Automation 1.0
 
 
 SystemPage {
-    source: "images/automazione.jpg"
+    source: "images/automation.jpg"
     text: qsTr("automation")
     rootColumn: Component { AutomationItems {} }
 }

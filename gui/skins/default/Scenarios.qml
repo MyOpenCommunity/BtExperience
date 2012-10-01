@@ -3,7 +3,7 @@ import Components.Scenarios 1.0
 
 
 SystemPage {
-    source: "images/scenari.jpg"
+    source: "images/scenario.jpg"
     text: qsTr("Scenarios")
     rootColumn: Component { ScenarioSystem {} }
 }

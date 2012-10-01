@@ -15,13 +15,13 @@ class ItemInterface : public QObject
 	/*!
 		\brief The id of a container object (defaults to -1), used for filtering
 	*/
-	Q_PROPERTY(int containerId READ getContainerId NOTIFY containerChanged)
+	Q_PROPERTY(int containerUii READ getContainerUii NOTIFY containerChanged)
 
 public:
 	ItemInterface(QObject *parent = 0);
 
-	void setContainerId(int id);
-	int getContainerId() const;
+	void setContainerUii(int uii);
+	int getContainerUii() const;
 
 signals:
 	void containerChanged();
@@ -32,7 +32,7 @@ signals:
 	void persistItem();
 
 private:
-	int container_id;
+	int container_uii;
 };
 
 #endif // ITEMINTERFACE_H

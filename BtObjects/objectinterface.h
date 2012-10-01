@@ -6,6 +6,12 @@
 #include <QString>
 #include <QPair>
 
+class QDomNode;
+class ObjectInterface;
+
+
+void updateObjectName(QDomNode node, ObjectInterface *item);
+
 
 /*!
 	\ingroup Core
@@ -43,7 +49,7 @@ class ObjectInterface : public ItemInterface
 	Q_ENUMS(ObjectId)
 
 public:
-	ObjectInterface(QObject *parent = 0) : ItemInterface(parent) {}
+	ObjectInterface(QObject *parent = 0);
 
 	/// Numeric identifier for object type
 	enum ObjectId

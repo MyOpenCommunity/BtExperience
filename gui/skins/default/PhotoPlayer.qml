@@ -178,7 +178,7 @@ Page {
             leftMargin: frameBg.height / 100 * 2.15
         }
 
-        onClicked: Stack.popPage() // TODO backToPage(pagina folder)
+        onClicked: Stack.backToPage("Devices.qml")
         status: 0
     }
 
@@ -208,7 +208,7 @@ Page {
     }
 
     function backButtonClicked() {
-        Stack.popPages(2)
+        Stack.backToMultimedia()
     }
 
     Component.onCompleted: player.upnp ?

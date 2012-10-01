@@ -9,6 +9,8 @@ Item {
     property string onText: qsTr("ON")
     property string offText: qsTr("OFF")
 
+    property alias onEnabled: onButton.enabled
+    property alias offEnabled: offButton.enabled
     signal clicked(bool newStatus)
 
     width: bg.width
@@ -23,6 +25,7 @@ Item {
         anchors.centerIn: parent // in this way we need no margins
 
         ButtonThreeStates {
+            id: onButton
             defaultImage: "../images/common/btn_99x35.svg"
             pressedImage: "../images/common/btn_99x35_P.svg"
             selectedImage: "../images/common/btn_99x35_S.svg"
@@ -33,6 +36,7 @@ Item {
         }
 
         ButtonThreeStates {
+            id: offButton
             defaultImage: "../images/common/btn_99x35.svg"
             pressedImage: "../images/common/btn_99x35_P.svg"
             selectedImage: "../images/common/btn_99x35_S.svg"

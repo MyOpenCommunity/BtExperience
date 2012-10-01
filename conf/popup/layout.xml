@@ -1,0 +1,50 @@
+﻿<layout>
+	<container id="11" descr="antintrusion">
+		<ist uii="311" img="images/systems/burlgar-alarm_card.jpg">
+		</ist>
+	</container>
+	<container id="15" descr="messages">
+		<ist uii="315" img="images/systems/messages_card.jpg">
+		</ist>
+	</container>
+	<container id="9" descr="video door entry system">
+		<ist uii="309" img="images/systems/vde_card.jpg">
+		</ist>
+	</container>
+	<container id="100" > <!-- rooms -->
+		<ist uii="102" descr="living room">
+		</ist>
+		<ist uii="103" descr="bathroom">
+		</ist>
+
+		<ist uii="104" descr="garage">
+		</ist>
+		<ist uii="105" descr="bedroom">
+		</ist>
+		<ist uii="106" descr="kitchen">
+		</ist>
+	</container>
+	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
+		<ist uii="901" descr="famiglia" img="images/home/card_1.png" >
+		</ist>
+		<ist uii="902" descr="mattia" img="images/home/card_2.png" >
+		</ist>
+		<ist uii="903" descr="camilla" img="images/home/card_3.png" >
+		</ist>
+		<ist uii="904" descr="mamma" img="images/home/card_4.png" >
+		</ist>
+		<ist uii="905" descr="papà" img="images/home/card_5.png" >
+		</ist>
+	</container>
+	<container id="13" descr="floor" img="floor.png"> <!-- floor -->
+		<ist uii="201" descr="ground" >
+			<link uii="102" />
+			<link uii="103" />
+			<link uii="104" />
+			<link uii="106" />
+		</ist>
+		<ist uii="202" descr="first floor" img="first.png" >
+			<link uii="105" />
+		</ist>
+	</container>
+</layout>

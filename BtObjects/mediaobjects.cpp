@@ -88,8 +88,8 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 			objects << new IpRadio(EntryInfo("Trance", EntryInfo::AUDIO, "http://scfire-dtc-aa02.stream.aol.com:80/stream/1065"));
 			objects << new IpRadio(EntryInfo("Slay radio", EntryInfo::AUDIO, "http://relay.slayradio.org:8000/"));
 
-			sources << new SourceLocalMedia("USB1", "/media/usb1", source, SourceObject::FileSystem);
-			sources << new SourceLocalMedia("SD card", "/media/sd", source, SourceObject::FileSystem);
+			sources << new SourceLocalMedia("USB1", "/media/sda1", source, SourceObject::FileSystem);
+			sources << new SourceLocalMedia("SD card", "/media/mmcblk0p1", source, SourceObject::FileSystem);
 			sources << new SourceUpnpMedia("Network shares", source);
 
 			// use a default

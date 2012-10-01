@@ -32,11 +32,11 @@ void TestMediaModel::initObjects(MediaDataModel *_src, MediaModel *_obj, QList<I
 	for (int i = 0; i < items.count(); ++i)
 	{
 		if (i < 3)
-			items[i]->setContainerId(3);
+			items[i]->setContainerUii(3);
 		else if (i < 5)
-			items[i]->setContainerId(1);
+			items[i]->setContainerUii(1);
 		else
-			items[i]->setContainerId(-1);
+			items[i]->setContainerUii(-1);
 	}
 }
 

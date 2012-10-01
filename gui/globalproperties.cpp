@@ -18,6 +18,8 @@
 #include <maliit/settingsentry.h>
 #endif
 
+#define EXTRA_PATH "/home/bticino/cfg/extra"
+
 namespace
 {
 	QStringList allowed_layouts = QStringList() << "en_gb_bticino" << "it_bticino" << "fr_bticino";
@@ -145,7 +147,7 @@ QString GlobalProperties::getExtraPath() const
 #if defined(Q_WS_MAC) || defined(Q_WS_X11)
 	QFileInfo extra(QDir(path.absoluteFilePath()), "extra");
 #else
-	#error "Implement for ARM"
+	QFileInfo extra(EXTRA_PATH);
 #endif
 
 	if (!extra.exists())

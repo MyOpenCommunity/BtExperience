@@ -2,11 +2,13 @@
 #include "objectinterface.h"
 
 
-ObjectLink::ObjectLink(ObjectInterface *obj, int _x, int _y)
+ObjectLink::ObjectLink(ObjectInterface *obj, MediaType type, int x, int y) :
+	LinkInterface(-1, type, QPoint(x, y))
 {
 	bt_object = obj;
-	x = _x;
-	y = _y;
+
+	connect(bt_object, SIGNAL(nameChanged()), this, SLOT(objectNameChanged()));
+	connect(this, SIGNAL(positionChanged(QPointF)), this, SIGNAL(persistItem()));
 }
 
 QString ObjectLink::getName() const
@@ -19,7 +21,7 @@ ObjectInterface *ObjectLink::getBtObject() const
 	return bt_object;
 }
 
-QPoint ObjectLink::getPosition() const
+void ObjectLink::objectNameChanged()
 {
-	return QPoint(x, y);
+	emit nameChanged(getName());
 }

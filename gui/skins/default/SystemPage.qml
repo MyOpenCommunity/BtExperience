@@ -21,7 +21,7 @@ Page {
     }
 
     function systemsButtonClicked() {
-        Stack.backToSystem()
+        Stack.backToSystemOrHome()
     }
 
     function closeAll() {
@@ -29,7 +29,7 @@ Page {
     }
 
     function systemPageClosed() {
-        Stack.backToSystem()
+        Stack.backToSystemOrHome()
     }
 
     Pannable {

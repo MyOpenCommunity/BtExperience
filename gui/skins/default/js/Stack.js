@@ -52,34 +52,21 @@ function popPage() {
         backToHome()
 }
 
-// tries to remove count pages from the stack
-// if count is bigger than the number of stack pages, removes all except the home
-// if count is less or equal to zero does nothing
-function popPages(count) {
-    if (count <= 0) // nothing to do
-        return
-
-    if (count >= stack.length) {
-        backToHome()
-        return
-    }
-
-    _showPreviousPage(stack.length - count - 1)
-}
-
 // empties the stack and opens the page passed in; plays push animations
 function goToPage(filename, properties) {
     if (properties === undefined)
-        properties = {"visible": false}
+        properties = {}
+    properties.visible = false
 
     var current = currentPage()
     var entering = _goPage(filename, properties)
 
-    if (current && (entering === undefined || entering._pageName !== current._pageName))
+    if (current._pageName !== entering._pageName) {
         current.pushOutStart()
-
-    if (entering && (current === undefined || entering._pageName !== current._pageName))
         entering.pushInStart()
+    }
+    else
+        changePageDone()
 
     return entering
 }
@@ -87,16 +74,18 @@ function goToPage(filename, properties) {
 // empties the stack and opens the page passed in; plays pop animations
 function backToPage(filename, properties) {
     if (properties === undefined)
-        properties = {"visible": false}
+        properties = {}
+    properties.visible = false
 
     var current = currentPage()
     var entering = _goPage(filename, properties)
 
-    if (current && (entering === undefined || entering._pageName !== current._pageName))
+    if (current._pageName !== entering._pageName) {
         current.popOutStart()
-
-    if (entering && (current === undefined || entering._pageName !== current._pageName))
         entering.popInStart()
+    }
+    else
+        changePageDone()
 
     return entering
 }
@@ -112,8 +101,17 @@ function backToHome() {
 }
 
 // returns to systems page
-function backToSystem() {
-    backToPage("Systems.qml")
+function backToSystemOrHome() {
+    var ret = _findTargetPage("Systems.qml")
+    if (!ret)
+        return
+
+    // Handle the case of page skippers. If we only have one system and we
+    // press back, using backToPage() will bring us to the same system.
+    if (ret.filename === "Systems.qml")
+        backToPage("Systems.qml")
+    else
+        backToHome()
 }
 
 // returns to rooms page
@@ -170,6 +168,7 @@ function changePageDone() {
 function _goPage(filename, properties) {
     var current = currentPage()
 
+    logDebug("_goPage(), new page name: " + _getName(filename))
     if (current && current._pageName === _getName(filename)) {
         if (current.closeAll) // closes all menus if closeAll is defined on page
             current.closeAll()
@@ -229,17 +228,16 @@ function _openPage(filename, properties) {
     return page
 }
 
-// Create a QML object from a given filename
-function _createPage(filename, properties) {
-    if (changing_page == true)
-        return
+// Find the name of the page to open, considering any skippers
+//
+// \return Undefined if maximum skip steps was reached or an object with the following properties:
+//      - "filename": the path of the page to open
+//      - "properties": the properties to pass to the page
 
-    if (stack.length > 0)
-        changing_page = true
-
-    var page = undefined
+function _findTargetPage(filename, properties) {
     var deletingObjects = []
     var parachute = 0
+    var page_filename = ""
 
     // Implement the "page skip" functionality.
     //
@@ -256,7 +254,7 @@ function _createPage(filename, properties) {
     //     file path, in the same format accepted by Stack.openPage().
     //  "properties": the properties to set into the new page
     while (filename !== "") {
-        var page_filename = filename
+        page_filename = filename
         var skipper_component = Qt.createComponent(_skipperFilename(filename))
         if (skipper_component.status === 1) {
             logDebug("Found page skipper: " + _skipperFilename(filename))
@@ -283,40 +281,55 @@ function _createPage(filename, properties) {
             logError("Maximum number skip pages reached, aborting")
             changePageDone()
             _deleteObjects(deletingObjects)
-            return null
+            return undefined
         }
     }
 
+    _deleteObjects(deletingObjects)
+    return {'filename': page_filename, 'properties': properties}
+}
+
+// Create a QML object from a given filename
+function _createPage(filename, properties) {
+    if (changing_page == true)
+        return null
+
+    if (stack.length > 0)
+        changing_page = true
+
+    var ret = _findTargetPage(filename, properties)
+    if (!ret)
+        return null
+    filename = ret.filename
+    properties = ret.properties
+
     // now, Stack.js is in a js subdir so we have to trick the filename
-    var page_component = Qt.createComponent("../" + page_filename)
+    var page_component = Qt.createComponent("../" + filename)
     // The component status (like the Component.Ready that has 1 as value) is not currently
     // available on js files that uses .pragma library declaration.
     // This should be fixed in the future:
     // http://lists.qt.nokia.com/pipermail/qt-qml/2010-November/001713.html
     if (page_component.status === 1) {
         // Properly set _pageName
-        _addPageName(page_filename, properties)
-        page = page_component.createObject(mainContainer, properties)
+        _addPageName(filename, properties)
+        var page = page_component.createObject(mainContainer, properties)
         if (page === null) {
             logError('Error on creating the object for the page: ' + filename)
             logError('Properties:')
             for (var k in properties)
                 logError('    ' + k + ": " + properties[k])
             changePageDone()
-            _deleteObjects(deletingObjects)
             return null
         }
+        logDebug("_createPage(), created page: " + page._pageName)
     }
     // Component.Error
     else if (page_component.status === 3) {
         logError("Error in creating page component: ")
         logError(page_component.errorString())
         changePageDone()
-        _deleteObjects(deletingObjects)
         return null
     }
-
-    _deleteObjects(deletingObjects)
 
     return page
 }

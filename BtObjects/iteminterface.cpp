@@ -1,22 +1,23 @@
 #include "iteminterface.h"
+#include "xml_functions.h"
 
 
 ItemInterface::ItemInterface(QObject *parent) :
 	QObject(parent)
 {
-	container_id = -1;
+	container_uii = -1;
 }
 
-void ItemInterface::setContainerId(int id)
+void ItemInterface::setContainerUii(int id)
 {
-	if (id == container_id)
+	if (id == container_uii)
 		return;
 
-	container_id = id;
+	container_uii = id;
 	emit containerChanged();
 }
 
-int ItemInterface::getContainerId() const
+int ItemInterface::getContainerUii() const
 {
-	return container_id;
+	return container_uii;
 }

@@ -37,6 +37,9 @@ SvgImage {
         color: "silver"
         opacity: 0.6
         visible: bg.enabled === false
+        MouseArea {
+            anchors.fill: parent
+        }
     }
 
     UbuntuLightText {

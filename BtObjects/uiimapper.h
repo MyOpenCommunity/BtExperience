@@ -14,6 +14,8 @@ class UiiMapper : public QObject
 	Q_OBJECT
 
 public:
+	UiiMapper() { next_uii = 1; }
+
 	/*!
 		\brief Add a new mapping, calls qFatal() if it's a duplicate
 	*/
@@ -57,11 +59,17 @@ public:
 	*/
 	int findUii(QObject *value) const;
 
+	int nextUii() const
+	{
+		return next_uii;
+	}
+
 private slots:
 	void elementDestroyed(QObject *obj);
 
 private:
 	QHash<int, QObject *> items;
+	int next_uii;
 };
 
 #endif // UIIMAPPER_H

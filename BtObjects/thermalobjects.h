@@ -28,9 +28,8 @@ class QDomNode;
 typedef QHash<int, QVariant> ThermalRegulationState;
 
 
-QList<ObjectPair> parseControlUnit99(const QDomNode &obj);
+QList<ObjectPair> parseControlUnit99(const QDomNode &obj, const QDomNode &zones);
 QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNode, QDomNode> > zones);
-QList<ObjectPair> parseZone99(const QDomNode &obj);
 
 
 /*!
@@ -128,6 +127,9 @@ public:
 
 	QObject* getCurrentModality() const;
 	ThermalControlUnitId getCurrentModalityId() const;
+
+	int getMinimumManualTemperature() const;
+	int getMaximumManualTemperature() const;
 
 signals:
 	void seasonChanged();
