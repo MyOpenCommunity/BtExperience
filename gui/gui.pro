@@ -21,7 +21,7 @@ LIBS += -lssl -L../bin/$${HARDWARE}/BtObjects -lbtobjects
 
 !mac {
     # '\$\$' outputs $$ to the Makefile, make transforms $$ into a single $, then you need a backslash for the shell
-    LIBS += -Wl,-rpath=\\'\$\$'ORIGIN
+    LIBS += -Wl,-rpath=\\'\$\$'ORIGIN:\\'\$\$'ORIGIN/BtObjects
 }
 
 maliit {
