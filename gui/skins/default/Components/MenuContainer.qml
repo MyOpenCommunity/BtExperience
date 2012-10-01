@@ -31,7 +31,7 @@ Item {
 
     signal closed
     signal rootColumnClicked
-    signal loadNextColumn
+    signal loadNextColumn // used for menu navigation, see navigation.js for further details
 
     function closeLastColumn() {
         Script.closeLastItem()
@@ -110,7 +110,7 @@ Item {
     Component.onCompleted: {
         Script.loadComponent(-1, mainContainer.rootColumn, "", rootData)
         mainContainer.rootObject.columnClicked.connect(rootColumnClicked)
-        mainContainer.loadNextColumn()
+        mainContainer.loadNextColumn() // primes the menu navigation, see navigation.js for further details
     }
 }
 

@@ -48,7 +48,7 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
         _addItem(itemObj, titleObj, shadowObj)
         itemObj.closeItem.connect(closeItem)
         itemObj.loadComponent.connect(loadComponent)
-        itemObj.loadComponentFinished.connect(mainContainer.loadNextColumn)
+        itemObj.loadComponentFinished.connect(mainContainer.loadNextColumn) // see navigation.js for further details
         return
     }
     else {

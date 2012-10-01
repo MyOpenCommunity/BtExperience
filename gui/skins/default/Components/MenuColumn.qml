@@ -22,6 +22,7 @@ Item {
     }
 
     // checks if the need for opening a menu arose
+    // see navigation.js for further details
     function navigate() {
         var navigationTarget = Navigation.getNavigationTarget(pageObject._path, column.menuLevel)
 
@@ -36,6 +37,7 @@ Item {
 
     // hook to open a menu; receives a string to identify menu to be opened
     // returns true if target is managed, otherwise false
+    // see navigation.js for further details
     function openMenu(navigationTarget) {
         return false // by default returns false
     }
@@ -45,7 +47,7 @@ Item {
     signal closeItem(int menuLevel)
     signal columnClicked()
     signal loadComponent(int menuLevel, variant component, string title, variant dataModel, variant properties)
-    signal loadComponentFinished
+    signal loadComponentFinished // used for menu navigation, see navigation.js for further details
 
     // the page where the element is placed
     property variant pageObject: undefined
@@ -72,7 +74,7 @@ Item {
 
     onAnimationRunningChanged: {
         if (animationRunning === false)
-            column.loadComponentFinished()
+            column.loadComponentFinished() // primes next menu navigation, see navigation.js for further details
     }
 
     Constants {

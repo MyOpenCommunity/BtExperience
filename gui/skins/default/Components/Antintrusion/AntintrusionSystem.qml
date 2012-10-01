@@ -32,6 +32,7 @@ MenuColumn {
         onCurrentScenarioChanged: privateProps.setScenarioDescription()
     }
 
+    // redefined to implement menu navigation
     function openMenu(navigationTarget) {
         if (navigationTarget === "AlarmLog") {
             showAlarmLog()
