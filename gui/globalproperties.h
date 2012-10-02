@@ -107,6 +107,8 @@ private slots:
 	void pluginSettingsReceived(const QList<QSharedPointer<Maliit::PluginSettings> > &settings);
 #endif
 	void beepChanged();
+	void audioStateChanged();
+	void sendDelayedFrames();
 
 private:
 	InputContextWrapper *wrapper;
@@ -119,6 +121,7 @@ private:
 	AudioState *audio_state;
 	MultiMediaPlayer *sound_player;
 	RingtoneManager *ringtone_manager;
+	QTimer *delayed_frame_timer;
 
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);

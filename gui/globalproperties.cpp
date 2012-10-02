@@ -5,6 +5,7 @@
 #include "audiostate.h"
 #include "ringtonemanager.h"
 #include "ts/main.h"
+#include "devices_cache.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -19,6 +20,8 @@
 #endif
 
 #define EXTRA_PATH "/home/bticino/cfg/extra"
+#define LAZY_UPDATE_INTERVAL 5000
+#define LAZY_UPDATE_COUNT 2
 
 namespace
 {
@@ -30,6 +33,12 @@ GlobalProperties::GlobalProperties()
 {
 	wrapper = new InputContextWrapper(this);
 	main_widget = NULL;
+
+	delayed_frame_timer = new QTimer(this);
+	delayed_frame_timer->setInterval(LAZY_UPDATE_INTERVAL);
+
+	connect(delayed_frame_timer, SIGNAL(timeout()),
+		this, SLOT(sendDelayedFrames()));
 
 	qmlRegisterUncreatableType<GuiSettings>("BtExperience", 1, 0, "GuiSettings", "");
 	qmlRegisterUncreatableType<AudioVideoPlayer>("BtExperience", 1, 0, "AudioVideoPlayer", "");
@@ -81,6 +90,9 @@ void GlobalProperties::initAudio()
 	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(videoPlayer->getMediaPlayer()));
 	audio_state->registerSoundPlayer(sound_player);
 	audio_state->enableState(AudioState::Idle);
+
+	connect(audio_state, SIGNAL(stateChanged(AudioState::State,AudioState::State)),
+		this, SLOT(audioStateChanged()));
 
 	MultiMediaPlayer *player = new MultiMediaPlayer(this);
 
@@ -254,6 +266,19 @@ void GlobalProperties::beepChanged()
 		audio_state->enableState(AudioState::Beep);
 	else
 		audio_state->disableState(AudioState::Beep);
+}
+
+void GlobalProperties::audioStateChanged()
+{
+	if (audio_state->getState() == AudioState::Screensaver)
+		delayed_frame_timer->start();
+	else
+		delayed_frame_timer->stop();
+}
+
+void GlobalProperties::sendDelayedFrames()
+{
+	bt_global::devices_cache.checkLazyUpdate(LAZY_UPDATE_COUNT);
 }
 
 QString GlobalProperties::getKeyboardLayout() const
