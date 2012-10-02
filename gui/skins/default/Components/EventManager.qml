@@ -155,9 +155,22 @@ Item {
         onNewAlarm: {
             // we generate a screensaver "event" every time an alarm arrives
             eventManager.screensaverEvent()
-            var p = privateProps.getPopupPage()
-            p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
-            global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
+
+            var p = Stack.currentPage()
+            if (p._pageName === "VideoCamera") {
+                global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
+                if (Stack.findPage("PopupPage") === null)
+                    Stack.pushPageBelow("PopupPage.qml")
+                p = Stack.findPage("PopupPage")
+                p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
+
+                // Must stay here because it emits callEnded signal.
+                privateProps.vctModel.endCall()
+            }
+            else {
+                p = Stack.pushPage("PopupPage.qml")
+                p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
+            }
         }
     }
 
@@ -173,22 +186,5 @@ Item {
         property variant antintrusionModel: undefined
         property variant messagesModel: undefined
         property variant vctModel: undefined
-
-        function getPopupPage() {
-            // gets current page
-            var p = Stack.currentPage()
-            // if current page is vct, pops it
-            if (p._pageName === "VideoCamera") {
-                p.endCall()
-                Stack.popPage()
-                // regets current page
-                p = Stack.currentPage()
-            }
-            // if actual page is not popup one, pushes it
-            if (p._pageName !== "PopupPage")
-                Stack.pushPage("PopupPage.qml")
-            // now, popup page is on top of the stack, returns it
-            return Stack.currentPage()
-        }
     }
 }
