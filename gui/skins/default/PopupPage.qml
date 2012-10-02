@@ -5,6 +5,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import BtExperience 1.0
 import "js/Stack.js" as Stack
 import "js/datetime.js" as DateTime
 import "js/popup.js" as PopupLogic
@@ -36,6 +37,7 @@ BasePage {
     }
 
     function addAlarmPopup(type, zone, number, dateTime) {
+        global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
         var dt = DateTime.format(dateTime)["time"] + " - " + DateTime.format(dateTime)["date"]
 
         var t = privateProps.antintrusionNames.get('ALARM_TYPE', type)

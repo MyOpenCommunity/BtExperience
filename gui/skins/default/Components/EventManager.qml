@@ -158,7 +158,6 @@ Item {
 
             var p = Stack.currentPage()
             if (p._pageName === "VideoCamera") {
-                global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
                 if (Stack.findPage("PopupPage") === null)
                     Stack.pushPageBelow("PopupPage.qml")
                 p = Stack.findPage("PopupPage")
