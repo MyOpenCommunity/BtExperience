@@ -137,21 +137,24 @@ Page {
     // are "public"
     function homeButtonClicked() {
         privateProps.homeClicked = true
-        control.endCall()
+        camera.endCall()
     }
 
     function backButtonClicked() {
         privateProps.homeClicked = false
-        control.endCall()
+        camera.endCall()
     }
 
     function callEndedCallback() {
-        if (privateProps.homeClicked)
+        if (privateProps.homeClicked) {
             Stack.backToHome()
-        else if (control.camera.autoSwitch)
+        }
+        else if (control.camera.autoSwitch) {
             Stack.goToPage("VideoDoorEntry.qml")
-        else
+        }
+        else {
             Stack.popPage()
+        }
     }
 
     QtObject {

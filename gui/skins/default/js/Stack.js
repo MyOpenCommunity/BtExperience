@@ -36,8 +36,6 @@ var entering_page = undefined
 function pushPage(filename, properties) {
     if (properties === undefined)
         properties = {"visible": false}
-    // automatically set _pageName from component filename
-    _addPageName(filename, properties)
     return _openPage(filename, properties)
 }
 
@@ -50,6 +48,42 @@ function popPage() {
 
     if (stack.length === 1)
         backToHome()
+}
+
+// Add a page below the current one on the stack
+function pushPageBelow(filename, properties) {
+    if (properties === undefined)
+        properties = {}
+    properties.visible = false
+
+    var new_page = _createPage(filename, properties)
+    // _createPage sets changing_page to true, but we don't start any transition
+    // effect: reset changing_page to false
+    if (!new_page) {
+        changing_page = false
+        return null
+    }
+
+    // add the new page just below the current page, then adjust current_index
+    stack.splice(-1, 0, new_page)
+    current_index = stack.length - 1
+
+    // see comment above
+    changing_page = false
+}
+
+// Find the given page on the stack and return a reference to it, or null if not
+// found
+function findPage(pageName) {
+    var index
+    for (index = 0; index < stack.length; ++index) {
+        if (stack[index]._pageName === pageName)
+            break
+    }
+    if (index < stack.length)
+        return stack[index]
+    else
+        return null
 }
 
 // empties the stack and opens the page passed in; plays push animations

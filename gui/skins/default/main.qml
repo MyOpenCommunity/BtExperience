@@ -24,9 +24,10 @@ Item {
         Container.mainContainer = container
         EventManagerContainer.eventManager = eventManagerId
         // We need to update the reference in Stack because it includes MainContainer
-        // but it doesn't get the updates to it. Seems like that Qt.include()
+        // but it doesn't get the updates to it, because in QtQuick 1.1 Qt.include()
         // in a JS file operates a literal inclusion, not a real variable
         // sharing
+        // http://qt-project.org/forums/viewthread/18372
         Stack.mainContainer = container
         Stack.pushPage("HomePage.qml")
     }
