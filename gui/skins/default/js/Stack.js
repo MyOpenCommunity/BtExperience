@@ -173,7 +173,7 @@ function changePageDone() {
 function primeMenuNavigation(current, properties) {
     if ("_path" in properties) {
         current._path = properties._path
-        current.currentObject.navigate()
+        current.rootObject.navigate()
     }
 }
 
