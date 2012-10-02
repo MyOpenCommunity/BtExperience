@@ -4,7 +4,7 @@ import "../js/Stack.js" as Stack
 
 Item {
     id: item
-    property string type: "slide"
+    property string type: "fade"
     property alias animation: animationLoader.item
 
     Loader {
