@@ -137,12 +137,12 @@ Page {
     // are "public"
     function homeButtonClicked() {
         privateProps.homeClicked = true
-        control.endCall()
+        camera.endCall()
     }
 
     function backButtonClicked() {
         privateProps.homeClicked = false
-        control.endCall()
+        camera.endCall()
     }
 
     function callEndedCallback() {
