@@ -34,7 +34,7 @@ then
   rm -f BtExperience_qws
   touch BtExperience_qws
   chmod +x BtExperience_qws
-  echo "#!/bin/ettclsh" >> BtExperience_qws
+  echo "#!/bin/sh" >> BtExperience_qws
   echo "export TSLIB_TSDEVICE=/dev/input/touchscreen0" >> BtExperience_qws
   echo "export QWS_MOUSE_PROTO=Tslib:/dev/input/touchscreen0" >> BtExperience_qws
   echo "export QWS_DISPLAY=powervr" >> BtExperience_qws
