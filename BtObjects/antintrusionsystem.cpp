@@ -7,6 +7,7 @@
 
 #include <QDebug>
 #include <QStringList>
+#include <QtAlgorithms>
 
 
 namespace
@@ -206,14 +207,16 @@ void AntintrusionScenario::verifySelection(bool notify)
 		if (z->getSelected())
 			selected_zones.append(z->getNumber());
 
-	bool s = (scenario_zones == selected_zones);
-	if (notify && selected != s)
+	QSet<int> scenario_zones_set = scenario_zones.toSet();
+	QSet<int> selected_zones_set = selected_zones.toSet();
+	bool sets_are_equal = (scenario_zones_set == selected_zones_set);
+	if (notify && selected != sets_are_equal)
 	{
-		selected = s;
+		selected = sets_are_equal;
 		emit selectionChanged();
 	}
 	else
-		selected = s;
+		selected = sets_are_equal;
 }
 
 bool AntintrusionScenario::isSelected() const
