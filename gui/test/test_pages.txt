@@ -15,3 +15,10 @@ Test: back to home from a system with page skip
 * Use a configuration with only Lighting system defined.
 * In home page, click on Systems button. You are now in the Lighting system.
 * Click back to Home on the toolbar: you should be in home page now.
+
+Test: popup when a VCT call is active
+
+* Use a configuration with video control and antintrusion defined
+* Make a video call
+* Send an alarm
+=> The video call must close and the popup page must appear
