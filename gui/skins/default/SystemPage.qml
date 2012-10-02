@@ -15,7 +15,31 @@ Page {
 
     // The spacing between the buttons on the left and the MenuContainer
     property int containerLeftMargin: systemPage.width / 100 * 2
-    property int _path: 0 // for menu navigation, see navigation.js for further details
+    property int navigationTarget: 0 // for menu navigation, see navigation.js for further details
+
+    onNavigationTargetChanged: {
+        if (navigationTarget === 0)
+            return
+
+        var item = systemPage.rootObject
+
+        if (item === undefined)
+            return
+
+        var itemChild = item.child
+
+        if (!item.isTargetKnown()) {
+            systemPage.rootObject.navigate()
+            return
+        }
+
+        while (itemChild && itemChild.isTargetKnown()) {
+            item = itemChild
+            itemChild = item.child
+        }
+
+        item.navigate()
+    }
 
     function backButtonClicked() {
         container.closeLastColumn()

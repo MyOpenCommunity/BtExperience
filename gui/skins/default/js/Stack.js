@@ -168,12 +168,11 @@ function changePageDone() {
   *
   ***************************************************************************/
 
-// when _path property is defined on page, checks if menu navigation is needed
+// when navigationTarget property is defined on page, checks if menu navigation is needed
 // and eventually primes menu navigation
 function primeMenuNavigation(current, properties) {
-    if ("_path" in properties) {
-        current._path = properties._path
-        current.rootObject.navigate()
+    if ("navigationTarget" in properties) {
+        current.navigationTarget = properties.navigationTarget
     }
 }
 
@@ -183,8 +182,6 @@ function _goPage(filename, properties) {
 
     logDebug("_goPage(), new page name: " + _getName(filename))
     if (current && current._pageName === _getName(filename)) {
-        if (current.closeAll) // closes all menus if closeAll is defined on page
-            current.closeAll()
         return current
     }
 

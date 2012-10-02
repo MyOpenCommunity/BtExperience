@@ -9,10 +9,10 @@
   *     - (re)implement the openMenu hook in all MenuColumns involved (see AntintrusionSystem.qml for an example)
   *     - call (goTo|push)Page method passing the path to use (see navigate method in PopupPage.qml for an example)
   *
-  * When requesting a page to goTo or push, a _path property is eventually set
+  * When requesting a page to goTo or push, a navigationTarget property is eventually set
   * if menu navigation is desired. This property is set on the
   * SystemPage component and is later used to navigate to the proper menu.
-  * The _path property is passed to the getNavigationTarget function alongside
+  * The navigationTarget property is passed to the getNavigationTarget function alongside
   * the menuLevel property to retrieve the path element to be used to navigate to.
   * The getNavigationTarget function returns undefined if no menu navigation is
   * needed (so navigation processing ceases immediately) or it returns a string
@@ -30,7 +30,7 @@
   * The loadComponentFinished signal is defined in MenuColumn.qml and it is
   * triggered in onAnimationRunningChanged when the menu the animation finishes.
   *
-  * Summarizing, a request to load a page is sent (with _path property set).
+  * Summarizing, a request to load a page is sent (with navigationTarget property set).
   * The page is loaded and the root MenuContainer is constructed.
   * At the end of construction, the loadNextColumn signal is triggered.
   * In SystemPage, the corresponding slot calls navigate on current MenuColumn.

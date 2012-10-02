@@ -4,6 +4,7 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
     height: 50 * itemList.count
     width: 212
 

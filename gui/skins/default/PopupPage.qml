@@ -67,7 +67,7 @@ BasePage {
 
             if (data === "Antintrusion") {
                 popupLoader.sourceComponent = undefined
-                Stack.goToPage("Antintrusion.qml", {"_path": Navigation.ALARM_LOG})
+                Stack.goToPage("Antintrusion.qml", {"navigationTarget": Navigation.ALARM_LOG})
             }
         }
 

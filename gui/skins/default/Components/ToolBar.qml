@@ -229,7 +229,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm_p.svg" :
                               "../images/toolbar/icon_alarm.svg"
-            onClicked: Stack.goToPage("Antintrusion.qml", {"_path": Navigation.ALARM_LOG})
+            onClicked: Stack.goToPage("Antintrusion.qml", {"navigationTarget": Navigation.ALARM_LOG})
         }
 
         // volume (and mute)

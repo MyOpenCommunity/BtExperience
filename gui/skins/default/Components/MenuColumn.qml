@@ -21,10 +21,16 @@ Item {
         column.closeItem(menuLevel + 1)
     }
 
+    function isTargetKnown() {
+        if (Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel) === undefined)
+            return false
+        return true
+    }
+
     // checks if the need for opening a menu arose
     // see navigation.js for further details
     function navigate() {
-        var navigationTarget = Navigation.getNavigationTarget(pageObject._path, column.menuLevel)
+        var navigationTarget = Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel)
 
         if (navigationTarget === undefined)
             return
