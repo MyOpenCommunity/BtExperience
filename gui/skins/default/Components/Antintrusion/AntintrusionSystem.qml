@@ -35,15 +35,8 @@ MenuColumn {
     // redefined to implement menu navigation
     function openMenu(navigationTarget) {
         if (navigationTarget === "AlarmLog") {
-            showAlarmLog()
+            privateProps.showAlarmLog()
             return true
-        }
-    }
-
-    function showAlarmLog(name) {
-        column.loadColumn(antintrusionAlarms, column.alarmLogTitle, privateProps.model.alarms)
-        if (privateProps.currentIndex != 1) {
-            privateProps.currentIndex = 1
         }
     }
 
@@ -128,6 +121,14 @@ MenuColumn {
             popupLoader.item.state = "error"
             keypadTimer.start()
         }
+
+        // helper to open alarm log menu
+        function showAlarmLog() {
+            column.loadColumn(antintrusionAlarms, column.alarmLogTitle, privateProps.model.alarms)
+            if (privateProps.currentIndex != 1) {
+                privateProps.currentIndex = 1
+            }
+        }
     }
 
     Column {
@@ -163,7 +164,7 @@ MenuColumn {
             isSelected: privateProps.currentIndex === 1
             name: column.alarmLogTitle
             hasChild: true
-            onClicked: showAlarmLog()
+            onClicked: privateProps.showAlarmLog()
             boxInfoState: numberOfAlarms > 0 ? "warning" : ""
             boxInfoText: numberOfAlarms
 
