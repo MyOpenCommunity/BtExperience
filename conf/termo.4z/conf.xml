@@ -1,50 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<archive>
-  <item>
-    <id>7</id> <!-- Hardware settings -->
-  </item>
-	<obj cid="8004" id="8004" descr="Zona 1 - CU" where="1" fancoil="0" >
-		<ist uii="3012" descr="Zona 1 - CU 1" where="4" />
-		<ist uii="3014" descr="Zona 1 - CU 2" where="21" fancoil="1" />
-	</obj>
-	<obj cid="8005" id="8005" descr="Zona 2" where="2" fancoil="0" >
-		<ist uii="3015" descr="Zona 2 - CU 1" where="5" />
-	</obj>
-	<obj cid="8006" id="8006" descr="Zona 3" where="3" fancoil="0" >
-		<ist uii="3016" descr="Zona 2 - CU 2" where="15" />
-	</obj>
-	<obj cid="8007" id="8007" descr="Zona 4" where="4" fancoil="0" >
-		<ist uii="3017" descr="Zona 3 - CU 2" where="15" />
-	</obj>
-	<obj cid="8003" id="8003" descr="Control Unit" where="1" >
-		<ist uii="3001" descr="4 zones CU 1" where="4">
-			<zones>
-				<link uii="3012" />
-				<link uii="3015" />
-			</zones>
-			<programs>
-				<program descr="freeze" type="0" num="1" />
-				<program descr="hot" type="1" num="2" />
-			</programs>
-		</ist>
-		<ist uii="3003" descr="4 zones CU 2" where="21">
-			<zones>
-				<link uii="3014" />
-				<link uii="3016" />
-				<link uii="3017" />
-			</zones>
-			<programs>
-				<program descr="colder" type="0" num="1" />
-				<program descr="warm up" type="1" num="3" />
-			</programs>
-		</ist>
-	</obj>
-	<obj cid="8008" id="8008" descr="external probes" where="1">
-		<ist uii="3041" descr="Sonda esterna #1" where="118" />
-		<ist uii="3042" descr="Sonda esterna #2" where="118" />
-	</obj>
-	<obj cid="8009" id="8009" descr="uncontrolled probes" where="1">
-		<ist uii="3051" descr="Sonda non controllata #1" where="116" />
-		<ist uii="3052" descr="Sonda non controllata #2" where="116" />
-	</obj>
-</archive>
+<configuratore isValid="False">
+  <ver_xml>1.0.0</ver_xml>
+  <creator_sw>
+    <name>....</name>
+    <ver_sw>....</ver_sw>
+  </creator_sw>
+  <setup>
+    <generale>
+      <modello>....</modello>
+      <nome>Project</nome>
+      <language>en</language>
+      <keyboard_lang>en</keyboard_lang>
+      <languagePack>1</languagePack>
+      <clock>
+        <master>0</master>
+        <dateformat>0</dateformat>
+        <fuso>001</fuso>
+      </clock>
+      <temperature>
+        <format>0</format>
+      </temperature>
+      <culture>
+        <decimal_separator>.</decimal_separator>
+      </culture>
+    </generale>
+    <ethernet>
+      <lan>
+        <mode>2</mode>
+        <addressip>192.168.1.110</addressip>
+        <netmask>255.255.255.0</netmask>
+        <router>192.168.1.1</router>
+        <dnspri>192.168.1.1</dnspri>
+        <dnssec>192.168.1.1</dnssec>
+      </lan>
+    </ethernet>
+    <vdes>
+      <communication>
+        <vde_enabled>1</vde_enabled>
+        <mode>0</mode>
+        <dev>1</dev>
+        <address>1</address>
+      </communication>
+      <guardunits>
+        <item>1</item>
+      </guardunits>
+      <alarmlogger>
+        <enabled>0</enabled>
+        <address>1</address>
+      </alarmlogger>
+    </vdes>
+    <scs>
+      <coordinate_scs>
+        <my_mmaddress>-1</my_mmaddress>
+        <my_maaddress>-1</my_maaddress>
+        <bus_scs_type>0</bus_scs_type>
+        <mylevel>3</mylevel>
+        <int_mylevel>-1</int_mylevel>
+        <ack_scs>0</ack_scs>
+        <scs_addr>110</scs_addr>
+        <diag_addr>700</diag_addr>
+      </coordinate_scs>
+    </scs>
+    <sicurezza>
+      <pwd_open>12345</pwd_open>
+    </sicurezza>
+    <keyobjects>
+      <num>1</num>
+      <ko1>
+        <id>32</id>
+        <sysaddress>0</sysaddress>
+      </ko1>
+    </keyobjects>
+    <servizi>
+      <abil_gui>1</abil_gui>
+      <abil_djmount>0</abil_djmount>
+    </servizi>
+  </setup>
+</configuratore>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<archive>
+  <item>
+    <id>7</id> <!-- Hardware settings -->
+  </item>
+  <item>
+	  <id>16</id> <!-- Monochannel sound diffusion system -->
+	  <amplifiers>
+		  <item>
+			  <id>11</id> <!-- Amplifier -->
+			  <name>Amplificatore 2</name>
+			  <env>0</env>
+			  <where>22</where>
+		  </item>
+		  <item>
+			  <id>11</id> <!-- Amplifier -->
+			  <name>Amplificatore 3</name>
+			  <env>0</env>
+			  <where>23</where>
+		  </item>
+		  <item>
+			  <id>13</id> <!-- Power amplifier -->
+			  <name>Amplificatore di potenza</name>
+			  <env>0</env>
+			  <where>18</where>
+			  <preset>User preset 1</preset>
+			  <preset>User preset 2</preset>
+			  <preset>User preset 3</preset>
+		  </item>
+		  <item>
+			  <id>12</id> <!-- General -->
+			  <name>Generale</name>
+			  <env>0</env>
+			  <where>0</where>
+		  </item>
+	  </amplifiers>
+	  <ambients>
+		  <item>
+			  <id>17</id>
+			  <name>Generale</name>
+			  <env>0</env>
+		  </item>
+	  </ambients>
+	  <sources>
+		  <item>
+			  <id>14</id> <!-- Sound diffusion source -->
+			  <name>Radio</name>
+			  <where>1</where>
+			  <type>1</type>
+		  </item>
+		  <item>
+			  <id>14</id>
+			  <name>Touch</name>
+			  <where>4</where>
+			  <type>2</type>
+		  </item>
+		  <item>
+			  <id>14</id>
+			  <name>Media server</name>
+			  <where>5</where>
+			  <type>3</type>
+		  </item>
+	  </sources>
+  </item>
+</archive>
+

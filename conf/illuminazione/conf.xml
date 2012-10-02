@@ -1,40 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<archive>
-	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="2">
-		<ist uii="1" descr="lamp downstair" where="11#4#01" />
-		<ist uii="2" descr="lamp upstair"  where="12" pul="1" />
-		<ist uii="3" descr="lamp on the table"  where="22" ftime="3"/>
-	</obj>
-	<obj cid="2002" id="2002" descr="Dimmer 100" where="11" pul="0" ftime="1" ectime="0" ctime="00:00:00" sstart="0"  sstop="0">
-		<ist uii="4" descr="abat jour" where="21#4#01" ftime="5"/>
-		<ist uii="5" descr="applique"  where="21" pul="1" ectime="1" ctime="09:01:21" />
-		<ist uii="6" descr="applique downstair"  where="21" pul="1" sstart="102" sstop="12" />
-	</obj>
-	<obj cid="2003" id="2003" descr="Light" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
-		<ist uii="7" descr="Bedroom light" where="14" ectime="1" ctime="00:00:30" />
-		<ist uii="12" descr="Lampada scrivania di Gianni" where="13" ftime="6"/>
-	</obj>
-	<obj cid="2005" id="2005" descr="Light" where="0">
-		<ist uii="9" descr="room 1" where="1" />
-		<ist uii="10" descr="room 2" where="2" />
-		<ist uii="11" descr="general" />
-	</obj>
-	<obj cid="2004" id="2004" descr="light set">
-		<ist uii="8" descr="all downstair">
-			<link uii="1" />
-			<link uii="6" />
-			<link uii="9" />
-		</ist>
-		<ist uii="13" descr="all dimmer">
-			<link uii="1" />
-			<link uii="2" />
-			<link uii="6" />
-		</ist>
-		<ist uii="14" descr="all dimmer100">
-			<link uii="4" />
-			<link uii="5" />
-			<link uii="6" />
-		</ist>
-	</obj>
-</archive>
-
+<configuratore isValid="False">
+  <ver_xml>1.0.0</ver_xml>
+  <creator_sw>
+    <name>....</name>
+    <ver_sw>....</ver_sw>
+  </creator_sw>
+  <setup>
+    <generale>
+      <modello>....</modello>
+      <nome>Project</nome>
+      <language>en</language>
+      <keyboard_lang>en</keyboard_lang>
+      <languagePack>1</languagePack>
+      <clock>
+        <master>0</master>
+        <dateformat>0</dateformat>
+        <fuso>001</fuso>
+      </clock>
+      <temperature>
+        <format>0</format>
+      </temperature>
+      <culture>
+        <decimal_separator>.</decimal_separator>
+      </culture>
+    </generale>
+    <ethernet>
+      <lan>
+        <mode>2</mode>
+        <addressip>192.168.1.110</addressip>
+        <netmask>255.255.255.0</netmask>
+        <router>192.168.1.1</router>
+        <dnspri>192.168.1.1</dnspri>
+        <dnssec>192.168.1.1</dnssec>
+      </lan>
+    </ethernet>
+    <vdes>
+      <communication>
+        <vde_enabled>1</vde_enabled>
+        <mode>0</mode>
+        <dev>1</dev>
+        <address>1</address>
+      </communication>
+      <guardunits>
+        <item>1</item>
+      </guardunits>
+      <alarmlogger>
+        <enabled>0</enabled>
+        <address>1</address>
+      </alarmlogger>
+    </vdes>
+    <scs>
+      <coordinate_scs>
+        <my_mmaddress>-1</my_mmaddress>
+        <my_maaddress>-1</my_maaddress>
+        <bus_scs_type>0</bus_scs_type>
+        <mylevel>3</mylevel>
+        <int_mylevel>-1</int_mylevel>
+        <ack_scs>0</ack_scs>
+        <scs_addr>110</scs_addr>
+        <diag_addr>700</diag_addr>
+      </coordinate_scs>
+    </scs>
+    <sicurezza>
+      <pwd_open>12345</pwd_open>
+    </sicurezza>
+    <keyobjects>
+      <num>1</num>
+      <ko1>
+        <id>32</id>
+        <sysaddress>0</sysaddress>
+      </ko1>
+    </keyobjects>
+    <servizi>
+      <abil_gui>1</abil_gui>
+      <abil_djmount>0</abil_djmount>
+    </servizi>
+  </setup>
+</configuratore>

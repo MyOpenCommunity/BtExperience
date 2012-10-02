@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<archive>
+  <item>
+    <id>7</id> <!-- Hardware settings -->
+  </item>
+	<obj cid="8004" id="8004" descr="Zona 1 - CU" where="1" fancoil="0" >
+		<ist uii="3012" descr="Zona 1 - CU 1" where="4" />
+		<ist uii="3014" descr="Zona 1 - CU 2" where="21" fancoil="1" />
+	</obj>
+	<obj cid="8005" id="8005" descr="Zona 2" where="2" fancoil="0" >
+		<ist uii="3015" descr="Zona 2 - CU 1" where="5" />
+	</obj>
+	<obj cid="8006" id="8006" descr="Zona 3" where="3" fancoil="0" >
+		<ist uii="3016" descr="Zona 2 - CU 2" where="15" />
+	</obj>
+	<obj cid="8007" id="8007" descr="Zona 4" where="4" fancoil="0" >
+		<ist uii="3017" descr="Zona 3 - CU 2" where="15" />
+	</obj>
+	<obj cid="8003" id="8003" descr="Control Unit" where="1" >
+		<ist uii="3001" descr="4 zones CU 1" where="4">
+			<zones>
+				<link uii="3012" />
+				<link uii="3015" />
+			</zones>
+			<programs>
+				<program descr="freeze" type="0" num="1" />
+				<program descr="hot" type="1" num="2" />
+			</programs>
+		</ist>
+		<ist uii="3003" descr="4 zones CU 2" where="21">
+			<zones>
+				<link uii="3014" />
+				<link uii="3016" />
+				<link uii="3017" />
+			</zones>
+			<programs>
+				<program descr="colder" type="0" num="1" />
+				<program descr="warm up" type="1" num="3" />
+			</programs>
+		</ist>
+	</obj>
+	<obj cid="8008" id="8008" descr="external probes" where="1">
+		<ist uii="3041" descr="Sonda esterna #1" where="118" />
+		<ist uii="3042" descr="Sonda esterna #2" where="118" />
+	</obj>
+	<obj cid="8009" id="8009" descr="uncontrolled probes" where="1">
+		<ist uii="3051" descr="Sonda non controllata #1" where="116" />
+		<ist uii="3052" descr="Sonda non controllata #2" where="116" />
+	</obj>
+</archive>

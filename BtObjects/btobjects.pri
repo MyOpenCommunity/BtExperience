@@ -32,6 +32,7 @@ HEADERS += \
 	thermalprobes.h \
 	uiimapper.h \
 	vct.h \
+	watchdog.h \
 	xmlobject.h \
 	devices/airconditioning_device.h \
 	devices/antintrusion_device.h \
@@ -97,6 +98,7 @@ SOURCES += \
 	thermalprobes.cpp \
 	uiimapper.cpp \
 	vct.cpp \
+	watchdog.cpp \
 	generic_functions.cpp \
 	devices/airconditioning_device.cpp \
 	devices/antintrusion_device.cpp \

@@ -20,6 +20,7 @@ public:
 	enum Ringtone
 	{
 		Alarm,
+		Message,
 		// VCT
 		CCTVExternalPlace1 = CCTV::ExternalPlace1,
 		CCTVExternalPlace2 = CCTV::ExternalPlace2,

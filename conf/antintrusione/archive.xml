@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<archive>
+  <item>
+    <id>7</id> <!-- Hardware settings -->
+  </item>
+	<!-- Antintrusion system -->
+	<obj cid="13001" id="13001" descr="Zone" where="#1" mon="0" >
+		<ist uii="1001" descr="ingresso" where="#1" />
+		<ist uii="1002" cid="13002" descr="taverna" where="#2" mon="1" />
+		<ist uii="1005" cid="13003" descr="mansarda" where="#3" />
+		<ist uii="1010" cid="13004" descr="box/cantina" where="#4" />
+		<ist uii="1006" cid="13005" descr="soggiorno" where="#5" />
+		<ist uii="1003" cid="13006" descr="cucina" where="#6" />
+		<ist uii="1008" cid="13007" descr="camera" where="#7" />
+		<ist uii="1004" cid="13008" descr="cameretta" where="#8" />
+	</obj>
+	<obj cid="13101" id="13101" descr="aux" where="1" >
+		<ist uii="1009" descr="Gas" where="1" />
+		<ist uii="1011" descr="Freezer" where="2" />
+		<ist uii="1013" descr="Flood" where="3" />
+		<ist uii="1012" descr="Emergency call" where="4" />
+		<ist uii="1014" descr="Generic" where="5" />
+		<ist uii="1015" descr="Generic" where="6" />
+		<ist uii="1016" descr="Generic" where="7" />
+		<ist uii="1018" descr="Fire" where="8" />
+		<ist uii="1017" descr="Telerescue" where="9" />
+	</obj>
+	<obj cid="13010" id="13010" descr="set of zones">
+		<ist uii="1019" descr="giorno">
+			<link uii="1001" />
+			<link uii="1002" />
+			<link uii="1004" />
+		</ist>
+		<ist uii="1020" descr="notte">
+			<link uii="1001" />
+			<link uii="1002" />
+			<link uii="1003" />
+			<link uii="1005" />
+			<link uii="1006" />
+			<link uii="1008" />
+		</ist>
+		<ist uii="1021" descr="vacanze">
+			<link uii="1001" />
+			<link uii="1002" />
+			<link uii="1003" />
+			<link uii="1005" />
+			<link uii="1008" />
+		</ist>
+	</obj>
+</archive>

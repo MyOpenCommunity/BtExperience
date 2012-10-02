@@ -1,213 +1,79 @@
-<archive>
-	<obj cid="9001" id="9001" descr="Advanced Scenario">
-		<ist uii="6001" descr="Dimmer cond, time">
-			<scen>
-				<status>1</status>
-				<time>
-					<status>1</status>
-					<hour>07</hour>
-					<minute>00</minute>
-				</time>
-				<!-- Wednesday, Thursday and Friday are selected -->
-				<days>28</days>
-				<device>
-					<status>1</status>
-					<objectID>2</objectID>
-					<descr>Dimmer 10</descr>
-					<where>10</where>
-					<pul>0</pul>
-					<trigger>2-4</trigger>
-				</device>
-				<action>
-					<descr>Dimmer 10</descr>
-					<open>*1*1*11##</open>
-					<objectID>1</objectID>
-					<commandID>1</commandID>
-				</action>
-			</scen>
-		</ist>
-		<ist uii="6002" descr="Amplifier cond, no time">
-			<scen>
-				<status>1</status>
-				<time>
-					<status>0</status>
-					<hour>07</hour>
-					<minute>00</minute>
-				</time>
-				<!-- Wednesday, Thursday and Friday are selected -->
-				<days>28</days>
-				<device>
-					<status>1</status>
-					<objectID>4</objectID>
-					<descr>Amplifier 21</descr>
-					<where>21</where>
-					<pul>0</pul>
-					<trigger>13-22</trigger>
-				</device>
-				<action>
-					<descr>Temporized light</descr>
-					<open>*1*1*11##</open>
-					<objectID>3</objectID>
-					<commandID>12</commandID>
-				</action>
-			</scen>
-		</ist>
-		<ist uii="6003" descr="Temperature cond, time">
-			<scen>
-				<status>1</status>
-				<time>
-					<status>1</status>
-					<hour>08</hour>
-					<minute>00</minute>
-				</time>
-				<!-- Wednesday, Thursday and Friday are selected -->
-				<days>28</days>
-				<device>
-					<status>1</status>
-					<objectID>3</objectID>
-					<descr>Controlled zone 16</descr>
-					<where>16</where>
-					<pul>0</pul>
-					<trigger>210</trigger>
-				</device>
-				<action>
-					<descr>The gate of hell</descr>
-					<open>*1*1*11##</open>
-					<objectID>6</objectID>
-					<commandID>21</commandID>
-				</action>
-			</scen>
-		</ist>
-		<ist uii="6004" descr="Light cond, time">
-			<scen>
-				<status>1</status>
-				<time>
-					<status>1</status>
-					<hour>08</hour>
-					<minute>00</minute>
-				</time>
-				<!-- Wednesday, Thursday and Friday are selected -->
-				<days>28</days>
-				<device>
-					<status>1</status>
-					<objectID>1</objectID>
-					<descr>Light 17</descr>
-					<where>17</where>
-					<pul>0</pul>
-					<trigger>1</trigger>
-				</device>
-				<action>
-					<descr>Thermal control unit</descr>
-					<open>*1*1*11##</open>
-					<objectID>18</objectID>
-					<commandID>29</commandID>
-				</action>
-			</scen>
-		</ist>
-		<ist uii="6005" descr="Dimmer 100 cond, time">
-			<scen>
-				<status>1</status>
-				<time>
-					<status>1</status>
-					<hour>07</hour>
-					<minute>00</minute>
-				</time>
-				<!-- Wednesday, Thursday and Friday are selected -->
-				<days>28</days>
-				<device>
-					<status>1</status>
-					<objectID>6</objectID>
-					<descr>Dimmer 100</descr>
-					<where>100</where>
-					<pul>0</pul>
-					<trigger>50-70</trigger>
-				</device>
-				<action>
-					<descr>Super Scenario Plus</descr>
-					<open>*1*1*11##</open>
-					<objectID>25</objectID>
-					<commandID>102</commandID>
-				</action>
-			</scen>
-		</ist>
-		<ist uii="6006" descr="time without device">
-			<scen>
-				<status>1</status>
-				<time>
-					<status>1</status>
-					<hour>08</hour>
-					<minute>00</minute>
-				</time>
-				<!-- Wednesday, Thursday and Friday are selected -->
-				<days>28</days>
-				<action>
-					<descr>Thermal control unit</descr>
-					<open>*1*1*11##</open>
-					<objectID>18</objectID>
-					<commandID>29</commandID>
-				</action>
-			</scen>
-		</ist>
-	</obj>
-        <obj cid="9002" id="9002" descr="Scheduled scenario">
-		<ist uii="6101" descr="Scheduled scenario 3">
-			<schedscen>
-				<enable>
-					<presence>1</presence>
-					<cmdType>0</cmdType>
-					<open>*15*01*11##</open>
-				</enable>
-				<disable>
-					<presence>1</presence>
-					<cmdType>0</cmdType>
-					<open>*15*02*11##</open>
-				</disable>
-				<start>
-					<presence>1</presence>
-					<cmdType>0</cmdType>
-					<open>*15*03*11##</open>
-				</start>
-				<stop>
-					<presence>1</presence>
-					<cmdType>0</cmdType>
-					<open>*15*04*11##</open>
-				</stop>
-			</schedscen>
-		</ist>
-		<ist uii="6102" descr="Scheduled scenario 4">
-			<schedscen>
-				<enable>
-					<presence>0</presence>
-					<cmdType>0</cmdType>
-					<open>*15*01*11##</open>
-				</enable>
-				<disable>
-					<presence>0</presence>
-					<cmdType>0</cmdType>
-					<open>*15*02*11##</open>
-				</disable>
-				<start>
-					<presence>1</presence>
-					<cmdType>0</cmdType>
-					<open>*15*03*12##</open>
-				</start>
-				<stop>
-					<presence>1</presence>
-					<cmdType>0</cmdType>
-					<open>*15*04*12##</open>
-				</stop>
-			</schedscen>
-		</ist>
-	</obj>
-	<obj cid="1001" id="1001" descr="Scenario unit" where="11" what="1">
-		<ist uii="6201" descr="Scenario 1" where="12" what="1" />
-		<ist uii="6202" descr="Scenario 2" where="21" what="2" />
-		<ist uii="6203" descr="Scenario 3" where="22" what="3" />
-	</obj>
-	<obj cid="1002" id="1002" descr="Scenario module" where="11" what="1">
-		<ist uii="6204" descr="Scenario 4" where="11#4#01" what="4" />
-	</obj>
-	<obj cid="1003" id="1003" descr="Scenario plus" where="1">
-		<ist uii="6205" descr="Scenario Plus" where="10" />
-	</obj>
-</archive>
+<?xml version="1.0" encoding="utf-8"?>
+<configuratore isValid="False">
+  <ver_xml>1.0.0</ver_xml>
+  <creator_sw>
+    <name>....</name>
+    <ver_sw>....</ver_sw>
+  </creator_sw>
+  <setup>
+    <generale>
+      <modello>....</modello>
+      <nome>Project</nome>
+      <language>en</language>
+      <keyboard_lang>en</keyboard_lang>
+      <languagePack>1</languagePack>
+      <clock>
+        <master>0</master>
+        <dateformat>0</dateformat>
+        <fuso>001</fuso>
+      </clock>
+      <temperature>
+        <format>0</format>
+      </temperature>
+      <culture>
+        <decimal_separator>.</decimal_separator>
+      </culture>
+    </generale>
+    <ethernet>
+      <lan>
+        <mode>2</mode>
+        <addressip>192.168.1.110</addressip>
+        <netmask>255.255.255.0</netmask>
+        <router>192.168.1.1</router>
+        <dnspri>192.168.1.1</dnspri>
+        <dnssec>192.168.1.1</dnssec>
+      </lan>
+    </ethernet>
+    <vdes>
+      <communication>
+        <vde_enabled>1</vde_enabled>
+        <mode>0</mode>
+        <dev>1</dev>
+        <address>1</address>
+      </communication>
+      <guardunits>
+        <item>1</item>
+      </guardunits>
+      <alarmlogger>
+        <enabled>0</enabled>
+        <address>1</address>
+      </alarmlogger>
+    </vdes>
+    <scs>
+      <coordinate_scs>
+        <my_mmaddress>-1</my_mmaddress>
+        <my_maaddress>-1</my_maaddress>
+        <bus_scs_type>0</bus_scs_type>
+        <mylevel>3</mylevel>
+        <int_mylevel>-1</int_mylevel>
+        <ack_scs>0</ack_scs>
+        <scs_addr>110</scs_addr>
+        <diag_addr>700</diag_addr>
+      </coordinate_scs>
+    </scs>
+    <sicurezza>
+      <pwd_open>12345</pwd_open>
+    </sicurezza>
+    <keyobjects>
+      <num>1</num>
+      <ko1>
+        <id>32</id>
+        <sysaddress>0</sysaddress>
+      </ko1>
+    </keyobjects>
+    <servizi>
+      <abil_gui>1</abil_gui>
+      <abil_djmount>0</abil_djmount>
+    </servizi>
+  </setup>
+</configuratore>

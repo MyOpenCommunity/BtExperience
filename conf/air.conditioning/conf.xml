@@ -1,69 +1,79 @@
-<archive>
-	<!-- basic AC -->
-	<obj cid="8010" id="8010" descr="Basic AC Unit" where="11" eprobe="0" off_cmd="1" off_presence="0" command="1">
-		<ist uii="7001" descr="Living room Base" where="12" />
-		<ist uii="7002" descr="Bedroom Base" where="22" eprobe="1" off_cmd = "2" off_presence = "1" command="2">
-			<probe where_probe="112" />
-		</ist>
-	</obj>
-	<obj cid="8011" id="8011" descr="Command" command="1">
-		<ist uii="7003" descr="Command 1">
-			<link uii="7001" />
-		</ist>
-		<ist uii="7004" descr="Command 2" command="2">
-			<link uii="7001" />
-		</ist>
-		<ist uii="7005" descr="Command 3" command="3">
-			<link uii="7002" />
-		</ist>
-	</obj>
-	<obj cid="8012" id="8012" descr="Generic command" where="11" command="1">
-		<ist uii="7006" descr="Generic command 1" where="12" />
-		<ist uii="7007" descr="Generic command 2" where="13" command="2" />
-		<ist uii="7008" descr="Generic command 3" where="14" command="3" />
-	</obj>
-	<obj cid="8013" id="8013" descr="Group of commands">
-		<ist uii="7009" descr="Group of generic command 1-2">
-			<link uii="7006" />
-			<link uii="7007" />
-		</ist>
-		<ist uii="7010" descr="Group of generic command 3">
-			<link uii="7008" />
-		</ist>
-	</obj>
-	<!-- advanced AC -->
-	<obj cid="8014" id="8014" descr="AC Unit advanced" where="3#11#1" eprobe="0" off_cmd="0" setpoint_min="160" setpoint_max="260" setpoint_step="1" mode_auto="5" mode_cooling="-1" mode_heating="-1" mode_dry="-1" mode_fan="-1" speed_presence="0" swing_presence="-1">
-		<ist uii="7101" descr="Living room Adv" where="3#11#2" eprobe="1" setpoint_min="200" setpoint_max="250" mode_cooling="2" mode_heating="1" speed_presence="1" swing_presence="1" mode_dry="4" mode_fan="3" >
-			<probe where_probe="000" />
-			<speed speed_auto="-1" speed_high="3" speed_medium="2" speed_low="-1" speed_silent="-1" />
-		</ist>
-		<ist uii="7102" descr="Bedroom Adv" where="3#11#2" setpoint_min="200" setpoint_max="250" mode_cooling="2" mode_heating="1" />
-	</obj>
-	<obj cid="8015" id="8015" descr="Command" setpoint="200" mode="5" speed=" " fan_swing=" ">
-		<ist uii="7103" descr="Living room - cooling" setpoint="200" mode="2" speed="2">
-			<link uii="7101" />
-		</ist>
-		<ist uii="7104" descr="Living room - Heating" setpoint="250" mode="1">
-			<link uii="7101" />
-		</ist>
-		<ist uii="7105" descr="Bedroom heating" setpoint="250" mode="1">
-			<link uii="7102" />
-		</ist>
-	</obj>
-	<obj cid="8016" id="8016" descr="Generic Command" where="11#1" setpoint="180" mode="1" speed="1" fan_swing="1">
-		<ist uii="7106" descr="Generic Commnad 1" where="11#2" setpoint="190" mode="2" />
-		<ist uii="7107" descr="Generic Commnad 2" where="11#3" setpoint="200" mode="3" speed="2" />
-		<ist uii="7108" descr="Generic Commnad 3" where="11#4" />
-		<ist uii="7109" descr="Generic Commnad 4" where="11#5" />
-	</obj>
-	<obj cid="8017" id="8017" descr="Group of commands">
-		<ist uii="7110" descr="Group of commands 1-2">
-			<link uii="7106" />
-			<link uii="7107" />
-		</ist>
-		<ist uii="7111" descr="Group of commands 3-4">
-			<link uii="7108" />
-			<link uii="7109" />
-		</ist>
-	</obj>
-</archive>
+<?xml version="1.0" encoding="utf-8"?>
+<configuratore isValid="False">
+  <ver_xml>1.0.0</ver_xml>
+  <creator_sw>
+    <name>....</name>
+    <ver_sw>....</ver_sw>
+  </creator_sw>
+  <setup>
+    <generale>
+      <modello>....</modello>
+      <nome>Project</nome>
+      <language>en</language>
+      <keyboard_lang>en</keyboard_lang>
+      <languagePack>1</languagePack>
+      <clock>
+        <master>0</master>
+        <dateformat>0</dateformat>
+        <fuso>001</fuso>
+      </clock>
+      <temperature>
+        <format>0</format>
+      </temperature>
+      <culture>
+        <decimal_separator>.</decimal_separator>
+      </culture>
+    </generale>
+    <ethernet>
+      <lan>
+        <mode>2</mode>
+        <addressip>192.168.1.110</addressip>
+        <netmask>255.255.255.0</netmask>
+        <router>192.168.1.1</router>
+        <dnspri>192.168.1.1</dnspri>
+        <dnssec>192.168.1.1</dnssec>
+      </lan>
+    </ethernet>
+    <vdes>
+      <communication>
+        <vde_enabled>1</vde_enabled>
+        <mode>0</mode>
+        <dev>1</dev>
+        <address>1</address>
+      </communication>
+      <guardunits>
+        <item>1</item>
+      </guardunits>
+      <alarmlogger>
+        <enabled>0</enabled>
+        <address>1</address>
+      </alarmlogger>
+    </vdes>
+    <scs>
+      <coordinate_scs>
+        <my_mmaddress>-1</my_mmaddress>
+        <my_maaddress>-1</my_maaddress>
+        <bus_scs_type>0</bus_scs_type>
+        <mylevel>3</mylevel>
+        <int_mylevel>-1</int_mylevel>
+        <ack_scs>0</ack_scs>
+        <scs_addr>110</scs_addr>
+        <diag_addr>700</diag_addr>
+      </coordinate_scs>
+    </scs>
+    <sicurezza>
+      <pwd_open>12345</pwd_open>
+    </sicurezza>
+    <keyobjects>
+      <num>1</num>
+      <ko1>
+        <id>32</id>
+        <sysaddress>0</sysaddress>
+      </ko1>
+    </keyobjects>
+    <servizi>
+      <abil_gui>1</abil_gui>
+      <abil_djmount>0</abil_djmount>
+    </servizi>
+  </setup>
+</configuratore>

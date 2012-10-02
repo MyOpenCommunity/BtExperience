@@ -1,78 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<archive>
-	<obj cid="6101" id="6101" descr="Stop and go" where="1">
-		<ist uii="4001" descr="Stop and Go" where="2" />
-	</obj>
-	<obj cid="6102" id="6102" descr="Stop and go plus" where="1">
-		<ist uii="4002" descr="Stop and go plus" where="3" />
-	</obj>
-	<obj cid="6103" id="6103" descr="Stop and go btest" where="1">
-		<ist uii="4003" descr="Stop and go btest" where="5" />
-	</obj>
-	<obj cid="6104" id="6104" descr="Load diagnostic" where="0" phase="0">
-		<ist uii="4007" descr="Washing machine" where="6" />
-		<ist uii="4008" descr="Dishwasher" where="8" />
-	</obj>
-	<obj cid="6111" id="6111" descr="Load with CU" where="1" phase="0" advanced="0" mode="1" measure="Kw" rate_enabled="0" rate_type="0">
-		<ist uii="4004" descr="Load 1 w/ CU advanced" where="2" advanced="1" rate_enabled="1">
-			<rate>
-				<rate_id>5</rate_id>
-				<rate_n_decimal_view>0</rate_n_decimal_view>
-			</rate>
-		</ist>
-		<ist uii="4005" descr="Load 2 w/ CU base" where="3" />
-	</obj>
-	<obj cid="6111" id="6112" descr="Load without CU" where="1" phase="0" advanced="1" mode="1" measure="Kw" rate_enabled="0" rate_type="0">
-		<ist uii="4006" descr="Load 3 w/o CU" where="2" advanced="1" rate_enabled="1">
-			<rate>
-				<rate_id>5</rate_id>
-				<rate_n_decimal_view>0</rate_n_decimal_view>
-			</rate>
-		</ist>
-	</obj>
-	<obj cid="6105" id="6105" descr="Electric line" where="1"
-	     SWmeasure="Kw" measure="Kw" consumption_goal_enabled="0"
-	     threshold_one_enable="0" threshold_two_enable="0"
-	     rate_enable="0" rate_type="0" mode="1">
-		<ist uii="5001" descr="Office" where="2"
-		     consumption_goal_enabled="1" rate_enable="1">
-			<consumption_goal>
-				<january>100</january>
-				<february>120</february>
-				<march>100</march>
-				<april>100</april>
-				<may>100</may>
-				<june>100</june>
-				<july>100</july>
-				<august>100</august>
-				<september>100</september>
-				<october>100</october>
-				<november>90</november>
-				<december>100</december>
-			</consumption_goal>
-			<rate>
-				<rate_id>2</rate_id>
-				<rate_n_decimal_view>2</rate_n_decimal_view>
-			</rate>
-		</ist>
-		<ist uii="5002" descr="Kitchen" where="2" SWmeasure="Custom" measure="Kw" />
-		<ist uii="5003" descr="Box" where="3" rate_enable="1" >
-			<rate>
-				<rate_id>2</rate_id>
-				<rate_n_decimal_view>2</rate_n_decimal_view>
-			</rate>
-		</ist>
-	</obj>
-	<obj cid="6109" id="6105" descr="Heating/Cooling" where="1"
-	     SWmeasure="Kw" measure="Kw" consumption_goal="0" consumption_goal_enabled="0"
-	     threshold_one_enable="0" threshold_two_enable="0"
-	     rate_enable="0" rate_type="0" mode="5">
-		<ist uii="5004" descr="Living room" where="6" />
-		<ist uii="5005" descr="Bedroom" where="7" rate_enable="1">
-			<rate>
-				<rate_id>5</rate_id>
-				<rate_n_decimal_view>0</rate_n_decimal_view>
-			</rate>
-		</ist>
-	</obj>
-</archive>
+<configuratore isValid="False">
+  <ver_xml>1.0.0</ver_xml>
+  <creator_sw>
+    <name>....</name>
+    <ver_sw>....</ver_sw>
+  </creator_sw>
+  <setup>
+    <generale>
+      <modello>....</modello>
+      <nome>Project</nome>
+      <language>en</language>
+      <keyboard_lang>en</keyboard_lang>
+      <languagePack>1</languagePack>
+      <clock>
+        <master>0</master>
+        <dateformat>0</dateformat>
+        <fuso>001</fuso>
+      </clock>
+      <temperature>
+        <format>0</format>
+      </temperature>
+      <culture>
+        <decimal_separator>.</decimal_separator>
+      </culture>
+    </generale>
+    <ethernet>
+      <lan>
+        <mode>2</mode>
+        <addressip>192.168.1.110</addressip>
+        <netmask>255.255.255.0</netmask>
+        <router>192.168.1.1</router>
+        <dnspri>192.168.1.1</dnspri>
+        <dnssec>192.168.1.1</dnssec>
+      </lan>
+    </ethernet>
+    <vdes>
+      <communication>
+        <vde_enabled>1</vde_enabled>
+        <mode>0</mode>
+        <dev>1</dev>
+        <address>1</address>
+      </communication>
+      <guardunits>
+        <item>1</item>
+      </guardunits>
+      <alarmlogger>
+        <enabled>0</enabled>
+        <address>1</address>
+      </alarmlogger>
+    </vdes>
+    <scs>
+      <coordinate_scs>
+        <my_mmaddress>-1</my_mmaddress>
+        <my_maaddress>-1</my_maaddress>
+        <bus_scs_type>0</bus_scs_type>
+        <mylevel>3</mylevel>
+        <int_mylevel>-1</int_mylevel>
+        <ack_scs>0</ack_scs>
+        <scs_addr>110</scs_addr>
+        <diag_addr>700</diag_addr>
+      </coordinate_scs>
+    </scs>
+    <sicurezza>
+      <pwd_open>12345</pwd_open>
+    </sicurezza>
+    <keyobjects>
+      <num>1</num>
+      <ko1>
+        <id>32</id>
+        <sysaddress>0</sysaddress>
+      </ko1>
+    </keyobjects>
+    <servizi>
+      <abil_gui>1</abil_gui>
+      <abil_djmount>0</abil_djmount>
+    </servizi>
+  </setup>
+</configuratore>

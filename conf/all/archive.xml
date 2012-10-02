@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<archive>
+  <item>
+    <id>7</id> <!-- Hardware settings -->
+  </item>
+
+	<obj cid="3003" id="3003" descr="Door" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
+		<ist uii="15" descr="Door Lock" where="34"/>
+	</obj>
+	<obj cid="3002" id="3002" descr="Fan" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
+		<ist uii="16" descr="Fan" where="35"/>
+	</obj>
+	<obj cid="3000" id="3000" descr="3 State actuator" where="11" pul="0" mode="0" >
+		<ist uii="17" cid="3000" descr="Shutter" where="41" />
+	</obj>
+
+	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="2">
+		<ist uii="1" descr="lamp downstair" where="11#4#01" />
+		<ist uii="2" descr="lamp upstair"  where="12" pul="1" />
+		<ist uii="3" descr="lamp on the table"  where="22" ftime="3"/>
+	</obj>
+	<obj cid="2002" id="2002" descr="Dimmer 100" where="11" pul="0" ftime="1" ectime="0" ctime="00:00:00" sstart="0"  sstop="0">
+		<ist uii="4" descr="abat jour" where="21#4#01" ftime="5"/>
+		<ist uii="5" descr="applique"  where="21" pul="1" ectime="1" ctime="09:01:21" />
+		<ist uii="6" descr="applique downstair"  where="21" pul="1" sstart="102" sstop="12" />
+	</obj>
+	<obj cid="2003" id="2003" descr="Light" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
+		<ist uii="7" descr="Bedroom light" where="14" ectime="1" ctime="00:00:30" />
+		<ist uii="12" descr="Lampada scrivania di Gianni" where="13" ftime="6"/>
+	</obj>
+	<obj cid="2005" id="2005" descr="Light" where="0">
+		<ist uii="9" descr="room 1" where="1" />
+		<ist uii="10" descr="room 2" where="2" />
+		<ist uii="11" descr="general" />
+	</obj>
+	<obj cid="2004" id="2004" descr="light set">
+		<ist uii="8" descr="all downstair">
+			<link uii="1" />
+			<link uii="6" />
+			<link uii="9" />
+		</ist>
+		<ist uii="13" descr="all dimmer">
+			<link uii="1" />
+			<link uii="2" />
+			<link uii="6" />
+		</ist>
+		<ist uii="14" descr="all dimmer100">
+			<link uii="4" />
+			<link uii="5" />
+			<link uii="6" />
+		</ist>
+	</obj>
+	<obj cid="9001" id="9001" descr="Advanced Scenario">
+		<ist uii="6001" descr="Dimmer cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>2</objectID>
+					<descr>Dimmer 10</descr>
+					<where>10</where>
+					<pul>0</pul>
+					<trigger>2-4</trigger>
+				</device>
+				<action>
+					<descr>Dimmer 10</descr>
+					<open>*1*1*11##</open>
+					<objectID>1</objectID>
+					<commandID>1</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6002" descr="Amplifier cond, no time">
+			<scen>
+				<status>1</status>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>4</objectID>
+					<descr>Amplifier 21</descr>
+					<where>21</where>
+					<pul>0</pul>
+					<trigger>13-22</trigger>
+				</device>
+				<action>
+					<descr>Temporized light</descr>
+					<open>*1*1*11##</open>
+					<objectID>3</objectID>
+					<commandID>12</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6003" descr="Temperature cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>3</objectID>
+					<descr>Controlled zone 16</descr>
+					<where>16</where>
+					<pul>0</pul>
+					<trigger>210</trigger>
+				</device>
+				<action>
+					<descr>The gate of hell</descr>
+					<open>*1*1*11##</open>
+					<objectID>6</objectID>
+					<commandID>21</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6004" descr="Light cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>1</objectID>
+					<descr>Light 17</descr>
+					<where>17</where>
+					<pul>0</pul>
+					<trigger>1</trigger>
+				</device>
+				<action>
+					<descr>Thermal control unit</descr>
+					<open>*1*1*11##</open>
+					<objectID>18</objectID>
+					<commandID>29</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6005" descr="Dimmer 100 cond, time">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>07</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<device>
+					<status>1</status>
+					<objectID>6</objectID>
+					<descr>Dimmer 100</descr>
+					<where>100</where>
+					<pul>0</pul>
+					<trigger>50-70</trigger>
+				</device>
+				<action>
+					<descr>Super Scenario Plus</descr>
+					<open>*1*1*11##</open>
+					<objectID>25</objectID>
+					<commandID>102</commandID>
+				</action>
+			</scen>
+		</ist>
+		<ist uii="6006" descr="time without device">
+			<scen>
+				<status>1</status>
+				<time>
+					<status>1</status>
+					<hour>08</hour>
+					<minute>00</minute>
+				</time>
+				<!-- Wednesday, Thursday and Friday are selected -->
+				<days>28</days>
+				<action>
+					<descr>Thermal control unit</descr>
+					<open>*1*1*11##</open>
+					<objectID>18</objectID>
+					<commandID>29</commandID>
+				</action>
+			</scen>
+		</ist>
+	</obj>
+        <obj cid="9002" id="9002" descr="Scheduled scenario">
+		<ist uii="6101" descr="Scheduled scenario 3">
+			<schedscen>
+				<enable>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*01*11##</open>
+				</enable>
+				<disable>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*02*11##</open>
+				</disable>
+				<start>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*03*11##</open>
+				</start>
+				<stop>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*04*11##</open>
+				</stop>
+			</schedscen>
+		</ist>
+		<ist uii="6102" descr="Scheduled scenario 4">
+			<schedscen>
+				<enable>
+					<presence>0</presence>
+					<cmdType>0</cmdType>
+					<open>*15*01*11##</open>
+				</enable>
+				<disable>
+					<presence>0</presence>
+					<cmdType>0</cmdType>
+					<open>*15*02*11##</open>
+				</disable>
+				<start>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*03*12##</open>
+				</start>
+				<stop>
+					<presence>1</presence>
+					<cmdType>0</cmdType>
+					<open>*15*04*12##</open>
+				</stop>
+			</schedscen>
+		</ist>
+	</obj>
+	<obj cid="1001" id="1001" descr="Scenario unit" where="11" what="1">
+		<ist uii="6201" descr="Scenario 1" where="12" what="1" />
+		<ist uii="6202" descr="Scenario 2" where="21" what="2" />
+		<ist uii="6203" descr="Scenario 3" where="22" what="3" />
+	</obj>
+	<obj cid="1002" id="1002" descr="Scenario module" where="11" what="1">
+		<ist uii="6204" descr="Scenario 4" where="11#4#01" what="4" />
+	</obj>
+	<obj cid="1003" id="1003" descr="Scenario plus" where="1">
+		<ist uii="6205" descr="Scenario Plus" where="10" />
+	</obj>
+        <obj cid="8001" id="8001" descr="99 Zones Control Unit">
+		<ist uii="2001" descr="unità centrale">
+			<programs>
+				<program descr="Winter program" type="0" num="2" />
+				<program descr="Christmas program" type="0" num="5" />
+				<program descr="Summer program" type="1" num="3" />
+			</programs>
+			<scenarios>
+				<scenario descr="Winter scenario" type="0" num="2" />
+				<scenario descr="Summer scenario" type="1" num="5" />
+				<scenario descr="Midsummer scenario" type="1" num="6" />
+			</scenarios>
+		</ist>
+	</obj>
+	<!-- basic AC -->
+	<obj cid="8010" id="8010" descr="Basic AC Unit" where="11" eprobe="0" off_cmd="1" off_presence="0" command="1">
+		<ist uii="7001" descr="Living room Base" where="12" />
+		<ist uii="7002" descr="Bedroom Base" where="22" eprobe="1" off_cmd = "2" off_presence = "1" command="2">
+			<probe where_probe="112" />
+		</ist>
+	</obj>
+	<obj cid="8011" id="8011" descr="Command" command="1">
+		<ist uii="7003" descr="Command 1">
+			<link uii="7001" />
+		</ist>
+		<ist uii="7004" descr="Command 2" command="2">
+			<link uii="7001" />
+		</ist>
+		<ist uii="7005" descr="Command 3" command="3">
+			<link uii="7002" />
+		</ist>
+	</obj>
+	<obj cid="8012" id="8012" descr="Generic command" where="11" command="1">
+		<ist uii="7006" descr="Generic command 1" where="12" />
+		<ist uii="7007" descr="Generic command 2" where="13" command="2" />
+		<ist uii="7008" descr="Generic command 3" where="14" command="3" />
+	</obj>
+	<obj cid="8013" id="8013" descr="Group of commands">
+		<ist uii="7009" descr="Group of generic command 1-2">
+			<link uii="7006" />
+			<link uii="7007" />
+		</ist>
+		<ist uii="7010" descr="Group of generic command 3">
+			<link uii="7008" />
+		</ist>
+	</obj>
+	<!-- advanced AC -->
+	<obj cid="8014" id="8014" descr="AC Unit advanced" where="3#11#1" eprobe="0" off_cmd="0" setpoint_min="160" setpoint_max="260" setpoint_step="1" mode_auto="5" mode_cooling="-1" mode_heating="-1" mode_dry="-1" mode_fan="-1" speed_presence="0" swing_presence="-1">
+		<ist uii="7101" descr="Living room Adv" where="3#11#2" eprobe="1" setpoint_min="200" setpoint_max="250" mode_cooling="2" mode_heating="1" speed_presence="1" swing_presence="1" mode_dry="4" mode_fan="3" >
+			<probe where_probe="000" />
+			<speed speed_auto="-1" speed_high="3" speed_medium="2" speed_low="-1" speed_silent="-1" />
+		</ist>
+		<ist uii="7102" descr="Bedroom Adv" where="3#11#2" setpoint_min="200" setpoint_max="250" mode_cooling="2" mode_heating="1" />
+	</obj>
+	<obj cid="8015" id="8015" descr="Command" setpoint="200" mode="5" speed=" " fan_swing=" ">
+		<ist uii="7103" descr="Living room - cooling" setpoint="200" mode="2" speed="2">
+			<link uii="7101" />
+		</ist>
+		<ist uii="7104" descr="Living room - Heating" setpoint="250" mode="1">
+			<link uii="7101" />
+		</ist>
+		<ist uii="7105" descr="Bedroom heating" setpoint="250" mode="1">
+			<link uii="7102" />
+		</ist>
+	</obj>
+	<obj cid="8016" id="8016" descr="Generic Command" where="11#1" setpoint="180" mode="1" speed="1" fan_swing="1">
+		<ist uii="7106" descr="Generic Commnad 1" where="11#2" setpoint="190" mode="2" />
+		<ist uii="7107" descr="Generic Commnad 2" where="11#3" setpoint="200" mode="3" speed="2" />
+		<ist uii="7108" descr="Generic Commnad 3" where="11#4" />
+		<ist uii="7109" descr="Generic Commnad 4" where="11#5" />
+	</obj>
+	<obj cid="8017" id="8017" descr="Group of commands">
+		<ist uii="7110" descr="Group of commands 1-2">
+			<link uii="7106" />
+			<link uii="7107" />
+		</ist>
+		<ist uii="7111" descr="Group of commands 3-4">
+			<link uii="7108" />
+			<link uii="7109" />
+		</ist>
+	</obj>
+	<obj cid="8002" id="8002" descr="99 Zones" where="1" fancoil="0">
+		<ist uii="2011" descr="zona giorno" where="5" fancoil="1" />
+		<ist uii="2012" descr="zona notte" where="2" />
+		<ist uii="2013" descr="zona taverna" where="3" />
+		<ist uii="2014" descr="zona studio" where="4" />
+	</obj>
+	<obj cid="8008" id="8008" descr="external probes" where="1">
+		<ist uii="2041" descr="Sonda esterna #1" where="118" />
+		<ist uii="2042" descr="Sonda esterna #2" where="119" />
+	</obj>
+	<obj cid="8009" id="8009" descr="uncontrolled probes" where="1">
+		<ist uii="2051" descr="Sonda non controllata #1" where="116" />
+		<ist uii="2052" descr="Sonda non controllata #2" where="117" />
+	</obj>
+	<!-- Antintrusion system -->
+	<obj cid="13001" id="13001" descr="Zone" where="#1" mon="0" >
+		<ist uii="1001" descr="ingresso" where="#1" />
+		<ist uii="1002" cid="13002" descr="taverna" where="#2" mon="1" />
+		<ist uii="1005" cid="13003" descr="mansarda" where="#3" />
+		<ist uii="1010" cid="13004" descr="box/cantina" where="#4" />
+		<ist uii="1006" cid="13005" descr="soggiorno" where="#5" />
+		<ist uii="1003" cid="13006" descr="cucina" where="#6" />
+		<ist uii="1008" cid="13007" descr="camera" where="#7" />
+		<ist uii="1004" cid="13008" descr="cameretta" where="#8" />
+	</obj>
+	<obj cid="13101" id="13101" descr="aux" where="1" >
+		<ist uii="1009" descr="Gas" where="1" />
+		<ist uii="1011" descr="Freezer" where="2" />
+		<ist uii="1013" descr="Flood" where="3" />
+		<ist uii="1012" descr="Emergency call" where="4" />
+		<ist uii="1014" descr="Generic" where="5" />
+		<ist uii="1015" descr="Generic" where="6" />
+		<ist uii="1016" descr="Generic" where="7" />
+		<ist uii="1018" descr="Fire" where="8" />
+		<ist uii="1017" descr="Telerescue" where="9" />
+	</obj>
+	<obj cid="13010" id="13010" descr="set of zones">
+		<ist uii="1019" descr="giorno">
+			<link uii="1001" />
+			<link uii="1002" />
+			<link uii="1004" />
+		</ist>
+		<ist uii="1020" descr="notte">
+			<link uii="1001" />
+			<link uii="1002" />
+			<link uii="1003" />
+			<link uii="1005" />
+			<link uii="1006" />
+			<link uii="1008" />
+		</ist>
+		<ist uii="1021" descr="vacanze">
+			<link uii="1001" />
+			<link uii="1002" />
+			<link uii="1003" />
+			<link uii="1005" />
+			<link uii="1008" />
+		</ist>
+	</obj>
+	<obj cid="6101" id="6101" descr="Stop and go" where="1">
+		<ist uii="4001" descr="Stop and Go" where="2" />
+	</obj>
+	<obj cid="6102" id="6102" descr="Stop and go plus" where="1">
+		<ist uii="4002" descr="Stop and go plus" where="3" />
+	</obj>
+	<obj cid="6103" id="6103" descr="Stop and go btest" where="1">
+		<ist uii="4003" descr="Stop and go btest" where="5" />
+	</obj>
+	<obj cid="6104" id="6104" descr="Load diagnostic" where="0" phase="0">
+		<ist uii="4007" descr="Washing machine" where="6" />
+		<ist uii="4008" descr="Dishwasher" where="8" />
+	</obj>
+	<obj cid="6111" id="6111" descr="Load with CU" where="1" phase="0" advanced="0" mode="1" measure="Kw" rate_enabled="0" rate_type="0">
+		<ist uii="4004" descr="Load 1 w/ CU advanced" where="2" advanced="1" rate_enabled="1">
+			<rate>
+				<rate_id>5</rate_id>
+				<rate_n_decimal_view>0</rate_n_decimal_view>
+			</rate>
+		</ist>
+		<ist uii="4005" descr="Load 2 w/ CU base" where="3" />
+	</obj>
+	<obj cid="6111" id="6112" descr="Load without CU" where="1" phase="0" advanced="1" mode="1" measure="Kw" rate_enabled="0" rate_type="0">
+		<ist uii="4006" descr="Load 3 w/o CU" where="2" advanced="1" rate_enabled="1">
+			<rate>
+				<rate_id>5</rate_id>
+				<rate_n_decimal_view>0</rate_n_decimal_view>
+			</rate>
+		</ist>
+	</obj>
+	<obj cid="6105" id="6105" descr="Electric line" where="1"
+	     SWmeasure="Kw" measure="Kw" consumption_goal_enabled="0"
+	     threshold_one_enable="0" threshold_two_enable="0"
+	     rate_enable="0" rate_type="0" mode="1">
+		<ist uii="5001" descr="Office" where="2"
+		     consumption_goal_enabled="1" rate_enable="1" threshold_one_enable="1" threshold_two_enable="0">
+			<consumption_goal>
+				<january>100</january>
+				<february>120</february>
+				<march>100</march>
+				<april>100</april>
+				<may>100</may>
+				<june>100</june>
+				<july>100</july>
+				<august>100</august>
+				<september>100</september>
+				<october>100</october>
+				<november>90</november>
+				<december>100</december>
+			</consumption_goal>
+			<rate>
+				<rate_id>2</rate_id>
+				<rate_n_decimal_view>2</rate_n_decimal_view>
+			</rate>
+		</ist>
+		<ist uii="5002" descr="Kitchen" where="2" SWmeasure="Custom" measure="Kw" />
+		<ist uii="5003" descr="Box" where="3" rate_enable="1" >
+			<rate>
+				<rate_id>2</rate_id>
+				<rate_n_decimal_view>2</rate_n_decimal_view>
+			</rate>
+		</ist>
+	</obj>
+	<obj cid="6109" id="6105" descr="Heating/Cooling" where="1"
+	     SWmeasure="Kw" measure="Kw" consumption_goal="0" consumption_goal_enabled="0"
+	     threshold_one_enable="0" threshold_two_enable="0"
+	     rate_enable="0" rate_type="0" mode="5">
+		<ist uii="5004" descr="Living room" where="6" />
+		<ist uii="5005" descr="Bedroom" where="7" rate_enable="1">
+			<rate>
+				<rate_id>5</rate_id>
+				<rate_n_decimal_view>0</rate_n_decimal_view>
+			</rate>
+		</ist>
+	</obj>
+	<obj cid="16000" id="16000" descr="Web radio" title="Radio" url="http://">
+		<ist uii="8001" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
+	</obj>
+	<obj cid="16001" id="16001" descr="Webcam" url="http://">
+		<ist uii="8002" descr="Webcam" url="http://www.meteowbcam.itredirect_europa.php?id=2240" />
+	</obj>
+	<obj cid="16002" id="16002" descr="Rss info" url="http://">
+		<ist uii="8003" descr="News" url="http://news.bbc.co.uk/rss" />
+		<ist uii="8010" descr="News" url="http://news.bbc.co.uk/rss" />
+		<ist uii="8004" descr="Science" url="http://feeds.wired.com/wiredscience" />
+		<ist uii="8009" descr="XKCD" url="http://xkcd.com/rss.xml" />
+	</obj>
+	<obj cid="16003" id="16002" descr="" url="http://">
+		<ist uii="8005" descr="Weather" url="http://weather.yahooapis.com/" />
+	</obj>
+	<obj cid="16004" id="16003" descr="Weblink" url="http://">
+		<ist uii="8006" descr="Corriere della sera" url="http://www.corriere.it" />
+		<ist uii="8007" descr="La gazzetta dello sport" url="http://www.gazzetta.it" />
+		<ist uii="8008" descr="La Repubblica" url="http://www.repubblica.it" />
+	</obj>
+	<obj cid="16005" id="16004">
+		<ist uii="16004"/>
+	</obj>
+  <item>
+	  <id>8</id> <!-- Sound diffusion system -->
+	  <amplifiers>
+		  <item>
+			  <id>11</id> <!-- Amplifier -->
+			  <name>Amplificatore 2</name>
+			  <env>2</env>
+			  <where>22</where>
+		  </item>
+		  <item>
+			  <id>11</id> <!-- Amplifier -->
+			  <name>Amplificatore 3</name>
+			  <env>2</env>
+			  <where>23</where>
+		  </item>
+		  <item>
+			  <id>13</id> <!-- Power amplifier -->
+			  <name>Amplificatore di potenza</name>
+			  <env>2</env>
+			  <where>21</where>
+			  <preset>User preset 1</preset>
+			  <preset>User preset 2</preset>
+			  <preset>User preset 3</preset>
+		  </item>
+		  <item>
+			  <id>12</id> <!-- General ambient -->
+			  <name>Generale</name>
+			  <env>2</env>
+			  <where>#2</where>
+		  </item>
+		  <item>
+			  <id>11</id>
+			  <name>Amplificatore 2</name>
+			  <env>3</env>
+			  <where>32</where>
+		  </item>
+		  <item>
+			  <id>12</id>
+			  <name>Generale</name>
+			  <env>3</env>
+			  <where>#3</where>
+		  </item>
+	  </amplifiers>
+	  <ambients>
+		  <item>
+			  <id>9</id> <!-- Sound diffusion ambient -->
+			  <name>Cucina</name>
+			  <env>2</env>
+		  </item>
+		  <item>
+			  <id>9</id>
+			  <name>Salotto</name>
+			  <env>3</env>
+		  </item>
+	  </ambients>
+	  <sources>
+		  <item>
+			  <id>14</id> <!-- Sound diffusion source -->
+			  <name>Radio</name>
+			  <where>1</where>
+			  <type>1</type>
+		  </item>
+		  <item>
+			  <id>14</id>
+			  <name>Touch</name>
+			  <where>4</where>
+			  <type>2</type>
+		  </item>
+	  </sources>
+  </item>
+  <item>
+    <id>23</id>
+    <!-- taken from old configuration files, dev + address = 1 + 1 = 11 -->
+    <where>11</where>
+    <obj>
+	    <descr>monoblocco</descr>
+	    <where>21</where> 
+    </obj>
+    <obj>
+	    <descr>camera bikini</descr>
+	    <where>20</where>
+    </obj>
+  </item>
+  <item>
+    <id>25</id>
+    <descr>ingresso</descr>
+    <where>14</where>
+    <mode>0</mode>
+  </item>
+	<obj id="10051" cid="10051" descr="Camera" where="0" device="2">
+		<ist uii="9004" descr="Camera 1" where="124" />
+		<ist uii="9005" descr="Camera 2" where="125" />
+	</obj>
+</archive>
