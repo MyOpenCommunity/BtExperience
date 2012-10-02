@@ -25,4 +25,6 @@ ln -s ../../lib/libcommon.so.0.0 libcommon.so.0
 ln -s BtObjects/libbtobjects.so libbtobjects.so
 cd -
 
+cp BtExperience_qws $BTWEB_APP_BIN_NO_STACKOPEN
+
 exit 0
