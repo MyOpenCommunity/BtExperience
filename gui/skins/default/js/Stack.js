@@ -36,8 +36,6 @@ var entering_page = undefined
 function pushPage(filename, properties) {
     if (properties === undefined)
         properties = {"visible": false}
-    // automatically set _pageName from component filename
-    _addPageName(filename, properties)
     return _openPage(filename, properties)
 }
 
