@@ -1,6 +1,8 @@
 #include "objectinterface.h"
 #include "xml_functions.h"
 
+#include "device.h"
+
 
 void updateObjectName(QDomNode node, ObjectInterface *item)
 {
@@ -38,3 +40,26 @@ void ObjectInterface::setName(const QString &n)
 	emit nameChanged();
 }
 
+
+DeviceObjectInterface::DeviceObjectInterface(device *_dev, QObject *parent) :
+	ObjectInterface(parent)
+{
+	dev = _dev;
+
+	if (dev)
+		dev->setSupportedInitMode(device::DISABLED_INIT);
+}
+
+void DeviceObjectInterface::enableObject()
+{
+	if (!dev || dev->getSupportedInitMode() == device::NORMAL_INIT)
+		return;
+
+	dev->setSupportedInitMode(device::DEFERRED_INIT);
+}
+
+void DeviceObjectInterface::initializeObject()
+{
+	if (dev)
+		dev->smartInit(device::DEFERRED_INIT);
+}

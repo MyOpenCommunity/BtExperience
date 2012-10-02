@@ -268,7 +268,8 @@ QString AntintrusionAlarm::getName() const
 }
 
 
-AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionAlarmSource *> _aux, QList<AntintrusionZone*> _zones)
+AntintrusionSystem::AntintrusionSystem(AntintrusionDevice *d, QList<AntintrusionScenario*> _scenarios, QList<AntintrusionAlarmSource *> _aux, QList<AntintrusionZone*> _zones) :
+	DeviceObjectInterface(d)
 {
 	foreach (AntintrusionScenario *s, _scenarios)
 	{

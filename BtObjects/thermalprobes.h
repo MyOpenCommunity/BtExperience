@@ -26,7 +26,7 @@ QList<ObjectPair> parseExternalNonControlledProbes(const QDomNode &obj, ObjectIn
 	The object id is \ref ObjectInterface::IdThermalExternalProbe or \ref ObjectInterface::IdThermalNonControlledProbe,
 	the object key is the SCS where.
 */
-class ThermalNonControlledProbe : public ObjectInterface
+class ThermalNonControlledProbe : public DeviceObjectInterface
 {
 	friend class TestThermalNonControlledProbes;
 
@@ -69,7 +69,7 @@ private:
 
 	The object id is \a ObjectInterface::IdThermalControlledProbe, the object key is the SCS where.
 */
-class ThermalControlledProbe : public ObjectInterface
+class ThermalControlledProbe : public DeviceObjectInterface
 {
 	friend class TestThermalControlledProbes;
 

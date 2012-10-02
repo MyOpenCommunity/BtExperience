@@ -8,6 +8,7 @@
 
 class QDomNode;
 class ObjectInterface;
+class device;
 
 
 void updateObjectName(QDomNode node, ObjectInterface *item);
@@ -186,6 +187,29 @@ signals:
 
 protected:
 	QString name;
+};
+
+
+/*!
+	\ingroup Core
+	\brief Default implementation for objects using a device
+
+	Default implementation for \re enableObject and \ref initializeObject
+	useful for most objects containing a device.
+
+	The device is marked as disabled on object creation and initialized with
+	deferred initialization when the object is enabled/initialized.
+*/
+class DeviceObjectInterface : public ObjectInterface
+{
+public:
+	DeviceObjectInterface(device *dev, QObject *parent = 0);
+
+	virtual void enableObject();
+	virtual void initializeObject();
+
+private:
+	device *dev;
 };
 
 typedef QPair<int, ObjectInterface *> ObjectPair;

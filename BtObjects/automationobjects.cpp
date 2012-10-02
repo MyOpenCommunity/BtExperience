@@ -205,7 +205,8 @@ int AutomationLight::getObjectId() const
 	return myid;
 }
 
-AutomationCommand2::AutomationCommand2(LightingDevice *d)
+AutomationCommand2::AutomationCommand2(LightingDevice *d) :
+	DeviceObjectInterface(d)
 {
 	dev = d;
 }
@@ -232,7 +233,8 @@ void AutomationGroup2::setActive(bool status)
 }
 
 
-AutomationCommand3::AutomationCommand3(AutomationDevice *d)
+AutomationCommand3::AutomationCommand3(AutomationDevice *d) :
+	DeviceObjectInterface(d)
 {
 	dev = d;
 }

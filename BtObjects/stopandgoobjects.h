@@ -28,7 +28,7 @@ QList<ObjectPair> parseStopAndGoBTest(const QDomNode &obj);
 
 	The object id is \a ObjectInterface::IdStopAndGo, the object key is empty.
 */
-class StopAndGo : public ObjectInterface
+class StopAndGo : public DeviceObjectInterface
 {
 	friend class TestStopAndGo;
 

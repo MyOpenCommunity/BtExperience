@@ -183,7 +183,7 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 											 QList<int> _swings,
 											 int _setpoint_min, int _setpoint_max, int _setpoint_step,
 											 QObject *parent) :
-	ObjectInterface(parent)
+	DeviceObjectInterface(d_probe, parent)
 {
 	dev = d;
 	dev_probe = d_probe;

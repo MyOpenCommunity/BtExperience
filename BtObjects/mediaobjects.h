@@ -184,6 +184,8 @@ public:
 	void scsSourceActiveAreasChanged();
 	void scsSourceForGeneralAmbientChanged();
 
+	virtual void initializeObject();
+
 public slots:
 	/*!
 		\brief Activates this source on the specified area
@@ -348,6 +350,9 @@ public:
 	SourceObject *getSourceObject();
 	void setSourceObject(SourceObject *so);
 
+	void enableObject();
+	void initializeObject();
+
 signals:
 	void activeChanged();
 	void activeAreasChanged();
@@ -502,7 +507,7 @@ private:
 
 	The object id is \a ObjectInterface::IdSoundAmplifier and area number is the object key
 */
-class Amplifier : public ObjectInterface
+class Amplifier : public DeviceObjectInterface
 {
 	friend class TestAmplifier;
 	friend class TestSoundAmbient;

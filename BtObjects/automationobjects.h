@@ -41,7 +41,7 @@ protected:
 };
 
 // internal class, used in automation groups, not useful to the GUI
-class AutomationCommand2 : public ObjectInterface
+class AutomationCommand2 : public DeviceObjectInterface
 {
 	Q_OBJECT
 
@@ -93,7 +93,7 @@ private:
 
 
 // internal class, used in automation groups, not useful to the GUI
-class AutomationCommand3 : public ObjectInterface
+class AutomationCommand3 : public DeviceObjectInterface
 {
 	Q_OBJECT
 

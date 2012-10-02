@@ -295,6 +295,11 @@ SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType
 	type = t;
 }
 
+void SourceObject::initializeObject()
+{
+	source->initializeObject();
+}
+
 void SourceObject::scsSourceActiveAreasChanged()
 {
 	emit activeAreasChanged(this);
@@ -476,7 +481,18 @@ SourceBase::SourceBase(SourceDevice *d, SourceType t)
 	type = t;
 	source_object = 0;
 
+	dev->setSupportedInitMode(device::DISABLED_INIT);
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
+}
+
+void SourceBase::enableObject()
+{
+	dev->setSupportedInitMode(device::DEFERRED_INIT);
+}
+
+void SourceBase::initializeObject()
+{
+	dev->smartInit(device::DEFERRED_INIT);
 }
 
 QList<int> SourceBase::getActiveAreas() const
@@ -739,7 +755,8 @@ void SourceRadio::valueReceived(const DeviceValues &values_list)
 }
 
 
-Amplifier::Amplifier(int _area, QString _name, AmplifierDevice *d, int _object_id)
+Amplifier::Amplifier(int _area, QString _name, AmplifierDevice *d, int _object_id) :
+	DeviceObjectInterface(d)
 {
 	dev = d;
 	area = _area;

@@ -123,7 +123,8 @@ QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node)
 }
 
 
-SimpleScenario::SimpleScenario(int scenario, QString _name, ScenarioDevice *d)
+SimpleScenario::SimpleScenario(int scenario, QString _name, ScenarioDevice *d) :
+	DeviceObjectInterface(d)
 {
 	scenario_number = scenario;
 	name = _name;
@@ -588,6 +589,7 @@ DeviceConditionObject::DeviceConditionObject(DeviceCondition::Type type, QString
 		qFatal("Unknown device condition: %d", condition_type);
 	}
 
+	device_cond->setSupportedInitMode(device::DISABLED_INIT);
 	connect(device_cond, SIGNAL(condSatisfied()), this, SIGNAL(satisfied()));
 
 	if (on_off)
@@ -601,6 +603,11 @@ DeviceConditionObject::DeviceConditionObject(DeviceCondition::Type type, QString
 	// default value
 	if (!on_off)
 		device_cond->setState(device_cond->getState());
+}
+
+void DeviceConditionObject::enableObject()
+{
+	device_cond->setSupportedInitMode(device::NORMAL_INIT);
 }
 
 void DeviceConditionObject::updateText(int min_condition_value, int max_condition_value)
@@ -774,6 +781,12 @@ AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionO
 
 	Q_ASSERT_X(action_obj, "AdvancedScenario::AdvancedScenario", "The action object is mandatory!");
 	action_obj->setParent(this);
+}
+
+void AdvancedScenario::enableObject()
+{
+	if (device_obj)
+		device_obj->enableObject();
 }
 
 bool AdvancedScenario::isEnabled() const

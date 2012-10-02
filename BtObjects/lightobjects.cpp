@@ -196,7 +196,8 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 }
 
 
-LightCommand::LightCommand(LightingDevice *d)
+LightCommand::LightCommand(LightingDevice *d) :
+	DeviceObjectInterface(d)
 {
 	dev = d;
 }

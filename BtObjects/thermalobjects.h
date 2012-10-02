@@ -39,7 +39,7 @@ QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNo
 	The only difference is that only the 4 zones control unit has timed manual mode
 	and only 99 zones control unit has scenario mode.
 */
-class ThermalControlUnit : public ObjectInterface
+class ThermalControlUnit : public DeviceObjectInterface
 {
 	friend class TestThermalControlUnit;
 	friend class TestThermalControlUnitObject;
@@ -254,7 +254,7 @@ private:
 	\see ThermalControlUnitTimedManual
 	\see ThermalControlUnitScenario
 */
-class ThermalControlUnitObject : public ObjectInterface
+class ThermalControlUnitObject : public DeviceObjectInterface
 {
 	friend class TestThermalControlUnitObject;
 

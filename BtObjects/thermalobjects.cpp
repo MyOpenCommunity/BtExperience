@@ -128,7 +128,8 @@ QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNo
 	return obj_list;
 }
 
-ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d)
+ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d) :
+	DeviceObjectInterface(d)
 {
 	name = _name;
 	key = _key;
@@ -339,7 +340,8 @@ ObjectDataModel *ThermalControlUnit99Zones::getScenarios() const
 }
 
 
-ThermalControlUnitObject::ThermalControlUnitObject(QString _name, ThermalDevice *_dev)
+ThermalControlUnitObject::ThermalControlUnitObject(QString _name, ThermalDevice *_dev) :
+	DeviceObjectInterface(_dev)
 {
 	dev = _dev;
 	name = _name;

@@ -281,7 +281,7 @@ private:
 	Access global system configuration (list of zones and scenarios) and global system status (list of alarms,
 	active/inactive system).
 */
-class AntintrusionSystem : public ObjectInterface
+class AntintrusionSystem : public DeviceObjectInterface
 {
 	friend class TestAntintrusionSystem;
 

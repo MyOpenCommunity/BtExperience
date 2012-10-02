@@ -51,7 +51,7 @@ private:
 
 	The object id is \a ObjectInterface::IdSplitBasicScenario.
 */
-class SplitBasicScenario : public ObjectInterface
+class SplitBasicScenario : public DeviceObjectInterface
 {
 	friend class TestSplitScenarios;
 

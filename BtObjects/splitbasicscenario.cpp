@@ -107,7 +107,7 @@ SplitBasicScenario::SplitBasicScenario(QString _name,
 									   QString off_command,
 									   NonControlledProbeDevice *d_probe,
 									   QObject *parent) :
-	ObjectInterface(parent)
+	DeviceObjectInterface(d_probe, parent)
 {
 	dev = d;
 	dev_probe = d_probe;

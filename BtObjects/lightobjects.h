@@ -24,7 +24,7 @@ QList<ObjectPair> parseLightCommand(const QDomNode &obj);
 QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map);
 
 // internal class, used in light groups, not useful to the GUI
-class LightCommand : public ObjectInterface
+class LightCommand : public DeviceObjectInterface
 {
 	Q_OBJECT
 

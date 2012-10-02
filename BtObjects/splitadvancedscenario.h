@@ -111,7 +111,7 @@ public:
 
 	The object id is \a ObjectInterface::IdSplitAdvancedScenario.
 */
-class SplitAdvancedScenario : public ObjectInterface
+class SplitAdvancedScenario : public DeviceObjectInterface
 {
 	friend class TestSplitScenarios;
 

@@ -24,7 +24,7 @@ QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node);
 
 	Allows starting the scenario
 */
-class SimpleScenario : public ObjectInterface
+class SimpleScenario : public DeviceObjectInterface
 {
 	Q_OBJECT
 
@@ -310,6 +310,8 @@ public:
 	void save();
 	void reset();
 
+	void enableObject();
+
 public slots:
 	void conditionUp();
 	void conditionDown();
@@ -357,6 +359,8 @@ public:
 	QObject *getDeviceCondition() const;
 	QObject *getTimeCondition() const;
 	QObject *getAction() const;
+
+	virtual void enableObject();
 
 public slots:
 	void start();

@@ -40,7 +40,8 @@ QList<ObjectPair> parseStopAndGoBTest(const QDomNode &obj)
 }
 
 
-StopAndGo::StopAndGo(StopAndGoDevice *_dev, QString _name)
+StopAndGo::StopAndGo(StopAndGoDevice *_dev, QString _name) :
+	DeviceObjectInterface(_dev)
 {
 	dev = _dev;
 	name = _name;

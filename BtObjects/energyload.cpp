@@ -126,7 +126,8 @@ void EnergyLoadTotal::setResetDateTime(QDateTime reset)
 }
 
 
-EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, EnergyRate *_rate)
+EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, EnergyRate *_rate) :
+	DeviceObjectInterface(_dev)
 {
 	dev = _dev;
 	name = _name;

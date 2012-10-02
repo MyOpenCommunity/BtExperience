@@ -99,7 +99,7 @@ private:
 
 	The object id is \a ObjectInterface::IdEnergyLoad, the object key is empty.
 */
-class EnergyLoadManagement : public ObjectInterface
+class EnergyLoadManagement : public DeviceObjectInterface
 {
 	friend class TestEnergyLoadManagement;
 
