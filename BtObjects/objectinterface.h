@@ -163,6 +163,24 @@ public:
 	virtual QString getName() const;
 	virtual void setName(const QString &n);
 
+	/*!
+		\brief Mark object as enabled
+
+		Objects are initially disabled, and should not perform SCS initialization, even
+		if \ref initializeObject is called.
+
+		\ref enableObject marks the object for later initialization
+	 */
+	virtual void enableObject() {}
+
+	/*!
+		\brief Initialize object
+
+		Called after \ref enableObject to actually perform object initialization; typically
+		called by \ref ObjectModel::getObject (right before the object is displayed).
+	 */
+	virtual void initializeObject() {}
+
 signals:
 	void nameChanged();
 

@@ -92,6 +92,8 @@ public:
 	void setSource(ObjectDataModel *s);
 	ObjectDataModel *getSource() const;
 
+	virtual ItemInterface *getObject(int row);
+
 signals:
 	void filtersChanged();
 

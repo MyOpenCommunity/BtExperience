@@ -41,8 +41,19 @@ void ObjectModel::setSource(ObjectDataModel *s)
 
 ObjectDataModel *ObjectModel::getSource() const
 {
-
 	return qobject_cast<ObjectDataModel *>(MediaModel::getSource());
+}
+
+ItemInterface *ObjectModel::getObject(int row)
+{
+	ItemInterface *item = MediaModel::getObject(row);
+	ObjectInterface *obj = qobject_cast<ObjectInterface *>(item);
+
+	if (!obj)
+		return item;
+	obj->initializeObject();
+
+	return obj;
 }
 
 QVariantList ObjectModel::getFilters() const

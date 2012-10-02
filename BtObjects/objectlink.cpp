@@ -18,6 +18,8 @@ QString ObjectLink::getName() const
 
 ObjectInterface *ObjectLink::getBtObject() const
 {
+	bt_object->initializeObject();
+
 	return bt_object;
 }
 

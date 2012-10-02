@@ -30,6 +30,7 @@
 #include "choicelist.h"
 #include "energyrate.h"
 #include "xmlobject.h"
+#include "devices_cache.h"
 #include "watchdog.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
@@ -794,7 +795,10 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		else if (!obj_list.isEmpty())
 		{
 			foreach (ObjectInterface *oi, obj_list)
+			{
+				oi->enableObject();
 				objmodel << oi;
+			}
 		}
 	}
 	// TODO put in the right implementation; for now, use this for testing the interface
@@ -897,6 +901,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 
 			ObjectLink *item = new ObjectLink(o, ObjectLink::BtObject, x, y);
 
+			o->enableObject();
 			item->setContainerUii(room_uii);
 
 			object_link_model << item;
@@ -1011,6 +1016,7 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 				continue;
 			}
 
+			o->enableObject();
 			o->setContainerUii(system_uii);
 		}
 	}

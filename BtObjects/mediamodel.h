@@ -174,7 +174,7 @@ public:
 
 		Row must be in the range <tt>[0 .. rangeCount - 1]</tt>
 	*/
-	Q_INVOKABLE ItemInterface *getObject(int row);
+	Q_INVOKABLE virtual ItemInterface *getObject(int row);
 
 	/*!
 		\brief Deletes the specified element in this model from the source model
