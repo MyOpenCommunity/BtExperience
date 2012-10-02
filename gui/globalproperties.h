@@ -86,6 +86,9 @@ public:
 	}
 
 	Q_INVOKABLE void beep();
+
+	// this is a separate method because it needs to happen only after
+	// configuration file parsing
 	Q_INVOKABLE void initAudio();
 
 	QString getKeyboardLayout() const;
