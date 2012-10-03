@@ -492,6 +492,9 @@ SourceBase::SourceBase(SourceDevice *d, SourceType t)
 
 void SourceBase::enableObject()
 {
+	if (dev->getSupportedInitMode() == device::NORMAL_INIT)
+		return;
+
 	dev->setSupportedInitMode(device::DEFERRED_INIT);
 }
 
