@@ -547,6 +547,8 @@ void TestThermalControlUnitTimedProgram::testReceiveEndTime()
 	obj->setHours(0);
 	obj->setMinutes(0);
 	obj->setSeconds(0);
+	// required, because valueReceived() checks against applied state
+	obj->apply();
 
 	DeviceValues v;
 	v[ThermalDevice::DIM_TIME] = QTime(12, 3, 7);
