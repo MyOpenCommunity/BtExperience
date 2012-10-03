@@ -196,7 +196,7 @@ protected:
 	\ingroup Core
 	\brief Default implementation for objects using a device
 
-	Default implementation for \re enableObject and \ref initializeObject
+	Default implementation for \ref enableObject and \ref initializeObject
 	useful for most objects containing a device.
 
 	The device is marked as disabled on object creation and initialized with
