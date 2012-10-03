@@ -20,6 +20,10 @@ Page {
     showSystemsButton: true
     text: player.isVideo ? qsTr("Video") : qsTr("Audio")
 
+    function systemsButtonClicked() {
+        Stack.backToMultimedia()
+    }
+
     SvgImage {
         id: frameBg
 
