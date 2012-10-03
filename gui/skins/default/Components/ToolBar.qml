@@ -203,7 +203,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-answer_p.svg" :
                               "../images/toolbar/icon_vde-auto-answer.svg"
-            onClicked: console.log("autoAnswerButton clicked")
+            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.AUTO_ANSWER})
         }
 
         // vde mute
