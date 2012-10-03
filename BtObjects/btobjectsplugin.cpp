@@ -606,8 +606,15 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 
 	if (obj_int)
 	{
-		// TODO energy, scenarios, other specialized systems
 		updateObjectName(node_path.first, obj_int);
+
+		// TODO energy, other specialized systems
+		switch (obj_int->getObjectId())
+		{
+		case ObjectInterface::IdAdvancedScenario:
+			updateAdvancedScenario(node_path.first, qobject_cast<AdvancedScenario *>(obj_int));
+			break;
+		}
 	}
 	else if (obj_cont)
 	{

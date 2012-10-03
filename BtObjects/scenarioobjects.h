@@ -11,11 +11,14 @@
 
 class ScenarioDevice;
 class QDomNode;
+class AdvancedScenario;
 
 QList<ObjectPair> parseScenarioUnit(const QDomNode &xml_node);
 QList<ObjectPair> parseScenarioModule(const QDomNode &xml_node);
 QList<ObjectPair> parseScheduledScenario(const QDomNode &xml_node);
 QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node);
+
+void updateAdvancedScenario(QDomNode node, AdvancedScenario *item);
 
 
 /*!
@@ -310,6 +313,9 @@ public:
 	void save();
 	void reset();
 
+	// only used for configuration saving
+	QString getTriggerAsString() const;
+
 	void enableObject();
 
 public slots:
@@ -361,6 +367,9 @@ public:
 	QObject *getAction() const;
 
 	virtual void enableObject();
+
+	// only used for configuration saving
+	int getDays() const;
 
 public slots:
 	void start();
