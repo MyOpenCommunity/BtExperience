@@ -1,0 +1,30 @@
+#!/bin/bash
+#set -x
+
+export BTEXPERIENCE_TARGET=$BTWEB_APP_BIN_NO_STACKOPEN/BtExperience
+
+if [ -z "$1" ] 
+then
+  echo
+  echo -e "\t   1  ARGUMENT ARE REQUIRED"
+  echo -e "\t  MACHINE"
+  echo
+  exit 1
+fi
+
+MACHINE=$1
+
+
+mkdir $BTEXPERIENCE_TARGET
+rsync -a bin/arm/ $BTEXPERIENCE_TARGET || exit 1
+# by now we have two copies of libcommon... use the one in stackopen
+cd ${BTEXPERIENCE_TARGET}
+rm libcommon.so.0
+ln -s ../../lib/libcommon.so.0.0 libcommon.so.0
+#symbolic link for libbtobjects.so
+ln -s BtObjects/libbtobjects.so libbtobjects.so
+cd -
+
+cp BtExperience_qws $BTWEB_APP_BIN_NO_STACKOPEN
+
+exit 0
