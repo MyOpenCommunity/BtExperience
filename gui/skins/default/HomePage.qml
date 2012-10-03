@@ -123,13 +123,16 @@ BasePage {
     }
 
     ControlPathView {
+        id: pathView
         visible: model.count >= 3
         model: profilesModel
-        width: 740
         anchors {
             bottom: favourites.top
             top: toolbar.bottom
             left: parent.left
+            leftMargin: 10
+            right: homeMenu.left
+            rightMargin: -10
         }
         onClicked: Stack.goToPage('Profile.qml', {'profile': delegate})
     }
