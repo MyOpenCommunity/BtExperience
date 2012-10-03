@@ -20,7 +20,7 @@
 #endif
 
 #define EXTRA_PATH "/home/bticino/cfg/extra"
-#define LAZY_UPDATE_INTERVAL 5000
+#define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
 
 namespace
