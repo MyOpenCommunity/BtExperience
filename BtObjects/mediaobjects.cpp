@@ -50,7 +50,14 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 	AmplifierDevice::setIsMultichannel(is_multichannel);
 
 	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
-	//      and send sound diffusion initialization frame
+
+	if (!(*bt_global::config)[SOURCE_ADDRESS].isEmpty() || !(*bt_global::config)[AMPLIFIER_ADDRESS].isEmpty())
+	{
+		QString init_frame = VirtualSourceDevice::createMediaInitFrame(is_multichannel,
+									       (*bt_global::config)[SOURCE_ADDRESS],
+									       (*bt_global::config)[AMPLIFIER_ADDRESS]);
+		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
+	}
 
 	QList<SourceObject *> sources;
 	foreach (const QDomNode &source, getChildren(getChildWithName(xml_node, "sources"), "item"))
