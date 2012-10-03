@@ -12,6 +12,9 @@ RoomsItems 1.0 RoomsItems.qml
 ScenarioModuleSettings 1.0 ScenarioModuleSettings.qml
 ScreenSaverList 1.0 ScreenSaverList.qml
 ScreenSaverTypes 1.0 ScreenSaverTypes.qml
+SettingsAutoAnswer 1.0 SettingsAutoAnswer.qml
+SettingsAutoOpen 1.0 SettingsAutoOpen.qml
+SettingsBeep 1.0 SettingsBeep.qml
 SettingsDateTime 1.0 SettingsDateTime.qml
 SettingsDisplay 1.0 SettingsDisplay.qml
 SettingsEnergy 1.0 SettingsEnergy.qml
@@ -35,6 +38,8 @@ SettingsQuickLinks 1.0 SettingsQuickLinks.qml
 SettingsScenarios 1.0 SettingsScenarios.qml
 SettingsSkin 1.0 SettingsSkin.qml
 SettingsSystems 1.0 SettingsSystems.qml
+SettingsVDE 1.0 SettingsVDE.qml
+SettingsVdeMute 1.0 SettingsVdeMute.qml
 SettingsVersion 1.0 SettingsVersion.qml
 Skin 1.0 Skin.qml
 TextLanguage 1.0 TextLanguage.qml

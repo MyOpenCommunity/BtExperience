@@ -3,8 +3,19 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
     height: Math.max(1, 50 * itemList.count)
     width: 212
+
+    // redefined to implement menu navigation
+    function openMenu(navigationTarget) {
+        if (navigationTarget === "VDE") {
+            var m = modelList.get(2)
+            column.loadColumn(m.component, m.name)
+            return true
+        }
+        return false
+    }
 
     onChildDestroyed: {
         itemList.currentIndex = -1
@@ -35,6 +46,7 @@ MenuColumn {
         Component.onCompleted: {
             modelList.append({"name": qsTr("Scenarios"), "component": settingsScenario})
             modelList.append({"name": qsTr("Energy"), "component": settingsEnergy})
+            modelList.append({"name": qsTr("VDE"), "component": settingsVDE})
         }
     }
 
@@ -46,5 +58,10 @@ MenuColumn {
     Component {
         id: settingsEnergy
         SettingsEnergy {}
+    }
+
+    Component {
+        id: settingsVDE
+        SettingsVDE {}
     }
 }

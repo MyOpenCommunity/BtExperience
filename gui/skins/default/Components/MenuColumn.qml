@@ -53,7 +53,6 @@ Item {
     signal closeItem(int menuLevel)
     signal columnClicked()
     signal loadComponent(int menuLevel, variant component, string title, variant dataModel, variant properties)
-    signal loadComponentFinished // used for menu navigation, see navigation.js for further details
 
     // the page where the element is placed
     property variant pageObject: undefined
@@ -77,11 +76,6 @@ Item {
     // Needed to properly set the shadow (MenuShadow) size.
     width: childrenRect.width
     height: childrenRect.height
-
-    onAnimationRunningChanged: {
-        if (animationRunning === false)
-            column.loadComponentFinished() // primes next menu navigation, see navigation.js for further details
-    }
 
     Constants {
         id: constants
