@@ -182,6 +182,8 @@ public:
 	 */
 	virtual void initializeObject() {}
 
+	virtual void setContainerUii(int uii);
+
 signals:
 	void nameChanged();
 

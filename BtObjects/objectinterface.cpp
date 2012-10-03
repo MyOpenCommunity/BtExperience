@@ -40,6 +40,14 @@ void ObjectInterface::setName(const QString &n)
 	emit nameChanged();
 }
 
+void ObjectInterface::setContainerUii(int uii)
+{
+	ItemInterface::setContainerUii(uii);
+
+	if (uii != -1)
+		enableObject();
+}
+
 
 DeviceObjectInterface::DeviceObjectInterface(device *_dev, QObject *parent) :
 	ObjectInterface(parent)

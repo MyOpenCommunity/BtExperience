@@ -901,7 +901,6 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 
 			ObjectLink *item = new ObjectLink(o, ObjectLink::BtObject, x, y);
 
-			o->enableObject();
 			item->setContainerUii(room_uii);
 
 			object_link_model << item;
@@ -1016,7 +1015,6 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 				continue;
 			}
 
-			o->enableObject();
 			o->setContainerUii(system_uii);
 		}
 	}

@@ -20,7 +20,7 @@ class ItemInterface : public QObject
 public:
 	ItemInterface(QObject *parent = 0);
 
-	void setContainerUii(int uii);
+	virtual void setContainerUii(int uii);
 	int getContainerUii() const;
 
 signals:
