@@ -13,6 +13,18 @@ MenuColumn {
             column.loadColumn(autoAnswerComponent, autoAnswerMenuItem.name)
             return true
         }
+        if (navigationTarget === "AutoOpen") {
+            // last menu to open, resets navigationTarget
+            column.pageObject.navigationTarget = 0
+            column.loadColumn(autoOpenComponent, autoOpenMenuItem.name)
+            return true
+        }
+        if (navigationTarget === "VdeMute") {
+            // last menu to open, resets navigationTarget
+            column.pageObject.navigationTarget = 0
+            column.loadColumn(vdeMuteComponent, vdeMuteMenuItem.name)
+            return true
+        }
         return false
     }
 
@@ -46,6 +58,7 @@ MenuColumn {
         }
 
         MenuItem {
+            id: autoOpenMenuItem
             name: qsTr("auto open")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
@@ -64,6 +77,7 @@ MenuColumn {
         }
 
         MenuItem {
+            id: vdeMuteMenuItem
             name: qsTr("vde mute")
             hasChild: true
             isSelected: privateProps.currentIndex === 3

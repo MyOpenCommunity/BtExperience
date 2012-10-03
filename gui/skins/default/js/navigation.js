@@ -41,6 +41,8 @@
 
 var ALARM_LOG = 1
 var AUTO_ANSWER = 2
+var AUTO_OPEN = 3
+var VDE_MUTE = 4
 
 var _paths = []
 
@@ -48,6 +50,8 @@ function _init(paths) {
     // inits all possible navigation paths
     paths[ALARM_LOG] = ["AlarmLog"]
     paths[AUTO_ANSWER] = ["Systems", "VDE", "AutoAnswer"]
+    paths[AUTO_OPEN] = ["Systems", "VDE", "AutoOpen"]
+    paths[VDE_MUTE] = ["Systems", "VDE", "VdeMute"]
 }
 
 // returns a string indicating where to navigate
