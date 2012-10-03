@@ -43,6 +43,7 @@
 #include <QDomNode>
 
 #define WATCHDOG_INTERVAL 5000
+#define FILE_SAVE_INTERVAL 10000
 
 #if defined(BT_HARDWARE_X11)
 #define DEVICE_FILE "conf.xml"
@@ -224,6 +225,10 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	connect(&note_model, SIGNAL(persistItem(ItemInterface*)), this, SLOT(updateNotes()));
 	connect(&note_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateNotes()));
 	connect(&note_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateNotes()));
+
+	configuration_save = new QTimer(this);
+	configuration_save->setInterval(FILE_SAVE_INTERVAL);
+	connect(configuration_save, SIGNAL(timeout()), this, SLOT(flushModifiedFiles()));
 
 	device::initDevices();
 }
@@ -582,6 +587,20 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
 	return QPair<QDomNode, QString>();
 }
 
+void BtObjectsPlugin::markFileModified(QDomDocument document, QString name)
+{
+	modified_files[name] = document;
+	configuration_save->start();
+}
+
+void BtObjectsPlugin::flushModifiedFiles()
+{
+	foreach (QString name, modified_files.keys())
+		saveConfigFile(modified_files[name], name);
+
+	modified_files.clear();
+}
+
 void BtObjectsPlugin::saveConfigFile(QDomDocument document, QString name)
 {
 	QString filename = QFileInfo(QDir(qApp->applicationDirPath()), name).absoluteFilePath();
@@ -627,7 +646,7 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		updateMediaNameAddress(archive_path.first, obj_media);
 		updateLinkPosition(node_path.first, obj_media);
 
-		saveConfigFile(archive, archive_path.second);
+		markFileModified(archive, archive_path.second);
 	}
 	else if (obj_link)
 	{
@@ -638,7 +657,7 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		qWarning() << "Unknown object type" << obj;
 	}
 
-	saveConfigFile(node_path.first.ownerDocument(), node_path.second);
+	markFileModified(node_path.first.ownerDocument(), node_path.second);
 }
 
 void BtObjectsPlugin::insertObject(ItemInterface *obj)
@@ -658,7 +677,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 		uii_to_id[uii] = obj_media->getType();
 
 		createMediaLink(archive, uii, obj_media);
-		saveConfigFile(archive, CONF_FILE);
+		markFileModified(archive, CONF_FILE);
 	}
 	else if (obj_container)
 	{
@@ -669,7 +688,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 		createContainer(layout, uii, obj_container);
 
 		if (obj->getContainerUii() == -1)
-			saveConfigFile(layout, LAYOUT_FILE);
+			markFileModified(layout, LAYOUT_FILE);
 	}
 	else
 		uii = findLinkedUiiForObject(obj);
@@ -684,7 +703,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 	else
 		createLink(container_path.first, uii);
 
-	saveConfigFile(container_path.first.ownerDocument(), container_path.second);
+	markFileModified(container_path.first.ownerDocument(), container_path.second);
 }
 
 void BtObjectsPlugin::removeObject(ItemInterface *obj)
@@ -706,7 +725,7 @@ void BtObjectsPlugin::removeObject(ItemInterface *obj)
 
 		ist_path.first.parentNode().removeChild(ist_path.first);
 
-		saveConfigFile(ist_path.first.ownerDocument(), ist_path.second);
+		markFileModified(ist_path.first.ownerDocument(), ist_path.second);
 	}
 	else
 		uii = findLinkedUiiForObject(obj);
@@ -724,7 +743,7 @@ void BtObjectsPlugin::removeObject(ItemInterface *obj)
 
 		ist_path.first.parentNode().removeChild(ist_path.first);
 
-		saveConfigFile(ist_path.first.ownerDocument(), ist_path.second);
+		markFileModified(ist_path.first.ownerDocument(), ist_path.second);
 	}
 
 	foreach (QDomNode child, getChildren(container_path.first, "link"))
@@ -736,7 +755,7 @@ void BtObjectsPlugin::removeObject(ItemInterface *obj)
 		}
 	}
 
-	saveConfigFile(container_path.first.ownerDocument(), container_path.second);
+	markFileModified(container_path.first.ownerDocument(), container_path.second);
 }
 
 void BtObjectsPlugin::insertObjects(QModelIndex parent, int start, int end)

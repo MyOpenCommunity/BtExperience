@@ -11,6 +11,7 @@
 
 class QDomNode;
 class QDomDocument;
+class QTimer;
 
 
 class BtObjectsPlugin : public QDeclarativeExtensionPlugin
@@ -57,6 +58,12 @@ private:
 	QPair<QDomNode, QString> findNodeForUii(int uii) const;
 
 	void saveConfigFile(QDomDocument document, QString name);
+
+	void markFileModified(QDomDocument document, QString name);
+	Q_SLOT void flushModifiedFiles();
+
+	QTimer *configuration_save;
+	QHash<QString, QDomDocument> modified_files;
 };
 
 
