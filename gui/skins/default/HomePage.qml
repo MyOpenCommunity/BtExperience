@@ -117,105 +117,43 @@ BasePage {
         }
     }
 
-    PathView {
-        ObjectModel {
-            id: usersModel
-            source: myHomeModels.profiles
+    ObjectModel {
+        id: profilesModel
+        source: myHomeModels.profiles
+    }
+
+    ControlPathView {
+        visible: model.count >= 3
+        model: profilesModel
+        width: 740
+        anchors {
+            bottom: favourites.top
+            top: toolbar.bottom
+            left: parent.left
+        }
+        onClicked: Stack.goToPage('Profile.qml', {'profile': delegate})
+    }
+
+    CardView {
+        anchors { // we need a little different anchoring here to center the CardView
+            bottom: favourites.top
+            top: toolbar.bottom
+            horizontalCenter: parent.horizontalCenter
+            horizontalCenterOffset: -140
+        }
+        visible: model.count < 3
+        delegate: CardDelegate {
+            property variant itemObject: profilesModel.getObject(index)
+            source: itemObject.image
+            label: itemObject.description
+
+            onClicked: Stack.goToPage('Profile.qml', {'profile': itemObject})
         }
 
-        Component {
-            id: usersDelegate
-            Item {
-                id: itemDelegate
-                property variant itemObject: usersModel.getObject(index)
-                width: imageDelegate.sourceSize.width
-                height: imageDelegate.sourceSize.height + textDelegate.height
+        delegateSpacing: 40
+        visibleElements: 2
 
-                z: PathView.z
-                scale: PathView.iconScale + 0.1
-
-                Image {
-                    id: imageDelegate
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    source: itemObject.image
-                }
-
-                UbuntuLightText {
-                    id: textDelegate
-                    text: itemObject.description
-                    font.pixelSize: 22
-                    anchors.top: imageDelegate.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.topMargin: 8
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                //Component.onCompleted: {
-                //console.log('icon scale: ' + PathView.iconScale + ' x:' + itemDelegate.x)
-                //}
-
-                SvgImage {
-                    id: rectPressed
-                    source: "images/common/profilo_p.svg"
-                    visible: false
-                    anchors {
-                        centerIn: imageDelegate
-                        fill: imageDelegate
-                    }
-                    width: imageDelegate.width
-                    height: imageDelegate.height
-                }
-
-                BeepingMouseArea {
-                    anchors.fill: parent
-                    onClicked: Stack.goToPage('Profile.qml', {'profile': itemDelegate.itemObject})
-                    onPressed: itemDelegate.PathView.view.currentPressed = index
-                    onReleased: itemDelegate.PathView.view.currentPressed = -1
-                }
-
-                states: State {
-                    when: itemDelegate.PathView.view.currentPressed === index
-                    PropertyChanges {
-                        target: rectPressed
-                        visible: true
-                    }
-                }
-            }
-        }
-
-        id: users
-        property int currentPressed: -1
-        model: usersModel
-        delegate: usersDelegate
-
-        path:  Path {
-            startX: 100; startY: 250
-            PathAttribute { name: "iconScale"; value: 0.4 }
-            PathAttribute { name: "z"; value: 0.1 }
-            PathLine { x: 160; y: 250; }
-            PathAttribute { name: "iconScale"; value: 0.5 }
-            PathLine { x: 310; y: 210; }
-            PathAttribute { name: "iconScale"; value: 1.0 }
-            PathAttribute { name: "z"; value: 1.0 }
-            PathLine { x: 420; y: 243; }
-            PathAttribute { name: "iconScale"; value: 0.6 }
-            PathLine { x: 560; y: 252; }
-            PathAttribute { name: "iconScale"; value: 0.35 }
-            PathLine { x: 630; y: 250; }
-        }
-        width: 620
-        pathItemCount: 5
-        anchors.bottom: favourites.top
-        anchors.bottomMargin: 0
-        anchors.top: toolbar.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        onFlickStarted: currentPressed = -1
-        onMovementEnded: currentPressed = -1
+        model: profilesModel
     }
 
     MediaModel {

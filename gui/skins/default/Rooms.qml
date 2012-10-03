@@ -5,74 +5,65 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
-BasePage {
+Page {
     id: mainarea
-    source: "images/home/home.jpg"
+
     property int floorUii
 
-    ToolBar {
-        id: toolbar
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        onHomeClicked: Stack.backToHome()
+    source: "images/home/home.jpg"
+    text: qsTr("rooms")
+
+    MediaModel {
+        source: myHomeModels.rooms
+        id: roomsModel
+        containers: [floorUii]
     }
 
-    UbuntuLightText {
-        id: pageTitle
-        text: qsTr("Rooms")
-        font.pixelSize: 50
-        anchors.top: toolbar.bottom
-        anchors.left: parent.left
-        anchors.leftMargin: 20
-    }
-
-    CardView {
-        id: users
+    ControlPathView {
+        visible: roomsModel.count >= 3
+        x0FiveElements: 150
+        x0ThreeElements: 250
+        y0: 180
+        x1: 445
+        y1: 160
+        x2FiveElements: 740
+        x2ThreeElements: 640
+        sevenCards: true
+        model: roomsModel
         anchors {
             right: parent.right
             rightMargin: 30
-            left: parent.left
+            left: navigationBar.right
             leftMargin: 30
-            top: pageTitle.bottom
+            top: toolbar.bottom
             topMargin: 50
             bottom: floorView.top
         }
+        onClicked: Stack.goToPage("Room.qml", {'roomName': delegate.description, 'roomUii': delegate.uii, 'floorUii': mainarea.floorUii})
+    }
 
-        MediaModel {
-            source: myHomeModels.rooms
-            id: roomsModel
-            containers: [floorUii]
+    CardView {
+        anchors {
+            right: parent.right
+            rightMargin: 30
+            left: navigationBar.right
+            leftMargin: 30
+            top: toolbar.bottom
+            bottom: floorView.top
         }
-
-
-        model: roomsModel
+        visible: model.count < 3
         delegate: CardDelegate {
-            source: users.selectRoomImage(itemObject.description)
             property variant itemObject: roomsModel.getObject(index)
+            source: itemObject.image
             label: itemObject.description
 
             onClicked: Stack.goToPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
         }
-        delegateSpacing: 20
-        visibleElements: 4
 
-        function selectRoomImage(room) {
-            if (room === "living room")
-                return "images/rooms/soggiorno.png"
-            else if (room === "bathroom")
-                return "images/rooms/bagno.png"
-            else if (room === "garage")
-                return "images/rooms/box.png"
-            else if (room === "bedroom")
-                return "images/rooms/camera.png"
-            else if (room === "kitchen")
-                return "images/rooms/cucina.png"
-            console.log("Unknown room, default to studio")
-            return "images/rooms/studio.png"
-        }
+        delegateSpacing: 40
+        visibleElements: 2
+
+        model: roomsModel
     }
 
     ListView {
@@ -80,6 +71,7 @@ BasePage {
         orientation: ListView.Horizontal
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: 32
         height: 100
         width: 140 * floorsModel.count
         delegate: Image {
@@ -100,7 +92,7 @@ BasePage {
         }
 
         onCurrentIndexChanged: {
-             mainarea.floorUii = floorsModel.getObject(currentIndex).uii
+            mainarea.floorUii = floorsModel.getObject(currentIndex).uii
         }
 
         MediaModel {

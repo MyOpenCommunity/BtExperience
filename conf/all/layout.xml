@@ -80,28 +80,28 @@
 		</ist>
 	</container>
 	<container id="100" > <!-- rooms -->
-		<ist uii="102" descr="living room">
+		<ist uii="102" descr="living room" img="images/rooms/soggiorno.png">
 			<link uii="1" x="0" y="0"/>
 			<!-- x,y can be absolute (pixel) or percentual -->
 			<link uii="2" x="200" y="100" />
 			<link uii="3" x="300" y="300" />
 		</ist>
-		<ist uii="103" descr="bathroom">
+		<ist uii="103" descr="bathroom" img="images/rooms/bagno.png">
 			<link uii="12" x="200" y="100" />
 			<link uii="7" x="200" y="300" />
 		</ist>
 
-		<ist uii="104" descr="garage">
+		<ist uii="104" descr="garage" img="images/rooms/box.png">
 			<link uii="4" x="50" y="100" />
 			<link uii="5" x="200" y="300" />
 			<link uii="6" x="350" y="80" />
 		</ist>
-		<ist uii="105" descr="bedroom">
+		<ist uii="105" descr="bedroom" img="images/rooms/camera.png">
 			<link uii="6" x="20" y="10" />
 			<link uii="5" x="200" y="300" />
 			<link uii="12" x="400" y="125" />
 		</ist>
-		<ist uii="106" descr="kitchen">
+		<ist uii="106" descr="kitchen" img="images/rooms/cucina.png">
 			<link uii="12" x="500" y="60" />
 			<link uii="5" x="450" y="300" />
 			<link uii="4" x="200" y="350" />
