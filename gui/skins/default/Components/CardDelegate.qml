@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
+import BtExperience 1.0
 import "../js/CardView.js" as CardViewScript
 
 
@@ -31,7 +32,7 @@ Item {
     SvgImage {
         id: bg
 
-        source: global.guiSettings.skin === 0 ?
+        source: global.guiSettings.skin === GuiSettings.Clear ?
                     "../images/profiles/scheda_profili.svg" :
                     "../images/profiles/scheda_profili_dark.svg"
     }
@@ -39,7 +40,7 @@ Item {
     UbuntuLightText {
         id: textDelegate
         text: "prova microfono"
-        color: global.guiSettings.skin === 0 ? "#434343" : "white"
+        color: global.guiSettings.skin === GuiSettings.Clear ? "#434343" : "white"
         font.pixelSize: 18
         horizontalAlignment: Text.AlignHCenter
         anchors {
@@ -62,13 +63,13 @@ Item {
             when: itemDelegate.view.currentPressed === index
             PropertyChanges {
                 target: bg
-                source: global.guiSettings.skin === 0 ?
+                source: global.guiSettings.skin === GuiSettings.Clear ?
                             "../images/profiles/scheda_profili_P.svg" :
                             "../images/profiles/scheda_profili_dark_P.svg"
             }
             PropertyChanges {
                 target: textDelegate
-                color: global.guiSettings.skin === 0 ? "white" : "#434343"
+                color: global.guiSettings.skin === GuiSettings.Clear ? "white" : "#434343"
             }
         },
         State {
