@@ -3,6 +3,7 @@
 #include "xml_functions.h"
 #include "devices_cache.h"
 #include "xmlobject.h"
+#include "main.h" // bt_global::config
 
 #include <QDebug>
 
@@ -17,7 +18,7 @@ ObjectInterface *parseCCTV(const QDomNode &n)
 		list.append(new ExternalPlace(getTextChild(obj, "descr"), ObjectInterface::IdExternalPlace, getTextChild(obj, "where")));
 	}
 
-	return new CCTV(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice("11", "0")));
+	return new CCTV(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice((*bt_global::config)[PI_ADDRESS], (*bt_global::config)[PI_MODE])));
 }
 
 ObjectInterface *parseIntercom(const QDomNode &n)
@@ -29,7 +30,7 @@ ObjectInterface *parseIntercom(const QDomNode &n)
 	list.append(new ExternalPlace("Portone", ObjectInterface::IdExternalPlace, "14"));
 	list.append(new ExternalPlace("Garage", ObjectInterface::IdExternalPlace, "14#2"));
 
-	return new Intercom(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice("11", "0")));
+	return new Intercom(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice((*bt_global::config)[PI_ADDRESS], (*bt_global::config)[PI_MODE])));
 }
 
 QList<ObjectPair> parseVdeCamera(const QDomNode &xml_node)
