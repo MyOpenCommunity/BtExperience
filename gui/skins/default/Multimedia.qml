@@ -4,79 +4,75 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
-BasePage {
+Page {
     id: multimedia
+
     source: "images/multimedia.jpg"
+    text: qsTr("multimedia")
 
-    ToolBar {
-        id: toolbar
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        onHomeClicked: Stack.backToHome()
-    }
+    ControlPathView {
+        visible: multimediaModel.count >= 3
+        x0FiveElements: 150
+        x0ThreeElements: 250
+        x1: 445
+        x2FiveElements: 740
+        x2ThreeElements: 640
 
-    UbuntuLightText {
-        id: pageTitle
-        text: qsTr("Multimedia")
-        font.pixelSize: 50
-        anchors {
-            top: toolbar.bottom
-            left: parent.left
-            leftMargin: 20
-        }
-    }
-
-    CardView {
-        id: cardView
-        function selectImage(item) {
-            if (item === qsTr("Devices"))
-                return "images/multimedia/devices_card.jpg"
-            else if (item === qsTr("rss"))
-                return "images/multimedia/rss_card.jpg"
-            else if (item === qsTr("web link"))
-                return "images/multimedia/weblink_card.jpg"
-            console.log("Unknown item, default to usb")
-            return "images/multimedia/devices_card.jpg"
-        }
-
+        model: multimediaModel
         anchors {
             right: parent.right
             rightMargin: 30
-            left: parent.left
+            left: navigationBar.right
             leftMargin: 30
-            top: pageTitle.bottom
+            top: toolbar.bottom
             topMargin: 50
             bottom: parent.bottom
         }
+        onClicked: Stack.goToPage(delegate.target, delegate.props)
+    }
 
-        model: multimediaModel
+    CardView {
+        anchors {
+            right: parent.right
+            rightMargin: 30
+            left: navigationBar.right
+            leftMargin: 30
+            top: toolbar.bottom
+            topMargin: 50
+            bottom: parent.bottom
+        }
+        visible: model.count < 3
         delegate: CardDelegate {
-            property variant itemObject: cardView.model.get(index)
-            source: cardView.selectImage(itemObject.itemText)
-            label: itemObject.itemText
+            property variant itemObject: multimediaModel.getObject(index)
+            source: itemObject.image
+            label: itemObject.description
 
             onClicked: Stack.goToPage(itemObject.target, itemObject.props)
         }
-        delegateSpacing: 20
-        visibleElements: 4
+
+        delegateSpacing: 40
+        visibleElements: 2
+
+        model: multimediaModel
     }
 
     ListModel {
         id: multimediaModel
+
+        function getObject(index) {
+            return get(index)
+        }
     }
 
     Component.onCompleted: {
-        multimediaModel.append({"itemText": qsTr("Devices"), "target": "Devices.qml", "props": {} })
+        multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {} })
 
         // TODO to be implemented
-        multimediaModel.append({"itemText": qsTr("browser"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("rss"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("ip radio"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("weather"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("web browser"), "target": "Devices.qml", "props": {}})
-        multimediaModel.append({"itemText": qsTr("web link"), "target": "Devices.qml", "props": {}})
+        multimediaModel.append({"description": qsTr("browser"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})
+        multimediaModel.append({"description": qsTr("rss"), "target": "Devices.qml", "image": "images/multimedia/rss_card.jpg", "props": {}})
+        multimediaModel.append({"description": qsTr("ip radio"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})
+        multimediaModel.append({"description": qsTr("weather"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})
+        multimediaModel.append({"description": qsTr("web browser"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})
+        multimediaModel.append({"description": qsTr("web link"), "target": "Devices.qml", "image": "images/multimedia/weblink_card.jpg", "props": {}})
     }
 }
