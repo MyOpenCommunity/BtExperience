@@ -6,7 +6,6 @@ PathView {
     id: control
 
     // defaults are related to home page
-    property bool sevenCards: false
     property int x0FiveElements: 100
     property int x0ThreeElements: 160
     property int x1: 370

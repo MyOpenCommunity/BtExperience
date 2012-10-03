@@ -47,7 +47,6 @@ Page {
             y1: 250
             x2FiveElements: 740
             x2ThreeElements: 640
-            sevenCards: true
             model: systemsModel
             onClicked: Stack.goToPage(Script.getTarget(delegate.containerId))
         }
