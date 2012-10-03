@@ -190,7 +190,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-open_p.svg" :
                               "../images/toolbar/icon_vde-auto-open.svg"
-            onClicked: console.log("autoOpenButton clicked")
+            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.AUTO_OPEN})
         }
 
         // auto answer
@@ -216,7 +216,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-mute_p.svg" :
                               "../images/toolbar/icon_vde-mute.svg"
-            onClicked: console.log("vdeMuteButton clicked")
+            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.VDE_MUTE})
         }
 
         // alerts
