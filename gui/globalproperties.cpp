@@ -294,6 +294,8 @@ void GlobalProperties::setKeyboardLayout(QString layout)
 {
 #ifdef BT_MALIIT
 	keyboard_layout->set(language_map[layout]);
+#else
+	Q_UNUSED(layout);
 #endif
 }
 

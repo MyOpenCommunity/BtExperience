@@ -5,7 +5,7 @@
 void UiiMapper::insert(int uii, QObject *value)
 {
 	if (items.contains(uii))
-		qFatal(qPrintable(QString("Duplicate uii %1").arg(uii)));
+		qFatal("Duplicate uii %d", uii);
 
 	connect(value, SIGNAL(destroyed(QObject*)),
 		this, SLOT(elementDestroyed(QObject*)));
