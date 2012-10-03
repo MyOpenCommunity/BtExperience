@@ -6,14 +6,16 @@ PathView {
     id: control
 
     // defaults are related to home page
-    property int x0FiveElements: 100
-    property int x0ThreeElements: 160
-    property int x1: 370
-    property int x2FiveElements: 640
-    property int x2ThreeElements: 580
-    property int y0: 220
-    property int y1: 200
+    property int x0FiveElements: control.width / 100 * 15
+    property int x0ThreeElements: control.width / 100 * 20
+    property int x1: control.width / 2
+    property int x2FiveElements: control.width - x0FiveElements
+    property int x2ThreeElements: control.width - x0ThreeElements
+    property int y0: control.height / 100 * 55
+    property int y1: control.height / 100 * 50
     property int y2: y0
+    property alias prevArrowAnchors: prevArrow.anchors
+    property alias nextArrowAnchors: nextArrow.anchors
 
     property int currentPressed: -1
 
@@ -115,7 +117,7 @@ PathView {
         source: "../images/common/freccia_dx.svg"
         anchors {
             right: parent.right
-            rightMargin: 10
+            rightMargin: prevArrowAnchors.leftMargin
             verticalCenter: parent.verticalCenter
         }
 
