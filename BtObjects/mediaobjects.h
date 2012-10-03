@@ -184,6 +184,7 @@ public:
 	void scsSourceActiveAreasChanged();
 	void scsSourceForGeneralAmbientChanged();
 
+	virtual void enableObject();
 	virtual void initializeObject();
 
 public slots:

@@ -295,6 +295,11 @@ SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType
 	type = t;
 }
 
+void SourceObject::enableObject()
+{
+	source->enableObject();
+}
+
 void SourceObject::initializeObject()
 {
 	source->initializeObject();
