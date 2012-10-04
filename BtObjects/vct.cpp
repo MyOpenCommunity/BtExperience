@@ -119,6 +119,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	call_stopped = false;
 	call_active = false;
 	prof_studio = false;
+	hands_free = false;
 	ringtone = ExternalPlace1;
 	is_autoswitch = false;
 
@@ -166,6 +167,15 @@ void CCTV::setSaturation(int value)
 		return;
 	saturation = value;
 	emit saturationChanged();
+}
+
+void CCTV::setAutoAnswer(bool newValue)
+{
+	if (newValue == hands_free)
+		return;
+
+	hands_free = newValue;
+	emit autoAnswerChanged();
 }
 
 void CCTV::setAutoOpen(bool newValue)

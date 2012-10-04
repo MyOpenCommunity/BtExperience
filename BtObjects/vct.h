@@ -144,6 +144,11 @@ class CCTV : public VDEBase
 	Q_PROPERTY(bool autoOpen READ getAutoOpen WRITE setAutoOpen NOTIFY autoOpenChanged)
 
 	/*!
+		\brief Sets or gets the if device must automatically answer when a call arrives.
+	*/
+	Q_PROPERTY(bool autoAnswer READ getAutoAnswer WRITE setAutoAnswer NOTIFY autoAnswerChanged)
+
+	/*!
 		\brief Logical event (as reported by the device) for which a ringtone should be played
 	*/
 	Q_PROPERTY(Ringtone ringtone READ getRingtone NOTIFY ringtoneChanged)
@@ -181,6 +186,8 @@ public:
 	void setAutoOpen(bool newValue);
 	Ringtone getRingtone() const;
 	bool getAutoSwitch() const { return is_autoswitch; }
+	bool getAutoAnswer() const { return hands_free; }
+	void setAutoAnswer(bool newValue);
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
@@ -205,7 +212,7 @@ signals:
 	void isIpCallChanged();
 	void ringtoneChanged();
 	void autoSwitchChanged();
-
+	void autoAnswerChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -227,6 +234,7 @@ private:
 	bool call_stopped;
 	bool call_active;
 	bool prof_studio;
+	bool hands_free;
 	bool is_autoswitch;
 	Ringtone ringtone;
 	QProcess video_grabber;
