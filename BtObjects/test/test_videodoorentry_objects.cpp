@@ -401,3 +401,63 @@ void TestVideoDoorEntry::testCCTVRingtone()
 	t.checkSignals();
 	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace3);
 }
+
+void TestVideoDoorEntry::testAutoOpen()
+{
+	ObjectTester t(cctv, SIGNAL(autoOpenChanged()));
+
+	cctv->setAutoOpen(true);
+	t.checkSignals();
+
+	DeviceValues v;
+
+	// arrives a call
+	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::CALLER_ADDRESS] = QString("21");
+	cctv->valueReceived(v);
+	v.clear();
+
+	// opens door
+	dev->openLock();
+	dev->releaseLock();
+
+	compareClientCommand();
+}
+
+void TestVideoDoorEntry::testAutoAnswer()
+{
+	ObjectTester t(cctv, SIGNAL(autoAnswerChanged()));
+
+	cctv->setAutoAnswer(true);
+	t.checkSignals();
+
+	DeviceValues v;
+	ObjectTester t2(cctv, SignalList()
+					<< SIGNAL(incomingCall())
+					<< SIGNAL(callAnswered())
+					<< SIGNAL(callEnded()));
+
+	// arrives a call
+	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	cctv->valueReceived(v);
+	v.clear();
+
+	// auto answer
+	dev->answerCall();
+
+	compareClientCommand();
+
+	// answer confirmation
+	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
+	cctv->valueReceived(v);
+	v.clear();
+
+	// callee terminates call
+	v[VideoDoorEntryDevice::END_OF_CALL] = true;
+	cctv->valueReceived(v);
+	v.clear();
+
+	t2.checkSignalCount(SIGNAL(incomingCall()), 1);
+	t2.checkSignalCount(SIGNAL(callAnswered()), 1);
+	t2.checkSignalCount(SIGNAL(callEnded()), 1);
+}
