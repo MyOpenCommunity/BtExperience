@@ -27,7 +27,19 @@ Item {
 
         source: global.guiSettings.skin === 0 ?
                     "../images/profiles/scheda_profili.svg" :
-                    "../images/profiles/scheda_profili_dark.svg"
+                    "../images/profiles/scheda_profili_P.svg"
+
+        Image {
+            id: icon
+            anchors.fill: parent
+            Rectangle {
+                id: bgProfilePressed
+                color: "black"
+                opacity: 0.5
+                visible: false
+                anchors.fill: parent
+            }
+        }
     }
 
     UbuntuLightText {
@@ -47,8 +59,14 @@ Item {
     MouseArea {
         anchors.fill: parent
         onClicked: pathViewDelegate.delegateClicked(itemObject)
-        onPressed: pathViewDelegate.PathView.view.currentPressed = index
-        onReleased: pathViewDelegate.PathView.view.currentPressed = -1
+        onPressed: {
+            bgProfilePressed.visible = true
+            pathViewDelegate.PathView.view.currentPressed = index
+        }
+        onReleased: {
+            bgProfilePressed.visible = false
+            pathViewDelegate.PathView.view.currentPressed = -1
+        }
     }
 
     states: State {
@@ -57,7 +75,7 @@ Item {
             target: bg
             source: global.guiSettings.skin === 0 ?
                         "../images/profiles/scheda_profili_P.svg" :
-                        "../images/profiles/scheda_profili_dark_P.svg"
+                        "../images/profiles/scheda_profili.svg"
         }
         PropertyChanges {
             target: textDelegate
