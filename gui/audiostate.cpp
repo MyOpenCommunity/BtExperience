@@ -1,6 +1,7 @@
 #include "audiostate.h"
 
 #include "multimediaplayer.h"
+#include "mediaplayer.h" // SoundPlayer
 #include "generic_functions.h"
 
 #include <QStringList>
@@ -183,6 +184,16 @@ void AudioState::registerSoundPlayer(MultiMediaPlayer *player)
 		this, SLOT(checkDirectAudioAccess()));
 }
 
+void AudioState::registerBeep(SoundPlayer *player)
+{
+	beep = player;
+
+	connect(beep, SIGNAL(soundStarted()),
+		this, SLOT(checkDirectAudioAccess()));
+	connect(beep, SIGNAL(soundFinished()),
+		this, SLOT(checkDirectAudioAccess()));
+}
+
 void AudioState::registerSoundDiffusionPlayer(MultiMediaPlayer *player)
 {
 	players.append(PlayerInfo(player, SoundDiffusion));
@@ -271,6 +282,9 @@ void AudioState::checkDirectAudioAccess()
 			is_mute = info.player->getMute();
 		}
 	}
+
+	if (beep->isActive())
+		new_state = true;
 
 	if (is_mute)
 		enableState(LocalPlaybackMute);

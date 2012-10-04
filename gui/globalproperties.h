@@ -14,6 +14,7 @@ class AudioVideoPlayer;
 class PhotoPlayer;
 class AudioState;
 class MultiMediaPlayer;
+class SoundPlayer;
 class RingtoneManager;
 
 #ifdef BT_MALIIT
@@ -119,7 +120,7 @@ private:
 	AudioVideoPlayer *audioPlayer;
 	PhotoPlayer *photoPlayer;
 	AudioState *audio_state;
-	MultiMediaPlayer *sound_player;
+	SoundPlayer *sound_player;
 	RingtoneManager *ringtone_manager;
 	QTimer *delayed_frame_timer;
 
