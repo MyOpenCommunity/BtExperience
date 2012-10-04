@@ -27,12 +27,24 @@ Item {
         // top folder
         anchors {
             fill: bg
-            topMargin: 5
-            leftMargin: 5
-            rightMargin: 6
-            bottomMargin: 49
+            topMargin: bg.height / 100 * 1.65
+            leftMargin: bg.width / 100 * 2.38
+            rightMargin: bg.width / 100 * 2.86
+            bottomMargin: bg.height / 100 * 16.17
         }
         source: ""
+    }
+
+    Image {
+        id: icon
+        anchors.fill: imageDelegate
+        Rectangle {
+            id: bgProfilePressed
+            color: "black"
+            opacity: 0.5
+            visible: false
+            anchors.fill: parent
+        }
     }
 
     SvgImage {
@@ -41,19 +53,6 @@ Item {
         source: global.guiSettings.skin === GuiSettings.Clear ?
                     "../images/profiles/scheda_profili.svg" :
                     "../images/profiles/scheda_profili_P.svg"
-
-        Image {
-            id: icon
-            anchors.fill: parent
-            Rectangle {
-                id: bgProfilePressed
-                color: "black"
-                opacity: 0.5
-                visible: false
-                anchors.fill: parent
-                radius: 12
-            }
-        }
     }
 
     UbuntuLightText {
