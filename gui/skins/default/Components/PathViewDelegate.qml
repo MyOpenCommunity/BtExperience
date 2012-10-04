@@ -20,7 +20,13 @@ Item {
         // the up-navigation is needed because images are referred to project
         // top folder
         source: "../" + itemObject.image
-        anchors.fill: bg
+        anchors {
+            fill: bg
+            topMargin: 5
+            leftMargin: 5
+            rightMargin: 6
+            bottomMargin: 49
+        }
     }
 
     SvgImage {
@@ -39,6 +45,7 @@ Item {
                 opacity: 0.5
                 visible: false
                 anchors.fill: parent
+                radius: 12
             }
         }
     }
@@ -60,14 +67,8 @@ Item {
     MouseArea {
         anchors.fill: parent
         onClicked: pathViewDelegate.delegateClicked(itemObject)
-        onPressed: {
-            bgProfilePressed.visible = true
-            pathViewDelegate.PathView.view.currentPressed = index
-        }
-        onReleased: {
-            bgProfilePressed.visible = false
-            pathViewDelegate.PathView.view.currentPressed = -1
-        }
+        onPressed: pathViewDelegate.PathView.view.currentPressed = index
+        onReleased: pathViewDelegate.PathView.view.currentPressed = -1
     }
 
     states: State {
@@ -81,6 +82,10 @@ Item {
         PropertyChanges {
             target: textDelegate
             color: global.guiSettings.skin === GuiSettings.Clear ? "white" : "#434343"
+        }
+        PropertyChanges {
+            target: bgProfilePressed
+            visible: true
         }
     }
 }

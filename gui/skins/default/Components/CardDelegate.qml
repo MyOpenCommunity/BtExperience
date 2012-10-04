@@ -25,7 +25,13 @@ Item {
         id: imageDelegate
         // the up-navigation is needed because images are referred to project
         // top folder
-        anchors.fill: bg
+        anchors {
+            fill: bg
+            topMargin: 5
+            leftMargin: 5
+            rightMargin: 6
+            bottomMargin: 49
+        }
         source: ""
     }
 
@@ -45,6 +51,7 @@ Item {
                 opacity: 0.5
                 visible: false
                 anchors.fill: parent
+                radius: 12
             }
         }
     }
@@ -66,14 +73,8 @@ Item {
     BeepingMouseArea {
         anchors.fill: parent
         onClicked: itemDelegate.clicked()
-        onPressed: {
-            bgProfilePressed.visible = true
-            itemDelegate.view.currentPressed = index
-        }
-        onReleased: {
-            bgProfilePressed.visible = false
-            itemDelegate.view.currentPressed = -1
-        }
+        onPressed: itemDelegate.view.currentPressed = index
+        onReleased: itemDelegate.view.currentPressed = -1
     }
 
     states: [
@@ -88,6 +89,10 @@ Item {
             PropertyChanges {
                 target: textDelegate
                 color: global.guiSettings.skin === GuiSettings.Clear ? "white" : "#434343"
+            }
+            PropertyChanges {
+                target: bgProfilePressed
+                visible: true
             }
         },
         State {
