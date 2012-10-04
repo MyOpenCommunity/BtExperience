@@ -122,6 +122,35 @@ QList<ObjectPair> parseAdvancedScenario(const QDomNode &xml_node)
 	return obj_list;
 }
 
+void updateAdvancedScenario(QDomNode node, AdvancedScenario *item)
+{
+	QDomNode scen = getChildWithName(node, "scen");
+	QDomNodeList childs = scen.childNodes();
+
+	for (int i = 0; i < childs.size(); ++i)
+	{
+		if (!childs.at(i).isElement())
+			continue;
+		QDomElement child = childs.at(i).toElement();
+
+		if (child.tagName() == "time" && getTextChild(child, "status") == "1")
+		{
+			TimeConditionObject *tc = qobject_cast<TimeConditionObject *>(item->getTimeCondition());
+
+			setTextChild(child, "hour", QString::number(tc->getHours()));
+			setTextChild(child, "minute", QString::number(tc->getMinutes()));
+		}
+		else if (child.tagName() == "device" && getTextChild(child, "status") == "1")
+		{
+			DeviceConditionObject *dc = qobject_cast<DeviceConditionObject *>(item->getDeviceCondition());
+
+			setTextChild(child, "trigger", dc->getTriggerAsString());
+		}
+	}
+
+	setTextChild(scen, "days", QString::number(item->getDays()));
+}
+
 
 SimpleScenario::SimpleScenario(int scenario, QString _name, ScenarioDevice *d) :
 	DeviceObjectInterface(d)
@@ -756,6 +785,10 @@ bool DeviceConditionObject::isSatisfied() const
 	return device_cond->isTrue();
 }
 
+QString DeviceConditionObject::getTriggerAsString() const
+{
+	return device_cond->getConditionAsString();
+}
 
 AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionObject *time, ActionObject *action, bool _enabled, int _days, QString description)
 {
@@ -833,6 +866,11 @@ void AdvancedScenario::setDayEnabled(int day, bool enabled)
 	emit daysChanged();
 }
 
+int AdvancedScenario::getDays() const
+{
+	return days;
+}
+
 QObject *AdvancedScenario::getDeviceCondition() const
 {
 	return device_obj;
@@ -862,7 +900,7 @@ void AdvancedScenario::save()
 	if (device_obj)
 		device_obj->save();
 
-	// TODO save to configuration file
+	emit persistItem();
 }
 
 void AdvancedScenario::reset()
@@ -914,4 +952,3 @@ void AdvancedScenario::deviceConditionSatisfied()
 
 	start();
 }
-

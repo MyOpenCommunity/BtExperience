@@ -49,10 +49,6 @@ Page {
         Stack.backToSystemOrHome()
     }
 
-    function closeAll() {
-        container.closeAll()
-    }
-
     function systemPageClosed() {
         Stack.backToSystemOrHome()
     }
