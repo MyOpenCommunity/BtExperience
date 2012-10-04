@@ -11,23 +11,23 @@
 	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
 ]>
 <svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="209.746px"
-	 height="303.043px" viewBox="0 0 209.746 303.043" enable-background="new 0 0 209.746 303.043" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="210px" height="303px"
+	 viewBox="0 0 210 303" enable-background="new 0 0 210 303" xml:space="preserve">
 <metadata>
 	<sfw  xmlns="&ns_sfw;">
 		<slices></slices>
-		<sliceSourceBounds  y="148.979" x="406.627" width="209.745" height="303.042" bottomLeftOrigin="true"></sliceSourceBounds>
+		<sliceSourceBounds  height="303.043" width="209.745" y="148.957" x="406.5" bottomLeftOrigin="true"></sliceSourceBounds>
 	</sfw>
 </metadata>
-<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-153.7891" y1="-361.2168" x2="-332.4643" y2="-51.7424" gradientTransform="matrix(1 0 0 -1 348 -54.957)">
-	<stop  offset="0" style="stop-color:#5A5A5A"/>
-	<stop  offset="0.4663" style="stop-color:#CECFCF"/>
-	<stop  offset="0.9693" style="stop-color:#5A5A5A"/>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-501.7891" y1="1275.2178" x2="-680.4644" y2="965.7431" gradientTransform="matrix(1 0 0 1 696 -968.957)">
+	<stop  offset="0" style="stop-color:#545454"/>
+	<stop  offset="0.1662" style="stop-color:#3F3F3F"/>
+	<stop  offset="0.3582" style="stop-color:#2E2E2E"/>
+	<stop  offset="0.5" style="stop-color:#282828"/>
+	<stop  offset="0.6427" style="stop-color:#2F2F2F"/>
+	<stop  offset="0.8426" style="stop-color:#414141"/>
+	<stop  offset="1" style="stop-color:#545454"/>
 </linearGradient>
 <path fill="url(#SVGID_1_)" d="M196.129,0H13.62C6.098,0,0,6.099,0,13.62v275.806c0,7.521,6.098,13.617,13.62,13.617h182.509
-	c7.521,0,13.616-6.096,13.616-13.617V13.62C209.747,6.099,203.65,0,196.129,0z M204.301,243.117c0,6.018-4.879,10.896-10.896,10.896
-	l-177.392-0.042c-6.018,0-10.562-4.836-10.562-10.854V15.664c0-6.019,4.545-10.572,10.562-10.572l177.392-0.325
-	c6.018,0,10.896,4.878,10.896,10.897V243.117z"/>
-<path fill="#5A5A5A" d="M204.299,243.117c0,6.018-4.879,10.896-10.896,10.896l-177.391-0.042c-6.018,0-10.562-4.836-10.562-10.854
-	V15.664c0-6.019,4.544-10.572,10.562-10.572l177.391-0.325c6.02,0,10.896,4.878,10.896,10.897V243.117z"/>
+	c7.521,0,13.616-6.096,13.616-13.617V13.62C209.747,6.099,203.65,0,196.129,0z M204.299,254.271H5.45V10.021h198.849V254.271z"/>
 </svg>
