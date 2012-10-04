@@ -125,6 +125,8 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
+
+	connect(this, SIGNAL(incomingCall()), this, SLOT(manageHandsFree()));
 }
 
 int CCTV::getBrightness() const
@@ -407,6 +409,15 @@ void CCTV::disactivateCall()
 bool CCTV::callActive()
 {
 	return call_active;
+}
+
+void CCTV::manageHandsFree()
+{
+	if (callActive()) // call already in progress
+		return;
+
+	if (hands_free) // auto answer?
+		dev->answerCall();
 }
 
 
