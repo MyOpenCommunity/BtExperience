@@ -14,6 +14,8 @@ class AudioState : public QObject
 	Q_PROPERTY(State state READ getState NOTIFY stateChanged)
 	Q_PROPERTY(bool audioAccess READ isDirectAudioAccess NOTIFY directAudioAccessChanged)
 	Q_PROPERTY(bool videoAccess READ isDirectVideoAccess NOTIFY directVideoAccessChanged)
+	Q_PROPERTY(bool localSource READ isLocalSource CONSTANT)
+	Q_PROPERTY(bool localAmplifier READ isLocalAmplifier CONSTANT)
 
 	Q_ENUMS(State)
 
@@ -71,6 +73,9 @@ public:
 
 	bool isDirectAudioAccess() const;
 	bool isDirectVideoAccess() const;
+
+	bool isLocalSource() const;
+	bool isLocalAmplifier() const;
 
 signals:
 	void stateChanged(AudioState::State old_state, AudioState::State new_state);

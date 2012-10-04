@@ -122,6 +122,16 @@ AudioState::State AudioState::getState() const
 	return current_state;
 }
 
+bool AudioState::isLocalSource() const
+{
+	return !(*bt_global::config)[SOURCE_ADDRESS].isEmpty();
+}
+
+bool AudioState::isLocalAmplifier() const
+{
+	return !(*bt_global::config)[AMPLIFIER_ADDRESS].isEmpty();
+}
+
 void AudioState::setVolume(Volume state, int volume)
 {
 	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
