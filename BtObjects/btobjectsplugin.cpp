@@ -11,6 +11,7 @@
 #include "mediaobjects.h"
 #include "messagessystem.h"
 #include "multimediaplayer.h"
+#include "mediaplayer.h"
 #include "xml_functions.h"
 #include "hardware.h"
 #include "platform.h"
@@ -172,6 +173,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	parseDevice();
 
 	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList(), QStringList());
+	SoundPlayer::setGlobalCommandLineArguments("aplay", QStringList() << "<FILE_NAME>");
 
 	ClientWriter::setDelay((*bt_global::config)[TS_NUMBER].toInt() * TS_NUMBER_FRAME_DELAY);
 

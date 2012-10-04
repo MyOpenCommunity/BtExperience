@@ -5,6 +5,7 @@
 #include <QList>
 
 class MultiMediaPlayer;
+class SoundPlayer;
 
 
 class AudioState : public QObject
@@ -65,6 +66,7 @@ public:
 
 	void registerMediaPlayer(MultiMediaPlayer *player);
 	void registerSoundPlayer(MultiMediaPlayer *player);
+	void registerBeep(SoundPlayer *player);
 	void registerSoundDiffusionPlayer(MultiMediaPlayer *player);
 
 	bool isDirectAudioAccess() const;
@@ -119,6 +121,7 @@ private:
 	int volumes[VolumeCount];
 	bool sound_diffusion;
 	QList<PlayerInfo> players;
+	SoundPlayer *beep;
 };
 
 #endif // AUDIOSTATE_H

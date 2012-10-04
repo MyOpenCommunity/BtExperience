@@ -3,6 +3,7 @@
 #include "inputcontextwrapper.h"
 #include "player.h"
 #include "audiostate.h"
+#include "mediaplayer.h" // SoundPlayer
 #include "ringtonemanager.h"
 #include "ts/main.h"
 #include "devices_cache.h"
@@ -84,11 +85,11 @@ void GlobalProperties::initAudio()
 
 	videoPlayer = new AudioVideoPlayer(this);
 
-	sound_player = new MultiMediaPlayer(this);
+	sound_player = new SoundPlayer(this);
 
 	audio_state = new AudioState(this);
 	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(videoPlayer->getMediaPlayer()));
-	audio_state->registerSoundPlayer(sound_player);
+	audio_state->registerBeep(sound_player);
 	audio_state->enableState(AudioState::Idle);
 
 	connect(audio_state, SIGNAL(stateChanged(AudioState::State,AudioState::State)),
@@ -254,10 +255,7 @@ void GlobalProperties::beep()
 	QString path = getExtraPath() + "10/beep.wav";
 
 	if (QFile::exists(path) && audio_state->getState() == AudioState::Beep)
-	{
-		sound_player->setCurrentSource(path);
-		sound_player->play();
-	}
+		sound_player->play(path);
 }
 
 void GlobalProperties::beepChanged()

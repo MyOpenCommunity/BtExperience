@@ -26,7 +26,11 @@ PathView {
         z: PathView.elementZ
         scale: PathView.elementScale
         opacity: PathView.elementOpacity
-        onDelegateClicked: control.clicked(delegate)
+        onDelegateClicked: {
+            if (global.guiSettings.beep)
+                global.beep()
+            control.clicked(delegate)
+        }
     }
 
     path: Path {
@@ -94,7 +98,7 @@ PathView {
             verticalCenter: parent.verticalCenter
         }
 
-        MouseArea {
+        BeepingMouseArea {
             id: mouseAreaSx
             anchors.fill: parent
             onClicked: control.incrementCurrentIndex()
@@ -121,7 +125,7 @@ PathView {
             verticalCenter: parent.verticalCenter
         }
 
-        MouseArea {
+        BeepingMouseArea {
             id: mouseAreaDx
             anchors.fill: parent
             onClicked: control.decrementCurrentIndex()
