@@ -12,10 +12,10 @@ Item {
     property int alarms: privateProps.alarmsModel === undefined ? 0 : alarmsObjModel.count
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
+    property bool autoAnswer: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoAnswer
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
 
     property int clocks: 0 // TODO link to C++ model!
-    property bool autoAnswer: false // TODO link to C++ model!
     property bool vdeMute: false // TODO link to C++ model!
     property bool scenarioRecording: false // TODO link to C++ model and check if property exists!
     property bool playing: false // TODO link to C++ model and check if property exists!
