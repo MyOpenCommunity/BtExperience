@@ -158,7 +158,7 @@ QString GlobalProperties::getExtraPath() const
 	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
 #endif
 
-#if defined(Q_WS_MAC) || defined(Q_WS_X11)
+#if defined(BT_HARDWARE_X11)
 	QFileInfo extra(QDir(path.absoluteFilePath()), "extra");
 #else
 	QFileInfo extra(EXTRA_PATH);
