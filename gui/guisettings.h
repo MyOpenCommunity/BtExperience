@@ -99,11 +99,6 @@ class GuiSettings : public QObject
 	*/
 	Q_PROPERTY(bool beep READ getBeep WRITE setBeep NOTIFY beepChanged)
 
-	/*!
-		\brief Sets or gets ring exclusion status
-	*/
-	Q_PROPERTY(bool ringExclusion READ getRingExclusion WRITE setRingExclusion NOTIFY ringExclusionChanged)
-
 	Q_ENUMS(Currency)
 	Q_ENUMS(Language)
 	Q_ENUMS(MeasurementSystem)
@@ -223,8 +218,6 @@ public:
 	void setSkin(Skin s);
 	bool getBeep() const;
 	void setBeep(bool beep);
-	bool getRingExclusion() const;
-	void setRingExclusion(bool ringExclusion);
 
 	QString getLanguageString() const;
 	QString getSkinString() const;
@@ -247,7 +240,6 @@ signals:
 	void turnOffTimeChanged();
 	void skinChanged();
 	void beepChanged();
-	void ringExclusionChanged();
 
 private:
 	int brightness;
@@ -267,7 +259,6 @@ private:
 	TimeChoice turnOffTime;
 	Skin skin;
 	bool beep;
-	bool ring_exclusion;
 
 private:
 	void sendCommand(const QString &cmd);

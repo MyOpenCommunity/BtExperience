@@ -9,14 +9,14 @@ import "../js/ScreenSaver.js" as ScreenSaver
 Item {
     id: eventManager
 
-    property int alarms: privateProps.alarmsModel === undefined ? 0 : alarmsObjModel.count
+    property int alarms: privateProps.antintrusionModel === undefined ? 0 : privateProps.antintrusionModel.alarms.getCount()
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
     property bool autoAnswer: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoAnswer
+    property bool vdeMute: privateProps.vctModel === undefined ? false : privateProps.vctModel.ringExclusion
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
 
     property int clocks: 0 // TODO link to C++ model!
-    property bool vdeMute: false // TODO link to C++ model!
     property bool scenarioRecording: false // TODO link to C++ model and check if property exists!
     property bool playing: false // TODO link to C++ model and check if property exists!
     property bool mute: false // TODO link to C++ model and check if property exists!
@@ -81,7 +81,6 @@ Item {
                 case ObjectInterface.IdAntintrusionSystem:
                     antintrusionConnection.target = obj
                     privateProps.antintrusionModel = obj
-                    privateProps.alarmsModel = obj.alarms
                     break
                 case ObjectInterface.IdMessages:
                     privateProps.messagesModel = obj
@@ -96,7 +95,7 @@ Item {
         target: null
         onIncomingCall: {
             // VdeRingtone state should always be enabled to stop multimedia playback during call
-            if (!global.guiSettings.ringExclusion)
+            if (!vctConnection.target.ringExclusion)
                 global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(vctConnection.target.ringtone), AudioState.VdeRingtone)
             else
                 global.audioState.enableState(AudioState.VdeRingtone)
@@ -126,7 +125,7 @@ Item {
         target: null
         onIncomingCall: {
             // VdeRingtone state should always be enabled to stop multimedia playback during call
-            if (!global.guiSettings.ringExclusion)
+            if (!intercomConnection.target.getRingExclusion())
                 global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.VdeRingtone)
             else
                 global.audioState.enableState(AudioState.VdeRingtone)
@@ -144,7 +143,7 @@ Item {
                 global.audioState.enableState(AudioState.ScsIntercomCall)
         }
         onIncomingFloorCall: {
-            if (!global.guiSettings.ringExclusion)
+            if (!intercomConnection.target.getRingExclusion())
                 global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.FloorCall)
         }
     }
@@ -173,15 +172,9 @@ Item {
         }
     }
 
-    ObjectModel {
-        id: alarmsObjModel
-        source: privateProps.alarmsModel
-    }
-
     QtObject {
         id: privateProps
 
-        property variant alarmsModel: undefined
         property variant antintrusionModel: undefined
         property variant messagesModel: undefined
         property variant vctModel: undefined

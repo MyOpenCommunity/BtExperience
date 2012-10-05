@@ -293,6 +293,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionScenario *> antintrusion_scenarios;
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
 	QDomNode cu99zones;
+	int energy_family = 1;
 
 	int energy_family = 1;
 

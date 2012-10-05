@@ -158,6 +158,11 @@ class CCTV : public VDEBase
 	*/
 	Q_PROPERTY(bool autoSwitch READ getAutoSwitch NOTIFY autoSwitchChanged)
 
+	/*!
+		\brief Sets or gets ring exclusion status
+	*/
+	Q_PROPERTY(bool ringExclusion READ getRingExclusion WRITE setRingExclusion NOTIFY ringExclusionChanged)
+
 	Q_ENUMS(Ringtone)
 
 public:
@@ -188,6 +193,8 @@ public:
 	bool getAutoSwitch() const { return is_autoswitch; }
 	bool getAutoAnswer() const { return hands_free; }
 	void setAutoAnswer(bool newValue);
+	bool getRingExclusion() const;
+	void setRingExclusion(bool newValue);
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
@@ -213,6 +220,7 @@ signals:
 	void ringtoneChanged();
 	void autoSwitchChanged();
 	void autoAnswerChanged();
+	void ringExclusionChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -291,6 +299,7 @@ public:
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
 	Q_INVOKABLE void startCall(QString where);
+	Q_INVOKABLE bool getRingExclusion() const;
 
 	QString getTalker() const;
 	Ringtone getRingtone() const;
@@ -302,7 +311,6 @@ signals:
 	void talkerChanged();
 	void callAnswered();
 	void ringtoneChanged();
-
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);

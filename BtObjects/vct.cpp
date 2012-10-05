@@ -9,6 +9,11 @@
 
 QString video_grabber_path = "/usr/local/bin/Fw-A-LcdOpenGLRenderingQt.sh";
 
+namespace
+{
+	bool ring_exclusion = false;
+}
+
 ObjectInterface *parseCCTV(const QDomNode &n)
 {
 	QString where = getTextChild(n, "where");
@@ -178,6 +183,20 @@ void CCTV::setAutoAnswer(bool newValue)
 
 	hands_free = newValue;
 	emit autoAnswerChanged();
+}
+
+bool CCTV::getRingExclusion() const
+{
+	return ring_exclusion;
+}
+
+void CCTV::setRingExclusion(bool newValue)
+{
+	if (ring_exclusion == newValue)
+		return;
+
+	ring_exclusion = newValue;
+	emit ringExclusionChanged();
 }
 
 void CCTV::setAutoOpen(bool newValue)
@@ -451,6 +470,11 @@ void Intercom::startCall(QString where)
 Intercom::Ringtone Intercom::getRingtone() const
 {
 	return ringtone;
+}
+
+bool Intercom::getRingExclusion() const
+{
+	return ring_exclusion;
 }
 
 QString Intercom::getTalker() const
