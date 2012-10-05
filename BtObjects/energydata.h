@@ -31,7 +31,7 @@ class QDomNode;
 #define TEST_ENERGY_DATA 1
 #endif
 
-QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node);
+QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node, QString family);
 
 
 struct CacheKey
@@ -73,19 +73,25 @@ inline uint qHash(const CacheKey &key)
 /*!
 	\brief Used to group energy lines
 
-	This object does not correspond to an \c <ist> tag.
+	This object does not correspond to an \c <ist> tag; the \ref objectKey attribute
+	can be used to filter the list of interfaces that belong to the family.
 */
 class EnergyFamily : public ObjectInterface
 {
 	Q_OBJECT
 
 public:
-	EnergyFamily(QString _name)
+	EnergyFamily(QString _name, QString _key)
 	{
 		name = _name;
+		key = _key;
 	}
 
 	virtual int getObjectId() const { return IdEnergyFamily; }
+	virtual QString getObjectKey() const { return key; }
+
+private:
+	QString key;
 };
 
 
@@ -244,7 +250,7 @@ public:
 		Currency    = 1
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate);
+	EnergyData(EnergyDevice *dev, QString name, QString family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate);
 	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
@@ -387,6 +393,8 @@ private:
 	// conversion factor from device units to energy_unit
 	// f.e. if unit is yd3, unit_conversion is 0.0013079506
 	double unit_conversion;
+
+	QString family;
 
 #if TEST_ENERGY_DATA
 private slots:

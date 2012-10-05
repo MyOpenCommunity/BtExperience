@@ -293,6 +293,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionScenario *> antintrusion_scenarios;
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
 	QDomNode cu99zones;
+	int energy_family = 1;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
@@ -422,8 +423,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseLoadWithoutCU(xml_obj);
 			break;
 		case ObjectInterface::IdEnergyData:
-			objmodel << new EnergyFamily(getAttribute(xml_obj, "descr"));
-			obj_list = parseEnergyData(xml_obj);
+			objmodel << new EnergyFamily(getAttribute(xml_obj, "descr"), QString::number(energy_family));
+			obj_list = parseEnergyData(xml_obj, QString::number(energy_family));
+			++energy_family;
 			break;
 
 		case ObjectInterface::IdSimpleScenario:
