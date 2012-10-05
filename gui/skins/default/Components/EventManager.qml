@@ -9,7 +9,7 @@ import "../js/ScreenSaver.js" as ScreenSaver
 Item {
     id: eventManager
 
-    property int alarms: privateProps.alarmsModel === undefined ? 0 : alarmsObjModel.count
+    property int alarms: privateProps.antintrusionModel === undefined ? 0 : privateProps.antintrusionModel.alarms.getCount()
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
     property bool autoAnswer: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoAnswer
@@ -81,7 +81,6 @@ Item {
                 case ObjectInterface.IdAntintrusionSystem:
                     antintrusionConnection.target = obj
                     privateProps.antintrusionModel = obj
-                    privateProps.alarmsModel = obj.alarms
                     break
                 case ObjectInterface.IdMessages:
                     privateProps.messagesModel = obj
@@ -173,15 +172,9 @@ Item {
         }
     }
 
-    ObjectModel {
-        id: alarmsObjModel
-        source: privateProps.alarmsModel
-    }
-
     QtObject {
         id: privateProps
 
-        property variant alarmsModel: undefined
         property variant antintrusionModel: undefined
         property variant messagesModel: undefined
         property variant vctModel: undefined
