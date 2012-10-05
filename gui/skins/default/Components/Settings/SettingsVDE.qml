@@ -7,10 +7,10 @@ MenuColumn {
 
     // redefined to implement menu navigation
     function openMenu(navigationTarget) {
-        if (navigationTarget === "AutoAnswer") {
+        if (navigationTarget === "HandsFree") {
             // last menu to open, resets navigationTarget
             column.pageObject.navigationTarget = 0
-            column.loadColumn(autoAnswerComponent, autoAnswerMenuItem.name)
+            column.loadColumn(handsFreeComponent, handsFreeMenuItem.name)
             return true
         }
         if (navigationTarget === "AutoOpen") {
@@ -39,7 +39,7 @@ MenuColumn {
 
     Column {
         MenuItem {
-            id: autoAnswerMenuItem
+            id: handsFreeMenuItem
             name: qsTr("auto answer")
             hasChild: true
             isSelected: privateProps.currentIndex === 1
@@ -47,12 +47,12 @@ MenuColumn {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
 
-                column.loadColumn(autoAnswerComponent, name)
+                column.loadColumn(handsFreeComponent, name)
             }
 
             Component {
-                id: autoAnswerComponent
-                SettingsAutoAnswer {
+                id: handsFreeComponent
+                SettingsHandsFree {
                 }
             }
         }

@@ -196,14 +196,14 @@ Item {
         // auto answer
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.autoAnswer
+            visible: EventManager.eventManager.handsFree
             defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-answer.svg" :
                               "../images/toolbar/icon_vde-auto-answer_p.svg"
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-answer_p.svg" :
                               "../images/toolbar/icon_vde-auto-answer.svg"
-            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.AUTO_ANSWER})
+            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.HANDS_FREE})
         }
 
         // vde mute

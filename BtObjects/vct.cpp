@@ -176,13 +176,13 @@ void CCTV::setSaturation(int value)
 	emit saturationChanged();
 }
 
-void CCTV::setAutoAnswer(bool newValue)
+void CCTV::setHandsFree(bool newValue)
 {
 	if (newValue == hands_free)
 		return;
 
 	hands_free = newValue;
-	emit autoAnswerChanged();
+	emit handsFreeChanged();
 }
 
 bool CCTV::getRingExclusion() const

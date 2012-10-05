@@ -29,7 +29,7 @@ MenuColumn {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 if (privateProps.model)
-                    privateProps.model.autoAnswer = true
+                    privateProps.model.handsFree = true
             }
         }
 
@@ -40,7 +40,7 @@ MenuColumn {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 if (privateProps.model)
-                    privateProps.model.autoAnswer = false
+                    privateProps.model.handsFree = false
             }
         }
     }
