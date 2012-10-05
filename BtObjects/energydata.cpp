@@ -194,7 +194,7 @@ namespace
 }
 
 
-QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
+QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family)
 {
 	QList<ObjectPair> obj_list;
 	XmlObject v(xml_node);
@@ -233,7 +233,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, QString family)
 }
 
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, QString _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyType _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate)
 {
 	name = _name;
 	family = _family;
@@ -462,7 +462,7 @@ int EnergyData::getObjectId() const
 
 QString EnergyData::getObjectKey() const
 {
-	return QString("type:%1,%2").arg(static_cast<int>(getEnergyType())).arg(family);
+	return QString("type:%1,%2").arg(static_cast<int>(getEnergyType())).arg(static_cast<int>(family));
 }
 
 EnergyData::EnergyType EnergyData::getEnergyType() const
@@ -484,6 +484,11 @@ EnergyData::EnergyType EnergyData::getEnergyType() const
 	Q_ASSERT_X(0, "EnergyData::getEnergyType", "Invalid value for energy type");
 
 	return Electricity;
+}
+
+EnergyFamily::FamilyType EnergyData::getFamilyType() const
+{
+	return family;
 }
 
 void EnergyData::requestCurrentUpdateStart()

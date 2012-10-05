@@ -31,8 +31,6 @@ class QDomNode;
 #define TEST_ENERGY_DATA 1
 #endif
 
-QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node, QString family);
-
 
 struct CacheKey
 {
@@ -107,6 +105,9 @@ private:
 };
 
 
+QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family);
+
+
 /*!
 	\ingroup EnergyDataSystem
 	\brief Reads energy consumption data for a monitored object (current and historic data)
@@ -139,6 +140,9 @@ class EnergyData : public ObjectInterface
 
 	/// The type of energy measured by this object
 	Q_PROPERTY(EnergyType energyType READ getEnergyType CONSTANT)
+
+
+	Q_PROPERTY(EnergyFamily::FamilyType familyType READ getFamilyType CONSTANT)
 
 	/// Energy to currency conversion rate
 	Q_PROPERTY(EnergyRate *rate READ getRate CONSTANT)
@@ -262,7 +266,7 @@ public:
 		Currency    = 1
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, QString family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate);
+	EnergyData(EnergyDevice *dev, QString name, EnergyFamily::FamilyType family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate);
 	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
@@ -292,6 +296,7 @@ public:
 	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, MeasureType measure = Consumption);
 
 	EnergyType getEnergyType() const;
+	EnergyFamily::FamilyType getFamilyType() const;
 	EnergyRate *getRate() const;
 
 	int getThresholdLevel() const;
@@ -406,7 +411,7 @@ private:
 	// f.e. if unit is yd3, unit_conversion is 0.0013079506
 	double unit_conversion;
 
-	QString family;
+	EnergyFamily::FamilyType family;
 
 #if TEST_ENERGY_DATA
 private slots:
