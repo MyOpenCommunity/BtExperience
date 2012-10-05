@@ -146,7 +146,7 @@ class CCTV : public VDEBase
 	/*!
 		\brief Sets or gets the if device must automatically answer when a call arrives.
 	*/
-	Q_PROPERTY(bool autoAnswer READ getAutoAnswer WRITE setAutoAnswer NOTIFY autoAnswerChanged)
+	Q_PROPERTY(bool handsFree READ getHandsFree WRITE setHandsFree NOTIFY handsFreeChanged)
 
 	/*!
 		\brief Logical event (as reported by the device) for which a ringtone should be played
@@ -191,8 +191,8 @@ public:
 	void setAutoOpen(bool newValue);
 	Ringtone getRingtone() const;
 	bool getAutoSwitch() const { return is_autoswitch; }
-	bool getAutoAnswer() const { return hands_free; }
-	void setAutoAnswer(bool newValue);
+	bool getHandsFree() const { return hands_free; }
+	void setHandsFree(bool newValue);
 	bool getRingExclusion() const;
 	void setRingExclusion(bool newValue);
 
@@ -219,7 +219,7 @@ signals:
 	void isIpCallChanged();
 	void ringtoneChanged();
 	void autoSwitchChanged();
-	void autoAnswerChanged();
+	void handsFreeChanged();
 	void ringExclusionChanged();
 
 protected slots:

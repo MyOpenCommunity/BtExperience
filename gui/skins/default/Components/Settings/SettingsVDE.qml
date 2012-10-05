@@ -7,21 +7,27 @@ MenuColumn {
 
     // redefined to implement menu navigation
     function openMenu(navigationTarget) {
-        if (navigationTarget === "AutoAnswer") {
+        if (navigationTarget === "HandsFree") {
             // last menu to open, resets navigationTarget
             column.pageObject.navigationTarget = 0
-            column.loadColumn(autoAnswerComponent, autoAnswerMenuItem.name)
+            if (privateProps.currentIndex !== 1)
+                privateProps.currentIndex = 1
+            column.loadColumn(handsFreeComponent, handsFreeMenuItem.name)
             return true
         }
         if (navigationTarget === "AutoOpen") {
             // last menu to open, resets navigationTarget
             column.pageObject.navigationTarget = 0
+            if (privateProps.currentIndex !== 2)
+                privateProps.currentIndex = 2
             column.loadColumn(autoOpenComponent, autoOpenMenuItem.name)
             return true
         }
         if (navigationTarget === "VdeMute") {
             // last menu to open, resets navigationTarget
             column.pageObject.navigationTarget = 0
+            if (privateProps.currentIndex !== 3)
+                privateProps.currentIndex = 3
             column.loadColumn(vdeMuteComponent, vdeMuteMenuItem.name)
             return true
         }
@@ -39,20 +45,20 @@ MenuColumn {
 
     Column {
         MenuItem {
-            id: autoAnswerMenuItem
-            name: qsTr("auto answer")
+            id: handsFreeMenuItem
+            name: qsTr("hands free")
             hasChild: true
             isSelected: privateProps.currentIndex === 1
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
 
-                column.loadColumn(autoAnswerComponent, name)
+                column.loadColumn(handsFreeComponent, name)
             }
 
             Component {
-                id: autoAnswerComponent
-                SettingsAutoAnswer {
+                id: handsFreeComponent
+                SettingsHandsFree {
                 }
             }
         }

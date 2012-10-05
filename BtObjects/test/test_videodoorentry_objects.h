@@ -50,7 +50,7 @@ private slots:
 	void testCCTVOutgoingCallTerminatedByTalker();
 	void testCCTVRingtone();
 	void testAutoOpen();
-	void testAutoAnswer();
+	void testHandsFree();
 
 protected:
 	void compareClientCommand(int timeout = 0);

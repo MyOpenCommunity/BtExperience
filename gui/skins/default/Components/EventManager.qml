@@ -12,7 +12,7 @@ Item {
     property int alarms: privateProps.antintrusionModel === undefined ? 0 : privateProps.antintrusionModel.alarms.getCount()
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
-    property bool autoAnswer: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoAnswer
+    property bool handsFree: privateProps.vctModel === undefined ? false : privateProps.vctModel.handsFree
     property bool vdeMute: privateProps.vctModel === undefined ? false : privateProps.vctModel.ringExclusion
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
 

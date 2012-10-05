@@ -13,7 +13,7 @@ MenuColumn {
 
     QtObject {
         id: privateProps
-        property int currentIndex: -1
+        property int currentIndex: vctModel.getObject(0) === undefined ? -1 : (vctModel.getObject(0).handsFree ? 1 : 2)
         property variant model: vctModel.getObject(0)
     }
 
@@ -29,7 +29,7 @@ MenuColumn {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 if (privateProps.model)
-                    privateProps.model.autoAnswer = true
+                    privateProps.model.handsFree = true
             }
         }
 
@@ -40,7 +40,7 @@ MenuColumn {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 if (privateProps.model)
-                    privateProps.model.autoAnswer = false
+                    privateProps.model.handsFree = false
             }
         }
     }

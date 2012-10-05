@@ -424,11 +424,11 @@ void TestVideoDoorEntry::testAutoOpen()
 	compareClientCommand();
 }
 
-void TestVideoDoorEntry::testAutoAnswer()
+void TestVideoDoorEntry::testHandsFree()
 {
-	ObjectTester t(cctv, SIGNAL(autoAnswerChanged()));
+	ObjectTester t(cctv, SIGNAL(handsFreeChanged()));
 
-	cctv->setAutoAnswer(true);
+	cctv->setHandsFree(true);
 	t.checkSignals();
 
 	DeviceValues v;
