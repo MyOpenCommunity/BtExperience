@@ -303,7 +303,7 @@ function _findTargetPage(filename, properties) {
         if (skipper_component.status === 1) {
             logDebug("Found page skipper: " + _skipperFilename(filename))
             // the skipper is present and ready, use it
-            var skipper = skipper_component.createObject(null)
+            var skipper = skipper_component.createObject(null, properties)
             if (skipper === null) {
                 logWarning("Could not create skipper object for page: " + filename)
                 // terminate the loop anyway
@@ -313,7 +313,8 @@ function _findTargetPage(filename, properties) {
             var ret = skipper.pageSkip()
             filename = ret["page"]
             deletingObjects.push(skipper)
-            properties = ret["properties"]
+            if (filename !== "")
+                properties = ret["properties"]
         }
         else {
             // terminate the loop
