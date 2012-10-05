@@ -46,7 +46,7 @@ MenuColumn {
     Column {
         MenuItem {
             id: handsFreeMenuItem
-            name: qsTr("auto answer")
+            name: qsTr("hands free")
             hasChild: true
             isSelected: privateProps.currentIndex === 1
             onClicked: {
