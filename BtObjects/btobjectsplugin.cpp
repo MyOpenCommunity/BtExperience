@@ -295,8 +295,6 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QDomNode cu99zones;
 	int energy_family = 1;
 
-	int energy_family = 1;
-
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
 		QList<ObjectPair> obj_list;
