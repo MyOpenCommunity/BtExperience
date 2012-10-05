@@ -13,7 +13,7 @@ MenuColumn {
 
     QtObject {
         id: privateProps
-        property int currentIndex: -1
+        property int currentIndex: vctModel.getObject(0) === undefined ? -1 : (vctModel.getObject(0).handsFree ? 1 : 2)
         property variant model: vctModel.getObject(0)
     }
 
