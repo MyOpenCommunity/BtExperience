@@ -358,7 +358,7 @@ Page {
 
                 UbuntuLightText {
                     anchors.centerIn: parent
-                    text: parent.consumptionItem.value.toFixed(2) + " " + parent.consumptionItem.measureUnit
+                    text: parent.consumptionItem.isValid ? parent.consumptionItem.value.toFixed(2) + " " + parent.consumptionItem.measureUnit : ""
                     color: "grey"
                     font.pixelSize: 18
                 }
