@@ -13,6 +13,7 @@ MenuColumn {
     function openMenu(navigationTarget) {
         if (navigationTarget === "Systems") {
             var m = modelList.get(7)
+            itemList.currentIndex = 7
             column.loadColumn(m.component, m.name)
             return true
         }
