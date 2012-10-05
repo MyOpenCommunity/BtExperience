@@ -80,18 +80,30 @@ class EnergyFamily : public ObjectInterface
 {
 	Q_OBJECT
 
+	Q_ENUMS(FamilyType)
+
 public:
-	EnergyFamily(QString _name, QString _key)
+	enum FamilyType
+	{
+		Electricity,
+		Water,
+		Gas,
+		DomesticHotWater,
+		HeatingCooling,
+		Custom
+	};
+
+	EnergyFamily(QString _name, FamilyType _type)
 	{
 		name = _name;
-		key = _key;
+		type = _type;
 	}
 
 	virtual int getObjectId() const { return IdEnergyFamily; }
-	virtual QString getObjectKey() const { return key; }
+	virtual QString getObjectKey() const { return QString::number(type); }
 
 private:
-	QString key;
+	FamilyType type;
 };
 
 
