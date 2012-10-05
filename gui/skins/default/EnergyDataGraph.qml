@@ -111,7 +111,6 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("day")
                     status: 0
-                    enabled: true // TODO: what are the logics to do that?
                     onClicked: {
                         if (page.state === "dayGraph")
                             return
@@ -133,7 +132,6 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("month")
                     status: 1
-                    enabled: true // TODO: what are the logics to do that?
                     onClicked: {
                         if (page.state === "")
                             return
@@ -151,7 +149,6 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("year")
                     status: 0
-                    enabled: true // TODO: what are the logics to do that?
                     onClicked: {
                         if (page.state === "yearGraph")
                             return

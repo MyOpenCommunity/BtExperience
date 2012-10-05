@@ -75,9 +75,10 @@ Row {
     QtObject {
         id: privateProps
 
-        property date monthDate: new Date()
-        property date yearDate: new Date()
-        property date dayDate: new Date()
+        property date _date: new Date()
+        property alias monthDate: privateProps._date
+        property alias yearDate: privateProps._date
+        property alias dayDate: privateProps._date
 
         // Month functions
         function previousMonth() {
@@ -255,6 +256,10 @@ Row {
 
         onClicked: privateProps.nextMonth()
         enabled: privateProps.nextMonthEnabled()
+    }
+
+    onStateChanged: {
+        privateProps._date = new Date(); // reset the day/month/year to the current one
     }
 
     states: [
