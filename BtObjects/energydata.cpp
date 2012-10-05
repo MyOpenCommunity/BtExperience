@@ -185,7 +185,7 @@ namespace
 			break;
 		}
 		qWarning("Invalid measure unit %s", qPrintable(unit));
-		return 0;
+		return 1;
 	}
 
 	static QStringList goal_names = QStringList()
