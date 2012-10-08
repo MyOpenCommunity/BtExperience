@@ -18,6 +18,16 @@ PlayListPlayer::PlayListPlayer(QObject *parent) :
 	connect(upnp_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
 }
 
+void PlayListPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files)
+{
+	generate(model, index, total_files);
+}
+
+void PlayListPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files)
+{
+	generate(model, index, total_files);
+}
+
 void PlayListPlayer::previous()
 {
 	if (actual_list)
@@ -107,16 +117,6 @@ PhotoPlayer::PhotoPlayer(QObject *parent) :
 	connect(this, SIGNAL(currentChanged()), SIGNAL(fileNameChanged()));
 }
 
-void PhotoPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files)
-{
-	generate(model, index, total_files);
-}
-
-void PhotoPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files)
-{
-	generate(model, index, total_files);
-}
-
 void PhotoPlayer::prevPhoto()
 {
 	previous();
@@ -143,16 +143,6 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(muteChanged(bool)), SIGNAL(muteChanged()));
 
 	connect(this, SIGNAL(currentChanged()), SLOT(play()));
-}
-
-void AudioVideoPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files)
-{
-	generate(model, index, total_files);
-}
-
-void AudioVideoPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files)
-{
-	generate(model, index, total_files);
 }
 
 void AudioVideoPlayer::prevTrack()
