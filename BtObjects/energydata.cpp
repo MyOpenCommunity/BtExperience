@@ -424,8 +424,10 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 #if TEST_ENERGY_DATA
 		// We want to test the GUI representation. We set the goal as 70% of the
 		// max value so that we have a good chance to exceed the goal using random values.
-		if (!goal.isNull())
+		if (!goal.isNull()) {
 			goal = 0.7 * valueRange(getEnergyType()) / unit_conversion;
+			goals[date.month() -1]  = goal;
+		}
 #endif
 	}
 
@@ -433,8 +435,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 
 	if (type == CurrentValue)
 	{
-		value = new EnergyItemCurrent(this, type, actual_date, val,
-			decimals, goal, measure == Currency ? rate : 0);
+		value = new EnergyItemCurrent(this, type, actual_date, val, decimals, measure == Currency ? rate : 0);
 
 		connect(this, SIGNAL(thresholdLevelChanged(int)),
 			value, SIGNAL(thresholdLevelChanged(int)));
@@ -442,8 +443,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 			value, SIGNAL(thresholdsChanged(QVariantList)));
 	}
 	else
-		value = new EnergyItem(this, type, actual_date, val,
-			decimals, goal, measure == Currency ? rate : 0);
+		value = new EnergyItem(this, type, actual_date, val, decimals, measure == Currency ? rate : 0);
 
 	item_cache[key] = value;
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
@@ -943,7 +943,7 @@ QVariantList EnergyData::getThresholds() const
 
 
 EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value,
-		int _decimals, QVariant goal, EnergyRate *_rate)
+		int _decimals, EnergyRate *_rate)
 {
 	data = _data;
 	type = _type;
@@ -951,7 +951,6 @@ EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _da
 	value = _value;
 	rate = _rate;
 	decimals = _decimals;
-	consumption_goal = goal;
 
 	if (rate)
 		connect(rate, SIGNAL(rateChanged()), this, SIGNAL(valueChanged()));
@@ -1006,7 +1005,12 @@ QString EnergyItem::getMeasureUnit() const
 
 QVariant EnergyItem::getConsumptionGoal() const
 {
-	return consumption_goal;
+	return data->getGoals().value(date.month() - 1);
+}
+
+bool EnergyItem::getGoalEnabled() const
+{
+	return data->getGoalsEnabled();
 }
 
 int EnergyItem::getDecimals() const
@@ -1016,8 +1020,8 @@ int EnergyItem::getDecimals() const
 
 
 EnergyItemCurrent::EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-			int decimals, QVariant goal, EnergyRate *rate) :
-	EnergyItem(data, type, date, value, decimals, goal, rate)
+			int decimals, EnergyRate *rate) :
+	EnergyItem(data, type, date, value, decimals, rate)
 {
 }
 

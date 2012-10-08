@@ -480,6 +480,11 @@ class EnergyItem : public QObject
 	Q_PROPERTY(QVariant consumptionGoal READ getConsumptionGoal CONSTANT)
 
 	/*!
+		\brief Return whether the goal is enabled or not
+	*/
+	Q_PROPERTY(bool goalEnabled READ getGoalEnabled CONSTANT)
+
+	/*!
 		\brief Measure unit in which the value is expressed
 
 		\sa value
@@ -488,7 +493,7 @@ class EnergyItem : public QObject
 
 public:
 	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-			int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
+			int decimals = 0, EnergyRate *rate = 0);
 
 	QVariant getValue() const;
 
@@ -503,6 +508,7 @@ public:
 	virtual QString getMeasureUnit() const;
 
 	QVariant getConsumptionGoal() const;
+	bool getGoalEnabled() const;
 
 	int getDecimals() const;
 
@@ -529,7 +535,6 @@ private:
 	EnergyRate *rate;
 	QString measure_unit;
 	int decimals;
-	QVariant consumption_goal;
 };
 
 
@@ -558,7 +563,7 @@ class EnergyItemCurrent : public EnergyItem
 
 public:
 	EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-				int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
+				int decimals = 0, EnergyRate *rate = 0);
 
 	int getThresholdLevel() const;
 
