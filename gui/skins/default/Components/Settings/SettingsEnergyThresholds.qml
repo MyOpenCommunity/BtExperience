@@ -22,12 +22,12 @@ MenuColumn {
 
     ObjectModel {
         id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: EnergyData.Electricity}]
     }
 
     Component {
         id: thresholdsComponent
-        SettingsEnergyThresholdsFamily {
+        SettingsEnergySetThresholds {
 
         }
     }
