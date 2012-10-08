@@ -156,6 +156,19 @@ Page {
                 description: itemObject.general ? qsTr("Overall") : itemObject.name
                 measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
                 onClicked: Stack.pushPage("EnergyDataGraph.qml", {"energyData": itemObject})
+                maxValue: {
+                    if (parseInt(family.objectKey) !== EnergyFamily.Custom) {
+                        return energiesCounters.getMaxValue()
+                    }
+
+                    var monthItem = energiesCounters.getObject(index).getValue(EnergyData.CumulativeMonthValue,
+                                                                           new Date(), EnergyData.Consumption)
+
+                    if (monthItem.isValid && monthItem.goalEnabled)
+                        return Math.max(monthItem.consumptionGoal, monthItem.value)
+
+                    return -1
+                }
             }
             delegateSpacing: 40
             visibleElements: 4
@@ -169,6 +182,20 @@ Page {
 
     ObjectModel {
         id: energiesCounters
+        function getMaxValue() {
+            var max = 0
+            for (var i = 0; i < count; i+=1) {
+                var monthItem = getObject(i).getValue(EnergyData.CumulativeMonthValue,
+                                                      new Date(), EnergyData.Consumption)
+                if (monthItem.isValid && monthItem.value > max)
+                    max = monthItem.value
+
+                if (monthItem.consumptionGoal > max)
+                    max = monthItem.consumptionGoal
+            }
+            return max
+        }
+
         filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: family.objectKey}]
     }
 }

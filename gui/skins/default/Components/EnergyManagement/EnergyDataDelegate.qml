@@ -9,7 +9,8 @@ Column {
     property alias description: topText.text
     property variant itemObject: undefined
     property int measureType: EnergyData.Consumption
-    property bool isOverview: true
+    property real maxValue: -1
+
     // for CardView usage
     property int index: -1
     property variant view
@@ -47,8 +48,16 @@ Column {
             return "---"
         }
 
-        property bool bannerVisualization: itemObject.familyType === EnergyFamily.Custom &&
-                                           !logic.monthConsumptionItem.goalEnabled ? true : false
+        property variant consumptionObj: itemObject.getValue(EnergyData.CumulativeMonthValue,
+                                                             new Date(), EnergyData.Consumption)
+
+        function hasGoal() {
+            return consumptionObj.goalEnabled && consumptionObj.consumptionGoal > 0.0
+        }
+
+        property bool bannerVisualization: (itemObject.familyType === EnergyFamily.Custom && !hasGoal())
+
+        property real scaleFactor: 0.8 // the percentage of the height to not overcome
     }
 
     spacing: 5
@@ -83,11 +92,6 @@ Column {
         onClicked: delegate.clicked()
     }
 
-    EnergyConsumptionLogic {
-        id: logic
-        monthConsumptionItem: itemObject.getValue(EnergyData.CumulativeMonthValue,
-                                                  new Date(), EnergyData.Consumption)
-    }
 
     Item {
         visible: privateProps.bannerVisualization
@@ -151,31 +155,38 @@ Column {
 
                     width: columnBg.width
                     height: columnBg.height
+
                     SvgImage {
                         id: columnBg
                         opacity: 0.2
                         source: "../../images/energy/colonna.svg"
-                        visible: logic.hasGoal()
+                        visible: privateProps.hasGoal()
                     }
+
                     SvgImage {
                         anchors.bottom: parent.bottom
                         source: {
-                            if (logic.consumptionExceedGoal()) {
+                            if (privateProps.hasGoal() &&
+                                privateProps.consumptionObj.value > privateProps.consumptionObj.consumptionGoal) {
                                 return "../../images/energy/colonna_rosso.svg"
                             }
                             else {
                                 return "../../images/energy/colonna_verde.svg"
                             }
                         }
-                        height: logic.getConsumptionSize(parent.height)
+                        height: privateProps.consumptionObj.value / delegate.maxValue * parent.height * privateProps.scaleFactor
                     }
+
                     SvgImage {
                         id: goalLine
                         source: "../../images/energy/linea_livello_colonna.svg"
-                        visible: logic.hasGoal()
+                        visible: privateProps.hasGoal()
                         width: parent.width
                         anchors.top: parent.top
-                        anchors.topMargin: parent.height - logic.goalSize(parent.height)
+                        anchors.topMargin: {
+                            return parent.height - (privateProps.consumptionObj.consumptionGoal /
+                                                    delegate.maxValue * parent.height * privateProps.scaleFactor)
+                        }
                     }
                 }
 
@@ -190,7 +201,7 @@ Column {
     UbuntuLightText {
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: 14
-        text: Qt.formatDate(logic.monthConsumptionItem.date, "MMM yyyy")
+        text: Qt.formatDate(privateProps.consumptionObj.date, "MMM yyyy")
         color: "white"
     }
 
