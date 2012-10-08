@@ -46,6 +46,9 @@ Column {
             }
             return "---"
         }
+
+        property bool bannerVisualization: itemObject.familyType === EnergyFamily.Custom &&
+                                           !logic.monthConsumptionItem.goalEnabled ? true : false
     }
 
     spacing: 5
@@ -80,61 +83,116 @@ Column {
         onClicked: delegate.headerClicked(mouse)
     }
 
-    UbuntuLightText {
-        font.pixelSize: 18
-        text: privateProps.formatValue(EnergyData.CumulativeMonthValue)
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: "white"
-    }
-
     EnergyConsumptionLogic {
         id: logic
         monthConsumptionItem: itemObject.getValue(EnergyData.CumulativeMonthValue,
                                                   new Date(), EnergyData.Consumption)
     }
 
-    Column {
-        Item {
-            width: columnBg.width
-            height: columnBg.height
-            SvgImage {
-                id: columnBg
-                opacity: 0.2
-                source: "../../images/energy/colonna.svg"
-                visible: logic.hasGoal()
-            }
-            SvgImage {
-                anchors.bottom: parent.bottom
-                source: {
-                    if (logic.consumptionExceedGoal()) {
-                        return "../../images/energy/colonna_rosso.svg"
-                    }
-                    else {
-                        return "../../images/energy/colonna_verde.svg"
-                    }
-                }
-                height: logic.getConsumptionSize(parent.height)
-            }
-            SvgImage {
-                id: goalLine
-                source: "../../images/energy/linea_livello_colonna.svg"
-                visible: logic.hasGoal()
-                width: parent.width
-                anchors.top: parent.top
-                anchors.topMargin: parent.height - logic.goalSize(parent.height)
-            }
-        }
+    Item {
+        visible: privateProps.bannerVisualization
+        width: parent.width
+        height: 8
+    }
 
-        SvgImage {
-            source: "../../images/energy/ombra_btn_colonna_grafico.svg"
+    Loader {
+        sourceComponent: privateProps.bannerVisualization ? energyBannerComponent : energyStackComponent
+    }
+
+    Component {
+        id: energyBannerComponent
+        Item {
+            height: consumptionLabel.height + bg.height
+            width: delegate.width
+
+            UbuntuLightText {
+                id: consumptionLabel
+                font.pixelSize: 14
+                text: qsTr("cumulative consumption")
+                color: "white"
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WordWrap
+            }
+
+            SvgImage {
+                id: bg
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: consumptionLabel.bottom
+                source: "../../images/energy/bg_instant_consumption.svg"
+
+                UbuntuLightText {
+                    anchors.centerIn: parent
+                    font.pixelSize: 18
+                    color: "grey"
+                    text: privateProps.formatValue(EnergyData.CumulativeMonthValue)
+                }
+            }
         }
     }
+
+    Component {
+        id: energyStackComponent
+        Column {
+            spacing: delegate.spacing
+            UbuntuLightText {
+                font.pixelSize: 18
+                text: privateProps.formatValue(EnergyData.CumulativeMonthValue)
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "white"
+            }
+
+            Column {
+                Item {
+                    width: columnBg.width
+                    height: columnBg.height
+                    SvgImage {
+                        id: columnBg
+                        opacity: 0.2
+                        source: "../../images/energy/colonna.svg"
+                        visible: logic.hasGoal()
+                    }
+                    SvgImage {
+                        anchors.bottom: parent.bottom
+                        source: {
+                            if (logic.consumptionExceedGoal()) {
+                                return "../../images/energy/colonna_rosso.svg"
+                            }
+                            else {
+                                return "../../images/energy/colonna_verde.svg"
+                            }
+                        }
+                        height: logic.getConsumptionSize(parent.height)
+                    }
+                    SvgImage {
+                        id: goalLine
+                        source: "../../images/energy/linea_livello_colonna.svg"
+                        visible: logic.hasGoal()
+                        width: parent.width
+                        anchors.top: parent.top
+                        anchors.topMargin: parent.height - logic.goalSize(parent.height)
+                    }
+                }
+
+                SvgImage {
+                    source: "../../images/energy/ombra_btn_colonna_grafico.svg"
+                }
+            }
+        }
+    }
+
 
     UbuntuLightText {
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: 14
         text: Qt.formatDate(logic.monthConsumptionItem.date, "MMM yyyy")
         color: "white"
+    }
+
+    Item {
+        visible: privateProps.bannerVisualization
+        width: parent.width
+        height: 10
     }
 
     Column {
@@ -153,6 +211,7 @@ Column {
             UbuntuLightText {
                 anchors.centerIn: parent
                 font.pixelSize: 18
+                color: "grey"
                 text: privateProps.formatValue(EnergyData.CurrentValue)
             }
         }
