@@ -90,12 +90,12 @@ Item {
 
                 Behavior on width {
                     enabled: line.enableAnimation
-                    PropertyAnimation { duration: constants.lineTransitionDuration }
+                    NumberAnimation { duration: constants.lineTransitionDuration }
                 }
 
                 Behavior on x {
                     enabled: line.enableAnimation
-                    PropertyAnimation { duration: constants.lineTransitionDuration }
+                    NumberAnimation { duration: constants.lineTransitionDuration }
                 }
             }
         }
