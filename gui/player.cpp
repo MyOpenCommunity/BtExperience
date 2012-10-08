@@ -157,6 +157,16 @@ void AudioVideoPlayer::nextTrack()
 	next();
 }
 
+void AudioVideoPlayer::pause()
+{
+	media_player->pause();
+}
+
+void AudioVideoPlayer::resume()
+{
+	media_player->resume();
+}
+
 void AudioVideoPlayer::terminate()
 {
 	user_track_change_request = true;

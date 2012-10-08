@@ -185,11 +185,11 @@ Page {
             onClicked: {
                 if (playButtonItem.state === "") {
                     playButtonItem.state = "play"
-                    player.mediaPlayer.mediaPlayer.resume()
+                    player.mediaPlayer.resume()
                 }
                 else {
                     playButtonItem.state = ""
-                    player.mediaPlayer.mediaPlayer.pause()
+                    player.mediaPlayer.pause()
                 }
             }
 

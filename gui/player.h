@@ -74,11 +74,6 @@ class AudioVideoPlayer : public PlayListPlayer
 	Q_OBJECT
 
 	/*!
-		\brief A reference to the media player object
-	*/
-	Q_PROPERTY(QObject *mediaPlayer READ getMediaPlayer CONSTANT)
-
-	/*!
 		\brief Returns current time in hh:mm:ss format
 	*/
 	Q_PROPERTY(QString currentTime READ getCurrentTime NOTIFY currentTimeChanged)
@@ -113,6 +108,8 @@ public:
 
 	Q_INVOKABLE void prevTrack();
 	Q_INVOKABLE void nextTrack();
+	Q_INVOKABLE void pause();
+	Q_INVOKABLE void resume();
 	Q_INVOKABLE void terminate();
 	Q_INVOKABLE void incrementVolume();
 	Q_INVOKABLE void decrementVolume();
