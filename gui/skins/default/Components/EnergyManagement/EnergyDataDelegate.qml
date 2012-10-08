@@ -15,7 +15,7 @@ Column {
     property variant view
     property alias moveAnimationRunning: defaultAnimation.running
 
-    signal headerClicked(variant mouse)
+    signal clicked()
     signal removeAnimationFinished() // for CardView usage
 
     QtObject {
@@ -80,7 +80,7 @@ Column {
                 color: headerButton.state === "pressed" ? "white" : "#5A5A5A"
             }
         }
-        onClicked: delegate.headerClicked(mouse)
+        onClicked: delegate.clicked()
     }
 
     EnergyConsumptionLogic {
@@ -144,6 +144,11 @@ Column {
 
             Column {
                 Item {
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: delegate.clicked()
+                    }
+
                     width: columnBg.width
                     height: columnBg.height
                     SvgImage {
