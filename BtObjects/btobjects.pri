@@ -11,6 +11,7 @@ HEADERS += \
 	energyrate.h \
 	folderlistmodel.h \
 	globalmodels.h \
+	gstmediaplayer.h \
 	hardware.h \
 	iteminterface.h \
 	lightobjects.h \
@@ -78,6 +79,7 @@ SOURCES += \
 	energyrate.cpp \
 	folderlistmodel.cpp \
 	globalmodels.cpp \
+	gstmediaplayer.cpp \
 	hardware.cpp \
 	iteminterface.cpp \
 	lightobjects.cpp \
