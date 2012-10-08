@@ -219,8 +219,9 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 			if (!month.isElement())
 				continue;
 			int index = goal_names.indexOf(month.toElement().tagName());
+
 			if (index != -1)
-				goals[index] = month.toElement().text().toInt();
+				goals[index] = month.toElement().text().toFloat();
 		}
 
 		thresholds_enabled << bool(v.intValue("threshold_one_enable"));
@@ -247,6 +248,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyTy
 	thresholds = QVariantList() << 0.0 << 0.0;
 	threshold_level = 0;
 
+	decimals = getEnergyType() == Electricity ? 2 : 0;
 	value_cache.setMaxCost(VALUE_CACHE_MAX_COST);
 
 	trim_cache.setSingleShot(true);
@@ -326,6 +328,12 @@ QString EnergyData::getCumulativeUnit() const
 	else
 		return energy_unit;
 }
+
+int EnergyData::getDecimals() const
+{
+	return decimals;
+}
+
 
 void EnergyData::setThresholdEnabled(QVariantList enabled)
 {
@@ -414,28 +422,16 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	if (cached)
 		val = (*cached)[0];
 
-	// TODO: this must be read from conf.xml
-	int decimals = 2;
 	QVariant goal;
 
 	if (type == CumulativeMonthValue)
-	{
 		goal = goals.value(date.month() - 1);
-#if TEST_ENERGY_DATA
-		// We want to test the GUI representation. We set the goal as 70% of the
-		// max value so that we have a good chance to exceed the goal using random values.
-		if (!goal.isNull()) {
-			goal = 0.7 * valueRange(getEnergyType()) / unit_conversion;
-			goals[date.month() -1]  = goal;
-		}
-#endif
-	}
 
 	EnergyItem *value;
 
 	if (type == CurrentValue)
 	{
-		value = new EnergyItemCurrent(this, type, actual_date, val, decimals, measure == Currency ? rate : 0);
+		value = new EnergyItemCurrent(this, type, actual_date, val, measure == Currency ? rate : 0);
 
 		connect(this, SIGNAL(thresholdLevelChanged(int)),
 			value, SIGNAL(thresholdLevelChanged(int)));
@@ -443,7 +439,7 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 			value, SIGNAL(thresholdsChanged(QVariantList)));
 	}
 	else
-		value = new EnergyItem(this, type, actual_date, val, decimals, measure == Currency ? rate : 0);
+		value = new EnergyItem(this, type, actual_date, val, measure == Currency ? rate : 0);
 
 	item_cache[key] = value;
 	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
@@ -942,15 +938,13 @@ QVariantList EnergyData::getThresholds() const
 }
 
 
-EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value,
-		int _decimals, EnergyRate *_rate)
+EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value, EnergyRate *_rate)
 {
 	data = _data;
 	type = _type;
 	date = _date;
 	value = _value;
 	rate = _rate;
-	decimals = _decimals;
 
 	if (rate)
 		connect(rate, SIGNAL(rateChanged()), this, SIGNAL(valueChanged()));
@@ -1015,13 +1009,12 @@ bool EnergyItem::getGoalEnabled() const
 
 int EnergyItem::getDecimals() const
 {
-	return decimals;
+	return data->getDecimals();
 }
 
 
-EnergyItemCurrent::EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-			int decimals, EnergyRate *rate) :
-	EnergyItem(data, type, date, value, decimals, rate)
+EnergyItemCurrent::EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value, EnergyRate *rate) :
+	EnergyItem(data, type, date, value, rate)
 {
 }
 

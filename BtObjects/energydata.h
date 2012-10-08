@@ -202,6 +202,11 @@ class EnergyData : public ObjectInterface
 	Q_PROPERTY(QString cumulativeUnit READ getCumulativeUnit CONSTANT)
 
 	/*!
+		\brief Number of decimals to be used to approximate economic data
+	*/
+	Q_PROPERTY(int decimals READ getDecimals CONSTANT)
+
+	/*!
 		\brief Whether this is and advanced energy device
 
 		Advanced devices store more than 12 months of data and (for electricity)
@@ -310,10 +315,11 @@ public:
 	void setGoalsEnabled(bool enabled);
 	bool getGoalsEnabled() const;
 
-
 	QString getUnit() const;
 	QString getCurrentUnit() const;
 	QString getCumulativeUnit() const;
+
+	int getDecimals() const;
 
 	void setThresholdEnabled(QVariantList enabled);
 	QVariantList getThresholdEnabled() const;
@@ -411,6 +417,8 @@ private:
 	// f.e. if unit is yd3, unit_conversion is 0.0013079506
 	double unit_conversion;
 
+	int decimals; // the number of decimals in the current measure unit
+
 	EnergyFamily::FamilyType family;
 
 #if TEST_ENERGY_DATA
@@ -492,8 +500,7 @@ class EnergyItem : public QObject
 	Q_PROPERTY(QString measureUnit READ getMeasureUnit CONSTANT)
 
 public:
-	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-			int decimals = 0, EnergyRate *rate = 0);
+	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value, EnergyRate *rate = 0);
 
 	QVariant getValue() const;
 
@@ -534,7 +541,6 @@ private:
 	QVariant value;
 	EnergyRate *rate;
 	QString measure_unit;
-	int decimals;
 };
 
 
@@ -562,8 +568,7 @@ class EnergyItemCurrent : public EnergyItem
 	Q_PROPERTY(QVariantList thresholds READ getThresholds WRITE setThresholds NOTIFY thresholdsChanged)
 
 public:
-	EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-				int decimals = 0, EnergyRate *rate = 0);
+	EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value, EnergyRate *rate = 0);
 
 	int getThresholdLevel() const;
 
