@@ -291,6 +291,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionZone *> antintrusion_zones;
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
+	QList<ObjectPair> vde, intercom;
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
 	QDomNode cu99zones;
 
@@ -467,11 +468,28 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseAdvancedScenario(xml_obj);
 			break;
 
+		case ObjectInterface::IdExternalPlace:
+			obj_list = parseExternalPlace(xml_obj);
+			vde.append(obj_list);
+			break;
+
 		case ObjectInterface::IdSurveillanceCamera:
-			// TODO this needs to be added to the list in CCTV object, but it can only be done once
-			//      VCT configuration is finalized; surveillance cameras must be in UII map because
-			//      they can be linked in profile page
 			obj_list = parseVdeCamera(xml_obj);
+			vde.append(obj_list);
+			break;
+
+		case ObjectInterface::IdExternalIntercom:
+			obj_list = parseExternalIntercom(xml_obj);
+			intercom.append(obj_list);
+			break;
+
+		case ObjectInterface::IdInternalIntercom:
+			obj_list = parseInternalIntercom(xml_obj);
+			intercom.append(obj_list);
+			break;
+
+		case ObjectInterface::IdSwitchboard:
+			obj_list = parseSwitchboard(xml_obj);
 			break;
 
 		case ObjectInterface::IdIpRadio:
@@ -502,6 +520,11 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 	if (antintrusion_zones.size())
 		objmodel << createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios);
+	if ((*bt_global::config)[PI_ADDRESS] != "")
+	{
+		objmodel << createCCTV(vde);
+		objmodel << createIntercom(intercom);
+	}
 }
 
 int BtObjectsPlugin::findLinkedUiiForObject(ItemInterface *item) const
@@ -836,12 +859,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			break;
 		case ObjectInterface::IdMonoChannelSoundDiffusionSystem:
 			obj_list = createSoundDiffusionSystem(item, id);
-			break;
-		case ObjectInterface::IdCCTV:
-			obj = parseCCTV(item);
-			break;
-		case ObjectInterface::IdIntercom:
-			obj = parseIntercom(item);
 			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
