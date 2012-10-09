@@ -5,6 +5,7 @@ HEADERS += \
 	automationobjects.h \
 	choicelist.h \
 	container.h \
+	dangers.h \
 	energydata.h \
 	energyload.h \
 	energyrate.h \
@@ -71,6 +72,7 @@ SOURCES += \
 	automationobjects.cpp \
 	choicelist.cpp \
 	container.cpp \
+	dangers.cpp \
 	energydata.cpp \
 	energyload.cpp \
 	energyrate.cpp \
