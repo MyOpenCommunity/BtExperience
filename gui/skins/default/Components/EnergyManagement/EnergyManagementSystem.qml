@@ -1,21 +1,27 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.EnergyManagement 1.0
-import "../../js/Stack.js" as Stack
 
 MenuColumn {
     id: element
     width: 212
     height: 150
 
-    onChildDestroyed: {
-        listView.currentIndex = -1
+    // redefined to implement menu navigation
+    function openMenu(navigationTarget) {
+        if (navigationTarget === "Supervision") {
+            // last menu to open, resets navigationTarget
+            element.pageObject.navigationTarget = 0
+            var m = listModel.get(0)
+            listView.currentIndex = 0
+            element.loadColumn(m.component, m.name)
+            return true
+        }
+        return false
     }
 
-    Component.onCompleted: {
-        listModel.append({"name": qsTr("systems supervision"), "component": supervision})
-        listModel.append({"name": qsTr("consumption/production"), "component": energyOverview})
-        listModel.append({"name": qsTr("load management"), "component": loadManagement})
+    onChildDestroyed: {
+        listView.currentIndex = -1
     }
 
     ListView {
@@ -29,27 +35,29 @@ MenuColumn {
             onClicked: element.loadColumn(model.component, model.name)
         }
         model: listModel
+    }
 
-        ListModel {
-            id: listModel
+    ListModel {
+        id: listModel
+        Component.onCompleted: {
+            listModel.append({"name": qsTr("systems supervision"), "component": supervision})
+            listModel.append({"name": qsTr("consumption/production"), "component": energyOverview})
+            listModel.append({"name": qsTr("load management"), "component": loadManagement})
         }
+    }
 
-        Component {
-            id: supervision
-            Supervision {
-            }
-        }
+    Component {
+        id: supervision
+        Supervision {}
+    }
 
-        Component {
-            id: loadManagement
-            LoadManagement {
-            }
-        }
+    Component {
+        id: loadManagement
+        LoadManagement {}
+    }
 
-        Component {
-            id: energyOverview
-            EnergyOverview {
-            }
-        }
+    Component {
+        id: energyOverview
+        EnergyOverview {}
     }
 }
