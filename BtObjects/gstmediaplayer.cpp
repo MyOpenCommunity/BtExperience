@@ -10,13 +10,6 @@ extern "C" gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, 
 	return true;
 }
 
-namespace {
-	inline gint64 nsToSecs(gint64 val)
-	{
-		return val / 1000000000;
-	}
-}
-
 GstMediaPlayer::GstMediaPlayer(QObject *parent) :
 	QObject(parent)
 {
@@ -28,7 +21,6 @@ GstMediaPlayer::GstMediaPlayer(QObject *parent) :
 	bus = gst_pipeline_get_bus(GST_PIPELINE(pipeline));
 	gst_bus_add_watch(bus, gstMediaPlayerBusCallback, this);
 	gst_object_unref(bus);
-
 }
 
 GstMediaPlayer::~GstMediaPlayer()
@@ -58,6 +50,7 @@ void GstMediaPlayer::setTrack(QString track)
 
 	GstState saved_state;
 	gst_element_get_state(GST_ELEMENT(pipeline), &saved_state, NULL, 0);
+	metadata.clear();
 
 	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_READY);
 	g_object_set(G_OBJECT(pipeline), "uri", qPrintable(uri.toString()), NULL);
@@ -129,10 +122,7 @@ void GstMediaPlayer::stop()
 
 QMap<QString, QString> GstMediaPlayer::getPlayingInfo()
 {
-	GstFormat f = GST_FORMAT_TIME;
-	gint64 position;
-	if (gst_element_query_position(GST_ELEMENT(pipeline), &f, &position))
-		metadata["current_time"] = QString::number(nsToSecs(position));
+	queryTime();
 	return metadata;
 }
 
@@ -172,14 +162,7 @@ void GstMediaPlayer::handleStateChange()
 	switch (GST_STATE_TRANSITION(current, next))
 	{
 	case GST_STATE_CHANGE_PAUSED_TO_PLAYING:
-	{
-		GstFormat f = GST_FORMAT_TIME;
-		gint64 duration;
-		if (gst_element_query_duration(GST_ELEMENT(pipeline), &f, &duration))
-			metadata["total_time"] = QString::number(nsToSecs(duration));
-
 		emit gstPlayerResumed();
-	}
 		break;
 	case GST_STATE_CHANGE_PLAYING_TO_PAUSED:
 		emit gstPlayerPaused();
@@ -190,4 +173,14 @@ void GstMediaPlayer::handleStateChange()
 	default:
 		break;
 	}
+}
+
+void GstMediaPlayer::queryTime()
+{
+	GstFormat f = GST_FORMAT_TIME;
+	gint64 position, duration;
+	if (gst_element_query_position(GST_ELEMENT(pipeline), &f, &position))
+		metadata["current_time"] = QString::number(GST_TIME_AS_SECONDS(position));
+	if (gst_element_query_duration(GST_ELEMENT(pipeline), &f, &duration))
+		metadata["total_time"] = QString::number(GST_TIME_AS_SECONDS(duration));
 }

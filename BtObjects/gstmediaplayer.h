@@ -70,10 +70,11 @@ signals:
 	void gstPlayerStopped();
 
 	/*!
-		\brief Information for a video/audio file.
+		\brief Information for a video file.
 
-		Emitted by requestInitialVideoInfo() and requestInitialPlayingInfo().
-		\a info contains the same data returned by getPlayingInfo() and getVideoInfo().
+		Emitted when new information about the media is available; works reliably
+		both in playing and paused state.
+		\a info contains the same data returned by getPlayingInfo().
 	 */
 	void playingInfoUpdated(const QMap<QString,QString> &info);
 
@@ -81,6 +82,7 @@ private:
 	void handleBusMessage(GstBus *bus, GstMessage *message);
 	void handleTagMessage(GstMessage *message);
 	void handleStateChange();
+	void queryTime();
 	bool check_for_state_change;
 	GstPipeline *pipeline;
 	QMap<QString, QString> metadata;
