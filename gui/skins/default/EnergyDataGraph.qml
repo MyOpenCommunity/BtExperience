@@ -89,19 +89,8 @@ Page {
                 anchors {
                     top: buttonRow.top
                     left: divisorLine.left
-                    leftMargin: divisorLine.width / 100 * 17
                 }
 
-                UbuntuLightText {
-                    text: qsTr("time")
-                    color: "white"
-                    anchors.verticalCenter: dayButton.verticalCenter
-                    font.pixelSize: 14
-                }
-                Item {
-                    width: 15
-                    height: dayButton.height
-                }
                 ButtonThreeStates {
                     id: dayButton
                     font.pixelSize: 14
@@ -163,6 +152,45 @@ Page {
                 }
             }
 
+            Item {
+                anchors {
+                    top: parent.top
+                    topMargin: parent.height / 100 * 3
+                    right: buttonRow.left
+                    left: timeButtonRow.right
+                }
+
+                Row {
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    ButtonImageThreeStates {
+                        id: graphButton
+                        defaultImageBg: "images/energy/btn_value.svg"
+                        pressedImageBg: "images/energy/btn_value_P.svg"
+                        selectedImageBg: "images/energy/btn_value_S.svg"
+                        defaultImage: "images/energy/ico_graph.svg"
+                        pressedImage: "images/energy/ico_graph_P.svg"
+                        selectedImage: "images/energy/ico_graph_P.svg"
+                        shadowImage: "images/energy/ombra_btn_value.svg"
+                        status: 1
+                        onClicked: {}
+                    }
+                    ButtonImageThreeStates {
+                        id: tableButton
+                        defaultImageBg: "images/energy/btn_value.svg"
+                        pressedImageBg: "images/energy/btn_value_P.svg"
+                        selectedImageBg: "images/energy/btn_value_S.svg"
+                        defaultImage: "images/energy/ico_table.svg"
+                        pressedImage: "images/energy/ico_table_P.svg"
+                        selectedImage: "images/energy/ico_table_P.svg"
+                        shadowImage: "images/energy/ombra_btn_value.svg"
+                        status: 0
+                        enabled: false
+                        onClicked: {}
+                    }
+                }
+            }
+
             Row {
                 id: buttonRow
                 anchors {
@@ -171,16 +199,6 @@ Page {
                     right: divisorLine.right
                 }
 
-                UbuntuLightText {
-                    text: qsTr("value")
-                    color: "white"
-                    anchors.verticalCenter: moneyButton.verticalCenter
-                    font.pixelSize: 14
-                }
-                Item {
-                    width: 15
-                    height: moneyButton.height
-                }
                 ButtonThreeStates {
                     id: moneyButton
                     font.pixelSize: 14

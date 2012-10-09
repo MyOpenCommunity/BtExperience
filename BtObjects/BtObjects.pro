@@ -30,6 +30,10 @@ HEADERS += btobjectsplugin.h
 
 INCLUDEPATH += . ./ts ./devices
 
+# Add gstreamer by default, it's needed for video playback
+CONFIG += link_pkgconfig
+PKGCONFIG += gstreamer-0.10
+
 include(btobjects.pri)
 
 OTHER_FILES += \

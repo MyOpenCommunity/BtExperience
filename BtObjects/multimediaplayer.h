@@ -10,6 +10,7 @@
 #include <QMetaType>
 
 class MediaPlayer;
+class GstMediaPlayer;
 
 class QTimer;
 
@@ -177,6 +178,7 @@ signals:
 private slots:
 	void readPlayerInfo();
 	void playerInfoReceived(QMap<QString, QString> new_track_info);
+	void gstPlayerInfoReceived(QMap<QString, QString> new_track_info);
 
 	void playbackStarted();
 	void playbackStopped();
@@ -192,6 +194,8 @@ private:
 	void setAudioOutputState(AudioOutputState new_state);
 
 	MediaPlayer *player;
+	GstMediaPlayer *gst_player;
+	bool is_video_track;
 	QTimer *info_poll_timer;
 
 	QString current_source;

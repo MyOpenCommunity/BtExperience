@@ -43,6 +43,7 @@
 #include <QDir>
 #include <QCoreApplication> // qApp
 #include <QDomNode>
+#include <gst/gst.h>
 
 #define WATCHDOG_INTERVAL 5000
 #define FILE_SAVE_INTERVAL 10000
@@ -160,6 +161,9 @@ namespace
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
+	// init GStreamer services
+	Q_ASSERT_X(gst_init_check(NULL, NULL, NULL), "BtObjectsPlugin::BtObjectsPlugin", "Failed to initialize GStreamer");
+
 	// for logging
 	QString errorMsg;
 	int errorLine, errorColumn;
