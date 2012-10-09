@@ -10,8 +10,6 @@ MenuColumn {
     // redefined to implement menu navigation
     function openMenu(navigationTarget) {
         if (navigationTarget === "Supervision") {
-            // last menu to open, resets navigationTarget
-            element.pageObject.navigationTarget = 0
             var m = listModel.get(0)
             listView.currentIndex = 0
             element.loadColumn(m.component, m.name)

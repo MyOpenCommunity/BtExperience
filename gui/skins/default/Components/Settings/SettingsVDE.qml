@@ -8,24 +8,18 @@ MenuColumn {
     // redefined to implement menu navigation
     function openMenu(navigationTarget) {
         if (navigationTarget === "HandsFree") {
-            // last menu to open, resets navigationTarget
-            column.pageObject.navigationTarget = 0
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1
             column.loadColumn(handsFreeComponent, handsFreeMenuItem.name)
             return true
         }
         if (navigationTarget === "AutoOpen") {
-            // last menu to open, resets navigationTarget
-            column.pageObject.navigationTarget = 0
             if (privateProps.currentIndex !== 2)
                 privateProps.currentIndex = 2
             column.loadColumn(autoOpenComponent, autoOpenMenuItem.name)
             return true
         }
         if (navigationTarget === "VdeMute") {
-            // last menu to open, resets navigationTarget
-            column.pageObject.navigationTarget = 0
             if (privateProps.currentIndex !== 3)
                 privateProps.currentIndex = 3
             column.loadColumn(vdeMuteComponent, vdeMuteMenuItem.name)
