@@ -16,7 +16,7 @@ MACHINE=$1
 
 
 mkdir $BTEXPERIENCE_TARGET
-rsync -a bin/arm/ $BTEXPERIENCE_TARGET || exit 1
+rsync -a dist/arm/ $BTEXPERIENCE_TARGET || exit 1
 # by now we have two copies of libcommon... use the one in stackopen
 cd ${BTEXPERIENCE_TARGET}
 rm libcommon.so.0
