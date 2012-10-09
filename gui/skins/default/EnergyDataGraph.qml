@@ -315,7 +315,7 @@ Page {
                                                                                                   EnergyData.Consumption)
 
                     anchors.centerIn: parent
-                    text: currentItem.value.toFixed(2) + " " + currentItem.measureUnit
+                    text: currentItem.isValid ? currentItem.value.toFixed(currentItem.decimals) + " " + currentItem.measureUnit : ""
                     color: "grey"
                     font.pixelSize: 18
                 }
@@ -373,7 +373,7 @@ Page {
 
                 UbuntuLightText {
                     anchors.centerIn: parent
-                    text: parent.consumptionItem.isValid ? parent.consumptionItem.value.toFixed(2) + " " + parent.consumptionItem.measureUnit : ""
+                    text: parent.consumptionItem.isValid ? parent.consumptionItem.value.toFixed(parent.consumptionItem.decimals) + " " + parent.consumptionItem.measureUnit : ""
                     color: "grey"
                     font.pixelSize: 18
                 }
