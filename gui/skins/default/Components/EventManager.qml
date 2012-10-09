@@ -15,12 +15,12 @@ Item {
     property bool handsFree: privateProps.vctModel === undefined ? false : privateProps.vctModel.handsFree
     property bool vdeMute: privateProps.vctModel === undefined ? false : privateProps.vctModel.ringExclusion
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
+    property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.opened
 
     property int clocks: 0 // TODO link to C++ model!
     property bool scenarioRecording: false // TODO link to C++ model and check if property exists!
     property bool playing: false // TODO link to C++ model and check if property exists!
     property bool mute: false // TODO link to C++ model and check if property exists!
-    property int dangers: 0 // TODO link to C++ model and check if property exists!
 
     anchors.fill: parent
 
@@ -65,7 +65,8 @@ Item {
             {objectId: ObjectInterface.IdCCTV},
             {objectId: ObjectInterface.IdIntercom},
             {objectId: ObjectInterface.IdAntintrusionSystem},
-            {objectId: ObjectInterface.IdMessages}
+            {objectId: ObjectInterface.IdMessages},
+            {objectId: ObjectInterface.IdDangers}
         ]
         Component.onCompleted: {
             for (var i = 0; i < listModel.count; ++i) {
@@ -84,6 +85,9 @@ Item {
                     break
                 case ObjectInterface.IdMessages:
                     privateProps.messagesModel = obj
+                    break
+                case ObjectInterface.IdDangers:
+                    privateProps.dangersModel = obj
                     break
                 }
             }
@@ -178,5 +182,6 @@ Item {
         property variant antintrusionModel: undefined
         property variant messagesModel: undefined
         property variant vctModel: undefined
+        property variant dangersModel: undefined
     }
 }

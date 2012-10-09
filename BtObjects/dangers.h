@@ -6,6 +6,9 @@
 #include <QObject>
 
 
+class ObjectModel;
+
+
 /*!
 	\brief Collects and notifies data about stop&go devices
 
@@ -16,22 +19,41 @@
 
 	The object id is \a ObjectInterface::IdDangers.
 */
-class Dangers : public ObjectInterface
+class StopAndGoDangers : public ObjectInterface
 {
 	Q_OBJECT
 
+	/*!
+		\brief Gets the number of opened devices
+	*/
+	Q_PROPERTY(int opened READ getOpenedDevices NOTIFY openedDevices)
+
+	/*!
+		\brief Gets the number of closed devices
+	*/
+	Q_PROPERTY(int closed READ getClosedDevices NOTIFY closedDevices)
+
 public:
-	Dangers();
+	StopAndGoDangers();
 
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdDangers;
 	}
 
+	int getOpenedDevices() const { return opened_devices; }
+	int getClosedDevices() const { return closed_devices; }
+
 signals:
+	void openedDevices(int devices_open);
+	void closedDevices(int devices_closed);
 
-protected slots:
+private slots:
+	void updateDangerInfo();
 
+private:
+	ObjectModel *stop_go_model;
+	int closed_devices, opened_devices;
 };
 
 #endif // DANGERS_H
