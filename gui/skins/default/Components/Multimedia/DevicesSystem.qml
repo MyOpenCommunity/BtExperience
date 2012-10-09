@@ -50,7 +50,7 @@ MenuColumn {
                                  "model": columnBrowserDirectory,
                                  "props": {
                                      "upnp": false,
-                                     "rootPath": ["media", "sd1"],
+                                     "rootPath": ["media", "mmcblk0p1"],
                                      "text": qsTr("SD")}
                              })
         }
