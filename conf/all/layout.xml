@@ -64,6 +64,16 @@
 	</container>
 	<container id="9" descr="video door entry system">
 		<ist uii="309" img="images/systems/vde_card.jpg">
+                        <link uii="9011" />
+                        <link uii="9012" />
+                        <link uii="9013" />
+                        <link uii="9014" />
+                        <link uii="9015" />
+                        <link uii="9016" />
+                        <link uii="9017" />
+                        <link uii="9019" />
+                        <link uii="9020" />
+                        <link uii="9022" />
 		</ist>
 	</container>
 	<container id="10" descr="sound diffusion">

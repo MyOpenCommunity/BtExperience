@@ -13,11 +13,17 @@
 #include <QProcess>
 
 class VideoDoorEntryDevice;
+class ExternalPlace;
 class QDomNode;
 
-ObjectInterface *parseCCTV(const QDomNode &n);
-ObjectInterface *parseIntercom(const QDomNode &n);
+QList<ObjectPair> parseExternalPlace(const QDomNode &xml_node);
 QList<ObjectPair> parseVdeCamera(const QDomNode &xml_node);
+QList<ObjectPair> parseInternalIntercom(const QDomNode &xml_node);
+QList<ObjectPair> parseExternalIntercom(const QDomNode &xml_node);
+QList<ObjectPair> parseSwitchboard(const QDomNode &xml_node);
+
+ObjectInterface *createCCTV(QList<ObjectPair> places);
+ObjectInterface *createIntercom(QList<ObjectPair> places);
 
 
 /*!

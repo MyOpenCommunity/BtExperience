@@ -22,12 +22,12 @@ MenuColumn {
 
     ObjectModel {
         id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: EnergyData.Electricity}]
+        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
     }
 
     Component {
         id: goalsLineComponent
-        SettingsEnergyGoalsLine {
+        SettingsEnergyGoalsFamily {
 
         }
     }

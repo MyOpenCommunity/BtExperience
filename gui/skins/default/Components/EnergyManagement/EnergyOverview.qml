@@ -12,7 +12,10 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: energiesCounters.getObject(index)
             hasChild: true
-            onClicked: Stack.goToPage("EnergyDataDetail.qml", {"family": itemObject})
+            // Energy data system is the only one that requires more than one page,
+            // with properties set: this is a shortcut to avoid complicating
+            // the code a lot.
+            onClicked: Stack.pushPage("EnergyDataDetail.qml", {"family": itemObject})
         }
 
         model: energiesCounters

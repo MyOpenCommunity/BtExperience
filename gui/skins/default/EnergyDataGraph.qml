@@ -34,7 +34,24 @@ Page {
         }
 
         SvgImage {
-            source: "images/energy/ico_electricity_bianca.svg"
+            function getIcon(familyType) {
+                familyType = familyType + 0
+                switch (familyType) {
+                case EnergyFamily.Water:
+                    return "images/energy/ico_water_p.svg"
+                case EnergyFamily.Gas:
+                    return "images/energy/ico_gas_p.svg"
+                case EnergyFamily.DomesticHotWater:
+                    return "images/energy/ico_hot_water_p.svg"
+                case EnergyFamily.HeatingCooling:
+                    return "images/energy/ico_heating_p.svg"
+                case EnergyFamily.Electricity:
+                    return "images/energy/ico_electricity_p.svg"
+                default:
+                    return ""
+                }
+            }
+            source: getIcon(energyData.familyType)
             anchors {
                 verticalCenter: parent.verticalCenter
                 right: titleText.left
@@ -94,7 +111,6 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("day")
                     status: 0
-                    enabled: true // TODO: what are the logics to do that?
                     onClicked: {
                         if (page.state === "dayGraph")
                             return
@@ -116,7 +132,6 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("month")
                     status: 1
-                    enabled: true // TODO: what are the logics to do that?
                     onClicked: {
                         if (page.state === "")
                             return
@@ -134,7 +149,6 @@ Page {
                     shadowImage: "images/energy/ombra_btn_time.svg"
                     text: qsTr("year")
                     status: 0
-                    enabled: true // TODO: what are the logics to do that?
                     onClicked: {
                         if (page.state === "yearGraph")
                             return
@@ -289,7 +303,6 @@ Page {
                 }
             }
 
-
             UbuntuLightText {
                 id: cumulativeConsumptionLabel
                 text: qsTr("month cumulative consumption")
@@ -297,126 +310,61 @@ Page {
                 font.pixelSize: 14
                 wrapMode: Text.WordWrap
                 anchors {
-                    bottom: cumulativeConsumptionLoader.top
+                    bottom: cumulativeConsumptionItem.top
                     bottomMargin: 5
-                    left: cumulativeConsumptionLoader.left
-                    right: cumulativeConsumptionLoader.right
+                    left: cumulativeConsumptionItem.left
+                    right: cumulativeConsumptionItem.right
                 }
                 horizontalAlignment: Text.AlignHCenter
             }
 
-            Loader {
-                id: cumulativeConsumptionLoader
+            SvgImage {
+                id: cumulativeConsumptionItem
+                property int valueType: EnergyData.CumulativeMonthValue
+                property date referredDate: dateSelector.monthDate
+
+                property variant consumptionItem: energyData.getValue(valueType, referredDate,
+                                                                      privateProps.showCurrency ? EnergyData.Currency :
+                                                                                                  EnergyData.Consumption)
+
+                source: "images/energy/livello_cumulative_consumption.svg"
                 anchors {
                     top: instantConsumption.bottom
                     topMargin: parent.height / 100 * 25
                     horizontalCenter: parent.horizontalCenter
                 }
-                sourceComponent: monthCumulativeConsumptionComponent
-                property int valueType: EnergyData.CumulativeMonthValue
-                property date referredDate: dateSelector.monthDate
-
-                property variant consumptionItem: energyData.getValue(valueType,
-                                                                      referredDate, EnergyData.Consumption)
 
                 states: [
                     State {
                         name: "year"
                         PropertyChanges {
-                            target: cumulativeConsumptionLoader
+                            target: cumulativeConsumptionItem
                             valueType: EnergyData.CumulativeYearValue
                             referredDate: dateSelector.yearDate
-                            sourceComponent: cumulativeConsumptionComponent
                         }
                     },
                     State {
                         name: "day"
                         PropertyChanges {
-                            target: cumulativeConsumptionLoader
+                            target: cumulativeConsumptionItem
                             valueType: EnergyData.CumulativeDayValue
                             referredDate: dateSelector.dayDate
-                            sourceComponent: cumulativeConsumptionComponent
                         }
                     }
                 ]
-            }
 
-            Component {
-                id: monthCumulativeConsumptionComponent
-                SvgImage {
-                    source: "images/energy/livello_cumulative_consumption.svg"
-
-                    EnergyConsumptionLogic {
-                        id: logic
-                        monthConsumptionItem: cumulativeConsumptionLoader.consumptionItem
-                    }
-
-                    SvgImage {
-                        source: "images/energy/livello_cumulative_consumption_" + (logic.consumptionExceedGoal() ? "rosso" : "verde") + ".svg"
-                        anchors.left: parent.left
-                        anchors.top: parent.top
-                        width: logic.getConsumptionSize(parent.width)
-                    }
-
-                    SvgImage {
-                        source: "images/energy/linea_livello_cumulative_consumption.svg"
-                        visible: logic.hasGoal()
-                        anchors.left: parent.left
-                        anchors.leftMargin: logic.goalSize(parent.width)
-                        height: parent.height
-                    }
+                UbuntuLightText {
+                    anchors.centerIn: parent
+                    text: parent.consumptionItem.isValid ? parent.consumptionItem.value.toFixed(2) + " " + parent.consumptionItem.measureUnit : ""
+                    color: "grey"
+                    font.pixelSize: 18
                 }
             }
-
-            Component {
-                id: cumulativeConsumptionComponent
-
-                SvgImage {
-                    source: "images/energy/livello_cumulative_consumption.svg"
-                    SvgImage {
-                        source: "images/energy/livello_cumulative_consumption_verde.svg"
-                        anchors.left: parent.left
-                        anchors.top: parent.top
-                        width: consumptionItem.isValid ? parent.width / 100 * 80 : 0 // TODO: calculate the bar length (in some way) from the value property.
-                    }
-                }
-            }
-
             SvgImage {
                 source: "images/energy/ombra_livello_cumulative_consumption.svg"
-                anchors.top: cumulativeConsumptionLoader.bottom
-                anchors.left: cumulativeConsumptionLoader.left
-                anchors.right: cumulativeConsumptionLoader.right
-            }
-
-            UbuntuLightText {
-                text: cumulativeConsumptionValue.energyItem.measureUnit
-                color: "white"
-                font.pixelSize: 14
-                anchors {
-                    top: cumulativeConsumptionLoader.bottom
-                    topMargin: 5
-                    left: cumulativeConsumptionLoader.left
-                }
-            }
-
-            UbuntuLightText {
-                id: cumulativeConsumptionValue
-                // We want not to use the consumptionItem inside the cumulativeConsumptionLoader
-                // component because it never use the currency (because we don't know at this moment
-                // if the goal can be corverted).
-                property variant energyItem: energyData.getValue(cumulativeConsumptionLoader.valueType,
-                                                                 cumulativeConsumptionLoader.referredDate,
-                    privateProps.showCurrency ? EnergyData.Currency : EnergyData.Consumption)
-
-                text: energyItem.isValid ? energyItem.value.toFixed(2) : 0
-                font.pixelSize: 14
-                color: "white"
-                anchors {
-                    top: cumulativeConsumptionLoader.bottom
-                    topMargin: 5
-                    right: cumulativeConsumptionLoader.right
-                }
+                anchors.top: cumulativeConsumptionItem.bottom
+                anchors.left: cumulativeConsumptionItem.left
+                anchors.right: cumulativeConsumptionItem.right
             }
         }
     }
@@ -433,7 +381,7 @@ Page {
             PropertyChanges { target: monthButton; status: 0 }
             PropertyChanges { target: dayButton; status: 0 }
             PropertyChanges { target: dateSelector; state: "year" }
-            PropertyChanges { target: cumulativeConsumptionLoader; state: "year" }
+            PropertyChanges { target: cumulativeConsumptionItem; state: "year" }
             PropertyChanges { target: cumulativeConsumptionLabel; text: qsTr("year cumulative consumption") }
 
         },
@@ -443,7 +391,7 @@ Page {
             PropertyChanges { target: monthButton; status: 0 }
             PropertyChanges { target: dayButton; status: 1 }
             PropertyChanges { target: dateSelector; state: "day" }
-            PropertyChanges { target: cumulativeConsumptionLoader; state: "day" }
+            PropertyChanges { target: cumulativeConsumptionItem; state: "day" }
             PropertyChanges { target: cumulativeConsumptionLabel; text: qsTr("day cumulative consumption") }
         }
     ]

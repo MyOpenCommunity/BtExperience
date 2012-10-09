@@ -85,7 +85,7 @@ Item {
                     return 1
                 }
                 Behavior on opacity {
-                    PropertyAnimation { duration: 200; }
+                    NumberAnimation { duration: 200; }
                 }
 
                 SvgImage {

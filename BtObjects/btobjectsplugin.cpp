@@ -291,9 +291,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<AntintrusionZone *> antintrusion_zones;
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
+	QList<ObjectPair> vde, intercom;
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
 	QDomNode cu99zones;
-	int energy_family = 1;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
@@ -423,10 +423,37 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseLoadWithoutCU(xml_obj);
 			break;
 		case ObjectInterface::IdEnergyData:
-			objmodel << new EnergyFamily(getAttribute(xml_obj, "descr"), QString::number(energy_family));
-			obj_list = parseEnergyData(xml_obj, QString::number(energy_family));
-			++energy_family;
+		{
+			EnergyFamily::FamilyType family;
+
+			switch (getIntAttribute(xml_obj, "cid"))
+			{
+			case 6105:
+				family = EnergyFamily::Electricity;
+				break;
+			case 6106:
+				family = EnergyFamily::Water;
+				break;
+			case 6107:
+				family = EnergyFamily::Gas;
+				break;
+			case 6108:
+				family = EnergyFamily::DomesticHotWater;
+				break;
+			case 6109:
+				family = EnergyFamily::HeatingCooling;
+				break;
+			case 6110:
+				family = EnergyFamily::Custom;
+				break;
+			default:
+				qFatal("Invalid CID value for energy data: %d\n", getIntAttribute(xml_obj, "cid"));
+			}
+
+			objmodel << new EnergyFamily(getAttribute(xml_obj, "descr"), family);
+			obj_list = parseEnergyData(xml_obj, family);
 			break;
+		}
 
 		case ObjectInterface::IdSimpleScenario:
 			obj_list = parseScenarioUnit(xml_obj);
@@ -441,11 +468,28 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseAdvancedScenario(xml_obj);
 			break;
 
+		case ObjectInterface::IdExternalPlace:
+			obj_list = parseExternalPlace(xml_obj);
+			vde.append(obj_list);
+			break;
+
 		case ObjectInterface::IdSurveillanceCamera:
-			// TODO this needs to be added to the list in CCTV object, but it can only be done once
-			//      VCT configuration is finalized; surveillance cameras must be in UII map because
-			//      they can be linked in profile page
 			obj_list = parseVdeCamera(xml_obj);
+			vde.append(obj_list);
+			break;
+
+		case ObjectInterface::IdExternalIntercom:
+			obj_list = parseExternalIntercom(xml_obj);
+			intercom.append(obj_list);
+			break;
+
+		case ObjectInterface::IdInternalIntercom:
+			obj_list = parseInternalIntercom(xml_obj);
+			intercom.append(obj_list);
+			break;
+
+		case ObjectInterface::IdSwitchboard:
+			obj_list = parseSwitchboard(xml_obj);
 			break;
 
 		case ObjectInterface::IdIpRadio:
@@ -476,6 +520,11 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 
 	if (antintrusion_zones.size())
 		objmodel << createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios);
+	if ((*bt_global::config)[PI_ADDRESS] != "")
+	{
+		objmodel << createCCTV(vde);
+		objmodel << createIntercom(intercom);
+	}
 }
 
 int BtObjectsPlugin::findLinkedUiiForObject(ItemInterface *item) const
@@ -811,12 +860,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 		case ObjectInterface::IdMonoChannelSoundDiffusionSystem:
 			obj_list = createSoundDiffusionSystem(item, id);
 			break;
-		case ObjectInterface::IdCCTV:
-			obj = parseCCTV(item);
-			break;
-		case ObjectInterface::IdIntercom:
-			obj = parseIntercom(item);
-			break;
 		default:
 			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
 		}
@@ -1108,6 +1151,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a StopAndGo instance");
 	qmlRegisterUncreatableType<EnergyData>(uri, 1, 0, "EnergyData",
 		"unable to create an EnergyData instance");
+	qmlRegisterUncreatableType<EnergyFamily>(uri, 1, 0, "EnergyFamily",
+		"unable to create an EnergyFamily instance");
 	qmlRegisterUncreatableType<EnergyRate>(uri, 1, 0, "EnergyRate",
 		"unable to create an EnergyRate instance");
 	qmlRegisterUncreatableType<Light>(uri, 1, 0, "Light",

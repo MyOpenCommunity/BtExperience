@@ -12,45 +12,76 @@ QString video_grabber_path = "/usr/local/bin/Fw-A-LcdOpenGLRenderingQt.sh";
 namespace
 {
 	bool ring_exclusion = false;
+
+	QList<ObjectPair> parseExternalPlace(const QDomNode &xml_node, int id)
+	{
+		QList<ObjectPair> obj_list;
+		XmlObject v(xml_node);
+
+		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+		{
+			v.setIst(ist);
+			int uii = getIntAttribute(ist, "uii");
+
+			obj_list << ObjectPair(uii, new ExternalPlace(v.value("descr"), id, v.value("where")));
+		}
+		return obj_list;
+	}
 }
 
-ObjectInterface *parseCCTV(const QDomNode &n)
+ObjectInterface *createCCTV(QList<ObjectPair> places)
 {
-	QString where = getTextChild(n, "where");
+	VideoDoorEntryDevice *d = bt_global::add_device_to_cache(new VideoDoorEntryDevice((*bt_global::config)[PI_ADDRESS], (*bt_global::config)[PI_MODE]));
 	QList<ExternalPlace *> list;
-	foreach (const QDomNode &obj, getChildren(n, "obj"))
+
+	foreach (const ObjectPair &p, places)
 	{
-		list.append(new ExternalPlace(getTextChild(obj, "descr"), ObjectInterface::IdExternalPlace, getTextChild(obj, "where")));
+		ExternalPlace *place = qobject_cast<ExternalPlace *>(p.second);
+		Q_ASSERT_X(place, "createCCTV", "Invalid external place type");
+		list.append(place);
 	}
 
-	return new CCTV(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice((*bt_global::config)[PI_ADDRESS], (*bt_global::config)[PI_MODE])));
+	return new CCTV(list, d);
 }
 
-ObjectInterface *parseIntercom(const QDomNode &n)
+ObjectInterface *createIntercom(QList<ObjectPair> places)
 {
-	// TODO add parse code
-	Q_UNUSED(n);
-
+	VideoDoorEntryDevice *d = bt_global::add_device_to_cache(new VideoDoorEntryDevice((*bt_global::config)[PI_ADDRESS], (*bt_global::config)[PI_MODE]));
 	QList<ExternalPlace *> list;
-	list.append(new ExternalPlace("Portone", ObjectInterface::IdExternalPlace, "14"));
-	list.append(new ExternalPlace("Garage", ObjectInterface::IdExternalPlace, "14#2"));
 
-	return new Intercom(list, bt_global::add_device_to_cache(new VideoDoorEntryDevice((*bt_global::config)[PI_ADDRESS], (*bt_global::config)[PI_MODE])));
+	foreach (const ObjectPair &p, places)
+	{
+		ExternalPlace *place = qobject_cast<ExternalPlace *>(p.second);
+		Q_ASSERT_X(place, "createCCTV", "Invalid external place type");
+		list.append(place);
+	}
+
+	return new Intercom(list, d);
+}
+
+QList<ObjectPair> parseExternalPlace(const QDomNode &xml_node)
+{
+	return parseExternalPlace(xml_node, ObjectInterface::IdExternalPlace);
 }
 
 QList<ObjectPair> parseVdeCamera(const QDomNode &xml_node)
 {
-	QList<ObjectPair> obj_list;
-	XmlObject v(xml_node);
+	return parseExternalPlace(xml_node, ObjectInterface::IdSurveillanceCamera);
+}
 
-	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-	{
-		v.setIst(ist);
-		int uii = getIntAttribute(ist, "uii");
+QList<ObjectPair> parseInternalIntercom(const QDomNode &xml_node)
+{
+	return parseExternalPlace(xml_node, ObjectInterface::IdInternalIntercom);
+}
 
-		obj_list << ObjectPair(uii, new ExternalPlace(v.value("descr"), ObjectInterface::IdSurveillanceCamera, v.value("where")));
-	}
-	return obj_list;
+QList<ObjectPair> parseExternalIntercom(const QDomNode &xml_node)
+{
+	return parseExternalPlace(xml_node, ObjectInterface::IdExternalIntercom);
+}
+
+QList<ObjectPair> parseSwitchboard(const QDomNode &xml_node)
+{
+	return parseExternalPlace(xml_node, ObjectInterface::IdSwitchboard);
 }
 
 

@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
-
+import BtObjects 1.0
 
 MenuColumn {
     id: column
@@ -8,21 +8,28 @@ MenuColumn {
 
     QtObject {
         id: privateProps
-        property int goal: dataModel.goals[monthIndex]
+        property real goal: dataModel.goals[monthIndex]
     }
 
     Column {
         ControlMinusPlus {
             onPlusClicked: {
-                privateProps.goal += 1
+                if (dataModel.energyType === EnergyData.Electricity)
+                    privateProps.goal += .1
+                else
+                    privateProps.goal += 1
             }
 
             onMinusClicked: {
-                if (privateProps.goal > 0)
-                    privateProps.goal -= 1
+                if (privateProps.goal > 0) {
+                    if (dataModel.energyType === EnergyData.Electricity)
+                        privateProps.goal -= .1
+                    else
+                        privateProps.goal -= 1
+                }
             }
 
-            text: privateProps.goal + " " + dataModel.cumulativeUnit
+            text: privateProps.goal.toFixed(dataModel.decimals) + " " + dataModel.cumulativeUnit
             title: qsTr("consumption goal")
         }
         ButtonOkCancel {

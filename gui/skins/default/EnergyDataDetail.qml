@@ -17,6 +17,7 @@ Page {
     text: qsTr("energy consumption")
     source: "images/bg2.jpg"
 
+
     QtObject {
         id: privateProps
         property bool showCurrency: false
@@ -32,7 +33,24 @@ Page {
         }
 
         SvgImage {
-            source: "images/energy/ico_electricity_bianca.svg"
+            function getIcon(familyType) {
+                familyType = familyType + 0
+                switch (familyType) {
+                case EnergyFamily.Water:
+                    return "images/energy/ico_water_p.svg"
+                case EnergyFamily.Gas:
+                    return "images/energy/ico_gas_p.svg"
+                case EnergyFamily.DomesticHotWater:
+                    return "images/energy/ico_hot_water_p.svg"
+                case EnergyFamily.HeatingCooling:
+                    return "images/energy/ico_heating_p.svg"
+                case EnergyFamily.Electricity:
+                    return "images/energy/ico_electricity_p.svg"
+                default:
+                    return ""
+                }
+            }
+            source: getIcon(parseInt(family.objectKey))
             anchors {
                 verticalCenter: parent.verticalCenter
                 right: titleText.left
@@ -137,7 +155,20 @@ Page {
                 itemObject: energiesCounters.getObject(index)
                 description: itemObject.general ? qsTr("Overall") : itemObject.name
                 measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
-                onHeaderClicked: Stack.goToPage("EnergyDataGraph.qml", {"energyData": itemObject})
+                onClicked: Stack.pushPage("EnergyDataGraph.qml", {"energyData": itemObject})
+                maxValue: {
+                    if (parseInt(family.objectKey) !== EnergyFamily.Custom) {
+                        return energiesCounters.getMaxValue()
+                    }
+
+                    var monthItem = energiesCounters.getObject(index).getValue(EnergyData.CumulativeMonthValue,
+                                                                           new Date(), EnergyData.Consumption)
+
+                    if (monthItem.isValid && monthItem.goalEnabled)
+                        return Math.max(monthItem.consumptionGoal, monthItem.value)
+
+                    return -1
+                }
             }
             delegateSpacing: 40
             visibleElements: 4
@@ -151,6 +182,20 @@ Page {
 
     ObjectModel {
         id: energiesCounters
+        function getMaxValue() {
+            var max = 0
+            for (var i = 0; i < count; i+=1) {
+                var monthItem = getObject(i).getValue(EnergyData.CumulativeMonthValue,
+                                                      new Date(), EnergyData.Consumption)
+                if (monthItem.isValid && monthItem.value > max)
+                    max = monthItem.value
+
+                if (monthItem.consumptionGoal > max)
+                    max = monthItem.consumptionGoal
+            }
+            return max
+        }
+
         filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: family.objectKey}]
     }
 }

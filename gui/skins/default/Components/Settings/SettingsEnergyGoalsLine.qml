@@ -68,7 +68,7 @@ MenuColumn {
             Repeater {
                 MenuItem {
                     name: privateProps.getMonthName(index)
-                    description: dataModel.goals[index] + " " + dataModel.cumulativeUnit
+                    description: dataModel.goals[index].toFixed(dataModel.decimals) + " " + dataModel.cumulativeUnit
                     hasChild: true
                     isSelected: privateProps.currentIndex === index
                     onClicked: {

@@ -31,8 +31,6 @@ class QDomNode;
 #define TEST_ENERGY_DATA 1
 #endif
 
-QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node, QString family);
-
 
 struct CacheKey
 {
@@ -80,19 +78,34 @@ class EnergyFamily : public ObjectInterface
 {
 	Q_OBJECT
 
+	Q_ENUMS(FamilyType)
+
 public:
-	EnergyFamily(QString _name, QString _key)
+	enum FamilyType
+	{
+		Electricity,
+		Water,
+		Gas,
+		DomesticHotWater,
+		HeatingCooling,
+		Custom
+	};
+
+	EnergyFamily(QString _name, FamilyType _type)
 	{
 		name = _name;
-		key = _key;
+		type = _type;
 	}
 
 	virtual int getObjectId() const { return IdEnergyFamily; }
-	virtual QString getObjectKey() const { return key; }
+	virtual QString getObjectKey() const { return QString::number(type); }
 
 private:
-	QString key;
+	FamilyType type;
 };
+
+
+QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family);
 
 
 /*!
@@ -127,6 +140,9 @@ class EnergyData : public ObjectInterface
 
 	/// The type of energy measured by this object
 	Q_PROPERTY(EnergyType energyType READ getEnergyType CONSTANT)
+
+
+	Q_PROPERTY(EnergyFamily::FamilyType familyType READ getFamilyType CONSTANT)
 
 	/// Energy to currency conversion rate
 	Q_PROPERTY(EnergyRate *rate READ getRate CONSTANT)
@@ -184,6 +200,11 @@ class EnergyData : public ObjectInterface
 		\brief Measure unit symbol for cumulative consumption/production
 	*/
 	Q_PROPERTY(QString cumulativeUnit READ getCumulativeUnit CONSTANT)
+
+	/*!
+		\brief Number of decimals to be used to approximate economic data
+	*/
+	Q_PROPERTY(int decimals READ getDecimals CONSTANT)
 
 	/*!
 		\brief Whether this is and advanced energy device
@@ -250,7 +271,7 @@ public:
 		Currency    = 1
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, QString family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate);
+	EnergyData(EnergyDevice *dev, QString name, EnergyFamily::FamilyType family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate);
 	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
@@ -280,6 +301,7 @@ public:
 	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, MeasureType measure = Consumption);
 
 	EnergyType getEnergyType() const;
+	EnergyFamily::FamilyType getFamilyType() const;
 	EnergyRate *getRate() const;
 
 	int getThresholdLevel() const;
@@ -293,10 +315,11 @@ public:
 	void setGoalsEnabled(bool enabled);
 	bool getGoalsEnabled() const;
 
-
 	QString getUnit() const;
 	QString getCurrentUnit() const;
 	QString getCumulativeUnit() const;
+
+	int getDecimals() const;
 
 	void setThresholdEnabled(QVariantList enabled);
 	QVariantList getThresholdEnabled() const;
@@ -394,7 +417,9 @@ private:
 	// f.e. if unit is yd3, unit_conversion is 0.0013079506
 	double unit_conversion;
 
-	QString family;
+	int decimals; // the number of decimals in the current measure unit
+
+	EnergyFamily::FamilyType family;
 
 #if TEST_ENERGY_DATA
 private slots:
@@ -463,6 +488,11 @@ class EnergyItem : public QObject
 	Q_PROPERTY(QVariant consumptionGoal READ getConsumptionGoal CONSTANT)
 
 	/*!
+		\brief Return whether the goal is enabled or not
+	*/
+	Q_PROPERTY(bool goalEnabled READ getGoalEnabled CONSTANT)
+
+	/*!
 		\brief Measure unit in which the value is expressed
 
 		\sa value
@@ -470,8 +500,7 @@ class EnergyItem : public QObject
 	Q_PROPERTY(QString measureUnit READ getMeasureUnit CONSTANT)
 
 public:
-	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-			int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
+	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value, EnergyRate *rate = 0);
 
 	QVariant getValue() const;
 
@@ -486,6 +515,7 @@ public:
 	virtual QString getMeasureUnit() const;
 
 	QVariant getConsumptionGoal() const;
+	bool getGoalEnabled() const;
 
 	int getDecimals() const;
 
@@ -511,8 +541,6 @@ private:
 	QVariant value;
 	EnergyRate *rate;
 	QString measure_unit;
-	int decimals;
-	QVariant consumption_goal;
 };
 
 
@@ -540,8 +568,7 @@ class EnergyItemCurrent : public EnergyItem
 	Q_PROPERTY(QVariantList thresholds READ getThresholds WRITE setThresholds NOTIFY thresholdsChanged)
 
 public:
-	EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value,
-				int decimals = 0, QVariant goal = QVariant(), EnergyRate *rate = 0);
+	EnergyItemCurrent(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value, EnergyRate *rate = 0);
 
 	int getThresholdLevel() const;
 

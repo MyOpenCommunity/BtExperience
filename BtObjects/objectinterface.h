@@ -139,6 +139,9 @@ public:
 
 		IdExternalPlace = 10050,
 		IdSurveillanceCamera = 10051,
+		IdInternalIntercom = 10052,
+		IdExternalIntercom = 10053,
+		IdSwitchboard = 10054, // a.k.a. guard unit
 
 		IdIpRadio = 16000,
 
