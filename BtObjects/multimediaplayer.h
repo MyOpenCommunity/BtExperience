@@ -178,6 +178,7 @@ signals:
 private slots:
 	void readPlayerInfo();
 	void playerInfoReceived(QMap<QString, QString> new_track_info);
+	void gstPlayerInfoReceived(QMap<QString, QString> new_track_info);
 
 	void playbackStarted();
 	void playbackStopped();

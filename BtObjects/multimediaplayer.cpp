@@ -49,6 +49,9 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	connect(gst_player, SIGNAL(gstPlayerStopped()), SLOT(mplayerStopped()));
 	connect(gst_player, SIGNAL(gstPlayerPaused()), SLOT(mplayerPaused()));
 
+	connect(gst_player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
+			SLOT(gstPlayerInfoReceived(QMap<QString,QString>)));
+
 	info_poll_timer = new QTimer(this);
 	info_poll_timer->setInterval(INFO_POLL_INTERVAL);
 	connect(info_poll_timer, SIGNAL(timeout()), this, SLOT(readPlayerInfo()));
@@ -109,7 +112,10 @@ void MultiMediaPlayer::setMute(bool newValue)
 
 void MultiMediaPlayer::readPlayerInfo()
 {
-	playerInfoReceived(player->getPlayingInfo());
+	if (is_video_track)
+		gstPlayerInfoReceived(gst_player->getPlayingInfo());
+	else
+		playerInfoReceived(player->getPlayingInfo());
 }
 
 namespace
@@ -144,6 +150,37 @@ void MultiMediaPlayer::playerInfoReceived(QMap<QString, QString> new_track_info)
 		new_info["current_time"] = parseMPlayerTime(new_track_info["current_time"]);
 	else if (new_track_info.contains("current_time_only"))
 		new_info["current_time"] = parseMPlayerTime(new_track_info["current_time_only"]);
+
+	if (new_info == track_info)
+		return;
+
+	track_info = new_info;
+	emit trackInfoChanged(track_info);
+}
+
+void MultiMediaPlayer::gstPlayerInfoReceived(QMap<QString, QString> new_track_info)
+{
+	QVariantMap new_info = track_info;
+
+	// if we're paused, and the timer is active, it means it was reactivated by seek(),
+	// so we can stop it now
+	if (player_state != Playing && info_poll_timer->isActive())
+	{
+		++seek_tick_count;
+		if (seek_tick_count > SEEK_TICK_TIMEOUT)
+			info_poll_timer->stop();
+	}
+
+	// TODO maybe handle here out-of-band metadata from UPnP
+	foreach (QString key, COMMON_ATTRIBUTES)
+		if (new_track_info.contains(key))
+			new_info[key] = new_track_info[key];
+
+	if (new_track_info.contains("total_time"))
+		new_info["total_time"] = QTime().addSecs(new_track_info["total_time"].toInt());
+
+	if (new_track_info.contains("current_time"))
+		new_info["current_time"] = QTime().addSecs(new_track_info["current_time"].toInt());
 
 	if (new_info == track_info)
 		return;
@@ -234,9 +271,8 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 	}
 	else if (is_video_track)
 	{
-		// TODO: let's hope for the best :/
-		// this doesn't pass through the player stopped state...
 		gst_player->setTrack(source);
+		// TODO: discover file properties (duration etc) while in pause mode.
 	}
 	else
 	{
