@@ -76,6 +76,9 @@ public:
 		IdEnergyLoad, //!< Energy load object
 		IdThermalControlledProbe, //!< Thermal controlled probe
 		IdThermalControlledProbeFancoil, //!< Thermal controlled probe with fancoil
+
+		IdDangers,                              // 30
+
 		// used internally
 		IdDimmerGroup = 100, //!< Group of lights containing only dimmer objects
 		IdDimmer100Group = 101, //!< group of lights containing only 100-level dimmer objects
