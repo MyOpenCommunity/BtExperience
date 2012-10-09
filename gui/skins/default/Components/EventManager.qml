@@ -9,7 +9,7 @@ import "../js/ScreenSaver.js" as ScreenSaver
 Item {
     id: eventManager
 
-    property int alarms: privateProps.antintrusionModel === undefined ? 0 : privateProps.antintrusionModel.alarms.getCount()
+    property int alarms: privateProps.antintrusionModel === undefined ? 0 : loader.item.alarmsModel.count
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
     property bool handsFree: privateProps.vctModel === undefined ? false : privateProps.vctModel.handsFree
@@ -90,6 +90,22 @@ Item {
                     privateProps.dangersModel = obj
                     break
                 }
+            }
+        }
+    }
+
+    Loader {
+        id: loader
+        sourceComponent: privateProps.antintrusionModel !== undefined ? alarmsModelComponent : undefined
+    }
+
+    Component {
+        id: alarmsModelComponent
+        Item {
+            property alias alarmsModel: alarmsModelObjModel
+            ObjectModel {
+                id: alarmsModelObjModel
+                source: privateProps.antintrusionModel.alarms
             }
         }
     }

@@ -52,7 +52,7 @@ public:
 
 	ItemInterface *getObject(int row) const;
 
-	Q_INVOKABLE int getCount() const
+	int getCount() const
 	{
 		return item_list.size();
 	}
