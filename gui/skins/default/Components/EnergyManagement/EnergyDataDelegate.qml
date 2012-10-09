@@ -60,7 +60,7 @@ Column {
     }
 
     spacing: 5
-    onHeightChanged: delegate.view.height = height // for CardView usage
+    onHeightChanged: delegate.view.height = Math.max(delegate.view.height, height) // for CardView usage
 
     ButtonThreeStates {
         id: headerButton
