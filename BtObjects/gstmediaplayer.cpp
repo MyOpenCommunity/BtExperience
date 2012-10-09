@@ -39,12 +39,29 @@ GstMediaPlayer::~GstMediaPlayer()
 
 bool GstMediaPlayer::play(QString track)
 {
+	setTrack(track);
+	GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_PLAYING);
+	if (ret == GST_STATE_CHANGE_ASYNC)
+	{
+		check_for_state_change = true;
+		emit gstPlayerStarted();
+	}
+	else if (ret == GST_STATE_CHANGE_SUCCESS)
+		emit gstPlayerResumed();
+	return true;
+}
+
+void GstMediaPlayer::setTrack(QString track)
+{
 	// Get URI
 	QUrl uri = QUrl::fromLocalFile(track);
 
+	GstState saved_state;
+	gst_element_get_state(GST_ELEMENT(pipeline), &saved_state, NULL, 0);
+
+	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_READY);
 	g_object_set(G_OBJECT(pipeline), "uri", qPrintable(uri.toString()), NULL);
-	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_PLAYING);
-	return true;
+	gst_element_set_state(GST_ELEMENT(pipeline), saved_state);
 }
 
 void GstMediaPlayer::handleBusMessage(GstBus *bus, GstMessage *message)

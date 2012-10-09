@@ -36,6 +36,8 @@ public:
 	 */
 	QMap<QString, QString> getPlayingInfo();
 
+	void setTrack(QString track);
+
 public slots:
 	void pause();
 	void resume();
