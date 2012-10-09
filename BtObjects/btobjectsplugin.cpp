@@ -527,7 +527,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		objmodel << createIntercom(intercom);
 	}
 	// the following needs stop&go objects to be already created
-	objmodel << new Dangers();
+	objmodel << new StopAndGoDangers();
 }
 
 int BtObjectsPlugin::findLinkedUiiForObject(ItemInterface *item) const

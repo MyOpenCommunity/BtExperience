@@ -5,7 +5,7 @@
 #include <QDebug>
 
 
-Dangers::Dangers()
+StopAndGoDangers::StopAndGoDangers()
 {
 	closed_devices = opened_devices = 0;
 
@@ -43,7 +43,7 @@ Dangers::Dangers()
 	updateDangerInfo();
 }
 
-void Dangers::updateDangerInfo()
+void StopAndGoDangers::updateDangerInfo()
 {
 	int closed = 0;
 	int opened = 0;

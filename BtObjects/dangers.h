@@ -19,7 +19,7 @@ class ObjectModel;
 
 	The object id is \a ObjectInterface::IdDangers.
 */
-class Dangers : public ObjectInterface
+class StopAndGoDangers : public ObjectInterface
 {
 	Q_OBJECT
 
@@ -34,7 +34,7 @@ class Dangers : public ObjectInterface
 	Q_PROPERTY(int closed READ getClosedDevices NOTIFY closedDevices)
 
 public:
-	Dangers();
+	StopAndGoDangers();
 
 	virtual int getObjectId() const
 	{
