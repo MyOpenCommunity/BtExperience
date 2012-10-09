@@ -1,5 +1,8 @@
 #include "multimediaplayer.h"
 #include "mediaplayer.h"
+#include "gstmediaplayer.h"
+
+#include "generic_functions.h"
 
 #include <QTime>
 #include <QTimer>
@@ -7,11 +10,23 @@
 #define INFO_POLL_INTERVAL 500
 #define SEEK_TICK_TIMEOUT 4
 
+namespace
+{
+	bool isVideoFile(QString track)
+	{
+		QStringList extensions = getFileExtensions(EntryInfo::VIDEO);
+		QString ext = track.mid(track.lastIndexOf(".") + 1);
+		return extensions.contains(ext);
+	}
+}
+
 
 MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	QObject(parent)
 {
 	player = new MediaPlayer(this);
+	gst_player = new GstMediaPlayer(this);
+	is_video_track = false;
 	player_state = Stopped;
 	output_state = AudioOutputStopped;
 	mediaplayer_output_mode = MediaPlayer::OutputAll;
@@ -27,6 +42,12 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 
 	connect(player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
 		SLOT(playerInfoReceived(QMap<QString,QString>)));
+
+	connect(gst_player, SIGNAL(gstPlayerStarted()), SLOT(mplayerStarted()));
+	connect(gst_player, SIGNAL(gstPlayerResumed()), SLOT(mplayerResumed()));
+	connect(gst_player, SIGNAL(gstPlayerDone()), SLOT(mplayerDone()));
+	connect(gst_player, SIGNAL(gstPlayerStopped()), SLOT(mplayerStopped()));
+	connect(gst_player, SIGNAL(gstPlayerPaused()), SLOT(mplayerPaused()));
 
 	info_poll_timer = new QTimer(this);
 	info_poll_timer->setInterval(INFO_POLL_INTERVAL);
@@ -139,7 +160,10 @@ void MultiMediaPlayer::play()
 	if (current_source.isEmpty())
 		return;
 
-	player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
+	if (is_video_track)
+		gst_player->play(current_source);
+	else
+		player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 }
 
 void MultiMediaPlayer::pause()
@@ -148,7 +172,7 @@ void MultiMediaPlayer::pause()
 		return;
 
 	setPlayerState(AboutToPause);
-	player->pause();
+	is_video_track ? gst_player->pause() : player->pause();
 }
 
 void MultiMediaPlayer::resume()
@@ -156,10 +180,17 @@ void MultiMediaPlayer::resume()
 	if (player_state != Paused && player_state != AboutToPause)
 		return;
 
-	if (player->isInstanceRunning())
-		player->resume();
+	if (is_video_track)
+	{
+		gst_player->resume();
+	}
 	else
-		play();
+	{
+		if (player->isInstanceRunning())
+			player->resume();
+		else
+			play();
+	}
 }
 
 void MultiMediaPlayer::stop()
@@ -199,22 +230,32 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 		// source
 		current_source = source;
 		track_info.clear();
-		player->stop();
+		is_video_track? gst_player->stop() : player->stop();
 	}
-	else if (player->isPlaying())
+	else if (is_video_track)
 	{
-		player->play(source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
+		// TODO: let's hope for the best :/
+		// this doesn't pass through the player stopped state...
+		gst_player->setTrack(source);
 	}
-	else if (player->isPaused())
+	else
 	{
-		// accourding to documentation, "pausing_keep loadfile" should do the right thing, but
-		// it does not, so we call quit() here to force a restart when resume() is called
-		player->quit();
-		// TODO maybe request after some time, in case we start playing
-		player->requestInitialPlayingInfo(source);
+		if (player->isPlaying())
+		{
+			player->play(source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
+		}
+		else if (player->isPaused())
+		{
+			// accourding to documentation, "pausing_keep loadfile" should do the right thing, but
+			// it does not, so we call quit() here to force a restart when resume() is called
+			player->quit();
+			// TODO maybe request after some time, in case we start playing
+			player->requestInitialPlayingInfo(source);
+		}
 	}
 
 	current_source = source;
+	is_video_track = isVideoFile(source);
 	track_info.clear();
 
 	if (had_track_info)
