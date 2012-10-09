@@ -6,8 +6,13 @@
 #include <QObject>
 #include <QMap>
 
+// Anonymous namespaces are useless with extern "C" linkage, see:
+// https://groups.google.com/d/msg/comp.lang.c++.moderated/bRso4RIDiBI/F2BscJar_qMJ
+extern "C" gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, gpointer data);
+
 class GstMediaPlayer : public QObject
 {
+friend gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, gpointer data);
 	Q_OBJECT
 public:
 	GstMediaPlayer(QObject *parent = 0);
@@ -15,8 +20,6 @@ public:
 	virtual ~GstMediaPlayer();
 
 	bool play(QString track);
-
-	void handleBusMessage(GstBus *bus, GstMessage *message);
 
 	/*!
 		\brief Return information about the playing audio track
@@ -72,6 +75,7 @@ signals:
 	void playingInfoUpdated(const QMap<QString,QString> &info);
 
 private:
+	void handleBusMessage(GstBus *bus, GstMessage *message);
 	void handleTagMessage(GstMessage *message);
 	GstPipeline *pipeline;
 	QMap<QString, QString> metadata;

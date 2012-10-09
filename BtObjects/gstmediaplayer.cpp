@@ -3,14 +3,14 @@
 #include <QUrl>
 #include <QDebug>
 
-namespace {
-	extern "C" gboolean gstBusCallback(GstBus *bus, GstMessage *message, gpointer data)
-	{
-		GstMediaPlayer *player = static_cast<GstMediaPlayer *>(data);
-		player->handleBusMessage(bus, message);
-		return true;
-	}
+extern "C" gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, gpointer data)
+{
+	GstMediaPlayer *player = static_cast<GstMediaPlayer *>(data);
+	player->handleBusMessage(bus, message);
+	return true;
+}
 
+namespace {
 	inline gint64 nsToSecs(gint64 val)
 	{
 		return val / 1000000000;
@@ -25,7 +25,7 @@ GstMediaPlayer::GstMediaPlayer(QObject *parent) :
 	// add bus
 	GstBus *bus;
 	bus = gst_pipeline_get_bus(GST_PIPELINE(pipeline));
-	gst_bus_add_watch(bus, gstBusCallback, this);
+	gst_bus_add_watch(bus, gstMediaPlayerBusCallback, this);
 	gst_object_unref(bus);
 
 }
