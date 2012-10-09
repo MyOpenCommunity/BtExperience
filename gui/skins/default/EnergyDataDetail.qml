@@ -153,7 +153,6 @@ Page {
             delegate: EnergyDataDelegate {
                 id: delegate
                 itemObject: energiesCounters.getObject(index)
-                description: itemObject.general ? qsTr("Overall") : itemObject.name
                 measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
                 onClicked: Stack.pushPage("EnergyDataGraph.qml", {"energyData": itemObject})
                 maxValue: {

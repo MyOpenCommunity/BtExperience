@@ -33,22 +33,22 @@
 	<obj cid="6105" id="6105" descr="Electric line" where="1"
 	     SWmeasure="Kw" measure="Kw" consumption_goal_enabled="0"
 	     threshold_one_enable="0" threshold_two_enable="0"
-	     rate_enable="0" rate_type="0" mode="1">
+	     rate_enabled="0" rate_type="0" mode="1">
 		<ist uii="5001" descr="Office" where="2"
-		     consumption_goal_enabled="1" rate_enable="1">
+		     consumption_goal_enabled="1" rate_enabled="1">
 			<consumption_goal>
-				<january>100</january>
-				<february>120</february>
-				<march>100</march>
-				<april>100</april>
-				<may>100</may>
-				<june>100</june>
-				<july>100</july>
-				<august>100</august>
-				<september>100</september>
-				<october>100</october>
-				<november>90</november>
-				<december>100</december>
+				<january>2.6</january>
+				<february>2.8</february>
+				<march>2.6</march>
+				<april>2.5</april>
+				<may>2.25</may>
+				<june>2.00</june>
+				<july>2.10</july>
+				<august>2.20</august>
+				<september>2.40</september>
+				<october>2.45</october>
+				<november>2.50</november>
+				<december>2.60</december>
 			</consumption_goal>
 			<rate>
 				<rate_id>2</rate_id>
@@ -56,22 +56,59 @@
 			</rate>
 		</ist>
 		<ist uii="5002" descr="Kitchen" where="2" SWmeasure="Custom" measure="Kw" />
-		<ist uii="5003" descr="Box" where="3" rate_enable="1" >
+		<ist uii="5003" descr="Box" where="3" rate_enabled="1" consumption_goal_enabled="1">
 			<rate>
 				<rate_id>2</rate_id>
 				<rate_n_decimal_view>2</rate_n_decimal_view>
 			</rate>
+			<consumption_goal>
+				<january>2.5</january>
+				<february>2.6</february>
+				<march>2.4</march>
+				<april>2.3</april>
+				<may>2.25</may>
+				<june>2.10</june>
+				<july>2.15</july>
+				<august>2.30</august>
+				<september>2.30</september>
+				<october>2.25</october>
+				<november>2.30</november>
+				<december>2.35</december>
+			</consumption_goal>
 		</ist>
 	</obj>
 	<obj cid="6109" id="6105" descr="Heating/Cooling" where="1"
-	     SWmeasure="Kw" measure="Kw" consumption_goal="0" consumption_goal_enabled="0"
+	     SWmeasure="Kw" measure="Kw" consumption_goal_enabled="0"
 	     threshold_one_enable="0" threshold_two_enable="0"
-	     rate_enable="0" rate_type="0" mode="5">
-		<ist uii="5005" descr="Bedroom" where="7" rate_enable="1">
+	     rate_enabled="0" rate_type="0" mode="5">
+		<ist uii="5005" descr="Bedroom" where="7" rate_enabled="1">
 			<rate>
 				<rate_id>5</rate_id>
 				<rate_n_decimal_view>0</rate_n_decimal_view>
 			</rate>
+		</ist>
+	</obj>
+	<obj cid="6110" id="6105" descr="Custom Family" where="1"
+	     SWmeasure="Pere" measure="Pere" consumption_goal_enabled="0"
+	     threshold_one_enable="0" threshold_two_enable="0"
+	     rate_enabled="0" rate_type="0" mode="5">
+		<ist uii="5006" descr="Kitchens" where="12" consumption_goal_enabled="1">
+			<consumption_goal>
+				<january>80</january>
+				<february>82</february>
+				<march>70</march>
+				<april>60</april>
+				<may>66</may>
+				<june>50</june>
+				<july>55</july>
+				<august>40</august>
+				<september>50</september>
+				<october>56</october>
+				<november>48</november>
+				<december>87</december>
+			</consumption_goal>
+        </ist>
+		<ist uii="5007" descr="Bedrooms" where="17" SWmeasure="Custom" measure="Noci">
 		</ist>
 	</obj>
 </archive>

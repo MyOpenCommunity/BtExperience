@@ -6,7 +6,6 @@ import BtObjects 1.0
 
 Column {
     id: delegate
-    property alias description: topText.text
     property variant itemObject: undefined
     property int measureType: EnergyData.Consumption
     property real maxValue: -1
@@ -61,7 +60,7 @@ Column {
     }
 
     spacing: 5
-    onHeightChanged: delegate.view.height = height // for CardView usage
+    onHeightChanged: delegate.view.height = Math.max(delegate.view.height, height) // for CardView usage
 
     ButtonThreeStates {
         id: headerButton
@@ -84,8 +83,8 @@ Column {
 
             UbuntuLightText {
                 id: topText
+                text: itemObject.name
                 font.pixelSize: 14
-                text: "electricity"
                 color: headerButton.state === "pressed" ? "white" : "#5A5A5A"
             }
         }
