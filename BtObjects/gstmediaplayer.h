@@ -39,6 +39,7 @@ public:
 public slots:
 	void pause();
 	void resume();
+	void stop();
 
 signals:
 	/*!
@@ -77,6 +78,8 @@ signals:
 private:
 	void handleBusMessage(GstBus *bus, GstMessage *message);
 	void handleTagMessage(GstMessage *message);
+	void handleStateChange();
+	bool check_for_state_change;
 	GstPipeline *pipeline;
 	QMap<QString, QString> metadata;
 };

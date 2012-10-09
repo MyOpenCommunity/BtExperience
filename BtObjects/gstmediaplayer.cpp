@@ -21,6 +21,7 @@ GstMediaPlayer::GstMediaPlayer(QObject *parent) :
 	QObject(parent)
 {
 	pipeline = GST_PIPELINE(gst_element_factory_make("playbin2", NULL));
+	check_for_state_change = false;
 
 	// add bus
 	GstBus *bus;
@@ -68,25 +69,12 @@ void GstMediaPlayer::handleBusMessage(GstBus *bus, GstMessage *message)
 		break;
 	}
 	case GST_MESSAGE_STATE_CHANGED:
-	{
-		GstState current;
-		gst_element_get_state(GST_ELEMENT(pipeline), &current, NULL, 0);
-		// TODO: maybe this should be:
-		// switch (GST_STATE_TRANSITION(current, next))
-		// so that we have a finer control on the state transitions
-		if (current == GST_STATE_PLAYING)
+		if (check_for_state_change)
 		{
-			GstFormat f = GST_FORMAT_TIME;
-			gint64 duration;
-			if (gst_element_query_duration(GST_ELEMENT(pipeline), &f, &duration))
-				metadata["total_time"] = QString::number(nsToSecs(duration));
-
-			emit gstPlayerResumed();
+			handleStateChange();
+			check_for_state_change = false;
 		}
-		else if (current == GST_STATE_PAUSED)
-			emit gstPlayerPaused();
 		break;
-	}
 
 	case GST_MESSAGE_TAG:
 		handleTagMessage(message);
@@ -97,14 +85,29 @@ void GstMediaPlayer::handleBusMessage(GstBus *bus, GstMessage *message)
 	}
 }
 
+
+#define CHANGE_STATE(signal, new_state) \
+	do { \
+		GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(pipeline), new_state); \
+		if (ret == GST_STATE_CHANGE_SUCCESS) \
+			emit signal(); \
+		else if (ret == GST_STATE_CHANGE_ASYNC) \
+			check_for_state_change = true; \
+	} while (0)
+
 void GstMediaPlayer::pause()
 {
-	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_PAUSED);
+	CHANGE_STATE(gstPlayerPaused, GST_STATE_PAUSED);
 }
 
 void GstMediaPlayer::resume()
 {
-	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_PLAYING);
+	CHANGE_STATE(gstPlayerResumed, GST_STATE_PLAYING);
+}
+
+void GstMediaPlayer::stop()
+{
+	CHANGE_STATE(gstPlayerStopped, GST_STATE_READY);
 }
 
 QMap<QString, QString> GstMediaPlayer::getPlayingInfo()
@@ -141,5 +144,33 @@ void GstMediaPlayer::handleTagMessage(GstMessage *message)
 	{
 		metadata["meta_album"] = QString(value);
 		g_free(value);
+	}
+}
+
+void GstMediaPlayer::handleStateChange()
+{
+	GstState current, next;
+	gst_element_get_state(GST_ELEMENT(pipeline), &current, &next, 0);
+
+	switch (GST_STATE_TRANSITION(current, next))
+	{
+	case GST_STATE_CHANGE_PAUSED_TO_PLAYING:
+	{
+		GstFormat f = GST_FORMAT_TIME;
+		gint64 duration;
+		if (gst_element_query_duration(GST_ELEMENT(pipeline), &f, &duration))
+			metadata["total_time"] = QString::number(nsToSecs(duration));
+
+		emit gstPlayerResumed();
+	}
+		break;
+	case GST_STATE_CHANGE_PLAYING_TO_PAUSED:
+		emit gstPlayerPaused();
+		break;
+	case GST_STATE_CHANGE_PAUSED_TO_READY:
+		emit gstPlayerStopped();
+		break;
+	default:
+		break;
 	}
 }
