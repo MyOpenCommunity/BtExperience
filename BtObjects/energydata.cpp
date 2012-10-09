@@ -151,40 +151,9 @@ namespace
 
 	double unitConversionFactor(EnergyData::EnergyType type, QString unit)
 	{
-		switch (type)
-		{
-		case EnergyData::Electricity:
-			if (unit == "Kw")
-				return 1000;
-			break;
-		case EnergyData::Water:
-		case EnergyData::Gas:
-		case EnergyData::HotWater:
-			if (unit == "m3")
-				return 1000;
-			if (unit == "l")
-				return 1;
-			if (unit == "dal")
-				return 10;
-			if (unit == "hl")
-				return 100;
-			if (unit == "ft3")
-				return 3.048 * 3.048 * 3.048;
-			if (unit == "yd3")
-				return 9.144 * 9.144 * 9.144;
-			if (unit == "galUS")
-				return 3.785411784;
-			if (unit == "galUK")
-				return 4.54609;
-			break;
-		case EnergyData::Heat:
-			if (unit == "Kw")
-				return 1 / 1.163e-6;
-			if (unit == "cal")
-				return 1;
-			break;
-		}
-		qWarning("Invalid measure unit %s", qPrintable(unit));
+		if (type == EnergyData::Electricity && unit == "Kw")
+			return 1000;
+
 		return 1;
 	}
 
