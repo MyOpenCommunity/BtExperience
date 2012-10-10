@@ -7,6 +7,7 @@ Row {
     id: tableRow
     property string index
     property string value
+    property color valueColor: "white"
     spacing: 5
     height: 24
 
@@ -32,7 +33,7 @@ Row {
             anchors.leftMargin: 10
             text: tableRow.value
             font.pixelSize: 14
-            color: "white"
+            color: tableRow.valueColor
         }
     }
 }
