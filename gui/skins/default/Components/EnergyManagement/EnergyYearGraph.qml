@@ -57,7 +57,6 @@ Item {
         source: "../../images/energy/colonna_year.svg"
     }
 
-
     SvgImage {
         id: previousYearPrototype
         visible: false

@@ -173,7 +173,11 @@ Column {
                                 return "../../images/energy/colonna_verde.svg"
                             }
                         }
-                        height: privateProps.consumptionObj.value / delegate.maxValue * parent.height * privateProps.scaleFactor
+                        height: {
+                            if (!privateProps.consumptionObj.isValid)
+                                return false
+                            return privateProps.consumptionObj.value / delegate.maxValue * parent.height * privateProps.scaleFactor
+                        }
                     }
 
                     SvgImage {
@@ -183,8 +187,10 @@ Column {
                         width: parent.width
                         anchors.top: parent.top
                         anchors.topMargin: {
-                            return parent.height - (privateProps.consumptionObj.consumptionGoal /
-                                                    delegate.maxValue * parent.height * privateProps.scaleFactor)
+                            var goalHeight = 0
+                            if (privateProps.consumptionObj.isValid)
+                                goalHeight = privateProps.consumptionObj.consumptionGoal / delegate.maxValue * parent.height * privateProps.scaleFactor
+                            return parent.height - goalHeight
                         }
                     }
                 }
