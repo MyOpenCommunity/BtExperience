@@ -115,12 +115,6 @@ Item {
         id: vctConnection
         target: null
         onIncomingCall: {
-            // VdeRingtone state should always be enabled to stop multimedia playback during call
-            if (!vctConnection.target.ringExclusion)
-                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(vctConnection.target.ringtone), AudioState.VdeRingtone)
-            else
-                global.audioState.enableState(AudioState.VdeRingtone)
-
             screensaver.stopScreensaver()
             screensaver.isEnabled = false
             Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
@@ -138,23 +132,22 @@ Item {
             global.audioState.disableState(AudioState.IpVideoCall)
             global.audioState.disableState(AudioState.Mute)
         }
+        onRingtoneReceived: {
+            // VdeRingtone state should always be enabled to stop multimedia playback during call
+            if (!vctConnection.target.ringExclusion)
+                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(vctConnection.target.ringtone), AudioState.VdeRingtone)
+            else
+                global.audioState.enableState(AudioState.VdeRingtone)
+        }
     }
 
     Connections {
         id: intercomConnection
         target: null
         onIncomingCall: {
-            // VdeRingtone state should always be enabled to stop multimedia playback during call
-            if (!intercomConnection.target.getRingExclusion())
-                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.VdeRingtone)
-            else
-                global.audioState.enableState(AudioState.VdeRingtone)
-
             screensaver.stopScreensaver()
             screensaver.isEnabled = false
-            Stack.currentPage().installPopup(callPopup)
-            Stack.currentPage().popupLoader.item.dataObject = intercomConnection.target
-            Stack.currentPage().popupLoader.item.state = "callFrom"
+            Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
         }
         onCallAnswered: {
             if (intercomConnection.target.isIpCall)
@@ -162,7 +155,21 @@ Item {
             else
                 global.audioState.enableState(AudioState.ScsIntercomCall)
         }
-        onIncomingFloorCall: {
+        onCallEnded: {
+            enableScreensaver()
+            global.audioState.disableState(AudioState.VdeRingtone)
+            global.audioState.disableState(AudioState.ScsIntercomCall)
+            global.audioState.disableState(AudioState.IpIntercomCall)
+            global.audioState.disableState(AudioState.Mute)
+        }
+        onRingtoneReceived: {
+            // VdeRingtone state should always be enabled to stop multimedia playback during call
+            if (!intercomConnection.target.getRingExclusion())
+                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.VdeRingtone)
+            else
+                global.audioState.enableState(AudioState.VdeRingtone)
+        }
+        onFloorRingtoneReceived: {
             if (!intercomConnection.target.getRingExclusion())
                 global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.FloorCall)
         }
