@@ -31,13 +31,19 @@ Item {
         }
 
         function calculateMaxValue() {
-            var max_data =  Math.max(modelGraph.maxValue, previousGraph.maxValue)
 
-            if (modelGraph.maxConsumptionGoal === undefined)
-                return max_data * 1.1
-            else {
-                return Math.max(max_data, modelGraph.maxConsumptionGoal) * 1.1
+            var maxValue = Math.max(modelGraph.maxValue, previousGraph.maxValue)
+
+            if (energyData.goalsEnabled) {
+                var maxGoal = 0
+
+                for (var i = 0; i < energyData.goals.length; i += 1)
+                    maxGoal = Math.max(maxGoal, energyData.goals[i])
+
+                maxValue = Math.max(maxValue, maxGoal)
             }
+
+            return maxValue * 1.2
         }
 
         property real maxValue: calculateMaxValue()
@@ -130,46 +136,45 @@ Item {
             left: valuesAxis.right
         }
         spacing: privateProps.columnSpacing - (privateProps.hasPreviousYear() ? previousYearPrototype.width + privateProps.previousYearSpacing : 0)
-        Repeater {
-            Item {
-//                Component.onCompleted: { // Debug purpose only
 
-//                    if (privateProps.hasPreviousYear() && privateProps.previousGraph.isValid)
-//                        console.log("Current Value: " + model.modelData.value + " Previous Value:" + privateProps.previousGraph.getGraphBar(index).value +
-//                                    " Goal: " + model.modelData.consumptionGoal)
-//                    else
-//                        console.log("Current Value: " + model.modelData.value + " Goal: " + model.modelData.consumptionGoal)
-//                }
+        Repeater {
+
+            Item {
+                property variant goal: energyData.goals[index]
+                function goalValid() {
+                    return goal !== undefined && goal > 0
+                }
+
 
                 width: columnGraphBg.width + (previusYearBar.visible ? previusYearBar.width + privateProps.previousYearSpacing : 0)
                 height: columnGraphBg.height + columnShadow.height
 
                 Loader {
                     id: columnGraphBg
-                    sourceComponent: (model.modelData.consumptionGoal !== undefined ? columnGraphBgImage : columnGraphBgTransparent)
+                    sourceComponent: goalValid() ? columnGraphBgImage : columnGraphBgTransparent
+
                     anchors {
                         top: parent.top
                         topMargin: 5
                         left: parent.left
                     }
-                }
 
-                Component {
-                    id: columnGraphBgImage
-                    SvgImage {
-                        opacity: 0.200
-                        source: columnPrototype.source
+                    Component {
+                        id: columnGraphBgImage
+                        SvgImage {
+                            opacity: 0.200
+                            source: columnPrototype.source
+                        }
+                    }
+
+                    Component {
+                        id: columnGraphBgTransparent
+                        Item {
+                            width: columnPrototype.width
+                            height: columnPrototype.height
+                        }
                     }
                 }
-
-                Component {
-                    id: columnGraphBgTransparent
-                    Item {
-                        width: columnPrototype.width
-                        height: columnPrototype.height
-                    }
-                }
-
 
                 SvgImage {
                     id: columnShadow
@@ -180,7 +185,7 @@ Item {
 
                 SvgImage {
                     source: {
-                        if (model.modelData.consumptionGoal !== undefined && model.modelData.value > model.modelData.consumptionGoal)
+                        if (goalValid() && model.modelData.value > goal)
                             return "../../images/energy/colonna_year_rosso.svg"
                         return "../../images/energy/colonna_year_verde.svg"
                     }
@@ -201,16 +206,15 @@ Item {
                 }
 
                 SvgImage {
-                    visible: model.modelData.consumptionGoal !== undefined
+                    visible: goalValid()
                     source: "../../images/energy/linea_livello_colonna_year.svg"
 
                     z: 2
                     anchors {
                         left: columnGraphBg.left
                         top: columnGraphBg.top
-                        topMargin: columnGraphBg.height - (model.modelData.consumptionGoal / privateProps.maxValue * columnGraphBg.height)
+                        topMargin: columnGraphBg.height - (goal / privateProps.maxValue * columnGraphBg.height)
                     }
-
                 }
 
                 SvgImage {
@@ -239,10 +243,10 @@ Item {
                     anchors.left: previusYearBar.left
                 }
             }
+
             model: privateProps.modelGraph.graph
         }
     }
-
 
     Item {
         id: periodAxis

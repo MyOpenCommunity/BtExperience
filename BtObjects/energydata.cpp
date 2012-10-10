@@ -590,14 +590,7 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 	}
 
 	for (int i = 0; i < values.count(); ++i)
-	{
-		QVariant goal;
-
-		if (type == CumulativeYearGraph)
-			goal = goals.value(i);
-
-		bars.append(new EnergyGraphBar(i, keys[i], values[i], goal, rate));
-	}
+		bars.append(new EnergyGraphBar(i, keys[i], values[i], rate));
 
 	return bars;
 }
@@ -1003,12 +996,11 @@ QString EnergyItemCurrent::getMeasureUnit() const
 
 
 
-EnergyGraphBar::EnergyGraphBar(QVariant _index, QString _label, QVariant _value, QVariant goal, EnergyRate *_rate)
+EnergyGraphBar::EnergyGraphBar(QVariant _index, QString _label, QVariant _value, EnergyRate *_rate)
 {
 	index = _index;
 	label = _label;
 	value = _value;
-	consumption_goal = goal;
 	rate = _rate;
 
 	if (rate)
@@ -1031,11 +1023,6 @@ QVariant EnergyGraphBar::getValue() const
 		return value;
 	else
 		return value.toDouble() * rate->getRate();
-}
-
-QVariant EnergyGraphBar::getConsumptionGoal() const
-{
-	return consumption_goal;
 }
 
 
@@ -1085,8 +1072,6 @@ bool EnergyGraph::graphEqual(QList<QObject*> first, QList<QObject*> second)
 
 		if (fb->getValue() != sb->getValue())
 			return false;
-		if (fb->getConsumptionGoal() != sb->getConsumptionGoal())
-			return false;
 	}
 
 	return true;
@@ -1107,12 +1092,6 @@ void EnergyGraph::setGraph(QList<QObject *> _graph)
 		EnergyGraphBar *bar = qobject_cast<EnergyGraphBar*>(graph[i]);
 		bar->setParent(this);
 		max = qMax(max, bar->getValue().toDouble());
-
-		if (!bar->getConsumptionGoal().isNull())
-		{
-			if (max_consumption_goal.isNull() || bar->getConsumptionGoal().toDouble() > max_consumption_goal.toDouble())
-				max_consumption_goal = bar->getConsumptionGoal();
-		}
 	}
 
 	if (!valid && isValid())
@@ -1140,10 +1119,5 @@ QObject *EnergyGraph::getGraphBar(int index) const
 QVariant EnergyGraph::getMaxValue() const
 {
 	return max_value;
-}
-
-QVariant EnergyGraph::getMaxConsumptionGoal() const
-{
-	return max_consumption_goal;
 }
 
