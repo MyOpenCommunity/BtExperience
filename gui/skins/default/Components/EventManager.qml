@@ -230,6 +230,9 @@ Item {
 
             // if current page is vct or intercom, pushes PopupPage below it and ends call
             if (p._pageName === "VideoCamera" || p._pageName === "IntercomPage") {
+                // records what is the current call page
+                var callPageName = p._pageName
+
                 // rings alarm
                 global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
 
@@ -243,7 +246,7 @@ Item {
                 // Must stay here because it emits callEnded signal, close is
                 // asynchronous, so some time may pass before page is actually
                 // closed
-                privateProps.endActualCall(p._pageName)
+                privateProps.endActualCall(callPageName)
             }
 
             // if p doesn't point to Popup page, pushes it
