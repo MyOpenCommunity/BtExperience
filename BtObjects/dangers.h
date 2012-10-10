@@ -27,12 +27,12 @@ class StopAndGoDangers : public ObjectInterface
 	/*!
 		\brief Gets the number of opened devices
 	*/
-	Q_PROPERTY(int opened READ getOpenedDevices NOTIFY openedDevices)
+	Q_PROPERTY(int openedDevices READ getOpenedDevices NOTIFY openedDevicesChanged)
 
 	/*!
 		\brief Gets the number of closed devices
 	*/
-	Q_PROPERTY(int closed READ getClosedDevices NOTIFY closedDevices)
+	Q_PROPERTY(int closedDevices READ getClosedDevices NOTIFY closedDevicesChanged)
 
 public:
 	StopAndGoDangers();
@@ -46,8 +46,8 @@ public:
 	int getClosedDevices() const { return closed_devices; }
 
 signals:
-	void openedDevices(int devices_open);
-	void closedDevices(int devices_closed);
+	void openedDevicesChanged(int devices_open);
+	void closedDevicesChanged(int devices_closed);
 	void stopAndGoDeviceChanged(StopAndGo *stopGoDevice);
 
 private slots:

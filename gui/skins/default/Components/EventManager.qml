@@ -15,7 +15,7 @@ Item {
     property bool handsFree: privateProps.vctModel === undefined ? false : privateProps.vctModel.handsFree
     property bool vdeMute: privateProps.vctModel === undefined ? false : privateProps.vctModel.ringExclusion
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
-    property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.opened
+    property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.openedDevices
 
     property int clocks: 0 // TODO link to C++ model!
     property bool scenarioRecording: false // TODO link to C++ model and check if property exists!

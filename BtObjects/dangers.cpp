@@ -68,12 +68,12 @@ void StopAndGoDangers::updateDangerInfo()
 	if (closed_devices != closed)
 	{
 		closed_devices = closed;
-		emit closedDevices(closed_devices);
+		emit closedDevicesChanged(closed_devices);
 	}
 
 	if (opened_devices != opened)
 	{
 		opened_devices = opened;
-		emit openedDevices(opened_devices);
+		emit openedDevicesChanged(opened_devices);
 	}
 }
