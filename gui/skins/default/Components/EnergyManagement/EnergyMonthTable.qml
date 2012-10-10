@@ -1,7 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
-import Components.Text 1.0
 
 Item {
     property bool showCurrency
@@ -136,7 +135,6 @@ Item {
         }
 
         Repeater {
-
             model: 11 + 1
             delegate: Loader {
                 property int offset: 20
