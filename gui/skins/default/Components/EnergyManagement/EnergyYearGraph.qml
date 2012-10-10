@@ -150,7 +150,7 @@ Item {
 
                 Loader {
                     id: columnGraphBg
-                    sourceComponent: goalValid() ? columnGraphBgImage : columnGraphBgTransparent
+                    sourceComponent: energyData.goalsEnabled && goalValid() ? columnGraphBgImage : columnGraphBgTransparent
 
                     anchors {
                         top: parent.top
@@ -184,7 +184,7 @@ Item {
 
                 SvgImage {
                     source: {
-                        if (goalValid() && model.modelData.value > goal)
+                        if (energyData.goalsEnabled && goalValid() && model.modelData.value > goal)
                             return "../../images/energy/colonna_year_rosso.svg"
                         return "../../images/energy/colonna_year_verde.svg"
                     }
@@ -205,7 +205,7 @@ Item {
                 }
 
                 SvgImage {
-                    visible: goalValid()
+                    visible: energyData.goalsEnabled && goalValid()
                     source: "../../images/energy/linea_livello_colonna_year.svg"
 
                     z: 2
