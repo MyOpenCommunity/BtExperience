@@ -175,7 +175,7 @@ Column {
                         }
                         height: {
                             if (!privateProps.consumptionObj.isValid)
-                                return false
+                                return 0
                             return privateProps.consumptionObj.value / delegate.maxValue * parent.height * privateProps.scaleFactor
                         }
                     }
