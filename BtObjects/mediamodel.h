@@ -167,7 +167,7 @@ class MediaModel : public QSortFilterProxyModel
 	Q_PROPERTY(int rangeCount READ getRangeCount NOTIFY countChanged)
 
 public:
-	MediaModel();
+	MediaModel(QObject * parent = 0);
 
 	/*!
 		\brief Returns the specified item

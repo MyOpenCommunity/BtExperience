@@ -28,7 +28,8 @@ void ObjectModel::setGlobalSource(ObjectDataModel *model)
 	global_source = model;
 }
 
-ObjectModel::ObjectModel()
+ObjectModel::ObjectModel(QObject *parent)
+	: MediaModel(parent)
 {
 	Q_ASSERT_X(global_source, "ObjectModel::ObjectModel", "global source model not set!");
 	setSource(global_source);
