@@ -391,10 +391,6 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	if (cached)
 		val = (*cached)[0];
 
-	QVariant goal;
-
-	if (type == CumulativeMonthValue)
-		goal = goals.value(date.month() - 1);
 
 	EnergyItem *value;
 
