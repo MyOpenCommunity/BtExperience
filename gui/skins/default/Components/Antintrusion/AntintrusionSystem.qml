@@ -35,8 +35,6 @@ MenuColumn {
     // redefined to implement menu navigation
     function openMenu(navigationTarget) {
         if (navigationTarget === "AlarmLog") {
-            // last menu to open, resets navigationTarget
-            column.pageObject.navigationTarget = 0
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1
             privateProps.showAlarmLog()

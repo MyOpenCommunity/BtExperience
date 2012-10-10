@@ -15,7 +15,7 @@ Item {
     property bool handsFree: privateProps.vctModel === undefined ? false : privateProps.vctModel.handsFree
     property bool vdeMute: privateProps.vctModel === undefined ? false : privateProps.vctModel.ringExclusion
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
-    property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.opened
+    property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.openedDevices
 
     property int clocks: 0 // TODO link to C++ model!
     property bool scenarioRecording: false // TODO link to C++ model and check if property exists!
@@ -87,6 +87,7 @@ Item {
                     privateProps.messagesModel = obj
                     break
                 case ObjectInterface.IdDangers:
+                    stopAndGoConnection.target = obj
                     privateProps.dangersModel = obj
                     break
                 }
@@ -120,7 +121,6 @@ Item {
             else
                 global.audioState.enableState(AudioState.VdeRingtone)
 
-            console.log("EventManager::vctIncomingCall")
             screensaver.stopScreensaver()
             screensaver.isEnabled = false
             Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
@@ -172,10 +172,43 @@ Item {
         id: antintrusionConnection
         target: null
         onNewAlarm: {
-            // we generate a screensaver "event" every time an alarm arrives
+            var p = privateProps.preparePopupPage()
+            // adds antintrusion alarm
+            p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
+        }
+    }
+
+    Connections {
+        id: stopAndGoConnection
+        target: null
+        onStopAndGoDeviceChanged: {
+            var p = privateProps.preparePopupPage()
+            // adds stop&go alarm
+            p.addStopAndGoPopup(stopGoDevice)
+        }
+    }
+
+    QtObject {
+        id: privateProps
+
+        property variant antintrusionModel: undefined
+        property variant messagesModel: undefined
+        property variant vctModel: undefined
+        property variant dangersModel: undefined
+
+        // prepares the popup page to show a popup
+        //
+        // when a popup arrives, we need show it, but only under certain
+        // conditions; if those conditions are not met we must put the popup
+        // page under the current page and add them to it: when the page above closes
+        // the popup page will automagically appear showing all popups
+        function preparePopupPage() {
+            // we generate a screensaver "event" every time a popup arrives
             eventManager.screensaverEvent()
 
-            // gets current page
+            // gets current page (if popups are still to be managed we assume
+            // popup page is at the top of the stack; exceptions will be treated
+            // separately in subsequent ifs)
             var p = Stack.currentPage()
 
             // if current page is vct, pushes PopupPage below it and ends call
@@ -190,7 +223,9 @@ Item {
                 // gets popup page
                 p = Stack.findPage("PopupPage")
 
-                // Must stay here because it emits callEnded signal.
+                // Must stay here because it emits callEnded signal, close is
+                // asynchronous, so some time may pass before page is actually
+                // closed
                 privateProps.vctModel.endCall()
             }
 
@@ -198,17 +233,8 @@ Item {
             if (p._pageName !== "PopupPage")
                 p = Stack.pushPage("PopupPage.qml")
 
-            // finally, adds alarm
-            p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
+            // returns pointer to PopupPage
+            return p
         }
-    }
-
-    QtObject {
-        id: privateProps
-
-        property variant antintrusionModel: undefined
-        property variant messagesModel: undefined
-        property variant vctModel: undefined
-        property variant dangersModel: undefined
     }
 }

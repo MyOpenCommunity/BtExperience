@@ -332,7 +332,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_energy_p.svg" :
                               "../images/toolbar/icon_energy.svg"
-            onClicked: console.log("dangerButton clicked")
+            onClicked: Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
         }
 
     }

@@ -3,6 +3,8 @@
 #include "xmlobject.h"
 #include "devices_cache.h"
 
+#include <QDebug>
+
 
 namespace
 {
@@ -83,7 +85,7 @@ void StopAndGo::valueReceived(const DeviceValues &values_list)
 	if (st != status)
 	{
 		status = st;
-		emit statusChanged();
+		emit statusChanged(this);
 	}
 
 	bool active = !values_list[StopAndGoDevice::DIM_AUTORESET_DISACTIVE].toBool();

@@ -9,6 +9,16 @@ QtObject {
     function _init(container) {
         container['ENERGY_TYPE'] = []
         container['ENERGY_UNIT'] = []
+        container['STOP_GO_STATUS'] = []
+
+        // stop&go status translations
+        container['STOP_GO_STATUS'][StopAndGo.Unknown] = qsTr("Unknown")
+        container['STOP_GO_STATUS'][StopAndGo.Closed] = qsTr("Closed")
+        container['STOP_GO_STATUS'][StopAndGo.Opened] = qsTr("Opened")
+        container['STOP_GO_STATUS'][StopAndGo.Locked] = qsTr("Locked")
+        container['STOP_GO_STATUS'][StopAndGo.ShortCircuit] = qsTr("ShortCircuit")
+        container['STOP_GO_STATUS'][StopAndGo.GroundFail] = qsTr("GroundFail")
+        container['STOP_GO_STATUS'][StopAndGo.Overtension] = qsTr("Overtension")
 
         // "normal" strings
         container['ENERGY_TYPE']["Consumption Management"] = qsTr("Consumption Management")

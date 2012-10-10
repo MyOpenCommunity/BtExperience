@@ -43,6 +43,7 @@ var ALARM_LOG = 1
 var HANDS_FREE = 2
 var AUTO_OPEN = 3
 var VDE_MUTE = 4
+var SUPERVISION = 5
 
 var _paths = []
 
@@ -52,6 +53,7 @@ function _init(paths) {
     paths[HANDS_FREE] = ["Systems", "VDE", "HandsFree"]
     paths[AUTO_OPEN] = ["Systems", "VDE", "AutoOpen"]
     paths[VDE_MUTE] = ["Systems", "VDE", "VdeMute"]
+    paths[SUPERVISION] = ["Supervision"]
 }
 
 // returns a string indicating where to navigate
