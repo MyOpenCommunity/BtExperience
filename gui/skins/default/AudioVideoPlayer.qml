@@ -463,7 +463,7 @@ Page {
         Stack.backToMultimedia()
     }
 
-    Component.onCompleted: player.mediaPlayer.upnp ?
+    Component.onCompleted: player.upnp ?
                                player.mediaPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count) :
                                player.mediaPlayer.generatePlaylistLocal(player.model, player.index, player.model.count)
     Component.onDestruction: {
