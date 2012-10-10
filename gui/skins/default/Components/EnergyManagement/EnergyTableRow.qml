@@ -5,7 +5,7 @@ import Components.Text 1.0
 
 Row {
     id: tableRow
-    property int index
+    property string index
     property string value
     spacing: 5
     height: 24

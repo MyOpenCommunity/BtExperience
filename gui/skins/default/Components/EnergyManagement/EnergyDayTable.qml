@@ -10,7 +10,7 @@ Item {
     QtObject {
         id: privateProps
         property int horizontalSpacing: 15
-        property variant modelGraph: energyData.getGraph(EnergyData.CumulativeMonthGraph, graphDate,
+        property variant modelGraph: energyData.getGraph(EnergyData.CumulativeDayGraph, graphDate,
                                                          showCurrency ? EnergyData.Currency : EnergyData.Consumption)
 
         function isRowValid(i) {
@@ -19,7 +19,7 @@ Item {
 
         function getRowIndex(i) {
             if (isRowValid(i))
-                return privateProps.modelGraph.graph[i].index + 1
+                return privateProps.modelGraph.graph[i].index
             return ""
         }
 
@@ -31,7 +31,7 @@ Item {
         }
     }
 
-    height: 350 // required to make the separator line works
+    height: 280 // required to make the separator line works
 
     Column {
         id: firstColumn
@@ -43,7 +43,7 @@ Item {
         }
 
         Repeater {
-            model: 10 + 1
+            model: 8 + 1
             delegate: Loader {
                 property int offset: 0
                 sourceComponent: model.index === 0 ? tableHeaderComponent : tableRowComponent
@@ -59,7 +59,7 @@ Item {
                 Component {
                     id: tableHeaderComponent
                     EnergyTableHeader {
-                        label: qsTr("day")
+                        label: qsTr("hour")
                         unitMeasure: energyData.cumulativeUnit
                     }
                 }
@@ -89,9 +89,9 @@ Item {
         }
 
         Repeater {
-            model: 10 + 1
+            model: 8 + 1
             delegate: Loader {
-                property int offset: 10
+                property int offset: 8
                 sourceComponent: model.index === 0 ? tableHeaderComponent2 : tableRowComponent2
 
                 Component {
@@ -105,7 +105,7 @@ Item {
                 Component {
                     id: tableHeaderComponent2
                     EnergyTableHeader {
-                        label: qsTr("day")
+                        label: qsTr("hour")
                         unitMeasure: energyData.cumulativeUnit
                     }
                 }
@@ -135,18 +135,11 @@ Item {
         }
 
         Repeater {
-            model: 11 + 1
+            model: 8 + 1
             delegate: Loader {
-                property int offset: 20
+                property int offset: 16
 
-                sourceComponent: {
-                    if (model.index === 0)
-                        return tableHeaderComponent3
-                    else if (model.index - 1 + offset < privateProps.modelGraph.graph.length)
-                        return tableRowComponent3
-
-                    return undefined
-                }
+                sourceComponent: model.index === 0 ? tableHeaderComponent3 : tableRowComponent3
 
                 Component {
                     id: tableRowComponent3
@@ -159,7 +152,7 @@ Item {
                 Component {
                     id: tableHeaderComponent3
                     EnergyTableHeader {
-                        label: qsTr("day")
+                        label: qsTr("hour")
                         unitMeasure: energyData.cumulativeUnit
                     }
                 }
@@ -167,4 +160,5 @@ Item {
         }
     }
 }
+
 

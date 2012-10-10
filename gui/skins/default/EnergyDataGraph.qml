@@ -110,7 +110,7 @@ Page {
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        graphLoader.setComponent(privateProps.showTable ? energyDayGraphComponent : energyDayGraphComponent)
+                        graphLoader.setComponent(privateProps.showTable ? energyDayTableComponent : energyDayGraphComponent)
                     }
                 }
                 ButtonThreeStates {
@@ -148,7 +148,7 @@ Page {
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        graphLoader.setComponent(privateProps.showTable ? energyYearGraphComponent : energyYearGraphComponent)
+                        graphLoader.setComponent(privateProps.showTable ? energyYearTableComponent : energyYearGraphComponent)
                     }
                 }
             }
@@ -202,9 +202,9 @@ Page {
                                 if (page.state == "")
                                     graphLoader.setComponent(energyMonthTableComponent)
                                 else if (page.state == "day")
-                                    graphLoader.setComponent(energyDayGraphComponent)
+                                    graphLoader.setComponent(energyDayTableComponent)
                                 else // year
-                                    graphLoader.setComponent(energyYearGraphComponent)
+                                    graphLoader.setComponent(energyYearTableComponent)
                             }
                         }
                     }
@@ -294,8 +294,26 @@ Page {
             }
 
             Component {
+                id: energyYearTableComponent
+                EnergyYearTable {
+                    showCurrency: privateProps.showCurrency
+                    graphDate: dateSelector.yearDate
+                    energyData: page.energyData
+                }
+            }
+
+            Component {
                 id: energyDayGraphComponent
                 EnergyDayGraph {
+                    showCurrency: privateProps.showCurrency
+                    graphDate: dateSelector.dayDate
+                    energyData: page.energyData
+                }
+            }
+
+            Component {
+                id: energyDayTableComponent
+                EnergyDayTable {
                     showCurrency: privateProps.showCurrency
                     graphDate: dateSelector.dayDate
                     energyData: page.energyData
