@@ -36,7 +36,8 @@ StopAndGoDangers::StopAndGoDangers()
 		StopAndGo *stopGo = qobject_cast<StopAndGo *>(item);
 		if (!stopGo)
 			continue;
-		connect(stopGo, SIGNAL(statusChanged()), this, SLOT(updateDangerInfo()));
+		connect(stopGo, SIGNAL(statusChanged(StopAndGo *)), this, SLOT(updateDangerInfo()));
+		connect(stopGo, SIGNAL(statusChanged(StopAndGo *)), this, SIGNAL(stopAndGoDeviceChanged(StopAndGo *)));
 	}
 
 	// inits everything

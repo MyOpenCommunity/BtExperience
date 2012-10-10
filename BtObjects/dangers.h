@@ -7,6 +7,7 @@
 
 
 class ObjectModel;
+class StopAndGo;
 
 
 /*!
@@ -47,6 +48,7 @@ public:
 signals:
 	void openedDevices(int devices_open);
 	void closedDevices(int devices_closed);
+	void stopAndGoDeviceChanged(StopAndGo *stopGoDevice);
 
 private slots:
 	void updateDangerInfo();

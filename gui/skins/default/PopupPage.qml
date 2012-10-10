@@ -54,11 +54,25 @@ BasePage {
         privateProps.update(PopupLogic.addAlarmPopup(t, z, dt))
     }
 
+    function addStopAndGoPopup(device) {
+        if (device.status === StopAndGo.Unknown || device.status === StopAndGo.Closed) // not interesting
+            return
+
+        // rings the bell
+        global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
+
+        // status description
+        var t = privateProps.energyManagementNames.get('STOP_GO_STATUS', device.status)
+
+        privateProps.update(PopupLogic.addStopAndGoPopup(device.name, t))
+    }
+
     // needed to translate antintrusion names in alarm popups
     QtObject {
         id: privateProps
 
         property QtObject antintrusionNames: AntintrusionNames {}
+        property QtObject energyManagementNames: EnergyManagementNames {}
 
         function navigate(data) {
             if (data === "") {
@@ -70,6 +84,11 @@ BasePage {
             if (data === "Antintrusion") {
                 popupLoader.sourceComponent = undefined
                 Stack.goToPage("Antintrusion.qml", {"navigationTarget": Navigation.ALARM_LOG})
+            }
+
+            if (data === "Supervision") {
+                popupLoader.sourceComponent = undefined
+                Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
             }
         }
 

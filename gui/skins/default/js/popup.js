@@ -19,7 +19,7 @@ function addAlarmPopup(type, zone, dateTime) {
     var data = []
 
     data["_kind"] = "alarm"
-    data["title"] = qsTr("Alarm!")
+    data["title"] = qsTr("ANTINTRUSION")
 
     data["line1"] = dateTime
 
@@ -29,6 +29,32 @@ function addAlarmPopup(type, zone, dateTime) {
     data["line2"] = msg
 
     data["line3"] = ""
+    data["confirmText"] = qsTr("Confirm")
+    data["dismissText"] = qsTr("Dismiss")
+
+    _alarmPopups.push(data)
+
+    return data
+}
+
+/**
+  * Adds a stop&go alarm to list of alarm popups
+  *
+  * Adds a stop&go alarm to the stack of alarm popups and returns the last one
+  *
+  * descr: translated text of stop&go description
+  * status: enum that corresponds to the kind of alarm
+  */
+function addStopAndGoPopup(descr, status) {
+    var data = []
+
+    data["_kind"] = "stop&go"
+    data["title"] = qsTr("SUPERVISION")
+
+    data["line1"] = descr
+    data["line2"] = status
+    data["line3"] = ""
+
     data["confirmText"] = qsTr("Confirm")
     data["dismissText"] = qsTr("Dismiss")
 
@@ -51,6 +77,11 @@ function confirm() {
     if (p["_kind"] === "alarm") {
         _alarmPopups = []
         return "Antintrusion"
+    }
+
+    if (p["_kind"] === "stop&go") {
+        _alarmPopups = []
+        return "Supervision"
     }
 
     return ""

@@ -79,7 +79,7 @@ public:
 	void setAutoReset(bool active);
 
 signals:
-	void statusChanged();
+	void statusChanged(StopAndGo *stopGoDevice);
 	void autoResetChanged();
 
 protected slots:
