@@ -18,6 +18,10 @@ CONFIG   -= app_bundle
 CONFIG += debug
 CONFIG -= release
 
+# Add gstreamer by default, it's needed for video playback
+CONFIG += link_pkgconfig
+PKGCONFIG += gstreamer-0.10
+
 QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter
 
 TEMPLATE = app
