@@ -172,33 +172,8 @@ Item {
         id: antintrusionConnection
         target: null
         onNewAlarm: {
-            // we generate a screensaver "event" every time an alarm arrives
-            eventManager.screensaverEvent()
-
-            // gets current page
-            var p = Stack.currentPage()
-
-            // if current page is vct, pushes PopupPage below it and ends call
-            if (p._pageName === "VideoCamera") {
-                // rings alarm
-                global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
-
-                // eventually pushes popup page below vct page (vct close is asynchronous)
-                if (Stack.findPage("PopupPage") === null)
-                    Stack.pushPageBelow("PopupPage.qml")
-
-                // gets popup page
-                p = Stack.findPage("PopupPage")
-
-                // Must stay here because it emits callEnded signal.
-                privateProps.vctModel.endCall()
-            }
-
-            // if p doesn't point to Popup page, pushes it
-            if (p._pageName !== "PopupPage")
-                p = Stack.pushPage("PopupPage.qml")
-
-            // finally, adds alarm
+            var p = privateProps.preparePopupPage()
+            // adds antintrusion alarm
             p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
         }
     }
@@ -207,33 +182,8 @@ Item {
         id: stopAndGoConnection
         target: null
         onStopAndGoDeviceChanged: {
-            // we generate a screensaver "event" every time an alarm arrives
-            eventManager.screensaverEvent()
-
-            // gets current page
-            var p = Stack.currentPage()
-
-            // if current page is vct, pushes PopupPage below it and ends call
-            if (p._pageName === "VideoCamera") {
-                // rings alarm
-                global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
-
-                // eventually pushes popup page below vct page (vct close is asynchronous)
-                if (Stack.findPage("PopupPage") === null)
-                    Stack.pushPageBelow("PopupPage.qml")
-
-                // gets popup page
-                p = Stack.findPage("PopupPage")
-
-                // Must stay here because it emits callEnded signal.
-                privateProps.vctModel.endCall()
-            }
-
-            // if p doesn't point to Popup page, pushes it
-            if (p._pageName !== "PopupPage")
-                p = Stack.pushPage("PopupPage.qml")
-
-            // finally, adds alarm
+            var p = privateProps.preparePopupPage()
+            // adds stop&go alarm
             p.addStopAndGoPopup(stopGoDevice)
         }
     }
@@ -245,5 +195,46 @@ Item {
         property variant messagesModel: undefined
         property variant vctModel: undefined
         property variant dangersModel: undefined
+
+        // prepares the popup page to show a popup
+        //
+        // when a popup arrives, we need show it, but only under certain
+        // conditions; if those conditions are not met we must put the popup
+        // page under the current page and add them to it: when the page above closes
+        // the popup page will automagically appear showing all popups
+        function preparePopupPage() {
+            // we generate a screensaver "event" every time a popup arrives
+            eventManager.screensaverEvent()
+
+            // gets current page (if popups are still to be managed we assume
+            // popup page is at the top of the stack; exceptions will be treated
+            // separately in subsequent ifs)
+            var p = Stack.currentPage()
+
+            // if current page is vct, pushes PopupPage below it and ends call
+            if (p._pageName === "VideoCamera") {
+                // rings alarm
+                global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
+
+                // eventually pushes popup page below vct page (vct close is asynchronous)
+                if (Stack.findPage("PopupPage") === null)
+                    Stack.pushPageBelow("PopupPage.qml")
+
+                // gets popup page
+                p = Stack.findPage("PopupPage")
+
+                // Must stay here because it emits callEnded signal, close is
+                // asynchronous, so some time may pass before page is actually
+                // closed
+                privateProps.vctModel.endCall()
+            }
+
+            // if p doesn't point to Popup page, pushes it
+            if (p._pageName !== "PopupPage")
+                p = Stack.pushPage("PopupPage.qml")
+
+            // returns pointer to PopupPage
+            return p
+        }
     }
 }
