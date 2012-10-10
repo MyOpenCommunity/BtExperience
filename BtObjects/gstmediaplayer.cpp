@@ -46,7 +46,18 @@ bool GstMediaPlayer::play(QString track)
 void GstMediaPlayer::setTrack(QString track)
 {
 	// Get URI
-	QUrl uri = QUrl::fromLocalFile(track);
+	// Assume that the file is either an absolute path of a local file or
+	// an http stream from a media server
+	QUrl uri;
+	if (track.startsWith('/'))
+		uri.fromLocalFile(track);
+	else if (track.startsWith("http"))
+		uri = QUrl(track);
+	else
+	{
+		qWarning() << "GstMediaPlayer::setTrack(), track is not an absolute path or an http uri";
+		return;
+	}
 
 	GstState saved_state;
 	gst_element_get_state(GST_ELEMENT(pipeline), &saved_state, NULL, 0);
