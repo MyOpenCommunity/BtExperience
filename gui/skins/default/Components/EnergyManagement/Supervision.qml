@@ -48,7 +48,7 @@ MenuColumn {
 
     Component.onCompleted: {
         // last menu to open, resets navigationTarget
-        column.pageObject.navigationTarget = 0
+        element.pageObject.navigationTarget = 0
     }
 
     QtObject {
