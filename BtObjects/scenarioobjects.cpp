@@ -245,7 +245,7 @@ void ScenarioModule::changeStatus(ScenarioModule::Status new_status)
 {
 	// Please notice: you need to check if new_status == status outside!
 	status = new_status;
-	emit statusChanged();
+	emit statusChanged(this);
 }
 
 

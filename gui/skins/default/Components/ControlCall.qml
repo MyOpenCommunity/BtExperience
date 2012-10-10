@@ -18,7 +18,7 @@ SvgImage {
     onDataObjectChanged: {
         if (dataObject !== undefined) {
             dataObject.callAnswered.connect(privateProps.callAnswered)
-            dataObject.callEnded.connect(privateProps.callEnding)
+            dataObject.callEnded.connect(callEndedCallback)
             connDataObject.target = dataObject
         }
     }
@@ -215,6 +215,10 @@ SvgImage {
             }
         }
     ]
+
+    function callEndedCallback() {
+        privateProps.callEnding()
+    }
 
     QtObject {
         id: privateProps

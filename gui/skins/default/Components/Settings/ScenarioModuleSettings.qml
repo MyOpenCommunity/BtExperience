@@ -22,8 +22,7 @@ MenuColumn {
         id: privateProps
 
         property int errorTimeout: 2000
-        property int isProgramming: column.dataModel.status === ScenarioModule.Editing ?
-                                        true : false
+        property int isProgramming: column.dataModel.status === ScenarioModule.Editing
 
         function startClicked() {
             switch (column.dataModel.status)

@@ -79,7 +79,7 @@ class ObjectModel : public MediaModel
 	Q_PROPERTY(QVariantList filters READ getFilters WRITE setFilters NOTIFY filtersChanged)
 
 public:
-	ObjectModel();
+	ObjectModel(QObject * parent = 0);
 	static void setGlobalSource(ObjectDataModel *model);
 
 	// The filters argument is a QVariantList in order to set them from qml. The real

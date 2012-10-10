@@ -108,7 +108,7 @@ public slots:
 	void deleteScenario();
 
 signals:
-	void statusChanged();
+	void statusChanged(ScenarioModule *scenario);
 
 private slots:
 	void valueReceived(const DeviceValues &values_list);

@@ -224,6 +224,7 @@ signals:
 	void callAnswered();
 	void isIpCallChanged();
 	void ringtoneChanged();
+	void ringtoneReceived();
 	void autoSwitchChanged();
 	void handsFreeChanged();
 	void ringExclusionChanged();
@@ -312,11 +313,12 @@ public:
 
 signals:
 	void incomingCall();
-	void incomingFloorCall();
 	void callEnded();
 	void talkerChanged();
 	void callAnswered();
 	void ringtoneChanged();
+	void ringtoneReceived();
+	void floorRingtoneReceived();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);

@@ -361,8 +361,6 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::VCT_CALL:
 		case VideoDoorEntryDevice::AUTO_VCT_CALL:
 			qDebug() << "Received VCT_(AUTO)_CALL";
-			if (values_list.contains(VideoDoorEntryDevice::RINGTONE))
-				setRingtone(values_list[VideoDoorEntryDevice::RINGTONE].toInt());
 			// TODO: many many other things...but this should be enough for now.
 			if (call_stopped && it.key() == VideoDoorEntryDevice::VCT_CALL)
 			{
@@ -408,6 +406,7 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::RINGTONE:
 			qDebug() << "Received VideoDoorEntryDevice::RINGTONE" << *it;
 			setRingtone(it.value().toInt());
+			emit ringtoneReceived();
 			break;
 		default:
 			qDebug() << "CCTV::valueReceived, unhandled value" << it.key() << *it;
@@ -557,8 +556,6 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 		{
 		case VideoDoorEntryDevice::INTERCOM_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::INTERCOM_CALL";
-			if (values_list.contains(VideoDoorEntryDevice::RINGTONE))
-				setRingtone(values_list[VideoDoorEntryDevice::RINGTONE].toInt());
 			// TODO: many many other things...but this should be enough for now.
 			emit incomingCall();
 			activateCall();
@@ -585,12 +582,16 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			setTalkerFromWhere(it.value().toString());
 			break;
 		case VideoDoorEntryDevice::RINGTONE:
+		{
 			qDebug() << "Received VideoDoorEntryDevice::RINGTONE" << *it;
-			setRingtone(it.value().toInt());
-
-			if (it.value().toInt() == VideoDoorEntryDevice::FLOORCALL)
-				emit incomingFloorCall();
+			int rt = it.value().toInt();
+			setRingtone(rt);
+			if (VideoDoorEntryDevice::FLOORCALL == rt)
+				emit floorRingtoneReceived();
+			else
+				emit ringtoneReceived();
 			break;
+		}
 		default:
 			qDebug() << "Intercom::valueReceived, unhandled value" << it.key() << *it;
 			break;

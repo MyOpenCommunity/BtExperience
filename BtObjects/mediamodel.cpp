@@ -111,7 +111,8 @@ ItemInterface *MediaDataModel::getObject(int row) const
 	Calling reset() before <filter>Changed() is not a strict requirement, but it makes behaviour
 	less surprising for users that want to do something in an on<filter>Changed QML handler.
 */
-MediaModel::MediaModel()
+MediaModel::MediaModel(QObject *parent)
+	: QSortFilterProxyModel(parent)
 {
 	min_range = -1;
 	max_range = -1;

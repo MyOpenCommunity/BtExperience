@@ -10,7 +10,7 @@ StopAndGoDangers::StopAndGoDangers()
 	closed_devices = opened_devices = 0;
 
 	// creates an ObjectModel to select stop&go objects
-	stop_go_model = new ObjectModel();
+	stop_go_model = new ObjectModel(this);
 	QVariantList filters;
 	QVariantMap filter;
 
@@ -34,8 +34,7 @@ StopAndGoDangers::StopAndGoDangers()
 	{
 		ItemInterface *item = stop_go_model->getObject(i);
 		StopAndGo *stopGo = qobject_cast<StopAndGo *>(item);
-		if (!stopGo)
-			continue;
+		Q_ASSERT_X(stopGo, __PRETTY_FUNCTION__, "Unexpected NULL object");
 		connect(stopGo, SIGNAL(statusChanged(StopAndGo *)), this, SLOT(updateDangerInfo()));
 		connect(stopGo, SIGNAL(statusChanged(StopAndGo *)), this, SIGNAL(stopAndGoDeviceChanged(StopAndGo *)));
 	}
@@ -55,8 +54,7 @@ void StopAndGoDangers::updateDangerInfo()
 		ItemInterface *item = stop_go_model->getObject(i);
 		StopAndGo *stopGo = qobject_cast<StopAndGo *>(item);
 
-		if (!stopGo)
-			continue;
+		Q_ASSERT_X(stopGo, __PRETTY_FUNCTION__, "Unexpected NULL object");
 
 		StopAndGo::Status st = stopGo->getStatus();
 		if (st == StopAndGo::Closed || st == StopAndGo::Unknown)

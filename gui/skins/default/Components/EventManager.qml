@@ -16,9 +16,9 @@ Item {
     property bool vdeMute: privateProps.vctModel === undefined ? false : privateProps.vctModel.ringExclusion
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
     property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.openedDevices
+    property bool scenarioRecording: privateProps.recordingModel === undefined ? false : privateProps.recordingModel.recording
 
     property int clocks: 0 // TODO link to C++ model!
-    property bool scenarioRecording: false // TODO link to C++ model and check if property exists!
     property bool playing: false // TODO link to C++ model and check if property exists!
     property bool mute: false // TODO link to C++ model and check if property exists!
 
@@ -66,7 +66,8 @@ Item {
             {objectId: ObjectInterface.IdIntercom},
             {objectId: ObjectInterface.IdAntintrusionSystem},
             {objectId: ObjectInterface.IdMessages},
-            {objectId: ObjectInterface.IdDangers}
+            {objectId: ObjectInterface.IdDangers},
+            {objectId: ObjectInterface.IdScenarioModulesNotifier}
         ]
         Component.onCompleted: {
             for (var i = 0; i < listModel.count; ++i) {
@@ -89,6 +90,9 @@ Item {
                 case ObjectInterface.IdDangers:
                     stopAndGoConnection.target = obj
                     privateProps.dangersModel = obj
+                    break
+                case ObjectInterface.IdScenarioModulesNotifier:
+                    privateProps.recordingModel = obj
                     break
                 }
             }
@@ -115,12 +119,6 @@ Item {
         id: vctConnection
         target: null
         onIncomingCall: {
-            // VdeRingtone state should always be enabled to stop multimedia playback during call
-            if (!vctConnection.target.ringExclusion)
-                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(vctConnection.target.ringtone), AudioState.VdeRingtone)
-            else
-                global.audioState.enableState(AudioState.VdeRingtone)
-
             screensaver.stopScreensaver()
             screensaver.isEnabled = false
             Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
@@ -138,23 +136,22 @@ Item {
             global.audioState.disableState(AudioState.IpVideoCall)
             global.audioState.disableState(AudioState.Mute)
         }
+        onRingtoneReceived: {
+            // VdeRingtone state should always be enabled to stop multimedia playback during call
+            if (!vctConnection.target.ringExclusion)
+                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(vctConnection.target.ringtone), AudioState.VdeRingtone)
+            else
+                global.audioState.enableState(AudioState.VdeRingtone)
+        }
     }
 
     Connections {
         id: intercomConnection
         target: null
         onIncomingCall: {
-            // VdeRingtone state should always be enabled to stop multimedia playback during call
-            if (!intercomConnection.target.getRingExclusion())
-                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.VdeRingtone)
-            else
-                global.audioState.enableState(AudioState.VdeRingtone)
-
             screensaver.stopScreensaver()
             screensaver.isEnabled = false
-            Stack.currentPage().installPopup(callPopup)
-            Stack.currentPage().popupLoader.item.dataObject = intercomConnection.target
-            Stack.currentPage().popupLoader.item.state = "callFrom"
+            Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
         }
         onCallAnswered: {
             if (intercomConnection.target.isIpCall)
@@ -162,7 +159,21 @@ Item {
             else
                 global.audioState.enableState(AudioState.ScsIntercomCall)
         }
-        onIncomingFloorCall: {
+        onCallEnded: {
+            enableScreensaver()
+            global.audioState.disableState(AudioState.VdeRingtone)
+            global.audioState.disableState(AudioState.ScsIntercomCall)
+            global.audioState.disableState(AudioState.IpIntercomCall)
+            global.audioState.disableState(AudioState.Mute)
+        }
+        onRingtoneReceived: {
+            // VdeRingtone state should always be enabled to stop multimedia playback during call
+            if (!intercomConnection.target.getRingExclusion())
+                global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.VdeRingtone)
+            else
+                global.audioState.enableState(AudioState.VdeRingtone)
+        }
+        onFloorRingtoneReceived: {
             if (!intercomConnection.target.getRingExclusion())
                 global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.FloorCall)
         }
@@ -195,6 +206,17 @@ Item {
         property variant messagesModel: undefined
         property variant vctModel: undefined
         property variant dangersModel: undefined
+        property variant recordingModel: undefined
+
+        // ends the right call type
+        function endActualCall(pagename) {
+            if (pagename === "VideoCamera")
+                if (vctConnection.target)
+                    vctConnection.target.endCall()
+            if (pagename === "IntercomPage")
+                if (intercomConnection.target)
+                    intercomConnection.target.endCall()
+        }
 
         // prepares the popup page to show a popup
         //
@@ -211,8 +233,11 @@ Item {
             // separately in subsequent ifs)
             var p = Stack.currentPage()
 
-            // if current page is vct, pushes PopupPage below it and ends call
-            if (p._pageName === "VideoCamera") {
+            // if current page is vct or intercom, pushes PopupPage below it and ends call
+            if (p._pageName === "VideoCamera" || p._pageName === "IntercomPage") {
+                // records what is the current call page
+                var callPageName = p._pageName
+
                 // rings alarm
                 global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
 
@@ -226,7 +251,7 @@ Item {
                 // Must stay here because it emits callEnded signal, close is
                 // asynchronous, so some time may pass before page is actually
                 // closed
-                privateProps.vctModel.endCall()
+                privateProps.endActualCall(callPageName)
             }
 
             // if p doesn't point to Popup page, pushes it
