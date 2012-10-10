@@ -22,6 +22,7 @@ Page {
     QtObject {
         id: privateProps
         property bool showCurrency: false
+        property bool showTable: false
     }
 
     SvgImage {
@@ -101,15 +102,15 @@ Page {
                     text: qsTr("day")
                     status: 0
                     onClicked: {
-                        if (page.state === "dayGraph")
+                        if (page.state === "day")
                             return
 
-                        page.state = "dayGraph"
+                        page.state = "day"
                         // Change the energy graph is an operation that ideally
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        graphLoader.setComponent(energyDayGraphComponent)
+                        graphLoader.setComponent(privateProps.showTable ? energyDayTableComponent : energyDayGraphComponent)
                     }
                 }
                 ButtonThreeStates {
@@ -126,7 +127,7 @@ Page {
                             return
 
                         page.state = ""
-                        graphLoader.setComponent(energyMonthGraphComponent)
+                        graphLoader.setComponent(privateProps.showTable ? energyMonthTableComponent : energyMonthGraphComponent)
                     }
                 }
                 ButtonThreeStates {
@@ -139,15 +140,15 @@ Page {
                     text: qsTr("year")
                     status: 0
                     onClicked: {
-                        if (page.state === "yearGraph")
+                        if (page.state === "year")
                             return
 
-                        page.state = "yearGraph"
-                        // Change the energy graph is an operation that ideally
+                        page.state = "year"
+                        // Change the energy graph/table is an operation that ideally
                         // should be put inside the state change, but in this way
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
-                        graphLoader.setComponent(energyYearGraphComponent)
+                        graphLoader.setComponent(privateProps.showTable ? energyYearTableComponent : energyYearGraphComponent)
                     }
                 }
             }
@@ -172,8 +173,18 @@ Page {
                         pressedImage: "images/energy/ico_graph_P.svg"
                         selectedImage: "images/energy/ico_graph_P.svg"
                         shadowImage: "images/energy/ombra_btn_value.svg"
-                        status: 1
-                        onClicked: {}
+                        status: privateProps.showTable === false ? 1 : 0
+                        onClicked: {
+                            if (privateProps.showTable) {
+                                privateProps.showTable = false
+                                if (page.state == "")
+                                    graphLoader.setComponent(energyMonthGraphComponent)
+                                else if (page.state == "day")
+                                    graphLoader.setComponent(energyDayGraphComponent)
+                                else // year
+                                    graphLoader.setComponent(energyYearGraphComponent)
+                            }
+                        }
                     }
                     ButtonImageThreeStates {
                         id: tableButton
@@ -184,9 +195,18 @@ Page {
                         pressedImage: "images/energy/ico_table_P.svg"
                         selectedImage: "images/energy/ico_table_P.svg"
                         shadowImage: "images/energy/ombra_btn_value.svg"
-                        status: 0
-                        enabled: false
-                        onClicked: {}
+                        status: privateProps.showTable === true ? 1 : 0
+                        onClicked: {
+                            if (!privateProps.showTable) {
+                                privateProps.showTable = true
+                                if (page.state == "")
+                                    graphLoader.setComponent(energyMonthTableComponent)
+                                else if (page.state == "day")
+                                    graphLoader.setComponent(energyDayTableComponent)
+                                else // year
+                                    graphLoader.setComponent(energyYearTableComponent)
+                            }
+                        }
                     }
                 }
             }
@@ -256,6 +276,15 @@ Page {
             }
 
             Component {
+                id: energyMonthTableComponent
+                EnergyMonthTable {
+                    showCurrency: privateProps.showCurrency
+                    graphDate: dateSelector.monthDate
+                    energyData: page.energyData
+                }
+            }
+
+            Component {
                 id: energyYearGraphComponent
                 EnergyYearGraph {
                     showCurrency: privateProps.showCurrency
@@ -265,8 +294,26 @@ Page {
             }
 
             Component {
+                id: energyYearTableComponent
+                EnergyYearTable {
+                    showCurrency: privateProps.showCurrency
+                    graphDate: dateSelector.yearDate
+                    energyData: page.energyData
+                }
+            }
+
+            Component {
                 id: energyDayGraphComponent
                 EnergyDayGraph {
+                    showCurrency: privateProps.showCurrency
+                    graphDate: dateSelector.dayDate
+                    energyData: page.energyData
+                }
+            }
+
+            Component {
+                id: energyDayTableComponent
+                EnergyDayTable {
                     showCurrency: privateProps.showCurrency
                     graphDate: dateSelector.dayDate
                     energyData: page.energyData
@@ -315,7 +362,7 @@ Page {
                                                                                                   EnergyData.Consumption)
 
                     anchors.centerIn: parent
-                    text: currentItem.value.toFixed(2) + " " + currentItem.measureUnit
+                    text: currentItem.isValid ? currentItem.value.toFixed(currentItem.decimals) + " " + currentItem.measureUnit : ""
                     color: "grey"
                     font.pixelSize: 18
                 }
@@ -373,7 +420,7 @@ Page {
 
                 UbuntuLightText {
                     anchors.centerIn: parent
-                    text: parent.consumptionItem.isValid ? parent.consumptionItem.value.toFixed(2) + " " + parent.consumptionItem.measureUnit : ""
+                    text: parent.consumptionItem.isValid ? parent.consumptionItem.value.toFixed(parent.consumptionItem.decimals) + " " + parent.consumptionItem.measureUnit : ""
                     color: "grey"
                     font.pixelSize: 18
                 }
@@ -394,7 +441,7 @@ Page {
 
     states: [
         State {
-            name: "yearGraph"
+            name: "year"
             PropertyChanges { target: yearButton; status: 1 }
             PropertyChanges { target: monthButton; status: 0 }
             PropertyChanges { target: dayButton; status: 0 }
@@ -404,7 +451,7 @@ Page {
 
         },
         State {
-            name: "dayGraph"
+            name: "day"
             PropertyChanges { target: yearButton; status: 0 }
             PropertyChanges { target: monthButton; status: 0 }
             PropertyChanges { target: dayButton; status: 1 }
