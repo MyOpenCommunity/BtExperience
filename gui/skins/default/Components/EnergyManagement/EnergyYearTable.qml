@@ -9,7 +9,7 @@ Item {
 
     QtObject {
         id: privateProps
-        property int horizontalSpacing: 15
+        property int horizontalSpacing: 5
         property variant modelGraph: energyData.getGraph(EnergyData.CumulativeYearGraph, graphDate,
                                                          showCurrency ? EnergyData.Currency : EnergyData.Consumption)
 
@@ -30,8 +30,6 @@ Item {
             return ""
         }
     }
-
-    height: 380 // required to make the separator line works
 
     Column {
         id: firstColumn
@@ -90,70 +88,49 @@ Item {
     Component {
         id: goalColumnComponent
 
-        Item {
+        Column {
+            id: secondColumn
             anchors.fill: parent
 
-            SvgImage {
-                id: firstSeparator
-                anchors {
-                    left: parent.left
-                    top: parent.top
-                    bottom: parent.bottom
-                    bottomMargin: 40
-                }
-                source: "../../images/energy/separator_table-dmy_small.svg"
-            }
+            Repeater {
+                model: 12 + 1
+                delegate: Loader {
+                    function calculateDelta() {
+                        if (privateProps.isRowValid(model.index - 1))
+                            return privateProps.modelGraph.graph[model.index - 1].value - energyData.goals[model.index - 1]
 
-            Column {
-                id: secondColumn
-                anchors {
-                    top: parent.top
-                    bottom: parent.bottom
-                    left: firstSeparator.right
-                    leftMargin: privateProps.horizontalSpacing
-                }
+                        return 0
+                    }
 
-                Repeater {
-                    model: 12 + 1
-                    delegate: Loader {
-                        function calculateDelta() {
-                            if (privateProps.isRowValid(model.index - 1))
-                                return privateProps.modelGraph.graph[model.index - 1].value - energyData.goals[model.index - 1]
+                    property real delta: calculateDelta()
 
-                            return 0
-                        }
+                    sourceComponent: model.index === 0 ? tableHeaderComponent2 : tableRowComponent2
 
-                        property real delta: calculateDelta()
-
-                        sourceComponent: model.index === 0 ? tableHeaderComponent2 : tableRowComponent2
-
-                        Component {
-                            id: tableRowComponent2
-                            EnergyTableRow {
-                                index: privateProps.isRowValid(model.index - 1) ? energyData.goals[model.index - 1].toFixed(energyData.decimals) : ""
-                                value: {
-                                    if (privateProps.isRowValid(model.index - 1))
-                                        return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(energyData.decimals)
-                                    return ""
-                                }
-
-                                valueColor: delta < 0 ? "#00ff00" : "#ff2b2b"
+                    Component {
+                        id: tableRowComponent2
+                        EnergyTableRow {
+                            index: privateProps.isRowValid(model.index - 1) ? energyData.goals[model.index - 1].toFixed(energyData.decimals) : ""
+                            value: {
+                                if (privateProps.isRowValid(model.index - 1))
+                                    return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(energyData.decimals)
+                                return ""
                             }
-                        }
 
-                        Component {
-                            id: tableHeaderComponent2
-                            EnergyTableHeader {
-                                label: qsTr("objective")
-                                unitMeasure: qsTr("delta")
-                            }
+                            valueColor: delta < 0 ? "#00ff00" : "#ff2b2b"
+                        }
+                    }
+
+                    Component {
+                        id: tableHeaderComponent2
+                        EnergyTableHeader {
+                            label: qsTr("objective")
+                            unitMeasure: qsTr("delta")
                         }
                     }
                 }
             }
         }
     }
-
 }
 
 
