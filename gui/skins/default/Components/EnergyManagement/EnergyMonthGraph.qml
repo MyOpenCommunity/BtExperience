@@ -54,7 +54,7 @@ Item {
 
         Repeater {
             UbuntuLightText {
-               text: valuesAxis.calculateValue(index).toFixed(0)
+               text: valuesAxis.calculateValue(index).toFixed(energyData.decimals)
                color: "white"
                font.pixelSize: 12
                anchors.left: parent.left

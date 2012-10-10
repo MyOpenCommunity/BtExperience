@@ -74,7 +74,7 @@ Item {
         spacing: privateProps.columnSpacing
         Repeater {
             UbuntuLightText {
-                text: model.modelData.value.toFixed(2)
+                text: model.modelData.value.toFixed(energyData.decimals)
                 color: "white"
                 font.pixelSize: 12
                 width: columnPrototype.width
@@ -114,7 +114,7 @@ Item {
 
         Repeater {
             UbuntuLightText {
-               text: valuesAxis.calculateValue(index).toFixed(0)
+               text: valuesAxis.calculateValue(index).toFixed(energyData.decimals)
                color: "white"
                font.pixelSize: 11
                anchors.left: parent.left
