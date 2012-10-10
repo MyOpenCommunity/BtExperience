@@ -594,13 +594,7 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 		QVariant goal;
 
 		if (type == CumulativeYearGraph)
-		{
 			goal = goals.value(i);
-#if TEST_ENERGY_DATA
-			double multiplier = ((rand() % 40) + 80) / 100.0;
-			goal = values[i] * multiplier;
-#endif
-		}
 
 		bars.append(new EnergyGraphBar(i, keys[i], values[i], goal, rate));
 	}
