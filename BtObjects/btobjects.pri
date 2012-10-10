@@ -26,6 +26,7 @@ HEADERS += \
 	objectmodel.h \
 	platform.h \
 	objectlink.h \
+	scenariomodulesnotifier.h \
 	scenarioobjects.h \
 	stopandgoobjects.h \
 	splitadvancedscenario.h \
@@ -94,6 +95,7 @@ SOURCES += \
 	objectmodel.cpp \
 	platform.cpp \
 	objectlink.cpp \
+	scenariomodulesnotifier.cpp \
 	scenarioobjects.cpp \
 	stopandgoobjects.cpp \
 	splitadvancedscenario.cpp \

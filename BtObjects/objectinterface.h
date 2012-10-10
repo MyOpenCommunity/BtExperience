@@ -78,6 +78,7 @@ public:
 		IdThermalControlledProbeFancoil, //!< Thermal controlled probe with fancoil
 
 		IdDangers,                              // 30
+		IdScenarioModulesNotifier,
 
 		// used internally
 		IdDimmerGroup = 100, //!< Group of lights containing only dimmer objects

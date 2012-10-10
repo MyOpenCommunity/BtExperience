@@ -34,6 +34,7 @@
 #include "devices_cache.h"
 #include "watchdog.h"
 #include "dangers.h"
+#include "scenariomodulesnotifier.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -530,8 +531,13 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		objmodel << createCCTV(vde);
 		objmodel << createIntercom(intercom);
 	}
+
+	// the following objects are used as collectors of signals from other objects
+	// they are used in EventManager, for example, to be notified only globally
 	// the following needs stop&go objects to be already created
 	objmodel << new StopAndGoDangers();
+	// the following needs scenario modules to be already created
+	objmodel << new ScenarioModulesNotifier();
 }
 
 int BtObjectsPlugin::findLinkedUiiForObject(ItemInterface *item) const
