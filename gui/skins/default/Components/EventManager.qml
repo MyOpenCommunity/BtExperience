@@ -203,6 +203,16 @@ Item {
         property variant vctModel: undefined
         property variant dangersModel: undefined
 
+        // ends the right call type
+        function endActualCall(pagename) {
+            if (pagename === "VideoCamera")
+                if (vctConnection.target)
+                    vctConnection.target.endCall()
+            if (pagename === "IntercomPage")
+                if (intercomConnection.target)
+                    intercomConnection.target.endCall()
+        }
+
         // prepares the popup page to show a popup
         //
         // when a popup arrives, we need show it, but only under certain
@@ -218,8 +228,8 @@ Item {
             // separately in subsequent ifs)
             var p = Stack.currentPage()
 
-            // if current page is vct, pushes PopupPage below it and ends call
-            if (p._pageName === "VideoCamera") {
+            // if current page is vct or intercom, pushes PopupPage below it and ends call
+            if (p._pageName === "VideoCamera" || p._pageName === "IntercomPage") {
                 // rings alarm
                 global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
 
@@ -233,7 +243,7 @@ Item {
                 // Must stay here because it emits callEnded signal, close is
                 // asynchronous, so some time may pass before page is actually
                 // closed
-                privateProps.vctModel.endCall()
+                privateProps.endActualCall(p._pageName)
             }
 
             // if p doesn't point to Popup page, pushes it
