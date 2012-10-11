@@ -24,6 +24,7 @@ Item {
     property int status: -1
     property bool hasChild: false
     property alias backgroundImage: background.source
+    property bool enabled: true
 
     signal clicked(variant itemClicked)
     signal pressed(variant itemPressed)
@@ -78,6 +79,16 @@ Item {
         source: "../images/common/menu_column_item_bg.svg";
     }
 
+    Rectangle {
+        z: 1
+        anchors.fill: parent
+        color: "silver"
+        opacity: 0.6
+        visible: menuItem.enabled === false
+        MouseArea {
+            anchors.fill: parent
+        }
+    }
 
     Item {
         anchors.fill: parent
