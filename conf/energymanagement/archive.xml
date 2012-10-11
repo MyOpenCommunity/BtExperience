@@ -108,7 +108,7 @@
 				<december>87</december>
 			</consumption_goal>
         </ist>
-		<ist uii="5007" descr="Bedrooms" where="17" SWmeasure="Custom" measure="Noci">
+		<ist uii="5007" descr="Bedrooms" where="17" mode="3" SWmeasure="Custom" measure="Noci">
 		</ist>
 	</obj>
 </archive>
