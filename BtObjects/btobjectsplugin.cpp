@@ -163,7 +163,8 @@ namespace
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
 	// init GStreamer services
-	Q_ASSERT_X(gst_init_check(NULL, NULL, NULL), "BtObjectsPlugin::BtObjectsPlugin", "Failed to initialize GStreamer");
+	bool gst_init_check_result = gst_init_check(NULL, NULL, NULL);
+	Q_ASSERT_X(gst_init_check_result, "BtObjectsPlugin::BtObjectsPlugin", "Failed to initialize GStreamer");
 
 	// for logging
 	QString errorMsg;

@@ -221,11 +221,11 @@ void TestScenarioModule::checkMethod()
 	QFETCH(ScenarioModule::Status, end_status);
 	QFETCH(int, signals_emitted);
 
-	ObjectTester t(scen, SIGNAL(statusChanged()));
+	ObjectTester t(scen, SIGNAL(statusChanged(ScenarioModule *)));
 
 	scen->status = start_status;
 	scen->valueReceived(value);
-	t.checkSignalCount(SIGNAL(statusChanged()), signals_emitted);
+	t.checkSignalCount(SIGNAL(statusChanged(ScenarioModule *)), signals_emitted);
 	QCOMPARE(scen->status, end_status);
 }
 
