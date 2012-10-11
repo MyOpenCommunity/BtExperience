@@ -50,7 +50,7 @@ void GstMediaPlayer::setTrack(QString track)
 	// an http stream from a media server
 	QUrl uri;
 	if (track.startsWith('/'))
-		uri.fromLocalFile(track);
+		uri = QUrl::fromLocalFile(track);
 	else if (track.startsWith("http"))
 		uri = QUrl(track);
 	else
