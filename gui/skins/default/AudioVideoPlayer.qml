@@ -485,7 +485,7 @@ Page {
         }
 
         // player.model is not set, checks if playlist is set
-        if (p.mediaPlayer.isPlaying())
+        if (p.mediaPlayer.playing)
             return // everything is fine
 
         // we don't have a model and we don't have a playlist: something is wrong somewhere...

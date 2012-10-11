@@ -50,7 +50,7 @@ class GlobalProperties : public QObject
 	// The object to manage MPlayer from QML
 	Q_PROPERTY(AudioVideoPlayer *videoPlayer READ getVideoPlayer CONSTANT)
 	// The object to manage MPlayer from QML
-	Q_PROPERTY(AudioVideoPlayer *audioPlayer READ getAudioPlayer CONSTANT)
+	Q_PROPERTY(AudioVideoPlayer *audioPlayer READ getAudioPlayer NOTIFY audioPlayerChanged)
 	// The object to manage image lists
 	Q_PROPERTY(PhotoPlayer *photoPlayer READ getPhotoPlayer CONSTANT)
 	// The object to manage audio/video playback state from QML
@@ -102,6 +102,7 @@ signals:
 	void lastTimePressChanged();
 	void requestReboot();
 	void keyboardLayoutChanged();
+	void audioPlayerChanged();
 
 private slots:
 #ifdef BT_MALIIT

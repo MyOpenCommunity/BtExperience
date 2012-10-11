@@ -13,6 +13,7 @@ PlayListPlayer::PlayListPlayer(QObject *parent) :
 {
 	is_video = false;
 	actual_list = 0;
+	emit playingChanged();
 	local_list = new FileListManager;
 	connect(local_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
 	upnp_list = new UPnpListManager(UPnPListModel::getXmlDevice());
@@ -33,6 +34,9 @@ void PlayListPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int t
 
 bool PlayListPlayer::isPlaying()
 {
+	qDebug() << QString("______________________________________________________");
+	qDebug() << __PRETTY_FUNCTION__;
+	qDebug() << actual_list << local_list << upnp_list;
 	// if actual_list is neither pointing to local_list nor to upnp_list we
 	// assume we are not playing anything and one generatePlaylist* method
 	// must be called to setup the player; otherwise we are already setup and
@@ -56,9 +60,12 @@ void PlayListPlayer::next()
 void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_files)
 {
 	Q_UNUSED(total_files);
+	qDebug() << QString("______________________________________________________");
+	qDebug() << __PRETTY_FUNCTION__;
 
 	// sets list to use since now
 	actual_list = local_list;
+	emit playingChanged();
 
 	// saves old range to restore it later
 	QVariantList oldRange = model->getRange();
@@ -96,6 +103,7 @@ void PlayListPlayer::generate(UPnPListModel *model, int index, int total_files)
 {
 	// sets list to use since now
 	actual_list = upnp_list;
+	emit playingChanged();
 
 	// needs file for setting starting file
 	FileObject *file = static_cast<FileObject *>(model->getObject(index));
@@ -114,6 +122,7 @@ void PlayListPlayer::reset()
 {
 	is_video = false;
 	actual_list = 0;
+	emit playingChanged();
 }
 
 void PlayListPlayer::updateCurrent()
