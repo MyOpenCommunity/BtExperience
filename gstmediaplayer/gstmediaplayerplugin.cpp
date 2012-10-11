@@ -1,28 +1,26 @@
-#include "gstmediaplayer.h"
+#include "gstmediaplayerplugin.h"
 
 #include <gst/gst.h>
 
 #include <QUrl>
 #include <QDebug>
+#include <QtPlugin>
 
 
-class GstMediaPlayerPrivate : public QObject
+class GstMediaPlayerPrivate : public GstMediaPlayer
 {
 	Q_OBJECT
 public:
 	GstMediaPlayerPrivate(QObject *parent = 0);
+	virtual ~GstMediaPlayerPrivate();
+	virtual bool play(QString track);
+	virtual QMap<QString, QString> getPlayingInfo();
+	virtual void setTrack(QString track);
 
-	~GstMediaPlayerPrivate();
-
-	bool play();
-
-	QMap<QString, QString> getPlayingInfo();
-
-	void setTrack(QString track);
-
-	void pause();
-	void resume();
-	void stop();
+public slots:
+	virtual void pause();
+	virtual void resume();
+	virtual void stop();
 
 	void handleBusMessage(GstBus *bus, GstMessage *message);
 
@@ -58,7 +56,7 @@ extern "C" gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, 
 
 
 GstMediaPlayerPrivate::GstMediaPlayerPrivate(QObject *parent) :
-	QObject(parent)
+	GstMediaPlayer(parent)
 {
 	pipeline = GST_PIPELINE(gst_element_factory_make("playbin2", NULL));
 	check_for_state_change = false;
@@ -76,8 +74,9 @@ GstMediaPlayerPrivate::~GstMediaPlayerPrivate()
 	gst_object_unref(pipeline);
 }
 
-bool GstMediaPlayerPrivate::play()
+bool GstMediaPlayerPrivate::play(QString track)
 {
+	setTrack(track);
 	GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_PLAYING);
 	if (ret == GST_STATE_CHANGE_ASYNC)
 	{
@@ -89,18 +88,30 @@ bool GstMediaPlayerPrivate::play()
 	return true;
 }
 
-void GstMediaPlayerPrivate::setTrack(QString uri)
+void GstMediaPlayerPrivate::setTrack(QString track)
 {
+	// Get URI
+	// Assume that the file is either an absolute path of a local file or
+	// an http stream from a media server
+	QUrl uri;
+	if (track.startsWith('/'))
+		uri = QUrl::fromLocalFile(track);
+	else if (track.startsWith("http"))
+		uri = QUrl(track);
+	else
+	{
+		qWarning() << "GstMediaPlayer::setTrack(), track is not an absolute path or an http uri";
+		return;
+	}
+
 	GstState saved_state;
 	gst_element_get_state(GST_ELEMENT(pipeline), &saved_state, NULL, 0);
 	metadata.clear();
 
 	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_READY);
-	g_object_set(G_OBJECT(pipeline), "uri", qPrintable(uri), NULL);
+	g_object_set(G_OBJECT(pipeline), "uri", qPrintable(uri.toString()), NULL);
 	gst_element_set_state(GST_ELEMENT(pipeline), saved_state);
 }
-
-
 
 void GstMediaPlayerPrivate::handleBusMessage(GstBus *bus, GstMessage *message)
 {
@@ -230,6 +241,7 @@ void GstMediaPlayerPrivate::queryTime()
 		metadata["total_time"] = QString::number(GST_TIME_AS_SECONDS(duration));
 }
 
+/*
 GstMediaPlayer::GstMediaPlayer(QObject *parent) :
 	QObject(parent)
 {
@@ -286,5 +298,25 @@ void GstMediaPlayer::stop()
 {
 	impl->stop();
 }
+*/
 
-#include "gstmediaplayer.moc"
+
+GstMediaPlayer *GstMediaPlayerPlugin::createPlayer(QObject *parent)
+{
+	GError *err;
+
+	if (gst_init_check(NULL, NULL, &err))
+	{
+		return new GstMediaPlayerPrivate(parent);
+	}
+	else
+	{
+		qWarning("Couldn't init GStreamer, error: %s", err->message);
+		g_error_free(err);
+		return 0;
+	}
+}
+
+Q_EXPORT_PLUGIN2(gstmediaplayer, GstMediaPlayerPlugin)
+
+#include "gstmediaplayerplugin.moc"
