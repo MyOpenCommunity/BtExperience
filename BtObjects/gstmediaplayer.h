@@ -1,23 +1,17 @@
 #ifndef GSTMEDIAPLAYER_H
 #define GSTMEDIAPLAYER_H
 
-#include <gst/gst.h>
-
 #include <QObject>
 #include <QMap>
 
-// Anonymous namespaces are useless with extern "C" linkage, see:
-// https://groups.google.com/d/msg/comp.lang.c++.moderated/bRso4RIDiBI/F2BscJar_qMJ
-extern "C" gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, gpointer data);
+class GstMediaPlayerPrivate;
+
 
 class GstMediaPlayer : public QObject
 {
-friend gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, gpointer data);
 	Q_OBJECT
 public:
 	GstMediaPlayer(QObject *parent = 0);
-
-	virtual ~GstMediaPlayer();
 
 	bool play(QString track);
 
@@ -79,13 +73,7 @@ signals:
 	void playingInfoUpdated(const QMap<QString,QString> &info);
 
 private:
-	void handleBusMessage(GstBus *bus, GstMessage *message);
-	void handleTagMessage(GstMessage *message);
-	void handleStateChange();
-	void queryTime();
-	bool check_for_state_change;
-	GstPipeline *pipeline;
-	QMap<QString, QString> metadata;
+	GstMediaPlayerPrivate *impl;
 };
 
 #endif // GSTMEDIAPLAYER_H
