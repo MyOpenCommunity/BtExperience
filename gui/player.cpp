@@ -34,9 +34,6 @@ void PlayListPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int t
 
 bool PlayListPlayer::isPlaying()
 {
-	qDebug() << QString("______________________________________________________");
-	qDebug() << __PRETTY_FUNCTION__;
-	qDebug() << actual_list << local_list << upnp_list;
 	// if actual_list is neither pointing to local_list nor to upnp_list we
 	// assume we are not playing anything and one generatePlaylist* method
 	// must be called to setup the player; otherwise we are already setup and
@@ -60,8 +57,6 @@ void PlayListPlayer::next()
 void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_files)
 {
 	Q_UNUSED(total_files);
-	qDebug() << QString("______________________________________________________");
-	qDebug() << __PRETTY_FUNCTION__;
 
 	// sets list to use since now
 	actual_list = local_list;
