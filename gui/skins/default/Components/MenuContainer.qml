@@ -110,7 +110,6 @@ Item {
     Component.onCompleted: {
         Script.loadComponent(-1, mainContainer.rootColumn, "", rootData)
         mainContainer.rootObject.columnClicked.connect(rootColumnClicked)
-        mainContainer.loadNextColumn() // primes the menu navigation, see navigation.js for further details
     }
 }
 

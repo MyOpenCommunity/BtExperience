@@ -15,13 +15,21 @@ class ListManager;
 class PlayListPlayer : public QObject
 {
 	Q_OBJECT
+
+	/*!
+		\brief Returns if the player is playing.
+	*/
+	Q_PROPERTY(bool playing READ isPlaying NOTIFY playingChanged)
+
 public:
 	// as stated in documentation, it is possible to overload invokable methods
 	// to be used in QML with same name, but different arguments; of course it
 	// turned out to be a urban tale, so I changed names to be different: pay
 	// attention when using them in QML code
-	Q_INVOKABLE void generatePlaylistLocal(DirectoryListModel *model, int index, int total_files);
-	Q_INVOKABLE void generatePlaylistUPnP(UPnPListModel *model, int index, int total_files);
+	Q_INVOKABLE void generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool is_video);
+	Q_INVOKABLE void generatePlaylistUPnP(UPnPListModel *model, int index, int total_files, bool is_video);
+	// methods needed to restore state when coming back to player page
+	Q_INVOKABLE bool isUpnp() const { return ((actual_list == upnp_list) ? true : false); }
 
 protected:
 	explicit PlayListPlayer(QObject *parent = 0);
@@ -31,9 +39,12 @@ protected:
 	void next();
 	void generate(DirectoryListModel *model, int index, int total_files);
 	void generate(UPnPListModel *model, int index, int total_files);
+	void reset();
+	bool isPlaying();
 
 signals:
 	void currentChanged();
+	void playingChanged();
 
 protected slots:
 	virtual void updateCurrent();
@@ -41,6 +52,7 @@ protected slots:
 private:
 	ListManager *local_list, *upnp_list, *actual_list;
 	QString current;
+	bool is_video;
 };
 
 /*!

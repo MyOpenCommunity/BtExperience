@@ -228,10 +228,12 @@ void TestVideoDoorEntry::testRingtone()
 {
 	DeviceValues v;
 	ObjectTester t(intercom, SIGNAL(ringtoneChanged()));
+	ObjectTester tfc(intercom, SIGNAL(floorRingtoneReceived()));
 
 	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::FLOORCALL;
 	intercom->valueReceived(v);
 	t.checkSignals();
+	tfc.checkSignals();
 	QCOMPARE(intercom->getRingtone(), Intercom::Floorcall);
 
 	intercom->valueReceived(v);
@@ -253,7 +255,7 @@ void TestVideoDoorEntry::testFloorCall()
 {
 	DeviceValues v;
 	ObjectTester tr(intercom, SIGNAL(ringtoneChanged()));
-	ObjectTester tfc(intercom, SIGNAL(incomingFloorCall()));
+	ObjectTester tfc(intercom, SIGNAL(floorRingtoneReceived()));
 
 	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::FLOORCALL;
 	intercom->valueReceived(v);

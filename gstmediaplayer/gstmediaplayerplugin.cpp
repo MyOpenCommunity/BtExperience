@@ -1,17 +1,62 @@
-#include "gstmediaplayer.h"
+#include "gstmediaplayerplugin.h"
+
+#include <gst/gst.h>
 
 #include <QUrl>
 #include <QDebug>
+#include <QtPlugin>
 
+
+class GstMediaPlayerPrivate : public GstMediaPlayer
+{
+	Q_OBJECT
+public:
+	GstMediaPlayerPrivate(QObject *parent = 0);
+	virtual ~GstMediaPlayerPrivate();
+	virtual bool play(QString track);
+	virtual QMap<QString, QString> getPlayingInfo();
+	virtual void setTrack(QString track);
+
+public slots:
+	virtual void pause();
+	virtual void resume();
+	virtual void stop();
+
+	void handleBusMessage(GstBus *bus, GstMessage *message);
+
+signals:
+	void gstPlayerStarted();
+	void gstPlayerPaused();
+	void gstPlayerResumed();
+	void gstPlayerDone();
+	void gstPlayerStopped();
+	void playingInfoUpdated(const QMap<QString,QString> &info);
+
+private:
+	// disable copy
+	GstMediaPlayerPrivate(const GstMediaPlayerPrivate&);
+
+	void handleTagMessage(GstMessage *message);
+	void handleStateChange();
+	void queryTime();
+	bool check_for_state_change;
+	GstPipeline *pipeline;
+	QMap<QString, QString> metadata;
+};
+
+
+// Anonymous namespaces are useless with extern "C" linkage, see:
+// https://groups.google.com/d/msg/comp.lang.c++.moderated/bRso4RIDiBI/F2BscJar_qMJ
 extern "C" gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, gpointer data)
 {
-	GstMediaPlayer *player = static_cast<GstMediaPlayer *>(data);
+	GstMediaPlayerPrivate *player = static_cast<GstMediaPlayerPrivate *>(data);
 	player->handleBusMessage(bus, message);
 	return true;
 }
 
-GstMediaPlayer::GstMediaPlayer(QObject *parent) :
-	QObject(parent)
+
+GstMediaPlayerPrivate::GstMediaPlayerPrivate(QObject *parent) :
+	GstMediaPlayer(parent)
 {
 	pipeline = GST_PIPELINE(gst_element_factory_make("playbin2", NULL));
 	check_for_state_change = false;
@@ -23,13 +68,13 @@ GstMediaPlayer::GstMediaPlayer(QObject *parent) :
 	gst_object_unref(bus);
 }
 
-GstMediaPlayer::~GstMediaPlayer()
+GstMediaPlayerPrivate::~GstMediaPlayerPrivate()
 {
 	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_NULL);
 	gst_object_unref(pipeline);
 }
 
-bool GstMediaPlayer::play(QString track)
+bool GstMediaPlayerPrivate::play(QString track)
 {
 	setTrack(track);
 	GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_PLAYING);
@@ -43,14 +88,14 @@ bool GstMediaPlayer::play(QString track)
 	return true;
 }
 
-void GstMediaPlayer::setTrack(QString track)
+void GstMediaPlayerPrivate::setTrack(QString track)
 {
 	// Get URI
 	// Assume that the file is either an absolute path of a local file or
 	// an http stream from a media server
 	QUrl uri;
 	if (track.startsWith('/'))
-		uri.fromLocalFile(track);
+		uri = QUrl::fromLocalFile(track);
 	else if (track.startsWith("http"))
 		uri = QUrl(track);
 	else
@@ -68,7 +113,7 @@ void GstMediaPlayer::setTrack(QString track)
 	gst_element_set_state(GST_ELEMENT(pipeline), saved_state);
 }
 
-void GstMediaPlayer::handleBusMessage(GstBus *bus, GstMessage *message)
+void GstMediaPlayerPrivate::handleBusMessage(GstBus *bus, GstMessage *message)
 {
 	Q_UNUSED(bus);
 
@@ -116,28 +161,28 @@ void GstMediaPlayer::handleBusMessage(GstBus *bus, GstMessage *message)
 			check_for_state_change = true; \
 	} while (0)
 
-void GstMediaPlayer::pause()
+void GstMediaPlayerPrivate::pause()
 {
 	CHANGE_STATE(gstPlayerPaused, GST_STATE_PAUSED);
 }
 
-void GstMediaPlayer::resume()
+void GstMediaPlayerPrivate::resume()
 {
 	CHANGE_STATE(gstPlayerResumed, GST_STATE_PLAYING);
 }
 
-void GstMediaPlayer::stop()
+void GstMediaPlayerPrivate::stop()
 {
 	CHANGE_STATE(gstPlayerStopped, GST_STATE_READY);
 }
 
-QMap<QString, QString> GstMediaPlayer::getPlayingInfo()
+QMap<QString, QString> GstMediaPlayerPrivate::getPlayingInfo()
 {
 	queryTime();
 	return metadata;
 }
 
-void GstMediaPlayer::handleTagMessage(GstMessage *message)
+void GstMediaPlayerPrivate::handleTagMessage(GstMessage *message)
 {
 	GstTagList *current_tags = NULL;
 	gchar *value = NULL;
@@ -165,7 +210,7 @@ void GstMediaPlayer::handleTagMessage(GstMessage *message)
 	}
 }
 
-void GstMediaPlayer::handleStateChange()
+void GstMediaPlayerPrivate::handleStateChange()
 {
 	GstState current, next;
 	gst_element_get_state(GST_ELEMENT(pipeline), &current, &next, 0);
@@ -186,7 +231,7 @@ void GstMediaPlayer::handleStateChange()
 	}
 }
 
-void GstMediaPlayer::queryTime()
+void GstMediaPlayerPrivate::queryTime()
 {
 	GstFormat f = GST_FORMAT_TIME;
 	gint64 position, duration;
@@ -195,3 +240,83 @@ void GstMediaPlayer::queryTime()
 	if (gst_element_query_duration(GST_ELEMENT(pipeline), &f, &duration))
 		metadata["total_time"] = QString::number(GST_TIME_AS_SECONDS(duration));
 }
+
+/*
+GstMediaPlayer::GstMediaPlayer(QObject *parent) :
+	QObject(parent)
+{
+	impl = new GstMediaPlayerPrivate(this);
+	connect(impl, SIGNAL(gstPlayerDone()), SIGNAL(gstPlayerDone()));
+	connect(impl, SIGNAL(gstPlayerPaused()), SIGNAL(gstPlayerPaused()));
+	connect(impl, SIGNAL(gstPlayerResumed()), SIGNAL(gstPlayerResumed()));
+	connect(impl, SIGNAL(gstPlayerStarted()), SIGNAL(gstPlayerStarted()));
+	connect(impl, SIGNAL(gstPlayerStopped()), SIGNAL(gstPlayerStopped()));
+	connect(impl, SIGNAL(playingInfoUpdated(QMap<QString,QString>)), SIGNAL(playingInfoUpdated(QMap<QString,QString>)));
+}
+
+bool GstMediaPlayer::play(QString track)
+{
+	setTrack(track);
+	return impl->play();
+}
+
+QMap<QString, QString> GstMediaPlayer::getPlayingInfo()
+{
+	return impl->getPlayingInfo();
+}
+
+void GstMediaPlayer::setTrack(QString track)
+{
+	// Get URI
+	// Assume that the file is either an absolute path of a local file or
+	// an http stream from a media server
+	QUrl uri;
+	if (track.startsWith('/'))
+		uri = QUrl::fromLocalFile(track);
+	else if (track.startsWith("http"))
+		uri = QUrl(track);
+	else
+	{
+		qWarning() << "GstMediaPlayer::setTrack(), track is not an absolute path or an http uri";
+		return;
+	}
+
+	impl->setTrack(uri.toString());
+}
+
+void GstMediaPlayer::pause()
+{
+	impl->pause();
+}
+
+void GstMediaPlayer::resume()
+{
+	impl->resume();
+}
+
+void GstMediaPlayer::stop()
+{
+	impl->stop();
+}
+*/
+
+
+GstMediaPlayer *GstMediaPlayerPlugin::createPlayer(QObject *parent)
+{
+	GError *err;
+
+	if (gst_init_check(NULL, NULL, &err))
+	{
+		return new GstMediaPlayerPrivate(parent);
+	}
+	else
+	{
+		qWarning("Couldn't init GStreamer, error: %s", err->message);
+		g_error_free(err);
+		return 0;
+	}
+}
+
+Q_EXPORT_PLUGIN2(gstmediaplayer, GstMediaPlayerPlugin)
+
+#include "gstmediaplayerplugin.moc"

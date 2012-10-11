@@ -6,6 +6,9 @@
 
 #include <QTime>
 #include <QTimer>
+#include <QDir>
+#include <QPluginLoader>
+#include <QCoreApplication> // qApp
 
 #define INFO_POLL_INTERVAL 500
 #define SEEK_TICK_TIMEOUT 4
@@ -24,8 +27,19 @@ namespace
 MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	QObject(parent)
 {
+	// Try to load plugin
+	gst_player = 0;
+	QDir pluginsDir = QDir(qApp->applicationDirPath());
+
+	foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+		QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+		GstMediaPlayerInterface *plugin = qobject_cast<GstMediaPlayerInterface *>(loader.instance());
+		if (plugin)
+			gst_player = qobject_cast<GstMediaPlayer *>(plugin->createPlayer(this));
+	}
+
 	player = new MediaPlayer(this);
-	gst_player = new GstMediaPlayer(this);
+
 	is_video_track = false;
 	player_state = Stopped;
 	output_state = AudioOutputStopped;
@@ -291,7 +305,7 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 	}
 
 	current_source = source;
-	is_video_track = isVideoFile(source);
+	is_video_track = isVideoFile(source) && gst_player;
 	track_info.clear();
 
 	if (had_track_info)

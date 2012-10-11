@@ -1,0 +1,15 @@
+Test: popup priorities
+
+* Use a configuration with, at least, Antinstrusion and Messages systems defined.
+* Start the program, you are in home page.
+* Send a message to BtExperience.
+=> Unread messages popup appears with the message "1 unread message".
+* Send another message to BtExperience.
+=> Unread messages popup updates to "2 unread messages".
+* Send some alarms to BtExperience.
+=> Alarm popup appears with proper message.
+** Click on Ignore button.
+=> Every time you click, you see another alarm popup message.
+==> When alarm messages are done, you see unread messages popup again.
+* Click on Ignore button
+=> Popup page disappears and you are in home page again.

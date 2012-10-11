@@ -4,6 +4,8 @@
 
 
 var _alarmPopups = []
+var _stopGoPopups = []
+var _unreadMessagesPopups = []
 
 
 /**
@@ -29,12 +31,12 @@ function addAlarmPopup(type, zone, dateTime) {
     data["line2"] = msg
 
     data["line3"] = ""
-    data["confirmText"] = qsTr("Confirm")
-    data["dismissText"] = qsTr("Dismiss")
+    data["confirmText"] = qsTr("More info")
+    data["dismissText"] = qsTr("Ignore")
 
     _alarmPopups.push(data)
 
-    return data
+    return _highestPriorityPopup()
 }
 
 /**
@@ -55,12 +57,47 @@ function addStopAndGoPopup(descr, status) {
     data["line2"] = status
     data["line3"] = ""
 
-    data["confirmText"] = qsTr("Confirm")
-    data["dismissText"] = qsTr("Dismiss")
+    data["confirmText"] = qsTr("Show")
+    data["dismissText"] = qsTr("Ignore")
 
-    _alarmPopups.push(data)
+    _stopGoPopups.push(data)
 
-    return data
+    return _highestPriorityPopup()
+}
+
+/**
+  * Updates the popup of unread messages
+  *
+  * Updates the popup of unread messages and returns if popup page must be
+  * shown or hidden.
+  *
+  * unreadMessages: actual number of unread messages; may be zero
+  */
+function updateUnreadMessages(unreadMessages) {
+    // in this case we only show a message with the number of unread messages
+    // we don't add messages every time, but update the only one message created
+    // once for all
+    var data = []
+
+    data["_kind"] = "messages"
+    data["title"] = qsTr("MESSAGES")
+
+    data["line1"] = unreadMessages
+    data["line2"] = qsTr("new message(s)", "", unreadMessages)
+    data["line3"] = ""
+
+    data["confirmText"] = qsTr("Read")
+    data["dismissText"] = qsTr("Ignore")
+
+    if (unreadMessages === 0)
+        data = undefined // no message to show
+
+    if (_unreadMessagesPopups.length > 0)
+        _unreadMessagesPopups[0] = data
+    else
+        _unreadMessagesPopups.push(data)
+
+    return _highestPriorityPopup()
 }
 
 /**
@@ -72,15 +109,22 @@ function addStopAndGoPopup(descr, status) {
   * Returns a string to navigate on the correct application page.
   */
 function confirm() {
-    var p = _alarmPopups.pop() // last popup gives me info on what to do next
+    var p = _highestPriorityPopup() // last popup gives me info on what to do next
+
+    // resets all popups
+    _alarmPopups = []
+    _stopGoPopups = []
+    _unreadMessagesPopups = []
+
+    if (p["_kind"] === "messages") {
+        return "Messages"
+    }
 
     if (p["_kind"] === "alarm") {
-        _alarmPopups = []
         return "Antintrusion"
     }
 
     if (p["_kind"] === "stop&go") {
-        _alarmPopups = []
         return "Supervision"
     }
 
@@ -100,7 +144,35 @@ function confirm() {
 function dismiss() {
     if (_alarmPopups.length > 0) {
         _alarmPopups.pop()
+        return _highestPriorityPopup()
+    }
+
+    if (_stopGoPopups.length > 0) {
+        _stopGoPopups.pop()
+        return _highestPriorityPopup()
+    }
+
+    if (_unreadMessagesPopups.length > 0) {
+        _unreadMessagesPopups.pop()
+        return _highestPriorityPopup()
+    }
+
+    return undefined
+}
+
+function _highestPriorityPopup() {
+    // scans all lists to find the popup to show
+
+    if (_alarmPopups.length > 0) {
         return _alarmPopups[_alarmPopups.length - 1]
+    }
+
+    if (_stopGoPopups.length > 0) {
+        return _stopGoPopups[_stopGoPopups.length - 1]
+    }
+
+    if (_unreadMessagesPopups.length > 0) {
+        return _unreadMessagesPopups[0] // only one exists
     }
 
     return undefined

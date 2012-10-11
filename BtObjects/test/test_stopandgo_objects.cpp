@@ -62,7 +62,7 @@ void TestStopAndGo::testSendAutoReset()
 void TestStopAndGo::testReceiveStatus()
 {
 	DeviceValues v;
-	ObjectTester t(obj, SIGNAL(statusChanged()));
+	ObjectTester t(obj, SIGNAL(statusChanged(StopAndGo *)));
 
 	v[StopAndGoDevice::DIM_OPENED] = false;
 	v[StopAndGoDevice::DIM_FAULT] = false;

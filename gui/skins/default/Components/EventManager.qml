@@ -1,7 +1,8 @@
 import QtQuick 1.1
-import Components 1.0
 import BtObjects 1.0
 import BtExperience 1.0
+import Components 1.0
+
 import "../js/Stack.js" as Stack
 import "../js/ScreenSaver.js" as ScreenSaver
 
@@ -17,9 +18,9 @@ Item {
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
     property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.openedDevices
     property bool scenarioRecording: privateProps.recordingModel === undefined ? false : privateProps.recordingModel.recording
+    property bool playing: global.audioPlayer === undefined ? false : global.audioPlayer.playing
 
     property int clocks: 0 // TODO link to C++ model!
-    property bool playing: false // TODO link to C++ model and check if property exists!
     property bool mute: false // TODO link to C++ model and check if property exists!
 
     anchors.fill: parent
@@ -85,6 +86,7 @@ Item {
                     privateProps.antintrusionModel = obj
                     break
                 case ObjectInterface.IdMessages:
+                    messagesConnection.target = obj
                     privateProps.messagesModel = obj
                     break
                 case ObjectInterface.IdDangers:
@@ -196,6 +198,16 @@ Item {
             var p = privateProps.preparePopupPage()
             // adds stop&go alarm
             p.addStopAndGoPopup(stopGoDevice)
+        }
+    }
+
+    Connections {
+        id: messagesConnection
+        target: null
+        onUnreadMessagesChanged: {
+            var p = privateProps.preparePopupPage()
+            // updates number of unread messages
+            p.updateUnreadMessages(messagesConnection.target.unreadMessages)
         }
     }
 

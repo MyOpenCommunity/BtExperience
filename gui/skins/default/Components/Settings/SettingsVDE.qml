@@ -11,21 +11,21 @@ MenuColumn {
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1
             column.loadColumn(handsFreeComponent, handsFreeMenuItem.name)
-            return true
+            return 0
         }
         if (navigationTarget === "AutoOpen") {
             if (privateProps.currentIndex !== 2)
                 privateProps.currentIndex = 2
             column.loadColumn(autoOpenComponent, autoOpenMenuItem.name)
-            return true
+            return 0
         }
         if (navigationTarget === "VdeMute") {
             if (privateProps.currentIndex !== 3)
                 privateProps.currentIndex = 3
             column.loadColumn(vdeMuteComponent, vdeMuteMenuItem.name)
-            return true
+            return 0
         }
-        return false
+        return -2 // wrong target
     }
 
     QtObject {

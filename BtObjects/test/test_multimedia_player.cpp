@@ -4,6 +4,7 @@
 #include "mediaplayer.h"
 
 #include <QtTest>
+#include <gst/gst.h>
 
 #define TIMEOUT 2000
 
@@ -591,4 +592,9 @@ void TestMultiMediaPlayer::testDone()
 	QVERIFY(!player->info_poll_timer->isActive());
 	QCOMPARE(player->getCurrentSource(), QString(""));
 	QCOMPARE(player->getTrackInfo(), QVariantMap());
+}
+
+void TestMultiMediaPlayer::initTestCase()
+{
+	gst_init_check(NULL, NULL, NULL);
 }

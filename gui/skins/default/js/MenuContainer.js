@@ -45,9 +45,9 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     }
 
     if (itemObj) {
-        _addItem(itemObj, titleObj, shadowObj)
         itemObj.closeItem.connect(closeItem)
         itemObj.loadComponent.connect(loadComponent)
+        _addItem(itemObj, titleObj, shadowObj)
         return
     }
     else {

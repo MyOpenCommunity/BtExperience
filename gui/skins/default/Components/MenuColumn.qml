@@ -35,17 +35,23 @@ Item {
         if (navigationTarget === undefined)
             return
 
-        if (openMenu(navigationTarget))
-            return
+        var openMenuResult = openMenu(navigationTarget)
+        if (openMenuResult === 1)
+            return // further processing needed
 
-        console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + " unknown.")
+        if (openMenuResult < 0) // processing error
+            console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + " unknown. Error code: " + openMenuResult)
+
+        // resets navigation
+        column.pageObject.navigationTarget = 0
     }
 
     // hook to open a menu; receives a string to identify menu to be opened
-    // returns true if target is managed, otherwise false
+    // returns 0 if target is managed, 1 if more processing is needed, -1 in
+    // case of errors
     // see navigation.js for further details
     function openMenu(navigationTarget) {
-        return false // by default returns false
+        return -1 // by default returns generic error
     }
 
     // The signals captured from the MenuContainer to create/close child or the element

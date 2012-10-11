@@ -1,25 +1,16 @@
 #ifndef GSTMEDIAPLAYER_H
 #define GSTMEDIAPLAYER_H
 
-#include <gst/gst.h>
-
 #include <QObject>
 #include <QMap>
 
-// Anonymous namespaces are useless with extern "C" linkage, see:
-// https://groups.google.com/d/msg/comp.lang.c++.moderated/bRso4RIDiBI/F2BscJar_qMJ
-extern "C" gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, gpointer data);
-
 class GstMediaPlayer : public QObject
 {
-friend gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, gpointer data);
 	Q_OBJECT
 public:
-	GstMediaPlayer(QObject *parent = 0);
+	GstMediaPlayer(QObject *parent = 0) : QObject(parent) { }
 
-	virtual ~GstMediaPlayer();
-
-	bool play(QString track);
+	virtual bool play(QString track) { Q_UNUSED(track); return false; }
 
 	/*!
 		\brief Return information about the playing audio track
@@ -34,14 +25,14 @@ public:
 		- meta_album: track album, as written in ID3 tags
 		- total_time: total track time, either from ID3 tags or guessed by the player
 	 */
-	QMap<QString, QString> getPlayingInfo();
+	virtual QMap<QString, QString> getPlayingInfo() { return QMap<QString, QString>(); }
 
-	void setTrack(QString track);
+	virtual void setTrack(QString track) { Q_UNUSED(track) }
 
 public slots:
-	void pause();
-	void resume();
-	void stop();
+	virtual void pause() { }
+	virtual void resume() { }
+	virtual void stop() { }
 
 signals:
 	/*!
@@ -77,15 +68,15 @@ signals:
 		\a info contains the same data returned by getPlayingInfo().
 	 */
 	void playingInfoUpdated(const QMap<QString,QString> &info);
-
-private:
-	void handleBusMessage(GstBus *bus, GstMessage *message);
-	void handleTagMessage(GstMessage *message);
-	void handleStateChange();
-	void queryTime();
-	bool check_for_state_change;
-	GstPipeline *pipeline;
-	QMap<QString, QString> metadata;
 };
+
+
+class GstMediaPlayerInterface
+{
+public:
+	virtual QObject *createPlayer(QObject *parent = 0) = 0;
+};
+
+Q_DECLARE_INTERFACE(GstMediaPlayerInterface, "it.bticino.GstMediaPlayerPluginInterface/1.0")
 
 #endif // GSTMEDIAPLAYER_H

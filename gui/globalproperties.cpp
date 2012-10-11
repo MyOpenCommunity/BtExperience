@@ -108,6 +108,7 @@ void GlobalProperties::initAudio()
 	if (sound_diffusion_enabled)
 	{
 		audioPlayer = new AudioVideoPlayer(this);
+		emit audioPlayerChanged();
 
 		MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audioPlayer->getMediaPlayer());
 
@@ -117,6 +118,7 @@ void GlobalProperties::initAudio()
 	else
 	{
 		audioPlayer = videoPlayer;
+		emit audioPlayerChanged();
 	}
 
 	// TODO remove after configuration parsing is complete
