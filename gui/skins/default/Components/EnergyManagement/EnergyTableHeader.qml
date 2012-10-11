@@ -14,7 +14,7 @@ Column {
         height: 28
 
         Rectangle {
-            color: "white"
+            color: "#e6e6e6"
             width: 95
             height: parent.height
             UbuntuLightText {
@@ -27,7 +27,7 @@ Column {
         }
 
         Rectangle {
-            color: "white"
+            color: "#e6e6e6"
             width: 75
             height: parent.height
             UbuntuLightText {
