@@ -76,4 +76,13 @@ private:
 	GstMediaPlayerPrivate *impl;
 };
 
+
+class GstMediaPlayerInterface
+{
+public:
+	virtual QObject *createPlayer(QObject *parent = 0) = 0;
+};
+
+Q_DECLARE_INTERFACE(GstMediaPlayerInterface, "it.bticino.GstMediaPlayerPluginInterface/1.0")
+
 #endif // GSTMEDIAPLAYER_H

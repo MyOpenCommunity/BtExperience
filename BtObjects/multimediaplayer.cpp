@@ -25,7 +25,7 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	QObject(parent)
 {
 	player = new MediaPlayer(this);
-	gst_player = new GstMediaPlayer(this);
+	gst_player = 0; //new GstMediaPlayer(this);
 	is_video_track = false;
 	player_state = Stopped;
 	output_state = AudioOutputStopped;
@@ -291,7 +291,7 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 	}
 
 	current_source = source;
-	is_video_track = isVideoFile(source);
+	is_video_track = isVideoFile(source) && gst_player;
 	track_info.clear();
 
 	if (had_track_info)
