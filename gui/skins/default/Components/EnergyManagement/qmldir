@@ -14,6 +14,7 @@ EnergyTableHeader 1.0 EnergyTableHeader.qml
 EnergyTableRow 1.0 EnergyTableRow.qml
 EnergyYearGraph 1.0 EnergyYearGraph.qml
 EnergyYearTable 1.0 EnergyYearTable.qml
+GlobalViewTable 1.0 GlobalViewTable.qml
 LoadDetail 1.0 LoadDetail.qml
 LoadDiagnostic 1.0 LoadDiagnostic.qml
 LoadManagement 1.0 LoadManagement.qml
