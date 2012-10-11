@@ -258,7 +258,6 @@ Item {
             topMargin: 5
         }
 
-
         Repeater {
             model: privateProps.modelGraph.graph
             UbuntuLightText {
@@ -272,6 +271,4 @@ Item {
             }
         }
     }
-
-
 }

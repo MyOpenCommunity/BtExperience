@@ -281,8 +281,6 @@ void TestEnergyData::testReceiveCurrentValue()
 	QVERIFY(qobject_cast<EnergyItemCurrent *>(o1));
 	QVERIFY(qobject_cast<EnergyItemCurrent *>(o2));
 
-	QCOMPARE(o1->getConsumptionGoal(), QVariant());
-
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CURRENT, QDate(), 1234000));
 
 	t1.checkSignals();
@@ -298,8 +296,6 @@ void TestEnergyData::testReceiveCumulativeDayValue()
 	EnergyItem *o2 = getValue(EnergyData::CumulativeDayValue, QDate(2012, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
-
-	QCOMPARE(o1->getConsumptionGoal(), QVariant());
 
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_DAY, QDate(2012, 5, 18), 1234000));
 
@@ -349,8 +345,6 @@ void TestEnergyData::testReceiveCumulativeYearValue()
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
-	QCOMPARE(o1->getConsumptionGoal(), QVariant());
-
 	for (int i = 0; i < 12; ++i)
 	{
 		t1.checkNoSignals();
@@ -398,7 +392,7 @@ void TestEnergyData::testReceiveMonthlyAverage()
 	ObjectTester t1(o1, SIGNAL(valueChanged()));
 	ObjectTester t2(o2, SIGNAL(valueChanged()));
 
-	QCOMPARE(o1->getConsumptionGoal(), QVariant());
+	QCOMPARE(o1->getConsumptionGoal(), QVariant(15));
 
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_MONTLY_AVERAGE, QDate(2012, 5, 17), 1234000));
 
@@ -423,8 +417,6 @@ void TestEnergyData::testReceiveDailyAverageGraph()
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
-	QCOMPARE(o1->getMaxConsumptionGoal(), QVariant());
-
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_DAILY_AVERAGE_GRAPH, QDate(2011, 5, 18),
 					    graphValues(24, 1234000)));
 
@@ -438,10 +430,6 @@ void TestEnergyData::testReceiveDailyAverageGraph()
 	QCOMPARE(o2->getGraph().size(), 24);
 	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(308.5));
 	QCOMPARE(getBar(o2, 23)->getValue(), QVariant(309.075));
-
-	QCOMPARE(o1->getMaxConsumptionGoal(), QVariant());
-	for (int i = 0; i < 24; ++i)
-		QCOMPARE(getBar(o1, i)->getConsumptionGoal(), QVariant());
 
 	// different day: no updates
 
@@ -459,8 +447,6 @@ void TestEnergyData::testReceiveCumulativeDayGraph()
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
-	QCOMPARE(o1->getMaxConsumptionGoal(), QVariant());
-
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_DAY_GRAPH, QDate(2011, 5, 18),
 					    graphValues(24, 1234000)));
 
@@ -474,10 +460,6 @@ void TestEnergyData::testReceiveCumulativeDayGraph()
 	QCOMPARE(o2->getGraph().size(), 24);
 	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(308.5));
 	QCOMPARE(getBar(o2, 23)->getValue(), QVariant(309.075));
-
-	QCOMPARE(o1->getMaxConsumptionGoal(), QVariant());
-	for (int i = 0; i < 24; ++i)
-		QCOMPARE(getBar(o1, i)->getConsumptionGoal(), QVariant());
 
 	// different day: no updates
 
@@ -495,8 +477,6 @@ void TestEnergyData::testReceiveCumulativeMonthGraph()
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
 
-	QCOMPARE(o1->getMaxConsumptionGoal(), QVariant());
-
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH_GRAPH, QDate(2011, 5, 17),
 					    graphValues(31, 1234000)));
 
@@ -510,10 +490,6 @@ void TestEnergyData::testReceiveCumulativeMonthGraph()
 	QCOMPARE(o2->getGraph().size(), 31);
 	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(308.5));
 	QCOMPARE(getBar(o2, 30)->getValue(), QVariant(309.25));
-
-	QCOMPARE(o1->getMaxConsumptionGoal(), QVariant());
-	for (int i = 0; i < 31; ++i)
-		QCOMPARE(getBar(o1, i)->getConsumptionGoal(), QVariant());
 
 	// different month: no updates
 
@@ -530,8 +506,6 @@ void TestEnergyData::testReceiveCumulativeYearGraph()
 	EnergyGraph *o2 = getGraph(EnergyData::CumulativeYearGraph, QDate(2011, 5, 18), EnergyData::Currency);
 	ObjectTester t1(o1, SIGNAL(graphChanged()));
 	ObjectTester t2(o2, SIGNAL(graphChanged()));
-
-	QCOMPARE(o1->getMaxConsumptionGoal(), QVariant());
 
 	for (int i = 0; i < 12; ++i)
 	{
@@ -552,10 +526,6 @@ void TestEnergyData::testReceiveCumulativeYearGraph()
 	QCOMPARE(o2->getGraph().size(), 12);
 	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(308.5));
 	QCOMPARE(getBar(o2, 11)->getValue(), QVariant(308.775));
-
-	QCOMPARE(o1->getMaxConsumptionGoal(), QVariant(22));
-	for (int i = 0; i < 12; ++i)
-		QCOMPARE(getBar(o1, i)->getConsumptionGoal(), QVariant(i + 11));
 
 	// different year: no updates
 
@@ -1085,7 +1055,7 @@ void TestEnergyItem::testSetValue()
 void TestEnergyItem::testRateChanged()
 {
 	EnergyRate rate(0.5);
-	EnergyItem item(obj, EnergyData::CurrentValue, QDate(2012, 05, 16), QVariant(4), 0, QVariant(), &rate);
+	EnergyItem item(obj, EnergyData::CurrentValue, QDate(2012, 05, 16), QVariant(4), &rate);
 	ObjectTester t(&item, SIGNAL(valueChanged()));
 
 	QCOMPARE(item.getValue(), QVariant(2));
@@ -1126,8 +1096,8 @@ void TestEnergyGraph::testSetGraph()
 	ObjectTester tvalue(&graph, SIGNAL(graphChanged()));
 	QList<QObject *> values, new_values;
 
-	values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant(), QVariant());
-	new_values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant(1), QVariant());
+	values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant());
+	new_values << new EnergyGraphBar(QVariant("1"), "0-1", QVariant(1));
 
 	QCOMPARE(graph.isValid(), false);
 
@@ -1150,7 +1120,7 @@ void TestEnergyGraph::testSetGraph()
 void TestEnergyGraph::testRateChanged()
 {
 	EnergyRate rate(0.5);
-	EnergyGraphBar bar(QVariant(), "", QVariant(4), QVariant(), &rate);
+	EnergyGraphBar bar(QVariant(), "", QVariant(4), &rate);
 	ObjectTester t(&bar, SIGNAL(valueChanged()));
 
 	QCOMPARE(bar.getValue(), QVariant(2));
