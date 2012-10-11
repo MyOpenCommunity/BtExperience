@@ -4,16 +4,13 @@
 #include <QObject>
 #include <QMap>
 
-class GstMediaPlayerPrivate;
-
-
 class GstMediaPlayer : public QObject
 {
 	Q_OBJECT
 public:
-	GstMediaPlayer(QObject *parent = 0);
+	GstMediaPlayer(QObject *parent = 0) : QObject(parent) { }
 
-	bool play(QString track);
+	virtual bool play(QString track) { Q_UNUSED(track); return false; }
 
 	/*!
 		\brief Return information about the playing audio track
@@ -28,14 +25,14 @@ public:
 		- meta_album: track album, as written in ID3 tags
 		- total_time: total track time, either from ID3 tags or guessed by the player
 	 */
-	QMap<QString, QString> getPlayingInfo();
+	virtual QMap<QString, QString> getPlayingInfo() { return QMap<QString, QString>(); }
 
-	void setTrack(QString track);
+	virtual void setTrack(QString track) { Q_UNUSED(track) }
 
 public slots:
-	void pause();
-	void resume();
-	void stop();
+	virtual void pause() { }
+	virtual void resume() { }
+	virtual void stop() { }
 
 signals:
 	/*!
@@ -71,9 +68,6 @@ signals:
 		\a info contains the same data returned by getPlayingInfo().
 	 */
 	void playingInfoUpdated(const QMap<QString,QString> &info);
-
-private:
-	GstMediaPlayerPrivate *impl;
 };
 
 
