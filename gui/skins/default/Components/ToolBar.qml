@@ -235,7 +235,7 @@ Item {
         // volume (and mute)
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.playing
+            visible: true
             defaultImage: EventManager.eventManager.mute ?
                               (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_audio-source-on.svg" :
@@ -250,8 +250,9 @@ Item {
                               (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_source-audio-mute_p.svg" :
                                    "../images/toolbar/icon_source-audio-mute.svg")
-            // TODO come recuperare il modello da usare (local, upnp) e come impostare rootPath e index corretti?
-            onClicked: console.log("volumeButton clicked")
+            onClicked: EventManager.eventManager.playing ?
+                           Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioPlayer.isUpnp()}) :
+                           console.log("TODO: navigation to volume settings menu")
         }
 
         // play
@@ -264,8 +265,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_source-play_p.svg" :
                               "../images/toolbar/icon_source-play.svg"
-            // TODO come recuperare il modello da usare (local, upnp) e come impostare rootPath e index corretti?
-            onClicked: console.log("playButton clicked")
+            onClicked: Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioPlayer.isUpnp()})
         }
 
         // message

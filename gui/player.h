@@ -28,6 +28,8 @@ public:
 	// attention when using them in QML code
 	Q_INVOKABLE void generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool is_video);
 	Q_INVOKABLE void generatePlaylistUPnP(UPnPListModel *model, int index, int total_files, bool is_video);
+	// methods needed to restore state when coming back to player page
+	Q_INVOKABLE bool isUpnp() const { return ((actual_list == upnp_list) ? true : false); }
 
 protected:
 	explicit PlayListPlayer(QObject *parent = 0);
