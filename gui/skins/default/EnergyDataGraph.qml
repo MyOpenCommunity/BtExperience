@@ -19,6 +19,10 @@ Page {
     text: qsTr("energy consumption")
     source: "images/bg2.jpg"
 
+    EnergyFunctions {
+        id: energyFunctions
+    }
+
     QtObject {
         id: privateProps
         property bool showCurrency: false
@@ -35,24 +39,7 @@ Page {
         }
 
         SvgImage {
-            function getIcon(familyType) {
-                familyType = familyType + 0
-                switch (familyType) {
-                case EnergyFamily.Water:
-                    return "images/energy/ico_water_p.svg"
-                case EnergyFamily.Gas:
-                    return "images/energy/ico_gas_p.svg"
-                case EnergyFamily.DomesticHotWater:
-                    return "images/energy/ico_hot_water_p.svg"
-                case EnergyFamily.HeatingCooling:
-                    return "images/energy/ico_heating_p.svg"
-                case EnergyFamily.Electricity:
-                    return "images/energy/ico_electricity_p.svg"
-                default:
-                    return ""
-                }
-            }
-            source: getIcon(energyData.familyType)
+            source: "images/energy/" + energyFunctions.getFamilyIcon(energyData.familyType)
             anchors {
                 verticalCenter: parent.verticalCenter
                 right: titleText.left
@@ -362,7 +349,7 @@ Page {
                                                                                                   EnergyData.Consumption)
 
                     anchors.centerIn: parent
-                    text: currentItem.isValid ? currentItem.value.toFixed(currentItem.decimals) + " " + currentItem.measureUnit : ""
+                    text: energyFunctions.formatValue(currentItem)
                     color: "grey"
                     font.pixelSize: 18
                 }
@@ -420,7 +407,7 @@ Page {
 
                 UbuntuLightText {
                     anchors.centerIn: parent
-                    text: parent.consumptionItem.isValid ? parent.consumptionItem.value.toFixed(parent.consumptionItem.decimals) + " " + parent.consumptionItem.measureUnit : ""
+                    text: energyFunctions.formatValue(parent.consumptionItem)
                     color: "grey"
                     font.pixelSize: 18
                 }

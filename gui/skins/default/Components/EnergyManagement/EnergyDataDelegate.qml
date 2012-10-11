@@ -18,33 +18,15 @@ Column {
     signal clicked()
     signal removeAnimationFinished() // for CardView usage
 
+    EnergyFunctions {
+        id: energyFunctions
+    }
+
     QtObject {
         id: privateProps
 
-        function getIcon(energyType, state) {
-            switch (energyType) {
-            case EnergyData.Water:
-                return state === "pressed" ? "../../images/energy/ico_water_p.svg" : "../../images/energy/ico_water.svg"
-            case EnergyData.Gas:
-                return state === "pressed" ? "../../images/energy/ico_gas_p.svg" : "../../images/energy/ico_gas.svg"
-            case EnergyData.HotWater:
-                return state === "pressed" ? "../../images/energy/ico_hot_water_p.svg" : "../../images/energy/ico_hot_water.svg"
-            case EnergyData.Heat:
-                return state === "pressed" ? "../../images/energy/ico_heating_p.svg" : "../../images/energy/ico_heating.svg"
-            default:
-                if (energyType !== EnergyData.Electricity)
-                    console.log("EnergyDataDelegate, unknown energy type (" + energyType + "), use default icon")
-                return state === "pressed" ?  "../../images/energy/ico_electricity_p.svg" : "../../images/energy/ico_electricity.svg"
-            }
-        }
-
         function formatValue(energyType) {
-            var energyItem = itemObject.getValue(energyType, new Date(), measureType)
-            var value = energyItem.value
-            if (value !== undefined) {
-                return value.toFixed(energyItem.decimals) + " " + energyItem.measureUnit;
-            }
-            return "---"
+            return energyFunctions.formatValue(itemObject.getValue(energyType, new Date(), measureType))
         }
 
         property variant consumptionObj: itemObject.getValue(EnergyData.CumulativeMonthValue,
@@ -78,7 +60,7 @@ Column {
 
             SvgImage {
                 id: energyIcon
-                source: privateProps.getIcon(itemObject.energyType, headerButton.state)
+                source: "../../images/energy/" + energyFunctions.getIcon(itemObject.energyType, headerButton.state == "pressed")
             }
 
             UbuntuLightText {

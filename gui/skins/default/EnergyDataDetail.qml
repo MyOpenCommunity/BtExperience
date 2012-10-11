@@ -23,6 +23,10 @@ Page {
         property bool showCurrency: false
     }
 
+    EnergyFunctions {
+        id: energyFunctions
+    }
+
     SvgImage {
         id: header
         source: "images/energy/bg_titolo.svg"
@@ -33,24 +37,7 @@ Page {
         }
 
         SvgImage {
-            function getIcon(familyType) {
-                familyType = familyType + 0
-                switch (familyType) {
-                case EnergyFamily.Water:
-                    return "images/energy/ico_water_p.svg"
-                case EnergyFamily.Gas:
-                    return "images/energy/ico_gas_p.svg"
-                case EnergyFamily.DomesticHotWater:
-                    return "images/energy/ico_hot_water_p.svg"
-                case EnergyFamily.HeatingCooling:
-                    return "images/energy/ico_heating_p.svg"
-                case EnergyFamily.Electricity:
-                    return "images/energy/ico_electricity_p.svg"
-                default:
-                    return ""
-                }
-            }
-            source: getIcon(parseInt(family.objectKey))
+            source: "images/energy/" + energyFunctions.getFamilyIcon(parseInt(family.objectKey))
             anchors {
                 verticalCenter: parent.verticalCenter
                 right: titleText.left

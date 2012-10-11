@@ -5,6 +5,7 @@ EnergyDataDelegate 1.0 EnergyDataDelegate.qml
 EnergyDateSelector 1.0 EnergyDateSelector.qml
 EnergyDayGraph 1.0 EnergyDayGraph.qml
 EnergyDayTable 1.0 EnergyDayTable.qml
+EnergyFunctions 1.0 EnergyFunctions.qml
 EnergyManagementSystem 1.0 EnergyManagementSystem.qml
 EnergyMonthGraph 1.0 EnergyMonthGraph.qml
 EnergyMonthTable 1.0 EnergyMonthTable.qml
