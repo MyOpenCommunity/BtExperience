@@ -69,7 +69,7 @@ function addStopAndGoPopup(descr, status) {
   * Updates the popup of unread messages
   *
   * Updates the popup of unread messages and returns if popup page must be
-  * shown or hide.
+  * shown or hidden.
   *
   * unreadMessages: actual number of unread messages; may be zero
   */
@@ -83,7 +83,7 @@ function updateUnreadMessages(unreadMessages) {
     data["title"] = qsTr("MESSAGES")
 
     data["line1"] = unreadMessages
-    data["line2"] = qsTr("new messages")
+    data["line2"] = qsTr("new message(s)", "", unreadMessages)
     data["line3"] = ""
 
     data["confirmText"] = qsTr("Read")
@@ -109,7 +109,7 @@ function updateUnreadMessages(unreadMessages) {
   * Returns a string to navigate on the correct application page.
   */
 function confirm() {
-    var p = _alarmPopups.pop() // last popup gives me info on what to do next
+    var p = _highestPriorityPopup() // last popup gives me info on what to do next
 
     // resets all popups
     _alarmPopups = []
