@@ -36,6 +36,10 @@ BasePage {
         state = "popup"
     }
 
+    function updateUnreadMessages(unreadMessages) {
+        privateProps.update(PopupLogic.updateUnreadMessages(unreadMessages))
+    }
+
     function addAlarmPopup(type, zone, number, dateTime) {
         global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
         var dt = DateTime.format(dateTime)["time"] + " - " + DateTime.format(dateTime)["date"]

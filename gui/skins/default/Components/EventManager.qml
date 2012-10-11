@@ -86,6 +86,7 @@ Item {
                     privateProps.antintrusionModel = obj
                     break
                 case ObjectInterface.IdMessages:
+                    messagesConnection.target = obj
                     privateProps.messagesModel = obj
                     break
                 case ObjectInterface.IdDangers:
@@ -197,6 +198,16 @@ Item {
             var p = privateProps.preparePopupPage()
             // adds stop&go alarm
             p.addStopAndGoPopup(stopGoDevice)
+        }
+    }
+
+    Connections {
+        id: messagesConnection
+        target: null
+        onUnreadMessagesChanged: {
+            var p = privateProps.preparePopupPage()
+            // updates number of unread messages
+            p.updateUnreadMessages(messagesConnection.target.unreadMessages)
         }
     }
 
