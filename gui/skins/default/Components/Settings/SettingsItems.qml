@@ -15,9 +15,9 @@ MenuColumn {
             var m = modelList.get(7)
             itemList.currentIndex = 7
             column.loadColumn(m.component, m.name)
-            return true
+            return 1
         }
-        return false
+        return -2 // wrong target
     }
 
     onChildDestroyed: {

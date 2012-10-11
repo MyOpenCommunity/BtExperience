@@ -38,9 +38,9 @@ MenuColumn {
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1
             privateProps.showAlarmLog()
-            return true
+            return 1
         }
-        return false
+        return -2 // wrong target
     }
 
     Component.onCompleted: privateProps.setScenarioDescription()

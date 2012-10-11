@@ -13,9 +13,9 @@ MenuColumn {
             var m = listModel.get(0)
             listView.currentIndex = 0
             element.loadColumn(m.component, m.name)
-            return true
+            return 0
         }
-        return false
+        return -2 // wrong target
     }
 
     onChildDestroyed: {

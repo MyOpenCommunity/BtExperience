@@ -171,11 +171,6 @@ MenuColumn {
             font.pixelSize: 24
             visible: modelList.count === 0
         }
-
-        Component.onCompleted: {
-            // last menu to open, resets navigationTarget
-            column.pageObject.navigationTarget = 0
-        }
     }
 
     ObjectModel {

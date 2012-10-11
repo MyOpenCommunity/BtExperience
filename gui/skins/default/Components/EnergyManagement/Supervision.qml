@@ -46,11 +46,6 @@ MenuColumn {
         privateProps.currentIndex = -1
     }
 
-    Component.onCompleted: {
-        // last menu to open, resets navigationTarget
-        element.pageObject.navigationTarget = 0
-    }
-
     QtObject {
         id: privateProps
 
