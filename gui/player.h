@@ -20,8 +20,10 @@ public:
 	// to be used in QML with same name, but different arguments; of course it
 	// turned out to be a urban tale, so I changed names to be different: pay
 	// attention when using them in QML code
-	Q_INVOKABLE void generatePlaylistLocal(DirectoryListModel *model, int index, int total_files);
-	Q_INVOKABLE void generatePlaylistUPnP(UPnPListModel *model, int index, int total_files);
+	Q_INVOKABLE void generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool is_video);
+	Q_INVOKABLE void generatePlaylistUPnP(UPnPListModel *model, int index, int total_files, bool is_video);
+	// this is used to know if I'm playing something or if it is a "new" call
+	Q_INVOKABLE bool isPlaying();
 
 protected:
 	explicit PlayListPlayer(QObject *parent = 0);
@@ -31,6 +33,7 @@ protected:
 	void next();
 	void generate(DirectoryListModel *model, int index, int total_files);
 	void generate(UPnPListModel *model, int index, int total_files);
+	void reset();
 
 signals:
 	void currentChanged();
@@ -41,6 +44,7 @@ protected slots:
 private:
 	ListManager *local_list, *upnp_list, *actual_list;
 	QString current;
+	bool is_video;
 };
 
 /*!

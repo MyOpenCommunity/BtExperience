@@ -11,6 +11,7 @@
 PlayListPlayer::PlayListPlayer(QObject *parent) :
 	QObject(parent)
 {
+	is_video = false;
 	actual_list = 0;
 	local_list = new FileListManager;
 	connect(local_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
@@ -18,14 +19,26 @@ PlayListPlayer::PlayListPlayer(QObject *parent) :
 	connect(upnp_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
 }
 
-void PlayListPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files)
+void PlayListPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool _is_video)
 {
+	is_video = _is_video;
 	generate(model, index, total_files);
 }
 
-void PlayListPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files)
+void PlayListPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files, bool _is_video)
 {
+	is_video = _is_video;
 	generate(model, index, total_files);
+}
+
+bool PlayListPlayer::isPlaying()
+{
+	// if actual_list is neither pointing to local_list nor to upnp_list we
+	// assume we are not playing anything and one generatePlaylist* method
+	// must be called to setup the player; otherwise we are already setup and
+	// the generatePlaylist* call may be skipped (or done if we want to reset
+	// the player state)
+	return (actual_list == local_list || actual_list == upnp_list);
 }
 
 void PlayListPlayer::previous()
@@ -95,6 +108,12 @@ void PlayListPlayer::generate(UPnPListModel *model, int index, int total_files)
 
 	// updates reference to current (emits currentChanged)
 	updateCurrent();
+}
+
+void PlayListPlayer::reset()
+{
+	is_video = false;
+	actual_list = 0;
 }
 
 void PlayListPlayer::updateCurrent()
@@ -171,6 +190,7 @@ void AudioVideoPlayer::terminate()
 {
 	user_track_change_request = true;
 	media_player->stop();
+	PlayListPlayer::reset();
 }
 
 int AudioVideoPlayer::getVolume() const
