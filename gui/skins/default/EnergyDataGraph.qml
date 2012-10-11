@@ -38,8 +38,9 @@ Page {
             leftMargin: 130
         }
 
-        SvgImage {
-            source: "images/energy/" + energyFunctions.getFamilyIcon(energyData.familyType)
+        Image {
+            source: "images/energy/" + energyFunctions.getIcon(energyData.energyType, true)
+
             anchors {
                 verticalCenter: parent.verticalCenter
                 right: titleText.left

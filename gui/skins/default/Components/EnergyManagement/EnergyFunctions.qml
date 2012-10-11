@@ -30,22 +30,5 @@ QtObject {
         }
         return ""
     }
-
-    function getFamilyIcon(familyType) {
-        switch (familyType) {
-        case EnergyFamily.Water:
-            return "ico_water_p.svg"
-        case EnergyFamily.Gas:
-            return "ico_gas_p.svg"
-        case EnergyFamily.DomesticHotWater:
-            return "ico_hot_water_p.svg"
-        case EnergyFamily.HeatingCooling:
-            return "ico_heating_p.svg"
-        case EnergyFamily.Electricity:
-            return "ico_electricity_p.svg"
-        default:
-            return ""
-        }
-    }
 }
 
