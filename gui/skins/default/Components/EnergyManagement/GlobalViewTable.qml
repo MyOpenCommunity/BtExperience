@@ -3,6 +3,8 @@ import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 
+import "../../js/Stack.js" as Stack
+
 Column {
     id: table
     property date viewDate: new Date()
@@ -94,85 +96,113 @@ Column {
 
             Component {
                 id: tableRowComponent
-                Row {
-                    id: tableRow
-                    property variant itemObject: energiesCounters.getObjectWithGoal(model.index)
-                    property variant monthItem: itemObject.getValue(EnergyData.CumulativeMonthValue, new Date(), EnergyData.Consumption)
+                Item {
+                    width: tableRow.width
+                    height: tableRow.height
 
-                    height: privateProps.cellHeight
-                    spacing: 3
-                    SvgImage {
-                        id: btnLine
-                        source: "../../images/energy/btn_line_table.svg"
-                        UbuntuLightText {
-                            anchors {
-                                left: parent.left
-                                leftMargin: privateProps.textMargin
-                                verticalCenter: parent.verticalCenter
+                    Row {
+                        id: tableRow
+                        property variant itemObject: energiesCounters.getObjectWithGoal(model.index)
+                        property variant monthItem: itemObject.getValue(EnergyData.CumulativeMonthValue, new Date(), EnergyData.Consumption)
+
+                        height: privateProps.cellHeight
+                        spacing: 3
+                        SvgImage {
+                            id: btnLine
+                            source: "../../images/energy/btn_line_table.svg"
+                            UbuntuLightText {
+                                anchors {
+                                    left: parent.left
+                                    leftMargin: privateProps.textMargin
+                                    verticalCenter: parent.verticalCenter
+                                }
+                                text: tableRow.itemObject.name
                             }
-                            text: itemObject.name
+
+                            SvgImage {
+                                id: energyIcon
+                                source: "../../images/energy/" + energyFunctions.getIcon(tableRow.itemObject.energyType, false)
+                                anchors {
+                                    verticalCenter: parent.verticalCenter
+                                    right: parent.right
+                                    rightMargin: 10
+                                }
+                            }
                         }
 
                         SvgImage {
-                            id: energyIcon
-                            source: "../../images/energy/" + energyFunctions.getIcon(itemObject.energyType, false)
-                            anchors {
-                                verticalCenter: parent.verticalCenter
-                                right: parent.right
-                                rightMargin: 10
+                            id: line
+                            function calculateDelta() {
+                                if (tableRow.monthItem.isValid)
+                                    return tableRow.monthItem.value - tableRow.monthItem.consumptionGoal
+
+                                return 0
+                            }
+
+                            source: {
+                                if (calculateDelta() > 0)
+                                    return "../../images/energy/btn_row_table_red.svg"
+                                return "../../images/energy/btn_row_table_green.svg"
+                            }
+                            width: tableHeader.width - btnLine.width - spacing
+                            UbuntuLightText {
+                                anchors {
+                                    left: parent.left
+                                    leftMargin: privateProps.textMargin
+                                    verticalCenter: parent.verticalCenter
+                                }
+                                text: energyFunctions.formatValue(tableRow.monthItem)
+                                font.pixelSize: 14
+                                color: "white"
+                            }
+                            UbuntuLightText {
+                                anchors {
+                                    left: parent.left
+                                    leftMargin: privateProps.textMargin + tableHeader.spacing + privateProps.cellWidth
+                                    verticalCenter: parent.verticalCenter
+                                }
+                                text: tableRow.monthItem.consumptionGoal.toFixed(tableRow.itemObject.decimals) + " " + tableRow.monthItem.measureUnit
+                                font.pixelSize: 14
+                                color: "white"
+                            }
+
+                            UbuntuMediumText {
+                                anchors {
+                                    left: parent.left
+                                    leftMargin: privateProps.textMargin + (tableHeader.spacing + privateProps.cellWidth) * 2
+                                    verticalCenter: parent.verticalCenter
+                                }
+                                text: {
+                                    var delta = parent.calculateDelta()
+                                    return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(tableRow.itemObject.decimals) +  " " + tableRow.monthItem.measureUnit
+                                }
+
+                                font.pixelSize: 16
+                                color: "white"
+                            }
+                        }
+                        states: State {
+                            name: "pressed"
+                            PropertyChanges {
+                                target: btnLine
+                                source: "../../images/energy/btn_line_table_p.svg"
+                            }
+                            PropertyChanges {
+                                target: line
+                                source: "../../images/energy/btn_row_table_p.svg"
+                            }
+                            PropertyChanges {
+                                target: energyIcon
+                                source: "../../images/energy/" + energyFunctions.getIcon(tableRow.itemObject.energyType, true)
                             }
                         }
                     }
 
-                    SvgImage {
-                        function calculateDelta() {
-                            if (tableRow.monthItem.isValid)
-                                return tableRow.monthItem.value - tableRow.monthItem.consumptionGoal
-
-                            return 0
-                        }
-
-                        source: {
-                            if (calculateDelta() > 0)
-                                return "../../images/energy/btn_row_table_red.svg"
-                            return "../../images/energy/btn_row_table_green.svg"
-                        }
-                        width: tableHeader.width - btnLine.width - spacing
-                        UbuntuLightText {
-                            anchors {
-                                left: parent.left
-                                leftMargin: privateProps.textMargin
-                                verticalCenter: parent.verticalCenter
-                            }
-                            text: energyFunctions.formatValue(tableRow.monthItem)
-                            font.pixelSize: 14
-                            color: "white"
-                        }
-                        UbuntuLightText {
-                            anchors {
-                                left: parent.left
-                                leftMargin: privateProps.textMargin + tableHeader.spacing + privateProps.cellWidth
-                                verticalCenter: parent.verticalCenter
-                            }
-                            text: tableRow.monthItem.consumptionGoal.toFixed(itemObject.decimals) + " " + tableRow.monthItem.measureUnit
-                            font.pixelSize: 14
-                            color: "white"
-                        }
-
-                        UbuntuMediumText {
-                            anchors {
-                                left: parent.left
-                                leftMargin: privateProps.textMargin + (tableHeader.spacing + privateProps.cellWidth) * 2
-                                verticalCenter: parent.verticalCenter
-                            }
-                            text: {
-                                var delta = parent.calculateDelta()
-                                return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(itemObject.decimals) +  " " + tableRow.monthItem.measureUnit
-                            }
-
-                            font.pixelSize: 16
-                            color: "white"
-                        }
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: tableRow.state = "pressed"
+                        onReleased: tableRow.state = ""
+                        onClicked: Stack.pushPage("EnergyDataGraph.qml", {"energyData": tableRow.itemObject})
                     }
                 }
             }
