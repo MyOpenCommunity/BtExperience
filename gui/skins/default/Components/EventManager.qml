@@ -94,6 +94,7 @@ Item {
                     privateProps.dangersModel = obj
                     break
                 case ObjectInterface.IdScenarioModulesNotifier:
+                    scenarioConnection.target = obj
                     privateProps.recordingModel = obj
                     break
                 }
@@ -208,6 +209,16 @@ Item {
             var p = privateProps.preparePopupPage()
             // updates number of unread messages
             p.updateUnreadMessages(messagesConnection.target.unreadMessages)
+        }
+    }
+
+    Connections {
+        id: scenarioConnection
+        target: null
+        onScenarioActivated: {
+            var p = privateProps.preparePopupPage()
+            // adds popup for scenario activation
+            p.addScenarioActivationPopup(description)
         }
     }
 

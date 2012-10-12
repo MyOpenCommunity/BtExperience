@@ -5,6 +5,7 @@
 
 var _alarmPopups = []
 var _stopGoPopups = []
+var _scenarioActivationPopups = []
 var _unreadMessagesPopups = []
 
 
@@ -66,6 +67,33 @@ function addStopAndGoPopup(descr, status) {
 }
 
 /**
+  * Adds a scenario activation popup
+  *
+  * Adds a scenario activation popup to the stack of scenario popups and show
+  * the last popup
+  *
+  * descr: translated text of stop&go description
+  * status: enum that corresponds to the kind of alarm
+  */
+function addScenarioActivationPopup(descr) {
+    var data = []
+
+    data["_kind"] = "scenario"
+    data["title"] = qsTr("SCENARIO")
+
+    data["line1"] = descr
+    data["line2"] = qsTr("activated")
+    data["line3"] = ""
+
+    data["confirmText"] = qsTr("Show")
+    data["dismissText"] = ""
+
+    _scenarioActivationPopups.push(data)
+
+    return _highestPriorityPopup()
+}
+
+/**
   * Updates the popup of unread messages
   *
   * Updates the popup of unread messages and returns if popup page must be
@@ -114,6 +142,7 @@ function confirm() {
     // resets all popups
     _alarmPopups = []
     _stopGoPopups = []
+    _scenarioActivationPopups = []
     _unreadMessagesPopups = []
 
     if (p["_kind"] === "messages") {
@@ -128,6 +157,7 @@ function confirm() {
         return "Supervision"
     }
 
+    // scenario activation popups don't navigate
     return ""
 }
 
@@ -152,6 +182,11 @@ function dismiss() {
         return _highestPriorityPopup()
     }
 
+    if (_scenarioActivationPopups.length > 0) {
+        _scenarioActivationPopups.pop()
+        return _highestPriorityPopup()
+    }
+
     if (_unreadMessagesPopups.length > 0) {
         _unreadMessagesPopups.pop()
         return _highestPriorityPopup()
@@ -169,6 +204,10 @@ function _highestPriorityPopup() {
 
     if (_stopGoPopups.length > 0) {
         return _stopGoPopups[_stopGoPopups.length - 1]
+    }
+
+    if (_scenarioActivationPopups.length > 0) {
+        return _scenarioActivationPopups[_scenarioActivationPopups.length - 1]
     }
 
     if (_unreadMessagesPopups.length > 0) {

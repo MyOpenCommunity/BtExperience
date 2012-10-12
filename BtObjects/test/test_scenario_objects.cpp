@@ -259,7 +259,7 @@ void TestScenarioAdvanced::testDeviceCondition()
 	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
 	ActionObject ao("", TEST_COMMAND, ActionObject::ActionLight, 1);
 	AdvancedScenario obj(&dc, 0, &ao, true, 127, "");
-	ObjectTester ts(&obj, SIGNAL(started()));
+	ObjectTester ts(&obj, SIGNAL(started(QString)));
 	OpenMsg off("*9*0*3##"), on("*9*1*3##");
 	RawDevice dev(1);
 
@@ -284,7 +284,7 @@ void TestScenarioAdvanced::testWeekdayCondition()
 	ActionObject ao("", TEST_COMMAND, ActionObject::ActionLight, 1);
 	DeviceConditionObject dc(DeviceCondition::AUX, "", "1", "3", NOT_PULL);
 	AdvancedScenario obj1(&dc, 0, &ao, true, today_mask, "");
-	ObjectTester ts1(&obj1, SIGNAL(started()));
+	ObjectTester ts1(&obj1, SIGNAL(started(QString)));
 	OpenMsg off("*9*0*3##"), on("*9*1*3##");
 	RawDevice dev(1);
 
@@ -301,7 +301,7 @@ void TestScenarioAdvanced::testWeekdayCondition()
 	compareClientCommand();
 
 	AdvancedScenario obj2(&dc, 0, &ao, true, not_today_mask, "");
-	ObjectTester ts2(&obj2, SIGNAL(started()));
+	ObjectTester ts2(&obj2, SIGNAL(started(QString)));
 
 	dc.setParent(0);
 	ao.setParent(0);
@@ -318,7 +318,7 @@ void TestScenarioAdvanced::testTimeCondition()
 	TimeConditionObject tc(0, 0);
 	ActionObject ao("", TEST_COMMAND, ActionObject::ActionLight, 1);
 	AdvancedScenario obj(0, &tc, &ao, true, 127, "");
-	ObjectTester ts(&obj, SIGNAL(started()));
+	ObjectTester ts(&obj, SIGNAL(started(QString)));
 	RawDevice dev(1);
 
 	tc.setParent(0);
@@ -338,7 +338,7 @@ void TestScenarioAdvanced::testTimeDeviceCondition()
 	TimeConditionObject tc(0, 0);
 	ActionObject ao("", TEST_COMMAND, ActionObject::ActionLight, 1);
 	AdvancedScenario obj(&dc, &tc, &ao, true, 127, "");
-	ObjectTester ts(&obj, SIGNAL(started()));
+	ObjectTester ts(&obj, SIGNAL(started(QString)));
 	OpenMsg off("*9*0*3##"), on("*9*1*3##");
 	RawDevice dev(1);
 

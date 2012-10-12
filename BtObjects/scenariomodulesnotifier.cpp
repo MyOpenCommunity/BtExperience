@@ -33,6 +33,25 @@ ScenarioModulesNotifier::ScenarioModulesNotifier()
 		connect(scenarioModule, SIGNAL(statusChanged(ScenarioModule *)), this, SIGNAL(scenarioModuleChanged(ScenarioModule *)));
 	}
 
+	// creates an ObjectModel to select all scenarios
+	scenarios_model = new ObjectModel(this);
+
+	// sets filters to select advanced scenario objects
+	filters.clear();
+	filter["objectId"] = ObjectInterface::IdAdvancedScenario;
+	filters << filter;
+	filter.clear();
+
+	scenarios_model->setFilters(filters);
+
+	for(int i = 0; i < scenarios_model->getCount(); ++i)
+	{
+		ItemInterface *item = scenarios_model->getObject(i);
+		AdvancedScenario *scenario = qobject_cast<AdvancedScenario *>(item);
+		Q_ASSERT_X(scenario, __PRETTY_FUNCTION__, "Unexpected NULL object");
+		connect(scenario, SIGNAL(started(QString)), this, SIGNAL(scenarioActivated(QString)));
+	}
+
 	// inits everything
 	updateRecordingInfo();
 }
