@@ -4,11 +4,31 @@ import Components 1.0
 import Components.Text 1.0
 
 import "../../js/Stack.js" as Stack
+import "../../js/datetime.js" as DateTime
 
 Column {
     id: table
     property date viewDate: new Date()
-    property bool showCurrency: false
+
+    function scrollLeft() {
+        if (privateProps.currentPage > 0)
+            privateProps.currentPage -= 1
+        else
+            viewDate = DateTime.previousMonth(viewDate)
+    }
+
+    function scrollRight() {
+        if (energiesCounters.linesWithGoal > (privateProps.currentPage + 1) * privateProps.maxRows)
+            privateProps.currentPage += 1
+        else {
+            var currentDate = new Date()
+            if (viewDate.getFullYear() < currentDate.getFullYear() ||
+                viewDate.getFullYear() == currentDate.getFullYear() && viewDate.getMonth() < currentDate.getMonth()) {
+                viewDate = DateTime.nextMonth(viewDate)
+                privateProps.currentPage = 0
+            }
+        }
+    }
 
     spacing: 3
 
@@ -21,6 +41,8 @@ Column {
         property int textMargin: 10
         property int cellWidth: 152
         property int cellHeight: 44
+        property int maxRows: 6
+        property int currentPage: 0
     }
 
     Row {
@@ -89,21 +111,16 @@ Column {
 
 
     Repeater {
-        model: energiesCounters.linesWithGoal()
+        model: Math.min(privateProps.maxRows, energiesCounters.linesWithGoal - privateProps.currentPage * privateProps.maxRows)
 
-        delegate: Loader {
-            sourceComponent: tableRowComponent
-
-            Component {
-                id: tableRowComponent
-                Item {
+        delegate: Item {
                     width: tableRow.width
                     height: tableRow.height
 
                     Row {
                         id: tableRow
-                        property variant itemObject: energiesCounters.getObjectWithGoal(model.index)
-                        property variant monthItem: itemObject.getValue(EnergyData.CumulativeMonthValue, new Date(), EnergyData.Consumption)
+                        property variant itemObject: energiesCounters.getObjectWithGoal(model.index + privateProps.currentPage * privateProps.maxRows)
+                        property variant monthItem: itemObject.getValue(EnergyData.CumulativeMonthValue, table.viewDate, EnergyData.Consumption)
 
                         height: privateProps.cellHeight
                         spacing: 3
@@ -205,15 +222,15 @@ Column {
                         onClicked: Stack.pushPage("EnergyDataGraph.qml", {"energyData": tableRow.itemObject})
                     }
                 }
-            }
-        }
+
     }
 
     ObjectModel {
         id: energiesCounters
         filters: [{objectId: ObjectInterface.IdEnergyData}]
+        property int linesWithGoal: calculateLines()
 
-        function linesWithGoal() {
+        function calculateLines() {
             var lines = 0
             for (var i = 0; i < energiesCounters.count; i += 1) {
                 var energyData = energiesCounters.getObject(i)
@@ -247,7 +264,6 @@ Column {
             }
             return null
         }
-
     }
 }
 

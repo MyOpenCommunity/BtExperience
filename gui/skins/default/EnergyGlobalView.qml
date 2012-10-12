@@ -111,12 +111,68 @@ Page {
             }
         }
 
+        Image {
+            id: prevArrow
+            source: "images/common/freccia_sx.svg"
+            anchors {
+                right: table.left
+                rightMargin: 20
+                verticalCenter: parent.verticalCenter
+            }
+
+            BeepingMouseArea {
+                id: mouseAreaSx
+                anchors.fill: parent
+                onClicked: table.scrollLeft()
+            }
+
+            states: [
+                State {
+                    name: "pressed"
+                    when: mouseAreaSx.pressed === true
+                    PropertyChanges {
+                        target: prevArrow
+                        source: "images/common/freccia_sx_P.svg"
+                    }
+                }
+            ]
+        }
+
         GlobalViewTable {
+            id: table
             anchors {
                 top: divisorLine.bottom
                 topMargin: 15
                 horizontalCenter: parent.horizontalCenter
             }
         }
+
+        Image {
+            id: nextArrow
+            source: "images/common/freccia_dx.svg"
+            anchors {
+                left: table.right
+                leftMargin: 20
+                verticalCenter: parent.verticalCenter
+            }
+
+            BeepingMouseArea {
+                id: mouseAreaDx
+                anchors.fill: parent
+                onClicked: table.scrollRight()
+            }
+
+            states: [
+                State {
+                    name: "pressed"
+                    when: mouseAreaDx.pressed === true
+                    PropertyChanges {
+                        target: nextArrow
+                        source: "images/common/freccia_dx_P.svg"
+                    }
+                }
+            ]
+        }
+
     }
 }
