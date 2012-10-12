@@ -9,6 +9,8 @@ Item {
     property date graphDate
     property variant energyData
 
+    signal monthClicked(int year, int month)
+
     QtObject {
         id: privateProps
 
@@ -144,9 +146,13 @@ Item {
                     return goal !== undefined && goal > 0
                 }
 
-
                 width: columnGraphBg.width + (previusYearBar.visible ? previusYearBar.width + privateProps.previousYearSpacing : 0)
                 height: columnGraphBg.height + columnShadow.height
+
+                BeepingMouseArea {
+                    anchors.fill: parent
+                    onClicked: itemGraph.monthClicked(privateProps.modelGraph.date.getFullYear(), model.index)
+                }
 
                 Loader {
                     id: columnGraphBg

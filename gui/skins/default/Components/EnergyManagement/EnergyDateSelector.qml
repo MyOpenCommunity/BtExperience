@@ -6,9 +6,17 @@ import "../../js/datetime.js" as DateTime
 
 Row {
     id: selector
+    // because we have an unique date for month, year and day, we use aliases to
+    // avoid wasting memoty and mantain a separate API.
+
     property date monthDate: new Date()
-    property date yearDate: new Date()
-    property date dayDate: new Date()
+    property alias yearDate: selector.monthDate
+    property alias dayDate: selector.monthDate
+
+    // updates back the real datas
+    onMonthDateChanged: privateProps.monthDate = selector.monthDate
+    onYearDateChanged: privateProps.yearDate = selector.yearDate
+    onDayDateChanged: privateProps.dayDate = selector.dayDate
 
     spacing: 4
 
