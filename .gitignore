@@ -16,3 +16,8 @@ obj/
 /doc/
 /extra
 build_arm/
+
+*.moc
+*.o
+moc_*.cpp
+
