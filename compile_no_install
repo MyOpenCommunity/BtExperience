@@ -11,6 +11,7 @@ then
 fi
 
 MACHINE=$1
+POINTERCAL=/etc/pointercal
 
 if [ "$MACHINE" = "TS10" ]
 then
@@ -27,8 +28,8 @@ then
   export PKG_CONFIG_SYSROOT_DIR="/home/sources/TS10_PREMIUM/TS10_PACKAGES/ti-dvsdk_dm3730-evm_04_03_00_06/linux-devkit/arm-arago-linux-gnueabi/"
   
   /usr/lib/qt/bin/qmake CONFIG+=maliit  
-  make -j || exit 1
-  make install  #It's necessary to create the folder dist with the executable file
+  make -j$CPU4COMPILE || exit 1
+  make install || exit 1  #It's necessary to create the folder dist with the executable file
 
   #create launcher file
   rm -f BtExperience_qws
@@ -40,7 +41,7 @@ then
   echo "export QWS_DISPLAY=powervr" >> BtExperience_qws
   echo "export QT_IM_MODULE=MaliitDirect" >> BtExperience_qws
   echo "export LD_LIBRARY_PATH=/home/bticino/lib:$LD_LIBRARY_PATH" >> BtExperience_qws
-  echo "export POINTERCAL=/etc/pointercal" >> BtExperience_qws
+  echo "export POINTERCAL=$POINTERCAL" >> BtExperience_qws
   echo "if [ ! -e "$POINTERCAL" ]" >> BtExperience_qws
   echo "then" >> BtExperience_qws
   echo "ts_calibrate" >> BtExperience_qws
