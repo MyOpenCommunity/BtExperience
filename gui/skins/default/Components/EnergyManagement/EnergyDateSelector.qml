@@ -2,6 +2,8 @@ import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
 
+import "../../js/datetime.js" as DateTime
+
 Row {
     id: selector
     property date monthDate: new Date()
@@ -82,119 +84,59 @@ Row {
 
         // Month functions
         function previousMonth() {
-            privateProps.monthDate = _previousMonth(privateProps.monthDate)
+            privateProps.monthDate = DateTime.previousMonth(privateProps.monthDate)
             updateTimer.restart()
-        }
-
-        function _previousMonth(d) {
-            var month = d.getMonth()
-            if (month === 0) {
-                d.setFullYear(d.getFullYear() - 1)
-                d.setMonth(11)
-            }
-            else {
-                d.setMonth(month -1)
-            }
-            return d
         }
 
         function nextMonth() {
-            privateProps.monthDate = _nextMonth(privateProps.monthDate)
+            privateProps.monthDate = DateTime.nextMonth(privateProps.monthDate)
             updateTimer.restart()
         }
 
-        function _nextMonth(d) {
-            var month = d.getMonth()
-            if (month === 11) {
-                d.setFullYear(d.getFullYear() + 1)
-                d.setMonth(0)
-            }
-            else {
-                d.setMonth(month + 1)
-            }
-            return d
-        }
-
         function previousMonthEnabled() {
-            return selector.isEnergyMonthValid(_previousMonth(privateProps.monthDate))
+            return selector.isEnergyMonthValid(DateTime.previousMonth(privateProps.monthDate))
         }
 
         function nextMonthEnabled(){
-            return selector.isEnergyMonthValid(_nextMonth(privateProps.monthDate))
+            return selector.isEnergyMonthValid(DateTime.nextMonth(privateProps.monthDate))
         }
 
         // Year functions
         function previousYear() {
-            privateProps.yearDate = _previousYear(privateProps.yearDate)
+            privateProps.yearDate = DateTime.previousYear(privateProps.yearDate)
             updateTimer.restart()
-        }
-
-        function _previousYear(d) {
-            d.setFullYear(d.getFullYear() - 1)
-            return d
         }
 
         function nextYear() {
-            privateProps.yearDate = _nextYear(privateProps.yearDate)
+            privateProps.yearDate = DateTime.nextYear(privateProps.yearDate)
             updateTimer.restart()
-        }
-
-        function _nextYear(d) {
-            d.setFullYear(d.getFullYear() + 1)
-            return d
         }
 
         function previousYearEnabled() {
-            return selector.isEnergyYearValid(_previousYear(privateProps.yearDate))
+            return selector.isEnergyYearValid(DateTime.previousYear(privateProps.yearDate))
         }
 
         function nextYearEnabled() {
-            return selector.isEnergyYearValid(_nextYear(privateProps.yearDate))
+            return selector.isEnergyYearValid(DateTime.nextYear(privateProps.yearDate))
         }
-
 
         // Day functions
         function previousDay() {
-            privateProps.dayDate = _previousDay(privateProps.dayDate)
+            privateProps.dayDate = DateTime.previousDay(privateProps.dayDate)
             updateTimer.restart()
-        }
-
-        function daysInMonth(month, year) {
-            return new Date(year, month + 1, 0).getDate()
-        }
-
-        function _previousDay(d) {
-            if (d.getDate() === 1) {
-                d = _previousMonth(d)
-                d.setDate(daysInMonth(d.getMonth(), d.getFullYear()))
-            }
-            else
-                d.setDate(d.getDate() - 1)
-            return d
         }
 
         function nextDay() {
-            privateProps.dayDate = _nextDay(privateProps.dayDate)
+            privateProps.dayDate = DateTime.nextDay(privateProps.dayDate)
             updateTimer.restart()
         }
 
-        function _nextDay(d) {
-            var day = d.getDate() + 1
-            if (day > daysInMonth(d.getMonth(), d.getFullYear())) {
-                d.setDate(1)
-                return _nextMonth(d)
-            }
-
-            d.setDate(d.getDate() + 1)
-            return d
-        }
-
         function previousDayEnabled() {
-            return selector.isEnergyDayValid(_previousDay(privateProps.dayDate))
+            return selector.isEnergyDayValid(DateTime.previousDay(privateProps.dayDate))
         }
 
         function nextDayEnabled() {
-            return selector.isEnergyDayValid(_nextDay(privateProps.dayDate))
+            return selector.isEnergyDayValid(DateTime.nextDay(privateProps.dayDate))
         }
     }
 
