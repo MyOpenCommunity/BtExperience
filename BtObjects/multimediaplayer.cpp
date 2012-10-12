@@ -272,6 +272,7 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 		return;
 
 	bool had_track_info = track_info.size() != 0;
+	bool is_new_track_video = isVideoFile(source) && gst_player;
 
 	// if playing, start playing new track right now (which automatically gets
 	// track info), otherwise request track info separately
@@ -287,27 +288,37 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 	}
 	else if (is_video_track)
 	{
-		gst_player->setTrack(source);
+		if (is_new_track_video)
+			gst_player->setTrack(source);
+		else
+			gst_player->stop();
 		// TODO: discover file properties (duration etc) while in pause mode.
 	}
 	else
 	{
-		if (player->isPlaying())
+		if (is_new_track_video)
 		{
-			player->play(source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
+			player->stop();
 		}
-		else if (player->isPaused())
+		else
 		{
-			// accourding to documentation, "pausing_keep loadfile" should do the right thing, but
-			// it does not, so we call quit() here to force a restart when resume() is called
-			player->quit();
-			// TODO maybe request after some time, in case we start playing
-			player->requestInitialPlayingInfo(source);
+			if (player->isPlaying())
+			{
+				player->play(source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
+			}
+			else if (player->isPaused())
+			{
+				// accourding to documentation, "pausing_keep loadfile" should do the right thing, but
+				// it does not, so we call quit() here to force a restart when resume() is called
+				player->quit();
+				// TODO maybe request after some time, in case we start playing
+				player->requestInitialPlayingInfo(source);
+			}
 		}
 	}
 
 	current_source = source;
-	is_video_track = isVideoFile(source) && gst_player;
+	is_video_track = is_new_track_video;
 	track_info.clear();
 
 	if (had_track_info)
