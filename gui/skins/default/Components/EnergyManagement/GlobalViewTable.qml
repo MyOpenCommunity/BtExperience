@@ -198,7 +198,7 @@ Column {
                         }
                     }
 
-                    MouseArea {
+                    BeepingMouseArea {
                         anchors.fill: parent
                         onPressed: tableRow.state = "pressed"
                         onReleased: tableRow.state = ""
