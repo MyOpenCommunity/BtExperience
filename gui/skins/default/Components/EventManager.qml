@@ -19,9 +19,9 @@ Item {
     property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.openedDevices
     property bool scenarioRecording: privateProps.recordingModel === undefined ? false : privateProps.recordingModel.recording
     property bool playing: global.audioPlayer === undefined ? false : global.audioPlayer.playing
+    property bool mute: global.audioState === null ? false : (global.audioState.state === AudioState.LocalPlaybackMute || global.audioState.state === AudioState.Mute)
 
     property int clocks: 0 // TODO link to C++ model!
-    property bool mute: false // TODO link to C++ model and check if property exists!
 
     anchors.fill: parent
 

@@ -88,12 +88,13 @@ void GlobalProperties::initAudio()
 	sound_player = new SoundPlayer(this);
 
 	audio_state = new AudioState(this);
+	emit audioStateChanged();
 	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(videoPlayer->getMediaPlayer()));
 	audio_state->registerBeep(sound_player);
 	audio_state->enableState(AudioState::Idle);
 
 	connect(audio_state, SIGNAL(stateChanged(AudioState::State,AudioState::State)),
-		this, SLOT(audioStateChanged()));
+		this, SLOT(audioStateChangedManagement()));
 
 	MultiMediaPlayer *player = new MultiMediaPlayer(this);
 
@@ -268,7 +269,7 @@ void GlobalProperties::beepChanged()
 		audio_state->disableState(AudioState::Beep);
 }
 
-void GlobalProperties::audioStateChanged()
+void GlobalProperties::audioStateChangedManagement()
 {
 	if (audio_state->getState() == AudioState::Screensaver)
 		delayed_frame_timer->start();

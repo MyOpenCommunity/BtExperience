@@ -54,7 +54,7 @@ class GlobalProperties : public QObject
 	// The object to manage image lists
 	Q_PROPERTY(PhotoPlayer *photoPlayer READ getPhotoPlayer CONSTANT)
 	// The object to manage audio/video playback state from QML
-	Q_PROPERTY(QObject *audioState READ getAudioState CONSTANT)
+	Q_PROPERTY(QObject *audioState READ getAudioState NOTIFY audioStateChanged)
 	// The object to play ringtones from QML
 	Q_PROPERTY(QObject *ringtoneManager READ getRingtoneManager CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
@@ -103,13 +103,14 @@ signals:
 	void requestReboot();
 	void keyboardLayoutChanged();
 	void audioPlayerChanged();
+	void audioStateChanged();
 
 private slots:
 #ifdef BT_MALIIT
 	void pluginSettingsReceived(const QList<QSharedPointer<Maliit::PluginSettings> > &settings);
 #endif
 	void beepChanged();
-	void audioStateChanged();
+	void audioStateChangedManagement();
 	void sendDelayedFrames();
 
 private:
