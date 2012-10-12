@@ -98,6 +98,7 @@ Item {
 
     ButtonThreeStates {
         id: buttonDismiss
+        visible: buttonDismiss.text !== ""
         defaultImage: "../images/common/btn_alert.svg"
         pressedImage: "../images/common/btn_alert.svg"
         selectedImage: "../images/common/btn_alert.svg"
@@ -127,7 +128,8 @@ Item {
         onClicked: confirmClicked()
         status: 0
         anchors {
-            right: buttonDismiss.left
+            right: buttonDismiss.visible ? buttonDismiss.left : bgBottom.right
+            rightMargin: buttonDismiss.visible ? 0 : bgTitle.width / 100 * 1.59
             bottom: bgBottom.bottom
             bottomMargin: bgTitle.height / 100 * 11.24
         }

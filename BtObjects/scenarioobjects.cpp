@@ -890,7 +890,7 @@ void AdvancedScenario::start()
 {
 	qDebug() << "START the advanced scenario";
 	action_obj->sendFrame();
-	emit started();
+	emit started(getName());
 }
 
 void AdvancedScenario::save()

@@ -238,18 +238,18 @@ Item {
             visible: true
             defaultImage: EventManager.eventManager.mute ?
                               (global.guiSettings.skin === GuiSettings.Clear ?
-                                   "../images/toolbar/icon_audio-source-on.svg" :
-                                   "../images/toolbar/icon_audio-source-on_p.svg") :
-                              (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_source-audio-mute.svg" :
-                                   "../images/toolbar/icon_source-audio-mute_p.svg")
+                                   "../images/toolbar/icon_source-audio-mute_p.svg") :
+                              (global.guiSettings.skin === GuiSettings.Clear ?
+                                   "../images/toolbar/icon_audio-source-on.svg" :
+                                   "../images/toolbar/icon_audio-source-on_p.svg")
             pressedImage: EventManager.eventManager.mute ?
                               (global.guiSettings.skin === GuiSettings.Clear ?
-                                   "../images/toolbar/icon_audio-source-on_p.svg" :
-                                   "../images/toolbar/icon_audio-source-on.svg") :
-                              (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_source-audio-mute_p.svg" :
-                                   "../images/toolbar/icon_source-audio-mute.svg")
+                                   "../images/toolbar/icon_source-audio-mute.svg") :
+                              (global.guiSettings.skin === GuiSettings.Clear ?
+                                   "../images/toolbar/icon_audio-source-on_p.svg" :
+                                   "../images/toolbar/icon_audio-source-on.svg")
             onClicked: EventManager.eventManager.playing ?
                            Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioPlayer.isUpnp()}) :
                            console.log("TODO: navigation to volume settings menu")

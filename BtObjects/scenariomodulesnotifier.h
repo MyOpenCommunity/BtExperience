@@ -40,12 +40,13 @@ public:
 signals:
 	void recordingChanged();
 	void scenarioModuleChanged(ScenarioModule *scenario);
+	void scenarioActivated(QString description);
 
 private slots:
 	void updateRecordingInfo();
 
 private:
-	ObjectModel *scenario_modules_model;
+	ObjectModel *scenario_modules_model, *scenarios_model;
 	bool is_recording;
 };
 

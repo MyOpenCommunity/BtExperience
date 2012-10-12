@@ -383,7 +383,7 @@ public slots:
 signals:
 	void enabledChanged();
 	void daysChanged();
-	void started();
+	void started(QString description);
 
 private slots:
 	void timeConditionSatisfied();

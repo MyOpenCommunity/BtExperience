@@ -247,24 +247,37 @@ Page {
         status: 0
     }
 
-    ButtonImageThreeStates {
-        id: buttonMute
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_mute.svg"
-        defaultImage: "images/common/ico_mute.svg"
-        pressedImage: "images/common/ico_mute.svg"
-        onClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
-        status: 0
-        visible: player.isVideo || !global.audioState.localSource
+    Item {
+        // I used an Item to define some specific states for the buttonMute
+        // please note that buttonMute is a ButtonImageThreeStates so it defines
+        // its internal states, it is neither possible nor desirable to redefine
+        // these internal states
+        id: buttonMuteItem
+
+        width: buttonMute.width
+        height: buttonMute.height
+
         anchors {
             top: prevButton.top
             right: buttonMinus.left
             rightMargin: frameBg.width / 100 * 1.90
         }
-        // this binding does not work when loading the page (the button is always in default state)
-        // this is not a problem because player.mediaPlayer.mute should always be false when entering the page)
-        // see playButtonItem if it's necessary to work around this
+
+        ButtonImageThreeStates {
+            id: buttonMute
+
+            defaultImageBg: "images/common/btn_player_comando.svg"
+            pressedImageBg: "images/common/btn_player_comando_P.svg"
+            shadowImage: "images/common/ombra_btn_mute.svg"
+            defaultImage: "images/common/ico_mute.svg"
+            pressedImage: "images/common/ico_mute.svg"
+            anchors.centerIn: parent
+            status: 0
+            visible: player.isVideo || !global.audioState.localSource
+
+            onClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
+        }
+
         state: player.mediaPlayer.mute ? "mute" : ""
 
         states: [
@@ -274,7 +287,6 @@ Page {
                     target: buttonMute
                     defaultImage: "images/common/ico_mute_on.svg"
                     pressedImage: "images/common/ico_mute_on.svg"
-                    status: 0
                 }
             }
         ]
@@ -521,15 +533,11 @@ Page {
                 anchors.horizontalCenter: undefined
                 anchors.verticalCenter: prevButton.verticalCenter
                 anchors.left: folderButton.right
-                anchors.right: buttonMute.left
+                anchors.right: buttonMuteItem.left
             }
             AnchorChanges {
                 target: prevButton
                 anchors.top: bottomBarBg.top
-            }
-            PropertyChanges {
-                target: theVideo
-                anchors.fill: fullScreenBg
             }
             PropertyChanges {
                 target: title

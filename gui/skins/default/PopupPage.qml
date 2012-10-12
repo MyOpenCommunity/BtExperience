@@ -71,6 +71,10 @@ BasePage {
         privateProps.update(PopupLogic.addStopAndGoPopup(device.name, t))
     }
 
+    function addScenarioActivationPopup(description) {
+        privateProps.update(PopupLogic.addScenarioActivationPopup(description))
+    }
+
     // needed to translate antintrusion names in alarm popups
     QtObject {
         id: privateProps

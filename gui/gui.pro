@@ -49,9 +49,7 @@ target.commands += cp -L $${PWD}/../archive.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../conf.xml $${target.path}/ &&
 target.commands += cp -L $${PWD}/../BtObjects/qmldir $${target.path}/BtObjects/ &&
 target.commands += cp -L $${DESTDIR}/$${TARGET} $${target.path}/ &&
-isArm() {
-    target.commands += cp -L $${PWD}/common_files/libcommon.so.0 $${target.path}/ &&
-} else {
+!isArm() {
     target.commands += cp -L $${PWD}/common_files/lib/x86/libcommon.so.0 $${target.path}/ &&
 }
 target.commands += true
