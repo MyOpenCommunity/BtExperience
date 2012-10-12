@@ -533,15 +533,11 @@ Page {
                 anchors.horizontalCenter: undefined
                 anchors.verticalCenter: prevButton.verticalCenter
                 anchors.left: folderButton.right
-                anchors.right: buttonMute.left
+                anchors.right: buttonMuteItem.left
             }
             AnchorChanges {
                 target: prevButton
                 anchors.top: bottomBarBg.top
-            }
-            PropertyChanges {
-                target: theVideo
-                anchors.fill: fullScreenBg
             }
             PropertyChanges {
                 target: title
