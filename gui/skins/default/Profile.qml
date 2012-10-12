@@ -43,8 +43,8 @@ Page {
         // the following properties are used to compute margins for the moving grid
         // we have to be sure that elements moved on the bottom and right part of
         // the grid don't disappear from the screen or don't overlap with other elements
-        property int gridRightMargin: 0
-        property int gridBottomMargin: 0
+        property int maxItemWidth: 0
+        property int maxItemHeight: 0
 
         function selectObj(favorite) {
             unselectObj()
@@ -120,10 +120,10 @@ Page {
                 // x and y are absolute coordinates
                 var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
                 var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": obj})
-                // grid margins are set to maximum quicklink size; this info is used to draw a grid in which
+                // grid margins are set to maximum quicklink size / 2; this info is used to draw a grid in which
                 // QuickLinks don't overlap with other elements and don't disappear out of screen
-                privateProps.gridRightMargin = privateProps.gridRightMargin < instance.width ? instance.width : privateProps.gridRightMargin
-                privateProps.gridBottomMargin = privateProps.gridBottomMargin < instance.height ? instance.height : privateProps.gridBottomMargin
+                privateProps.maxItemWidth = Math.max(privateProps.maxItemWidth, instance.width)
+                privateProps.maxItemHeight = Math.max(privateProps.maxItemHeight, instance.height)
                 instance.requestEdit.connect(showEditBox)
                 instance.selected.connect(selectObj)
                 instance.requestMove.connect(moveBegin)
@@ -401,8 +401,8 @@ Page {
                     privateProps.actualFavorite.y = itemPos.y
                     privateProps.actualFavorite.itemObject.position = Qt.point(absX, absY)
                 }
-                gridRightMargin: 90 //TODO: privateProps.gridRightMargin - parent.width / moveGrid.columns
-                gridBottomMargin: 90 //privateProps.gridBottomMargin - parent.height / moveGrid.rows
+                maxItemHeight: privateProps.maxItemHeight
+                maxItemWidth: privateProps.maxItemWidth
 
                 z: bgPannable.z + 2 // must be on top of quicklinks
                 anchors {
@@ -413,6 +413,7 @@ Page {
                 }
 
                 onMoveEnd: privateProps.moveEnd()
+
             }
         }
     }
