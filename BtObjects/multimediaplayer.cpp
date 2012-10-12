@@ -37,6 +37,8 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 		if (plugin)
 			gst_player = qobject_cast<GstMediaPlayer *>(plugin->createPlayer(this));
 	}
+	if (!gst_player)
+		qWarning() << "Could not load GStreamer plugin in directory" << pluginsDir.absolutePath();
 
 	player = new MediaPlayer(this);
 
