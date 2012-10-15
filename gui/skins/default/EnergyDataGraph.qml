@@ -154,13 +154,13 @@ Page {
 
                     ButtonImageThreeStates {
                         id: graphButton
-                        defaultImageBg: "images/energy/btn_value.svg"
-                        pressedImageBg: "images/energy/btn_value_P.svg"
-                        selectedImageBg: "images/energy/btn_value_S.svg"
+                        defaultImageBg: "images/common/btn_66x35.svg"
+                        pressedImageBg: "images/common/btn_66x35_P.svg"
+                        selectedImageBg: "images/common/btn_66x35_S.svg"
+                        shadowImage: "images/common/btn_shadow_66x35.svg"
                         defaultImage: "images/energy/ico_graph.svg"
                         pressedImage: "images/energy/ico_graph_P.svg"
                         selectedImage: "images/energy/ico_graph_P.svg"
-                        shadowImage: "images/energy/ombra_btn_value.svg"
                         status: privateProps.showTable === false ? 1 : 0
                         onClicked: {
                             if (privateProps.showTable) {
@@ -176,13 +176,13 @@ Page {
                     }
                     ButtonImageThreeStates {
                         id: tableButton
-                        defaultImageBg: "images/energy/btn_value.svg"
-                        pressedImageBg: "images/energy/btn_value_P.svg"
-                        selectedImageBg: "images/energy/btn_value_S.svg"
+                        defaultImageBg: "images/common/btn_66x35.svg"
+                        pressedImageBg: "images/common/btn_66x35_P.svg"
+                        selectedImageBg: "images/common/btn_66x35_S.svg"
+                        shadowImage: "images/common/btn_shadow_66x35.svg"
                         defaultImage: "images/energy/ico_table.svg"
                         pressedImage: "images/energy/ico_table_P.svg"
                         selectedImage: "images/energy/ico_table_P.svg"
-                        shadowImage: "images/energy/ombra_btn_value.svg"
                         status: privateProps.showTable === true ? 1 : 0
                         onClicked: {
                             if (!privateProps.showTable) {
@@ -210,10 +210,10 @@ Page {
                 ButtonThreeStates {
                     id: moneyButton
                     font.pixelSize: 14
-                    defaultImage: "images/energy/btn_value.svg"
-                    pressedImage: "images/energy/btn_value_P.svg"
-                    selectedImage: "images/energy/btn_value_S.svg"
-                    shadowImage: "images/energy/ombra_btn_value.svg"
+                    defaultImage: "images/common/btn_66x35.svg"
+                    pressedImage: "images/common/btn_66x35_P.svg"
+                    selectedImage: "images/common/btn_66x35_S.svg"
+                    shadowImage: "images/common/btn_shadow_66x35.svg"
                     text: qsTr("€")
                     status: privateProps.showCurrency === true ? 1 : 0
                     onClicked: privateProps.showCurrency = true
@@ -222,10 +222,10 @@ Page {
                 ButtonThreeStates {
                     id: consumptionButton
                     font.pixelSize: 14
-                    defaultImage: "images/energy/btn_value.svg"
-                    pressedImage: "images/energy/btn_value_P.svg"
-                    selectedImage: "images/energy/btn_value_S.svg"
-                    shadowImage: "images/energy/ombra_btn_value.svg"
+                    defaultImage: "images/common/btn_66x35.svg"
+                    pressedImage: "images/common/btn_66x35_P.svg"
+                    selectedImage: "images/common/btn_66x35_S.svg"
+                    shadowImage: "images/common/btn_shadow_66x35.svg"
                     text: qsTr("units")
                     status: privateProps.showCurrency === false ? 1 : 0
                     onClicked: privateProps.showCurrency = false
