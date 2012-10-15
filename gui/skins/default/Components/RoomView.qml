@@ -200,11 +200,12 @@ Item {
             bgMoveGrid.selectedItem.yAnimation.start()
             bgMoveGrid.selectedItem.itemObject.position = Qt.point(itemPos.x, itemPos.y)
         }
+        maxItemWidth: 212 // assumes menu width is always this value
+        maxItemHeight: 50 // assumes menu height is always this value
 
-        maxItemWidth: 250 // TODO: roomItem.width + edit column
-        maxItemHeight: 50 // TODO: roomItem.height
-        anchors.fill: parent
         z: roomView.z + 2 // must be on top of quicklinks
+        anchors.fill: parent
+
         onMoveEnd: {
             bgMoveGrid.selectedItem.state = ""
             bgMoveGrid.state = ""
@@ -253,7 +254,7 @@ Item {
 
         function createObjects() {
             for (var i = 0; i < model.count; ++i) {
-                var obj = model.getObject(i);
+                var obj = model.getObject(i)
                 var y = obj.position.y
                 var x = obj.position.x
                 var object = itemComponent.createObject(roomView, {"rootData": obj.btObject, 'x': x, 'y': y, 'pageObject': pageObject, "itemObject": obj})
