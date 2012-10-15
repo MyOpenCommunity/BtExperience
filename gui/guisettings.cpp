@@ -18,12 +18,8 @@ GuiSettings::GuiSettings(QObject *parent) :
 	language = Italian;
 	measurementSystem = Metric;
 	numberSeparators = Dot_Comma;
-	screensaverImage = QString("");
-	screensaverText = QString(tr("change text"));
-	screensaverType = Image;
 	temperatureUnit = Celsius;
 	timeFormat = TimeFormat_24h;
-	timeOut = Minutes_1;
 	timezone = 0;
 	turnOffTime = Minutes_10;
 	skin = Clear;
@@ -217,51 +213,6 @@ void GuiSettings::setNumberSeparators(NumberSeparators s)
 	emit numberSeparatorsChanged();
 }
 
-QString GuiSettings::getScreensaverImage() const
-{
-	return screensaverImage;
-}
-
-void GuiSettings::setScreensaverImage(QString i)
-{
-	if (screensaverImage == i)
-		return;
-
-	// TODO save value somewhere
-	screensaverImage = i;
-	emit screensaverImageChanged();
-}
-
-QString GuiSettings::getScreensaverText() const
-{
-	return screensaverText;
-}
-
-void GuiSettings::setScreensaverText(QString t)
-{
-	if (screensaverText == t)
-		return;
-
-	// TODO save value somewhere
-	screensaverText = t;
-	emit screensaverTextChanged();
-}
-
-GuiSettings::ScreensaverType GuiSettings::getScreensaverType() const
-{
-	return screensaverType;
-}
-
-void GuiSettings::setScreensaverType(ScreensaverType st)
-{
-	if (screensaverType == st)
-		return;
-
-	// TODO save value somewhere
-	screensaverType = st;
-	emit screensaverTypeChanged();
-}
-
 GuiSettings::TemperatureUnit GuiSettings::getTemperatureUnit() const
 {
 	return temperatureUnit;
@@ -275,48 +226,6 @@ void GuiSettings::setTemperatureUnit(TemperatureUnit u)
 	// TODO save value somewhere
 	temperatureUnit = u;
 	emit temperatureUnitChanged();
-}
-
-GuiSettings::TimeChoice GuiSettings::getTimeOut() const
-{
-	return timeOut;
-}
-
-void GuiSettings::setTimeOut(TimeChoice tc)
-{
-	if (timeOut == tc)
-		return;
-
-	// TODO save value somewhere
-	timeOut = tc;
-	emit timeOutChanged();
-}
-
-int GuiSettings::getTimeOutInSeconds() const
-{
-	// converts the enum value to seconds
-	switch(timeOut)
-	{
-	case Seconds_15:
-		return 15;
-	case Seconds_30:
-		return 30;
-	case Minutes_1:
-		return 60;
-	case Minutes_2:
-		return 120;
-	case Minutes_5:
-		return 300;
-	case Minutes_10:
-		return 600;
-	case Minutes_30:
-		return 1800;
-	case Hours_1:
-		return 3600;
-	default:;
-	}
-	// Never and not recognized value are translated as "infinite"
-	return std::numeric_limits<int>::max();
 }
 
 int GuiSettings::getTimezone() const

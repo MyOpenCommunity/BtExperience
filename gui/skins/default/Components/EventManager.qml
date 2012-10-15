@@ -4,7 +4,6 @@ import BtExperience 1.0
 import Components 1.0
 
 import "../js/Stack.js" as Stack
-import "../js/ScreenSaver.js" as ScreenSaver
 
 
 Item {
@@ -25,39 +24,16 @@ Item {
 
     anchors.fill: parent
 
-    ScreenSaver {
-        id: screensaver
-        z: parent.z
-    }
-
-    // this is needed to manage the activation of the screensaver;
-    // this function is used to send an event to reactivate the screensaver
-    // even in those cases where an interaction with the user is not performed;
-    // see comments in ScreenSaver.js file for more info on this subject
-    function screensaverEvent() {
-        // the updateLast call is needed to compute elapsed time correctly
-        // see comments in ScreenSaver.js file for more info on this subject
-        ScreenSaver.updateLast()
-    }
-
     Component {
         id: callPopup
         ControlCall {
-            // it is useful to call enableScreensaver here because attaching
-            // it to callEnded signal may lead to unpredictable behavior in
-            // some cases (see comment inside callEnding function in ControlCall.qml)
             onClosePopup: {
-                enableScreensaver()
                 global.audioState.disableState(AudioState.VdeRingtone)
                 global.audioState.disableState(AudioState.ScsIntercomCall)
                 global.audioState.disableState(AudioState.IpIntercomCall)
                 global.audioState.disableState(AudioState.Mute)
             }
         }
-    }
-
-    function enableScreensaver() {
-        screensaver.isEnabled = true
     }
 
     ObjectModel {
@@ -121,11 +97,7 @@ Item {
     Connections {
         id: vctConnection
         target: null
-        onIncomingCall: {
-            screensaver.stopScreensaver()
-            screensaver.isEnabled = false
-            Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
-        }
+        onIncomingCall: Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
         onCallAnswered: {
             if (vctConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpVideoCall)
@@ -133,7 +105,6 @@ Item {
                 global.audioState.enableState(AudioState.ScsVideoCall)
         }
         onCallEnded: {
-            enableScreensaver()
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsVideoCall)
             global.audioState.disableState(AudioState.IpVideoCall)
@@ -151,11 +122,7 @@ Item {
     Connections {
         id: intercomConnection
         target: null
-        onIncomingCall: {
-            screensaver.stopScreensaver()
-            screensaver.isEnabled = false
-            Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
-        }
+        onIncomingCall: Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
         onCallAnswered: {
             if (intercomConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpIntercomCall)
@@ -163,7 +130,6 @@ Item {
                 global.audioState.enableState(AudioState.ScsIntercomCall)
         }
         onCallEnded: {
-            enableScreensaver()
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsIntercomCall)
             global.audioState.disableState(AudioState.IpIntercomCall)
@@ -248,9 +214,6 @@ Item {
         // page under the current page and add them to it: when the page above closes
         // the popup page will automagically appear showing all popups
         function preparePopupPage() {
-            // we generate a screensaver "event" every time a popup arrives
-            eventManager.screensaverEvent()
-
             // gets current page (if popups are still to be managed we assume
             // popup page is at the top of the stack; exceptions will be treated
             // separately in subsequent ifs)
