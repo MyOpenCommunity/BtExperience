@@ -11,6 +11,11 @@ Item {
 
     signal monthClicked(int year, int month)
 
+
+    EnergyFunctions {
+        id: energyFunctions
+    }
+
     QtObject {
         id: privateProps
 
@@ -51,6 +56,76 @@ Item {
         property real maxValue: calculateMaxValue()
         property int previousYearSpacing: 2
         property int columnSpacing: 17
+
+        function graphClicked(index) {
+            var date = modelGraph.date
+            date.setMonth(index)
+            if (energyFunctions.isEnergyMonthValid(date))
+                itemGraph.monthClicked(modelGraph.date.getFullYear(), index)
+            else {
+                loader.setComponent(popupComponent, {})
+                darkRect.opacity = 0.3
+            }
+        }
+    }
+
+    Rectangle {
+        id: darkRect
+        z: 2
+        anchors.fill: graph
+        opacity: 0.0
+        color: "black"
+
+        MouseArea { // prevent mouse events
+            anchors.fill: parent
+        }
+
+        Behavior on opacity {
+            NumberAnimation { duration: 200 }
+        }
+    }
+
+    AnimatedLoader {
+        id: loader
+        z: 3
+        anchors.centerIn: graph
+        duration: 300
+    }
+
+    Component {
+        id: popupComponent
+        SvgImage {
+            anchors.centerIn: parent
+            source: "../../images/energy/bg_pop-up-date.svg"
+
+            UbuntuLightText {
+                id: text
+                text: qsTr("no data available")
+                font.pixelSize: 14
+                anchors {
+                    top: parent.top
+                    topMargin: 5
+                    horizontalCenter: parent.horizontalCenter
+                }
+            }
+
+            ButtonThreeStates {
+                anchors {
+                    bottom: parent.bottom
+                    bottomMargin: 5
+                    horizontalCenter: parent.horizontalCenter
+                }
+
+                defaultImage: "../../images/common/btn_84x35.svg"
+                pressedImage: "../../images/common/btn_84x35_P.svg"
+                shadowImage: "../../images/common/btn_shadow_84x35.svg"
+                text: qsTr("OK")
+                onClicked: {
+                    loader.setComponent(undefined)
+                    darkRect.opacity = 0.0
+                }
+            }
+        }
     }
 
     SvgImage {
@@ -127,7 +202,23 @@ Item {
         }
     }
 
+    BeepingMouseArea {
+        anchors.fill: graph
+        onClicked: {
+            // find the column that match best
+            var prevWidth = 0
+            var nextWidth = columnPrototype.width
+            for (var i = 0; i < privateProps.modelGraph.graph.length; i += 1) {
+                if (mouse.x >= prevWidth & mouse.x <= nextWidth) {
+                    privateProps.graphClicked(i)
+                    return
+                }
 
+                prevWidth = nextWidth
+                nextWidth += columnPrototype.width + privateProps.columnSpacing
+            }
+        }
+    }
 
     Row {
         id: graph
@@ -148,11 +239,6 @@ Item {
 
                 width: columnGraphBg.width + (previusYearBar.visible ? previusYearBar.width + privateProps.previousYearSpacing : 0)
                 height: columnGraphBg.height + columnShadow.height
-
-                BeepingMouseArea {
-                    anchors.fill: parent
-                    onClicked: itemGraph.monthClicked(privateProps.modelGraph.date.getFullYear(), model.index)
-                }
 
                 Loader {
                     id: columnGraphBg

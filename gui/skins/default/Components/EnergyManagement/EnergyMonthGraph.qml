@@ -201,7 +201,7 @@ Item {
         }
     }
 
-    MouseArea {
+    BeepingMouseArea {
         anchors.fill: graph
         onClicked: {
             // find the column that match best

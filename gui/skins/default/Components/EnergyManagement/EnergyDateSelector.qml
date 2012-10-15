@@ -31,55 +31,8 @@ Row {
         }
     }
 
-    function isEnergyMonthValid(d) {
-        var year = d.getFullYear()
-        var month = d.getMonth()
-
-        var currentDate = new Date()
-        var cur_year = currentDate.getFullYear()
-        var cur_month = currentDate.getMonth()
-
-        if (year === cur_year && month <= cur_month)
-            return true
-
-        if (year === cur_year - 1 && month > cur_month)
-            return true
-
-        return false
-    }
-
-    function isEnergyYearValid(d) {
-        var year = d.getFullYear()
-        var cur_year = new Date().getFullYear()
-
-        if (year <= cur_year && year >= cur_year - 12)
-            return true
-
-        return false
-    }
-
-    function isEnergyDayValid(d) {
-        var currentDate = new Date()
-        if (d.getTime() > currentDate.getTime())
-            return false
-
-        var year = d.getFullYear()
-        var month = d.getMonth()
-        var day = d.getDate()
-
-        var cur_year = currentDate.getFullYear()
-        var cur_month = currentDate.getMonth()
-        var cur_day = currentDate.getDate()
-
-        if (year === cur_year)
-            return true
-        if (year === cur_year -1 && month > cur_month)
-            return true
-
-        if (year === cur_year -1 && month === cur_month && day > cur_day)
-            return true
-
-        return false
+    EnergyFunctions {
+        id: energyFunctions
     }
 
     QtObject {
@@ -102,11 +55,11 @@ Row {
         }
 
         function previousMonthEnabled() {
-            return selector.isEnergyMonthValid(DateTime.previousMonth(privateProps.monthDate))
+            return energyFunctions.isEnergyMonthValid(DateTime.previousMonth(privateProps.monthDate))
         }
 
         function nextMonthEnabled(){
-            return selector.isEnergyMonthValid(DateTime.nextMonth(privateProps.monthDate))
+            return energyFunctions.isEnergyMonthValid(DateTime.nextMonth(privateProps.monthDate))
         }
 
         // Year functions
@@ -121,11 +74,11 @@ Row {
         }
 
         function previousYearEnabled() {
-            return selector.isEnergyYearValid(DateTime.previousYear(privateProps.yearDate))
+            return energyFunctions.isEnergyYearValid(DateTime.previousYear(privateProps.yearDate))
         }
 
         function nextYearEnabled() {
-            return selector.isEnergyYearValid(DateTime.nextYear(privateProps.yearDate))
+            return energyFunctions.isEnergyYearValid(DateTime.nextYear(privateProps.yearDate))
         }
 
         // Day functions
@@ -140,11 +93,11 @@ Row {
         }
 
         function previousDayEnabled() {
-            return selector.isEnergyDayValid(DateTime.previousDay(privateProps.dayDate))
+            return energyFunctions.isEnergyDayValid(DateTime.previousDay(privateProps.dayDate))
         }
 
         function nextDayEnabled() {
-            return selector.isEnergyDayValid(DateTime.nextDay(privateProps.dayDate))
+            return energyFunctions.isEnergyDayValid(DateTime.nextDay(privateProps.dayDate))
         }
     }
 
