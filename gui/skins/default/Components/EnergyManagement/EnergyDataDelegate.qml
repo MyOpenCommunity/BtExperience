@@ -129,7 +129,7 @@ Column {
 
             Column {
                 Item {
-                    MouseArea {
+                    BeepingMouseArea {
                         anchors.fill: parent
                         onClicked: delegate.clicked()
                     }

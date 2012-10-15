@@ -1,6 +1,7 @@
 # misc
 *.pro.user
 # build
+BtExperience_qws
 Makefile
 moc/
 obj/

@@ -92,7 +92,7 @@
 	     SWmeasure="Pere" measure="Pere" consumption_goal_enabled="0"
 	     threshold_one_enable="0" threshold_two_enable="0"
 	     rate_enabled="0" rate_type="0" mode="5">
-		<ist uii="5006" descr="Kitchens" where="12" consumption_goal_enabled="1">
+		<ist uii="5006" descr="Bathroom" where="15" consumption_goal_enabled="1">
 			<consumption_goal>
 				<january>80</january>
 				<february>82</february>
@@ -108,7 +108,117 @@
 				<december>87</december>
 			</consumption_goal>
         </ist>
-		<ist uii="5007" descr="Bedrooms" where="17" mode="3" SWmeasure="Custom" measure="Noci">
-		</ist>
+		<ist uii="5007" descr="Living Room" where="17" mode="3" SWmeasure="Custom" measure="Noci" consumption_goal_enabled="1">
+			<consumption_goal>
+				<january>80</january>
+				<february>82</february>
+				<march>70</march>
+				<april>60</april>
+				<may>66</may>
+				<june>50</june>
+				<july>55</july>
+				<august>40</august>
+				<september>50</september>
+				<october>56</october>
+				<november>48</november>
+				<december>87</december>
+			</consumption_goal>
+        </ist>
+		<ist uii="5008" descr="Stable" where="16" mode="2" SWmeasure="Custom" measure="Albicocche" consumption_goal_enabled="1">
+			<consumption_goal>
+				<january>80</january>
+				<february>82</february>
+				<march>70</march>
+				<april>60</april>
+				<may>66</may>
+				<june>50</june>
+				<july>55</july>
+				<august>40</august>
+				<september>50</september>
+				<october>56</october>
+				<november>48</november>
+				<december>87</december>
+			</consumption_goal>
+        </ist>
+		<ist uii="5009" descr="Tavern" where="18" consumption_goal_enabled="1">
+			<consumption_goal>
+				<january>80</january>
+				<february>82</february>
+				<march>70</march>
+				<april>60</april>
+				<may>66</may>
+				<june>50</june>
+				<july>55</july>
+				<august>40</august>
+				<september>50</september>
+				<october>56</october>
+				<november>48</november>
+				<december>87</december>
+			</consumption_goal>
+        </ist>
+		<ist uii="5010" descr="Winter Room" where="19" mode="3" consumption_goal_enabled="1">
+			<consumption_goal>
+				<january>80</january>
+				<february>82</february>
+				<march>70</march>
+				<april>60</april>
+				<may>66</may>
+				<june>50</june>
+				<july>55</july>
+				<august>40</august>
+				<september>50</september>
+				<october>56</october>
+				<november>48</november>
+				<december>87</december>
+			</consumption_goal>
+        </ist>
+		<ist uii="5011" descr="Summer Room" where="20" mode="1" consumption_goal_enabled="1">
+			<consumption_goal>
+				<january>80</january>
+				<february>82</february>
+				<march>70</march>
+				<april>60</april>
+				<may>66</may>
+				<june>50</june>
+				<july>55</july>
+				<august>40</august>
+				<september>50</september>
+				<october>56</october>
+				<november>48</november>
+				<december>87</december>
+			</consumption_goal>
+        </ist>
+		<ist uii="5012" descr="Spring Room" where="21" consumption_goal_enabled="1">
+			<consumption_goal>
+				<january>80</january>
+				<february>82</february>
+				<march>70</march>
+				<april>60</april>
+				<may>66</may>
+				<june>50</june>
+				<july>55</july>
+				<august>40</august>
+				<september>50</september>
+				<october>56</october>
+				<november>48</november>
+				<december>87</december>
+			</consumption_goal>
+        </ist>
+		<ist uii="5013" descr="Fall Room" where="22" mode="1" consumption_goal_enabled="1">
+			<consumption_goal>
+				<january>80</january>
+				<february>82</february>
+				<march>70</march>
+				<april>60</april>
+				<may>66</may>
+				<june>50</june>
+				<july>55</july>
+				<august>40</august>
+				<september>50</september>
+				<october>56</october>
+				<november>48</november>
+				<december>87</december>
+			</consumption_goal>
+        </ist>
 	</obj>
 </archive>
