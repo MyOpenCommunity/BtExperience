@@ -7,6 +7,9 @@ Item {
     height: 0
 
     function setComponent(component, properties) {
+        if (item === undefined && component === undefined) // nothing to do
+            return
+
         privateObj.pendingComponent = component
         privateObj.pendingProperties = (properties === undefined ? {} : properties)
         if (item === undefined)
