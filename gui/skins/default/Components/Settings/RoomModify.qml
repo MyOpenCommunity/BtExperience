@@ -6,13 +6,13 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    height: Math.max(1, 50 * itemList.count)
+
     width: 212
+    height: Math.max(1, 50 * itemList.count)
 
     onChildDestroyed: {
         itemList.currentIndex = -1
     }
-
 
     ListView {
         id: itemList

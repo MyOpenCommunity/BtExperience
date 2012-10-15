@@ -43,10 +43,6 @@ MenuColumn {
         global.reboot()
     }
 
-    // dimensions
-    width: 212
-    height: paginator.height
-
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
         id: privateProps

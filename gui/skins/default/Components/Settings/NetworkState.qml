@@ -4,9 +4,11 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: 100
+
     signal networkChanged(int state)
+
+    width: 212
+    height: Math.max(1, 50 * networkStateView.count)
 
     ListView {
         id: networkStateView

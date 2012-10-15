@@ -4,8 +4,9 @@ import Components 1.0
 
 MenuColumn {
     id: column
+
     width: 212
-    height: 100
+    height: Math.max(1, 50 * view.count)
 
     ListView {
         id: view

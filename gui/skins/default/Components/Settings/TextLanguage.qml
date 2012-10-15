@@ -5,9 +5,11 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: 100
+
     signal textLanguageChanged(int config)
+
+    width: 212
+    height: Math.max(1, 50 * view.count)
 
     ListView {
         id: view

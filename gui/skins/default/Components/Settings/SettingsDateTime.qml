@@ -7,10 +7,6 @@ import "../../js/logging.js" as Log
 MenuColumn {
     id: column
 
-    // dimensions
-    width: 212
-    height: paginator.height
-
     Component {
         id: dateComponent
         Item {}
