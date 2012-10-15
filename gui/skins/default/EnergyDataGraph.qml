@@ -80,16 +80,6 @@ Page {
                     left: divisorLine.left
                 }
 
-                Timer {
-                    id: resetDateTimer
-                    interval: graphLoader.duration
-                    running: false
-                    repeat: false
-                    triggeredOnStart: false
-                    onTriggered: dateSelector.selectedDate = new Date()
-
-                }
-
                 ButtonThreeStates {
                     id: dayButton
                     font.pixelSize: 14
