@@ -83,10 +83,10 @@ Page {
                 ButtonThreeStates {
                     id: dayButton
                     font.pixelSize: 14
-                    defaultImage: "images/energy/btn_time.svg"
-                    pressedImage: "images/energy/btn_time_P.svg"
-                    selectedImage: "images/energy/btn_time_S.svg"
-                    shadowImage: "images/energy/ombra_btn_time.svg"
+                    defaultImage: "images/common/btn_84x35.svg"
+                    pressedImage: "images/common/btn_84x35_P.svg"
+                    selectedImage: "images/common/btn_84x35_S.svg"
+                    shadowImage: "images/common/btn_shadow_84x35.svg"
                     text: qsTr("day")
                     status: 0
                     onClicked: {
@@ -104,10 +104,10 @@ Page {
                 ButtonThreeStates {
                     id: monthButton
                     font.pixelSize: 14
-                    defaultImage: "images/energy/btn_time.svg"
-                    pressedImage: "images/energy/btn_time_P.svg"
-                    selectedImage: "images/energy/btn_time_S.svg"
-                    shadowImage: "images/energy/ombra_btn_time.svg"
+                    defaultImage: "images/common/btn_84x35.svg"
+                    pressedImage: "images/common/btn_84x35_P.svg"
+                    selectedImage: "images/common/btn_84x35_S.svg"
+                    shadowImage: "images/common/btn_shadow_84x35.svg"
                     text: qsTr("month")
                     status: 1
                     onClicked: {
@@ -121,10 +121,10 @@ Page {
                 ButtonThreeStates {
                     id: yearButton
                     font.pixelSize: 14
-                    defaultImage: "images/energy/btn_time.svg"
-                    pressedImage: "images/energy/btn_time_P.svg"
-                    selectedImage: "images/energy/btn_time_S.svg"
-                    shadowImage: "images/energy/ombra_btn_time.svg"
+                    defaultImage: "images/common/btn_84x35.svg"
+                    pressedImage: "images/common/btn_84x35_P.svg"
+                    selectedImage: "images/common/btn_84x35_S.svg"
+                    shadowImage: "images/common/btn_shadow_84x35.svg"
                     text: qsTr("year")
                     status: 0
                     onClicked: {
