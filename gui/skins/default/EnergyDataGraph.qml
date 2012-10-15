@@ -80,6 +80,16 @@ Page {
                     left: divisorLine.left
                 }
 
+                Timer {
+                    id: resetDateTimer
+                    interval: graphLoader.duration
+                    running: false
+                    repeat: false
+                    triggeredOnStart: false
+                    onTriggered: dateSelector.selectedDate = new Date()
+
+                }
+
                 ButtonThreeStates {
                     id: dayButton
                     font.pixelSize: 14
@@ -99,8 +109,10 @@ Page {
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
                         graphLoader.setComponent(privateProps.showTable ? energyDayTableComponent : energyDayGraphComponent)
+                        dateSelector.selectedDate = new Date()
                     }
                 }
+
                 ButtonThreeStates {
                     id: monthButton
                     font.pixelSize: 14
@@ -116,6 +128,7 @@ Page {
 
                         page.state = ""
                         graphLoader.setComponent(privateProps.showTable ? energyMonthTableComponent : energyMonthGraphComponent)
+                        dateSelector.selectedDate = new Date()
                     }
                 }
                 ButtonThreeStates {
@@ -137,6 +150,7 @@ Page {
                         // (because is a very slow operation) the user experience
                         // is better because the ui does not appears blocked.
                         graphLoader.setComponent(privateProps.showTable ? energyYearTableComponent : energyYearGraphComponent)
+                        dateSelector.selectedDate = new Date()
                     }
                 }
             }
@@ -258,17 +272,19 @@ Page {
                 id: energyMonthGraphComponent
                 EnergyMonthGraph {
                     showCurrency: privateProps.showCurrency
-                    graphDate: dateSelector.monthDate
+                    graphDate: dateSelector.selectedDate
                     energyData: page.energyData
                     onDayClicked: {
-                        dayButton.clicked(undefined)
+                        page.state = "day"
+                        graphLoader.setComponent(energyDayGraphComponent)
+
                         // This trick are required to make the property signal
                         // works when we change the data.
-                        var date = dateSelector.dayDate
+                        var date = dateSelector.selectedDate
                         date.setFullYear(year)
                         date.setMonth(month)
                         date.setDate(day)
-                        dateSelector.dayDate = date
+                        dateSelector.selectedDate = date
                     }
                 }
             }
@@ -277,7 +293,7 @@ Page {
                 id: energyMonthTableComponent
                 EnergyMonthTable {
                     showCurrency: privateProps.showCurrency
-                    graphDate: dateSelector.monthDate
+                    graphDate: dateSelector.selectedDate
                     energyData: page.energyData
                 }
             }
@@ -286,16 +302,18 @@ Page {
                 id: energyYearGraphComponent
                 EnergyYearGraph {
                     showCurrency: privateProps.showCurrency
-                    graphDate: dateSelector.yearDate
+                    graphDate: dateSelector.selectedDate
                     energyData: page.energyData
                     onMonthClicked: {
-                        monthButton.clicked(undefined)
+                        page.state = ""
+                        graphLoader.setComponent(energyMonthGraphComponent)
+
                         // This trick are required to make the property signal
                         // works when we change the data.
-                        var date = dateSelector.monthDate
+                        var date = dateSelector.selectedDate
                         date.setFullYear(year)
                         date.setMonth(month)
-                        dateSelector.monthDate = date
+                        dateSelector.selectedDate = date
                     }
                 }
             }
@@ -304,7 +322,7 @@ Page {
                 id: energyYearTableComponent
                 EnergyYearTable {
                     showCurrency: privateProps.showCurrency
-                    graphDate: dateSelector.yearDate
+                    graphDate: dateSelector.selectedDate
                     energyData: page.energyData
                 }
             }
@@ -313,7 +331,7 @@ Page {
                 id: energyDayGraphComponent
                 EnergyDayGraph {
                     showCurrency: privateProps.showCurrency
-                    graphDate: dateSelector.dayDate
+                    graphDate: dateSelector.selectedDate
                     energyData: page.energyData
                 }
             }
@@ -322,7 +340,7 @@ Page {
                 id: energyDayTableComponent
                 EnergyDayTable {
                     showCurrency: privateProps.showCurrency
-                    graphDate: dateSelector.dayDate
+                    graphDate: dateSelector.selectedDate
                     energyData: page.energyData
                 }
             }
@@ -393,7 +411,7 @@ Page {
             SvgImage {
                 id: cumulativeConsumptionItem
                 property int valueType: EnergyData.CumulativeMonthValue
-                property date referredDate: dateSelector.monthDate
+                property date referredDate: dateSelector.selectedDate
 
                 property variant consumptionItem: energyData.getValue(valueType, referredDate,
                                                                       privateProps.showCurrency ? EnergyData.Currency :
@@ -412,7 +430,6 @@ Page {
                         PropertyChanges {
                             target: cumulativeConsumptionItem
                             valueType: EnergyData.CumulativeYearValue
-                            referredDate: dateSelector.yearDate
                         }
                     },
                     State {
@@ -420,7 +437,6 @@ Page {
                         PropertyChanges {
                             target: cumulativeConsumptionItem
                             valueType: EnergyData.CumulativeDayValue
-                            referredDate: dateSelector.dayDate
                         }
                     }
                 ]
