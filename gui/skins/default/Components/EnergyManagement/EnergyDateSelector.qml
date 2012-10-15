@@ -209,7 +209,7 @@ Row {
     }
 
     onStateChanged: {
-        privateProps._date = new Date(); // reset the day/month/year to the current one
+        selector.monthDate = new Date(); // reset the day/month/year to the current one
     }
 
     states: [
