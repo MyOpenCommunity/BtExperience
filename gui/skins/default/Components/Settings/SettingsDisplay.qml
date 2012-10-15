@@ -35,7 +35,6 @@ MenuColumn {
         id: modelList
         Component.onCompleted: {
             modelList.append({"name": qsTr("Brightness"), "component": brightness})
-            modelList.append({"name": qsTr("Screensaver List"), "component": screenSaverList})
             modelList.append({"name": qsTr("Transition effects"), "component": transitionEffects})
             modelList.append({"name": qsTr("Calibration"), "component": calibration})
             modelList.append({"name": qsTr("Clean"), "component": clean})
@@ -45,11 +44,6 @@ MenuColumn {
     Component {
         id: brightness
         Brightness {}
-    }
-
-    Component {
-        id: screenSaverList
-        ScreenSaverList {}
     }
 
     Component {

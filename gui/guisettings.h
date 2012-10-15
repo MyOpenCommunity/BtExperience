@@ -54,34 +54,9 @@ class GuiSettings : public QObject
 	Q_PROPERTY(NumberSeparators numberSeparators READ getNumberSeparators WRITE setNumberSeparators NOTIFY numberSeparatorsChanged)
 
 	/*!
-		\brief Sets or gets the image of screensaver in use
-	*/
-	Q_PROPERTY(QString screensaverImage READ getScreensaverImage WRITE setScreensaverImage NOTIFY screensaverImageChanged)
-
-	/*!
-		\brief Sets or gets the text of screensaver in use
-	*/
-	Q_PROPERTY(QString screensaverText READ getScreensaverText WRITE setScreensaverText NOTIFY screensaverTextChanged)
-
-	/*!
-		\brief Sets or gets the type of screensaver in use
-	*/
-	Q_PROPERTY(ScreensaverType screensaverType READ getScreensaverType WRITE setScreensaverType NOTIFY screensaverTypeChanged)
-
-	/*!
 		\brief Sets or gets the unit used for temperature in Celsius or Fahrenheit.
 	*/
 	Q_PROPERTY(TemperatureUnit temperatureUnit READ getTemperatureUnit WRITE setTemperatureUnit NOTIFY temperatureUnitChanged)
-
-	/*!
-		\brief Sets or gets the time out for the screensaver.
-	*/
-	Q_PROPERTY(TimeChoice timeOut READ getTimeOut WRITE setTimeOut NOTIFY timeOutChanged)
-
-	/*!
-		\brief Gets the time out for the screensaver, but in seconds (for QML usage).
-	*/
-	Q_PROPERTY(int timeOutInSeconds READ getTimeOutInSeconds NOTIFY timeOutChanged)
 
 	/*!
 		\brief Sets or gets the timezone.
@@ -103,7 +78,6 @@ class GuiSettings : public QObject
 	Q_ENUMS(Language)
 	Q_ENUMS(MeasurementSystem)
 	Q_ENUMS(NumberSeparators)
-	Q_ENUMS(ScreensaverType)
 	Q_ENUMS(TemperatureUnit)
 	Q_ENUMS(TimeChoice)
 	Q_ENUMS(TimeFormat)
@@ -144,16 +118,6 @@ public:
 		// TODO define meaningful values
 		Dot_Comma,
 		Comma_Dot
-	};
-
-	enum ScreensaverType
-	{
-		None,
-		DateTime,
-		Text,
-		Image,
-		Rectangles,
-		Slideshow
 	};
 
 	enum TemperatureUnit
@@ -199,17 +163,8 @@ public:
 	void setMeasurementSystem(MeasurementSystem m);
 	NumberSeparators getNumberSeparators() const;
 	void setNumberSeparators(NumberSeparators s);
-	QString getScreensaverImage() const;
-	void setScreensaverImage(QString i);
-	QString getScreensaverText() const;
-	void setScreensaverText(QString t);
-	ScreensaverType getScreensaverType() const;
-	void setScreensaverType(ScreensaverType st);
 	TemperatureUnit getTemperatureUnit() const;
 	void setTemperatureUnit(TemperatureUnit u);
-	TimeChoice getTimeOut() const;
-	void setTimeOut(TimeChoice tc);
-	int getTimeOutInSeconds() const;
 	int getTimezone() const;
 	void setTimezone(int z);
 	TimeChoice getTurnOffTime() const;
@@ -231,11 +186,7 @@ signals:
 	void languageChanged();
 	void measurementSystemChanged();
 	void numberSeparatorsChanged();
-	void screensaverImageChanged();
-	void screensaverTextChanged();
-	void screensaverTypeChanged();
 	void temperatureUnitChanged();
-	void timeOutChanged();
 	void timezoneChanged();
 	void turnOffTimeChanged();
 	void skinChanged();
@@ -249,12 +200,8 @@ private:
 	Language language;
 	MeasurementSystem measurementSystem;
 	NumberSeparators numberSeparators;
-	QString screensaverImage;
-	QString screensaverText;
-	ScreensaverType screensaverType;
 	TemperatureUnit temperatureUnit;
 	TimeFormat timeFormat;
-	TimeChoice timeOut;
 	int timezone;
 	TimeChoice turnOffTime;
 	Skin skin;
