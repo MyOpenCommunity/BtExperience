@@ -260,6 +260,16 @@ Page {
                     showCurrency: privateProps.showCurrency
                     graphDate: dateSelector.monthDate
                     energyData: page.energyData
+                    onDayClicked: {
+                        dayButton.clicked(undefined)
+                        // This trick are required to make the property signal
+                        // works when we change the data.
+                        var date = dateSelector.dayDate
+                        date.setFullYear(year)
+                        date.setMonth(month)
+                        date.setDate(day)
+                        dateSelector.dayDate = date
+                    }
                 }
             }
 
