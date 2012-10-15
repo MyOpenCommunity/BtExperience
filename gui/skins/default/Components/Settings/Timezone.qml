@@ -4,8 +4,7 @@ import Components 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: paginator.height
+
     signal timezoneChanged(int gmtOffset)
 
     PaginatorColumn {

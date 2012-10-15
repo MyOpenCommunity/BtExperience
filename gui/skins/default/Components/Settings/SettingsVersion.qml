@@ -7,9 +7,6 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    // dimensions
-    width: 212
-    height: paginator.height
     property string imagesPath: "../../images/"
 
     // object model to retrieve version data

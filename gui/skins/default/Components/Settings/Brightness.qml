@@ -7,9 +7,6 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    width: 212
-    height: paginator.height
-
     PaginatorColumn {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter

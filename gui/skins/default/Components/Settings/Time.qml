@@ -6,8 +6,7 @@ import Components.Text 1.0
 
 MenuColumn {
     id: column
-    width: 212
-    height: paginator.height
+
     property string imagesPath: "../../images/"
 
     signal timeChanged(variant value, int auto, int format)

@@ -17,17 +17,11 @@ MenuColumn {
         IPConfigurations {}
     }
 
-    // dimensions
-    width: 212
-    height: paginator.height
-
     // object model to retrieve network data
     ObjectModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdPlatformSettings}]
     }
-    // TODO investigate why dataModel is not working as expected
-    //dataModel: objectModel.getObject(0)
 
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
