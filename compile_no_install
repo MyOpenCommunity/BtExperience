@@ -31,23 +31,6 @@ then
   make -j$CPU4COMPILE || exit 1
   make install || exit 1  #It's necessary to create the folder dist with the executable file
 
-  #create launcher file
-  rm -f BtExperience_qws
-  touch BtExperience_qws
-  chmod +x BtExperience_qws
-  echo "#!/bin/sh" >> BtExperience_qws
-  echo "export TSLIB_TSDEVICE=/dev/input/touchscreen0" >> BtExperience_qws
-  echo "export QWS_MOUSE_PROTO=Tslib:/dev/input/touchscreen0" >> BtExperience_qws
-  echo "export QWS_DISPLAY=powervr" >> BtExperience_qws
-  echo "export QT_IM_MODULE=MaliitDirect" >> BtExperience_qws
-  echo "export LD_LIBRARY_PATH=/home/bticino/lib:$LD_LIBRARY_PATH" >> BtExperience_qws
-  echo "export POINTERCAL=$POINTERCAL" >> BtExperience_qws
-  echo "if [ ! -e "$POINTERCAL" ]" >> BtExperience_qws
-  echo "then" >> BtExperience_qws
-  echo "ts_calibrate" >> BtExperience_qws
-  echo "fi" >> BtExperience_qws
-  echo "bin/BtExperience/BtExperience -qws &" >> BtExperience_qws
-
   exit 0
 fi
 exit 1
