@@ -23,8 +23,6 @@ class PowerAmplifierDevice;
 class ListManager;
 
 
-QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id);
-
 QList<ObjectInterface *> createLocalSources(bool is_multichannel);
 
 QList<ObjectPair> parseAuxSource(const QDomNode &xml_node);
