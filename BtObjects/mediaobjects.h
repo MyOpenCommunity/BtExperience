@@ -427,7 +427,9 @@ class SourceRadio : public SourceBase
 	/*!
 		\brief Sets and gets the current memorized station
 
-		The value can be set to 1-5 to listen to one of the memorized stations.
+		The value can be set to 1-5 or 1-15 to listen to one of the memorized stations.
+
+		\see savedStationsCount
 	*/
 	Q_PROPERTY(int currentStation READ getCurrentStation WRITE setCurrentStation NOTIFY currentStationChanged)
 
@@ -441,8 +443,13 @@ class SourceRadio : public SourceBase
 	*/
 	Q_PROPERTY(QString rdsText READ getRdsText NOTIFY rdsTextChanged)
 
+	/*!
+		\brief Gets the number of saved stations for this device
+	*/
+	Q_PROPERTY(int savedStationsCount READ getSavedStationsCount CONSTANT)
+
 public:
-	SourceRadio(RadioSourceDevice *d);
+	SourceRadio(int saved_stations, RadioSourceDevice *d);
 
 	int getCurrentStation() const { return getCurrentTrack(); }
 	void setCurrentStation(int station);
@@ -450,6 +457,8 @@ public:
 	int getCurrentFrequency() const;
 
 	QString getRdsText() const;
+
+	int getSavedStationsCount() const;
 
 public slots:
 	/*!
@@ -505,7 +514,7 @@ private slots:
 
 private:
 	RadioSourceDevice *dev;
-	int frequency;
+	int frequency, saved_stations;
 	QString rds_text;
 	QTimer request_frequency;
 };

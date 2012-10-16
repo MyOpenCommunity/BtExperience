@@ -91,7 +91,7 @@ QList<ObjectPair> parseRadioSource(const QDomNode &xml_node)
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
 
-		SourceRadio *source = new SourceRadio(bt_global::add_device_to_cache(new RadioSourceDevice(v.value("where"))));
+		SourceRadio *source = new SourceRadio(v.intValue("radio_num"), bt_global::add_device_to_cache(new RadioSourceDevice(v.value("where"))));
 		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::RdsRadio);
 		source->setParent(so);
 		source->setSourceObject(so);
@@ -688,10 +688,11 @@ void SourceMultiMedia::valueReceived(const DeviceValues &values_list)
 }
 
 
-SourceRadio::SourceRadio(RadioSourceDevice *d) :
+SourceRadio::SourceRadio(int _saved_stations, RadioSourceDevice *d) :
 	SourceBase(d, Radio)
 {
 	dev = d;
+	saved_stations = _saved_stations;
 
 	connect(this, SIGNAL(currentTrackChanged()), this, SIGNAL(currentStationChanged()));
 
@@ -714,6 +715,11 @@ int SourceRadio::getCurrentFrequency() const
 QString SourceRadio::getRdsText() const
 {
 	return rds_text;
+}
+
+int SourceRadio::getSavedStationsCount() const
+{
+	return saved_stations;
 }
 
 void SourceRadio::previousStation()

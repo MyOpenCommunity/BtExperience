@@ -22,7 +22,7 @@
 			<link uii="10004" />
 		</ist>
 	</obj>
-	<obj cid="11032" id="11032" descr="Source" where="1" num_radio="5">
+	<obj cid="11032" id="11032" descr="Source" where="1" radio_num="5">
 		<ist uii="10007" descr="Radio" where="1" />
 	</obj>
 	<obj cid="11033" id="11033" descr="Source" where="1">
