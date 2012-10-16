@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-  <item>
-    <id>7</id> <!-- Hardware settings -->
-  </item>
 	<obj cid="8004" id="8004" descr="Zona 1 - CU" where="1" fancoil="0" >
 		<ist uii="3012" descr="Zona 1 - CU 1" where="4" />
 		<ist uii="3014" descr="Zona 1 - CU 2" where="21" fancoil="1" />

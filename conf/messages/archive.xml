@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-	<item>
-		<id>7</id> <!-- Hardware settings -->
-	</item>
 	<obj cid="16005" id="16004">
 		<ist uii="16004"/>
 	</obj>

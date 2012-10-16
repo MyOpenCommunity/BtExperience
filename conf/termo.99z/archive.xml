@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-  <item>
-    <id>7</id> <!-- Hardware settings -->
-  </item>
         <obj cid="8001" id="8001" descr="99 Zones Control Unit">
 		<ist uii="2001" descr="unità centrale">
 			<programs>

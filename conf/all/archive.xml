@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-  <item>
-    <id>7</id> <!-- Hardware settings -->
-  </item>
-
 	<obj cid="3003" id="3003" descr="Door" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
 		<ist uii="15" descr="Door Lock" where="34"/>
 	</obj>

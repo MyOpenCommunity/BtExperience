@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
   <item>
-    <id>7</id> <!-- Hardware settings -->
-  </item>
-  <item>
 	  <id>16</id> <!-- Monochannel sound diffusion system -->
 	  <amplifiers>
 		  <item>

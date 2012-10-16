@@ -528,6 +528,9 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		objmodel << createIntercom(intercom);
 	}
 
+	objmodel << new HardwareSettings;
+	objmodel << new PlatformSettings(new PlatformDevice);
+
 	// the following objects are used as collectors of signals from other objects
 	// they are used in EventManager, for example, to be notified only globally
 	// the following needs stop&go objects to be already created
@@ -860,9 +863,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 
 		switch (id)
 		{
-		case ObjectInterface::IdHardwareSettings:
-			obj = new HardwareSettings;
-			break;
 		case ObjectInterface::IdMultiChannelSoundDiffusionSystem:
 			obj_list = createSoundDiffusionSystem(item, id);
 			break;
@@ -883,8 +883,6 @@ void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
 			}
 		}
 	}
-	// TODO put in the right implementation; for now, use this for testing the interface
-	objmodel << new PlatformSettings(new PlatformDevice);
 }
 
 void BtObjectsPlugin::parseConfig()
