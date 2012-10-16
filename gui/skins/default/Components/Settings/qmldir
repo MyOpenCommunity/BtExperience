@@ -31,10 +31,10 @@ SettingsInternational 1.0 SettingsInternational.qml
 SettingsItems 1.0 SettingsItems.qml
 SettingsNetwork 1.0 SettingsNetwork.qml
 SettingsPassword 1.0 SettingsPassword.qml
+SettingsProfile 1.0 SettingsProfile.qml
 SettingsProfiles 1.0 SettingsProfiles.qml
 SettingsQuickLinks 1.0 SettingsQuickLinks.qml
 SettingsScenarios 1.0 SettingsScenarios.qml
-SettingsSkin 1.0 SettingsSkin.qml
 SettingsSystems 1.0 SettingsSystems.qml
 SettingsVDE 1.0 SettingsVDE.qml
 SettingsVdeMute 1.0 SettingsVdeMute.qml

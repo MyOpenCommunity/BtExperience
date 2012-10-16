@@ -1,51 +1,37 @@
 import QtQuick 1.1
-import Components 1.0
 import BtObjects 1.0
-import "../../js/Stack.js" as Stack
+import Components 1.0
+
 
 MenuColumn {
     id: column
 
-    width: 212
-    height: Math.max(1, 50 * itemList.count)
-
-    onChildDestroyed: {
-        itemList.currentIndex = -1
+    ObjectModel {
+        id: profilesModel
+        source: myHomeModels.profiles
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    ListView {
-        id: itemList
-        anchors.fill: parent
-        currentIndex: -1
-        interactive: false
+    onChildDestroyed: paginator.currentIndex = -1
+
+    PaginatorList {
+        id: paginator
+
+        model: profilesModel
+        onCurrentPageChanged: column.closeChild()
 
         delegate: MenuItemDelegate {
-            name: model.name
-            hasChild: model.component !== undefined
-                      && model.component !== null
-
+            itemObject: profilesModel.getObject(index)
+            hasChild: true
+            name: itemObject.description
             onClicked: {
-                if (model.component === undefined) {
-                    itemList.currentIndex = -1
-                    column.closeChild()
-                    Stack.pushPage(model.target)
-                }
-                else
-                    column.loadColumn(model.component, model.name)
+                column.loadColumn(settingsProfileComponent, itemObject.description, itemObject)
             }
         }
-
-        model: modelList
     }
 
-    ListModel {
-        id: modelList
-        ListElement {
-            name: "Modify card image"
-            target: "NewProfileCard.qml"
-        }
-        Component.onCompleted: {
-            modelList.append({"name": qsTr("Modify background image")})
-        }
+    Component {
+        id: settingsProfileComponent
+        SettingsProfile {}
     }
 }
