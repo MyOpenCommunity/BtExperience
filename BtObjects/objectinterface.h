@@ -55,18 +55,19 @@ public:
 	/// Numeric identifier for object type
 	enum ObjectId
 	{
-		IdAntintrusionSystem = 6,
+		IdAntintrusionSystem = 1,
 		IdHardwareSettings,
 		IdMultiChannelSoundDiffusionSystem,
-		IdMultiChannelSoundAmbient,
-		IdMultiChannelGeneralAmbient,           // 10
 		IdSoundAmplifier,
 		IdSoundAmplifierGeneral,
 		IdPowerAmplifier,
 		IdSoundSource,
-		IdPlatformSettings,                     // 15
-		IdMonoChannelSoundDiffusionSystem,
+		IdPlatformSettings,
 		IdMonoChannelSoundAmbient,
+		IdSoundAmplifierGroup,                  // 10
+
+		IdMultiChannelSoundAmbient = 14,        // Container::IdAmbient
+		IdMultiChannelGeneralAmbient = 16,      // Container::IdSpecialAmbient
 
 		IdCCTV = 23,
 		IdRoom,
@@ -143,6 +144,19 @@ public:
 		IdInternalIntercom = 10052,
 		IdExternalIntercom = 10053,
 		IdSwitchboard = 10054, // a.k.a. guard unit
+
+		IdRadioSource = 11032,
+		IdAuxSource = 11033,
+		IdMultimediaSource = 11034,
+
+		IdMonoAmplifier = 11029,
+		IdMonoAmplifierGroup = 11030,
+		IdMonoPowerAmplifier = 11031,
+
+		IdMultiAmplifier = 11001,
+		IdMultiAmplifierGroup = 11002,
+		IdMultiGeneral = 11003,
+		IdMultiPowerAmplifier = 11004,
 
 		IdIpRadio = 16000,
 

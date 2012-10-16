@@ -24,6 +24,16 @@ class ListManager;
 
 
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id);
+
+QList<ObjectInterface *> createLocalSources(bool is_multichannel);
+
+QList<ObjectPair> parseAuxSource(const QDomNode &xml_node);
+QList<ObjectPair> parseMultimediaSource(const QDomNode &xml_node);
+QList<ObjectPair> parseRadioSource(const QDomNode &xml_node);
+QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel);
+QList<ObjectPair> parseAmplifierGroup(const QDomNode &xml_node, const UiiMapper &uii_map);
+QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multichannel);
+
 QList<ObjectPair> parseIpRadio(const QDomNode &xml_node);
 
 
@@ -160,6 +170,7 @@ public:
 		RdsRadio,
 		IpRadio,
 		Aux,
+		Touch,
 		Upnp,
 		FileSystem,
 	};
@@ -556,6 +567,54 @@ protected slots:
 private:
 	AmplifierDevice *dev;
 	int object_id, area;
+	bool active;
+	int volume;
+};
+
+
+/*!
+	\ingroup SoundDiffusion
+	\brief Manages a sound diffusion amplifier group
+
+	The object id is \a ObjectInterface::IdSoundAmplifierGroup
+*/
+class AmplifierGroup : public ObjectInterface
+{
+	Q_OBJECT
+
+	/*!
+		\brief Sets or gets the on/off status of the amplifier
+	*/
+	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
+
+	/*!
+		\brief Sets or gets the amplifier volume (1-31)
+	*/
+	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
+
+public:
+	AmplifierGroup(QString name, QList<Amplifier *> amplifiers);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdSoundAmplifierGroup;
+	}
+
+	bool isActive() const { return false; }
+	void setActive(bool active);
+
+	int getVolume() const { return 0; }
+	void setVolume(int volume);
+
+	Q_INVOKABLE void volumeUp() const;
+	Q_INVOKABLE void volumeDown() const;
+
+signals:
+	void activeChanged();
+	void volumeChanged();
+
+private:
+	QList<Amplifier *> amplifiers;
 	bool active;
 	int volume;
 };

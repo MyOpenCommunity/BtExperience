@@ -15,7 +15,8 @@ function getTarget(systemId) {
         return "EnergyManagement.qml"
     case Container.IdVideoDoorEntry:
         return "VideoDoorEntry.qml"
-    case Container.IdSoundDiffusion:
+    case Container.IdSoundDiffusionMulti:
+    case Container.IdSoundDiffusionMono:
         return "SoundDiffusion.qml"
     case Container.IdAntintrusion:
         return "Antintrusion.qml"

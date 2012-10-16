@@ -1,100 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-  <item>
-	  <id>8</id> <!-- Multichannel sound diffusion system -->
-	  <amplifiers>
-		  <item>
-			  <id>11</id> <!-- Amplifier -->
-			  <name>Amplificatore 2</name>
-			  <env>2</env>
-			  <where>22</where>
-		  </item>
-		  <item>
-			  <id>11</id> <!-- Amplifier -->
-			  <name>Amplificatore 3</name>
-			  <env>2</env>
-			  <where>23</where>
-		  </item>
-		  <item>
-			  <id>13</id> <!-- Power amplifier -->
-			  <name>Amplificatore di potenza</name>
-			  <env>1</env>
-			  <where>18</where>
-			  <preset>User preset 1</preset>
-			  <preset>User preset 2</preset>
-			  <preset>User preset 3</preset>
-		  </item>
-		  <item>
-			  <id>12</id> <!-- General ambient -->
-			  <name>Generale</name>
-			  <env>2</env>
-			  <where>#2</where>
-		  </item>
-		  <item>
-			  <id>11</id>
-			  <name>Amplificatore 2</name>
-			  <env>3</env>
-			  <where>32</where>
-		  </item>
-		  <item>
-			  <id>12</id>
-			  <name>Generale</name>
-			  <env>3</env>
-			  <where>#3</where>
-		  </item>
-	  </amplifiers>
-	  <ambients>
-		  <item>
-			  <id>9</id> <!-- Sound diffusion ambient -->
-			  <name>Discoteca</name>
-			  <env>1</env>
-		  </item>
-		  <item>
-			  <id>9</id> <!-- Sound diffusion ambient -->
-			  <name>Cucina</name>
-			  <env>2</env>
-		  </item>
-		  <item>
-			  <id>9</id>
-			  <name>Salotto</name>
-			  <env>3</env>
-		  </item>
-		  <item>
-			  <id>9</id>
-			  <name>Cameretta</name>
-			  <env>4</env>
-		  </item>
-		  <item>
-			  <id>9</id>
-			  <name>Garage</name>
-			  <env>5</env>
-		  </item>
-		  <item>
-			  <id>9</id>
-			  <name>Giardino</name>
-			  <env>6</env>
-		  </item>
-	  </ambients>
-	  <sources>
-		  <item>
-			  <id>14</id> <!-- Sound diffusion source -->
-			  <name>Radio</name>
-			  <where>1</where>
-			  <type>1</type>
-		  </item>
-		  <item>
-			  <id>14</id>
-			  <name>Touch</name>
-			  <where>4</where>
-			  <type>2</type>
-		  </item>
-		  <item>
-			  <id>14</id>
-			  <name>Media server</name>
-			  <where>5</where>
-			  <type>3</type>
-		  </item>
-	  </sources>
-  </item>
+	<obj cid="11001" id="11001" descr="Amplifier" where="11">
+		<ist uii="10001" descr="Generale" where="0"/>
+		<ist uii="10014" descr="Generale" where="#2"/>
+		<ist uii="10002" descr="Amplificatore 2" where="22"/>
+		<ist uii="10003" descr="Amplificatore 3" where="23"/>
+		<ist uii="10012" descr="Amplificatore 2" where="32"/>
+		<ist uii="10013" descr="Generale" where="#3"/>
+	</obj>
+	<obj cid="11004" id="11004" descr="Power Amplifier" where="11" epre11="0" epre12="0" epre13="0" epre14="0" epre15="0" epre16="0" epre17="0" epre18="0" epre19="0" epre20="0">
+		<ist uii="10004" descr="Amplificatore di potenza" where="18" epre11="1" epre12="1" epre13="1">
+			<pre11>User preset 1</pre11>
+			<pre12>User preset 2</pre12>
+			<pre13>User preset 3</pre13>
+		</ist>
+	</obj>
+	<obj cid="11002" id="11002" descr="Amplifier group">
+		<ist uii="10006" descr="Amplifier group" >
+			<link uii="10001" />
+			<link uii="10002" />
+			<link uii="10004" />
+		</ist>
+	</obj>
+	<obj cid="11032" id="11032" descr="Source" where="1" num_radio="5">
+		<ist uii="10007" descr="Radio" where="1" />
+	</obj>
+	<obj cid="11033" id="11033" descr="Source" where="1">
+		<ist uii="10009" descr="Aux" where="2" />
+	</obj>
+	<obj cid="11034" id="11034" descr="Touch" where="1">
+		<ist uii="10011" descr="Touch" where="4" />
+	</obj>
 </archive>
-

@@ -41,6 +41,176 @@ QList<ObjectPair> parseIpRadio(const QDomNode &xml_node)
 	return obj_list;
 }
 
+QList<ObjectPair> parseAuxSource(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		SourceAux *source = new SourceAux(bt_global::add_device_to_cache(new SourceDevice(v.value("where"))));
+		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::Aux);
+		source->setParent(so);
+		source->setSourceObject(so);
+
+		obj_list << ObjectPair(uii, so);
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseMultimediaSource(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		SourceAux *source = new SourceAux(bt_global::add_device_to_cache(new SourceDevice(v.value("where"))));
+		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::Touch);
+		source->setParent(so);
+		source->setSourceObject(so);
+
+		obj_list << ObjectPair(uii, so);
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseRadioSource(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		SourceRadio *source = new SourceRadio(bt_global::add_device_to_cache(new RadioSourceDevice(v.value("where"))));
+		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::RdsRadio);
+		source->setParent(so);
+		source->setSourceObject(so);
+		// TODO station count
+		obj_list << ObjectPair(uii, so);
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		AmplifierDevice *d = AmplifierDevice::createDevice(v.value("where"));
+		int area = is_multichannel ? d->getArea().toInt() : 0;
+
+		obj_list << ObjectPair(uii, new Amplifier(area, v.value("descr"), d));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseAmplifierGroup(const QDomNode &xml_node, const UiiMapper &uii_map)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QList<Amplifier *> amplifiers;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			Amplifier *item = uii_map.value<Amplifier>(object_uii);
+
+			if (!item)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in amplifier set";
+				Q_ASSERT_X(false, "parseAmplifierGroup", "Invalid uii");
+				continue;
+			}
+
+			amplifiers.append(item);
+		}
+
+		obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"), amplifiers));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multichannel)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		PowerAmplifierDevice *d = bt_global::add_device_to_cache(new PowerAmplifierDevice(v.value("where")));
+		int area = is_multichannel ? d->getArea().toInt() : 0;
+		QList<QString> presets;
+
+		foreach(const QDomNode &p, getChildren(ist, "pre"))
+		{
+			QDomElement preset = p.toElement();
+			QString preset_name = preset.text();
+			int index = preset.tagName().mid(3).toInt() - 11;
+
+			while (presets.count() <= index)
+				presets.append(QString());
+			presets[index] = preset_name;
+		}
+
+		obj_list << ObjectPair(uii, new PowerAmplifier(area, v.value("descr"), d, presets));
+	}
+	return obj_list;
+}
+
+QList<ObjectInterface *> createLocalSources(bool is_multichannel)
+{
+	QList<ObjectInterface *> sources;
+
+	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
+
+	if (!(*bt_global::config)[SOURCE_ADDRESS].isEmpty() || !(*bt_global::config)[AMPLIFIER_ADDRESS].isEmpty())
+	{
+		QString init_frame = VirtualSourceDevice::createMediaInitFrame(is_multichannel,
+									       (*bt_global::config)[SOURCE_ADDRESS],
+									       (*bt_global::config)[AMPLIFIER_ADDRESS]);
+		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
+	}
+
+	if ((*bt_global::config)[SOURCE_ADDRESS].isEmpty())
+		return sources;
+
+	SourceMultiMedia *source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice((*bt_global::config)[SOURCE_ADDRESS])));
+
+	// TODO use configuration...
+	sources << new SourceIpRadio(QObject::tr("IP radio"), source);
+	sources << new SourceLocalMedia("USB1", "/media/sda1", source, SourceObject::FileSystem);
+	sources << new SourceLocalMedia("SD card", "/media/mmcblk0p1", source, SourceObject::FileSystem);
+	sources << new SourceUpnpMedia("Network shares", source);
+
+	// use a default
+	source->setSourceObject(static_cast<SourceObject *>(sources[0]));
+	// one of the above, used to destroy the object
+	source->setParent(sources[0]);
+
+	return sources;
+}
+
 QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id)
 {
 	bool is_multichannel = id == ObjectInterface::IdMultiChannelSoundDiffusionSystem;
@@ -845,6 +1015,37 @@ void Amplifier::valueReceived(const DeviceValues &values_list)
 		}
 		++it;
 	}
+}
+
+
+AmplifierGroup::AmplifierGroup(QString _name, QList<Amplifier *> _amplifiers)
+{
+	name = _name;
+	amplifiers = _amplifiers;
+}
+
+void AmplifierGroup::setActive(bool active)
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->setActive(active);
+}
+
+void AmplifierGroup::setVolume(int volume)
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->setVolume(volume);
+}
+
+void AmplifierGroup::volumeUp() const
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->volumeUp();
+}
+
+void AmplifierGroup::volumeDown() const
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->volumeDown();
 }
 
 

@@ -58,12 +58,14 @@ public:
 		IdEnergyData = 7,
 		IdThermalRegulation = 8,
 		IdVideoDoorEntry = 9,
-		IdSoundDiffusion = 10,
+		IdSoundDiffusionMulti = 10,
 		IdAntintrusion = 11,
 		IdSettings = 12,
 		IdFloors = 13,
 		IdAmbient = 14,
 		IdMessages = 15,
+		IdSpecialAmbient = 16,
+		IdSoundDiffusionMono = 18,
 		IdRooms = 100,
 		IdProfile = 101
 	};
