@@ -183,7 +183,7 @@ Page {
         }
         onClicked: {
             console.log("Add quicklink clicked")
-//            Stack.popPage()
+            //            Stack.popPage()
         }
     }
 
@@ -228,17 +228,32 @@ Page {
             bottomMargin: bg.width / 100 * 4.58
         }
         model: quicklinksModel
-        delegate: UbuntuLightText {
-            text: quicklinksModel.getObject(index).name // address, type (MediaType), position
+        delegate: Item {
+            width: delegateRadio.width
+            height: delegateRadio.height + bg.height / 100 * 2.29
+            ControlRadioHorizontal {
+                id: delegateRadio
+                property variant itemObject: quicklinksModel.getObject(index)
+                width: bg.width / 100 * 54.95
+                text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name // address, type (MediaType), position
+                onClicked: console.log("clicked on quicklink")
+                status: false
+                ButtonImageThreeStates {
+                    id: deleteButton
+                    defaultImage: "images/common/ico_delete.svg"
+                    pressedImage: "images/common/ico_delete_p.svg"
+                    defaultImageBg: "images/common/ico_bg.svg"
+                    pressedImageBg: "images/common/ico_bg.svg"
+                    anchors {
+                        verticalCenter: delegateRadio.verticalCenter
+                        left: delegateRadio.right
+                        leftMargin: bg.width / 100 * 2.51
+                    }
+                    onClicked: quicklinksModel.remove(delegateRadio.itemObject)
+                }
+            }
         }
     }
-
-
-
-
-
-
-
 
     // bottom bar
     SvgImage {

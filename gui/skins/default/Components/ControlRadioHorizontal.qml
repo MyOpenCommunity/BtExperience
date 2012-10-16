@@ -17,7 +17,7 @@ Item {
     UbuntuLightText {
         id: radioLabel
 
-        font.pixelSize: 17
+        font.pixelSize: 14
         color: "white"
 
         anchors {
