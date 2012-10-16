@@ -30,5 +30,57 @@ QtObject {
         }
         return ""
     }
+
+    function isEnergyMonthValid(d) {
+        var year = d.getFullYear()
+        var month = d.getMonth()
+
+        var currentDate = new Date()
+        var cur_year = currentDate.getFullYear()
+        var cur_month = currentDate.getMonth()
+
+        if (year === cur_year && month <= cur_month)
+            return true
+
+        if (year === cur_year - 1 && month > cur_month)
+            return true
+
+        return false
+    }
+
+    function isEnergyYearValid(d) {
+        var year = d.getFullYear()
+        var cur_year = new Date().getFullYear()
+
+        if (year <= cur_year && year >= cur_year - 12)
+            return true
+
+        return false
+    }
+
+    function isEnergyDayValid(d) {
+        var currentDate = new Date()
+        if (d.getTime() > currentDate.getTime())
+            return false
+
+        var year = d.getFullYear()
+        var month = d.getMonth()
+        var day = d.getDate()
+
+        var cur_year = currentDate.getFullYear()
+        var cur_month = currentDate.getMonth()
+        var cur_day = currentDate.getDate()
+
+        if (year === cur_year)
+            return true
+        if (year === cur_year -1 && month > cur_month)
+            return true
+
+        if (year === cur_year -1 && month === cur_month && day > cur_day)
+            return true
+
+        return false
+    }
+
 }
 
