@@ -7,6 +7,8 @@ import "js/Stack.js" as Stack
 BasePage {
     id: page
 
+    property variant profile // TODO add saving to right profile!!!
+
     ToolBar {
         id: toolbar
         anchors {
