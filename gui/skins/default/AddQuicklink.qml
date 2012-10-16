@@ -10,6 +10,7 @@ Page {
     id: page
 
     property variant profile: undefined
+    property int currentLink: -1
 
     text: qsTr("Profiles")
     source: "images/profiles.jpg"
@@ -17,7 +18,6 @@ Page {
     MediaModel {
         id: quicklinksModel
         source: myHomeModels.mediaLinks
-        containers: [page.profile.uii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
@@ -181,10 +181,7 @@ Page {
             top: nameBgImage.bottom
             topMargin: bg.height / 100 * 2.29
         }
-        onClicked: {
-            console.log("Add quicklink clicked")
-            //            Stack.popPage()
-        }
+        onClicked: quicklinksModel.append(myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.text, linkText.text))
     }
 
     SvgImage {
@@ -227,19 +224,25 @@ Page {
             bottom: bg.bottom
             bottomMargin: bg.width / 100 * 4.58
         }
+        onCurrentPageChanged: page.currentLink = -1
         model: quicklinksModel
         delegate: Item {
             width: delegateRadio.width
-            height: delegateRadio.height + bg.height / 100 * 2.29
+            height: delegateRadio.height + bg.height / 100 * 2.29 // adds spacing
+
             ControlRadioHorizontal {
                 id: delegateRadio
+
                 property variant itemObject: quicklinksModel.getObject(index)
+
                 width: bg.width / 100 * 54.95
                 text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name // address, type (MediaType), position
-                onClicked: console.log("clicked on quicklink")
-                status: false
+                onClicked: page.currentLink = index
+                status: page.currentLink === index
+
                 ButtonImageThreeStates {
                     id: deleteButton
+
                     defaultImage: "images/common/ico_delete.svg"
                     pressedImage: "images/common/ico_delete_p.svg"
                     defaultImageBg: "images/common/ico_bg.svg"
@@ -292,7 +295,8 @@ Page {
             right: cancelButton.left
         }
         onClicked: {
-            console.log("Save quicklink!!!")
+            if (page.currentLink >= 0) // saves selection on current profile
+                quicklinksModel.getObject(page.currentLink).containerUii = page.profile.uii
             Stack.popPage()
         }
     }
@@ -362,7 +366,7 @@ Page {
             if (privateProps.currentChoice === kind)
                 return
 
-            privateProps.dummy = !privateProps.dummy
+            privateProps.dummy = !privateProps.dummy // triggers updates
             privateProps.cameraStatus = false
             privateProps.webPageStatus = false
             privateProps.webCameraStatus = false
@@ -402,7 +406,7 @@ Page {
                 return qsTr("weather")
             if (kind === 5)
                 return qsTr("scenario")
-            return " "
+            return " " // a space to avoid zero height text element
         }
 
         function getSelectText(dummy) {
@@ -418,7 +422,7 @@ Page {
                 return qsTr("Select existing weather forecast link:")
             if (privateProps.currentChoice === 5)
                 return qsTr("Select existing scenario:")
-            return " "
+            return " " // a space to avoid zero height text element
         }
 
         function getAddText(dummy) {
@@ -434,7 +438,7 @@ Page {
                 return qsTr("Add new weather forecast link:")
             if (privateProps.currentChoice === 5)
                 return qsTr("Add new scenario:")
-            return " "
+            return " " // a space to avoid zero height text element
         }
     }
 }

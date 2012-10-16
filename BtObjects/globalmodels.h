@@ -6,6 +6,7 @@
 class MediaDataModel;
 class ObjectDataModel;
 class Note;
+class MediaLink;
 
 
 /*!
@@ -133,6 +134,17 @@ public:
 		\endverbatim
 	*/
 	Q_INVOKABLE Note *createNote(int profile_uii, QString text);
+
+	/*!
+		\brief Create a new quicklink instance
+
+		Example (QML):
+
+		\verbatim
+		quicklinks.append(myHomeModels.createQuicklink(profile.uii, "rss", "La Nazione", "http://www.lanazione.it"))
+		\endverbatim
+	*/
+	Q_INVOKABLE MediaLink *createQuicklink(int profile_uii, QString mediaType, QString name, QString address);
 
 	void setProfiles(MediaDataModel *profiles);
 	MediaDataModel *getProfiles() const;

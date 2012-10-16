@@ -15,7 +15,7 @@ class ItemInterface : public QObject
 	/*!
 		\brief The id of a container object (defaults to -1), used for filtering
 	*/
-	Q_PROPERTY(int containerUii READ getContainerUii NOTIFY containerChanged)
+	Q_PROPERTY(int containerUii READ getContainerUii WRITE setContainerUii NOTIFY containerChanged)
 
 public:
 	ItemInterface(QObject *parent = 0);

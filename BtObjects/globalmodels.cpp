@@ -1,5 +1,6 @@
 #include "globalmodels.h"
 #include "note.h"
+#include "medialink.h"
 
 
 GlobalModels::GlobalModels()
@@ -71,6 +72,25 @@ MediaDataModel *GlobalModels::getNotes() const
 Note *GlobalModels::createNote(int profile_uii, QString text)
 {
 	return new Note(profile_uii, text);
+}
+
+MediaLink *GlobalModels::createQuicklink(int profile_uii, QString mediaType, QString name, QString address)
+{
+	MediaLink::MediaType t = MediaLink::Web; // defaults to web link
+	if (QString::compare("camera", mediaType, Qt::CaseInsensitive) == 0)
+		t = MediaLink::Camera;
+	if (QString::compare("web page", mediaType, Qt::CaseInsensitive) == 0)
+		t = MediaLink::Web;
+	if (QString::compare("web camera", mediaType, Qt::CaseInsensitive) == 0)
+		t = MediaLink::Webcam;
+	if (QString::compare("rss", mediaType, Qt::CaseInsensitive) == 0)
+		t = MediaLink::Rss;
+	if (QString::compare("weather", mediaType, Qt::CaseInsensitive) == 0)
+		t = MediaLink::BtObject;
+	if (QString::compare("scenario", mediaType, Qt::CaseInsensitive) == 0)
+		t = MediaLink::BtObject;
+
+	return new MediaLink(profile_uii, t, name, address, QPoint(200, 200));
 }
 
 void GlobalModels::setProfiles(MediaDataModel *_profiles)
