@@ -13,7 +13,7 @@ EnergyThresholdsGoals::EnergyThresholdsGoals()
 	QVariantMap filter;
 
 	// sets filter
-	filter["objectId"] = ObjectInterface::IdEnergies;
+	filter["objectId"] = ObjectInterface::IdEnergyData;
 	filters << filter;
 
 	// applies filter to model
