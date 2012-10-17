@@ -156,7 +156,7 @@ Item {
         id: antintrusionConnection
         target: null
         onNewAlarm: {
-            var p = privateProps.preparePopupPage()
+            var p = privateProps.preparePopupPage(true)
             // adds antintrusion alarm
             p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
         }
@@ -166,7 +166,7 @@ Item {
         id: stopAndGoConnection
         target: null
         onStopAndGoDeviceChanged: {
-            var p = privateProps.preparePopupPage()
+            var p = privateProps.preparePopupPage(false)
             // adds stop&go alarm
             p.addStopAndGoPopup(stopGoDevice)
         }
@@ -176,12 +176,12 @@ Item {
         id: energiesConnection
         target: null
         onThresholdExceeded: {
-            var p = privateProps.preparePopupPage()
+            var p = privateProps.preparePopupPage(false)
             // adds threshold alarm
             p.addThresholdExceededPopup(energyDevice)
         }
         onGoalReached: {
-            var p = privateProps.preparePopupPage()
+            var p = privateProps.preparePopupPage(false)
             // adds goal alarm
             p.addGoalReachedPopup(energyDevice)
         }
@@ -191,7 +191,7 @@ Item {
         id: messagesConnection
         target: null
         onUnreadMessagesChanged: {
-            var p = privateProps.preparePopupPage()
+            var p = privateProps.preparePopupPage(false)
             // updates number of unread messages
             p.updateUnreadMessages(messagesConnection.target.unreadMessages)
         }
@@ -201,7 +201,7 @@ Item {
         id: scenarioConnection
         target: null
         onScenarioActivated: {
-            var p = privateProps.preparePopupPage()
+            var p = privateProps.preparePopupPage(false)
             // adds popup for scenario activation
             p.addScenarioActivationPopup(description)
         }
@@ -232,7 +232,7 @@ Item {
         // conditions; if those conditions are not met we must put the popup
         // page under the current page and add them to it: when the page above closes
         // the popup page will automagically appear showing all popups
-        function preparePopupPage() {
+        function preparePopupPage(closeOpenCall) {
             // gets current page (if popups are still to be managed we assume
             // popup page is at the top of the stack; exceptions will be treated
             // separately in subsequent ifs)
@@ -256,7 +256,8 @@ Item {
                 // Must stay here because it emits callEnded signal, close is
                 // asynchronous, so some time may pass before page is actually
                 // closed
-                privateProps.endActualCall(callPageName)
+                if (closeOpenCall)
+                    privateProps.endActualCall(callPageName)
             }
 
             // if p doesn't point to Popup page, pushes it
