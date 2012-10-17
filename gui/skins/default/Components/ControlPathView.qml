@@ -20,8 +20,10 @@ PathView {
     property int currentPressed: -1
 
     signal clicked(variant delegate)
+    signal internalClick()
 
     delegate: PathViewDelegate {
+        id: viewDelegate
         itemObject: control.model.getObject(index)
         z: PathView.elementZ
         scale: PathView.elementScale
@@ -30,6 +32,11 @@ PathView {
             if (global.guiSettings.beep)
                 global.beep()
             control.clicked(delegate)
+        }
+
+        Connections {
+            target: control
+            onInternalClick: viewDelegate.delegateClicked(viewDelegate.itemObject)
         }
     }
 
@@ -86,8 +93,19 @@ PathView {
     // card visible
     preferredHighlightBegin: (pathItemCount % 2) === 0 ? 0.49 : 0.5
     preferredHighlightEnd: (pathItemCount % 2) === 0 ? 0.49 : 0.5
-    onFlickStarted: currentPressed = -1
-    onMovementEnded: currentPressed = -1
+
+    onFlickStarted: {
+        privateProps.hasFlicked = true
+        currentPressed = -1
+    }
+    onMovementEnded: {
+        if (!privateProps.hasFlicked)
+            internalClick()
+        else
+            privateProps.hasFlicked = false
+
+        currentPressed = -1
+    }
 
     SvgImage {
         id: prevArrow
@@ -141,5 +159,10 @@ PathView {
                 }
             }
         ]
+    }
+
+    QtObject {
+        id: privateProps
+        property bool hasFlicked: false
     }
 }
