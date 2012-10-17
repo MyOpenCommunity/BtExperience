@@ -130,6 +130,9 @@ namespace
 		case EnergyData::CumulativeYearValue:
 		case EnergyData::CumulativeYearGraph:
 			return QDate(date.year(), 1, 1);
+		case EnergyData::CumulativeLastYearValue:
+		case EnergyData::CumulativeLastYearGraph:
+			return QDate();
 		}
 
 		Q_ASSERT_X(0, "EnergyData::normalizeDate", "Invalid value for ValueType");
@@ -351,7 +354,8 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
 
 	QVector<double> *cached = value_cache.object(value_key);
 	// for cumulative year graph we might have some valid values received as part of navigating month graphs
-	if (cached && (type != CumulativeYearGraph || checkYearGraphDataIsValid(date, *cached)))
+	if (cached && !(type == CumulativeYearGraph && !checkYearGraphDataIsValid(date, *cached)) &&
+		      !(type == CumulativeLastYearGraph && !checkLastYearGraphDataIsValid(*cached)))
 		values = createGraph(type, *cached, measure == Currency ? rate : 0);
 
 	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
@@ -480,7 +484,10 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 
 	// see comment in valueReceived()
 	if (type == CumulativeMonthValue)
+	{
 		cacheYearGraphData(date, value / unit_conversion);
+		cacheLastYearGraphData(date, value / unit_conversion);
+	}
 }
 
 void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph)
@@ -546,6 +553,58 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 		value->setValue(cumulative_value);
 }
 
+void EnergyData::cacheLastYearGraphData(QDate date, double month_value)
+{
+	QDate today = QDate::currentDate();
+	int delta = (today.year() - date.year()) * 12 + (today.month() - date.month());
+	if (delta >= 12)
+		return;
+
+	QDate actual_date = QDate();
+	CacheKey key(CumulativeLastYearGraph, actual_date);
+	QVector<double> *values = value_cache.object(key);
+	int index = 11 - ((QDate::currentDate().month() - date.month() + 12) % 12);
+
+	// add new value to the cache
+	if (!values)
+	{
+		values = new QVector<double>();
+		values->reserve(12);
+		value_cache.insert(key, values, 12);
+	}
+
+	while (values->size() <= index)
+		values->append(INVALID_VALUE);
+
+	double old_value = (*values)[index];
+
+	(*values)[index] = month_value;
+
+	// if the new value is different from the old one and we have all the data for the
+	// year, update EnergyGraph/EnergyItem objects
+	if (old_value == month_value || !checkLastYearGraphDataIsValid(*values))
+		return;
+
+	// compute cumulative year value and insert it into the cache
+	double cumulative_value = 0.0;
+
+	for (int i = 0; i < values->count(); ++i)
+		cumulative_value += (*values)[i];
+
+	value_cache.insert(CacheKey(CumulativeLastYearValue, actual_date), new QVector<double>(1, cumulative_value), 1);
+
+	// update year graph objects
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeLastYearGraph, actual_date, false)))
+		graph->setGraph(createGraph(CumulativeLastYearGraph, *values));
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeLastYearGraph, actual_date, true)))
+		graph->setGraph(createGraph(CumulativeLastYearGraph, *values, rate));
+	// update cumulative year value objects
+	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeLastYearValue, actual_date, false)))
+		value->setValue(cumulative_value);
+	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeLastYearValue, actual_date, true)))
+		value->setValue(cumulative_value);
+}
+
 bool EnergyData::checkYearGraphDataIsValid(QDate date, const QVector<double> &values)
 {
 	QDate today = QDate::currentDate();
@@ -555,6 +614,18 @@ bool EnergyData::checkYearGraphDataIsValid(QDate date, const QVector<double> &va
 		return false;
 
 	for (int i = 0; i < count; ++i)
+		if (values[i] == INVALID_VALUE)
+			return false;
+
+	return true;
+}
+
+bool EnergyData::checkLastYearGraphDataIsValid(const QVector<double> &values)
+{
+	if (values.size() < 12)
+		return false;
+
+	for (int i = 0; i < 12; ++i)
 		if (values[i] == INVALID_VALUE)
 			return false;
 
@@ -577,6 +648,23 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 		for (int i = 0; i < values.count(); ++i)
 			keys << QString::number(i + 1);
 		break;
+	case CumulativeLastYearGraph:
+	{
+		QDate today = QDate::currentDate();
+		QStringList all_keys = QStringList()
+			 << tr("Jan") << tr("Feb") << tr("Mar")
+			 << tr("Apr") << tr("May") << tr("Jun")
+			 << tr("Jul") << tr("Aug") << tr("Sep")
+			 << tr("Oct") << tr("Nov") << tr("Dec");
+
+		for (int i = 0; i < 12; ++i)
+		{
+			keys.append(all_keys[today.month() - 1]);
+			today.addMonths(-1);
+		}
+
+		break;
+	}
 	case CumulativeYearGraph:
 		keys << tr("Jan") << tr("Feb") << tr("Mar")
 			 << tr("Apr") << tr("May") << tr("Jun")
@@ -596,7 +684,8 @@ void EnergyData::requestUpdate(int type, QDate date, RequestOptions options)
 	CacheKey key(type, normalizeDate(type, date));
 	quint64 msec_now = QDateTime::currentMSecsSinceEpoch();
 
-	if (type != CumulativeYearGraph && type != CumulativeYearValue && options != Force)
+	if (type != CumulativeYearGraph && type != CumulativeYearValue &&
+	    type != CumulativeLastYearGraph && type != CumulativeLastYearValue && options != Force)
 	{
 		// there is a cached response and the timespan does not include today
 		if (!dateContainsToday(type, key.date) && value_cache.contains(key))
@@ -616,7 +705,8 @@ void EnergyData::requestUpdate(int type, QDate date, RequestOptions options)
 		}
 	}
 
-	if (type != CumulativeYearGraph && type != CumulativeYearValue)
+	if (type != CumulativeYearGraph && type != CumulativeYearValue &&
+	    type != CumulativeLastYearGraph && type != CumulativeLastYearValue)
 		requests[key] = qMakePair(msec_now, Pending);
 
 #if TEST_ENERGY_DATA
@@ -661,6 +751,9 @@ void EnergyData::requestUpdate(int type, QDate date, RequestOptions options)
 		// see comment in valueReceived()
 		requestCumulativeYear(key.date, options);
 		break;
+	case CumulativeLastYearGraph:
+		requestCumulativeLastYear(options);
+		break;
 	case CurrentValue:
 		dev->requestCurrent();
 		break;
@@ -673,6 +766,9 @@ void EnergyData::requestUpdate(int type, QDate date, RequestOptions options)
 	case CumulativeYearValue:
 		// see comment in valueReceived()
 		requestCumulativeYear(key.date, options);
+		break;
+	case CumulativeLastYearValue:
+		requestCumulativeLastYear(options);
 		break;
 	case MonthlyAverageValue:
 		dev->requestMontlyAverage(key.date);
@@ -697,6 +793,20 @@ void EnergyData::requestCumulativeYear(QDate date, RequestOptions options)
 
 		if (!value_cache.contains(CacheKey(CumulativeMonthValue, month)) || i == count - 1)
 			requestUpdate(CumulativeMonthValue, month, options);
+	}
+}
+
+void EnergyData::requestCumulativeLastYear(RequestOptions options)
+{
+	QDate today = QDate::currentDate();
+	QDate month(today.year(), today.month(), 1);
+
+	// request updates for past months not in cache
+	for (int i = 0; i < 12; ++i)
+	{
+		if (!value_cache.contains(CacheKey(CumulativeMonthValue, month)) || i == 0)
+			requestUpdate(CumulativeMonthValue, month, options);
+		month = month.addMonths(-1);
 	}
 }
 
@@ -838,6 +948,7 @@ void EnergyData::testGraphData(GraphType type, QDate date)
 		count = date.daysInMonth();
 		break;
 	case CumulativeYearGraph:
+	case CumulativeLastYearGraph:
 		count = 12;
 		break;
 	}

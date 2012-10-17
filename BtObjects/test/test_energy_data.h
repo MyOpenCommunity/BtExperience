@@ -44,6 +44,7 @@ private slots:
 	void testUpdateItemValue();
 	void testUpdateGraphValue();
 	void testUpdateYearGraphValue();
+	void testUpdateLastYearGraphValue();
 
 	void testCachedValue();
 	void testCachedGraph();
@@ -52,12 +53,14 @@ private slots:
 	void testReceiveCumulativeDayValue();
 	void testReceiveCumulativeMonthValue();
 	void testReceiveCumulativeYearValue();
+	void testReceiveCumulativeLastYearValue();
 	void testReceiveMonthlyAverage();
 
 	void testReceiveDailyAverageGraph();
 	void testReceiveCumulativeDayGraph();
 	void testReceiveCumulativeMonthGraph();
 	void testReceiveCumulativeYearGraph();
+	void testReceiveCumulativeLastYearGraph();
 
 	void testRequestCurrentUpdateStartStop();
 
@@ -65,12 +68,14 @@ private slots:
 	void testRequestCumulativeDayValue();
 	void testRequestCumulativeMonthValue();
 	void testRequestCumulativeYearValue();
+	void testRequestCumulativeLastYearValue();
 	void testRequestMonthlyAverage();
 
 	void testRequestDailyAverageGraph();
 	void testRequestCumulativeDayGraph();
 	void testRequestCumulativeMonthGraph();
 	void testRequestCumulativeYearGraph();
+	void testRequestCumulativeLastYearGraph();
 
 	// does not re-send a request when one is already pending
 	void testDuplicateValueRequests();
