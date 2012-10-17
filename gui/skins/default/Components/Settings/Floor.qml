@@ -1,5 +1,7 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
+
 
 MenuColumn {
     id: column
@@ -11,6 +13,11 @@ MenuColumn {
         itemList.currentIndex = -1
     }
 
+    MediaModel {
+        id: floorsModel
+        source: myHomeModels.floors
+    }
+
     ListView {
         id: itemList
         anchors.fill: parent
@@ -18,24 +25,13 @@ MenuColumn {
         interactive: false
 
         delegate: MenuItemDelegate {
-            name: model.name
-            hasChild: model.component !== undefined
-                      && model.component !== null
-
-            onClicked: {
-                column.loadColumn(model.component, model.name)
-            }
+            itemObject: floorsModel.getObject(index)
+            name: itemObject.description
+            hasChild: true
+            onClicked: column.loadColumn(roomsItems, itemObject.description, itemObject, {"floorUii": itemObject.uii})
         }
 
-        model: modelList
-    }
-
-    ListModel {
-        id: modelList
-        Component.onCompleted: {
-            modelList.append({"name": qsTr("Ground Floor"), "component": roomsItems})
-            modelList.append({"name": qsTr("First Floor"), "component": roomsItems})
-        }
+        model: floorsModel
     }
 
     Component {

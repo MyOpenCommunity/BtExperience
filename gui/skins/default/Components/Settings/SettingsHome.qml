@@ -17,11 +17,6 @@ MenuColumn {
         Item {}
     }
 
-    Component {
-        id: quickLinks
-         SettingsQuickLinks {}
-    }
-
     function alertOkClicked() {
         skinItem.description = pageObject.names.get('SKIN', privateProps.skin);
         global.guiSettings.skin = privateProps.skin
@@ -55,8 +50,6 @@ MenuColumn {
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 300
 
-        // TODO international menu is to be defined: this is a very skeletal
-        // starting point
         MenuItem {
             id: skinItem
             name: qsTr("skin home")
@@ -67,6 +60,27 @@ MenuColumn {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.loadColumn(skin, name)
+            }
+        }
+
+        MenuItem {
+            name: qsTr("Modify background image")
+            isSelected: privateProps.currentIndex === 2
+            onClicked: {
+                if (privateProps.currentIndex !== 2)
+                    privateProps.currentIndex = 2
+                console.log("Implement modify background image feature")
+            }
+        }
+
+        MenuItem {
+            name: qsTr("Add Quicklink")
+            isSelected: privateProps.currentIndex === 3
+            onClicked: {
+                if (privateProps.currentIndex !== 3)
+                    privateProps.currentIndex = 3
+                console.log("Implement add quicklink in home page (static uii?)")
+//                Stack.pushPage("AddQuicklink.qml", {"profile": column.dataModel})
             }
         }
      }

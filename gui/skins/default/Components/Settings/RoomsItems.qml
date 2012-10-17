@@ -1,44 +1,53 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
     id: column
 
-    width: 212
-    height: Math.max(1, 50 * itemList.count)
+    property int floorUii
 
-    onChildDestroyed: {
-        itemList.currentIndex = -1
+    MediaModel {
+        id: roomsModel
+        source: myHomeModels.rooms
+        containers: [floorUii]
     }
 
-    ListView {
-        id: itemList
-        anchors.fill: parent
-        currentIndex: -1
-        interactive: false
+    onChildDestroyed: {
+        paginator.currentIndex = -1
+        privateProps.currentIndex = -1
+    }
 
-        delegate: MenuItemDelegate {
-            name: model.name
-            hasChild: model.component !== undefined
-                      && model.component !== null
+    Column {
+        MenuItem {
+            name: qsTr("Add Room")
+            isSelected: privateProps.currentIndex === 1
 
             onClicked: {
-                if (model.name !== "")
-                    column.loadColumn(model.component, model.name)
+                paginator.currentIndex = -1
+                privateProps.currentIndex = 1
+                column.loadColumn(addRoom, "Add Room", column.dataModel, floorUii)
             }
         }
 
-        model: modelList
+        PaginatorList {
+            id: paginator
+            delegate: MenuItemDelegate {
+                itemObject: roomsModel.getObject(index)
+                name: itemObject.description
+                hasChild: true
+                onClicked: {
+                    privateProps.currentIndex = -1
+                    column.loadColumn(modifyRoom, itemObject.description)
+                }
+            }
+            model: roomsModel
+        }
     }
 
-    ListModel {
-        id: modelList
-        Component.onCompleted: {
-            modelList.append({"name": qsTr("Add new room"), "component": addRoom})
-            modelList.append({"name": qsTr("Kitchen"), "component": modifyRoom})
-            modelList.append({"name": qsTr("Children Room"), "component": modifyRoom})
-            modelList.append({"name": qsTr("Box"), "component": modifyRoom})
-        }
+    QtObject {
+        id: privateProps
+        property int currentIndex: -1
     }
 
     Component {

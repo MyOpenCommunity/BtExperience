@@ -51,10 +51,11 @@ MenuColumn {
             modelList.append({"name": qsTr("General"), "component": settingsGenerals})
             modelList.append({"name": qsTr("Profiles"), "component": profiles})
             modelList.append({"name": qsTr("Rooms"), "component": rooms})
+            modelList.append({"name": qsTr("Systems"), "component": systems})
             modelList.append({"name": qsTr("Alarm Clock"), "component": alarmClock})
             modelList.append({"name": qsTr("Notifications"), "component": notifications})
+//            modelList.append({"name": qsTr("Acoustic Signaling"), "component": boh})
             modelList.append({"name": qsTr("Multimedia"), "component": multimedia})
-            modelList.append({"name": qsTr("Systems"), "component": systems})
         }
     }
 
