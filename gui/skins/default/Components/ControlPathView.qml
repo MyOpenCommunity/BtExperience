@@ -36,7 +36,10 @@ PathView {
 
         Connections {
             target: control
-            onInternalClick: viewDelegate.delegateClicked(viewDelegate.itemObject)
+            onInternalClick: {
+                if (index === control.currentPressed)
+                    viewDelegate.delegateClicked(viewDelegate.itemObject)
+            }
         }
     }
 
@@ -100,7 +103,7 @@ PathView {
     }
     onMovementEnded: {
         if (!privateProps.hasFlicked)
-            internalClick()
+            control.internalClick()
         else
             privateProps.hasFlicked = false
 
