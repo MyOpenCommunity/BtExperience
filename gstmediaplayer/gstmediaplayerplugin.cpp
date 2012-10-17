@@ -24,14 +24,6 @@ public slots:
 
 	void handleBusMessage(GstBus *bus, GstMessage *message);
 
-signals:
-	void gstPlayerStarted();
-	void gstPlayerPaused();
-	void gstPlayerResumed();
-	void gstPlayerDone();
-	void gstPlayerStopped();
-	void playingInfoUpdated(const QMap<QString,QString> &info);
-
 private:
 	// disable copy
 	GstMediaPlayerPrivate(const GstMediaPlayerPrivate&);
