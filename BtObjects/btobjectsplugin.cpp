@@ -721,7 +721,6 @@ void BtObjectsPlugin::saveConfigFile(QDomDocument document, QString name)
 
 void BtObjectsPlugin::updateObject(ItemInterface *obj)
 {
-	qDebug() << "BtObjectsPlugin::updateObject" << obj;
 	QPair<QDomNode, QString> node_path = findNodeForObject(obj);
 
 	if (node_path.first.isNull())
