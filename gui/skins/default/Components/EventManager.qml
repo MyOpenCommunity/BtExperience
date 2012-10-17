@@ -44,6 +44,7 @@ Item {
             {objectId: ObjectInterface.IdAntintrusionSystem},
             {objectId: ObjectInterface.IdMessages},
             {objectId: ObjectInterface.IdDangers},
+            {objectId: ObjectInterface.IdEnergies},
             {objectId: ObjectInterface.IdScenarioModulesNotifier}
         ]
         Component.onCompleted: {
@@ -68,6 +69,9 @@ Item {
                 case ObjectInterface.IdDangers:
                     stopAndGoConnection.target = obj
                     privateProps.dangersModel = obj
+                    break
+                case ObjectInterface.IdEnergies:
+                    energiesConnection.target = obj
                     break
                 case ObjectInterface.IdScenarioModulesNotifier:
                     scenarioConnection.target = obj
@@ -165,6 +169,21 @@ Item {
             var p = privateProps.preparePopupPage()
             // adds stop&go alarm
             p.addStopAndGoPopup(stopGoDevice)
+        }
+    }
+
+    Connections {
+        id: energiesConnection
+        target: null
+        onThresholdExceeded: {
+            var p = privateProps.preparePopupPage()
+            // adds threshold alarm
+            p.addThresholdExceededPopup(energyDevice)
+        }
+        onGoalReached: {
+            var p = privateProps.preparePopupPage()
+            // adds goal alarm
+            p.addGoalReachedPopup(energyDevice)
         }
     }
 

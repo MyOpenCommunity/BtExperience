@@ -35,6 +35,7 @@
 #include "watchdog.h"
 #include "dangers.h"
 #include "scenariomodulesnotifier.h"
+#include "energies.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -534,6 +535,8 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	objmodel << new StopAndGoDangers();
 	// the following needs scenario modules to be already created
 	objmodel << new ScenarioModulesNotifier();
+	// the following needs energy "objects" to be already created
+	objmodel << new EnergyThresholdsGoals();
 }
 
 int BtObjectsPlugin::findLinkedUiiForObject(ItemInterface *item) const

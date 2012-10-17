@@ -7,6 +7,7 @@ var _alarmPopups = []
 var _stopGoPopups = []
 var _scenarioActivationPopups = []
 var _unreadMessagesPopups = []
+var _thresholdGoalPopups = []
 
 
 /**
@@ -94,6 +95,60 @@ function addScenarioActivationPopup(descr) {
 }
 
 /**
+  * Adds a threshold popup
+  *
+  * Adds a threshold popup to the stack of threshold popups and show
+  * the last popup
+  *
+  * descr: line name/description
+  * level: number of levels exceeded
+  */
+function addThresholdExceededPopup(descr, level) {
+    var data = []
+
+    data["_kind"] = "threshold_goal"
+    data["title"] = qsTr("ENERGY MANAGEMENT")
+
+    data["line1"] = descr
+    data["line2"] = qsTr("Threshold %n exceeded", "", level)
+    data["line3"] = ""
+
+    data["confirmText"] = qsTr("Show")
+    data["dismissText"] = qsTr("Ignore")
+
+    _thresholdGoalPopups.push(data)
+
+    return _highestPriorityPopup()
+}
+
+/**
+  * Adds a goal popup
+  *
+  * Adds a goal popup to the stack of threshold popups and show
+  * the last popup
+  *
+  * descr: line name/description
+  * level: number of levels exceeded
+  */
+function addGoalReachedPopup(descr, level) {
+    var data = []
+
+    data["_kind"] = "threshold_goal"
+    data["title"] = qsTr("ENERGY MANAGEMENT")
+
+    data["line1"] = descr
+    data["line2"] = qsTr("Monthly goal reached")
+    data["line3"] = ""
+
+    data["confirmText"] = qsTr("Show")
+    data["dismissText"] = qsTr("Ignore")
+
+    _thresholdGoalPopups.push(data)
+
+    return _highestPriorityPopup()
+}
+
+/**
   * Updates the popup of unread messages
   *
   * Updates the popup of unread messages and returns if popup page must be
@@ -144,6 +199,7 @@ function confirm() {
     _stopGoPopups = []
     _scenarioActivationPopups = []
     _unreadMessagesPopups = []
+    _thresholdGoalPopups = []
 
     if (p["_kind"] === "messages") {
         return "Messages"
@@ -155,6 +211,10 @@ function confirm() {
 
     if (p["_kind"] === "stop&go") {
         return "Supervision"
+    }
+
+    if (p["_kind"] === "threshold_goal") {
+        return "GlobalView"
     }
 
     // scenario activation popups don't navigate
@@ -192,6 +252,11 @@ function dismiss() {
         return _highestPriorityPopup()
     }
 
+    if (_thresholdGoalPopups.length > 0) {
+        _thresholdGoalPopups.pop()
+        return _highestPriorityPopup()
+    }
+
     return undefined
 }
 
@@ -212,6 +277,10 @@ function _highestPriorityPopup() {
 
     if (_unreadMessagesPopups.length > 0) {
         return _unreadMessagesPopups[0] // only one exists
+    }
+
+    if (_thresholdGoalPopups.length > 0) {
+        return _thresholdGoalPopups[_thresholdGoalPopups.length - 1]
     }
 
     return undefined

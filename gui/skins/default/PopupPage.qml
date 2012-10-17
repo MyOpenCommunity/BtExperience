@@ -75,6 +75,14 @@ BasePage {
         privateProps.update(PopupLogic.addScenarioActivationPopup(description))
     }
 
+    function addThresholdExceededPopup(energyDevice) {
+        privateProps.update(PopupLogic.addThresholdExceededPopup(energyDevice.name, energyDevice.thresholdLevel))
+    }
+
+    function addGoalReachedPopup(energyDevice) {
+        privateProps.update(PopupLogic.addGoalReachedPopup(energyDevice.name, energyDevice.goalLevel))
+    }
+
     // needed to translate antintrusion names in alarm popups
     QtObject {
         id: privateProps
@@ -97,6 +105,16 @@ BasePage {
             if (data === "Supervision") {
                 popupLoader.sourceComponent = undefined
                 Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
+            }
+
+            if (data === "Messages") {
+                popupLoader.sourceComponent = undefined
+                Stack.goToPage("Messages.qml")
+            }
+
+            if (data === "GlobalView") {
+                popupLoader.sourceComponent = undefined
+                Stack.goToPage("EnergyGlobalView.qml")
             }
         }
 

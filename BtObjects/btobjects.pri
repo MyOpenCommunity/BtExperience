@@ -6,6 +6,7 @@ HEADERS += \
 	choicelist.h \
 	container.h \
 	dangers.h \
+	energies.h \
 	energydata.h \
 	energyload.h \
 	energyrate.h \
@@ -75,6 +76,7 @@ SOURCES += \
 	choicelist.cpp \
 	container.cpp \
 	dangers.cpp \
+	energies.cpp \
 	energydata.cpp \
 	energyload.cpp \
 	energyrate.cpp \
