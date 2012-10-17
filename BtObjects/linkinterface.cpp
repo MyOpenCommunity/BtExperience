@@ -5,10 +5,8 @@
 
 void updateLinkPosition(QDomNode node, LinkInterface *item)
 {
-	if (!setAttribute(node, "x", QString::number(item->getPosition().x())))
-		qWarning("Attribute x not found in XML node");
-	if (!setAttribute(node, "y", QString::number(item->getPosition().y())))
-		qWarning("Attribute y not found in XML node");
+	setAttribute(node, "x", QString::number(item->getPosition().x()));
+	setAttribute(node, "y", QString::number(item->getPosition().y()));
 }
 
 

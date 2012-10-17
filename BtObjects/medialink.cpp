@@ -4,10 +4,8 @@
 
 void updateMediaNameAddress(QDomNode node, MediaLink *item)
 {
-	if (!setAttribute(node, "descr", item->getName()))
-		qWarning("Attribute descr not found in XML node");
-	if (!setAttribute(node, "url", item->getAddress()))
-		qWarning("Attribute url not found in XML node");
+	setAttribute(node, "descr", item->getName());
+	setAttribute(node, "url", item->getAddress());
 }
 
 
