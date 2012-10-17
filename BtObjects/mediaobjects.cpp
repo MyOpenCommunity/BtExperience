@@ -41,13 +41,146 @@ QList<ObjectPair> parseIpRadio(const QDomNode &xml_node)
 	return obj_list;
 }
 
-QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, int id)
+QList<ObjectPair> parseAuxSource(const QDomNode &xml_node)
 {
-	bool is_multichannel = id == ObjectInterface::IdMultiChannelSoundDiffusionSystem;
-	QList<ObjectInterface *> objects;
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
 
-	SourceDevice::setIsMultichannel(is_multichannel);
-	AmplifierDevice::setIsMultichannel(is_multichannel);
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		SourceAux *source = new SourceAux(bt_global::add_device_to_cache(new SourceDevice(v.value("where"))));
+		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::Aux);
+		source->setParent(so);
+		source->setSourceObject(so);
+
+		obj_list << ObjectPair(uii, so);
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseMultimediaSource(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		SourceAux *source = new SourceAux(bt_global::add_device_to_cache(new SourceDevice(v.value("where"))));
+		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::Touch);
+		source->setParent(so);
+		source->setSourceObject(so);
+
+		obj_list << ObjectPair(uii, so);
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseRadioSource(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		SourceRadio *source = new SourceRadio(v.intValue("radio_num"), bt_global::add_device_to_cache(new RadioSourceDevice(v.value("where"))));
+		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::RdsRadio);
+		source->setParent(so);
+		source->setSourceObject(so);
+		// TODO station count
+		obj_list << ObjectPair(uii, so);
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		AmplifierDevice *d = AmplifierDevice::createDevice(v.value("where"));
+		int area = is_multichannel ? d->getArea().toInt() : 0;
+
+		obj_list << ObjectPair(uii, new Amplifier(area, v.value("descr"), d));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parseAmplifierGroup(const QDomNode &xml_node, const UiiMapper &uii_map)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QList<Amplifier *> amplifiers;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			Amplifier *item = uii_map.value<Amplifier>(object_uii);
+
+			if (!item)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in amplifier set";
+				Q_ASSERT_X(false, "parseAmplifierGroup", "Invalid uii");
+				continue;
+			}
+
+			amplifiers.append(item);
+		}
+
+		obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"), amplifiers));
+	}
+	return obj_list;
+}
+
+QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multichannel)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		PowerAmplifierDevice *d = bt_global::add_device_to_cache(new PowerAmplifierDevice(v.value("where")));
+		int area = is_multichannel ? d->getArea().toInt() : 0;
+		QList<QString> presets;
+
+		foreach(const QDomNode &p, getChildren(ist, "pre"))
+		{
+			QDomElement preset = p.toElement();
+			QString preset_name = preset.text();
+			int index = preset.tagName().mid(3).toInt() - 11;
+
+			while (presets.count() <= index)
+				presets.append(QString());
+			presets[index] = preset_name;
+		}
+
+		obj_list << ObjectPair(uii, new PowerAmplifier(area, v.value("descr"), d, presets));
+	}
+	return obj_list;
+}
+
+QList<ObjectInterface *> createLocalSources(bool is_multichannel)
+{
+	QList<ObjectInterface *> sources;
 
 	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
 
@@ -59,125 +192,24 @@ QList<ObjectInterface *> createSoundDiffusionSystem(const QDomNode &xml_node, in
 		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
 	}
 
-	QList<SourceObject *> sources;
-	foreach (const QDomNode &source, getChildren(getChildWithName(xml_node, "sources"), "item"))
-	{
-		QString name = getTextChild(source, "name");
-		int type = getTextChild(source, "type").toInt();
-		QString where = getTextChild(source, "where");
+	if ((*bt_global::config)[SOURCE_ADDRESS].isEmpty())
+		return sources;
 
-		switch (type)
-		{
-		case SourceBase::Radio:
-		{
-			SourceRadio *source = new SourceRadio(bt_global::add_device_to_cache(new RadioSourceDevice(where)));
-			SourceObject *so = new SourceObject(name, source, SourceObject::RdsRadio);
-			source->setParent(so);
-			source->setSourceObject(so);
-			sources << so;
-		}
-			break;
-		case SourceBase::Aux:
-		{
-			SourceAux *source = new SourceAux(bt_global::add_device_to_cache(new SourceDevice(where)));
-			SourceObject *so = new SourceObject(name, source, SourceObject::Aux);
-			source->setParent(so);
-			source->setSourceObject(so);
-			sources << so;
-		}
-			break;
-		case SourceBase::MultiMedia:
-		{
-			SourceMultiMedia *source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice(where)));
-			SourceObject *ip_radio = new SourceIpRadio(QObject::tr("IP radio"), source);
-			sources << ip_radio;
-			// TODO: create fake radios for now
-			objects << new IpRadio(EntryInfo("Trance", EntryInfo::AUDIO, "http://scfire-dtc-aa02.stream.aol.com:80/stream/1065"));
-			objects << new IpRadio(EntryInfo("Slay radio", EntryInfo::AUDIO, "http://relay.slayradio.org:8000/"));
+	SourceMultiMedia *source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice((*bt_global::config)[SOURCE_ADDRESS])));
 
-			sources << new SourceLocalMedia("USB1", "/media/sda1", source, SourceObject::FileSystem);
-			sources << new SourceLocalMedia("SD card", "/media/mmcblk0p1", source, SourceObject::FileSystem);
-			sources << new SourceUpnpMedia("Network shares", source);
+	// TODO use configuration...
+	sources << new SourceIpRadio(QObject::tr("IP radio"), source);
+	sources << new SourceLocalMedia("USB1", "/media/sda1", source, SourceObject::FileSystem);
+	sources << new SourceLocalMedia("SD card", "/media/mmcblk0p1", source, SourceObject::FileSystem);
+	sources << new SourceUpnpMedia("Network shares", source);
 
-			// use a default
-			source->setSourceObject(ip_radio);
-			// one of the above, used to destroy the object
-			source->setParent(ip_radio);
-		}
-			break;
-		}
-	}
+	// use a default
+	source->setSourceObject(static_cast<SourceObject *>(sources[0]));
+	// one of the above, used to destroy the object
+	source->setParent(sources[0]);
 
-	QList<Amplifier *> amplifiers;
-	foreach (const QDomNode &amplifier, getChildren(getChildWithName(xml_node, "amplifiers"), "item"))
-	{
-		int id = getTextChild(amplifier, "id").toInt();
-		QString name = getTextChild(amplifier, "name");
-		int area = getTextChild(amplifier, "env").toInt();
-		QString where = getTextChild(amplifier, "where");
-
-		switch (id)
-		{
-		case ObjectInterface::IdSoundAmplifier:
-			amplifiers << new Amplifier(area, name, AmplifierDevice::createDevice(where));
-			break;
-		case ObjectInterface::IdSoundAmplifierGeneral:
-			amplifiers << new Amplifier(area, name, AmplifierDevice::createDevice(where),
-								ObjectInterface::IdSoundAmplifierGeneral);
-			break;
-		case ObjectInterface::IdPowerAmplifier:
-			QStringList sl;
-			foreach(const QDomNode &preset, getChildren(amplifier, "preset"))
-			{
-				QString preset_name = preset.toElement().text();
-				sl << preset_name;
-			}
-			amplifiers << new PowerAmplifier(area, name, bt_global::add_device_to_cache(new PowerAmplifierDevice(where)), sl);
-			break;
-		}
-	}
-
-	QList<SoundAmbient *> ambients;
-	foreach (const QDomNode &ambient, getChildren(getChildWithName(xml_node, "ambients"), "item"))
-	{
-		int id = getTextChild(ambient, "id").toInt();
-		QString name = getTextChild(ambient, "name");
-		int env = getTextChild(ambient, "env").toInt();
-
-		ambients << new SoundAmbient(env, name, id);
-	}
-
-	// connect sources with ambients
-	foreach (SoundAmbient *ambient, ambients)
-		ambient->connectSources(sources);
-
-	// connect amplifiers with ambients
-	foreach (SoundAmbient *ambient, ambients)
-		ambient->connectAmplifiers(amplifiers);
-
-	// create special zone (general)
-	if (is_multichannel)
-	{
-		amplifiers << new Amplifier(0, QObject::tr("general"), AmplifierDevice::createDevice("0"),
-								ObjectInterface::IdSoundAmplifierGeneral);
-		SoundGeneralAmbient *general = new SoundGeneralAmbient(QObject::tr("special zone"));
-		objects << general;
-
-		foreach(SourceObject *source, sources)
-			QObject::connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceObject *)), general, SLOT(setSource(SourceObject *)));
-	}
-
-	foreach (Amplifier *amplifier, amplifiers)
-		objects << amplifier;
-	foreach (SourceObject *source, sources)
-		objects << source;
-	foreach (SoundAmbient *ambient, ambients)
-		objects << ambient;
-
-	return objects;
+	return sources;
 }
-
-
 SoundAmbientBase::SoundAmbientBase(QString _name)
 {
 	name = _name;
@@ -656,10 +688,11 @@ void SourceMultiMedia::valueReceived(const DeviceValues &values_list)
 }
 
 
-SourceRadio::SourceRadio(RadioSourceDevice *d) :
+SourceRadio::SourceRadio(int _saved_stations, RadioSourceDevice *d) :
 	SourceBase(d, Radio)
 {
 	dev = d;
+	saved_stations = _saved_stations;
 
 	connect(this, SIGNAL(currentTrackChanged()), this, SIGNAL(currentStationChanged()));
 
@@ -682,6 +715,11 @@ int SourceRadio::getCurrentFrequency() const
 QString SourceRadio::getRdsText() const
 {
 	return rds_text;
+}
+
+int SourceRadio::getSavedStationsCount() const
+{
+	return saved_stations;
 }
 
 void SourceRadio::previousStation()
@@ -845,6 +883,37 @@ void Amplifier::valueReceived(const DeviceValues &values_list)
 		}
 		++it;
 	}
+}
+
+
+AmplifierGroup::AmplifierGroup(QString _name, QList<Amplifier *> _amplifiers)
+{
+	name = _name;
+	amplifiers = _amplifiers;
+}
+
+void AmplifierGroup::setActive(bool active)
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->setActive(active);
+}
+
+void AmplifierGroup::setVolume(int volume)
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->setVolume(volume);
+}
+
+void AmplifierGroup::volumeUp() const
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->volumeUp();
+}
+
+void AmplifierGroup::volumeDown() const
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->volumeDown();
 }
 
 

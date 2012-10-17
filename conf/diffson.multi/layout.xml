@@ -1,16 +1,40 @@
-﻿<!-- layout -->
-
-<!-- The layout defines containers -->
-<!-- A container is a section of the graphic that can shows objects of archive and: -->
-<!-- it has a politic of showing objects (fixed position, free position) -->
-<!-- it could have limitation in objects ID (e.g. only objs with id 200x -->
-<!-- More instances of containers can be on the devices but some can be limtated to one (e.g. systems) -->
-<!-- All instances of a container with the same ID share this behaviours -->
-<!-- The list of link to the instances of archive is an ordered list -->
-
-<layout>
-	<container id="10" descr="sound diffusion">
-		<ist uii="310" img="images/systems/diffusione-sonora.jpg">
+﻿<layout>
+	<container id="16" descr="Special Ambient">
+		<ist uii="416">
+			<link uii="10001" />
+			<link uii="10004" />
+			<link uii="10003" />
+			<link uii="10006" />
+		</ist>
+        </container>
+	<container id="14" descr="Ambient" env="1">
+		<ist uii="410" descr="Discoteca">
+			<link uii="10004" />
+		</ist>
+		<ist uii="411" descr="Cucina" env="2">
+			<link uii="10014" />
+			<link uii="10002" />
+			<link uii="10003" />
+		</ist>
+		<ist uii="412" descr="Salotto" env="3">
+			<link uii="10013" />
+			<link uii="10012" />
+		</ist>
+		<ist uii="413" descr="Cameretta" env="4">
+		</ist>
+		<ist uii="414" descr="Garage" env="5">
+		</ist>
+		<ist uii="415" descr="Giardino" env="6">
+		</ist>
+	</container>
+	<container id="10" descr="Sound system" img="default.png">
+		<ist uii="301">
+			<link uii="410" />
+			<link uii="411" />
+			<link uii="412" />
+			<link uii="413" />
+			<link uii="414" />
+			<link uii="415" />
 		</ist>
 	</container>
 </layout>

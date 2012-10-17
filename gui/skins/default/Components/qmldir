@@ -43,6 +43,7 @@ ControlPathView 1.0 ControlPathView.qml
 ControlPopup 1.0 ControlPopup.qml
 ControlPullDown 1.0 ControlPullDown.qml
 ControlRadio 1.0 ControlRadio.qml
+ControlRadioHorizontal 1.0 ControlRadioHorizontal.qml
 ControlSettings 1.0 ControlSettings.qml
 ControlSlider 1.0 ControlSlider.qml
 ControlSliderMute 1.0 ControlSliderMute.qml

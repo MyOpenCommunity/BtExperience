@@ -76,8 +76,42 @@
                         <link uii="9022" />
 		</ist>
 	</container>
+	<container id="16" descr="Special Ambient">
+		<ist uii="416">
+			<link uii="10001" />
+			<link uii="10004" />
+			<link uii="10003" />
+			<link uii="10006" />
+		</ist>
+        </container>
+	<container id="14" descr="Ambient" env="1">
+		<ist uii="410" descr="Discoteca">
+			<link uii="10004" />
+		</ist>
+		<ist uii="411" descr="Cucina" env="2">
+			<link uii="10014" />
+			<link uii="10002" />
+			<link uii="10003" />
+		</ist>
+		<ist uii="412" descr="Salotto" env="3">
+			<link uii="10013" />
+			<link uii="10012" />
+		</ist>
+		<ist uii="413" descr="Cameretta" env="4">
+		</ist>
+		<ist uii="414" descr="Garage" env="5">
+		</ist>
+		<ist uii="415" descr="Giardino" env="6">
+		</ist>
+	</container>
 	<container id="10" descr="sound diffusion">
 		<ist uii="310" img="images/systems/sound-diffusion_card.jpg">
+			<link uii="410" />
+			<link uii="411" />
+			<link uii="412" />
+			<link uii="413" />
+			<link uii="414" />
+			<link uii="415" />
 		</ist>
 	</container>
 	<container id="11" descr="antintrusion">

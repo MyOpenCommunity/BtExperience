@@ -274,7 +274,7 @@ void TestSourceRadio::init()
 {
 	RadioSourceDevice *d = new RadioSourceDevice("3");
 
-	obj = new SourceRadio(d);
+	obj = new SourceRadio(5, d);
 	so = new SourceObject("", obj, SourceObject::RdsRadio);
 	obj->setSourceObject(so);
 	dev = new RadioSourceDevice("3", 1);

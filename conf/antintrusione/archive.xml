@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-  <item>
-    <id>7</id> <!-- Hardware settings -->
-  </item>
 	<!-- Antintrusion system -->
 	<obj cid="13001" id="13001" descr="Zone" where="#1" mon="0" >
 		<ist uii="1001" descr="ingresso" where="#1" />
