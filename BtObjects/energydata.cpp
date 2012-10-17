@@ -206,6 +206,25 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 }
 
 
+void updateEnergyData(QDomNode node, EnergyData *item)
+{
+	setAttribute(node, "consumption_goal_enabled", QString::number(item->getGoalsEnabled()));
+	setAttribute(node, "threshold_one_enable", QString::number(item->getThresholdEnabled()[0].toInt()));
+	setAttribute(node, "threshold_two_enable", QString::number(item->getThresholdEnabled()[1].toInt()));
+
+	QVariantList values = item->getGoals();
+
+	QDomNode goals = node.namedItem("consumption_goal");
+	if (goals.isNull())
+	{
+		goals = node.ownerDocument().createElement("consumption_goal");
+		goals = node.appendChild(goals);
+	}
+
+	for (int i = 0; i < 12; ++i)
+		setTextChild(goals, goal_names[i], QString::number(values[i].toDouble()));
+}
+
 EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyType _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate)
 {
 	name = _name;
@@ -237,6 +256,10 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyTy
 	automatic_updates.setInterval(5000);
 	connect(&automatic_updates, SIGNAL(timeout()), this, SLOT(testAutomaticUpdates()));
 #endif
+
+	connect(this, SIGNAL(thresholdEnabledChanged(QVariantList)), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(goalsChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(goalsEnabledChanged()), this, SIGNAL(persistItem()));
 
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 }

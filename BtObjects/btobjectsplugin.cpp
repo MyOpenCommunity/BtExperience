@@ -742,6 +742,9 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		case ObjectInterface::IdAdvancedScenario:
 			updateAdvancedScenario(node_path.first, qobject_cast<AdvancedScenario *>(obj_int));
 			break;
+		case ObjectInterface::IdEnergyData:
+			updateEnergyData(node_path.first, qobject_cast<EnergyData *>(obj_int));
+			break;
 		}
 	}
 	else if (obj_cont)

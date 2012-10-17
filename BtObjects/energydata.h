@@ -25,6 +25,7 @@ class EnergyDevice;
 class EnergyGraph;
 class EnergyItem;
 class EnergyRate;
+class EnergyData;
 class QDomNode;
 
 #ifndef TEST_ENERGY_DATA
@@ -106,6 +107,8 @@ private:
 
 
 QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family);
+
+void updateEnergyData(QDomNode node, EnergyData *item);
 
 
 /*!
