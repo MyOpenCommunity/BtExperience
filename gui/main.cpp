@@ -17,6 +17,7 @@
 #endif
 #include <QDeclarativeContext>
 #include <QtDeclarative>
+#include <QDomDocument>
 
 #ifdef BT_MALIIT
 #include <QGraphicsProxyWidget>
@@ -30,6 +31,10 @@
 #include "globalproperties.h"
 #include "guisettings.h"
 #include "imagereader.h"
+#include "xml_functions.h"
+
+
+#define VERBOSITY_LEVEL_DEFAULT 0x1F
 
 
 // Start definitions required by libcommon
@@ -42,6 +47,15 @@ int use_ssl = false;
 char *ssl_cert_key_path = NULL;
 char *ssl_certificate_path = NULL;
 // End definitions required by libcommon
+
+
+// The struct that contains the general configuration values
+struct GeneralConfig
+{
+	int verbosity_level; // the verbosity used to print in the log file
+	QString log_file;    // the log file in stack_open.xml
+	// TODO: other fields (reconnection time, log file)
+};
 
 
 void messageHandler(QtMsgType type, const char *msg)
@@ -233,13 +247,44 @@ private:
 	QPoint viewer_pos;
 };
 
+static void loadGeneralConfig(GeneralConfig &general_config)
+{
+#define MY_FILE_CFG_DEFAULT "cfg/stack_open.xml"
+#define MY_FILE_LOG_DEFAULT "/var/tmp/BTouch.log"
+
+	general_config.verbosity_level = VERBOSITY_LEVEL_DEFAULT;
+	general_config.log_file = MY_FILE_LOG_DEFAULT;
+
+	if (QFile::exists(MY_FILE_CFG_DEFAULT))
+	{
+		QFile fh(MY_FILE_CFG_DEFAULT);
+		QDomDocument qdom_config;
+		if (qdom_config.setContent(&fh))
+		{
+			QDomNode el = getElement(qdom_config, "root/sw");
+			if (!el.isNull())
+			{
+				QDomElement v = getElement(el, "BtExperience/logverbosity");
+				if (!v.isNull())
+					general_config.verbosity_level = v.text().toInt(0, 16);
+
+				QDomElement l = getElement(el, "logfile");
+				if (!l.isNull())
+					general_config.log_file = l.text();
+			}
+		}
+	}
+}
+
 
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 
-	setupLogger("/var/tmp/BTicino.log");
-	VERBOSITY_LEVEL = 3;
+	GeneralConfig general_config;
+	loadGeneralConfig(general_config);
+	setupLogger(general_config.log_file);
+	VERBOSITY_LEVEL = general_config.verbosity_level;
 
 	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 

@@ -24,14 +24,6 @@ public slots:
 
 	void handleBusMessage(GstBus *bus, GstMessage *message);
 
-signals:
-	void gstPlayerStarted();
-	void gstPlayerPaused();
-	void gstPlayerResumed();
-	void gstPlayerDone();
-	void gstPlayerStopped();
-	void playingInfoUpdated(const QMap<QString,QString> &info);
-
 private:
 	// disable copy
 	GstMediaPlayerPrivate(const GstMediaPlayerPrivate&);
@@ -240,65 +232,6 @@ void GstMediaPlayerPrivate::queryTime()
 	if (gst_element_query_duration(GST_ELEMENT(pipeline), &f, &duration))
 		metadata["total_time"] = QString::number(GST_TIME_AS_SECONDS(duration));
 }
-
-/*
-GstMediaPlayer::GstMediaPlayer(QObject *parent) :
-	QObject(parent)
-{
-	impl = new GstMediaPlayerPrivate(this);
-	connect(impl, SIGNAL(gstPlayerDone()), SIGNAL(gstPlayerDone()));
-	connect(impl, SIGNAL(gstPlayerPaused()), SIGNAL(gstPlayerPaused()));
-	connect(impl, SIGNAL(gstPlayerResumed()), SIGNAL(gstPlayerResumed()));
-	connect(impl, SIGNAL(gstPlayerStarted()), SIGNAL(gstPlayerStarted()));
-	connect(impl, SIGNAL(gstPlayerStopped()), SIGNAL(gstPlayerStopped()));
-	connect(impl, SIGNAL(playingInfoUpdated(QMap<QString,QString>)), SIGNAL(playingInfoUpdated(QMap<QString,QString>)));
-}
-
-bool GstMediaPlayer::play(QString track)
-{
-	setTrack(track);
-	return impl->play();
-}
-
-QMap<QString, QString> GstMediaPlayer::getPlayingInfo()
-{
-	return impl->getPlayingInfo();
-}
-
-void GstMediaPlayer::setTrack(QString track)
-{
-	// Get URI
-	// Assume that the file is either an absolute path of a local file or
-	// an http stream from a media server
-	QUrl uri;
-	if (track.startsWith('/'))
-		uri = QUrl::fromLocalFile(track);
-	else if (track.startsWith("http"))
-		uri = QUrl(track);
-	else
-	{
-		qWarning() << "GstMediaPlayer::setTrack(), track is not an absolute path or an http uri";
-		return;
-	}
-
-	impl->setTrack(uri.toString());
-}
-
-void GstMediaPlayer::pause()
-{
-	impl->pause();
-}
-
-void GstMediaPlayer::resume()
-{
-	impl->resume();
-}
-
-void GstMediaPlayer::stop()
-{
-	impl->stop();
-}
-*/
 
 
 GstMediaPlayer *GstMediaPlayerPlugin::createPlayer(QObject *parent)
