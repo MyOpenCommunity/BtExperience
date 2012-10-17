@@ -83,6 +83,10 @@ BasePage {
         privateProps.update(PopupLogic.addGoalReachedPopup(energyDevice.name, energyDevice.goalLevel))
     }
 
+    function addMonthlyReportNotification() {
+        privateProps.update(PopupLogic.addMonthlyReportNotification())
+    }
+
     // needed to translate antintrusion names in alarm popups
     QtObject {
         id: privateProps

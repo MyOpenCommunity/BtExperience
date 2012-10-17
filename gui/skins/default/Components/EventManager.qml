@@ -48,6 +48,8 @@ Item {
             {objectId: ObjectInterface.IdScenarioModulesNotifier}
         ]
         Component.onCompleted: {
+            privateProps.updateTimerInterval()
+            monthlyReportTimer.start()
             for (var i = 0; i < listModel.count; ++i) {
                 var obj = listModel.getObject(i)
                 switch (obj.objectId) {
@@ -79,6 +81,17 @@ Item {
                     break
                 }
             }
+        }
+    }
+
+    Timer {
+        id: monthlyReportTimer
+        repeat: true
+        onTriggered: {
+            privateProps.updateTimerInterval()
+            var p = privateProps.preparePopupPage(false)
+            // adds monthly report notification
+            p.addMonthlyReportNotification()
         }
     }
 
@@ -266,6 +279,12 @@ Item {
 
             // returns pointer to PopupPage
             return p
+        }
+
+        function updateTimerInterval() {
+            var n = new Date()
+            var n2 = new Date(n.getFullYear(), n.getMonth() + 1, 0)
+            monthlyReportTimer.interval = n2.getTime() - n.getTime()
         }
     }
 }

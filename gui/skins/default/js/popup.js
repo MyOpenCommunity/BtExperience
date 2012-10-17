@@ -1,5 +1,5 @@
 /**
-  * Function to manage all popup types with all the needed different logics.
+  * API to manage all popup types with all the needed different logics.
   */
 
 
@@ -184,6 +184,27 @@ function updateUnreadMessages(unreadMessages) {
 }
 
 /**
+  * Show a popup notifying about energy monthly report
+  */
+function addMonthlyReportNotification() {
+    var data = []
+
+    data["_kind"] = "report"
+    data["title"] = qsTr("ENERGY MANAGEMENT")
+
+    data["line1"] = qsTr("Energy Monthly Report")
+    data["line2"] = qsTr("available")
+    data["line3"] = ""
+
+    data["confirmText"] = qsTr("Show")
+    data["dismissText"] = qsTr("Ignore")
+
+    _thresholdGoalPopups.push(data)
+
+    return _highestPriorityPopup()
+}
+
+/**
   * Confirms the current popup.
   *
   * Confirms the current popup. Based on popup type navigates to the right
@@ -214,6 +235,10 @@ function confirm() {
     }
 
     if (p["_kind"] === "threshold_goal") {
+        return "GlobalView"
+    }
+
+    if (p["_kind"] === "report") {
         return "GlobalView"
     }
 
@@ -271,12 +296,12 @@ function _highestPriorityPopup() {
         return _stopGoPopups[_stopGoPopups.length - 1]
     }
 
-    if (_scenarioActivationPopups.length > 0) {
-        return _scenarioActivationPopups[_scenarioActivationPopups.length - 1]
-    }
-
     if (_unreadMessagesPopups.length > 0) {
         return _unreadMessagesPopups[0] // only one exists
+    }
+
+    if (_scenarioActivationPopups.length > 0) {
+        return _scenarioActivationPopups[_scenarioActivationPopups.length - 1]
     }
 
     if (_thresholdGoalPopups.length > 0) {
