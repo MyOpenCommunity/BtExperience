@@ -250,7 +250,7 @@ private:
 static void loadGeneralConfig(GeneralConfig &general_config)
 {
 #define MY_FILE_CFG_DEFAULT "cfg/stack_open.xml"
-#define MY_FILE_LOG_DEFAULT "/var/tmp/BTouch.log"
+#define MY_FILE_LOG_DEFAULT "/var/tmp/BTicino.log"
 
 	general_config.verbosity_level = VERBOSITY_LEVEL_DEFAULT;
 	general_config.log_file = MY_FILE_LOG_DEFAULT;
