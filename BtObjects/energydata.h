@@ -706,7 +706,6 @@ signals:
 	void graphChanged();
 	void validChanged();
 	void maxValueChanged();
-	void maxConsumptionGoalChanged();
 
 private:
 	static bool graphEqual(QList<QObject*> first, QList<QObject*> second);

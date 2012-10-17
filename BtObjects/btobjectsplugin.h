@@ -39,9 +39,6 @@ private:
 	QHash<int, int> uii_to_id;
 	QDomDocument archive, layout;
 
-	// used to parse the made-up configuration we use for testing, remove after switching
-	// to the new configuration
-	void createObjectsFakeConfig(QDomDocument archive);
 	void createObjects(QDomDocument archive);
 	void parseConfig();
 	void parseDevice();
@@ -50,6 +47,8 @@ private:
 	void parseProfiles(const QDomNode &container);
 	void parseSystem(const QDomNode &container);
 	void parseMediaLinks(const QDomNode &xml_obj);
+	void parseSoundAmbientMulti(const QDomNode &ambient);
+	void parseSoundAmbientMono(const QDomNode &ambient);
 
 	QDomDocument findDocumentForId(int id) const;
 

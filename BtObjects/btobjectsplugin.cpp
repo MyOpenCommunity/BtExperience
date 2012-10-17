@@ -149,6 +149,21 @@ namespace
 		link_node.setAttribute("y", obj->getPosition().y());
 	}
 
+	QList<SourceObject *> getSoundSources(const ObjectDataModel &objects)
+	{
+		QList<SourceObject *> sources;
+
+		for (int i = 0; i < objects.getCount(); ++i)
+		{
+			SourceObject *s = qobject_cast<SourceObject *>(objects.getObject(i));
+
+			if (s)
+				sources.append(s);
+		}
+
+		return sources;
+	}
+
 	// these are defined here because there is no 1-to-1 correspondence
 	// between used in QML (the ones in objectinterface.h file) and the ones
 	// used in configuration file (defined here)
@@ -211,7 +226,6 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	global_models.setMediaLinks(&media_link_model);
 
 	ObjectModel::setGlobalSource(&objmodel);
-	createObjectsFakeConfig(archive);
 	createObjects(archive);
 	parseConfig();
 
@@ -297,6 +311,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 	QList<ObjectPair> vde, intercom;
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
 	QDomNode cu99zones;
+	bool is_multichannel = false;
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
@@ -475,24 +490,44 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 			obj_list = parseExternalPlace(xml_obj);
 			vde.append(obj_list);
 			break;
-
 		case ObjectInterface::IdSurveillanceCamera:
 			obj_list = parseVdeCamera(xml_obj);
 			vde.append(obj_list);
 			break;
-
 		case ObjectInterface::IdExternalIntercom:
 			obj_list = parseExternalIntercom(xml_obj);
 			intercom.append(obj_list);
 			break;
-
 		case ObjectInterface::IdInternalIntercom:
 			obj_list = parseInternalIntercom(xml_obj);
 			intercom.append(obj_list);
 			break;
-
 		case ObjectInterface::IdSwitchboard:
 			obj_list = parseSwitchboard(xml_obj);
+			break;
+
+		case ObjectInterface::IdRadioSource:
+			obj_list = parseRadioSource(xml_obj);
+			break;
+		case ObjectInterface::IdAuxSource:
+			obj_list = parseAuxSource(xml_obj);
+			break;
+		case ObjectInterface::IdMultimediaSource:
+			obj_list = parseMultimediaSource(xml_obj);
+			break;
+		case ObjectInterface::IdMonoAmplifier:
+		case ObjectInterface::IdMultiAmplifier:
+			is_multichannel = id == ObjectInterface::IdMultiAmplifier;
+			obj_list = parseAmplifier(xml_obj, is_multichannel);
+			break;
+		case ObjectInterface::IdMonoAmplifierGroup:
+		case ObjectInterface::IdMultiAmplifierGroup:
+			obj_list = parseAmplifierGroup(xml_obj, uii_map);
+			break;
+		case ObjectInterface::IdMonoPowerAmplifier:
+		case ObjectInterface::IdMultiPowerAmplifier:
+			is_multichannel = id == ObjectInterface::IdMultiPowerAmplifier;
+			obj_list = parsePowerAmplifier(xml_obj, is_multichannel);
 			break;
 
 		case ObjectInterface::IdIpRadio:
@@ -528,6 +563,12 @@ void BtObjectsPlugin::createObjects(QDomDocument document)
 		objmodel << createCCTV(vde);
 		objmodel << createIntercom(intercom);
 	}
+
+	foreach (ObjectInterface *o, createLocalSources(is_multichannel))
+		objmodel << o;
+
+	objmodel << new HardwareSettings;
+	objmodel << new PlatformSettings(new PlatformDevice);
 
 	// the following objects are used as collectors of signals from other objects
 	// they are used in EventManager, for example, to be notified only globally
@@ -612,10 +653,13 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case Container::IdEnergyData:
 	case Container::IdThermalRegulation:
 	case Container::IdVideoDoorEntry:
-	case Container::IdSoundDiffusion:
+	case Container::IdSoundDiffusionMono:
+	case Container::IdSoundDiffusionMulti:
 	case Container::IdAntintrusion:
 	case Container::IdSettings:
 	case Container::IdMessages:
+	case Container::IdAmbient:
+	case Container::IdSpecialAmbient:
 		return layout;
 	default:
 		return archive;
@@ -850,46 +894,6 @@ void BtObjectsPlugin::updateNotes()
 	saveNotes(QFileInfo(QDir(qApp->applicationDirPath()), NOTES_FILE).absoluteFilePath(), &note_model);
 }
 
-void BtObjectsPlugin::createObjectsFakeConfig(QDomDocument document)
-{
-	foreach (const QDomNode &item, getChildren(document.documentElement(), "item"))
-	{
-		ObjectInterface *obj = 0;
-		QList<ObjectInterface *> obj_list;
-
-		int id = getTextChild(item, "id").toInt();
-		QString descr = getTextChild(item, "descr");
-		QString where = getTextChild(item, "where");
-
-		switch (id)
-		{
-		case ObjectInterface::IdHardwareSettings:
-			obj = new HardwareSettings;
-			break;
-		case ObjectInterface::IdMultiChannelSoundDiffusionSystem:
-			obj_list = createSoundDiffusionSystem(item, id);
-			break;
-		case ObjectInterface::IdMonoChannelSoundDiffusionSystem:
-			obj_list = createSoundDiffusionSystem(item, id);
-			break;
-		default:
-			Q_ASSERT_X(false, "BtObjectsPlugin::createObjects", qPrintable(QString("Unknown id %1").arg(id)));
-		}
-		if (obj)
-			objmodel << obj;
-		else if (!obj_list.isEmpty())
-		{
-			foreach (ObjectInterface *oi, obj_list)
-			{
-				oi->enableObject();
-				objmodel << oi;
-			}
-		}
-	}
-	// TODO put in the right implementation; for now, use this for testing the interface
-	objmodel << new PlatformSettings(new PlatformDevice);
-}
-
 void BtObjectsPlugin::parseConfig()
 {
 	// for logging
@@ -916,6 +920,13 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdProfile:
 			parseProfiles(container);
 			break;
+		case Container::IdAmbient:
+		case Container::IdSpecialAmbient:
+			parseSoundAmbientMulti(container);
+			break;
+		case Container::IdSoundDiffusionMono:
+			parseSoundAmbientMono(container);
+			break;
 		case Container::IdScenarios:
 		case Container::IdLights:
 		case Container::IdAutomation:
@@ -925,7 +936,7 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdEnergyData:
 		case Container::IdThermalRegulation:
 		case Container::IdVideoDoorEntry:
-		case Container::IdSoundDiffusion:
+		case Container::IdSoundDiffusionMulti:
 		case Container::IdAntintrusion:
 		case Container::IdSettings:
 		case Container::IdMessages:
@@ -1102,6 +1113,87 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 
 			o->setContainerUii(system_uii);
 		}
+	}
+}
+
+void BtObjectsPlugin::parseSoundAmbientMulti(const QDomNode &ambient)
+{
+	XmlObject v(ambient);
+	int ambient_id = getIntAttribute(ambient, "id");
+	QList<SourceObject *> sources = getSoundSources(objmodel);
+
+	foreach (const QDomNode &ist, getChildren(ambient, "ist"))
+	{
+		v.setIst(ist);
+		int ambient_uii = getIntAttribute(ist, "uii");
+		SoundAmbient *ambient = new SoundAmbient(v.intValue("env"), v.value("descr"), ambient_id);
+		QList<Amplifier *> amplifiers;
+
+		objmodel << ambient;
+		uii_map.insert(ambient_uii, ambient);
+		uii_to_id[ambient_uii] = ambient_id;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			ObjectInterface *o = uii_map.value<ObjectInterface>(object_uii);
+			Amplifier *a = qobject_cast<Amplifier *>(o);
+
+			if (!o)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in ambient";
+				Q_ASSERT_X(false, "parseSoundAmbientMulti", "Invalid uii");
+				continue;
+			}
+
+			o->setContainerUii(ambient_uii);
+			if (a)
+				amplifiers.append(a);
+		}
+
+		ambient->connectSources(sources);
+		ambient->connectAmplifiers(amplifiers);
+	}
+}
+
+void BtObjectsPlugin::parseSoundAmbientMono(const QDomNode &ambient)
+{
+	XmlObject v(ambient);
+	int system_id = getIntAttribute(ambient, "id");
+	QList<SourceObject *> sources = getSoundSources(objmodel);
+
+	foreach (const QDomNode &ist, getChildren(ambient, "ist"))
+	{
+		v.setIst(ist);
+		int system_uii = getIntAttribute(ist, "uii");
+		int ambient_uii = -2;
+		Container *system = new Container(system_id, system_uii, v.value("img"), v.value("descr"));
+		SoundAmbient *ambient = new SoundAmbient(0, "", ObjectInterface::IdMonoChannelSoundAmbient);
+
+		objmodel << ambient;
+		systems_model << system;
+		uii_map.insert(system_uii, system);
+		uii_to_id[system_uii] = system_id;
+
+		// TODO this is a temporary workaround to allow the code in Systems.qml to work
+		system->setContainerUii(system_id);
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int object_uii = getIntAttribute(link, "uii");
+			ObjectInterface *o = uii_map.value<ObjectInterface>(object_uii);
+
+			if (!o)
+			{
+				qWarning() << "Invalid uii" << object_uii << "in ambient";
+				Q_ASSERT_X(false, "parseSoundAmbientMono", "Invalid uii");
+				continue;
+			}
+
+			o->setContainerUii(ambient_uii);
+		}
+
+		ambient->connectSources(sources);
 	}
 }
 
