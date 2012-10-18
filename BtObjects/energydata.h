@@ -25,6 +25,7 @@ class EnergyDevice;
 class EnergyGraph;
 class EnergyItem;
 class EnergyRate;
+class EnergyData;
 class QDomNode;
 
 #ifndef TEST_ENERGY_DATA
@@ -106,6 +107,8 @@ private:
 
 
 QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family);
+
+void updateEnergyData(QDomNode node, EnergyData *item);
 
 
 /*!
@@ -228,8 +231,10 @@ public:
 		CumulativeDayGraph,
 		/// Total consumption for each day in a month
 		CumulativeMonthGraph,
+		/// Total consumption for each month in the current year
+		CumulativeYearGraph,
 		/// Total consumption for each month in the last year (current month and the previous 11 months)
-		CumulativeYearGraph
+		CumulativeLastYearGraph
 	};
 
 	/// Type of value data
@@ -241,8 +246,10 @@ public:
 		CumulativeDayValue,
 		/// Total consumption over a month.
 		CumulativeMonthValue,
-		/// Total consumption over the last year (current month and the previous 11 months).
+		/// Total consumption for the current year
 		CumulativeYearValue,
+		/// Total consumption for the last year (current month and the previous 11 months)
+		CumulativeLastYearValue,
 		/// Average consumption value for the days in a month.
 		MonthlyAverageValue
 	};
@@ -374,10 +381,12 @@ private:
 	// called when receiving a cumulative month value, constructs cumulative
 	// year value and graph
 	void cacheYearGraphData(QDate date, double month_value);
+	void cacheLastYearGraphData(QDate date, double month_value);
 
 	// check whether the cache entry for a cumulative year graph contains valid
 	// values for the year
 	bool checkYearGraphDataIsValid(QDate date, const QVector<double> &values);
+	bool checkLastYearGraphDataIsValid(const QVector<double> &values);
 
 	// create EnergyGraphbar objects for a graph
 	QList<QObject *> createGraph(GraphType type, const QVector<double> &values, EnergyRate *rate = 0);
@@ -388,6 +397,7 @@ private:
 
 	// requests the cumulative month value for all months in the year
 	void requestCumulativeYear(QDate date, RequestOptions options);
+	void requestCumulativeLastYear(RequestOptions options);
 
 	typedef QPair<quint64, RequestStatus> RequestInfo;
 

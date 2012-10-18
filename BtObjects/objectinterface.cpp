@@ -6,8 +6,7 @@
 
 void updateObjectName(QDomNode node, ObjectInterface *item)
 {
-	if (!setAttribute(node, "descr", item->getName()))
-		qWarning("Attribute descr not found in XML node");
+	setAttribute(node, "descr", item->getName());
 }
 
 

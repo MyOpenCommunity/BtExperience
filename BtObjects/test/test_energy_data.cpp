@@ -5,7 +5,18 @@
 #include "objecttester.h"
 
 #include <QTest>
+#include <QtDebug>
 
+
+namespace
+{
+	QDate lastNthMonth(int delta)
+	{
+		QDate date = QDate::currentDate();
+
+		return QDate(date.year(), date.month(), 1).addMonths(-delta);
+	}
+}
 
 void TestEnergyData::init()
 {
@@ -240,6 +251,28 @@ void TestEnergyData::testUpdateYearGraphValue()
 	QCOMPARE((*values)[6], 11.0);
 }
 
+void TestEnergyData::testUpdateLastYearGraphValue()
+{
+	CacheKey key(EnergyData::CumulativeLastYearGraph, QDate());
+
+	QVERIFY(!obj->value_cache.object(key));
+
+	obj->cacheValueData(EnergyData::CumulativeMonthValue, lastNthMonth(7), 10000);
+
+	QVector<double> *values = obj->value_cache.object(key);
+
+	QVERIFY(values);
+	QCOMPARE(values->size(), 5);
+	QCOMPARE((*values)[0], -1.0);
+	QCOMPARE((*values)[4], 10.0);
+
+	obj->cacheValueData(EnergyData::CumulativeMonthValue, lastNthMonth(5), 11000);
+
+	QCOMPARE(values->size(), 7);
+	QCOMPARE((*values)[5], -1.0);
+	QCOMPARE((*values)[6], 11.0);
+}
+
 void TestEnergyData::testCachedValue()
 {
 	obj->cacheValueData(EnergyData::MonthlyAverageValue, QDate(2012, 05, 1), 1236000);
@@ -377,6 +410,53 @@ void TestEnergyData::testReceiveCumulativeYearValue()
 	// different value: update
 
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, QDate(2011, 1, 17), 1239000));
+
+	t1.checkSignals();
+	t2.checkSignals();
+
+	QCOMPARE(o1->getValue(), QVariant(14819.6));
+	QCOMPARE(o2->getValue(), QVariant(3704.9));
+}
+
+void TestEnergyData::testReceiveCumulativeLastYearValue()
+{
+	EnergyItem *o1 = getValue(EnergyData::CumulativeLastYearValue, QDate(), EnergyData::Consumption);
+	EnergyItem *o2 = getValue(EnergyData::CumulativeLastYearValue, QDate(), EnergyData::Currency);
+	ObjectTester t1(o1, SIGNAL(valueChanged()));
+	ObjectTester t2(o2, SIGNAL(valueChanged()));
+
+	for (int i = 0; i < 12; ++i)
+	{
+		t1.checkNoSignals();
+		t2.checkNoSignals();
+
+		obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, lastNthMonth(11 - i),
+						    1234000 + i * 100));
+	}
+
+	t1.checkSignals();
+	t2.checkSignals();
+
+	QCOMPARE(o1->getValue(), QVariant(14814.6));
+	QCOMPARE(o2->getValue(), QVariant(3703.65));
+
+	// different year: no updates
+
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, QDate(2011, 1, 17), 200000));
+
+	t1.checkNoSignals();
+	t2.checkNoSignals();
+
+	// no value change: no updates
+
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, lastNthMonth(11), 1234000));
+
+	t1.checkNoSignals();
+	t2.checkNoSignals();
+
+	// different value: update
+
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, lastNthMonth(11), 1239000));
 
 	t1.checkSignals();
 	t2.checkSignals();
@@ -552,6 +632,58 @@ void TestEnergyData::testReceiveCumulativeYearGraph()
 	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(309.75));
 }
 
+void TestEnergyData::testReceiveCumulativeLastYearGraph()
+{
+	EnergyGraph *o1 = getGraph(EnergyData::CumulativeLastYearGraph, QDate(), EnergyData::Consumption);
+	EnergyGraph *o2 = getGraph(EnergyData::CumulativeLastYearGraph, QDate(), EnergyData::Currency);
+	ObjectTester t1(o1, SIGNAL(graphChanged()));
+	ObjectTester t2(o2, SIGNAL(graphChanged()));
+
+	for (int i = 0; i < 12; ++i)
+	{
+		t1.checkNoSignals();
+		t2.checkNoSignals();
+
+		obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, lastNthMonth(11 - i),
+						    1234000 + i * 100));
+	}
+
+	t1.checkSignals();
+	t2.checkSignals();
+
+	QCOMPARE(o1->getGraph().size(), 12);
+	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(1234.0));
+	QCOMPARE(getBar(o1, 11)->getValue(), QVariant(1235.1));
+
+	QCOMPARE(o2->getGraph().size(), 12);
+	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(308.5));
+	QCOMPARE(getBar(o2, 11)->getValue(), QVariant(308.775));
+
+	// different year: no updates
+
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, QDate(2011, 1, 17), 200000));
+
+	t1.checkNoSignals();
+	t2.checkNoSignals();
+
+	// no value change: no updates
+
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, lastNthMonth(11), 1234000));
+
+	t1.checkNoSignals();
+	t2.checkNoSignals();
+
+	// different value: update
+
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, lastNthMonth(11), 1239000));
+
+	t1.checkSignals();
+	t2.checkSignals();
+
+	QCOMPARE(getBar(o1, 0)->getValue(), QVariant(1239.0));
+	QCOMPARE(getBar(o2, 0)->getValue(), QVariant(309.75));
+}
+
 void TestEnergyData::testRequestCurrentUpdateStartStop()
 {
 	obj->requestCurrentUpdateStart();
@@ -596,6 +728,14 @@ void TestEnergyData::testRequestCumulativeYearValue()
 	compareClientCommand();
 }
 
+void TestEnergyData::testRequestCumulativeLastYearValue()
+{
+	obj->requestUpdate(EnergyData::CumulativeLastYearValue, QDate());
+	for (int i = 0; i < 12; ++i)
+		dev->requestCumulativeMonth(QDate::currentDate().addMonths(-i));
+	compareClientCommand();
+}
+
 void TestEnergyData::testRequestMonthlyAverage()
 {
 	obj->requestUpdate(EnergyData::MonthlyAverageValue, QDate(2012, 4, 17));
@@ -631,6 +771,14 @@ void TestEnergyData::testRequestCumulativeYearGraph()
 	obj->requestUpdate(EnergyData::CumulativeYearGraph, QDate(year, 5, 17));
 	for (int i = 0; i < 12; ++i)
 		dev->requestCumulativeMonth(QDate(year, i + 1, 1));
+	compareClientCommand();
+}
+
+void TestEnergyData::testRequestCumulativeLastYearGraph()
+{
+	obj->requestUpdate(EnergyData::CumulativeLastYearValue, QDate());
+	for (int i = 0; i < 12; ++i)
+		dev->requestCumulativeMonth(QDate::currentDate().addMonths(-i));
 	compareClientCommand();
 }
 

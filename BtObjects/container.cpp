@@ -4,10 +4,8 @@
 
 void updateContainerNameImage(QDomNode node, Container *item)
 {
-	if (!setAttribute(node, "descr", item->getDescription()))
-		qWarning("Attribute descr not found in XML node");
-	if (!setAttribute(node, "img", item->getImage()))
-		qWarning("Attribute img not found in XML node");
+	setAttribute(node, "descr", item->getDescription());
+	setAttribute(node, "img", item->getImage());
 }
 
 
