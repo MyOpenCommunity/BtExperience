@@ -212,6 +212,9 @@ Page {
     PaginatorOnBackground {
         id: paginator
 
+        property int elementsOnFirstPage: 3
+        property int elementsOnOtherPages: 9
+
         elementsOnPage: 3
         buttonVisible: false
         spacing: 5
@@ -255,6 +258,27 @@ Page {
                     onClicked: quicklinksModel.remove(delegateRadio.itemObject)
                 }
             }
+        }
+
+        // Redefined to consider that we have 3 elements on first page and 9 on others
+        function computePageRange(page, elementsOnPage) {
+            if (page === 1)
+                return [0, paginator.elementsOnFirstPage]
+            return [(page - 2) * paginator.elementsOnOtherPages + paginator.elementsOnFirstPage,
+                    (page - 1) * paginator.elementsOnOtherPages + paginator.elementsOnFirstPage]
+        }
+
+        // Redefined to consider that we have 3 elements on first page and 9 on others
+        function computePagesFromModelSize(modelSize, elementsOnPage) {
+            if (modelSize <= paginator.elementsOnFirstPage)
+                return 1
+
+            var modelSizeWithoutFirstPage = modelSize - paginator.elementsOnFirstPage
+            var ret = modelSizeWithoutFirstPage % paginator.elementsOnOtherPages ?
+                        modelSizeWithoutFirstPage / paginator.elementsOnOtherPages + 1 :
+                        modelSizeWithoutFirstPage / paginator.elementsOnOtherPages
+
+            return Math.floor(ret + 1)
         }
     }
 
@@ -331,6 +355,66 @@ Page {
             onOkClicked: nameText.text = text
         }
     }
+
+    states: [
+        State {
+            name: "cameras"
+            when: privateProps.currentChoice === 0
+            PropertyChanges { target: addTextText; opacity: 0 }
+            PropertyChanges { target: linkBgImage; opacity: 0 }
+            PropertyChanges { target: linkText; opacity: 0 }
+            PropertyChanges { target: linkBgImage; opacity: 0 }
+            PropertyChanges { target: nameBgImage; opacity: 0 }
+            PropertyChanges { target: nameText; opacity: 0 }
+            PropertyChanges { target: nameBgImage; opacity: 0 }
+            PropertyChanges { target: addButton; opacity: 0 }
+            PropertyChanges { target: horizontalRightSeparator; opacity: 0 }
+            PropertyChanges { target: selectTextText; opacity: 0 }
+            PropertyChanges { target: paginator; elementsOnPage: 9; elementsOnFirstPage: 9 }
+            AnchorChanges { target: paginator; anchors.top: horizontalSeparator.bottom }
+        },
+        State {
+            name: "second_page"
+            when: paginator.currentPage > 1
+            PropertyChanges { target: addTextText; opacity: 0 }
+            PropertyChanges { target: linkBgImage; opacity: 0 }
+            PropertyChanges { target: linkText; opacity: 0 }
+            PropertyChanges { target: linkBgImage; opacity: 0 }
+            PropertyChanges { target: nameBgImage; opacity: 0 }
+            PropertyChanges { target: nameText; opacity: 0 }
+            PropertyChanges { target: nameBgImage; opacity: 0 }
+            PropertyChanges { target: addButton; opacity: 0 }
+            PropertyChanges { target: horizontalRightSeparator; opacity: 0 }
+            PropertyChanges { target: selectTextText; opacity: 0 }
+            PropertyChanges { target: paginator; elementsOnPage: 9 }
+            AnchorChanges { target: paginator; anchors.top: horizontalSeparator.bottom }
+        },
+        State {
+            name: "normal"
+            when: { return true }
+            PropertyChanges { target: addTextText; opacity: 1 }
+            PropertyChanges { target: linkBgImage; opacity: 1 }
+            PropertyChanges { target: linkText; opacity: 1 }
+            PropertyChanges { target: linkBgImage; opacity: 1 }
+            PropertyChanges { target: nameBgImage; opacity: 1 }
+            PropertyChanges { target: nameText; opacity: 1 }
+            PropertyChanges { target: nameBgImage; opacity: 1 }
+            PropertyChanges { target: addButton; opacity: 1 }
+            PropertyChanges { target: horizontalRightSeparator; opacity: 1 }
+            PropertyChanges { target: selectTextText; opacity: 1 }
+            PropertyChanges { target: paginator; elementsOnPage: 3 }
+            AnchorChanges { target: paginator; anchors.top: selectTextText.bottom }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            ParallelAnimation {
+                NumberAnimation { property: "opacity"; duration: 400 }
+                AnchorAnimation { duration: 400 }
+            }
+        }
+    ]
 
     QtObject {
         id: privateProps
