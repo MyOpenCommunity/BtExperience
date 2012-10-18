@@ -424,9 +424,10 @@
 	<obj cid="6105" id="6105" descr="Electric line" where="1"
 	     SWmeasure="Kw" measure="Kw" consumption_goal_enabled="0"
 	     threshold_one_enable="0" threshold_two_enable="0"
-	     rate_enable="0" rate_type="0" mode="1">
+	     rate_enabled="0" rate_type="0" mode="1"
+             rate_n_decimal_view="2">
 		<ist uii="5001" descr="Office" where="2"
-		     consumption_goal_enabled="1" rate_enable="1" threshold_one_enable="1" threshold_two_enable="0">
+		     consumption_goal_enabled="1" rate_enabled="1" threshold_one_enable="1" threshold_two_enable="0" rate_id="2" >
 			<consumption_goal>
 				<january>100</january>
 				<february>120</february>
@@ -441,30 +442,18 @@
 				<november>90</november>
 				<december>100</december>
 			</consumption_goal>
-			<rate>
-				<rate_id>2</rate_id>
-				<rate_n_decimal_view>2</rate_n_decimal_view>
-			</rate>
 		</ist>
 		<ist uii="5002" descr="Kitchen" where="2" SWmeasure="Custom" measure="Kw" />
-		<ist uii="5003" descr="Box" where="3" rate_enable="1" >
-			<rate>
-				<rate_id>2</rate_id>
-				<rate_n_decimal_view>2</rate_n_decimal_view>
-			</rate>
-		</ist>
+		<ist uii="5003" descr="Box" where="3" rate_enabled="1"
+                     rate_id="2" />
 	</obj>
 	<obj cid="6109" id="6105" descr="Heating/Cooling" where="1"
 	     SWmeasure="Kw" measure="Kw" consumption_goal="0" consumption_goal_enabled="0"
 	     threshold_one_enable="0" threshold_two_enable="0"
-	     rate_enable="0" rate_type="0" mode="5">
+	     rate_enabled="0" rate_type="0" mode="5" rate_n_decimal_view="2">
 		<ist uii="5004" descr="Living room" where="6" />
-		<ist uii="5005" descr="Bedroom" where="7" rate_enable="1">
-			<rate>
-				<rate_id>5</rate_id>
-				<rate_n_decimal_view>0</rate_n_decimal_view>
-			</rate>
-		</ist>
+		<ist uii="5005" descr="Bedroom" where="7" rate_enabled="1"
+                     rate_id="5" />
 	</obj>
 	<obj cid="16000" id="16000" descr="Web radio" title="Radio" url="http://">
 		<ist uii="8001" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />

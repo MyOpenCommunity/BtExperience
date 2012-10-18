@@ -33,9 +33,11 @@
 	<obj cid="6105" id="6105" descr="Electric line" where="1"
 	     SWmeasure="Kw" measure="Kw" consumption_goal_enabled="0"
 	     threshold_one_enable="0" threshold_two_enable="0"
-	     rate_enabled="0" rate_type="0" mode="1">
+	     rate_enabled="0" rate_id="2" rate_n_decimal_view="2"
+             rate_type="0" mode="1">
 		<ist uii="5001" descr="Office" where="2"
-		     consumption_goal_enabled="1" rate_enabled="1">
+		     consumption_goal_enabled="1" rate_enabled="1"
+                      rate_id="2" rate_n_decimal_view="2">
 			<consumption_goal>
 				<january>2.6</january>
 				<february>2.8</february>
@@ -50,17 +52,9 @@
 				<november>2.50</november>
 				<december>2.60</december>
 			</consumption_goal>
-			<rate>
-				<rate_id>2</rate_id>
-				<rate_n_decimal_view>2</rate_n_decimal_view>
-			</rate>
 		</ist>
 		<ist uii="5002" descr="Kitchen" where="2" SWmeasure="Custom" measure="Kw" />
-		<ist uii="5003" descr="Box" where="3" rate_enabled="1" consumption_goal_enabled="1">
-			<rate>
-				<rate_id>2</rate_id>
-				<rate_n_decimal_view>2</rate_n_decimal_view>
-			</rate>
+		<ist uii="5003" descr="Box" where="3" rate_enabled="1" consumption_goal_enabled="1" rate_id="2" rate_n_decimal_view="2">
 			<consumption_goal>
 				<january>2.5</january>
 				<february>2.6</february>
@@ -80,13 +74,10 @@
 	<obj cid="6109" id="6105" descr="Heating/Cooling" where="1"
 	     SWmeasure="Kw" measure="Kw" consumption_goal_enabled="0"
 	     threshold_one_enable="0" threshold_two_enable="0"
-	     rate_enabled="0" rate_type="0" mode="5">
-		<ist uii="5005" descr="Bedroom" where="7" rate_enabled="1">
-			<rate>
-				<rate_id>5</rate_id>
-				<rate_n_decimal_view>0</rate_n_decimal_view>
-			</rate>
-		</ist>
+	     rate_enabled="0"  rate_id="-1" rate_n_decimal_view="2"
+             rate_type="0" mode="5">
+		<ist uii="5005" descr="Bedroom" where="7" rate_enabled="1"
+                      rate_id="5" rate_n_decimal_view="0" />
 	</obj>
 	<obj cid="6110" id="6105" descr="Custom Family" where="1"
 	     SWmeasure="Pere" measure="Pere" consumption_goal_enabled="0"
@@ -107,7 +98,7 @@
 				<november>48</november>
 				<december>87</december>
 			</consumption_goal>
-        </ist>
+		</ist>
 		<ist uii="5007" descr="Living Room" where="17" mode="3" SWmeasure="Custom" measure="Noci" consumption_goal_enabled="1">
 			<consumption_goal>
 				<january>80</january>
@@ -123,7 +114,7 @@
 				<november>48</november>
 				<december>87</december>
 			</consumption_goal>
-        </ist>
+		</ist>
 		<ist uii="5008" descr="Stable" where="16" mode="2" SWmeasure="Custom" measure="Albicocche" consumption_goal_enabled="1">
 			<consumption_goal>
 				<january>80</january>
@@ -139,7 +130,7 @@
 				<november>48</november>
 				<december>87</december>
 			</consumption_goal>
-        </ist>
+		</ist>
 		<ist uii="5009" descr="Tavern" where="18" consumption_goal_enabled="1">
 			<consumption_goal>
 				<january>80</january>
@@ -155,7 +146,7 @@
 				<november>48</november>
 				<december>87</december>
 			</consumption_goal>
-        </ist>
+		</ist>
 		<ist uii="5010" descr="Winter Room" where="19" mode="3" consumption_goal_enabled="1">
 			<consumption_goal>
 				<january>80</january>
@@ -171,7 +162,7 @@
 				<november>48</november>
 				<december>87</december>
 			</consumption_goal>
-        </ist>
+		</ist>
 		<ist uii="5011" descr="Summer Room" where="20" mode="1" consumption_goal_enabled="1">
 			<consumption_goal>
 				<january>80</january>
@@ -187,7 +178,7 @@
 				<november>48</november>
 				<december>87</december>
 			</consumption_goal>
-        </ist>
+		</ist>
 		<ist uii="5012" descr="Spring Room" where="21" consumption_goal_enabled="1">
 			<consumption_goal>
 				<january>80</january>
@@ -203,7 +194,7 @@
 				<november>48</november>
 				<december>87</december>
 			</consumption_goal>
-        </ist>
+		</ist>
 		<ist uii="5013" descr="Fall Room" where="22" mode="1" consumption_goal_enabled="1">
 			<consumption_goal>
 				<january>80</january>
@@ -219,6 +210,6 @@
 				<november>48</november>
 				<december>87</december>
 			</consumption_goal>
-        </ist>
+		</ist>
 	</obj>
 </archive>

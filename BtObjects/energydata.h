@@ -106,7 +106,7 @@ private:
 };
 
 
-QList<ObjectPair>  parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family);
+QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family, QHash<int, EnergyRate *> rates);
 
 void updateEnergyData(QDomNode node, EnergyData *item);
 

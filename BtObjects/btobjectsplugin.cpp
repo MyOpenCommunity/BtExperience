@@ -508,7 +508,7 @@ void BtObjectsPlugin::createObjects(QDomDocument document, QDomDocument settings
 			}
 
 			objmodel << new EnergyFamily(getAttribute(xml_obj, "descr"), family);
-			obj_list = parseEnergyData(xml_obj, family);
+			obj_list = parseEnergyData(xml_obj, family, rates);
 			break;
 		}
 

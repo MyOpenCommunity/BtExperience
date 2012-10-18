@@ -167,7 +167,7 @@ namespace
 }
 
 
-QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family)
+QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family, QHash<int, EnergyRate *> rates)
 {
 	QList<ObjectPair> obj_list;
 	XmlObject v(xml_node);
@@ -178,6 +178,16 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 		int uii = getIntAttribute(ist, "uii");
 		EnergyDevice *d = bt_global::add_device_to_cache(new EnergyDevice(v.value("where"), v.intValue("mode")));
 		QVariantList goals, thresholds_enabled;
+
+		EnergyRate *rate = 0;
+		if (v.intValue("rate_enabled"))
+		{
+			int rate_id = v.intValue("rate_id");
+
+			if (!rates.contains(rate_id))
+				qFatal("Invalid rate id %d", rate_id);
+			rate = rates[rate_id];
+		}
 
 		bool goals_enabled = v.intValue("consumption_goal_enabled");
 
@@ -200,8 +210,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 		thresholds_enabled << bool(v.intValue("threshold_one_enable"));
 		thresholds_enabled << bool(v.intValue("threshold_two_enable"));
 
-		// TODO handle rates (after they are specified)
-		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, goals_enabled, thresholds_enabled, 0));
+		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, goals_enabled, thresholds_enabled, rate));
 	}
 	return obj_list;
 }
