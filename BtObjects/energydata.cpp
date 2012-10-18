@@ -696,10 +696,11 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 			 << tr("Jul") << tr("Aug") << tr("Sep")
 			 << tr("Oct") << tr("Nov") << tr("Dec");
 
+		today = today.addMonths(-11);
 		for (int i = 0; i < 12; ++i)
 		{
 			keys.append(all_keys[today.month() - 1]);
-			today.addMonths(-1);
+			today = today.addMonths(+1);
 		}
 
 		break;

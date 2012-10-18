@@ -419,7 +419,7 @@ Page {
                         name: "year"
                         PropertyChanges {
                             target: cumulativeConsumptionItem
-                            valueType: EnergyData.CumulativeYearValue
+                            valueType: energyData.advanced ? EnergyData.CumulativeYearValue : EnergyData.CumulativeLastYearValue
                         }
                     },
                     State {
@@ -458,7 +458,7 @@ Page {
             PropertyChanges { target: yearButton; status: 1 }
             PropertyChanges { target: monthButton; status: 0 }
             PropertyChanges { target: dayButton; status: 0 }
-            PropertyChanges { target: dateSelector; state: "year" }
+            PropertyChanges { target: dateSelector; state: energyData.advanced ? "year" : "lastyear" }
             PropertyChanges { target: cumulativeConsumptionItem; state: "year" }
             PropertyChanges { target: cumulativeConsumptionLabel; text: qsTr("year cumulative consumption") }
 

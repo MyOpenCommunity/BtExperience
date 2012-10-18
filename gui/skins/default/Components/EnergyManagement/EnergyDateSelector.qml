@@ -167,6 +167,15 @@ Row {
             PropertyChanges { target: previousButton; enabled: privateProps.previousDayEnabled() }
             PropertyChanges { target: nextButton; onClicked: privateProps.nextDay() }
             PropertyChanges { target: nextButton; enabled: privateProps.nextDayEnabled() }
+        },
+        State {
+            name: "lastyear"
+            PropertyChanges { target: textLabel; text: qsTr("year") }
+            AnchorChanges { target: textLabel; anchors.top: undefined; anchors.verticalCenter: parent.verticalCenter }
+            PropertyChanges { target: dateLabel; text: "" }
+            PropertyChanges { target: previousButton; enabled: false }
+            PropertyChanges { target: nextButton; enabled: false }
         }
+
     ]
 }
