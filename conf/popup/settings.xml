@@ -1,0 +1,13 @@
+<settings>
+	<obj cid="14101" id="14101" id_ringtone="1">
+		<ist uii="30001" id_ringtone="2"/>
+		<ist uii="30002" id="14102" id_ringtone="2"/>
+		<ist uii="30003" id="14103" id_ringtone="3"/>
+		<ist uii="30004" id="14104" id_ringtone="4"/>
+		<ist uii="30005" id="14105" id_ringtone="2"/>
+		<ist uii="30006" id="14106" id_ringtone="2"/>
+		<ist uii="30007" id="14107" id_ringtone="2"/>
+		<ist uii="30008" id="14109" id_ringtone="2"/>
+		<ist uii="30009" id="14110" id_ringtone="2"/>
+	</obj>
+</settings>

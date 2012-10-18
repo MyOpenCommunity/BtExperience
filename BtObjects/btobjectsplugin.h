@@ -37,9 +37,9 @@ private:
 	GlobalModels global_models;
 	UiiMapper uii_map;
 	QHash<int, int> uii_to_id;
-	QDomDocument archive, layout;
+	QDomDocument archive, layout, settings;
 
-	void createObjects(QDomDocument archive);
+	void createObjects(QDomDocument archive, QDomDocument settings);
 	void parseConfig();
 	void parseDevice();
 	void parseRooms(const QDomNode &container);

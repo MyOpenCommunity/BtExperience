@@ -1,0 +1,17 @@
+<settings>
+	<obj cid="14101" id="14101" id_ringtone="1">
+		<ist uii="30001" id_ringtone="2"/>
+		<ist uii="30002" id="14102" id_ringtone="2"/>
+		<ist uii="30003" id="14103" id_ringtone="3"/>
+		<ist uii="30004" id="14104" id_ringtone="4"/>
+		<ist uii="30005" id="14105" id_ringtone="2"/>
+		<ist uii="30006" id="14106" id_ringtone="2"/>
+		<ist uii="30007" id="14107" id_ringtone="2"/>
+		<ist uii="30008" id="14109" id_ringtone="2"/>
+		<ist uii="30009" id="14110" id_ringtone="2"/>
+	</obj>
+	<obj cid="14267" id="14267" rate_id="1" descr="" name="EUR" mode="1" type="0" tariff="0" measure="kW" symbol="" n_decimal="0" n_integer="3" delta="1">
+		<ist uii="30102" rate_id="2" descr="" name="EUR" mode="3" tariff="2" measure="m3" symbol="&#x20AC;" />
+		<ist uii="30104" rate_id="5" descr="" name="EUR" type="-1" tariff="4" symbol="&#x20AC;" n_decimal="0" n_integer="3" delta="1" />
+	</obj>
+</settings>

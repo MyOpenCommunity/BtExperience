@@ -54,11 +54,13 @@
 #define CONF_FILE "archive.xml"
 #define LAYOUT_FILE "layout.xml"
 #define NOTES_FILE "notes.xml"
+#define SETTINGS_FILE "settings.xml"
 #else
 #define DEVICE_FILE "/home/bticino/cfg/extra/0/conf.xml"
 #define CONF_FILE "/home/bticino/cfg/extra/0/archive.xml"
 #define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
 #define NOTES_FILE "/home/bticino/cfg/extra/0/notes.xml"
+#define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
 #endif
 
 QHash<GlobalField, QString> *bt_global::config;
@@ -180,9 +182,15 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	// for logging
 	QString errorMsg;
 	int errorLine, errorColumn;
-	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath());
-	if (!fh.exists() || !archive.setContent(&fh, &errorMsg, &errorLine, &errorColumn)) {
-		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
+	QFile fh_archive(QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath());
+	if (!fh_archive.exists() || !archive.setContent(&fh_archive, &errorMsg, &errorLine, &errorColumn)) {
+		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh_archive).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
+		qFatal("%s", qPrintable(msg));
+	}
+
+	QFile fh_settings(QFileInfo(QDir(qApp->applicationDirPath()), SETTINGS_FILE).absoluteFilePath());
+	if (!fh_settings.exists() || !settings.setContent(&fh_settings, &errorMsg, &errorLine, &errorColumn)) {
+		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh_settings).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
 		qFatal("%s", qPrintable(msg));
 	}
 
@@ -226,7 +234,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	global_models.setMediaLinks(&media_link_model);
 
 	ObjectModel::setGlobalSource(&objmodel);
-	createObjects(archive);
+	createObjects(archive, settings);
 	parseConfig();
 
 	QList<MediaDataModel *> models = QList<MediaDataModel *>()
@@ -303,15 +311,46 @@ void BtObjectsPlugin::parseDevice()
 		config[PI_MODE] = QString();
 }
 
-void BtObjectsPlugin::createObjects(QDomDocument document)
+void BtObjectsPlugin::createObjects(QDomDocument document, QDomDocument settings)
 {
 	QList<AntintrusionZone *> antintrusion_zones;
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
 	QList<ObjectPair> vde, intercom;
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
+	QHash<int, EnergyRate *> rates;
 	QDomNode cu99zones;
 	bool is_multichannel = false;
+
+	foreach (const QDomNode &xml_obj, getChildren(settings.documentElement(), "obj"))
+	{
+		QList<ObjectPair> obj_list;
+		int id = getIntAttribute(xml_obj, "id");
+
+		switch (id)
+		{
+		case ObjectInterface::IdEnergyRate:
+			obj_list = parseEnergyRate(xml_obj);
+
+			foreach (ObjectPair p, obj_list)
+			{
+				EnergyRate *rate = static_cast<EnergyRate *>(p.second);
+
+				rates[rate->getRateId()] = rate;
+			}
+			break;
+		}
+
+		if (!obj_list.isEmpty())
+		{
+			foreach (ObjectPair p, obj_list)
+			{
+				uii_map.insert(p.first, p.second);
+				uii_to_id[p.first] = id;
+				objmodel << p.second;
+			}
+		}
+	}
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{

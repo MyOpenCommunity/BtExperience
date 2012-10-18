@@ -159,6 +159,8 @@ public:
 		IdMultiGeneral = 11003,
 		IdMultiPowerAmplifier = 11004,
 
+		IdEnergyRate = 14267,
+
 		IdIpRadio = 16000,
 
 		IdMessages = 16004,

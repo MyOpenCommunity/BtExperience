@@ -3,6 +3,10 @@
 
 #include "xml_functions.h"
 
+#include <QHash>
+#include <QVariant>
+
+
 /*!
 	\ingroup Core
 	\brief Helper class for configuration parsing
@@ -44,6 +48,11 @@ public:
 	}
 
 	int intValue(const QString &name) const
+	{
+		return getIntAttribute(ist, name, objIntValue(name).toInt());
+	}
+
+	double doubleValue(const QString &name) const
 	{
 		return getIntAttribute(ist, name, objIntValue(name).toInt());
 	}
