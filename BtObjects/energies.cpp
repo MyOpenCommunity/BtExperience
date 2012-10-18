@@ -26,7 +26,7 @@ EnergyThresholdsGoals::EnergyThresholdsGoals()
 		EnergyData *energyData = qobject_cast<EnergyData *>(item);
 		Q_ASSERT_X(energyData, __PRETTY_FUNCTION__, "Unexpected NULL object");
 		connect(energyData, SIGNAL(thresholdLevelChanged(int)), this, SLOT(updateThresholdsGoals()));
-//		connect(energyData, SIGNAL(goalLevelChanged(int)), this, SLOT(updateThresholdsGoals()));
+		connect(energyData, SIGNAL(goalExceededChanged()), this, SLOT(updateThresholdsGoals()));
 	}
 
 	// inits everything
@@ -44,7 +44,7 @@ void EnergyThresholdsGoals::updateThresholdsGoals()
 		if (energyData->getThresholdLevel() > 0)
 			emit thresholdExceeded(energyData);
 
-//		if (energyData->getGoalLevel() > 0)
-//			emit goalReached(energyData);
+		if (energyData->getGoalExceeded())
+			emit goalReached(energyData);
 	}
 }
