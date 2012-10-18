@@ -190,8 +190,6 @@ BasePage {
 
             ButtonHomePageLink {
                 id: room
-                anchors.right: system.left
-                anchors.rightMargin: width / 100 * 16
                 source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_stanze.svg" :
                                                                         "images/home/btn_stanze_P.svg"
                 sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_stanze_P.svg" :
@@ -206,7 +204,6 @@ BasePage {
 
             ButtonHomePageLink {
                 id: system
-                anchors.right: parent.right
                 source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_sistemi.svg" :
                                                                         "images/home/btn_sistemi_P.svg"
                 sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_sistemi_P.svg" :
@@ -221,8 +218,6 @@ BasePage {
 
             ButtonHomePageLink {
                 id: option
-                anchors.right: multimedia.left
-                anchors.rightMargin: width / 100 * 10
                 source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_opzioni.svg" :
                                                                         "images/home/btn_opzioni_P.svg"
                 sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_opzioni_P.svg" :
@@ -237,8 +232,6 @@ BasePage {
 
             ButtonHomePageLink {
                 id: multimedia
-                anchors.right: parent.right
-                anchors.rightMargin: parent.height / 100 * 1.1
                 source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_multimedia.svg" :
                                                                         "images/home/btn_multimedia_P.svg"
                 sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_multimedia_P.svg" :
