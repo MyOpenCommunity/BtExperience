@@ -11,6 +11,8 @@ Page {
 
     property variant profile: undefined
     property int currentLink: -1
+    property variant actualModel: privateProps.currentChoice === 0 ? camerasModel : quicklinksModel
+    property bool isRemovable: privateProps.currentChoice !== 0
 
     text: qsTr("Profiles")
     source: "images/profiles.jpg"
@@ -19,6 +21,15 @@ Page {
         id: quicklinksModel
         source: myHomeModels.mediaLinks
         containers: [-1] // not assigned yet
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    ObjectModel {
+        id: camerasModel
+        filters: [
+            {objectId: ObjectInterface.IdExternalPlace},
+            {objectId: ObjectInterface.IdSurveillanceCamera}
+        ]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
@@ -232,7 +243,7 @@ Page {
             bottomMargin: bg.width / 100 * 4.58
         }
         onCurrentPageChanged: page.currentLink = -1
-        model: quicklinksModel
+        model: page.actualModel
         delegate: Item {
             width: delegateRadio.width
             height: delegateRadio.height + bg.height / 100 * 2.29 // adds spacing
@@ -240,7 +251,7 @@ Page {
             ControlRadioHorizontal {
                 id: delegateRadio
 
-                property variant itemObject: quicklinksModel.getObject(index)
+                property variant itemObject: page.actualModel.getObject(index)
 
                 width: bg.width / 100 * 54.95
                 text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name // address, type (MediaType), position
@@ -250,6 +261,7 @@ Page {
                 ButtonImageThreeStates {
                     id: deleteButton
 
+                    visible: page.isRemovable
                     defaultImage: "images/common/ico_delete.svg"
                     pressedImage: "images/common/ico_delete_p.svg"
                     defaultImageBg: "images/common/ico_bg.svg"
@@ -259,7 +271,7 @@ Page {
                         left: delegateRadio.right
                         leftMargin: bg.width / 100 * 2.51
                     }
-                    onClicked: quicklinksModel.remove(delegateRadio.itemObject)
+                    onClicked: page.actualModel.remove(delegateRadio.itemObject)
                 }
             }
         }
@@ -325,8 +337,20 @@ Page {
         onClicked: {
             if (page.currentLink >= 0) {
                 // saves selection on current profile
-                var current = quicklinksModel.getObject(page.currentLink)
-                quicklinksModel.append(myHomeModels.createQuicklink(page.profile.uii, privateProps.getTypeText(privateProps.currentChoice), current.name, current.address))
+                var current = page.actualModel.getObject(page.currentLink)
+
+                var name = ""
+                if (current.name)
+                    name = current.name
+                var address = ""
+                if (current.address)
+                    address = current.address
+                var btObject = current
+                var x = 200
+                var y = 200
+                var media = privateProps.getTypeText(privateProps.currentChoice)
+
+                quicklinksModel.append(myHomeModels.createQuicklink(page.profile.uii, media, name, address, btObject, x, y))
             }
             Stack.popPage()
         }
