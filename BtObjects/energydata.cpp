@@ -24,7 +24,8 @@
 #define VALUE_CACHE_TRIM_COST 31
 // ...after this inactivity timeout
 #define CACHE_TRIM_INTERVAL_MSEC 300 * 1000 // 5 min
-
+// consumption goals check interval
+#define GOAL_CHECK_INTERVAL (50 * 60 * 1000)
 
 /*
 	EnergyData tries to reduce the amount of requests performed by the object, it does so by:
@@ -236,6 +237,8 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyTy
 	unit_conversion = unitConversionFactor(getEnergyType(), _unit);
 	thresholds_enabled = _thresholds_enabled;
 	goals_enabled = _goals_enabled;
+	goal_exceeded = false;
+	goal_month_check = -1;
 	thresholds = QVariantList() << 0.0 << 0.0;
 	threshold_level = 0;
 
@@ -256,6 +259,13 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyTy
 	automatic_updates.setInterval(5000);
 	connect(&automatic_updates, SIGNAL(timeout()), this, SLOT(testAutomaticUpdates()));
 #endif
+
+	QTimer *goal_check_timer = new QTimer(this);
+
+	goal_check_timer->setInterval(GOAL_CHECK_INTERVAL);
+	goal_check_timer->start();
+
+	connect(goal_check_timer, SIGNAL(timeout()), this, SLOT(checkConsumptionGoals()));
 
 	connect(this, SIGNAL(thresholdEnabledChanged(QVariantList)), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(goalsChanged()), this, SIGNAL(persistItem()));
@@ -347,6 +357,11 @@ void EnergyData::setThresholdEnabled(QVariantList enabled)
 QVariantList EnergyData::getThresholdEnabled() const
 {
 	return thresholds_enabled;
+}
+
+bool EnergyData::getGoalExceeded() const
+{
+	return goal_exceeded;
 }
 
 bool EnergyData::getAdvanced() const
@@ -510,6 +525,7 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 	{
 		cacheYearGraphData(date, value / unit_conversion);
 		cacheLastYearGraphData(date, value / unit_conversion);
+		checkConsumptionGoal(date, value / unit_conversion);
 	}
 }
 
@@ -930,6 +946,33 @@ void EnergyData::trimCache()
 	// reduce cache size to VALUE_CACHE_TRIM_COST to delete some objects
 	value_cache.setMaxCost(VALUE_CACHE_TRIM_COST);
 	value_cache.setMaxCost(VALUE_CACHE_MAX_COST);
+}
+
+void EnergyData::checkConsumptionGoals()
+{
+	if (!goals_enabled)
+		return;
+	QDate today = QDate::currentDate();
+	if (goal_exceeded && goal_month_check == today.month())
+		return;
+
+	if (goal_exceeded)
+	{
+		goal_exceeded = false;
+		emit goalExceededChanged();
+	}
+
+	requestUpdate(CumulativeMonthValue, today, Force);
+}
+
+void EnergyData::checkConsumptionGoal(QDate date, double month_value)
+{
+	if (!goal_exceeded && month_value > goals[date.month() - 1].toDouble())
+	{
+		goal_exceeded = true;
+		goal_month_check = date.month();
+		emit goalExceededChanged();
+	}
 }
 
 void EnergyData::graphDestroyed(QObject *obj)

@@ -2,8 +2,8 @@
 #include "objectinterface.h"
 
 
-ObjectLink::ObjectLink(ObjectInterface *obj, MediaType type, int x, int y) :
-	LinkInterface(-1, type, QPoint(x, y))
+ObjectLink::ObjectLink(ObjectInterface *obj, MediaType type, int x, int y, int container_uii) :
+	LinkInterface(container_uii, type, QPoint(x, y))
 {
 	bt_object = obj;
 	obj->enableObject();

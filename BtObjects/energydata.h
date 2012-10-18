@@ -185,6 +185,13 @@ class EnergyData : public ObjectInterface
 	Q_PROPERTY(bool goalsEnabled READ getGoalsEnabled WRITE setGoalsEnabled NOTIFY goalsEnabledChanged)
 
 	/*!
+		\brief Get whether the goal for this month has been exceeded
+
+		The property is reset to false at the start of the month
+	*/
+	Q_PROPERTY(bool goalExceeded READ getGoalExceeded NOTIFY goalExceededChanged)
+
+	/*!
 		\brief Measure unit symbol, as specified in configuration file
 
 		This can be either an istantaneous or cumulative measure.
@@ -331,6 +338,8 @@ public:
 	void setThresholdEnabled(QVariantList enabled);
 	QVariantList getThresholdEnabled() const;
 
+	bool getGoalExceeded() const;
+
 	bool getAdvanced() const;
 
 public slots:
@@ -351,6 +360,7 @@ signals:
 	void advancedChanged();
 	void goalsChanged();
 	void goalsEnabledChanged();
+	void goalExceededChanged();
 
 private slots:
 	// remove destroyed objects from graphCache/itemChache
@@ -360,6 +370,9 @@ private slots:
 	void valueReceived(const DeviceValues &values_list);
 
 	void trimCache();
+
+	// called on first day of month to check consumption goals
+	void checkConsumptionGoals();
 
 private:
 	enum RequestOptions
@@ -399,6 +412,9 @@ private:
 	void requestCumulativeYear(QDate date, RequestOptions options);
 	void requestCumulativeLastYear(RequestOptions options);
 
+	// check whether consumption goal was exceeded
+	void checkConsumptionGoal(QDate date, double month_value);
+
 	typedef QPair<quint64, RequestStatus> RequestInfo;
 
 	EnergyDevice *dev;
@@ -419,7 +435,8 @@ private:
 
 	// Consumption goals
 	QVariantList goals;
-	bool goals_enabled;
+	bool goals_enabled, goal_exceeded;
+	int goal_month_check;
 
 	// Unit symbol (es. Kw, dm3, ...)
 	QString energy_unit;

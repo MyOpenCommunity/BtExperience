@@ -100,6 +100,11 @@ private slots:
 	void testReceiveThresholdValue();
 	void testReceiveThresholdLevel();
 
+	// test goals
+	void testCheckGoal();
+	void testRecheckGoal();
+	void testGoalExceeded();
+
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, EnergyData::MeasureType measure = EnergyData::Consumption);
 	EnergyGraph *getGraph(EnergyData::GraphType type, QDate date, EnergyData::MeasureType measure = EnergyData::Consumption);

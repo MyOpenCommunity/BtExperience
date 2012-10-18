@@ -1161,6 +1161,93 @@ void TestEnergyData::testReceiveThresholdLevel()
 	QCOMPARE(obj->getThresholdLevel(), 1);
 }
 
+void TestEnergyData::testCheckGoal()
+{
+	QDate today = QDate::currentDate();
+
+	obj->checkConsumptionGoals();
+	dev->requestCumulativeMonth(today);
+	compareClientCommand();
+}
+
+void TestEnergyData::testRecheckGoal()
+{
+	ObjectTester t(obj, SIGNAL(goalExceededChanged()));
+	QDate today = QDate::currentDate();
+
+	// check consumption goal
+	obj->checkConsumptionGoals();
+	dev->requestCumulativeMonth(today);
+	compareClientCommand();
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), false);
+
+	// goal not exceeded
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, today, ((today.month() - 1) + 11) * 1000));
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), false);
+
+	// goal not exceeded, re-send frame
+	obj->checkConsumptionGoals();
+	dev->requestCumulativeMonth(today);
+	compareClientCommand();
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), false);
+
+	// goal exceeded
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, today, ((today.month() - 1) + 11 + 1) * 1000));
+	t.checkSignals();
+	QCOMPARE(obj->getGoalExceeded(), true);
+	QCOMPARE(obj->goal_month_check, today.month());
+
+	// goal exceeded, no frame sent
+	obj->checkConsumptionGoals();
+	compareClientCommand();
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), true);
+	QCOMPARE(obj->goal_month_check, today.month());
+
+	// goal excceded last month, reset exceeded and re-send frame
+	obj->goal_month_check = today.addMonths(-1).month();
+
+	obj->checkConsumptionGoals();
+	dev->requestCumulativeMonth(today);
+	compareClientCommand();
+	t.checkSignals();
+	QCOMPARE(obj->getGoalExceeded(), false);
+}
+
+void TestEnergyData::testGoalExceeded()
+{
+	ObjectTester t(obj, SIGNAL(goalExceededChanged()));
+	QDate today = QDate::currentDate();
+
+	// check consumption goal
+	obj->checkConsumptionGoals();
+	dev->requestCumulativeMonth(today);
+	compareClientCommand();
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), false);
+	QCOMPARE(obj->goal_month_check, -1);
+
+	// goal not exceeded
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, today, ((today.month() - 1) + 11) * 1000));
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), false);
+
+	// goal exceeded
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, today, ((today.month() - 1) + 11 + 1) * 1000));
+	t.checkSignals();
+	QCOMPARE(obj->getGoalExceeded(), true);
+	QCOMPARE(obj->goal_month_check, today.month());
+
+	// goal exceeded only once
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, today, ((today.month() - 1) + 11 + 2) * 1000));
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), true);
+	QCOMPARE(obj->goal_month_check, today.month());
+}
+
 void TestEnergyItem::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);

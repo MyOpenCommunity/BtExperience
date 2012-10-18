@@ -6,7 +6,8 @@
 class MediaDataModel;
 class ObjectDataModel;
 class Note;
-class MediaLink;
+class ItemInterface;
+class ObjectInterface;
 
 
 /*!
@@ -141,10 +142,10 @@ public:
 		Example (QML):
 
 		\verbatim
-		quicklinks.append(myHomeModels.createQuicklink(profile.uii, "rss", "La Nazione", "http://www.lanazione.it"))
+		quicklinks.prepend(myHomeModels.createQuicklink(profile.uii, "rss", "La Nazione", "http://www.lanazione.it", undefined, 200, 300))
 		\endverbatim
 	*/
-	Q_INVOKABLE MediaLink *createQuicklink(int profile_uii, QString mediaType, QString name, QString address);
+	Q_INVOKABLE ItemInterface *createQuicklink(int profile_uii, QString mediaType, QString name=QString(), QString address=QString(), ObjectInterface *btObject=0, int x=0, int y=0);
 
 	void setProfiles(MediaDataModel *profiles);
 	MediaDataModel *getProfiles() const;
