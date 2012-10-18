@@ -58,13 +58,14 @@ public:
 	}
 
 	void append(ItemInterface *obj);
+	void prepend(ItemInterface *obj);
 	bool remove(ItemInterface *obj);
 
 signals:
 	void persistItem(ItemInterface *item);
 
 protected:
-	void insertObject(ItemInterface *obj);
+	void insertObject(ItemInterface *obj, bool prepend = false);
 
 private slots:
 	void persistItem();
@@ -190,6 +191,14 @@ public:
 		it will not be included in this model.
 	*/
 	Q_INVOKABLE void append(ItemInterface *obj);
+
+	/*!
+		\brief Prepend an object to the source model
+
+		Note that if the prepended object does not satisfy the filter criteria,
+		it will not be included in this model.
+	*/
+	Q_INVOKABLE void prepend(ItemInterface *obj);
 
 	/*!
 		\brief Deletes all elements in this model from the source model

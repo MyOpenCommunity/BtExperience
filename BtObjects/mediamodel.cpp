@@ -20,6 +20,11 @@ void MediaDataModel::append(ItemInterface *item)
 	insertObject(item);
 }
 
+void MediaDataModel::prepend(ItemInterface *item)
+{
+	insertObject(item, true);
+}
+
 bool MediaDataModel::remove(ItemInterface *obj)
 {
 	bool ok = removeRows(item_list.indexOf(obj), 1);
@@ -58,7 +63,7 @@ void MediaDataModel::clear()
 	removeRows(0, item_list.size());
 }
 
-void MediaDataModel::insertObject(ItemInterface *obj)
+void MediaDataModel::insertObject(ItemInterface *obj, bool prepend)
 {
 	// Objects extracted using a C++ method and passed to a Qml Component have
 	// a 'javascript ownership', but in that way the qml has the freedom to
@@ -69,9 +74,18 @@ void MediaDataModel::insertObject(ItemInterface *obj)
 
 	connect(obj, SIGNAL(persistItem()), this, SLOT(persistItem()));
 
-	beginInsertRows(QModelIndex(), rowCount(), rowCount());
-	item_list.append(obj);
-	endInsertRows();
+	if (prepend)
+	{
+		beginInsertRows(QModelIndex(), 0, 0);
+		item_list.prepend(obj);
+		endInsertRows();
+	}
+	else
+	{
+		beginInsertRows(QModelIndex(), rowCount(), rowCount());
+		item_list.append(obj);
+		endInsertRows();
+	}
 }
 
 void MediaDataModel::persistItem()
@@ -297,4 +311,9 @@ void MediaModel::clear()
 void MediaModel::append(ItemInterface *obj)
 {
 	getSource()->append(obj);
+}
+
+void MediaModel::prepend(ItemInterface *obj)
+{
+	getSource()->prepend(obj);
 }

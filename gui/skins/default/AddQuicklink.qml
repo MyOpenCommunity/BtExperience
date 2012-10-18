@@ -181,7 +181,10 @@ Page {
             top: nameBgImage.bottom
             topMargin: bg.height / 100 * 2.29
         }
-        onClicked: quicklinksModel.append(myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.text, linkText.text))
+        onClicked: {
+            quicklinksModel.prepend(myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.text, linkText.text))
+            page.currentLink = 0 // selects first quicklink (the one just created)
+        }
     }
 
     SvgImage {
