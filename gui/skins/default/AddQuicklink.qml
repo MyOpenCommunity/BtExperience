@@ -18,6 +18,7 @@ Page {
     MediaModel {
         id: quicklinksModel
         source: myHomeModels.mediaLinks
+        containers: [-1] // not assigned yet
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
@@ -322,8 +323,11 @@ Page {
             right: cancelButton.left
         }
         onClicked: {
-            if (page.currentLink >= 0) // saves selection on current profile
-                quicklinksModel.getObject(page.currentLink).containerUii = page.profile.uii
+            if (page.currentLink >= 0) {
+                // saves selection on current profile
+                var current = quicklinksModel.getObject(page.currentLink)
+                quicklinksModel.append(myHomeModels.createQuicklink(page.profile.uii, privateProps.getTypeText(privateProps.currentChoice), current.name, current.address))
+            }
             Stack.popPage()
         }
     }
