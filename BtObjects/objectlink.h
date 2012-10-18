@@ -22,7 +22,7 @@ class ObjectLink : public LinkInterface
 	Q_PROPERTY(ObjectInterface *btObject READ getBtObject CONSTANT)
 
 public:
-	ObjectLink(ObjectInterface *obj, MediaType type, int _x, int _y);
+	ObjectLink(ObjectInterface *obj, MediaType type, int _x, int _y, int container_uii = -1);
 
 	virtual QString getName() const;
 
