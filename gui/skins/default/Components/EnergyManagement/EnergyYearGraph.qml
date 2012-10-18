@@ -19,11 +19,23 @@ Item {
     QtObject {
         id: privateProps
 
-        property variant modelGraph: energyData.getGraph(EnergyData.CumulativeYearGraph, graphDate,
+        property int graphType: energyData.advanced ? EnergyData.CumulativeYearGraph : EnergyData.CumulativeLastYearGraph
+        property variant modelGraph: energyData.getGraph(graphType, graphDate,
                                                          showCurrency ? EnergyData.Currency : EnergyData.Consumption)
 
-        property variant previousGraph: energyData.getGraph(EnergyData.CumulativeYearGraph, _previousYear(graphDate),
+        property variant previousGraph: energyData.getGraph(graphType, _previousYear(graphDate),
                                                             showCurrency ? EnergyData.Currency : EnergyData.Consumption)
+
+        function goalIndex(index) {
+            if (energyData.advanced)
+                return index
+
+            var startMonth = new Date().getMonth() - 11
+            if (startMonth < 0)
+                startMonth += 12
+
+            return (startMonth + index) % 12
+        }
 
         function _previousYear(d) {
             d.setFullYear(d.getFullYear() - 1)
@@ -232,7 +244,7 @@ Item {
         Repeater {
 
             Item {
-                property variant goal: energyData.goals[index]
+                property variant goal: energyData.goals[privateProps.goalIndex(index)]
                 function goalValid() {
                     return goal !== undefined && goal > 0
                 }
