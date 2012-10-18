@@ -474,10 +474,10 @@ void BtObjectsPlugin::createObjects(QDomDocument document, QDomDocument settings
 			obj_list = parseLoadDiagnostic(xml_obj);
 			break;
 		case ObjectInterface::IdLoadWithControlUnit:
-			obj_list = parseLoadWithCU(xml_obj);
+			obj_list = parseLoadWithCU(xml_obj, rates);
 			break;
 		case ObjectInterface::IdLoadWithoutControlUnit:
-			obj_list = parseLoadWithoutCU(xml_obj);
+			obj_list = parseLoadWithoutCU(xml_obj, rates);
 			break;
 		case ObjectInterface::IdEnergyData:
 		{

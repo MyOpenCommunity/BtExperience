@@ -33,8 +33,8 @@ class QDomNode;
 class EnergyRate;
 
 QList<ObjectPair> parseLoadDiagnostic(const QDomNode &xml_node);
-QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node);
-QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node);
+QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node, QHash<int, EnergyRate *> rates);
+QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node, QHash<int, EnergyRate *> rates);
 
 
 /*!
@@ -197,7 +197,7 @@ public:
 		Critical
 	};
 
-	EnergyLoadManagement(LoadsDevice *dev, QString name, EnergyRate *rate = 0);
+	EnergyLoadManagement(LoadsDevice *dev, QString name, EnergyRate *rate);
 
 	virtual int getObjectId() const
 	{
@@ -318,7 +318,7 @@ class EnergyLoadManagementWithControlUnit : public EnergyLoadManagement
 	Q_PROPERTY(int forceDuration READ getForceDuration NOTIFY forceDurationChanged)
 
 public:
-	EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool is_advanced, QString name, EnergyRate *rate = 0);
+	EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool is_advanced, QString name, EnergyRate *rate);
 
 	virtual bool getHasControlUnit() const { return true; }
 	virtual bool getHasConsumptionMeters() const;

@@ -37,12 +37,12 @@ QList<ObjectPair> parseLoadDiagnostic(const QDomNode &xml_node)
 		int uii = getIntAttribute(ist, "uii");
 
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr")));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), 0));
 	}
 	return obj_list;
 }
 
-QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node)
+QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node, QHash<int, EnergyRate *> rates)
 {
 	QList<ObjectPair> obj_list;
 	XmlObject v(xml_node);
@@ -52,14 +52,23 @@ QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node)
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
 
-		// TODO rate handling
+		EnergyRate *rate = 0;
+		if (v.intValue("rate_enabled"))
+		{
+			int rate_id = v.intValue("rate_id");
+
+			if (!rates.contains(rate_id))
+				qFatal("Invalid rate id %d", rate_id);
+			rate = rates[rate_id];
+		}
+
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagementWithControlUnit(d, v.intValue("advanced"), v.value("descr")));
+		obj_list << ObjectPair(uii, new EnergyLoadManagementWithControlUnit(d, v.intValue("advanced"), v.value("descr"), rate));
 	}
 	return obj_list;
 }
 
-QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node)
+QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node, QHash<int, EnergyRate *> rates)
 {
 	QList<ObjectPair> obj_list;
 	XmlObject v(xml_node);
@@ -69,9 +78,18 @@ QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node)
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
 
-		// TODO rate handling
+		EnergyRate *rate = 0;
+		if (v.intValue("rate_enabled"))
+		{
+			int rate_id = v.intValue("rate_id");
+
+			if (!rates.contains(rate_id))
+				qFatal("Invalid rate id %d", rate_id);
+			rate = rates[rate_id];
+		}
+
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr")));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), rate));
 	}
 	return obj_list;
 }
