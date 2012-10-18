@@ -11,6 +11,8 @@ Page {
 
     property variant profile: undefined
     property int currentLink: -1
+
+    // the following properties are used by delegates
     property variant actualModel: privateProps.currentChoice === 0 ? camerasModel : quicklinksModel
     property bool isRemovable: privateProps.currentChoice !== 0
 
@@ -506,6 +508,8 @@ Page {
 
             linkText.text = qsTr("Click to enter link...")
             nameText.text = qsTr("Click to enter name...")
+
+            paginator.currentPage = 1
         }
 
         function getTypeText(kind) {
