@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <archive>
 	<!-- basic AC -->
 	<obj cid="8010" id="8010" descr="Basic AC Unit" where="11" eprobe="0" off_cmd="1" off_presence="0" command="1">
