@@ -15,4 +15,7 @@
 		<ist uii="30102" rate_id="2" descr="" name="EUR" mode="3" tariff="2" measure="m3" symbol="&#x20AC;" />
 		<ist uii="30104" rate_id="5" descr="" name="EUR" type="-1" tariff="4" symbol="&#x20AC;" n_decimal="0" n_integer="3" delta="1" />
 	</obj>
+	<obj cid="14001" id="14001">
+		<ist uii="3201" enable="1" />
+	</obj>
 </settings>

@@ -11,4 +11,7 @@
 		<ist uii="30008" id="14109" id_ringtone="2"/>
 		<ist uii="30009" id="14110" id_ringtone="2"/>
 	</obj>
+	<obj cid="14001" id="14001">
+		<ist uii="3201" enable="1" />
+	</obj>
 </settings>
