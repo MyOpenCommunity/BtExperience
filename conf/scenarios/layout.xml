@@ -1,4 +1,5 @@
-﻿<layout>
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
 	<container id="1" descr="scenarios">
 		<ist uii="301" img="images/systems/scenari.jpg">
 			<link uii="6001" />

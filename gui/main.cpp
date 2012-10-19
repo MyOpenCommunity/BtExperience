@@ -67,7 +67,7 @@ void messageHandler(QtMsgType type, const char *msg)
 		break;
 
 	case QtWarningMsg:
-		app_logger->debug(LOG_INFO, (char *) msg);
+		app_logger->debug(LOG_INFO | LOG_NOTICE, (char *) msg);
 		break;
 	case QtCriticalMsg:
 		fprintf(stderr, "%s Critical: %s\n", Prefix, msg);

@@ -149,7 +149,7 @@ Item {
         // antintrusion
         ToolbarButton {
             height: toolbar_top.height
-            visible: true
+            visible: EventManager.eventManager.antintrusionPresent
             defaultImage: EventManager.eventManager.isAntintrusionInserted ?
                               (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_burlgar alarm-on.svg" :

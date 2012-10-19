@@ -1,4 +1,5 @@
-﻿<layout>
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
 	<container id="9" descr="video door entry system">
 		<ist uii="309" img="images/systems/vde_card.jpg">
                         <link uii="9011" />

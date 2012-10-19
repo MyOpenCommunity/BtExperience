@@ -1,4 +1,5 @@
-﻿<layout>
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
 	<container id="11" descr="antintrusion">
 		<ist uii="311" img="images/systems/carichi.jpg">
 		</ist>

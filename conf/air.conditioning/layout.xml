@@ -1,4 +1,5 @@
-﻿<layout>
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
 	<container id="4" descr="air conditioning"> <!-- lights system container -->
 		<ist uii="301">
 			<link uii="7001" />
