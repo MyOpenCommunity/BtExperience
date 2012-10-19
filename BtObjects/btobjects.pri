@@ -4,6 +4,7 @@ HEADERS += \
 	antintrusionsystem.h \
 	automationobjects.h \
 	choicelist.h \
+	configfile.h \
 	container.h \
 	dangers.h \
 	energies.h \
@@ -74,6 +75,7 @@ SOURCES += \
 	antintrusionsystem.cpp \
 	automationobjects.cpp \
 	choicelist.cpp \
+	configfile.cpp \
 	container.cpp \
 	dangers.cpp \
 	energies.cpp \
