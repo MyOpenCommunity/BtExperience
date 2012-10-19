@@ -12,6 +12,7 @@ obj/
 /conf.xml
 /layout.xml
 /archive.xml
+/settings.xml
 /bin/
 /dist/
 /doc/
