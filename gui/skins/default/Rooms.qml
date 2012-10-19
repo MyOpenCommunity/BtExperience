@@ -38,6 +38,8 @@ Page {
             topMargin: 50
             bottom: floorView.top
         }
+        pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
+        arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
         onClicked: Stack.goToPage("Room.qml", {'roomName': delegate.description, 'roomUii': delegate.uii, 'floorUii': mainarea.floorUii})
     }
 

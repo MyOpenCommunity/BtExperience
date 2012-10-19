@@ -28,6 +28,8 @@ Page {
             topMargin: 50
             bottom: parent.bottom
         }
+        pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
+        arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
         onClicked: Stack.goToPage(delegate.target, delegate.props)
     }
 

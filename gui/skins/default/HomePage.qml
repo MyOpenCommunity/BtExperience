@@ -134,6 +134,8 @@ BasePage {
             right: homeMenu.left
             rightMargin: -10
         }
+        pathOffset: model.count === 4 ? -35 : (model.count === 6 ? -33 : 0)
+        arrowsMargin: model.count === 4 ? 30 : (model.count === 6 ? 15 : 10)
         onClicked: Stack.goToPage('Profile.qml', {'profile': delegate})
     }
 
