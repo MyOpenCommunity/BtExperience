@@ -10,6 +10,7 @@ Item {
     id: eventManager
 
     property int alarms: privateProps.antintrusionModel === undefined ? 0 : loader.item.alarmsModel.count
+    property bool antintrusionPresent: privateProps.antintrusionModel !== undefined
     property bool isAntintrusionInserted: privateProps.antintrusionModel === undefined ? false : privateProps.antintrusionModel.status
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
     property bool handsFree: privateProps.vctModel === undefined ? false : privateProps.vctModel.handsFree
