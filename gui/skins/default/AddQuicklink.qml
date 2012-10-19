@@ -348,8 +348,8 @@ Page {
                 if (current.address)
                     address = current.address
                 var btObject = current
-                var x = 200
-                var y = 200
+                var x = -1
+                var y = -1
                 var media = privateProps.getTypeText(privateProps.currentChoice)
 
                 quicklinksModel.append(myHomeModels.createQuicklink(page.profile.uii, media, name, address, btObject, x, y))

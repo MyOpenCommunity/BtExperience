@@ -99,7 +99,10 @@ Page {
             // here we compute the ref point for QuickLinks; essentially, this is the center of the moving
             // grid where QuickLinks will be positioned
             var refX = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).x + 0.5 * bgMoveGrid.width
+            if (refX === 0) // no init done, do not lose time
+                return
             var refY = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).y + 0.5 * bgMoveGrid.height
+
             for (var i = 0; i < mediaLinks.count; ++i) {
                 var obj = mediaLinks.getObject(i);
                 var text = obj.name
@@ -119,15 +122,55 @@ Page {
 
                 // x and y are absolute coordinates
                 var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
+
+                // new quicklink do not have a position yet; they will be positioned after all
+                // other items
+                if (obj.position.x < 0 && obj.position.y < 0)
+                    continue
+
                 var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": obj})
+
                 // grid margins are set to maximum quicklink size / 2; this info is used to draw a grid in which
                 // QuickLinks don't overlap with other elements and don't disappear out of screen
                 privateProps.maxItemWidth = Math.max(privateProps.maxItemWidth, instance.width)
                 privateProps.maxItemHeight = Math.max(privateProps.maxItemHeight, instance.height)
+
                 instance.requestEdit.connect(showEditBox)
                 instance.selected.connect(selectObj)
                 instance.requestMove.connect(moveBegin)
                 instance.requestDelete.connect(deleteFavorite)
+
+                Script.container.push(instance)
+            }
+
+            // we need absolute coordinates to position items without a position
+            var absGrid = bgMoveGrid.mapToItem(null, bgMoveGrid.gridX, bgMoveGrid.gridY)
+
+            for (var j = 0; j < mediaLinks.count; ++j) {
+                var link = mediaLinks.getObject(j)
+
+                // skip already done
+                if (link.position.x >= 0 || link.position.y >= 0)
+                    continue
+
+                // random position inside grid; we have to remove the margins around the grid and
+                // the offset wrt the item center (so we have 1.5)
+                var deltaX = Math.random() * (bgMoveGrid.gridW - 1.5 * privateProps.maxItemWidth)
+                var deltaY = Math.random() * (bgMoveGrid.gridH - 1.5 * privateProps.maxItemHeight)
+                res = pannableChild.mapFromItem(null, absGrid.x + deltaX, absGrid.y + deltaY)
+
+                instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": link})
+
+                // grid margins are set to maximum quicklink size / 2; this info is used to draw a grid in which
+                // QuickLinks don't overlap with other elements and don't disappear out of screen
+                privateProps.maxItemWidth = Math.max(privateProps.maxItemWidth, instance.width)
+                privateProps.maxItemHeight = Math.max(privateProps.maxItemHeight, instance.height)
+
+                instance.requestEdit.connect(showEditBox)
+                instance.selected.connect(selectObj)
+                instance.requestMove.connect(moveBegin)
+                instance.requestDelete.connect(deleteFavorite)
+
                 Script.container.push(instance)
             }
         }

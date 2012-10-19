@@ -1230,6 +1230,11 @@ void TestEnergyData::testGoalExceeded()
 	QCOMPARE(obj->getGoalExceeded(), false);
 	QCOMPARE(obj->goal_month_check, -1);
 
+	// only check goal for current month
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, today.addMonths(-1), 1000000000));
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), false);
+
 	// goal not exceeded
 	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, today, ((today.month() - 1) + 11) * 1000));
 	t.checkNoSignals();
