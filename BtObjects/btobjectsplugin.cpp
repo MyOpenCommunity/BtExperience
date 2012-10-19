@@ -676,6 +676,8 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case Container::IdAmbient:
 	case Container::IdSpecialAmbient:
 		return configurations->getConfiguration(LAYOUT_FILE);
+	case ObjectInterface::IdEnergyRate:
+		return configurations->getConfiguration(SETTINGS_FILE);
 	default:
 		return configurations->getConfiguration(CONF_FILE);
 	}
@@ -691,8 +693,10 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
 
 	int id = uii_to_id[uii];
 	QDomDocument document = findDocumentForId(id);
-	QString conf_name = document.documentElement().tagName() == "archive" ? CONF_FILE : LAYOUT_FILE;
-	QString child_name = document.documentElement().tagName() == "archive" ? "obj" : "container";
+	QString conf_name = document.documentElement().tagName() == "archive" ? CONF_FILE :
+			    document.documentElement().tagName() == "settings" ? SETTINGS_FILE :
+										 LAYOUT_FILE;
+	QString child_name = document.documentElement().tagName() == "layout" ? "container" : "obj";
 
 	foreach (QDomNode xml_obj, getChildren(document.documentElement(), child_name))
 	{
@@ -735,6 +739,9 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 			break;
 		case ObjectInterface::IdEnergyData:
 			updateEnergyData(node_path.first, qobject_cast<EnergyData *>(obj_int));
+			break;
+		case ObjectInterface::IdEnergyRate:
+			updateEnergyRate(node_path.first, qobject_cast<EnergyRate *>(obj_int));
 			break;
 		}
 	}

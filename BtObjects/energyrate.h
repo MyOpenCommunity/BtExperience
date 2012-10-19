@@ -4,7 +4,11 @@
 #include "objectinterface.h"
 
 
+class EnergyRate;
+
+
 QList<ObjectPair> parseEnergyRate(const QDomNode &xml_node);
+void updateEnergyRate(QDomNode node, EnergyRate *item);
 
 
 class EnergyRate : public ObjectInterface
