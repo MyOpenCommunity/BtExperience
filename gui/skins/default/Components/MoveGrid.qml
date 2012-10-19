@@ -9,6 +9,11 @@ Item {
     property int maxItemHeight: 0
     property Item selectedItem: null
 
+    property alias gridX: moveGrid.x
+    property alias gridY: moveGrid.y
+    property alias gridW: moveGrid.width
+    property alias gridH: moveGrid.height
+
     signal moveEnd
 
     function moveTo(absX, absY) {
