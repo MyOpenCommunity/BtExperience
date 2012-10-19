@@ -11,33 +11,60 @@ QList<ObjectPair> parseEnergyRate(const QDomNode &xml_node);
 void updateEnergyRate(QDomNode node, EnergyRate *item);
 
 
+/*!
+	\ingroup LoadManagement
+	\ingroup EnergyDataSystem
+	\brief Information about an energy conversion rate
+
+	The rate object is used implictly by \ref EnergyLoadManagement and \ref EnergyData.
+*/
 class EnergyRate : public ObjectInterface
 {
 	Q_OBJECT
 
+	/*!
+		\brief Conversion rate
+
+		The value should always be positive
+	*/
 	Q_PROPERTY(double rate READ getRate WRITE setRate NOTIFY rateChanged)
 
+	/*!
+		\brief Energy rate minimum increment
+
+		Used when changing rate: the GUI should increment/decrement rate
+		value using this increment.
+	*/
 	Q_PROPERTY(double rateDelta READ getRateDelta CONSTANT)
 
+	/// Internal rate identifier
 	Q_PROPERTY(int rateId READ getRateId CONSTANT)
 
+	/// Number of integer digits to display when changing the rate
 	Q_PROPERTY(int displayIntegers READ getDisplayIntegers CONSTANT)
 
+	/// Number of decimal digits to display when changing the rate
 	Q_PROPERTY(int displayDecimals READ getDisplayDecimals CONSTANT)
 
+	/// ISO currency code (EUR, USD, ...)
 	Q_PROPERTY(QString currencyName READ getCurrencyName CONSTANT)
 
+	/// Currency symbol
 	Q_PROPERTY(QString currencySymbol READ getCurrencySymbol CONSTANT)
 
+	/// Energy measure unit (Kwh, m3, ...)
 	Q_PROPERTY(QString measureUnit READ getMeasureUnit CONSTANT)
 
+	/// Whether this rate applied to energy consumption or production
 	Q_PROPERTY(RateType rateType READ getRateType CONSTANT)
 
+	/// Type of energy
 	Q_PROPERTY(EnergyType energyType READ getEnergyType CONSTANT)
 
 	Q_ENUMS(RateType EnergyType)
 
 public:
+	/// Whether this rate applies to energy consumption or production
 	enum RateType
 	{
 		Consumption = 1,
