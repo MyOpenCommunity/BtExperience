@@ -25,6 +25,27 @@ ln -s ../../lib/libcommon.so.0.0 libcommon.so.0
 ln -s BtObjects/libbtobjects.so libbtobjects.so
 cd -
 
+#create launcher file
+echo "#!/bin/sh
+
+trap \"killall BtExperience; trap SIGTERM; trap SIGUSR1; trap SIGUSR2; exit 0\" SIGTERM
+trap \"killall -SIGUSR1 BtExperience; wait\" SIGUSR1
+trap \"killall -SIGUSR2 BtExperience; wait\" SIGUSR2
+
+export TSLIB_TSDEVICE=/dev/input/touchscreen0
+export QWS_MOUSE_PROTO=Tslib:/dev/input/touchscreen0
+export QWS_DISPLAY=powervr
+export QT_IM_MODULE=MaliitDirect
+export LD_LIBRARY_PATH=/home/bticino/lib:
+export POINTERCAL=/etc/pointercal
+if [ ! -e /etc/pointercal ]
+then
+ts_calibrate
+fi
+bin/BtExperience/BtExperience -qws -noswcursor &
+
+wait" >> BtExperience_qws
+
 cp BtExperience_qws $BTWEB_APP_BIN_NO_STACKOPEN
 
 exit 0
