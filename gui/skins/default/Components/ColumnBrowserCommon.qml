@@ -21,9 +21,9 @@ MenuColumn {
     ButtonImageThreeStates {
         id: backButton
 
-        defaultImageBg: "../images/common/btn_back.svg"
-        pressedImageBg: "../images/common/btn_back_P.svg"
-        shadowImage: "../images/common/ombra_btn_back.svg"
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/common/ico_back.svg"
         pressedImage: "../images/common/ico_back_P.svg"
         anchors {
