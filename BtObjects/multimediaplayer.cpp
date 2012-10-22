@@ -29,7 +29,7 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 {
 	// Try to load plugin
 	gst_player = 0;
-	QDir pluginsDir = QDir(qApp->applicationDirPath());
+	QDir pluginsDir = QDir(qApp->applicationDirPath() + "/plugins/");
 
 	foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
 		QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
