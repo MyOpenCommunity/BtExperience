@@ -49,12 +49,12 @@
 #define WATCHDOG_INTERVAL 5000
 
 #if defined(BT_HARDWARE_X11)
-#define CONF_FILE "archive.xml"
+#define ARCHIVE_FILE "archive.xml"
 #define LAYOUT_FILE "layout.xml"
 #define NOTES_FILE "notes.xml"
 #define SETTINGS_FILE "settings.xml"
 #else
-#define CONF_FILE "/home/bticino/cfg/extra/0/archive.xml"
+#define ARCHIVE_FILE "/home/bticino/cfg/extra/0/archive.xml"
 #define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
 #define NOTES_FILE "/home/bticino/cfg/extra/0/notes.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
@@ -229,7 +229,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 void BtObjectsPlugin::createObjects()
 {
-	QDomDocument document = configurations->getConfiguration(CONF_FILE);
+	QDomDocument document = configurations->getConfiguration(ARCHIVE_FILE);
 	QDomDocument settings = configurations->getConfiguration(SETTINGS_FILE);
 
 	QList<AntintrusionZone *> antintrusion_zones;
@@ -622,7 +622,7 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case ObjectInterface::IdEnergyRate:
 		return configurations->getConfiguration(SETTINGS_FILE);
 	default:
-		return configurations->getConfiguration(CONF_FILE);
+		return configurations->getConfiguration(ARCHIVE_FILE);
 	}
 }
 
@@ -636,7 +636,7 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
 
 	int id = uii_to_id[uii];
 	QDomDocument document = findDocumentForId(id);
-	QString conf_name = document.documentElement().tagName() == "archive" ? CONF_FILE :
+	QString conf_name = document.documentElement().tagName() == "archive" ? ARCHIVE_FILE :
 			    document.documentElement().tagName() == "settings" ? SETTINGS_FILE :
 										 LAYOUT_FILE;
 	QString child_name = document.documentElement().tagName() == "layout" ? "container" : "obj";
@@ -725,14 +725,14 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 
 	if (obj_media)
 	{
-		QDomDocument archive = configurations->getConfiguration(CONF_FILE);
+		QDomDocument archive = configurations->getConfiguration(ARCHIVE_FILE);
 
 		uii = uii_map.nextUii();
 		uii_map.insert(uii, obj_media);
 		uii_to_id[uii] = obj_media->getType();
 
 		createMediaLink(archive, uii, obj_media);
-		configurations->saveConfiguration(CONF_FILE);
+		configurations->saveConfiguration(ARCHIVE_FILE);
 	}
 	else if (obj_container)
 	{
