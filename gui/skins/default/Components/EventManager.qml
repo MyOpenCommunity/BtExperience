@@ -4,6 +4,7 @@ import BtExperience 1.0
 import Components 1.0
 
 import "../js/Stack.js" as Stack
+import "../js/TurnOffMonitor.js" as TurnOff
 
 
 Item {
@@ -29,6 +30,8 @@ Item {
         id: callPopup
         ControlCall {
             onClosePopup: {
+                privateProps.monitorEvent()
+                turnOffMonitor.isEnabled = true
                 global.audioState.disableState(AudioState.VdeRingtone)
                 global.audioState.disableState(AudioState.ScsIntercomCall)
                 global.audioState.disableState(AudioState.IpIntercomCall)
@@ -96,6 +99,11 @@ Item {
         }
     }
 
+    TurnOffMonitor {
+        id: turnOffMonitor
+        z: parent.z
+    }
+
     Loader {
         id: loader
         sourceComponent: privateProps.antintrusionModel !== undefined ? alarmsModelComponent : undefined
@@ -115,7 +123,10 @@ Item {
     Connections {
         id: vctConnection
         target: null
-        onIncomingCall: Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
+        onIncomingCall: {
+            turnOffMonitor.isEnabled = false
+            Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
+        }
         onCallAnswered: {
             if (vctConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpVideoCall)
@@ -123,6 +134,8 @@ Item {
                 global.audioState.enableState(AudioState.ScsVideoCall)
         }
         onCallEnded: {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsVideoCall)
             global.audioState.disableState(AudioState.IpVideoCall)
@@ -140,7 +153,10 @@ Item {
     Connections {
         id: intercomConnection
         target: null
-        onIncomingCall: Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
+        onIncomingCall: {
+            turnOffMonitor.isEnabled = false
+            Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
+        }
         onCallAnswered: {
             if (intercomConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpIntercomCall)
@@ -148,6 +164,8 @@ Item {
                 global.audioState.enableState(AudioState.ScsIntercomCall)
         }
         onCallEnded: {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsIntercomCall)
             global.audioState.disableState(AudioState.IpIntercomCall)
@@ -170,6 +188,8 @@ Item {
         id: antintrusionConnection
         target: null
         onNewAlarm: {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
             var p = privateProps.preparePopupPage(true)
             // adds antintrusion alarm
             p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
@@ -180,6 +200,8 @@ Item {
         id: stopAndGoConnection
         target: null
         onStopAndGoDeviceChanged: {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
             var p = privateProps.preparePopupPage(false)
             // adds stop&go alarm
             p.addStopAndGoPopup(stopGoDevice)
@@ -190,6 +212,8 @@ Item {
         id: energiesConnection
         target: null
         onThresholdExceeded: {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
             var p = privateProps.preparePopupPage(false)
             // adds threshold alarm
             p.addThresholdExceededPopup(energyDevice)
@@ -205,6 +229,8 @@ Item {
         id: messagesConnection
         target: null
         onUnreadMessagesChanged: {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
             var p = privateProps.preparePopupPage(false)
             // updates number of unread messages
             p.updateUnreadMessages(messagesConnection.target.unreadMessages)
@@ -215,6 +241,8 @@ Item {
         id: scenarioConnection
         target: null
         onScenarioActivated: {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
             var p = privateProps.preparePopupPage(false)
             // adds popup for scenario activation
             p.addScenarioActivationPopup(description)
@@ -286,6 +314,16 @@ Item {
             var n = new Date()
             var n2 = new Date(n.getFullYear(), n.getMonth() + 1, 0)
             monthlyReportTimer.interval = n2.getTime() - n.getTime()
+        }
+
+        // this is needed to manage the activation of the monitor;
+        // this function is used to send an event to reactivate the monitor
+        // even in those cases where an interaction with the user is not performed;
+        // see comments in TurnOffMonitor.js file for more info on this subject
+        function monitorEvent() {
+            // the updateLast call is needed to compute elapsed time correctly
+            // see comments in TurnOffMonitor.js file for more info on this subject
+            TurnOff.updateLast()
         }
     }
 }

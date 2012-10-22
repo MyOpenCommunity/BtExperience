@@ -62,6 +62,8 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
 	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
 	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout NOTIFY keyboardLayoutChanged)
+	// A property to turn off/on the monitor from QML
+	Q_PROPERTY(bool monitorOff READ isMonitorOff WRITE setMonitorOff NOTIFY monitorOffChanged)
 
 public:
 	GlobalProperties();
@@ -78,6 +80,8 @@ public:
 	QObject *getRingtoneManager() const;
 	QString getBasePath() const;
 	QString getExtraPath() const;
+	bool isMonitorOff() const;
+	void setMonitorOff(bool newValue);
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE void takeScreenshot(QRect rect, QString filename);
@@ -105,6 +109,7 @@ signals:
 	void keyboardLayoutChanged();
 	void audioPlayerChanged();
 	void audioStateChanged();
+	void monitorOffChanged();
 
 private slots:
 #ifdef BT_MALIIT
@@ -129,6 +134,7 @@ private:
 	RingtoneManager *ringtone_manager;
 	QTimer *delayed_frame_timer;
 	ConfigFile *configurations;
+	bool monitor_off;
 
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);

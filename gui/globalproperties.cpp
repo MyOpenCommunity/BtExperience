@@ -75,6 +75,7 @@ GlobalProperties::GlobalProperties()
 {
 	wrapper = new InputContextWrapper(this);
 	main_widget = NULL;
+	monitor_off = false;
 
 	delayed_frame_timer = new QTimer(this);
 	delayed_frame_timer->setInterval(LAZY_UPDATE_INTERVAL);
@@ -232,6 +233,31 @@ QString GlobalProperties::getExtraPath() const
 		qFatal("Unable to find path for extra files");
 
 	return extra.canonicalFilePath() + "/";
+}
+
+bool GlobalProperties::isMonitorOff() const
+{
+	return monitor_off;
+}
+
+void GlobalProperties::setMonitorOff(bool newValue)
+{
+	if (monitor_off == newValue)
+		return;
+
+	monitor_off = newValue;
+
+	int transmitted_value = 0; // 0 - turn off, 1 - turn on
+	if (!newValue)
+		transmitted_value = 1;
+
+#if defined(BT_HARDWARE_X11)
+	qDebug() << QString("ARM COMMAND: echo %1 > /sys/devices/platform/omapdss/display0/enabled").arg(transmitted_value);
+#else
+	QProcess::startDetached(QString("echo %1 > /sys/devices/platform/omapdss/display0/enabled").arg(transmitted_value));
+#endif
+
+	emit monitorOffChanged();
 }
 
 int GlobalProperties::getMainWidth() const
