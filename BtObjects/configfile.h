@@ -8,6 +8,10 @@
 class QTimer;
 
 
+/// Parse conf.xml and populate bt_global::config
+void parseConfFile();
+
+
 /*!
  * \brief Global configuration handler class
  *

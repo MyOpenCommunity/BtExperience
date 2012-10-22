@@ -49,13 +49,11 @@
 #define WATCHDOG_INTERVAL 5000
 
 #if defined(BT_HARDWARE_X11)
-#define DEVICE_FILE "conf.xml"
 #define CONF_FILE "archive.xml"
 #define LAYOUT_FILE "layout.xml"
 #define NOTES_FILE "notes.xml"
 #define SETTINGS_FILE "settings.xml"
 #else
-#define DEVICE_FILE "/home/bticino/cfg/extra/0/conf.xml"
 #define CONF_FILE "/home/bticino/cfg/extra/0/archive.xml"
 #define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
 #define NOTES_FILE "/home/bticino/cfg/extra/0/notes.xml"
@@ -67,16 +65,6 @@ QHash<GlobalField, QString> *bt_global::config;
 
 namespace
 {
-	QString getDeviceValue(QDomNode conf, QString path, QString def_value = QString())
-	{
-		QDomElement n = getElement(conf, path);
-
-		if (n.isNull())
-			return def_value;
-		else
-			return n.text();
-	}
-
 	template<class Tr>
 	QList<Tr> convertObjectPairList(QList<ObjectPair> pairs)
 	{
@@ -178,10 +166,7 @@ namespace
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
-	// for logging
-	bt_global::config = new QHash<GlobalField, QString>();
-
-	parseDevice();
+	parseConfFile();
 
 	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList(), QStringList());
 	SoundPlayer::setGlobalCommandLineArguments("aplay", QStringList() << "<FILE_NAME>");
@@ -240,48 +225,6 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	connect(&note_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateNotes()));
 
 	device::initDevices();
-}
-
-void BtObjectsPlugin::parseDevice()
-{
-	QDomDocument device = configurations->getConfiguration(DEVICE_FILE);
-	QDomElement root = getElement(device.documentElement(), "setup");
-	QHash<GlobalField, QString> &config = *bt_global::config;
-
-	Q_ASSERT_X(!root.isNull(), "BtObjectsPlugin::parseDevice", "Invalid device configuration file");
-
-	config[TEMPERATURE_SCALE] = getDeviceValue(root, "generale/temperature/format", QString::number(CELSIUS));
-	config[LANGUAGE] = getDeviceValue(root, "generale/language", DEFAULT_LANGUAGE);
-	config[DATE_FORMAT] = getDeviceValue(root, "generale/clock/dateformat", QString::number(EUROPEAN_DATE));
-	config[MODEL] = getDeviceValue(root, "generale/modello");
-	config[NAME] = getDeviceValue(root, "generale/nome");
-
-	config[SOURCE_ADDRESS] = getDeviceValue(root, "scs/coordinate_scs/my_mmaddress");
-	config[AMPLIFIER_ADDRESS] = getDeviceValue(root, "scs/coordinate_scs/my_aaddress");
-	config[TS_NUMBER] = getDeviceValue(root, "scs/coordinate_scs/diag_addr", "0");
-
-	if (config[SOURCE_ADDRESS] == "-1")
-		config[SOURCE_ADDRESS] = "";
-	if (config[AMPLIFIER_ADDRESS] == "-1")
-		config[AMPLIFIER_ADDRESS] = "";
-
-	QString guard_addr = getDeviceValue(root, "vdes/guardunits/item");
-	if (!guard_addr.isEmpty())
-		config[GUARD_UNIT_ADDRESS] = "3" + guard_addr;
-
-	QDomElement vde_node = getElement(root, "vdes");
-	QDomNode vde_pi_node = getChildWithName(vde_node, "communication");
-	if (!vde_pi_node.isNull())
-	{
-		QString address = getTextChild(vde_pi_node, "address");
-		QString dev = getTextChild(vde_pi_node, "dev");
-		if (!address.isNull() && address != "-1")
-			config[PI_ADDRESS] = dev + address;
-
-		config[PI_MODE] = getTextChild(vde_pi_node, "mode");
-	}
-	else
-		config[PI_MODE] = QString();
 }
 
 void BtObjectsPlugin::createObjects()
