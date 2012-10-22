@@ -21,6 +21,7 @@ MenuColumn {
                 defaultImage: "../../images/common/btn_apriporta_ok_on.svg"
                 pressedImage: "../../images/common/btn_apriporta_ok_on_P.svg"
                 selectedImage: "../../images/common/btn_apriporta_ok_on.svg"
+                shadowImage: "../../images/common/ombra_btn_apriporta_ok_on.svg"
                 text: "start"
                 onClicked: column.dataModel.start()
             }
