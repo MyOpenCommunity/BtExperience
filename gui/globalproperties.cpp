@@ -94,9 +94,9 @@ GlobalProperties::GlobalProperties()
 	photoPlayer = new PhotoPlayer(this);
 	videoPlayer = 0;
 	audioPlayer = 0;
-	audio_state = 0;
+	audio_state = new AudioState(this);
 	sound_player = 0;
-	ringtone_manager = 0;
+	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", new MultiMediaPlayer(this), audio_state, this);
 
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -124,7 +124,7 @@ GlobalProperties::~GlobalProperties()
 
 void GlobalProperties::initAudio()
 {
-	if (audio_state)
+	if (videoPlayer)
 		return;
 
 	Q_ASSERT_X(bt_global::config, "GlobalProperties::initAudio", "BtObjects plugin not initialized yet");
@@ -133,8 +133,6 @@ void GlobalProperties::initAudio()
 
 	sound_player = new SoundPlayer(this);
 
-	audio_state = new AudioState(this);
-	emit audioStateChanged();
 	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(videoPlayer->getMediaPlayer()));
 	audio_state->registerBeep(sound_player);
 	audio_state->enableState(AudioState::Idle);
@@ -142,10 +140,7 @@ void GlobalProperties::initAudio()
 	connect(audio_state, SIGNAL(stateChanged(AudioState::State,AudioState::State)),
 		this, SLOT(audioStateChangedManagement()));
 
-	MultiMediaPlayer *player = new MultiMediaPlayer(this);
-
-	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", player, audio_state, this);
-	audio_state->registerSoundPlayer(player);
+	audio_state->registerSoundPlayer(ringtone_manager->getMediaPlayer());
 
 	connect(settings, SIGNAL(beepChanged()),
 		this, SLOT(beepChanged()));
