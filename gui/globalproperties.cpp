@@ -115,6 +115,7 @@ GlobalProperties::GlobalProperties()
 
 	maliit_settings->loadPluginSettings();
 #endif
+	setMonitorOff(false);
 }
 
 GlobalProperties::~GlobalProperties()
