@@ -44,7 +44,7 @@ ts_calibrate
 fi
 bin/BtExperience/BtExperience -qws -noswcursor &
 
-wait" >> BtExperience_qws
+wait" > BtExperience_qws
 
 cp BtExperience_qws $BTWEB_APP_BIN_NO_STACKOPEN
 
