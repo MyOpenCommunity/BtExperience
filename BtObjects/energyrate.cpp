@@ -43,6 +43,11 @@ QList<ObjectPair> parseEnergyRate(const QDomNode &xml_node)
 	return obj_list;
 }
 
+void updateEnergyRate(QDomNode node, EnergyRate *item)
+{
+	setAttribute(node, "tariff", QString::number(item->getRate()));
+}
+
 
 EnergyRate::EnergyRate(double _rate)
 {
@@ -64,6 +69,8 @@ EnergyRate::EnergyRate(QString _name, EnergyType _energy_type, int _id, double _
 	measure_unit = _measure_unit;
 	integers = _integers;
 	decimals = _decimals;
+
+	connect(this, SIGNAL(rateChanged()), this, SIGNAL(persistItem()));
 }
 
 void EnergyRate::setRate(double _rate)

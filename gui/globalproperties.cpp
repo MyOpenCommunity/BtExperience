@@ -5,8 +5,11 @@
 #include "audiostate.h"
 #include "mediaplayer.h" // SoundPlayer
 #include "ringtonemanager.h"
+#include "xml_functions.h"
 #include "ts/main.h"
+#include "configfile.h"
 #include "devices_cache.h"
+#include "xmlobject.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -24,9 +27,47 @@
 #define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
 
+#if defined(BT_HARDWARE_X11)
+#define SETTINGS_FILE "settings.xml"
+#else
+#define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
+#endif
+
+
 namespace
 {
 	QStringList allowed_layouts = QStringList() << "en_gb_bticino" << "it_bticino" << "fr_bticino";
+
+	enum Parsing
+	{
+		Beep = 14001,
+	};
+
+	void setEnableFlag(QDomDocument document, int id, bool enable)
+	{
+		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == id)
+			{
+				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+					setAttribute(ist, "enable", QString::number(int(enable)));
+				break;
+			}
+		}
+	}
+
+	bool parseEnableFlag(QDomNode xml_node)
+	{
+		bool result = false;
+		XmlObject v(xml_node);
+
+		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+		{
+			v.setIst(ist);
+			result = v.intValue("enable");
+		}
+		return result;
+	}
 }
 
 
@@ -47,6 +88,7 @@ GlobalProperties::GlobalProperties()
 	qmlRegisterUncreatableType<AudioState>("BtExperience", 1, 0, "AudioState", "");
 	qmlRegisterUncreatableType<RingtoneManager>("BtExperience", 1, 0, "RingtoneManager", "");
 
+	configurations = new ConfigFile(this);
 	settings = new GuiSettings(this);
 	photoPlayer = new PhotoPlayer(this);
 	videoPlayer = 0;
@@ -60,6 +102,8 @@ GlobalProperties::GlobalProperties()
 	QTimer *secs_timer = new QTimer(this);
 	connect(secs_timer, SIGNAL(timeout()), this, SIGNAL(lastTimePressChanged()));
 	secs_timer->start(1000);
+
+	parseSettings();
 
 #ifdef BT_MALIIT
 	maliit_settings = Maliit::SettingsManager::create();
@@ -132,6 +176,23 @@ void GlobalProperties::initAudio()
 	ringtone_manager->setRingtone(RingtoneManager::InternalIntercom, 5);
 	ringtone_manager->setRingtone(RingtoneManager::ExternalIntercom, 5);
 	ringtone_manager->setRingtone(RingtoneManager::IntercomFloorcall, 5);
+}
+
+void GlobalProperties::parseSettings()
+{
+	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
+
+	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+	{
+		int id = getIntAttribute(xml_obj, "id");
+
+		switch (id)
+		{
+		case Beep:
+			settings->setBeep(parseEnableFlag(xml_obj));
+			break;
+		}
+	}
 }
 
 QString GlobalProperties::getBasePath() const
@@ -267,6 +328,9 @@ void GlobalProperties::beepChanged()
 		audio_state->enableState(AudioState::Beep);
 	else
 		audio_state->disableState(AudioState::Beep);
+
+	setEnableFlag(configurations->getConfiguration(SETTINGS_FILE), Beep, settings->getBeep());
+	configurations->saveConfiguration(SETTINGS_FILE);
 }
 
 void GlobalProperties::audioStateChangedManagement()

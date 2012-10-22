@@ -36,18 +36,17 @@
 #include "dangers.h"
 #include "scenariomodulesnotifier.h"
 #include "energies.h"
+#include "configfile.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
-#include <QFile>
 #include <QFileInfo>
 #include <QDir>
 #include <QCoreApplication> // qApp
 #include <QDomNode>
 
 #define WATCHDOG_INTERVAL 5000
-#define FILE_SAVE_INTERVAL 10000
 
 #if defined(BT_HARDWARE_X11)
 #define DEVICE_FILE "conf.xml"
@@ -180,20 +179,6 @@ namespace
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
 	// for logging
-	QString errorMsg;
-	int errorLine, errorColumn;
-	QFile fh_archive(QFileInfo(QDir(qApp->applicationDirPath()), CONF_FILE).absoluteFilePath());
-	if (!fh_archive.exists() || !archive.setContent(&fh_archive, &errorMsg, &errorLine, &errorColumn)) {
-		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh_archive).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
-		qFatal("%s", qPrintable(msg));
-	}
-
-	QFile fh_settings(QFileInfo(QDir(qApp->applicationDirPath()), SETTINGS_FILE).absoluteFilePath());
-	if (!fh_settings.exists() || !settings.setContent(&fh_settings, &errorMsg, &errorLine, &errorColumn)) {
-		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh_settings).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
-		qFatal("%s", qPrintable(msg));
-	}
-
 	bt_global::config = new QHash<GlobalField, QString>();
 
 	parseDevice();
@@ -221,6 +206,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameReceiver::setClientsMonitor(monitors);
 	FrameSender::setClients(clients);
 
+	configurations = new ConfigFile(this);
 	global_models.setParent(this);
 	note_model.setParent(this);
 
@@ -234,7 +220,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	global_models.setMediaLinks(&media_link_model);
 
 	ObjectModel::setGlobalSource(&objmodel);
-	createObjects(archive, settings);
+	createObjects();
 	parseConfig();
 
 	QList<MediaDataModel *> models = QList<MediaDataModel *>()
@@ -253,25 +239,12 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	connect(&note_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateNotes()));
 	connect(&note_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateNotes()));
 
-	configuration_save = new QTimer(this);
-	configuration_save->setInterval(FILE_SAVE_INTERVAL);
-	connect(configuration_save, SIGNAL(timeout()), this, SLOT(flushModifiedFiles()));
-
 	device::initDevices();
 }
 
 void BtObjectsPlugin::parseDevice()
 {
-	QDomDocument device;
-	// for logging
-	QString errorMsg;
-	int errorLine, errorColumn;
-	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), DEVICE_FILE).absoluteFilePath());
-	if (!fh.exists() || !device.setContent(&fh, &errorMsg, &errorLine, &errorColumn)) {
-		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
-		qFatal("%s", qPrintable(msg));
-	}
-
+	QDomDocument device = configurations->getConfiguration(DEVICE_FILE);
 	QDomElement root = getElement(device.documentElement(), "setup");
 	QHash<GlobalField, QString> &config = *bt_global::config;
 
@@ -311,8 +284,11 @@ void BtObjectsPlugin::parseDevice()
 		config[PI_MODE] = QString();
 }
 
-void BtObjectsPlugin::createObjects(QDomDocument document, QDomDocument settings)
+void BtObjectsPlugin::createObjects()
 {
+	QDomDocument document = configurations->getConfiguration(CONF_FILE);
+	QDomDocument settings = configurations->getConfiguration(SETTINGS_FILE);
+
 	QList<AntintrusionZone *> antintrusion_zones;
 	QList<AntintrusionAlarmSource *> antintrusion_aux;
 	QList<AntintrusionScenario *> antintrusion_scenarios;
@@ -699,9 +675,11 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case Container::IdMessages:
 	case Container::IdAmbient:
 	case Container::IdSpecialAmbient:
-		return layout;
+		return configurations->getConfiguration(LAYOUT_FILE);
+	case ObjectInterface::IdEnergyRate:
+		return configurations->getConfiguration(SETTINGS_FILE);
 	default:
-		return archive;
+		return configurations->getConfiguration(CONF_FILE);
 	}
 }
 
@@ -715,8 +693,10 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
 
 	int id = uii_to_id[uii];
 	QDomDocument document = findDocumentForId(id);
-	QString conf_name = document.documentElement().tagName() == "archive" ? CONF_FILE : LAYOUT_FILE;
-	QString child_name = document.documentElement().tagName() == "archive" ? "obj" : "container";
+	QString conf_name = document.documentElement().tagName() == "archive" ? CONF_FILE :
+			    document.documentElement().tagName() == "settings" ? SETTINGS_FILE :
+										 LAYOUT_FILE;
+	QString child_name = document.documentElement().tagName() == "layout" ? "container" : "obj";
 
 	foreach (QDomNode xml_obj, getChildren(document.documentElement(), child_name))
 	{
@@ -733,29 +713,6 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
 	qWarning() << "Could not find XML node for uii" << uii << "in document" << conf_name;
 
 	return QPair<QDomNode, QString>();
-}
-
-void BtObjectsPlugin::markFileModified(QDomDocument document, QString name)
-{
-	modified_files[name] = document;
-	configuration_save->start();
-}
-
-void BtObjectsPlugin::flushModifiedFiles()
-{
-	foreach (QString name, modified_files.keys())
-		saveConfigFile(modified_files[name], name);
-
-	modified_files.clear();
-}
-
-void BtObjectsPlugin::saveConfigFile(QDomDocument document, QString name)
-{
-	QString filename = QFileInfo(QDir(qApp->applicationDirPath()), name).absoluteFilePath();
-	if (!saveXml(document, filename))
-		qWarning() << "Error saving the config file" << filename;
-	else
-		qDebug() << "Config file" << filename << "saved";
 }
 
 void BtObjectsPlugin::updateObject(ItemInterface *obj)
@@ -783,6 +740,9 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		case ObjectInterface::IdEnergyData:
 			updateEnergyData(node_path.first, qobject_cast<EnergyData *>(obj_int));
 			break;
+		case ObjectInterface::IdEnergyRate:
+			updateEnergyRate(node_path.first, qobject_cast<EnergyRate *>(obj_int));
+			break;
 		}
 	}
 	else if (obj_cont)
@@ -796,7 +756,7 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		updateMediaNameAddress(archive_path.first, obj_media);
 		updateLinkPosition(node_path.first, obj_media);
 
-		markFileModified(archive, archive_path.second);
+		configurations->saveConfiguration(archive_path.second);
 	}
 	else if (obj_link)
 	{
@@ -807,7 +767,7 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		qWarning() << "Unknown object type" << obj;
 	}
 
-	markFileModified(node_path.first.ownerDocument(), node_path.second);
+	configurations->saveConfiguration(node_path.second);
 }
 
 void BtObjectsPlugin::insertObject(ItemInterface *obj)
@@ -822,15 +782,19 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 
 	if (obj_media)
 	{
+		QDomDocument archive = configurations->getConfiguration(CONF_FILE);
+
 		uii = uii_map.nextUii();
 		uii_map.insert(uii, obj_media);
 		uii_to_id[uii] = obj_media->getType();
 
 		createMediaLink(archive, uii, obj_media);
-		markFileModified(archive, CONF_FILE);
+		configurations->saveConfiguration(CONF_FILE);
 	}
 	else if (obj_container)
 	{
+		QDomDocument layout = configurations->getConfiguration(LAYOUT_FILE);
+
 		uii = uii_map.nextUii();
 		uii_map.insert(uii, obj_container);
 		uii_to_id[uii] = obj_container->getContainerId();
@@ -838,7 +802,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 		createContainer(layout, uii, obj_container);
 
 		if (obj->getContainerUii() == -1)
-			markFileModified(layout, LAYOUT_FILE);
+			configurations->saveConfiguration(LAYOUT_FILE);
 	}
 	else
 		uii = findLinkedUiiForObject(obj);
@@ -853,7 +817,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 	else
 		createLink(container_path.first, uii);
 
-	markFileModified(container_path.first.ownerDocument(), container_path.second);
+	configurations->saveConfiguration(container_path.second);
 }
 
 void BtObjectsPlugin::removeObject(ItemInterface *obj)
@@ -875,7 +839,7 @@ void BtObjectsPlugin::removeObject(ItemInterface *obj)
 
 		ist_path.first.parentNode().removeChild(ist_path.first);
 
-		markFileModified(ist_path.first.ownerDocument(), ist_path.second);
+		configurations->saveConfiguration(ist_path.second);
 	}
 	else
 		uii = findLinkedUiiForObject(obj);
@@ -893,7 +857,7 @@ void BtObjectsPlugin::removeObject(ItemInterface *obj)
 
 		ist_path.first.parentNode().removeChild(ist_path.first);
 
-		markFileModified(ist_path.first.ownerDocument(), ist_path.second);
+		configurations->saveConfiguration(ist_path.second);
 	}
 
 	foreach (QDomNode child, getChildren(container_path.first, "link"))
@@ -905,7 +869,7 @@ void BtObjectsPlugin::removeObject(ItemInterface *obj)
 		}
 	}
 
-	markFileModified(container_path.first.ownerDocument(), container_path.second);
+	configurations->saveConfiguration(container_path.second);
 }
 
 void BtObjectsPlugin::insertObjects(QModelIndex parent, int start, int end)
@@ -937,14 +901,7 @@ void BtObjectsPlugin::updateNotes()
 
 void BtObjectsPlugin::parseConfig()
 {
-	// for logging
-	QString errorMsg;
-	int errorLine, errorColumn;
-	QFile fh(QFileInfo(QDir(qApp->applicationDirPath()), LAYOUT_FILE).absoluteFilePath());
-	if (!fh.exists() || !layout.setContent(&fh, &errorMsg, &errorLine, &errorColumn)) {
-		QString msg = QString("The config file %1 does not seem a valid xml configuration file: Error description: %2, line: %3, column: %4").arg(qPrintable(QFileInfo(fh).absoluteFilePath())).arg(errorMsg).arg(errorLine).arg(errorColumn);
-		qFatal("%s", qPrintable(msg));
-	}
+	QDomDocument layout = configurations->getConfiguration(LAYOUT_FILE);
 
 	foreach (const QDomNode &container, getChildren(layout.documentElement(), "container"))
 	{

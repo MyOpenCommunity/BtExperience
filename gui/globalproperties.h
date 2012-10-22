@@ -16,6 +16,7 @@ class AudioState;
 class MultiMediaPlayer;
 class SoundPlayer;
 class RingtoneManager;
+class ConfigFile;
 
 #ifdef BT_MALIIT
 #include <QSharedPointer>
@@ -114,6 +115,8 @@ private slots:
 	void sendDelayedFrames();
 
 private:
+	void parseSettings();
+
 	InputContextWrapper *wrapper;
 	QDeclarativeView *main_widget;
 	QDateTime last_press;
@@ -125,6 +128,7 @@ private:
 	SoundPlayer *sound_player;
 	RingtoneManager *ringtone_manager;
 	QTimer *delayed_frame_timer;
+	ConfigFile *configurations;
 
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);

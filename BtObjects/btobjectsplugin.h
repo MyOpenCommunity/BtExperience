@@ -9,9 +9,9 @@
 #include <QDomDocument>
 #include <QHash>
 
+class ConfigFile;
 class QDomNode;
 class QDomDocument;
-class QTimer;
 
 
 class BtObjectsPlugin : public QDeclarativeExtensionPlugin
@@ -37,9 +37,9 @@ private:
 	GlobalModels global_models;
 	UiiMapper uii_map;
 	QHash<int, int> uii_to_id;
-	QDomDocument archive, layout, settings;
+	ConfigFile *configurations;
 
-	void createObjects(QDomDocument archive, QDomDocument settings);
+	void createObjects();
 	void parseConfig();
 	void parseDevice();
 	void parseRooms(const QDomNode &container);
@@ -55,14 +55,6 @@ private:
 	int findLinkedUiiForObject(ItemInterface *item) const;
 	QPair<QDomNode, QString> findNodeForObject(ItemInterface *item) const;
 	QPair<QDomNode, QString> findNodeForUii(int uii) const;
-
-	void saveConfigFile(QDomDocument document, QString name);
-
-	void markFileModified(QDomDocument document, QString name);
-	Q_SLOT void flushModifiedFiles();
-
-	QTimer *configuration_save;
-	QHash<QString, QDomDocument> modified_files;
 };
 
 
