@@ -30,6 +30,18 @@ namespace
 		else
 			return n.text();
 	}
+
+	void setDeviceValue(QDomNode conf, QString path, QString value)
+	{
+		QDomElement n = getElement(conf, path);
+		QDomNode text = n.ownerDocument().createTextNode(value);
+		QDomNodeList childs = n.childNodes();
+
+		for (int i = 0; i < childs.count(); ++i)
+			n.removeChild(childs.at(i));
+
+		n.appendChild(text);
+	}
 }
 
 QHash<QString, QDomDocument> ConfigFile::files, ConfigFile::modified;
@@ -79,6 +91,16 @@ void parseConfFile()
 	}
 	else
 		config[PI_MODE] = QString();
+}
+
+void setConfValue(QDomDocument document, QString path, QString value)
+{
+	setDeviceValue(getElement(document.documentElement(), "setup"), path, value);
+}
+
+QString getConfValue(QDomDocument document, QString path)
+{
+	return getDeviceValue(getElement(document.documentElement(), "setup"), path);
 }
 
 

@@ -294,6 +294,7 @@ signals:
 private:
 	void parseSettings();
 	void setSettingsEnableFlag(int id, bool enable);
+	void setConfValue(QString path, QString value);
 
 	ConfigFile *configurations;
 	int brightness;

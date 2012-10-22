@@ -11,6 +11,12 @@ class QTimer;
 /// Parse conf.xml and populate bt_global::config
 void parseConfFile();
 
+/// Set a configuration value in conf.xml
+void setConfValue(QDomDocument document, QString path, QString value);
+
+/// Get a configuration value from conf.xml
+QString getConfValue(QDomDocument document, QString path);
+
 
 /*!
  * \brief Global configuration handler class

@@ -11,8 +11,10 @@
 #include <limits>
 
 #if defined(BT_HARDWARE_X11)
+#define CONF_FILE "conf.xml"
 #define SETTINGS_FILE "settings.xml"
 #else
+#define CONF_FILE "/home/bticino/cfg/extra/0/conf.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
 #endif
 
@@ -68,11 +70,12 @@ GuiSettings::GuiSettings(QObject *parent) :
 {
 	configurations = new ConfigFile(this);
 
+	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
+
 	brightness = 50;
 	contrast = 50;
 	currency = EUR;
-	keyboardLayout = "";
-	language = Italian;
+	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
 	measurementSystem = Metric;
 	numberSeparators = Dot_Comma;
 	temperatureUnit = Celsius;
@@ -93,6 +96,13 @@ GuiSettings::GuiSettings(QObject *parent) :
 	player_alert = false;
 	message_alert = false;
 	scenario_recording_alert = false;
+
+	QString language_string = getConfValue(conf, "generale/language");
+
+	if (language_string == "it")
+		language = Italian;
+	else
+		language = English;
 
 	parseSettings();
 }
@@ -151,6 +161,12 @@ void GuiSettings::setSettingsEnableFlag(int id, bool enable)
 {
 	setEnableFlag(configurations->getConfiguration(SETTINGS_FILE), id, enable);
 	configurations->saveConfiguration(SETTINGS_FILE);
+}
+
+void GuiSettings::setConfValue(QString path, QString value)
+{
+	::setConfValue(configurations->getConfiguration(CONF_FILE), path, value);
+	configurations->saveConfiguration(CONF_FILE);
 }
 
 void GuiSettings::sendCommand(const QString &cmd)
@@ -261,9 +277,9 @@ void GuiSettings::setKeyboardLayout(QString l)
 	if (keyboardLayout == l)
 		return;
 
-	// TODO save value somewhere
 	keyboardLayout = l;
 	emit keyboardLayoutChanged();
+	setConfValue("generale/keyboard_lang", l);
 }
 
 GuiSettings::Language GuiSettings::getLanguage() const
@@ -276,9 +292,9 @@ void GuiSettings::setLanguage(Language l)
 	if (language == l)
 		return;
 
-	// TODO save value somewhere
 	language = l;
 	emit languageChanged();
+	setConfValue("generale/language", getLanguageString());
 }
 
 GuiSettings::Skin GuiSettings::getSkin() const

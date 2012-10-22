@@ -73,6 +73,8 @@ namespace
 
 GlobalProperties::GlobalProperties()
 {
+	parseConfFile();
+
 	wrapper = new InputContextWrapper(this);
 	main_widget = NULL;
 	monitor_off = false;
