@@ -25,12 +25,20 @@ var changing_page = false
 // entering page (used as temp if there is a page to be destroyed)
 var entering_page = undefined
 
+// callback to call when page has changed
+var _changePageDoneCallback = undefined
 
 /*****************************************************************************
   *
   * public API
   *
   ***************************************************************************/
+
+// are we changing page?
+function isPageChanging(callback) {
+    _changePageDoneCallback = callback
+    return changing_page
+}
 
 // Create a QML object from a given filename and pushes it on the stack
 function pushPage(filename, properties) {
@@ -191,6 +199,9 @@ function changePageDone() {
     stack.length = current_index + 1
 
     changing_page = false
+
+    if (_changePageDoneCallback)
+        _changePageDoneCallback()
 
     logDebug("Opening page: " + stack[current_index]._pageName)
 }
