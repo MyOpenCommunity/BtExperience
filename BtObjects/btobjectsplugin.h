@@ -33,7 +33,7 @@ private slots:
 
 private:
 	ObjectDataModel objmodel;
-	MediaDataModel room_model, floor_model, object_link_model, systems_model, note_model, profile_model, media_link_model;
+	MediaDataModel room_model, floor_model, object_link_model, systems_model, note_model, profile_model, media_link_model, media_model;
 	GlobalModels global_models;
 	UiiMapper uii_map;
 	QHash<int, int> uii_to_id;
@@ -41,12 +41,13 @@ private:
 
 	void createObjects();
 	void parseConfig();
-	void parseDevice();
 	void parseRooms(const QDomNode &container);
 	void parseFloors(const QDomNode &container);
 	void parseProfiles(const QDomNode &container);
 	void parseSystem(const QDomNode &container);
+	void parseHomepage(const QDomNode &container);
 	void parseMediaLinks(const QDomNode &xml_obj);
+	void parseMediaContainers(const QDomNode &container);
 	void parseSoundAmbientMulti(const QDomNode &ambient);
 	void parseSoundAmbientMono(const QDomNode &ambient);
 

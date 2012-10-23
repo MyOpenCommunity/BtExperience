@@ -27,7 +27,7 @@ void TestEnergyData::init()
 	for (int i = 0; i < 12; ++i)
 		goals.append(i + 11);
 
-	obj = new EnergyData(d, "", EnergyFamily::Electricity, "Kw", goals, true, QVariantList() << false << false, rate);
+	obj = new EnergyData(d, "", EnergyFamily::Electricity, "Kw", goals, true, QVariantList() << false << false, rate, 0);
 	dev = new EnergyDevice("1", 1, 1);
 
 	rate->setParent(obj);
@@ -1253,11 +1253,32 @@ void TestEnergyData::testGoalExceeded()
 	QCOMPARE(obj->goal_month_check, today.month());
 }
 
+void TestEnergyData::testGoalDisabled()
+{
+	ObjectTester t(obj, SIGNAL(goalExceededChanged()));
+	QDate today = QDate::currentDate();
+
+	obj->goals_enabled = false;
+
+	// check consumption goal
+	obj->checkConsumptionGoals();
+	compareClientCommand();
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), false);
+	QCOMPARE(obj->goal_month_check, -1);
+
+	// goal would be exceeded if enabled
+	obj->valueReceived(makeDeviceValues(EnergyDevice::DIM_CUMULATIVE_MONTH, today, ((today.month() - 1) + 11 + 1) * 1000));
+	t.checkNoSignals();
+	QCOMPARE(obj->getGoalExceeded(), false);
+	QCOMPARE(obj->goal_month_check, -1);
+}
+
 void TestEnergyItem::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
-	obj = new EnergyData(d, "", EnergyFamily::Electricity, "Kw", QVariantList(), true, QVariantList(), 0);
+	obj = new EnergyData(d, "", EnergyFamily::Electricity, "Kw", QVariantList(), true, QVariantList(), 0, 0);
 	dev = new EnergyDevice("1", 1, 1);
 }
 
@@ -1318,7 +1339,7 @@ void TestEnergyGraph::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
-	obj = new EnergyData(d, "", EnergyFamily::Electricity, "Kw", QVariantList(), true, QVariantList(), 0);
+	obj = new EnergyData(d, "", EnergyFamily::Electricity, "Kw", QVariantList(), true, QVariantList(), 0, 0);
 	dev = new EnergyDevice("1", 1, 1);
 }
 

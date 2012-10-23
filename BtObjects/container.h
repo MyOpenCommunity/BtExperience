@@ -65,7 +65,14 @@ public:
 		IdAmbient = 14,
 		IdMessages = 15,
 		IdSpecialAmbient = 16,
+		IdHomepage = 17,
 		IdSoundDiffusionMono = 18,
+		IdMultimediaRss = 19,
+		IdMultimediaRssMeteo = 20,
+		IdMultimediaWebRadio = 21,
+		IdMultimediaWebCam = 22,
+		IdMultimediaDevice = 23,
+		IdMultimediaWebLink = 24,
 		IdRooms = 100,
 		IdProfile = 101
 	};

@@ -23,7 +23,7 @@ class PowerAmplifierDevice;
 class ListManager;
 
 
-QList<ObjectInterface *> createLocalSources(bool is_multichannel);
+QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multimedia);
 
 QList<ObjectPair> parseAuxSource(const QDomNode &xml_node);
 QList<ObjectPair> parseMultimediaSource(const QDomNode &xml_node);
@@ -289,6 +289,7 @@ private:
 	DirectoryListModel *model;
 };
 
+
 class SourceUpnpMedia : public SourceMedia
 {
 	Q_OBJECT
@@ -296,8 +297,6 @@ public:
 	SourceUpnpMedia(const QString &name, SourceBase *s);
 	Q_INVOKABLE void startUpnpPlay(FileObject *file, int current_index, int total_files);
 };
-
-
 
 
 /*!

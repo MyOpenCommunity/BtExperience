@@ -178,9 +178,9 @@ QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multicha
 	return obj_list;
 }
 
-QList<ObjectInterface *> createLocalSources(bool is_multichannel)
+QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multimedia)
 {
-	QList<ObjectInterface *> sources;
+	QList<ObjectPair> sources;
 
 	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
 
@@ -192,24 +192,56 @@ QList<ObjectInterface *> createLocalSources(bool is_multichannel)
 		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
 	}
 
-	if ((*bt_global::config)[SOURCE_ADDRESS].isEmpty())
-		return sources;
+	SourceMultiMedia *source = 0;
 
-	SourceMultiMedia *source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice((*bt_global::config)[SOURCE_ADDRESS])));
+	if (!(*bt_global::config)[SOURCE_ADDRESS].isEmpty())
+		source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice((*bt_global::config)[SOURCE_ADDRESS])));
 
-	// TODO use configuration...
-	sources << new SourceIpRadio(QObject::tr("IP radio"), source);
-	sources << new SourceLocalMedia("USB1", "/media/sda1", source, SourceObject::FileSystem);
-	sources << new SourceLocalMedia("SD card", "/media/mmcblk0p1", source, SourceObject::FileSystem);
-	sources << new SourceUpnpMedia("Network shares", source);
+	foreach (QDomNode xml_obj, multimedia)
+	{
+		int id = getIntAttribute(xml_obj, "id");
+		XmlObject v(xml_obj);
 
-	// use a default
-	source->setSourceObject(static_cast<SourceObject *>(sources[0]));
-	// one of the above, used to destroy the object
-	source->setParent(sources[0]);
+		switch (id)
+		{
+		case ObjectInterface::IdIpRadio:
+			sources << ObjectPair(-1, new SourceIpRadio(QObject::tr("IP radio"), source));
+			break;
+		case ObjectInterface::IdDeviceUSB:
+		case ObjectInterface::IdDeviceSD:
+		case ObjectInterface::IdDeviceUPnP:
+			foreach (const QDomNode &ist, getChildren(xml_obj, "ist"))
+			{
+				v.setIst(ist);
+				int uii = v.intValue("uii");
+
+				switch (id)
+				{
+				case ObjectInterface::IdDeviceUSB:
+					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), "/media/sda1", source, SourceObject::FileSystem));
+					break;
+				case ObjectInterface::IdDeviceSD:
+					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), "/media/mmcblk0p1", source, SourceObject::FileSystem));
+					break;
+				case ObjectInterface::IdDeviceUPnP:
+					sources << ObjectPair(uii, new SourceUpnpMedia(v.value("descr"), source));
+					break;
+				}
+			}
+		}
+	}
+
+	if (source)
+	{
+		// use a default
+		source->setSourceObject(static_cast<SourceObject *>(sources[0].second));
+		// one of the above, used to destroy the object
+		source->setParent(sources[0].second);
+	}
 
 	return sources;
 }
+
 SoundAmbientBase::SoundAmbientBase(QString _name)
 {
 	name = _name;

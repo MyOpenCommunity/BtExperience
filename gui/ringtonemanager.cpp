@@ -33,6 +33,11 @@ RingtoneManager::RingtoneManager(QString ringtone_file, MultiMediaPlayer *_playe
 		qFatal("Failed to load ringtone file %s", qPrintable(ringtone_file));
 }
 
+MultiMediaPlayer *RingtoneManager::getMediaPlayer() const
+{
+	return player;
+}
+
 QString RingtoneManager::ringtoneFromIndex(int index) const
 {
 	return ringtone_to_file.value(index, QString());

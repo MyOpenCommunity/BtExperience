@@ -8,6 +8,7 @@ class ObjectDataModel;
 class Note;
 class ItemInterface;
 class ObjectInterface;
+class Container;
 
 
 /*!
@@ -95,6 +96,22 @@ class GlobalModels : public QObject
 	Q_PROPERTY(MediaDataModel *profiles READ getProfiles CONSTANT)
 
 	/*!
+		\brief List of containers for multimedia section
+
+		List of Container objects, \ref ItemInterface::containerUii is -1.
+
+		\sa mediaLinks
+	*/
+	Q_PROPERTY(MediaDataModel *mediaContainers READ getMediaContainers CONSTANT)
+
+	/*!
+		\brief Container for homepage links
+
+		\sa mediaLinks
+	*/
+	Q_PROPERTY(Container *homepageLinks READ getHomepageLinks CONSTANT)
+
+	/*!
 		\brief List of user profiles
 
 		List of MediaLink objects, \ref ItemInterface::containerUii is the containing profile.
@@ -150,6 +167,12 @@ public:
 	void setProfiles(MediaDataModel *profiles);
 	MediaDataModel *getProfiles() const;
 
+	void setMediaContainers(MediaDataModel *media_containers);
+	MediaDataModel *getMediaContainers() const;
+
+	void setHomepageLinks(Container *homepage_links);
+	Container *getHomepageLinks() const;
+
 	void setMediaLinks(MediaDataModel *media_links);
 	MediaDataModel *getMediaLinks() const;
 
@@ -162,6 +185,8 @@ private:
 	MediaDataModel *notes;
 	MediaDataModel *profiles;
 	MediaDataModel *media_links;
+	MediaDataModel *media_containers;
+	Container *homepage_links;
 };
 
 #endif // GLOBALMODELS_H

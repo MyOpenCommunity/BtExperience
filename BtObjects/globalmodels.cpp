@@ -8,6 +8,14 @@ GlobalModels::GlobalModels()
 {
 	floors = 0;
 	rooms = 0;
+	object_links = 0;
+	systems = 0;
+	my_home_objects = 0;
+	notes = 0;
+	profiles = 0;
+	media_links = 0;
+	media_containers = 0;
+	homepage_links = 0;
 }
 
 void GlobalModels::setFloors(MediaDataModel *_floors)
@@ -105,6 +113,26 @@ void GlobalModels::setProfiles(MediaDataModel *_profiles)
 MediaDataModel *GlobalModels::getProfiles() const
 {
 	return profiles;
+}
+
+void GlobalModels::setMediaContainers(MediaDataModel *_media_containers)
+{
+	media_containers = _media_containers;
+}
+
+MediaDataModel *GlobalModels::getMediaContainers() const
+{
+	return media_containers;
+}
+
+void GlobalModels::setHomepageLinks(Container *_homepage_links)
+{
+	homepage_links = _homepage_links;
+}
+
+Container *GlobalModels::getHomepageLinks() const
+{
+	return homepage_links;
 }
 
 void GlobalModels::setMediaLinks(MediaDataModel *_media_links)

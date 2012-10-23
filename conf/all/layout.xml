@@ -192,6 +192,48 @@
 			<link uii="5005" />
 		</ist>
 	</container>
+	<container id="17" descr="Home page" img="home.png" img_type="0">
+		<ist uii="316">
+			<link uii="8001" img="web_radio.png" />
+			<link uii="8006" img="Corriere.png"/>
+			<link uii="8005" img="Weather.png"/>
+		</ist>
+	</container>
+	<container id="19" descr="Rss" img="rss.png" >
+		<ist uii="317">
+			<link uii="8003" />
+			<link uii="8004" />
+		</ist>
+	</container>
+	<container id="20" descr="Rss meteo" img="rss_meteo.png" >
+		<ist uii="318">
+			<link uii="8013" />
+		</ist>
+	</container>
+	<container id="21" descr="Web radio" img="web_radio.png" >
+		<ist uii="319">
+			<link uii="8011" />
+		</ist>
+	</container>
+	<container id="22" descr="Web cam" img="web_cam.png" >
+		<ist uii="320">
+			<link uii="8002" />
+		</ist>
+	</container>
+	<container id="23" descr="Device" img="device.png" >
+		<ist uii="321">
+			<link uii="11011" />
+			<link uii="11012" />
+			<link uii="11013" />
+		</ist>
+	</container>
+	<container id="24" descr="Web links" img="web_links.png" >
+		<ist uii="322">
+			<link uii="8012" />
+			<link uii="8007" />
+			<link uii="8008" />
+		</ist>
+	</container>
 	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
 		<ist uii="901" descr="famiglia" img="images/home/card_1.png" >
 			<link uii="8006" x="250" y="100" />

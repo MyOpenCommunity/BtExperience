@@ -49,14 +49,12 @@
 #define WATCHDOG_INTERVAL 5000
 
 #if defined(BT_HARDWARE_X11)
-#define DEVICE_FILE "conf.xml"
-#define CONF_FILE "archive.xml"
+#define ARCHIVE_FILE "archive.xml"
 #define LAYOUT_FILE "layout.xml"
 #define NOTES_FILE "notes.xml"
 #define SETTINGS_FILE "settings.xml"
 #else
-#define DEVICE_FILE "/home/bticino/cfg/extra/0/conf.xml"
-#define CONF_FILE "/home/bticino/cfg/extra/0/archive.xml"
+#define ARCHIVE_FILE "/home/bticino/cfg/extra/0/archive.xml"
 #define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
 #define NOTES_FILE "/home/bticino/cfg/extra/0/notes.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
@@ -67,16 +65,6 @@ QHash<GlobalField, QString> *bt_global::config;
 
 namespace
 {
-	QString getDeviceValue(QDomNode conf, QString path, QString def_value = QString())
-	{
-		QDomElement n = getElement(conf, path);
-
-		if (n.isNull())
-			return def_value;
-		else
-			return n.text();
-	}
-
 	template<class Tr>
 	QList<Tr> convertObjectPairList(QList<ObjectPair> pairs)
 	{
@@ -178,10 +166,7 @@ namespace
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
-	// for logging
-	bt_global::config = new QHash<GlobalField, QString>();
-
-	parseDevice();
+	parseConfFile();
 
 	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList(), QStringList());
 	SoundPlayer::setGlobalCommandLineArguments("aplay", QStringList() << "<FILE_NAME>");
@@ -218,6 +203,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	global_models.setNotes(&note_model);
 	global_models.setProfiles(&profile_model);
 	global_models.setMediaLinks(&media_link_model);
+	global_models.setMediaContainers(&media_model);
 
 	ObjectModel::setGlobalSource(&objmodel);
 	createObjects();
@@ -225,7 +211,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	QList<MediaDataModel *> models = QList<MediaDataModel *>()
 			<< &room_model << &floor_model << &object_link_model << &systems_model
-			<< &objmodel << &profile_model << &media_link_model;
+			<< &objmodel << &profile_model << &media_link_model << &media_model;
 
 	foreach (MediaDataModel *model, models)
 	{
@@ -242,51 +228,9 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	device::initDevices();
 }
 
-void BtObjectsPlugin::parseDevice()
-{
-	QDomDocument device = configurations->getConfiguration(DEVICE_FILE);
-	QDomElement root = getElement(device.documentElement(), "setup");
-	QHash<GlobalField, QString> &config = *bt_global::config;
-
-	Q_ASSERT_X(!root.isNull(), "BtObjectsPlugin::parseDevice", "Invalid device configuration file");
-
-	config[TEMPERATURE_SCALE] = getDeviceValue(root, "generale/temperature/format", QString::number(CELSIUS));
-	config[LANGUAGE] = getDeviceValue(root, "generale/language", DEFAULT_LANGUAGE);
-	config[DATE_FORMAT] = getDeviceValue(root, "generale/clock/dateformat", QString::number(EUROPEAN_DATE));
-	config[MODEL] = getDeviceValue(root, "generale/modello");
-	config[NAME] = getDeviceValue(root, "generale/nome");
-
-	config[SOURCE_ADDRESS] = getDeviceValue(root, "scs/coordinate_scs/my_mmaddress");
-	config[AMPLIFIER_ADDRESS] = getDeviceValue(root, "scs/coordinate_scs/my_aaddress");
-	config[TS_NUMBER] = getDeviceValue(root, "scs/coordinate_scs/diag_addr", "0");
-
-	if (config[SOURCE_ADDRESS] == "-1")
-		config[SOURCE_ADDRESS] = "";
-	if (config[AMPLIFIER_ADDRESS] == "-1")
-		config[AMPLIFIER_ADDRESS] = "";
-
-	QString guard_addr = getDeviceValue(root, "vdes/guardunits/item");
-	if (!guard_addr.isEmpty())
-		config[GUARD_UNIT_ADDRESS] = "3" + guard_addr;
-
-	QDomElement vde_node = getElement(root, "vdes");
-	QDomNode vde_pi_node = getChildWithName(vde_node, "communication");
-	if (!vde_pi_node.isNull())
-	{
-		QString address = getTextChild(vde_pi_node, "address");
-		QString dev = getTextChild(vde_pi_node, "dev");
-		if (!address.isNull() && address != "-1")
-			config[PI_ADDRESS] = dev + address;
-
-		config[PI_MODE] = getTextChild(vde_pi_node, "mode");
-	}
-	else
-		config[PI_MODE] = QString();
-}
-
 void BtObjectsPlugin::createObjects()
 {
-	QDomDocument document = configurations->getConfiguration(CONF_FILE);
+	QDomDocument document = configurations->getConfiguration(ARCHIVE_FILE);
 	QDomDocument settings = configurations->getConfiguration(SETTINGS_FILE);
 
 	QList<AntintrusionZone *> antintrusion_zones;
@@ -296,6 +240,7 @@ void BtObjectsPlugin::createObjects()
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
 	QHash<int, EnergyRate *> rates;
 	QDomNode cu99zones;
+	QList<QDomNode> multimedia;
 	bool is_multichannel = false;
 
 	foreach (const QDomNode &xml_obj, getChildren(settings.documentElement(), "obj"))
@@ -546,7 +491,13 @@ void BtObjectsPlugin::createObjects()
 			break;
 
 		case ObjectInterface::IdIpRadio:
+			multimedia.append(xml_obj);
 			obj_list = parseIpRadio(xml_obj);
+			break;
+		case ObjectInterface::IdDeviceUPnP:
+		case ObjectInterface::IdDeviceUSB:
+		case ObjectInterface::IdDeviceSD:
+			multimedia.append(xml_obj);
 			break;
 
 		case ObjectInterface::IdMessages:
@@ -579,8 +530,12 @@ void BtObjectsPlugin::createObjects()
 		objmodel << createIntercom(intercom);
 	}
 
-	foreach (ObjectInterface *o, createLocalSources(is_multichannel))
-		objmodel << o;
+	foreach (ObjectPair p, createLocalSources(is_multichannel, multimedia))
+	{
+		if (p.first != -1)
+			uii_map.insert(p.first, p.second);
+		objmodel << p.second;
+	}
 
 	objmodel << new HardwareSettings;
 	objmodel << new PlatformSettings(new PlatformDevice);
@@ -679,7 +634,7 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case ObjectInterface::IdEnergyRate:
 		return configurations->getConfiguration(SETTINGS_FILE);
 	default:
-		return configurations->getConfiguration(CONF_FILE);
+		return configurations->getConfiguration(ARCHIVE_FILE);
 	}
 }
 
@@ -693,7 +648,7 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
 
 	int id = uii_to_id[uii];
 	QDomDocument document = findDocumentForId(id);
-	QString conf_name = document.documentElement().tagName() == "archive" ? CONF_FILE :
+	QString conf_name = document.documentElement().tagName() == "archive" ? ARCHIVE_FILE :
 			    document.documentElement().tagName() == "settings" ? SETTINGS_FILE :
 										 LAYOUT_FILE;
 	QString child_name = document.documentElement().tagName() == "layout" ? "container" : "obj";
@@ -782,14 +737,14 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 
 	if (obj_media)
 	{
-		QDomDocument archive = configurations->getConfiguration(CONF_FILE);
+		QDomDocument archive = configurations->getConfiguration(ARCHIVE_FILE);
 
 		uii = uii_map.nextUii();
 		uii_map.insert(uii, obj_media);
 		uii_to_id[uii] = obj_media->getType();
 
 		createMediaLink(archive, uii, obj_media);
-		configurations->saveConfiguration(CONF_FILE);
+		configurations->saveConfiguration(ARCHIVE_FILE);
 	}
 	else if (obj_container)
 	{
@@ -939,6 +894,17 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdSettings:
 		case Container::IdMessages:
 			parseSystem(container);
+			break;
+		case Container::IdHomepage:
+			parseHomepage(container);
+			break;
+		case Container::IdMultimediaRss:
+		case Container::IdMultimediaRssMeteo:
+		case Container::IdMultimediaWebRadio:
+		case Container::IdMultimediaWebCam:
+		case Container::IdMultimediaDevice:
+		case Container::IdMultimediaWebLink:
+			parseMediaContainers(container);
 			break;
 		}
 	}
@@ -1110,6 +1076,70 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 			}
 
 			o->setContainerUii(system_uii);
+		}
+	}
+}
+
+void BtObjectsPlugin::parseHomepage(const QDomNode &container)
+{
+	XmlObject v(container);
+	int homepage_id = getIntAttribute(container, "id");
+
+	foreach (const QDomNode &ist, getChildren(container, "ist"))
+	{
+		v.setIst(ist);
+		int homepage_uii = getIntAttribute(ist, "uii");
+		Container *homepage = new Container(homepage_id, homepage_uii, v.value("img"), v.value("descr"));
+
+		global_models.setHomepageLinks(homepage);
+		uii_map.insert(homepage_uii, homepage);
+		uii_to_id[homepage_uii] = homepage_id;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int link_uii = getIntAttribute(link, "uii");
+			ItemInterface *l = uii_map.value<ItemInterface>(link_uii);
+
+			if (!l)
+			{
+				qWarning() << "Invalid uii" << link_uii << "in homepage";
+				Q_ASSERT_X(false, "parseHomepage", "Invalid uii");
+				continue;
+			}
+
+			l->setContainerUii(homepage_uii);
+		}
+	}
+}
+
+void BtObjectsPlugin::parseMediaContainers(const QDomNode &container)
+{
+	XmlObject v(container);
+	int media_id = getIntAttribute(container, "id");
+
+	foreach (const QDomNode &ist, getChildren(container, "ist"))
+	{
+		v.setIst(ist);
+		int media_uii = getIntAttribute(ist, "uii");
+		Container *media = new Container(media_id, media_uii, v.value("img"), v.value("descr"));
+
+		media_model << media;
+		uii_map.insert(media_uii, media);
+		uii_to_id[media_uii] = media_id;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int link_uii = getIntAttribute(link, "uii");
+			ItemInterface *l = uii_map.value<ItemInterface>(link_uii);
+
+			if (!l)
+			{
+				qWarning() << "Invalid uii" << link_uii << "in media container";
+				Q_ASSERT_X(false, "parseMediaContainers", "Invalid uii");
+				continue;
+			}
+
+			l->setContainerUii(media_uii);
 		}
 	}
 }

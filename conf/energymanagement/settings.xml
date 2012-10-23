@@ -16,6 +16,42 @@
 		<ist uii="30104" rate_id="5" descr="" name="EUR" type="-1" tariff="4" symbol="&#x20AC;" n_decimal="0" n_integer="3" delta="1" />
 	</obj>
 	<obj cid="14001" id="14001">
-		<ist uii="3201" enable="1" />
+		<ist uii="30105" enable="1" />
+	</obj>
+	<obj cid="14255" id="14255" enable="0">
+		<ist uii="30106" enable="1" />
+	</obj>
+	<obj cid="14256" id="14256" enable="0">
+		<ist uii="2" enable="1" />
+	</obj>
+	<obj cid="14257" id="14257" enable="0">
+		<ist uii="30108" enable="1" />
+	</obj>
+	<obj cid="14258" id="14258" enable="0">
+		<ist uii="30109" enable="1" />
+	</obj>
+	<obj cid="14259" id="14259" enable="0">
+		<ist uii="5" enable="1" />
+	</obj>
+	<obj cid="14260" id="14260" enable="0">
+		<ist uii="30111" enable="1" />
+	</obj>
+	<obj cid="14261" id="14261" enable="0">
+		<ist uii="30112" enable="1" />
+	</obj>
+	<obj cid="14262" id="14262" enable="0">
+		<ist uii="30113" enable="1" />
+	</obj>
+	<obj cid="14263" id="14263" enable="0">
+		<ist uii="30114" enable="1" />
+	</obj>
+	<obj cid="14264" id="14264" enable="0">
+		<ist uii="9" enable="1" />
+	</obj>
+	<obj cid="14265" id="14265" enable="0">
+		<ist uii="10" enable="1" />
+	</obj>
+        <obj cid="14266" id="14266" enable="0">
+		<ist uii="30117" enable="1" />
 	</obj>
 </settings>
