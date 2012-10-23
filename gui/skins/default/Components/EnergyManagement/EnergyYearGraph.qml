@@ -191,7 +191,7 @@ Item {
             top: columnsHeader.top
             left: parent.left
         }
-        text: qsTr("units")
+        text: showCurrency ? energyData.rate.currencySymbol : energyData.cumulativeUnit
         color: "white"
         font.pixelSize: 11
     }

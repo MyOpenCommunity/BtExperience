@@ -164,7 +164,7 @@ Item {
             topMargin: 20
             left: valuesAxis.left
         }
-        text: qsTr("units")
+        text: showCurrency ? energyData.rate.currencySymbol : energyData.cumulativeUnit
         color: "white"
         font.pixelSize: 12
     }

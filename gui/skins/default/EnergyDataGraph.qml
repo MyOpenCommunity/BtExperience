@@ -76,7 +76,8 @@ Page {
             Row {
                 id: timeButtonRow
                 anchors {
-                    top: buttonRow.top
+                    top: parent.top
+                    topMargin: parent.height / 100 * 3
                     left: divisorLine.left
                 }
 
@@ -149,11 +150,12 @@ Page {
                 anchors {
                     top: parent.top
                     topMargin: parent.height / 100 * 3
-                    right: buttonRow.left
+                    right: buttonRowLoader.left
                     left: timeButtonRow.right
                 }
 
                 Row {
+                    id: tableGraphButtons
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     ButtonImageThreeStates {
@@ -203,36 +205,43 @@ Page {
                 }
             }
 
-            Row {
-                id: buttonRow
+            Loader {
+                id: buttonRowLoader
                 anchors {
                     top: parent.top
                     topMargin: parent.height / 100 * 3
                     right: divisorLine.right
                 }
+                sourceComponent: energyData.rate !== null ? buttonRowComponent : undefined
+            }
 
-                ButtonThreeStates {
-                    id: moneyButton
-                    font.pixelSize: 14
-                    defaultImage: "images/common/btn_66x35.svg"
-                    pressedImage: "images/common/btn_66x35_P.svg"
-                    selectedImage: "images/common/btn_66x35_S.svg"
-                    shadowImage: "images/common/btn_shadow_66x35.svg"
-                    text: qsTr("€")
-                    status: privateProps.showCurrency === true ? 1 : 0
-                    onClicked: privateProps.showCurrency = true
-                    enabled: energyData.rate !== null
-                }
-                ButtonThreeStates {
-                    id: consumptionButton
-                    font.pixelSize: 14
-                    defaultImage: "images/common/btn_66x35.svg"
-                    pressedImage: "images/common/btn_66x35_P.svg"
-                    selectedImage: "images/common/btn_66x35_S.svg"
-                    shadowImage: "images/common/btn_shadow_66x35.svg"
-                    text: qsTr("units")
-                    status: privateProps.showCurrency === false ? 1 : 0
-                    onClicked: privateProps.showCurrency = false
+            Component {
+                id: buttonRowComponent
+
+                Row {
+                    ButtonThreeStates {
+                        id: moneyButton
+                        font.pixelSize: 14
+                        defaultImage: "images/common/btn_66x35.svg"
+                        pressedImage: "images/common/btn_66x35_P.svg"
+                        selectedImage: "images/common/btn_66x35_S.svg"
+                        shadowImage: "images/common/btn_shadow_66x35.svg"
+                        text: energyData.rate.currencySymbol
+                        status: privateProps.showCurrency === true ? 1 : 0
+                        onClicked: privateProps.showCurrency = true
+                        enabled: energyData.rate !== null
+                    }
+                    ButtonThreeStates {
+                        id: consumptionButton
+                        font.pixelSize: 14
+                        defaultImage: "images/common/btn_66x35.svg"
+                        pressedImage: "images/common/btn_66x35_P.svg"
+                        selectedImage: "images/common/btn_66x35_S.svg"
+                        shadowImage: "images/common/btn_shadow_66x35.svg"
+                        text: energyData.cumulativeUnit
+                        status: privateProps.showCurrency === false ? 1 : 0
+                        onClicked: privateProps.showCurrency = false
+                    }
                 }
             }
 
@@ -240,7 +249,7 @@ Page {
                 id: divisorLine
                 source: "images/energy/linea_grafico.svg"
                 anchors {
-                    top: buttonRow.bottom
+                    top: timeButtonRow.bottom
                     topMargin: parent.height / 100 * 3
                     horizontalCenter: parent.horizontalCenter
                 }
