@@ -239,6 +239,7 @@ void BtObjectsPlugin::createObjects()
 	QHash<int, QPair<QDomNode, QDomNode> > probe4zones, splitcommands;
 	QHash<int, EnergyRate *> rates;
 	QDomNode cu99zones;
+	QList<QDomNode> multimedia;
 	bool is_multichannel = false;
 
 	foreach (const QDomNode &xml_obj, getChildren(settings.documentElement(), "obj"))
@@ -489,7 +490,13 @@ void BtObjectsPlugin::createObjects()
 			break;
 
 		case ObjectInterface::IdIpRadio:
+			multimedia.append(xml_obj);
 			obj_list = parseIpRadio(xml_obj);
+			break;
+		case ObjectInterface::IdDeviceUPnP:
+		case ObjectInterface::IdDeviceUSB:
+		case ObjectInterface::IdDeviceSD:
+			multimedia.append(xml_obj);
 			break;
 
 		case ObjectInterface::IdMessages:
@@ -522,8 +529,12 @@ void BtObjectsPlugin::createObjects()
 		objmodel << createIntercom(intercom);
 	}
 
-	foreach (ObjectInterface *o, createLocalSources(is_multichannel))
-		objmodel << o;
+	foreach (ObjectPair p, createLocalSources(is_multichannel, multimedia))
+	{
+		if (p.first != -1)
+			uii_map.insert(p.first, p.second);
+		objmodel << p.second;
+	}
 
 	objmodel << new HardwareSettings;
 	objmodel << new PlatformSettings(new PlatformDevice);

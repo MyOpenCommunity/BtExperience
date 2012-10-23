@@ -162,6 +162,9 @@ public:
 		IdEnergyRate = 14267,
 
 		IdIpRadio = 16000,
+		IdDeviceUPnP = 16006,
+		IdDeviceUSB = 16007,
+		IdDeviceSD = 16008,
 
 		IdMessages = 16004,
 
