@@ -983,6 +983,8 @@ void EnergyData::checkConsumptionGoals()
 
 void EnergyData::checkConsumptionGoal(QDate date, double month_value)
 {
+	if (!goals_enabled)
+		return;
 	// only check goal for current month
 	QDate today = QDate::currentDate();
 	if (date.month() != today.month() || date.year() != today.year())
