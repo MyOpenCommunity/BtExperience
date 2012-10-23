@@ -285,7 +285,7 @@ public:
 		Currency    = 1
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, EnergyFamily::FamilyType family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate);
+	EnergyData(EnergyDevice *dev, QString name, EnergyFamily::FamilyType family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate, int rate_decimals);
 	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
@@ -334,6 +334,7 @@ public:
 	QString getCumulativeUnit() const;
 
 	int getDecimals() const;
+	int getRateDecimals() const;
 
 	void setThresholdEnabled(QVariantList enabled);
 	QVariantList getThresholdEnabled() const;
@@ -445,6 +446,7 @@ private:
 	double unit_conversion;
 
 	int decimals; // the number of decimals in the current measure unit
+	int rate_decimals;
 
 	EnergyFamily::FamilyType family;
 

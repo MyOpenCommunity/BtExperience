@@ -197,7 +197,7 @@ public:
 		Critical
 	};
 
-	EnergyLoadManagement(LoadsDevice *dev, QString name, EnergyRate *rate);
+	EnergyLoadManagement(LoadsDevice *dev, QString name, EnergyRate *rate, int rate_decimals);
 
 	virtual int getObjectId() const
 	{
@@ -262,6 +262,7 @@ protected:
 
 private:
 	EnergyRate *rate;
+	int rate_decimals;
 	LoadStatus status;
 	double consumption;
 	QList<EnergyLoadTotal *> period_totals;
@@ -318,7 +319,7 @@ class EnergyLoadManagementWithControlUnit : public EnergyLoadManagement
 	Q_PROPERTY(int forceDuration READ getForceDuration NOTIFY forceDurationChanged)
 
 public:
-	EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool is_advanced, QString name, EnergyRate *rate);
+	EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool is_advanced, QString name, EnergyRate *rate, int rate_decimals);
 
 	virtual bool getHasControlUnit() const { return true; }
 	virtual bool getHasConsumptionMeters() const;

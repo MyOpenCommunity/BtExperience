@@ -180,6 +180,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 		QVariantList goals, thresholds_enabled;
 
 		EnergyRate *rate = 0;
+		int rate_decimals = 0;
 		if (v.intValue("rate_enabled"))
 		{
 			int rate_id = v.intValue("rate_id");
@@ -187,6 +188,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 			if (!rates.contains(rate_id))
 				qFatal("Invalid rate id %d", rate_id);
 			rate = rates[rate_id];
+			rate_decimals = v.intValue("rate_n_decimal_view");
 		}
 
 		bool goals_enabled = v.intValue("consumption_goal_enabled");
@@ -210,7 +212,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 		thresholds_enabled << bool(v.intValue("threshold_one_enable"));
 		thresholds_enabled << bool(v.intValue("threshold_two_enable"));
 
-		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, goals_enabled, thresholds_enabled, rate));
+		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, goals_enabled, thresholds_enabled, rate, rate_decimals));
 	}
 	return obj_list;
 }
@@ -235,7 +237,7 @@ void updateEnergyData(QDomNode node, EnergyData *item)
 		setTextChild(goals, goal_names[i], QString::number(values[i].toDouble()));
 }
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyType _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyType _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate, int _rate_decimals)
 {
 	name = _name;
 	family = _family;
@@ -243,6 +245,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyTy
 	rate = _rate;
 	energy_unit = _unit;
 	goals = _goals;
+	rate_decimals = _rate_decimals;
 	unit_conversion = unitConversionFactor(getEnergyType(), _unit);
 	thresholds_enabled = _thresholds_enabled;
 	goals_enabled = _goals_enabled;
@@ -348,6 +351,10 @@ int EnergyData::getDecimals() const
 	return decimals;
 }
 
+int EnergyData::getRateDecimals() const
+{
+	return rate_decimals;
+}
 
 void EnergyData::setThresholdEnabled(QVariantList enabled)
 {

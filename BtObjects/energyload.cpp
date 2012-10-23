@@ -37,7 +37,7 @@ QList<ObjectPair> parseLoadDiagnostic(const QDomNode &xml_node)
 		int uii = getIntAttribute(ist, "uii");
 
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), 0));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), 0, 0));
 	}
 	return obj_list;
 }
@@ -53,6 +53,7 @@ QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node, QHash<int, EnergyRat
 		int uii = getIntAttribute(ist, "uii");
 
 		EnergyRate *rate = 0;
+		int rate_decimals = 0;
 		if (v.intValue("rate_enabled"))
 		{
 			int rate_id = v.intValue("rate_id");
@@ -60,10 +61,11 @@ QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node, QHash<int, EnergyRat
 			if (!rates.contains(rate_id))
 				qFatal("Invalid rate id %d", rate_id);
 			rate = rates[rate_id];
+			rate_decimals = v.intValue("rate_n_decimal_view");
 		}
 
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagementWithControlUnit(d, v.intValue("advanced"), v.value("descr"), rate));
+		obj_list << ObjectPair(uii, new EnergyLoadManagementWithControlUnit(d, v.intValue("advanced"), v.value("descr"), rate, rate_decimals));
 	}
 	return obj_list;
 }
@@ -79,6 +81,7 @@ QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node, QHash<int, Energy
 		int uii = getIntAttribute(ist, "uii");
 
 		EnergyRate *rate = 0;
+		int rate_decimals = 0;
 		if (v.intValue("rate_enabled"))
 		{
 			int rate_id = v.intValue("rate_id");
@@ -86,10 +89,11 @@ QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node, QHash<int, Energy
 			if (!rates.contains(rate_id))
 				qFatal("Invalid rate id %d", rate_id);
 			rate = rates[rate_id];
+			rate_decimals = v.intValue("rate_n_decimal_view");
 		}
 
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), rate));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), rate, rate_decimals));
 	}
 	return obj_list;
 }
@@ -144,12 +148,13 @@ void EnergyLoadTotal::setResetDateTime(QDateTime reset)
 }
 
 
-EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, EnergyRate *_rate) :
+EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, EnergyRate *_rate, int _rate_decimals) :
 	DeviceObjectInterface(_dev)
 {
 	dev = _dev;
 	name = _name;
 	rate = _rate;
+	rate_decimals = _rate_decimals;
 	status = Unknown;
 	consumption = 0;
 
@@ -281,8 +286,8 @@ void EnergyLoadManagement::valueReceived(const DeviceValues &values_list)
 }
 
 
-EnergyLoadManagementWithControlUnit::EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool advanced, QString name, EnergyRate *_rate) :
-	EnergyLoadManagement(dev, name, _rate)
+EnergyLoadManagementWithControlUnit::EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool advanced, QString name, EnergyRate *_rate, int _rate_decimals) :
+	EnergyLoadManagement(dev, name, _rate, _rate_decimals)
 {
 	load_enabled = load_forced = false;
 	is_advanced = advanced;
