@@ -120,10 +120,6 @@ GlobalProperties::GlobalProperties()
 	setMonitorOff(false);
 }
 
-GlobalProperties::~GlobalProperties()
-{
-}
-
 void GlobalProperties::initAudio()
 {
 	if (videoPlayer)

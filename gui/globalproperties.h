@@ -67,7 +67,6 @@ class GlobalProperties : public QObject
 
 public:
 	GlobalProperties();
-	~GlobalProperties();
 	int getMainWidth() const;
 	int getMainHeight() const;
 	int getLastTimePress() const;
