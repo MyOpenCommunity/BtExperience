@@ -17,6 +17,8 @@ class MultiMediaPlayer;
 class SoundPlayer;
 class RingtoneManager;
 class ConfigFile;
+class DebugTiming;
+class logger;
 
 #ifdef BT_MALIIT
 #include <QSharedPointer>
@@ -65,8 +67,15 @@ class GlobalProperties : public QObject
 	// A property to turn off/on the monitor from QML
 	Q_PROPERTY(bool monitorOff READ isMonitorOff WRITE setMonitorOff NOTIFY monitorOffChanged)
 
+	// Debug touchscreen events
+	Q_PROPERTY(bool debugTs READ getDebugTs CONSTANT)
+
+	// Debug timing between various GUI events
+	Q_PROPERTY(DebugTiming *debugTiming READ getDebugTiming CONSTANT)
+
+
 public:
-	GlobalProperties();
+	GlobalProperties(logger *log);
 	int getMainWidth() const;
 	int getMainHeight() const;
 	int getLastTimePress() const;
@@ -81,6 +90,8 @@ public:
 	QString getExtraPath() const;
 	bool isMonitorOff() const;
 	void setMonitorOff(bool newValue);
+	bool getDebugTs();
+	DebugTiming *getDebugTiming();
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE void takeScreenshot(QRect rect, QString filename);
@@ -118,7 +129,7 @@ private slots:
 	void sendDelayedFrames();
 
 private:
-	void parseSettings();
+	void parseSettings(logger *log);
 
 	InputContextWrapper *wrapper;
 	QDeclarativeView *main_widget;
@@ -133,6 +144,8 @@ private:
 	QTimer *delayed_frame_timer;
 	ConfigFile *configurations;
 	bool monitor_off;
+	bool debug_touchscreen;
+	DebugTiming *debug_timing;
 
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
@@ -142,6 +155,19 @@ private:
 	QSharedPointer<Maliit::SettingsEntry> keyboard_layout;
 	QHash<QString, QString> language_map;
 #endif
+};
+
+class DebugTiming : public QObject
+{
+	Q_OBJECT
+public:
+	DebugTiming(logger *log, bool enabled, QObject *parent);
+	Q_INVOKABLE void logTiming(const QString &message);
+
+private:
+	QTime last_message;
+	logger *app_logger;
+	bool is_enabled;
 };
 
 

@@ -325,7 +325,7 @@ int main(int argc, char *argv[])
 	app.setApplicationName(QString("Nokia"));
 	app.setApplicationVersion(QString("Mobile"));
 
-	GlobalProperties global;
+	GlobalProperties global(app_logger);
 	ImageReader::setBasePath(global.getBasePath());
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
 	BootManager boot_manager(&global);

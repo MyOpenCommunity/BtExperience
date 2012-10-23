@@ -10,6 +10,7 @@
 #include "configfile.h"
 #include "devices_cache.h"
 #include "xmlobject.h"
+#include <logger.h>
 
 #include <QTimer>
 #include <QDateTime>
@@ -41,6 +42,8 @@ namespace
 	enum Parsing
 	{
 		Beep = 14001,
+		DebugTouchscreen = 123456,
+		DebugEventTiming
 	};
 
 	void setEnableFlag(QDomDocument document, int id, bool enable)
@@ -71,7 +74,7 @@ namespace
 }
 
 
-GlobalProperties::GlobalProperties()
+GlobalProperties::GlobalProperties(logger *log)
 {
 	parseConfFile();
 
@@ -90,6 +93,7 @@ GlobalProperties::GlobalProperties()
 	qmlRegisterUncreatableType<PhotoPlayer>("BtExperience", 1, 0, "PhotoPlayer", "");
 	qmlRegisterUncreatableType<AudioState>("BtExperience", 1, 0, "AudioState", "");
 	qmlRegisterUncreatableType<RingtoneManager>("BtExperience", 1, 0, "RingtoneManager", "");
+	qmlRegisterUncreatableType<DebugTiming>("BtExperience", 1, 0, "DebugTiming", "");
 
 	configurations = new ConfigFile(this);
 	settings = new GuiSettings(this);
@@ -106,7 +110,7 @@ GlobalProperties::GlobalProperties()
 	connect(secs_timer, SIGNAL(timeout()), this, SIGNAL(lastTimePressChanged()));
 	secs_timer->start(1000);
 
-	parseSettings();
+	parseSettings(log);
 
 #ifdef BT_MALIIT
 	maliit_settings = Maliit::SettingsManager::create();
@@ -173,7 +177,7 @@ void GlobalProperties::initAudio()
 	ringtone_manager->setRingtone(RingtoneManager::IntercomFloorcall, 5);
 }
 
-void GlobalProperties::parseSettings()
+void GlobalProperties::parseSettings(logger *log)
 {
 	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
 
@@ -185,6 +189,15 @@ void GlobalProperties::parseSettings()
 		{
 		case Beep:
 			settings->setBeep(parseEnableFlag(xml_obj));
+			break;
+		case DebugTouchscreen:
+			debug_touchscreen = parseEnableFlag(xml_obj);
+			break;
+		case DebugEventTiming:
+		{
+			bool debug_timing_enabled = parseEnableFlag(xml_obj);
+			debug_timing = new DebugTiming(log, debug_timing_enabled, this);
+		}
 			break;
 		}
 	}
@@ -253,6 +266,17 @@ void GlobalProperties::setMonitorOff(bool newValue)
 
 	emit monitorOffChanged();
 }
+
+bool GlobalProperties::getDebugTs()
+{
+	return debug_touchscreen;
+}
+
+DebugTiming *GlobalProperties::getDebugTiming()
+{
+	return debug_timing;
+}
+
 
 int GlobalProperties::getMainWidth() const
 {
@@ -431,3 +455,19 @@ void GlobalProperties::maliitKeyboardSettings(const QSharedPointer<Maliit::Plugi
 	}
 }
 #endif
+
+
+DebugTiming::DebugTiming(logger *log, bool enabled, QObject *parent) :
+	QObject(parent)
+{
+	app_logger = log;
+	last_message.start();
+	is_enabled = enabled;
+}
+
+void DebugTiming::logTiming(const QString &message)
+{
+	if (is_enabled)
+		app_logger->debug(LOG_CRITICAL, (char *) qPrintable(message +
+			", TIME since last log (ms): " + QString::number(last_message.restart())));
+}
