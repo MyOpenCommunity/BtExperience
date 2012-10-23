@@ -92,10 +92,7 @@ Item {
         id: monthlyReportTimer
         repeat: true
         onTriggered: {
-            privateProps.updateTimerInterval()
-            var p = privateProps.preparePopupPage(false)
-            // adds monthly report notification
-            p.addMonthlyReportNotification()
+            privateProps.monthlyReportArriving()
         }
     }
 
@@ -124,8 +121,7 @@ Item {
         id: vctConnection
         target: null
         onIncomingCall: {
-            turnOffMonitor.isEnabled = false
-            Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
+            privateProps.vctIncomingCall()
         }
         onCallAnswered: {
             if (vctConnection.target.isIpCall)
@@ -154,8 +150,7 @@ Item {
         id: intercomConnection
         target: null
         onIncomingCall: {
-            turnOffMonitor.isEnabled = false
-            Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
+            privateProps.intercomIncomingCall()
         }
         onCallAnswered: {
             if (intercomConnection.target.isIpCall)
@@ -188,11 +183,7 @@ Item {
         id: antintrusionConnection
         target: null
         onNewAlarm: {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
-            var p = privateProps.preparePopupPage(true)
-            // adds antintrusion alarm
-            p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
+            privateProps.alarmArriving(alarm)
         }
     }
 
@@ -200,11 +191,7 @@ Item {
         id: stopAndGoConnection
         target: null
         onStopAndGoDeviceChanged: {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
-            var p = privateProps.preparePopupPage(false)
-            // adds stop&go alarm
-            p.addStopAndGoPopup(stopGoDevice)
+            privateProps.stopAndGoDeviceChanging(stopGoDevice)
         }
     }
 
@@ -212,18 +199,10 @@ Item {
         id: energiesConnection
         target: null
         onThresholdExceeded: {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
-            var p = privateProps.preparePopupPage(false)
-            // adds threshold alarm
-            p.addThresholdExceededPopup(energyDevice)
+            privateProps.thresholdExceeding(energyDevice)
         }
         onGoalReached: {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
-            var p = privateProps.preparePopupPage(false)
-            // adds goal alarm
-            p.addGoalReachedPopup(energyDevice)
+            privateProps.goalReaching(energyDevice)
         }
     }
 
@@ -231,11 +210,7 @@ Item {
         id: messagesConnection
         target: null
         onUnreadMessagesChanged: {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
-            var p = privateProps.preparePopupPage(false)
-            // updates number of unread messages
-            p.updateUnreadMessages(messagesConnection.target.unreadMessages)
+            privateProps.unreadMessagesUpdate()
         }
     }
 
@@ -243,11 +218,7 @@ Item {
         id: scenarioConnection
         target: null
         onScenarioActivated: {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
-            var p = privateProps.preparePopupPage(false)
-            // adds popup for scenario activation
-            p.addScenarioActivationPopup(description)
+            privateProps.scenarioActivation(description)
         }
     }
 
@@ -308,6 +279,9 @@ Item {
             if (p._pageName !== "PopupPage")
                 p = Stack.pushPage("PopupPage.qml")
 
+            if (!p) // something bad happened
+                console.log("PopupPage not opened.")
+
             // returns pointer to PopupPage
             return p
         }
@@ -326,6 +300,71 @@ Item {
             // the updateLast call is needed to compute elapsed time correctly
             // see comments in TurnOffMonitor.js file for more info on this subject
             TurnOff.updateLast()
+        }
+
+        function monthlyReportArriving() {
+            privateProps.updateTimerInterval()
+            var p = privateProps.preparePopupPage(false)
+            // adds monthly report notification
+            p.addMonthlyReportNotification()
+        }
+
+        function vctIncomingCall() {
+            turnOffMonitor.isEnabled = false
+            Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
+        }
+
+        function intercomIncomingCall() {
+            turnOffMonitor.isEnabled = false
+            Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
+        }
+
+        function alarmArriving(alarm) {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
+            var p = privateProps.preparePopupPage(true)
+            // adds antintrusion alarm
+            p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
+        }
+
+        function stopAndGoDeviceChanging(stopGoDevice) {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
+            var p = privateProps.preparePopupPage(false)
+            // adds stop&go alarm
+            p.addStopAndGoPopup(stopGoDevice)
+        }
+
+        function thresholdExceeding(energyDevice) {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
+            var p = privateProps.preparePopupPage(false)
+            // adds threshold alarm
+            p.addThresholdExceededPopup(energyDevice)
+        }
+
+        function goalReaching(energyDevice) {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
+            var p = privateProps.preparePopupPage(false)
+            // adds goal alarm
+            p.addGoalReachedPopup(energyDevice)
+        }
+
+        function unreadMessagesUpdate() {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
+            var p = privateProps.preparePopupPage(false)
+            // updates number of unread messages
+            p.updateUnreadMessages(messagesConnection.target.unreadMessages)
+        }
+
+        function scenarioActivation(description) {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
+            var p = privateProps.preparePopupPage(false)
+            // adds popup for scenario activation
+            p.addScenarioActivationPopup(description)
         }
     }
 }
