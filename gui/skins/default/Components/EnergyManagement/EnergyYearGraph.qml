@@ -3,6 +3,9 @@ import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 
+import "../../js/datetime.js" as DateTime
+
+
 Item {
     id: itemGraph
     property bool showCurrency
@@ -73,10 +76,18 @@ Item {
         property int columnSpacing: 17
 
         function graphClicked(index) {
-            var date = modelGraph.date
-            date.setMonth(index)
+            if (energyData.advanced) {
+                var date = modelGraph.date
+                date.setMonth(index)
+            }
+            else {
+                var date = new Date()
+                for (var i = 11; i > index; i-= 1)
+                    date = DateTime.previousMonth(date)
+            }
+
             if (energyFunctions.isEnergyMonthValid(date))
-                itemGraph.monthClicked(modelGraph.date.getFullYear(), index)
+                itemGraph.monthClicked(date.getFullYear(), date.getMonth())
             else {
                 loader.setComponent(popupComponent, {})
                 darkRect.opacity = 0.3
