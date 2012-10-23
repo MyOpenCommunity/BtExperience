@@ -1145,12 +1145,18 @@ void EnergyItem::setValue(QVariant val)
 
 QString EnergyItem::getMeasureUnit() const
 {
-	return data->getCumulativeUnit();
+	if (rate)
+		return rate->getCurrencySymbol();
+	else
+		return data->getCumulativeUnit();
 }
 
 QVariant EnergyItem::getConsumptionGoal() const
 {
-	return data->getGoals().value(date.month() - 1);
+	if (rate)
+		return data->getGoals().value(date.month() - 1).toDouble() * rate->getRate();
+	else
+		return data->getGoals().value(date.month() - 1);
 }
 
 bool EnergyItem::getGoalEnabled() const
@@ -1160,7 +1166,10 @@ bool EnergyItem::getGoalEnabled() const
 
 int EnergyItem::getDecimals() const
 {
-	return data->getDecimals();
+	if (rate)
+		return data->getRateDecimals();
+	else
+		return data->getDecimals();
 }
 
 
@@ -1186,7 +1195,10 @@ QVariantList EnergyItemCurrent::getThresholds() const
 
 QString EnergyItemCurrent::getMeasureUnit() const
 {
-	return data->getCurrentUnit();
+	if (rate)
+		return rate->getCurrencySymbol() + "/h";
+	else
+		return data->getCurrentUnit();
 }
 
 

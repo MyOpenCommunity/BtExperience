@@ -563,12 +563,12 @@ signals:
 
 protected:
 	EnergyData *data;
+	EnergyRate *rate;
 
 private:
 	EnergyData::ValueType type;
 	QDate date;
 	QVariant value;
-	EnergyRate *rate;
 	QString measure_unit;
 };
 
