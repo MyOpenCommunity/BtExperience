@@ -19,6 +19,8 @@ var stack = []
 // stack index of current page
 var current_index = -1
 
+var debugTiming
+
 // are we changing page?
 var changing_page = false
 
@@ -203,6 +205,7 @@ function changePageDone() {
     if (_changePageDoneCallback)
         _changePageDoneCallback()
 
+    debugTiming.logTiming("Change page done")
     logDebug("Opening page: " + stack[current_index]._pageName)
 }
 
@@ -351,6 +354,7 @@ function _createPage(filename, properties) {
     if (changing_page == true)
         return null
 
+    debugTiming.logTiming("Create page start")
     if (stack.length > 0)
         changing_page = true
 
@@ -387,6 +391,8 @@ function _createPage(filename, properties) {
         changePageDone()
         return null
     }
+
+    debugTiming.logTiming("Page created")
 
     return page
 }

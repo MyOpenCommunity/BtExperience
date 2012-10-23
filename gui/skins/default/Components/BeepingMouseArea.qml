@@ -6,4 +6,5 @@ MouseArea {
         if (global.guiSettings.beep)
             global.beep()
     }
+    onClicked: global.debugTiming.logTiming("Clicked on icon")
 }

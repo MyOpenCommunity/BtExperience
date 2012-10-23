@@ -29,6 +29,7 @@ Item {
         // sharing
         // http://qt-project.org/forums/viewthread/18372
         Stack.mainContainer = container
+        Stack.debugTiming = global.debugTiming
         Stack.pushPage("HomePage.qml")
     }
 
