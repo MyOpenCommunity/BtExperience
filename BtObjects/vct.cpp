@@ -7,7 +7,11 @@
 
 #include <QDebug>
 
+#if BT_HARDWARE_X11
+QString video_grabber_path = "ls";
+#else
 QString video_grabber_path = "/usr/local/bin/Fw-A-LcdOpenGLRenderingQt.sh";
+#endif
 
 namespace
 {
@@ -163,6 +167,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	video_grabber.setStandardErrorFile("/dev/null");
 
 	connect(this, SIGNAL(incomingCall()), this, SLOT(manageHandsFree()));
+	connect(&video_grabber, SIGNAL(started()), SIGNAL(incomingCall()));
 }
 
 int CCTV::getBrightness() const
@@ -252,9 +257,9 @@ void CCTV::answerCall()
 void CCTV::endCall()
 {
 	dev->endCall();
+	emit callEnded();
 	call_stopped = false;
 	stopVideo();
-	emit callEnded();
 }
 
 void CCTV::cameraOn(QString where)
@@ -368,7 +373,6 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			}
 			else
 			{
-				emit incomingCall();
 				startVideo();
 			}
 			activateCall();

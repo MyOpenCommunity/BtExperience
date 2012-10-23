@@ -54,4 +54,14 @@ Item {
         // let's make it very "high"
         z: 1000
     }
+
+    MouseArea {
+        anchors.fill: parent
+        z: eventManagerId.z + 1
+        onPressed: {
+            var dot = Qt.createComponent("Components/PressDot.qml")
+            dot.createObject(container, {"x": mouseX, "y": mouseY})
+            mouse.accepted = false
+        }
+    }
 }
