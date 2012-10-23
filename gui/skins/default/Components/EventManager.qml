@@ -219,6 +219,8 @@ Item {
             p.addThresholdExceededPopup(energyDevice)
         }
         onGoalReached: {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
             var p = privateProps.preparePopupPage(false)
             // adds goal alarm
             p.addGoalReachedPopup(energyDevice)
