@@ -5,6 +5,7 @@ import Components 1.0
 
 import "../js/Stack.js" as Stack
 import "../js/TurnOffMonitor.js" as TurnOff
+import "../js/EventManager.js" as Script
 
 
 Item {
@@ -23,6 +24,8 @@ Item {
     property bool mute: global.audioState === null ? false : (global.audioState.state === AudioState.LocalPlaybackMute || global.audioState.state === AudioState.Mute)
 
     property int clocks: 0 // TODO link to C++ model!
+
+    signal changePageDone
 
     anchors.fill: parent
 
@@ -92,7 +95,11 @@ Item {
         id: monthlyReportTimer
         repeat: true
         onTriggered: {
-            privateProps.monthlyReportArriving()
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": "monthlyReportArriving"})
+            }
+            else
+                privateProps.monthlyReportArriving()
         }
     }
 
@@ -121,7 +128,11 @@ Item {
         id: vctConnection
         target: null
         onIncomingCall: {
-            privateProps.vctIncomingCall()
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": "vctIncomingCall"})
+            }
+            else
+                privateProps.vctIncomingCall()
         }
         onCallAnswered: {
             if (vctConnection.target.isIpCall)
@@ -150,7 +161,11 @@ Item {
         id: intercomConnection
         target: null
         onIncomingCall: {
-            privateProps.intercomIncomingCall()
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": "intercomIncomingCall"})
+            }
+            else
+                privateProps.intercomIncomingCall()
         }
         onCallAnswered: {
             if (intercomConnection.target.isIpCall)
@@ -183,7 +198,11 @@ Item {
         id: antintrusionConnection
         target: null
         onNewAlarm: {
-            privateProps.alarmArriving(alarm)
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": "alarmArriving", "data": alarm})
+            }
+            else
+                privateProps.alarmArriving(alarm)
         }
     }
 
@@ -191,7 +210,11 @@ Item {
         id: stopAndGoConnection
         target: null
         onStopAndGoDeviceChanged: {
-            privateProps.stopAndGoDeviceChanging(stopGoDevice)
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": "stopAndGoDeviceChanging", "data": stopGoDevice})
+            }
+            else
+                privateProps.stopAndGoDeviceChanging(stopGoDevice)
         }
     }
 
@@ -199,10 +222,18 @@ Item {
         id: energiesConnection
         target: null
         onThresholdExceeded: {
-            privateProps.thresholdExceeding(energyDevice)
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": "thresholdExceeding", "data": energyDevice})
+            }
+            else
+                privateProps.thresholdExceeding(energyDevice)
         }
         onGoalReached: {
-            privateProps.goalReaching(energyDevice)
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": "goalReaching", "data": energyDevice})
+            }
+            else
+                privateProps.goalReaching(energyDevice)
         }
     }
 
@@ -210,7 +241,11 @@ Item {
         id: messagesConnection
         target: null
         onUnreadMessagesChanged: {
-            privateProps.unreadMessagesUpdate()
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": "unreadMessagesUpdate"})
+            }
+            else
+                privateProps.unreadMessagesUpdate()
         }
     }
 
@@ -218,8 +253,39 @@ Item {
         id: scenarioConnection
         target: null
         onScenarioActivated: {
-            privateProps.scenarioActivation(description)
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": "scenarioActivation", "data": description})
+            }
+            else
+                privateProps.scenarioActivation(description)
         }
+    }
+
+    onChangePageDone: {
+        if (Script.delayedNotifications.length === 0)
+            return
+
+        var notify = Script.delayedNotifications[0]
+        Script.delayedNotifications.shift()
+
+        if (notify["type"] === "alarmArriving")
+            privateProps.alarmArriving(notify["data"])
+        else if (notify["type"] === "goalReaching")
+            privateProps.goalReaching(notify["data"])
+        else if (notify["type"] === "monthlyReportArriving")
+            privateProps.monthlyReportArriving()
+        else if (notify["type"] === "vctIncomingCall")
+            privateProps.vctIncomingCall()
+        else if (notify["type"] === "intercomIncomingCall")
+            privateProps.intercomIncomingCall()
+        else if (notify["type"] === "stopAndGoDeviceChanging")
+            privateProps.stopAndGoDeviceChanging(notify["data"])
+        else if (notify["type"] === "thresholdExceeding")
+            privateProps.thresholdExceeding(notify["data"])
+        else if (notify["type"] === "scenarioActivation")
+            privateProps.scenarioActivation(notify["data"])
+        else if (notify["type"] === "unreadMessagesUpdate")
+            privateProps.unreadMessagesUpdate()
     }
 
     QtObject {
