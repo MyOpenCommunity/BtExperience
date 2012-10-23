@@ -104,6 +104,7 @@ private slots:
 	void testCheckGoal();
 	void testRecheckGoal();
 	void testGoalExceeded();
+	void testGoalDisabled();
 
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, EnergyData::MeasureType measure = EnergyData::Consumption);
