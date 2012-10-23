@@ -8,6 +8,12 @@ GlobalModels::GlobalModels()
 {
 	floors = 0;
 	rooms = 0;
+	object_links = 0;
+	systems = 0;
+	my_home_objects = 0;
+	notes = 0;
+	profiles = 0;
+	media_links = 0;
 }
 
 void GlobalModels::setFloors(MediaDataModel *_floors)
