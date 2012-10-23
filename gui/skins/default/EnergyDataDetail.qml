@@ -80,47 +80,53 @@ Page {
             left: header.left
         }
 
-        Row {
-            id: buttonRow
+        Loader {
+            id: buttonRowLoader
+            sourceComponent: energiesCounters.hasRate() ? buttonRowComponent : undefined
             anchors {
                 top: parent.top
                 topMargin: parent.height / 100 * 3
                 right: divisorLine.right
             }
+        }
 
-            UbuntuLightText {
-                text: qsTr("value")
-                color: "white"
-                anchors.verticalCenter: moneyButton.verticalCenter
-                font.pixelSize: 14
-            }
+        Component {
+            id: buttonRowComponent
+            Row {
+                UbuntuLightText {
+                    text: qsTr("value")
+                    color: "white"
+                    anchors.verticalCenter: moneyButton.verticalCenter
+                    font.pixelSize: 14
+                }
 
-            Item {
-                width: 15
-                height: moneyButton.height
-            }
+                Item {
+                    width: 15
+                    height: moneyButton.height
+                }
 
-            ButtonThreeStates {
-                id: moneyButton
-                defaultImage: "images/common/btn_66x35.svg"
-                pressedImage: "images/common/btn_66x35_P.svg"
-                selectedImage: "images/common/btn_66x35_S.svg"
-                shadowImage: "images/common/btn_shadow_66x35.svg"
-                text: qsTr("€")
-                font.pixelSize: 14
-                status: privateProps.showCurrency === true ? 1 : 0
-                onClicked: privateProps.showCurrency = true
-            }
-            ButtonThreeStates {
-                id: consumptionButton
-                defaultImage: "images/common/btn_66x35.svg"
-                pressedImage: "images/common/btn_66x35_P.svg"
-                selectedImage: "images/common/btn_66x35_S.svg"
-                shadowImage: "images/common/btn_shadow_66x35.svg"
-                text: qsTr("units")
-                font.pixelSize: 14
-                status: privateProps.showCurrency === false ? 1 : 0
-                onClicked: privateProps.showCurrency = false
+                ButtonThreeStates {
+                    id: moneyButton
+                    defaultImage: "images/common/btn_66x35.svg"
+                    pressedImage: "images/common/btn_66x35_P.svg"
+                    selectedImage: "images/common/btn_66x35_S.svg"
+                    shadowImage: "images/common/btn_shadow_66x35.svg"
+                    text: energiesCounters.getCurrencySymbol()
+                    font.pixelSize: 14
+                    status: privateProps.showCurrency === true ? 1 : 0
+                    onClicked: privateProps.showCurrency = true
+                }
+                ButtonThreeStates {
+                    id: consumptionButton
+                    defaultImage: "images/common/btn_66x35.svg"
+                    pressedImage: "images/common/btn_66x35_P.svg"
+                    selectedImage: "images/common/btn_66x35_S.svg"
+                    shadowImage: "images/common/btn_shadow_66x35.svg"
+                    text: qsTr("units")
+                    font.pixelSize: 14
+                    status: privateProps.showCurrency === false ? 1 : 0
+                    onClicked: privateProps.showCurrency = false
+                }
             }
         }
 
@@ -128,7 +134,7 @@ Page {
             id: divisorLine
             source: "images/energy/linea.svg"
             anchors {
-                top: buttonRow.bottom
+                top: buttonRowLoader.bottom
                 topMargin: parent.height / 100 * 3
                 horizontalCenter: parent.horizontalCenter
             }
@@ -192,6 +198,25 @@ Page {
                     max = monthItem.consumptionGoal
             }
             return max
+        }
+
+        function hasRate() {
+            for (var i = 0; i < count; i+=1) {
+                if (getObject(i).rate !== null)
+                    return true
+            }
+            return false
+        }
+
+        function getCurrencySymbol() {
+            // We are assuming that the currencySymbol for a family is always
+            // the same.
+            for (var i = 0; i < count; i+=1) {
+                var rate = getObject(i).rate
+                if (rate !== null)
+                    return rate.currencySymbol
+            }
+            return ""
         }
 
         filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: family.objectKey}]

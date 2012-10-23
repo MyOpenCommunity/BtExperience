@@ -43,6 +43,9 @@ Item {
         }
 
         function hasPreviousYear() {
+            if (!itemGraph.energyData.advanced)
+                return false
+
             // TODO: what is the right way to do this check?
             if (itemGraph.graphDate.getFullYear() > 2010)
                 return true
