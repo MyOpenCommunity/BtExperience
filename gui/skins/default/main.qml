@@ -59,8 +59,10 @@ Item {
         anchors.fill: parent
         z: eventManagerId.z + 1
         onPressed: {
-            var dot = Qt.createComponent("Components/PressDot.qml")
-            dot.createObject(container, {"x": mouseX, "y": mouseY})
+            if (global.debugTs) {
+                var dot = Qt.createComponent("Components/PressDot.qml")
+                dot.createObject(container, {"x": mouseX, "y": mouseY})
+            }
             mouse.accepted = false
         }
     }
