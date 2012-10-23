@@ -163,8 +163,12 @@ Page {
         property bool homeClicked: false
     }
 
+    Connections {
+        target: camera
+        onCallEnded: control.callEndedCallback()
+    }
+
     Component.onCompleted: {
-        camera.callEnded.connect(control.callEndedCallback)
         toolbar.z = 1
         navigationBar.z = 1
     }
