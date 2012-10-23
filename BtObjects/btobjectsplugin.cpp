@@ -203,6 +203,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	global_models.setNotes(&note_model);
 	global_models.setProfiles(&profile_model);
 	global_models.setMediaLinks(&media_link_model);
+	global_models.setMediaContainers(&media_model);
 
 	ObjectModel::setGlobalSource(&objmodel);
 	createObjects();
@@ -210,7 +211,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	QList<MediaDataModel *> models = QList<MediaDataModel *>()
 			<< &room_model << &floor_model << &object_link_model << &systems_model
-			<< &objmodel << &profile_model << &media_link_model;
+			<< &objmodel << &profile_model << &media_link_model << &media_model;
 
 	foreach (MediaDataModel *model, models)
 	{
@@ -894,6 +895,17 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdMessages:
 			parseSystem(container);
 			break;
+		case Container::IdHomepage:
+			parseHomepage(container);
+			break;
+		case Container::IdMultimediaRss:
+		case Container::IdMultimediaRssMeteo:
+		case Container::IdMultimediaWebRadio:
+		case Container::IdMultimediaWebCam:
+		case Container::IdMultimediaDevice:
+		case Container::IdMultimediaWebLink:
+			parseMediaContainers(container);
+			break;
 		}
 	}
 
@@ -1064,6 +1076,70 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 			}
 
 			o->setContainerUii(system_uii);
+		}
+	}
+}
+
+void BtObjectsPlugin::parseHomepage(const QDomNode &container)
+{
+	XmlObject v(container);
+	int homepage_id = getIntAttribute(container, "id");
+
+	foreach (const QDomNode &ist, getChildren(container, "ist"))
+	{
+		v.setIst(ist);
+		int homepage_uii = getIntAttribute(ist, "uii");
+		Container *homepage = new Container(homepage_id, homepage_uii, v.value("img"), v.value("descr"));
+
+		global_models.setHomepageLinks(homepage);
+		uii_map.insert(homepage_uii, homepage);
+		uii_to_id[homepage_uii] = homepage_id;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int link_uii = getIntAttribute(link, "uii");
+			ItemInterface *l = uii_map.value<ItemInterface>(link_uii);
+
+			if (!l)
+			{
+				qWarning() << "Invalid uii" << link_uii << "in homepage";
+				Q_ASSERT_X(false, "parseHomepage", "Invalid uii");
+				continue;
+			}
+
+			l->setContainerUii(homepage_uii);
+		}
+	}
+}
+
+void BtObjectsPlugin::parseMediaContainers(const QDomNode &container)
+{
+	XmlObject v(container);
+	int media_id = getIntAttribute(container, "id");
+
+	foreach (const QDomNode &ist, getChildren(container, "ist"))
+	{
+		v.setIst(ist);
+		int media_uii = getIntAttribute(ist, "uii");
+		Container *media = new Container(media_id, media_uii, v.value("img"), v.value("descr"));
+
+		media_model << media;
+		uii_map.insert(media_uii, media);
+		uii_to_id[media_uii] = media_id;
+
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			int link_uii = getIntAttribute(link, "uii");
+			ItemInterface *l = uii_map.value<ItemInterface>(link_uii);
+
+			if (!l)
+			{
+				qWarning() << "Invalid uii" << link_uii << "in media container";
+				Q_ASSERT_X(false, "parseMediaContainers", "Invalid uii");
+				continue;
+			}
+
+			l->setContainerUii(media_uii);
 		}
 	}
 }

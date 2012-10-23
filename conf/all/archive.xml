@@ -449,6 +449,7 @@
 	</obj>
 	<obj cid="16000" id="16000" descr="Web radio" title="Radio" url="http://">
 		<ist uii="8001" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
+		<ist uii="8011" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
 	</obj>
 	<obj cid="16001" id="16001" descr="Webcam" url="http://">
 		<ist uii="8002" descr="Webcam" url="http://www.meteowbcam.itredirect_europa.php?id=2240" />
@@ -461,9 +462,11 @@
 	</obj>
 	<obj cid="16003" id="16002" descr="" url="http://">
 		<ist uii="8005" descr="Weather" url="http://weather.yahooapis.com/" />
+		<ist uii="8013" descr="Weather" url="http://weather.yahooapis.com/" />
 	</obj>
 	<obj cid="16004" id="16003" descr="Weblink" url="http://">
 		<ist uii="8006" descr="Corriere della sera" url="http://www.corriere.it" />
+		<ist uii="8012" descr="Corriere della sera" url="http://www.corriere.it" />
 		<ist uii="8007" descr="La gazzetta dello sport" url="http://www.gazzetta.it" />
 		<ist uii="8008" descr="La Repubblica" url="http://www.repubblica.it" />
 	</obj>
