@@ -148,6 +148,8 @@ MenuColumn {
                 radioTitle: trackInfo['stream_title'] === undefined ? qsTr("no title") : trackInfo['stream_title']
                 playerStatus: objModel.mediaPlayer.playerState
                 onPlayClicked: objModel.togglePause()
+                onPreviousClicked: objModel.previousTrack()
+                onNextClicked: objModel.nextTrack()
             }
         }
     }
