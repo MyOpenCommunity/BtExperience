@@ -67,6 +67,11 @@ public:
 		AlarmClockSoundSystem
 	};
 
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdAlarmClock;
+	}
+
 	QString getDescription() const { return description; }
 	void setDescription(QString newValue);
 	bool isEnabled() const { return enabled; }
