@@ -9,4 +9,11 @@
                         <link uii="10006" />
 		</ist>
 	</container>
+	<container id="21" descr="Web radio" img="web_radio.png" >
+		<ist uii="319">
+			<link uii="8011" />
+			<link uii="8014" />
+			<link uii="8015" />
+		</ist>
+	</container>
 </layout>
