@@ -1,6 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
-
+#ifndef PLAYLISTPLAYER_H
+#define PLAYLISTPLAYER_H
 
 #include "multimediaplayer.h"
 
@@ -55,6 +54,7 @@ private:
 	bool is_video;
 };
 
+
 /*!
 	\brief A model to encapsulate logic for photo player
 */
@@ -77,6 +77,7 @@ signals:
 	// the following is needed because I didn't manage to compile if using currentChanged directly
 	void fileNameChanged();
 };
+
 
 /*!
 	\brief A model to interface with MPlayer for audio and video players
@@ -158,4 +159,4 @@ private:
 	QVariant current_time_s, total_time_s;
 };
 
-#endif // PLAYER_H
+#endif // PLAYLISTPLAYER_H

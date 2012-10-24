@@ -26,8 +26,9 @@ HEADERS += \
 	note.h \
 	objectinterface.h \
 	objectmodel.h \
-	platform.h \
 	objectlink.h \
+	platform.h \
+	playlistplayer.h \
 	scenariomodulesnotifier.h \
 	scenarioobjects.h \
 	stopandgoobjects.h \
@@ -96,8 +97,9 @@ SOURCES += \
 	note.cpp \
 	objectinterface.cpp \
 	objectmodel.cpp \
-	platform.cpp \
 	objectlink.cpp \
+	platform.cpp \
+	playlistplayer.cpp \
 	scenariomodulesnotifier.cpp \
 	scenarioobjects.cpp \
 	stopandgoobjects.cpp \

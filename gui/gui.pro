@@ -67,7 +67,6 @@ SOURCES += \
     guisettings.cpp \
     imagereader.cpp \
     inputcontextwrapper.cpp \
-    player.cpp \
     ringtonemanager.cpp
 
 HEADERS += \
@@ -77,7 +76,6 @@ HEADERS += \
     guisettings.h \
     imagereader.h \
     inputcontextwrapper.h \
-    player.h \
     ringtonemanager.h
 
 TRANSLATIONS += locale/bt_experience_it.ts

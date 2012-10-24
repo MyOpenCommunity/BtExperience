@@ -1,7 +1,7 @@
 #include "globalproperties.h"
 #include "guisettings.h"
 #include "inputcontextwrapper.h"
-#include "player.h"
+#include "playlistplayer.h"
 #include "audiostate.h"
 #include "mediaplayer.h" // SoundPlayer
 #include "ringtonemanager.h"
@@ -89,8 +89,6 @@ GlobalProperties::GlobalProperties(logger *log)
 		this, SLOT(sendDelayedFrames()));
 
 	qmlRegisterUncreatableType<GuiSettings>("BtExperience", 1, 0, "GuiSettings", "");
-	qmlRegisterUncreatableType<AudioVideoPlayer>("BtExperience", 1, 0, "AudioVideoPlayer", "");
-	qmlRegisterUncreatableType<PhotoPlayer>("BtExperience", 1, 0, "PhotoPlayer", "");
 	qmlRegisterUncreatableType<AudioState>("BtExperience", 1, 0, "AudioState", "");
 	qmlRegisterUncreatableType<RingtoneManager>("BtExperience", 1, 0, "RingtoneManager", "");
 	qmlRegisterUncreatableType<DebugTiming>("BtExperience", 1, 0, "DebugTiming", "");

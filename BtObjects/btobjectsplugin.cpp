@@ -37,6 +37,7 @@
 #include "scenariomodulesnotifier.h"
 #include "energies.h"
 #include "configfile.h"
+#include "playlistplayer.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -1296,6 +1297,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<DeviceConditionObject>(uri, 1, 0, "DeviceConditionObject",
 		"unable to create a DeviceConditionObject instance");
 	qmlRegisterUncreatableType<MessagesSystem>(uri, 1, 0, "MessagesSystem", "");
+	qmlRegisterUncreatableType<AudioVideoPlayer>(uri, 1, 0, "AudioVideoPlayer", "");
+	qmlRegisterUncreatableType<PhotoPlayer>(uri, 1, 0, "PhotoPlayer", "");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

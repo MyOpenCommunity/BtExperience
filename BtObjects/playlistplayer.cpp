@@ -1,4 +1,4 @@
-#include "player.h"
+#include "playlistplayer.h"
 #include "folderlistmodel.h"
 #include "list_manager.h"
 
