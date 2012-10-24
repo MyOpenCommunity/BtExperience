@@ -102,6 +102,8 @@ GlobalProperties::GlobalProperties(logger *log)
 	audio_state = new AudioState(this);
 	sound_player = 0;
 	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", new MultiMediaPlayer(this), audio_state, this);
+	debug_touchscreen = false;
+	debug_timing = 0;
 
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -199,6 +201,7 @@ void GlobalProperties::parseSettings(logger *log)
 {
 	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
 
+	bool debug_timing_enabled = false;
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
 		int id = getIntAttribute(xml_obj, "id");
@@ -212,13 +215,12 @@ void GlobalProperties::parseSettings(logger *log)
 			debug_touchscreen = parseEnableFlag(xml_obj);
 			break;
 		case DebugEventTiming:
-		{
-			bool debug_timing_enabled = parseEnableFlag(xml_obj);
-			debug_timing = new DebugTiming(log, debug_timing_enabled, this);
-		}
+			debug_timing_enabled = parseEnableFlag(xml_obj);
 			break;
 		}
 	}
+
+	debug_timing = new DebugTiming(log, debug_timing_enabled, this);
 }
 
 QString GlobalProperties::getBasePath() const
