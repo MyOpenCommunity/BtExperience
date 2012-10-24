@@ -35,7 +35,7 @@ MenuColumn {
                                  "model": columnBrowserDirectory,
                                  "props": {
                                      "upnp": false,
-                                     "rootPath": ["media", "usb1"],
+                                     "rootPath": ["media", "sda1"],
                                      "text": qsTr("USB")}
                              })
             modelList.append({
