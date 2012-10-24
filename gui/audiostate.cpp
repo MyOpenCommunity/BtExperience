@@ -332,6 +332,8 @@ void AudioState::changeSoundDiffusionAccess()
 		qWarning("Add code to enable sound diffusion");
 	else
 		qWarning("Add code to disable sound diffusion");
+
+	sound_diffusion = new_sound_diffusion;
 }
 
 bool AudioState::pauseActivePlayer()
