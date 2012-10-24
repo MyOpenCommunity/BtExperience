@@ -32,14 +32,32 @@ private:
 };
 
 
+/*!
+	\brief Class representing a mount point
+
+	Currently there can only be a single USB mount point and a single SD mount point
+ */
 class MountPoint : public BrowsePoint
 {
 	Q_OBJECT
 
+	/*!
+		\brief mount point path as a string (es. /media/sda1)
+
+		Only set after the first time the mount status is updated
+	*/
 	Q_PROPERTY(QString path READ getPath  NOTIFY pathChanged)
 
+	/*!
+		\brief mount point path as a list (es. ["media", "sda1"])
+
+		Only set after the first time the mount status is updated
+	*/
 	Q_PROPERTY(QVariantList logicalPath READ getLogicalPath NOTIFY logicalPathChanged)
 
+	/*!
+		\brief Whether this mount point is mounted or not
+	*/
 	Q_PROPERTY(bool mounted READ getMounted NOTIFY mountedChanged)
 
 public:
@@ -70,6 +88,7 @@ private:
 };
 
 
+// Helper class, not used directly
 class MountWatcher : public QObject
 {
 	Q_OBJECT

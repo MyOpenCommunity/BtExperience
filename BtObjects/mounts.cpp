@@ -9,6 +9,10 @@
 #include <QtDebug>
 
 
+// when /etc/udev/scripts/mount.sh mounts a new device under /media/NAME, it creates
+// a file named /tmp/.automount-NAME; the code below does not check the files in /tmp,
+// but uses the /tmp directory change to trigger a reparse of /proc/mounts
+
 #define MTAB         "/etc/mtab"
 #define MOUNTS       "/proc/mounts"
 #define AUTOMOUNT    "/tmp/.automount-"
@@ -246,8 +250,8 @@ void MountWatcher::startWatching()
 		emit directoryMounted(dir, mountType(dir));
 
 	// USB mount/umount
-	watcher->addPath(MTAB);
-	watcher->addPath("/tmp");
+	watcher->addPath(MTAB);   // for x86/desktop
+	watcher->addPath("/tmp"); // for touch
 }
 
 void MountWatcher::fileChanged(const QString &file)

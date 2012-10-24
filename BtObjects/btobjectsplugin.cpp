@@ -539,6 +539,8 @@ void BtObjectsPlugin::createObjects()
 		objmodel << createIntercom(intercom);
 	}
 
+	// note that this returns source objects even if sound diffusion is not configured, because
+	// the objects are used to construct the item list for multimedia
 	foreach (ObjectPair p, createLocalSources(is_multichannel, multimedia))
 	{
 		if (p.first != -1)

@@ -146,33 +146,38 @@ public slots:
 };
 
 
+/*!
+	\brief Base class for objects that represent a user visible source, eg. usb, sd, ip radio, rds radio etc.
 
-
-
-
-
-/*
-  Base class for objects that represent a user visible source, eg. usb, sd,
-  ip radio, rds radio etc.
-
-  Each SourceObject communicates with one SourceBase object, which handles low
-  level communication with the bus.
+	Each SourceObject communicates with one SourceBase object, which handles low
+	level communication with the bus.
 */
 class SourceObject : public ObjectInterface
 {
 	Q_OBJECT
+
+	/// The SCS source object
 	Q_PROPERTY(QObject *source READ getSource CONSTANT)
+
+	/// Type of source object
 	Q_PROPERTY(SourceObjectType sourceType READ getSourceType CONSTANT)
+
 	Q_ENUMS(SourceObjectType)
 
 public:
 	enum SourceObjectType
 	{
+		/// RDS radio (from SCS bus)
 		RdsRadio,
+		/// IP Radio (local source)
 		IpRadio,
+		/// Aux source (from SCS bus)
 		Aux,
+		/// Another touchscreen (from SCS bus)
 		Touch,
+		/// UPnP media server (local source)
 		Upnp,
+		/// local USB or SD (local source)
 		FileSystem,
 	};
 
@@ -224,19 +229,34 @@ private:
 	SourceObjectType type;
 };
 
+
+/*!
+	\brief Multimedia played through local source
+
+	All SourceMedia instances share the same \ref MultiMediaPlayer/\ref AudioVideoPlayer instance
+*/
 class SourceMedia : public SourceObject
 {
 	Q_OBJECT
+
+	/// \ref MultiMediaPlayer instace used for playback
 	Q_PROPERTY(QObject *mediaPlayer READ getMediaPlayer CONSTANT)
+
+	/// \ref AudioVideoPlayer instance used for playback
 	Q_PROPERTY(QObject *audioVideoPlayer READ getAudioVideoPlayer CONSTANT)
 
 public:
+	/// Toggle paused state
 	Q_INVOKABLE void togglePause();
+
 	QObject *getMediaPlayer() const;
 	QObject *getAudioVideoPlayer() const;
 
 public slots:
+	/// Go to next track
 	virtual void previousTrack();
+
+	/// Go to previous track
 	virtual void nextTrack();
 
 protected:
@@ -247,6 +267,9 @@ protected:
 };
 
 
+/*!
+	\brief Wrapper class for a single IP radio address
+*/
 class IpRadio : public FileObject
 {
 	Q_OBJECT
@@ -260,25 +283,39 @@ public:
 };
 
 
+/*!
+	\brief Web radio played through local source
+*/
 class SourceIpRadio : public SourceMedia
 {
 	Q_OBJECT
 public:
 	SourceIpRadio(const QString &name, SourceMultiMedia *s);
+
+	/// Start media playback at the given index
 	Q_INVOKABLE void startPlay(QList<QVariant> urls, int index, int total_files);
 };
 
 
+/*!
+	\brief Local file played through local source
+*/
 class SourceLocalMedia : public SourceMedia
 {
 	Q_OBJECT
+
+	/// Root path for browsing
 	Q_PROPERTY(QVariantList rootPath READ getRootPath CONSTANT)
+
+	/// Object used to monitor mounted state
 	Q_PROPERTY(MountPoint *mountPoint READ getMountPoint CONSTANT)
 
 public:
 	SourceLocalMedia(const QString &name, MountPoint *mount_point, SourceMultiMedia *s, SourceObjectType t);
 	QVariantList getRootPath() const;
 	MountPoint *getMountPoint() const;
+
+	/// Start media playback at the given index
 	Q_INVOKABLE void startPlay(DirectoryListModel *model, int index, int total_files);
 
 private:
@@ -287,11 +324,16 @@ private:
 };
 
 
+/*!
+	\brief UPnP media object played through local source
+*/
 class SourceUpnpMedia : public SourceMedia
 {
 	Q_OBJECT
 public:
 	SourceUpnpMedia(const QString &name, SourceMultiMedia *s);
+
+	/// Start media playback at the given index
 	Q_INVOKABLE void startUpnpPlay(UPnPListModel *model, int current_index, int total_files);
 };
 
