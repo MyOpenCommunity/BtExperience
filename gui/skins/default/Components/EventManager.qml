@@ -96,7 +96,7 @@ Item {
         repeat: true
         onTriggered: {
             if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": "monthlyReportArriving"})
+                Script.delayedNotifications.push({"type": Script.MONTHLY_REPORT_ARRIVING})
             }
             else
                 privateProps.monthlyReportArriving()
@@ -129,7 +129,7 @@ Item {
         target: null
         onIncomingCall: {
             if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": "vctIncomingCall"})
+                Script.delayedNotifications.push({"type": Script.VCT_INCOMING_CALL})
             }
             else
                 privateProps.vctIncomingCall()
@@ -162,7 +162,7 @@ Item {
         target: null
         onIncomingCall: {
             if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": "intercomIncomingCall"})
+                Script.delayedNotifications.push({"type": Script.INTERCOM_INCOMING_CALL})
             }
             else
                 privateProps.intercomIncomingCall()
@@ -199,7 +199,7 @@ Item {
         target: null
         onNewAlarm: {
             if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": "alarmArriving", "data": alarm})
+                Script.delayedNotifications.push({"type": Script.ALARM_ARRIVING, "data": alarm})
             }
             else
                 privateProps.alarmArriving(alarm)
@@ -211,7 +211,7 @@ Item {
         target: null
         onStopAndGoDeviceChanged: {
             if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": "stopAndGoDeviceChanging", "data": stopGoDevice})
+                Script.delayedNotifications.push({"type": Script.STOP_GO_DEVICE_CHANGING, "data": stopGoDevice})
             }
             else
                 privateProps.stopAndGoDeviceChanging(stopGoDevice)
@@ -223,14 +223,14 @@ Item {
         target: null
         onThresholdExceeded: {
             if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": "thresholdExceeding", "data": energyDevice})
+                Script.delayedNotifications.push({"type": Script.THRESHOLD_EXCEEDING, "data": energyDevice})
             }
             else
                 privateProps.thresholdExceeding(energyDevice)
         }
         onGoalReached: {
             if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": "goalReaching", "data": energyDevice})
+                Script.delayedNotifications.push({"type": Script.GOAL_REACHING, "data": energyDevice})
             }
             else
                 privateProps.goalReaching(energyDevice)
@@ -242,7 +242,7 @@ Item {
         target: null
         onUnreadMessagesChanged: {
             if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": "unreadMessagesUpdate"})
+                Script.delayedNotifications.push({"type": Script.UNREAD_MESSAGES_UPDATING})
             }
             else
                 privateProps.unreadMessagesUpdate()
@@ -254,7 +254,7 @@ Item {
         target: null
         onScenarioActivated: {
             if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": "scenarioActivation", "data": description})
+                Script.delayedNotifications.push({"type": Script.SCENARIO_ACTIVATION, "data": description})
             }
             else
                 privateProps.scenarioActivation(description)
@@ -268,23 +268,23 @@ Item {
         var notify = Script.delayedNotifications[0]
         Script.delayedNotifications.shift()
 
-        if (notify["type"] === "alarmArriving")
+        if (notify["type"] === Script.ALARM_ARRIVING)
             privateProps.alarmArriving(notify["data"])
-        else if (notify["type"] === "goalReaching")
+        else if (notify["type"] === Script.GOAL_REACHING)
             privateProps.goalReaching(notify["data"])
-        else if (notify["type"] === "monthlyReportArriving")
+        else if (notify["type"] === Script.MONTHLY_REPORT_ARRIVING)
             privateProps.monthlyReportArriving()
-        else if (notify["type"] === "vctIncomingCall")
+        else if (notify["type"] === Script.VCT_INCOMING_CALL)
             privateProps.vctIncomingCall()
-        else if (notify["type"] === "intercomIncomingCall")
+        else if (notify["type"] === Script.INTERCOM_INCOMING_CALL)
             privateProps.intercomIncomingCall()
-        else if (notify["type"] === "stopAndGoDeviceChanging")
+        else if (notify["type"] === Script.STOP_GO_DEVICE_CHANGING)
             privateProps.stopAndGoDeviceChanging(notify["data"])
-        else if (notify["type"] === "thresholdExceeding")
+        else if (notify["type"] === Script.THRESHOLD_EXCEEDING)
             privateProps.thresholdExceeding(notify["data"])
-        else if (notify["type"] === "scenarioActivation")
+        else if (notify["type"] === Script.SCENARIO_ACTIVATION)
             privateProps.scenarioActivation(notify["data"])
-        else if (notify["type"] === "unreadMessagesUpdate")
+        else if (notify["type"] === Script.UNREAD_MESSAGES_UPDATING)
             privateProps.unreadMessagesUpdate()
     }
 
