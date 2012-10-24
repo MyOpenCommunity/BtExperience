@@ -50,4 +50,10 @@
         <obj cid="14266" id="14266" enable="0">
 		<ist uii="30117" enable="1" />
 	</obj>
+	<obj id="123456" internal_descr="debug touchscreen">
+		<ist uii="123456" enable="1" />
+	</obj>
+	<obj id="123457" internal_descr="debug timing">
+		<ist uii="123457" enable="1" />
+	</obj>
 </settings>
