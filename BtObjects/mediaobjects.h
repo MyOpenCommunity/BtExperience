@@ -23,6 +23,7 @@ class SourceMultiMedia;
 class PowerAmplifierDevice;
 class AudioVideoPlayer;
 class ObjectListModel;
+class MountPoint;
 
 
 QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multimedia);
@@ -272,15 +273,17 @@ class SourceLocalMedia : public SourceMedia
 {
 	Q_OBJECT
 	Q_PROPERTY(QVariantList rootPath READ getRootPath CONSTANT)
+	Q_PROPERTY(MountPoint *mountPoint READ getMountPoint CONSTANT)
 
 public:
-	SourceLocalMedia(const QString &name, const QString &root_path, SourceMultiMedia *s, SourceObjectType t);
+	SourceLocalMedia(const QString &name, MountPoint *mount_point, SourceMultiMedia *s, SourceObjectType t);
 	QVariantList getRootPath() const;
+	MountPoint *getMountPoint() const;
 	Q_INVOKABLE void startPlay(DirectoryListModel *model, int index, int total_files);
 
 private:
-	QString root_path;
 	DirectoryListModel *model;
+	MountPoint *mount_point;
 };
 
 

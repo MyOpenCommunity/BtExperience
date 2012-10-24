@@ -5,6 +5,7 @@
 #include "devices_cache.h"
 #include "xml_functions.h"
 #include "xmlobject.h"
+#include "mounts.h"
 
 #include <QDebug>
 #include <QStringList>
@@ -219,11 +220,17 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 				switch (id)
 				{
 				case ObjectInterface::IdDeviceUSB:
-					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), "/media/sda1", source, SourceObject::FileSystem));
+				{
+					MountPoint *mp = new MountPoint(MountPoint::Usb);
+					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::FileSystem));
 					break;
+				}
 				case ObjectInterface::IdDeviceSD:
-					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), "/media/mmcblk0p1", source, SourceObject::FileSystem));
+				{
+					MountPoint *mp = new MountPoint(MountPoint::Sd);
+					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::FileSystem));
 					break;
+				}
 				case ObjectInterface::IdDeviceUPnP:
 					sources << ObjectPair(uii, new SourceUpnpMedia(v.value("descr"), source));
 					break;
@@ -456,10 +463,10 @@ void SourceIpRadio::startPlay(QList<QVariant> urls, int index, int total_files)
 }
 
 
-SourceLocalMedia::SourceLocalMedia(const QString &name, const QString &_root_path, SourceMultiMedia *s, SourceObjectType t) :
+SourceLocalMedia::SourceLocalMedia(const QString &name, MountPoint *_mount_point, SourceMultiMedia *s, SourceObjectType t) :
 	SourceMedia(name, s, t)
 {
-	root_path = _root_path;
+	mount_point = _mount_point;
 	model = new DirectoryListModel(this);
 }
 
@@ -479,11 +486,12 @@ void SourceLocalMedia::startPlay(DirectoryListModel *_model, int index, int tota
 
 QVariantList SourceLocalMedia::getRootPath() const
 {
-	QVariantList list;
+	return mount_point->getLogicalPath();
+}
 
-	foreach (const QString &s, root_path.split("/", QString::SkipEmptyParts))
-		list << s;
-	return list;
+MountPoint *SourceLocalMedia::getMountPoint() const
+{
+	return mount_point;
 }
 
 

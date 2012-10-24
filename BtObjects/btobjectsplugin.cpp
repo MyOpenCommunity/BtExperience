@@ -39,6 +39,7 @@
 #include "configfile.h"
 #include "playlistplayer.h"
 #include "alarmclock.h"
+#include "mounts.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -210,6 +211,9 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	ObjectModel::setGlobalSource(&objmodel);
 	createObjects();
 	parseConfig();
+
+	if (MountWatcher::mount_watcher)
+		MountWatcher::mount_watcher->startWatching();
 
 	QList<MediaDataModel *> models = QList<MediaDataModel *>()
 			<< &room_model << &floor_model << &object_link_model << &systems_model

@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
 
 import "../../js/Stack.js" as Stack
 
@@ -16,53 +17,38 @@ MenuColumn {
         currentIndex: -1
 
         delegate: MenuItemDelegate {
-            name: model.itemText
+            itemObject: modelList.getObject(index)
+            name: itemObject.name
             hasChild: true
             onDelegateClicked: {
-                var clickedItem = modelList.get(index)
-                column.loadColumn(clickedItem.model, clickedItem.itemText, clickedItem, clickedItem.props)
+                var upnp = itemObject.sourceType !== SourceObject.FileSystem;
+                var props = {
+                    rootPath: itemObject.rootPath,
+                    text: itemObject.name,
+                    upnp: upnp
+                }
+                column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
             }
         }
 
         model: modelList
     }
 
-    ListModel {
+    BtObjectsMapping { id: mapping }
+    SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
+
+    ObjectModel {
         id: modelList
-        Component.onCompleted: {
-            modelList.append({
-                                 "itemText": qsTr("USB"),
-                                 "model": columnBrowserDirectory,
-                                 "props": {
-                                     "upnp": false,
-                                     "rootPath": ["media", "sda1"],
-                                     "text": qsTr("USB")}
-                             })
-            modelList.append({
-                                 "itemText": qsTr("media server"),
-                                 "model": columnBrowserUpnpModel,
-                                 "props": {
-                                     "upnp": true,
-                                     "text": qsTr("media server")}
-                             })
-            modelList.append({
-                                 "itemText": qsTr("SD"),
-                                 "model": columnBrowserDirectory,
-                                 "props": {
-                                     "upnp": false,
-                                     "rootPath": ["media", "mmcblk0p1"],
-                                     "text": qsTr("SD")}
-                             })
-        }
+        containers: [deviceModel.systemUii]
     }
 
     Component {
-        id: columnBrowserDirectory
+        id: directoryBrowser
         ColumnBrowserDirectoryModel {}
     }
 
     Component {
-        id: columnBrowserUpnpModel
+        id: upnpBrowser
         ColumnBrowserUpnpModel {}
     }
 }
