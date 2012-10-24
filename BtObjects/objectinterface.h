@@ -160,6 +160,7 @@ public:
 		IdMultiPowerAmplifier = 11004,
 
 		IdEnergyRate = 14267,
+		IdAlarmClock = 14201,
 
 		IdIpRadio = 16000,
 		IdDeviceUPnP = 16006,

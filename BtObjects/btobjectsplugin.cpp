@@ -38,6 +38,7 @@
 #include "energies.h"
 #include "configfile.h"
 #include "playlistplayer.h"
+#include "alarmclock.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -260,6 +261,9 @@ void BtObjectsPlugin::createObjects()
 
 				rates[rate->getRateId()] = rate;
 			}
+			break;
+		case ObjectInterface::IdAlarmClock:
+			obj_list = parseAlarmClocks(xml_obj);
 			break;
 		}
 
@@ -633,6 +637,7 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case Container::IdSpecialAmbient:
 		return configurations->getConfiguration(LAYOUT_FILE);
 	case ObjectInterface::IdEnergyRate:
+	case ObjectInterface::IdAlarmClock:
 		return configurations->getConfiguration(SETTINGS_FILE);
 	default:
 		return configurations->getConfiguration(ARCHIVE_FILE);
@@ -698,6 +703,9 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 			break;
 		case ObjectInterface::IdEnergyRate:
 			updateEnergyRate(node_path.first, qobject_cast<EnergyRate *>(obj_int));
+			break;
+		case ObjectInterface::IdAlarmClock:
+			updateAlarmClocks(node_path.first, qobject_cast<AlarmClock *>(obj_int));
 			break;
 		}
 	}
