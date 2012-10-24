@@ -81,7 +81,7 @@ MenuColumn {
 
     Component {
         id: alarmClock
-        Item {}
+        SettingsClocks {}
     }
 
     Component {
