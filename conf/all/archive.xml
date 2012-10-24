@@ -450,6 +450,8 @@
 	<obj cid="16000" id="16000" descr="Web radio" title="Radio" url="http://">
 		<ist uii="8001" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
 		<ist uii="8011" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
+		<ist uii="8014" descr="Fox FM" title="Radio 1" url="http://mediasrv.musicradio.com/FoxFM" />
+		<ist uii="8015" descr="Non funziona" title="Radio 1" url="http://yp.shoutcast.com/sbin/tunein-station.pls?id=2101" />
 	</obj>
 	<obj cid="16001" id="16001" descr="Webcam" url="http://">
 		<ist uii="8002" descr="Webcam" url="http://www.meteowbcam.itredirect_europa.php?id=2240" />
