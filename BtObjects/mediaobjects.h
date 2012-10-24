@@ -450,6 +450,8 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
+	void startLocalPlayback(bool force);
+
 	VirtualSourceDevice *dev;
 	AudioVideoPlayer *player;
 };

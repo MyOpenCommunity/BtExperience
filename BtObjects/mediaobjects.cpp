@@ -646,6 +646,14 @@ AudioVideoPlayer *SourceMultiMedia::getAudioVideoPlayer() const
 	return player;
 }
 
+void SourceMultiMedia::startLocalPlayback(bool force)
+{
+	// TODO
+	// - resume player if paused
+	// - if force is true and player is stopped, search for a media content to play
+	qWarning() << "SourceMultiMedia::startLocalPlayback";
+}
+
 void SourceMultiMedia::valueReceived(const DeviceValues &values_list)
 {
 	SourceBase::valueReceived(values_list);
@@ -657,25 +665,27 @@ void SourceMultiMedia::valueReceived(const DeviceValues &values_list)
 		{
 		case VirtualSourceDevice::REQ_SOURCE_ON:
 		case VirtualSourceDevice::REQ_SOURCE_OFF:
-			qDebug() << "REQ_SOURCE_ON/OFF";
-			break;
-
-		case SourceDevice::DIM_AREAS_UPDATED:
 		{
-			bool status = dev->isActive();
+			bool status = (it.key() == VirtualSourceDevice::REQ_SOURCE_ON);
 
-			// TODO: do something smart here
-//			if (!status)
-//				source_object->pauseLocalPlayback();
+			if (status)
+				startLocalPlayback(!values_list.contains(VirtualSourceDevice::DIM_SELF_REQUEST));
+			else
+				player->pause();
 		}
 			break;
 
+		case SourceDevice::DIM_AREAS_UPDATED:
+			if (!dev->isActive())
+				player->pause();
+			break;
+
 		case VirtualSourceDevice::REQ_NEXT_TRACK:
-			source_object->nextTrack();
+			player->nextTrack();
 			break;
 
 		case VirtualSourceDevice::REQ_PREV_TRACK:
-			source_object->previousTrack();
+			player->prevTrack();
 			break;
 		}
 
