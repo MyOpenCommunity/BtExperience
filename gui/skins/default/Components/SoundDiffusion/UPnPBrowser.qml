@@ -5,8 +5,8 @@ SongBrowser {
     id: column
     property alias rootPath: files.rootPath
 
-    function startPlay(fileObject, objIndex) {
-        column.dataModel.startUpnpPlay(fileObject, objIndex, files.count)
+    function startPlay(objIndex) {
+        column.dataModel.startUpnpPlay(files, objIndex, files.count)
     }
 
     listModel: files

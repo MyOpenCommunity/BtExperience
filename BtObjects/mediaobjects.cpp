@@ -1,6 +1,7 @@
 #include "mediaobjects.h"
 #include "media_device.h"
 #include "list_manager.h"
+#include "playlistplayer.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
 #include "xmlobject.h"
@@ -402,50 +403,31 @@ void SourceObject::nextTrack()
 	source->nextTrack();
 }
 
-bool SourceMedia::user_track_change_request = false;
-
-SourceMedia::SourceMedia(const QString &name, SourceBase *s, SourceObjectType t) :
+SourceMedia::SourceMedia(const QString &name, SourceMultiMedia *s, SourceObjectType t) :
 	SourceObject(name, s, t)
 {
-	media_player = new MultiMediaPlayer();
-	connect(media_player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
-		SLOT(handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState)));
-}
-
-void SourceMedia::play(const QString &song_path)
-{
-	user_track_change_request = true;
-	media_player->setCurrentSource(song_path);
-	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)
-		media_player->play();
-}
-
-void SourceMedia::playlistTrackChanged()
-{
-	play(playlist->currentFilePath());
+	source = s;
 }
 
 QObject *SourceMedia::getMediaPlayer() const
 {
-	return media_player;
+	return source->getAudioVideoPlayer()->getMediaPlayer();
 }
 
 void SourceMedia::previousTrack()
 {
-	user_track_change_request = true;
-	if (playlist)
-		playlist->previousFile();
+	source->getAudioVideoPlayer()->prevTrack();
 }
 
 void SourceMedia::nextTrack()
 {
-	user_track_change_request = true;
-	if (playlist)
-		playlist->nextFile();
+	source->getAudioVideoPlayer()->nextTrack();
 }
 
 void SourceMedia::togglePause()
 {
+	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(source->getAudioVideoPlayer()->getMediaPlayer());
+
 	if (media_player->getPlayerState() == MultiMediaPlayer::Playing)
 	{
 		media_player->pause();
@@ -456,60 +438,27 @@ void SourceMedia::togglePause()
 	}
 }
 
-void SourceMedia::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state)
-{
-	if (new_state == MultiMediaPlayer::Stopped && !user_track_change_request)
-		if (playlist)
-			playlist->nextFile();
-	user_track_change_request = false;
-}
 
 
-SourceIpRadio::SourceIpRadio(const QString &name, SourceBase *s) :
+SourceIpRadio::SourceIpRadio(const QString &name, SourceMultiMedia *s) :
 	SourceMedia(name, s, IpRadio)
 {
 }
 
-void SourceIpRadio::startPlay(FileObject *file)
+void SourceIpRadio::startPlay(QList<QVariant> urls, int index, int total_files)
 {
-	play(file->getPath());
+	source->getAudioVideoPlayer()->generatePlaylistWebRadio(urls, index, total_files);
 }
 
 
-SourceLocalMedia::SourceLocalMedia(const QString &name, const QString &_root_path, SourceBase *s, SourceObjectType t) :
+SourceLocalMedia::SourceLocalMedia(const QString &name, const QString &_root_path, SourceMultiMedia *s, SourceObjectType t) :
 	SourceMedia(name, s, t)
 {
 	root_path = _root_path;
 	model = new DirectoryListModel(this);
-	playlist = new FileListManager;
-	connect(playlist, SIGNAL(currentFileChanged()), SLOT(playlistTrackChanged()));
 }
 
-void SourceLocalMedia::startPlay(FileObject *file)
-{
-	EntryInfoList entry_list;
-	int start_index = 0;
-	int skipped_entries = 0;
-	for (int i = 0; i < model->getCount(); ++i)
-	{
-		FileObject *fo = static_cast<FileObject *>(model->getObject(i));
-		if (fo->getPath() == file->getPath())
-			start_index = i;
-
-		// skip directories from playlist
-		if (fo->getFileType() == FileObject::Directory)
-			++skipped_entries;
-		else
-			entry_list << fo->getEntryInfo();
-	}
-
-	FileListManager *list = static_cast<FileListManager *>(playlist);
-	list->setList(entry_list);
-	list->setCurrentIndex(start_index - skipped_entries);
-	play(file->getPath());
-}
-
-void SourceLocalMedia::setModel(DirectoryListModel *_model)
+void SourceLocalMedia::startPlay(DirectoryListModel *_model, int index, int total_files)
 {
 	if (_model != model)
 	{
@@ -519,6 +468,8 @@ void SourceLocalMedia::setModel(DirectoryListModel *_model)
 		model->setRange(QVariantList() << 0 << model->getCount());
 		delete state;
 	}
+
+	source->getAudioVideoPlayer()->generatePlaylistLocal(model, index, total_files, false);
 }
 
 QVariantList SourceLocalMedia::getRootPath() const
@@ -531,20 +482,14 @@ QVariantList SourceLocalMedia::getRootPath() const
 }
 
 
-SourceUpnpMedia::SourceUpnpMedia(const QString &name, SourceBase *s) :
+SourceUpnpMedia::SourceUpnpMedia(const QString &name, SourceMultiMedia *s) :
 	SourceMedia(name, s, Upnp)
 {
-	playlist = new UPnpListManager(UPnPListModel::getXmlDevice());
-	connect(playlist, SIGNAL(currentFileChanged()), SLOT(playlistTrackChanged()));
 }
 
-void SourceUpnpMedia::startUpnpPlay(FileObject *file, int current_index, int total_files)
+void SourceUpnpMedia::startUpnpPlay(UPnPListModel *model, int current_index, int total_files)
 {
-	UPnpListManager *list = static_cast<UPnpListManager *>(playlist);
-	list->setStartingFile(file->getEntryInfo());
-	list->setCurrentIndex(current_index);
-	list->setTotalFiles(total_files);
-	play(file->getPath());
+	source->getAudioVideoPlayer()->generatePlaylistUPnP(model, current_index, total_files, false);
 }
 
 
@@ -680,6 +625,12 @@ SourceMultiMedia::SourceMultiMedia(VirtualSourceDevice *d) :
 	SourceBase(d, MultiMedia)
 {
 	dev = d;
+	player = new AudioVideoPlayer(this);
+}
+
+AudioVideoPlayer *SourceMultiMedia::getAudioVideoPlayer() const
+{
+	return player;
 }
 
 void SourceMultiMedia::valueReceived(const DeviceValues &values_list)

@@ -19,8 +19,10 @@ class VirtualSourceDevice;
 class Amplifier;
 class SourceObject;
 class SourceBase;
+class SourceMultiMedia;
 class PowerAmplifierDevice;
-class ListManager;
+class AudioVideoPlayer;
+class ObjectListModel;
 
 
 QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multimedia);
@@ -235,19 +237,10 @@ public slots:
 	virtual void nextTrack();
 
 protected:
-	SourceMedia(const QString &name, SourceBase *s, SourceObjectType t);
-	void play(const QString &song_path);
-	ListManager *playlist;
+	SourceMedia(const QString &name, SourceMultiMedia *s, SourceObjectType t);
 
-protected slots:
-	void playlistTrackChanged();
-
-private slots:
-	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);
-
-private:
-	MultiMediaPlayer *media_player;
-	static bool user_track_change_request;
+protected:
+	SourceMultiMedia *source;
 };
 
 
@@ -268,8 +261,8 @@ class SourceIpRadio : public SourceMedia
 {
 	Q_OBJECT
 public:
-	SourceIpRadio(const QString &name, SourceBase *s);
-	Q_INVOKABLE void startPlay(FileObject *file);
+	SourceIpRadio(const QString &name, SourceMultiMedia *s);
+	Q_INVOKABLE void startPlay(QList<QVariant> urls, int index, int total_files);
 };
 
 
@@ -279,10 +272,9 @@ class SourceLocalMedia : public SourceMedia
 	Q_PROPERTY(QVariantList rootPath READ getRootPath CONSTANT)
 
 public:
-	SourceLocalMedia(const QString &name, const QString &root_path, SourceBase *s, SourceObjectType t);
+	SourceLocalMedia(const QString &name, const QString &root_path, SourceMultiMedia *s, SourceObjectType t);
 	QVariantList getRootPath() const;
-	Q_INVOKABLE void startPlay(FileObject *file);
-	Q_INVOKABLE void setModel(DirectoryListModel *_model);
+	Q_INVOKABLE void startPlay(DirectoryListModel *model, int index, int total_files);
 
 private:
 	QString root_path;
@@ -294,8 +286,8 @@ class SourceUpnpMedia : public SourceMedia
 {
 	Q_OBJECT
 public:
-	SourceUpnpMedia(const QString &name, SourceBase *s);
-	Q_INVOKABLE void startUpnpPlay(FileObject *file, int current_index, int total_files);
+	SourceUpnpMedia(const QString &name, SourceMultiMedia *s);
+	Q_INVOKABLE void startUpnpPlay(UPnPListModel *model, int current_index, int total_files);
 };
 
 
@@ -405,11 +397,14 @@ class SourceMultiMedia : public SourceBase
 public:
 	SourceMultiMedia(VirtualSourceDevice *d);
 
+	AudioVideoPlayer *getAudioVideoPlayer() const;
+
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
 	VirtualSourceDevice *dev;
+	AudioVideoPlayer *player;
 };
 
 

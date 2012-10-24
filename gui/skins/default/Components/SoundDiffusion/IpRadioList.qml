@@ -12,17 +12,27 @@ MenuColumn {
             itemObject: radioModel.getObject(index)
             editable: true
             onDelegateClicked: {
-                console.log("Clicked on element: " + itemObject)
-                column.dataModel.startPlay(itemObject)
+                column.dataModel.startPlay(radioUrls(radioModel), index, radioModel.count)
             }
         }
 
         model: radioModel
     }
 
+    SystemsModel { id: linksModel; systemId: Container.IdMultimediaWebRadio; source: myHomeModels.mediaContainers }
+
     ObjectModel {
         id: radioModel
-        filters: [{objectId: ObjectInterface.IdIpRadio}]
+        containers: [linksModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    function radioUrls(model) {
+        var urls = []
+
+        for (var i = 0; i < model.count; ++i)
+            urls.push(model.getObject(i).path)
+
+        return urls
     }
 }
