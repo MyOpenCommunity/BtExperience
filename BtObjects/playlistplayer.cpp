@@ -32,6 +32,12 @@ void PlayListPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int t
 	generate(model, index, total_files);
 }
 
+void PlayListPlayer::generatePlaylistWebRadio(QList<QVariant> urls, int index, int total_files)
+{
+	is_video = false;
+	generate(urls, index, total_files);
+}
+
 bool PlayListPlayer::isPlaying()
 {
 	// if actual_list is neither pointing to local_list nor to upnp_list we
@@ -108,6 +114,35 @@ void PlayListPlayer::generate(UPnPListModel *model, int index, int total_files)
 	list->setStartingFile(file->getEntryInfo());
 	list->setCurrentIndex(index);
 	list->setTotalFiles(total_files);
+
+	// updates reference to current (emits currentChanged)
+	updateCurrent();
+}
+
+void PlayListPlayer::generate(QList<QVariant> urls, int index, int total_files)
+{
+	Q_UNUSED(total_files);
+
+	// sets list to use since now
+	actual_list = local_list;
+	emit playingChanged();
+
+	// creates list of files (of the same type) to play
+	EntryInfoList entry_list;
+	for (int i = 0; i < urls.size(); ++i)
+	{
+		EntryInfo info;
+
+		info.type = EntryInfo::AUDIO;
+		info.path = urls[i].toString();
+
+		entry_list << info;
+	}
+
+	// saves retrieved data in internal play_list and seeks to actual selected file
+	FileListManager *list = static_cast<FileListManager *>(local_list);
+	list->setList(entry_list);
+	list->setCurrentIndex(index);
 
 	// updates reference to current (emits currentChanged)
 	updateCurrent();
