@@ -227,10 +227,12 @@ class SourceMedia : public SourceObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QObject *mediaPlayer READ getMediaPlayer CONSTANT)
+	Q_PROPERTY(QObject *audioVideoPlayer READ getAudioVideoPlayer CONSTANT)
 
 public:
 	Q_INVOKABLE void togglePause();
 	QObject *getMediaPlayer() const;
+	QObject *getAudioVideoPlayer() const;
 
 public slots:
 	virtual void previousTrack();

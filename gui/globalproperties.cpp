@@ -4,6 +4,7 @@
 #include "playlistplayer.h"
 #include "audiostate.h"
 #include "mediaplayer.h" // SoundPlayer
+#include "mediaobjects.h" // SourceMedia
 #include "ringtonemanager.h"
 #include "xml_functions.h"
 #include "ts/main.h"
@@ -149,8 +150,27 @@ void GlobalProperties::initAudio()
 
 	if (sound_diffusion_enabled)
 	{
-		audioPlayer = new AudioVideoPlayer(this);
-		emit audioPlayerChanged();
+		// find all source objects
+		ObjectModel sources;
+		QVariantList filters;
+		QVariantMap filter;
+
+		filter["objectId"] = ObjectInterface::IdSoundSource;
+		filters << filter;
+
+		sources.setFilters(filters);
+
+		for (int i = 0; i < sources.getCount(); ++i)
+		{
+			SourceMedia *source = qobject_cast<SourceMedia *>(sources.getObject(i));
+
+			if (source)
+			{
+				audioPlayer = static_cast<AudioVideoPlayer *>(source->getAudioVideoPlayer());
+				emit audioPlayerChanged();
+				break;
+			}
+		}
 
 		MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audioPlayer->getMediaPlayer());
 

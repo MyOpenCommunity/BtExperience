@@ -414,6 +414,11 @@ QObject *SourceMedia::getMediaPlayer() const
 	return source->getAudioVideoPlayer()->getMediaPlayer();
 }
 
+QObject *SourceMedia::getAudioVideoPlayer() const
+{
+	return source->getAudioVideoPlayer();
+}
+
 void SourceMedia::previousTrack()
 {
 	source->getAudioVideoPlayer()->prevTrack();
