@@ -3,6 +3,7 @@
 
 
 #include <QObject>
+#include <QPoint>
 
 class QEvent;
 class QWidget;
@@ -33,6 +34,7 @@ public:
 
 signals:
 	void updateTime();
+	void mouseRelease(QPoint pos);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev);

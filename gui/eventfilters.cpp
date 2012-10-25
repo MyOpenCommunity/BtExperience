@@ -56,6 +56,8 @@ bool LastClickTime::eventFilter(QObject *obj, QEvent *ev)
 	if (ev->type() == QEvent::MouseButtonRelease)
 	{
 		emit updateTime();
+		QMouseEvent *event = static_cast<QMouseEvent *>(ev);
+		emit mouseRelease(event->pos());
 		pressed = false;
 	}
 

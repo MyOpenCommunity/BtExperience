@@ -103,6 +103,8 @@ public:
 
 	Q_INVOKABLE void beep();
 
+	Q_INVOKABLE QPoint mouseReleasePosition() const;
+
 	// this is a separate method because it needs to happen only after
 	// configuration file parsing
 	Q_INVOKABLE void initAudio();
@@ -112,6 +114,7 @@ public:
 
 public slots:
 	void updateTime();
+	void mouseReleased(QPoint pos);
 
 signals:
 	void lastTimePressChanged();
@@ -146,6 +149,7 @@ private:
 	bool monitor_off;
 	bool debug_touchscreen;
 	DebugTiming *debug_timing;
+	QPoint mouse_position;
 
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
