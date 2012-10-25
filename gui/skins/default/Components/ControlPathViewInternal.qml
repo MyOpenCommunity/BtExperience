@@ -97,20 +97,28 @@ PathView {
     preferredHighlightEnd: (pathItemCount % 2) === 0 ? 0.49 : 0.5
 
     onFlickStarted: {
-        privateProps.hasFlicked = true
         currentPressed = -1
     }
     onMovementEnded: {
-        if (!privateProps.hasFlicked)
+        // start position is taken relative to this item, while releasePosition
+        // is already global
+        var start = control.mapToItem(null, realClick.mouseStart.x, realClick.mouseStart.y)
+        if (Math.abs(global.mouseReleasePosition().x - start.x) < 20) {
             control.internalClick()
-        else
-            privateProps.hasFlicked = false
+        }
 
         currentPressed = -1
     }
 
-    QtObject {
-        id: privateProps
-        property bool hasFlicked: false
+    MouseArea {
+        id: realClick
+        property variant mouseStart: undefined
+        anchors.fill: parent
+        // needed, otherwise clicks are not registered
+        z: 10
+        onPressed: {
+            realClick.mouseStart = {'x': mouse.x, 'y': mouse.y}
+            mouse.accepted = false
+        }
     }
 }

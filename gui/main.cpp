@@ -328,6 +328,7 @@ int main(int argc, char *argv[])
 	GlobalProperties global(app_logger);
 	ImageReader::setBasePath(global.getBasePath());
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
+	QObject::connect(last_click, SIGNAL(mouseRelease(QPoint)), &global, SLOT(mouseReleased(QPoint)));
 	BootManager boot_manager(&global);
 	return app.exec();
 }

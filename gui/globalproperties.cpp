@@ -362,6 +362,11 @@ void GlobalProperties::updateTime()
 	emit lastTimePressChanged();
 }
 
+void GlobalProperties::mouseReleased(QPoint pos)
+{
+	mouse_position = pos;
+}
+
 void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
 {
 	main_widget = _viewport;
@@ -384,6 +389,11 @@ void GlobalProperties::beep()
 
 	if (QFile::exists(path) && audio_state->getState() == AudioState::Beep)
 		sound_player->play(path);
+}
+
+QPoint GlobalProperties::mouseReleasePosition() const
+{
+	return mouse_position;
 }
 
 void GlobalProperties::beepChanged()
