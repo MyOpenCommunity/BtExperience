@@ -84,6 +84,14 @@ bool MountPoint::getMounted() const
 	return mounted;
 }
 
+void MountPoint::unmount()
+{
+	if (!mounted)
+		return;
+
+	MountWatcher::instance()->unmount(path);
+}
+
 void MountPoint::directoryMounted(const QString &dir, MountPoint::MountType mount_type)
 {
 	if (getType() != mount_type)

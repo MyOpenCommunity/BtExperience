@@ -72,6 +72,9 @@ public:
 	void setMounted(bool mounted);
 	bool getMounted() const;
 
+public slots:
+	void unmount();
+
 signals:
 	void pathChanged();
 	void logicalPathChanged();
