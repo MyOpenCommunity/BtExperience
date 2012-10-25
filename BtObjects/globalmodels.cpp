@@ -2,6 +2,7 @@
 #include "note.h"
 #include "medialink.h"
 #include "objectlink.h"
+#include "alarmclock.h"
 
 
 GlobalModels::GlobalModels()
@@ -103,6 +104,11 @@ ItemInterface *GlobalModels::createQuicklink(int profile_uii, QString mediaType,
 		return new ObjectLink(btObject, t, x, y, profile_uii);
 
 	return new MediaLink(profile_uii, t, name, address, QPoint(x, y));
+}
+
+ItemInterface *GlobalModels::createAlarmClock()
+{
+	return new AlarmClock("new alarm clock", false, AlarmClock::AlarmClockBeep, 0, 0, 0);
 }
 
 void GlobalModels::setProfiles(MediaDataModel *_profiles)

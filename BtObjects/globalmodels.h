@@ -164,6 +164,8 @@ public:
 	*/
 	Q_INVOKABLE ItemInterface *createQuicklink(int profile_uii, QString mediaType, QString name=QString(), QString address=QString(), ObjectInterface *btObject=0, int x=0, int y=0);
 
+	Q_INVOKABLE ItemInterface *createAlarmClock();
+
 	void setProfiles(MediaDataModel *profiles);
 	MediaDataModel *getProfiles() const;
 

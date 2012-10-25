@@ -24,7 +24,7 @@ MenuColumn {
             onClicked: {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1
-                console.log("________________ Add Clock ________________")
+                objectModel.append(myHomeModels.createAlarmClock())
             }
         }
 

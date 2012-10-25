@@ -737,12 +737,15 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 void BtObjectsPlugin::insertObject(ItemInterface *obj)
 {
 	qDebug() << "BtObjectsPlugin::insertObject" << obj;
-	QPair<QDomNode, QString> container_path = findNodeForUii(obj->getContainerUii());
+	QPair<QDomNode, QString> container_path;
+	if (obj->getContainerUii() != -1)
+		container_path = findNodeForUii(obj->getContainerUii());
 	int uii = -1;
 
 	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
 	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
 	Container *obj_container = qobject_cast<Container *>(obj);
+	ObjectInterface *obj_interface = qobject_cast<ObjectInterface *>(obj);
 
 	if (obj_media)
 	{
@@ -767,6 +770,14 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 
 		if (obj->getContainerUii() == -1)
 			configurations->saveConfiguration(LAYOUT_FILE);
+	}
+	else if (obj_interface)
+	{
+		uii = uii_map.nextUii();
+		uii_map.insert(uii, obj_interface);
+		uii_to_id[uii] = obj_interface->getObjectId();
+		configurations->saveConfiguration(SETTINGS_FILE);
+		return;
 	}
 	else
 		uii = findLinkedUiiForObject(obj);
