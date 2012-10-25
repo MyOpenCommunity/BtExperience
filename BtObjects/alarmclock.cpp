@@ -41,7 +41,7 @@ QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node)
 
 		int uii = getIntAttribute(ist, "uii");
 
-		QString descr = getAttribute(xml_node, "descr", def_descr);
+		QString descr = getAttribute(ist, "descr", def_descr);
 		int enabled = getIntAttribute(ist, "enabled", def_enabled);
 		int type = getIntAttribute(ist, "type", def_type);
 		int days = getIntAttribute(ist, "days", def_days);

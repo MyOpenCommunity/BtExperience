@@ -39,11 +39,13 @@ class AlarmClock : public ObjectInterface
 		\brief The alarm clock hour [0-23] at which alarm triggers
 	*/
 	Q_PROPERTY(int hour READ getHour WRITE setHour NOTIFY hourChanged)
+	Q_PROPERTY(int hours READ getHour WRITE setHour NOTIFY hourChanged)
 
 	/*!
 		\brief The alarm clock minute [0-59] at which alarm triggers
 	*/
 	Q_PROPERTY(int minute READ getMinute WRITE setMinute NOTIFY minuteChanged)
+	Q_PROPERTY(int minutes READ getMinute WRITE setMinute NOTIFY minuteChanged)
 
 	/*!
 		\brief Does the alarm clock trigger on a specific weekday?
@@ -55,6 +57,7 @@ class AlarmClock : public ObjectInterface
 	Q_PROPERTY(bool triggerOnFridays READ isTriggerOnFridays WRITE setTriggerOnFridays NOTIFY triggerOnFridaysChanged)
 	Q_PROPERTY(bool triggerOnSaturdays READ isTriggerOnSaturdays WRITE setTriggerOnSaturdays NOTIFY triggerOnSaturdaysChanged)
 	Q_PROPERTY(bool triggerOnSundays READ isTriggerOnSundays WRITE setTriggerOnSundays NOTIFY triggerOnSundaysChanged)
+	Q_PROPERTY(int trigger READ getDays NOTIFY daysChanged) // used for updates in QML
 
 	Q_ENUMS(AlarmClockType)
 

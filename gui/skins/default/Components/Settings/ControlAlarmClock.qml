@@ -1,6 +1,8 @@
 import QtQuick 1.1
 import Components 1.0
 
+import "../../js/Stack.js" as Stack
+
 
 MenuColumn {
     id: column
@@ -24,9 +26,10 @@ MenuColumn {
                                                               column.dataModel.triggerOnFridays,
                                                               column.dataModel.triggerOnSaturdays,
                                                               column.dataModel.triggerOnSundays
-                                                          ])
+                                                          ],
+                                                          column.dataModel.trigger)
             bottomTextFormat: Text.RichText
-            onEditClicked: console.log("_____________ onEditClicked ________________")
+            onEditClicked: Stack.pushPage("AlarmClockDateTimePage.qml", {"alarmClock": column.dataModel})
         }
 
         ControlSettings {
@@ -66,7 +69,7 @@ MenuColumn {
             return value
         }
 
-        function formatRepetionString(days, flags) {
+        function formatRepetionString(days, flags, trigger) {
             var result = ""
 
             for (var i = 0; i < 7; ++i)
