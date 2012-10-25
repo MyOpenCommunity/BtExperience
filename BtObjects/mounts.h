@@ -113,7 +113,7 @@ public:
 	// force notifications for all currently-mounted mountpoints
 	void notifyAll();
 
-	static MountWatcher *mount_watcher;
+	static MountWatcher *instance();
 
 signals:
 	void directoryMounted(const QString &dir, MountPoint::MountType type);
@@ -144,6 +144,8 @@ private:
 	QFileSystemWatcher *watcher;
 	QProcess mount_process;
 	QList<ProcessEntry> command_queue;
+
+	static MountWatcher *mount_watcher;
 };
 
 #endif // MOUNTS_H

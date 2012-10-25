@@ -37,12 +37,11 @@ MountPoint::MountPoint(MountType type) :
 {
 	mounted = false;
 
-	if (!MountWatcher::mount_watcher)
-		MountWatcher::mount_watcher = new MountWatcher(this);
+	MountWatcher *mount_watcher = MountWatcher::instance();
 
-	connect(MountWatcher::mount_watcher, SIGNAL(directoryMounted(QString,MountPoint::MountType)),
+	connect(mount_watcher, SIGNAL(directoryMounted(QString,MountPoint::MountType)),
 		this, SLOT(directoryMounted(QString,MountPoint::MountType)));
-	connect(MountWatcher::mount_watcher, SIGNAL(directoryUnmounted(QString,MountPoint::MountType)),
+	connect(mount_watcher, SIGNAL(directoryUnmounted(QString,MountPoint::MountType)),
 		this, SLOT(directoryUnmounted(QString,MountPoint::MountType)));
 }
 
@@ -136,6 +135,14 @@ MountWatcher::MountWatcher(QObject *parent) : QObject(parent)
 
 	// mount/umount notifications
 	connect(watcher, SIGNAL(fileChanged(const QString &)), SLOT(fileChanged(const QString &)));
+}
+
+MountWatcher *MountWatcher::instance()
+{
+	if (!mount_watcher)
+		mount_watcher = new MountWatcher();
+
+	return mount_watcher;
 }
 
 void MountWatcher::enqueueCommand(const QString &command, const QStringList &arguments)

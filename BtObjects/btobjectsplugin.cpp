@@ -212,8 +212,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	createObjects();
 	parseConfig();
 
-	if (MountWatcher::mount_watcher)
-		MountWatcher::mount_watcher->startWatching();
+	MountWatcher::instance()->startWatching();
 
 	QList<MediaDataModel *> models = QList<MediaDataModel *>()
 			<< &room_model << &floor_model << &object_link_model << &systems_model
