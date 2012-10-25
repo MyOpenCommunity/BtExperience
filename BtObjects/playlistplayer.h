@@ -47,8 +47,14 @@ signals:
 	void currentChanged();
 	void playingChanged();
 
+	/// emitted when player is active and the device for current file gets unmounted
+	void deviceUnmounted();
+
 protected slots:
 	virtual void updateCurrent();
+
+private slots:
+	void directoryUnmounted(QString dir);
 
 private:
 	ListManager *local_list, *upnp_list, *actual_list;
