@@ -118,7 +118,7 @@ void AlarmClock::setAlarmType(AlarmClockType newValue)
 
 void AlarmClock::setDays(int newValue)
 {
-	if (days == newValue)
+	if (days == newValue || newValue < 0 || newValue > 0x7F)
 		return;
 
 	days = newValue;
@@ -127,7 +127,7 @@ void AlarmClock::setDays(int newValue)
 
 void AlarmClock::setHour(int newValue)
 {
-	if (hour == newValue)
+	if (hour == newValue || newValue < 0 || newValue > 23)
 		return;
 
 	hour = newValue;
@@ -136,7 +136,7 @@ void AlarmClock::setHour(int newValue)
 
 void AlarmClock::setMinute(int newValue)
 {
-	if (minute == newValue)
+	if (minute == newValue || newValue < 0 || newValue > 59)
 		return;
 
 	minute = newValue;
