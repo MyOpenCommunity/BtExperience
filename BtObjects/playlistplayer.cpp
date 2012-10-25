@@ -212,6 +212,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(muteChanged(bool)), SIGNAL(muteChanged()));
 
 	connect(this, SIGNAL(currentChanged()), SLOT(play()));
+	connect(this, SIGNAL(deviceUnmounted()), media_player, SLOT(stop()));
 }
 
 void AudioVideoPlayer::prevTrack()
