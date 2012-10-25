@@ -9,6 +9,7 @@ MenuColumn {
     ObjectModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdAlarmClock}]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     onChildDestroyed: {

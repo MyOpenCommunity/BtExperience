@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 
 import "../../js/Stack.js" as Stack
@@ -6,6 +7,11 @@ import "../../js/Stack.js" as Stack
 
 MenuColumn {
     id: column
+
+    ObjectModel {
+        id: objectModel
+        filters: [{objectId: ObjectInterface.IdAlarmClock}]
+    }
 
     Column {
         ControlSwitch {
@@ -54,7 +60,7 @@ MenuColumn {
                 pressedImage: "../../images/common/ico_delete.svg"
                 imageAnchors.rightMargin: 10
 
-                onClicked: console.log("_____________ delete clicked ________________")
+                onClicked: objectModel.remove(column.dataModel)
                 status: 0
             }
         }

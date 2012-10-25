@@ -776,7 +776,25 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 		uii = uii_map.nextUii();
 		uii_map.insert(uii, obj_interface);
 		uii_to_id[uii] = obj_interface->getObjectId();
+
+		QDomDocument settings = configurations->getConfiguration(SETTINGS_FILE);
+
+		foreach (QDomNode xml_obj, getChildren(settings.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == obj_interface->getObjectId())
+			{
+				QDomElement ist_obj = settings.createElement("ist");
+				// TODO for now, we are sure we have only AlarmClocks objects;
+				// if other classes need this, update code accordingly
+				updateAlarmClocks(ist_obj, qobject_cast<AlarmClock *>(obj_interface));
+				setAttribute(ist_obj, "uii", QString::number(uii));
+				xml_obj.appendChild(ist_obj);
+				break;
+			}
+		}
+
 		configurations->saveConfiguration(SETTINGS_FILE);
+
 		return;
 	}
 	else
@@ -798,11 +816,14 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 void BtObjectsPlugin::removeObject(ItemInterface *obj)
 {
 	qDebug() << "BtObjectsPlugin::removeObject" << obj;
-	QPair<QDomNode, QString> container_path = findNodeForUii(obj->getContainerUii());
+	QPair<QDomNode, QString> container_path;
+	if (obj->getContainerUii() != -1)
+		container_path = findNodeForUii(obj->getContainerUii());
 	int uii = -1;
 
 	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
 	Container *obj_container = qobject_cast<Container *>(obj);
+	ObjectInterface *obj_interface = qobject_cast<ObjectInterface *>(obj);
 
 	if (obj_container)
 	{
@@ -815,6 +836,19 @@ void BtObjectsPlugin::removeObject(ItemInterface *obj)
 		ist_path.first.parentNode().removeChild(ist_path.first);
 
 		configurations->saveConfiguration(ist_path.second);
+	}
+	else if (obj_interface)
+	{
+		int uii = uii_map.findUii(obj_interface);
+		QPair<QDomNode, QString> ist_path = findNodeForUii(uii);
+
+		if (ist_path.first.isNull())
+			qFatal("Can't find item node for uii %d", uii);
+
+		ist_path.first.parentNode().removeChild(ist_path.first);
+
+		configurations->saveConfiguration(SETTINGS_FILE);
+		return;
 	}
 	else
 		uii = findLinkedUiiForObject(obj);
