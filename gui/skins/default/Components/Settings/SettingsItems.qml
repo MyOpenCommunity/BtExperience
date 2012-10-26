@@ -12,8 +12,8 @@ MenuColumn {
     // redefined to implement menu navigation
     function openMenu(navigationTarget) {
         if (navigationTarget === "Systems") {
-            var m = modelList.get(7)
-            itemList.currentIndex = 7
+            var m = modelList.get(4)
+            itemList.currentIndex = 4
             column.loadColumn(m.component, m.name)
             return 1
         }
