@@ -29,11 +29,15 @@ public:
 		return ObjectInterface::IdAlarmClockNotifier;
 	}
 
+signals:
+	void enabledChanged();
+
 private slots:
 	void updateAlarmClocksInfo();
 
 private:
 	ObjectModel *alarm_clocks_model;
+	bool is_one_enabled;
 };
 
 #endif // ALARM_CLOCK_NOTIFIER_H
