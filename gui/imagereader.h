@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QSize>
+#include <QHash>
 
 
 // A simply wrapper around a QImageReader, used to retrieve the original size of
@@ -31,6 +32,7 @@ signals:
 	void heightChanged();
 
 private:
+	static QHash<QString, QSize> size_cache;
 	QSize size;
 	QString filename;
 	static QString base_path;
