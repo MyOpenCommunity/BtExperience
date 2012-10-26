@@ -21,6 +21,8 @@ class AlarmClockNotifier : public ObjectInterface
 {
 	Q_OBJECT
 
+	Q_PROPERTY(bool enabled READ isEnabled NOTIFY enabledChanged)
+
 public:
 	AlarmClockNotifier();
 
@@ -28,6 +30,8 @@ public:
 	{
 		return ObjectInterface::IdAlarmClockNotifier;
 	}
+
+	bool isEnabled() const { return is_one_enabled; }
 
 signals:
 	void enabledChanged();
