@@ -7,6 +7,7 @@
 
 class MediaDataModel;
 class AlarmClock;
+class QTimer;
 
 
 QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node);
@@ -107,11 +108,13 @@ public:
 
 signals:
 	void alarmTypeChanged();
+	void checkRequested();
 	void daysChanged();
 	void descriptionChanged();
 	void enabledChanged();
 	void hourChanged();
 	void minuteChanged();
+	void ringMe(AlarmClock *alarmClock);
 	void triggered(AlarmClock *alarmClock);
 	void triggerOnMondaysChanged();
 	void triggerOnTuesdaysChanged();
@@ -121,6 +124,10 @@ signals:
 	void triggerOnSaturdaysChanged();
 	void triggerOnSundaysChanged();
 
+private slots:
+	void checkRequestManagement();
+	void triggersIfHasTo();
+
 private:
 	void setTriggerOnWeekdays(bool newValue, int dayMask);
 
@@ -128,6 +135,7 @@ private:
 	QString description;
 	bool enabled;
 	int days, hour, minute;
+	QTimer *timerTrigger;
 };
 
 #endif // ALARMCLOCK_H

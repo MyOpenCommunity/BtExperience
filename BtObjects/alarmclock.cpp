@@ -6,6 +6,7 @@
 
 #include <QFile>
 #include <QtDebug>
+#include <QTimer>
 
 
 namespace
@@ -66,6 +67,7 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarmClock)
 AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days, int _hour, int _minute, QObject *parent)
 	: ObjectInterface(parent)
 {
+	timerTrigger = new QTimer(this);
 	description = _description;
 	switch(_type)
 	{
@@ -80,14 +82,68 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	hour = _hour;
 	minute = _minute;
 	enabled = false; // starting from a well known state
-	setEnabled(_enabled); // sets real value
 
 	connect(this, SIGNAL(alarmTypeChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(checkRequested()), this, SLOT(checkRequestManagement()));
 	connect(this, SIGNAL(daysChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(descriptionChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(hourChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(persistItem()));
+	connect(timerTrigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
+
+	setEnabled(_enabled); // sets real value
+}
+
+void AlarmClock::checkRequestManagement()
+{
+	// gets actual date&time
+	QDateTime actualDateTime = QDateTime::currentDateTime();
+
+	// gets triggering date&time
+	QDateTime triggeringDateTime = QDateTime(actualDateTime.date(), QTime(hour, minute));
+
+	// computes difference in seconds between actual and candidate date&time
+	int deltaSeconds = actualDateTime.secsTo(triggeringDateTime);
+
+	// if difference is not positive adds 1 day to triggering date&time and recomputes delta
+	if (deltaSeconds <= 0)
+		deltaSeconds = actualDateTime.secsTo(triggeringDateTime.addDays(1));
+
+	// finally, sets trigger timer
+	timerTrigger->setSingleShot(true);
+	timerTrigger->start(deltaSeconds * 1000);
+}
+
+void AlarmClock::triggersIfHasTo()
+{
+	if (days == 0)
+	{
+		// once alarm: ring and disable
+		emit ringMe(this);
+		setEnabled(false);
+		return;
+	}
+
+	// computes day of week (1 = Monday .. 7 = Sunday)
+	int weekday = QDateTime::currentDateTime().date().dayOfWeek();
+
+	// checks if it is a trigger day
+	bool isTriggerDay = false;
+	isTriggerDay = isTriggerDay || (isTriggerOnMondays() && (weekday == 1));
+	isTriggerDay = isTriggerDay || (isTriggerOnTuesdays() && (weekday == 2));
+	isTriggerDay = isTriggerDay || (isTriggerOnWednesdays() && (weekday == 3));
+	isTriggerDay = isTriggerDay || (isTriggerOnThursdays() && (weekday == 4));
+	isTriggerDay = isTriggerDay || (isTriggerOnFridays() && (weekday == 5));
+	isTriggerDay = isTriggerDay || (isTriggerOnSaturdays() && (weekday == 6));
+	isTriggerDay = isTriggerDay || (isTriggerOnSundays() && (weekday == 7));
+
+	// eventually rings
+	if (isTriggerDay)
+		emit ringMe(this);
+
+	// reloads timer
+	emit checkRequested();
 }
 
 void AlarmClock::stop()
@@ -120,6 +176,9 @@ void AlarmClock::setEnabled(bool newValue)
 
 	enabled = newValue;
 	emit enabledChanged();
+
+	if (enabled)
+		emit checkRequested();
 }
 
 void AlarmClock::setAlarmType(AlarmClockType newValue)

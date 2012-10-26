@@ -29,6 +29,7 @@ AlarmClockNotifier::AlarmClockNotifier()
 		Q_ASSERT_X(alarm, __PRETTY_FUNCTION__, "Unexpected NULL object");
 		connect(alarm, SIGNAL(enabledChanged()), this, SLOT(updateAlarmClocksInfo()));
 		connect(alarm, SIGNAL(triggered(AlarmClock*)), this, SIGNAL(alarmClockTrigger(AlarmClock*)));
+		connect(alarm, SIGNAL(ringMe(AlarmClock*)), this, SIGNAL(ringAlarmClock(AlarmClock*)));
 	}
 
 	// inits everything

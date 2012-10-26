@@ -37,6 +37,7 @@ public:
 signals:
 	void alarmClockTrigger(AlarmClock *alarmClock);
 	void enabledChanged();
+	void ringAlarmClock(AlarmClock *alarmClock);
 
 private slots:
 	void updateAlarmClocksInfo();
