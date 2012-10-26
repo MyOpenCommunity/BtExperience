@@ -177,7 +177,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm-clock_p.svg" :
                               "../images/toolbar/icon_alarm-clock.svg"
-            onClicked: console.log("clockButton clicked")
+            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ALARM_CLOCKS})
         }
 
         // auto open

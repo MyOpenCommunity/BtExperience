@@ -12,10 +12,16 @@ MenuColumn {
     // redefined to implement menu navigation
     function openMenu(navigationTarget) {
         if (navigationTarget === "Systems") {
-            var m = modelList.get(7)
-            itemList.currentIndex = 7
+            var m = modelList.get(4)
+            itemList.currentIndex = 4
             column.loadColumn(m.component, m.name)
             return 1
+        }
+        else if (navigationTarget === "AlarmClock") {
+            var m = modelList.get(5)
+            itemList.currentIndex = 5
+            column.loadColumn(m.component, m.name)
+            return 0
         }
         return -2 // wrong target
     }
