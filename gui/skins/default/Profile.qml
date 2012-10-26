@@ -40,9 +40,9 @@ Page {
         id: privateProps
 
         property Item actualFavorite: null
-        // the following properties are used to compute margins for the moving grid
+        // the following properties are used to compute margins for the moving area
         // we have to be sure that elements moved on the bottom and right part of
-        // the grid don't disappear from the screen or don't overlap with other elements
+        // the area don't overlap the area margins
         property int maxItemWidth: 0
         property int maxItemHeight: 0
 
@@ -435,7 +435,7 @@ Page {
                 onCurrentPageChanged: privateProps.unselectObj()
             }
 
-            MoveGrid {
+            MoveArea {
                 id: bgMoveArea
 
                 function moveTo(absX, absY) {

@@ -189,7 +189,7 @@ Item {
         id: constants
     }
 
-    MoveGrid {
+    MoveArea {
         id: bgMoveArea
 
         function moveTo(absX, absY) {

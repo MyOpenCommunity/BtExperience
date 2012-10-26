@@ -64,7 +64,7 @@ MenuItem 1.0 MenuItem.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 MenuShadow 1.0 MenuShadow.qml
 MenuTitle 1.0 MenuTitle.qml
-MoveGrid 1.0 MoveGrid.qml
+MoveArea 1.0 MoveArea.qml
 NavigationBar 1.0 NavigationBar.qml
 NoteActions 1.0 NoteActions.qml
 PageAnimation 1.0 PageAnimation.qml
@@ -74,6 +74,7 @@ PaginatorList 1.0 PaginatorList.qml
 PaginatorOnBackground 1.0 PaginatorOnBackground.qml
 Pannable 1.0 Pannable.qml
 PathViewDelegate 1.0 PathViewDelegate.qml
+PressDot 1.0 PressDot.qml
 QuickLink 1.0 QuickLink.qml
 RoomItem 1.0 RoomItem.qml
 RoomView 1.0 RoomView.qml
@@ -84,3 +85,4 @@ Switch 1.0 Switch.qml
 SystemsModel 1.0 SystemsModel.qml
 ToolBar 1.0 ToolBar.qml
 ToolbarButton 1.0 ToolbarButton.qml
+TurnOffMonitor 1.0 TurnOffMonitor.qml

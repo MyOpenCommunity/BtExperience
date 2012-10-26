@@ -1,4 +1,4 @@
-// Implement a grid which can be used to move Items around the page.
+// Implement an area which can be used to move Items around the page.
 // Used in Profile and RoomView.
 import QtQuick 1.1
 
@@ -8,11 +8,6 @@ Item {
     property int maxItemWidth: 0
     property int maxItemHeight: 0
     property Item selectedItem: null
-
-    property alias gridX: bgMoveArea.x
-    property alias gridY: bgMoveArea.y
-    property alias gridW: bgMoveArea.width
-    property alias gridH: bgMoveArea.height
 
     signal moveEnd
 
@@ -35,7 +30,7 @@ Item {
     }
 
     BeepingMouseArea {
-        id: moveGrid
+        id: moveArea
         visible: false
         anchors.fill: parent
 
@@ -81,7 +76,7 @@ Item {
         State {
             name: "shown"
             PropertyChanges {
-                target: moveGrid
+                target: moveArea
                 visible: true
             }
             PropertyChanges {
