@@ -17,6 +17,12 @@ MenuColumn {
             column.loadColumn(m.component, m.name)
             return 1
         }
+        else if (navigationTarget === "AlarmClock") {
+            var m = modelList.get(5)
+            itemList.currentIndex = 5
+            column.loadColumn(m.component, m.name)
+            return 0
+        }
         return -2 // wrong target
     }
 
