@@ -114,6 +114,7 @@ GlobalProperties::GlobalProperties(logger *log)
 	debug_touchscreen = false;
 	debug_timing = 0;
 
+	setMonitorEnabled(1);
 	updateTime();
 	// We emit a signal every second to update the time.
 	QTimer *secs_timer = new QTimer(this);
@@ -131,7 +132,6 @@ GlobalProperties::GlobalProperties(logger *log)
 
 	maliit_settings->loadPluginSettings();
 #endif
-	setMonitorOff(false);
 }
 
 void GlobalProperties::initAudio()
