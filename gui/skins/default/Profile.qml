@@ -11,7 +11,7 @@ Page {
 
     property variant profile
 
-    source: 'images/profiles.jpg'
+    source: 'images/home/home.jpg'
     text: profile.description
     showSystemsButton: false
 
