@@ -185,7 +185,11 @@ void GlobalProperties::initAudio()
 
 		MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audio_player->getMediaPlayer());
 
+#if defined(BT_HARDWARE_X11)
 		player->setCommandLineArguments(QStringList(), QStringList());
+#else
+		player->setCommandLineArguments(QStringList() << "-ao" << "alsa", QStringList() << "-ao" << "alsa");
+#endif
 		audio_state->registerSoundDiffusionPlayer(player);
 	}
 	else

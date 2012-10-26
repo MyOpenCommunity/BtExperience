@@ -172,7 +172,11 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 {
 	parseConfFile();
 
+#if defined(BT_HARDWARE_X11)
 	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList(), QStringList());
+#else
+	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList() << "-ao" << "alsa", QStringList() << "-ao" << "alsa");
+#endif
 	SoundPlayer::setGlobalCommandLineArguments("aplay", QStringList() << "<FILE_NAME>");
 
 	ClientWriter::setDelay((*bt_global::config)[TS_NUMBER].toInt() * TS_NUMBER_FRAME_DELAY);
