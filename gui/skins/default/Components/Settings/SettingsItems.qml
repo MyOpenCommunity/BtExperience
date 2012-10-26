@@ -36,8 +36,9 @@ MenuColumn {
                       && model.component !== null
 
             onClicked: {
-                if (model.name !== "")
-                    column.loadColumn(model.component, model.name)
+                if (model.name !== "") {
+                    column.loadColumn(nameToComponent(model.component), model.name)
+                }
             }
         }
 
@@ -47,55 +48,21 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Home"), "component": settingsHome})
-            modelList.append({"name": qsTr("General"), "component": settingsGenerals})
-            modelList.append({"name": qsTr("Profiles"), "component": profiles})
-            modelList.append({"name": qsTr("Rooms"), "component": rooms})
-            modelList.append({"name": qsTr("Systems"), "component": systems})
-            modelList.append({"name": qsTr("Alarm Clock"), "component": alarmClock})
-            modelList.append({"name": qsTr("Notifications"), "component": notifications})
-//            modelList.append({"name": qsTr("Acoustic Signaling"), "component": boh})
-            modelList.append({"name": qsTr("Multimedia"), "component": multimedia})
+            modelList.append({"name": qsTr("Home"), "component": "SettingsHome.qml"})
+            modelList.append({"name": qsTr("General"), "component": "SettingsGenerals.qml"})
+            modelList.append({"name": qsTr("Profiles"), "component": "SettingsProfiles.qml"})
+            modelList.append({"name": qsTr("Rooms"), "component": "Floor.qml"})
+            modelList.append({"name": qsTr("Systems"), "component": "SettingsSystems.qml"})
+            modelList.append({"name": qsTr("Alarm Clock"), "component": "SettingsClocks.qml"})
         }
     }
 
-    Component {
-        id: settingsHome
-        SettingsHome {}
-    }
-
-    Component {
-        id: settingsGenerals
-        SettingsGenerals {}
-    }
-
-    Component {
-        id: profiles
-        SettingsProfiles {}
-    }
-
-    Component {
-        id: rooms
-        Floor {}
-    }
-
-    Component {
-        id: alarmClock
-        SettingsClocks {}
-    }
-
-    Component {
-        id: notifications
-        Item {}
-    }
-
-    Component {
-        id: multimedia
-        Item {}
-    }
-
-    Component {
-        id: systems
-        SettingsSystems {}
+    function nameToComponent(name) {
+        var component = Qt.createComponent(name)
+        // TODO: handle more states
+        if (component.status === Component.Ready) {
+            return component
+        }
+        console.log("Error on creating component for settings:" + component.errorString())
     }
 }
