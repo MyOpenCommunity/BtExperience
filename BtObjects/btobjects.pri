@@ -23,6 +23,7 @@ HEADERS += \
 	mediamodel.h \
 	mediaobjects.h \
 	messagessystem.h \
+	mounts.h \
 	multimediaplayer.h \
 	note.h \
 	objectinterface.h \
@@ -95,6 +96,7 @@ SOURCES += \
 	mediamodel.cpp \
 	mediaobjects.cpp \
 	messagessystem.cpp \
+	mounts.cpp \
 	multimediaplayer.cpp \
 	note.cpp \
 	objectinterface.cpp \

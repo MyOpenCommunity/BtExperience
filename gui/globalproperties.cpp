@@ -96,9 +96,9 @@ GlobalProperties::GlobalProperties(logger *log)
 
 	configurations = new ConfigFile(this);
 	settings = new GuiSettings(this);
-	photoPlayer = new PhotoPlayer(this);
-	videoPlayer = 0;
-	audioPlayer = 0;
+	photo_player = new PhotoPlayer(this);
+	video_player = 0;
+	audio_player = 0;
 	audio_state = new AudioState(this);
 	sound_player = 0;
 	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", new MultiMediaPlayer(this), audio_state, this);
@@ -127,16 +127,16 @@ GlobalProperties::GlobalProperties(logger *log)
 
 void GlobalProperties::initAudio()
 {
-	if (videoPlayer)
+	if (video_player)
 		return;
 
 	Q_ASSERT_X(bt_global::config, "GlobalProperties::initAudio", "BtObjects plugin not initialized yet");
 
-	videoPlayer = new AudioVideoPlayer(this);
+	video_player = new AudioVideoPlayer(this);
 
 	sound_player = new SoundPlayer(this);
 
-	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(videoPlayer->getMediaPlayer()));
+	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(video_player->getMediaPlayer()));
 	audio_state->registerBeep(sound_player);
 	audio_state->enableState(AudioState::Idle);
 
@@ -168,20 +168,20 @@ void GlobalProperties::initAudio()
 
 			if (source)
 			{
-				audioPlayer = static_cast<AudioVideoPlayer *>(source->getAudioVideoPlayer());
+				audio_player = static_cast<AudioVideoPlayer *>(source->getAudioVideoPlayer());
 				emit audioPlayerChanged();
 				break;
 			}
 		}
 
-		MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audioPlayer->getMediaPlayer());
+		MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audio_player->getMediaPlayer());
 
 		player->setCommandLineArguments(QStringList(), QStringList());
 		audio_state->registerSoundDiffusionPlayer(player);
 	}
 	else
 	{
-		audioPlayer = videoPlayer;
+		audio_player = video_player;
 		emit audioPlayerChanged();
 	}
 
@@ -323,17 +323,17 @@ GuiSettings *GlobalProperties::getGuiSettings() const
 
 AudioVideoPlayer *GlobalProperties::getVideoPlayer() const
 {
-	return videoPlayer;
+	return video_player;
 }
 
 AudioVideoPlayer *GlobalProperties::getAudioPlayer() const
 {
-	return audioPlayer;
+	return audio_player;
 }
 
 PhotoPlayer *GlobalProperties::getPhotoPlayer() const
 {
-	return photoPlayer;
+	return photo_player;
 }
 
 QObject *GlobalProperties::getAudioState() const

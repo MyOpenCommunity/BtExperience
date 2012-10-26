@@ -39,6 +39,7 @@
 #include "configfile.h"
 #include "playlistplayer.h"
 #include "alarmclock.h"
+#include "mounts.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -210,6 +211,8 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	ObjectModel::setGlobalSource(&objmodel);
 	createObjects();
 	parseConfig();
+
+	MountWatcher::instance()->startWatching();
 
 	QList<MediaDataModel *> models = QList<MediaDataModel *>()
 			<< &room_model << &floor_model << &object_link_model << &systems_model
@@ -535,6 +538,8 @@ void BtObjectsPlugin::createObjects()
 		objmodel << createIntercom(intercom);
 	}
 
+	// note that this returns source objects even if sound diffusion is not configured, because
+	// the objects are used to construct the item list for multimedia
 	foreach (ObjectPair p, createLocalSources(is_multichannel, multimedia))
 	{
 		if (p.first != -1)

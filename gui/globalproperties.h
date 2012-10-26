@@ -138,9 +138,9 @@ private:
 	QDeclarativeView *main_widget;
 	QDateTime last_press;
 	GuiSettings *settings;
-	AudioVideoPlayer *videoPlayer;
-	AudioVideoPlayer *audioPlayer;
-	PhotoPlayer *photoPlayer;
+	AudioVideoPlayer *video_player;
+	AudioVideoPlayer *audio_player;
+	PhotoPlayer *photo_player;
 	AudioState *audio_state;
 	SoundPlayer *sound_player;
 	RingtoneManager *ringtone_manager;

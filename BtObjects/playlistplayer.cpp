@@ -1,6 +1,7 @@
 #include "playlistplayer.h"
 #include "folderlistmodel.h"
 #include "list_manager.h"
+#include "mounts.h"
 
 #include <QDebug>
 #include <QTime>
@@ -18,6 +19,8 @@ PlayListPlayer::PlayListPlayer(QObject *parent) :
 	connect(local_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
 	upnp_list = new UPnpListManager(UPnPListModel::getXmlDevice());
 	connect(upnp_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
+	connect(MountWatcher::instance(), SIGNAL(directoryUnmounted(QString,MountPoint::MountType)),
+		this, SLOT(directoryUnmounted(QString)));
 }
 
 void PlayListPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool _is_video)
@@ -46,6 +49,14 @@ bool PlayListPlayer::isPlaying()
 	// the generatePlaylist* call may be skipped (or done if we want to reset
 	// the player state)
 	return (actual_list == local_list || actual_list == upnp_list);
+}
+
+void PlayListPlayer::directoryUnmounted(QString dir)
+{
+	if (!isPlaying() || actual_list != local_list)
+		return;
+	if (current.startsWith(dir))
+		emit deviceUnmounted();
 }
 
 void PlayListPlayer::previous()
@@ -201,6 +212,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(muteChanged(bool)), SIGNAL(muteChanged()));
 
 	connect(this, SIGNAL(currentChanged()), SLOT(play()));
+	connect(this, SIGNAL(deviceUnmounted()), media_player, SLOT(stop()));
 }
 
 void AudioVideoPlayer::prevTrack()
