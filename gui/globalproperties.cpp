@@ -72,6 +72,15 @@ namespace
 		}
 		return result;
 	}
+
+	void setMonitorEnabled(int value)
+	{
+		QFile display_device("/sys/devices/platform/omapdss/display0/enabled");
+
+		display_device.open(QFile::WriteOnly);
+		display_device.write(qPrintable(QString::number(value)));
+		display_device.close();
+	}
 }
 
 
@@ -105,6 +114,7 @@ GlobalProperties::GlobalProperties(logger *log)
 	debug_touchscreen = false;
 	debug_timing = 0;
 
+	setMonitorEnabled(1);
 	updateTime();
 	// We emit a signal every second to update the time.
 	QTimer *secs_timer = new QTimer(this);
@@ -122,7 +132,6 @@ GlobalProperties::GlobalProperties(logger *log)
 
 	maliit_settings->loadPluginSettings();
 #endif
-	setMonitorOff(false);
 }
 
 void GlobalProperties::initAudio()
@@ -176,7 +185,11 @@ void GlobalProperties::initAudio()
 
 		MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audio_player->getMediaPlayer());
 
+#if defined(BT_HARDWARE_X11)
 		player->setCommandLineArguments(QStringList(), QStringList());
+#else
+		player->setCommandLineArguments(QStringList() << "-ao" << "alsa", QStringList() << "-ao" << "alsa");
+#endif
 		audio_state->registerSoundDiffusionPlayer(player);
 	}
 	else
@@ -278,10 +291,9 @@ void GlobalProperties::setMonitorOff(bool newValue)
 	if (!newValue)
 		transmitted_value = 1;
 
-#if defined(BT_HARDWARE_X11)
-	qDebug() << QString("ARM COMMAND: echo %1 > /sys/devices/platform/omapdss/display0/enabled").arg(transmitted_value);
-#else
-	QProcess::startDetached(QString("echo %1 > /sys/devices/platform/omapdss/display0/enabled").arg(transmitted_value));
+	qDebug() << "Writing" <<  transmitted_value << "to /sys/devices/platform/omapdss/display0/enabled";
+#if !defined(BT_HARDWARE_X11)
+	setMonitorEnabled(transmitted_value);
 #endif
 
 	emit monitorOffChanged();

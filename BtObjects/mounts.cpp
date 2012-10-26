@@ -224,7 +224,7 @@ QStringList MountWatcher::parseMounts() const
 			break;
 		QStringList parts = line.split(' ', QString::SkipEmptyParts);
 		// the "/" is necessary in case /mnt is mounted using tmpfs
-		if (!parts[1].startsWith(MOUNT_PATH "/"))
+		if (!parts[1].startsWith(MOUNT_PATH "/") || !parts[0].startsWith("/"))
 			continue;
 		dirs.append(parts[1]);
 	}
@@ -239,7 +239,7 @@ MountPoint::MountType MountWatcher::mountType(const QString &dir) const
 
 	return MountPoint::Usb;
 #else
-	return dir.startsWith("/media/mmc") ? MountPoint::Sd : MountPoint::Usb;
+	return dir.startsWith(MOUNT_PATH "/mmc") ? MountPoint::Sd : MountPoint::Usb;
 #endif
 }
 
