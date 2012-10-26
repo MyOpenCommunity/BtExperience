@@ -392,7 +392,7 @@ function _createPage(filename, properties) {
         return null
     }
 
-    debugTiming.logTiming("Page created")
+    debugTiming.logTiming("Page \"" + page._pageName + "\" created")
 
     return page
 }
