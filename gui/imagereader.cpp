@@ -6,6 +6,7 @@
 
 
 QString ImageReader::base_path;
+QHash<QString, QSize> ImageReader::size_cache;
 
 ImageReader::ImageReader(QObject *parent) : QObject(parent)
 {
@@ -27,7 +28,15 @@ void ImageReader::setFileName(const QString &f)
 	emit fileNameChanged();
 
 	QSize old_size = size;
-	size = QImageReader(filename).size();
+	if (size_cache.contains(filename))
+	{
+		size = size_cache[filename];
+	}
+	else
+	{
+		size = QImageReader(filename).size();
+		size_cache[filename] = size;
+	}
 
 	if (size.width() != old_size.width())
 		emit widthChanged();
