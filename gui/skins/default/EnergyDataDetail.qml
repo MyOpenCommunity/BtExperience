@@ -17,12 +17,6 @@ Page {
     text: qsTr("energy consumption")
     source: "images/bg2.jpg"
 
-
-    QtObject {
-        id: privateProps
-        property bool showCurrency: false
-    }
-
     SvgImage {
         id: header
         source: "images/energy/bg_titolo.svg"
@@ -80,62 +74,12 @@ Page {
             left: header.left
         }
 
-        Loader {
-            id: buttonRowLoader
-            sourceComponent: energiesCounters.hasRate() ? buttonRowComponent : undefined
-            anchors {
-                top: parent.top
-                topMargin: parent.height / 100 * 3
-                right: divisorLine.right
-            }
-        }
-
-        Component {
-            id: buttonRowComponent
-            Row {
-                UbuntuLightText {
-                    text: qsTr("value")
-                    color: "white"
-                    anchors.verticalCenter: moneyButton.verticalCenter
-                    font.pixelSize: 14
-                }
-
-                Item {
-                    width: 15
-                    height: moneyButton.height
-                }
-
-                ButtonThreeStates {
-                    id: moneyButton
-                    defaultImage: "images/common/btn_66x35.svg"
-                    pressedImage: "images/common/btn_66x35_P.svg"
-                    selectedImage: "images/common/btn_66x35_S.svg"
-                    shadowImage: "images/common/btn_shadow_66x35.svg"
-                    text: energiesCounters.getCurrencySymbol()
-                    font.pixelSize: 14
-                    status: privateProps.showCurrency === true ? 1 : 0
-                    onClicked: privateProps.showCurrency = true
-                }
-                ButtonThreeStates {
-                    id: consumptionButton
-                    defaultImage: "images/common/btn_66x35.svg"
-                    pressedImage: "images/common/btn_66x35_P.svg"
-                    selectedImage: "images/common/btn_66x35_S.svg"
-                    shadowImage: "images/common/btn_shadow_66x35.svg"
-                    text: qsTr("units")
-                    font.pixelSize: 14
-                    status: privateProps.showCurrency === false ? 1 : 0
-                    onClicked: privateProps.showCurrency = false
-                }
-            }
-        }
-
         SvgImage {
             id: divisorLine
             source: "images/energy/linea.svg"
             anchors {
-                top: buttonRowLoader.bottom
-                topMargin: parent.height / 100 * 3
+                top: parent.top
+                topMargin: parent.height / 100 * 14.5
                 horizontalCenter: parent.horizontalCenter
             }
         }
@@ -158,7 +102,7 @@ Page {
             delegate: EnergyDataDelegate {
                 id: delegate
                 itemObject: energiesCounters.getObject(index)
-                measureType: privateProps.showCurrency === true ? EnergyData.Currency : EnergyData.Consumption
+                measureType: EnergyData.Consumption
                 onClicked: Stack.pushPage("EnergyDataGraph.qml", {"energyData": itemObject})
                 maxValue: {
                     if (parseInt(family.objectKey) !== EnergyFamily.Custom) {
