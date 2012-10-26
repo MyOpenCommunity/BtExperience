@@ -67,7 +67,6 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	: ObjectInterface(parent)
 {
 	description = _description;
-	enabled = _enabled;
 	switch(_type)
 	{
 	case 1:
@@ -80,6 +79,8 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	days = _days;
 	hour = _hour;
 	minute = _minute;
+	enabled = false; // starting from a well known state
+	setEnabled(_enabled); // sets real value
 
 	connect(this, SIGNAL(alarmTypeChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(daysChanged()), this, SIGNAL(persistItem()));
