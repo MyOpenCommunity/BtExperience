@@ -40,6 +40,7 @@
 #include "playlistplayer.h"
 #include "alarmclock.h"
 #include "mounts.h"
+#include "alarmclocknotifier.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -558,6 +559,8 @@ void BtObjectsPlugin::createObjects()
 	objmodel << new ScenarioModulesNotifier();
 	// the following needs energy "objects" to be already created
 	objmodel << new EnergyThresholdsGoals();
+	// the following needs alarm clocks object to be already created
+	objmodel << new AlarmClockNotifier();
 }
 
 int BtObjectsPlugin::findLinkedUiiForObject(ItemInterface *item) const
