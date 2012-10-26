@@ -22,8 +22,7 @@ Item {
     property bool scenarioRecording: privateProps.recordingModel === undefined ? false : privateProps.recordingModel.recording
     property bool playing: global.audioPlayer === undefined ? false : global.audioPlayer.playing
     property bool mute: global.audioState === null ? false : (global.audioState.state === AudioState.LocalPlaybackMute || global.audioState.state === AudioState.Mute)
-
-    property int clocks: 0 // TODO link to C++ model!
+    property bool clocksEnabled: privateProps.clocksModel === null ? false : privateProps.clocksModel.enabled
 
     signal changePageDone
 
@@ -52,7 +51,8 @@ Item {
             {objectId: ObjectInterface.IdMessages},
             {objectId: ObjectInterface.IdDangers},
             {objectId: ObjectInterface.IdEnergies},
-            {objectId: ObjectInterface.IdScenarioModulesNotifier}
+            {objectId: ObjectInterface.IdScenarioModulesNotifier},
+            {objectId: ObjectInterface.IdAlarmClockNotifier}
         ]
         Component.onCompleted: {
             privateProps.updateTimerInterval()
@@ -85,6 +85,10 @@ Item {
                 case ObjectInterface.IdScenarioModulesNotifier:
                     scenarioConnection.target = obj
                     privateProps.recordingModel = obj
+                    break
+                case ObjectInterface.IdAlarmClockNotifier:
+                    clocksConnection.target = obj
+                    privateProps.clocksModel = obj
                     break
                 }
             }
@@ -250,6 +254,12 @@ Item {
     }
 
     Connections {
+        id: clocksConnection
+        target: null
+        // TODO implement notifications
+    }
+
+    Connections {
         id: scenarioConnection
         target: null
         onScenarioActivated: {
@@ -296,6 +306,7 @@ Item {
         property variant vctModel: undefined
         property variant dangersModel: undefined
         property variant recordingModel: undefined
+        property variant clocksModel: undefined
 
         // ends the right call type
         function endActualCall(pagename) {

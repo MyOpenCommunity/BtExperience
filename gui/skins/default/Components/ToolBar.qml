@@ -170,7 +170,7 @@ Item {
         // alarm clock
         ToolbarButton {
             height: toolbar_top.height
-            quantity: EventManager.eventManager.clocks
+            visible: EventManager.eventManager.clocksEnabled
             defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm-clock.svg" :
                               "../images/toolbar/icon_alarm-clock_p.svg"

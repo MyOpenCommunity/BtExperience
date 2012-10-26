@@ -2,6 +2,7 @@ DEFINES += MEDIAPLAYER_DISABLE_HARDWARE_FUNCTIONS MEDIAPLAYER_MULTIPLE_PLAYERS
 
 HEADERS += \
 	alarmclock.h \
+	alarmclocknotifier.h \
 	antintrusionsystem.h \
 	automationobjects.h \
 	choicelist.h \
@@ -76,6 +77,7 @@ HEADERS += \
 
 SOURCES += \
 	alarmclock.cpp \
+	alarmclocknotifier.cpp \
 	antintrusionsystem.cpp \
 	automationobjects.cpp \
 	choicelist.cpp \

@@ -81,6 +81,7 @@ public:
 		IdDangers,                              // 30
 		IdScenarioModulesNotifier,
 		IdEnergies,
+		IdAlarmClockNotifier,
 
 		// used internally
 		IdDimmerGroup = 100, //!< Group of lights containing only dimmer objects
