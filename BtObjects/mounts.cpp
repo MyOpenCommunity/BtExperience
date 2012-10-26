@@ -239,7 +239,7 @@ MountPoint::MountType MountWatcher::mountType(const QString &dir) const
 
 	return MountPoint::Usb;
 #else
-	return dir.startsWith("/media/mmc") ? MountPoint::Sd : MountPoint::Usb;
+	return dir.startsWith(MOUNT_PATH "/mmc") ? MountPoint::Sd : MountPoint::Usb;
 #endif
 }
 
