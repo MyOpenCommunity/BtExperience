@@ -72,6 +72,15 @@ namespace
 		}
 		return result;
 	}
+
+	void setMonitorEnabled(int value)
+	{
+		QFile display_device("/sys/devices/platform/omapdss/display0/enabled");
+
+		display_device.open(QFile::WriteOnly);
+		display_device.write(qPrintable(QString::number(value)));
+		display_device.close();
+	}
 }
 
 
@@ -278,10 +287,9 @@ void GlobalProperties::setMonitorOff(bool newValue)
 	if (!newValue)
 		transmitted_value = 1;
 
-#if defined(BT_HARDWARE_X11)
-	qDebug() << QString("ARM COMMAND: echo %1 > /sys/devices/platform/omapdss/display0/enabled").arg(transmitted_value);
-#else
-	QProcess::startDetached(QString("echo %1 > /sys/devices/platform/omapdss/display0/enabled").arg(transmitted_value));
+	qDebug() << "Writing" <<  transmitted_value << "to /sys/devices/platform/omapdss/display0/enabled";
+#if !defined(BT_HARDWARE_X11)
+	setMonitorEnabled(transmitted_value);
 #endif
 
 	emit monitorOffChanged();
