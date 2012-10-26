@@ -13,8 +13,9 @@ MenuColumn {
         id: paginator
         delegate: MenuItemDelegate {
             itemObject: energiesCounters.getObject(index)
+            property variant rateObject: itemObject.rate
             hasChild: true
-            description: "0,24 €/w"
+            description: rateObject ? qsTr("%1 %2/%3").arg(rateObject.rate).arg(rateObject.currencySymbol).arg(rateObject.measureUnit) : "" // +  "0,24 €/w"
             onClicked: column.loadColumn(setTariffsComponent, itemObject.name, itemObject)
         }
 

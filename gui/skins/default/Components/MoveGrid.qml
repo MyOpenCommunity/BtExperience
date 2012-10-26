@@ -3,16 +3,16 @@
 import QtQuick 1.1
 
 Item {
-    id: bgMoveGrid
+    id: bgMoveArea
 
     property int maxItemWidth: 0
     property int maxItemHeight: 0
     property Item selectedItem: null
 
-    property alias gridX: moveGrid.x
-    property alias gridY: moveGrid.y
-    property alias gridW: moveGrid.width
-    property alias gridH: moveGrid.height
+    property alias gridX: bgMoveArea.x
+    property alias gridY: bgMoveArea.y
+    property alias gridW: bgMoveArea.width
+    property alias gridH: bgMoveArea.height
 
     signal moveEnd
 
@@ -24,13 +24,9 @@ Item {
     }
 
     Rectangle {
-        id: gridRect
+        id: darkRect
         anchors {
             fill: parent
-            leftMargin: bgMoveGrid.maxItemWidth / 2
-            rightMargin: bgMoveGrid.maxItemWidth / 2
-            topMargin: bgMoveGrid.maxItemHeight / 2
-            bottomMargin: bgMoveGrid.maxItemHeight / 2
         }
         color: "black"
         opacity: 0.6
@@ -38,45 +34,48 @@ Item {
         radius: 10
     }
 
-    Grid {
+    BeepingMouseArea {
         id: moveGrid
-        // TODO: do these need to be exposed?
-        columns: 18
-        rows: 14
         visible: false
-        anchors {
-            fill: parent
-            leftMargin: bgMoveGrid.maxItemWidth / 2
-            rightMargin: bgMoveGrid.maxItemWidth / 2
-            topMargin: bgMoveGrid.maxItemHeight / 2
-            bottomMargin: bgMoveGrid.maxItemHeight / 2
+        anchors.fill: parent
+
+        // The functions below ensure that the x or the y are inside the
+        // movearea rect.
+        function xInRect(start_x) {
+            var half_item_width = bgMoveArea.maxItemWidth / 2
+            var dest_x = start_x
+            if (dest_x - bgMoveArea.maxItemWidth / 2 < 0)
+                dest_x = bgMoveArea.maxItemWidth / 2
+            else if (dest_x + bgMoveArea.maxItemWidth / 2 > bgMoveArea.width)
+                dest_x = bgMoveArea.width - bgMoveArea.maxItemWidth / 2
+
+            return dest_x
         }
 
-        Repeater {
-            model: moveGrid.columns * moveGrid.rows
+        function yInRect(start_y) {
+            var half_item_height = bgMoveArea.maxItemHeight / 2
+            var dest_y = start_y
+            if (dest_y - bgMoveArea.maxItemHeight / 2 < 0)
+                dest_y = bgMoveArea.maxItemHeight / 2
+            else if (dest_y + bgMoveArea.maxItemHeight / 2 > bgMoveArea.height)
+                dest_y = bgMoveArea.height - bgMoveArea.maxItemHeight / 2
 
-            delegate: Item {
-                width: moveGrid.width / moveGrid.columns
-                height: moveGrid.height / moveGrid.rows
-
-                BeepingMouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        // map the coordinates to the RoomItem's parent
-                        var absPos = parent.mapToItem(null, x, y)
-                        bgMoveGrid.moveTo(absPos.x - bgMoveGrid.maxItemWidth / 2, absPos.y - bgMoveGrid.maxItemHeight / 2)
-                        bgMoveGrid.moveEnd()
-                        bgMoveGrid.selectedItem = null
-                    }
-                }
-            }
-
+            return dest_y
         }
 
-        Behavior on opacity {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+        onClicked: {
+            var absPos = parent.mapToItem(null, xInRect(mouse.x), yInRect(mouse.y))
+
+            bgMoveArea.moveTo(absPos.x - bgMoveArea.maxItemWidth / 2, absPos.y - bgMoveArea.maxItemHeight / 2)
+            bgMoveArea.moveEnd()
+            bgMoveArea.selectedItem = null
         }
     }
+
+    Behavior on opacity {
+        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+    }
+
 
     states: [
         State {
@@ -86,7 +85,7 @@ Item {
                 visible: true
             }
             PropertyChanges {
-                target: gridRect
+                target: darkRect
                 visible: true
 
             }

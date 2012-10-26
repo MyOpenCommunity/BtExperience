@@ -73,11 +73,11 @@ Page {
         function moveBegin(favorite) {
             unselectObj()
             privateProps.actualFavorite = favorite
-            bgMoveGrid.state = "shown"
+            bgMoveArea.state = "shown"
         }
 
         function moveEnd() {
-            bgMoveGrid.state = ""
+            bgMoveArea.state = ""
             privateProps.actualFavorite = null
         }
 
@@ -97,11 +97,11 @@ Page {
 
         function createProfileObjects() {
             // here we compute the ref point for QuickLinks; essentially, this is the center of the moving
-            // grid where QuickLinks will be positioned
-            var refX = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).x + 0.5 * bgMoveGrid.width
+            // area where QuickLinks will be positioned
+            var refX = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).x + 0.5 * bgMoveArea.width
             if (refX === 0) // no init done, do not lose time
                 return
-            var refY = bgMoveGrid.mapToItem(null, bgMoveGrid.x, bgMoveGrid.y).y + 0.5 * bgMoveGrid.height
+            var refY = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).y + 0.5 * bgMoveArea.height
 
             for (var i = 0; i < mediaLinks.count; ++i) {
                 var obj = mediaLinks.getObject(i);
@@ -130,8 +130,8 @@ Page {
 
                 var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": obj})
 
-                // grid margins are set to maximum quicklink size / 2; this info is used to draw a grid in which
-                // QuickLinks don't overlap with other elements and don't disappear out of screen
+                // area margins are set to maximum quicklink size / 2; this info is used to draw
+                // an area in which QuickLinks don't overlap the area itself
                 privateProps.maxItemWidth = Math.max(privateProps.maxItemWidth, instance.width)
                 privateProps.maxItemHeight = Math.max(privateProps.maxItemHeight, instance.height)
 
@@ -144,7 +144,7 @@ Page {
             }
 
             // we need absolute coordinates to position items without a position
-            var absGrid = bgMoveGrid.mapToItem(null, bgMoveGrid.gridX, bgMoveGrid.gridY)
+            var absArea = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y)
 
             for (var j = 0; j < mediaLinks.count; ++j) {
                 var link = mediaLinks.getObject(j)
@@ -153,16 +153,16 @@ Page {
                 if (link.position.x >= 0 || link.position.y >= 0)
                     continue
 
-                // random position inside grid; we have to remove the margins around the grid and
+                // random position inside the move area; we have to remove the margins around the area and
                 // the offset wrt the item center (so we have 1.5)
-                var deltaX = Math.random() * (bgMoveGrid.gridW - 1.5 * privateProps.maxItemWidth)
-                var deltaY = Math.random() * (bgMoveGrid.gridH - 1.5 * privateProps.maxItemHeight)
-                res = pannableChild.mapFromItem(null, absGrid.x + deltaX, absGrid.y + deltaY)
+                var deltaX = Math.random() * (bgMoveArea.width - 1.5 * privateProps.maxItemWidth)
+                var deltaY = Math.random() * (bgMoveArea.height - 1.5 * privateProps.maxItemHeight)
+                res = pannableChild.mapFromItem(null, absArea.x + deltaX, absArea.y + deltaY)
 
                 instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": link})
 
-                // grid margins are set to maximum quicklink size / 2; this info is used to draw a grid in which
-                // QuickLinks don't overlap with other elements and don't disappear out of screen
+                // area margins are set to maximum quicklink size / 2; this info is used to draw
+                // an area in which QuickLinks don't overlap the area itself
                 privateProps.maxItemWidth = Math.max(privateProps.maxItemWidth, instance.width)
                 privateProps.maxItemHeight = Math.max(privateProps.maxItemHeight, instance.height)
 
@@ -436,7 +436,7 @@ Page {
             }
 
             MoveGrid {
-                id: bgMoveGrid
+                id: bgMoveArea
 
                 function moveTo(absX, absY) {
                     var itemPos = pannableChild.mapFromItem(null, absX, absY)
@@ -451,6 +451,7 @@ Page {
                 anchors {
                     left: parent.left
                     right: rightArea.left
+                    rightMargin: 10
                     top: parent.top
                     bottom: parent.bottom
                 }

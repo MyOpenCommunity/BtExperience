@@ -56,8 +56,8 @@ Item {
     function startMove(container) {
         privateProps.unselectObj()
 
-        bgMoveGrid.selectedItem = container
-        bgMoveGrid.state = "shown"
+        bgMoveArea.selectedItem = container
+        bgMoveArea.state = "shown"
     }
 
     /* private implementation */
@@ -190,15 +190,15 @@ Item {
     }
 
     MoveGrid {
-        id: bgMoveGrid
+        id: bgMoveArea
 
         function moveTo(absX, absY) {
             var itemPos = roomView.mapFromItem(null, absX, absY - constants.navbarTopMargin)
-            bgMoveGrid.selectedItem.xAnimation.to = itemPos.x
-            bgMoveGrid.selectedItem.yAnimation.to = itemPos.y
-            bgMoveGrid.selectedItem.xAnimation.start()
-            bgMoveGrid.selectedItem.yAnimation.start()
-            bgMoveGrid.selectedItem.itemObject.position = Qt.point(itemPos.x, itemPos.y)
+            bgMoveArea.selectedItem.xAnimation.to = itemPos.x
+            bgMoveArea.selectedItem.yAnimation.to = itemPos.y
+            bgMoveArea.selectedItem.xAnimation.start()
+            bgMoveArea.selectedItem.yAnimation.start()
+            bgMoveArea.selectedItem.itemObject.position = Qt.point(itemPos.x, itemPos.y)
         }
         maxItemWidth: 212 // assumes menu width is always this value
         maxItemHeight: 50 // assumes menu height is always this value
@@ -207,8 +207,8 @@ Item {
         anchors.fill: parent
 
         onMoveEnd: {
-            bgMoveGrid.selectedItem.state = ""
-            bgMoveGrid.state = ""
+            bgMoveArea.selectedItem.state = ""
+            bgMoveArea.state = ""
         }
     }
 
