@@ -8,6 +8,7 @@ var _stopGoPopups = []
 var _scenarioActivationPopups = []
 var _unreadMessagesPopups = []
 var _thresholdGoalPopups = []
+var _alarmClockPopups = []
 
 
 /**
@@ -63,6 +64,34 @@ function addStopAndGoPopup(descr, status) {
     data["dismissText"] = qsTr("Ignore")
 
     _stopGoPopups.push(data)
+
+    return _highestPriorityPopup()
+}
+
+/**
+  * Adds a alarm clock notification to alarm clock popups
+  *
+  * Adds a alarm clock notification to the stack of alarm clock popups and
+  * returns the last one
+  *
+  * device: the alarm clock
+  */
+function addAlarmClockPopup(device) {
+    var data = []
+
+    data["_kind"] = "alarm_clock"
+    data["_device"] = device // saved for later use
+
+    data["title"] = qsTr("ALARM CLOCK")
+
+    data["line1"] = device.description
+    data["line2"] = device.hour + ":" + (device.minute >= 10 ? device.minute : "0" + device.minute)
+    data["line3"] = ""
+
+    data["confirmText"] = qsTr("Stop")
+    data["dismissText"] = qsTr("Postpone")
+
+    _alarmClockPopups.push(data)
 
     return _highestPriorityPopup()
 }
@@ -217,6 +246,7 @@ function confirm() {
 
     // resets all popups
     _alarmPopups = []
+    _alarmClockPopups = []
     _stopGoPopups = []
     _scenarioActivationPopups = []
     _unreadMessagesPopups = []
@@ -242,7 +272,12 @@ function confirm() {
         return "GlobalView"
     }
 
-    // scenario activation popups don't navigate
+    if (p["_kind"] === "alarm_clock") {
+        // in case of alarm clock confirm we have to stop the alarm
+        p["_device"].stop()
+    }
+
+    // scenario activation and alarm clocks popups don't navigate
     return ""
 }
 
@@ -259,6 +294,14 @@ function confirm() {
 function dismiss() {
     if (_alarmPopups.length > 0) {
         _alarmPopups.pop()
+        return _highestPriorityPopup()
+    }
+
+    if (_alarmClockPopups.length > 0) {
+        // in case of alarm clock dismiss we have to postpone the alarm
+        var actual = _highestPriorityPopup()
+        _alarmClockPopups.pop()
+        actual["_device"].postpone()
         return _highestPriorityPopup()
     }
 
@@ -290,6 +333,10 @@ function _highestPriorityPopup() {
 
     if (_alarmPopups.length > 0) {
         return _alarmPopups[_alarmPopups.length - 1]
+    }
+
+    if (_alarmClockPopups.length > 0) {
+        return _alarmClockPopups[_alarmClockPopups.length - 1]
     }
 
     if (_stopGoPopups.length > 0) {

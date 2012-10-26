@@ -1360,6 +1360,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<MessagesSystem>(uri, 1, 0, "MessagesSystem", "");
 	qmlRegisterUncreatableType<AudioVideoPlayer>(uri, 1, 0, "AudioVideoPlayer", "");
 	qmlRegisterUncreatableType<PhotoPlayer>(uri, 1, 0, "PhotoPlayer", "");
+	qmlRegisterUncreatableType<AlarmClock>(uri, 1, 0, "AlarmClock",
+		"unable to create a AlarmClock instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

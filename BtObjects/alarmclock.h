@@ -75,6 +75,9 @@ public:
 		return ObjectInterface::IdAlarmClock;
 	}
 
+	Q_INVOKABLE void stop();
+	Q_INVOKABLE void postpone();
+
 	QString getDescription() const { return description; }
 	void setDescription(QString newValue);
 	bool isEnabled() const { return enabled; }
@@ -109,6 +112,7 @@ signals:
 	void enabledChanged();
 	void hourChanged();
 	void minuteChanged();
+	void triggered(AlarmClock *alarmClock);
 	void triggerOnMondaysChanged();
 	void triggerOnTuesdaysChanged();
 	void triggerOnWednesdaysChanged();

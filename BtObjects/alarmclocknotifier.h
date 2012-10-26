@@ -7,6 +7,7 @@
 
 
 class ObjectModel;
+class AlarmClock;
 
 
 /*!
@@ -34,6 +35,7 @@ public:
 	bool isEnabled() const { return is_one_enabled; }
 
 signals:
+	void alarmClockTrigger(AlarmClock *alarmClock);
 	void enabledChanged();
 
 private slots:

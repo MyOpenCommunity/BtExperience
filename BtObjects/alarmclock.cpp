@@ -89,6 +89,20 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(persistItem()));
 }
 
+void AlarmClock::stop()
+{
+	// TODO stops alarm if ringing
+	qDebug() << __PRETTY_FUNCTION__;
+	qDebug() << "+++++++++++++++++++++++++++++++++++++++++++++++ Alarm stopped";
+}
+
+void AlarmClock::postpone()
+{
+	// TODO postpones alarm if ringing
+	qDebug() << __PRETTY_FUNCTION__;
+	qDebug() << "+++++++++++++++++++++++++++++++++++++++++++++++ Alarm postponed";
+}
+
 void AlarmClock::setDescription(QString newValue)
 {
 	if (description == newValue)

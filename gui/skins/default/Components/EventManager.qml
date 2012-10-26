@@ -257,6 +257,13 @@ Item {
         id: clocksConnection
         target: null
         // TODO implement notifications
+        onAlarmClockTrigger: {
+            if (Stack.isPageChanging(changePageDone)) {
+                Script.delayedNotifications.push({"type": Script.ALARM_CLOCK_TRIGGERING, "data": alarmClock})
+            }
+            else
+                privateProps.alarmClockTriggering(alarmClock)
+        }
     }
 
     Connections {
@@ -294,6 +301,8 @@ Item {
             privateProps.thresholdExceeding(notify["data"])
         else if (notify["type"] === Script.SCENARIO_ACTIVATION)
             privateProps.scenarioActivation(notify["data"])
+        else if (notify["type"] === Script.ALARM_CLOCK_TRIGGERING)
+            privateProps.alarmClockTriggering(notify["data"])
         else if (notify["type"] === Script.UNREAD_MESSAGES_UPDATING)
             privateProps.unreadMessagesUpdate()
     }
@@ -442,6 +451,14 @@ Item {
             var p = privateProps.preparePopupPage(false)
             // adds popup for scenario activation
             p.addScenarioActivationPopup(description)
+        }
+
+        function alarmClockTriggering(alarmClock) {
+            privateProps.monitorEvent()
+            turnOffMonitor.isEnabled = true
+            var p = privateProps.preparePopupPage(false)
+            // adds alarm clock triggering
+            p.addAlarmClockTriggering(alarmClock)
         }
     }
 }

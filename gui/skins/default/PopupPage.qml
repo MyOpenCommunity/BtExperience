@@ -87,12 +87,18 @@ BasePage {
         privateProps.update(PopupLogic.addMonthlyReportNotification())
     }
 
+    function addAlarmClockTriggering(device) {
+        privateProps.update(PopupLogic.addAlarmClockPopup(device))
+    }
+
     // needed to translate antintrusion names in alarm popups
     QtObject {
         id: privateProps
 
         property QtObject antintrusionNames: AntintrusionNames {}
         property QtObject energyManagementNames: EnergyManagementNames {}
+
+        property variant alarmClock
 
         function navigate(data) {
             if (data === "") {
