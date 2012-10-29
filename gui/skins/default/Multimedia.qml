@@ -69,13 +69,12 @@ Page {
 
     Component.onCompleted: {
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {} })
-        multimediaModel.append({"description": qsTr("browser"), "target": "Browser.qml", "image": "images/multimedia/devices_card.jpg", "props": {"urlString": "http://www.google.it"}})
-        multimediaModel.append({"description": qsTr("web browser"), "target": "BrowserPage.qml", "image": "images/multimedia/devices_card.jpg", "props": {"containerUii": Container.IdMultimediaWebLink}})
+        multimediaModel.append({"description": qsTr("web browser"), "target": "Browser.qml", "image": "images/multimedia/devices_card.jpg", "props": {"urlString": "http://www.google.it"}})
+        multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "image": "images/multimedia/devices_card.jpg", "props": {"containerUii": Container.IdMultimediaWebLink}})
         multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "image": "images/multimedia/rss_card.jpg", "props": {"containerUii": Container.IdMultimediaRss}})
+        multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserIpRadioPage.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})
 
         // TODO to be implemented
-        multimediaModel.append({"description": qsTr("ip radio"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})
         multimediaModel.append({"description": qsTr("weather"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})
-        multimediaModel.append({"description": qsTr("web link"), "target": "Devices.qml", "image": "images/multimedia/weblink_card.jpg", "props": {}})
     }
 }
