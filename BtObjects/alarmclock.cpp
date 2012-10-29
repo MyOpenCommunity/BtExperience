@@ -67,15 +67,15 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarmClock)
 AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days, int _hour, int _minute, QObject *parent)
 	: ObjectInterface(parent)
 {
-	timerTrigger = new QTimer(this);
+	timer_trigger = new QTimer(this);
 	description = _description;
 	switch(_type)
 	{
 	case 1:
-		alarmType = AlarmClockSoundSystem;
+		alarm_type = AlarmClockSoundSystem;
 		break;
 	default:
-		alarmType = AlarmClockBeep;
+		alarm_type = AlarmClockBeep;
 		break;
 	}
 	days = _days;
@@ -91,7 +91,7 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	connect(this, SIGNAL(hourChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(persistItem()));
 
-	connect(timerTrigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
+	connect(timer_trigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
 
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(checkRequested()));
 	connect(this, SIGNAL(daysChanged()), this, SIGNAL(checkRequested()));
@@ -119,12 +119,12 @@ void AlarmClock::checkRequestManagement()
 			deltaSeconds = actualDateTime.secsTo(triggeringDateTime.addDays(1));
 
 		// finally, sets trigger timer
-		timerTrigger->setSingleShot(true);
-		timerTrigger->start(deltaSeconds * 1000);
+		timer_trigger->setSingleShot(true);
+		timer_trigger->start(deltaSeconds * 1000);
 	}
 	else
 	{
-		timerTrigger->stop();
+		timer_trigger->stop();
 	}
 }
 
@@ -193,10 +193,10 @@ void AlarmClock::setEnabled(bool newValue)
 
 void AlarmClock::setAlarmType(AlarmClockType newValue)
 {
-	if (alarmType == newValue)
+	if (alarm_type == newValue)
 		return;
 
-	alarmType = newValue;
+	alarm_type = newValue;
 	emit alarmTypeChanged();
 }
 

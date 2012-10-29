@@ -63,7 +63,7 @@ class AlarmClock : public ObjectInterface
 	Q_ENUMS(AlarmClockType)
 
 public:
-	AlarmClock(QString description, bool enabled, int alarmType, int days, int hour, int minute, QObject *parent = 0);
+	AlarmClock(QString description, bool enabled, int alarm_type, int days, int hour, int minute, QObject *parent = 0);
 
 	enum AlarmClockType
 	{
@@ -83,7 +83,7 @@ public:
 	void setDescription(QString newValue);
 	bool isEnabled() const { return enabled; }
 	void setEnabled(bool newValue);
-	AlarmClockType getAlarmType() const { return alarmType; }
+	AlarmClockType getAlarmType() const { return alarm_type; }
 	void setAlarmType(AlarmClockType newValue);
 	int getDays() const { return days; }
 	void setDays(int newValue);
@@ -130,11 +130,11 @@ private slots:
 private:
 	void setTriggerOnWeekdays(bool newValue, int dayMask);
 
-	AlarmClockType alarmType;
+	AlarmClockType alarm_type;
 	QString description;
 	bool enabled;
 	int days, hour, minute;
-	QTimer *timerTrigger;
+	QTimer *timer_trigger;
 };
 
 #endif // ALARMCLOCK_H
