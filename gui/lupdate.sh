@@ -5,6 +5,6 @@
 SCRIPT_PATH="$(cd -P $(dirname "$0"); pwd)"
 
 # update translation files for qml sources
-lupdate "${SCRIPT_PATH}" -extensions qml -ts "${SCRIPT_PATH}"/locale/bt_experience_it.ts
+lupdate "${SCRIPT_PATH}"/.. -extensions qml,js,cpp -ts "${SCRIPT_PATH}"/locale/bt_experience_it.ts
 
 echo "End of script"
