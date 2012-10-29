@@ -11,22 +11,23 @@ MenuColumn {
 
     // redefined to implement menu navigation
     function openMenu(navigationTarget) {
+        var m = undefined
         if (navigationTarget === "Systems") {
-            var m = modelList.get(4)
+            m = modelList.get(4)
             itemList.currentIndex = 4
-            column.loadColumn(m.component, m.name)
+            column.loadColumn(nameToComponent(m.component), m.name)
             return 1
         }
         else if (navigationTarget === "Profiles") {
-            var m = modelList.get(2)
+            m = modelList.get(2)
             itemList.currentIndex = 2
-            column.loadColumn(m.component, m.name)
-            return 1
+            column.loadColumn(nameToComponent(m.component), m.name)
+            return 0
         }
         else if (navigationTarget === "AlarmClock") {
-            var m = modelList.get(5)
+            m = modelList.get(5)
             itemList.currentIndex = 5
-            column.loadColumn(m.component, m.name)
+            column.loadColumn(nameToComponent(m.component), m.name)
             return 0
         }
         return -2 // wrong target
