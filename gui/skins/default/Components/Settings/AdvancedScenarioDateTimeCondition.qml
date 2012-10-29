@@ -33,13 +33,13 @@ Column {
             model: ListModel {
                 id: daysModel
                 Component.onCompleted: {
-                    daysModel.append({"day": qsTr("M"), "numDay": 1})
-                    daysModel.append({"day": qsTr("T"), "numDay": 2})
-                    daysModel.append({"day": qsTr("W"), "numDay": 3})
-                    daysModel.append({"day": qsTr("T"), "numDay": 4})
-                    daysModel.append({"day": qsTr("F"), "numDay": 5})
-                    daysModel.append({"day": qsTr("S"), "numDay": 6})
-                    daysModel.append({"day": qsTr("S"), "numDay": 7})
+                    daysModel.append({"day": qsTr("M", "Monday"), "numDay": 1})
+                    daysModel.append({"day": qsTr("T", "Tuesday"), "numDay": 2})
+                    daysModel.append({"day": qsTr("W", "Wednesday"), "numDay": 3})
+                    daysModel.append({"day": qsTr("T", "Thursday"), "numDay": 4})
+                    daysModel.append({"day": qsTr("F", "Friday"), "numDay": 5})
+                    daysModel.append({"day": qsTr("S", "Saturday"), "numDay": 6})
+                    daysModel.append({"day": qsTr("S", "Sunday"), "numDay": 7})
                 }
             }
 
