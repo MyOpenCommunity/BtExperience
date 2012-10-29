@@ -29,6 +29,7 @@ Item {
     // the object that represents the current element (the last column open)
     property variant currentObject: undefined
 
+    property alias clipBehavior: clippingContainer.clip
     signal closed
     signal rootColumnClicked
     signal loadNextColumn // used for menu navigation, see navigation.js for further details

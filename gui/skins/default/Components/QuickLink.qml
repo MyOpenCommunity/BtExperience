@@ -2,8 +2,9 @@ import QtQuick 1.1
 import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
-import "../js/Stack.js" as Stack
 
+import "../js/Stack.js" as Stack
+import "../js/anchorspositioning.js" as Positioner
 
 Item {
     id: bgQuick
@@ -13,8 +14,8 @@ Item {
     property string page: "Browser.qml"
     property bool editable: true
     property variant itemObject
-    property int refX: -1 // used for sidebar placement, -1 means not used
-    property int refY: -1 // used for sidebar placement, -1 means not used
+    property int refX: -1 // used for editColumn placement, -1 means not used
+    property int refY: -1 // used for editColumn placement, -1 means not used
 
     signal selected(variant favorite)
     signal requestEdit(variant favorite)
@@ -331,94 +332,22 @@ Item {
     Behavior on x {
         SequentialAnimation {
             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-            ScriptAction { script: privateProps.computeAnchors() }
+            ScriptAction { script: Positioner.computeAnchors(bgQuick, editColumn) }
         }
     }
 
     Behavior on y {
         SequentialAnimation {
             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-            ScriptAction { script: privateProps.computeAnchors() }
+            ScriptAction { script: Positioner.computeAnchors(bgQuick, editColumn) }
         }
     }
 
-    Component.onCompleted: privateProps.computeAnchors()
+    Component.onCompleted: Positioner.computeAnchors(bgQuick, editColumn)
+
 
     QtObject {
         id: privateProps
-
-        function computeAnchors() {
-            // function to compute and set anchors considering the QuickLink
-            // position and the reference point
-
-            // first of all, resets everything
-            editColumn.anchors.top = undefined
-            editColumn.anchors.bottom = undefined
-            editColumn.anchors.left = undefined
-            editColumn.anchors.right = undefined
-            editColumn.anchors.leftMargin = 0
-            editColumn.anchors.rightMargin = 0
-
-            // checks if ref point is defined, if not default to top right
-            if ((bgQuick.refX === -1) || (bgQuick.refY === -1)) {
-                editColumn.anchors.top = column.top
-                editColumn.anchors.bottom = undefined
-                editColumn.anchors.left = column.right
-                editColumn.anchors.right = undefined
-                editColumn.anchors.leftMargin = 1
-                editColumn.anchors.rightMargin = 0
-                return
-            }
-
-            // bgQuick.refX, bgQuick.refY are absolute coordinates, so converts QuickLink x, y to absolute ones
-            var mov_cx = bgQuick.mapToItem(null, 0, 0).x + 0.5 * bgQuick.width
-            var mov_cy = bgQuick.mapToItem(null, 0, 0).y + 0.5 * bgQuick.height
-
-            // computes delta wrt the ref point
-            var px = mov_cx - bgQuick.refX
-            var py = mov_cy - bgQuick.refY
-
-            // analyzes signs and sets the right anchorings
-            if ((px >= 0) && (py >= 0)) {
-                // bottom left
-                editColumn.anchors.top = undefined
-                editColumn.anchors.bottom = column.bottom
-                editColumn.anchors.left = undefined
-                editColumn.anchors.right = column.left
-                editColumn.anchors.leftMargin = 0
-                editColumn.anchors.rightMargin = 1
-                return
-            }
-            else if ((px >= 0) && (py <= 0)) {
-                // top left
-                editColumn.anchors.top = column.top
-                editColumn.anchors.bottom = undefined
-                editColumn.anchors.left = undefined
-                editColumn.anchors.right = column.left
-                editColumn.anchors.leftMargin = 0
-                editColumn.anchors.rightMargin = 1
-                return
-            }
-            else if ((px <= 0) && (py >= 0)) {
-                // bottom right
-                editColumn.anchors.top = undefined
-                editColumn.anchors.bottom = column.bottom
-                editColumn.anchors.left = column.right
-                editColumn.anchors.right = undefined
-                editColumn.anchors.leftMargin = 1
-                editColumn.anchors.rightMargin = 0
-                return
-            }
-            else {
-                // top right
-                editColumn.anchors.top = column.top
-                editColumn.anchors.bottom = undefined
-                editColumn.anchors.left = column.right
-                editColumn.anchors.right = undefined
-                editColumn.anchors.leftMargin = 1
-                editColumn.anchors.rightMargin = 0
-            }
-        }
 
         function startEdit() {
             labelLoader.sourceComponent = labelInputComponent

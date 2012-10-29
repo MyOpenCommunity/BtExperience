@@ -66,6 +66,8 @@ Item {
 
         RoomItem {
             id: roomItem
+            refX: privateProps.refX
+            refY: privateProps.refY
 
             // if I click on the background around the menu item, focus is lost
             Connections {
@@ -84,9 +86,12 @@ Item {
         MenuContainer {
             id: container
 
+            clipBehavior: false
             property alias xAnimation: xAnim
             property alias yAnimation: yAnim
             property variant itemObject: undefined
+            property int refX: -1 // used for editColumn placement, -1 means not used
+            property int refY: -1 // used for editColumn placement, -1 means not used
 
             width: 500
             rootColumn: roomItemComponent
@@ -114,6 +119,15 @@ Item {
                     container.rootObject.select()
                 }
                 ignoreUnknownSignals: true
+            }
+
+            Connections {
+                target: xAnim
+                onRunningChanged: {
+                    if (!xAnim.running) {
+                        rootObject.updateAnchors()
+                    }
+                }
             }
 
             NumberAnimation { id: xAnim; target: container; property: "x"; duration: 400; easing.type: Easing.InSine }
@@ -215,6 +229,9 @@ Item {
     QtObject {
         id: privateProps
 
+        property int refX: -1 // seee RoomItem.refX, refY
+        property int refY: -1
+
         property variant currentMenu: undefined
 
         function unselectObj() {
@@ -225,8 +242,7 @@ Item {
         }
 
         function closeMenu() {
-            if (privateProps.currentMenu !== undefined)
-            {
+            if (privateProps.currentMenu !== undefined) {
                 privateProps.currentMenu.closeAll()
                 privateProps.currentMenu.state = ""
                 roomView.state = ""
@@ -257,6 +273,10 @@ Item {
                 var obj = model.getObject(i)
                 var y = obj.position.y
                 var x = obj.position.x
+
+                privateProps.refX = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).x + 0.5 * bgMoveArea.width
+                privateProps.refY = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).y + 0.5 * bgMoveArea.height
+
                 var object = itemComponent.createObject(roomView, {"rootData": obj.btObject, 'x': x, 'y': y, 'pageObject': pageObject, "itemObject": obj})
                 Script.obj_array.push(object)
             }

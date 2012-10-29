@@ -1,12 +1,16 @@
 import QtQuick 1.1
 import BtObjects 1.0
 
+import "../js/anchorspositioning.js" as Positioner
 
 MenuColumn {
     id: column
 
     signal requestMove
     signal requestSelect
+
+    property alias refX: theMenu.refX
+    property alias refY: theMenu.refY
 
     /* simply forwarding to the menu builtin focusLost function */
     function focusLost() {
@@ -18,8 +22,15 @@ MenuColumn {
         theMenu.state = "toolbar"
     }
 
+    function updateAnchors() {
+        Positioner.computeAnchors(theMenu, editColumn)
+    }
+
     MenuItem {
         id: theMenu
+
+        property int refX: -1 // used for editColumn placement, -1 means not used
+        property int refY: -1 // used for editColumn placement, -1 means not used
 
         function startEdit() {
             column.requestSelect()
@@ -42,7 +53,7 @@ MenuColumn {
         }
 
         Column {
-            id: sidebar
+            id: editColumn
 
             opacity: 0
             anchors {
@@ -51,7 +62,7 @@ MenuColumn {
             }
 
             Behavior on opacity {
-                NumberAnimation { target: sidebar; property: "opacity"; duration: 200;}
+                NumberAnimation { target: editColumn; property: "opacity"; duration: 200;}
             }
 
             Rectangle {
@@ -116,7 +127,7 @@ MenuColumn {
         states: [
             State {
                 name: "toolbar"
-                PropertyChanges { target: sidebar; opacity: 1 }
+                PropertyChanges { target: editColumn; opacity: 1 }
                 PropertyChanges {
                     target: blockMouseInteractionOnToolbarState
                     visible: true
@@ -126,5 +137,6 @@ MenuColumn {
     }
 
     BtObjectsMapping { id: mapping }
+    Component.onCompleted: Positioner.computeAnchors(theMenu, editColumn)
 }
 
