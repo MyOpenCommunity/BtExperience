@@ -50,6 +50,7 @@
         <obj cid="14266" id="14266" enable="0">
 		<ist uii="30117" enable="1" />
 	</obj>
+	<obj cid="14201" id="14201" enabled="0" type="0" days="0" hour="0" minutes="0" />
 	<obj id="123456" internal_descr="debug touchscreen">
 		<ist uii="123456" enable="1" />
 	</obj>
