@@ -23,6 +23,9 @@ namespace
 	const int MASK_SATURDAY = 0x2;
 	const int MASK_SUNDAY = 0x1;
 
+	const int BEEP_INTERVAL = 5000;
+	const int MAX_BEEP_TICK = 24;
+
 	const int SOUND_DIFFUSION_INTERVAL = 3000;
 	const int MAX_SOUND_DIFFUSION_TICK = 39;
 }
@@ -172,11 +175,10 @@ void AlarmClock::start()
 {
 	tick_count = 0;
 	if (alarm_type == AlarmClockBeep)
-		; // TODO
+		tick->setInterval(BEEP_INTERVAL);
 	else
 		tick->setInterval(SOUND_DIFFUSION_INTERVAL);
 	tick->start();
-	emit ringMe(this);
 }
 
 void AlarmClock::stop()
@@ -339,7 +341,10 @@ void AlarmClock::alarmTick()
 
 	if (alarm_type == AlarmClockBeep)
 	{
-		// TODO
+		if (tick_count == MAX_BEEP_TICK)
+			tick->stop();
+		else
+			emit ringMe(this);
 	}
 	else
 	{
