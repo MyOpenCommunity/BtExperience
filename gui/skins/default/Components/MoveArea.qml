@@ -36,26 +36,26 @@ Item {
 
         // The functions below ensure that the x or the y are inside the
         // movearea rect.
-        function xInRect(start_x) {
-            var half_item_width = bgMoveArea.maxItemWidth / 2
-            var dest_x = start_x
-            if (dest_x - half_item_width < 0)
-                dest_x = half_item_width
-            else if (dest_x + half_item_width > bgMoveArea.width)
-                dest_x = bgMoveArea.width - half_item_width
+        function xInRect(startX) {
+            var halfItemWidth = bgMoveArea.maxItemWidth / 2
+            var destX = startX
+            if (destX - halfItemWidth < 0)
+                destX = halfItemWidth
+            else if (destX + halfItemWidth > bgMoveArea.width)
+                destX = bgMoveArea.width - halfItemWidth
 
-            return dest_x
+            return destX
         }
 
-        function yInRect(start_y) {
-            var half_item_height = bgMoveArea.maxItemHeight / 2
-            var dest_y = start_y
-            if (dest_y - half_item_height < 0)
-                dest_y = half_item_height
-            else if (dest_y + half_item_height > bgMoveArea.height)
-                dest_y = bgMoveArea.height - half_item_height
+        function yInRect(startY) {
+            var halfItemHeight = bgMoveArea.maxItemHeight / 2
+            var destY = startY
+            if (destY - halfItemHeight < 0)
+                destY = halfItemHeight
+            else if (destY + halfItemHeight > bgMoveArea.height)
+                destY = bgMoveArea.height - halfItemHeight
 
-            return dest_y
+            return destY
         }
 
         onClicked: {
