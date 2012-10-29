@@ -4,6 +4,7 @@ import Components 1.0
 import Components.Text 1.0
 import "js/Stack.js" as Stack
 import "js/array.js" as Script
+import "js/navigation.js" as Navigation
 
 
 Page {
@@ -278,18 +279,34 @@ Page {
                     font.pixelSize: 16
                 }
 
-                Rectangle {
+                Image {
                     id: profileRect
+                    source: "images/profile-settings/bg_settings_profile.svg"
                     width: 212
                     height: 100
-                    color: "grey"
 
                     Image {
                         id: imageProfile
-                        width: 100
-                        height: parent.height
+                        width: parent.width / 100 * 38
+                        height: parent.height / 100 * 80
+                        anchors.top: parent.top
+                        anchors.topMargin: parent.height / 100 * 8
                         source: profilePage.profile.image
                         fillMode: Image.PreserveAspectFit
+                    }
+
+                    Image {
+                        id: imageProfileSettings
+                        anchors.right: parent.right
+                        anchors.rightMargin: parent.width / 100 * 6
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: parent.height / 100 * 8
+                        source: "images/profile-settings/icon_settings_profile.svg"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.PROFILE})
                     }
 
                     UbuntuLightText {
@@ -299,7 +316,7 @@ Page {
                             top: parent.top
                             topMargin: 10
                         }
-                        horizontalAlignment: Text.AlignHCenter
+                        horizontalAlignment: Text.AlignLeft
                         font.pixelSize: 16
                         text: profilePage.profile.description
                     }
