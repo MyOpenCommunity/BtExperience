@@ -15,7 +15,7 @@
 #if defined(BT_HARDWARE_X11)
 #define CONF_FILE "conf.xml"
 #else
-#define CONF_FILE "/home/bticino/cfg/extra/0/conf.xml"
+#define CONF_FILE "/var/tmp/conf.xml"
 #endif
 
 
