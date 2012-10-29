@@ -31,6 +31,7 @@ public:
 	{
 		return ObjectInterface::IdAlarmClockNotifier;
 	}
+	void addAlarmClockConnections(AlarmClock *alarm);
 
 	bool isEnabled() const { return is_one_enabled; }
 

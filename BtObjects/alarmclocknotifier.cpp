@@ -21,19 +21,24 @@ AlarmClockNotifier::AlarmClockNotifier()
 	// actually filters
 	alarm_clocks_model->setFilters(filters);
 
-	// connects various alarm clocks signals to out slot
+	// connects various alarm clocks signals to our slots
 	for (int i = 0; i < alarm_clocks_model->getCount(); ++i)
 	{
 		ItemInterface *item = alarm_clocks_model->getObject(i);
 		AlarmClock *alarm = qobject_cast<AlarmClock *>(item);
 		Q_ASSERT_X(alarm, __PRETTY_FUNCTION__, "Unexpected NULL object");
-		connect(alarm, SIGNAL(enabledChanged()), this, SLOT(updateAlarmClocksInfo()));
-		connect(alarm, SIGNAL(triggered(AlarmClock*)), this, SIGNAL(alarmClockTrigger(AlarmClock*)));
-		connect(alarm, SIGNAL(ringMe(AlarmClock*)), this, SIGNAL(ringAlarmClock(AlarmClock*)));
+		addAlarmClockConnections(alarm);
 	}
 
 	// inits everything
 	updateAlarmClocksInfo();
+}
+
+void AlarmClockNotifier::addAlarmClockConnections(AlarmClock *alarm)
+{
+	connect(alarm, SIGNAL(enabledChanged()), this, SLOT(updateAlarmClocksInfo()));
+	connect(alarm, SIGNAL(triggered(AlarmClock*)), this, SIGNAL(alarmClockTrigger(AlarmClock*)));
+	connect(alarm, SIGNAL(ringMe(AlarmClock*)), this, SIGNAL(ringAlarmClock(AlarmClock*)));
 }
 
 void AlarmClockNotifier::updateAlarmClocksInfo()
