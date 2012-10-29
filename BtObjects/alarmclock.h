@@ -1,13 +1,17 @@
 #ifndef ALARMCLOCK_H
 #define ALARMCLOCK_H
 
-
 #include "objectinterface.h"
+
+#include <QHash>
+#include <QSet>
 
 
 class MediaDataModel;
 class AlarmClock;
 class QTimer;
+class Amplifier;
+class SourceObject;
 
 
 QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node);
@@ -19,6 +23,8 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarmClock);
 */
 class AlarmClock : public ObjectInterface
 {
+	friend class TestAlarmClockSoundDiffusion;
+
 	Q_OBJECT
 
 	/*!
@@ -60,6 +66,16 @@ class AlarmClock : public ObjectInterface
 	Q_PROPERTY(bool triggerOnSundays READ isTriggerOnSundays WRITE setTriggerOnSundays NOTIFY triggerOnSundaysChanged)
 	Q_PROPERTY(int trigger READ getDays NOTIFY daysChanged) // used for updates in QML
 
+	/*!
+		\brief The alarm clock sound diffusion source
+	*/
+	Q_PROPERTY(SourceObject* source READ getSource WRITE setSource NOTIFY sourceChanged)
+
+	/*!
+		\brief The alarm clock sound diffusion volume
+	*/
+	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
+
 	Q_ENUMS(AlarmClockType)
 
 public:
@@ -78,6 +94,9 @@ public:
 
 	Q_INVOKABLE void stop();
 	Q_INVOKABLE void postpone();
+
+	Q_INVOKABLE void setAmplifierEnabled(Amplifier *amplifier, bool enabled);
+	Q_INVOKABLE bool isAmplifierEnabled(Amplifier *amplifier) const;
 
 	QString getDescription() const { return description; }
 	void setDescription(QString newValue);
@@ -105,6 +124,13 @@ public:
 	void setTriggerOnFridays(bool newValue);
 	void setTriggerOnSaturdays(bool newValue);
 	void setTriggerOnSundays(bool newValue);
+	void setSource(SourceObject *source);
+	SourceObject *getSource() const;
+	void setVolume(int volume);
+	int getVolume() const;
+
+	static void addSource(SourceObject *source);
+	static void addAmplifier(Amplifier *amplifier);
 
 signals:
 	void alarmTypeChanged();
@@ -122,19 +148,36 @@ signals:
 	void triggerOnFridaysChanged();
 	void triggerOnSaturdaysChanged();
 	void triggerOnSundaysChanged();
+	void sourceChanged();
+	void volumeChanged();
 
 private slots:
 	void checkRequestManagement();
 	void triggersIfHasTo();
+	void alarmTick();
 
 private:
+	void start();
 	void setTriggerOnWeekdays(bool newValue, int dayMask);
+	void soundDiffusionStop();
+	void soundDiffusionSetVolume();
 
 	AlarmClockType alarm_type;
 	QString description;
 	bool enabled;
 	int days, hour, minute;
 	QTimer *timer_trigger;
+	QTimer *tick;
+	int tick_count;
+
+	// sound diffusion alarm clock
+	QSet<Amplifier *> enabled_amplifiers;
+	SourceObject *source;
+	int volume;
+
+	// used when loading/saving configurations
+	static QHash<int, Amplifier *> amplififers;
+	static QHash<int, SourceObject *> sources;
 };
 
 #endif // ALARMCLOCK_H

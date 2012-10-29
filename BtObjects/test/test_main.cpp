@@ -30,6 +30,7 @@
 #include "test_filebrowser.h"
 #include "test_light_objects.h"
 #include "test_media_objects.h"
+#include "test_alarm_clock.h"
 #include "test_messages_system.h"
 #include "test_multimedia_player.h"
 #include "test_splitscenarios_object.h"
@@ -66,6 +67,7 @@ int main(int argc, char *argv[])
 	ADD_TEST(TestSourceAux);
 	ADD_TEST(TestSourceRadio);
 	ADD_TEST(TestSoundAmbient);
+	ADD_TEST(TestAlarmClockSoundDiffusion);
 	ADD_TEST(TestThermalControlUnit4Zones);
 	ADD_TEST(TestThermalControlUnit99Zones);
 	ADD_TEST(TestThermalControlUnitManual);

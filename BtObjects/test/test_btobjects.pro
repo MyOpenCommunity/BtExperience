@@ -30,7 +30,9 @@ LIBS+= -L ../../../common_files/lib/x86 -lcommon -lssl
 
 DEPENDPATH = ../.. ..
 
-HEADERS += test_antintrusion_object.h \
+HEADERS += \
+	test_alarm_clock.h \
+	test_antintrusion_object.h \
 	test_btobject.h \
 	test_energy_data.h \
 	test_energy_load.h \
@@ -53,6 +55,7 @@ HEADERS += test_antintrusion_object.h \
 	common_files/logger.h
 
 SOURCES += test_main.cpp \
+	test_alarm_clock.cpp \
 	test_antintrusion_object.cpp \
 	test_btobject.cpp \
 	test_energy_data.cpp \
