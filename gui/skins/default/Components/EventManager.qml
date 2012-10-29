@@ -256,17 +256,14 @@ Item {
     Connections {
         id: clocksConnection
         target: null
-        // TODO implement notifications
-        onAlarmClockTrigger: {
+        onRingAlarmClock: {
+            // TODO check on alarmClock what alarm type we have to ring and ring appropriately
+            global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
             if (Stack.isPageChanging(changePageDone)) {
                 Script.delayedNotifications.push({"type": Script.ALARM_CLOCK_TRIGGERING, "data": alarmClock})
             }
             else
                 privateProps.alarmClockTriggering(alarmClock)
-        }
-        onRingAlarmClock: {
-            // TODO check on alarmClock what alarm type we have to ring and ring appropriately
-            global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
         }
     }
 

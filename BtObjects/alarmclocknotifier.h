@@ -36,7 +36,6 @@ public:
 	bool isEnabled() const { return is_one_enabled; }
 
 signals:
-	void alarmClockTrigger(AlarmClock *alarmClock);
 	void enabledChanged();
 	void ringAlarmClock(AlarmClock *alarmClock);
 

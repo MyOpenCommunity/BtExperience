@@ -115,7 +115,6 @@ signals:
 	void hourChanged();
 	void minuteChanged();
 	void ringMe(AlarmClock *alarmClock);
-	void triggered(AlarmClock *alarmClock);
 	void triggerOnMondaysChanged();
 	void triggerOnTuesdaysChanged();
 	void triggerOnWednesdaysChanged();
