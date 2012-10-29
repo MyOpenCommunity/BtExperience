@@ -46,6 +46,10 @@ namespace
 		AudioState::InvalidVolume,
 		AudioState::RingtoneVolume,
 	};
+
+	QString scs_source_on     = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
+	QString vde_audio_on      = "/usr/local/bin/Hw-D-Audio-VDE_Conversation.sh";
+	QString vde_audio_off     = "/usr/local/bin/Hw-D-Audio-VDE_Conversation_off.sh";
 }
 
 #define VOLUME_MIN 0
@@ -230,6 +234,10 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	switch (old_state)
 	{
+	case ScsVideoCall:
+	case ScsIntercomCall:
+		smartExecute(vde_audio_off);
+		break;
 	default:
 		qWarning("Add code to leave old state");
 		break;
@@ -242,6 +250,10 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	switch (new_state)
 	{
+	case ScsVideoCall:
+	case ScsIntercomCall:
+		smartExecute(vde_audio_on);
+		break;
 	default:
 		qWarning("Add code to enter new state");
 		break;
@@ -329,7 +341,7 @@ void AudioState::changeSoundDiffusionAccess()
 		return;
 
 	if (new_sound_diffusion)
-		qWarning("Add code to enable sound diffusion");
+		smartExecute(scs_source_on);
 	else
 		qWarning("Add code to disable sound diffusion");
 
