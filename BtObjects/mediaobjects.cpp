@@ -55,8 +55,6 @@ QList<ObjectPair> parseAuxSource(const QDomNode &xml_node)
 
 		SourceAux *source = new SourceAux(bt_global::add_device_to_cache(new SourceDevice(v.value("where"))));
 		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::Aux);
-		source->setParent(so);
-		source->setSourceObject(so);
 
 		obj_list << ObjectPair(uii, so);
 	}
@@ -75,8 +73,6 @@ QList<ObjectPair> parseMultimediaSource(const QDomNode &xml_node)
 
 		SourceAux *source = new SourceAux(bt_global::add_device_to_cache(new SourceDevice(v.value("where"))));
 		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::Touch);
-		source->setParent(so);
-		source->setSourceObject(so);
 
 		obj_list << ObjectPair(uii, so);
 	}
@@ -95,8 +91,6 @@ QList<ObjectPair> parseRadioSource(const QDomNode &xml_node)
 
 		SourceRadio *source = new SourceRadio(v.intValue("radio_num"), bt_global::add_device_to_cache(new RadioSourceDevice(v.value("where"))));
 		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::RdsRadio);
-		source->setParent(so);
-		source->setSourceObject(so);
 		// TODO station count
 		obj_list << ObjectPair(uii, so);
 	}
@@ -239,14 +233,6 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 		}
 	}
 
-	if (source)
-	{
-		// use a default
-		source->setSourceObject(static_cast<SourceObject *>(sources[0].second));
-		// one of the above, used to destroy the object
-		source->setParent(sources[0].second);
-	}
-
 	return sources;
 }
 
@@ -372,6 +358,9 @@ SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType
 	name = _name;
 	source = s;
 	type = t;
+
+	source->setParent(this);
+	source->setSourceObject(this);
 }
 
 void SourceObject::enableObject()
