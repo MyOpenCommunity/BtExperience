@@ -237,7 +237,7 @@
 		</ist>
 	</container>
 	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
-		<ist uii="901" descr="famiglia" img="images/home/card-home_bambina.png" >
+		<ist uii="901" descr="camilla" img="images/home/card-home_bambina.png" >
 			<link uii="8006" x="250" y="100" />
 			<link uii="8003" x="250" y="300" />
 		</ist>
@@ -245,7 +245,7 @@
 			<link uii="8009" x="250" y="100" />
 			<link uii="9005" x="250" y="300" />
 		</ist>
-		<ist uii="903" descr="camilla" img="images/home/card-home_uomo.png" >
+		<ist uii="903" descr="papà" img="images/home/card-home_uomo.png" >
 			<link uii="8004" x="150" y="100" />
 			<link uii="8008" x="350" y="100" />
 			<link uii="9004" x="250" y="300" />
@@ -253,7 +253,7 @@
 		<ist uii="904" descr="mamma" img="images/home/card-home_donna.png" >
 			<link uii="8007" x="250" y="100" />
 		</ist>
-		<ist uii="905" descr="papà" img="images/home/card-home_famiglia.png" >
+		<ist uii="905" descr="famiglia" img="images/home/card-home_famiglia.png" >
 			<link uii="8010" x="250" y="100" />
 		</ist>
 	</container>

@@ -45,6 +45,7 @@ var AUTO_OPEN = 3
 var VDE_MUTE = 4
 var SUPERVISION = 5
 var ALARM_CLOCKS = 6
+var PROFILE = 7
 
 var _paths = []
 
@@ -56,6 +57,7 @@ function _init(paths) {
     paths[VDE_MUTE] = ["Systems", "VDE", "VdeMute"]
     paths[SUPERVISION] = ["Supervision"]
     paths[ALARM_CLOCKS] = ["AlarmClock"]
+    paths[PROFILE] = ["Profiles"]
 }
 
 // returns a string indicating where to navigate

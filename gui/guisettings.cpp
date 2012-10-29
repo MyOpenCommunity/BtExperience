@@ -14,7 +14,7 @@
 #define CONF_FILE "conf.xml"
 #define SETTINGS_FILE "settings.xml"
 #else
-#define CONF_FILE "/home/bticino/cfg/extra/0/conf.xml"
+#define CONF_FILE "/var/tmp/conf.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
 #endif
 

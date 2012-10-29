@@ -17,6 +17,12 @@ MenuColumn {
             column.loadColumn(m.component, m.name)
             return 1
         }
+        else if (navigationTarget === "Profiles") {
+            var m = modelList.get(2)
+            itemList.currentIndex = 2
+            column.loadColumn(m.component, m.name)
+            return 1
+        }
         else if (navigationTarget === "AlarmClock") {
             var m = modelList.get(5)
             itemList.currentIndex = 5
