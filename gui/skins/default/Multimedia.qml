@@ -68,9 +68,9 @@ Page {
 
     Component.onCompleted: {
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {} })
+        multimediaModel.append({"description": qsTr("browser"), "target": "Browser.qml", "image": "images/multimedia/devices_card.jpg", "props": {"urlString": "http://www.google.it"}})
 
         // TODO to be implemented
-        multimediaModel.append({"description": qsTr("browser"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})
         multimediaModel.append({"description": qsTr("rss"), "target": "Devices.qml", "image": "images/multimedia/rss_card.jpg", "props": {}})
         multimediaModel.append({"description": qsTr("ip radio"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})
         multimediaModel.append({"description": qsTr("weather"), "target": "Devices.qml", "image": "images/multimedia/devices_card.jpg", "props": {}})

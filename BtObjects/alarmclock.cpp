@@ -90,29 +90,42 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(hourChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(persistItem()));
+
 	connect(timerTrigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
+
+	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(checkRequested()));
+	connect(this, SIGNAL(daysChanged()), this, SIGNAL(checkRequested()));
+	connect(this, SIGNAL(hourChanged()), this, SIGNAL(checkRequested()));
+	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(checkRequested()));
 
 	setEnabled(_enabled); // sets real value
 }
 
 void AlarmClock::checkRequestManagement()
 {
-	// gets actual date&time
-	QDateTime actualDateTime = QDateTime::currentDateTime();
+	if (enabled)
+	{
+		// gets actual date&time
+		QDateTime actualDateTime = QDateTime::currentDateTime();
 
-	// gets triggering date&time
-	QDateTime triggeringDateTime = QDateTime(actualDateTime.date(), QTime(hour, minute));
+		// gets triggering date&time
+		QDateTime triggeringDateTime = QDateTime(actualDateTime.date(), QTime(hour, minute));
 
-	// computes difference in seconds between actual and candidate date&time
-	int deltaSeconds = actualDateTime.secsTo(triggeringDateTime);
+		// computes difference in seconds between actual and candidate date&time
+		int deltaSeconds = actualDateTime.secsTo(triggeringDateTime);
 
-	// if difference is not positive adds 1 day to triggering date&time and recomputes delta
-	if (deltaSeconds <= 0)
-		deltaSeconds = actualDateTime.secsTo(triggeringDateTime.addDays(1));
+		// if difference is not positive adds 1 day to triggering date&time and recomputes delta
+		if (deltaSeconds <= 0)
+			deltaSeconds = actualDateTime.secsTo(triggeringDateTime.addDays(1));
 
-	// finally, sets trigger timer
-	timerTrigger->setSingleShot(true);
-	timerTrigger->start(deltaSeconds * 1000);
+		// finally, sets trigger timer
+		timerTrigger->setSingleShot(true);
+		timerTrigger->start(deltaSeconds * 1000);
+	}
+	else
+	{
+		timerTrigger->stop();
+	}
 }
 
 void AlarmClock::triggersIfHasTo()
@@ -176,9 +189,6 @@ void AlarmClock::setEnabled(bool newValue)
 
 	enabled = newValue;
 	emit enabledChanged();
-
-	if (enabled)
-		emit checkRequested();
 }
 
 void AlarmClock::setAlarmType(AlarmClockType newValue)
@@ -289,16 +299,15 @@ void AlarmClock::setTriggerOnSundays(bool newValue)
 
 void AlarmClock::setTriggerOnWeekdays(bool newValue, int dayMask)
 {
-	int d = days;
+	int old_days = days;
 
 	if (newValue) // set
-		d |= dayMask;
+		old_days |= dayMask;
 	else // reset
-		d &= ~dayMask;
+		old_days &= ~dayMask;
 
-	if (d == days)
+	if (old_days == days)
 		return;
 
-	days = d;
-	emit daysChanged();
+	setDays(old_days);
 }

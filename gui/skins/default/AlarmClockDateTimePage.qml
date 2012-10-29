@@ -208,7 +208,8 @@ Page {
             right: cancelButton.left
         }
         onClicked: {
-            page.alarmClock.description = nameText.text
+            if (nameText.text !== qsTr("Click to enter description..."))
+                page.alarmClock.description = nameText.text
             Stack.popPage()
         }
     }

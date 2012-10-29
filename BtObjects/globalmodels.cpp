@@ -3,6 +3,8 @@
 #include "medialink.h"
 #include "objectlink.h"
 #include "alarmclock.h"
+#include "objectmodel.h"
+#include "alarmclocknotifier.h"
 
 
 GlobalModels::GlobalModels()
@@ -108,7 +110,30 @@ ItemInterface *GlobalModels::createQuicklink(int profile_uii, QString mediaType,
 
 ItemInterface *GlobalModels::createAlarmClock()
 {
-	return new AlarmClock("new alarm clock", false, AlarmClock::AlarmClockBeep, 0, 0, 0);
+	AlarmClock *alarmClock = new AlarmClock("new alarm clock", false, AlarmClock::AlarmClockBeep, 0, 0, 0);
+
+	// retrieves notifier model
+	ObjectModel *notifierModel = new ObjectModel(this);
+	QVariantList filters;
+	QVariantMap filter;
+
+	// sets filters to select alarm clocks objects
+	filter["objectId"] = ObjectInterface::IdAlarmClockNotifier;
+	filters << filter;
+
+	// actually filters
+	notifierModel->setFilters(filters);
+
+	// retrieves notifiers and add alarm clock connections to them
+	for (int i = 0; i < notifierModel->getCount(); ++i)
+	{
+		ItemInterface *item = notifierModel->getObject(i);
+		AlarmClockNotifier *notifier = qobject_cast<AlarmClockNotifier *>(item);
+		Q_ASSERT_X(notifier, __PRETTY_FUNCTION__, "Unexpected NULL object");
+		notifier->addAlarmClockConnections(alarmClock);
+	}
+
+	return alarmClock;
 }
 
 void GlobalModels::setProfiles(MediaDataModel *_profiles)
