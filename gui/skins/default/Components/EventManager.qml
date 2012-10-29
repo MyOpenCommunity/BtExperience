@@ -257,8 +257,7 @@ Item {
         id: clocksConnection
         target: null
         onRingAlarmClock: {
-            // TODO check on alarmClock what alarm type we have to ring and ring appropriately
-            global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
+            global.ringtoneManager.playRingtone(global.extraPath + "10/alarm.wav", AudioState.Ringtone)
             if (Stack.isPageChanging(changePageDone)) {
                 Script.delayedNotifications.push({"type": Script.ALARM_CLOCK_TRIGGERING, "data": alarmClock})
             }

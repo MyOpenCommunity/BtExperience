@@ -62,6 +62,8 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(QObject *ringtoneManager READ getRingtoneManager CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
+	// The extra path for resources.
+	Q_PROPERTY(QString extraPath READ getExtraPath CONSTANT)
 	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
 	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout NOTIFY keyboardLayoutChanged)
 	// A property to turn off/on the monitor from QML
