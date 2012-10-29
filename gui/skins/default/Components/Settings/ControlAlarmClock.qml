@@ -60,7 +60,10 @@ MenuColumn {
                 pressedImage: "../../images/common/ico_delete.svg"
                 imageAnchors.rightMargin: 10
 
-                onClicked: objectModel.remove(column.dataModel)
+                onClicked: {
+                    objectModel.remove(column.dataModel)
+                    column.closeColumn()
+                }
                 status: 0
             }
         }
