@@ -7,6 +7,7 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
+    SystemsModel {id: systemsModel; systemId: Container.IdVideoDoorEntry }
     ObjectModel {
         id: modelList
         filters: [{objectId: ObjectInterface.IdIntercom}]
@@ -27,7 +28,9 @@ MenuColumn {
 
         ObjectModel {
             id: extPlaceModel
+            containers: [systemsModel.systemUii]
             source: modelList.getObject(0).externalPlaces
+            range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
         }
 
         model: extPlaceModel
