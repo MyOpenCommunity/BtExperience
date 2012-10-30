@@ -9,9 +9,10 @@
 #include <QtDebug>
 
 
-// when /etc/udev/scripts/mount.sh mounts a new device under /media/NAME, it creates
-// a file named /tmp/.automount-NAME; the code below does not check the files in /tmp,
-// but uses the /tmp directory change to trigger a reparse of /proc/mounts
+// when /etc/udev/scripts/mount.sh mounts a new device under /media/NAME, it
+// creates/touches a file named /tmp/.automount-NAME, updating either /tmp or
+// /tmp/.automount-NAME, but when it unmounts the device it only removes the mount
+// directory under /media, hence we need to monitor all three locations
 
 #define MTAB         "/etc/mtab"
 #define MOUNTS       "/proc/mounts"
@@ -258,21 +259,18 @@ void MountWatcher::startWatching()
 		return;
 	watching = true;
 
-	mounts = parseMounts();
-
-	// force a status update
-	foreach (const QString &dir, mounts)
-		emit directoryMounted(dir, mountType(dir));
+	mtabChanged();
 
 	// USB mount/umount
 	watcher->addPath(MTAB);   // for x86/desktop
 	watcher->addPath("/tmp"); // for touch
+	watcher->addPath(MOUNT_PATH); // for touch
 }
 
 void MountWatcher::fileChanged(const QString &file)
 {
 	qDebug() << "File" << file << "changed";
-	if (file == MTAB)
+	if (file == MTAB || file.startsWith(AUTOMOUNT))
 		mtabChanged();
 }
 
@@ -298,7 +296,13 @@ void MountWatcher::mtabChanged()
 	QSet<QString> unmounted = QSet<QString>(old_dirs).subtract(new_dirs);
 
 	foreach (const QString &dir, mounted)
+	{
 		emit directoryMounted(dir, mountType(dir));
+
+		QString sentinel(AUTOMOUNT + QFileInfo(dir).baseName());
+		if (QFile::exists(sentinel) && !watcher->files().contains(sentinel))
+			watcher->addPath(sentinel);
+	}
 
 	foreach (const QString &dir, unmounted)
 		emit directoryUnmounted(dir, mountType(dir));
