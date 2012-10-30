@@ -6,12 +6,24 @@
 #include <QDebug>
 #include <QTime>
 
+// The timeout for a single item in msec
+#define LOOP_TIMEOUT 2000
+
 #define VOLUME_INCREMENT 5
 
 
 PlayListPlayer::PlayListPlayer(QObject *parent) :
 	QObject(parent)
 {
+	// Sometimes it happens that mplayer can't reproduce a song or a web radio,
+	// for example because the network is down. In this case the mplayer exits
+	// immediately with the signal mplayerDone (== everything ok). Since the
+	// UI starts reproducing the next item when receiving the mplayerDone signal,
+	// this causes an infinite loop. To avoid that, we count the time elapsed to
+	// reproduce the whole item list, and if it is under LOOP_TIMEOUT * num_of_items
+	// we stop the reproduction.
+	loop_starting_file = -1;
+
 	is_video = false;
 	actual_list = 0;
 	local_list = new FileListManager;
@@ -71,6 +83,41 @@ void PlayListPlayer::next()
 {
 	if (actual_list)
 		actual_list->nextFile();
+}
+
+bool PlayListPlayer::checkLoop()
+{
+	if (loop_starting_file == -1)
+	{
+		loop_starting_file = actual_list->currentIndex();
+		loop_total_time = actual_list->totalFiles() * LOOP_TIMEOUT;
+
+		loop_time_counter.start();
+	}
+	else if (loop_starting_file == actual_list->currentIndex())
+	{
+		if (loop_time_counter.elapsed() < loop_total_time)
+		{
+			qWarning() << "MediaPlayer: loop detected, force stop";
+			terminate();
+			emit loopDetected();
+
+			return true;
+		}
+		else
+		{
+			// we restart the time counter to find loop that happens when the player
+			// is already started.
+			loop_time_counter.start();
+		}
+	}
+
+	return false;
+}
+
+void PlayListPlayer::resetLoopCheck()
+{
+	loop_starting_file = -1;
 }
 
 void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_files)
@@ -220,12 +267,14 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 void AudioVideoPlayer::prevTrack()
 {
 	user_track_change_request = true;
+	resetLoopCheck();
 	previous();
 }
 
 void AudioVideoPlayer::nextTrack()
 {
 	user_track_change_request = true;
+	resetLoopCheck();
 	next();
 }
 
@@ -281,7 +330,10 @@ void AudioVideoPlayer::decrementVolume()
 void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state)
 {
 	if (new_state == MultiMediaPlayer::Stopped && !user_track_change_request)
-		next();
+	{
+		if (!checkLoop())
+			next();
+	}
 	user_track_change_request = false;
 }
 

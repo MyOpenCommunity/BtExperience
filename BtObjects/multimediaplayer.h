@@ -31,6 +31,7 @@ class QTimer;
 class MultiMediaPlayer : public QObject
 {
 	friend class TestMultiMediaPlayer;
+	friend class TestPlaylistPlayer;
 
 	Q_OBJECT
 

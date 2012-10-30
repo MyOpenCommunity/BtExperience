@@ -102,6 +102,7 @@ int main(int argc, char *argv[])
 	ADD_TEST(TestMediaModel);
 	ADD_TEST(TestObjectModel);
 	ADD_TEST(TestMultiMediaPlayer);
+	ADD_TEST(TestPlaylistPlayer);
 	ADD_TEST(TestMessagesSystem);
 
 	QStringList arglist = app.arguments();

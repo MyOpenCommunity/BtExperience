@@ -4,6 +4,8 @@
 #include "test_btobject.h"
 
 class MultiMediaPlayer;
+class AudioVideoPlayer;
+class DirectoryListModel;
 class ObjectTester;
 
 
@@ -43,6 +45,23 @@ private slots:
 private:
 	MultiMediaPlayer *player;
 	ObjectTester *state_changed, *output_changed, *track_info_changed, *source_changed;
+};
+
+
+class TestPlaylistPlayer : public TestBtObject
+{
+	Q_OBJECT
+
+private slots:
+	void initTestCase();
+	void init();
+	void cleanup();
+
+	void testLoopCheck();
+
+private:
+	AudioVideoPlayer *player;
+	DirectoryListModel *model;
 };
 
 #endif // TEST_MULTIMEDIA_PLAYER_H

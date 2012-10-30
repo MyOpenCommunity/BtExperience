@@ -3,6 +3,8 @@
 
 #include "multimediaplayer.h"
 
+#include <QTime>
+
 class DirectoryListModel;
 class UPnPListModel;
 class ListManager;
@@ -31,6 +33,11 @@ public:
 	// methods needed to restore state when coming back to player page
 	Q_INVOKABLE bool isUpnp() const { return ((actual_list == upnp_list) ? true : false); }
 
+	bool isPlaying();
+
+public slots:
+	virtual void terminate() { }
+
 protected:
 	explicit PlayListPlayer(QObject *parent = 0);
 
@@ -41,17 +48,21 @@ protected:
 	void generate(UPnPListModel *model, int index, int total_files);
 	void generate(QList<QVariant> urls, int index, int total_files);
 	void reset();
-	bool isPlaying();
 
 signals:
 	void currentChanged();
 	void playingChanged();
+	void loopDetected();
 
 	/// emitted when player is active and the device for current file gets unmounted
 	void deviceUnmounted();
 
 protected slots:
 	virtual void updateCurrent();
+
+protected:
+	bool checkLoop();
+	void resetLoopCheck();
 
 private slots:
 	void directoryUnmounted(QString dir);
@@ -60,6 +71,10 @@ private:
 	ListManager *local_list, *upnp_list, *actual_list;
 	QString current;
 	bool is_video;
+
+	int loop_starting_file; // the index of the song used to detect loop
+	int loop_total_time; // the total time used to detect a loop
+	QTime loop_time_counter; // used to count the time elapsed
 };
 
 
@@ -142,7 +157,7 @@ public slots:
 	void nextTrack();
 	void pause();
 	void resume();
-	void terminate();
+	virtual void terminate();
 	void incrementVolume();
 	void decrementVolume();
 
