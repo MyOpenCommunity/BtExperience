@@ -14,13 +14,15 @@ PlayListPlayer::PlayListPlayer(QObject *parent) :
 {
 	is_video = false;
 	actual_list = 0;
-	emit playingChanged();
 	local_list = new FileListManager;
 	connect(local_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
+
 	upnp_list = new UPnpListManager(UPnPListModel::getXmlDevice());
 	connect(upnp_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
 	connect(MountWatcher::instance(), SIGNAL(directoryUnmounted(QString,MountPoint::MountType)),
 		this, SLOT(directoryUnmounted(QString)));
+
+	emit playingChanged();
 }
 
 void PlayListPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool _is_video)
