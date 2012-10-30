@@ -66,7 +66,6 @@ Page {
 
                 Text {
                     text: "Erba, CO, Italy"
-                    //                    text: (model.hasValidCity ? model.city : "Unknown location") + (model.useGps ? " (GPS)" : "")
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -82,15 +81,6 @@ Page {
                 weather: "sunny"
                 temperature: "13°"
                 title: "Sunny"
-                //                weather: (model.hasValidWeather
-                //                          ? model.weather.weather
-                //                          : "sunny")
-                //                topText: (model.hasValidWeather
-                //                          ? model.weather.tempString
-                //                          : "??")
-                //                bottomText: (model.hasValidWeather
-                //                             ? model.weather.weatherDesc
-                //                             : "No weather data")
             }
 
             Row {
@@ -111,12 +101,6 @@ Page {
                     day: "Mon"
                     temperature: "5°/15°"
                     weather: "showers"
-                    //                    topText: (model.hasValidWeather ?
-                    //                                  model.forecast[0].dayOfWeek : "??")
-                    //                    bottomText: (model.hasValidWeather ?
-                    //                                     model.forecast[0].tempString : "??/??")
-                    //                    weather: (model.hasValidWeather ?
-                    //                                  model.forecast[0].weather : "showers")
                 }
                 ForecastIcon {
                     id: forecast2
@@ -126,12 +110,6 @@ Page {
                     day: "Tue"
                     temperature: "6°/15°"
                     weather: "snow"
-                    //                    topText: (model.hasValidWeather ?
-                    //                                  model.forecast[1].dayOfWeek : "??")
-                    //                    bottomText: (model.hasValidWeather ?
-                    //                                     model.forecast[1].tempString : "??/??")
-                    //                    weather: (model.hasValidWeather ?
-                    //                                  model.forecast[1].weather : "showers")
                 }
                 ForecastIcon {
                     id: forecast3
@@ -141,12 +119,6 @@ Page {
                     day: "Wed"
                     temperature: "5°/16°"
                     weather: "t-storm-rain"
-                    //                    topText: (model.hasValidWeather ?
-                    //                                  model.forecast[2].dayOfWeek : "??")
-                    //                    bottomText: (model.hasValidWeather ?
-                    //                                     model.forecast[2].tempString : "??/??")
-                    //                    weather: (model.hasValidWeather ?
-                    //                                  model.forecast[2].weather : "showers")
                 }
                 ForecastIcon {
                     id: forecast4
@@ -156,12 +128,6 @@ Page {
                     day: "Thu"
                     temperature: "5°/15°"
                     weather: "m-cloudy"
-                    //                    topText: (model.hasValidWeather ?
-                    //                                  model.forecast[3].dayOfWeek : "??")
-                    //                    bottomText: (model.hasValidWeather ?
-                    //                                     model.forecast[3].tempString : "??/??")
-                    //                    weather: (model.hasValidWeather ?
-                    //                                  model.forecast[3].weather : "showers")
                 }
 
             }
