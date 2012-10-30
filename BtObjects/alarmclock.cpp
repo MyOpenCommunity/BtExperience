@@ -337,8 +337,6 @@ void AlarmClock::setTriggerOnWeekdays(bool newValue, int dayMask)
 
 void AlarmClock::alarmTick()
 {
-	++tick_count;
-
 	if (alarm_type == AlarmClockBeep)
 	{
 		if (tick_count == MAX_BEEP_TICK)
@@ -376,6 +374,8 @@ void AlarmClock::alarmTick()
 		else
 			soundDiffusionSetVolume();
 	}
+
+	++tick_count;
 }
 
 void AlarmClock::soundDiffusionStop()
