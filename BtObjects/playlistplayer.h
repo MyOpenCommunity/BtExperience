@@ -127,14 +127,6 @@ class AudioVideoPlayer : public PlayListPlayer
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
-	Q_INVOKABLE void prevTrack();
-	Q_INVOKABLE void nextTrack();
-	Q_INVOKABLE void pause();
-	Q_INVOKABLE void resume();
-	Q_INVOKABLE void terminate();
-	Q_INVOKABLE void incrementVolume();
-	Q_INVOKABLE void decrementVolume();
-
 	QObject *getMediaPlayer() const { return media_player; }
 	QString getCurrentTime() const;
 	QString getTotalTime() const;
@@ -144,6 +136,15 @@ public:
 	int getPercentage() const { return percentage; }
 	bool getMute() const;
 	void setMute(bool newValue);
+
+public slots:
+	void prevTrack();
+	void nextTrack();
+	void pause();
+	void resume();
+	void terminate();
+	void incrementVolume();
+	void decrementVolume();
 
 signals:
 	void currentTimeChanged();
