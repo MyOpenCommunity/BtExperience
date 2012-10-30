@@ -175,9 +175,19 @@ void AlarmClock::start()
 {
 	tick_count = 0;
 	if (alarm_type == AlarmClockBeep)
+	{
 		tick->setInterval(BEEP_INTERVAL);
+	}
 	else
+	{
+		if (!source || !enabled_amplifiers.size())
+		{
+			qWarning() << "Invalid alarm clock setup: either no source or amplifier enabled";
+			return;
+		}
+
 		tick->setInterval(SOUND_DIFFUSION_INTERVAL);
+	}
 	tick->start();
 }
 
