@@ -2,8 +2,10 @@ import QtQuick 1.1
 import Components.Text 1.0
 import Components.Weather 1.0
 
+import "js/Stack.js" as Stack
 
-Page {
+
+SystemPage {
     id: page
 
     property int controlWidth: 300
@@ -152,4 +154,12 @@ Page {
             NumberAnimation { property: "opacity"; duration: 400 }
         }
     ]
+
+    function systemsButtonClicked() {
+        Stack.backToMultimedia()
+    }
+
+    function systemPageClosed() {
+        Stack.backToMultimedia()
+    }
 }

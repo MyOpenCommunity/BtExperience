@@ -7,7 +7,7 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
-Page {
+SystemPage {
     id: page
 
     property int containerUii: -1
@@ -82,5 +82,13 @@ Page {
                 }
             }
         }
+    }
+
+    function systemsButtonClicked() {
+        Stack.backToMultimedia()
+    }
+
+    function systemPageClosed() {
+        Stack.backToMultimedia()
     }
 }

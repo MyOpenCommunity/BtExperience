@@ -7,7 +7,7 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
-Page {
+SystemPage {
     id: page
 
     source: "images/multimedia.jpg"
@@ -102,5 +102,13 @@ Page {
                 }
             }
         }
+    }
+
+    function systemsButtonClicked() {
+        Stack.backToMultimedia()
+    }
+
+    function systemPageClosed() {
+        Stack.backToMultimedia()
     }
 }
