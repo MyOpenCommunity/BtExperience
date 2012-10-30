@@ -5,7 +5,7 @@ import Components.Weather 1.0
 import "js/Stack.js" as Stack
 
 
-SystemPage {
+Page {
     id: page
 
     property int controlWidth: 300
@@ -155,11 +155,7 @@ SystemPage {
         }
     ]
 
-    function systemsButtonClicked() {
-        Stack.backToMultimedia()
-    }
-
-    function systemPageClosed() {
+    function backButtonClicked() {
         Stack.backToMultimedia()
     }
 }

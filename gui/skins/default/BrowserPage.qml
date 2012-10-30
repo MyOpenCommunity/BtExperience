@@ -7,7 +7,7 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
-SystemPage {
+Page {
     id: page
 
     property int containerUii: -1
@@ -24,18 +24,30 @@ SystemPage {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    PaginatorOnBackground {
-        id: paginator
+    SvgImage {
+        id: bg
 
-        elementsOnPage: 8
-        buttonVisible: false
+        source: "images/common/bg_browse.svg"
         anchors {
             top: toolbar.bottom
             topMargin: 50
             left: navigationBar.right
             leftMargin: 30
         }
+    }
+
+    PaginatorOnBackground {
+        id: paginator
+
+        elementsOnPage: 8
+        buttonVisible: false
         model: objectLinksModel
+        anchors {
+            top: toolbar.bottom
+            topMargin: 50
+            left: navigationBar.right
+            leftMargin: 40
+        }
 
         delegate: Item {
             property variant itemObject: objectLinksModel.getObject(index)
@@ -84,11 +96,7 @@ SystemPage {
         }
     }
 
-    function systemsButtonClicked() {
-        Stack.backToMultimedia()
-    }
-
-    function systemPageClosed() {
+    function backButtonClicked() {
         Stack.backToMultimedia()
     }
 }
