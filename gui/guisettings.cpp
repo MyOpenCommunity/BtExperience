@@ -101,8 +101,13 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	if (language_string == "it")
 		language = Italian;
+	else if (language_string == "fr")
+		language = French;
 	else
+	{
+		qWarning() << "Unknown language in conf, default to en";
 		language = English;
+	}
 
 	parseSettings();
 }
@@ -184,6 +189,8 @@ QString GuiSettings::getLanguageString() const
 		return QString("en");
 	case Italian:
 		return QString("it");
+	case French:
+		return QString("fr");
 	default:
 		return QString("it");
 	}

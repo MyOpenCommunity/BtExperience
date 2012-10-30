@@ -161,7 +161,8 @@ public:
 	enum Language
 	{
 		English,
-		Italian
+		Italian,
+		French
 	};
 
 	enum Skin
