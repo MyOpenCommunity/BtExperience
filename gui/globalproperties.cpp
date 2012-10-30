@@ -11,6 +11,7 @@
 #include "configfile.h"
 #include "devices_cache.h"
 #include "xmlobject.h"
+#include "hwkeys.h"
 #include <logger.h>
 
 #include <QTimer>
@@ -113,6 +114,7 @@ GlobalProperties::GlobalProperties(logger *log)
 	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", new MultiMediaPlayer(this), audio_state, this);
 	debug_touchscreen = false;
 	debug_timing = 0;
+	hardware_keys = new HwKeys(this);
 
 	setMonitorEnabled(1);
 	updateTime();
@@ -309,6 +311,10 @@ DebugTiming *GlobalProperties::getDebugTiming()
 	return debug_timing;
 }
 
+HwKeys *GlobalProperties::getHardwareKeys() const
+{
+	return hardware_keys;
+}
 
 int GlobalProperties::getMainWidth() const
 {

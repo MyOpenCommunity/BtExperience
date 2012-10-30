@@ -18,6 +18,7 @@ class SoundPlayer;
 class RingtoneManager;
 class ConfigFile;
 class DebugTiming;
+class HwKeys;
 class logger;
 
 #ifdef BT_MALIIT
@@ -69,6 +70,9 @@ class GlobalProperties : public QObject
 	// A property to turn off/on the monitor from QML
 	Q_PROPERTY(bool monitorOff READ isMonitorOff WRITE setMonitorOff NOTIFY monitorOffChanged)
 
+	// Hardware key handler
+	Q_PROPERTY(HwKeys *hardwareKeys READ getHardwareKeys CONSTANT)
+
 	// Debug touchscreen events
 	Q_PROPERTY(bool debugTs READ getDebugTs CONSTANT)
 
@@ -94,6 +98,7 @@ public:
 	void setMonitorOff(bool newValue);
 	bool getDebugTs();
 	DebugTiming *getDebugTiming();
+	HwKeys *getHardwareKeys() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE void takeScreenshot(QRect rect, QString filename);
@@ -151,6 +156,7 @@ private:
 	bool monitor_off;
 	bool debug_touchscreen;
 	DebugTiming *debug_timing;
+	HwKeys *hardware_keys;
 	QPoint mouse_position;
 
 #ifdef BT_MALIIT
