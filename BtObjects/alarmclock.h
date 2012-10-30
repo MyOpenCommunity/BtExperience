@@ -15,7 +15,7 @@ class SourceObject;
 
 
 QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node);
-void updateAlarmClocks(QDomNode node, AlarmClock *alarmClock);
+void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock);
 
 
 /*!
@@ -99,17 +99,17 @@ public:
 	Q_INVOKABLE bool isAmplifierEnabled(Amplifier *amplifier) const;
 
 	QString getDescription() const { return description; }
-	void setDescription(QString newValue);
+	void setDescription(QString new_value);
 	bool isEnabled() const { return enabled; }
-	void setEnabled(bool newValue);
+	void setEnabled(bool new_value);
 	AlarmClockType getAlarmType() const { return alarm_type; }
-	void setAlarmType(AlarmClockType newValue);
+	void setAlarmType(AlarmClockType new_value);
 	int getDays() const { return days; }
-	void setDays(int newValue);
+	void setDays(int new_value);
 	int getHour() const { return hour; }
-	void setHour(int newValue);
+	void setHour(int new_value);
 	int getMinute() const { return minute; }
-	void setMinute(int newValue);
+	void setMinute(int new_value);
 	bool isTriggerOnMondays() const;
 	bool isTriggerOnTuesdays() const;
 	bool isTriggerOnWednesdays() const;
@@ -117,13 +117,13 @@ public:
 	bool isTriggerOnFridays() const;
 	bool isTriggerOnSaturdays() const;
 	bool isTriggerOnSundays() const;
-	void setTriggerOnMondays(bool newValue);
-	void setTriggerOnTuesdays(bool newValue);
-	void setTriggerOnWednesdays(bool newValue);
-	void setTriggerOnThursdays(bool newValue);
-	void setTriggerOnFridays(bool newValue);
-	void setTriggerOnSaturdays(bool newValue);
-	void setTriggerOnSundays(bool newValue);
+	void setTriggerOnMondays(bool new_value);
+	void setTriggerOnTuesdays(bool new_value);
+	void setTriggerOnWednesdays(bool new_value);
+	void setTriggerOnThursdays(bool new_value);
+	void setTriggerOnFridays(bool new_value);
+	void setTriggerOnSaturdays(bool new_value);
+	void setTriggerOnSundays(bool new_value);
 	void setSource(SourceObject *source);
 	SourceObject *getSource() const;
 	void setVolume(int volume);
@@ -140,7 +140,7 @@ signals:
 	void enabledChanged();
 	void hourChanged();
 	void minuteChanged();
-	void ringMe(AlarmClock *alarmClock);
+	void ringMe(AlarmClock *alarm_clock);
 	void triggerOnMondaysChanged();
 	void triggerOnTuesdaysChanged();
 	void triggerOnWednesdaysChanged();
@@ -158,7 +158,7 @@ private slots:
 
 private:
 	void start();
-	void setTriggerOnWeekdays(bool newValue, int dayMask);
+	void setTriggerOnWeekdays(bool new_value, int day_mask);
 	void soundDiffusionStop();
 	void soundDiffusionSetVolume();
 
