@@ -227,6 +227,10 @@ QStringList MountWatcher::parseMounts() const
 		// the "/" is necessary in case /mnt is mounted using tmpfs
 		if (!parts[1].startsWith(MOUNT_PATH "/") || !parts[0].startsWith("/"))
 			continue;
+#if !defined(BT_HARDWARE_X11)
+		if (parts[1] != "/media/sda1" && parts[1] != "/media/mmcblk0p1")
+			continue;
+#endif
 		dirs.append(parts[1]);
 	}
 
