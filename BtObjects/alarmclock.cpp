@@ -193,9 +193,6 @@ void AlarmClock::start()
 
 void AlarmClock::stop()
 {
-	// TODO stops alarm if ringing
-	qDebug() << __PRETTY_FUNCTION__;
-	qDebug() << "+++++++++++++++++++++++++++++++++++++++++++++++ Alarm stopped";
 	tick->stop();
 }
 
