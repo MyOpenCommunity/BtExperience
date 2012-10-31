@@ -257,12 +257,20 @@ Item {
         id: clocksConnection
         target: null
         onRingAlarmClock: {
-            global.ringtoneManager.playRingtone(global.extraPath + "10/alarm.wav", AudioState.Ringtone)
+            global.ringtoneManager.playRingtoneAndKeepState(global.extraPath + "10/alarm.wav", AudioState.Ringtone)
+        }
+        onAlarmStarted: {
             if (Stack.isPageChanging(changePageDone)) {
                 Script.delayedNotifications.push({"type": Script.ALARM_CLOCK_TRIGGERING, "data": alarmClock})
             }
             else
                 privateProps.alarmClockTriggering(alarmClock)
+        }
+        onBeepAlarmActiveChanged: {
+            if (clocksConnection.target.beepAlarmActive)
+                global.audioState.enableState(AudioState.Ringtone)
+            else
+                global.audioState.disableState(AudioState.Ringtone)
         }
     }
 
