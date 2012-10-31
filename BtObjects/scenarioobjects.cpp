@@ -332,9 +332,9 @@ QString ActionObject::getTarget() const
 QString ActionObject::getDescription() const
 {
 	if (id_to_descr.contains(command_id))
-		return id_to_descr[command_id];
+		return trUtf8(id_to_descr[command_id].toUtf8());
 
-	return id_to_descr[-1]; // contains the default
+	return trUtf8(id_to_descr[-1].toUtf8()); // contains the default
 }
 
 void ActionObject::buildDescriptionMap()
@@ -345,166 +345,166 @@ void ActionObject::buildDescriptionMap()
 	case ActionFan:
 	case ActionWatering:
 	case ActionControlledSocket:
-		id_to_descr[0] = tr("OFF");
-		id_to_descr[1] = tr("ON");
+		id_to_descr[0] = QT_TR_NOOP("OFF");
+		id_to_descr[1] = QT_TR_NOOP("ON");
 		id_to_descr[-1] = id_to_descr[0];
 		break;
 
 	case ActionDimmer:
-		id_to_descr[0] = tr("OFF");
-		id_to_descr[1] = tr("ON");
-		id_to_descr[2] = tr("20%");
-		id_to_descr[3] = tr("30%");
-		id_to_descr[4] = tr("40%");
-		id_to_descr[5] = tr("50%");
-		id_to_descr[6] = tr("60%");
-		id_to_descr[7] = tr("70%");
-		id_to_descr[8] = tr("80%");
-		id_to_descr[9] = tr("90%");
-		id_to_descr[10] = tr("100%");
+		id_to_descr[0] = QT_TR_NOOP("OFF");
+		id_to_descr[1] = QT_TR_NOOP("ON");
+		id_to_descr[2] = QT_TR_NOOP("20%");
+		id_to_descr[3] = QT_TR_NOOP("30%");
+		id_to_descr[4] = QT_TR_NOOP("40%");
+		id_to_descr[5] = QT_TR_NOOP("50%");
+		id_to_descr[6] = QT_TR_NOOP("60%");
+		id_to_descr[7] = QT_TR_NOOP("70%");
+		id_to_descr[8] = QT_TR_NOOP("80%");
+		id_to_descr[9] = QT_TR_NOOP("90%");
+		id_to_descr[10] = QT_TR_NOOP("100%");
 		id_to_descr[-1] = id_to_descr[0];
 		break;
 
 	case ActionTimedLights:
-		id_to_descr[11] = tr("1 min.");
-		id_to_descr[12] = tr("2 min.");
-		id_to_descr[13] = tr("3 min.");
-		id_to_descr[15] = tr("4 min.");
-		id_to_descr[16] = tr("5 min.");
-		id_to_descr[17] = tr("15 min.");
+		id_to_descr[11] = QT_TR_NOOP("1 min.");
+		id_to_descr[12] = QT_TR_NOOP("2 min.");
+		id_to_descr[13] = QT_TR_NOOP("3 min.");
+		id_to_descr[15] = QT_TR_NOOP("4 min.");
+		id_to_descr[16] = QT_TR_NOOP("5 min.");
+		id_to_descr[17] = QT_TR_NOOP("15 min.");
 		id_to_descr[-1] = id_to_descr[11];
 		break;
 
 	case ActionDimmer100:
-		id_to_descr[18] = tr("OFF");
-		id_to_descr[19] = tr("ON");
-		id_to_descr[20] = tr("Level");
+		id_to_descr[18] = QT_TR_NOOP("OFF");
+		id_to_descr[19] = QT_TR_NOOP("ON");
+		id_to_descr[20] = QT_TR_NOOP("Level");
 		id_to_descr[-1] = id_to_descr[18];
 		break;
 
 	case ActionShutter:
 	case ActionTilting:
-		id_to_descr[21] = tr("Up");
-		id_to_descr[22] = tr("Down");
-		id_to_descr[23] = tr("Stop");
+		id_to_descr[21] = QT_TR_NOOP("Up");
+		id_to_descr[22] = QT_TR_NOOP("Down");
+		id_to_descr[23] = QT_TR_NOOP("Stop");
 		id_to_descr[-1] = id_to_descr[21];
 		break;
 
 	case ActionCurtain:
 	case ActionAutomationGate:
-		id_to_descr[21] = tr("Open");
-		id_to_descr[22] = tr("Close");
-		id_to_descr[23] = tr("Stop");
+		id_to_descr[21] = QT_TR_NOOP("Open");
+		id_to_descr[22] = QT_TR_NOOP("Close");
+		id_to_descr[23] = QT_TR_NOOP("Stop");
 		id_to_descr[-1] = id_to_descr[21];
 		break;
 
 	case ActionLightinGate:
-		id_to_descr[1] = tr("On 1 sec.");
-		id_to_descr[2] = tr("On 2 sec.");
+		id_to_descr[1] = QT_TR_NOOP("On 1 sec.");
+		id_to_descr[2] = QT_TR_NOOP("On 2 sec.");
 		id_to_descr[-1] = id_to_descr[1];
 		break;
 
 	case ActionVideoDoorEntryGate:
 	case ActionVideoDoorEntryLock:
-		id_to_descr[24] = tr("ON");
+		id_to_descr[24] = QT_TR_NOOP("ON");
 		id_to_descr[-1] = id_to_descr[24];
 		break;
 
 	case ActionAutomationDoorLock:
-		id_to_descr[90] = tr("ON");
+		id_to_descr[90] = QT_TR_NOOP("ON");
 		id_to_descr[-1] = id_to_descr[90];
 		break;
 
 	case ActionScenarioUnit:
-		id_to_descr[25] = tr("Scenario 1.4");
+		id_to_descr[25] = QT_TR_NOOP("Scenario 1.4");
 		id_to_descr[-1] = id_to_descr[25];
 		break;
 
 	case ActionScenarioModule:
-		id_to_descr[25] = tr("Scenario 1.16");
+		id_to_descr[25] = QT_TR_NOOP("Scenario 1.16");
 		id_to_descr[-1] = id_to_descr[25];
 		break;
 
 	case ActionControlUnit3550:
-		id_to_descr[26] = tr("Antifreeze/thermal protection");
-		id_to_descr[27] = tr("OFF");
-		id_to_descr[28] = tr("Manual Temperature");
-		id_to_descr[29] = tr("Heating scenario");
-		id_to_descr[45] = tr("Air-conditioning scenario");
-		id_to_descr[61] = tr("Heating Program");
-		id_to_descr[64] = tr("Air-conditioning program");
-		id_to_descr[67] = tr("Last program");
-		id_to_descr[86] = tr("Set the air conditioning mode");
-		id_to_descr[87] = tr("Set the heating mode");
-		id_to_descr[88] = tr("Last scenario");
+		id_to_descr[26] = QT_TR_NOOP("Antifreeze/thermal protection");
+		id_to_descr[27] = QT_TR_NOOP("OFF");
+		id_to_descr[28] = QT_TR_NOOP("Manual Temperature");
+		id_to_descr[29] = QT_TR_NOOP("Heating scenario");
+		id_to_descr[45] = QT_TR_NOOP("Air-conditioning scenario");
+		id_to_descr[61] = QT_TR_NOOP("Heating Program");
+		id_to_descr[64] = QT_TR_NOOP("Air-conditioning program");
+		id_to_descr[67] = QT_TR_NOOP("Last program");
+		id_to_descr[86] = QT_TR_NOOP("Set the air conditioning mode");
+		id_to_descr[87] = QT_TR_NOOP("Set the heating mode");
+		id_to_descr[88] = QT_TR_NOOP("Last scenario");
 		id_to_descr[-1] = id_to_descr[27];
 		break;
 
 	case ActionZone3550:
-		id_to_descr[26] = tr("Antifreeze/thermal protection");
-		id_to_descr[27] = tr("OFF");
-		id_to_descr[28] = tr("Manual Temperature");
-		id_to_descr[68] = tr("Automatic");
+		id_to_descr[26] = QT_TR_NOOP("Antifreeze/thermal protection");
+		id_to_descr[27] = QT_TR_NOOP("OFF");
+		id_to_descr[28] = QT_TR_NOOP("Manual Temperature");
+		id_to_descr[68] = QT_TR_NOOP("Automatic");
 		id_to_descr[-1] = id_to_descr[27];
 		break;
 
 	case ActionAmplifier:
-		id_to_descr[70] = tr("OFF");
-		id_to_descr[71] = tr("ON");
-		id_to_descr[72] = tr("Volume");
+		id_to_descr[70] = QT_TR_NOOP("OFF");
+		id_to_descr[71] = QT_TR_NOOP("ON");
+		id_to_descr[72] = QT_TR_NOOP("Volume");
 		id_to_descr[-1] = id_to_descr[70];
 		break;
 
 	case ActionControlUnit4695:
-		id_to_descr[73] = tr("Antifreeze/thermal protection");
-		id_to_descr[74] = tr("OFF");
-		id_to_descr[75] = tr("Manual Temperature");
-		id_to_descr[76] = tr("Timed manual Temperature");
-		id_to_descr[77] = tr("Heating Program");
-		id_to_descr[80] = tr("Air-conditioning program");
-		id_to_descr[83] = tr("Last program");
-		id_to_descr[84] = tr("Set the air conditioning mode");
-		id_to_descr[85] = tr("Set the heating mode");
+		id_to_descr[73] = QT_TR_NOOP("Antifreeze/thermal protection");
+		id_to_descr[74] = QT_TR_NOOP("OFF");
+		id_to_descr[75] = QT_TR_NOOP("Manual Temperature");
+		id_to_descr[76] = QT_TR_NOOP("Timed manual Temperature");
+		id_to_descr[77] = QT_TR_NOOP("Heating Program");
+		id_to_descr[80] = QT_TR_NOOP("Air-conditioning program");
+		id_to_descr[83] = QT_TR_NOOP("Last program");
+		id_to_descr[84] = QT_TR_NOOP("Set the air conditioning mode");
+		id_to_descr[85] = QT_TR_NOOP("Set the heating mode");
 		id_to_descr[-1] = id_to_descr[74];
 		break;
 
 	case ActionZone3550Fan:
-		id_to_descr[26] = tr("Antifreeze/thermal protection");
-		id_to_descr[27] = tr("OFF");
-		id_to_descr[28] = tr("Manual Temperature");
-		id_to_descr[68] = tr("Automatic");
-		id_to_descr[89] = tr("Set the fan-coil speed");
+		id_to_descr[26] = QT_TR_NOOP("Antifreeze/thermal protection");
+		id_to_descr[27] = QT_TR_NOOP("OFF");
+		id_to_descr[28] = QT_TR_NOOP("Manual Temperature");
+		id_to_descr[68] = QT_TR_NOOP("Automatic");
+		id_to_descr[89] = QT_TR_NOOP("Set the fan-coil speed");
 		id_to_descr[-1] = id_to_descr[27];
 		break;
 
 	case ActionCen:
-		id_to_descr[94] = tr("Start pressure button");
-		id_to_descr[95] = tr("Short pressure button");
-		id_to_descr[96] = tr("Release after extended pressure button");
-		id_to_descr[97] = tr("Extended pressure button");
+		id_to_descr[94] = QT_TR_NOOP("Start pressure button");
+		id_to_descr[95] = QT_TR_NOOP("Short pressure button");
+		id_to_descr[96] = QT_TR_NOOP("Release after extended pressure button");
+		id_to_descr[97] = QT_TR_NOOP("Extended pressure button");
 		id_to_descr[-1] = id_to_descr[94];
 		break;
 
 	case ActionCenPlus:
-		id_to_descr[98] = tr("Short pressure button");
-		id_to_descr[99] = tr("Start pressure button");
-		id_to_descr[100] = tr("Release after extended pressure button");
-		id_to_descr[101] = tr("Extended pressure button");
+		id_to_descr[98] = QT_TR_NOOP("Short pressure button");
+		id_to_descr[99] = QT_TR_NOOP("Start pressure button");
+		id_to_descr[100] = QT_TR_NOOP("Release after extended pressure button");
+		id_to_descr[101] = QT_TR_NOOP("Extended pressure button");
 		id_to_descr[-1] = id_to_descr[98];
 		break;
 
 	case ActionScenarioPlus:
-		id_to_descr[102] = tr("Activate Scenarios");
-		id_to_descr[103] = tr("Scenario OFF");
-		id_to_descr[104] = tr("Increase level");
-		id_to_descr[105] = tr("Decrease level");
-		id_to_descr[106] = tr("Stop");
+		id_to_descr[102] = QT_TR_NOOP("Activate Scenarios");
+		id_to_descr[103] = QT_TR_NOOP("Scenario OFF");
+		id_to_descr[104] = QT_TR_NOOP("Increase level");
+		id_to_descr[105] = QT_TR_NOOP("Decrease level");
+		id_to_descr[106] = QT_TR_NOOP("Stop");
 		id_to_descr[-1] = id_to_descr[103];
 		break;
 
 	case ActionAux:
-		id_to_descr[109] = tr("OFF");
-		id_to_descr[110] = tr("ON");
+		id_to_descr[109] = QT_TR_NOOP("OFF");
+		id_to_descr[110] = QT_TR_NOOP("ON");
 		id_to_descr[-1] = id_to_descr[109];
 		break;
 

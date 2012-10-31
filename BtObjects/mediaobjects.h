@@ -685,7 +685,7 @@ public:
 
 	virtual int getObjectId() const { return preset_number; }
 
-	virtual QString getName() const { return preset_name; }
+	virtual QString getName() const;
 
 private:
 	int preset_number;
@@ -816,8 +816,6 @@ private:
 	ObjectDataModel presets;
 	int bass, treble, balance, preset;
 	bool loud;
-
-	static const char *standard_presets[];
 };
 
 #endif // MEDIAOBJECTS_H
