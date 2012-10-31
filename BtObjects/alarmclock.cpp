@@ -189,11 +189,13 @@ void AlarmClock::start()
 		tick->setInterval(SOUND_DIFFUSION_INTERVAL);
 	}
 	tick->start();
+	emit ringingChanged();
 }
 
 void AlarmClock::stop()
 {
 	tick->stop();
+	emit ringingChanged();
 }
 
 void AlarmClock::postpone()
@@ -347,7 +349,7 @@ void AlarmClock::alarmTick()
 	if (alarm_type == AlarmClockBeep)
 	{
 		if (tick_count == MAX_BEEP_TICK)
-			tick->stop();
+			stop();
 		else
 			emit ringMe(this);
 	}
@@ -376,7 +378,7 @@ void AlarmClock::alarmTick()
 		if (tick_count == MAX_SOUND_DIFFUSION_TICK)
 		{
 			soundDiffusionStop();
-			tick->stop();
+			stop();
 		}
 		else
 			soundDiffusionSetVolume();
@@ -443,4 +445,9 @@ void AlarmClock::setVolume(int _volume)
 int AlarmClock::getVolume() const
 {
 	return volume;
+}
+
+bool AlarmClock::isRinging() const
+{
+	return tick->isActive();
 }

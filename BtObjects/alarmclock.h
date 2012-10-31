@@ -37,6 +37,11 @@ class AlarmClock : public ObjectInterface
 	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
 
 	/*!
+		\brief Is the alarm clock ringing?
+	*/
+	Q_PROPERTY(bool ringing READ isRinging NOTIFY ringingChanged)
+
+	/*!
 		\brief The alarm clock type
 	*/
 	Q_PROPERTY(AlarmClockType alarmType READ getAlarmType WRITE setAlarmType NOTIFY alarmTypeChanged)
@@ -127,6 +132,7 @@ public:
 	SourceObject *getSource() const;
 	void setVolume(int volume);
 	int getVolume() const;
+	bool isRinging() const;
 
 	static void addSource(SourceObject *source);
 	static void addAmplifier(Amplifier *amplifier);
@@ -149,6 +155,7 @@ signals:
 	void triggerOnSundaysChanged();
 	void sourceChanged();
 	void volumeChanged();
+	void ringingChanged();
 
 private slots:
 	void checkRequestManagement();
