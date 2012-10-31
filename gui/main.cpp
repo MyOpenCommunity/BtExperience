@@ -176,7 +176,7 @@ public:
 
 	void boot()
 	{
-		setLanguage(global->getGuiSettings()->getLanguageString());
+		setLanguage(global->getGuiSettings()->getLanguage());
 //		setSkin(global->getGuiSettings()->getSkinString());
 
 		viewer = new QmlApplicationViewer;

@@ -38,7 +38,7 @@ class GuiSettings : public QObject
 	/*!
 		\brief Sets or gets the language for the interface.
 	*/
-	Q_PROPERTY(Language language READ getLanguage WRITE setLanguage NOTIFY languageChanged)
+	Q_PROPERTY(QString language READ getLanguage WRITE setLanguage NOTIFY languageChanged)
 
 	/*!
 		\brief Sets or gets the skin for the interface.
@@ -138,7 +138,6 @@ class GuiSettings : public QObject
 	Q_PROPERTY(bool scenarioRecordingAlert READ getScenarioRecordingAlert WRITE setScenarioRecordingAlert NOTIFY scenarioRecordingAlertChanged)
 
 	Q_ENUMS(Currency)
-	Q_ENUMS(Language)
 	Q_ENUMS(MeasurementSystem)
 	Q_ENUMS(NumberSeparators)
 	Q_ENUMS(TemperatureUnit)
@@ -156,13 +155,6 @@ public:
 		GBP,
 		JPY,
 		USD
-	};
-
-	enum Language
-	{
-		English,
-		Italian,
-		French
 	};
 
 	enum Skin
@@ -221,8 +213,8 @@ public:
 	void setFormat(TimeFormat f);
 	QString getKeyboardLayout() const;
 	void setKeyboardLayout(QString l);
-	Language getLanguage() const;
-	void setLanguage(Language l);
+	QString getLanguage() const;
+	void setLanguage(QString l);
 	MeasurementSystem getMeasurementSystem() const;
 	void setMeasurementSystem(MeasurementSystem m);
 	NumberSeparators getNumberSeparators() const;
@@ -262,7 +254,6 @@ public:
 	bool getScenarioRecordingAlert() const;
 	void setScenarioRecordingAlert(bool enable);
 
-	QString getLanguageString() const;
 	QString getSkinString() const;
 
 signals:
@@ -302,7 +293,7 @@ private:
 	int contrast;
 	Currency currency;
 	QString keyboardLayout;
-	Language language;
+	QString language;
 	MeasurementSystem measurementSystem;
 	NumberSeparators numberSeparators;
 	TemperatureUnit temperatureUnit;

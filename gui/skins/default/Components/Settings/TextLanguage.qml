@@ -6,7 +6,7 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    signal textLanguageChanged(int config)
+    signal textLanguageChanged(string config)
 
     width: 212
     height: Math.max(1, 50 * view.count)
@@ -22,8 +22,9 @@ MenuColumn {
             id: modelList
             Component.onCompleted: {
                 var l = [
-                            GuiSettings.Italian,
-                            GuiSettings.English,
+                            "it",
+                            "en",
+                            "fr",
                         ]
                 for (var i = 0; i < l.length; i++)
                     append({

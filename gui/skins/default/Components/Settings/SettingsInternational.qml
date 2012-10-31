@@ -38,6 +38,7 @@ MenuColumn {
     }
 
     function alertOkClicked() {
+        console.log(privateProps.language)
         textLanguageItem.description = pageObject.names.get('LANGUAGE', privateProps.language);
         global.guiSettings.language = privateProps.language
         global.reboot()
@@ -54,7 +55,7 @@ MenuColumn {
         //  4 -> unit system
         //  5 -> currency
         //  6 -> number separators
-        property int language: -1
+        property string language: ''
     }
 
     onChildDestroyed: privateProps.currentIndex = -1
@@ -135,7 +136,7 @@ MenuColumn {
         MenuItem {
             id: keyboardLanguageItem
             name: qsTr("keyboard language")
-            description: pageObject.names.get('LANGUAGE', 0)
+            description: pageObject.names.get('LANGUAGE', "it")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {

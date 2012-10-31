@@ -96,18 +96,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 	player_alert = false;
 	message_alert = false;
 	scenario_recording_alert = false;
-
-	QString language_string = getConfValue(conf, "generale/language");
-
-	if (language_string == "it")
-		language = Italian;
-	else if (language_string == "fr")
-		language = French;
-	else
-	{
-		qWarning() << "Unknown language in conf, default to en";
-		language = English;
-	}
+	language = getConfValue(conf, "generale/language");
 
 	parseSettings();
 }
@@ -179,21 +168,6 @@ void GuiSettings::sendCommand(const QString &cmd)
 	// TODO: add error check
 	qDebug() << QString("GuiSettings::sendCommand(%1)").arg(cmd);
 	system(qPrintable(cmd));
-}
-
-QString GuiSettings::getLanguageString() const
-{
-	switch(language)
-	{
-	case English:
-		return QString("en");
-	case Italian:
-		return QString("it");
-	case French:
-		return QString("fr");
-	default:
-		return QString("it");
-	}
 }
 
 QString GuiSettings::getSkinString() const
@@ -289,19 +263,19 @@ void GuiSettings::setKeyboardLayout(QString l)
 	setConfValue("generale/keyboard_lang", l);
 }
 
-GuiSettings::Language GuiSettings::getLanguage() const
+QString GuiSettings::getLanguage() const
 {
 	return language;
 }
 
-void GuiSettings::setLanguage(Language l)
+void GuiSettings::setLanguage(QString l)
 {
 	if (language == l)
 		return;
 
 	language = l;
 	emit languageChanged();
-	setConfValue("generale/language", getLanguageString());
+	setConfValue("generale/language", language);
 }
 
 GuiSettings::Skin GuiSettings::getSkin() const

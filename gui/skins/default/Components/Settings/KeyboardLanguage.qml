@@ -23,8 +23,9 @@ MenuColumn {
             Component.onCompleted: {
                 // TODO use keyboard layout data
                 var l = [
-                            GuiSettings.Italian,
-                            GuiSettings.English,
+                            "it",
+                            "en",
+                            "fr",
                         ]
                 for (var i = 0; i < l.length; i++)
                     append({
