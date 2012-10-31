@@ -373,9 +373,14 @@ Item {
         }
 
         function updateTimerInterval() {
+            monthlyReportTimer.stop()
             var n = new Date()
-            var n2 = new Date(n.getFullYear(), n.getMonth() + 1, 0)
-            monthlyReportTimer.interval = n2.getTime() - n.getTime()
+            var n2 = new Date(n.getFullYear(), n.getMonth() + 1, 1)
+            var delta = n2.getTime() - n.getTime()
+            if (delta <= 0)
+                n2 = new Date(n.getFullYear(), n.getMonth() + 2, 1)
+            delta = n2.getTime() - n.getTime()
+            monthlyReportTimer.interval = delta
         }
 
         // this is needed to manage the activation of the monitor;
