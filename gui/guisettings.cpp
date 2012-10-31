@@ -7,6 +7,10 @@
 #include <QDateTime>
 #include <QDate>
 #include <QTime>
+#include <QCoreApplication>
+#include <QFileInfo>
+#include <QDir>
+#include <QTranslator>
 
 #include <limits>
 
@@ -62,6 +66,38 @@ namespace
 		}
 		return result;
 	}
+
+	// Sets a language on the GUI; the GUI must be restarted for changes to have effect
+	void setLanguageTranslator(QString language)
+	{
+		// language must be in the form it, en, ...
+		static QTranslator *actual_translator = 0;
+		// removes actual translation
+		if (actual_translator)
+		{
+			QCoreApplication::instance()->removeTranslator(actual_translator);
+			actual_translator = 0;
+		}
+		// computes new translation file name
+		QFileInfo path = qApp->applicationDirPath();
+
+	#ifdef Q_WS_MAC
+		path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
+	#endif
+
+		QString lf = QFileInfo(QDir(path.canonicalFilePath()),
+			QString("gui/locale/bt_experience_%1").arg(language.toAscii().constData())).absoluteFilePath();
+
+		// tries to install new translation
+		actual_translator = new QTranslator();
+		if (actual_translator->load(lf))
+			QCoreApplication::instance()->installTranslator(actual_translator);
+		else
+		{
+			actual_translator = 0;
+			qWarning() << "File " << lf << " not found for language " << language;
+		}
+	}
 }
 
 
@@ -98,6 +134,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 	scenario_recording_alert = false;
 	language = getConfValue(conf, "generale/language");
 
+	setLanguageTranslator(language);
 	parseSettings();
 }
 
@@ -276,6 +313,7 @@ void GuiSettings::setLanguage(QString l)
 	language = l;
 	emit languageChanged();
 	setConfValue("generale/language", language);
+	setLanguageTranslator(language);
 }
 
 GuiSettings::Skin GuiSettings::getSkin() const

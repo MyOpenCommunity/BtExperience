@@ -107,38 +107,6 @@ void setupOpenGL(QDeclarativeView *v)
 #endif
 
 
-// Sets a language on the GUI; the GUI must be restarted for changes to have effect
-void setLanguage(QString language)
-{
-	// language must be in the form it, en, ...
-	static QTranslator *actual_translator = 0;
-	// removes actual translation
-	if (actual_translator)
-	{
-		QCoreApplication::instance()->removeTranslator(actual_translator);
-		actual_translator = 0;
-	}
-	// computes new translation file name
-	QFileInfo path = qApp->applicationDirPath();
-
-#ifdef Q_WS_MAC
-	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
-#endif
-
-	QString lf = QFileInfo(QDir(path.canonicalFilePath()),
-		QString("gui/locale/bt_experience_%1").arg(language.toAscii().constData())).absoluteFilePath();
-
-	// tries to install new translation
-	actual_translator = new QTranslator();
-	if (actual_translator->load(lf))
-		QCoreApplication::instance()->installTranslator(actual_translator);
-	else
-	{
-		actual_translator = 0;
-		qWarning() << "File " << lf << " not found for language " << language;
-	}
-}
-
 // Manage the boot (or reboot) of the gui part
 class BootManager : public QObject
 {
@@ -161,8 +129,6 @@ public:
 
 	void boot()
 	{
-		setLanguage(global->getGuiSettings()->getLanguage());
-
 		viewer = new QmlApplicationViewer;
 	#if USE_OPENGL
 		setupOpenGL(viewer);
