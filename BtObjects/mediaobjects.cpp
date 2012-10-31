@@ -628,6 +628,14 @@ SourceMultiMedia::SourceMultiMedia(VirtualSourceDevice *d) :
 {
 	dev = d;
 	player = new AudioVideoPlayer(this);
+
+	MultiMediaPlayer *p = static_cast<MultiMediaPlayer *>(player->getMediaPlayer());
+
+#if defined(BT_HARDWARE_X11)
+	p->setCommandLineArguments(QStringList(), QStringList());
+#else
+	p->setCommandLineArguments(QStringList() << "-ao" << "alsa:device=plughw=0.1", QStringList());
+#endif
 }
 
 AudioVideoPlayer *SourceMultiMedia::getAudioVideoPlayer() const
