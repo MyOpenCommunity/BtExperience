@@ -45,7 +45,9 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     }
 
     if (itemObj) {
+        var ma = createComponent("MenuColumnMouseArea.qml", {"parent": elementsContainer, "anchors.fill": itemObj, "z": -1})
         itemObj.closeItem.connect(closeItem)
+        itemObj.destroyed.connect(ma.destroy)
         itemObj.loadComponent.connect(loadComponent)
         _addItem(itemObj, titleObj, shadowObj)
         return

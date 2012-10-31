@@ -59,6 +59,7 @@ Item {
     signal closeItem(int menuLevel)
     signal columnClicked()
     signal loadComponent(int menuLevel, variant component, string title, variant dataModel, variant properties)
+    signal destroyed()
 
     // the page where the element is placed
     property variant pageObject: undefined
@@ -98,5 +99,7 @@ Item {
     }
 
     property QtObject dataModel: null
+
+    Component.onDestruction: column.destroyed()
 }
 
