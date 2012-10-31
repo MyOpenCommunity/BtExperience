@@ -4,7 +4,6 @@
 #include "objectinterface.h"
 
 #include <QHash>
-#include <QSet>
 
 
 class MediaDataModel;
@@ -171,7 +170,7 @@ private:
 	int tick_count;
 
 	// sound diffusion alarm clock
-	QSet<Amplifier *> enabled_amplifiers;
+	QList<Amplifier *> enabled_amplifiers;
 	SourceObject *source;
 	int volume;
 

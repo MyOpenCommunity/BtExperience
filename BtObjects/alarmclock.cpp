@@ -407,9 +407,9 @@ void AlarmClock::soundDiffusionSetVolume()
 void AlarmClock::setAmplifierEnabled(Amplifier *amplifier, bool enabled)
 {
 	if (!enabled && enabled_amplifiers.contains(amplifier))
-		enabled_amplifiers.remove(amplifier);
+		enabled_amplifiers.removeOne(amplifier);
 	else if (enabled && !enabled_amplifiers.contains(amplifier))
-		enabled_amplifiers.insert(amplifier);
+		enabled_amplifiers.append(amplifier);
 }
 
 bool AlarmClock::isAmplifierEnabled(Amplifier *amplifier) const
