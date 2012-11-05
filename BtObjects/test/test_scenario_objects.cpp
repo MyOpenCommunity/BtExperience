@@ -54,6 +54,11 @@ namespace
 	}
 }
 
+void TestScenarioModule::initTestCase()
+{
+	qRegisterMetaType<ScenarioModule*>("ScenarioModule*");
+}
+
 void TestScenarioModule::init()
 {
 	ScenarioDevice *d = new ScenarioDevice("3");
