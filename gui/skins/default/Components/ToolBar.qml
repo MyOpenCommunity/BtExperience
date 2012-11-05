@@ -152,15 +152,15 @@ Item {
             visible: EventManager.eventManager.antintrusionPresent
             defaultImage: EventManager.eventManager.isAntintrusionInserted ?
                               (global.guiSettings.skin === GuiSettings.Clear ?
-                                   "../images/toolbar/icon_burlgar alarm-on.svg" :
-                                   "../images/toolbar/icon_burlgar alarm-on_p.svg") :
+                                   "../images/toolbar/icon_burlgar-alarm-on.svg" :
+                                   "../images/toolbar/icon_burlgar-alarm-on_p.svg") :
                               (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_alarm-disabled.svg" :
                                    "../images/toolbar/icon_alarm-disabled_p.svg")
             pressedImage:  EventManager.eventManager.isAntintrusionInserted ?
                                (global.guiSettings.skin === GuiSettings.Clear ?
-                                    "../images/toolbar/icon_burlgar alarm-on_p.svg" :
-                                    "../images/toolbar/icon_burlgar alarm-on.svg") :
+                                    "../images/toolbar/icon_burlgar-alarm-on_p.svg" :
+                                    "../images/toolbar/icon_burlgar-alarm-on.svg") :
                                (global.guiSettings.skin === GuiSettings.Clear ?
                                     "../images/toolbar/icon_alarm-disabled_p.svg" :
                                     "../images/toolbar/icon_alarm-disabled.svg")
