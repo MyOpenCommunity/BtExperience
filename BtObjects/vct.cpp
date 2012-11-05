@@ -8,7 +8,7 @@
 #include <QDebug>
 
 #if defined(BT_HARDWARE_X11)
-QString video_grabber_path = "ls";
+QString video_grabber_path = "/bin/cat";
 #else
 QString video_grabber_path = "/usr/local/bin/Fw-A-LcdOpenGLRenderingQt.sh";
 #endif
