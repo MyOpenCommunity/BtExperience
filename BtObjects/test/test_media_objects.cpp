@@ -171,9 +171,9 @@ void TestSourceBase::initObjects(SourceDevice *_dev, SourceBase *_obj, SourceObj
 
 void TestSourceBase::cleanup()
 {
-	delete so;
 	delete obj->dev;
 	delete obj;
+	delete so;
 	delete dev;
 }
 
