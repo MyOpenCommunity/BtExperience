@@ -78,3 +78,4 @@ SOURCES += test_main.cpp \
 	ts/definitions.cpp
 
 include(../btobjects.pri)
+include(../../config.pri)
