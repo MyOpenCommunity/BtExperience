@@ -85,6 +85,26 @@ SvgImage {
                 target: unlockedArrow
                 visible: false
             }
+        },
+        State {
+            name: "normal"
+            when: { return true }
+            PropertyChanges {
+                target: locked
+                visible: true
+            }
+            PropertyChanges {
+                target: unlocked
+                visible: false
+            }
+            PropertyChanges {
+                target: lockedArrow
+                visible: false
+            }
+            PropertyChanges {
+                target: unlockedArrow
+                visible: true
+            }
         }
     ]
 }
