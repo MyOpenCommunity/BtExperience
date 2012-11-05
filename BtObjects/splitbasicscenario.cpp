@@ -121,7 +121,7 @@ SplitBasicScenario::SplitBasicScenario(QString _name,
 	dev->setOffCommand(off_command);
 	if (!off_command.isEmpty())
 	{
-		program_list.append(new SplitBasicProgram("off", off_command.toInt()));
+		program_list.append(new SplitBasicOffProgram(off_command.toInt()));
 		actual_program = program_list.front();
 	}
 	temperature = 200;

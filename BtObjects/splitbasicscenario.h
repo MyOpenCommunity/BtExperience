@@ -43,6 +43,18 @@ private:
 };
 
 
+// This subclass exists only to have the correct translation for the "off" string
+class SplitBasicOffProgram : public SplitBasicProgram
+{
+	Q_OBJECT
+
+public:
+	SplitBasicOffProgram(int number) : SplitBasicProgram("", number) { }
+
+	virtual QString getName() const { return tr("off"); }
+};
+
+
 /*!
 	\ingroup AirConditioning
 	\brief A basic split scenario
