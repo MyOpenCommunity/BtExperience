@@ -12,18 +12,18 @@
 
 namespace
 {
-	AntintrusionAlarmSource *findAlarmSource(const ObjectDataModel &sources, int number)
+AntintrusionAlarmSource *findAlarmSource(const ObjectDataModel &sources, int number)
+{
+	for (int i = 0; i < sources.getCount(); ++i)
 	{
-		for (int i = 0; i < sources.getCount(); ++i)
-		{
-			AntintrusionAlarmSource *s = static_cast<AntintrusionAlarmSource *>(sources.getObject(i));
+		AntintrusionAlarmSource *s = static_cast<AntintrusionAlarmSource *>(sources.getObject(i));
 
-			if (s->getNumber() == number)
-				return s;
-		}
-
-		return 0;
+		if (s->getNumber() == number)
+			return s;
 	}
+
+	return 0;
+}
 }
 
 
@@ -329,7 +329,7 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 			if (!initialized)
 			{
 				initialized = true;
-				status = inserted;
+				setStatus(inserted);
 			}
 			else
 			{
@@ -345,7 +345,7 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 				{
 					if (!status)
 						alarms.clear();
-					status = inserted;
+					setStatus(inserted);
 					emit statusChanged();
 
 					if (waiting_response)
@@ -497,6 +497,15 @@ bool AntintrusionSystem::isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zo
 			return true;
 	}
 	return false;
+}
+
+void AntintrusionSystem::setStatus(bool new_value)
+{
+	if (status == new_value)
+		return;
+
+	status = new_value;
+	emit statusChanged();
 }
 
 void AntintrusionSystem::requestPartialization(const QString &password)

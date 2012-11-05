@@ -35,7 +35,7 @@
 
 namespace AntintrusionSystemNS
 {
-	const int CODE_TIMEOUT_SECS = 10;
+const int CODE_TIMEOUT_SECS = 10;
 }
 
 
@@ -364,6 +364,7 @@ private:
 	void addAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
 	void removeAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
 	bool isDuplicateAlarm(AntintrusionAlarm::AlarmType t, int zone_num);
+	void setStatus(bool new_value);
 	AntintrusionDevice *dev;
 	ObjectDataModel zones;
 	ObjectDataModel aux;
