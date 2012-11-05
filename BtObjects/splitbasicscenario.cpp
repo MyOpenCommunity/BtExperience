@@ -207,10 +207,9 @@ void SplitBasicScenario::addProgram(SplitBasicProgram *program)
 
 void SplitBasicScenario::apply()
 {
-	if (actual_program && actual_program->getName() == tr("off"))
-		dev->turnOff();
-	else
-		dev->activateScenario(QString::number(actual_program->getObjectId()));
+	// since program number is correct for all programs (including "off"), just using
+	// activateScenario() works for both normal programs and the off program
+	dev->activateScenario(QString::number(actual_program->getObjectId()));
 }
 
 int SplitBasicScenario::getTemperature() const
