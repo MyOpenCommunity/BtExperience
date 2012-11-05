@@ -48,6 +48,9 @@ void TestVideoDoorEntry::init()
 
 void TestVideoDoorEntry::cleanup()
 {
+	cctv->video_grabber.terminate();
+	cctv->video_grabber.waitForFinished(300);
+
 	delete intercom->dev;
 	delete intercom;
 	delete cctv->dev;
