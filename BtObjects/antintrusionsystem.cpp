@@ -123,6 +123,10 @@ AntintrusionSystem *createAntintrusionSystem(QList<AntintrusionZone *> zones, QL
 {
 	AntintrusionDevice *dev = bt_global::add_device_to_cache(new AntintrusionDevice);
 	AntintrusionSystem *system = new AntintrusionSystem(dev, scenarios, aux, zones);
+	// this is needed to have toolbar icon notifications since startup
+	// this is needed to request zone status since the antintrusion object is
+	// never inserted into a container
+	system->enableObject();
 
 	return system;
 }
