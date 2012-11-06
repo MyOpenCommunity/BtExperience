@@ -33,6 +33,11 @@ void TestStopAndGo::initObjects(StopAndGoDevice *_dev, StopAndGo *_obj)
 	obj = _obj;
 }
 
+void TestStopAndGo::initTestCase()
+{
+	qRegisterMetaType<StopAndGo *>("StopAndGo*");
+}
+
 void TestStopAndGo::init()
 {
 	StopAndGoDevice *d = new StopAndGoDevice("1");

@@ -41,6 +41,7 @@ protected:
 	void initObjects(StopAndGoDevice *dev, StopAndGo *obj);
 
 private slots:
+	void initTestCase();
 	void init();
 	void cleanup();
 

@@ -2,6 +2,8 @@
 #include "multimediaplayer.h"
 #include "objecttester.h"
 #include "mediaplayer.h"
+#include "playlistplayer.h"
+#include "folderlistmodel.h"
 
 #include <QtTest>
 #include <gst/gst.h>
@@ -595,6 +597,57 @@ void TestMultiMediaPlayer::testDone()
 }
 
 void TestMultiMediaPlayer::initTestCase()
+{
+	gst_init_check(NULL, NULL, NULL);
+}
+
+
+void TestPlaylistPlayer::init()
+{
+	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList() << "-ao" << "null", QStringList());
+
+	player = new AudioVideoPlayer(this);
+	static_cast<MultiMediaPlayer*>(player->getMediaPlayer())->mediaplayer_output_mode = MediaPlayer::OutputStdout;
+	model = new DirectoryListModel(this);
+
+	QVariantList root;
+
+	foreach (QString part, QDir::currentPath().split("/", QString::SkipEmptyParts))
+		root << part;
+	root << "files" << "audio" << "broken";
+
+	model->setRootPath(root);
+}
+
+void TestPlaylistPlayer::cleanup()
+{
+	delete player;
+	delete model;
+}
+
+void TestPlaylistPlayer::testLoopCheck()
+{
+	ObjectTester next(player->getMediaPlayer(), SIGNAL(currentSourceChanged(QString)));
+	ObjectTester loop(player, SIGNAL(loopDetected()));
+
+	player->generatePlaylistLocal(model, 3, model->getCount(), false);
+
+	QVERIFY(player->isPlaying());
+	QVERIFY(next.waitForSignal(TIMEOUT));
+	loop.checkNoSignals();
+
+	for (int i = 0; i < 8; ++i)
+	{
+		QVERIFY(player->isPlaying());
+		loop.checkNoSignals();
+		QVERIFY(next.waitForSignal(TIMEOUT));
+	}
+
+	QVERIFY(!player->isPlaying());
+	loop.checkSignals();
+}
+
+void TestPlaylistPlayer::initTestCase()
 {
 	gst_init_check(NULL, NULL, NULL);
 }

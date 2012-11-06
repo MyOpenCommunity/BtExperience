@@ -14,6 +14,12 @@ fi
 
 MACHINE=$1
 
+# exit if recovery (test hostname)
+x=`cat $TMPFS/etc/hostname`
+if [[ "$x" == *"_rec" ]]
+then
+exit 0
+fi
 
 mkdir $BTEXPERIENCE_TARGET
 rsync -a dist/arm/ $BTEXPERIENCE_TARGET || exit 1

@@ -18,6 +18,8 @@ private slots:
 	void init();
 	void cleanup();
 
+	void testEnableDisableAmplifier();
+
 	void testStart();
 	void testTick();
 	void testStop();

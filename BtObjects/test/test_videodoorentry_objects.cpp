@@ -30,6 +30,8 @@
 #include <QtTest/QtTest>
 #include <QPair>
 
+#define GRABBER_START_TIME 2000
+
 
 void TestVideoDoorEntry::init()
 {
@@ -48,6 +50,9 @@ void TestVideoDoorEntry::init()
 
 void TestVideoDoorEntry::cleanup()
 {
+	cctv->video_grabber.terminate();
+	cctv->video_grabber.waitForFinished(300);
+
 	delete intercom->dev;
 	delete intercom;
 	delete cctv->dev;
@@ -298,6 +303,7 @@ void TestVideoDoorEntry::testCCTVIgnoringFramesIfNotActive()
 void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 {
 	DeviceValues v;
+	ObjectTester ti(cctv, SIGNAL(incomingCall()));
 	ObjectTester t(cctv, SignalList()
 				   << SIGNAL(incomingCall())
 				   << SIGNAL(callAnswered())
@@ -313,6 +319,8 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
 	cctv->valueReceived(v);
 	v.clear();
+
+	QVERIFY(ti.waitForSignal(GRABBER_START_TIME));
 
 	// protocol for CCTV needs the following
 	cctv->answerCall();
@@ -337,6 +345,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 {
 	DeviceValues v;
+	ObjectTester ti(cctv, SIGNAL(incomingCall()));
 	ObjectTester t(cctv, SignalList()
 				   << SIGNAL(incomingCall())
 				   << SIGNAL(callAnswered())
@@ -352,6 +361,8 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
 	cctv->valueReceived(v);
 	v.clear();
+
+	QVERIFY(ti.waitForSignal(GRABBER_START_TIME));
 
 	// protocol for CCTV needs the following
 	cctv->answerCall();
@@ -434,6 +445,7 @@ void TestVideoDoorEntry::testHandsFree()
 	t.checkSignals();
 
 	DeviceValues v;
+	ObjectTester ti(cctv, SIGNAL(incomingCall()));
 	ObjectTester t2(cctv, SignalList()
 					<< SIGNAL(incomingCall())
 					<< SIGNAL(callAnswered())
@@ -443,6 +455,8 @@ void TestVideoDoorEntry::testHandsFree()
 	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
 	cctv->valueReceived(v);
 	v.clear();
+
+	QVERIFY(ti.waitForSignal(GRABBER_START_TIME));
 
 	// auto answer
 	dev->answerCall();

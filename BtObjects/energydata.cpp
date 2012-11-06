@@ -6,6 +6,7 @@
 
 #include <stdlib.h> // rand
 
+#include <QCoreApplication>
 #include <QDebug> // qDebug
 #include <QVector>
 
@@ -707,10 +708,10 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 	{
 		QDate today = QDate::currentDate();
 		QStringList all_keys = QStringList()
-			 << tr("Jan") << tr("Feb") << tr("Mar")
-			 << tr("Apr") << tr("May") << tr("Jun")
-			 << tr("Jul") << tr("Aug") << tr("Sep")
-			 << tr("Oct") << tr("Nov") << tr("Dec");
+			 << QT_TR_NOOP("Jan") << QT_TR_NOOP("Feb") << QT_TR_NOOP("Mar")
+			 << QT_TR_NOOP("Apr") << QT_TR_NOOP("May") << QT_TR_NOOP("Jun")
+			 << QT_TR_NOOP("Jul") << QT_TR_NOOP("Aug") << QT_TR_NOOP("Sep")
+			 << QT_TR_NOOP("Oct") << QT_TR_NOOP("Nov") << QT_TR_NOOP("Dec");
 
 		today = today.addMonths(-11);
 		for (int i = 0; i < 12; ++i)
@@ -722,10 +723,10 @@ QList<QObject *> EnergyData::createGraph(GraphType type, const QVector<double> &
 		break;
 	}
 	case CumulativeYearGraph:
-		keys << tr("Jan") << tr("Feb") << tr("Mar")
-			 << tr("Apr") << tr("May") << tr("Jun")
-			 << tr("Jul") << tr("Aug") << tr("Sep")
-			 << tr("Oct") << tr("Nov") << tr("Dec");
+		keys << QT_TR_NOOP("Jan") << QT_TR_NOOP("Feb") << QT_TR_NOOP("Mar")
+			 << QT_TR_NOOP("Apr") << QT_TR_NOOP("May") << QT_TR_NOOP("Jun")
+			 << QT_TR_NOOP("Jul") << QT_TR_NOOP("Aug") << QT_TR_NOOP("Sep")
+			 << QT_TR_NOOP("Oct") << QT_TR_NOOP("Nov") << QT_TR_NOOP("Dec");
 		break;
 	}
 
@@ -1223,7 +1224,7 @@ QVariant EnergyGraphBar::getIndex() const
 
 QString EnergyGraphBar::getLabel() const
 {
-	return label;
+	return QCoreApplication::translate("EnergyData", label.toUtf8());
 }
 
 QVariant EnergyGraphBar::getValue() const

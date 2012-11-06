@@ -3,6 +3,8 @@
 
 #include "multimediaplayer.h"
 
+#include <QTime>
+
 class DirectoryListModel;
 class UPnPListModel;
 class ListManager;
@@ -31,6 +33,11 @@ public:
 	// methods needed to restore state when coming back to player page
 	Q_INVOKABLE bool isUpnp() const { return ((actual_list == upnp_list) ? true : false); }
 
+	bool isPlaying();
+
+public slots:
+	virtual void terminate() { }
+
 protected:
 	explicit PlayListPlayer(QObject *parent = 0);
 
@@ -41,17 +48,21 @@ protected:
 	void generate(UPnPListModel *model, int index, int total_files);
 	void generate(QList<QVariant> urls, int index, int total_files);
 	void reset();
-	bool isPlaying();
 
 signals:
 	void currentChanged();
 	void playingChanged();
+	void loopDetected();
 
 	/// emitted when player is active and the device for current file gets unmounted
 	void deviceUnmounted();
 
 protected slots:
 	virtual void updateCurrent();
+
+protected:
+	bool checkLoop();
+	void resetLoopCheck();
 
 private slots:
 	void directoryUnmounted(QString dir);
@@ -60,6 +71,10 @@ private:
 	ListManager *local_list, *upnp_list, *actual_list;
 	QString current;
 	bool is_video;
+
+	int loop_starting_file; // the index of the song used to detect loop
+	int loop_total_time; // the total time used to detect a loop
+	QTime loop_time_counter; // used to count the time elapsed
 };
 
 
@@ -127,14 +142,6 @@ class AudioVideoPlayer : public PlayListPlayer
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
-	Q_INVOKABLE void prevTrack();
-	Q_INVOKABLE void nextTrack();
-	Q_INVOKABLE void pause();
-	Q_INVOKABLE void resume();
-	Q_INVOKABLE void terminate();
-	Q_INVOKABLE void incrementVolume();
-	Q_INVOKABLE void decrementVolume();
-
 	QObject *getMediaPlayer() const { return media_player; }
 	QString getCurrentTime() const;
 	QString getTotalTime() const;
@@ -144,6 +151,15 @@ public:
 	int getPercentage() const { return percentage; }
 	bool getMute() const;
 	void setMute(bool newValue);
+
+public slots:
+	void prevTrack();
+	void nextTrack();
+	void pause();
+	void resume();
+	virtual void terminate();
+	void incrementVolume();
+	void decrementVolume();
 
 signals:
 	void currentTimeChanged();

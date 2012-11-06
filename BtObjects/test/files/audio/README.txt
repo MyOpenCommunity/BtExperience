@@ -18,3 +18,7 @@ id3v2 --TYER '2011' d3.mp3
 id3v2 --genre 147 d3.mp3
 
 Track, Genre and Title change for each MP3
+
+Broken files:
+
+dd if=a4.mp3 of=broken/1.mp3 bs=1024 count=4

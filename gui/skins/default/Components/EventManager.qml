@@ -257,12 +257,20 @@ Item {
         id: clocksConnection
         target: null
         onRingAlarmClock: {
-            global.ringtoneManager.playRingtone(global.extraPath + "10/alarm.wav", AudioState.Ringtone)
+            global.ringtoneManager.playRingtoneAndKeepState(global.extraPath + "10/alarm.wav", AudioState.Ringtone)
+        }
+        onAlarmStarted: {
             if (Stack.isPageChanging(changePageDone)) {
                 Script.delayedNotifications.push({"type": Script.ALARM_CLOCK_TRIGGERING, "data": alarmClock})
             }
             else
                 privateProps.alarmClockTriggering(alarmClock)
+        }
+        onBeepAlarmActiveChanged: {
+            if (clocksConnection.target.beepAlarmActive)
+                global.audioState.enableState(AudioState.Ringtone)
+            else
+                global.audioState.disableState(AudioState.Ringtone)
         }
     }
 
@@ -373,9 +381,14 @@ Item {
         }
 
         function updateTimerInterval() {
+            monthlyReportTimer.stop()
             var n = new Date()
-            var n2 = new Date(n.getFullYear(), n.getMonth() + 1, 0)
-            monthlyReportTimer.interval = n2.getTime() - n.getTime()
+            var n2 = new Date(n.getFullYear(), n.getMonth() + 1, 1)
+            var delta = n2.getTime() - n.getTime()
+            if (delta <= 0)
+                n2 = new Date(n.getFullYear(), n.getMonth() + 2, 1)
+            delta = n2.getTime() - n.getTime()
+            monthlyReportTimer.interval = delta
         }
 
         // this is needed to manage the activation of the monitor;

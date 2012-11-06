@@ -61,14 +61,14 @@ QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node)
 	return obj_list;
 }
 
-void updateAlarmClocks(QDomNode node, AlarmClock *alarmClock)
+void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock)
 {
-	setAttribute(node, "descr", alarmClock->getDescription());
-	setAttribute(node, "enabled", QString::number(alarmClock->isEnabled()));
-	setAttribute(node, "type", QString::number(alarmClock->getAlarmType()));
-	setAttribute(node, "days", QString::number(alarmClock->getDays()));
-	setAttribute(node, "hour", QString::number(alarmClock->getHour()));
-	setAttribute(node, "minutes", QString::number(alarmClock->getMinute()));
+	setAttribute(node, "descr", alarm_clock->getDescription());
+	setAttribute(node, "enabled", QString::number(alarm_clock->isEnabled()));
+	setAttribute(node, "type", QString::number(alarm_clock->getAlarmType()));
+	setAttribute(node, "days", QString::number(alarm_clock->getDays()));
+	setAttribute(node, "hour", QString::number(alarm_clock->getHour()));
+	setAttribute(node, "minutes", QString::number(alarm_clock->getMinute()));
 }
 
 AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days, int _hour, int _minute, QObject *parent)
@@ -118,21 +118,21 @@ void AlarmClock::checkRequestManagement()
 	if (enabled)
 	{
 		// gets actual date&time
-		QDateTime actualDateTime = QDateTime::currentDateTime();
+		QDateTime actual_date_time = QDateTime::currentDateTime();
 
 		// gets triggering date&time
-		QDateTime triggeringDateTime = QDateTime(actualDateTime.date(), QTime(hour, minute));
+		QDateTime triggering_date_time = QDateTime(actual_date_time.date(), QTime(hour, minute));
 
 		// computes difference in seconds between actual and candidate date&time
-		int deltaSeconds = actualDateTime.secsTo(triggeringDateTime);
+		int delta_seconds = actual_date_time.secsTo(triggering_date_time);
 
 		// if difference is not positive adds 1 day to triggering date&time and recomputes delta
-		if (deltaSeconds <= 0)
-			deltaSeconds = actualDateTime.secsTo(triggeringDateTime.addDays(1));
+		if (delta_seconds <= 0)
+			delta_seconds = actual_date_time.secsTo(triggering_date_time.addDays(1));
 
 		// finally, sets trigger timer
 		timer_trigger->setSingleShot(true);
-		timer_trigger->start(deltaSeconds * 1000);
+		timer_trigger->start(delta_seconds * 1000);
 	}
 	else
 	{
@@ -154,17 +154,17 @@ void AlarmClock::triggersIfHasTo()
 	int weekday = QDateTime::currentDateTime().date().dayOfWeek();
 
 	// checks if it is a trigger day
-	bool isTriggerDay = false;
-	isTriggerDay = isTriggerDay || (isTriggerOnMondays() && (weekday == 1));
-	isTriggerDay = isTriggerDay || (isTriggerOnTuesdays() && (weekday == 2));
-	isTriggerDay = isTriggerDay || (isTriggerOnWednesdays() && (weekday == 3));
-	isTriggerDay = isTriggerDay || (isTriggerOnThursdays() && (weekday == 4));
-	isTriggerDay = isTriggerDay || (isTriggerOnFridays() && (weekday == 5));
-	isTriggerDay = isTriggerDay || (isTriggerOnSaturdays() && (weekday == 6));
-	isTriggerDay = isTriggerDay || (isTriggerOnSundays() && (weekday == 7));
+	bool is_trigger_day = false;
+	is_trigger_day = is_trigger_day || (isTriggerOnMondays() && (weekday == 1));
+	is_trigger_day = is_trigger_day || (isTriggerOnTuesdays() && (weekday == 2));
+	is_trigger_day = is_trigger_day || (isTriggerOnWednesdays() && (weekday == 3));
+	is_trigger_day = is_trigger_day || (isTriggerOnThursdays() && (weekday == 4));
+	is_trigger_day = is_trigger_day || (isTriggerOnFridays() && (weekday == 5));
+	is_trigger_day = is_trigger_day || (isTriggerOnSaturdays() && (weekday == 6));
+	is_trigger_day = is_trigger_day || (isTriggerOnSundays() && (weekday == 7));
 
 	// eventually rings
-	if (isTriggerDay)
+	if (is_trigger_day)
 		start();
 
 	// reloads timer
@@ -175,18 +175,27 @@ void AlarmClock::start()
 {
 	tick_count = 0;
 	if (alarm_type == AlarmClockBeep)
+	{
 		tick->setInterval(BEEP_INTERVAL);
+	}
 	else
+	{
+		if (!source || !enabled_amplifiers.size())
+		{
+			qWarning() << "Invalid alarm clock setup: either no source or amplifier enabled";
+			return;
+		}
+
 		tick->setInterval(SOUND_DIFFUSION_INTERVAL);
+	}
 	tick->start();
+	emit ringingChanged();
 }
 
 void AlarmClock::stop()
 {
-	// TODO stops alarm if ringing
-	qDebug() << __PRETTY_FUNCTION__;
-	qDebug() << "+++++++++++++++++++++++++++++++++++++++++++++++ Alarm stopped";
 	tick->stop();
+	emit ringingChanged();
 }
 
 void AlarmClock::postpone()
@@ -196,57 +205,57 @@ void AlarmClock::postpone()
 	qDebug() << "+++++++++++++++++++++++++++++++++++++++++++++++ Alarm postponed";
 }
 
-void AlarmClock::setDescription(QString newValue)
+void AlarmClock::setDescription(QString new_value)
 {
-	if (description == newValue)
+	if (description == new_value)
 		return;
 
-	description = newValue;
+	description = new_value;
 	emit descriptionChanged();
 }
 
-void AlarmClock::setEnabled(bool newValue)
+void AlarmClock::setEnabled(bool new_value)
 {
-	if (enabled == newValue)
+	if (enabled == new_value)
 		return;
 
-	enabled = newValue;
+	enabled = new_value;
 	emit enabledChanged();
 }
 
-void AlarmClock::setAlarmType(AlarmClockType newValue)
+void AlarmClock::setAlarmType(AlarmClockType new_value)
 {
-	if (alarm_type == newValue)
+	if (alarm_type == new_value)
 		return;
 
-	alarm_type = newValue;
+	alarm_type = new_value;
 	emit alarmTypeChanged();
 }
 
-void AlarmClock::setDays(int newValue)
+void AlarmClock::setDays(int new_value)
 {
-	if (days == newValue || newValue < 0 || newValue > 0x7F)
+	if (days == new_value || new_value < 0 || new_value > 0x7F)
 		return;
 
-	days = newValue;
+	days = new_value;
 	emit daysChanged();
 }
 
-void AlarmClock::setHour(int newValue)
+void AlarmClock::setHour(int new_value)
 {
-	if (hour == newValue || newValue < 0 || newValue > 23)
+	if (hour == new_value || new_value < 0 || new_value > 23)
 		return;
 
-	hour = newValue;
+	hour = new_value;
 	emit hourChanged();
 }
 
-void AlarmClock::setMinute(int newValue)
+void AlarmClock::setMinute(int new_value)
 {
-	if (minute == newValue || newValue < 0 || newValue > 59)
+	if (minute == new_value || new_value < 0 || new_value > 59)
 		return;
 
-	minute = newValue;
+	minute = new_value;
 	emit minuteChanged();
 }
 
@@ -285,49 +294,49 @@ bool AlarmClock::isTriggerOnSundays() const
 	return ((days & MASK_SUNDAY) > 0);
 }
 
-void AlarmClock::setTriggerOnMondays(bool newValue)
+void AlarmClock::setTriggerOnMondays(bool new_value)
 {
-	setTriggerOnWeekdays(newValue, MASK_MONDAY);
+	setTriggerOnWeekdays(new_value, MASK_MONDAY);
 }
 
-void AlarmClock::setTriggerOnTuesdays(bool newValue)
+void AlarmClock::setTriggerOnTuesdays(bool new_value)
 {
-	setTriggerOnWeekdays(newValue, MASK_TUESDAY);
+	setTriggerOnWeekdays(new_value, MASK_TUESDAY);
 }
 
-void AlarmClock::setTriggerOnWednesdays(bool newValue)
+void AlarmClock::setTriggerOnWednesdays(bool new_value)
 {
-	setTriggerOnWeekdays(newValue, MASK_WEDNESDAY);
+	setTriggerOnWeekdays(new_value, MASK_WEDNESDAY);
 }
 
-void AlarmClock::setTriggerOnThursdays(bool newValue)
+void AlarmClock::setTriggerOnThursdays(bool new_value)
 {
-	setTriggerOnWeekdays(newValue, MASK_THURSDAY);
+	setTriggerOnWeekdays(new_value, MASK_THURSDAY);
 }
 
-void AlarmClock::setTriggerOnFridays(bool newValue)
+void AlarmClock::setTriggerOnFridays(bool new_value)
 {
-	setTriggerOnWeekdays(newValue, MASK_FRIDAY);
+	setTriggerOnWeekdays(new_value, MASK_FRIDAY);
 }
 
-void AlarmClock::setTriggerOnSaturdays(bool newValue)
+void AlarmClock::setTriggerOnSaturdays(bool new_value)
 {
-	setTriggerOnWeekdays(newValue, MASK_SATURDAY);
+	setTriggerOnWeekdays(new_value, MASK_SATURDAY);
 }
 
-void AlarmClock::setTriggerOnSundays(bool newValue)
+void AlarmClock::setTriggerOnSundays(bool new_value)
 {
-	setTriggerOnWeekdays(newValue, MASK_SUNDAY);
+	setTriggerOnWeekdays(new_value, MASK_SUNDAY);
 }
 
-void AlarmClock::setTriggerOnWeekdays(bool newValue, int dayMask)
+void AlarmClock::setTriggerOnWeekdays(bool new_value, int day_mask)
 {
 	int old_days = days;
 
-	if (newValue) // set
-		old_days |= dayMask;
+	if (new_value) // set
+		old_days |= day_mask;
 	else // reset
-		old_days &= ~dayMask;
+		old_days &= ~day_mask;
 
 	if (old_days == days)
 		return;
@@ -340,7 +349,7 @@ void AlarmClock::alarmTick()
 	if (alarm_type == AlarmClockBeep)
 	{
 		if (tick_count == MAX_BEEP_TICK)
-			tick->stop();
+			stop();
 		else
 			emit ringMe(this);
 	}
@@ -369,7 +378,7 @@ void AlarmClock::alarmTick()
 		if (tick_count == MAX_SOUND_DIFFUSION_TICK)
 		{
 			soundDiffusionStop();
-			tick->stop();
+			stop();
 		}
 		else
 			soundDiffusionSetVolume();
@@ -400,9 +409,9 @@ void AlarmClock::soundDiffusionSetVolume()
 void AlarmClock::setAmplifierEnabled(Amplifier *amplifier, bool enabled)
 {
 	if (!enabled && enabled_amplifiers.contains(amplifier))
-		enabled_amplifiers.remove(amplifier);
+		enabled_amplifiers.removeOne(amplifier);
 	else if (enabled && !enabled_amplifiers.contains(amplifier))
-		enabled_amplifiers.insert(amplifier);
+		enabled_amplifiers.append(amplifier);
 }
 
 bool AlarmClock::isAmplifierEnabled(Amplifier *amplifier) const
@@ -436,4 +445,9 @@ void AlarmClock::setVolume(int _volume)
 int AlarmClock::getVolume() const
 {
 	return volume;
+}
+
+bool AlarmClock::isRinging() const
+{
+	return tick->isActive();
 }

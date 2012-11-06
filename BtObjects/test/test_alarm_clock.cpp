@@ -4,6 +4,8 @@
 #include "mediaobjects.h"
 #include "alarmclock.h"
 
+#include <QtTest>
+
 
 void TestAlarmClockSoundDiffusion::init()
 {
@@ -30,6 +32,26 @@ void TestAlarmClockSoundDiffusion::cleanup()
 {
 	delete source_dev;
 	delete obj;
+}
+
+void TestAlarmClockSoundDiffusion::testEnableDisableAmplifier()
+{
+	QCOMPARE(obj->enabled_amplifiers.count(), 2);
+	QVERIFY(!obj->isAmplifierEnabled(amplifiers[0]));
+	QVERIFY( obj->isAmplifierEnabled(amplifiers[1]));
+	QVERIFY(!obj->isAmplifierEnabled(amplifiers[2]));
+	QVERIFY( obj->isAmplifierEnabled(amplifiers[3]));
+
+	obj->setAmplifierEnabled(amplifiers[0], false);
+	obj->setAmplifierEnabled(amplifiers[1], true);
+	obj->setAmplifierEnabled(amplifiers[2], true);
+	obj->setAmplifierEnabled(amplifiers[3], false);
+
+	QCOMPARE(obj->enabled_amplifiers.count(), 2);
+	QVERIFY(!obj->isAmplifierEnabled(amplifiers[0]));
+	QVERIFY( obj->isAmplifierEnabled(amplifiers[1]));
+	QVERIFY( obj->isAmplifierEnabled(amplifiers[2]));
+	QVERIFY(!obj->isAmplifierEnabled(amplifiers[3]));
 }
 
 void TestAlarmClockSoundDiffusion::testStart()

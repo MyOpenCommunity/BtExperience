@@ -7,6 +7,10 @@
 #include <QDateTime>
 #include <QDate>
 #include <QTime>
+#include <QCoreApplication>
+#include <QFileInfo>
+#include <QDir>
+#include <QTranslator>
 
 #include <limits>
 
@@ -62,6 +66,38 @@ namespace
 		}
 		return result;
 	}
+
+	// Sets a language on the GUI; the GUI must be restarted for changes to have effect
+	void setLanguageTranslator(QString language)
+	{
+		// language must be in the form it, en, ...
+		static QTranslator *actual_translator = 0;
+		// removes actual translation
+		if (actual_translator)
+		{
+			QCoreApplication::instance()->removeTranslator(actual_translator);
+			actual_translator = 0;
+		}
+		// computes new translation file name
+		QFileInfo path = qApp->applicationDirPath();
+
+	#ifdef Q_WS_MAC
+		path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
+	#endif
+
+		QString lf = QFileInfo(QDir(path.canonicalFilePath()),
+			QString("gui/locale/bt_experience_%1").arg(language.toAscii().constData())).absoluteFilePath();
+
+		// tries to install new translation
+		actual_translator = new QTranslator();
+		if (actual_translator->load(lf))
+			QCoreApplication::instance()->installTranslator(actual_translator);
+		else
+		{
+			actual_translator = 0;
+			qWarning() << "File " << lf << " not found for language " << language;
+		}
+	}
 }
 
 
@@ -96,14 +132,9 @@ GuiSettings::GuiSettings(QObject *parent) :
 	player_alert = false;
 	message_alert = false;
 	scenario_recording_alert = false;
+	language = getConfValue(conf, "generale/language");
 
-	QString language_string = getConfValue(conf, "generale/language");
-
-	if (language_string == "it")
-		language = Italian;
-	else
-		language = English;
-
+	setLanguageTranslator(language);
 	parseSettings();
 }
 
@@ -174,19 +205,6 @@ void GuiSettings::sendCommand(const QString &cmd)
 	// TODO: add error check
 	qDebug() << QString("GuiSettings::sendCommand(%1)").arg(cmd);
 	system(qPrintable(cmd));
-}
-
-QString GuiSettings::getLanguageString() const
-{
-	switch(language)
-	{
-	case English:
-		return QString("en");
-	case Italian:
-		return QString("it");
-	default:
-		return QString("it");
-	}
 }
 
 QString GuiSettings::getSkinString() const
@@ -282,19 +300,20 @@ void GuiSettings::setKeyboardLayout(QString l)
 	setConfValue("generale/keyboard_lang", l);
 }
 
-GuiSettings::Language GuiSettings::getLanguage() const
+QString GuiSettings::getLanguage() const
 {
 	return language;
 }
 
-void GuiSettings::setLanguage(Language l)
+void GuiSettings::setLanguage(QString l)
 {
 	if (language == l)
 		return;
 
 	language = l;
 	emit languageChanged();
-	setConfValue("generale/language", getLanguageString());
+	setConfValue("generale/language", language);
+	setLanguageTranslator(language);
 }
 
 GuiSettings::Skin GuiSettings::getSkin() const

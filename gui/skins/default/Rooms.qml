@@ -69,6 +69,7 @@ Page {
 
     ListView {
         id: floorView
+        interactive: false
         orientation: ListView.Horizontal
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter

@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import "../../js/logging.js" as Log
+import "../../js/Stack.js" as Stack
 
 
 MenuColumn {
@@ -40,7 +41,7 @@ MenuColumn {
     function alertOkClicked() {
         textLanguageItem.description = pageObject.names.get('LANGUAGE', privateProps.language);
         global.guiSettings.language = privateProps.language
-        global.reboot()
+        Stack.backToHome()
     }
 
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
@@ -54,7 +55,7 @@ MenuColumn {
         //  4 -> unit system
         //  5 -> currency
         //  6 -> number separators
-        property int language: -1
+        property string language: ''
     }
 
     onChildDestroyed: privateProps.currentIndex = -1
@@ -135,7 +136,7 @@ MenuColumn {
         MenuItem {
             id: keyboardLanguageItem
             name: qsTr("keyboard language")
-            description: pageObject.names.get('LANGUAGE', 0)
+            description: pageObject.names.get('LANGUAGE', "it")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {

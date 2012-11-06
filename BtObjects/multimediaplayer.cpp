@@ -59,14 +59,17 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	connect(player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
 		SLOT(playerInfoReceived(QMap<QString,QString>)));
 
-	connect(gst_player, SIGNAL(gstPlayerStarted()), SLOT(mplayerStarted()));
-	connect(gst_player, SIGNAL(gstPlayerResumed()), SLOT(mplayerResumed()));
-	connect(gst_player, SIGNAL(gstPlayerDone()), SLOT(mplayerDone()));
-	connect(gst_player, SIGNAL(gstPlayerStopped()), SLOT(mplayerStopped()));
-	connect(gst_player, SIGNAL(gstPlayerPaused()), SLOT(mplayerPaused()));
+	if (gst_player)
+	{
+		connect(gst_player, SIGNAL(gstPlayerStarted()), SLOT(mplayerStarted()));
+		connect(gst_player, SIGNAL(gstPlayerResumed()), SLOT(mplayerResumed()));
+		connect(gst_player, SIGNAL(gstPlayerDone()), SLOT(mplayerDone()));
+		connect(gst_player, SIGNAL(gstPlayerStopped()), SLOT(mplayerStopped()));
+		connect(gst_player, SIGNAL(gstPlayerPaused()), SLOT(mplayerPaused()));
 
-	connect(gst_player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
-			SLOT(gstPlayerInfoReceived(QMap<QString,QString>)));
+		connect(gst_player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
+				SLOT(gstPlayerInfoReceived(QMap<QString,QString>)));
+	}
 
 	info_poll_timer = new QTimer(this);
 	info_poll_timer->setInterval(INFO_POLL_INTERVAL);

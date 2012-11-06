@@ -1,7 +1,6 @@
 import QtQuick 1.1
-//import BtObjects 1.0
 import Components 1.0
-//import "../../js/logging.js" as Log
+import "../../js/Stack.js" as Stack
 
 
 MenuColumn {
@@ -20,7 +19,7 @@ MenuColumn {
     function alertOkClicked() {
         skinItem.description = pageObject.names.get('SKIN', privateProps.skin);
         global.guiSettings.skin = privateProps.skin
-        global.reboot()
+        Stack.backToHome()
     }
 
     // we don't have a ListView, so we don't have a currentIndex property: let's define it

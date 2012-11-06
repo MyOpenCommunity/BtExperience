@@ -57,8 +57,9 @@ QtObject {
         container['SUMMER_TIME'][false] = qsTr("Disable")
 
         container['LANGUAGE'] = []
-        container['LANGUAGE'][GuiSettings.Italian] = qsTr("Italian")
-        container['LANGUAGE'][GuiSettings.English] = qsTr("English")
+        container['LANGUAGE']["it"] = qsTr("Italian")
+        container['LANGUAGE']["en"] = qsTr("English")
+        container['LANGUAGE']["fr"] = qsTr("French")
 
         container['CURRENCY'] = []
         container['CURRENCY'][GuiSettings.CHF] = qsTr("CHF")

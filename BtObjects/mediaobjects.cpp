@@ -12,19 +12,23 @@
 
 #define REQUEST_FREQUENCY_TIME 1000
 
-const char *PowerAmplifier::standard_presets[] =
+namespace
 {
-	QT_TR_NOOP("Normal"),
-	QT_TR_NOOP("Dance"),
-	QT_TR_NOOP("Pop"),
-	QT_TR_NOOP("Rock"),
-	QT_TR_NOOP("Classical"),
-	QT_TR_NOOP("Techno"),
-	QT_TR_NOOP("Party"),
-	QT_TR_NOOP("Soft"),
-	QT_TR_NOOP("Full Bass"),
-	QT_TR_NOOP("Full Treble"),
-};
+	const char *standard_presets[] =
+	{
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Normal"),
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Dance"),
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Pop"),
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Rock"),
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Classical"),
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Techno"),
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Party"),
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Soft"),
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Full Bass"),
+		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Full Treble"),
+	};
+}
+
 #define standard_presets_size int(sizeof(standard_presets) / sizeof(standard_presets[0]))
 
 
@@ -628,6 +632,14 @@ SourceMultiMedia::SourceMultiMedia(VirtualSourceDevice *d) :
 {
 	dev = d;
 	player = new AudioVideoPlayer(this);
+
+	MultiMediaPlayer *p = static_cast<MultiMediaPlayer *>(player->getMediaPlayer());
+
+#if defined(BT_HARDWARE_X11)
+	p->setCommandLineArguments(QStringList(), QStringList());
+#else
+	p->setCommandLineArguments(QStringList() << "-ao" << "alsa:device=plughw=0.1", QStringList());
+#endif
 }
 
 AudioVideoPlayer *SourceMultiMedia::getAudioVideoPlayer() const
@@ -918,6 +930,14 @@ PowerAmplifierPreset::PowerAmplifierPreset(int number, const QString &name)
 	preset_name = name;
 }
 
+QString PowerAmplifierPreset::getName() const
+{
+	if (preset_number < standard_presets_size)
+		return trUtf8(preset_name.toUtf8());
+	else
+		return preset_name;
+}
+
 
 PowerAmplifier::PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, QList<QString> _presets) :
 	Amplifier(area, name, d, ObjectInterface::IdPowerAmplifier)
@@ -929,7 +949,7 @@ PowerAmplifier::PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, 
 	connect(this, SIGNAL(presetChanged()), this, SIGNAL(presetDescriptionChanged()));
 
 	for (int i = 0; i < standard_presets_size; ++i)
-		presets << new PowerAmplifierPreset(i, tr(standard_presets[i]));
+		presets << new PowerAmplifierPreset(i, standard_presets[i]);
 
 	for (int i = 0; i < _presets.size(); ++i)
 		presets << new PowerAmplifierPreset(i, _presets[i]);

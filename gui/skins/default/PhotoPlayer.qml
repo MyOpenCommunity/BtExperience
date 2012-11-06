@@ -212,8 +212,8 @@ Page {
     }
 
     Component.onCompleted: player.upnp ?
-                               global.photoPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count) :
-                               global.photoPlayer.generatePlaylistLocal(player.model, player.index, player.model.count)
+                               global.photoPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count, false) :
+                               global.photoPlayer.generatePlaylistLocal(player.model, player.index, player.model.count, false)
 
     states: [
         State {

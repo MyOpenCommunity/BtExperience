@@ -65,6 +65,7 @@ SOURCES += \
     eventfilters.cpp \
     globalproperties.cpp \
     guisettings.cpp \
+    hwkeys.cpp \
     imagereader.cpp \
     inputcontextwrapper.cpp \
     ringtonemanager.cpp
@@ -74,11 +75,13 @@ HEADERS += \
     eventfilters.h \
     globalproperties.h \
     guisettings.h \
+    hwkeys.h \
     imagereader.h \
     inputcontextwrapper.h \
     ringtonemanager.h
 
-TRANSLATIONS += locale/bt_experience_it.ts
+TRANSLATIONS += locale/bt_experience_it.ts \
+	locale/bt_experience_fr.ts
 
 mac {
     APP_DIR = $${DESTDIR}/$${TARGET}.app/Contents
