@@ -57,7 +57,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: 20
-            TextInput {
+            UbuntuLightTextInput {
                 id: addressInput
                 anchors.fill: parent
                 activeFocusOnPress: false
@@ -91,7 +91,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 10
         height: 20
-        TextInput {
+        UbuntuLightTextInput {
             id: descriptionInput
             anchors.fill: parent
             activeFocusOnPress: false
