@@ -31,11 +31,11 @@ Item {
     Column {
         id: column
         anchors.centerIn: parent
-  
-     Image {
+
+        Image {
             id: container
             source: global.guiSettings.skin === GuiSettings.Clear ? "../images/profiles/scheda_preferiti.svg" :
-                                                    "../images/profiles/scheda_preferiti_P.svg"
+                                                                    "../images/profiles/scheda_preferiti_P.svg"
 
             Image {
                 id: icon
@@ -56,7 +56,7 @@ Item {
                 id: containerPressed
                 anchors.fill: container
                 source: global.guiSettings.skin === GuiSettings.Clear ? "../images/profiles/scheda_preferiti_P.svg" :
-                                                        "../images/profiles/scheda_preferiti.svg"
+                                                                        "../images/profiles/scheda_preferiti.svg"
                 visible: false
                 anchors.left: container.left
                 anchors.bottom: container.bottom
@@ -166,7 +166,7 @@ Item {
             UbuntuLightText {
                 text: bgQuick.text
                 color: global.guiSettings.skin === GuiSettings.Clear ? "#434343":
-                                                       "#FFFFFF"
+                                                                       "#FFFFFF"
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 13
                 elide: Text.ElideRight
@@ -180,7 +180,7 @@ Item {
             TextInput {
                 text: bgQuick.text
                 color: global.guiSettings.skin === GuiSettings.Clear ? "#434343":
-                                                       "#FFFFFF"
+                                                                       "#FFFFFF"
                 horizontalAlignment: Text.AlignHCenter
                 activeFocusOnPress: false
                 anchors.top: parent.top
@@ -323,8 +323,12 @@ Item {
             containerPressed.visible = false
         }
         onClicked: {
-            if (page !== "")
-                Stack.pushPage(page, {'urlString': itemObject.address, 'profile': bgQuick.profile})
+            if (page !== "") {
+                var fixedAddress = itemObject.address
+                if (fixedAddress.toLowerCase().indexOf("http://") !== 0)
+                    fixedAddress = "http://" + fixedAddress
+                Stack.pushPage(page, {'urlString': fixedAddress, 'profile': bgQuick.profile})
+            }
 
             bgQuick.clicked()
         }
