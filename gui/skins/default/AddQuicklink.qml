@@ -378,7 +378,7 @@ Page {
     Component {
         id: popupEditLink
         EditNote {
-            onOkClicked: linkText.text = text
+            onOkClicked: linkText.text = text.toLowerCase().indexOf("http://") === 0 ? text : "http://" + text
         }
     }
 
