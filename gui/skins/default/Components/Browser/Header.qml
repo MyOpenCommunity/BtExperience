@@ -70,6 +70,8 @@ SvgImage {
             leftMargin: 10
             top: parent.top
             topMargin: 6
+            right: parent.right
+            rightMargin: 30 + actionButton.width
         }
     }
 

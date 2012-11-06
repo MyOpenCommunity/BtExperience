@@ -8,6 +8,11 @@ Page {
     id: webBrowser
 
     property string urlString : "http://www.google.it/search?hl=it&rlz=&q=eclissi&gs_sm=e&gs_upl=1154l1995l0l2170l7l5l0l0l0l0l264l264l2-1l1l0&um=1&ie=UTF-8&tbm=isch&source=og&sa=N&tab=wi&biw=1920&bih=968&sei=bmXWTsLhHoOZ8QPvmdmlAg"
+    property variant profile: undefined
+
+    source: profile === undefined ? 'images/home/home.jpg' : 'images/home/home.jpg' // TODO: profile background image
+    text: profile === undefined ? qsTr("Browser") : profile.description
+    showSystemsButton: false
 
     Header {
         id: header
@@ -16,15 +21,24 @@ Page {
         browser: webBrowser
         anchors {
             top: toolbar.bottom
-            horizontalCenter: parent.horizontalCenter
+            left: navigationBar.right
+            leftMargin: 30
+            right: parent.right
+            rightMargin: 30
         }
     }
 
     Pannable {
         id: webViewContaineer
-        anchors.top: header.bottom
-        anchors.bottom: parent.bottom
-        width: parent.width
+        anchors {
+            top: header.bottom
+            left: navigationBar.right
+            leftMargin: 30
+            right: parent.right
+            rightMargin: 30
+            bottom: parent.bottom
+        }
+        width: header.width
         height: 452
 
         FlickableWebView {
@@ -46,6 +60,13 @@ Page {
 
     ScrollBar {
         scrollArea: webView; height: 8; orientation: Qt.Horizontal
-        anchors { right: parent.right; rightMargin: 8; left: parent.left; bottom: parent.bottom }
+        anchors { right: parent.right; rightMargin: 8; left: header.left; bottom: parent.bottom }
+    }
+
+    function backButtonClicked() {
+        if (profile === undefined)
+            Stack.backToMultimedia()
+        else
+            Stack.popPage()
     }
 }

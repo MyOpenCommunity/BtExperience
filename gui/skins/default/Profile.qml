@@ -129,7 +129,7 @@ Page {
                 if (obj.position.x < 0 && obj.position.y < 0)
                     continue
 
-                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": obj})
+                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": obj, "profile": profilePage.profile})
 
                 // area margins are set to maximum quicklink size / 2; this info is used to draw
                 // an area in which QuickLinks don't overlap the area itself

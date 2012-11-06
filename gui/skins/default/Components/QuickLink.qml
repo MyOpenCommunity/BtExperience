@@ -16,6 +16,7 @@ Item {
     property variant itemObject
     property int refX: -1 // used for editColumn placement, -1 means not used
     property int refY: -1 // used for editColumn placement, -1 means not used
+    property variant profile: undefined
 
     signal selected(variant favorite)
     signal requestEdit(variant favorite)
@@ -323,7 +324,7 @@ Item {
         }
         onClicked: {
             if (page !== "")
-                Stack.pushPage(page, {'urlString': itemObject.address})
+                Stack.pushPage(page, {'urlString': itemObject.address, 'profile': bgQuick.profile})
 
             bgQuick.clicked()
         }

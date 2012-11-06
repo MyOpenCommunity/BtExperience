@@ -9,6 +9,7 @@ Page {
     property string urlString
     property bool isRss: rssFeedModel.count > 0
     property bool isAtom: atomFeedModel.count > 0
+    property variant profile: undefined
 
     text: "rss"
 
