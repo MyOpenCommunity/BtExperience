@@ -70,6 +70,7 @@ Rectangle {
                     edit.cursorPosition = text.length
                     edit.initialized = true
                 }
+                containerWidget: bg
             }
         }
 

@@ -3,6 +3,8 @@ import Components.Text 1.0
 
 
 Item {
+    id: popup
+
     width: background.width
     height: background.height
     property variant favoriteItem: undefined
@@ -62,6 +64,7 @@ Item {
                 anchors.fill: parent
                 activeFocusOnPress: false
                 text: "www.corriere.it"
+                containerWidget: popup
             }
 
             MouseArea {
@@ -96,6 +99,7 @@ Item {
             anchors.fill: parent
             activeFocusOnPress: false
             text: "www.corriere.it"
+            containerWidget: popup
         }
 
         MouseArea {
