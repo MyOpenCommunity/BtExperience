@@ -380,6 +380,21 @@ Item {
             return p
         }
 
+        // if a call is in progress the corresponding page is at the top of the
+        // stack; keep in mind that is not possible that a vct call arrives when
+        // an intercom call is in progress or viceversa: bt_processes end actual
+        // call before starting a new call
+        function checkCallInProgress(type) {
+            var p = Stack.currentPage()
+
+            // if there is a call already in progress of the right type returns true
+            if (p._pageName === type)
+                return true
+
+            // no call in progress returns false
+            return false
+        }
+
         function updateTimerInterval() {
             monthlyReportTimer.stop()
             var n = new Date()
@@ -410,10 +425,14 @@ Item {
 
         function vctIncomingCall() {
             turnOffMonitor.isEnabled = false
+            if (checkCallInProgress("VideoCamera"))
+                return
             Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
         }
 
         function intercomIncomingCall() {
+            if (checkCallInProgress("IntercomPage"))
+                return
             turnOffMonitor.isEnabled = false
             Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
         }
