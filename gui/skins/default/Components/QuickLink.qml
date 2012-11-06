@@ -359,7 +359,7 @@ Item {
         function editDone() {
             if (labelLoader.item.text !== bgQuick.text) {
                 bgQuick.editCompleted()
-                bgQuick.text = labelLoader.item.text
+                bgQuick.itemObject.name = bgQuick.text = labelLoader.item.text
             }
             labelLoader.sourceComponent = labelComponent
         }
