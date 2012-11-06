@@ -14,6 +14,7 @@ SvgImage {
 
     property alias label: statusLabel.text
     property alias nextButtonVisible: nextButton.visible
+    property alias color: bg_video.color
 
     signal nextClicked
 
@@ -27,7 +28,7 @@ SvgImage {
 
         Rectangle {
             id: bg_video
-            color: "red"
+            color: "black"
             width: 640
             height: 480
             anchors.centerIn: parent

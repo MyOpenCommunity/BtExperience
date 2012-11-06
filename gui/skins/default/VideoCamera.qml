@@ -63,6 +63,11 @@ Page {
             bottomMargin: 22
         }
         onNextClicked: camera.nextCamera()
+        Timer {
+            id: redTimer
+            interval: 1500
+            onTriggered: controlVideo.color = "red"
+        }
     }
 
     ControlTextCommand {
@@ -129,6 +134,7 @@ Page {
 
     function endCall() {
         privateProps.homeClicked = false
+        controlVideo.color = "black"
         camera.endCall()
     }
 
@@ -137,11 +143,13 @@ Page {
     // are "public"
     function homeButtonClicked() {
         privateProps.homeClicked = true
+        controlVideo.color = "black"
         camera.endCall()
     }
 
     function backButtonClicked() {
         privateProps.homeClicked = false
+        controlVideo.color = "black"
         camera.endCall()
     }
 
@@ -169,6 +177,7 @@ Page {
     }
 
     Component.onCompleted: {
+        redTimer.running = true
         toolbar.z = 1
         navigationBar.z = 1
     }
