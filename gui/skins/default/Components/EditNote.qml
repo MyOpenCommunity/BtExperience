@@ -57,13 +57,19 @@ Rectangle {
 
             UbuntuLightTextEdit {
                 id: edit
+                property bool initialized: false
                 text: ""
                 width: flick.width
                 height: flick.height
                 focus: true
                 wrapMode: TextEdit.Wrap
                 onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
-                cursorPosition: text.length
+                onTextChanged: {
+                    if (initialized)
+                        return
+                    edit.cursorPosition = text.length
+                    edit.initialized = true
+                }
             }
         }
 
