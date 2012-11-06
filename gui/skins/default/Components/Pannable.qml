@@ -5,6 +5,8 @@ import QtQuick 1.0
 // when the on-screen keyboard is displayed, move the flickable content so the
 // input cursor is entirely on-screen and (if necessary) move the flickable upwards
 // so the input field is not obscured by the on-screen keyboard
+//
+// see also BaseTextInput and BaseTextEdit
 Item {
     // bind this property to the .y property of the Flickable child
     property real childOffset: 0.0
