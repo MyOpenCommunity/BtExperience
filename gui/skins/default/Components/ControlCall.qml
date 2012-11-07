@@ -24,6 +24,18 @@ SvgImage {
     }
 
     Connections {
+        target: global.hardwareKeys
+        onPressed: {
+            if (!control.dataObject)
+                return
+
+            // answer call on hw key 0 press, open lock on hw key 1
+            if (index === 0)
+                control.dataObject.answerCall()
+        }
+    }
+
+    Connections {
         id: connDataObject
         target: null
         onMuteChanged: {

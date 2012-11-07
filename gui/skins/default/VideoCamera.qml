@@ -178,6 +178,28 @@ Page {
         onCallEnded: control.callEndedCallback()
     }
 
+    Connections {
+        target: global.hardwareKeys
+        onPressed: {
+            if (!control.camera)
+                return
+
+            // answer call on hw key 0 press, open lock on hw key 1
+            if (index === 0)
+                control.camera.answerCall()
+            else if (index === 1)
+                control.camera.openLock()
+        }
+        onReleased: {
+            if (!control.camera)
+                return
+
+            // answer call on hw key 0 press, open lock on hw key 1
+            if (index === 1)
+                control.camera.openLock()
+        }
+    }
+
     Component.onCompleted: {
         redTimer.running = true
         toolbar.z = 1
