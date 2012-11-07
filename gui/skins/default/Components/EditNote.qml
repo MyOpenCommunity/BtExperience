@@ -57,19 +57,12 @@ Rectangle {
 
             UbuntuLightTextEdit {
                 id: edit
-                property bool initialized: false
                 text: ""
                 width: flick.width
                 height: flick.height
                 focus: true
                 wrapMode: TextEdit.Wrap
                 onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
-                onTextChanged: {
-                    if (initialized)
-                        return
-                    edit.cursorPosition = text.length
-                    edit.initialized = true
-                }
             }
         }
 
@@ -124,4 +117,9 @@ Rectangle {
     }
 
     Component.onCompleted: edit.forceActiveFocus()
+
+    function setInitialText(initialText) {
+        edit.text = initialText
+        edit.cursorPosition = edit.text.length
+    }
 }

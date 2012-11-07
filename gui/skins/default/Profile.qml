@@ -426,7 +426,7 @@ Page {
                         id: menu
                         onEditClicked: {
                             installPopup(popupEditNote)
-                            popupLoader.item.text = delegate.text
+                            popupLoader.item.setInitialText(delegate.text)
                         }
                         onDeleteClicked: {
                             privateProps.unselectObj()
