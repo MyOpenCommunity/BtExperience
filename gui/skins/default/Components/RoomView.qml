@@ -27,8 +27,10 @@ Item {
                 id: darkRect
                 anchors.fill: parent
                 color: "black"
-                opacity: 0
+                opacity: 0.02
                 radius: 20
+                z: 9
+                visible: false
 
                 MouseArea {
                     id: areaDarkRect
@@ -42,7 +44,7 @@ Item {
                 }
 
                 Behavior on opacity {
-                    NumberAnimation { duration: 200 }
+                    NumberAnimation { duration: privateProps.durationInterval }
                 }
 
                 states: [
@@ -51,6 +53,7 @@ Item {
                         PropertyChanges {
                             target: darkRect
                             opacity: 0.6
+                            visible: true
                         }
                     },
                     State {
@@ -112,9 +115,8 @@ Item {
                 if (container.state === "highlight")
                     return
 
-                container.state = "opened"
                 roomView.state = "menuOpened"
-                privateProps.currentMenu = container
+                container.state = "opened"
             }
 
             Connections {
@@ -143,8 +145,8 @@ Item {
                 }
             }
 
-            NumberAnimation { id: xAnim; target: container; property: "x"; duration: 400; easing.type: Easing.InSine }
-            NumberAnimation { id: yAnim; target: container; property: "y"; duration: 400; easing.type: Easing.InSine }
+            NumberAnimation { id: xAnim; target: container; property: "x"; duration: privateProps.durationInterval; easing.type: Easing.InSine }
+            NumberAnimation { id: yAnim; target: container; property: "y"; duration: privateProps.durationInterval; easing.type: Easing.InSine }
 
             states: [
                 State {
@@ -173,16 +175,15 @@ Item {
                     from: ""
                     to: "opened"
                     SequentialAnimation {
-                        PropertyAction { target: areaDarkRect; property: "visible"; value: false }
-                        NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
-                        PropertyAction { target: areaDarkRect; property: "visible"; value: true }
+                        NumberAnimation { targets: container; properties: "x, y"; duration: privateProps.durationInterval }
+                        ScriptAction { script: privateProps.currentMenu = container }
                     }
                 },
                 Transition {
                     from: "opened"
                     to: ""
                     SequentialAnimation {
-                        NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
+                        NumberAnimation { targets: container; properties: "x, y"; duration: privateProps.durationInterval }
                         ScriptAction {
                             script: privateProps.closingTransitionChanged()
                         }
@@ -248,6 +249,7 @@ Item {
 
         property int refX: -1 // seee RoomItem.refX, refY
         property int refY: -1
+        property int durationInterval: 400
 
         property variant currentMenu: undefined
 
