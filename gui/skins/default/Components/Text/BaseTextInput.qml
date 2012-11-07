@@ -4,7 +4,7 @@ TextInput {
     // see BaseTextEdit
     property variant containerWidget
 
-    onFocusChanged: {
+    onActiveFocusChanged: {
         if (!containerWidget)
             return
 
