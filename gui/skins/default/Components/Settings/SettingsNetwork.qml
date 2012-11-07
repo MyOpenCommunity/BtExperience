@@ -84,7 +84,7 @@ MenuColumn {
         MenuItem {
             id: networkStateItem
             name: qsTr("network state")
-            description: qsTr("connected")
+            description: privateProps.model.lanStatus === PlatformSettings.Enabled ? qsTr("connected") : qsTr("disconnected")
             hasChild: true
             isSelected: privateProps.currentIndex === 1
             status: privateProps.model.lanStatus ? 1 : 0
@@ -99,7 +99,9 @@ MenuColumn {
         MenuItem {
             id: ipConfigurationItem
             name: qsTr("IP configuration")
-            description: qsTr("DHCP")
+            description: privateProps.model.lanConfig === PlatformSettings.Dhcp   ? qsTr("DHCP") :
+                         privateProps.model.lanConfig === PlatformSettings.Static ? qsTr("disconnected") :
+                                                                                    qsTr("unknown")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {
