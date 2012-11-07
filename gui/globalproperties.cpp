@@ -375,7 +375,7 @@ void GlobalProperties::updateTime()
 	emit lastTimePressChanged();
 }
 
-void GlobalProperties::maxTravelledDistanceOnLastMove(QPoint value)
+void GlobalProperties::setMaxTravelledDistanceOnLastMove(QPoint value)
 {
 	max_travelled_distance = value;
 }

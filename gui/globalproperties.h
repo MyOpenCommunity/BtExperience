@@ -121,7 +121,7 @@ public:
 
 public slots:
 	void updateTime();
-	void maxTravelledDistanceOnLastMove(QPoint pos);
+	void setMaxTravelledDistanceOnLastMove(QPoint pos);
 
 signals:
 	void lastTimePressChanged();
