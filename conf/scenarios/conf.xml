@@ -40,6 +40,10 @@
         <mode>0</mode>
         <dev>1</dev>
         <address>1</address>
+        <p_default>
+          <dev>2</dev>
+          <address>1</address>
+        </p_default>
       </communication>
       <guardunits>
         <item>1</item>
