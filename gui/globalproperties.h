@@ -71,7 +71,7 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(bool monitorOff READ isMonitorOff WRITE setMonitorOff NOTIFY monitorOffChanged)
 
 	// Hardware key handler
-	Q_PROPERTY(HwKeys *hardwareKeys READ getHardwareKeys CONSTANT)
+	Q_PROPERTY(QObject *hardwareKeys READ getHardwareKeys CONSTANT)
 
 	// Debug touchscreen events
 	Q_PROPERTY(bool debugTs READ getDebugTs CONSTANT)
@@ -98,7 +98,7 @@ public:
 	void setMonitorOff(bool newValue);
 	bool getDebugTs();
 	DebugTiming *getDebugTiming();
-	HwKeys *getHardwareKeys() const;
+	QObject *getHardwareKeys() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE void takeScreenshot(QRect rect, QString filename);

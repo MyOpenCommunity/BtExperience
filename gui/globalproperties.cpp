@@ -306,7 +306,7 @@ DebugTiming *GlobalProperties::getDebugTiming()
 	return debug_timing;
 }
 
-HwKeys *GlobalProperties::getHardwareKeys() const
+QObject *GlobalProperties::getHardwareKeys() const
 {
 	return hardware_keys;
 }
