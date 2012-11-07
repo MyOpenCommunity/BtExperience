@@ -286,6 +286,23 @@ Item {
         }
     }
 
+    Connections {
+        target: global.hardwareKeys
+        onPressed: {
+            if (!cctvModel.count === 0)
+                return
+
+            // call default external point on hardware key 2
+            if (index === 2)
+                cctvModel.getObject(0).cameraOn(global.defaultExternalPlace)
+        }
+    }
+
+    ObjectModel {
+        id: cctvModel
+        filters: [{objectId: ObjectInterface.IdCCTV}]
+    }
+
     onChangePageDone: {
         if (Script.delayedNotifications.length === 0)
             return

@@ -311,6 +311,11 @@ QObject *GlobalProperties::getHardwareKeys() const
 	return hardware_keys;
 }
 
+QString GlobalProperties::getDefaultExternalPlace() const
+{
+	return (*bt_global::config)[DEFAULT_PE];
+}
+
 int GlobalProperties::getMainWidth() const
 {
 #ifdef Q_WS_QWS

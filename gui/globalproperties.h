@@ -73,12 +73,14 @@ class GlobalProperties : public QObject
 	// Hardware key handler
 	Q_PROPERTY(QObject *hardwareKeys READ getHardwareKeys CONSTANT)
 
+	// default external place
+	Q_PROPERTY(QString defaultExternalPlace READ getDefaultExternalPlace CONSTANT)
+
 	// Debug touchscreen events
 	Q_PROPERTY(bool debugTs READ getDebugTs CONSTANT)
 
 	// Debug timing between various GUI events
 	Q_PROPERTY(DebugTiming *debugTiming READ getDebugTiming CONSTANT)
-
 
 public:
 	GlobalProperties(logger *log);
@@ -99,6 +101,8 @@ public:
 	bool getDebugTs();
 	DebugTiming *getDebugTiming();
 	QObject *getHardwareKeys() const;
+
+	QString getDefaultExternalPlace() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE void takeScreenshot(QRect rect, QString filename);
