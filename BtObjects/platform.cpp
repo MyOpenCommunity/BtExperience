@@ -143,6 +143,17 @@ void PlatformSettings::setSubnet(QString s)
 	subnet = s;
 }
 
+void PlatformSettings::requestNetworkSettings()
+{
+	dev->requestStatus();
+	dev->requestIp();
+	dev->requestNetmask();
+	dev->requestMacAddress();
+	dev->requestGateway();
+	dev->requestDNS1();
+	dev->requestDNS2();
+}
+
 void PlatformSettings::valueReceived(const DeviceValues &values_list)
 {
 	DeviceValues::const_iterator it = values_list.constBegin();

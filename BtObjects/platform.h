@@ -119,6 +119,8 @@ public:
 	QString getSubnet() const;
 	void setSubnet(QString s);
 
+	Q_INVOKABLE void requestNetworkSettings();
+
 signals:
 	void addressChanged();
 	void dnsChanged();
