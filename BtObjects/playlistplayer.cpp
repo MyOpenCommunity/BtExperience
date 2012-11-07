@@ -315,6 +315,11 @@ void AudioVideoPlayer::setMute(bool newValue)
 	media_player->setMute(newValue);
 }
 
+bool AudioVideoPlayer::getPlaying() const
+{
+	return media_player->getPlayerState() == MultiMediaPlayer::Playing;
+}
+
 void AudioVideoPlayer::incrementVolume()
 {
 	setMute(false);
@@ -335,6 +340,7 @@ void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerStat
 			next();
 	}
 	user_track_change_request = false;
+	emit playingChanged();
 }
 
 void AudioVideoPlayer::play()

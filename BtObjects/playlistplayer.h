@@ -139,6 +139,11 @@ class AudioVideoPlayer : public PlayListPlayer
 	*/
 	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
 
+	/*!
+		\brief Is player playing anything?
+	*/
+	Q_PROPERTY(bool playing READ getPlaying NOTIFY playingChanged)
+
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
@@ -151,6 +156,7 @@ public:
 	int getPercentage() const { return percentage; }
 	bool getMute() const;
 	void setMute(bool newValue);
+	bool getPlaying() const;
 
 public slots:
 	void prevTrack();
@@ -168,6 +174,7 @@ signals:
 	void volumeChanged();
 	void percentageChanged();
 	void muteChanged();
+	void playingChanged();
 
 private slots:
 	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);

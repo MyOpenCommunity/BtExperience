@@ -183,20 +183,16 @@ Page {
             anchors.centerIn: parent
 
             onClicked: {
-                if (playButtonItem.state === "") {
-                    playButtonItem.state = "play"
-                    player.mediaPlayer.resume()
-                }
-                else {
-                    playButtonItem.state = ""
+                if (player.mediaPlayer.playing)
                     player.mediaPlayer.pause()
-                }
+                else
+                    player.mediaPlayer.resume()
             }
 
             status: 0
         }
 
-        state: "play"
+        state: player.mediaPlayer.playing ? "play" : ""
 
         states: [
             State {
