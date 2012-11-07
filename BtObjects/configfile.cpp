@@ -88,6 +88,12 @@ void parseConfFile()
 			config[PI_ADDRESS] = dev + address;
 
 		config[PI_MODE] = getTextChild(vde_pi_node, "mode");
+
+		QString def_address = getDeviceValue(vde_pi_node, "p_default/address");
+		QString def_dev = getDeviceValue(vde_pi_node, "p_default/dev");
+
+		if (!def_address.isNull() && def_address != "-1")
+			config[DEFAULT_PE] = def_dev + def_address;
 	}
 	else
 		config[PI_MODE] = QString();
