@@ -375,9 +375,9 @@ void GlobalProperties::updateTime()
 	emit lastTimePressChanged();
 }
 
-void GlobalProperties::mouseReleased(QPoint pos)
+void GlobalProperties::maxTravelledDistanceOnLastMove(QPoint value)
 {
-	mouse_position = pos;
+	max_travelled_distance = value;
 }
 
 void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
@@ -404,9 +404,9 @@ void GlobalProperties::beep()
 		sound_player->play(path);
 }
 
-QPoint GlobalProperties::mouseReleasePosition() const
+QPoint GlobalProperties::maxTravelledDistanceOnLastMove() const
 {
-	return mouse_position;
+	return max_travelled_distance;
 }
 
 void GlobalProperties::beepChanged()

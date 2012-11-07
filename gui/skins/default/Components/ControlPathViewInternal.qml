@@ -103,7 +103,7 @@ PathView {
         // start position is taken relative to this item, while releasePosition
         // is already global
         var start = control.mapToItem(null, realClick.mouseStart.x, realClick.mouseStart.y)
-        if (Math.abs(global.mouseReleasePosition().x - start.x) < 20) {
+        if (global.maxTravelledDistanceOnLastMove().x < 20) {
             control.internalClick()
         }
 

@@ -40,12 +40,32 @@ bool InputMethodEventFilter::eventFilter(QObject *obj, QEvent *event)
 }
 
 
+namespace
+{
+	QPoint lastPressPosition;
+	QPoint maxDifferencesOnMove;
+
+	void updateMaxDifferences(QPoint lastPosition)
+	{
+		int deltaX = abs(lastPosition.x() - lastPressPosition.x());
+		int deltaY = abs(lastPosition.y() - lastPressPosition.y());
+
+		if (maxDifferencesOnMove.x() < deltaX)
+			maxDifferencesOnMove.setX(deltaX);
+
+		if (maxDifferencesOnMove.y() < deltaY)
+			maxDifferencesOnMove.setY(deltaY);
+	}
+}
 
 bool LastClickTime::pressed = false;
 
 bool LastClickTime::eventFilter(QObject *obj, QEvent *ev)
 {
 	Q_UNUSED(obj)
+
+	QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(ev);
+
 	// Save last click time
 	if (ev->type() == QEvent::MouseButtonPress || ev->type() == QEvent::MouseButtonDblClick)
 	{
@@ -53,12 +73,23 @@ bool LastClickTime::eventFilter(QObject *obj, QEvent *ev)
 		pressed = true;
 	}
 
+	if (ev->type() == QEvent::MouseButtonPress)
+	{
+		lastPressPosition = mouseEvent->pos();
+		maxDifferencesOnMove.setX(0);
+		maxDifferencesOnMove.setY(0);
+	}
+
 	if (ev->type() == QEvent::MouseButtonRelease)
 	{
 		emit updateTime();
-		QMouseEvent *event = static_cast<QMouseEvent *>(ev);
-		emit mouseRelease(event->pos());
 		pressed = false;
+		emit maxTravelledDistanceOnLastMove(maxDifferencesOnMove);
+	}
+
+	if (ev->type() == QEvent::MouseMove)
+	{
+		updateMaxDifferences(mouseEvent->pos());
 	}
 
 	return false;

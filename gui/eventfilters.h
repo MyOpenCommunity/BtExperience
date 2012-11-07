@@ -34,7 +34,7 @@ public:
 
 signals:
 	void updateTime();
-	void mouseRelease(QPoint pos);
+	void maxTravelledDistanceOnLastMove(QPoint pos);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev);

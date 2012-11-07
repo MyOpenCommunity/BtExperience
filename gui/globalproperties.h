@@ -110,7 +110,7 @@ public:
 
 	Q_INVOKABLE void beep();
 
-	Q_INVOKABLE QPoint mouseReleasePosition() const;
+	Q_INVOKABLE QPoint maxTravelledDistanceOnLastMove() const;
 
 	// this is a separate method because it needs to happen only after
 	// configuration file parsing
@@ -121,7 +121,7 @@ public:
 
 public slots:
 	void updateTime();
-	void mouseReleased(QPoint pos);
+	void maxTravelledDistanceOnLastMove(QPoint pos);
 
 signals:
 	void lastTimePressChanged();
@@ -157,7 +157,7 @@ private:
 	bool debug_touchscreen;
 	DebugTiming *debug_timing;
 	HwKeys *hardware_keys;
-	QPoint mouse_position;
+	QPoint max_travelled_distance;
 
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
