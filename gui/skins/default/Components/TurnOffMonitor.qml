@@ -20,6 +20,15 @@ Item {
         onLastTimePressChanged: manageControlState()
     }
 
+    Connections {
+        target: global.hardwareKeys
+        onPressed: {
+            // turn off monitor on hw key 3 press
+            if (index === 3)
+                state = "running"
+        }
+    }
+
     // manages control logic related to app and user events; it doesn't
     // consider mouse interaction once the control activates
     // mouse interaction while running is managed inside MouseArea because
