@@ -7,7 +7,7 @@ TextEdit {
     // above the keyboard
     property variant containerWidget
 
-    onFocusChanged: {
+    onActiveFocusChanged: {
         if (!containerWidget)
             return
 

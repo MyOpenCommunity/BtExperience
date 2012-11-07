@@ -57,11 +57,13 @@
 #define LAYOUT_FILE "layout.xml"
 #define NOTES_FILE "notes.xml"
 #define SETTINGS_FILE "settings.xml"
+#define CONF_LOADED "BtExperience_checkconfok"
 #else
 #define ARCHIVE_FILE "/home/bticino/cfg/extra/0/archive.xml"
 #define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
 #define NOTES_FILE "/home/bticino/cfg/extra/0/notes.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
+#define CONF_LOADED "/var/tmp/flags/BtExperience_checkconfok"
 #endif
 
 QHash<GlobalField, QString> *bt_global::config;
@@ -69,6 +71,18 @@ QHash<GlobalField, QString> *bt_global::config;
 
 namespace
 {
+	void createFlagFile(QString filename)
+	{
+#if defined(BT_HARDWARE_X11)
+		Q_UNUSED(filename);
+#else
+		QFile fh(filename);
+
+		if (!fh.open(QFile::WriteOnly))
+			qWarning("unable to create flag file");
+#endif
+	}
+
 	template<class Tr>
 	QList<Tr> convertObjectPairList(QList<ObjectPair> pairs)
 	{
@@ -236,6 +250,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	connect(&note_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateNotes()));
 
 	device::initDevices();
+	createFlagFile(CONF_LOADED);
 }
 
 void BtObjectsPlugin::createObjects()
