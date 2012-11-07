@@ -4,6 +4,7 @@
 #include <QEvent>
 #include <QWidget>
 #include <QApplication>
+#include <QDebug>
 
 
 InputMethodEventFilter::InputMethodEventFilter()
@@ -75,7 +76,7 @@ bool LastClickTime::eventFilter(QObject *obj, QEvent *ev)
 
 	if (ev->type() == QEvent::MouseButtonPress)
 	{
-		lastPressPosition = mouseEvent->pos();
+		lastPressPosition = mouseEvent->globalPos();
 		maxDifferencesOnMove.setX(0);
 		maxDifferencesOnMove.setY(0);
 	}
@@ -89,7 +90,7 @@ bool LastClickTime::eventFilter(QObject *obj, QEvent *ev)
 
 	if (ev->type() == QEvent::MouseMove)
 	{
-		updateMaxDifferences(mouseEvent->pos());
+		updateMaxDifferences(mouseEvent->globalPos());
 	}
 
 	return false;

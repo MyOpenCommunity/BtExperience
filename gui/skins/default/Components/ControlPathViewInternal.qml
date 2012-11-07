@@ -100,25 +100,8 @@ PathView {
         currentPressed = -1
     }
     onMovementEnded: {
-        // start position is taken relative to this item, while releasePosition
-        // is already global
-        var start = control.mapToItem(null, realClick.mouseStart.x, realClick.mouseStart.y)
-        if (global.maxTravelledDistanceOnLastMove().x < 20) {
+        if (global.maxTravelledDistanceOnLastMove().x < 20)
             control.internalClick()
-        }
-
         currentPressed = -1
-    }
-
-    MouseArea {
-        id: realClick
-        property variant mouseStart: undefined
-        anchors.fill: parent
-        // needed, otherwise clicks are not registered
-        z: 10
-        onPressed: {
-            realClick.mouseStart = {'x': mouse.x, 'y': mouse.y}
-            mouse.accepted = false
-        }
     }
 }
