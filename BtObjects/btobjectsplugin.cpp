@@ -177,7 +177,13 @@ namespace
 	enum ParserConstants
 	{
 		IdDimmer100 = 2002,
-		IdLight = 2003
+		IdLight = 2003,
+		IdEnergyElectricity = 6105,
+		IdEnergyWater = 6106,
+		IdEnergyGas = 6107,
+		IdEnergyDomesticHotWater = 6108,
+		IdEnergyHeatingCooling = 6109,
+		IdEnergyCustom = 6110
 	};
 }
 
@@ -434,22 +440,22 @@ void BtObjectsPlugin::createObjects()
 
 			switch (getIntAttribute(xml_obj, "cid"))
 			{
-			case 6105:
+			case IdEnergyElectricity:
 				family = EnergyFamily::Electricity;
 				break;
-			case 6106:
+			case IdEnergyWater:
 				family = EnergyFamily::Water;
 				break;
-			case 6107:
+			case IdEnergyGas:
 				family = EnergyFamily::Gas;
 				break;
-			case 6108:
+			case IdEnergyDomesticHotWater:
 				family = EnergyFamily::DomesticHotWater;
 				break;
-			case 6109:
+			case IdEnergyHeatingCooling:
 				family = EnergyFamily::HeatingCooling;
 				break;
-			case 6110:
+			case IdEnergyCustom:
 				family = EnergyFamily::Custom;
 				break;
 			default:
