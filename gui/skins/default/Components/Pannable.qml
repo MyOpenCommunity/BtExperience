@@ -5,11 +5,23 @@ import QtQuick 1.0
 // when the on-screen keyboard is displayed, move the flickable content so the
 // input cursor is entirely on-screen and (if necessary) move the flickable upwards
 // so the input field is not obscured by the on-screen keyboard
+//
+// see also BaseTextInput and BaseTextEdit
 Item {
     // bind this property to the .y property of the Flickable child
     property real childOffset: 0.0
     property bool keyboardVisible: false
     property Item contentItem: children[0]
+
+    property int keyboardTop
+    property int keyboardHeight
+
+    // cursor top/bottom relative to Pannable
+    property double mappedVisibleTop
+    property double mappedVisibleBottom
+
+    property Item focusedItem
+    property Item focusedWidget
 
     id: container
     clip: true
@@ -17,7 +29,7 @@ Item {
     Connections {
         target: global.inputWrapper.inputContext
         onInputMethodAreaChanged: {
-            var cursor = global.inputWrapper.cursorRect;
+            var cursor = global.inputWrapper.cursorRect
 
             // On the touch (probably depends on Qt version rather than environemnt),
             // we get a first input method area change event with
@@ -33,8 +45,7 @@ Item {
                 return
 
             setKeyboardRect(region)
-            setCursorRect(cursor)
-            setKeyboardVisible(region.height !== 0)
+            updateCursorRect()
         }
         // We silent the warnings because the signal inputMethodAreaChanged exist only
         // when Mailiit is installed as input context.
@@ -45,47 +56,96 @@ Item {
     function setKeyboardRect(rect) {
         var mapped = mapFromItem(null, 0, rect.y)
 
-        this.keyboardHeight = height - mapped.y
-        this.keyboardTop = mapped.y
+        keyboardHeight = height - mapped.y
+        keyboardTop = mapped.y
+        keyboardVisible = rect.height !== 0
+
+        if (!keyboardVisible) {
+            childOffset = 0.0
+            mappedVisibleTop = mappedVisibleBottom = 0
+        }
     }
 
     // sets the area used by the input cursor, in screen coordinates
-    function setCursorRect(rect) {
+    function updateCursorRect() {
         var OFFSET = 10.0 // arbitrary border between the widget border and the input field
-        var mappedTop = mapFromItem(null, 0, rect.y - OFFSET)
-        var mappedBottom = mapFromItem(null, 0, rect.y + rect.height + OFFSET)
 
-        this.focusRect = {top: mappedTop.y, bottom: mappedBottom.y}
+        var rect = global.inputWrapper.cursorRect
+        var mappedTop = mapFromItem(null, rect.x, rect.y)
+        var mappedBottom = mapFromItem(null, rect.x, rect.y + rect.height)
+
+        if (focusedWidget) {
+            // assumption: cursor is always inside the focus widget, othervise implement rectangle union
+            var fwTop = mapFromItem(focusedWidget.parent, focusedWidget.x, focusedWidget.y)
+
+            rect = Qt.rect(fwTop.x, fwTop.y, focusedWidget.width, focusedWidget.height)
+            mappedTop.y = fwTop.y
+            mappedBottom.y = fwTop.y + focusedWidget.height
+        }
+
+        var newMappedVisibleTop = mappedTop.y - OFFSET
+        var newMappedVisibleBottom = mappedBottom.y + OFFSET
+
+        if (keyboardVisible && (newMappedVisibleTop !== mappedVisibleTop || newMappedVisibleBottom !== mappedVisibleBottom)) {
+            mappedVisibleTop = newMappedVisibleTop
+            mappedVisibleBottom = newMappedVisibleBottom
+            ensureCursorVisible()
+        }
     }
 
-    function setKeyboardVisible(visible) {
+    function ensureCursorVisible() {
         var delta = 0
 
-        keyboardVisible = visible
-
-        if (!visible) {
-            this.childOffset = 0.0
-
-            return
-        }
-
-        // handle Flickable content with the input field partially scrolled outside the screen
+        // handle Flickable content with the input field partially scrolled outside the item
         if (contentItem.contentY !== undefined) {
+            var mappedTop = mapToItem(contentItem, 0, mappedVisibleTop)
+            var mappedBottom = mapToItem(contentItem, 0, mappedVisibleBottom)
+
             // if the input field is partially outside the screen, move it into view;
             // this is not rolled back when the keyboard is hidden
-            if (this.focusRect.top < 0)
-                delta = this.focusRect.top;
-            else if (this.focusRect.bottom > height)
-                delta = this.focusRect.bottom - height
+            if (mappedTop.y + contentItem.contentY < 0)
+                delta = mappedTop.y
+            else if (mappedBottom.y + contentItem.contentY > height)
+                delta = mappedBottom.y - height
 
             contentItem.contentY += delta
-            this.focusRect.top -= delta
-            this.focusRect.bottom -= delta
+            mappedVisibleTop -= delta
+            mappedVisibleBottom -= delta
         }
-
         // if the input field is covered by the keyboard, move the entire widget
         // upwards se the input field is visible
-        if (this.focusRect.bottom > this.keyboardTop)
-            this.childOffset -= this.focusRect.bottom - this.keyboardTop
+        if (mappedVisibleBottom > keyboardTop)
+            childOffset -= mappedVisibleBottom - keyboardTop
+    }
+
+    // since the cursor position is not a property, it's necessary to poll it for changes
+    Timer {
+        id: pollCursor
+        interval: 2000
+        repeat: true
+        running: keyboardVisible
+
+        property int lastTop
+
+        onTriggered: {
+            var y = global.inputWrapper.cursorRect.y
+
+            if (lastTop !== y)
+                updateCursorRect()
+            lastTop = y
+        }
+    }
+
+    function setCursorContainerWidget(item, focus, widget) {
+        if (!focus && focusedItem === item) {
+            focusedItem = null
+            focusedWidget = null
+        } else if (focus) {
+            focusedItem = item
+            focusedWidget = widget
+
+            if (keyboardVisible)
+                updateCursorRect()
+        }
     }
 }

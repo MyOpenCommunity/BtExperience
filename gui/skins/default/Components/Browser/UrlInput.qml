@@ -1,4 +1,5 @@
 import QtQuick 1.0
+import Components.Text 1.0
 
  Item {
      id: container
@@ -26,7 +27,7 @@ import QtQuick 1.0
          opacity: view.progress === 1.0 ? 0.0 : 1.0
      }
 
-     TextInput {
+     UbuntuMediumTextInput {
          id: urlText
          horizontalAlignment: TextEdit.AlignLeft
          font.pixelSize: 14;

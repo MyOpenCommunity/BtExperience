@@ -177,7 +177,7 @@ Item {
 
         Component {
             id: labelInputComponent
-            TextInput {
+            UbuntuLightTextInput {
                 text: bgQuick.text
                 color: global.guiSettings.skin === GuiSettings.Clear ? "#434343":
                                                                        "#FFFFFF"

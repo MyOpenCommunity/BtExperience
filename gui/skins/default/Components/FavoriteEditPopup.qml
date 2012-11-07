@@ -3,6 +3,8 @@ import Components.Text 1.0
 
 
 Item {
+    id: popup
+
     width: background.width
     height: background.height
     property variant favoriteItem: undefined
@@ -57,11 +59,12 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: 20
-            TextInput {
+            UbuntuLightTextInput {
                 id: addressInput
                 anchors.fill: parent
                 activeFocusOnPress: false
                 text: "www.corriere.it"
+                containerWidget: popup
             }
 
             MouseArea {
@@ -91,11 +94,12 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 10
         height: 20
-        TextInput {
+        UbuntuLightTextInput {
             id: descriptionInput
             anchors.fill: parent
             activeFocusOnPress: false
             text: "www.corriere.it"
+            containerWidget: popup
         }
 
         MouseArea {

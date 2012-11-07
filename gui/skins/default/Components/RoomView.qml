@@ -12,45 +12,57 @@ Item {
 
     signal focusLost // to signal to menu when menu focus is lost
 
-    Rectangle {
-        id: darkRect
-
+    Pannable {
+        id: pannable
         anchors.fill: parent
-        color: "black"
-        opacity: 0
-        radius: 20
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if (darkRect.state === "menuHighlighted")
-                    privateProps.unselectObj()
-                else
-                    privateProps.closeMenu()
-            }
-        }
+        Item {
+            id: content
+            x: parent.left
+            y: parent.childOffset
+            width: parent.width
+            height: parent.height
 
-        Behavior on opacity {
-            NumberAnimation { duration: 200 }
-        }
+            Rectangle {
+                id: darkRect
+                anchors.fill: parent
+                color: "black"
+                opacity: 0
+                radius: 20
 
-        states: [
-            State {
-                name: "shown"
-                PropertyChanges {
-                    target: darkRect
-                    opacity: 0.6
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        if (darkRect.state === "menuHighlighted")
+                            privateProps.unselectObj()
+                        else
+                            privateProps.closeMenu()
+                    }
                 }
-            },
-            State {
-                name: "menuOpened"
-                extend: "shown"
-            },
-            State {
-                name: "menuHighlighted"
-                extend: "shown"
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 200 }
+                }
+
+                states: [
+                    State {
+                        name: "shown"
+                        PropertyChanges {
+                            target: darkRect
+                            opacity: 0.6
+                        }
+                    },
+                    State {
+                        name: "menuOpened"
+                        extend: "shown"
+                    },
+                    State {
+                        name: "menuHighlighted"
+                        extend: "shown"
+                    }
+                ]
             }
-        ]
+        }
     }
 
     function startMove(container) {
@@ -277,7 +289,7 @@ Item {
                 privateProps.refX = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).x + 0.5 * bgMoveArea.width
                 privateProps.refY = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).y + 0.5 * bgMoveArea.height
 
-                var object = itemComponent.createObject(roomView, {"rootData": obj.btObject, 'x': x, 'y': y, 'pageObject': pageObject, "itemObject": obj})
+                var object = itemComponent.createObject(content, {"rootData": obj.btObject, 'x': x, 'y': y, 'pageObject': pageObject, "itemObject": obj})
                 Script.obj_array.push(object)
             }
         }

@@ -101,14 +101,20 @@ Image {
         }
     }
 
-    Loader {
-        id: popupLoader
-        opacity: 0
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+    Pannable {
+        id: pannable
+        anchors.fill: parent
         z: 10
-        Behavior on opacity {
-            NumberAnimation { duration: constants.alertTransitionDuration }
+
+        Loader {
+            id: popupLoader
+            opacity: 0
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenterOffset: parent.childOffset
+            Behavior on opacity {
+                NumberAnimation { duration: constants.alertTransitionDuration }
+            }
         }
     }
 
