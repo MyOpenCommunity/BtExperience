@@ -43,11 +43,13 @@ Page {
             bottom: parent.bottom
             bottomMargin: 22
         }
-        onLeftClicked: {
-            state = "terminate"
-            control.camera.answerCall()
-        }
+        onLeftClicked: control.camera.answerCall()
         onRightClicked: control.endCall()
+
+        Connections {
+            target: control.camera
+            onCallAnswered: controlCallManager.state = "terminate"
+        }
     }
 
     ControlVideo {

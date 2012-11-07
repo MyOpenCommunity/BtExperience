@@ -80,15 +80,18 @@ SvgImage {
             left: parent.left
         }
         onLeftClicked: {
-            if (dataObject !== undefined) {
+            if (dataObject !== undefined)
                 dataObject.answerCall()
-                control.state = "activeCall"
-            }
         }
         onRightClicked: {
             if (dataObject !== undefined)
                 dataObject.endCall()
             closePopup()
+        }
+
+        Connections {
+            target: callManager.dataObject
+            onCallAnswered: control.state = "activeCall"
         }
     }
 
