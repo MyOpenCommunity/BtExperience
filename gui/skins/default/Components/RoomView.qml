@@ -31,6 +31,7 @@ Item {
                 radius: 20
 
                 MouseArea {
+                    id: areaDarkRect
                     anchors.fill: parent
                     onClicked: {
                         if (darkRect.state === "menuHighlighted")
@@ -171,7 +172,11 @@ Item {
                 Transition {
                     from: ""
                     to: "opened"
-                    NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
+                    SequentialAnimation {
+                        PropertyAction { target: areaDarkRect; property: "visible"; value: false }
+                        NumberAnimation { targets: container; properties: "x, y"; duration: 400 }
+                        PropertyAction { target: areaDarkRect; property: "visible"; value: true }
+                    }
                 },
                 Transition {
                     from: "opened"
