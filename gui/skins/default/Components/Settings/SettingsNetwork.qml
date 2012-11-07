@@ -38,6 +38,8 @@ MenuColumn {
         // HACK dataModel is not working, so let's define a model property here
         // when dataModel work again, change all references!
         property variant model: objectModel.getObject(0)
+
+        Component.onCompleted: model.requestNetworkSettings()
     }
 
     onChildDestroyed: privateProps.currentIndex = -1
