@@ -126,6 +126,7 @@ public:
 public slots:
 	void updateTime();
 	void setMaxTravelledDistanceOnLastMove(QPoint pos);
+	void handleSignal(int signal_number);
 
 signals:
 	void lastTimePressChanged();
@@ -133,6 +134,7 @@ signals:
 	void keyboardLayoutChanged();
 	void audioPlayerChanged();
 	void monitorOffChanged();
+	void systemTimeChanged();
 
 private slots:
 #ifdef BT_MALIIT

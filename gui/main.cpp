@@ -32,6 +32,7 @@
 #include "guisettings.h"
 #include "imagereader.h"
 #include "xml_functions.h"
+#include "signalshandler.h"
 
 
 #define VERBOSITY_LEVEL_DEFAULT 0x1F
@@ -130,9 +131,9 @@ public:
 	void boot()
 	{
 		viewer = new QmlApplicationViewer;
-	#if USE_OPENGL
+#if USE_OPENGL
 		setupOpenGL(viewer);
-	#endif
+#endif
 
 		viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
 
@@ -146,9 +147,9 @@ public:
 			qFatal("Maliit initialization failed");
 
 		addMaliitSurfaces(viewer->scene(), Maliit::InputMethod::instance()->widget());
-	#if !USE_OPENGL
+#if !USE_OPENGL
 		viewer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-	#endif
+#endif
 #endif
 
 #if defined(Q_WS_X11) || defined(Q_WS_MAC)
@@ -236,6 +237,12 @@ int main(int argc, char *argv[])
 	setupLogger(general_config.log_file);
 	VERBOSITY_LEVEL = general_config.verbosity_level;
 
+	// TODO use this?
+	//#ifdef BT_HARDWARE_PXA270
+	//	signal(SIGUSR1, MySignal);
+	//#endif
+	SignalsHandler *sh = installSignalsHandler();
+
 	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
 #if defined(BT_MALIIT)
@@ -276,11 +283,14 @@ int main(int argc, char *argv[])
 	app.setApplicationVersion(QString("Mobile"));
 
 	GlobalProperties global(app_logger);
+	sh->connect(sh, SIGNAL(signalReceived(int)), &global, SLOT(handleSignal(int)));
 	ImageReader::setBasePath(global.getBasePath());
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
 	QObject::connect(last_click, SIGNAL(maxTravelledDistanceOnLastMove(QPoint)), &global, SLOT(setMaxTravelledDistanceOnLastMove(QPoint)));
 	BootManager boot_manager(&global);
 	return app.exec();
+	delete sh;
+	sh = 0;
 }
 
 #include "main.moc"

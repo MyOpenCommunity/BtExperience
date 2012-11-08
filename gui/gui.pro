@@ -68,7 +68,9 @@ SOURCES += \
     hwkeys.cpp \
     imagereader.cpp \
     inputcontextwrapper.cpp \
-    ringtonemanager.cpp
+	ringtonemanager.cpp \
+	../BtObjects/ts/signalshandler.cpp
+
 
 HEADERS += \
     audiostate.h \
@@ -78,7 +80,8 @@ HEADERS += \
     hwkeys.h \
     imagereader.h \
     inputcontextwrapper.h \
-    ringtonemanager.h
+	ringtonemanager.h \
+	../BtObjects/ts/signalshandler.h
 
 TRANSLATIONS += locale/bt_experience_it.ts \
 	locale/bt_experience_fr.ts
