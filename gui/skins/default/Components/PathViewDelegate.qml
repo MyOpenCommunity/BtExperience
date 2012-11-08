@@ -23,9 +23,9 @@ Item {
         anchors {
             fill: bg
             topMargin: bg.height / 100 * 1.65
-            leftMargin: bg.width / 100 * 2.38
-            rightMargin: bg.width / 100 * 2.86
-            bottomMargin: bg.height / 100 * 16.17
+            leftMargin: bg.width / 100 * 1.98
+            rightMargin: bg.width / 100 * 2.38
+            bottomMargin: bg.height / 100 * 15.50
         }
     }
 
