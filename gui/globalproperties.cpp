@@ -385,20 +385,6 @@ void GlobalProperties::setMaxTravelledDistanceOnLastMove(QPoint value)
 	max_travelled_distance = value;
 }
 
-void GlobalProperties::handleSignal(int signal_number)
-{
-	if (signal_number == SIGUSR2)
-	{
-		qDebug("Received signal SIGUSR2");
-		emit systemTimeChanged();
-	}
-	else if (signal_number == SIGTERM)
-	{
-		qDebug("Terminating on SIGTERM");
-		qApp->quit();
-	}
-}
-
 void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
 {
 	main_widget = _viewport;

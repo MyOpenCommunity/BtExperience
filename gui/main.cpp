@@ -228,20 +228,17 @@ static void loadGeneralConfig(GeneralConfig &general_config)
 }
 
 
+
 int main(int argc, char *argv[])
 {
+	SignalsHandler *sh = installSignalsHandler();
+
 	QApplication app(argc, argv);
 
 	GeneralConfig general_config;
 	loadGeneralConfig(general_config);
 	setupLogger(general_config.log_file);
 	VERBOSITY_LEVEL = general_config.verbosity_level;
-
-	// TODO use this?
-	//#ifdef BT_HARDWARE_PXA270
-	//	signal(SIGUSR1, MySignal);
-	//#endif
-	SignalsHandler *sh = installSignalsHandler();
 
 	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
@@ -281,9 +278,7 @@ int main(int argc, char *argv[])
 	//Set user-agent of the application in order to see the Mobile version of the web sites
 	app.setApplicationName(QString("Nokia"));
 	app.setApplicationVersion(QString("Mobile"));
-
 	GlobalProperties global(app_logger);
-	sh->connect(sh, SIGNAL(signalReceived(int)), &global, SLOT(handleSignal(int)));
 	ImageReader::setBasePath(global.getBasePath());
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
 	QObject::connect(last_click, SIGNAL(maxTravelledDistanceOnLastMove(QPoint)), &global, SLOT(setMaxTravelledDistanceOnLastMove(QPoint)));
