@@ -196,7 +196,7 @@ Page {
 
             // answer call on hw key 0 press, open lock on hw key 1
             if (index === 1)
-                control.camera.openLock()
+                control.camera.releaseLock()
         }
     }
 
