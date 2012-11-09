@@ -21,7 +21,7 @@ namespace
 HwKeys::HwKeys(QObject *parent) : QObject(parent)
 {
 #if defined(BT_HARDWARE_X11)
-	handle = 0;
+	handle = -1;
 #else
 	handle = open(EVENT_PATH, O_RDONLY | O_SYNC);
 	if (handle < 0)
