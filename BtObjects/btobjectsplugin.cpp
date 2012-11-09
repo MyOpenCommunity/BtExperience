@@ -322,9 +322,6 @@ void BtObjectsPlugin::createObjects()
 				rates[rate->getRateId()] = rate;
 			}
 			break;
-		case ObjectInterface::IdAlarmClock:
-			obj_list = parseAlarmClocks(xml_obj);
-			break;
 		case IdHandsFree:
 			hands_free = parseEnableFlag(xml_obj);
 			break;
@@ -596,6 +593,41 @@ void BtObjectsPlugin::createObjects()
 		}
 	}
 
+	// note that this returns source objects even if sound diffusion is not configured, because
+	// the objects are used to construct the item list for multimedia
+	//
+	// source objects are used for alarm clock construction
+	foreach (ObjectPair p, createLocalSources(is_multichannel, multimedia))
+	{
+		if (p.first != -1)
+			uii_map.insert(p.first, p.second);
+		objmodel << p.second;
+	}
+
+
+	foreach (const QDomNode &xml_obj, getChildren(settings.documentElement(), "obj"))
+	{
+		QList<ObjectPair> obj_list;
+		int id = getIntAttribute(xml_obj, "id");
+
+		switch (id)
+		{
+		case ObjectInterface::IdAlarmClock:
+			obj_list = parseAlarmClocks(xml_obj, getSoundSources(objmodel), uii_map);
+			break;
+		}
+
+		if (!obj_list.isEmpty())
+		{
+			foreach (ObjectPair p, obj_list)
+			{
+				uii_map.insert(p.first, p.second);
+				uii_to_id[p.first] = id;
+				objmodel << p.second;
+			}
+		}
+	}
+
 	if (antintrusion_zones.size())
 		objmodel << createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios);
 	if ((*bt_global::config)[PI_ADDRESS] != "")
@@ -608,15 +640,6 @@ void BtObjectsPlugin::createObjects()
 
 		objmodel << cctv;
 		objmodel << createIntercom(intercom);
-	}
-
-	// note that this returns source objects even if sound diffusion is not configured, because
-	// the objects are used to construct the item list for multimedia
-	foreach (ObjectPair p, createLocalSources(is_multichannel, multimedia))
-	{
-		if (p.first != -1)
-			uii_map.insert(p.first, p.second);
-		objmodel << p.second;
 	}
 
 	objmodel << new HardwareSettings;
@@ -799,7 +822,7 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 			updateEnergyRate(node_path.first, qobject_cast<EnergyRate *>(obj_int));
 			break;
 		case ObjectInterface::IdAlarmClock:
-			updateAlarmClocks(node_path.first, qobject_cast<AlarmClock *>(obj_int));
+			updateAlarmClocks(node_path.first, qobject_cast<AlarmClock *>(obj_int), uii_map);
 			break;
 		}
 	}
@@ -880,7 +903,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 				QDomElement ist_obj = settings.createElement("ist");
 				// TODO for now, we are sure we have only AlarmClocks objects;
 				// if other classes need this, update code accordingly
-				updateAlarmClocks(ist_obj, qobject_cast<AlarmClock *>(obj_interface));
+				updateAlarmClocks(ist_obj, qobject_cast<AlarmClock *>(obj_interface), uii_map);
 				setAttribute(ist_obj, "uii", QString::number(uii));
 				xml_obj.appendChild(ist_obj);
 				break;

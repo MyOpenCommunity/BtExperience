@@ -11,10 +11,11 @@ class AlarmClock;
 class QTimer;
 class Amplifier;
 class SourceObject;
+class UiiMapper;
 
 
-QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node);
-void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock);
+QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node, QList<SourceObject *> sources, const UiiMapper &uii_map);
+void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &uii_map);
 
 
 /*!
@@ -138,9 +139,6 @@ public:
 	int getVolume() const;
 	bool isRinging() const;
 
-	static void addSource(SourceObject *source);
-	static void addAmplifier(Amplifier *amplifier);
-
 signals:
 	void alarmTypeChanged();
 	void checkRequested();
@@ -185,10 +183,6 @@ private:
 	Amplifier *amplifier;
 	SourceObject *source;
 	int volume;
-
-	// used when loading/saving configurations
-	static QHash<int, Amplifier *> amplififers;
-	static QHash<int, SourceObject *> sources;
 };
 
 #endif // ALARMCLOCK_H

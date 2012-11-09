@@ -31,37 +31,62 @@ namespace
 }
 
 
-QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node)
+QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node, QList<SourceObject *> sources, const UiiMapper &uii_map)
 {
 	QList<ObjectPair> obj_list;
 	XmlObject v(xml_node);
 
-	QString def_descr = getAttribute(xml_node, "descr", "Alarm clock");
-	int def_enabled = getIntAttribute(xml_node, "enabled", 0);
-	int def_type = getIntAttribute(xml_node, "type", 0);
-	int def_days = getIntAttribute(xml_node, "days", 0);
-	int def_hour = getIntAttribute(xml_node, "hour", 0);
-	int def_minutes = getIntAttribute(xml_node, "minutes", 0);
-
 	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
 	{
 		v.setIst(ist);
-
 		int uii = getIntAttribute(ist, "uii");
+		AlarmClock *alarm = new AlarmClock(v.value("descr"), v.intValue("enabled"), v.intValue("type"),
+						   v.intValue("days"), v.intValue("hour"), v.intValue("minutes"));
 
-		QString descr = getAttribute(ist, "descr", def_descr);
-		int enabled = getIntAttribute(ist, "enabled", def_enabled);
-		int type = getIntAttribute(ist, "type", def_type);
-		int days = getIntAttribute(ist, "days", def_days);
-		int hour = getIntAttribute(ist, "hour", def_hour);
-		int minutes = getIntAttribute(ist, "minutes", def_minutes);
+		if (alarm->getAlarmType() == AlarmClock::AlarmClockSoundSystem)
+		{
+			alarm->setVolume(v.intValue("volume"));
+			alarm->setAmplifier(uii_map.value<Amplifier>(v.intValue("amplifier_uii")));
 
-		obj_list << ObjectPair(uii, new AlarmClock(descr, enabled != 0, type, days, hour, minutes));
+			SourceObject::SourceObjectType source_type;
+
+			switch (v.intValue("source_type"))
+			{
+			case 0:
+				source_type = SourceObject::Aux;
+				break;
+			case 1:
+				source_type = SourceObject::RdsRadio;
+				break;
+			case 2:
+				source_type = SourceObject::IpRadio;
+				break;
+			case 3:
+				source_type = SourceObject::Sd;
+				break;
+			case 4:
+				source_type = SourceObject::Usb;
+				break;
+			default:
+				qFatal("Invalid source type for alarm clock");
+			}
+
+			foreach (SourceObject *source, sources)
+			{
+				if (source->getSourceType() == source_type)
+				{
+					alarm->setSource(source);
+					break;
+				}
+			}
+		}
+
+		obj_list << ObjectPair(uii, alarm);
 	}
 	return obj_list;
 }
 
-void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock)
+void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &uii_map)
 {
 	setAttribute(node, "descr", alarm_clock->getDescription());
 	setAttribute(node, "enabled", QString::number(alarm_clock->isEnabled()));
@@ -69,6 +94,36 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock)
 	setAttribute(node, "days", QString::number(alarm_clock->getDays()));
 	setAttribute(node, "hour", QString::number(alarm_clock->getHour()));
 	setAttribute(node, "minutes", QString::number(alarm_clock->getMinute()));
+
+	if (alarm_clock->getAlarmType() == AlarmClock::AlarmClockSoundSystem)
+	{
+		setAttribute(node, "volume", QString::number(alarm_clock->getVolume()));
+		setAttribute(node, "amplifier_uii", QString::number(uii_map.findUii(alarm_clock->getAmplifier())));
+
+		int type;
+		switch (alarm_clock->getSource()->getSourceType())
+		{
+		case SourceObject::Aux:
+			type = 0;
+			break;
+		case SourceObject::RdsRadio:
+			type = 1;
+			break;
+		case SourceObject::IpRadio:
+			type = 2;
+			break;
+		case SourceObject::Sd:
+			type = 3;
+			break;
+		case SourceObject::Usb:
+			type = 4;
+			break;
+		default:
+			qFatal("Invalid source object");
+		}
+
+		setAttribute(node, "source_type", QString::number(type));
+	}
 }
 
 AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days, int _hour, int _minute, QObject *parent)
