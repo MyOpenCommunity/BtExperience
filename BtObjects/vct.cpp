@@ -168,6 +168,10 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 
 	connect(this, SIGNAL(incomingCall()), this, SLOT(manageHandsFree()));
 	connect(&video_grabber, SIGNAL(started()), SIGNAL(incomingCall()));
+
+	connect(this, SIGNAL(autoOpenChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(handsFreeChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(ringExclusionChanged()), this, SIGNAL(persistItem()));
 }
 
 int CCTV::getBrightness() const

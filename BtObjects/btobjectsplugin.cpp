@@ -171,6 +171,33 @@ namespace
 		return sources;
 	}
 
+	// TODO duplicated in globalproperties.cpp
+	void setEnableFlag(QDomDocument document, int id, bool enable)
+	{
+		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == id)
+			{
+				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+					setAttribute(ist, "enable", QString::number(int(enable)));
+				break;
+			}
+		}
+	}
+
+	bool parseEnableFlag(QDomNode xml_node)
+	{
+		bool result = false;
+		XmlObject v(xml_node);
+
+		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+		{
+			v.setIst(ist);
+			result = v.intValue("enable");
+		}
+		return result;
+	}
+
 	// these are defined here because there is no 1-to-1 correspondence
 	// between used in QML (the ones in objectinterface.h file) and the ones
 	// used in configuration file (defined here)
@@ -183,7 +210,10 @@ namespace
 		IdEnergyGas = 6107,
 		IdEnergyDomesticHotWater = 6108,
 		IdEnergyHeatingCooling = 6109,
-		IdEnergyCustom = 6110
+		IdEnergyCustom = 6110,
+		IdHandsFree = 14251,
+		IdProfessionalStudio = 14252,
+		IdRingExclusion = 14253
 	};
 }
 
@@ -273,6 +303,7 @@ void BtObjectsPlugin::createObjects()
 	QDomNode cu99zones;
 	QList<QDomNode> multimedia;
 	bool is_multichannel = false;
+	bool hands_free = false, professional_studio = false, ring_exclusion = false;
 
 	foreach (const QDomNode &xml_obj, getChildren(settings.documentElement(), "obj"))
 	{
@@ -293,6 +324,15 @@ void BtObjectsPlugin::createObjects()
 			break;
 		case ObjectInterface::IdAlarmClock:
 			obj_list = parseAlarmClocks(xml_obj);
+			break;
+		case IdHandsFree:
+			hands_free = parseEnableFlag(xml_obj);
+			break;
+		case IdProfessionalStudio:
+			professional_studio = parseEnableFlag(xml_obj);
+			break;
+		case IdRingExclusion:
+			ring_exclusion = parseEnableFlag(xml_obj);
 			break;
 		}
 
@@ -560,7 +600,13 @@ void BtObjectsPlugin::createObjects()
 		objmodel << createAntintrusionSystem(antintrusion_zones, antintrusion_aux, antintrusion_scenarios);
 	if ((*bt_global::config)[PI_ADDRESS] != "")
 	{
-		objmodel << createCCTV(vde);
+		CCTV *cctv = static_cast<CCTV *>(createCCTV(vde));
+
+		cctv->setAutoOpen(professional_studio);
+		cctv->setHandsFree(hands_free);
+		cctv->setRingExclusion(ring_exclusion);
+
+		objmodel << cctv;
 		objmodel << createIntercom(intercom);
 	}
 
@@ -711,12 +757,27 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
 
 void BtObjectsPlugin::updateObject(ItemInterface *obj)
 {
+	ObjectInterface *obj_int = qobject_cast<ObjectInterface *>(obj);
+
+	// CCTV object do not have an obj/ist, but have configurations in settings.xml
+	if (obj_int && obj_int->getObjectId() == ObjectInterface::IdCCTV)
+	{
+		CCTV *cctv = qobject_cast<CCTV*>(obj_int);
+		QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
+
+		setEnableFlag(document, IdHandsFree, cctv->getHandsFree());
+		setEnableFlag(document, IdProfessionalStudio, cctv->getAutoOpen());
+		setEnableFlag(document, IdRingExclusion, cctv->getRingExclusion());
+
+		configurations->saveConfiguration(SETTINGS_FILE);
+		return;
+	}
+
 	QPair<QDomNode, QString> node_path = findNodeForObject(obj);
 
 	if (node_path.first.isNull())
 		return;
 
-	ObjectInterface *obj_int = qobject_cast<ObjectInterface *>(obj);
 	Container *obj_cont = qobject_cast<Container *>(obj);
 	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
 	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
