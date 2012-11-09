@@ -76,6 +76,10 @@ class GlobalProperties : public QObject
 	// default external place
 	Q_PROPERTY(QString defaultExternalPlace READ getDefaultExternalPlace CONSTANT)
 
+	// current password and whether password is enabled or not
+	Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged)
+	Q_PROPERTY(bool passwordEnabled READ isPasswordEnabled WRITE setPasswordEnabled NOTIFY passwordEnabledChanged)
+
 	// Debug touchscreen events
 	Q_PROPERTY(bool debugTs READ getDebugTs CONSTANT)
 
@@ -123,6 +127,12 @@ public:
 	QString getKeyboardLayout() const;
 	void setKeyboardLayout(QString layout);
 
+	void setPassword(QString password);
+	QString getPassword() const;
+
+	void setPasswordEnabled(bool enabled);
+	bool isPasswordEnabled() const;
+
 public slots:
 	void updateTime();
 	void setMaxTravelledDistanceOnLastMove(QPoint pos);
@@ -134,6 +144,8 @@ signals:
 	void audioPlayerChanged();
 	void monitorOffChanged();
 	void systemTimeChanged();
+	void passwordChanged();
+	void passwordEnabledChanged();
 
 private slots:
 #ifdef BT_MALIIT
@@ -164,6 +176,8 @@ private:
 	DebugTiming *debug_timing;
 	HwKeys *hardware_keys;
 	QPoint max_travelled_distance;
+	QString password;
+	bool password_enabled;
 
 #ifdef BT_MALIIT
 	void maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings);

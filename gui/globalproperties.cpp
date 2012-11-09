@@ -44,6 +44,7 @@ namespace
 	enum Parsing
 	{
 		Beep = 14001,
+		Password = 14003,
 		DebugTouchscreen = 123456,
 		DebugEventTiming,
 		RingtoneS0 = 14101,
@@ -107,6 +108,34 @@ namespace
 			result = v.intValue("id_ringtone");
 		}
 		return result;
+	}
+
+	void setPassword(QDomDocument document, int id, QString password, bool enabled)
+	{
+		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == id)
+			{
+				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+				{
+					setAttribute(ist, "password", password);
+					setAttribute(ist, "mode", QString::number(bool(enabled)));
+				}
+				break;
+			}
+		}
+	}
+
+	void parsePassword(QDomNode xml_node, QString *password, bool *enabled)
+	{
+		XmlObject v(xml_node);
+
+		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+		{
+			v.setIst(ist);
+			*password = v.value("password");
+			*enabled = bool(v.intValue("mode"));
+		}
 	}
 
 	void setMonitorEnabled(int value)
@@ -247,6 +276,9 @@ void GlobalProperties::parseSettings(logger *log)
 		{
 		case Beep:
 			settings->setBeep(parseEnableFlag(xml_obj));
+			break;
+		case Password:
+			parsePassword(xml_obj, &password, &password_enabled);
 			break;
 		case DebugTouchscreen:
 			debug_touchscreen = parseEnableFlag(xml_obj);
@@ -527,6 +559,36 @@ void GlobalProperties::audioStateChangedManagement()
 void GlobalProperties::sendDelayedFrames()
 {
 	bt_global::devices_cache.checkLazyUpdate(LAZY_UPDATE_COUNT);
+}
+
+void GlobalProperties::setPassword(QString _password)
+{
+	if (password == _password)
+		return;
+	password = _password;
+	emit passwordChanged();
+	::setPassword(configurations->getConfiguration(SETTINGS_FILE), Password, password, password_enabled);
+	configurations->saveConfiguration(SETTINGS_FILE);
+}
+
+QString GlobalProperties::getPassword() const
+{
+	return password;
+}
+
+void GlobalProperties::setPasswordEnabled(bool enabled)
+{
+	if (password_enabled == enabled)
+		return;
+	password_enabled = enabled;
+	emit passwordEnabledChanged();
+	::setPassword(configurations->getConfiguration(SETTINGS_FILE), Password, password, password_enabled);
+	configurations->saveConfiguration(SETTINGS_FILE);
+}
+
+bool GlobalProperties::isPasswordEnabled() const
+{
+	return password_enabled;
 }
 
 QString GlobalProperties::getKeyboardLayout() const
