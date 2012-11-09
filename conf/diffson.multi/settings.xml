@@ -1,56 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
+	<!-- ringtones -->
 	<obj cid="14101" id="14101" id_ringtone="1">
-		<ist uii="30001" id_ringtone="2"/>
-		<ist uii="30002" id="14102" id_ringtone="2"/>
-		<ist uii="30003" id="14103" id_ringtone="3"/>
-		<ist uii="30004" id="14104" id_ringtone="4"/>
-		<ist uii="30005" id="14105" id_ringtone="2"/>
-		<ist uii="30006" id="14106" id_ringtone="2"/>
-		<ist uii="30007" id="14107" id_ringtone="2"/>
-		<ist uii="30008" id="14109" id_ringtone="2"/>
-		<ist uii="30009" id="14110" id_ringtone="2"/>
+		<ist uii="30201" id_ringtone="4"/>
 	</obj>
+	<obj cid="14102" id="14102" id_ringtone="1">
+		<ist uii="30202" id_ringtone="4"/>
+	</obj>
+	<obj cid="14103" id="14103" id_ringtone="1">
+		<ist uii="30203" id_ringtone="4"/>
+	</obj>
+	<obj cid="14104" id="14104" id_ringtone="1">
+		<ist uii="30204" id_ringtone="4"/>
+	</obj>
+	<obj cid="14105" id="14105" id_ringtone="1">
+		<ist uii="30205" id_ringtone="5"/>
+	</obj>
+	<obj cid="14106" id="14106" id_ringtone="1">
+		<ist uii="30206" id_ringtone="5"/>
+	</obj>
+	<obj cid="14107" id="14107" id_ringtone="1">
+		<ist uii="30207" id_ringtone="5"/>
+	</obj>
+	<obj cid="14109" id="14109" id_ringtone="1">
+		<ist uii="30208" id_ringtone="1"/>
+	</obj>
+	<obj cid="14110" id="14110" id_ringtone="1">
+		<ist uii="30209" id_ringtone="1"/>
+	</obj>
+	<!-- password -->
+	<obj cid="14003" id="14003" mode="0" password="12345">
+		<ist uii="30301" password="1234567" mode="1" />
+	</obj>
+	<!-- beep enable -->
 	<obj cid="14001" id="14001">
 		<ist uii="30105" enable="1" />
 	</obj>
+	<!-- threshold bip -->
 	<obj cid="14255" id="14255" enable="0">
 		<ist uii="30106" enable="1" />
 	</obj>
+	<!-- consume pop up -->
 	<obj cid="14256" id="14256" enable="0">
-		<ist uii="2" enable="1" />
+		<ist uii="30107" enable="1" />
 	</obj>
+	<!-- burglar alarm (alert) -->
 	<obj cid="14257" id="14257" enable="0">
 		<ist uii="30108" enable="1" />
 	</obj>
+	<!-- alarm clock (alert) -->
 	<obj cid="14258" id="14258" enable="0">
 		<ist uii="30109" enable="1" />
 	</obj>
+	<!-- hands free (alert) -->
 	<obj cid="14259" id="14259" enable="0">
-		<ist uii="5" enable="1" />
+		<ist uii="30110" enable="1" />
 	</obj>
+	<!-- professional studio (alert) -->
 	<obj cid="14260" id="14260" enable="0">
 		<ist uii="30111" enable="1" />
 	</obj>
+	<!-- call exclusion (alert) -->
 	<obj cid="14261" id="14261" enable="0">
 		<ist uii="30112" enable="1" />
 	</obj>
+	<!-- burglar alarm danger (alert) -->
 	<obj cid="14262" id="14262" enable="0">
 		<ist uii="30113" enable="1" />
 	</obj>
+	<!-- volume (alert) -->
 	<obj cid="14263" id="14263" enable="0">
 		<ist uii="30114" enable="1" />
 	</obj>
+	<!-- player (alert) -->
 	<obj cid="14264" id="14264" enable="0">
-		<ist uii="9" enable="1" />
+		<ist uii="30115" enable="1" />
 	</obj>
+	<!-- messages (alert) -->
 	<obj cid="14265" id="14265" enable="0">
-		<ist uii="10" enable="1" />
+		<ist uii="30116" enable="1" />
 	</obj>
+	<!-- scenario recording (alert) -->
         <obj cid="14266" id="14266" enable="0">
 		<ist uii="30117" enable="1" />
 	</obj>
-	<obj cid="14201" id="14201" enabled="0" type="0" days="0" hour="0" minutes="0" />
+	<!-- hands free enable -->
+	<obj cid="14251" id="14251" enable="0">
+		<ist uii="30401" />
+	</obj>
+	<!-- professional studio enable -->
+	<obj cid="14252" id="14252" enable="0">
+		<ist uii="30402" id="14252" enable="1"/>
+	</obj>
+	<!-- ring exclusion enable -->
+	<obj cid="14253" id="14253" enable="0">
+		<ist uii="30403" id="14253" />
+	</obj>
+	<!-- tele loop enable -->
+	<obj cid="14254" id="14254" enable="0">
+		<ist uii="30404" id="14254" />
+	</obj>
+	<!-- alarm clock -->
+	<obj cid="14201" id="14201" enabled="0" type="0" days="0" hour="0" minutes="0">
+		<ist uii="30501" enabled="1" type="0" volume="1" />
+		<ist uii="30502" enabled="1" type="1" days="127" volume="9" source_type="1" amplifier_uii="10003"/>
+	</obj>
+	<!-- debug settings -->
 	<obj id="123456" internal_descr="debug touchscreen">
 		<ist uii="123456" enable="1" />
 	</obj>
