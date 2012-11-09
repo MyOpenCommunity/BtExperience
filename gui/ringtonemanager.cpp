@@ -55,7 +55,10 @@ void RingtoneManager::setRingtone(Ringtone type, int index)
 {
 	Q_ASSERT_X(ringtone_to_file.contains(index), "RingtonesManager::setRingtone",
 		qPrintable(QString("Given ringtone %1 is outside valid range.").arg(index)));
+	if (type_to_ringtone[type] == index)
+		return;
 	type_to_ringtone[type] = index;
+	emit ringtoneChanged(type, index);
 }
 
 void RingtoneManager::playRingtone(QString path, int _state)

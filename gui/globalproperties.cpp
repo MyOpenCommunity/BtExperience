@@ -45,7 +45,16 @@ namespace
 	{
 		Beep = 14001,
 		DebugTouchscreen = 123456,
-		DebugEventTiming
+		DebugEventTiming,
+		RingtoneS0 = 14101,
+		RingtoneS1,
+		RingtoneS2,
+		RingtoneS3,
+		RingtoneInternal,
+		RingtoneExternal,
+		RingtoneDoor,
+		RingtoneAlarm,
+		RingtoneMessage
 	};
 
 	void setEnableFlag(QDomDocument document, int id, bool enable)
@@ -70,6 +79,32 @@ namespace
 		{
 			v.setIst(ist);
 			result = v.intValue("enable");
+		}
+		return result;
+	}
+
+	void setRingtone(QDomDocument document, int id, int ringtone)
+	{
+		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == id)
+			{
+				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+					setAttribute(ist, "id_ringtone", QString::number(ringtone));
+				break;
+			}
+		}
+	}
+
+	int parseRingtone(QDomNode xml_node)
+	{
+		int result = -1;
+		XmlObject v(xml_node);
+
+		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+		{
+			v.setIst(ist);
+			result = v.intValue("id_ringtone");
 		}
 		return result;
 	}
@@ -134,6 +169,9 @@ GlobalProperties::GlobalProperties(logger *log)
 
 	maliit_settings->loadPluginSettings();
 #endif
+
+	connect(ringtone_manager, SIGNAL(ringtoneChanged(int,int)),
+		this, SLOT(ringtoneChanged(int,int)));
 }
 
 void GlobalProperties::initAudio()
@@ -194,17 +232,6 @@ void GlobalProperties::initAudio()
 		audio_player = video_player;
 		emit audioPlayerChanged();
 	}
-
-	// TODO remove after configuration parsing is complete
-	ringtone_manager->setRingtone(RingtoneManager::Alarm, 1);
-	ringtone_manager->setRingtone(RingtoneManager::Message, 1);
-	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace1, 4);
-	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace2, 4);
-	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace3, 4);
-	ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace4, 4);
-	ringtone_manager->setRingtone(RingtoneManager::InternalIntercom, 5);
-	ringtone_manager->setRingtone(RingtoneManager::ExternalIntercom, 5);
-	ringtone_manager->setRingtone(RingtoneManager::IntercomFloorcall, 5);
 }
 
 void GlobalProperties::parseSettings(logger *log)
@@ -226,6 +253,33 @@ void GlobalProperties::parseSettings(logger *log)
 			break;
 		case DebugEventTiming:
 			debug_timing_enabled = parseEnableFlag(xml_obj);
+			break;
+		case RingtoneS0:
+			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace1, parseRingtone(xml_obj));
+			break;
+		case RingtoneS1:
+			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace2, parseRingtone(xml_obj));
+			break;
+		case RingtoneS2:
+			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace3, parseRingtone(xml_obj));
+			break;
+		case RingtoneS3:
+			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace4, parseRingtone(xml_obj));
+			break;
+		case RingtoneInternal:
+			ringtone_manager->setRingtone(RingtoneManager::InternalIntercom, parseRingtone(xml_obj));
+			break;
+		case RingtoneExternal:
+			ringtone_manager->setRingtone(RingtoneManager::ExternalIntercom, parseRingtone(xml_obj));
+			break;
+		case RingtoneDoor:
+			ringtone_manager->setRingtone(RingtoneManager::IntercomFloorcall, parseRingtone(xml_obj));
+			break;
+		case RingtoneAlarm:
+			ringtone_manager->setRingtone(RingtoneManager::Alarm, parseRingtone(xml_obj));
+			break;
+		case RingtoneMessage:
+			ringtone_manager->setRingtone(RingtoneManager::Message, parseRingtone(xml_obj));
 			break;
 		}
 	}
@@ -422,6 +476,43 @@ void GlobalProperties::beepChanged()
 		audio_state->disableState(AudioState::Beep);
 
 	setEnableFlag(configurations->getConfiguration(SETTINGS_FILE), Beep, settings->getBeep());
+	configurations->saveConfiguration(SETTINGS_FILE);
+}
+
+void GlobalProperties::ringtoneChanged(int ringtone, int index)
+{
+	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
+
+	switch (ringtone)
+	{
+	case RingtoneManager::Alarm:
+		setRingtone(document, RingtoneAlarm, index);
+		break;
+	case RingtoneManager::Message:
+		setRingtone(document, RingtoneMessage, index);
+		break;
+	case RingtoneManager::CCTVExternalPlace1:
+		setRingtone(document, RingtoneS0, index);
+		break;
+	case RingtoneManager::CCTVExternalPlace2:
+		setRingtone(document, RingtoneS1, index);
+		break;
+	case RingtoneManager::CCTVExternalPlace3:
+		setRingtone(document, RingtoneS2, index);
+		break;
+	case RingtoneManager::CCTVExternalPlace4:
+		setRingtone(document, RingtoneS3, index);
+		break;
+	case RingtoneManager::InternalIntercom:
+		setRingtone(document, RingtoneInternal, index);
+		break;
+	case RingtoneManager::ExternalIntercom:
+		setRingtone(document, RingtoneExternal, index);
+		break;
+	case RingtoneManager::IntercomFloorcall:
+		setRingtone(document, RingtoneDoor, index);
+		break;
+	}
 	configurations->saveConfiguration(SETTINGS_FILE);
 }
 

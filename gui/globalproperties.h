@@ -140,6 +140,7 @@ private slots:
 	void pluginSettingsReceived(const QList<QSharedPointer<Maliit::PluginSettings> > &settings);
 #endif
 	void beepChanged();
+	void ringtoneChanged(int ringtone, int index);
 	void audioStateChangedManagement();
 	void sendDelayedFrames();
 

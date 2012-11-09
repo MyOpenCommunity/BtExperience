@@ -47,6 +47,7 @@ public:
 
 signals:
 	void ringtoneFinished();
+	void ringtoneChanged(int type, int index);
 
 private slots:
 	void playerStateChange();
