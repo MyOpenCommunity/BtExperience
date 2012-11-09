@@ -446,7 +446,7 @@ void AlarmClock::soundDiffusionStop()
 
 void AlarmClock::soundDiffusionSetVolume()
 {
-	int real_volume = 32 * volume / 100;
+	int real_volume = 32 * volume / 10;
 
 	if (tick_count <= real_volume)
 		amplifier->setVolume(tick_count);

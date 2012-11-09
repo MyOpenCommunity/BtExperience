@@ -22,7 +22,7 @@ void TestAlarmClockSoundDiffusion::init()
 	source = new SourceObject("", new SourceAux(new SourceDevice("3")), SourceObject::Aux);
 
 	obj = new AlarmClock("", false, AlarmClock::AlarmClockBeep, 0, 0, 0);
-	obj->setVolume(80);
+	obj->setVolume(8);
 	obj->setSource(source);
 	obj->setAmplifier(amplifiers[1]);
 }
