@@ -107,7 +107,7 @@
 	</obj>
 	<!-- alarm clock -->
 	<obj cid="14201" id="14201" enabled="0" type="0" days="0" hour="0" minutes="0">
-		<ist uii="30501" enabled="1" type="0" volume="1" />
+		<ist uii="30501" enabled="1" type="0" volume="1" descr="Beep" hour="13" minutes="30"/>
 	</obj>
 	<!-- debug settings -->
 	<obj id="123456" internal_descr="debug touchscreen">
