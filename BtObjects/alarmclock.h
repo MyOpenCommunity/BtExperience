@@ -76,6 +76,11 @@ class AlarmClock : public ObjectInterface
 	Q_PROPERTY(SourceObject* source READ getSource WRITE setSource NOTIFY sourceChanged)
 
 	/*!
+		\brief The alarm clock sound diffusion amplifier
+	*/
+	Q_PROPERTY(Amplifier* amplifier READ getAmplifier WRITE setAmplifier NOTIFY amplifierChanged)
+
+	/*!
 		\brief The alarm clock sound diffusion volume
 	*/
 	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
@@ -98,9 +103,6 @@ public:
 
 	Q_INVOKABLE void stop();
 	Q_INVOKABLE void postpone();
-
-	Q_INVOKABLE void setAmplifierEnabled(Amplifier *amplifier, bool enabled);
-	Q_INVOKABLE bool isAmplifierEnabled(Amplifier *amplifier) const;
 
 	QString getDescription() const { return description; }
 	void setDescription(QString new_value);
@@ -130,6 +132,8 @@ public:
 	void setTriggerOnSundays(bool new_value);
 	void setSource(SourceObject *source);
 	SourceObject *getSource() const;
+	void setAmplifier(Amplifier *amplifier);
+	Amplifier *getAmplifier() const;
 	void setVolume(int volume);
 	int getVolume() const;
 	bool isRinging() const;
@@ -154,6 +158,7 @@ signals:
 	void triggerOnSaturdaysChanged();
 	void triggerOnSundaysChanged();
 	void sourceChanged();
+	void amplifierChanged();
 	void volumeChanged();
 	void ringingChanged();
 
@@ -177,7 +182,7 @@ private:
 	int tick_count;
 
 	// sound diffusion alarm clock
-	QList<Amplifier *> enabled_amplifiers;
+	Amplifier *amplifier;
 	SourceObject *source;
 	int volume;
 

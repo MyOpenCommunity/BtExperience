@@ -180,7 +180,7 @@ void AlarmClock::start()
 	}
 	else
 	{
-		if (!source || !enabled_amplifiers.size())
+		if (!source || !amplifier)
 		{
 			qWarning() << "Invalid alarm clock setup: either no source or amplifier enabled";
 			return;
@@ -363,15 +363,12 @@ void AlarmClock::alarmTick()
 			source->setActive(0);
 			areas[0] = true;
 
-			foreach (Amplifier *a, enabled_amplifiers)
-			{
-				int area = a->getArea();
+			int area = amplifier->getArea();
 
-				if (!areas[area])
-				{
-					source->setActive(area);
-					areas[area] = true;
-				}
+			if (!areas[area])
+			{
+				source->setActive(area);
+				areas[area] = true;
 			}
 		}
 
@@ -389,34 +386,17 @@ void AlarmClock::alarmTick()
 
 void AlarmClock::soundDiffusionStop()
 {
-	foreach (Amplifier *a, enabled_amplifiers)
-		a->setActive(false);
+	amplifier->setActive(false);
 }
 
 void AlarmClock::soundDiffusionSetVolume()
 {
 	int real_volume = 32 * volume / 100;
 
-	foreach (Amplifier *a, enabled_amplifiers)
-	{
-		if (tick_count <= real_volume)
-			a->setVolume(tick_count);
-		if (tick_count == 0)
-			a->setActive(true);
-	}
-}
-
-void AlarmClock::setAmplifierEnabled(Amplifier *amplifier, bool enabled)
-{
-	if (!enabled && enabled_amplifiers.contains(amplifier))
-		enabled_amplifiers.removeOne(amplifier);
-	else if (enabled && !enabled_amplifiers.contains(amplifier))
-		enabled_amplifiers.append(amplifier);
-}
-
-bool AlarmClock::isAmplifierEnabled(Amplifier *amplifier) const
-{
-	return enabled_amplifiers.contains(amplifier);
+	if (tick_count <= real_volume)
+		amplifier->setVolume(tick_count);
+	if (tick_count == 0)
+		amplifier->setActive(true);
 }
 
 void AlarmClock::setSource(SourceObject *_source)
@@ -431,6 +411,20 @@ void AlarmClock::setSource(SourceObject *_source)
 SourceObject *AlarmClock::getSource() const
 {
 	return source;
+}
+
+void AlarmClock::setAmplifier(Amplifier *_amplifier)
+{
+	if (_amplifier == amplifier)
+		return;
+
+	amplifier = _amplifier;
+	emit amplifierChanged();
+}
+
+Amplifier *AlarmClock::getAmplifier() const
+{
+	return amplifier;
 }
 
 void AlarmClock::setVolume(int _volume)

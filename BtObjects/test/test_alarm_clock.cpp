@@ -24,34 +24,13 @@ void TestAlarmClockSoundDiffusion::init()
 	obj = new AlarmClock("", false, AlarmClock::AlarmClockBeep, 0, 0, 0);
 	obj->setVolume(80);
 	obj->setSource(source);
-	obj->setAmplifierEnabled(amplifiers[1], true);
-	obj->setAmplifierEnabled(amplifiers[3], true);
+	obj->setAmplifier(amplifiers[1]);
 }
 
 void TestAlarmClockSoundDiffusion::cleanup()
 {
 	delete source_dev;
 	delete obj;
-}
-
-void TestAlarmClockSoundDiffusion::testEnableDisableAmplifier()
-{
-	QCOMPARE(obj->enabled_amplifiers.count(), 2);
-	QVERIFY(!obj->isAmplifierEnabled(amplifiers[0]));
-	QVERIFY( obj->isAmplifierEnabled(amplifiers[1]));
-	QVERIFY(!obj->isAmplifierEnabled(amplifiers[2]));
-	QVERIFY( obj->isAmplifierEnabled(amplifiers[3]));
-
-	obj->setAmplifierEnabled(amplifiers[0], false);
-	obj->setAmplifierEnabled(amplifiers[1], true);
-	obj->setAmplifierEnabled(amplifiers[2], true);
-	obj->setAmplifierEnabled(amplifiers[3], false);
-
-	QCOMPARE(obj->enabled_amplifiers.count(), 2);
-	QVERIFY(!obj->isAmplifierEnabled(amplifiers[0]));
-	QVERIFY( obj->isAmplifierEnabled(amplifiers[1]));
-	QVERIFY( obj->isAmplifierEnabled(amplifiers[2]));
-	QVERIFY(!obj->isAmplifierEnabled(amplifiers[3]));
 }
 
 void TestAlarmClockSoundDiffusion::testStart()
@@ -62,11 +41,8 @@ void TestAlarmClockSoundDiffusion::testStart()
 
 	source_dev->turnOn("0");
 	source_dev->turnOn("1");
-	source_dev->turnOn("3");
 	amplifier_dev[1]->setVolume(0);
 	amplifier_dev[1]->turnOn();
-	amplifier_dev[3]->setVolume(0);
-	amplifier_dev[3]->turnOn();
 
 	compareClientCommand();
 }
@@ -78,7 +54,6 @@ void TestAlarmClockSoundDiffusion::testTick()
 	obj->alarmTick();
 
 	amplifier_dev[1]->setVolume(10);
-	amplifier_dev[3]->setVolume(10);
 
 	compareClientCommand();
 }
@@ -90,7 +65,6 @@ void TestAlarmClockSoundDiffusion::testStop()
 	obj->alarmTick();
 
 	amplifier_dev[1]->turnOff();
-	amplifier_dev[3]->turnOff();
 
 	compareClientCommand();
 }
