@@ -220,13 +220,13 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 				case ObjectInterface::IdDeviceUSB:
 				{
 					MountPoint *mp = new MountPoint(MountPoint::Usb);
-					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::FileSystem));
+					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::Usb));
 					break;
 				}
 				case ObjectInterface::IdDeviceSD:
 				{
 					MountPoint *mp = new MountPoint(MountPoint::Sd);
-					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::FileSystem));
+					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::Sd));
 					break;
 				}
 				case ObjectInterface::IdDeviceUPnP:

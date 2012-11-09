@@ -21,7 +21,7 @@ MenuColumn {
             name: itemObject.name
             hasChild: true
             onDelegateClicked: {
-                var upnp = itemObject.sourceType !== SourceObject.FileSystem;
+                var upnp = itemObject.sourceType === SourceObject.Upnp;
                 var props = {
                     rootPath: itemObject.rootPath,
                     text: itemObject.name,

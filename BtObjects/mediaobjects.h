@@ -177,8 +177,10 @@ public:
 		Touch,
 		/// UPnP media server (local source)
 		Upnp,
-		/// local USB or SD (local source)
-		FileSystem,
+		/// local SD (local source)
+		Sd,
+		/// local USB (local source)
+		Usb
 	};
 
 	SourceObject(const QString &name, SourceBase *s, SourceObjectType t);

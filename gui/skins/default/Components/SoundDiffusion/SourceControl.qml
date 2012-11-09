@@ -166,7 +166,7 @@ MenuColumn {
                 onClicked: {
                     if (privateProps.currentIndex !== 1)
                         privateProps.currentIndex = 1
-                    var comp = objModel.sourceType === SourceObject.FileSystem ? directoryBrowser : upnpBrowser
+                    var comp = objModel.sourceType === SourceObject.Upnp ? upnpBrowser : directoryBrowser
                     var props = {"rootPath": objModel.rootPath}
                     column.loadColumn(comp, name, mediaPlayerColumn.objModel, props)
                 }
