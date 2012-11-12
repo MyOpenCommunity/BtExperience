@@ -576,6 +576,7 @@ void BtObjectsPlugin::createObjects()
 			break;
 
 		case MediaLink::Rss:
+		case MediaLink::RssMeteo:
 		case MediaLink::Web:
 		case MediaLink::Webcam:
 			parseMediaLinks(xml_obj);

@@ -39,7 +39,8 @@ public:
 	/// Media link type
 	enum MediaType
 	{
-		Web = 16003, //!< Web link, address is an URL
+		Web = 16004, //!< Web link, address is an URL
+		RssMeteo = 16003, //!< RSS link, address is an URL
 		Rss = 16002,  //!< RSS link, address is an URL
 		Webcam = 16001,  //!< Webcam link, address is an URL
 		Camera = 3, //!< Video-surveillance camera link
