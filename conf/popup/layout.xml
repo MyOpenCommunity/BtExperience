@@ -1,43 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+	<container id="1" descr="scenarios">
+		<ist uii="301" img="images/systems/scenario_card.jpg">
+			<link uii="6001" />
+			<link uii="6002" />
+			<link uii="6003" />
+			<link uii="6004" />
+			<link uii="6005" />
+			<link uii="6006" />
+			<link uii="6101" />
+			<link uii="6102" />
+			<link uii="6201" />
+			<link uii="6202" />
+			<link uii="6203" />
+			<link uii="6204" />
+			<!-- not parsed yet <link uii="6205" /> -->
+		</ist>
+	</container>
+	<container id="2" descr="lights"> <!-- lights system container -->
+		<ist uii="302" img="images/systems/lighting_card.jpg">
+			<link uii="12" />
+			<link uii="1" />
+			<link uii="2" />
+			<link uii="7" />
+			<link uii="5" />
+			<link uii="6" />
+			<link uii="8" />
+			<link uii="13" />
+			<link uii="14" />
+			<!-- uii 3, 4 not inserted. Only in the archive but not visualized -->
+		</ist>
+	</container>
+	<container id="3" descr="automation">
+		<ist uii="303" img="images/systems/automation_card.jpg">
+			<link uii="15" />
+			<link uii="16" />
+			<link uii="17" />
+		</ist>
+	</container>
+	<container id="4" descr="air conditioning">
+		<ist uii="304" img="images/systems/temperature-control_card.jpg">
+			<link uii="7001" />
+			<link uii="7002" />
+			<link uii="7101" />
+			<link uii="7102" />
+			<link uii="7009" />
+			<link uii="7010" />
+			<link uii="7110" />
+			<link uii="7111" />
+		</ist>
+	</container>
+	<container id="8" descr="thermal regulation">
+		<ist uii="308" img="images/systems/temperature-control_card.jpg">
+			<link uii="2001" />
+			<link uii="2011" />
+			<link uii="2012" />
+			<link uii="2013" />
+			<link uii="2014" />
+			<link uii="2041" />
+			<link uii="2042" />
+			<link uii="2051" />
+			<link uii="2052" />
+		</ist>
+	</container>
+	<container id="9" descr="video door entry system">
+		<ist uii="309" img="images/systems/vde_card.jpg">
+                        <link uii="9011" />
+                        <link uii="9012" />
+                        <link uii="9013" />
+                        <link uii="9014" />
+                        <link uii="9015" />
+                        <link uii="9016" />
+                        <link uii="9017" />
+                        <link uii="9019" />
+                        <link uii="9020" />
+                        <link uii="9022" />
+		</ist>
+	</container>
+	<container id="16" descr="Special Ambient">
+		<ist uii="416">
+			<link uii="10001" />
+			<link uii="10004" />
+			<link uii="10003" />
+			<link uii="10006" />
+		</ist>
+        </container>
+	<container id="14" descr="Ambient" env="1">
+		<ist uii="410" descr="Discoteca">
+			<link uii="10004" />
+		</ist>
+		<ist uii="411" descr="Cucina" env="2">
+			<link uii="10014" />
+			<link uii="10002" />
+			<link uii="10003" />
+		</ist>
+		<ist uii="412" descr="Salotto" env="3">
+			<link uii="10013" />
+			<link uii="10012" />
+		</ist>
+		<ist uii="413" descr="Cameretta" env="4">
+		</ist>
+		<ist uii="414" descr="Garage" env="5">
+		</ist>
+		<ist uii="415" descr="Giardino" env="6">
+		</ist>
+	</container>
+	<container id="10" descr="sound diffusion">
+		<ist uii="310" img="images/systems/sound-diffusion_card.jpg">
+			<link uii="410" />
+			<link uii="411" />
+			<link uii="412" />
+			<link uii="413" />
+			<link uii="414" />
+			<link uii="415" />
+		</ist>
+	</container>
 	<container id="11" descr="antintrusion">
 		<ist uii="311" img="images/systems/burlgar-alarm_card.jpg">
 		</ist>
 	</container>
 	<container id="15" descr="messages">
 		<ist uii="315" img="images/systems/messages_card.jpg">
-		</ist>
-	</container>
-	<container id="9" descr="video door entry system">
-		<ist uii="309" img="images/systems/vde_card.jpg">
+
 		</ist>
 	</container>
 	<container id="100" > <!-- rooms -->
-		<ist uii="102" descr="living room">
+		<ist uii="102" descr="living room" img="images/rooms/soggiorno.png">
+			<link uii="1" x="0" y="0"/>
+			<!-- x,y can be absolute (pixel) or percentual -->
+			<link uii="2" x="200" y="100" />
+			<link uii="3" x="300" y="300" />
 		</ist>
-		<ist uii="103" descr="bathroom">
+		<ist uii="103" descr="bathroom" img="images/rooms/bagno.png">
+			<link uii="12" x="200" y="100" />
+			<link uii="7" x="200" y="300" />
 		</ist>
 
-		<ist uii="104" descr="garage">
+		<ist uii="104" descr="garage" img="images/rooms/box.png">
+			<link uii="4" x="50" y="100" />
+			<link uii="5" x="200" y="300" />
+			<link uii="6" x="350" y="80" />
 		</ist>
-		<ist uii="105" descr="bedroom">
+		<ist uii="105" descr="bedroom" img="images/rooms/camera.png">
+			<link uii="6" x="20" y="10" />
+			<link uii="5" x="200" y="300" />
+			<link uii="12" x="400" y="125" />
 		</ist>
-		<ist uii="106" descr="kitchen">
-		</ist>
-	</container>
-	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
-		<ist uii="901" descr="camilla" img="images/home/card-home_bambina.png" >
-		</ist>
-		<ist uii="902" descr="mattia" img="images/home/card-home_bambino.png" >
-		</ist>
-		<ist uii="903" descr="papà" img="images/home/card-home_uomo.png" >
-		</ist>
-		<ist uii="904" descr="mamma" img="images/home/card-home_donna.png" >
-		</ist>
-		<ist uii="905" descr="famiglia" img="images/home/card-home_famiglia.png" >
+		<ist uii="106" descr="kitchen" img="images/rooms/cucina.png">
+			<link uii="12" x="500" y="60" />
+			<link uii="5" x="450" y="300" />
+			<link uii="4" x="200" y="350" />
 		</ist>
 	</container>
-	<container id="13" descr="floor" img="floor.png"> <!-- floor -->
+	<container id="13" descr="floor" img="floor.png">
 		<ist uii="201" descr="ground" >
 			<link uii="102" />
 			<link uii="103" />
@@ -46,6 +161,100 @@
 		</ist>
 		<ist uii="202" descr="first floor" img="first.png" >
 			<link uii="105" />
+		</ist>
+	</container>
+	<container id="5" descr="load management">
+		<ist uii="305" img="images/systems/energy_card.jpg">
+			<link uii="4004" />
+			<link uii="4005" />
+			<link uii="4006" />
+		</ist>
+	</container>
+	<container id="6" descr="supervision">
+		<ist uii="306" img="images/systems/energy_card.jpg">
+			<!-- Stop & go -->
+			<link uii="4001" />
+			<link uii="4002" />
+			<link uii="4003" />
+			<!-- load diagnostic -->
+			<link uii="4007" />
+			<link uii="4008" />
+			<!-- also in load management -->
+			<link uii="4006" />
+		</ist>
+	</container>
+	<container id="7" descr="energy data">
+		<ist uii="307" img="images/systems/energy_card.jpg">
+			<link uii="5001" />
+			<link uii="5002" />
+			<link uii="5003" />
+			<link uii="5004" />
+			<link uii="5005" />
+		</ist>
+	</container>
+	<container id="17" descr="Home page" img="home.png" img_type="0">
+		<ist uii="316">
+			<link uii="8001" img="web_radio.png" />
+			<link uii="8006" img="Corriere.png"/>
+			<link uii="8005" img="Weather.png"/>
+		</ist>
+	</container>
+	<container id="19" descr="Rss" img="rss.png" >
+		<ist uii="317">
+			<link uii="8003" />
+			<link uii="8004" />
+		</ist>
+	</container>
+	<container id="20" descr="Rss meteo" img="rss_meteo.png" >
+		<ist uii="318">
+			<link uii="8013" />
+		</ist>
+	</container>
+	<container id="21" descr="Web radio" img="web_radio.png" >
+		<ist uii="319">
+			<link uii="8011" />
+			<link uii="8014" />
+			<link uii="8015" />
+		</ist>
+	</container>
+	<container id="22" descr="Web cam" img="web_cam.png" >
+		<ist uii="320">
+			<link uii="8002" />
+		</ist>
+	</container>
+	<container id="23" descr="Device" img="device.png" >
+		<ist uii="321">
+			<link uii="11011" />
+			<link uii="11012" />
+			<link uii="11013" />
+		</ist>
+	</container>
+	<container id="24" descr="Web links" img="web_links.png" >
+		<ist uii="322">
+			<link uii="8012" />
+			<link uii="8007" />
+			<link uii="8008" />
+		</ist>
+	</container>
+	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
+		<ist uii="901" descr="camilla" img="images/home/card-home_bambina.png" >
+			<link uii="8006" x="250" y="100" />
+			<link uii="8003" x="250" y="300" />
+		</ist>
+		<ist uii="902" descr="mattia" img="images/home/card-home_bambino.png" >
+			<link uii="8009" x="250" y="100" />
+			<link uii="9005" x="250" y="300" />
+		</ist>
+		<ist uii="903" descr="papà" img="images/home/card-home_uomo.png" >
+			<link uii="8004" x="150" y="100" />
+			<link uii="8008" x="350" y="100" />
+			<link uii="9004" x="250" y="300" />
+		</ist>
+		<ist uii="904" descr="mamma" img="images/home/card-home_donna.png" >
+			<link uii="8007" x="250" y="100" />
+		</ist>
+		<ist uii="905" descr="famiglia" img="images/home/card-home_famiglia.png" >
+			<link uii="8010" x="250" y="100" />
 		</ist>
 	</container>
 </layout>
