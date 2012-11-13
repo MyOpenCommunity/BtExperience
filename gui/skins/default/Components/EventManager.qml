@@ -99,6 +99,9 @@ Item {
         id: monthlyReportTimer
         repeat: true
         onTriggered: {
+            if (!global.guiSettings.energyPopup)
+                return
+
             if (Stack.isPageChanging(changePageDone)) {
                 Script.delayedNotifications.push({"type": Script.MONTHLY_REPORT_ARRIVING})
             }
