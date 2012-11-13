@@ -69,6 +69,7 @@ SOURCES += \
     imagereader.cpp \
     inputcontextwrapper.cpp \
 	ringtonemanager.cpp \
+	watchdog.cpp \
 	../BtObjects/ts/signalshandler.cpp
 
 
@@ -81,6 +82,7 @@ HEADERS += \
     imagereader.h \
     inputcontextwrapper.h \
 	ringtonemanager.h \
+	watchdog.h \
 	../BtObjects/ts/signalshandler.h
 
 TRANSLATIONS += locale/bt_experience_it.ts \

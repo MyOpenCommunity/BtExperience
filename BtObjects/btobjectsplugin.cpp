@@ -32,7 +32,6 @@
 #include "energyrate.h"
 #include "xmlobject.h"
 #include "devices_cache.h"
-#include "watchdog.h"
 #include "dangers.h"
 #include "scenariomodulesnotifier.h"
 #include "energies.h"
@@ -49,8 +48,6 @@
 #include <QDir>
 #include <QCoreApplication> // qApp
 #include <QDomNode>
-
-#define WATCHDOG_INTERVAL 5000
 
 #if defined(BT_HARDWARE_X11)
 #define ARCHIVE_FILE "archive.xml"
@@ -237,10 +234,6 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	monitors[MAIN_OPENSERVER] = new ClientReader(Client::MONITOR);
 	clients[MAIN_OPENSERVER].command = new ClientWriter(Client::COMMAND);
 	clients[MAIN_OPENSERVER].request = new ClientWriter(Client::REQUEST);
-
-	Watchdog *watchdog = new Watchdog(this);
-
-	watchdog->start(WATCHDOG_INTERVAL);
 
 	ClientReader *client_supervisor = new ClientReader(Client::SUPERVISOR);
 	client_supervisor->forwardFrame(monitors[MAIN_OPENSERVER]);
