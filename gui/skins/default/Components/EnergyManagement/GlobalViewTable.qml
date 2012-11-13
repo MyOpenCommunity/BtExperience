@@ -9,6 +9,7 @@ import "../../js/datetime.js" as DateTime
 Column {
     id: table
     property date viewDate: new Date()
+    property bool showCurrency
 
     function scrollLeft() {
         if (privateProps.currentPage > 0)
@@ -120,7 +121,14 @@ Column {
                     Row {
                         id: tableRow
                         property variant itemObject: energiesCounters.getObjectWithGoal(model.index + privateProps.currentPage * privateProps.maxRows)
-                        property variant monthItem: itemObject.getValue(EnergyData.CumulativeMonthValue, table.viewDate, EnergyData.Consumption)
+                        property variant monthItem: itemObject.getValue(EnergyData.CumulativeMonthValue, table.viewDate,
+                                                                        showCurrency ? EnergyData.Currency : EnergyData.Consumption)
+
+                        function hasRate() {
+                            if (monthItem !== undefined && monthItem.rate !== null)
+                                return true
+                            return false
+                        }
 
                         height: privateProps.cellHeight
                         spacing: 3
@@ -150,7 +158,7 @@ Column {
                         SvgImage {
                             id: line
                             function calculateDelta() {
-                                if (tableRow.monthItem.isValid)
+                                if (tableRow.monthItem!== undefined && tableRow.monthItem.isValid)
                                     return tableRow.monthItem.value - tableRow.monthItem.consumptionGoal
 
                                 return 0
@@ -168,7 +176,7 @@ Column {
                                     leftMargin: privateProps.textMargin
                                     verticalCenter: parent.verticalCenter
                                 }
-                                text: energyFunctions.formatValue(tableRow.monthItem)
+                                text: tableRow.hasRate() ? energyFunctions.formatValue(tableRow.monthItem) : qsTr("---")
                                 font.pixelSize: 14
                                 color: "white"
                             }
@@ -178,7 +186,7 @@ Column {
                                     leftMargin: privateProps.textMargin + tableHeader.spacing + privateProps.cellWidth
                                     verticalCenter: parent.verticalCenter
                                 }
-                                text: tableRow.monthItem.consumptionGoal.toFixed(tableRow.itemObject.decimals) + " " + tableRow.monthItem.measureUnit
+                                text: tableRow.hasRate() ? tableRow.monthItem.consumptionGoal.toFixed(tableRow.itemObject.decimals) + " " + tableRow.monthItem.measureUnit : qsTr("---")
                                 font.pixelSize: 14
                                 color: "white"
                             }
@@ -190,6 +198,8 @@ Column {
                                     verticalCenter: parent.verticalCenter
                                 }
                                 text: {
+                                    if (!tableRow.hasRate())
+                                        return qsTr("---")
                                     var delta = parent.calculateDelta()
                                     return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(tableRow.itemObject.decimals) +  " " + tableRow.monthItem.measureUnit
                                 }
