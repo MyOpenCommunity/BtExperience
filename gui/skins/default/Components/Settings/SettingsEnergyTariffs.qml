@@ -12,19 +12,18 @@ MenuColumn {
     PaginatorList {
         id: paginator
         delegate: MenuItemDelegate {
-            itemObject: energiesCounters.getObject(index)
-            property variant rateObject: itemObject.rate
+            itemObject: energiesRates.getObject(index)
             hasChild: true
-            description: rateObject ? qsTr("%1 %2/%3").arg(rateObject.rate).arg(rateObject.currencySymbol).arg(rateObject.measureUnit) : "" // +  "0,24 €/w"
+            description: itemObject.rate.toFixed(itemObject.displayDecimals) + " " + itemObject.currencySymbol + "/" + itemObject.measureUnit
             onClicked: column.loadColumn(setTariffsComponent, itemObject.name, itemObject)
         }
 
-        model: energiesCounters
+        model: energiesRates
     }
 
     ObjectModel {
-        id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
+        id: energiesRates
+        filters: [{objectId: ObjectInterface.IdEnergyRate}]
     }
 
     Component {

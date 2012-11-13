@@ -64,7 +64,6 @@ Item {
         }
     }
 
-
     Loader {
         anchors {
             top: firstColumn.top
