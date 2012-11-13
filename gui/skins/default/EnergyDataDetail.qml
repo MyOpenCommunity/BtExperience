@@ -15,7 +15,7 @@ Page {
 
     showSystemsButton: true
     text: qsTr("energy consumption")
-    source: "images/bg2.jpg"
+    source: "images/energy.jpg"
 
     SvgImage {
         id: header
