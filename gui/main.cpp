@@ -33,7 +33,9 @@
 #include "imagereader.h"
 #include "xml_functions.h"
 #include "signalshandler.h"
+#include "watchdog.h"
 
+#define WATCHDOG_INTERVAL 5000
 
 #define VERBOSITY_LEVEL_DEFAULT 0x1F
 
@@ -299,6 +301,10 @@ int main(int argc, char *argv[])
 	QObject::connect(last_click, SIGNAL(maxTravelledDistanceOnLastMove(QPoint)), &global, SLOT(setMaxTravelledDistanceOnLastMove(QPoint)));
 	BootManager boot_manager(&global);
 	sh->connect(sh, SIGNAL(signalReceived(int)), &boot_manager, SLOT(handleSignal(int)));
+
+	Watchdog *watchdog = new Watchdog;
+	watchdog->start(WATCHDOG_INTERVAL);
+
 	return app.exec();
 }
 
