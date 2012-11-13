@@ -829,10 +829,12 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 	}
 	else if (obj_cont)
 	{
+		ContainerWithCard *obj_card = qobject_cast<ContainerWithCard *>(obj_cont);
+
 		updateContainerNameImage(node_path.first, obj_cont);
 
-		if (obj_cont->getContainerId() == Container::IdProfile)
-			updateProfileCardImage(node_path.first, qobject_cast<Profile *>(obj_cont));
+		if (obj_card)
+			updateProfileCardImage(node_path.first, obj_card);
 	}
 	else if (obj_media)
 	{
