@@ -122,7 +122,7 @@ MenuColumn {
         MenuItem {
             id: keyboardLanguageItem
             name: qsTr("keyboard language")
-            description: pageObject.names.get('LANGUAGE', "it")
+            description: pageObject.names.get('LANGUAGE', global.guiSettings.keyboardLayout)
             hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {
