@@ -112,10 +112,8 @@ GuiSettings::GuiSettings(QObject *parent) :
 	contrast = 50;
 	currency = EUR;
 	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
-	measurementSystem = Metric;
 	numberSeparators = Dot_Comma;
 	temperatureUnit = Celsius;
-	timeFormat = TimeFormat_24h;
 	timezone = 0;
 	turnOffTime = Minutes_10;
 	skin = Clear;
@@ -270,21 +268,6 @@ void GuiSettings::setCurrency(Currency c)
 	emit currencyChanged();
 }
 
-GuiSettings::TimeFormat GuiSettings::getFormat() const
-{
-	return timeFormat;
-}
-
-void GuiSettings::setFormat(TimeFormat f)
-{
-	if (timeFormat == f)
-		return;
-
-	// TODO save value somewhere
-	timeFormat = f;
-	emit formatChanged();
-}
-
 QString GuiSettings::getKeyboardLayout() const
 {
 	return keyboardLayout;
@@ -343,21 +326,6 @@ void GuiSettings::setBeep(bool b)
 
 	beep = b;
 	emit beepChanged();
-}
-
-GuiSettings::MeasurementSystem GuiSettings::getMeasurementSystem() const
-{
-	return measurementSystem;
-}
-
-void GuiSettings::setMeasurementSystem(MeasurementSystem m)
-{
-	if (measurementSystem == m)
-		return;
-
-	// TODO save value somewhere
-	measurementSystem = m;
-	emit measurementSystemChanged();
 }
 
 GuiSettings::NumberSeparators GuiSettings::getNumberSeparators() const

@@ -24,11 +24,6 @@ MenuColumn {
     }
 
     Component {
-        id: unitSystem
-        Item {}
-    }
-
-    Component {
         id: currency
         Item {}
     }
@@ -52,9 +47,8 @@ MenuColumn {
         //  1 -> text language menu
         //  2 -> keyboard language menu
         //  3 -> temperature menu
-        //  4 -> unit system
-        //  5 -> currency
-        //  6 -> number separators
+        //  4 -> currency
+        //  5 -> number separators
         property string language: ''
     }
 
@@ -68,8 +62,6 @@ MenuColumn {
             child.keyboardLanguageChanged.connect(keyboardLanguageChanged)
         if (child.temperatureChanged)
             child.temperatureChanged.connect(temperatureChanged)
-        if (child.unitSystemChanged)
-            child.unitSystemChanged.connect(unitSystemChanged)
         if (child.currencyChanged)
             child.currencyChanged.connect(currencyChanged)
         if (child.numberSeparatorsChanged)
@@ -94,12 +86,6 @@ MenuColumn {
         //privateProps.model.Temperature = value;
         // TODO remove when model is implemented
         temperatureItem.description = pageObject.names.get('LANGUAGE', value)
-    }
-    function unitSystemChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.UnitSystem = value;
-        // TODO remove when model is implemented
-        unitSystemItem.description = pageObject.names.get('LANGUAGE', value)
     }
     function currencyChanged(value) {
         // TODO assign to a model property
@@ -155,18 +141,6 @@ MenuColumn {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
                 column.loadColumn(temperature, name)
-            }
-        }
-        MenuItem {
-            id: unitSystemItem
-            name: qsTr("unit system")
-            description: "metric"
-            hasChild: true
-            isSelected: privateProps.currentIndex === 4
-            onClicked: {
-                if (privateProps.currentIndex !== 4)
-                    privateProps.currentIndex = 4
-                column.loadColumn(unitSystem, name)
             }
         }
         MenuItem {

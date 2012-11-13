@@ -26,11 +26,6 @@ class GuiSettings : public QObject
 	Q_PROPERTY(Currency currency READ getCurrency WRITE setCurrency NOTIFY currencyChanged)
 
 	/*!
-		\brief Sets or gets time format as 12h or 24h.
-	*/
-	Q_PROPERTY(TimeFormat format READ getFormat WRITE setFormat NOTIFY formatChanged)
-
-	/*!
 		\brief Sets or gets the keyboard layout.
 	*/
 	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout NOTIFY keyboardLayoutChanged)
@@ -44,11 +39,6 @@ class GuiSettings : public QObject
 		\brief Sets or gets the skin for the interface.
 	*/
 	Q_PROPERTY(Skin skin READ getSkin WRITE setSkin NOTIFY skinChanged)
-
-	/*!
-		\brief Sets or gets the system of measurement.
-	*/
-	Q_PROPERTY(MeasurementSystem measurementSystem READ getMeasurementSystem WRITE setMeasurementSystem NOTIFY measurementSystemChanged)
 
 	/*!
 		\brief Sets or gets the number separators for thousands and between
@@ -138,11 +128,9 @@ class GuiSettings : public QObject
 	Q_PROPERTY(bool scenarioRecordingAlert READ getScenarioRecordingAlert WRITE setScenarioRecordingAlert NOTIFY scenarioRecordingAlertChanged)
 
 	Q_ENUMS(Currency)
-	Q_ENUMS(MeasurementSystem)
 	Q_ENUMS(NumberSeparators)
 	Q_ENUMS(TemperatureUnit)
 	Q_ENUMS(TimeChoice)
-	Q_ENUMS(TimeFormat)
 	Q_ENUMS(Skin)
 
 public:
@@ -161,12 +149,6 @@ public:
 	{
 		Clear,
 		Dark
-	};
-
-	enum MeasurementSystem
-	{
-		Metric,
-		Imperial
 	};
 
 	enum NumberSeparators
@@ -195,12 +177,6 @@ public:
 		Never
 	};
 
-	enum TimeFormat
-	{
-		TimeFormat_12h,
-		TimeFormat_24h
-	};
-
 	// brightness must be [1, 100]
 	int getBrightness() const;
 	void setBrightness(int b);
@@ -209,14 +185,10 @@ public:
 	void setContrast(int c);
 	Currency getCurrency() const;
 	void setCurrency(Currency c);
-	TimeFormat getFormat() const;
-	void setFormat(TimeFormat f);
 	QString getKeyboardLayout() const;
 	void setKeyboardLayout(QString l);
 	QString getLanguage() const;
 	void setLanguage(QString l);
-	MeasurementSystem getMeasurementSystem() const;
-	void setMeasurementSystem(MeasurementSystem m);
 	NumberSeparators getNumberSeparators() const;
 	void setNumberSeparators(NumberSeparators s);
 	TemperatureUnit getTemperatureUnit() const;
@@ -260,10 +232,8 @@ signals:
 	void brightnessChanged();
 	void contrastChanged();
 	void currencyChanged();
-	void formatChanged();
 	void keyboardLayoutChanged();
 	void languageChanged();
-	void measurementSystemChanged();
 	void numberSeparatorsChanged();
 	void temperatureUnitChanged();
 	void timezoneChanged();
@@ -294,10 +264,8 @@ private:
 	Currency currency;
 	QString keyboardLayout;
 	QString language;
-	MeasurementSystem measurementSystem;
 	NumberSeparators numberSeparators;
 	TemperatureUnit temperatureUnit;
-	TimeFormat timeFormat;
 	int timezone;
 	TimeChoice turnOffTime;
 	Skin skin;

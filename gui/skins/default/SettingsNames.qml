@@ -48,10 +48,6 @@ QtObject {
         container['AUTO_UPDATE'][true] = qsTr("Enabled")
         container['AUTO_UPDATE'][false] = qsTr("Disabled")
 
-        container['FORMAT'] = []
-        container['FORMAT'][GuiSettings.TimeFormat_12h] = qsTr("12h")
-        container['FORMAT'][GuiSettings.TimeFormat_24h] = qsTr("24h")
-
         container['SUMMER_TIME'] = []
         container['SUMMER_TIME'][true] = qsTr("Enable")
         container['SUMMER_TIME'][false] = qsTr("Disable")
