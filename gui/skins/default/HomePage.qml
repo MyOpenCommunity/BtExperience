@@ -1,9 +1,11 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
 import BtObjects 1.0 // a temporary workaround to load immediately the BtObjects module
 import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
+
+import "js/Stack.js" as Stack
+
 
 BasePage {
     id: mainarea
@@ -19,9 +21,15 @@ BasePage {
         }
     }
 
+    MediaModel {
+        id: homeLinksModel
+        source: myHomeModels.mediaLinks
+        containers: [myHomeModels.homepageLinks.uii]
+    }
+
     ListView {
         id: favourites
-        model: favouritesModel
+        model: homeLinksModel
         delegate: favouritesDelegate
         orientation: ListView.Horizontal
         height: 130
@@ -30,45 +38,6 @@ BasePage {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         interactive: false
-
-        ListModel {
-            id: favouritesModel
-            ListElement {
-                type: "camera"
-                address: ""
-                name: "Cancelletto"
-            }
-            ListElement {
-                type: "web"
-                address: "http://www.corriere.it"
-                name: "Corriere.it"
-            }
-            ListElement {
-                type: "web"
-                address: "http://www.gazzetta.it"
-                name: "Gazzetta.it"
-            }
-            ListElement {
-                type: "web"
-                address: "http://www.repubblica.it"
-                name: "Repubblica.it"
-            }
-            ListElement {
-                type: "web"
-                address: "http://www.style.it"
-                name: "Style.it"
-            }
-            ListElement {
-                type: "rss"
-                address: "http://www.corriere.it"
-                name: "News Corriere.it"
-            }
-            ListElement {
-                type: "web"
-                address: "http://www.bticino.it"
-                name: "BTicino.it"
-            }
-        }
 
         Component {
             id: cameraDelegate
@@ -90,28 +59,26 @@ BasePage {
 
             Item {
                 id: favouriteItem
+
+                property variant itemObject: homeLinksModel.getObject(index)
+
                 width: 140
                 height: 130
 
                 function bestDelegate(t) {
-                    if (t === "camera")
+                    if (t === LinkInterface.Camera)
                         return cameraDelegate
-                    if (t === "web")
+                    if (t === LinkInterface.Web)
                         return webDelegate
                     return rssDelegate
                 }
 
                 Loader {
                     id: favouriteItemLoader
-                    sourceComponent: bestDelegate(type)
+                    sourceComponent: bestDelegate(itemObject.type)
                     anchors.centerIn: favouriteItem
                     z: 1
-                    Component.onCompleted: {
-                        item.editable = false
-                    }
-                    onLoaded: {
-                        item.itemObject = model
-                    }
+                    onLoaded: item.itemObject = favouriteItem.itemObject
                 }
             }
         }
