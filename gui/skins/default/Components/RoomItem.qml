@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 
 import "../js/anchorspositioning.js" as Positioner
+import "../js/MenuItem.js" as Script
 
 MenuColumn {
     id: column
@@ -37,7 +38,9 @@ MenuColumn {
         }
 
         name: dataModel.name
-        status: dataModel.active === true ? 1 : 0
+        status: Script.status(dataModel)
+        boxInfoState: Script.boxInfoState(dataModel)
+        boxInfoText: Script.boxInfoText(dataModel)
         hasChild: true
 
         // We are assuming that items in rooms are always editable

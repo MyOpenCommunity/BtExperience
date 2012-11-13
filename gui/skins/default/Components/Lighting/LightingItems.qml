@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/MenuItem.js" as Script
 
 MenuColumn {
     id: column
@@ -16,36 +17,11 @@ MenuColumn {
             itemObject: objectModel.getObject(index)
             editable: true
 
-            status: {
-                if (itemObject.objectId === ObjectInterface.IdLightGroup ||
-                        itemObject.objectId === ObjectInterface.IdDimmerGroup ||
-                        itemObject.objectId === ObjectInterface.IdDimmer100Group)
-                    return -1
-                return itemObject.active === true ? 1 : 0
-            }
+            status: Script.status(itemObject)
+
             hasChild: true
-            boxInfoState: {
-                if(itemObject.objectId === ObjectInterface.IdLightCustom ||
-                        itemObject.objectId === ObjectInterface.IdLightFixed ||
-                        itemObject.objectId === ObjectInterface.IdLightGroup ||
-                        itemObject.objectId === ObjectInterface.IdDimmerGroup ||
-                        itemObject.objectId === ObjectInterface.IdDimmer100Group)
-                    return ""
-                // Dimmer10 and Dimmer100
-                return "info"
-            }
-            boxInfoText: {
-                if(itemObject.objectId === ObjectInterface.IdLightCustom ||
-                        itemObject.objectId === ObjectInterface.IdLightFixed ||
-                        itemObject.objectId === ObjectInterface.IdLightGroup ||
-                        itemObject.objectId === ObjectInterface.IdDimmerGroup ||
-                        itemObject.objectId === ObjectInterface.IdDimmer100Group)
-                    return ""
-                // Dimmer10 and Dimmer100
-                if (itemObject.active)
-                    return itemObject.percentage + "%"
-                return "-"
-            }
+            boxInfoState: Script.boxInfoState(itemObject)
+            boxInfoText: Script.boxInfoText(itemObject)
 
             onClicked: {
                 column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, objectModel.getObject(model.index))
