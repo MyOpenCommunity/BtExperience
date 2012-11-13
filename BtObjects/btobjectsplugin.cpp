@@ -1116,7 +1116,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 	{
 		v.setIst(instance);
 		int room_uii = getIntAttribute(instance, "uii");
-		Container *room = new Container(room_id, room_uii, v.value("img"), v.value("descr"));
+		Container *room = new ContainerWithCard(room_id, room_uii, v.value("img"), v.value("img_card"), v.value("descr"));
 
 		room_model << room;
 		uii_map.insert(room_uii, room);
