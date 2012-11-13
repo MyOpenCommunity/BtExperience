@@ -60,7 +60,7 @@ Item {
                     id: tableHeaderComponent
                     EnergyTableHeader {
                         label: qsTr("day")
-                        unitMeasure: energyData.cumulativeUnit
+                        unitMeasure: showCurrency ? energyData.rate.currencySymbol : energyData.cumulativeUnit
                     }
                 }
             }
@@ -106,7 +106,7 @@ Item {
                     id: tableHeaderComponent2
                     EnergyTableHeader {
                         label: qsTr("day")
-                        unitMeasure: energyData.cumulativeUnit
+                        unitMeasure: showCurrency ? energyData.rate.currencySymbol : energyData.cumulativeUnit
                     }
                 }
             }
@@ -160,7 +160,7 @@ Item {
                     id: tableHeaderComponent3
                     EnergyTableHeader {
                         label: qsTr("day")
-                        unitMeasure: energyData.cumulativeUnit
+                        unitMeasure: showCurrency ? energyData.rate.currencySymbol : energyData.cumulativeUnit
                     }
                 }
             }

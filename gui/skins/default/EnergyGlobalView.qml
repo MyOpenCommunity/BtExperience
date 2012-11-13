@@ -145,6 +145,7 @@ Page {
                 topMargin: 15
                 horizontalCenter: parent.horizontalCenter
             }
+            showCurrency: privateProps.showCurrency
         }
 
         Image {

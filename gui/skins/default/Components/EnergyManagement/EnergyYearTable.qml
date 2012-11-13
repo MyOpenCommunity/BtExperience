@@ -57,7 +57,7 @@ Item {
                     id: tableHeaderComponent
                     EnergyTableHeader {
                         label: qsTr("month")
-                        unitMeasure: energyData.cumulativeUnit
+                        unitMeasure: showCurrency ? energyData.rate.currencySymbol : energyData.cumulativeUnit
                     }
                 }
             }
