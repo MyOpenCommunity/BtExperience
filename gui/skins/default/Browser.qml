@@ -8,6 +8,7 @@ Page {
     id: webBrowser
 
     property string urlString : "http://www.google.it/search?hl=it&rlz=&q=eclissi&gs_sm=e&gs_upl=1154l1995l0l2170l7l5l0l0l0l0l264l264l2-1l1l0&um=1&ie=UTF-8&tbm=isch&source=og&sa=N&tab=wi&biw=1920&bih=968&sei=bmXWTsLhHoOZ8QPvmdmlAg"
+    property string _fixedUrlString: privateProps.fixedAddress(webBrowser.urlString)
     property variant profile: undefined
 
     source: profile === undefined ? 'images/home/home.jpg' : 'images/home/home.jpg' // TODO: profile background image
@@ -16,7 +17,7 @@ Page {
 
     Header {
         id: header
-        editUrl: webBrowser.urlString
+        editUrl: webBrowser._fixedUrlString
         view: webView
         browser: webBrowser
         anchors {
@@ -44,7 +45,7 @@ Page {
         FlickableWebView {
             id: webView
             clip: true
-            url: webBrowser.urlString
+            url: webBrowser._fixedUrlString
             onProgressChanged: header.urlChanged = false
             x: 0
             y: parent.childOffset
@@ -68,5 +69,16 @@ Page {
             Stack.backToMultimedia()
         else
             Stack.popPage()
+    }
+
+    QtObject {
+        id: privateProps
+
+        function fixedAddress(address) {
+            var fixedAddress = address
+            if (fixedAddress.toLowerCase().indexOf("http://") !== 0)
+                fixedAddress = "http://" + fixedAddress
+            return fixedAddress
+        }
     }
 }

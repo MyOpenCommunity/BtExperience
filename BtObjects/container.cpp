@@ -8,6 +8,11 @@ void updateContainerNameImage(QDomNode node, Container *item)
 	setAttribute(node, "img", item->getImage());
 }
 
+void updateProfileCardImage(QDomNode node, Profile *item)
+{
+	setAttribute(node, "img_card", item->getCardImage());
+}
+
 
 Container::Container(int _id, int _uii, QString _image, QString _description)
 {
@@ -56,4 +61,26 @@ void Container::setDescription(QString _description)
 QString Container::getDescription() const
 {
 	return description;
+}
+
+
+Profile::Profile(int id, int uii, QString image, QString _card_image, QString description) :
+	Container(id, uii, image, description)
+{
+	card_image = _card_image;
+
+	connect(this, SIGNAL(cardImageChanged()), this, SIGNAL(persistItem()));
+}
+
+void Profile::setCardImage(QString image)
+{
+	if (image == card_image)
+		return;
+	card_image = image;
+	emit cardImageChanged();
+}
+
+QString Profile::getCardImage() const
+{
+	return card_image;
 }

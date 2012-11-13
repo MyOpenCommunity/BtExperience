@@ -576,6 +576,7 @@ void BtObjectsPlugin::createObjects()
 			break;
 
 		case MediaLink::Rss:
+		case MediaLink::RssMeteo:
 		case MediaLink::Web:
 		case MediaLink::Webcam:
 			parseMediaLinks(xml_obj);
@@ -737,6 +738,12 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case Container::IdMessages:
 	case Container::IdAmbient:
 	case Container::IdSpecialAmbient:
+	case Container::IdMultimediaRss:
+	case Container::IdMultimediaRssMeteo:
+	case Container::IdMultimediaWebRadio:
+	case Container::IdMultimediaWebCam:
+	case Container::IdMultimediaDevice:
+	case Container::IdMultimediaWebLink:
 		return configurations->getConfiguration(LAYOUT_FILE);
 	case ObjectInterface::IdEnergyRate:
 	case ObjectInterface::IdAlarmClock:
@@ -829,6 +836,9 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 	else if (obj_cont)
 	{
 		updateContainerNameImage(node_path.first, obj_cont);
+
+		if (obj_cont->getContainerId() == Container::IdProfile)
+			updateProfileCardImage(node_path.first, qobject_cast<Profile *>(obj_cont));
 	}
 	else if (obj_media)
 	{
@@ -853,7 +863,7 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 
 void BtObjectsPlugin::insertObject(ItemInterface *obj)
 {
-	qDebug() << "BtObjectsPlugin::insertObject" << obj;
+	qDebug() << "BtObjectsPlugin::insertObject" << obj << obj->getContainerUii();
 	QPair<QDomNode, QString> container_path;
 	if (obj->getContainerUii() != -1)
 		container_path = findNodeForUii(obj->getContainerUii());
@@ -1180,7 +1190,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 	{
 		v.setIst(ist);
 		int profile_uii = getIntAttribute(ist, "uii");
-		Container *profile = new Container(profile_id, profile_uii, v.value("img"), v.value("descr"));
+		Container *profile = new Profile(profile_id, profile_uii, v.value("img"), v.value("img_card"), v.value("descr"));
 
 		profile_model << profile;
 		uii_map.insert(profile_uii, profile);

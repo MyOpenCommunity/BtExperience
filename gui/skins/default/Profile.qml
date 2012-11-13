@@ -161,6 +161,7 @@ Page {
                 res = pannableChild.mapFromItem(null, absArea.x + deltaX, absArea.y + deltaY)
 
                 instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": link})
+                link.position = Qt.point(absArea.x + deltaX, absArea.y + deltaY)
 
                 // area margins are set to maximum quicklink size / 2; this info is used to draw
                 // an area in which QuickLinks don't overlap the area itself

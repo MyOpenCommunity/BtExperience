@@ -16,13 +16,15 @@ Page {
     property variant actualModel: privateProps.currentChoice === 0 ? camerasModel : quicklinksModel
     property bool isRemovable: privateProps.currentChoice !== 0
 
-    text: qsTr("Profiles")
-    source: "images/profiles.jpg"
+    text: page.profile === undefined ? qsTr("Profiles") : profile.description
+    source: page.profile === undefined ? "images/profiles.jpg" : "images/profiles.jpg" // TODO profile background image
+
+    SystemsModel { id: linksModel; systemId: privateProps.getContainerUii(privateProps.currentChoice, privateProps.dummy); source: myHomeModels.mediaContainers }
 
     MediaModel {
         id: quicklinksModel
         source: myHomeModels.mediaLinks
-        containers: [-1] // not assigned yet
+        containers: [linksModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
@@ -196,7 +198,7 @@ Page {
             topMargin: bg.height / 100 * 2.29
         }
         onClicked: {
-            quicklinksModel.prepend(myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.text, linkText.text))
+            myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.text, linkText.text)
             page.currentLink = 0 // selects first quicklink (the one just created)
         }
     }
@@ -352,7 +354,7 @@ Page {
                 var y = -1
                 var media = privateProps.getTypeText(privateProps.currentChoice)
 
-                quicklinksModel.append(myHomeModels.createQuicklink(page.profile.uii, media, name, address, btObject, x, y))
+                myHomeModels.createQuicklink(page.profile.uii, media, name, address, btObject, x, y)
             }
             Stack.popPage()
         }
@@ -462,6 +464,21 @@ Page {
         property bool rssStatus: false
         property bool weatherStatus: false
         property bool scenarioStatus: false
+
+        function getContainerUii(kind, dummy) {
+            // camera is not managed by media link model
+            if (kind === 1)
+                return Container.IdMultimediaWebLink
+            if (kind === 2)
+                return Container.IdMultimediaWebCam
+            if (kind === 3)
+                return Container.IdMultimediaRss
+            if (kind === 4)
+                return Container.IdMultimediaRssMeteo
+            if (kind === 5) // scenario
+                return -1 // TODO what is this?
+            return -1
+        }
 
         function getStatus(kind, dummy) {
             if (kind === 0)
