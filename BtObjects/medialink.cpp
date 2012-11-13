@@ -17,6 +17,7 @@ MediaLink::MediaLink(int container_id, MediaType type, QString _name, QString _a
 
 	connect(this, SIGNAL(nameChanged(QString)), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(addressChanged(QString)), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(linkUpdateRequest()), this, SIGNAL(persistItem()));
 }
 
 QString MediaLink::getName() const
@@ -43,4 +44,9 @@ void MediaLink::setAddress(QString _address)
 		return;
 	address = _address;
 	emit addressChanged(address);
+}
+
+void MediaLink::update()
+{
+	emit linkUpdateRequest();
 }

@@ -39,10 +39,12 @@ public:
 public slots:
 	void setName(QString name);
 	void setAddress(QString address);
+	void update();
 
 signals:
 	void nameChanged(QString address);
 	void addressChanged(QString address);
+	void linkUpdateRequest();
 
 private:
 	QString name;

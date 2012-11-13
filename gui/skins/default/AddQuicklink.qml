@@ -19,10 +19,12 @@ Page {
     text: page.profile === undefined ? qsTr("Profiles") : profile.description
     source: page.profile === undefined ? "images/profiles.jpg" : "images/profiles.jpg" // TODO profile background image
 
+    SystemsModel { id: linksModel; systemId: privateProps.getContainerUii(privateProps.currentChoice, privateProps.dummy); source: myHomeModels.mediaContainers }
+
     MediaModel {
         id: quicklinksModel
         source: myHomeModels.mediaLinks
-        containers: [privateProps.getContainerUii(privateProps.currentChoice, privateProps.dummy)]
+        containers: [linksModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
@@ -196,7 +198,7 @@ Page {
             topMargin: bg.height / 100 * 2.29
         }
         onClicked: {
-            quicklinksModel.prepend(myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.text, linkText.text))
+            myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.text, linkText.text)
             page.currentLink = 0 // selects first quicklink (the one just created)
         }
     }
@@ -352,7 +354,7 @@ Page {
                 var y = -1
                 var media = privateProps.getTypeText(privateProps.currentChoice)
 
-                quicklinksModel.append(myHomeModels.createQuicklink(page.profile.uii, media, name, address, btObject, x, y))
+                myHomeModels.createQuicklink(page.profile.uii, media, name, address, btObject, x, y)
             }
             Stack.popPage()
         }

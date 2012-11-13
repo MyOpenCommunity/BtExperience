@@ -738,6 +738,12 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case Container::IdMessages:
 	case Container::IdAmbient:
 	case Container::IdSpecialAmbient:
+	case Container::IdMultimediaRss:
+	case Container::IdMultimediaRssMeteo:
+	case Container::IdMultimediaWebRadio:
+	case Container::IdMultimediaWebCam:
+	case Container::IdMultimediaDevice:
+	case Container::IdMultimediaWebLink:
 		return configurations->getConfiguration(LAYOUT_FILE);
 	case ObjectInterface::IdEnergyRate:
 	case ObjectInterface::IdAlarmClock:
