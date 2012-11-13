@@ -18,7 +18,7 @@ Item {
 
         Item {
             id: content
-            x: parent.left
+            x: 0
             y: parent.childOffset
             width: parent.width
             height: parent.height
