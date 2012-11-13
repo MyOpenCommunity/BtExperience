@@ -36,11 +36,11 @@ QtObject {
         container['LANGUAGE']["fr"] = qsTr("French")
 
         container['CURRENCY'] = []
-        container['CURRENCY'][GuiSettings.CHF] = qsTr("CHF")
-        container['CURRENCY'][GuiSettings.EUR] = qsTr("EUR")
-        container['CURRENCY'][GuiSettings.GBP] = qsTr("GBP")
-        container['CURRENCY'][GuiSettings.JPY] = qsTr("JPY")
-        container['CURRENCY'][GuiSettings.USD] = qsTr("USD")
+        container['CURRENCY']["CHF"] = qsTr("Swiss franc")
+        container['CURRENCY']["EUR"] = qsTr("Euro €")
+        container['CURRENCY']["GBP"] = qsTr("British pound £")
+        container['CURRENCY']["JPY"] = qsTr("Japanese yen ¥")
+        container['CURRENCY']["USD"] = qsTr("U.S. dollar $")
 
         container['SKIN'] = []
         container['SKIN'][GuiSettings.Clear] = qsTr("Clear")

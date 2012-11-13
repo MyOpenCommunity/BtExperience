@@ -23,7 +23,7 @@ class GuiSettings : public QObject
 	/*!
 		\brief Sets or gets the currency.
 	*/
-	Q_PROPERTY(Currency currency READ getCurrency WRITE setCurrency NOTIFY currencyChanged)
+	Q_PROPERTY(QString currency READ getCurrency WRITE setCurrency NOTIFY currencyChanged)
 
 	/*!
 		\brief Sets or gets the keyboard layout.
@@ -41,10 +41,9 @@ class GuiSettings : public QObject
 	Q_PROPERTY(Skin skin READ getSkin WRITE setSkin NOTIFY skinChanged)
 
 	/*!
-		\brief Sets or gets the number separators for thousands and between
-		integral and fractional part.
+		\brief Sets or gets the number separator between integral and fractional part
 	*/
-	Q_PROPERTY(NumberSeparators numberSeparators READ getNumberSeparators WRITE setNumberSeparators NOTIFY numberSeparatorsChanged)
+	Q_PROPERTY(QString numberSeparator READ getNumberSeparator WRITE setNumberSeparator NOTIFY numberSeparatorChanged)
 
 	/*!
 		\brief Sets or gets the unit used for temperature in Celsius or Fahrenheit.
@@ -122,34 +121,16 @@ class GuiSettings : public QObject
 	*/
 	Q_PROPERTY(bool scenarioRecordingAlert READ getScenarioRecordingAlert WRITE setScenarioRecordingAlert NOTIFY scenarioRecordingAlertChanged)
 
-	Q_ENUMS(Currency)
-	Q_ENUMS(NumberSeparators)
 	Q_ENUMS(TemperatureUnit)
 	Q_ENUMS(Skin)
 
 public:
 	explicit GuiSettings(QObject *parent = 0);
 
-	enum Currency
-	{
-		CHF,
-		EUR,
-		GBP,
-		JPY,
-		USD
-	};
-
 	enum Skin
 	{
 		Clear,
 		Dark
-	};
-
-	enum NumberSeparators
-	{
-		// TODO define meaningful values
-		Dot_Comma,
-		Comma_Dot
 	};
 
 	enum TemperatureUnit
@@ -164,14 +145,14 @@ public:
 	// contrast must be [1, 100]
 	int getContrast() const;
 	void setContrast(int c);
-	Currency getCurrency() const;
-	void setCurrency(Currency c);
+	QString getCurrency() const;
+	void setCurrency(QString c);
 	QString getKeyboardLayout() const;
 	void setKeyboardLayout(QString l);
 	QString getLanguage() const;
 	void setLanguage(QString l);
-	NumberSeparators getNumberSeparators() const;
-	void setNumberSeparators(NumberSeparators s);
+	QString getNumberSeparator() const;
+	void setNumberSeparator(QString s);
 	TemperatureUnit getTemperatureUnit() const;
 	void setTemperatureUnit(TemperatureUnit u);
 	int getTimezone() const;
@@ -213,7 +194,7 @@ signals:
 	void currencyChanged();
 	void keyboardLayoutChanged();
 	void languageChanged();
-	void numberSeparatorsChanged();
+	void numberSeparatorChanged();
 	void temperatureUnitChanged();
 	void timezoneChanged();
 	void skinChanged();
@@ -239,10 +220,10 @@ private:
 	ConfigFile *configurations;
 	int brightness;
 	int contrast;
-	Currency currency;
+	QString currency;
 	QString keyboardLayout;
 	QString language;
-	NumberSeparators numberSeparators;
+	QString numberSeparator;
 	TemperatureUnit temperatureUnit;
 	int timezone;
 	Skin skin;

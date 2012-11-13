@@ -110,9 +110,9 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	brightness = 50;
 	contrast = 50;
-	currency = EUR;
+	currency = "EUR";
 	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
-	numberSeparators = Dot_Comma;
+	numberSeparator = ".";
 	temperatureUnit = Celsius;
 	timezone = 0;
 	skin = Clear;
@@ -252,12 +252,12 @@ void GuiSettings::setContrast(int c)
 	emit contrastChanged();
 }
 
-GuiSettings::Currency GuiSettings::getCurrency() const
+QString GuiSettings::getCurrency() const
 {
 	return currency;
 }
 
-void GuiSettings::setCurrency(Currency c)
+void GuiSettings::setCurrency(QString c)
 {
 	if (currency == c)
 		return;
@@ -327,19 +327,19 @@ void GuiSettings::setBeep(bool b)
 	emit beepChanged();
 }
 
-GuiSettings::NumberSeparators GuiSettings::getNumberSeparators() const
+QString GuiSettings::getNumberSeparator() const
 {
-	return numberSeparators;
+       return numberSeparator;
 }
 
-void GuiSettings::setNumberSeparators(NumberSeparators s)
+void GuiSettings::setNumberSeparator(QString s)
 {
-	if (numberSeparators == s)
-		return;
+       if (numberSeparator == s)
+	       return;
 
-	// TODO save value somewhere
-	numberSeparators = s;
-	emit numberSeparatorsChanged();
+       // TODO save value somewhere
+       numberSeparator = s;
+       emit numberSeparatorChanged();
 }
 
 GuiSettings::TemperatureUnit GuiSettings::getTemperatureUnit() const

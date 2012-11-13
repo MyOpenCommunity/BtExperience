@@ -146,7 +146,7 @@ MenuColumn {
         MenuItem {
             id: currencyItem
             name: qsTr("currency")
-            description: "euro €"
+            description: pageObject.names.get('CURRENCY', global.guiSettings.currency)
             hasChild: true
             isSelected: privateProps.currentIndex === 5
             onClicked: {
