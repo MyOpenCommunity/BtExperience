@@ -76,11 +76,6 @@ Item {
                 NumberAnimation { id: defaultanimation; duration: constants.elementTransitionDuration }
             }
 
-            Loader {
-                id: itemHighlighed
-                z: 10
-            }
-
             Rectangle {
                 id: line
                 color: "#f27021"
@@ -100,12 +95,6 @@ Item {
                 }
             }
         }
-
-        MouseArea {
-            id: interactivityArea
-            anchors.fill: parent
-            visible: !interactive
-        }
     }
 
     Component.onCompleted: {
@@ -113,5 +102,3 @@ Item {
         mainContainer.rootObject.columnClicked.connect(rootColumnClicked)
     }
 }
-
-

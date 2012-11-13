@@ -47,7 +47,13 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     if (itemObj) {
         var ma = createComponent("MenuColumnMouseArea.qml", {"parent": elementsContainer, "anchors.fill": itemObj, "z": -1})
         itemObj.closeItem.connect(closeItem)
-        itemObj.destroyed.connect(ma.destroy)
+        // We cannot directly connect to the destroy() method, it seems because
+        // it's not a 'proper' javascript function. In fact, defining a
+        // myDestroy() function inside the object works fine.
+        // Use a Connections object to be more declarative.
+        shadowObj.menuColumn = itemObj
+        ma.menuColumn = itemObj
+        titleObj.menuColumn = itemObj
         itemObj.loadComponent.connect(loadComponent)
         _addItem(itemObj, titleObj, shadowObj)
         return
@@ -331,13 +337,8 @@ function _doCloseItem() {
     if (item.animationRunning)
         return
 
-    var title = stackObjects[stackObjects.length -1]['title']
-    var shadow = stackObjects[stackObjects.length -1]['shadow']
-
     elementsContainer.width -= item.width
     item.destroy()
-    title.destroy()
-    shadow.destroy()
     stackObjects.length -= 1
     var last_item = stackObjects[stackObjects.length -1]['item']
     last_item.child = null

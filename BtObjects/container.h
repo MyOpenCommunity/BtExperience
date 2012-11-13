@@ -5,9 +5,11 @@
 
 class QDomNode;
 class Container;
+class Profile;
 
 
 void updateContainerNameImage(QDomNode node, Container *item);
+void updateProfileCardImage(QDomNode node, Profile *item);
 
 
 /*!
@@ -96,6 +98,32 @@ signals:
 private:
 	QString description, image;
 	int id, uii;
+};
+
+
+/*!
+	\brief Container subclass for profile
+*/
+class Profile : public Container
+{
+	Q_OBJECT
+
+	/*!
+		\brief Image for profile card
+	*/
+	Q_PROPERTY(QString cardImage READ getCardImage WRITE setCardImage NOTIFY cardImageChanged)
+
+public:
+	Profile(int id, int uii, QString image, QString card_image, QString description);
+
+	void setCardImage(QString image);
+	QString getCardImage() const;
+
+signals:
+	void cardImageChanged();
+
+private:
+	QString card_image;
 };
 
 #endif // CONTAINER_H
