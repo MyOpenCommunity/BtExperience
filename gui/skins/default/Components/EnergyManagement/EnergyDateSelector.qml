@@ -7,6 +7,7 @@ import "../../js/datetime.js" as DateTime
 Row {
     id: selector
     property date selectedDate: new Date()
+    property variant energyData: undefined
 
     // updates back the real data
     onSelectedDateChanged: privateProps.selectedDate = selector.selectedDate
@@ -62,7 +63,8 @@ Row {
         }
 
         function previousYearEnabled() {
-            return energyFunctions.isEnergyYearValid(DateTime.previousYear(privateProps.selectedDate))
+            var d = DateTime.previousYear(privateProps.selectedDate)
+            return energyFunctions.isEnergyYearValid(d) && energyData.isValidDate(d)
         }
 
         function nextYearEnabled() {

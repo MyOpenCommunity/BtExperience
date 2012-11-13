@@ -351,6 +351,7 @@ Page {
 
             EnergyDateSelector {
                 id: dateSelector
+                energyData: page.energyData
                 anchors {
                     top: parent.top
                     topMargin: parent.height / 100 * 3

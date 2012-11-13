@@ -49,9 +49,9 @@ Item {
             if (!itemGraph.energyData.advanced)
                 return false
 
-            // TODO: what is the right way to do this check?
-            if (itemGraph.graphDate.getFullYear() > 2010)
+            if (energyData.isValidDate(_previousYear(itemGraph.graphDate)))
                 return true
+
             return false
         }
 

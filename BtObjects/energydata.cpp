@@ -475,6 +475,12 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	return value;
 }
 
+bool EnergyData::isValidDate(QDate date) const
+{
+	// HARDCODED, move in the configuration file when possible.
+	return date > QDate(2010, 1, 1);
+}
+
 int EnergyData::getObjectId() const
 {
 	return IdEnergyData;

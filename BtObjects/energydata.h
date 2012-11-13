@@ -314,6 +314,11 @@ public:
 	*/
 	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, MeasureType measure = Consumption);
 
+	/*!
+		\brief Checks if the date argument is valid.
+	*/
+	Q_INVOKABLE bool isValidDate(QDate date) const;
+
 	EnergyType getEnergyType() const;
 	EnergyFamily::FamilyType getFamilyType() const;
 	EnergyRate *getRate() const;
