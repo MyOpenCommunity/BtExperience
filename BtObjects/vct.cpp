@@ -26,8 +26,14 @@ namespace
 		{
 			v.setIst(ist);
 			int uii = getIntAttribute(ist, "uii");
+			QString where;
 
-			obj_list << ObjectPair(uii, new ExternalPlace(v.value("descr"), id, v.value("where")));
+			if (id == ObjectInterface::IdSwitchboard)
+				where = (*bt_global::config)[GUARD_UNIT_ADDRESS];
+			else
+				where = v.value("where");
+
+			obj_list << ObjectPair(uii, new ExternalPlace(v.value("descr"), id, where));
 		}
 		return obj_list;
 	}
