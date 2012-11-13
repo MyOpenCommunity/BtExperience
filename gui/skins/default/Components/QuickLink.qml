@@ -323,12 +323,8 @@ Item {
             containerPressed.visible = false
         }
         onClicked: {
-            if (page !== "") {
-                var fixedAddress = itemObject.address
-                if (fixedAddress.toLowerCase().indexOf("http://") !== 0)
-                    fixedAddress = "http://" + fixedAddress
-                Stack.pushPage(page, {'urlString': fixedAddress, 'profile': bgQuick.profile})
-            }
+            if (page !== "")
+                Stack.pushPage(page, {'urlString': itemObject.address, 'profile': bgQuick.profile})
 
             bgQuick.clicked()
         }
