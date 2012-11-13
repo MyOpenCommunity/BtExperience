@@ -19,17 +19,6 @@ MenuColumn {
     }
 
     Column {
-        MenuItem {
-            name: qsTr("Add Room")
-            isSelected: privateProps.currentIndex === 1
-
-            onClicked: {
-                paginator.currentIndex = -1
-                privateProps.currentIndex = 1
-                column.loadColumn(addRoom, "Add Room", column.dataModel, floorUii)
-            }
-        }
-
         PaginatorList {
             id: paginator
             delegate: MenuItemDelegate {

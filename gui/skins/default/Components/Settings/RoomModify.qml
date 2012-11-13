@@ -3,40 +3,35 @@ import BtObjects 1.0
 import "../../js/Stack.js" as Stack
 import Components 1.0
 
-
 MenuColumn {
     id: column
 
-    width: 212
-    height: Math.max(1, 50 * itemList.count)
+    onChildDestroyed: privateProps.currentIndex = -1
 
-    onChildDestroyed: {
-        itemList.currentIndex = -1
+    Column {
+        MenuItem {
+            name: qsTr("Modify card image")
+            isSelected: privateProps.currentIndex === 1
+            onClicked: {
+                if (privateProps.currentIndex !== 1)
+                    privateProps.currentIndex = 1
+                Stack.pushPage("NewProfileCard.qml", {"profile": column.dataModel})
+            }
+        }
+
+        MenuItem {
+            name: qsTr("Modify background image")
+            isSelected: privateProps.currentIndex === 2
+            onClicked: {
+                if (privateProps.currentIndex !== 2)
+                    privateProps.currentIndex = 2
+                console.log("Implement modify background image feature")
+            }
+        }
     }
 
-    ListView {
-        id: itemList
-        anchors.fill: parent
-
-        currentIndex: -1
-
-        delegate: MenuItemDelegate {
-            name: model.name
-            hasChild: false
-            selectOnClick: true
-        }
-
-        model: modelList
-    }
-
-    ListModel {
-        id: modelList
-        ListElement {
-            name: "Rinomina"
-        }
-
-        ListElement {
-            name: "Aggiungi"
-        }
+    QtObject {
+        id: privateProps
+        property int currentIndex: -1
     }
 }
