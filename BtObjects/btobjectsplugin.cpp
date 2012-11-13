@@ -1184,7 +1184,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 	{
 		v.setIst(ist);
 		int profile_uii = getIntAttribute(ist, "uii");
-		Container *profile = new Profile(profile_id, profile_uii, v.value("img"), v.value("img_card"), v.value("descr"));
+		Container *profile = new ContainerWithCard(profile_id, profile_uii, v.value("img"), v.value("img_card"), v.value("descr"));
 
 		profile_model << profile;
 		uii_map.insert(profile_uii, profile);
