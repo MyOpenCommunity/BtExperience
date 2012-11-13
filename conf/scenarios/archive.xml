@@ -121,7 +121,7 @@
 					<descr>Dimmer 100</descr>
 					<where>100</where>
 					<pul>0</pul>
-					<trigger>50-70</trigger>
+					<trigger>41-70</trigger>
 				</device>
 				<action>
 					<descr>Super Scenario Plus</descr>
