@@ -829,6 +829,9 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 	else if (obj_cont)
 	{
 		updateContainerNameImage(node_path.first, obj_cont);
+
+		if (obj_cont->getContainerId() == Container::IdProfile)
+			updateProfileCardImage(node_path.first, qobject_cast<Profile *>(obj_cont));
 	}
 	else if (obj_media)
 	{
@@ -1180,7 +1183,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 	{
 		v.setIst(ist);
 		int profile_uii = getIntAttribute(ist, "uii");
-		Container *profile = new Container(profile_id, profile_uii, v.value("img"), v.value("descr"));
+		Container *profile = new Profile(profile_id, profile_uii, v.value("img"), v.value("img_card"), v.value("descr"));
 
 		profile_model << profile;
 		uii_map.insert(profile_uii, profile);
