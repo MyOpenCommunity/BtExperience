@@ -149,7 +149,7 @@ Item {
         // antintrusion
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.antintrusionPresent
+            visible: EventManager.eventManager.antintrusionPresent && global.guiSettings.burglarAlarmAlert
             defaultImage: EventManager.eventManager.isAntintrusionInserted ?
                               (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_burlgar-alarm-on.svg" :
@@ -170,7 +170,7 @@ Item {
         // alarm clock
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.clocksEnabled
+            visible: EventManager.eventManager.clocksEnabled && global.guiSettings.alarmClockAlert
             defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm-clock.svg" :
                               "../images/toolbar/icon_alarm-clock_p.svg"
@@ -183,7 +183,7 @@ Item {
         // auto open
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.autoOpen
+            visible: EventManager.eventManager.autoOpen && global.guiSettings.professionalStudioAlert
             defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-open.svg" :
                               "../images/toolbar/icon_vde-auto-open_p.svg"
@@ -196,7 +196,7 @@ Item {
         // auto answer
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.handsFree
+            visible: EventManager.eventManager.handsFree && global.guiSettings.handsFreeAlert
             defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-answer.svg" :
                               "../images/toolbar/icon_vde-auto-answer_p.svg"
@@ -209,7 +209,7 @@ Item {
         // vde mute
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.vdeMute
+            visible: EventManager.eventManager.vdeMute && global.guiSettings.callExclusionAlert
             defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-mute.svg" :
                               "../images/toolbar/icon_vde-mute_p.svg"
@@ -222,6 +222,7 @@ Item {
         // alerts
         ToolbarButton {
             height: toolbar_top.height
+            visible: EventManager.eventManager.alarms > 0 && global.guiSettings.burglarAlarmDangerAlert
             quantity: EventManager.eventManager.alarms
             defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm.svg" :
@@ -235,7 +236,7 @@ Item {
         // volume (and mute)
         ToolbarButton {
             height: toolbar_top.height
-            visible: true
+            visible: global.guiSettings.volumeAlert
             defaultImage: EventManager.eventManager.mute ?
                               (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_source-audio-mute.svg" :
@@ -258,7 +259,7 @@ Item {
         // play
         ToolbarButton {
             height: toolbar_top.height
-            visible: EventManager.eventManager.playing
+            visible: EventManager.eventManager.playing && global.guiSettings.playerAlert
             defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_source-play.svg" :
                               "../images/toolbar/icon_source-play_p.svg"
@@ -271,6 +272,7 @@ Item {
         // message
         ToolbarButton {
             height: toolbar_top.height
+            visible: EventManager.eventManager.messages > 0 && global.guiSettings.messageAlert
             quantity: EventManager.eventManager.messages
             defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_new-message.svg" :
@@ -285,7 +287,7 @@ Item {
             id: recording
 
             height: toolbar_top.height
-            visible: EventManager.eventManager.scenarioRecording
+            visible: EventManager.eventManager.scenarioRecording && global.guiSettings.scenarioRecordingAlert
 
             // separator
             SvgImage {
