@@ -78,8 +78,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
-                console.log("Implement add quicklink in home page (static uii?)")
-//                Stack.pushPage("AddQuicklink.qml", {"profile": column.dataModel})
+                Stack.pushPage("AddQuicklink.qml", {"homeCustomization": true})
             }
         }
      }

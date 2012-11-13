@@ -11,13 +11,14 @@ Page {
 
     property variant profile: undefined
     property int currentLink: -1
+    property bool homeCustomization: false
 
     // the following properties are used by delegates
     property variant actualModel: privateProps.currentChoice === 0 ? camerasModel : quicklinksModel
     property bool isRemovable: privateProps.currentChoice !== 0
 
-    text: page.profile === undefined ? qsTr("Profiles") : profile.description
-    source: page.profile === undefined ? "images/profiles.jpg" : "images/profiles.jpg" // TODO profile background image
+    text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
+    source: page.profile === undefined ? (page.homeCustomization ? "images/home/home.jpg" : "images/profiles.jpg") : "images/profiles.jpg" // TODO profile background image
 
     SystemsModel { id: linksModel; systemId: privateProps.getContainerUii(privateProps.currentChoice, privateProps.dummy); source: myHomeModels.mediaContainers }
 
@@ -353,8 +354,9 @@ Page {
                 var x = -1
                 var y = -1
                 var media = privateProps.getTypeText(privateProps.currentChoice)
+                var uii = page.homeCustomization ? myHomeModels.homepageLinks.uii : page.profile.uii
 
-                myHomeModels.createQuicklink(page.profile.uii, media, name, address, btObject, x, y)
+                myHomeModels.createQuicklink(uii, media, name, address, btObject, x, y, page.homeCustomization)
             }
             Stack.popPage()
         }
