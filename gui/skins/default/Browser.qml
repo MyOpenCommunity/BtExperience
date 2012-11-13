@@ -76,7 +76,7 @@ Page {
 
         function fixedAddress(address) {
             var fixedAddress = address
-            if (fixedAddress.toLowerCase().indexOf("http://") !== 0)
+            if (fixedAddress.toLowerCase().indexOf("://") !== 0)
                 fixedAddress = "http://" + fixedAddress
             return fixedAddress
         }
