@@ -172,6 +172,21 @@ public slots:
 		boot();
 	}
 
+	void handleSignal(int signal_number)
+	{
+		if (signal_number == SIGUSR2)
+		{
+			qDebug("Received signal SIGUSR2");
+	//		emit systemTimeChanged();
+		}
+		else if (signal_number == SIGTERM)
+		{
+			qDebug("Terminating on SIGTERM");
+			global->setMonitorOff(false);
+			qApp->quit();
+		}
+	}
+
 private:
 	void addMaliitSurfaces(QGraphicsScene *scene, QWidget *root)
 	{
@@ -231,9 +246,9 @@ static void loadGeneralConfig(GeneralConfig &general_config)
 
 int main(int argc, char *argv[])
 {
-	SignalsHandler *sh = installSignalsHandler();
-
 	QApplication app(argc, argv);
+
+	SignalsHandler *sh = installSignalsHandler();
 
 	GeneralConfig general_config;
 	loadGeneralConfig(general_config);
@@ -283,9 +298,8 @@ int main(int argc, char *argv[])
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
 	QObject::connect(last_click, SIGNAL(maxTravelledDistanceOnLastMove(QPoint)), &global, SLOT(setMaxTravelledDistanceOnLastMove(QPoint)));
 	BootManager boot_manager(&global);
+	sh->connect(sh, SIGNAL(signalReceived(int)), &boot_manager, SLOT(handleSignal(int)));
 	return app.exec();
-	delete sh;
-	sh = 0;
 }
 
 #include "main.moc"
