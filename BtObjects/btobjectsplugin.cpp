@@ -854,7 +854,7 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 
 void BtObjectsPlugin::insertObject(ItemInterface *obj)
 {
-	qDebug() << "BtObjectsPlugin::insertObject" << obj;
+	qDebug() << "BtObjectsPlugin::insertObject" << obj << obj->getContainerUii();
 	QPair<QDomNode, QString> container_path;
 	if (obj->getContainerUii() != -1)
 		container_path = findNodeForUii(obj->getContainerUii());
