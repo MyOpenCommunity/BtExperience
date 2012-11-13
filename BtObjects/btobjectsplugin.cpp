@@ -744,6 +744,7 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case Container::IdMultimediaWebCam:
 	case Container::IdMultimediaDevice:
 	case Container::IdMultimediaWebLink:
+	case Container::IdHomepage:
 		return configurations->getConfiguration(LAYOUT_FILE);
 	case ObjectInterface::IdEnergyRate:
 	case ObjectInterface::IdAlarmClock:

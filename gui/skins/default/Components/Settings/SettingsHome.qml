@@ -72,15 +72,14 @@ MenuColumn {
             }
         }
 
-        MenuItem {
-            name: qsTr("Add Quicklink")
-            isSelected: privateProps.currentIndex === 3
-            onClicked: {
-                if (privateProps.currentIndex !== 3)
-                    privateProps.currentIndex = 3
-                console.log("Implement add quicklink in home page (static uii?)")
-//                Stack.pushPage("AddQuicklink.qml", {"profile": column.dataModel})
-            }
-        }
+//        MenuItem {
+//            name: qsTr("Add Quicklink")
+//            isSelected: privateProps.currentIndex === 3
+//            onClicked: {
+//                if (privateProps.currentIndex !== 3)
+//                    privateProps.currentIndex = 3
+//                Stack.pushPage("AddQuicklink.qml", {"homeCustomization": true})
+//            }
+//        }
      }
 }

@@ -30,11 +30,6 @@ bool InputMethodEventFilter::eventFilter(QObject *obj, QEvent *event)
 			QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
 			ic->filterEvent(&closeSIPEvent);
 		}
-		else if (prevFocused == 0 && focused)
-		{
-			QEvent openSIPEvent(QEvent::RequestSoftwareInputPanel);
-			ic->filterEvent(&openSIPEvent);
-		}
 	}
 
 	return QObject::eventFilter(obj,event);

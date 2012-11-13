@@ -89,55 +89,65 @@ Note *GlobalModels::createNote(int profile_uii, QString text)
 	return new Note(profile_uii, text);
 }
 
-ItemInterface *GlobalModels::createQuicklink(int profile_uii, QString mediaType, QString name, QString address, ObjectInterface *btObject, int x, int y)
+ItemInterface *GlobalModels::createQuicklink(int uii, QString media_type, QString name,
+											 QString address, ObjectInterface *bt_object,
+											 int x, int y, bool is_home_link)
 {
+	if (QString::compare("camera", media_type, Qt::CaseInsensitive) == 0)
+	{
+		return new ObjectLink(bt_object, MediaLink::Camera, x, y, uii);
+	}
+
 	// defaults to web link
 	int cid = Container::IdMultimediaWebLink;
 	MediaLink::MediaType t = MediaLink::Web;
 
-	if (QString::compare("camera", mediaType, Qt::CaseInsensitive) == 0)
-		t = MediaLink::Camera;
-
-	if (QString::compare("web page", mediaType, Qt::CaseInsensitive) == 0)
+	if (QString::compare("web page", media_type, Qt::CaseInsensitive) == 0)
 	{
 		cid = Container::IdMultimediaWebLink;
 		t = MediaLink::Web;
 	}
 
-	if (QString::compare("web camera", mediaType, Qt::CaseInsensitive) == 0)
+	if (QString::compare("web camera", media_type, Qt::CaseInsensitive) == 0)
 	{
 		cid = Container::IdMultimediaWebCam;
 		t = MediaLink::Webcam;
 	}
 
-	if (QString::compare("rss", mediaType, Qt::CaseInsensitive) == 0)
+	if (QString::compare("rss", media_type, Qt::CaseInsensitive) == 0)
 	{
 		cid = Container::IdMultimediaRss;
 		t = MediaLink::Rss;
 	}
 
-	if (QString::compare("weather", mediaType, Qt::CaseInsensitive) == 0)
+	if (QString::compare("weather", media_type, Qt::CaseInsensitive) == 0)
 	{
 		cid = Container::IdMultimediaRssMeteo;
 		t = MediaLink::RssMeteo;
 	}
 
-	if (QString::compare("scenario", mediaType, Qt::CaseInsensitive) == 0)
+	if (QString::compare("scenario", media_type, Qt::CaseInsensitive) == 0)
 	{
 		// TODO check these values
 		cid = Container::IdScenarios;
 		t = MediaLink::BtObject;
 	}
 
-	if (t == MediaLink::Camera)
-		return new ObjectLink(btObject, t, x, y, profile_uii);
-
 	MediaLink *result = new MediaLink(-1, t, name, address, QPoint(x, y));
 
-	if (profile_uii != -1)
-		result->setContainerUii(profile_uii);
+	if (is_home_link)
+	{
+		// home link
+		result->setContainerUii(uii);
+	}
+	else if (uii != -1)
+	{
+		// profile link
+		result->setContainerUii(uii);
+	}
 	else
 	{
+		// multimedia link
 		MediaDataModel *containers = getMediaContainers();
 		for (int i = 0; i < containers->getCount(); ++i)
 		{
