@@ -58,11 +58,6 @@ class GuiSettings : public QObject
 	// TODO use an enum for all managed timezones
 
 	/*!
-		\brief Sets or gets the turn off time for the display.
-	*/
-	Q_PROPERTY(TimeChoice turnOffTime READ getTurnOffTime WRITE setTurnOffTime NOTIFY turnOffTimeChanged)
-
-	/*!
 		\brief Sets or gets the beep status.
 	*/
 	Q_PROPERTY(bool beep READ getBeep WRITE setBeep NOTIFY beepChanged)
@@ -130,7 +125,6 @@ class GuiSettings : public QObject
 	Q_ENUMS(Currency)
 	Q_ENUMS(NumberSeparators)
 	Q_ENUMS(TemperatureUnit)
-	Q_ENUMS(TimeChoice)
 	Q_ENUMS(Skin)
 
 public:
@@ -164,19 +158,6 @@ public:
 		Fahrenheit
 	};
 
-	enum TimeChoice
-	{
-		Seconds_15,
-		Seconds_30,
-		Minutes_1,
-		Minutes_2,
-		Minutes_5,
-		Minutes_10,
-		Minutes_30,
-		Hours_1,
-		Never
-	};
-
 	// brightness must be [1, 100]
 	int getBrightness() const;
 	void setBrightness(int b);
@@ -195,8 +176,6 @@ public:
 	void setTemperatureUnit(TemperatureUnit u);
 	int getTimezone() const;
 	void setTimezone(int z);
-	TimeChoice getTurnOffTime() const;
-	void setTurnOffTime(TimeChoice tc);
 	Skin getSkin() const;
 	void setSkin(Skin s);
 	bool getBeep() const;
@@ -237,7 +216,6 @@ signals:
 	void numberSeparatorsChanged();
 	void temperatureUnitChanged();
 	void timezoneChanged();
-	void turnOffTimeChanged();
 	void skinChanged();
 	void beepChanged();
 	void energyThresholdBeepChanged();
@@ -267,7 +245,6 @@ private:
 	NumberSeparators numberSeparators;
 	TemperatureUnit temperatureUnit;
 	int timezone;
-	TimeChoice turnOffTime;
 	Skin skin;
 	bool beep;
 	bool energy_threshold_beep;

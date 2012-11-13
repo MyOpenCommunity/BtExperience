@@ -22,28 +22,6 @@ QtObject {
         container['SCREEN_SAVER_TYPE'][GuiSettings.Rectangles] = qsTr("Rectangles")
         container['SCREEN_SAVER_TYPE'][GuiSettings.Slideshow] = qsTr("Slideshow")
 
-        container['TURN_OFF_DISPLAY_LIST'] = []
-        container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Seconds_15] = qsTr("15 sec")
-        container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Seconds_30] = qsTr("30 sec")
-        container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Minutes_1] = qsTr("1 min")
-        container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Minutes_2] = qsTr("2 min")
-        container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Minutes_5] = qsTr("5 min")
-        container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Minutes_10] = qsTr("10 min")
-        container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Minutes_30] = qsTr("30 min")
-        container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Hours_1] = qsTr("1 hour")
-        container['TURN_OFF_DISPLAY_LIST'][GuiSettings.Never] = qsTr("never")
-
-        container['SCREEN_SAVER_TIMEOUT'] = []
-        container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Seconds_15] = qsTr("15 sec")
-        container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Seconds_30] = qsTr("30 sec")
-        container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Minutes_1] = qsTr("1 min")
-        container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Minutes_2] = qsTr("2 min")
-        container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Minutes_5] = qsTr("5 min")
-        container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Minutes_10] = qsTr("10 min")
-        container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Minutes_30] = qsTr("30 min")
-        container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Hours_1] = qsTr("1 hour")
-        container['SCREEN_SAVER_TIMEOUT'][GuiSettings.Never] = qsTr("never") // not really used
-
         container['AUTO_UPDATE'] = []
         container['AUTO_UPDATE'][true] = qsTr("Enabled")
         container['AUTO_UPDATE'][false] = qsTr("Disabled")

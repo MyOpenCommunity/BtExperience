@@ -115,7 +115,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 	numberSeparators = Dot_Comma;
 	temperatureUnit = Celsius;
 	timezone = 0;
-	turnOffTime = Minutes_10;
 	skin = Clear;
 	beep = false;
 	energy_threshold_beep = false;
@@ -371,21 +370,6 @@ void GuiSettings::setTimezone(int z)
 	// TODO save value somewhere
 	timezone = z;
 	emit timezoneChanged();
-}
-
-GuiSettings::TimeChoice GuiSettings::getTurnOffTime() const
-{
-	return turnOffTime;
-}
-
-void GuiSettings::setTurnOffTime(TimeChoice tc)
-{
-	if (turnOffTime == tc)
-		return;
-
-	// TODO save value somewhere
-	turnOffTime = tc;
-	emit turnOffTimeChanged();
 }
 
 bool GuiSettings::getEnergyThresholdBeep() const
