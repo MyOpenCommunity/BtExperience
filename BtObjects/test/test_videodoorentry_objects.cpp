@@ -170,9 +170,10 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 				   << SIGNAL(callEnded())
 				   << SIGNAL(talkerChanged())
 				   << SIGNAL(callAnswered()));
+	ExternalPlace ep("", ObjectInterface::IdInternalIntercom, "21");
 
 	// starts a call
-	intercom->startCall("21");
+	intercom->startCall(&ep);
 	dev->internalIntercomCall("21");
 	QCOMPARE(QString("portone"), intercom->getTalker());
 
@@ -308,9 +309,10 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 				   << SIGNAL(incomingCall())
 				   << SIGNAL(callAnswered())
 				   << SIGNAL(callEnded()));
+	ExternalPlace ep("", ObjectInterface::IdExternalPlace, "21");
 
 	// starts a call
-	cctv->cameraOn("21");
+	cctv->cameraOn(&ep);
 	dev->cameraOn("21");
 
 	compareClientCommand();
@@ -350,9 +352,10 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 				   << SIGNAL(incomingCall())
 				   << SIGNAL(callAnswered())
 				   << SIGNAL(callEnded()));
+	ExternalPlace ep("", ObjectInterface::IdExternalPlace, "21");
 
 	// starts a call
-	cctv->cameraOn("21");
+	cctv->cameraOn(&ep);
 	dev->cameraOn("21");
 
 	compareClientCommand();

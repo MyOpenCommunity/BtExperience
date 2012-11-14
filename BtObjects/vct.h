@@ -204,9 +204,9 @@ public:
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
+	Q_INVOKABLE void cameraOn(ExternalPlace *place);
 
 public slots:
-	void cameraOn(QString where);
 	void openLock();
 	void releaseLock();
 	void stairLightActivate();
@@ -305,7 +305,7 @@ public:
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
-	Q_INVOKABLE void startCall(QString where);
+	Q_INVOKABLE void startCall(ExternalPlace *place);
 	Q_INVOKABLE bool getRingExclusion() const;
 
 	QString getTalker() const;

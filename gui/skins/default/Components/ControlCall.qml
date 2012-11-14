@@ -9,7 +9,7 @@ SvgImage {
     id: control
 
     property variant dataObject: undefined
-    property string where // used only to make calls
+    property variant intercom // used only to make calls
 
     signal closePopup
 
@@ -72,7 +72,7 @@ SvgImage {
 
         onClicked: {
             if (dataObject !== undefined) {
-                dataObject.startCall(where)
+                dataObject.startCall(intercom)
                 control.state = "callTo"
             }
         }

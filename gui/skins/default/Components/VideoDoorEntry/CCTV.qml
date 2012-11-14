@@ -21,7 +21,7 @@ MenuColumn {
             selectOnClick: false
             editable: true
             onDelegateClicked: {
-                cctvModel.getObject(0).cameraOn(itemObject.where)
+                cctvModel.getObject(0).cameraOn(itemObject)
             }
         }
         ObjectModel {

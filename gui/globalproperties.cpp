@@ -180,6 +180,12 @@ GlobalProperties::GlobalProperties(logger *log)
 	debug_timing = 0;
 	hardware_keys = new HwKeys(this);
 
+	if (!(*bt_global::config)[DEFAULT_PE].isEmpty())
+		default_external_place = new ExternalPlace(QString(), ObjectInterface::IdExternalPlace,
+							   (*bt_global::config)[DEFAULT_PE]);
+	else
+		default_external_place = 0;
+
 	setMonitorEnabled(1);
 	updateTime();
 	// We emit a signal every second to update the time.
@@ -397,9 +403,9 @@ QObject *GlobalProperties::getHardwareKeys() const
 	return hardware_keys;
 }
 
-QString GlobalProperties::getDefaultExternalPlace() const
+QObject *GlobalProperties::getDefaultExternalPlace() const
 {
-	return (*bt_global::config)[DEFAULT_PE];
+	return default_external_place;
 }
 
 int GlobalProperties::getMainWidth() const
