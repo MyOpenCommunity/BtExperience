@@ -35,7 +35,7 @@ class Container : public ItemInterface
 	/*!
 		\brief Image for profile card. Here, it is equal to image, in derived classes may be different
 	*/
-	Q_PROPERTY(QString cardImage READ getCardImage WRITE setCardImage NOTIFY cardImageChanged)
+	Q_PROPERTY(QString cardImage READ getCardImage NOTIFY cardImageChanged)
 
 	/*!
 		\brief Unique identifier for this container instance.
@@ -91,7 +91,6 @@ public:
 	void setImage(QString image);
 	QString getImage() const;
 
-	virtual void setCardImage(QString image);
 	virtual QString getCardImage() const;
 
 	void setDescription(QString description);
@@ -117,11 +116,19 @@ class ContainerWithCard : public Container
 {
 	Q_OBJECT
 
+	/*!
+		\brief Image for profile card.
+	*/
+	Q_PROPERTY(QString cardImage READ getCardImage WRITE setCardImage NOTIFY cardImageChanged)
+
 public:
 	ContainerWithCard(int id, int uii, QString image, QString card_image, QString description);
 
-	virtual void setCardImage(QString image);
+	void setCardImage(QString image);
 	virtual QString getCardImage() const;
+
+signals:
+	void cardImageChanged();
 
 private:
 	QString card_image;

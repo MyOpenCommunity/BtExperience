@@ -51,12 +51,6 @@ QString Container::getImage() const
 	return image;
 }
 
-void Container::setCardImage(QString image)
-{
-	qWarning() << "Invalid " << __PRETTY_FUNCTION__ << " call with argument " << image << ". Defaulting to do nothing.";
-	return;
-}
-
 QString Container::getCardImage() const
 {
 	return getImage();
