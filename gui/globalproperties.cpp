@@ -619,6 +619,15 @@ void GlobalProperties::setKeyboardLayout(QString layout)
 #endif
 }
 
+QStringList GlobalProperties::getKeyboardLayouts() const
+{
+#ifdef BT_MALIIT
+	return language_map.keys();
+#else
+	return QStringList();
+#endif
+}
+
 #ifdef BT_MALIIT
 void GlobalProperties::pluginSettingsReceived(const QList<QSharedPointer<Maliit::PluginSettings> > &settings)
 {
@@ -643,6 +652,7 @@ void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::Plug
 				if (value.section(':', 1).endsWith("_bticino"))
 					language_map[value.section(':', 1)] = value;
 
+			emit keyboardLayoutsChanged();
 		}
 		else if (entry->key() == "/maliit/onscreen/active")
 		{
