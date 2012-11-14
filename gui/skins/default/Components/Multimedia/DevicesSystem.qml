@@ -34,7 +34,6 @@ MenuColumn {
         model: modelList
     }
 
-    BtObjectsMapping { id: mapping }
     SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
 
     ObjectModel {
