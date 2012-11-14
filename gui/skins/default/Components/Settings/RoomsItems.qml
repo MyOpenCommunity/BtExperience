@@ -27,7 +27,7 @@ MenuColumn {
                 hasChild: true
                 onClicked: {
                     privateProps.currentIndex = -1
-                    column.loadColumn(modifyRoom, itemObject.description)
+                    column.loadColumn(modifyRoom, itemObject.description, itemObject)
                 }
             }
             model: roomsModel

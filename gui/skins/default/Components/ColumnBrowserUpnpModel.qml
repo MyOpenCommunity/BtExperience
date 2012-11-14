@@ -5,6 +5,7 @@ import BtObjects 1.0
 ColumnBrowserCommon {
 
     property variant rootPath
+    property alias filter: upnpModel.filter
 
     theModel: upnpModel
 

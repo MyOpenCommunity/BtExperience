@@ -5,6 +5,7 @@ import BtObjects 1.0
 ColumnBrowserCommon {
 
     property alias rootPath: localModel.rootPath
+    property alias filter: localModel.filter
 
     theModel: localModel
 

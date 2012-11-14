@@ -12,6 +12,10 @@ MenuColumn {
     property alias paginator: paginator
     property bool upnp
     property variant theModel
+    property bool imageOnly: false
+    property alias bgHeight: imageBg.height
+
+    signal selected(variant item)
 
     SvgImage {
         id: imageBg
@@ -40,6 +44,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: photoButton
 
+        visible: !column.imageOnly
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -64,6 +69,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: videoButton
 
+        visible: !column.imageOnly
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -87,6 +93,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: audioButton
 
+        visible: !column.imageOnly
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -110,6 +117,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: fileButton
 
+        visible: !column.imageOnly
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -190,7 +198,13 @@ MenuColumn {
                 }
                 case FileObject.Image:
                 {
-                    Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
+                    if (column.imageOnly) {
+                        column.selected(itemObject)
+                        column.closeColumn()
+                    }
+                    else {
+                        Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
+                    }
                     break
                 }
                 case FileObject.Video:

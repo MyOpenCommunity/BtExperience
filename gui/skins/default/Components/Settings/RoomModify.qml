@@ -22,10 +22,11 @@ MenuColumn {
         MenuItem {
             name: qsTr("Modify background image")
             isSelected: privateProps.currentIndex === 2
+            hasChild: true
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                console.log("Implement modify background image feature")
+                column.loadColumn(settingsImageBrowser, qsTr("Background image"), column.dataModel)
             }
         }
     }
@@ -33,5 +34,10 @@ MenuColumn {
     QtObject {
         id: privateProps
         property int currentIndex: -1
+    }
+
+    Component {
+        id: settingsImageBrowser
+        SettingsImageBrowser {}
     }
 }
