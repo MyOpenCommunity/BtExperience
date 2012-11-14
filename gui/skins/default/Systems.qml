@@ -59,7 +59,7 @@ Page {
         CardView {
             delegate: CardDelegate {
                 property variant itemObject: systemsModel.getObject(index)
-                source: itemObject.image
+                source: itemObject.cardImage
                 label: itemObject.description
 
                 onClicked: Stack.goToPage(Script.getTarget(itemObject.containerId))
@@ -78,7 +78,7 @@ Page {
         CardGridView {
             delegate: CardGridDelegate {
                 property variant itemObject: systemsModel.getObject(index)
-                source: itemObject.image
+                source: itemObject.cardImage
                 label: itemObject.description
 
                 onClicked: Stack.goToPage(Script.getTarget(itemObject.containerId))

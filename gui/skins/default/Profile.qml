@@ -292,7 +292,7 @@ Page {
                         height: parent.height / 100 * 80
                         anchors.top: parent.top
                         anchors.topMargin: parent.height / 100 * 8
-                        source: profilePage.profile.image
+                        source: profilePage.profile.cardImage
                         fillMode: Image.PreserveAspectFit
                     }
 

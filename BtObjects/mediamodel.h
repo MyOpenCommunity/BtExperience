@@ -108,7 +108,7 @@ private:
 		id: listDelegate
 
 		Image {
-		    source: listDelegate.itemObject.image
+			source: listDelegate.itemObject.cardImage
 
 		    // ...
 		}

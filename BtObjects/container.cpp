@@ -1,6 +1,8 @@
 #include "container.h"
 #include "xml_functions.h"
 
+#include <QDebug>
+
 
 void updateContainerNameImage(QDomNode node, Container *item)
 {
@@ -47,6 +49,17 @@ void Container::setImage(QString _image)
 QString Container::getImage() const
 {
 	return image;
+}
+
+void Container::setCardImage(QString image)
+{
+	qWarning() << "Invalid " << __PRETTY_FUNCTION__ << " call with argument " << image << ". Defaulting to do nothing.";
+	return;
+}
+
+QString Container::getCardImage() const
+{
+	return getImage();
 }
 
 void Container::setDescription(QString _description)

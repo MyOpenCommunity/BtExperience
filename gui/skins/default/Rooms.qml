@@ -55,7 +55,7 @@ Page {
         visible: model.count < 3
         delegate: CardDelegate {
             property variant itemObject: roomsModel.getObject(index)
-            source: itemObject.image
+            source: itemObject.cardImage
             label: itemObject.description
 
             onClicked: Stack.goToPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})

@@ -33,6 +33,11 @@ class Container : public ItemInterface
 	Q_PROPERTY(QString image READ getImage WRITE setImage NOTIFY imageChanged)
 
 	/*!
+		\brief Image for profile card. Here, it is equal to image, in derived classes may be different
+	*/
+	Q_PROPERTY(QString cardImage READ getCardImage WRITE setCardImage NOTIFY cardImageChanged)
+
+	/*!
 		\brief Unique identifier for this container instance.
 
 		Can be used as a filter criterium for MediaModel.
@@ -86,6 +91,9 @@ public:
 	void setImage(QString image);
 	QString getImage() const;
 
+	virtual void setCardImage(QString image);
+	virtual QString getCardImage() const;
+
 	void setDescription(QString description);
 	QString getDescription() const;
 
@@ -94,6 +102,7 @@ public:
 signals:
 	void descriptionChanged();
 	void imageChanged();
+	void cardImageChanged();
 
 private:
 	QString description, image;
@@ -108,19 +117,11 @@ class ContainerWithCard : public Container
 {
 	Q_OBJECT
 
-	/*!
-		\brief Image for profile card
-	*/
-	Q_PROPERTY(QString cardImage READ getCardImage WRITE setCardImage NOTIFY cardImageChanged)
-
 public:
 	ContainerWithCard(int id, int uii, QString image, QString card_image, QString description);
 
-	void setCardImage(QString image);
-	QString getCardImage() const;
-
-signals:
-	void cardImageChanged();
+	virtual void setCardImage(QString image);
+	virtual QString getCardImage() const;
 
 private:
 	QString card_image;

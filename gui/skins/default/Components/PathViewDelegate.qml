@@ -19,7 +19,7 @@ Item {
         id: imageDelegate
         // the up-navigation is needed because images are referred to project
         // top folder
-        source: "../" + itemObject.image
+        source: "../" + itemObject.cardImage
         anchors {
             fill: bg
             topMargin: bg.height / 100 * 1.65

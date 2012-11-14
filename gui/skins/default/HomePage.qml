@@ -116,7 +116,7 @@ BasePage {
         visible: model.count < 3
         delegate: CardDelegate {
             property variant itemObject: profilesModel.getObject(index)
-            source: itemObject.image
+            source: itemObject.cardImage
             label: itemObject.description
 
             onClicked: Stack.goToPage('Profile.qml', {'profile': itemObject})
