@@ -26,7 +26,7 @@
     </generale>
     <ethernet>
       <lan>
-        <mode>2</mode>
+        <mode>1</mode>
         <addressip>192.168.1.110</addressip>
         <netmask>255.255.255.0</netmask>
         <router>192.168.1.1</router>

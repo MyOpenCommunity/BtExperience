@@ -1,7 +1,15 @@
 #include "platform.h"
 #include "platform_device.h"
+#include "connectiontester.h"
+#include "configfile.h"
 
 #include <QDebug>
+
+#if defined(BT_HARDWARE_X11)
+#define CONF_FILE "conf.xml"
+#else
+#define CONF_FILE "/var/tmp/conf.xml"
+#endif
 
 
 namespace {
@@ -13,17 +21,26 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
+	configurations = new ConfigFile(this);
+
+	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
+
 	// initial values
 	address = unknown;
 	dns = unknown;
 	firmware = unknown;
 	gateway = unknown;
-	lan_config = Unknown;
+	lan_config = getConfValue(conf, "ethernet/lan/mode").toInt() == 1 ? Dhcp : Static;
 	lan_status = Disabled; // at start, we assume network is disabled
 	mac = unknown;
 	serial_number = unknown;
 	software = unknown;
 	subnet = unknown;
+
+	connection_status = Testing;
+	connection_tester = new ConnectionTester(this);
+	connect(connection_tester, SIGNAL(testFailed()), this, SLOT(connectionDown()));
+	connect(connection_tester, SIGNAL(testPassed()), this, SLOT(connectionUp()));
 }
 
 QString PlatformSettings::getAddress() const
@@ -78,19 +95,8 @@ void PlatformSettings::setLanConfig(LanConfig lc)
 		return;
 
 	// TODO set the value on the device
-	switch (lc)
-	{
-	case Dhcp:
-		break;
-	case Static:
-		break;
-	case Unknown:
-		qWarning() << "Are you sure you want to set config to Unknown?";
-		break;
-	default:
-		qWarning() << "Unhandled config: " << lc;
-	}
 	lan_config = lc;
+	emit lanConfigChanged();
 }
 
 PlatformSettings::LanStatus PlatformSettings::getLanStatus() const
@@ -143,6 +149,19 @@ void PlatformSettings::setSubnet(QString s)
 	subnet = s;
 }
 
+void PlatformSettings::setConnectionStatus(InternetConnectionStatus status)
+{
+	if (status == connection_status)
+		return;
+	connection_status = status;
+	emit connectionStatusChanged();
+}
+
+PlatformSettings::InternetConnectionStatus PlatformSettings::getConnectionStatus() const
+{
+	return connection_status;
+}
+
 void PlatformSettings::requestNetworkSettings()
 {
 	dev->requestStatus();
@@ -152,6 +171,36 @@ void PlatformSettings::requestNetworkSettings()
 	dev->requestGateway();
 	dev->requestDNS1();
 	dev->requestDNS2();
+
+	if (!connection_tester->isTesting() && lan_status != Disabled)
+	{
+		connection_attempts = 1;
+		connection_attempts_delay = 0;
+		setConnectionStatus(Testing);
+		connection_tester->test();
+	}
+}
+
+void PlatformSettings::connectionDown()
+{
+	--connection_attempts;
+	if (connection_attempts > 0)
+		QTimer::singleShot(connection_attempts_delay, connection_tester, SLOT(test()));
+	else
+		setConnectionStatus(Down);
+}
+
+void PlatformSettings::connectionUp()
+{
+	setConnectionStatus(Up);
+}
+
+void PlatformSettings::startConnectionTest()
+{
+	connection_attempts = 3;
+	connection_attempts_delay = 10000;
+	setConnectionStatus(Testing);
+	QTimer::singleShot(connection_attempts_delay, connection_tester, SLOT(test()));
 }
 
 void PlatformSettings::valueReceived(const DeviceValues &values_list)
@@ -217,15 +266,11 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 			{
 				lan_status = static_cast<LanStatus>(it.value().toInt());
 				emit lanStatusChanged();
-			}
-			break;
-		// TODO use the right value (when defined)
-		//case PlatformDevice::DIM_CONFIG:
-		case 111111:
-			if (it.value().toInt() != lan_config)
-			{
-				lan_config = static_cast<LanConfig>(it.value().toInt());
-				emit lanConfigChanged();
+
+				if (lan_status == Enabled)
+					startConnectionTest();
+				else
+					setConnectionStatus(Down);
 			}
 			break;
 		case PlatformDevice::DIM_NETMASK:

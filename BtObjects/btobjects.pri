@@ -59,6 +59,7 @@ HEADERS += \
 	devices/thermal_device.h \
 	devices/videodoorentry_device.h \
 	ts/bttime.h \
+	ts/connectiontester.h \
 	ts/delayedslotcaller.h \
 	ts/frame_classes.h \
 	ts/openclient.h \
@@ -132,6 +133,7 @@ SOURCES += \
 	devices/thermal_device.cpp \
 	devices/videodoorentry_device.cpp \
 	ts/bttime.cpp \
+	ts/connectiontester.cpp \
 	ts/delayedslotcaller.cpp \
 	ts/openclient.cpp \
 	ts/treebrowser.cpp \

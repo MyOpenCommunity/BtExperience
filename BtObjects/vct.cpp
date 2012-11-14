@@ -272,9 +272,9 @@ void CCTV::endCall()
 	stopVideo();
 }
 
-void CCTV::cameraOn(QString where)
+void CCTV::cameraOn(ExternalPlace *place)
 {
-	dev->cameraOn(where);
+	dev->cameraOn(place->getWhere());
 }
 
 void CCTV::openLock()
@@ -504,10 +504,13 @@ void Intercom::endCall()
 	emit callEnded();
 }
 
-void Intercom::startCall(QString where)
+void Intercom::startCall(ExternalPlace *place)
 {
-	dev->internalIntercomCall(where);
-	setTalkerFromWhere(where);
+	if (place->getObjectId() == ObjectInterface::IdInternalIntercom)
+		dev->internalIntercomCall(place->getWhere());
+	else
+		dev->externalIntercomCall(place->getWhere());
+	setTalkerFromWhere(place->getWhere());
 	activateCall();
 }
 

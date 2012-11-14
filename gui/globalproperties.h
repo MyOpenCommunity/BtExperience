@@ -19,6 +19,7 @@ class RingtoneManager;
 class ConfigFile;
 class DebugTiming;
 class HwKeys;
+class ExternalPlace;
 class logger;
 
 #ifdef BT_MALIIT
@@ -74,7 +75,7 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(QObject *hardwareKeys READ getHardwareKeys CONSTANT)
 
 	// default external place
-	Q_PROPERTY(QString defaultExternalPlace READ getDefaultExternalPlace CONSTANT)
+	Q_PROPERTY(QObject *defaultExternalPlace READ getDefaultExternalPlace CONSTANT)
 
 	// current password and whether password is enabled or not
 	Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged)
@@ -106,7 +107,7 @@ public:
 	DebugTiming *getDebugTiming();
 	QObject *getHardwareKeys() const;
 
-	QString getDefaultExternalPlace() const;
+	QObject *getDefaultExternalPlace() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE void takeScreenshot(QRect rect, QString filename);
@@ -169,6 +170,7 @@ private:
 	AudioState *audio_state;
 	SoundPlayer *sound_player;
 	RingtoneManager *ringtone_manager;
+	ExternalPlace *default_external_place;
 	QTimer *delayed_frame_timer;
 	ConfigFile *configurations;
 	bool monitor_off;

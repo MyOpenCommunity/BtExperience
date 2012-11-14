@@ -6,7 +6,7 @@ import "../../js/logging.js" as Log
 MenuColumn {
     id: column
 
-    property alias where: controlCall.where
+    property alias intercom: controlCall.intercom
 
     ControlCall {
         id: controlCall

@@ -22,7 +22,7 @@ MenuColumn {
             selectOnClick: false
             hasChild: true
             onDelegateClicked: {
-                column.loadColumn(talk, itemObject.name, modelList.getObject(0), {"where": itemObject.where})
+                column.loadColumn(talk, itemObject.name, modelList.getObject(0), {"intercom": itemObject})
             }
         }
 
