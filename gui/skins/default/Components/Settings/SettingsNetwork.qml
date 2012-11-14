@@ -84,7 +84,7 @@ MenuColumn {
         MenuItem {
             id: networkStateItem
             name: qsTr("network state")
-            description: privateProps.model.lanStatus === PlatformSettings.Enabled ? qsTr("connected") : qsTr("disconnected")
+            description: privateProps.model.connectionStatus === PlatformSettings.Down ? qsTr("disconnected") : qsTr("connected")
             hasChild: true
             isSelected: privateProps.currentIndex === 1
             status: privateProps.model.lanStatus ? 1 : 0
