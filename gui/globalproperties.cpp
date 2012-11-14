@@ -39,8 +39,6 @@
 
 namespace
 {
-	QStringList allowed_layouts = QStringList() << "en_gb_bticino" << "it_bticino" << "fr_bticino";
-
 	enum Parsing
 	{
 		Beep = 14001,
@@ -642,7 +640,7 @@ void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::Plug
 			allowed_layouts = entry;
 
 			foreach (QString value, entry->attributes()[Maliit::SettingEntryAttributes::valueDomain].toStringList())
-				if (allowed_layouts.indexOf(value.section(':', 1)) != -1)
+				if (value.section(':', 1).endsWith("_bticino"))
 					language_map[value.section(':', 1)] = value;
 
 		}
