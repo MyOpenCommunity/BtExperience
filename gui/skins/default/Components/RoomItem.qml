@@ -37,11 +37,32 @@ MenuColumn {
             column.requestSelect()
         }
 
+        function handleClick() {
+            var object = dataModel
+            var properties = {}
+
+            switch (dataModel.objectId) {
+            case ObjectInterface.IdSurveillanceCamera:
+            case ObjectInterface.IdExternalPlace:
+            case ObjectInterface.IdSwitchboard:
+                cctvModel.getObject(0).cameraOn(dataModel)
+                return
+            case ObjectInterface.IdInternalIntercom:
+            case ObjectInterface.IdExternalIntercom:
+                object = intercomModel.getObject(0)
+                properties["intercom"] = dataModel
+                break
+            }
+
+            column.columnClicked()
+            column.loadColumn(mapping.getComponent(dataModel.objectId), "", object, properties)
+        }
+
         name: dataModel.name
         status: Script.status(dataModel)
         boxInfoState: Script.boxInfoState(dataModel)
         boxInfoText: Script.boxInfoText(dataModel)
-        hasChild: true
+        hasChild: Script.hasChild(dataModel)
 
         // We are assuming that items in rooms are always editable
         editable: true
@@ -51,8 +72,16 @@ MenuColumn {
             if (theMenu.state === "toolbar")
                 return
 
-            column.columnClicked()
-            column.loadColumn(mapping.getComponent(dataModel.objectId), "", dataModel)
+            handleClick()
+        }
+
+        ObjectModel {
+            id: cctvModel
+            filters: [{objectId: ObjectInterface.IdCCTV}]
+        }
+        ObjectModel {
+            id: intercomModel
+            filters: [{objectId: ObjectInterface.IdIntercom}]
         }
 
         Column {

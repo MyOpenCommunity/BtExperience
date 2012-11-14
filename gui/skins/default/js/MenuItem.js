@@ -33,3 +33,12 @@ function boxInfoText(itemObject) {
     }
     return ""
 }
+
+function hasChild(itemObject) {
+    switch (itemObject.objectId) {
+    case ObjectInterface.IdExternalPlace:
+    case ObjectInterface.IdSurveillanceCamera:
+        return false
+    }
+    return true
+}
