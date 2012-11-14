@@ -35,6 +35,11 @@ QtObject {
         container['LANGUAGE']["en"] = qsTr("English")
         container['LANGUAGE']["fr"] = qsTr("French")
 
+        container['KEYBOARD'] = []
+        container['KEYBOARD']["it_bticino"] = qsTr("Italian")
+        container['KEYBOARD']["en_gb_bticino"] = qsTr("English (GB)")
+        container['KEYBOARD']["fr_bticino"] = qsTr("French")
+
         container['CURRENCY'] = []
         container['CURRENCY']["CHF"] = qsTr("Swiss franc")
         container['CURRENCY']["EUR"] = qsTr("Euro €")
