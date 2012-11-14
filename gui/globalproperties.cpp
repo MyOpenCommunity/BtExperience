@@ -609,6 +609,12 @@ QString GlobalProperties::getKeyboardLayout() const
 void GlobalProperties::setKeyboardLayout(QString layout)
 {
 #ifdef BT_MALIIT
+	if (!language_map.contains(layout))
+		return;
+
+	// setting the allowed layout list to the current layout is a roundabout way of disabling
+	// the swipe left/right gesture used to change keyboard layout
+	allowed_layouts->set(QStringList() << language_map[layout]);
 	keyboard_layout->set(language_map[layout]);
 #else
 	Q_UNUSED(layout);
@@ -633,11 +639,12 @@ void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::Plug
 	{
 		if (entry->key() == "/maliit/onscreen/enabled")
 		{
+			allowed_layouts = entry;
+
 			foreach (QString value, entry->attributes()[Maliit::SettingEntryAttributes::valueDomain].toStringList())
 				if (allowed_layouts.indexOf(value.section(':', 1)) != -1)
 					language_map[value.section(':', 1)] = value;
 
-			entry->set(QStringList() << language_map.values());
 		}
 		else if (entry->key() == "/maliit/onscreen/active")
 		{
@@ -647,6 +654,9 @@ void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::Plug
 				this, SIGNAL(keyboardLayoutChanged()));
 		}
 	}
+
+	// see comment in setKeyboardLayout()
+	setKeyboardLayout(getKeyboardLayout());
 }
 
 void GlobalProperties::maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings)

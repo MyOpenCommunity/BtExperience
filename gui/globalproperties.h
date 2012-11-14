@@ -186,7 +186,7 @@ private:
 	void maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
 
 	Maliit::SettingsManager *maliit_settings;
-	QSharedPointer<Maliit::SettingsEntry> keyboard_layout;
+	QSharedPointer<Maliit::SettingsEntry> keyboard_layout, allowed_layouts;
 	QHash<QString, QString> language_map;
 #endif
 };
