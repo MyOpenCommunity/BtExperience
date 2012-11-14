@@ -15,7 +15,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                Stack.pushPage("NewProfileCard.qml", {"profile": column.dataModel})
+                Stack.pushPage("NewImageCard.qml", {"profile": column.dataModel})
             }
         }
 
