@@ -38,6 +38,7 @@ function hasChild(itemObject) {
     switch (itemObject.objectId) {
     case ObjectInterface.IdExternalPlace:
     case ObjectInterface.IdSurveillanceCamera:
+    case ObjectInterface.IdSwitchboard:
         return false
     }
     return true
