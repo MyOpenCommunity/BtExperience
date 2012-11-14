@@ -280,21 +280,6 @@ void GuiSettings::setCurrency(QString c)
 	emit currencyChanged();
 }
 
-QString GuiSettings::getKeyboardLayout() const
-{
-	return keyboardLayout;
-}
-
-void GuiSettings::setKeyboardLayout(QString l)
-{
-	if (keyboardLayout == l)
-		return;
-
-	keyboardLayout = l;
-	emit keyboardLayoutChanged();
-	setConfValue("generale/keyboard_lang", l);
-}
-
 QString GuiSettings::getLanguage() const
 {
 	return language;

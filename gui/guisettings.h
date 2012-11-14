@@ -26,11 +26,6 @@ class GuiSettings : public QObject
 	Q_PROPERTY(QString currency READ getCurrency WRITE setCurrency NOTIFY currencyChanged)
 
 	/*!
-		\brief Sets or gets the keyboard layout.
-	*/
-	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout NOTIFY keyboardLayoutChanged)
-
-	/*!
 		\brief Sets or gets the language for the interface.
 	*/
 	Q_PROPERTY(QString language READ getLanguage WRITE setLanguage NOTIFY languageChanged)
@@ -147,8 +142,6 @@ public:
 	void setContrast(int c);
 	QString getCurrency() const;
 	void setCurrency(QString c);
-	QString getKeyboardLayout() const;
-	void setKeyboardLayout(QString l);
 	QString getLanguage() const;
 	void setLanguage(QString l);
 	QString getNumberSeparator() const;
@@ -192,7 +185,6 @@ signals:
 	void brightnessChanged();
 	void contrastChanged();
 	void currencyChanged();
-	void keyboardLayoutChanged();
 	void languageChanged();
 	void numberSeparatorChanged();
 	void temperatureUnitChanged();
