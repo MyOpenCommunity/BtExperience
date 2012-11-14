@@ -13,6 +13,7 @@ MenuColumn {
     ListView {
         id: networkStateView
         anchors.fill: parent
+        interactive: false
         delegate: MenuItemDelegate {
             name: model.name
             onClicked: networkChanged(model.type)

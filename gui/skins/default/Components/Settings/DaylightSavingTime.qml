@@ -13,6 +13,7 @@ MenuColumn {
     ListView {
         id: view
         anchors.fill: parent
+        interactive: false
         delegate: MenuItemDelegate {
             name: model.name
             onClicked: daylightSavingTimeChanged(model.type)
