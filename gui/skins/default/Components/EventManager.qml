@@ -296,7 +296,7 @@ Item {
                 return
 
             // call default external point on hardware key 2
-            if (index === 2)
+            if (index === 2 && global.defaultExternalPlace)
                 cctvModel.getObject(0).cameraOn(global.defaultExternalPlace)
         }
     }
