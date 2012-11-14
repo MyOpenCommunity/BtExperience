@@ -7,6 +7,7 @@
 #include <QObject>
 
 class PlatformDevice;
+class ConnectionTester;
 
 
 /*!
@@ -78,8 +79,14 @@ class PlatformSettings : public ObjectInterface
 	*/
 	Q_PROPERTY(LanStatus lanStatus READ getLanStatus WRITE setLanStatus NOTIFY lanStatusChanged)
 
+	/*!
+		\brief Sets or gets the status of the internet connection
+	*/
+	Q_PROPERTY(InternetConnectionStatus connectionStatus READ getConnectionStatus WRITE setConnectionStatus NOTIFY connectionStatusChanged)
+
 	Q_ENUMS(LanConfig)
 	Q_ENUMS(LanStatus)
+	Q_ENUMS(InternetConnectionStatus)
 
 public:
 	PlatformSettings(PlatformDevice *d);
@@ -95,6 +102,13 @@ public:
 	{
 		Disabled,   /*!< Platform adapter is disabled. */
 		Enabled     /*!< Platform adapter is enabled. */
+	};
+
+	enum InternetConnectionStatus
+	{
+		Testing,    /*!< Unknown status. */
+		Down,       /*!< Internet not reachable. */
+		Up          /*!< Internet reachable. */
 	};
 
 	virtual int getObjectId() const
@@ -118,6 +132,8 @@ public:
 	QString getSoftware() const;
 	QString getSubnet() const;
 	void setSubnet(QString s);
+	void setConnectionStatus(InternetConnectionStatus status);
+	InternetConnectionStatus getConnectionStatus() const;
 
 	Q_INVOKABLE void requestNetworkSettings();
 
@@ -132,11 +148,16 @@ signals:
 	void serialNumberChanged();
 	void softwareChanged();
 	void subnetChanged();
+	void connectionStatusChanged();
 
-protected slots:
-	virtual void valueReceived(const DeviceValues &values_list);
+private slots:
+	void valueReceived(const DeviceValues &values_list);
+	void connectionUp();
+	void connectionDown();
 
-protected:
+private:
+	void startConnectionTest();
+
 	QString address;
 	QString dns;
 	QString firmware;
@@ -147,9 +168,12 @@ protected:
 	QString serial_number;
 	QString software;
 	QString subnet;
-
-private:
 	PlatformDevice *dev;
+
+	int connection_attempts;
+	int connection_attempts_delay;
+	InternetConnectionStatus connection_status;
+	ConnectionTester *connection_tester;
 };
 
 #endif // PLATFORM_H

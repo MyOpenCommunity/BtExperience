@@ -1,5 +1,6 @@
 #include "platform.h"
 #include "platform_device.h"
+#include "connectiontester.h"
 
 #include <QDebug>
 
@@ -24,6 +25,11 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 	serial_number = unknown;
 	software = unknown;
 	subnet = unknown;
+
+	connection_status = Testing;
+	connection_tester = new ConnectionTester(this);
+	connect(connection_tester, SIGNAL(testFailed()), this, SLOT(connectionDown()));
+	connect(connection_tester, SIGNAL(testPassed()), this, SLOT(connectionUp()));
 }
 
 QString PlatformSettings::getAddress() const
@@ -143,6 +149,19 @@ void PlatformSettings::setSubnet(QString s)
 	subnet = s;
 }
 
+void PlatformSettings::setConnectionStatus(InternetConnectionStatus status)
+{
+	if (status == connection_status)
+		return;
+	connection_status = status;
+	emit connectionStatusChanged();
+}
+
+PlatformSettings::InternetConnectionStatus PlatformSettings::getConnectionStatus() const
+{
+	return connection_status;
+}
+
 void PlatformSettings::requestNetworkSettings()
 {
 	dev->requestStatus();
@@ -152,6 +171,36 @@ void PlatformSettings::requestNetworkSettings()
 	dev->requestGateway();
 	dev->requestDNS1();
 	dev->requestDNS2();
+
+	if (!connection_tester->isTesting() && lan_status != Disabled)
+	{
+		connection_attempts = 1;
+		connection_attempts_delay = 0;
+		setConnectionStatus(Testing);
+		connection_tester->test();
+	}
+}
+
+void PlatformSettings::connectionDown()
+{
+	--connection_attempts;
+	if (connection_attempts > 0)
+		QTimer::singleShot(connection_attempts_delay, connection_tester, SLOT(test()));
+	else
+		setConnectionStatus(Down);
+}
+
+void PlatformSettings::connectionUp()
+{
+	setConnectionStatus(Up);
+}
+
+void PlatformSettings::startConnectionTest()
+{
+	connection_attempts = 3;
+	connection_attempts_delay = 10000;
+	setConnectionStatus(Testing);
+	QTimer::singleShot(connection_attempts_delay, connection_tester, SLOT(test()));
 }
 
 void PlatformSettings::valueReceived(const DeviceValues &values_list)
@@ -217,6 +266,11 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 			{
 				lan_status = static_cast<LanStatus>(it.value().toInt());
 				emit lanStatusChanged();
+
+				if (lan_status == Enabled)
+					startConnectionTest();
+				else
+					setConnectionStatus(Down);
 			}
 			break;
 		// TODO use the right value (when defined)
