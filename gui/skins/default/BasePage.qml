@@ -14,7 +14,6 @@ Image {
 
     width: 1024
     height: 600
-    asynchronous: true
     sourceSize.width: 1024
     sourceSize.height: 600
 
