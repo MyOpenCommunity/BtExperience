@@ -99,9 +99,7 @@ MenuColumn {
         MenuItem {
             id: ipConfigurationItem
             name: qsTr("IP configuration")
-            description: privateProps.model.lanConfig === PlatformSettings.Dhcp   ? qsTr("DHCP") :
-                         privateProps.model.lanConfig === PlatformSettings.Static ? qsTr("disconnected") :
-                                                                                    qsTr("unknown")
+            description: privateProps.model.lanConfig === PlatformSettings.Dhcp   ? qsTr("DHCP") : qsTr("Static")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {

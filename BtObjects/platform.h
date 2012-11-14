@@ -8,6 +8,7 @@
 
 class PlatformDevice;
 class ConnectionTester;
+class ConfigFile;
 
 
 /*!
@@ -93,7 +94,6 @@ public:
 
 	enum LanConfig
 	{
-		Unknown,    /*!< No config received yet (only during initialization). */
 		Dhcp,       /*!< Platform is configured by DHCP. */
 		Static      /*!< Platform is statically configured. */
 	};
@@ -169,6 +169,7 @@ private:
 	QString software;
 	QString subnet;
 	PlatformDevice *dev;
+	ConfigFile *configurations;
 
 	int connection_attempts;
 	int connection_attempts_delay;

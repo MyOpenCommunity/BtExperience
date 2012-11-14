@@ -1,8 +1,15 @@
 #include "platform.h"
 #include "platform_device.h"
 #include "connectiontester.h"
+#include "configfile.h"
 
 #include <QDebug>
+
+#if defined(BT_HARDWARE_X11)
+#define CONF_FILE "conf.xml"
+#else
+#define CONF_FILE "/var/tmp/conf.xml"
+#endif
 
 
 namespace {
@@ -14,12 +21,16 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
+	configurations = new ConfigFile(this);
+
+	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
+
 	// initial values
 	address = unknown;
 	dns = unknown;
 	firmware = unknown;
 	gateway = unknown;
-	lan_config = Unknown;
+	lan_config = getConfValue(conf, "ethernet/lan/mode").toInt() == 1 ? Dhcp : Static;
 	lan_status = Disabled; // at start, we assume network is disabled
 	mac = unknown;
 	serial_number = unknown;
@@ -84,19 +95,8 @@ void PlatformSettings::setLanConfig(LanConfig lc)
 		return;
 
 	// TODO set the value on the device
-	switch (lc)
-	{
-	case Dhcp:
-		break;
-	case Static:
-		break;
-	case Unknown:
-		qWarning() << "Are you sure you want to set config to Unknown?";
-		break;
-	default:
-		qWarning() << "Unhandled config: " << lc;
-	}
 	lan_config = lc;
+	emit lanConfigChanged();
 }
 
 PlatformSettings::LanStatus PlatformSettings::getLanStatus() const
@@ -271,15 +271,6 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 					startConnectionTest();
 				else
 					setConnectionStatus(Down);
-			}
-			break;
-		// TODO use the right value (when defined)
-		//case PlatformDevice::DIM_CONFIG:
-		case 111111:
-			if (it.value().toInt() != lan_config)
-			{
-				lan_config = static_cast<LanConfig>(it.value().toInt());
-				emit lanConfigChanged();
 			}
 			break;
 		case PlatformDevice::DIM_NETMASK:
