@@ -5,11 +5,13 @@ import Components 1.0
 
 Page {
     id: page
-    source: "images/imgsfondo_sfumato.png"
+
     property variant names: translations
     property string roomName
     property int roomUii
     property int floorUii
+
+    source: "images/imgsfondo_sfumato.png"
 
     function systemsButtonClicked() {
         Stack.backToRoom()
