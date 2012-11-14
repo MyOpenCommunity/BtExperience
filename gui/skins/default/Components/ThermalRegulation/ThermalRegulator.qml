@@ -74,43 +74,24 @@ MenuColumn {
             if (isControlledProbe(itemObject)) {
                 // it is a probe
                 descr = ""
-                if (isCentral99Zones(itemObject)) {
-                    // Z99Z
 
-                    if (localProbeStatus === ThermalControlledProbe.Normal && isModeManual(probeStatus)) {
-                        // manual mode
-                        // If we enter here we show: "24.6 +2  manual"
-                        descr += " " + (itemObject.setpoint / 10).toFixed(1) + qsTr("°C")
-                        if (!isProbeOffsetZero(itemObject))
-                            descr += " " + getOffsetRepresentation(itemObject.localOffset)
-                    }
-                    descr += " " + pageObject.names.get('PROBE_STATUS', probeStatus)
-                    if (localProbeStatus === ThermalControlledProbe.Normal && !isModeManual(probeStatus)) {
-                        // If we enter here we show: "program1  -1"
-                        if (!isProbeOffsetZero(itemObject))
-                            descr += " " + getOffsetRepresentation(itemObject.localOffset)
-                    }
+                // show 'protection' or 'off'
+                if (localProbeStatus === ThermalControlledProbe.Antifreeze ||
+                        localProbeStatus === ThermalControlledProbe.Off) {
+                    return pageObject.names.get('PROBE_STATUS', localProbeStatus)
                 }
-                else {
-                    // Z4Z
-
-                    // show 'protection' or 'off'
-                    if (localProbeStatus === ThermalControlledProbe.Antifreeze ||
-                            localProbeStatus === ThermalControlledProbe.Off) {
-                        return pageObject.names.get('PROBE_STATUS', localProbeStatus)
-                    }
-                    else if (probeStatus === ThermalControlledProbe.Antifreeze ||
-                             probeStatus === ThermalControlledProbe.Off) {
-                        return pageObject.names.get('PROBE_STATUS', probeStatus)
-                    }
-
-                    // no special state, show setpoint (if in manual) and local offset
-                    if (isModeManual(itemObject.controlUnit.currentModalityId)) {
-                        descr += (itemObject.setpoint / 10).toFixed(1) + qsTr("°C")
-                    }
-                    if (!isProbeOffsetZero(itemObject))
-                        descr += " " + getOffsetRepresentation(itemObject.localOffset)
+                else if (probeStatus === ThermalControlledProbe.Antifreeze ||
+                         probeStatus === ThermalControlledProbe.Off) {
+                    return pageObject.names.get('PROBE_STATUS', probeStatus)
                 }
+
+                // no special state, show setpoint (if in manual) and local offset
+                if (probeStatus === ThermalControlledProbe.Manual) {
+                    descr += (itemObject.setpoint / 10).toFixed(1) + qsTr("°C")
+                }
+                if (!isProbeOffsetZero(itemObject))
+                    descr += " " + getOffsetRepresentation(itemObject.localOffset)
+                descr += " " + pageObject.names.get('PROBE_STATUS', probeStatus)
             }
             else {
                 // it is a CU (99Z or 4Z are the same)
