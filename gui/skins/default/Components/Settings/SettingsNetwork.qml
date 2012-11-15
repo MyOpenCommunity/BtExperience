@@ -27,6 +27,16 @@ MenuColumn {
         filters: [{objectId: ObjectInterface.IdPlatformSettings}]
     }
 
+    function alertCancelClicked() {
+        privateProps.model.reset()
+        column.closeColumn()
+    }
+
+    function alertOkClicked() {
+        privateProps.model.apply()
+        column.closeColumn()
+    }
+
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
         id: privateProps
@@ -136,8 +146,7 @@ MenuColumn {
                 }
                 ButtonOkCancel {
                     onOkClicked: {
-                        privateProps.model.apply()
-                        column.closeColumn()
+                        pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
                     }
                     onCancelClicked: {
                         privateProps.model.reset()
@@ -205,8 +214,7 @@ MenuColumn {
                     ButtonOkCancel {
                         onOkClicked: {
                             focus = true // to accept current value (if any)
-                            privateProps.model.apply()
-                            column.closeColumn()
+                            pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
                         }
                         onCancelClicked: {
                             privateProps.model.reset()
