@@ -12,6 +12,7 @@ MenuColumn {
         MenuItem {
             name: qsTr("Modify card image")
             isSelected: privateProps.currentIndex === 1
+            hasChild: true
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
