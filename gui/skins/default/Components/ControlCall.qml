@@ -102,7 +102,7 @@ SvgImage {
         }
 
         Connections {
-            target: callManager.dataObject
+            target: dataObject
             onCallAnswered: control.state = "activeCall"
         }
     }
@@ -250,6 +250,20 @@ SvgImage {
             // object is destroyed very shortly after the call returns and doing
             // stuff may lead to random crashes
             closePopup()
+        }
+    }
+
+    Component.onDestruction: {
+        // close active calls if any. Useful when closing a MenuColumn which
+        // contains this control (eg. Rooms, Systems)
+        if (dataObject !== undefined) {
+            // remove all connections to avoid callbacks when calling endCall()
+            // QML sucks: there's no disconnect() method as in regular Qt code,
+            // we must name exactly the function we want to disconnect from...
+            dataObject.callAnswered.disconnect(privateProps.callAnswered)
+            dataObject.callEnded.disconnect(callEndedCallback)
+            connDataObject.target = null
+            dataObject.endCall()
         }
     }
 }

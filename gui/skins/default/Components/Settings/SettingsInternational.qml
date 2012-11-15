@@ -58,8 +58,6 @@ MenuColumn {
     onChildLoaded: {
         if (child.textLanguageChanged)
             child.textLanguageChanged.connect(textLanguageChanged)
-        if (child.keyboardLanguageChanged)
-            child.keyboardLanguageChanged.connect(keyboardLanguageChanged)
         if (child.temperatureChanged)
             child.temperatureChanged.connect(temperatureChanged)
         if (child.currencyChanged)
@@ -74,12 +72,6 @@ MenuColumn {
         // TODO remove when model is implemented
         privateProps.language = value
         pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
-    }
-    function keyboardLanguageChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.TextLanguage = value;
-        // TODO remove when model is implemented
-        keyboardLanguageItem.description = pageObject.names.get('LANGUAGE', value);
     }
     function temperatureChanged(value) {
         // TODO assign to a model property
@@ -122,7 +114,7 @@ MenuColumn {
         MenuItem {
             id: keyboardLanguageItem
             name: qsTr("keyboard language")
-            description: pageObject.names.get('LANGUAGE', global.guiSettings.keyboardLayout)
+            description: pageObject.names.get('KEYBOARD', global.keyboardLayout)
             hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {

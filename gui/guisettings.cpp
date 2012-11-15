@@ -16,9 +16,11 @@
 
 #if defined(BT_HARDWARE_X11)
 #define CONF_FILE "conf.xml"
+#define LAYOUT_FILE "layout.xml"
 #define SETTINGS_FILE "settings.xml"
 #else
 #define CONF_FILE "/var/tmp/conf.xml"
+#define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
 #endif
 
@@ -27,6 +29,8 @@ namespace
 {
 	enum Parsing
 	{
+		HomePageContainer = 17,
+
 		EnergyThresholdBeep = 14255,
 		EnergyConsumptionPopup = 14256,
 		BurglarAlarmAlert = 14257,
@@ -130,6 +134,15 @@ GuiSettings::GuiSettings(QObject *parent) :
 	message_alert = false;
 	scenario_recording_alert = false;
 	language = getConfValue(conf, "generale/language");
+
+	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
+	{
+		if (getIntAttribute(container, "id") == HomePageContainer)
+		{
+			skin = getIntAttribute(container, "img_type", 0) == 0 ? Clear : Dark;
+			break;
+		}
+	}
 
 	setLanguageTranslator(language);
 	parseSettings();
@@ -267,21 +280,6 @@ void GuiSettings::setCurrency(QString c)
 	emit currencyChanged();
 }
 
-QString GuiSettings::getKeyboardLayout() const
-{
-	return keyboardLayout;
-}
-
-void GuiSettings::setKeyboardLayout(QString l)
-{
-	if (keyboardLayout == l)
-		return;
-
-	keyboardLayout = l;
-	emit keyboardLayoutChanged();
-	setConfValue("generale/keyboard_lang", l);
-}
-
 QString GuiSettings::getLanguage() const
 {
 	return language;
@@ -308,7 +306,16 @@ void GuiSettings::setSkin(Skin s)
 	if (skin == s)
 		return;
 
-	// TODO save value somewhere
+	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
+	{
+		if (getIntAttribute(container, "id") == HomePageContainer)
+		{
+			setAttribute(container, "img_type", QString::number(s == Clear ? 0 : 1));
+			break;
+		}
+	}
+	configurations->saveConfiguration(LAYOUT_FILE);
+
 	skin = s;
 	emit skinChanged();
 }

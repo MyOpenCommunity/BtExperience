@@ -11,7 +11,7 @@
 	</obj>
 	<obj id="10052" cid="10052" descr="Internal intercom" where="0" device="1">
 		<ist uii="9016" descr="Internal 1" where="17" />
-		<ist uii="9017" descr="Internal 2" where="18" />
+		<ist uii="9017" descr="Internal 2" where="14" />
 		<ist uii="9018" descr="Internal 3 - no layout" where="19" />
 	</obj>
 	<obj id="10053" cid="10053" descr="External intercom" where="0" device="1">

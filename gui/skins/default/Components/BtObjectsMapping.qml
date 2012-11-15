@@ -78,6 +78,9 @@ QtObject {
             return Qt.createComponent("Scenarios/ScheduledScenario.qml")
         case ObjectInterface.IdAdvancedScenario:
             return Qt.createComponent("Scenarios/AdvancedScenario.qml")
+        case ObjectInterface.IdExternalIntercom:
+        case ObjectInterface.IdInternalIntercom:
+            return Qt.createComponent("VideoDoorEntry/Talk.qml")
         default:
             console.log("getComponent(): Unknown object id: " + objectId)
             return ""

@@ -6,6 +6,7 @@
 #include <QRect>
 #include <QImage>
 #include <QHash>
+#include <QStringList>
 
 class QDeclarativeView;
 class GuiSettings;
@@ -66,8 +67,13 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
 	// The extra path for resources.
 	Q_PROPERTY(QString extraPath READ getExtraPath CONSTANT)
+
 	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
 	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout NOTIFY keyboardLayoutChanged)
+
+	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
+	Q_PROPERTY(QStringList keyboardLayouts READ getKeyboardLayouts NOTIFY keyboardLayoutsChanged)
+
 	// A property to turn off/on the monitor from QML
 	Q_PROPERTY(bool monitorOff READ isMonitorOff WRITE setMonitorOff NOTIFY monitorOffChanged)
 
@@ -128,6 +134,8 @@ public:
 	QString getKeyboardLayout() const;
 	void setKeyboardLayout(QString layout);
 
+	QStringList getKeyboardLayouts() const;
+
 	void setPassword(QString password);
 	QString getPassword() const;
 
@@ -142,6 +150,7 @@ signals:
 	void lastTimePressChanged();
 	void requestReboot();
 	void keyboardLayoutChanged();
+	void keyboardLayoutsChanged();
 	void audioPlayerChanged();
 	void monitorOffChanged();
 	void systemTimeChanged();
@@ -186,7 +195,7 @@ private:
 	void maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
 
 	Maliit::SettingsManager *maliit_settings;
-	QSharedPointer<Maliit::SettingsEntry> keyboard_layout;
+	QSharedPointer<Maliit::SettingsEntry> keyboard_layout, allowed_layouts;
 	QHash<QString, QString> language_map;
 #endif
 };

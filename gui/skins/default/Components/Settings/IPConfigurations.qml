@@ -13,6 +13,7 @@ MenuColumn {
     ListView {
         id: ipConfigurationView
         anchors.fill: parent
+        interactive: false
         delegate: MenuItemDelegate {
             name: model.name
             onClicked: ipConfigurationChanged(model.type)
