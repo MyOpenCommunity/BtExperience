@@ -8,6 +8,8 @@ import "../../js/Stack.js" as Stack
 MenuColumn {
     id: column
 
+    property bool isCard: false
+
     onChildDestroyed: {
         itemList.currentIndex = -1
     }
@@ -48,14 +50,28 @@ MenuColumn {
     Component {
         id: directoryBrowser
         ColumnBrowserDirectoryModel {
-            onSelected: column.dataModel.image = item.path
+            onSelected: {
+                if (column.isCard) {
+                    Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel})
+                }
+                else {
+                    column.dataModel.image = item.path
+                }
+            }
         }
     }
 
     Component {
         id: upnpBrowser
         ColumnBrowserUpnpModel {
-            onSelected: column.dataModel.image = item.path
+            onSelected: {
+                if (column.isCard) {
+                    Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel})
+                }
+                else {
+                    column.dataModel.image = item.path
+                }
+            }
         }
     }
 }

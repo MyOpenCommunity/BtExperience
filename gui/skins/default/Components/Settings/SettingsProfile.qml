@@ -15,7 +15,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                Stack.pushPage("NewImageCard.qml", {"profile": column.dataModel})
+                column.loadColumn(settingsImageBrowser, qsTr("Background image"), column.dataModel, {isCard: true})
             }
         }
 
