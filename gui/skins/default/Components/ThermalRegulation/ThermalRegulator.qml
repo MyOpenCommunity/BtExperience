@@ -96,18 +96,8 @@ MenuColumn {
             else {
                 // it is a CU (99Z or 4Z are the same)
                 descr = ""
-                if (isModeManual(probeStatus)) {
-                    descr += " " + itemObject.setpoint
-                    if (!isProbeOffsetZero(itemObject))
-                        if (itemObject.localOffset)
-                            descr += " " + getOffsetRepresentation(itemObject.localOffset)
-                }
                 if (currentModalityId !== undefined && currentModalityId >= 0)
                     descr += pageObject.names.get('CENTRAL_STATUS', currentModalityId)
-                if (!isModeManual(probeStatus))
-                    if (!isProbeOffsetZero(itemObject))
-                        if (itemObject.localOffset)
-                            descr += " " + getOffsetRepresentation(itemObject.localOffset)
             }
 
             return descr
