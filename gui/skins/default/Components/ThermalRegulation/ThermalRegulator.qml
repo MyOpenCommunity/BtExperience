@@ -13,7 +13,7 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
-            description: privateProps.getDescription(itemObject, itemObject.currentModalityId, itemObject.probeStatus, itemObject.localProbeStatus)
+            description: privateProps.getDescription(itemObject)
             hasChild: true
             onClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
             boxInfoState: privateProps.getBoxInfoState(itemObject, itemObject.currentModalityId)
@@ -68,12 +68,14 @@ MenuColumn {
         // Z4Z:
         //      - in manual mode: set point, offset
         //      - otherwise: offset
-        function getDescription(itemObject, currentModalityId, probeStatus, localProbeStatus) {
+        function getDescription(itemObject) {
             var descr = "---"
 
             if (isControlledProbe(itemObject)) {
                 // it is a probe
                 descr = ""
+                var localProbeStatus = itemObject.localProbeStatus
+                var probeStatus = itemObject.probeStatus
 
                 // show 'protection' or 'off'
                 if (localProbeStatus === ThermalControlledProbe.Antifreeze ||
@@ -96,6 +98,8 @@ MenuColumn {
             else {
                 // it is a CU (99Z or 4Z are the same)
                 descr = ""
+                var currentModalityId = itemObject.currentModalityId
+
                 if (currentModalityId !== undefined && currentModalityId >= 0)
                     descr += pageObject.names.get('CENTRAL_STATUS', currentModalityId)
             }
