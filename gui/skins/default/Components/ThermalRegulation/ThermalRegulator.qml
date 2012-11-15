@@ -15,41 +15,14 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
             description: Script.description(itemObject)
-            hasChild: true
+            hasChild: Script.hasChild(itemObject)
             onClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
-            boxInfoState: privateProps.getBoxInfoState(itemObject, itemObject.currentModalityId)
-            boxInfoText: privateProps.getBoxInfoText(itemObject, itemObject.currentModalityId, itemObject.temperature)
+            boxInfoState: Script.boxInfoState(itemObject)
+            boxInfoText: Script.boxInfoText(itemObject)
         }
 
         model: modelList
         onCurrentPageChanged: column.closeChild()
-    }
-
-    QtObject {
-        id: privateProps
-
-        function getBoxInfoState(itemObject, currentModalityId) {
-            // we need to show the measured temperature for probes and in manual mode
-            if (itemObject.objectId === ObjectInterface.IdThermalControlledProbe ||
-                    itemObject.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
-                return "info"
-            if (itemObject.probeStatus === ThermalControlledProbe.Manual ||
-                    currentModalityId === ThermalControlUnit.IdManual)
-                return "info"
-            return ""
-        }
-
-        function getBoxInfoText(itemObject, currentModalityId, temperature) {
-            // formats the measured temperature in the right format
-            var t = 0
-            if (itemObject.objectId === ObjectInterface.IdThermalControlledProbe ||
-                    itemObject.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
-                t = (temperature / 10).toFixed(1)
-            if (currentModalityId === ThermalControlUnit.IdManual) {
-                t = (itemObject.currentModality.temperature / 10).toFixed(1)
-            }
-            return t + qsTr("°C")
-        }
     }
 
     BtObjectsMapping { id: mapping }

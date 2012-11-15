@@ -58,6 +58,15 @@ function boxInfoState(itemObject) {
     case ObjectInterface.IdDimmer100Fixed:
     case ObjectInterface.IdDimmer100Custom:
         return "info"
+    case ObjectInterface.IdThermalControlledProbe:
+    case ObjectInterface.IdThermalControlledProbeFancoil:
+        return "info"
+    case ObjectInterface.IdThermalControlUnit99:
+    case ObjectInterface.IdThermalControlUnit4:
+        if (itemObject.currentModalityId === ThermalControlUnit.IdManual ||
+                itemObject.currentModalityId === ThermalControlUnit.IdTimedManual)
+            return "info"
+        break
     }
     return ""
 }
@@ -71,6 +80,15 @@ function boxInfoText(itemObject) {
             return itemObject.percentage + "%"
         else
             return "-"
+    case ObjectInterface.IdThermalControlledProbe:
+    case ObjectInterface.IdThermalControlledProbeFancoil:
+        return (itemObject.temperature / 10).toFixed(1) + "°C"
+    case ObjectInterface.IdThermalControlUnit99:
+    case ObjectInterface.IdThermalControlUnit4:
+        if (itemObject.currentModalityId === ThermalControlUnit.IdManual ||
+                itemObject.currentModalityId === ThermalControlUnit.IdTimedManual)
+            return (itemObject.currentModality.temperature / 10).toFixed(1) + "°C"
+        break
     }
     return ""
 }
