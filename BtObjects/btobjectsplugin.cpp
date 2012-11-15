@@ -637,7 +637,7 @@ void BtObjectsPlugin::createObjects()
 	}
 
 	objmodel << new HardwareSettings;
-	objmodel << new PlatformSettings(new PlatformDevice);
+	objmodel << new PlatformSettings(bt_global::add_device_to_cache(new PlatformDevice));
 
 	// the following objects are used as collectors of signals from other objects
 	// they are used in EventManager, for example, to be notified only globally
