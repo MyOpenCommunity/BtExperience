@@ -240,10 +240,16 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 	return sources;
 }
 
-SoundAmbientBase::SoundAmbientBase(QString _name)
+SoundAmbientBase::SoundAmbientBase(QString _name, int _uii)
 {
 	name = _name;
+	uii = _uii;
 	current_source = 0;
+}
+
+int SoundAmbientBase::getUii() const
+{
+	return uii;
 }
 
 QObject *SoundAmbientBase::getCurrentSource() const
@@ -266,8 +272,8 @@ void SoundAmbientBase::setCurrentSource(SourceObject *other)
 }
 
 
-SoundAmbient::SoundAmbient(int _area, QString name, int _object_id) :
-	SoundAmbientBase(name)
+SoundAmbient::SoundAmbient(int _area, QString name, int _object_id, int uii) :
+	SoundAmbientBase(name, uii)
 {
 	area = _area;
 	amplifier_count = 0;
@@ -345,8 +351,8 @@ void SoundAmbient::updateActiveAmplifier()
 }
 
 
-SoundGeneralAmbient::SoundGeneralAmbient(QString name) :
-	SoundAmbientBase(name)
+SoundGeneralAmbient::SoundGeneralAmbient(QString name, int uii) :
+	SoundAmbientBase(name, uii)
 {
 	area = 0;
 }

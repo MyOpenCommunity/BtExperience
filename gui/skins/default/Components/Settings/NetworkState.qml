@@ -5,7 +5,7 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    signal networkChanged(int state)
+    property variant platform
 
     width: 212
     height: Math.max(1, 50 * networkStateView.count)
@@ -14,18 +14,16 @@ MenuColumn {
         id: networkStateView
         anchors.fill: parent
         interactive: false
+        currentIndex: -1
         delegate: MenuItemDelegate {
-            name: model.name
-            onClicked: networkChanged(model.type)
-        }
-        model: ListModel {
-            id: modelList
-            Component.onCompleted: {
-                var l = [PlatformSettings.Disabled,
-                         PlatformSettings.Enabled]
-                for (var i = 0; i < l.length; i++)
-                    append({"type": l[i], "name": pageObject.names.get('STATE', l[i])})
+            name: pageObject.names.get('STATE', modelData)
+            isSelected: platform.lanStatus === modelData
+            onClicked: {
+                platform.lanStatus = modelData
+                column.closeColumn()
             }
         }
+        model: [PlatformSettings.Disabled,
+                PlatformSettings.Enabled]
     }
 }

@@ -36,9 +36,14 @@ class PlatformSettings : public ObjectInterface
 	Q_PROPERTY(QString address READ getAddress WRITE setAddress NOTIFY addressChanged)
 
 	/*!
-		\brief Sets and gets the DNS address
+		\brief Sets and gets the primary DNS address
 	*/
-	Q_PROPERTY(QString dns READ getDns WRITE setDns NOTIFY dnsChanged)
+	Q_PROPERTY(QString dns1 READ getDns1 WRITE setDns1 NOTIFY dns1Changed)
+
+	/*!
+		\brief Sets and gets the secondary DNS address
+	*/
+	Q_PROPERTY(QString dns2 READ getDns2 WRITE setDns2 NOTIFY dns2Changed)
 
 	/*!
 		\brief Gets the firmware version.
@@ -118,8 +123,10 @@ public:
 
 	QString getAddress() const;
 	void setAddress(QString a);
-	QString getDns() const;
-	void setDns(QString d);
+	QString getDns1() const;
+	void setDns1(QString d);
+	QString getDns2() const;
+	void setDns2(QString d);
 	QString getFirmware() const;
 	QString getGateway() const;
 	void setGateway(QString g);
@@ -137,9 +144,14 @@ public:
 
 	Q_INVOKABLE void requestNetworkSettings();
 
+public slots:
+	void apply();
+	void reset();
+
 signals:
 	void addressChanged();
-	void dnsChanged();
+	void dns1Changed();
+	void dns2Changed();
 	void firmwareChanged();
 	void gatewayChanged();
 	void lanConfigChanged();
@@ -157,17 +169,14 @@ private slots:
 
 private:
 	void startConnectionTest();
+	QVariant value(int id) const;
 
-	QString address;
-	QString dns;
+	QHash<int, QVariant> current, to_apply;
 	QString firmware;
-	QString gateway;
-	LanConfig lan_config;
 	LanStatus lan_status;
 	QString mac;
 	QString serial_number;
 	QString software;
-	QString subnet;
 	PlatformDevice *dev;
 	ConfigFile *configurations;
 

@@ -1331,7 +1331,7 @@ void BtObjectsPlugin::parseSoundAmbientMulti(const QDomNode &ambient)
 	{
 		v.setIst(ist);
 		int ambient_uii = getIntAttribute(ist, "uii");
-		SoundAmbient *ambient = new SoundAmbient(v.intValue("env"), v.value("descr"), ambient_id);
+		SoundAmbient *ambient = new SoundAmbient(v.intValue("env"), v.value("descr"), ambient_id, ambient_uii);
 		QList<Amplifier *> amplifiers;
 
 		objmodel << ambient;
@@ -1373,7 +1373,7 @@ void BtObjectsPlugin::parseSoundAmbientMono(const QDomNode &ambient)
 		int system_uii = getIntAttribute(ist, "uii");
 		int ambient_uii = -2;
 		Container *system = new Container(system_id, system_uii, v.value("img"), v.value("descr"));
-		SoundAmbient *ambient = new SoundAmbient(0, "", ObjectInterface::IdMonoChannelSoundAmbient);
+		SoundAmbient *ambient = new SoundAmbient(0, "", ObjectInterface::IdMonoChannelSoundAmbient, ambient_uii);
 
 		objmodel << ambient;
 		systems_model << system;

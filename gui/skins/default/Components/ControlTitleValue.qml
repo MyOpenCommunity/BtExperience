@@ -11,6 +11,7 @@ Item {
     property string title
     property string value
     property bool readOnly: true
+    property string inputMask
 
     signal accepted
 
@@ -52,13 +53,20 @@ Item {
     // TODO: we can do better, loading the TextInput only when the user clicks on
     // the input field.
     Component {
-    id: editableLabelComponent
+        id: editableLabelComponent
         UbuntuLightTextInput {
             text: control.value
+            inputMask: control.inputMask
             horizontalAlignment: Text.AlignHCenter
-            onAccepted: { control.value = text; control.accepted() }
+            onAccepted: acceptValue()
+            onActiveFocusChanged: if (!activeFocus) acceptValue()
             font.pixelSize: 14
             color:  "#626262"
+
+            function acceptValue() {
+                control.value = text
+                control.accepted()
+            }
         }
     }
 }
