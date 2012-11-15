@@ -22,9 +22,17 @@ Container::Container(int _id, int _uii, QString _image, QString _description)
 	uii = _uii;
 	image = _image;
 	description = _description;
+	cache_id = 0;
 
 	connect(this, SIGNAL(descriptionChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(imageChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(cardImageChanged()), this, SIGNAL(cardImageCachedChanged()));
+}
+
+void Container::setCacheDirty()
+{
+	++cache_id;
+	emit cardImageCachedChanged();
 }
 
 int Container::getContainerId() const
@@ -56,6 +64,11 @@ QString Container::getCardImage() const
 	return getImage();
 }
 
+QString Container::getCardImageCached() const
+{
+	return getImage() + "?cache_id=" + getCacheId();
+}
+
 void Container::setDescription(QString _description)
 {
 	if (description == _description)
@@ -68,6 +81,11 @@ void Container::setDescription(QString _description)
 QString Container::getDescription() const
 {
 	return description;
+}
+
+QString Container::getCacheId() const
+{
+	return QString("%1").arg(cache_id);
 }
 
 
@@ -90,4 +108,9 @@ void ContainerWithCard::setCardImage(QString image)
 QString ContainerWithCard::getCardImage() const
 {
 	return card_image;
+}
+
+QString ContainerWithCard::getCardImageCached() const
+{
+	return getCardImage() + "?cache_id=" + getCacheId();
 }

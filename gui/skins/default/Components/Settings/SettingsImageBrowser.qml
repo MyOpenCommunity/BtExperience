@@ -52,7 +52,7 @@ MenuColumn {
         ColumnBrowserDirectoryModel {
             onSelected: {
                 if (column.isCard) {
-                    Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel})
+                    Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
                 }
                 else {
                     column.dataModel.image = item.path
@@ -66,7 +66,7 @@ MenuColumn {
         ColumnBrowserUpnpModel {
             onSelected: {
                 if (column.isCard) {
-                    Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel})
+                    Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
                 }
                 else {
                     column.dataModel.image = item.path

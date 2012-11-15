@@ -8,6 +8,7 @@ BasePage {
     id: page
 
     property variant containerWithCard
+    property alias fullImage: sourceImage.source
 
     ToolBar {
         id: toolbar
@@ -395,8 +396,7 @@ BasePage {
             global.takeScreenshot(Qt.rect(x, y, w, h), name)
             // images are internally cached and shared, so a trick is needed
             // to cause a reload of the image from disk
-            containerWithCard.cardImage = ""
-            containerWithCard.cardImage = name
+            containerWithCard.setCacheDirty()
         }
     }
 }

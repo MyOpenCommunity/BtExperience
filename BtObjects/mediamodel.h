@@ -108,7 +108,7 @@ private:
 		id: listDelegate
 
 		Image {
-			source: listDelegate.itemObject.cardImage
+			source: listDelegate.itemObject.cardImageCached
 
 		    // ...
 		}
