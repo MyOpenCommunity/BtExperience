@@ -47,15 +47,15 @@ MenuColumn {
             Column {
                 ControlTitleValue {
                     title: qsTr("firmware")
-                    value: privateProps.model.firmware
+                    value: privateProps.model.firmware || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("software")
-                    value: privateProps.model.software
+                    value: privateProps.model.software || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("serial number")
-                    value: privateProps.model.serialNumber
+                    value: privateProps.model.serialNumber || qsTr("Unknown")
                 }
             }
         }

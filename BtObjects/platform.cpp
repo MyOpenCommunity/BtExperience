@@ -12,10 +12,6 @@
 #endif
 
 
-namespace {
-	QString unknown = QString("UNKNOWN"); // maybe empty string?
-}
-
 enum
 {
 	LAN_CONFIG,
@@ -37,12 +33,8 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
 
 	// initial values
-	firmware = unknown;
 	current[LAN_CONFIG] = getConfValue(conf, "ethernet/lan/mode").toInt() == 1 ? Dhcp : Static;
 	lan_status = Disabled; // at start, we assume network is disabled
-	mac = unknown;
-	serial_number = unknown;
-	software = unknown;
 
 	connection_status = Testing;
 	connection_tester = new ConnectionTester(this);

@@ -27,6 +27,16 @@ MenuColumn {
         filters: [{objectId: ObjectInterface.IdPlatformSettings}]
     }
 
+    function alertCancelClicked() {
+        privateProps.model.reset()
+        column.closeColumn()
+    }
+
+    function alertOkClicked() {
+        privateProps.model.apply()
+        column.closeColumn()
+    }
+
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
         id: privateProps
@@ -112,32 +122,31 @@ MenuColumn {
             Column {
                 ControlTitleValue {
                     title: qsTr("MAC address")
-                    value: privateProps.model.mac
+                    value: privateProps.model.mac || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("IP address")
-                    value: privateProps.model.address
+                    value: privateProps.model.address || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Subnet mask")
-                    value: privateProps.model.subnet
+                    value: privateProps.model.subnet || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Gateway")
-                    value: privateProps.model.gateway
+                    value: privateProps.model.gateway || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Primary DNS")
-                    value: privateProps.model.dns1
+                    value: privateProps.model.dns1 || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Secondary DNS")
-                    value: privateProps.model.dns2
+                    value: privateProps.model.dns2 || qsTr("Unknown")
                 }
                 ButtonOkCancel {
                     onOkClicked: {
-                        privateProps.model.apply()
-                        column.closeColumn()
+                        pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
                     }
                     onCancelClicked: {
                         privateProps.model.reset()
@@ -165,7 +174,7 @@ MenuColumn {
                 Column {
                     ControlTitleValue {
                         title: qsTr("MAC address")
-                        value: privateProps.model.mac
+                        value: privateProps.model.mac || qsTr("Unknown")
                     }
                     ControlTitleValue {
                         title: qsTr("IP address")
@@ -205,8 +214,7 @@ MenuColumn {
                     ButtonOkCancel {
                         onOkClicked: {
                             focus = true // to accept current value (if any)
-                            privateProps.model.apply()
-                            column.closeColumn()
+                            pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
                         }
                         onCancelClicked: {
                             privateProps.model.reset()
