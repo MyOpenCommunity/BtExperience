@@ -32,8 +32,10 @@
 
 #if defined(BT_HARDWARE_X11)
 #define SETTINGS_FILE "settings.xml"
+#define EXTRA_11_DIR "11/"
 #else
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
+#define EXTRA_11_DIR "/home/bticino/cfg/extra/11/"
 #endif
 
 
@@ -480,7 +482,7 @@ void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
 	main_widget = _viewport;
 }
 
-void GlobalProperties::takeScreenshot(QRect rect, QString filename)
+QString GlobalProperties::takeScreenshot(QRect rect, QString filename)
 {
 	QWidget *viewport = main_widget->viewport();
 
@@ -488,7 +490,16 @@ void GlobalProperties::takeScreenshot(QRect rect, QString filename)
 		viewport = main_widget;
 
 	QImage image = QPixmap::grabWidget(viewport, rect).toImage();
-	image.save(getBasePath() + "/" + filename);
+
+#if defined(BT_HARDWARE_X11)
+	QDir().mkdir(EXTRA_11_DIR);
+#endif
+
+	QDir customDir = QDir(EXTRA_11_DIR);
+	QString fn = customDir.canonicalPath() + "/" + filename;
+	image.save(fn);
+
+	return fn;
 }
 
 void GlobalProperties::beep()

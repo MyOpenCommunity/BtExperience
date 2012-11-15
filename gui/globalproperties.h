@@ -116,7 +116,7 @@ public:
 	QObject *getDefaultExternalPlace() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
-	Q_INVOKABLE void takeScreenshot(QRect rect, QString filename);
+	Q_INVOKABLE QString takeScreenshot(QRect rect, QString filename);
 
 	Q_INVOKABLE void reboot()
 	{

@@ -387,16 +387,17 @@ BasePage {
             var y = transparentRect.mapToItem(null, 0, 0).y
             var w = transparentRect.width
             var h = transparentRect.height
-            var name = containerWithCard.cardImage
-            if (name === "") {
-                // in reality, this must never happen
-                console.log("Warning! This containerWithCard has an empty cardImage attribute. Check layout.xml file.")
-                return
-            }
-            global.takeScreenshot(Qt.rect(x, y, w, h), name)
+            // customization filenames are in the form uii.extension
+            // the string concatenation is needed to convert everything to a string
+            var name = containerWithCard.uii + "." + getExtension("" + sourceImage.source)
+            containerWithCard.cardImage = global.takeScreenshot(Qt.rect(x, y, w, h), name)
             // images are internally cached and shared, so a trick is needed
             // to cause a reload of the image from disk
             containerWithCard.setCacheDirty()
+        }
+
+        function getExtension(filename) {
+            return filename.split(".").pop()
         }
     }
 }
