@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/MenuItem.js" as Script
 
 MenuColumn {
     id: column
@@ -13,7 +14,7 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
-            description: privateProps.getDescription(itemObject)
+            description: Script.description(itemObject)
             hasChild: true
             onClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
             boxInfoState: privateProps.getBoxInfoState(itemObject, itemObject.currentModalityId)
@@ -26,86 +27,6 @@ MenuColumn {
 
     QtObject {
         id: privateProps
-
-        // some helpers
-        function isControlledProbe(itemObject) {
-            return (itemObject.objectId === ObjectInterface.IdThermalControlledProbe ||
-                    itemObject.objectId === ObjectInterface.IdThermalControlledProbeFancoil)
-        }
-
-        function isModeManual(mode) {
-            return (mode === ThermalControlUnit.IdManual ||
-                    mode === ThermalControlUnit.IdTimedManual)
-        }
-
-        function isProbeOffsetZero(itemObject) {
-            return (itemObject.localOffset === 0)
-        }
-
-        function isCentral99Zones(itemObject) {
-            return (itemObject.centralType === ThermalControlledProbe.CentralUnit99Zones)
-        }
-
-        function getOffsetRepresentation(offset) {
-            // we need to output a '+' sign for positive values
-            var r = offset > 0 ? "+" : ""
-            r += offset
-            return r
-        }
-
-        // this function computes a description for CU and ZONES menu items (it does not consider
-        // the measured temperature because is managed by getBoxInfoText function)
-        // the possible cases are:
-        // CU99Z:
-        //      - in manual mode: set point, offset, mode
-        //      - otherwise: mode, offset
-        // CU4Z:
-        //      - in manual mode: set point, offset, mode
-        //      - otherwise: mode, offset
-        // Z99Z:
-        //      - if CU or Z in manual mode: set point, offset, mode
-        //      - otherwise: mode, offset
-        // Z4Z:
-        //      - in manual mode: set point, offset
-        //      - otherwise: offset
-        function getDescription(itemObject) {
-            var descr = "---"
-
-            if (isControlledProbe(itemObject)) {
-                // it is a probe
-                descr = ""
-                var localProbeStatus = itemObject.localProbeStatus
-                var probeStatus = itemObject.probeStatus
-
-                // show 'protection' or 'off'
-                if (localProbeStatus === ThermalControlledProbe.Antifreeze ||
-                        localProbeStatus === ThermalControlledProbe.Off) {
-                    return pageObject.names.get('PROBE_STATUS', localProbeStatus)
-                }
-                else if (probeStatus === ThermalControlledProbe.Antifreeze ||
-                         probeStatus === ThermalControlledProbe.Off) {
-                    return pageObject.names.get('PROBE_STATUS', probeStatus)
-                }
-
-                // no special state, show setpoint (if in manual) and local offset
-                if (probeStatus === ThermalControlledProbe.Manual) {
-                    descr += (itemObject.setpoint / 10).toFixed(1) + qsTr("°C")
-                }
-                if (!isProbeOffsetZero(itemObject))
-                    descr += " " + getOffsetRepresentation(itemObject.localOffset)
-                descr += " " + pageObject.names.get('PROBE_STATUS', probeStatus)
-            }
-            else {
-                // it is a CU (99Z or 4Z are the same)
-                descr = ""
-                var currentModalityId = itemObject.currentModalityId
-
-                if (currentModalityId !== undefined && currentModalityId >= 0)
-                    descr += pageObject.names.get('CENTRAL_STATUS', currentModalityId)
-            }
-
-            return descr
-        }
 
         function getBoxInfoState(itemObject, currentModalityId) {
             // we need to show the measured temperature for probes and in manual mode
