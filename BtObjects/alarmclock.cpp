@@ -23,11 +23,11 @@ namespace
 	const int MASK_SATURDAY = 0x2;
 	const int MASK_SUNDAY = 0x1;
 
+	const int ALARM_TIME = 120;
+
 	const int BEEP_INTERVAL = 5000;
-	const int MAX_BEEP_TICK = 24;
 
 	const int SOUND_DIFFUSION_INTERVAL = 3000;
-	const int MAX_SOUND_DIFFUSION_TICK = 39;
 }
 
 
@@ -147,7 +147,7 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	source = 0;
 	volume = 0;
 	tick_count = 0;
-	tick = new QTimer(this);
+	timer_tick = new QTimer(this);
 
 	connect(this, SIGNAL(alarmTypeChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(checkRequested()), this, SLOT(checkRequestManagement()));
@@ -158,7 +158,7 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(persistItem()));
 
 	connect(timer_trigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
-	connect(tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
+	connect(timer_tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
 
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(checkRequested()));
 	connect(this, SIGNAL(daysChanged()), this, SIGNAL(checkRequested()));
@@ -231,7 +231,7 @@ void AlarmClock::start()
 	tick_count = 0;
 	if (alarm_type == AlarmClockBeep)
 	{
-		tick->setInterval(BEEP_INTERVAL);
+		timer_tick->setInterval(BEEP_INTERVAL);
 	}
 	else
 	{
@@ -241,15 +241,15 @@ void AlarmClock::start()
 			return;
 		}
 
-		tick->setInterval(SOUND_DIFFUSION_INTERVAL);
+		timer_tick->setInterval(SOUND_DIFFUSION_INTERVAL);
 	}
-	tick->start();
+	timer_tick->start();
 	emit ringingChanged();
 }
 
 void AlarmClock::stop()
 {
-	tick->stop();
+	timer_tick->stop();
 	emit ringingChanged();
 }
 
@@ -403,7 +403,7 @@ void AlarmClock::alarmTick()
 {
 	if (alarm_type == AlarmClockBeep)
 	{
-		if (tick_count == MAX_BEEP_TICK)
+		if (tick_count == (ALARM_TIME * 1000) / BEEP_INTERVAL - 1)
 			stop();
 		else
 			emit ringMe(this);
@@ -427,7 +427,7 @@ void AlarmClock::alarmTick()
 			}
 		}
 
-		if (tick_count == MAX_SOUND_DIFFUSION_TICK)
+		if (tick_count == (ALARM_TIME * 1000) / SOUND_DIFFUSION_INTERVAL - 1)
 		{
 			soundDiffusionStop();
 			stop();
@@ -498,5 +498,5 @@ int AlarmClock::getVolume() const
 
 bool AlarmClock::isRinging() const
 {
-	return tick->isActive();
+	return timer_tick->isActive();
 }

@@ -176,7 +176,7 @@ private:
 	bool enabled;
 	int days, hour, minute;
 	QTimer *timer_trigger;
-	QTimer *tick;
+	QTimer *timer_tick;
 	int tick_count;
 
 	// sound diffusion alarm clock
