@@ -16,22 +16,10 @@ MenuColumn {
         anchors.fill: parent
         interactive: false
         delegate: MenuItemDelegate {
-            name: model.name
-            onClicked: skinChanged(model.type)
+            name: pageObject.names.get('SKIN', modelData)
+            onClicked: skinChanged(modelData)
         }
-        model: ListModel {
-            id: modelList
-            Component.onCompleted: {
-                var s = [
-                            GuiSettings.Clear,
-                            GuiSettings.Dark,
-                        ]
-                for (var i = 0; i < s.length; i++)
-                    append({
-                               "type": s[i],
-                               "name": pageObject.names.get('SKIN', s[i])
-                           })
-            }
-        }
+        model: [GuiSettings.Clear,
+                GuiSettings.Dark]
     }
 }
