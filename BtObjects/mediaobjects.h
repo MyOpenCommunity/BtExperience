@@ -48,6 +48,13 @@ class SoundAmbientBase : public ObjectInterface
 	*/
 	Q_PROPERTY(QObject *currentSource READ getCurrentSource NOTIFY currentSourceChanged)
 
+	/*!
+		\brief Unique identifier for this container instance.
+
+		Can be used as a filter criterium for MediaModel.
+	*/
+	Q_PROPERTY(int uii READ getUii CONSTANT)
+
 	Q_PROPERTY(int area READ getArea CONSTANT)
 
 public:
@@ -55,13 +62,16 @@ public:
 
 	int getArea() const;
 
+	int getUii() const;
+
 signals:
 	void currentSourceChanged();
 
 protected:
-	SoundAmbientBase(QString name);
+	SoundAmbientBase(QString name, int uii);
 	void setCurrentSource(SourceObject *other);
 	int area;
+	int uii;
 
 private:
 	SourceObject *current_source;
@@ -93,7 +103,7 @@ class SoundAmbient : public SoundAmbientBase
 	Q_PROPERTY(QObject *previousSource READ getPreviousSource NOTIFY previousSourceChanged)
 
 public:
-	SoundAmbient(int area, QString name, int object_id);
+	SoundAmbient(int area, QString name, int object_id, int uii);
 
 	virtual QString getObjectKey() const { return QString::number(area); }
 
@@ -134,7 +144,7 @@ class SoundGeneralAmbient : public SoundAmbientBase
 	Q_OBJECT
 
 public:
-	SoundGeneralAmbient(QString name);
+	SoundGeneralAmbient(QString name, int uii);
 
 	virtual int getObjectId() const
 	{

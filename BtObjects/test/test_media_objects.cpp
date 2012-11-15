@@ -15,8 +15,8 @@ void TestSoundAmbient::init()
 	ampd23 = AmplifierDevice::createDevice("23");
 	ampd33 = AmplifierDevice::createDevice("33");
 
-	obj2 = new SoundAmbient(2, "", ObjectInterface::IdMultiChannelSoundAmbient);
-	obj3 = new SoundAmbient(3, "", ObjectInterface::IdMultiChannelSoundAmbient);
+	obj2 = new SoundAmbient(2, "", ObjectInterface::IdMultiChannelSoundAmbient, -1);
+	obj3 = new SoundAmbient(3, "", ObjectInterface::IdMultiChannelSoundAmbient, -1);
 
 	src1 = new SourceAux(srcd1);
 	srco1 = new SourceObject("", src1, SourceObject::Aux);
