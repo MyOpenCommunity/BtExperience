@@ -11,6 +11,7 @@ Item {
     property string title
     property string value
     property bool readOnly: true
+    property string inputMask
 
     signal accepted
 
@@ -55,6 +56,7 @@ Item {
         id: editableLabelComponent
         UbuntuLightTextInput {
             text: control.value
+            inputMask: control.inputMask
             horizontalAlignment: Text.AlignHCenter
             onAccepted: acceptValue()
             onActiveFocusChanged: if (!activeFocus) acceptValue()
