@@ -48,9 +48,7 @@ MenuColumn {
             if (currentModalityId === ThermalControlUnit.IdManual) {
                 t = (itemObject.currentModality.temperature / 10).toFixed(1)
             }
-            if (t > 0)
-                return t + qsTr("°C")
-            return "---"
+            return t + qsTr("°C")
         }
     }
 
