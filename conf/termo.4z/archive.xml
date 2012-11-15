@@ -5,7 +5,7 @@
 		<ist uii="3014" descr="Zona 1 - CU 2" where="21" fancoil="1" />
 	</obj>
 	<obj cid="8005" id="8005" descr="Zona 2" where="2" fancoil="0" >
-		<ist uii="3015" descr="Zona 2 - CU 1" where="5" />
+		<ist uii="3015" descr="Zona 2 - CU 1" where="5" fancoil="1" />
 	</obj>
 	<obj cid="8006" id="8006" descr="Zona 3" where="3" fancoil="0" >
 		<ist uii="3016" descr="Zona 2 - CU 2" where="15" />

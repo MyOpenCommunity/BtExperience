@@ -13,4 +13,18 @@
 			<link uii="2052" />
 		</ist>
 	</container>
+	<container id="100" >
+                <ist uii="102" descr="living room" img="images/imgsfondo_sfumato.png" img_card="images/rooms/soggiorno.png">
+			<link uii="2001" x="200" y="100" />
+		</ist>
+                <ist uii="103" descr="bathroom" img="images/imgsfondo_sfumato.png" img_card="images/rooms/bagno.png">
+			<link uii="2011" x="200" y="100" />
+		</ist>
+	</container>
+	<container id="13" descr="floor" img="floor.png">
+		<ist uii="201" descr="ground" >
+			<link uii="102" />
+			<link uii="103" />
+		</ist>
+	</container>
 </layout>
