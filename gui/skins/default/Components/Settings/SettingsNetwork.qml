@@ -112,27 +112,27 @@ MenuColumn {
             Column {
                 ControlTitleValue {
                     title: qsTr("MAC address")
-                    value: privateProps.model.mac
+                    value: privateProps.model.mac || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("IP address")
-                    value: privateProps.model.address
+                    value: privateProps.model.address || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Subnet mask")
-                    value: privateProps.model.subnet
+                    value: privateProps.model.subnet || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Gateway")
-                    value: privateProps.model.gateway
+                    value: privateProps.model.gateway || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Primary DNS")
-                    value: privateProps.model.dns1
+                    value: privateProps.model.dns1 || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Secondary DNS")
-                    value: privateProps.model.dns2
+                    value: privateProps.model.dns2 || qsTr("Unknown")
                 }
                 ButtonOkCancel {
                     onOkClicked: {
@@ -165,7 +165,7 @@ MenuColumn {
                 Column {
                     ControlTitleValue {
                         title: qsTr("MAC address")
-                        value: privateProps.model.mac
+                        value: privateProps.model.mac || qsTr("Unknown")
                     }
                     ControlTitleValue {
                         title: qsTr("IP address")
