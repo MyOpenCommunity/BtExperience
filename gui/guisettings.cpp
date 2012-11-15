@@ -2,6 +2,7 @@
 #include "xml_functions.h"
 #include "xmlobject.h"
 #include "configfile.h"
+#include "main.h" // bt_global::config
 
 #include <QDebug>
 #include <QDateTime>
@@ -117,7 +118,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 	currency = "EUR";
 	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
 	numberSeparator = ".";
-	temperatureUnit = Celsius;
 	timezone = 0;
 	skin = Clear;
 	beep = false;
@@ -351,16 +351,16 @@ void GuiSettings::setNumberSeparator(QString s)
 
 GuiSettings::TemperatureUnit GuiSettings::getTemperatureUnit() const
 {
-	return temperatureUnit;
+	return (*bt_global::config)[TEMPERATURE_SCALE].toInt() == CELSIUS ? Celsius : Fahrenheit;
 }
 
 void GuiSettings::setTemperatureUnit(TemperatureUnit u)
 {
-	if (temperatureUnit == u)
+	if (getTemperatureUnit() == u)
 		return;
 
-	// TODO save value somewhere
-	temperatureUnit = u;
+	(*bt_global::config)[TEMPERATURE_SCALE] = QString::number(u == Celsius ? CELSIUS : FAHRENHEIT);
+	setConfValue("generale/temperature/format", (*bt_global::config)[TEMPERATURE_SCALE]);
 	emit temperatureUnitChanged();
 }
 
