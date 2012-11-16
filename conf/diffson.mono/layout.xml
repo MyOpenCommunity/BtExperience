@@ -17,10 +17,10 @@
 		</ist>
 	</container>
 	<container id="100" >
-                <ist uii="102" descr="living room" img="images/imgsfondo_sfumato.png" img_card="images/rooms/soggiorno.png">
+                <ist uii="102" descr="living room" img="images/imgsfondo_sfumato.png" img_card="images/rooms/soggiorno.jpg">
 			<link uii="10020" x="200" y="100" />
 		</ist>
-                <ist uii="103" descr="bathroom" img="images/imgsfondo_sfumato.png" img_card="images/rooms/bagno.png">
+                <ist uii="103" descr="bathroom" img="images/imgsfondo_sfumato.png" img_card="images/rooms/bagno.jpg">
 			<link uii="10002" x="200" y="100" />
 		</ist>
 	</container>
