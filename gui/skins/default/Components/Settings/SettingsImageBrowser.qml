@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import BtExperience 1.0
 import Components 1.0
 
 import "../../js/Stack.js" as Stack
@@ -9,35 +10,63 @@ MenuColumn {
     id: column
 
     property bool isCard: false
+    property bool _isStock: false // used internally to know if user selected a stock image
 
     onChildDestroyed: {
+        privateProps.currentIndex = -1
         itemList.currentIndex = -1
     }
 
-    PaginatorList {
-        id: itemList
-        currentIndex: -1
-
-        delegate: MenuItemDelegate {
-            itemObject: modelList.getObject(index)
-            name: itemObject.name
+    Column {
+        MenuItem {
+            name: qsTr("Stock images")
+            isSelected: privateProps.currentIndex === 1
             hasChild: true
-            onDelegateClicked: {
-                var upnp = itemObject.sourceType === SourceObject.Upnp;
+
+            onClicked: {
+                itemList.currentIndex = -1
+                privateProps.currentIndex = 1
+                column._isStock = true
                 var props = {
-                    rootPath: itemObject.rootPath,
-                    text: itemObject.name,
-                    upnp: upnp,
+                    rootPath: global.stockImagesFolder,
+                    text: qsTr("Stock images"),
+                    upnp: false,
                     imageOnly: true,
                     filter: FileObject.Image | FileObject.Directory,
                     bgHeight: 422,
                     "paginator.elementsOnPage": 7
                 }
-                column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
+                column.loadColumn(directoryBrowser, qsTr("Stock images"), undefined, props)
             }
         }
 
-        model: modelList
+        PaginatorList {
+            id: itemList
+            currentIndex: -1
+
+            delegate: MenuItemDelegate {
+                itemObject: modelList.getObject(index)
+                name: itemObject.name
+                hasChild: true
+                onDelegateClicked: {
+                    privateProps.currentIndex = -1
+                    column._isStock = false
+                    var upnp = itemObject.sourceType === SourceObject.Upnp;
+                    var props = {
+                        rootPath: itemObject.rootPath,
+                        text: itemObject.name,
+                        upnp: upnp,
+                        imageOnly: true,
+                        filter: FileObject.Image | FileObject.Directory,
+                        bgHeight: 422,
+                        "paginator.elementsOnPage": 7
+                    }
+                    column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
+                }
+            }
+
+            model: modelList
+        }
     }
 
     SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
@@ -47,12 +76,21 @@ MenuColumn {
         containers: [deviceModel.systemUii]
     }
 
+    QtObject {
+        id: privateProps
+
+        property int currentIndex: -1
+    }
+
     Component {
         id: directoryBrowser
         ColumnBrowserDirectoryModel {
             onSelected: {
                 if (column.isCard) {
-                    Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
+                    if (column._isStock)
+                        column.dataModel.cardImage = item.path
+                    else
+                        Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
                 }
                 else {
                     column.dataModel.image = item.path
@@ -65,12 +103,10 @@ MenuColumn {
         id: upnpBrowser
         ColumnBrowserUpnpModel {
             onSelected: {
-                if (column.isCard) {
+                if (column.isCard)
                     Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
-                }
-                else {
+                else
                     column.dataModel.image = item.path
-                }
             }
         }
     }

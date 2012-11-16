@@ -7,6 +7,7 @@
 #include <QImage>
 #include <QHash>
 #include <QStringList>
+#include <QVariantList>
 
 class QDeclarativeView;
 class GuiSettings;
@@ -93,6 +94,9 @@ class GlobalProperties : public QObject
 	// Debug timing between various GUI events
 	Q_PROPERTY(DebugTiming *debugTiming READ getDebugTiming CONSTANT)
 
+	// Folder containing stock images
+	Q_PROPERTY(QVariantList stockImagesFolder READ getStockImagesFolder CONSTANT)
+
 public:
 	GlobalProperties(logger *log);
 	int getMainWidth() const;
@@ -112,6 +116,7 @@ public:
 	bool getDebugTs();
 	DebugTiming *getDebugTiming();
 	QObject *getHardwareKeys() const;
+	QVariantList getStockImagesFolder() const;
 
 	QObject *getDefaultExternalPlace() const;
 

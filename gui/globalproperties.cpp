@@ -403,6 +403,27 @@ QObject *GlobalProperties::getHardwareKeys() const
 	return hardware_keys;
 }
 
+QVariantList GlobalProperties::getStockImagesFolder() const
+{
+	QVariantList result;
+
+#if defined(BT_HARDWARE_X11)
+	QString base = getBasePath();
+	QStringList base_list = base.split("/");
+	foreach (const QString &comp, base_list)
+		result.append(comp);
+	result.append("images");
+#else
+	QString extra = getExtraPath();
+	QStringList extra_list = extra.split("/");
+	foreach (const QString &comp, extra_list)
+		result.append(comp);
+	result.append("1");
+#endif
+
+	return result;
+}
+
 QObject *GlobalProperties::getDefaultExternalPlace() const
 {
 	return default_external_place;
