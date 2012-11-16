@@ -12,6 +12,7 @@
 #include <QByteArray>
 
 class ObjectInterface;
+class ObjectModelFilters;
 typedef QPair<int, ObjectInterface *> ObjectPair;
 
 
@@ -89,6 +90,9 @@ public:
 	QVariantList getFilters() const;
 	void setFilters(QVariantList f);
 
+	// helper method for C++
+	void setFilters(ObjectModelFilters f);
+
 	void setSource(ObjectDataModel *s);
 	ObjectDataModel *getSource() const;
 
@@ -109,5 +113,57 @@ private:
 	static ObjectDataModel *global_source;
 };
 
+
+/*!
+	\ingroup Core
+	\brief Helper class to simplify filter creation from C++
+
+	for example:
+
+	\verbatim
+	ObjectListModel thermal;
+
+	thermal.setFilter(ObjectModelFilters() << "objectId" << ObjectInterface.IdThermalControlledProbe
+					       << "objectKey" << "1"
+		       << ObjectModelFilters() << "objectId" << ObjectInterface.IdThermalControlledProbeFancoil);
+	\endverbatim
+
+	Is equivalent to the following QML code
+
+	\verbatim
+	ObjectModel {
+	     id: thermal
+	     source: myHomeModels.myHomeObjects
+	     filters: [
+		 {objectId:  ObjectInterface.IdThermalControlledProbe,
+		  objectKey: "1"},
+		 {objectId:  ObjectInterface.IdThermalControlledProbeFancoil}
+	     ]
+	}
+	\endverbatim
+
+	\sa ObjectListModel
+*/
+class ObjectModelFilters
+{
+public:
+	ObjectModelFilters();
+
+	QVariantList getFilters() const;
+
+	ObjectModelFilters &operator <<(QVariant v);
+
+	ObjectModelFilters &operator <<(const char *v)
+	{
+		return operator <<(QString(v));
+	}
+
+	ObjectModelFilters &operator <<(ObjectModelFilters f);
+
+private:
+	QVariantList filters;
+	QString key;
+	bool has_key;
+};
 
 #endif // OBJECTMODEL_H

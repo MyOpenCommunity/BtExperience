@@ -62,6 +62,11 @@ QVariantList ObjectModel::getFilters() const
 	return input_filters;
 }
 
+void ObjectModel::setFilters(ObjectModelFilters f)
+{
+	setFilters(f.getFilters());
+}
+
 void ObjectModel::setFilters(QVariantList f)
 {
 	if (f == input_filters)
@@ -120,4 +125,46 @@ bool ObjectModel::keyMatches(QString key, ObjectInterface *obj) const
 		if (!objList.contains(k))
 			return false;
 	return true;
+}
+
+
+ObjectModelFilters::ObjectModelFilters()
+{
+	has_key = false;
+}
+
+QVariantList ObjectModelFilters::getFilters() const
+{
+	Q_ASSERT_X(!has_key, "ObjectModelFilters::getFilters", "Odd number of elements in filter");
+	return filters;
+}
+
+ObjectModelFilters &ObjectModelFilters::operator <<(QVariant v)
+{
+	if (has_key)
+	{
+		has_key = false;
+		if (filters.count() == 0)
+			filters << QVariantMap();
+
+		QVariantMap last = filters.last().toMap();
+
+		last[key] = v;
+		filters.last().setValue(last);
+	}
+	else
+	{
+		has_key = true;
+		key = v.toString();
+	}
+
+	return *this;
+}
+
+ObjectModelFilters &ObjectModelFilters::operator <<(ObjectModelFilters f)
+{
+	Q_UNUSED(f)
+	filters.append(QVariant());
+
+	return *this;
 }
