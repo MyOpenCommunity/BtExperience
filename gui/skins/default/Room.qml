@@ -6,18 +6,17 @@ import Components 1.0
 Page {
     id: page
 
+    property variant room
     property variant names: translations
-    property string roomName
-    property int roomUii
     property int floorUii
 
-    source: "images/imgsfondo_sfumato.png"
+    source: room.image
 
     function systemsButtonClicked() {
         Stack.backToRoom()
     }
 
-    text: roomName
+    text: room.description
     showBackButton: false
     showSystemsButton: true
 
@@ -28,7 +27,7 @@ Page {
     MediaModel {
         source: myHomeModels.objectLinks
         id: roomModel
-        containers: [roomUii]
+        containers: [room.uii]
         onContainersChanged: page.state = ""
     }
 
@@ -40,6 +39,7 @@ Page {
 
     RoomView {
         id: roomCustomView
+
         anchors {
             left: navigationBar.right
             leftMargin: 20
@@ -54,61 +54,47 @@ Page {
 
     ListView {
         id: roomView
-        anchors.bottom: parent.bottom
-        anchors.left: navigationBar.right
-        anchors.right: parent.right
-        height: 110
 
-        function selectRoomImage(room) {
-            if (room === "living room")
-                return "images/rooms/soggiorno.png"
-            else if (room === "bathroom")
-                return "images/rooms/bagno.png"
-            else if (room === "garage")
-                return "images/rooms/box.png"
-            else if (room === "bedroom")
-                return "images/rooms/camera.png"
-            else if (room === "kitchen")
-                return "images/rooms/cucina.png"
-            console.log("Unknown room, default to studio")
-            return "images/rooms/studio.png"
+        anchors {
+            bottom: parent.bottom
+            left: navigationBar.right
+            right: parent.right
         }
-
+        height: 110
         orientation: ListView.Horizontal
         interactive: false
+        currentIndex: findCurrentIndex()
+        model: roomsModel
+
         delegate: Image {
-            property variant itemObject: roomsModel.getObject(index)
             id: listDelegate
+
+            property variant itemObject: roomsModel.getObject(index)
+
             source: roomView.currentIndex === index ? "images/common/stanzaS.png" : "images/common/stanza.png"
+
             Image {
-                source: roomView.selectRoomImage(listDelegate.itemObject.description)
+                source: itemObject.cardImageCached
                 fillMode: Image.PreserveAspectCrop
                 clip: true
                 width: parent.width - (roomView.currentIndex === index ? 30 : 20)
                 height: parent.height - (roomView.currentIndex === index ? 30 : 20)
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
+
                 BeepingMouseArea {
                     anchors.fill: parent
-                    onClicked: {
-                        roomView.currentIndex = index
-                        roomName = listDelegate.itemObject.description
-                    }
+                    onClicked: roomView.currentIndex = index
                 }
             }
         }
 
-        onCurrentIndexChanged: {
-            page.roomUii = roomsModel.getObject(currentIndex).uii
-        }
-
-        currentIndex: findCurrentIndex()
-        model: roomsModel
+        onCurrentIndexChanged: page.room = roomsModel.getObject(currentIndex)
     }
 
     function findCurrentIndex() {
         for (var i = 0; i < roomsModel.count; ++i)
-            if (roomsModel.getObject(i).uii == roomUii)
+            if (roomsModel.getObject(i).uii === room.uii)
                     return i;
 
         return 0;
