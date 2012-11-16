@@ -238,13 +238,8 @@ void GlobalProperties::initAudio()
 	{
 		// find all source objects
 		ObjectModel sources;
-		QVariantList filters;
-		QVariantMap filter;
 
-		filter["objectId"] = ObjectInterface::IdSoundSource;
-		filters << filter;
-
-		sources.setFilters(filters);
+		sources.setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdSoundSource);
 
 		for (int i = 0; i < sources.getCount(); ++i)
 		{

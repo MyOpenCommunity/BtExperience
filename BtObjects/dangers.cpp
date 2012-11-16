@@ -11,22 +11,9 @@ StopAndGoDangers::StopAndGoDangers()
 
 	// creates an ObjectModel to select stop&go objects
 	stop_go_model = new ObjectModel(this);
-	QVariantList filters;
-	QVariantMap filter;
-
-	// sets filters to select stop&go objects
-	filter["objectId"] = ObjectInterface::IdStopAndGo;
-	filters << filter;
-	filter.clear();
-	filter["objectId"] = ObjectInterface::IdStopAndGoPlus;
-	filters << filter;
-	filter.clear();
-	filter["objectId"] = ObjectInterface::IdStopAndGoBTest;
-	filters << filter;
-	filter.clear();
-
-	// filters
-	stop_go_model->setFilters(filters);
+	stop_go_model->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdStopAndGo
+			       << ObjectModelFilters() << "objectId" << ObjectInterface::IdStopAndGoPlus
+			       << ObjectModelFilters() << "objectId" << ObjectInterface::IdStopAndGoBTest);
 
 	// connects statusChanged signal of stop&go objects to our updateDangerInfo
 	// signal

@@ -12,15 +12,7 @@ AlarmClockNotifier::AlarmClockNotifier()
 
 	// creates an ObjectModel to select alarm clocks objects
 	alarm_clocks_model = new ObjectModel(this);
-	QVariantList filters;
-	QVariantMap filter;
-
-	// sets filters to select alarm clocks objects
-	filter["objectId"] = ObjectInterface::IdAlarmClock;
-	filters << filter;
-
-	// actually filters
-	alarm_clocks_model->setFilters(filters);
+	alarm_clocks_model->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdAlarmClock);
 
 	// connects various alarm clocks signals to our slots
 	for (int i = 0; i < alarm_clocks_model->getCount(); ++i)

@@ -9,15 +9,7 @@ EnergyThresholdsGoals::EnergyThresholdsGoals()
 {
 	// creates and ObjectModel and selects energy objects
 	energies_model = new ObjectModel(this);
-	QVariantList filters;
-	QVariantMap filter;
-
-	// sets filter
-	filter["objectId"] = ObjectInterface::IdEnergyData;
-	filters << filter;
-
-	// applies filter to model
-	energies_model->setFilters(filters);
+	energies_model->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdEnergyData);
 
 	// connects notifying signals to out updateThresholdsGoals slot
 	for (int i = 0; i < energies_model->getCount(); ++i)
