@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import "../../js/logging.js" as Log
 import Components 1.0
+import "../../js/MenuItem.js" as Script
 
 MenuColumn {
     id: column
@@ -38,8 +39,8 @@ MenuColumn {
                 editable: true
                 itemObject: objectModel.getObject(index)
 
-                status: itemObject.active
-                hasChild: true
+                status: Script.status(itemObject)
+                hasChild: Script.hasChild(itemObject)
                 onDelegateClicked: {
                     privateProps.currentIndex = -1
                     column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject);
@@ -59,10 +60,11 @@ MenuColumn {
 
     ObjectModel {
         id: objectModel
-        filters: [{objectId: ObjectInterface.IdSoundAmplifierGeneral, objectKey: column.dataModel.objectKey},
-            {objectId: ObjectInterface.IdSoundAmplifier, objectKey: column.dataModel.objectKey},
-            {objectId: ObjectInterface.IdPowerAmplifier, objectKey: column.dataModel.objectKey}
+        filters: [{objectId: ObjectInterface.IdSoundAmplifierGroup},
+            {objectId: ObjectInterface.IdSoundAmplifier},
+            {objectId: ObjectInterface.IdPowerAmplifier}
         ]
+        containers: [column.dataModel.uii]
         range: paginator.computePageRange(itemList.currentPage, itemList.elementsOnPage)
     }
 }

@@ -9,6 +9,8 @@ function status(itemObject) {
     case ObjectInterface.IdDimmerFixed:
     case ObjectInterface.IdDimmer100Fixed:
     case ObjectInterface.IdDimmer100Custom:
+    case ObjectInterface.IdSoundAmplifier:
+    case ObjectInterface.IdPowerAmplifier:
         return itemObject.active === true ? 1 : 0;
     }
     return -1
