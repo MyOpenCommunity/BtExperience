@@ -232,9 +232,6 @@ signals:
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
-private slots:
-	void manageHandsFree();
-
 protected:
 	int brightness;
 	int contrast;
