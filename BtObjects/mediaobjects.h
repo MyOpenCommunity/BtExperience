@@ -22,6 +22,7 @@ class SourceBase;
 class SourceMultiMedia;
 class PowerAmplifierDevice;
 class AudioVideoPlayer;
+class ObjectListModel;
 class MountPoint;
 
 
