@@ -8,6 +8,7 @@ SvgImage {
     id: background
 
     property variant itemObject
+    property bool preview: false
 
     signal delegateClicked
 
@@ -17,7 +18,9 @@ SvgImage {
         id: privateProps
 
         function getPressedImage() {
-            if (itemObject.fileType === FileObject.Audio)
+            if (background.preview)
+                return itemObject.path
+            else if (itemObject.fileType === FileObject.Audio)
                 return "../images/common/ico_audio_P.svg"
             else if (itemObject.fileType === FileObject.Video)
                 return "../images/common/ico_video_P.svg"
@@ -29,7 +32,9 @@ SvgImage {
         }
 
         function getDefaultImage() {
-            if (itemObject.fileType === FileObject.Audio)
+            if (background.preview)
+                return itemObject.path
+            else if (itemObject.fileType === FileObject.Audio)
                 return "../images/common/ico_audio.svg"
             else if (itemObject.fileType === FileObject.Video)
                 return "../images/common/ico_video.svg"
@@ -53,7 +58,8 @@ SvgImage {
 
         SvgImage {
             id: icon
-            anchors.fill: parent
+            width: 25
+            height: 25
             source: privateProps.getDefaultImage()
         }
     }

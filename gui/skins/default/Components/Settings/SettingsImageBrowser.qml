@@ -34,7 +34,8 @@ MenuColumn {
                     imageOnly: true,
                     filter: FileObject.Image | FileObject.Directory,
                     bgHeight: 422,
-                    "paginator.elementsOnPage": 7
+                    "paginator.elementsOnPage": 7,
+                    preview: true
                 }
                 column.loadColumn(directoryBrowser, qsTr("Stock images"), undefined, props)
             }
@@ -59,7 +60,8 @@ MenuColumn {
                         imageOnly: true,
                         filter: FileObject.Image | FileObject.Directory,
                         bgHeight: 422,
-                        "paginator.elementsOnPage": 7
+                        "paginator.elementsOnPage": 7,
+                        preview: true
                     }
                     column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
                 }
