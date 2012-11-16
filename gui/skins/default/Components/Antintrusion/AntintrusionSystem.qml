@@ -33,7 +33,7 @@ MenuColumn {
     }
 
     // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
+    function openMenu(navigationTarget, navigationData) {
         if (navigationTarget === "AlarmLog") {
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1

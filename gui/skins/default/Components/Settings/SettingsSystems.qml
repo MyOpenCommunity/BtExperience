@@ -8,7 +8,7 @@ MenuColumn {
     height: Math.max(1, 50 * itemList.count)
 
     // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
+    function openMenu(navigationTarget, navigationData) {
         if (navigationTarget === "VDE") {
             var m = modelList.get(2)
             itemList.currentIndex = 2

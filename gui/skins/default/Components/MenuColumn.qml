@@ -35,22 +35,23 @@ Item {
         if (navigationTarget === undefined)
             return
 
-        var openMenuResult = openMenu(navigationTarget)
+        var openMenuResult = openMenu(navigationTarget, pageObject.navigationData)
         if (openMenuResult === 1)
             return // further processing needed
 
         if (openMenuResult < 0) // processing error
-            console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + " unknown. Error code: " + openMenuResult)
+            console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + " unknown. Navigation data: " + pageObject.navigationData + ". Error code: " + openMenuResult)
 
         // resets navigation
         column.pageObject.navigationTarget = 0
+        column.pageObject.navigationData = undefined
     }
 
     // hook to open a menu; receives a string to identify menu to be opened
     // returns 0 if target is managed, 1 if more processing is needed, -1 in
     // case of errors
     // see navigation.js for further details
-    function openMenu(navigationTarget) {
+    function openMenu(navigationTarget, navigationData) {
         return -1 // by default returns generic error
     }
 

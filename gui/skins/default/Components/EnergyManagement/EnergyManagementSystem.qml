@@ -8,7 +8,7 @@ MenuColumn {
     height: 150
 
     // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
+    function openMenu(navigationTarget, navigationData) {
         if (navigationTarget === "Supervision") {
             var m = listModel.get(0)
             listView.currentIndex = 0

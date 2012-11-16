@@ -10,7 +10,7 @@ MenuColumn {
     height: Math.max(1, 50 * itemList.count)
 
     // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
+    function openMenu(navigationTarget, navigationData) {
         var m = undefined
         if (navigationTarget === "Systems") {
             m = modelList.get(4)

@@ -221,6 +221,8 @@ function changePageDone() {
 function primeMenuNavigation(current, properties) {
     if ("navigationTarget" in properties) {
         current.navigationTarget = properties.navigationTarget
+        if ("navigationData" in properties)
+            current.navigationData = properties.navigationData
     }
 }
 

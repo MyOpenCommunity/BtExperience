@@ -6,7 +6,7 @@ MenuColumn {
     id: column
 
     // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
+    function openMenu(navigationTarget, navigationData) {
         if (navigationTarget === "HandsFree") {
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1
