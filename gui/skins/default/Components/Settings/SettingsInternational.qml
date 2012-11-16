@@ -126,7 +126,7 @@ MenuColumn {
         MenuItem {
             id: temperatureItem
             name: qsTr("temperature")
-            description: "°C"
+            description: pageObject.names.get('TEMPERATURE', global.guiSettings.temperatureUnit)
             hasChild: true
             isSelected: privateProps.currentIndex === 3
             onClicked: {

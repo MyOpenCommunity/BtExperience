@@ -216,7 +216,6 @@ private:
 	QString keyboardLayout;
 	QString language;
 	QString numberSeparator;
-	TemperatureUnit temperatureUnit;
 	int timezone;
 	Skin skin;
 	bool beep;
