@@ -3,7 +3,7 @@
 	<obj cid="11001" id="11001" descr="Amplifier" where="11">
 		<ist uii="10001" descr="Generale" where="0"/>
 		<ist uii="10014" descr="Generale" where="#2"/>
-		<ist uii="10002" descr="Amplificatore 2" where="22"/>
+		<ist uii="10002" descr="Amplificatore 2" where="21"/>
 		<ist uii="10003" descr="Amplificatore 3" where="23"/>
 		<ist uii="10012" descr="Amplificatore 2" where="32"/>
 		<ist uii="10013" descr="Generale" where="#3"/>
@@ -20,6 +20,15 @@
 			<link uii="10001" />
 			<link uii="10002" />
 			<link uii="10004" />
+		</ist>
+		<ist uii="10030" descr="General ambient 2" >
+			<link uii="10014" />
+		</ist>
+		<ist uii="10031" descr="General ambient 3" >
+			<link uii="10013" />
+		</ist>
+		<ist uii="10032" descr="General" >
+			<link uii="10001" />
 		</ist>
 	</obj>
 	<obj cid="11032" id="11032" descr="Source" where="1" radio_num="5">

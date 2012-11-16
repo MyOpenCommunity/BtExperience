@@ -2,11 +2,11 @@
 <layout>
 	<container id="18" descr="sound diffusion mono">
                 <ist uii="301">
-                        <link uii="10001" />
                         <link uii="10002" />
                         <link uii="10003" />
                         <link uii="10004" />
                         <link uii="10006" />
+                        <link uii="10020" />
 		</ist>
 	</container>
 	<container id="21" descr="Web radio" img="web_radio.png" >
@@ -14,6 +14,20 @@
 			<link uii="8011" />
 			<link uii="8014" />
 			<link uii="8015" />
+		</ist>
+	</container>
+	<container id="100" >
+                <ist uii="102" descr="living room" img="images/imgsfondo_sfumato.png" img_card="images/rooms/soggiorno.png">
+			<link uii="10020" x="200" y="100" />
+		</ist>
+                <ist uii="103" descr="bathroom" img="images/imgsfondo_sfumato.png" img_card="images/rooms/bagno.png">
+			<link uii="10002" x="200" y="100" />
+		</ist>
+	</container>
+	<container id="13" descr="floor" img="floor.png">
+		<ist uii="201" descr="ground" >
+			<link uii="102" />
+			<link uii="103" />
 		</ist>
 	</container>
 </layout>
