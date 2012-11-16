@@ -29,4 +29,20 @@
 		<ist uii="905" descr="famiglia" img="images/home/card-home_famiglia.png" >
 		</ist>
 	</container>
+
+	<container id="100" >
+                <ist uii="102" descr="living room" img="images/imgsfondo_sfumato.png" img_card="images/rooms/soggiorno.png">
+			<link uii="6001" x="200" y="100" />
+		</ist>
+                <ist uii="103" descr="bathroom" img="images/imgsfondo_sfumato.png" img_card="images/rooms/bagno.png">
+			<link uii="6101" x="200" y="100" />
+			<link uii="6204" x="400" y="180" />
+		</ist>
+	</container>
+	<container id="13" descr="floor" img="floor.png">
+		<ist uii="201" descr="ground" >
+			<link uii="102" />
+			<link uii="103" />
+		</ist>
+	</container>
 </layout>

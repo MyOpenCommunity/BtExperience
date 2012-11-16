@@ -2,7 +2,7 @@
 <archive>
 	<obj cid="11029" id="11029" descr="Amplifier" where="11">
 		<ist uii="10001" descr="Generale" where="0"/>
-		<ist uii="10002" descr="Amplificatore 2" where="22"/>
+		<ist uii="10002" descr="Amplificatore 2" where="21"/>
 		<ist uii="10003" descr="Amplificatore 3" where="23"/>
 	</obj>
 	<obj cid="11031" id="11031" descr="Power Amplifier" where="11" epre11="0" epre12="0" epre13="0" epre14="0" epre15="0" epre16="0" epre17="0" epre18="0" epre19="0" epre20="0">
@@ -17,6 +17,9 @@
 			<link uii="10001" />
 			<link uii="10002" />
 			<link uii="10004" />
+		</ist>
+		<ist uii="10020" descr="General" >
+			<link uii="10001" />
 		</ist>
 	</obj>
 	<obj cid="11032" id="11032" descr="Source" where="1" radio_num="5">

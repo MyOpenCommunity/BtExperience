@@ -6,6 +6,7 @@
 			<link uii="10004" />
 			<link uii="10003" />
 			<link uii="10006" />
+			<link uii="10032" />
 		</ist>
         </container>
 	<container id="14" descr="Ambient" env="1">
@@ -13,12 +14,12 @@
 			<link uii="10004" />
 		</ist>
 		<ist uii="411" descr="Cucina" env="2">
-			<link uii="10014" />
+			<link uii="10030" />
 			<link uii="10002" />
 			<link uii="10003" />
 		</ist>
 		<ist uii="412" descr="Salotto" env="3">
-			<link uii="10013" />
+			<link uii="10031" />
 			<link uii="10012" />
 		</ist>
 		<ist uii="413" descr="Cameretta" env="4">
@@ -43,6 +44,21 @@
 			<link uii="8011" />
 			<link uii="8014" />
 			<link uii="8015" />
+		</ist>
+	</container>
+
+	<container id="100" >
+                <ist uii="102" descr="living room" img="images/imgsfondo_sfumato.png" img_card="images/rooms/soggiorno.png">
+			<link uii="10030" x="200" y="100" />
+		</ist>
+                <ist uii="103" descr="bathroom" img="images/imgsfondo_sfumato.png" img_card="images/rooms/bagno.png">
+			<link uii="10002" x="200" y="100" />
+		</ist>
+	</container>
+	<container id="13" descr="floor" img="floor.png">
+		<ist uii="201" descr="ground" >
+			<link uii="102" />
+			<link uii="103" />
 		</ist>
 	</container>
 </layout>
