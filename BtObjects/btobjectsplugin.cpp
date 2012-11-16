@@ -60,7 +60,7 @@
 #define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
 #define NOTES_FILE "/home/bticino/cfg/extra/0/notes.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
-#define CONF_LOADED "/var/tmp/flags/BtExperience_checkconfok"
+#define CONF_LOADED "/var/tmp/flags/BTouch_checkconfok"
 #endif
 
 QHash<GlobalField, QString> *bt_global::config;
