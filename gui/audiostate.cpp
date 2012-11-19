@@ -284,6 +284,14 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	case ScsIntercomCall:
 		smartExecute(vde_audio_on);
 		break;
+	case LocalPlaybackMute:
+		setHardwareVolume(LocalPlaybackVolume, 0);
+		break;
+	case Mute:
+		// no need to set both Vde and Intercom volume, since they map to
+		// the same hardware control
+		setHardwareVolume(VdeCallVolume, 0);
+		break;
 	default:
 		qWarning("Add code to enter new state");
 		break;
