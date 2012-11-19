@@ -319,6 +319,8 @@ public:
 
 	/// Start media playback at the given index
 	Q_INVOKABLE void startPlay(QList<QVariant> urls, int index, int total_files);
+
+	virtual void playFirstMediaContent();
 };
 
 

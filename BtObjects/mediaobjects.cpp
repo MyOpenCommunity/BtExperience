@@ -465,6 +465,22 @@ void SourceIpRadio::startPlay(QList<QVariant> urls, int index, int total_files)
 	source->getAudioVideoPlayer()->generatePlaylistWebRadio(urls, index, total_files);
 }
 
+void SourceIpRadio::playFirstMediaContent()
+{
+	ObjectModel ip_radios;
+	QList<QVariant> urls;
+
+	ip_radios.setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdIpRadio);
+
+	for (int i = 0; i < ip_radios.getCount(); ++i)
+		urls.append(static_cast< ::IpRadio *>(ip_radios.getObject(i))->getPath());
+
+	if (urls.count())
+		startPlay(urls, 0, urls.count());
+
+	emit firstMediaContentStatus(urls.count() != 0);
+}
+
 
 SourceLocalMedia::SourceLocalMedia(const QString &name, MountPoint *_mount_point, SourceMultiMedia *s, SourceObjectType t) :
 	SourceMedia(name, s, t)
