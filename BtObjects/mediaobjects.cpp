@@ -217,10 +217,16 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
 	}
 
-	SourceMultiMedia *source = 0;
+	VirtualSourceDevice *device = 0;
 
+	// source objects are used both for sound diffusion and multimedia; rather than instantiating different
+	// objects it's easier to use a dummy device (in any case it will not be used by the UI)
 	if (!(*bt_global::config)[SOURCE_ADDRESS].isEmpty())
-		source = new SourceMultiMedia(bt_global::add_device_to_cache(new VirtualSourceDevice((*bt_global::config)[SOURCE_ADDRESS])));
+		device = bt_global::add_device_to_cache(new VirtualSourceDevice((*bt_global::config)[SOURCE_ADDRESS]));
+	else
+		device = bt_global::add_device_to_cache(new VirtualSourceDevice("-1"), NO_INIT);
+
+	SourceMultiMedia *source = new SourceMultiMedia(device);
 
 	foreach (QDomNode xml_obj, multimedia)
 	{
