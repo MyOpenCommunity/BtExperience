@@ -244,6 +244,7 @@ void AlarmClock::restart()
 
 void AlarmClock::start()
 {
+	actual_type = alarm_type;
 	start_time = QTime::currentTime();
 	startRinging();
 }
@@ -251,7 +252,7 @@ void AlarmClock::start()
 void AlarmClock::startRinging()
 {
 	tick_count = 0;
-	if (alarm_type == AlarmClockBeep)
+	if (actual_type == AlarmClockBeep)
 	{
 		timer_tick->setInterval(BEEP_INTERVAL);
 	}
@@ -265,9 +266,22 @@ void AlarmClock::startRinging()
 
 		timer_tick->setInterval(SOUND_DIFFUSION_INTERVAL);
 	}
+
 	timer_tick->start();
 	timer_postpone->stop();
 	emit ringingChanged();
+
+	if (actual_type == AlarmClockSoundSystem)
+	{
+		SourceMedia *media = qobject_cast<SourceMedia *>(source);
+
+		if (media)
+		{
+			connect(media, SIGNAL(firstMediaContentStatus(bool)),
+				this, SLOT(mediaSourcePlaybackStatus(bool)));
+			media->playFirstMediaContent();
+		}
+	}
 }
 
 void AlarmClock::stop()
@@ -281,7 +295,7 @@ void AlarmClock::postpone()
 {
 	if (!isRinging())
 		return;
-	if (alarm_type == AlarmClockSoundSystem)
+	if (actual_type == AlarmClockSoundSystem)
 		soundDiffusionStop();
 
 	timer_tick->stop();
@@ -430,7 +444,7 @@ void AlarmClock::setTriggerOnWeekdays(bool new_value, int day_mask)
 
 void AlarmClock::alarmTick()
 {
-	if (alarm_type == AlarmClockBeep)
+	if (actual_type == AlarmClockBeep)
 	{
 		if (tick_count == (ALARM_TIME * 1000) / BEEP_INTERVAL - 1)
 			stop();
@@ -466,6 +480,24 @@ void AlarmClock::alarmTick()
 	}
 
 	++tick_count;
+}
+
+void AlarmClock::mediaSourcePlaybackStatus(bool status)
+{
+	disconnect(source, SIGNAL(firstMediaContentStatus(bool)),
+		   this, SLOT(mediaSourcePlaybackStatus(bool)));
+
+	if (!isRinging())
+		return;
+
+	if (!status)
+	{
+		qDebug("Unable to start local source, fallback to beep");
+
+		actual_type = AlarmClockBeep;
+		soundDiffusionStop();
+		startRinging();
+	}
 }
 
 void AlarmClock::soundDiffusionStop()

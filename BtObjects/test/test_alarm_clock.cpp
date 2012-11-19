@@ -61,6 +61,8 @@ void TestAlarmClockBeep::testPostpone()
 
 void TestAlarmClockBeep::testRestart()
 {
+	obj->actual_type = AlarmClock::AlarmClockBeep;
+
 	obj->timer_postpone->start();
 	obj->start_time = QTime::currentTime().addSecs(-10);
 	obj->tick_count = 20;
@@ -74,6 +76,8 @@ void TestAlarmClockBeep::testRestart()
 
 void TestAlarmClockBeep::testRestartExpired()
 {
+	obj->actual_type = AlarmClock::AlarmClockBeep;
+
 	obj->timer_postpone->start();
 	obj->start_time = QTime::currentTime().addSecs(-4000);
 	obj->tick_count = 20;
@@ -88,6 +92,7 @@ void TestAlarmClockBeep::testFirstTick()
 {
 	ObjectTester t(obj, SIGNAL(ringMe(AlarmClock*)));
 
+	obj->actual_type = AlarmClock::AlarmClockBeep;
 	obj->tick_count = 0;
 	obj->alarmTick();
 
@@ -98,6 +103,7 @@ void TestAlarmClockBeep::testTick()
 {
 	ObjectTester t(obj, SIGNAL(ringMe(AlarmClock*)));
 
+	obj->actual_type = AlarmClock::AlarmClockBeep;
 	obj->tick_count = 10;
 	obj->alarmTick();
 
@@ -108,6 +114,7 @@ void TestAlarmClockBeep::testLastTick()
 {
 	ObjectTester t(obj, SIGNAL(ringMe(AlarmClock*)));
 
+	obj->actual_type = AlarmClock::AlarmClockBeep;
 	obj->tick_count = 23;
 	obj->alarmTick();
 
@@ -193,6 +200,8 @@ void TestAlarmClockSoundDiffusion::testPostpone()
 
 void TestAlarmClockSoundDiffusion::testRestart()
 {
+	obj->actual_type = AlarmClock::AlarmClockSoundSystem;
+
 	obj->timer_postpone->start();
 	obj->start_time = QTime::currentTime().addSecs(-10);
 	obj->tick_count = 20;
@@ -206,6 +215,8 @@ void TestAlarmClockSoundDiffusion::testRestart()
 
 void TestAlarmClockSoundDiffusion::testRestartExpired()
 {
+	obj->actual_type = AlarmClock::AlarmClockSoundSystem;
+
 	obj->timer_postpone->start();
 	obj->start_time = QTime::currentTime().addSecs(-4000);
 	obj->tick_count = 20;
@@ -218,6 +229,7 @@ void TestAlarmClockSoundDiffusion::testRestartExpired()
 
 void TestAlarmClockSoundDiffusion::testFirstTick()
 {
+	obj->actual_type = AlarmClock::AlarmClockSoundSystem;
 	obj->tick_count = 0;
 	obj->alarmTick();
 
@@ -231,6 +243,7 @@ void TestAlarmClockSoundDiffusion::testFirstTick()
 
 void TestAlarmClockSoundDiffusion::testTick()
 {
+	obj->actual_type = AlarmClock::AlarmClockSoundSystem;
 	obj->tick_count = 10;
 	obj->alarmTick();
 
@@ -241,6 +254,7 @@ void TestAlarmClockSoundDiffusion::testTick()
 
 void TestAlarmClockSoundDiffusion::testLastTick()
 {
+	obj->actual_type = AlarmClock::AlarmClockSoundSystem;
 	obj->tick_count = 39;
 	obj->alarmTick();
 

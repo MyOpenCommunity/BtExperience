@@ -167,6 +167,7 @@ private slots:
 	void triggersIfHasTo();
 	void alarmTick();
 	void restart();
+	void mediaSourcePlaybackStatus(bool status);
 
 private:
 	void start();
@@ -175,7 +176,7 @@ private:
 	void soundDiffusionStop();
 	void soundDiffusionSetVolume();
 
-	AlarmClockType alarm_type;
+	AlarmClockType alarm_type, actual_type;
 	QString description;
 	bool enabled;
 	int days, hour, minute;
