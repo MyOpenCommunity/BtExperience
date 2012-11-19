@@ -438,6 +438,7 @@ SourceMedia::SourceMedia(const QString &name, SourceMultiMedia *s, SourceObjectT
 	SourceObject(name, s, t)
 {
 	source = s;
+	source->addMediaSource(this);
 }
 
 QObject *SourceMedia::getMediaPlayer() const
@@ -640,8 +641,6 @@ void SourceUpnpMedia::startUpnpPlay(UPnPListModel *model, int current_index, int
 }
 
 
-
-
 SourceBase::SourceBase(SourceDevice *d, SourceType t)
 {
 	dev = d;
@@ -773,6 +772,7 @@ SourceMultiMedia::SourceMultiMedia(VirtualSourceDevice *d) :
 {
 	dev = d;
 	player = new AudioVideoPlayer(this);
+	source_index = -1;
 
 	MultiMediaPlayer *p = static_cast<MultiMediaPlayer *>(player->getMediaPlayer());
 
@@ -783,6 +783,12 @@ SourceMultiMedia::SourceMultiMedia(VirtualSourceDevice *d) :
 #endif
 }
 
+void SourceMultiMedia::addMediaSource(SourceMedia *source)
+{
+	sources.append(source);
+	connect(source, SIGNAL(firstMediaContentStatus(bool)), this, SLOT(firstMediaContentStatus(bool)));
+}
+
 AudioVideoPlayer *SourceMultiMedia::getAudioVideoPlayer() const
 {
 	return player;
@@ -790,10 +796,46 @@ AudioVideoPlayer *SourceMultiMedia::getAudioVideoPlayer() const
 
 void SourceMultiMedia::startLocalPlayback(bool force)
 {
-	// TODO
-	// - resume player if paused
-	// - if force is true and player is stopped, search for a media content to play
-	qWarning() << "SourceMultiMedia::startLocalPlayback";
+	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(player->getMediaPlayer());
+
+	if (media_player->getPlayerState() == MultiMediaPlayer::Playing)
+		return;
+
+	if (media_player->getPlayerState() != MultiMediaPlayer::Stopped)
+	{
+		player->resume();
+		return;
+	}
+
+	if (!force || source_index != -1)
+		return;
+
+	nextSource();
+}
+
+void SourceMultiMedia::nextSource()
+{
+	source_index += 1;
+
+	if (source_index >= sources.count())
+	{
+		qDebug() << "No local media content found";
+		source_index = -1;
+		return;
+	}
+
+	SourceMedia *source = sources[source_index];
+
+	qDebug() << "Trying media source" << source->getName();
+	source->playFirstMediaContent();
+}
+
+void SourceMultiMedia::firstMediaContentStatus(bool status)
+{
+	if (!status)
+		nextSource();
+	else
+		setSourceObject(sources[source_index]);
 }
 
 void SourceMultiMedia::valueReceived(const DeviceValues &values_list)

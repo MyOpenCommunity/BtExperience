@@ -483,14 +483,22 @@ public:
 
 	AudioVideoPlayer *getAudioVideoPlayer() const;
 
+	void addMediaSource(SourceMedia *source);
+
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
+private slots:
+	void firstMediaContentStatus(bool status);
+
 private:
 	void startLocalPlayback(bool force);
+	void nextSource();
 
 	VirtualSourceDevice *dev;
 	AudioVideoPlayer *player;
+	QList<SourceMedia *> sources;
+	int source_index;
 };
 
 
