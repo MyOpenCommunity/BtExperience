@@ -10,6 +10,11 @@ MenuColumn {
     width: 212
     height: Math.max(1, 50 * itemList.count)
 
+    // needed for menu navigation
+    function targetsKnown() {
+        return ["Systems", "Profiles", "AlarmClock"]
+    }
+
     // redefined to implement menu navigation
     function openMenu(navigationTarget, navigationData) {
         var m = undefined

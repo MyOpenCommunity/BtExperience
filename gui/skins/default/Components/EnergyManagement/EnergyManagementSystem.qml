@@ -9,6 +9,11 @@ MenuColumn {
     width: 212
     height: 150
 
+    // needed for menu navigation
+    function targetsKnown() {
+        return ["Supervision"]
+    }
+
     // redefined to implement menu navigation
     function openMenu(navigationTarget, navigationData) {
         if (navigationTarget === "Supervision") {

@@ -9,6 +9,11 @@ MenuColumn {
     width: 212
     height: Math.max(1, 50 * itemList.count)
 
+    // needed for menu navigation
+    function targetsKnown() {
+        return ["VDE"]
+    }
+
     // redefined to implement menu navigation
     function openMenu(navigationTarget, navigationData) {
         if (navigationTarget === "VDE") {

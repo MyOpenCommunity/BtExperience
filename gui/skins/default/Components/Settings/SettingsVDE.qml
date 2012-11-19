@@ -6,6 +6,11 @@ import "../../js/navigationconstants.js" as NavigationConstants
 MenuColumn {
     id: column
 
+    // needed for menu navigation
+    function targetsKnown() {
+        return ["HandsFree", "AutoOpen", "VdeMute"]
+    }
+
     // redefined to implement menu navigation
     function openMenu(navigationTarget, navigationData) {
         if (navigationTarget === "HandsFree") {

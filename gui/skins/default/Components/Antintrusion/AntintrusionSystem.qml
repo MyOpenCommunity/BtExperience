@@ -33,6 +33,11 @@ MenuColumn {
         onCurrentScenarioChanged: privateProps.setScenarioDescription()
     }
 
+    // needed for menu navigation
+    function targetsKnown() {
+        return ["AlarmLog"]
+    }
+
     // redefined to implement menu navigation
     function openMenu(navigationTarget, navigationData) {
         if (navigationTarget === "AlarmLog") {

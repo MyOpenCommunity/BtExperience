@@ -39,7 +39,7 @@ Page {
             itemChild = item.child
         }
 
-        systemPage.rootObject.navigate()
+        item.navigate()
     }
 
     function backButtonClicked() {

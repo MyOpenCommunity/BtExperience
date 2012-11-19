@@ -22,10 +22,25 @@ Item {
         column.closeItem(menuLevel + 1)
     }
 
+    function targetsKnown() {
+        return []
+    }
+
     function isTargetKnown() {
-        if (Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel) === undefined)
+        var navTarget = Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel)
+
+        // no target to navigate to, target is unknown
+        if (navTarget === undefined)
             return false
-        return true
+
+        // checks if navigationTarget is known or not
+        var targets = column.targetsKnown()
+        for (var i = 0; i < targets.length; ++i)
+            if (targets[i] === navTarget)
+                return true
+
+        // it is not known
+        return false
     }
 
     // checks if the need for opening a menu arose
@@ -34,18 +49,22 @@ Item {
         var navigationTarget = Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel)
 
         if (navigationTarget === undefined)
-            return
+            return true
 
         var openMenuResult = openMenu(navigationTarget, pageObject.navigationData)
         if (openMenuResult === NavigationConstants.NAVIGATION_IN_PROGRESS)
-            return // further processing needed
+            return true // further processing needed
 
-        if (openMenuResult < 0) // processing error
+        if (openMenuResult < 0) {
             console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + " unknown. Navigation data: " + pageObject.navigationData + ". Error code: " + openMenuResult)
+            return false
+        }
 
         // resets navigation
         column.pageObject.navigationTarget = 0
         column.pageObject.navigationData = undefined
+
+        return true
     }
 
     // hook to open a menu; receives a string to identify menu to be opened

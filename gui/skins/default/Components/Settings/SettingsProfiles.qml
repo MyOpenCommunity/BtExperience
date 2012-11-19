@@ -15,6 +15,11 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
+    // needed for menu navigation
+    function targetsKnown() {
+        return ["Profile"]
+    }
+
     // redefined to implement menu navigation
     function openMenu(navigationTarget, navigationData) {
         if (navigationTarget === "Profile") {
