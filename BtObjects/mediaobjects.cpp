@@ -9,6 +9,10 @@
 
 #include <QDebug>
 #include <QStringList>
+#include <QFutureWatcher>
+#include <QtConcurrentRun>
+#include <QFileInfo>
+#include <QDir>
 
 #define REQUEST_FREQUENCY_TIME 1000
 
@@ -27,6 +31,27 @@ namespace
 		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Full Bass"),
 		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Full Treble"),
 	};
+
+	template<class R>
+	R makeAbsolute(QFileInfoList files)
+	{
+		R result;
+
+		foreach (const QFileInfo &fi, files)
+			result.append(fi.absoluteFilePath());
+
+		return result;
+	}
+
+	QVariantList makeModelPath(QString path)
+	{
+		QVariantList res;
+
+		foreach (QString dir, path.split("/", QString::SkipEmptyParts))
+			res << dir;
+
+		return res;
+	}
 }
 
 #define standard_presets_size int(sizeof(standard_presets) / sizeof(standard_presets[0]))
@@ -487,6 +512,7 @@ SourceLocalMedia::SourceLocalMedia(const QString &name, MountPoint *_mount_point
 {
 	mount_point = _mount_point;
 	model = new DirectoryListModel(this);
+	terminate = 0;
 }
 
 void SourceLocalMedia::startPlay(DirectoryListModel *_model, int index, int total_files)
@@ -511,6 +537,95 @@ QVariantList SourceLocalMedia::getRootPath() const
 MountPoint *SourceLocalMedia::getMountPoint() const
 {
 	return mount_point;
+}
+
+void SourceLocalMedia::pathScanComplete()
+{
+	qDebug() << "USB/SD search complete";
+
+	QFutureWatcher<AsyncRes> *watch = static_cast<QFutureWatcher<AsyncRes> *>(sender());
+	DirectoryListModel *files = watch->result().first;
+	bool *terminated = watch->result().second;
+
+	if (!*terminated && files->getCount())
+	{
+		qDebug() << "Playing from USB/SD";
+		startPlay(files, 0, files->getCount());
+	}
+
+	files->deleteLater();
+	delete terminated;
+	watch->deleteLater();
+
+	emit firstMediaContentStatus(!*terminated);
+}
+
+void SourceLocalMedia::playFirstMediaContent()
+{
+	if (!mount_point->getMounted() || mount_point->getPath().isEmpty())
+	{
+		emit firstMediaContentStatus(false);
+		return;
+	}
+
+	// abort running search (if any)
+	if (terminate)
+		*terminate = true;
+
+	// run the search asynchronously; the termination flag is always deallocated when the search completes
+	// (either by setting *terminate to true or by normal completion); the flag is written at most once to
+	// true from the main thread and only checked from the worker thread
+	terminate = new bool(false);
+	QFuture<AsyncRes> res = QtConcurrent::run(&scanPath, new DirectoryListModel, mount_point->getPath(), terminate);
+	QFutureWatcher<AsyncRes> *watch = new QFutureWatcher<AsyncRes>(this);
+
+	connect(watch, SIGNAL(finished()), this, SLOT(pathScanComplete()));
+
+	watch->setFuture(res);
+}
+
+SourceLocalMedia::AsyncRes SourceLocalMedia::scanPath(DirectoryListModel *model, QString path, bool * volatile terminate)
+{
+	QList<QFileInfo> queue;
+	QDir files, dirs;
+
+	dirs.setFilter(QDir::Dirs|QDir::NoDotAndDotDot);
+	files.setFilter(QDir::Files);
+	files.setNameFilters(getFileFilter(EntryInfo::AUDIO));
+
+	queue << path;
+
+	while (!queue.isEmpty() && !*terminate)
+	{
+		QFileInfo dir = queue.takeFirst();
+
+		// search for files
+		qDebug() << "Scanning" << dir.absoluteFilePath();
+		files.cd(dir.absoluteFilePath());
+
+		// found some files
+		QFileInfoList file_list = files.entryInfoList();
+		if (!file_list.isEmpty())
+		{
+			DirectoryListModel m(0);
+
+			m.setRootPath(makeModelPath(files.absolutePath()));
+
+			DirectoryListModelMemento *s = m.clone();
+			model->restore(s);
+			delete s;
+
+			return qMakePair(model, terminate);
+		}
+
+		// recurse into subdirectories
+		dirs.cd(dir.absoluteFilePath());
+		queue.append(makeAbsolute<QFileInfoList>(dirs.entryInfoList()));
+	}
+
+	*terminate = true;
+
+	return qMakePair(model, terminate);
 }
 
 

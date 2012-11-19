@@ -345,7 +345,17 @@ public:
 	/// Start media playback at the given index
 	Q_INVOKABLE void startPlay(DirectoryListModel *model, int index, int total_files);
 
+	virtual void playFirstMediaContent();
+
+private slots:
+	void pathScanComplete();
+
 private:
+	typedef QPair<DirectoryListModel *, bool * volatile> AsyncRes;
+
+	static AsyncRes scanPath(DirectoryListModel *model, QString path, bool * volatile terminate);
+
+	bool * volatile terminate;
 	DirectoryListModel *model;
 	MountPoint *mount_point;
 };
