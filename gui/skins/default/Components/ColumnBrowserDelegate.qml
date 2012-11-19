@@ -18,7 +18,7 @@ SvgImage {
         id: privateProps
 
         function getPressedImage() {
-            if (background.preview)
+            if (background.preview && itemObject.fileType !== FileObject.Directory)
                 return itemObject.path
             else if (itemObject.fileType === FileObject.Audio)
                 return "../images/common/ico_audio_P.svg"
@@ -32,7 +32,7 @@ SvgImage {
         }
 
         function getDefaultImage() {
-            if (background.preview)
+            if (background.preview && itemObject.fileType !== FileObject.Directory)
                 return itemObject.path
             else if (itemObject.fileType === FileObject.Audio)
                 return "../images/common/ico_audio.svg"
