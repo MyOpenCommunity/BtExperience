@@ -250,6 +250,7 @@ void GlobalProperties::initAudio()
 	Q_ASSERT_X(bt_global::config, "GlobalProperties::initAudio", "BtObjects plugin not initialized yet");
 
 	video_player = new AudioVideoPlayer(this);
+	video_player->setVolume(audio_state->getVolume(AudioState::LocalPlaybackVolume));
 
 	sound_player = new SoundPlayer(this);
 
@@ -612,6 +613,7 @@ void GlobalProperties::volumeChanged(int state, int volume)
 		setVolume(document, VolumeBeep, volume);
 		break;
 	case AudioState::LocalPlaybackVolume:
+		video_player->setVolume(volume);
 		setVolume(document, VolumeLocalPlayback, volume);
 		break;
 	case AudioState::RingtoneVolume:
