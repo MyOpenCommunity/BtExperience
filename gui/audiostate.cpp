@@ -220,7 +220,8 @@ void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
 {
 	players.append(PlayerInfo(player, MultiMedia));
 
-	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
+	// this assumes audiioOutputState is changed after playerState
+	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 		this, SLOT(checkDirectAudioAccess()));
 }
 
@@ -228,7 +229,8 @@ void AudioState::registerSoundPlayer(MultiMediaPlayer *player)
 {
 	players.append(PlayerInfo(player, SoundEffect));
 
-	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
+	// this assumes audiioOutputState is changed after playerState
+	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 		this, SLOT(checkDirectAudioAccess()));
 }
 
@@ -246,7 +248,8 @@ void AudioState::registerSoundDiffusionPlayer(MultiMediaPlayer *player)
 {
 	players.append(PlayerInfo(player, SoundDiffusion));
 
-	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
+	// this assumes audiioOutputState is changed after playerState
+	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 		this, SLOT(changeSoundDiffusionAccess()));
 }
 
