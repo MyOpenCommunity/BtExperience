@@ -18,23 +18,23 @@
 		</ist>
 	</container>
 	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
-		<ist uii="901" descr="camilla" img="images/home/card-home_bambina.png" >
+                <ist uii="901" descr="camilla" img="images/home/home.jpg" img_card="images/home/card-home_bambina.png" >
 		</ist>
-		<ist uii="902" descr="mattia" img="images/home/card-home_bambino.png" >
+                <ist uii="902" descr="mattia" img="images/home/home.jpg" img_card="images/home/card-home_bambino.png" >
 		</ist>
-		<ist uii="903" descr="papà" img="images/home/card-home_uomo.png" >
+                <ist uii="903" descr="papà" img="images/home/home.jpg" img_card="images/home/card-home_uomo.png" >
 		</ist>
-		<ist uii="904" descr="mamma" img="images/home/card-home_donna.png" >
+                <ist uii="904" descr="mamma" img="images/home/home.jpg" img_card="images/home/card-home_donna.png" >
 		</ist>
-		<ist uii="905" descr="famiglia" img="images/home/card-home_famiglia.png" >
+                <ist uii="905" descr="famiglia" img="images/home/home.jpg" img_card="images/home/card-home_famiglia.png" >
 		</ist>
 	</container>
 
 	<container id="100" >
-                <ist uii="102" descr="living room" img="images/imgsfondo_sfumato.png" img_card="images/rooms/soggiorno.png">
+                <ist uii="102" descr="living room" img="images/imgsfondo_sfumato.png" img_card="images/rooms/soggiorno.jpg">
 			<link uii="6001" x="200" y="100" />
 		</ist>
-                <ist uii="103" descr="bathroom" img="images/imgsfondo_sfumato.png" img_card="images/rooms/bagno.png">
+                <ist uii="103" descr="bathroom" img="images/imgsfondo_sfumato.png" img_card="images/rooms/bagno.jpg">
 			<link uii="6101" x="200" y="100" />
 			<link uii="6204" x="400" y="180" />
 		</ist>

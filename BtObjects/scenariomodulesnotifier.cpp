@@ -11,16 +11,7 @@ ScenarioModulesNotifier::ScenarioModulesNotifier()
 
 	// creates an ObjectModel to select scenario modules objects
 	scenario_modules_model = new ObjectModel(this);
-	QVariantList filters;
-	QVariantMap filter;
-
-	// sets filters to select scenario modules objects
-	filter["objectId"] = ObjectInterface::IdScenarioModule;
-	filters << filter;
-	filter.clear();
-
-	// filters
-	scenario_modules_model->setFilters(filters);
+	scenario_modules_model->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdScenarioModule);
 
 	// connects statusChanged signal of scenario modules objects to our updateRecordingInfo
 	// signal
@@ -35,14 +26,7 @@ ScenarioModulesNotifier::ScenarioModulesNotifier()
 
 	// creates an ObjectModel to select all scenarios
 	scenarios_model = new ObjectModel(this);
-
-	// sets filters to select advanced scenario objects
-	filters.clear();
-	filter["objectId"] = ObjectInterface::IdAdvancedScenario;
-	filters << filter;
-	filter.clear();
-
-	scenarios_model->setFilters(filters);
+	scenarios_model->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdAdvancedScenario);
 
 	for(int i = 0; i < scenarios_model->getCount(); ++i)
 	{

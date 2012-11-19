@@ -4,6 +4,7 @@
 #include "objectinterface.h"
 
 #include <QHash>
+#include <QTime>
 
 
 class MediaDataModel;
@@ -164,9 +165,11 @@ private slots:
 	void checkRequestManagement();
 	void triggersIfHasTo();
 	void alarmTick();
+	void restart();
 
 private:
 	void start();
+	void startRinging();
 	void setTriggerOnWeekdays(bool new_value, int day_mask);
 	void soundDiffusionStop();
 	void soundDiffusionSetVolume();
@@ -176,8 +179,10 @@ private:
 	bool enabled;
 	int days, hour, minute;
 	QTimer *timer_trigger;
-	QTimer *tick;
+	QTimer *timer_tick;
+	QTimer *timer_postpone;
 	int tick_count;
+	QTime start_time;
 
 	// sound diffusion alarm clock
 	Amplifier *amplifier;

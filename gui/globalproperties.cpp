@@ -238,13 +238,8 @@ void GlobalProperties::initAudio()
 	{
 		// find all source objects
 		ObjectModel sources;
-		QVariantList filters;
-		QVariantMap filter;
 
-		filter["objectId"] = ObjectInterface::IdSoundSource;
-		filters << filter;
-
-		sources.setFilters(filters);
+		sources.setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdSoundSource);
 
 		for (int i = 0; i < sources.getCount(); ++i)
 		{
@@ -258,9 +253,19 @@ void GlobalProperties::initAudio()
 			}
 		}
 
-		MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audio_player->getMediaPlayer());
+		if (audio_player)
+		{
+			MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audio_player->getMediaPlayer());
 
-		audio_state->registerSoundDiffusionPlayer(player);
+			audio_state->registerSoundDiffusionPlayer(player);
+		}
+		else
+		{
+			// avoid crashing with wrong configuration
+			qWarning("Touch configured as local source but no local source defined");
+			audio_player = video_player;
+			emit audioPlayerChanged();
+		}
 	}
 	else
 	{

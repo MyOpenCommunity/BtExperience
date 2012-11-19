@@ -21,6 +21,7 @@ private slots:
 	void testFilterObjectId();
 	void testFilterObjectKey();
 	void testComplexFilter();
+	void testMultipleFilter();
 
 private:
 	ObjectInterface *light1, *light2, *light3, *amplifier1, *amplifier2;

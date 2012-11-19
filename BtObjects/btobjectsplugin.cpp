@@ -1412,7 +1412,7 @@ void BtObjectsPlugin::initializeEngine(QDeclarativeEngine *engine, const char *u
 void BtObjectsPlugin::registerTypes(const char *uri)
 {
 	// @uri BtObjects
-	qmlRegisterUncreatableType<ObjectDataModel>(uri, 1, 0, "ObjectListModel", "");
+	qmlRegisterUncreatableType<ObjectDataModel>(uri, 1, 0, "ObjectDataModel", "");
 	qmlRegisterUncreatableType<MediaDataModel>(uri, 1, 0, "MediaDataModel", "");
 	qmlRegisterType<MediaModel>(uri, 1, 0, "MediaModel");
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "ObjectModel");
