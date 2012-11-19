@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
 	ADD_TEST(TestSourceAux);
 	ADD_TEST(TestSourceRadio);
 	ADD_TEST(TestSoundAmbient);
+	ADD_TEST(TestAlarmClockBeep);
 	ADD_TEST(TestAlarmClockSoundDiffusion);
 	ADD_TEST(TestThermalControlUnit4Zones);
 	ADD_TEST(TestThermalControlUnit99Zones);

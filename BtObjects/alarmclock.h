@@ -24,6 +24,7 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &
 */
 class AlarmClock : public ObjectInterface
 {
+	friend class TestAlarmClockBeep;
 	friend class TestAlarmClockSoundDiffusion;
 
 	Q_OBJECT
@@ -166,6 +167,7 @@ private slots:
 	void triggersIfHasTo();
 	void alarmTick();
 	void restart();
+	void mediaSourcePlaybackStatus(bool status);
 
 private:
 	void start();
@@ -174,7 +176,7 @@ private:
 	void soundDiffusionStop();
 	void soundDiffusionSetVolume();
 
-	AlarmClockType alarm_type;
+	AlarmClockType alarm_type, actual_type;
 	QString description;
 	bool enabled;
 	int days, hour, minute;

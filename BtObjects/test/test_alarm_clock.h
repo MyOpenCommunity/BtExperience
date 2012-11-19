@@ -10,6 +10,29 @@ class Amplifier;
 class SourceObject;
 
 
+class TestAlarmClockBeep : public TestBtObject
+{
+	Q_OBJECT
+
+private slots:
+	void init();
+	void cleanup();
+
+	void testStart();
+	void testStop();
+	void testPostpone();
+	void testRestart();
+	void testRestartExpired();
+
+	void testFirstTick();
+	void testTick();
+	void testLastTick();
+
+private:
+	AlarmClock *obj;
+};
+
+
 class TestAlarmClockSoundDiffusion : public TestBtObject
 {
 	Q_OBJECT
@@ -19,8 +42,14 @@ private slots:
 	void cleanup();
 
 	void testStart();
-	void testTick();
 	void testStop();
+	void testPostpone();
+	void testRestart();
+	void testRestartExpired();
+
+	void testFirstTick();
+	void testTick();
+	void testLastTick();
 
 private:
 	AlarmClock *obj;

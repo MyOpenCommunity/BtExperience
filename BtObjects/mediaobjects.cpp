@@ -9,6 +9,10 @@
 
 #include <QDebug>
 #include <QStringList>
+#include <QFutureWatcher>
+#include <QtConcurrentRun>
+#include <QFileInfo>
+#include <QDir>
 
 #define REQUEST_FREQUENCY_TIME 1000
 
@@ -27,6 +31,27 @@ namespace
 		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Full Bass"),
 		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Full Treble"),
 	};
+
+	template<class R>
+	R makeAbsolute(QFileInfoList files)
+	{
+		R result;
+
+		foreach (const QFileInfo &fi, files)
+			result.append(fi.absoluteFilePath());
+
+		return result;
+	}
+
+	QVariantList makeModelPath(QString path)
+	{
+		QVariantList res;
+
+		foreach (QString dir, path.split("/", QString::SkipEmptyParts))
+			res << dir;
+
+		return res;
+	}
 }
 
 #define standard_presets_size int(sizeof(standard_presets) / sizeof(standard_presets[0]))
@@ -413,6 +438,7 @@ SourceMedia::SourceMedia(const QString &name, SourceMultiMedia *s, SourceObjectT
 	SourceObject(name, s, t)
 {
 	source = s;
+	source->addMediaSource(this);
 }
 
 QObject *SourceMedia::getMediaPlayer() const
@@ -449,6 +475,10 @@ void SourceMedia::togglePause()
 	}
 }
 
+void SourceMedia::playFirstMediaContent()
+{
+	emit firstMediaContentStatus(false);
+}
 
 
 SourceIpRadio::SourceIpRadio(const QString &name, SourceMultiMedia *s) :
@@ -461,12 +491,29 @@ void SourceIpRadio::startPlay(QList<QVariant> urls, int index, int total_files)
 	source->getAudioVideoPlayer()->generatePlaylistWebRadio(urls, index, total_files);
 }
 
+void SourceIpRadio::playFirstMediaContent()
+{
+	ObjectModel ip_radios;
+	QList<QVariant> urls;
+
+	ip_radios.setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdIpRadio);
+
+	for (int i = 0; i < ip_radios.getCount(); ++i)
+		urls.append(static_cast< ::IpRadio *>(ip_radios.getObject(i))->getPath());
+
+	if (urls.count())
+		startPlay(urls, 0, urls.count());
+
+	emit firstMediaContentStatus(urls.count() != 0);
+}
+
 
 SourceLocalMedia::SourceLocalMedia(const QString &name, MountPoint *_mount_point, SourceMultiMedia *s, SourceObjectType t) :
 	SourceMedia(name, s, t)
 {
 	mount_point = _mount_point;
 	model = new DirectoryListModel(this);
+	terminate = 0;
 }
 
 void SourceLocalMedia::startPlay(DirectoryListModel *_model, int index, int total_files)
@@ -493,6 +540,95 @@ MountPoint *SourceLocalMedia::getMountPoint() const
 	return mount_point;
 }
 
+void SourceLocalMedia::pathScanComplete()
+{
+	qDebug() << "USB/SD search complete";
+
+	QFutureWatcher<AsyncRes> *watch = static_cast<QFutureWatcher<AsyncRes> *>(sender());
+	DirectoryListModel *files = watch->result().first;
+	bool *terminated = watch->result().second;
+
+	if (!*terminated && files->getCount())
+	{
+		qDebug() << "Playing from USB/SD";
+		startPlay(files, 0, files->getCount());
+	}
+
+	files->deleteLater();
+	delete terminated;
+	watch->deleteLater();
+
+	emit firstMediaContentStatus(!*terminated);
+}
+
+void SourceLocalMedia::playFirstMediaContent()
+{
+	if (!mount_point->getMounted() || mount_point->getPath().isEmpty())
+	{
+		emit firstMediaContentStatus(false);
+		return;
+	}
+
+	// abort running search (if any)
+	if (terminate)
+		*terminate = true;
+
+	// run the search asynchronously; the termination flag is always deallocated when the search completes
+	// (either by setting *terminate to true or by normal completion); the flag is written at most once to
+	// true from the main thread and only checked from the worker thread
+	terminate = new bool(false);
+	QFuture<AsyncRes> res = QtConcurrent::run(&scanPath, new DirectoryListModel, mount_point->getPath(), terminate);
+	QFutureWatcher<AsyncRes> *watch = new QFutureWatcher<AsyncRes>(this);
+
+	connect(watch, SIGNAL(finished()), this, SLOT(pathScanComplete()));
+
+	watch->setFuture(res);
+}
+
+SourceLocalMedia::AsyncRes SourceLocalMedia::scanPath(DirectoryListModel *model, QString path, bool * volatile terminate)
+{
+	QList<QFileInfo> queue;
+	QDir files, dirs;
+
+	dirs.setFilter(QDir::Dirs|QDir::NoDotAndDotDot);
+	files.setFilter(QDir::Files);
+	files.setNameFilters(getFileFilter(EntryInfo::AUDIO));
+
+	queue << path;
+
+	while (!queue.isEmpty() && !*terminate)
+	{
+		QFileInfo dir = queue.takeFirst();
+
+		// search for files
+		qDebug() << "Scanning" << dir.absoluteFilePath();
+		files.cd(dir.absoluteFilePath());
+
+		// found some files
+		QFileInfoList file_list = files.entryInfoList();
+		if (!file_list.isEmpty())
+		{
+			DirectoryListModel m(0);
+
+			m.setRootPath(makeModelPath(files.absolutePath()));
+
+			DirectoryListModelMemento *s = m.clone();
+			model->restore(s);
+			delete s;
+
+			return qMakePair(model, terminate);
+		}
+
+		// recurse into subdirectories
+		dirs.cd(dir.absoluteFilePath());
+		queue.append(makeAbsolute<QFileInfoList>(dirs.entryInfoList()));
+	}
+
+	*terminate = true;
+
+	return qMakePair(model, terminate);
+}
+
 
 SourceUpnpMedia::SourceUpnpMedia(const QString &name, SourceMultiMedia *s) :
 	SourceMedia(name, s, Upnp)
@@ -503,8 +639,6 @@ void SourceUpnpMedia::startUpnpPlay(UPnPListModel *model, int current_index, int
 {
 	source->getAudioVideoPlayer()->generatePlaylistUPnP(model, current_index, total_files, false);
 }
-
-
 
 
 SourceBase::SourceBase(SourceDevice *d, SourceType t)
@@ -638,6 +772,7 @@ SourceMultiMedia::SourceMultiMedia(VirtualSourceDevice *d) :
 {
 	dev = d;
 	player = new AudioVideoPlayer(this);
+	source_index = -1;
 
 	MultiMediaPlayer *p = static_cast<MultiMediaPlayer *>(player->getMediaPlayer());
 
@@ -648,6 +783,12 @@ SourceMultiMedia::SourceMultiMedia(VirtualSourceDevice *d) :
 #endif
 }
 
+void SourceMultiMedia::addMediaSource(SourceMedia *source)
+{
+	sources.append(source);
+	connect(source, SIGNAL(firstMediaContentStatus(bool)), this, SLOT(firstMediaContentStatus(bool)));
+}
+
 AudioVideoPlayer *SourceMultiMedia::getAudioVideoPlayer() const
 {
 	return player;
@@ -655,10 +796,46 @@ AudioVideoPlayer *SourceMultiMedia::getAudioVideoPlayer() const
 
 void SourceMultiMedia::startLocalPlayback(bool force)
 {
-	// TODO
-	// - resume player if paused
-	// - if force is true and player is stopped, search for a media content to play
-	qWarning() << "SourceMultiMedia::startLocalPlayback";
+	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(player->getMediaPlayer());
+
+	if (media_player->getPlayerState() == MultiMediaPlayer::Playing)
+		return;
+
+	if (media_player->getPlayerState() != MultiMediaPlayer::Stopped)
+	{
+		player->resume();
+		return;
+	}
+
+	if (!force || source_index != -1)
+		return;
+
+	nextSource();
+}
+
+void SourceMultiMedia::nextSource()
+{
+	source_index += 1;
+
+	if (source_index >= sources.count())
+	{
+		qDebug() << "No local media content found";
+		source_index = -1;
+		return;
+	}
+
+	SourceMedia *source = sources[source_index];
+
+	qDebug() << "Trying media source" << source->getName();
+	source->playFirstMediaContent();
+}
+
+void SourceMultiMedia::firstMediaContentStatus(bool status)
+{
+	if (!status)
+		nextSource();
+	else
+		setSourceObject(sources[source_index]);
 }
 
 void SourceMultiMedia::valueReceived(const DeviceValues &values_list)

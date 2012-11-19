@@ -12,6 +12,22 @@ namespace
 	const char *audio_files[] = {"m3u", "mp3", "wav", "ogg", "wma", 0};
 	const char *video_files[] = {"mpg", "avi", "mp4", 0};
 	const char *image_files[] = {"png", "gif", "jpg", "jpeg", 0};
+
+	// transforms an extension to a pattern (es. "wav" -> "*.[wW][aA][vV]")
+	void addFilters(QStringList &filters, const char **extensions, int size)
+	{
+		for (int i = 0; extensions[i] != 0; ++i)
+		{
+			QString pattern = "*.";
+
+			for (const char *c = extensions[i]; *c; ++c)
+			{
+				QChar letter(*c);
+				pattern += QString("[%1%2]").arg(letter).arg(letter.toUpper());
+			}
+			filters.append(pattern);
+		}
+	}
 }
 
 
@@ -62,6 +78,40 @@ QStringList getFileExtensions(EntryInfo::Type type)
 	}
 
 	return exts;
+}
+
+QStringList getFileFilter(EntryInfo::Type type)
+{
+	QStringList filters;
+	const char **files = 0;
+
+	switch (type)
+	{
+	case EntryInfo::UNKNOWN:
+	case EntryInfo::DIRECTORY:
+		break;
+	case EntryInfo::AUDIO:
+		files = audio_files;
+		break;
+	case EntryInfo::VIDEO:
+		files = video_files;
+		break;
+	case EntryInfo::IMAGE:
+		files = image_files;
+		break;
+#ifdef BUILD_EXAMPLES
+	case EntryInfo::PDF:
+		files = pdf_files;
+		break;
+#endif
+	default:
+		Q_ASSERT_X(false, "getFileFilter", qPrintable(QString("type %1 not handled").arg(type)));
+	}
+
+	if (files)
+		addFilters(filters, files, ARRAY_SIZE(files));
+
+	return filters;
 }
 
 

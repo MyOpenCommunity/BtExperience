@@ -263,12 +263,26 @@ public:
 	QObject *getMediaPlayer() const;
 	QObject *getAudioVideoPlayer() const;
 
+	/*!
+		\brief Play the first media content found on the source
+
+		Searches for the first media element available for this source and
+		starts playing it.
+
+		Emits \ref firstMediaContentStatus() to signal completion.  The search might be either
+		sinchronous or asynchronous (depending on the source).
+	*/
+	virtual void playFirstMediaContent();
+
 public slots:
 	/// Go to next track
 	virtual void previousTrack();
 
 	/// Go to previous track
 	virtual void nextTrack();
+
+signals:
+	void firstMediaContentStatus(bool success);
 
 protected:
 	SourceMedia(const QString &name, SourceMultiMedia *s, SourceObjectType t);
@@ -305,6 +319,8 @@ public:
 
 	/// Start media playback at the given index
 	Q_INVOKABLE void startPlay(QList<QVariant> urls, int index, int total_files);
+
+	virtual void playFirstMediaContent();
 };
 
 
@@ -329,7 +345,17 @@ public:
 	/// Start media playback at the given index
 	Q_INVOKABLE void startPlay(DirectoryListModel *model, int index, int total_files);
 
+	virtual void playFirstMediaContent();
+
+private slots:
+	void pathScanComplete();
+
 private:
+	typedef QPair<DirectoryListModel *, bool * volatile> AsyncRes;
+
+	static AsyncRes scanPath(DirectoryListModel *model, QString path, bool * volatile terminate);
+
+	bool * volatile terminate;
 	DirectoryListModel *model;
 	MountPoint *mount_point;
 };
@@ -457,14 +483,22 @@ public:
 
 	AudioVideoPlayer *getAudioVideoPlayer() const;
 
+	void addMediaSource(SourceMedia *source);
+
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
+private slots:
+	void firstMediaContentStatus(bool status);
+
 private:
 	void startLocalPlayback(bool force);
+	void nextSource();
 
 	VirtualSourceDevice *dev;
 	AudioVideoPlayer *player;
+	QList<SourceMedia *> sources;
+	int source_index;
 };
 
 
