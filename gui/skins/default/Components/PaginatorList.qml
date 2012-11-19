@@ -34,13 +34,17 @@ Item {
     function getIndexesInPaginator(absIndex) {
         // some pages (like AddQuicklink.qml) have a variable number of elements
         // per page, so a simple division doesn't cut it; we must use computePageRange
-        for (var p = 1; p <= totalPages; ++i) {
+        for (var p = 1; p <= totalPages; ++p) {
             var r = computePageRange(p, elementsOnPage)
             if (absIndex >= r[0] && absIndex < r[1])
                 return [p, absIndex - r[0]]
         }
         // in case totalPages is zero returns 0
         return [0, 0]
+    }
+
+    function goToPage(p) {
+        paginator.goToPage(p)
     }
 
     // hook to open a specific delegate (like when clicking on an internalList item)

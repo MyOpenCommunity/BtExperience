@@ -14,8 +14,14 @@ Item {
     // The total number of buttons (numbers + arrows) shown in the paginator element.
     property alias numSlots: privateProps.numSlots
 
+    // useful in dynamic navigation
+    function goToPage(pageNumber) {
+        privateProps.offset += pageNumber - privateProps.currentPage
+        privateProps.currentPage = pageNumber
+        privateProps.updateWindow()
+    }
+
     // Private details
-    //
     QtObject {
         id: privateProps
         // currently selected page
@@ -51,47 +57,43 @@ Item {
                 offset -= 1
         }
 
-        function goToPage(pageNumber) {
-            offset += pageNumber - currentPage
-            currentPage = pageNumber
-        }
-
         function isButtonVisible(index) {
             var lowerPage = currentPage - (offset - 1 - (needScrollLeft() ? 1 : 0))
             var upperPage = currentPage + (numSlots - offset - (needScrollRight() ? 1 : 0))
             return (index >= lowerPage) && (index <= upperPage)
         }
+
+        function updateWindow() {
+            // if totalPages is less than currentPage sets currentPage to totalPages
+            if (privateProps.totalPages < privateProps.currentPage && privateProps.totalPages > 0)
+                privateProps.currentPage = privateProps.totalPages
+
+            // now we need to adjust the offset
+            if (privateProps.totalPages <= privateProps.numSlots) {
+                privateProps.offset = privateProps.currentPage
+                return
+            }
+
+            // computes window center
+            var center = Math.ceil(privateProps.numSlots / 2)
+
+            // checks if left window side is valid, if not adjusts offset
+            if (privateProps.currentPage < center) {
+                // moves window to the right
+                privateProps.offset = privateProps.currentPage
+                return
+            }
+
+            // checks if right window side is valid, if not adjusts offset
+            if (privateProps.currentPage + privateProps.numSlots - center > privateProps.totalPages) {
+                privateProps.offset = privateProps.currentPage + privateProps.numSlots - privateProps.totalPages
+                return
+        }
     }
 
     // Needed when the model changes, eg. in antintrusion the alarms may be
     // removed from the model
-    onTotalPagesChanged: {
-        // if totalPages is less than currentPage sets currentPage to totalPages
-        if (privateProps.totalPages < privateProps.currentPage && privateProps.totalPages > 0)
-            privateProps.currentPage = privateProps.totalPages
-
-        // now we need to adjust the offset
-        if (privateProps.totalPages <= privateProps.numSlots) {
-            privateProps.offset = privateProps.currentPage
-            return
-        }
-
-        // computes window center
-        var center = Math.ceil(privateProps.numSlots / 2)
-
-        // checks if left window side is valid, if not adjusts offset
-        if (privateProps.currentPage < center) {
-            // moves window to the right
-            privateProps.offset = privateProps.currentPage
-            return
-        }
-
-        // checks if right window side is valid, if not adjusts offset
-        if (privateProps.currentPage + privateProps.numSlots - center > privateProps.totalPages) {
-            privateProps.offset = privateProps.currentPage + privateProps.numSlots - privateProps.totalPages
-            return
-        }
-
+        onTotalPagesChanged: privateProps.updateWindow()
     }
 
     Row {
@@ -136,7 +138,7 @@ Item {
                 pressedImage: "../images/common/button_pager_press.svg"
                 selectedImage: "../images/common/button_pager_select.svg"
                 shadowImage: "../images/common/shadow_button_pager.svg"
-                onClicked: privateProps.goToPage(pageNumber)
+                onClicked: goToPage(pageNumber)
                 status: privateProps.currentPage === pageNumber ? 1 : 0
             }
         }
