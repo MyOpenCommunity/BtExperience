@@ -281,6 +281,8 @@ void AlarmClock::postpone()
 {
 	if (!isRinging())
 		return;
+	if (alarm_type == AlarmClockSoundSystem)
+		soundDiffusionStop();
 
 	timer_tick->stop();
 	timer_postpone->start();
@@ -468,7 +470,8 @@ void AlarmClock::alarmTick()
 
 void AlarmClock::soundDiffusionStop()
 {
-	amplifier->setActive(false);
+	if (amplifier)
+		amplifier->setActive(false);
 }
 
 void AlarmClock::soundDiffusionSetVolume()
