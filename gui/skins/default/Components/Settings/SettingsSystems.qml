@@ -1,5 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
+
 
 MenuColumn {
     id: column
@@ -13,9 +15,9 @@ MenuColumn {
             var m = modelList.get(2)
             itemList.currentIndex = 2
             column.loadColumn(m.component, m.name)
-            return 1
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
-        return -2 // wrong target
+        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     onChildDestroyed: {

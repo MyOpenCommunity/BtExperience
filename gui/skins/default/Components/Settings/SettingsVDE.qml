@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
 
 
 MenuColumn {
@@ -11,21 +12,21 @@ MenuColumn {
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1
             column.loadColumn(handsFreeComponent, handsFreeMenuItem.name)
-            return 0
+            return NavigationConstants.NAVIGATION_FINISHED_OK
         }
         if (navigationTarget === "AutoOpen") {
             if (privateProps.currentIndex !== 2)
                 privateProps.currentIndex = 2
             column.loadColumn(autoOpenComponent, autoOpenMenuItem.name)
-            return 0
+            return NavigationConstants.NAVIGATION_FINISHED_OK
         }
         if (navigationTarget === "VdeMute") {
             if (privateProps.currentIndex !== 3)
                 privateProps.currentIndex = 3
             column.loadColumn(vdeMuteComponent, vdeMuteMenuItem.name)
-            return 0
+            return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        return -2 // wrong target
+        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     QtObject {

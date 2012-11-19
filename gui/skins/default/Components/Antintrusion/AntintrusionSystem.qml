@@ -3,6 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 import "../../js/navigation.js" as Navigation
+import "../../js/navigationconstants.js" as NavigationConstants
 
 
 MenuColumn {
@@ -38,9 +39,9 @@ MenuColumn {
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1
             privateProps.showAlarmLog()
-            return 1
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
-        return -2 // wrong target
+        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     Component.onCompleted: privateProps.setScenarioDescription()

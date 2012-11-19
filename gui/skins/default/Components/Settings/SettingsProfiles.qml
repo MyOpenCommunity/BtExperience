@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
 
 
 MenuColumn {
@@ -19,12 +20,12 @@ MenuColumn {
         if (navigationTarget === "Profile") {
             var absIndex = column.absoluteIndexInModel(profilesModel, navigationData)
             if (absIndex === -1)
-                return -3 // profile not found
+                return NavigationConstants.NAVIGATION_PROFILE_NOT_FOUND
             var indexes = paginator.getIndexesInPaginator(absIndex)
             paginator.openDelegate(indexes)
-            return 0
+            return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        return -2 // wrong target
+        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     PaginatorList {

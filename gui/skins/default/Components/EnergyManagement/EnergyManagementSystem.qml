@@ -1,6 +1,8 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.EnergyManagement 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
+
 
 MenuColumn {
     id: element
@@ -13,9 +15,9 @@ MenuColumn {
             var m = listModel.get(0)
             listView.currentIndex = 0
             element.loadColumn(m.component, m.name)
-            return 0
+            return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        return -2 // wrong target
+        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     onChildDestroyed: {

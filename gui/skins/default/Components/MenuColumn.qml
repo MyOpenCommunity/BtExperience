@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "../js/navigation.js" as Navigation
+import "../js/navigationconstants.js" as NavigationConstants
 
 
 Item {
@@ -36,7 +37,7 @@ Item {
             return
 
         var openMenuResult = openMenu(navigationTarget, pageObject.navigationData)
-        if (openMenuResult === 1)
+        if (openMenuResult === NavigationConstants.NAVIGATION_IN_PROGRESS)
             return // further processing needed
 
         if (openMenuResult < 0) // processing error
@@ -52,7 +53,7 @@ Item {
     // case of errors
     // see navigation.js for further details
     function openMenu(navigationTarget, navigationData) {
-        return -1 // by default returns generic error
+        return NavigationConstants.NAVIGATION_GENERIC_ERROR
     }
 
     // helper function to retrieve navigationData absolute index inside a model

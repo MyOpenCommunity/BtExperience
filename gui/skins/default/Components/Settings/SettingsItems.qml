@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.Settings 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
 
 
 MenuColumn {
@@ -16,21 +17,21 @@ MenuColumn {
             m = modelList.get(4)
             itemList.currentIndex = 4
             column.loadColumn(nameToComponent(m.component), m.name)
-            return 1
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
         else if (navigationTarget === "Profiles") {
             m = modelList.get(2)
             itemList.currentIndex = 2
             column.loadColumn(nameToComponent(m.component), m.name)
-            return 1
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
         else if (navigationTarget === "AlarmClock") {
             m = modelList.get(5)
             itemList.currentIndex = 5
             column.loadColumn(nameToComponent(m.component), m.name)
-            return 0
+            return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        return -2 // wrong target
+        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     onChildDestroyed: {
