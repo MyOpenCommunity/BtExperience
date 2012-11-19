@@ -176,7 +176,11 @@ void AudioState::setVolume(Volume state, int volume)
 	Q_ASSERT_X(volume >= VOLUME_MIN && volume <= VOLUME_MAX, "AudioState::setVolume",
 		qPrintable(QString("Volume value %1 out of range for volume %2!").arg(volume).arg(state)));
 
+	if (volumes[state] == volume)
+		return;
+
 	volumes[state] = volume;
+	emit volumeChanged(state, volume);
 	if (state == current_volume)
 		setHardwareVolume(current_volume, volume);
 }
