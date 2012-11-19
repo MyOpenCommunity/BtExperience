@@ -147,6 +147,7 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	minute = _minute;
 	enabled = false; // starting from a well known state
 	source = 0;
+	amplifier = 0;
 	volume = 0;
 	tick_count = 0;
 	timer_tick = new QTimer(this);
