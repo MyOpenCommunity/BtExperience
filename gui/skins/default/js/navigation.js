@@ -61,7 +61,7 @@ function _init(paths) {
     paths[VDE_MUTE] = ["Systems", "VDE", "VdeMute"]
     paths[SUPERVISION] = ["Supervision"]
     paths[ALARM_CLOCKS] = ["AlarmClock"]
-    paths[PROFILE] = ["Profiles"]
+    paths[PROFILE] = ["Profiles", "Profile"]
 }
 
 // returns a string indicating where to navigate

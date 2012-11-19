@@ -307,7 +307,7 @@ Page {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.PROFILE})
+                        onClicked: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.PROFILE, navigationData: profilePage.profile})
                     }
 
                     UbuntuLightText {

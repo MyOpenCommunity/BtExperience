@@ -55,6 +55,15 @@ Item {
         return -1 // by default returns generic error
     }
 
+    // helper function to retrieve navigationData absolute index inside a model
+    function absoluteIndexInModel(model, navigationData) {
+        for (var i = 0; i < model.count; ++i) {
+            if (model.getObject(i) === navigationData)
+                return i
+        }
+        return -1
+    }
+
     // The signals captured from the MenuContainer to create/close child or the element
     // itself.
     signal closeItem(int menuLevel)

@@ -22,7 +22,7 @@ MenuColumn {
             m = modelList.get(2)
             itemList.currentIndex = 2
             column.loadColumn(nameToComponent(m.component), m.name)
-            return 0
+            return 1
         }
         else if (navigationTarget === "AlarmClock") {
             m = modelList.get(5)
