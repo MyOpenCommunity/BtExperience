@@ -449,6 +449,10 @@ void SourceMedia::togglePause()
 	}
 }
 
+void SourceMedia::playFirstMediaContent()
+{
+	emit firstMediaContentStatus(false);
+}
 
 
 SourceIpRadio::SourceIpRadio(const QString &name, SourceMultiMedia *s) :

@@ -263,12 +263,26 @@ public:
 	QObject *getMediaPlayer() const;
 	QObject *getAudioVideoPlayer() const;
 
+	/*!
+		\brief Play the first media content found on the source
+
+		Searches for the first media element available for this source and
+		starts playing it.
+
+		Emits \ref firstMediaContentStatus() to signal completion.  The search might be either
+		sinchronous or asynchronous (depending on the source).
+	*/
+	virtual void playFirstMediaContent();
+
 public slots:
 	/// Go to next track
 	virtual void previousTrack();
 
 	/// Go to previous track
 	virtual void nextTrack();
+
+signals:
+	void firstMediaContentStatus(bool success);
 
 protected:
 	SourceMedia(const QString &name, SourceMultiMedia *s, SourceObjectType t);
