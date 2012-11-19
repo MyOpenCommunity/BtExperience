@@ -294,6 +294,11 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	current_volume = volume_map[new_state + 1];
 	current_state = new_state;
+
+	// restore volume level
+	if (current_volume != InvalidVolume)
+		setHardwareVolume(current_volume, volumes[current_volume]);
+
 	emit stateChanged(old_state, new_state);
 
 	if (new_state == LocalPlayback || new_state == LocalPlaybackMute)
