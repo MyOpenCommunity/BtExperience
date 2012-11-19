@@ -231,6 +231,8 @@ void GlobalProperties::initAudio()
 
 	connect(settings, SIGNAL(beepChanged()),
 		this, SLOT(beepChanged()));
+	if (settings->getBeep())
+		audio_state->enableState(AudioState::Beep);
 
 	bool sound_diffusion_enabled = !(*bt_global::config)[SOURCE_ADDRESS].isEmpty();
 
