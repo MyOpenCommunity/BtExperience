@@ -3,8 +3,116 @@
 #include "media_device.h"
 #include "mediaobjects.h"
 #include "alarmclock.h"
+#include "objecttester.h"
 
 #include <QtTest>
+
+#define FRAME_TIMEOUT 500
+
+
+void TestAlarmClockBeep::init()
+{
+	obj = new AlarmClock("", true, AlarmClock::AlarmClockBeep, 0, 0, 0);
+	qRegisterMetaType<AlarmClock *>("AlarmClock*");
+}
+
+void TestAlarmClockBeep::cleanup()
+{
+	delete obj;
+}
+
+void TestAlarmClockBeep::testStart()
+{
+	QVERIFY(obj->isEnabled());
+
+	obj->triggersIfHasTo();
+
+	QVERIFY(!obj->isEnabled());
+	QVERIFY(obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+	QCOMPARE(obj->tick_count, 0);
+}
+
+void TestAlarmClockBeep::testStop()
+{
+	obj->triggersIfHasTo();
+
+	QVERIFY(obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+
+	obj->stop();
+
+	QVERIFY(!obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+}
+
+void TestAlarmClockBeep::testPostpone()
+{
+	obj->triggersIfHasTo();
+
+	QVERIFY(obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+
+	obj->postpone();
+
+	QVERIFY(!obj->timer_tick->isActive());
+	QVERIFY(obj->timer_postpone->isActive());
+}
+
+void TestAlarmClockBeep::testRestart()
+{
+	obj->timer_postpone->start();
+	obj->start_time = QTime::currentTime().addSecs(-10);
+	obj->tick_count = 20;
+
+	obj->restart();
+
+	QVERIFY(obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+	QCOMPARE(obj->tick_count, 0);
+}
+
+void TestAlarmClockBeep::testRestartExpired()
+{
+	obj->timer_postpone->start();
+	obj->start_time = QTime::currentTime().addSecs(-4000);
+	obj->tick_count = 20;
+
+	obj->restart();
+
+	QVERIFY(!obj->timer_tick->isActive());
+	QCOMPARE(obj->tick_count, 20);
+}
+
+void TestAlarmClockBeep::testFirstTick()
+{
+	ObjectTester t(obj, SIGNAL(ringMe(AlarmClock*)));
+
+	obj->tick_count = 0;
+	obj->alarmTick();
+
+	t.checkSignals();
+}
+
+void TestAlarmClockBeep::testTick()
+{
+	ObjectTester t(obj, SIGNAL(ringMe(AlarmClock*)));
+
+	obj->tick_count = 10;
+	obj->alarmTick();
+
+	t.checkSignals();
+}
+
+void TestAlarmClockBeep::testLastTick()
+{
+	ObjectTester t(obj, SIGNAL(ringMe(AlarmClock*)));
+
+	obj->tick_count = 23;
+	obj->alarmTick();
+
+	t.checkNoSignals();
+}
 
 
 void TestAlarmClockSoundDiffusion::init()
@@ -21,7 +129,7 @@ void TestAlarmClockSoundDiffusion::init()
 	amplifiers.append(new Amplifier(3, "", AmplifierDevice::createDevice("31")));
 	source = new SourceObject("", new SourceAux(new SourceDevice("3")), SourceObject::Aux);
 
-	obj = new AlarmClock("", false, AlarmClock::AlarmClockBeep, 0, 0, 0);
+	obj = new AlarmClock("", true, AlarmClock::AlarmClockSoundSystem, 0, 0, 0);
 	obj->setVolume(8);
 	obj->setSource(source);
 	obj->setAmplifier(amplifiers[1]);
@@ -35,7 +143,81 @@ void TestAlarmClockSoundDiffusion::cleanup()
 
 void TestAlarmClockSoundDiffusion::testStart()
 {
-	obj->setAlarmType(AlarmClock::AlarmClockSoundSystem);
+	QVERIFY(obj->isEnabled());
+
+	obj->triggersIfHasTo();
+
+	QVERIFY(!obj->isEnabled());
+	QVERIFY(obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+	QCOMPARE(obj->tick_count, 0);
+
+	compareClientCommand(FRAME_TIMEOUT);
+}
+
+void TestAlarmClockSoundDiffusion::testStop()
+{
+	obj->triggersIfHasTo();
+
+	QVERIFY(obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+
+	compareClientCommand(FRAME_TIMEOUT);
+
+	obj->stop();
+
+	QVERIFY(!obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+
+	compareClientCommand(FRAME_TIMEOUT);
+}
+
+void TestAlarmClockSoundDiffusion::testPostpone()
+{
+	obj->triggersIfHasTo();
+
+	QVERIFY(obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+
+	compareClientCommand(FRAME_TIMEOUT);
+
+	obj->postpone();
+
+	amplifier_dev[1]->turnOff();
+
+	QVERIFY(!obj->timer_tick->isActive());
+	QVERIFY(obj->timer_postpone->isActive());
+
+	compareClientCommand(FRAME_TIMEOUT);
+}
+
+void TestAlarmClockSoundDiffusion::testRestart()
+{
+	obj->timer_postpone->start();
+	obj->start_time = QTime::currentTime().addSecs(-10);
+	obj->tick_count = 20;
+
+	obj->restart();
+
+	QVERIFY(obj->timer_tick->isActive());
+	QVERIFY(!obj->timer_postpone->isActive());
+	QCOMPARE(obj->tick_count, 0);
+}
+
+void TestAlarmClockSoundDiffusion::testRestartExpired()
+{
+	obj->timer_postpone->start();
+	obj->start_time = QTime::currentTime().addSecs(-4000);
+	obj->tick_count = 20;
+
+	obj->restart();
+
+	QVERIFY(!obj->timer_tick->isActive());
+	QCOMPARE(obj->tick_count, 20);
+}
+
+void TestAlarmClockSoundDiffusion::testFirstTick()
+{
 	obj->tick_count = 0;
 	obj->alarmTick();
 
@@ -49,7 +231,6 @@ void TestAlarmClockSoundDiffusion::testStart()
 
 void TestAlarmClockSoundDiffusion::testTick()
 {
-	obj->setAlarmType(AlarmClock::AlarmClockSoundSystem);
 	obj->tick_count = 10;
 	obj->alarmTick();
 
@@ -58,9 +239,8 @@ void TestAlarmClockSoundDiffusion::testTick()
 	compareClientCommand();
 }
 
-void TestAlarmClockSoundDiffusion::testStop()
+void TestAlarmClockSoundDiffusion::testLastTick()
 {
-	obj->setAlarmType(AlarmClock::AlarmClockSoundSystem);
 	obj->tick_count = 39;
 	obj->alarmTick();
 

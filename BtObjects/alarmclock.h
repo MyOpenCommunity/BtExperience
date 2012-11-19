@@ -24,6 +24,7 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &
 */
 class AlarmClock : public ObjectInterface
 {
+	friend class TestAlarmClockBeep;
 	friend class TestAlarmClockSoundDiffusion;
 
 	Q_OBJECT
