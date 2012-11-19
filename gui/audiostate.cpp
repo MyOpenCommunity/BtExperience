@@ -47,6 +47,40 @@ namespace
 		AudioState::RingtoneVolume,
 	};
 
+	void setTpaVolume(int volume)
+	{
+		QString scaled_volume = QString::number(volume * 30 / 100);
+
+		smartExecute("amixer", QStringList() << "-c" << "0" << "sset" << "TPA2016D2 Gain" << scaled_volume);
+	}
+
+	void setHpDacVolume(int volume)
+	{
+		// 0 -> 0 (mute)
+		// 1 -> 20
+		// 2-100 -> 21-118
+		QString scaled_volume = QString::number(volume == 0 ? 0 :
+							volume == 1 ? 20 :
+								      (volume - 2) * 97 / 98 + 21);
+
+		smartExecute("amixer", QStringList() << "cset" << "name='HP DAC Playback Volume'" << scaled_volume + "," + scaled_volume);
+	}
+
+	void setHardwareVolume(AudioState::Volume state, int volume)
+	{
+		switch (state)
+		{
+		case AudioState::BeepVolume:
+		case AudioState::LocalPlaybackVolume:
+		case AudioState::RingtoneVolume:
+			setHpDacVolume(volume);
+			break;
+		default:
+			setTpaVolume(volume);
+			break;
+		}
+	}
+
 	QString scs_source_on     = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
 	QString vde_audio_on      = "/usr/local/bin/Hw-D-Audio-VDE_Conversation.sh";
 	QString vde_audio_off     = "/usr/local/bin/Hw-D-Audio-VDE_Conversation_off.sh";
@@ -144,11 +178,7 @@ void AudioState::setVolume(Volume state, int volume)
 
 	volumes[state] = volume;
 	if (state == current_volume)
-	{
-		int scaled_volume = volume * 30 / 100;
-
-		smartExecute("amixer", QStringList() << "-c" << "0" << "sset" << "TPA2016D2 Gain" << QString::number(scaled_volume));
-	}
+		setHardwareVolume(current_volume, volume);
 }
 
 int AudioState::getVolume(Volume state) const
