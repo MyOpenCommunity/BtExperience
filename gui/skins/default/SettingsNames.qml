@@ -61,10 +61,6 @@ QtObject {
         container['BEEP'][true] = qsTr("Enable")
         container['BEEP'][false] = qsTr("Disable")
 
-        container['TEMPERATURE'] = []
-        container['TEMPERATURE'][GuiSettings.Celsius] = qsTr("°C")
-        container['TEMPERATURE'][GuiSettings.Fahrenheit] = qsTr("°F")
-
         container['TIMEZONE'] = []
         container['TIMEZONE'][-2] = qsTr("GMT -2")
         container['TIMEZONE'][-1] = qsTr("GMT -1")

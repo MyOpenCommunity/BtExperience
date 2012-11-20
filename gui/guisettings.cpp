@@ -115,9 +115,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	brightness = 50;
 	contrast = 50;
-	currency = "EUR";
 	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
-	numberSeparator = ".";
 	timezone = 0;
 	skin = Clear;
 	beep = false;
@@ -265,21 +263,6 @@ void GuiSettings::setContrast(int c)
 	emit contrastChanged();
 }
 
-QString GuiSettings::getCurrency() const
-{
-	return currency;
-}
-
-void GuiSettings::setCurrency(QString c)
-{
-	if (currency == c)
-		return;
-
-	// TODO save value somewhere
-	currency = c;
-	emit currencyChanged();
-}
-
 QString GuiSettings::getLanguage() const
 {
 	return language;
@@ -332,36 +315,6 @@ void GuiSettings::setBeep(bool b)
 
 	beep = b;
 	emit beepChanged();
-}
-
-QString GuiSettings::getNumberSeparator() const
-{
-       return numberSeparator;
-}
-
-void GuiSettings::setNumberSeparator(QString s)
-{
-       if (numberSeparator == s)
-	       return;
-
-       // TODO save value somewhere
-       numberSeparator = s;
-       emit numberSeparatorChanged();
-}
-
-GuiSettings::TemperatureUnit GuiSettings::getTemperatureUnit() const
-{
-	return (*bt_global::config)[TEMPERATURE_SCALE].toInt() == CELSIUS ? Celsius : Fahrenheit;
-}
-
-void GuiSettings::setTemperatureUnit(TemperatureUnit u)
-{
-	if (getTemperatureUnit() == u)
-		return;
-
-	(*bt_global::config)[TEMPERATURE_SCALE] = QString::number(u == Celsius ? CELSIUS : FAHRENHEIT);
-	setConfValue("generale/temperature/format", (*bt_global::config)[TEMPERATURE_SCALE]);
-	emit temperatureUnitChanged();
 }
 
 int GuiSettings::getTimezone() const
