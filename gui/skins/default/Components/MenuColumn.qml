@@ -49,22 +49,18 @@ Item {
         var navigationTarget = Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel)
 
         if (navigationTarget === undefined)
-            return true
+            return
 
         var openMenuResult = openMenu(navigationTarget, pageObject.navigationData)
         if (openMenuResult === NavigationConstants.NAVIGATION_IN_PROGRESS)
-            return true // further processing needed
+            return // further processing needed
 
-        if (openMenuResult < 0) {
+        if (openMenuResult < 0)
             console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + " unknown. Navigation data: " + pageObject.navigationData + ". Error code: " + openMenuResult)
-            return false
-        }
 
         // resets navigation
         column.pageObject.navigationTarget = 0
         column.pageObject.navigationData = undefined
-
-        return true
     }
 
     // hook to open a menu; receives a string to identify menu to be opened
