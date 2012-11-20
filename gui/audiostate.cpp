@@ -47,6 +47,40 @@ namespace
 		AudioState::RingtoneVolume,
 	};
 
+	void setTpaVolume(int volume)
+	{
+		QString scaled_volume = QString::number(volume * 30 / 100);
+
+		smartExecute("amixer", QStringList() << "-c" << "0" << "sset" << "TPA2016D2 Gain" << scaled_volume);
+	}
+
+	void setHpDacVolume(int volume)
+	{
+		// 0 -> 0 (mute)
+		// 1 -> 20
+		// 2-100 -> 21-118
+		QString scaled_volume = QString::number(volume == 0 ? 0 :
+							volume == 1 ? 20 :
+								      (volume - 2) * 97 / 98 + 21);
+
+		smartExecute("amixer", QStringList() << "cset" << "name='HP DAC Playback Volume'" << scaled_volume + "," + scaled_volume);
+	}
+
+	void setHardwareVolume(AudioState::Volume state, int volume)
+	{
+		switch (state)
+		{
+		case AudioState::BeepVolume:
+		case AudioState::LocalPlaybackVolume:
+		case AudioState::RingtoneVolume:
+			setHpDacVolume(volume);
+			break;
+		default:
+			setTpaVolume(volume);
+			break;
+		}
+	}
+
 	QString scs_source_on     = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
 	QString vde_audio_on      = "/usr/local/bin/Hw-D-Audio-VDE_Conversation.sh";
 	QString vde_audio_off     = "/usr/local/bin/Hw-D-Audio-VDE_Conversation_off.sh";
@@ -142,13 +176,13 @@ void AudioState::setVolume(Volume state, int volume)
 	Q_ASSERT_X(volume >= VOLUME_MIN && volume <= VOLUME_MAX, "AudioState::setVolume",
 		qPrintable(QString("Volume value %1 out of range for volume %2!").arg(volume).arg(state)));
 
-	volumes[state] = volume;
-	if (state == current_volume)
-	{
-		int scaled_volume = volume * 30 / 100;
+	if (volumes[state] == volume)
+		return;
 
-		smartExecute("amixer", QStringList() << "-c" << "0" << "sset" << "TPA2016D2 Gain" << QString::number(scaled_volume));
-	}
+	volumes[state] = volume;
+	emit volumeChanged(state, volume);
+	if (state == current_volume)
+		setHardwareVolume(current_volume, volume);
 }
 
 int AudioState::getVolume(Volume state) const
@@ -186,7 +220,8 @@ void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
 {
 	players.append(PlayerInfo(player, MultiMedia));
 
-	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
+	// this assumes audiioOutputState is changed after playerState
+	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 		this, SLOT(checkDirectAudioAccess()));
 }
 
@@ -194,7 +229,8 @@ void AudioState::registerSoundPlayer(MultiMediaPlayer *player)
 {
 	players.append(PlayerInfo(player, SoundEffect));
 
-	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
+	// this assumes audiioOutputState is changed after playerState
+	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 		this, SLOT(checkDirectAudioAccess()));
 }
 
@@ -212,7 +248,8 @@ void AudioState::registerSoundDiffusionPlayer(MultiMediaPlayer *player)
 {
 	players.append(PlayerInfo(player, SoundDiffusion));
 
-	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
+	// this assumes audiioOutputState is changed after playerState
+	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 		this, SLOT(changeSoundDiffusionAccess()));
 }
 
@@ -254,6 +291,14 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	case ScsIntercomCall:
 		smartExecute(vde_audio_on);
 		break;
+	case LocalPlaybackMute:
+		setHardwareVolume(LocalPlaybackVolume, 0);
+		break;
+	case Mute:
+		// no need to set both Vde and Intercom volume, since they map to
+		// the same hardware control
+		setHardwareVolume(VdeCallVolume, 0);
+		break;
 	default:
 		qWarning("Add code to enter new state");
 		break;
@@ -264,6 +309,11 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	current_volume = volume_map[new_state + 1];
 	current_state = new_state;
+
+	// restore volume level
+	if (current_volume != InvalidVolume)
+		setHardwareVolume(current_volume, volumes[current_volume]);
+
 	emit stateChanged(old_state, new_state);
 
 	if (new_state == LocalPlayback || new_state == LocalPlaybackMute)

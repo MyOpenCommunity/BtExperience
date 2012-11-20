@@ -86,6 +86,8 @@ signals:
 
 	void directVideoAccessChanged(bool value);
 
+	void volumeChanged(int state, int volume);
+
 private slots:
 	void completeTransition(bool state);
 	void checkDirectAudioAccess();

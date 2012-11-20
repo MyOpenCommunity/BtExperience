@@ -169,6 +169,7 @@ private slots:
 #endif
 	void beepChanged();
 	void ringtoneChanged(int ringtone, int index);
+	void volumeChanged(int state, int volume);
 	void audioStateChangedManagement();
 	void sendDelayedFrames();
 

@@ -55,7 +55,12 @@ namespace
 		RingtoneExternal,
 		RingtoneDoor,
 		RingtoneAlarm,
-		RingtoneMessage
+		RingtoneMessage,
+		VolumeBeep = 14121,
+		VolumeLocalPlayback,
+		VolumeRingtone,
+		VolumeVdeCall,
+		VolumeIntercomCall
 	};
 
 	void setEnableFlag(QDomDocument document, int id, bool enable)
@@ -106,6 +111,32 @@ namespace
 		{
 			v.setIst(ist);
 			result = v.intValue("id_ringtone");
+		}
+		return result;
+	}
+
+	void setVolume(QDomDocument document, int id, int ringtone)
+	{
+		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == id)
+			{
+				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+					setAttribute(ist, "volume", QString::number(ringtone));
+				break;
+			}
+		}
+	}
+
+	int parseVolume(QDomNode xml_node)
+	{
+		int result = -1;
+		XmlObject v(xml_node);
+
+		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+		{
+			v.setIst(ist);
+			result = v.intValue("volume");
 		}
 		return result;
 	}
@@ -207,6 +238,8 @@ GlobalProperties::GlobalProperties(logger *log)
 
 	connect(ringtone_manager, SIGNAL(ringtoneChanged(int,int)),
 		this, SLOT(ringtoneChanged(int,int)));
+	connect(audio_state, SIGNAL(volumeChanged(int,int)),
+		this, SLOT(volumeChanged(int,int)));
 }
 
 void GlobalProperties::initAudio()
@@ -217,6 +250,7 @@ void GlobalProperties::initAudio()
 	Q_ASSERT_X(bt_global::config, "GlobalProperties::initAudio", "BtObjects plugin not initialized yet");
 
 	video_player = new AudioVideoPlayer(this);
+	video_player->setVolume(audio_state->getVolume(AudioState::LocalPlaybackVolume));
 
 	sound_player = new SoundPlayer(this);
 
@@ -231,6 +265,8 @@ void GlobalProperties::initAudio()
 
 	connect(settings, SIGNAL(beepChanged()),
 		this, SLOT(beepChanged()));
+	if (settings->getBeep())
+		audio_state->enableState(AudioState::Beep);
 
 	bool sound_diffusion_enabled = !(*bt_global::config)[SOURCE_ADDRESS].isEmpty();
 
@@ -323,6 +359,21 @@ void GlobalProperties::parseSettings(logger *log)
 			break;
 		case RingtoneMessage:
 			ringtone_manager->setRingtone(RingtoneManager::Message, parseRingtone(xml_obj));
+			break;
+		case VolumeBeep:
+			audio_state->setVolume(AudioState::BeepVolume, parseVolume(xml_obj));
+			break;
+		case VolumeLocalPlayback:
+			audio_state->setVolume(AudioState::LocalPlaybackVolume, parseVolume(xml_obj));
+			break;
+		case VolumeRingtone:
+			audio_state->setVolume(AudioState::RingtoneVolume, parseVolume(xml_obj));
+			break;
+		case VolumeVdeCall:
+			audio_state->setVolume(AudioState::VdeCallVolume, parseVolume(xml_obj));
+			break;
+		case VolumeIntercomCall:
+			audio_state->setVolume(AudioState::IntercomCallVolume, parseVolume(xml_obj));
 			break;
 		}
 	}
@@ -573,6 +624,32 @@ void GlobalProperties::beepChanged()
 		audio_state->disableState(AudioState::Beep);
 
 	setEnableFlag(configurations->getConfiguration(SETTINGS_FILE), Beep, settings->getBeep());
+	configurations->saveConfiguration(SETTINGS_FILE);
+}
+
+void GlobalProperties::volumeChanged(int state, int volume)
+{
+	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
+
+	switch (state)
+	{
+	case AudioState::BeepVolume:
+		setVolume(document, VolumeBeep, volume);
+		break;
+	case AudioState::LocalPlaybackVolume:
+		video_player->setVolume(volume);
+		setVolume(document, VolumeLocalPlayback, volume);
+		break;
+	case AudioState::RingtoneVolume:
+		setVolume(document, VolumeRingtone, volume);
+		break;
+	case AudioState::VdeCallVolume:
+		setVolume(document, VolumeVdeCall, volume);
+		break;
+	case AudioState::IntercomCallVolume:
+		setVolume(document, VolumeIntercomCall, volume);
+		break;
+	}
 	configurations->saveConfiguration(SETTINGS_FILE);
 }
 

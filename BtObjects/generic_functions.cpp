@@ -124,6 +124,7 @@ bool smartExecute(const QString &program, QStringList args)
 	qDebug() << "Executed:" << program << args.join(" ") << "in:" << t.elapsed() << "ms";
 	return ret;
 #else
+	qDebug() << "Executing:" << program << args.join(" ");
 	return QProcess::execute(program, args);
 #endif
 }
