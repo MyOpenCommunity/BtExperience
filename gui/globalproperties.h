@@ -122,6 +122,7 @@ public:
 
 	void setMainWidget(QDeclarativeView *main_widget);
 	Q_INVOKABLE QString takeScreenshot(QRect rect, QString filename);
+	Q_INVOKABLE QString saveInCustomDirIfNeeded(QString filename, QString new_filename, QSize size = QSize());
 
 	Q_INVOKABLE void reboot()
 	{

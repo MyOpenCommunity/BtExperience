@@ -95,7 +95,7 @@ MenuColumn {
                         Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
                 }
                 else {
-                    column.dataModel.image = item.path
+                    column.dataModel.image = global.saveInCustomDirIfNeeded(item.path, "bg_" + column.dataModel.uii, Qt.size(global.mainWidth, global.mainHeight))
                 }
             }
         }
@@ -108,7 +108,7 @@ MenuColumn {
                 if (column.isCard)
                     Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
                 else
-                    column.dataModel.image = item.path
+                    column.dataModel.image = global.saveInCustomDirIfNeeded(item.path, "bg_" + column.dataModel.uii, Qt.size(global.mainWidth, global.mainHeight))
             }
         }
     }

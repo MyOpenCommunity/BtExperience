@@ -528,6 +528,30 @@ QString GlobalProperties::takeScreenshot(QRect rect, QString filename)
 	return fn;
 }
 
+QString GlobalProperties::saveInCustomDirIfNeeded(QString filename, QString new_filename, QSize size)
+{
+	QString result;
+
+#if defined(BT_HARDWARE_X11)
+	QDir().mkdir(EXTRA_11_DIR);
+#endif
+
+	QDir customDir = QDir(EXTRA_11_DIR);
+
+	if (filename.startsWith(customDir.canonicalPath() + "/"))
+		result = filename;
+	else
+		result = customDir.canonicalPath() + "/" + new_filename + "." + filename.split(".").last();
+
+	QImage image = QImage(filename);
+	if (size.isValid())
+		image = image.scaled(size);
+
+	image.save(result);
+
+	return result;
+}
+
 void GlobalProperties::beep()
 {
 	QString path = getExtraPath() + "10/beep.wav";
