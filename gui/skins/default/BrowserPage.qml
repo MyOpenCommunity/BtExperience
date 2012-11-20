@@ -12,6 +12,9 @@ Page {
 
     property int containerId: -1
     property string type: "browser"
+    // TODO: find a way (if any) to put this into paginator and make it work for
+    // real.
+    property variant realModel: type === "webradio" ? ipRadiosModel : objectLinksModel
 
     source: "images/multimedia.jpg"
     text: qsTr("multimedia")
@@ -21,6 +24,13 @@ Page {
     MediaModel {
         id: objectLinksModel
         source: myHomeModels.mediaLinks
+        containers: [linksModel.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    ObjectModel {
+        id: ipRadiosModel
+        filters: [{"objectId": ObjectInterface.IdIpRadio}]
         containers: [linksModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
@@ -41,7 +51,7 @@ Page {
 
             elementsOnPage: 7
             buttonVisible: false
-            model: objectLinksModel
+            model: page.realModel
             anchors {
                 top: parent.top
                 topMargin: parent.height / 100 * 2
@@ -53,7 +63,7 @@ Page {
 
             delegate: ButtonThreeStates {
                 id: delegateItem
-                property variant itemObject: objectLinksModel.getObject(index)
+                property variant itemObject: page.realModel.getObject(index)
                 defaultImage: "images/common/btn_weblink.svg"
                 pressedImage: "images/common/btn_weblink_P.svg"
                 onClicked: {
@@ -61,6 +71,14 @@ Page {
                         Stack.pushPage("Browser.qml", {"urlString": itemObject.address})
                     else if (type === "rss")
                         Stack.pushPage("RssPage.qml", {"urlString": itemObject.address})
+                    else if (type === "webradio") {
+                        var urls = []
+                        for (var i = 0; i < ipRadiosModel.count; ++i) {
+                            urls.push(ipRadiosModel.getObject(i).path)
+                        }
+                        global.audioVideoPlayer.generatePlaylistWebRadio(urls, index, ipRadiosModel.count)
+                        Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false})
+                    }
                 }
 
                 UbuntuMediumText {
@@ -78,7 +96,7 @@ Page {
 
                 UbuntuLightText {
                     id: link
-                    text: itemObject.address
+                    text: type === "webradio" ? itemObject.path : itemObject.address
                     font.pixelSize: 14
                     color: delegateItem.state === "pressed" ? "white" : "black"
                     anchors {
