@@ -41,11 +41,6 @@ class GuiSettings : public QObject
 	Q_PROPERTY(QString numberSeparator READ getNumberSeparator WRITE setNumberSeparator NOTIFY numberSeparatorChanged)
 
 	/*!
-		\brief Sets or gets the unit used for temperature in Celsius or Fahrenheit.
-	*/
-	Q_PROPERTY(TemperatureUnit temperatureUnit READ getTemperatureUnit WRITE setTemperatureUnit NOTIFY temperatureUnitChanged)
-
-	/*!
 		\brief Sets or gets the timezone.
 	*/
 	Q_PROPERTY(int timezone READ getTimezone WRITE setTimezone NOTIFY timezoneChanged)
@@ -116,7 +111,6 @@ class GuiSettings : public QObject
 	*/
 	Q_PROPERTY(bool scenarioRecordingAlert READ getScenarioRecordingAlert WRITE setScenarioRecordingAlert NOTIFY scenarioRecordingAlertChanged)
 
-	Q_ENUMS(TemperatureUnit)
 	Q_ENUMS(Skin)
 
 public:
@@ -126,12 +120,6 @@ public:
 	{
 		Clear,
 		Dark
-	};
-
-	enum TemperatureUnit
-	{
-		Celsius,
-		Fahrenheit
 	};
 
 	// brightness must be [1, 100]
@@ -146,8 +134,6 @@ public:
 	void setLanguage(QString l);
 	QString getNumberSeparator() const;
 	void setNumberSeparator(QString s);
-	TemperatureUnit getTemperatureUnit() const;
-	void setTemperatureUnit(TemperatureUnit u);
 	int getTimezone() const;
 	void setTimezone(int z);
 	Skin getSkin() const;
@@ -187,7 +173,6 @@ signals:
 	void currencyChanged();
 	void languageChanged();
 	void numberSeparatorChanged();
-	void temperatureUnitChanged();
 	void timezoneChanged();
 	void skinChanged();
 	void beepChanged();

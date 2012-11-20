@@ -349,21 +349,6 @@ void GuiSettings::setNumberSeparator(QString s)
        emit numberSeparatorChanged();
 }
 
-GuiSettings::TemperatureUnit GuiSettings::getTemperatureUnit() const
-{
-	return (*bt_global::config)[TEMPERATURE_SCALE].toInt() == CELSIUS ? Celsius : Fahrenheit;
-}
-
-void GuiSettings::setTemperatureUnit(TemperatureUnit u)
-{
-	if (getTemperatureUnit() == u)
-		return;
-
-	(*bt_global::config)[TEMPERATURE_SCALE] = QString::number(u == Celsius ? CELSIUS : FAHRENHEIT);
-	setConfValue("generale/temperature/format", (*bt_global::config)[TEMPERATURE_SCALE]);
-	emit temperatureUnitChanged();
-}
-
 int GuiSettings::getTimezone() const
 {
 	return timezone;

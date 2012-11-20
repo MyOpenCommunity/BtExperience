@@ -19,11 +19,6 @@ MenuColumn {
     }
 
     Component {
-        id: temperature
-        Item {}
-    }
-
-    Component {
         id: currency
         Item {}
     }
@@ -46,7 +41,6 @@ MenuColumn {
         // -1 -> no selection
         //  1 -> text language menu
         //  2 -> keyboard language menu
-        //  3 -> temperature menu
         //  4 -> currency
         //  5 -> number separators
         property string language: ''
@@ -58,8 +52,6 @@ MenuColumn {
     onChildLoaded: {
         if (child.textLanguageChanged)
             child.textLanguageChanged.connect(textLanguageChanged)
-        if (child.temperatureChanged)
-            child.temperatureChanged.connect(temperatureChanged)
         if (child.currencyChanged)
             child.currencyChanged.connect(currencyChanged)
         if (child.numberSeparatorsChanged)
@@ -73,12 +65,7 @@ MenuColumn {
         privateProps.language = value
         pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
     }
-    function temperatureChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.Temperature = value;
-        // TODO remove when model is implemented
-        temperatureItem.description = pageObject.names.get('LANGUAGE', value)
-    }
+
     function currencyChanged(value) {
         // TODO assign to a model property
         //privateProps.model.Currency = value;
@@ -123,18 +110,7 @@ MenuColumn {
                 column.loadColumn(keyboardLanguage, name)
             }
         }
-        MenuItem {
-            id: temperatureItem
-            name: qsTr("temperature")
-            description: pageObject.names.get('TEMPERATURE', global.guiSettings.temperatureUnit)
-            hasChild: true
-            isSelected: privateProps.currentIndex === 3
-            onClicked: {
-                if (privateProps.currentIndex !== 3)
-                    privateProps.currentIndex = 3
-                column.loadColumn(temperature, name)
-            }
-        }
+
         MenuItem {
             id: currencyItem
             name: qsTr("currency")
