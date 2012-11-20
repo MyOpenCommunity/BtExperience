@@ -10,14 +10,14 @@ import "js/Stack.js" as Stack
 Page {
     id: page
 
-    property int containerUii: -1
+    property int containerId: -1
 
     source: "images/multimedia.jpg"
     text: qsTr("multimedia")
 
-    SystemsModel { id: linksModel; systemId: page.containerUii; source: myHomeModels.mediaContainers }
+    SystemsModel { id: linksModel; systemId: page.containerId; source: myHomeModels.mediaContainers }
 
-    ObjectModel {
+    MediaModel {
         id: objectLinksModel
         source: myHomeModels.mediaLinks
         containers: [linksModel.systemUii]

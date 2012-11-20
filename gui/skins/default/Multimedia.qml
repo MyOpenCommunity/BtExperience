@@ -70,8 +70,8 @@ Page {
     Component.onCompleted: {
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/multimedia/devices_card.jpg", "props": {} })
         multimediaModel.append({"description": qsTr("web browser"), "target": "Browser.qml", "cardImageCached": "images/multimedia/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
-        multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/browser_card.jpg", "props": {"containerUii": Container.IdMultimediaWebLink}})
-        multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/rss_card.jpg", "props": {"containerUii": Container.IdMultimediaRss}})
+        multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/browser_card.jpg", "props": {"containerId": Container.IdMultimediaWebLink}})
+        multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/rss_card.jpg", "props": {"containerId": Container.IdMultimediaRss}})
         multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserIpRadioPage.qml", "cardImageCached": "images/multimedia/weblink_card.jpg", "props": {}})
         multimediaModel.append({"description": qsTr("weather"), "target": "WeatherInfoPage.qml", "cardImageCached": "images/multimedia/meteo_card.jpg", "props": {}})
     }
