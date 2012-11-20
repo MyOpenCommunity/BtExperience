@@ -115,7 +115,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	brightness = 50;
 	contrast = 50;
-	currency = "EUR";
 	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
 	numberSeparator = ".";
 	timezone = 0;
@@ -263,21 +262,6 @@ void GuiSettings::setContrast(int c)
 	// TODO save value somewhere
 	contrast = c;
 	emit contrastChanged();
-}
-
-QString GuiSettings::getCurrency() const
-{
-	return currency;
-}
-
-void GuiSettings::setCurrency(QString c)
-{
-	if (currency == c)
-		return;
-
-	// TODO save value somewhere
-	currency = c;
-	emit currencyChanged();
 }
 
 QString GuiSettings::getLanguage() const

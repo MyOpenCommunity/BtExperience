@@ -21,11 +21,6 @@ class GuiSettings : public QObject
 	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
 
 	/*!
-		\brief Sets or gets the currency.
-	*/
-	Q_PROPERTY(QString currency READ getCurrency WRITE setCurrency NOTIFY currencyChanged)
-
-	/*!
 		\brief Sets or gets the language for the interface.
 	*/
 	Q_PROPERTY(QString language READ getLanguage WRITE setLanguage NOTIFY languageChanged)
@@ -128,8 +123,6 @@ public:
 	// contrast must be [1, 100]
 	int getContrast() const;
 	void setContrast(int c);
-	QString getCurrency() const;
-	void setCurrency(QString c);
 	QString getLanguage() const;
 	void setLanguage(QString l);
 	QString getNumberSeparator() const;
@@ -170,7 +163,6 @@ public:
 signals:
 	void brightnessChanged();
 	void contrastChanged();
-	void currencyChanged();
 	void languageChanged();
 	void numberSeparatorChanged();
 	void timezoneChanged();
@@ -197,7 +189,6 @@ private:
 	ConfigFile *configurations;
 	int brightness;
 	int contrast;
-	QString currency;
 	QString keyboardLayout;
 	QString language;
 	QString numberSeparator;

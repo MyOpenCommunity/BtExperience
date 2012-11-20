@@ -19,11 +19,6 @@ MenuColumn {
     }
 
     Component {
-        id: currency
-        Item {}
-    }
-
-    Component {
         id: numberSeparator
         Item {}
     }
@@ -41,7 +36,6 @@ MenuColumn {
         // -1 -> no selection
         //  1 -> text language menu
         //  2 -> keyboard language menu
-        //  4 -> currency
         //  5 -> number separators
         property string language: ''
     }
@@ -52,8 +46,6 @@ MenuColumn {
     onChildLoaded: {
         if (child.textLanguageChanged)
             child.textLanguageChanged.connect(textLanguageChanged)
-        if (child.currencyChanged)
-            child.currencyChanged.connect(currencyChanged)
         if (child.numberSeparatorsChanged)
             child.numberSeparatorsChanged.connect(numberSeparatorsChanged)
     }
@@ -66,12 +58,6 @@ MenuColumn {
         pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
     }
 
-    function currencyChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.Currency = value;
-        // TODO remove when model is implemented
-        currencyItem.description = pageObject.names.get('LANGUAGE', value)
-    }
     function numberSeparatorsChanged(value) {
         // TODO assign to a model property
         //privateProps.model.NumberSeparator = value;
@@ -111,18 +97,6 @@ MenuColumn {
             }
         }
 
-        MenuItem {
-            id: currencyItem
-            name: qsTr("currency")
-            description: pageObject.names.get('CURRENCY', global.guiSettings.currency)
-            hasChild: true
-            isSelected: privateProps.currentIndex === 5
-            onClicked: {
-                if (privateProps.currentIndex !== 5)
-                    privateProps.currentIndex = 5
-                column.loadColumn(currency, name)
-            }
-        }
         MenuItem {
             id: numberSeparatorItem
             name: qsTr("number separator")
