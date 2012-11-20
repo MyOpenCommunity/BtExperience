@@ -58,9 +58,9 @@ Page {
                 pressedImage: "images/common/btn_weblink_P.svg"
                 onClicked: {
                     if (type === "browser")
-                        Stack.goToPage("Browser.qml", {"urlString": itemObject.address})
+                        Stack.pushPage("Browser.qml", {"urlString": itemObject.address})
                     else if (type === "rss")
-                        Stack.goToPage("RssPage.qml", {"urlString": itemObject.address})
+                        Stack.pushPage("RssPage.qml", {"urlString": itemObject.address})
                 }
 
                 UbuntuMediumText {
