@@ -267,7 +267,8 @@ public:
 		\brief Play the first media content found on the source
 
 		Searches for the first media element available for this source and
-		starts playing it.
+		starts playing it.  The active status for the source is not changed by
+		this method.
 
 		Emits \ref firstMediaContentStatus() to signal completion.  The search might be either
 		sinchronous or asynchronous (depending on the source).
