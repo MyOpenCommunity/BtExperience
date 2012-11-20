@@ -13,17 +13,12 @@ Page {
     source: "images/multimedia.jpg"
     text: qsTr("multimedia")
 
-    SystemsModel { id: deviceModel; systemId: Container.IdMultimediaWebRadio; source: myHomeModels.mediaContainers }
-
+    SystemsModel { id: containerModel; systemId: Container.IdMultimediaWebRadio; source: myHomeModels.mediaContainers }
     ObjectModel {
         id: ipRadiosModel
-        containers: [deviceModel.systemUii]
+        filters: [{"objectId": ObjectInterface.IdIpRadio}]
+        containers: [containerModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-    }
-
-    ObjectModel {
-        id: sourceModel
-        filters: [{objectId: ObjectInterface.IdSoundSource}]
     }
 
     PaginatorOnBackground {
@@ -56,23 +51,12 @@ Page {
                 defaultImage: "images/common/btn_weblink.svg"
                 pressedImage: "images/common/btn_weblink_P.svg"
                 onClicked: {
-                    var ipSource = undefined
-                    for (var k = 0; k < sourceModel.count; ++k)
-                    {
-                        var src = sourceModel.getObject(k)
-                        if (src.sourceType !== SourceObject.IpRadio)
-                            continue
-                        ipSource = src
-                        break
-                    }
                     var urls = []
                     for (var i = 0; i < ipRadiosModel.count; ++i) {
                         urls.push(ipRadiosModel.getObject(i).path)
                     }
-                    if (ipSource)
-                        ipSource.startPlay(urls, index, ipRadiosModel.count)
-                    else
-                        console.log("Ip Radio Source not defined/configured.")
+                    global.audioVideoPlayer.generatePlaylistWebRadio(urls, index, ipRadiosModel.count)
+                    Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false})
                 }
             }
 
