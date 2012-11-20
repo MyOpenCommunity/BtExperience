@@ -29,8 +29,6 @@ Page {
         property bool loading: (rssFeedModel.status == XmlListModel.Loading) || (atomFeedModel.status == XmlListModel.Loading)
         property string currentFeed: rssPage.urlString
 
-        RssFeeds { id: rssFeeds }
-
         XmlListModel {
             id: rssFeedModel
             source: window.currentFeed
@@ -53,34 +51,14 @@ Page {
             XmlRole { name: "description"; query: "summary/string()" }
         }
 
-        Row {
-            Rectangle {
-                width: 220; height: window.height
-                color: "#efefef"
-
-                ListView {
-                    id: categories
-                    anchors.fill: parent
-                    model: rssFeeds
-                    delegate: CategoryDelegate {}
-                    highlight: Rectangle { color: "steelblue" }
-                    highlightMoveSpeed: 9999999
-                    interactive: false
-                }
-                ScrollBar {
-                    scrollArea: categories; height: categories.height; width: 8
-                    anchors.right: categories.right
-                }
-            }
-            ListView {
-                id: list
-                width: window.width - 220; height: window.height
-                model: isRss ? rssFeedModel : atomFeedModel
-                delegate: NewsDelegate {}
-            }
+        ListView {
+            id: list
+            width: window.width
+            height: window.height
+            model: isRss ? rssFeedModel : atomFeedModel
+            delegate: NewsDelegate {}
         }
 
         ScrollBar { scrollArea: list; height: list.height; width: 8; anchors.right: window.right }
-        Rectangle { x: 220; height: window.height; width: 1; color: "#cccccc" }
     }
 }
