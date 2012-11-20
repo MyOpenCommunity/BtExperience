@@ -76,7 +76,12 @@ Page {
 
         function fixedAddress(address) {
             var fixedAddress = address
-            if (fixedAddress.toLowerCase().indexOf("://") !== 0)
+            var isHttp = (fixedAddress.toLowerCase().indexOf("http://") === 0)
+            var isHttps = (fixedAddress.toLowerCase().indexOf("https://") === 0)
+            var isProcol = (fixedAddress.toLowerCase().indexOf("://") > 0)
+            if (!isHttp && !isHttps && !isProcol)
+                fixedAddress = "http://" + fixedAddress
+            else if (!isProcol)
                 fixedAddress = "http://" + fixedAddress
             return fixedAddress
         }
