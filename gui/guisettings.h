@@ -31,11 +31,6 @@ class GuiSettings : public QObject
 	Q_PROPERTY(Skin skin READ getSkin WRITE setSkin NOTIFY skinChanged)
 
 	/*!
-		\brief Sets or gets the number separator between integral and fractional part
-	*/
-	Q_PROPERTY(QString numberSeparator READ getNumberSeparator WRITE setNumberSeparator NOTIFY numberSeparatorChanged)
-
-	/*!
 		\brief Sets or gets the timezone.
 	*/
 	Q_PROPERTY(int timezone READ getTimezone WRITE setTimezone NOTIFY timezoneChanged)
@@ -125,8 +120,6 @@ public:
 	void setContrast(int c);
 	QString getLanguage() const;
 	void setLanguage(QString l);
-	QString getNumberSeparator() const;
-	void setNumberSeparator(QString s);
 	int getTimezone() const;
 	void setTimezone(int z);
 	Skin getSkin() const;
@@ -164,7 +157,6 @@ signals:
 	void brightnessChanged();
 	void contrastChanged();
 	void languageChanged();
-	void numberSeparatorChanged();
 	void timezoneChanged();
 	void skinChanged();
 	void beepChanged();
@@ -191,7 +183,6 @@ private:
 	int contrast;
 	QString keyboardLayout;
 	QString language;
-	QString numberSeparator;
 	int timezone;
 	Skin skin;
 	bool beep;

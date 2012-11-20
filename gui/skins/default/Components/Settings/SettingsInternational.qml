@@ -18,11 +18,6 @@ MenuColumn {
         KeyboardLanguage {}
     }
 
-    Component {
-        id: numberSeparator
-        Item {}
-    }
-
     function alertOkClicked() {
         textLanguageItem.description = pageObject.names.get('LANGUAGE', privateProps.language);
         global.guiSettings.language = privateProps.language
@@ -36,7 +31,6 @@ MenuColumn {
         // -1 -> no selection
         //  1 -> text language menu
         //  2 -> keyboard language menu
-        //  5 -> number separators
         property string language: ''
     }
 
@@ -46,8 +40,6 @@ MenuColumn {
     onChildLoaded: {
         if (child.textLanguageChanged)
             child.textLanguageChanged.connect(textLanguageChanged)
-        if (child.numberSeparatorsChanged)
-            child.numberSeparatorsChanged.connect(numberSeparatorsChanged)
     }
 
     function textLanguageChanged(value) {
@@ -58,20 +50,11 @@ MenuColumn {
         pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
     }
 
-    function numberSeparatorsChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.NumberSeparator = value;
-        // TODO remove when model is implemented
-        numberSeparatorsItem.description = pageObject.names.get('LANGUAGE', value)
-    }
-
     PaginatorColumn {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 300
 
-        // TODO international menu is to be defined: this is a very skeletal
-        // starting point
         MenuItem {
             id: textLanguageItem
             name: qsTr("text language")
@@ -84,6 +67,7 @@ MenuColumn {
                 column.loadColumn(textLanguage, name)
             }
         }
+
         MenuItem {
             id: keyboardLanguageItem
             name: qsTr("keyboard language")
@@ -94,19 +78,6 @@ MenuColumn {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 column.loadColumn(keyboardLanguage, name)
-            }
-        }
-
-        MenuItem {
-            id: numberSeparatorItem
-            name: qsTr("number separator")
-            description: "0.000,00"
-            hasChild: true
-            isSelected: privateProps.currentIndex === 6
-            onClicked: {
-                if (privateProps.currentIndex !== 6)
-                    privateProps.currentIndex = 6
-                column.loadColumn(numberSeparator, name)
             }
         }
     }

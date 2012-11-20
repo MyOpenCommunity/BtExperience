@@ -116,7 +116,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 	brightness = 50;
 	contrast = 50;
 	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
-	numberSeparator = ".";
 	timezone = 0;
 	skin = Clear;
 	beep = false;
@@ -316,21 +315,6 @@ void GuiSettings::setBeep(bool b)
 
 	beep = b;
 	emit beepChanged();
-}
-
-QString GuiSettings::getNumberSeparator() const
-{
-       return numberSeparator;
-}
-
-void GuiSettings::setNumberSeparator(QString s)
-{
-       if (numberSeparator == s)
-	       return;
-
-       // TODO save value somewhere
-       numberSeparator = s;
-       emit numberSeparatorChanged();
 }
 
 int GuiSettings::getTimezone() const
