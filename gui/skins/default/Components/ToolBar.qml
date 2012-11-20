@@ -252,7 +252,7 @@ Item {
                                    "../images/toolbar/icon_audio-source-on_p.svg" :
                                    "../images/toolbar/icon_audio-source-on.svg")
             onClicked: EventManager.eventManager.playing ?
-                           Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioPlayer.isUpnp()}) :
+                           Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioVideoPlayer.isUpnp()}) :
                            console.log("TODO: navigation to volume settings menu")
         }
 
@@ -266,7 +266,7 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_source-play_p.svg" :
                               "../images/toolbar/icon_source-play.svg"
-            onClicked: Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioPlayer.isUpnp()})
+            onClicked: Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioVideoPlayer.isUpnp()})
         }
 
         // message

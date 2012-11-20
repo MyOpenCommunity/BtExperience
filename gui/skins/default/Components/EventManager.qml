@@ -20,7 +20,7 @@ Item {
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
     property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.openedDevices
     property bool scenarioRecording: privateProps.recordingModel === undefined ? false : privateProps.recordingModel.recording
-    property bool playing: global.audioPlayer === undefined ? false : global.audioPlayer.playing
+    property bool playing: global.audioVideoPlayer === undefined ? false : global.audioVideoPlayer.playing
     property bool mute: global.audioState === null ? false : (global.audioState.state === AudioState.LocalPlaybackMute || global.audioState.state === AudioState.Mute)
     property bool clocksEnabled: privateProps.clocksModel === null ? false : privateProps.clocksModel.enabled
 
