@@ -461,6 +461,15 @@
 		<ist uii="8010" descr="News" url="http://news.bbc.co.uk/rss" />
 		<ist uii="8004" descr="Science" url="http://feeds.wired.com/wiredscience" />
 		<ist uii="8009" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8020" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8021" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8022" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8023" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8024" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8025" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8026" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8027" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8028" descr="XKCD" url="http://xkcd.com/rss.xml" />
 	</obj>
 	<obj cid="16003" id="16003" descr="" url="http://">
 		<ist uii="8005" descr="Weather" url="http://weather.yahooapis.com/" />
@@ -471,6 +480,14 @@
 		<ist uii="8012" descr="Corriere della sera" url="http://www.corriere.it" />
 		<ist uii="8007" descr="La gazzetta dello sport" url="http://www.gazzetta.it" />
 		<ist uii="8008" descr="La Repubblica" url="http://www.repubblica.it" />
+		<ist uii="80013" descr="La Repubblica" url="http://www.repubblica.it" />
+		<ist uii="80014" descr="La Repubblica" url="http://www.repubblica.it" />
+		<ist uii="80015" descr="La Repubblica" url="http://www.repubblica.it" />
+		<ist uii="80016" descr="La Repubblica" url="http://www.repubblica.it" />
+		<ist uii="80017" descr="La Repubblica" url="http://www.repubblica.it" />
+		<ist uii="80018" descr="La Repubblica" url="http://www.repubblica.it" />
+		<ist uii="80019" descr="La Repubblica" url="http://www.repubblica.it" />
+		<ist uii="80020" descr="La Repubblica" url="http://www.repubblica.it" />
 	</obj>
 	<obj cid="16005" id="16005">
 		<ist uii="16004"/>

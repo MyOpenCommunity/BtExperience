@@ -201,8 +201,15 @@
 	</container>
 	<container id="19" descr="Rss" img="rss.png" >
 		<ist uii="317">
-			<link uii="8003" />
-			<link uii="8004" />
+			<link uii="8020" />
+			<link uii="8021" />
+			<link uii="8022" />
+			<link uii="8023" />
+			<link uii="8024" />
+			<link uii="8025" />
+			<link uii="8026" />
+			<link uii="8027" />
+			<link uii="8028" />
 		</ist>
 	</container>
 	<container id="20" descr="Rss meteo" img="rss_meteo.png" >
@@ -232,8 +239,14 @@
 	<container id="24" descr="Web links" img="web_links.png" >
 		<ist uii="322">
 			<link uii="8012" />
-			<link uii="8007" />
-			<link uii="8008" />
+			<link uii="80013" />
+			<link uii="80014" />
+			<link uii="80015" />
+			<link uii="80016" />
+			<link uii="80017" />
+			<link uii="80018" />
+			<link uii="80019" />
+			<link uii="80020" />
 		</ist>
 	</container>
 	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
