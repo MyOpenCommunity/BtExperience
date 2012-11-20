@@ -430,7 +430,7 @@ void AudioVideoPlayer::trackInfoChanged()
 	if (total == 0)
 		return;
 
-	int p = 100 * current / total;
+	double p = 100.0 * current / total;
 	if (percentage != p)
 	{
 		percentage = p;
