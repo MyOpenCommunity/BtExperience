@@ -448,10 +448,13 @@
                      rate_id="5" />
 	</obj>
 	<obj cid="16000" id="16000" descr="Web radio" title="Radio" url="http://">
-		<ist uii="8001" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
+		<ist uii="8001" descr="Classic FM (no container)" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
 		<ist uii="8011" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
 		<ist uii="8014" descr="Fox FM" title="Radio 1" url="http://mediasrv.musicradio.com/FoxFM" />
 		<ist uii="8015" descr="Non funziona" title="Radio 1" url="http://yp.shoutcast.com/sbin/tunein-station.pls?id=2101" />
+		<ist uii="8016" descr="RTL 102.5" title="Radio 1" url="http://shoutcast.rtl.it:3010/listen.pls" />
+		<ist uii="8017" descr="Virgin radio" title="Radio 1" url="http://shoutcast.unitedradio.it:1301/listen.pls" />
+		<ist uii="8018" descr="m2o" title="Radio 1" url="http://mp3.kataweb.it:8000/M2O.m3u" />
 	</obj>
 	<obj cid="16001" id="16001" descr="Webcam" url="http://">
 		<ist uii="8002" descr="Webcam" url="http://www.meteowbcam.itredirect_europa.php?id=2240" />
