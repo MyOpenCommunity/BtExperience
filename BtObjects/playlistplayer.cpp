@@ -213,6 +213,12 @@ void PlayListPlayer::reset()
 	is_video = false;
 	actual_list = 0;
 	emit playingChanged();
+
+	if (!current.isEmpty())
+	{
+		current = QString();
+		emit currentChanged();
+	}
 }
 
 void PlayListPlayer::updateCurrent()
