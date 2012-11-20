@@ -29,11 +29,6 @@ Page {
 
         var itemChild = item.child
 
-        if (!item.isTargetKnown()) {
-            systemPage.rootObject.navigate()
-            return
-        }
-
         while (itemChild && itemChild.isTargetKnown()) {
             item = itemChild
             itemChild = item.child

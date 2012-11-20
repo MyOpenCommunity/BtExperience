@@ -35,18 +35,9 @@ MenuColumn {
 
     // needed for menu navigation
     function targetsKnown() {
-        return ["AlarmLog"]
-    }
-
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget, navigationData) {
-        if (navigationTarget === "AlarmLog") {
-            if (privateProps.currentIndex !== 1)
-                privateProps.currentIndex = 1
-            privateProps.showAlarmLog()
-            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        return {
+            "AlarmLog": privateProps.openAlarmLogMenu,
         }
-        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     Component.onCompleted: privateProps.setScenarioDescription()
@@ -77,6 +68,11 @@ MenuColumn {
         property bool actionPartialize: false
 
         property int currentIndex: -1
+
+        function openAlarmLogMenu(navigationData) {
+            privateProps.showAlarmLog()
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
 
         // 'Public' API
         function scenarioSelected(obj) {

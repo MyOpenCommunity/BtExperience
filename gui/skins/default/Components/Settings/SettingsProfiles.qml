@@ -17,12 +17,15 @@ MenuColumn {
 
     // needed for menu navigation
     function targetsKnown() {
-        return ["Profile"]
+        return {
+            "Profile": privateProps.openProfileMenu,
+        }
     }
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget, navigationData) {
-        if (navigationTarget === "Profile") {
+    QtObject {
+        id: privateProps
+
+        function openProfileMenu(navigationData) {
             var absIndex = profilesModel.getAbsoluteIndexOf(navigationData)
             if (absIndex === -1)
                 return NavigationConstants.NAVIGATION_PROFILE_NOT_FOUND
@@ -30,7 +33,6 @@ MenuColumn {
             paginator.openDelegate(indexes)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     PaginatorList {

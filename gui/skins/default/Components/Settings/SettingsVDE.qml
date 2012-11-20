@@ -8,35 +8,38 @@ MenuColumn {
 
     // needed for menu navigation
     function targetsKnown() {
-        return ["HandsFree", "AutoOpen", "VdeMute"]
+        return {
+            "HandsFree": privateProps.openHandsFreeMenu,
+            "AutoOpen": privateProps.openAutoOpenMenu,
+            "VdeMute": privateProps.openVdeMuteMenu,
+        }
     }
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget, navigationData) {
-        if (navigationTarget === "HandsFree") {
+    QtObject {
+        id: privateProps
+
+        property int currentIndex: -1
+
+        function openHandsFreeMenu(navigationData) {
             if (privateProps.currentIndex !== 1)
                 privateProps.currentIndex = 1
             column.loadColumn(handsFreeComponent, handsFreeMenuItem.name)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        if (navigationTarget === "AutoOpen") {
+
+        function openAutoOpenMenu(navigationData) {
             if (privateProps.currentIndex !== 2)
                 privateProps.currentIndex = 2
             column.loadColumn(autoOpenComponent, autoOpenMenuItem.name)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        if (navigationTarget === "VdeMute") {
+
+        function openVdeMuteMenu(navigationData) {
             if (privateProps.currentIndex !== 3)
                 privateProps.currentIndex = 3
             column.loadColumn(vdeMuteComponent, vdeMuteMenuItem.name)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        return NavigationConstants.NAVIGATION_WRONG_TARGET
-    }
-
-    QtObject {
-        id: privateProps
-        property int currentIndex: -1
     }
 
     onChildDestroyed: {

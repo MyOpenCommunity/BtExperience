@@ -27,17 +27,16 @@ Item {
     }
 
     function isTargetKnown() {
-        var navTarget = Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel)
+        var navigationTarget = Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel)
 
         // no target to navigate to, target is unknown
-        if (navTarget === undefined)
+        if (navigationTarget === undefined)
             return false
 
         // checks if navigationTarget is known or not
         var targets = column.targetsKnown()
-        for (var i = 0; i < targets.length; ++i)
-            if (targets[i] === navTarget)
-                return true
+        if (navigationTarget in targets)
+            return true
 
         // it is not known
         return false
@@ -51,24 +50,23 @@ Item {
         if (navigationTarget === undefined)
             return
 
-        var openMenuResult = openMenu(navigationTarget, pageObject.navigationData)
-        if (openMenuResult === NavigationConstants.NAVIGATION_IN_PROGRESS)
-            return // further processing needed
+        var targets = column.targetsKnown()
+        if (navigationTarget in targets) {
+            var openMenuResult = targets[navigationTarget](pageObject.navigationData)
 
-        if (openMenuResult < 0)
-            console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + " unknown. Navigation data: " + pageObject.navigationData + ". Error code: " + openMenuResult)
+            if (openMenuResult === NavigationConstants.NAVIGATION_IN_PROGRESS)
+                return // further processing needed
+
+            if (openMenuResult < 0)
+                console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + ". Navigation data: " + pageObject.navigationData + ". Error code: " + openMenuResult)
+        }
+        else {
+            console.log("MenuColumn.navigate error. Navigation target: " + navigationTarget + " unknown. Navigation data: " + pageObject.navigationData + ".")
+        }
 
         // resets navigation
         column.pageObject.navigationTarget = 0
         column.pageObject.navigationData = undefined
-    }
-
-    // hook to open a menu; receives a string to identify menu to be opened
-    // returns 0 if target is managed, 1 if more processing is needed, -1 in
-    // case of errors
-    // see navigation.js for further details
-    function openMenu(navigationTarget, navigationData) {
-        return NavigationConstants.NAVIGATION_GENERIC_ERROR
     }
 
     // The signals captured from the MenuContainer to create/close child or the element

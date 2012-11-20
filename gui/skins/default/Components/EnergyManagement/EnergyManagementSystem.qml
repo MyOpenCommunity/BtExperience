@@ -11,18 +11,24 @@ MenuColumn {
 
     // needed for menu navigation
     function targetsKnown() {
-        return ["Supervision"]
+        return {
+            "Supervision": privateProps.openSupervisionMenu,
+        }
     }
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget, navigationData) {
-        if (navigationTarget === "Supervision") {
-            var m = listModel.get(0)
-            listView.currentIndex = 0
+    QtObject {
+        id: privateProps
+
+        function openSupervisionMenu(navigationData) {
+            return _openMenu(0)
+        }
+
+        function _openMenu(index) {
+            var m = listModel.get(index)
+            listView.currentIndex = index
             element.loadColumn(m.component, m.name)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     onChildDestroyed: {

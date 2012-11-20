@@ -11,18 +11,20 @@ MenuColumn {
 
     // needed for menu navigation
     function targetsKnown() {
-        return ["VDE"]
+        return {
+            "VDE": privateProps.openVDEMenu,
+        }
     }
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget, navigationData) {
-        if (navigationTarget === "VDE") {
+    QtObject {
+        id: privateProps
+
+        function openVDEMenu(navigationData) {
             var m = modelList.get(2)
             itemList.currentIndex = 2
             column.loadColumn(m.component, m.name)
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
-        return NavigationConstants.NAVIGATION_WRONG_TARGET
     }
 
     onChildDestroyed: {

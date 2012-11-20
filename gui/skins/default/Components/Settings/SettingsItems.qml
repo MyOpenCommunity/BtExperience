@@ -12,31 +12,36 @@ MenuColumn {
 
     // needed for menu navigation
     function targetsKnown() {
-        return ["Systems", "Profiles", "AlarmClock"]
+        return {
+            "AlarmClock": privateProps.openAlarmClockMenu,
+            "Profiles": privateProps.openProfilesMenu,
+            "Systems": privateProps.openSystemsMenu,
+        }
     }
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget, navigationData) {
-        var m = undefined
-        if (navigationTarget === "Systems") {
-            m = modelList.get(4)
-            itemList.currentIndex = 4
-            column.loadColumn(nameToComponent(m.component), m.name)
-            return NavigationConstants.NAVIGATION_IN_PROGRESS
-        }
-        else if (navigationTarget === "Profiles") {
-            m = modelList.get(2)
-            itemList.currentIndex = 2
-            column.loadColumn(nameToComponent(m.component), m.name)
-            return NavigationConstants.NAVIGATION_IN_PROGRESS
-        }
-        else if (navigationTarget === "AlarmClock") {
-            m = modelList.get(5)
-            itemList.currentIndex = 5
-            column.loadColumn(nameToComponent(m.component), m.name)
+    QtObject {
+        id: privateProps
+
+        function openAlarmClockMenu(navigationData) {
+            _openMenu(5)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        return NavigationConstants.NAVIGATION_WRONG_TARGET
+
+        function openProfilesMenu(navigationData) {
+            _openMenu(2)
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
+
+        function openSystemsMenu(navigationData) {
+            _openMenu(4)
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
+
+        function _openMenu(index) {
+            var m = modelList.get(index)
+            itemList.currentIndex = index
+            column.loadColumn(nameToComponent(m.component), m.name)
+        }
     }
 
     onChildDestroyed: {
