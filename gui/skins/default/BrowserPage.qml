@@ -30,67 +30,57 @@ Page {
         source: "images/common/bg_browse.svg"
         anchors {
             top: toolbar.bottom
-            topMargin: 50
+            topMargin: bg.height * 11 / 100
             left: navigationBar.right
-            leftMargin: 30
-        }
-    }
-
-    PaginatorOnBackground {
-        id: paginator
-
-        elementsOnPage: 8
-        buttonVisible: false
-        model: objectLinksModel
-        anchors {
-            top: toolbar.bottom
-            topMargin: 50
-            left: navigationBar.right
-            leftMargin: 40
+            leftMargin: bg.width * 7 / 100
         }
 
-        delegate: Item {
-            property variant itemObject: objectLinksModel.getObject(index)
+        PaginatorOnBackground {
+            id: paginator
 
-            width: delegateBg.width
-            height: delegateBg.height
-
-            SvgImage {
-                id: delegateBg
-                source: "images/common/btn_weblink.svg"
+            elementsOnPage: 7
+            buttonVisible: false
+            model: objectLinksModel
+            anchors {
+                top: parent.top
+                topMargin: parent.height / 100 * 2
+                left: parent.left
+                leftMargin: parent.width / 100 * 2.5
+                right: parent.right
+                bottom: parent.bottom
             }
 
-            ButtonThreeStates {
-                id: addButton
-
+            delegate: ButtonThreeStates {
+                id: delegateItem
+                property variant itemObject: objectLinksModel.getObject(index)
                 defaultImage: "images/common/btn_weblink.svg"
                 pressedImage: "images/common/btn_weblink_P.svg"
                 onClicked: Stack.goToPage("Browser.qml", {"urlString": itemObject.address})
-            }
 
-            UbuntuMediumText {
-                id: description
-                text: itemObject.name
-                font.pixelSize: 14
-                color: addButton.state === "pressed" ? "white" : "black"
-                anchors {
-                    top: delegateBg.top
-                    topMargin: 5
-                    left: delegateBg.left
-                    leftMargin: 10
+                UbuntuMediumText {
+                    id: description
+                    text: itemObject.name
+                    font.pixelSize: 14
+                    color: delegateItem.state === "pressed" ? "white" : "black"
+                    anchors {
+                        top: delegateItem.top
+                        topMargin: 5
+                        left: delegateItem.left
+                        leftMargin: 10
+                    }
                 }
-            }
 
-            UbuntuLightText {
-                id: link
-                text: itemObject.address
-                font.pixelSize: 14
-                color: addButton.state === "pressed" ? "white" : "black"
-                anchors {
-                    bottom: delegateBg.bottom
-                    bottomMargin: 5
-                    left: delegateBg.left
-                    leftMargin: 10
+                UbuntuLightText {
+                    id: link
+                    text: itemObject.address
+                    font.pixelSize: 14
+                    color: delegateItem.state === "pressed" ? "white" : "black"
+                    anchors {
+                        bottom: delegateItem.bottom
+                        bottomMargin: 5
+                        left: delegateItem.left
+                        leftMargin: 10
+                    }
                 }
             }
         }
