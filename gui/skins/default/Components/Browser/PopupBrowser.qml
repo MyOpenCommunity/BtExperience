@@ -66,4 +66,14 @@ Rectangle {
             rightMargin: 10
         }
     }
+
+    ScrollBar {
+        scrollArea: webView; width: 8
+        anchors { right: parent.right; top: toolbar.bottom; bottom: parent.bottom }
+    }
+
+    ScrollBar {
+        scrollArea: webView; height: 8; orientation: Qt.Horizontal
+        anchors { right: parent.right; rightMargin: 8; left: header.left; bottom: parent.bottom }
+    }
 }
