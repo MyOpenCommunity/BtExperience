@@ -464,8 +464,8 @@
 		<ist uii="8010" descr="News" url="http://news.bbc.co.uk/rss" />
 		<ist uii="8004" descr="Science" url="http://feeds.wired.com/wiredscience" />
 		<ist uii="8009" descr="XKCD" url="http://xkcd.com/rss.xml" />
-		<ist uii="8020" descr="XKCD" url="http://xkcd.com/rss.xml" />
-		<ist uii="8021" descr="XKCD" url="http://xkcd.com/rss.xml" />
+		<ist uii="8020" descr="Techcrunch, Greentech" url="http://feeds.feedburner.com/TechCrunch/Greentech?format=xml" />
+		<ist uii="8021" descr="Slashdot" url="http://rss.slashdot.org/Slashdot/slashdot" />
 		<ist uii="8022" descr="XKCD" url="http://xkcd.com/rss.xml" />
 		<ist uii="8023" descr="XKCD" url="http://xkcd.com/rss.xml" />
 		<ist uii="8024" descr="XKCD" url="http://xkcd.com/rss.xml" />
@@ -475,8 +475,7 @@
 		<ist uii="8028" descr="XKCD" url="http://xkcd.com/rss.xml" />
 	</obj>
 	<obj cid="16003" id="16003" descr="" url="http://">
-		<ist uii="8005" descr="Weather" url="http://weather.yahooapis.com/" />
-		<ist uii="8013" descr="Weather" url="http://weather.yahooapis.com/" />
+		<ist uii="8005" descr="Weather" url="http://www.meteogiornale.it/rss/rss20.xml" />
 	</obj>
 	<obj cid="16004" id="16004" descr="Weblink" url="http://">
 		<ist uii="8006" descr="Corriere della sera" url="http://www.corriere.it" />

@@ -195,7 +195,6 @@
 	<container id="17" descr="Home page" img="home.png" img_type="0">
 		<ist uii="316">
 			<link uii="8006" img="Corriere.png"/>
-			<link uii="8005" img="Weather.png"/>
 		</ist>
 	</container>
 	<container id="19" descr="Rss" img="rss.png" >
@@ -213,7 +212,7 @@
 	</container>
 	<container id="20" descr="Rss meteo" img="rss_meteo.png" >
 		<ist uii="318">
-			<link uii="8013" />
+			<link uii="8005" />
 		</ist>
 	</container>
 	<container id="21" descr="Web radio" img="web_radio.png" >
