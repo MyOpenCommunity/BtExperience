@@ -11,22 +11,13 @@ MenuColumn {
     ListView {
         id: view
         anchors.fill: parent
+        interactive: false
+        currentIndex: -1
         delegate: MenuItemDelegate {
-            name: model.name
-            onClicked: global.guiSettings.beep = type == 0
+            name: pageObject.names.get('BEEP', modelData)
+            isSelected: global.guiSettings.beep === modelData
+            onClicked: global.guiSettings.beep = modelData
         }
-        model: ListModel {
-            id: modelList
-            Component.onCompleted: {
-                var l = [0,
-                         1,
-                        ]
-                for (var i = 0; i < l.length; i++)
-                    append({
-                               "type": l[i],
-                               "name": pageObject.names.get('BEEP', l[i])
-                           })
-            }
-        }
+        model: [true, false]
     }
 }

@@ -1,21 +1,34 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.EnergyManagement 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
+
 
 MenuColumn {
     id: element
     width: 212
     height: 150
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
-        if (navigationTarget === "Supervision") {
-            var m = listModel.get(0)
-            listView.currentIndex = 0
-            element.loadColumn(m.component, m.name)
-            return 0
+    // needed for menu navigation
+    function targetsKnown() {
+        return {
+            "Supervision": privateProps.openSupervisionMenu,
         }
-        return -2 // wrong target
+    }
+
+    QtObject {
+        id: privateProps
+
+        function openSupervisionMenu(navigationData) {
+            return _openMenu(0)
+        }
+
+        function _openMenu(index) {
+            var m = listModel.get(index)
+            listView.currentIndex = index
+            element.loadColumn(m.component, m.name)
+            return NavigationConstants.NAVIGATION_FINISHED_OK
+        }
     }
 
     onChildDestroyed: {

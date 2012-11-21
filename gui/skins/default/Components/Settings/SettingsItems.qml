@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.Settings 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
 
 
 MenuColumn {
@@ -9,28 +10,38 @@ MenuColumn {
     width: 212
     height: Math.max(1, 50 * itemList.count)
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
-        var m = undefined
-        if (navigationTarget === "Systems") {
-            m = modelList.get(4)
-            itemList.currentIndex = 4
-            column.loadColumn(nameToComponent(m.component), m.name)
-            return 1
+    // needed for menu navigation
+    function targetsKnown() {
+        return {
+            "AlarmClock": privateProps.openAlarmClockMenu,
+            "Profiles": privateProps.openProfilesMenu,
+            "Systems": privateProps.openSystemsMenu,
         }
-        else if (navigationTarget === "Profiles") {
-            m = modelList.get(2)
-            itemList.currentIndex = 2
-            column.loadColumn(nameToComponent(m.component), m.name)
-            return 0
+    }
+
+    QtObject {
+        id: privateProps
+
+        function openAlarmClockMenu(navigationData) {
+            _openMenu(5)
+            return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-        else if (navigationTarget === "AlarmClock") {
-            m = modelList.get(5)
-            itemList.currentIndex = 5
-            column.loadColumn(nameToComponent(m.component), m.name)
-            return 0
+
+        function openProfilesMenu(navigationData) {
+            _openMenu(2)
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
-        return -2 // wrong target
+
+        function openSystemsMenu(navigationData) {
+            _openMenu(4)
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
+
+        function _openMenu(index) {
+            var m = modelList.get(index)
+            itemList.currentIndex = index
+            column.loadColumn(nameToComponent(m.component), m.name)
+        }
     }
 
     onChildDestroyed: {

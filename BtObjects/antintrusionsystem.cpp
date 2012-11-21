@@ -350,7 +350,6 @@ void AntintrusionSystem::valueReceived(const DeviceValues &values_list)
 					if (!status)
 						alarms.clear();
 					setStatus(inserted);
-					emit statusChanged();
 
 					if (waiting_response)
 					{

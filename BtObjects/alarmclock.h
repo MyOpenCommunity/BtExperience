@@ -4,6 +4,7 @@
 #include "objectinterface.h"
 
 #include <QHash>
+#include <QTime>
 
 
 class MediaDataModel;
@@ -23,6 +24,7 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &
 */
 class AlarmClock : public ObjectInterface
 {
+	friend class TestAlarmClockBeep;
 	friend class TestAlarmClockSoundDiffusion;
 
 	Q_OBJECT
@@ -164,20 +166,25 @@ private slots:
 	void checkRequestManagement();
 	void triggersIfHasTo();
 	void alarmTick();
+	void restart();
+	void mediaSourcePlaybackStatus(bool status);
 
 private:
 	void start();
+	void startRinging();
 	void setTriggerOnWeekdays(bool new_value, int day_mask);
 	void soundDiffusionStop();
 	void soundDiffusionSetVolume();
 
-	AlarmClockType alarm_type;
+	AlarmClockType alarm_type, actual_type;
 	QString description;
 	bool enabled;
 	int days, hour, minute;
 	QTimer *timer_trigger;
-	QTimer *tick;
+	QTimer *timer_tick;
+	QTimer *timer_postpone;
 	int tick_count;
+	QTime start_time;
 
 	// sound diffusion alarm clock
 	Amplifier *amplifier;

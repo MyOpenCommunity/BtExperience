@@ -172,7 +172,6 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
 
-	connect(this, SIGNAL(incomingCall()), this, SLOT(manageHandsFree()));
 	connect(&video_grabber, SIGNAL(started()), SIGNAL(incomingCall()));
 
 	connect(this, SIGNAL(autoOpenChanged()), this, SIGNAL(persistItem()));
@@ -384,6 +383,8 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			else
 			{
 				startVideo();
+				if (hands_free) // auto answer?
+					dev->answerCall();
 			}
 			activateCall();
 			if (values_list.contains(VideoDoorEntryDevice::CALLER_ADDRESS))
@@ -472,15 +473,6 @@ void CCTV::disactivateCall()
 bool CCTV::callActive()
 {
 	return call_active;
-}
-
-void CCTV::manageHandsFree()
-{
-	if (callActive()) // call already in progress
-		return;
-
-	if (hands_free) // auto answer?
-		dev->answerCall();
 }
 
 

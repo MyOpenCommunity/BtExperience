@@ -12,10 +12,11 @@ MenuColumn {
         MenuItem {
             name: qsTr("Modify card image")
             isSelected: privateProps.currentIndex === 1
+            hasChild: true
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                Stack.pushPage("NewProfileCard.qml", {"profile": column.dataModel})
+                column.loadColumn(settingsImageBrowser, qsTr("Background image"), column.dataModel, {isCard: true})
             }
         }
 

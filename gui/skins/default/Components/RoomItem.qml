@@ -59,6 +59,7 @@ MenuColumn {
         }
 
         name: dataModel.name
+        description: Script.description(dataModel)
         status: Script.status(dataModel)
         boxInfoState: Script.boxInfoState(dataModel)
         boxInfoText: Script.boxInfoText(dataModel)

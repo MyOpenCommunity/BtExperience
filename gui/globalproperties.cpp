@@ -32,15 +32,15 @@
 
 #if defined(BT_HARDWARE_X11)
 #define SETTINGS_FILE "settings.xml"
+#define EXTRA_11_DIR "11/"
 #else
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
+#define EXTRA_11_DIR "/home/bticino/cfg/extra/11/"
 #endif
 
 
 namespace
 {
-	QStringList allowed_layouts = QStringList() << "en_gb_bticino" << "it_bticino" << "fr_bticino";
-
 	enum Parsing
 	{
 		Beep = 14001,
@@ -55,7 +55,12 @@ namespace
 		RingtoneExternal,
 		RingtoneDoor,
 		RingtoneAlarm,
-		RingtoneMessage
+		RingtoneMessage,
+		VolumeBeep = 14121,
+		VolumeLocalPlayback,
+		VolumeRingtone,
+		VolumeVdeCall,
+		VolumeIntercomCall
 	};
 
 	void setEnableFlag(QDomDocument document, int id, bool enable)
@@ -106,6 +111,32 @@ namespace
 		{
 			v.setIst(ist);
 			result = v.intValue("id_ringtone");
+		}
+		return result;
+	}
+
+	void setVolume(QDomDocument document, int id, int ringtone)
+	{
+		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == id)
+			{
+				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+					setAttribute(ist, "volume", QString::number(ringtone));
+				break;
+			}
+		}
+	}
+
+	int parseVolume(QDomNode xml_node)
+	{
+		int result = -1;
+		XmlObject v(xml_node);
+
+		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+		{
+			v.setIst(ist);
+			result = v.intValue("volume");
 		}
 		return result;
 	}
@@ -207,6 +238,8 @@ GlobalProperties::GlobalProperties(logger *log)
 
 	connect(ringtone_manager, SIGNAL(ringtoneChanged(int,int)),
 		this, SLOT(ringtoneChanged(int,int)));
+	connect(audio_state, SIGNAL(volumeChanged(int,int)),
+		this, SLOT(volumeChanged(int,int)));
 }
 
 void GlobalProperties::initAudio()
@@ -217,6 +250,7 @@ void GlobalProperties::initAudio()
 	Q_ASSERT_X(bt_global::config, "GlobalProperties::initAudio", "BtObjects plugin not initialized yet");
 
 	video_player = new AudioVideoPlayer(this);
+	video_player->setVolume(audio_state->getVolume(AudioState::LocalPlaybackVolume));
 
 	sound_player = new SoundPlayer(this);
 
@@ -231,6 +265,8 @@ void GlobalProperties::initAudio()
 
 	connect(settings, SIGNAL(beepChanged()),
 		this, SLOT(beepChanged()));
+	if (settings->getBeep())
+		audio_state->enableState(AudioState::Beep);
 
 	bool sound_diffusion_enabled = !(*bt_global::config)[SOURCE_ADDRESS].isEmpty();
 
@@ -238,13 +274,8 @@ void GlobalProperties::initAudio()
 	{
 		// find all source objects
 		ObjectModel sources;
-		QVariantList filters;
-		QVariantMap filter;
 
-		filter["objectId"] = ObjectInterface::IdSoundSource;
-		filters << filter;
-
-		sources.setFilters(filters);
+		sources.setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdSoundSource);
 
 		for (int i = 0; i < sources.getCount(); ++i)
 		{
@@ -258,9 +289,19 @@ void GlobalProperties::initAudio()
 			}
 		}
 
-		MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audio_player->getMediaPlayer());
+		if (audio_player)
+		{
+			MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audio_player->getMediaPlayer());
 
-		audio_state->registerSoundDiffusionPlayer(player);
+			audio_state->registerSoundDiffusionPlayer(player);
+		}
+		else
+		{
+			// avoid crashing with wrong configuration
+			qWarning("Touch configured as local source but no local source defined");
+			audio_player = video_player;
+			emit audioPlayerChanged();
+		}
 	}
 	else
 	{
@@ -318,6 +359,21 @@ void GlobalProperties::parseSettings(logger *log)
 			break;
 		case RingtoneMessage:
 			ringtone_manager->setRingtone(RingtoneManager::Message, parseRingtone(xml_obj));
+			break;
+		case VolumeBeep:
+			audio_state->setVolume(AudioState::BeepVolume, parseVolume(xml_obj));
+			break;
+		case VolumeLocalPlayback:
+			audio_state->setVolume(AudioState::LocalPlaybackVolume, parseVolume(xml_obj));
+			break;
+		case VolumeRingtone:
+			audio_state->setVolume(AudioState::RingtoneVolume, parseVolume(xml_obj));
+			break;
+		case VolumeVdeCall:
+			audio_state->setVolume(AudioState::VdeCallVolume, parseVolume(xml_obj));
+			break;
+		case VolumeIntercomCall:
+			audio_state->setVolume(AudioState::IntercomCallVolume, parseVolume(xml_obj));
 			break;
 		}
 	}
@@ -403,6 +459,27 @@ QObject *GlobalProperties::getHardwareKeys() const
 	return hardware_keys;
 }
 
+QVariantList GlobalProperties::getStockImagesFolder() const
+{
+	QVariantList result;
+
+#if defined(BT_HARDWARE_X11)
+	QString base = getBasePath();
+	QStringList base_list = base.split("/");
+	foreach (const QString &comp, base_list)
+		result.append(comp);
+	result.append("images");
+#else
+	QString extra = getExtraPath();
+	QStringList extra_list = extra.split("/");
+	foreach (const QString &comp, extra_list)
+		result.append(comp);
+	result.append("1");
+#endif
+
+	return result;
+}
+
 QObject *GlobalProperties::getDefaultExternalPlace() const
 {
 	return default_external_place;
@@ -482,7 +559,7 @@ void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
 	main_widget = _viewport;
 }
 
-void GlobalProperties::takeScreenshot(QRect rect, QString filename)
+QString GlobalProperties::takeScreenshot(QRect rect, QString filename)
 {
 	QWidget *viewport = main_widget->viewport();
 
@@ -490,7 +567,40 @@ void GlobalProperties::takeScreenshot(QRect rect, QString filename)
 		viewport = main_widget;
 
 	QImage image = QPixmap::grabWidget(viewport, rect).toImage();
-	image.save(getBasePath() + "/" + filename);
+
+#if defined(BT_HARDWARE_X11)
+	QDir().mkdir(EXTRA_11_DIR);
+#endif
+
+	QDir customDir = QDir(EXTRA_11_DIR);
+	QString fn = customDir.canonicalPath() + "/" + filename;
+	image.save(fn);
+
+	return fn;
+}
+
+QString GlobalProperties::saveInCustomDirIfNeeded(QString filename, QString new_filename, QSize size)
+{
+	QString result;
+
+#if defined(BT_HARDWARE_X11)
+	QDir().mkdir(EXTRA_11_DIR);
+#endif
+
+	QDir customDir = QDir(EXTRA_11_DIR);
+
+	if (filename.startsWith(customDir.canonicalPath() + "/"))
+		result = filename;
+	else
+		result = customDir.canonicalPath() + "/" + new_filename + "." + filename.split(".").last();
+
+	QImage image = QImage(filename);
+	if (size.isValid())
+		image = image.scaled(size);
+
+	image.save(result);
+
+	return result;
 }
 
 void GlobalProperties::beep()
@@ -514,6 +624,32 @@ void GlobalProperties::beepChanged()
 		audio_state->disableState(AudioState::Beep);
 
 	setEnableFlag(configurations->getConfiguration(SETTINGS_FILE), Beep, settings->getBeep());
+	configurations->saveConfiguration(SETTINGS_FILE);
+}
+
+void GlobalProperties::volumeChanged(int state, int volume)
+{
+	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
+
+	switch (state)
+	{
+	case AudioState::BeepVolume:
+		setVolume(document, VolumeBeep, volume);
+		break;
+	case AudioState::LocalPlaybackVolume:
+		video_player->setVolume(volume);
+		setVolume(document, VolumeLocalPlayback, volume);
+		break;
+	case AudioState::RingtoneVolume:
+		setVolume(document, VolumeRingtone, volume);
+		break;
+	case AudioState::VdeCallVolume:
+		setVolume(document, VolumeVdeCall, volume);
+		break;
+	case AudioState::IntercomCallVolume:
+		setVolume(document, VolumeIntercomCall, volume);
+		break;
+	}
 	configurations->saveConfiguration(SETTINGS_FILE);
 }
 
@@ -609,9 +745,24 @@ QString GlobalProperties::getKeyboardLayout() const
 void GlobalProperties::setKeyboardLayout(QString layout)
 {
 #ifdef BT_MALIIT
+	if (!language_map.contains(layout))
+		return;
+
+	// setting the allowed layout list to the current layout is a roundabout way of disabling
+	// the swipe left/right gesture used to change keyboard layout
+	allowed_layouts->set(QStringList() << language_map[layout]);
 	keyboard_layout->set(language_map[layout]);
 #else
 	Q_UNUSED(layout);
+#endif
+}
+
+QStringList GlobalProperties::getKeyboardLayouts() const
+{
+#ifdef BT_MALIIT
+	return language_map.keys();
+#else
+	return QStringList();
 #endif
 }
 
@@ -633,11 +784,13 @@ void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::Plug
 	{
 		if (entry->key() == "/maliit/onscreen/enabled")
 		{
+			allowed_layouts = entry;
+
 			foreach (QString value, entry->attributes()[Maliit::SettingEntryAttributes::valueDomain].toStringList())
-				if (allowed_layouts.indexOf(value.section(':', 1)) != -1)
+				if (value.section(':', 1).endsWith("_bticino"))
 					language_map[value.section(':', 1)] = value;
 
-			entry->set(QStringList() << language_map.values());
+			emit keyboardLayoutsChanged();
 		}
 		else if (entry->key() == "/maliit/onscreen/active")
 		{
@@ -647,6 +800,9 @@ void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::Plug
 				this, SIGNAL(keyboardLayoutChanged()));
 		}
 	}
+
+	// see comment in setKeyboardLayout()
+	setKeyboardLayout(getKeyboardLayout());
 }
 
 void GlobalProperties::maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings)

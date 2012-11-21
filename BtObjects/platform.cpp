@@ -12,9 +12,16 @@
 #endif
 
 
-namespace {
-	QString unknown = QString("UNKNOWN"); // maybe empty string?
-}
+enum
+{
+	LAN_CONFIG,
+	LAN_ADDRESS,
+	LAN_NETMASK,
+	LAN_GATEWAY,
+	LAN_DNS1,
+	LAN_DNS2
+};
+
 
 PlatformSettings::PlatformSettings(PlatformDevice *d)
 {
@@ -26,16 +33,8 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
 
 	// initial values
-	address = unknown;
-	dns = unknown;
-	firmware = unknown;
-	gateway = unknown;
-	lan_config = getConfValue(conf, "ethernet/lan/mode").toInt() == 1 ? Dhcp : Static;
+	current[LAN_CONFIG] = getConfValue(conf, "ethernet/lan/mode").toInt() == 1 ? Dhcp : Static;
 	lan_status = Disabled; // at start, we assume network is disabled
-	mac = unknown;
-	serial_number = unknown;
-	software = unknown;
-	subnet = unknown;
 
 	connection_status = Testing;
 	connection_tester = new ConnectionTester(this);
@@ -43,28 +42,73 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 	connect(connection_tester, SIGNAL(testPassed()), this, SLOT(connectionUp()));
 }
 
+QVariant PlatformSettings::value(int id) const
+{
+	return to_apply.value(id, current.value(id));
+}
+
+void PlatformSettings::apply()
+{
+	if (to_apply.count() == 0)
+		return;
+	foreach (int k, to_apply.keys())
+		current[k] = to_apply[k];
+	to_apply.clear();
+
+	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
+
+	setConfValue(conf, "ethernet/lan/mode", QString::number(getLanConfig() == Dhcp ? 1 : 2));
+	setConfValue(conf, "ethernet/lan/addressip", getAddress());
+	setConfValue(conf, "ethernet/lan/netmask", getSubnet());
+	setConfValue(conf, "ethernet/lan/router", getGateway());
+	setConfValue(conf, "ethernet/lan/dnspri", getDns1());
+	setConfValue(conf, "ethernet/lan/dnssec", getDns2());
+
+	configurations->saveConfiguration(CONF_FILE);
+}
+
+void PlatformSettings::reset()
+{
+	to_apply.clear();
+}
+
 QString PlatformSettings::getAddress() const
 {
-	return address;
+	return value(LAN_ADDRESS).toString();
 }
 
 void PlatformSettings::setAddress(QString a)
 {
-	qDebug() << QString("PlatformSettings::setAddress(%1)").arg(a);
-	// TODO set the value on the device
-	address = a;
+	if (a == getAddress())
+		return;
+	to_apply[LAN_ADDRESS] = a;
+	emit addressChanged();
 }
 
-QString PlatformSettings::getDns() const
+QString PlatformSettings::getDns1() const
 {
-	return dns;
+	return value(LAN_DNS1).toString();
 }
 
-void PlatformSettings::setDns(QString d)
+void PlatformSettings::setDns1(QString d)
 {
-	qDebug() << QString("PlatformSettings::setDns(%1)").arg(d);
-	// TODO set the value on the device
-	dns = d;
+	if (d == getDns1())
+		return;
+	to_apply[LAN_DNS1] = d;
+	emit dns1Changed();
+}
+
+QString PlatformSettings::getDns2() const
+{
+	return value(LAN_DNS2).toString();
+}
+
+void PlatformSettings::setDns2(QString d)
+{
+	if (d == getDns2())
+		return;
+	to_apply[LAN_DNS2] = d;
+	emit dns2Changed();
 }
 
 QString PlatformSettings::getFirmware() const
@@ -74,28 +118,29 @@ QString PlatformSettings::getFirmware() const
 
 QString PlatformSettings::getGateway() const
 {
-	return gateway;
+	return value(LAN_GATEWAY).toString();
 }
 
 void PlatformSettings::setGateway(QString g)
 {
-	qDebug() << QString("PlatformSettings::setGateway(%1)").arg(g);
-	// TODO set the value on the device
-	gateway = g;
+	if (g == getGateway())
+		return;
+	to_apply[LAN_GATEWAY] = g;
+	emit gatewayChanged();
 }
 
 PlatformSettings::LanConfig PlatformSettings::getLanConfig() const
 {
-	return lan_config;
+	return static_cast<LanConfig>(value(LAN_CONFIG).toInt());
 }
 
 void PlatformSettings::setLanConfig(LanConfig lc)
 {
-	if (lc == lan_config)
+	if (lc == getLanConfig())
 		return;
-
-	// TODO set the value on the device
-	lan_config = lc;
+	if (lc == Dhcp)
+		reset();
+	to_apply[LAN_CONFIG] = lc;
 	emit lanConfigChanged();
 }
 
@@ -139,14 +184,15 @@ QString PlatformSettings::getSoftware() const
 
 QString PlatformSettings::getSubnet() const
 {
-	return subnet;
+	return value(LAN_NETMASK).toString();
 }
 
 void PlatformSettings::setSubnet(QString s)
 {
-	qDebug() << QString("PlatformSettings::setSubnet(%1)").arg(s);
-	// TODO set the value on the device
-	subnet = s;
+	if (s == getSubnet())
+		return;
+	to_apply[LAN_NETMASK] = s;
+	emit subnetChanged();
 }
 
 void PlatformSettings::setConnectionStatus(InternetConnectionStatus status)
@@ -211,17 +257,24 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 		switch (it.key())
 		{
 		case PlatformDevice::DIM_IP:
-			if (it.value().toString() != address)
+			if (it.value() != current[LAN_ADDRESS])
 			{
-				address = it.value().toString();
+				current[LAN_ADDRESS] = it.value();
 				emit addressChanged();
 			}
 			break;
 		case PlatformDevice::DIM_DNS1:
-			if (it.value().toString() != dns)
+			if (it.value() != current[LAN_DNS1])
 			{
-				dns = it.value().toString();
-				emit dnsChanged();
+				current[LAN_DNS1] = it.value();
+				emit dns1Changed();
+			}
+			break;
+		case PlatformDevice::DIM_DNS2:
+			if (it.value() != current[LAN_DNS2])
+			{
+				current[LAN_DNS2] = it.value();
+				emit dns2Changed();
 			}
 			break;
 		case PlatformDevice::DIM_FW_VERS:
@@ -248,9 +301,9 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 //			}
 //			break;
 		case PlatformDevice::DIM_GATEWAY:
-			if (it.value().toString() != gateway)
+			if (it.value() != current[LAN_GATEWAY])
 			{
-				gateway = it.value().toString();
+				current[LAN_GATEWAY] = it.value();
 				emit gatewayChanged();
 			}
 			break;
@@ -274,9 +327,9 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 			}
 			break;
 		case PlatformDevice::DIM_NETMASK:
-			if (it.value().toString() != subnet)
+			if (it.value() != current[LAN_NETMASK])
 			{
-				subnet = it.value().toString();
+				current[LAN_NETMASK] = it.value();
 				emit subnetChanged();
 			}
 			break;

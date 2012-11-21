@@ -18,21 +18,6 @@ MenuColumn {
         KeyboardLanguage {}
     }
 
-    Component {
-        id: temperature
-        Item {}
-    }
-
-    Component {
-        id: currency
-        Item {}
-    }
-
-    Component {
-        id: numberSeparator
-        Item {}
-    }
-
     function alertOkClicked() {
         textLanguageItem.description = pageObject.names.get('LANGUAGE', privateProps.language);
         global.guiSettings.language = privateProps.language
@@ -46,9 +31,6 @@ MenuColumn {
         // -1 -> no selection
         //  1 -> text language menu
         //  2 -> keyboard language menu
-        //  3 -> temperature menu
-        //  4 -> currency
-        //  5 -> number separators
         property string language: ''
     }
 
@@ -58,14 +40,6 @@ MenuColumn {
     onChildLoaded: {
         if (child.textLanguageChanged)
             child.textLanguageChanged.connect(textLanguageChanged)
-        if (child.keyboardLanguageChanged)
-            child.keyboardLanguageChanged.connect(keyboardLanguageChanged)
-        if (child.temperatureChanged)
-            child.temperatureChanged.connect(temperatureChanged)
-        if (child.currencyChanged)
-            child.currencyChanged.connect(currencyChanged)
-        if (child.numberSeparatorsChanged)
-            child.numberSeparatorsChanged.connect(numberSeparatorsChanged)
     }
 
     function textLanguageChanged(value) {
@@ -75,38 +49,12 @@ MenuColumn {
         privateProps.language = value
         pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
     }
-    function keyboardLanguageChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.TextLanguage = value;
-        // TODO remove when model is implemented
-        keyboardLanguageItem.description = pageObject.names.get('LANGUAGE', value);
-    }
-    function temperatureChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.Temperature = value;
-        // TODO remove when model is implemented
-        temperatureItem.description = pageObject.names.get('LANGUAGE', value)
-    }
-    function currencyChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.Currency = value;
-        // TODO remove when model is implemented
-        currencyItem.description = pageObject.names.get('LANGUAGE', value)
-    }
-    function numberSeparatorsChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.NumberSeparator = value;
-        // TODO remove when model is implemented
-        numberSeparatorsItem.description = pageObject.names.get('LANGUAGE', value)
-    }
 
     PaginatorColumn {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
         maxHeight: 300
 
-        // TODO international menu is to be defined: this is a very skeletal
-        // starting point
         MenuItem {
             id: textLanguageItem
             name: qsTr("text language")
@@ -119,52 +67,17 @@ MenuColumn {
                 column.loadColumn(textLanguage, name)
             }
         }
+
         MenuItem {
             id: keyboardLanguageItem
             name: qsTr("keyboard language")
-            description: pageObject.names.get('LANGUAGE', global.guiSettings.keyboardLayout)
+            description: pageObject.names.get('KEYBOARD', global.keyboardLayout)
             hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 column.loadColumn(keyboardLanguage, name)
-            }
-        }
-        MenuItem {
-            id: temperatureItem
-            name: qsTr("temperature")
-            description: "°C"
-            hasChild: true
-            isSelected: privateProps.currentIndex === 3
-            onClicked: {
-                if (privateProps.currentIndex !== 3)
-                    privateProps.currentIndex = 3
-                column.loadColumn(temperature, name)
-            }
-        }
-        MenuItem {
-            id: currencyItem
-            name: qsTr("currency")
-            description: pageObject.names.get('CURRENCY', global.guiSettings.currency)
-            hasChild: true
-            isSelected: privateProps.currentIndex === 5
-            onClicked: {
-                if (privateProps.currentIndex !== 5)
-                    privateProps.currentIndex = 5
-                column.loadColumn(currency, name)
-            }
-        }
-        MenuItem {
-            id: numberSeparatorItem
-            name: qsTr("number separator")
-            description: "0.000,00"
-            hasChild: true
-            isSelected: privateProps.currentIndex === 6
-            onClicked: {
-                if (privateProps.currentIndex !== 6)
-                    privateProps.currentIndex = 6
-                column.loadColumn(numberSeparator, name)
             }
         }
     }

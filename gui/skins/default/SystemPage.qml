@@ -16,6 +16,7 @@ Page {
     // The spacing between the buttons on the left and the MenuContainer
     property int containerLeftMargin: systemPage.width / 100 * 2
     property int navigationTarget: 0 // for menu navigation, see navigation.js for further details
+    property variant navigationData: undefined // for menu navigation, see navigation.js for further details
 
     onNavigationTargetChanged: {
         if (navigationTarget === 0)
@@ -27,11 +28,6 @@ Page {
             return
 
         var itemChild = item.child
-
-        if (!item.isTargetKnown()) {
-            systemPage.rootObject.navigate()
-            return
-        }
 
         while (itemChild && itemChild.isTargetKnown()) {
             item = itemChild

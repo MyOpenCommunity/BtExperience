@@ -637,7 +637,7 @@ void BtObjectsPlugin::createObjects()
 	}
 
 	objmodel << new HardwareSettings;
-	objmodel << new PlatformSettings(new PlatformDevice);
+	objmodel << new PlatformSettings(bt_global::add_device_to_cache(new PlatformDevice));
 
 	// the following objects are used as collectors of signals from other objects
 	// they are used in EventManager, for example, to be notified only globally
@@ -1331,7 +1331,7 @@ void BtObjectsPlugin::parseSoundAmbientMulti(const QDomNode &ambient)
 	{
 		v.setIst(ist);
 		int ambient_uii = getIntAttribute(ist, "uii");
-		SoundAmbient *ambient = new SoundAmbient(v.intValue("env"), v.value("descr"), ambient_id);
+		SoundAmbient *ambient = new SoundAmbient(v.intValue("env"), v.value("descr"), ambient_id, ambient_uii);
 		QList<Amplifier *> amplifiers;
 
 		objmodel << ambient;
@@ -1373,7 +1373,7 @@ void BtObjectsPlugin::parseSoundAmbientMono(const QDomNode &ambient)
 		int system_uii = getIntAttribute(ist, "uii");
 		int ambient_uii = -2;
 		Container *system = new Container(system_id, system_uii, v.value("img"), v.value("descr"));
-		SoundAmbient *ambient = new SoundAmbient(0, "", ObjectInterface::IdMonoChannelSoundAmbient);
+		SoundAmbient *ambient = new SoundAmbient(0, "", ObjectInterface::IdMonoChannelSoundAmbient, ambient_uii);
 
 		objmodel << ambient;
 		systems_model << system;
@@ -1412,7 +1412,7 @@ void BtObjectsPlugin::initializeEngine(QDeclarativeEngine *engine, const char *u
 void BtObjectsPlugin::registerTypes(const char *uri)
 {
 	// @uri BtObjects
-	qmlRegisterUncreatableType<ObjectDataModel>(uri, 1, 0, "ObjectListModel", "");
+	qmlRegisterUncreatableType<ObjectDataModel>(uri, 1, 0, "ObjectDataModel", "");
 	qmlRegisterUncreatableType<MediaDataModel>(uri, 1, 0, "MediaDataModel", "");
 	qmlRegisterType<MediaModel>(uri, 1, 0, "MediaModel");
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "ObjectModel");

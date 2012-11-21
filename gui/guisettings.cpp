@@ -2,6 +2,7 @@
 #include "xml_functions.h"
 #include "xmlobject.h"
 #include "configfile.h"
+#include "main.h" // bt_global::config
 
 #include <QDebug>
 #include <QDateTime>
@@ -16,9 +17,11 @@
 
 #if defined(BT_HARDWARE_X11)
 #define CONF_FILE "conf.xml"
+#define LAYOUT_FILE "layout.xml"
 #define SETTINGS_FILE "settings.xml"
 #else
 #define CONF_FILE "/var/tmp/conf.xml"
+#define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
 #endif
 
@@ -27,6 +30,8 @@ namespace
 {
 	enum Parsing
 	{
+		HomePageContainer = 17,
+
 		EnergyThresholdBeep = 14255,
 		EnergyConsumptionPopup = 14256,
 		BurglarAlarmAlert = 14257,
@@ -110,10 +115,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	brightness = 50;
 	contrast = 50;
-	currency = "EUR";
 	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
-	numberSeparator = ".";
-	temperatureUnit = Celsius;
 	timezone = 0;
 	skin = Clear;
 	beep = false;
@@ -130,6 +132,15 @@ GuiSettings::GuiSettings(QObject *parent) :
 	message_alert = false;
 	scenario_recording_alert = false;
 	language = getConfValue(conf, "generale/language");
+
+	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
+	{
+		if (getIntAttribute(container, "id") == HomePageContainer)
+		{
+			skin = getIntAttribute(container, "img_type", 0) == 0 ? Clear : Dark;
+			break;
+		}
+	}
 
 	setLanguageTranslator(language);
 	parseSettings();
@@ -252,36 +263,6 @@ void GuiSettings::setContrast(int c)
 	emit contrastChanged();
 }
 
-QString GuiSettings::getCurrency() const
-{
-	return currency;
-}
-
-void GuiSettings::setCurrency(QString c)
-{
-	if (currency == c)
-		return;
-
-	// TODO save value somewhere
-	currency = c;
-	emit currencyChanged();
-}
-
-QString GuiSettings::getKeyboardLayout() const
-{
-	return keyboardLayout;
-}
-
-void GuiSettings::setKeyboardLayout(QString l)
-{
-	if (keyboardLayout == l)
-		return;
-
-	keyboardLayout = l;
-	emit keyboardLayoutChanged();
-	setConfValue("generale/keyboard_lang", l);
-}
-
 QString GuiSettings::getLanguage() const
 {
 	return language;
@@ -308,7 +289,16 @@ void GuiSettings::setSkin(Skin s)
 	if (skin == s)
 		return;
 
-	// TODO save value somewhere
+	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
+	{
+		if (getIntAttribute(container, "id") == HomePageContainer)
+		{
+			setAttribute(container, "img_type", QString::number(s == Clear ? 0 : 1));
+			break;
+		}
+	}
+	configurations->saveConfiguration(LAYOUT_FILE);
+
 	skin = s;
 	emit skinChanged();
 }
@@ -325,36 +315,6 @@ void GuiSettings::setBeep(bool b)
 
 	beep = b;
 	emit beepChanged();
-}
-
-QString GuiSettings::getNumberSeparator() const
-{
-       return numberSeparator;
-}
-
-void GuiSettings::setNumberSeparator(QString s)
-{
-       if (numberSeparator == s)
-	       return;
-
-       // TODO save value somewhere
-       numberSeparator = s;
-       emit numberSeparatorChanged();
-}
-
-GuiSettings::TemperatureUnit GuiSettings::getTemperatureUnit() const
-{
-	return temperatureUnit;
-}
-
-void GuiSettings::setTemperatureUnit(TemperatureUnit u)
-{
-	if (temperatureUnit == u)
-		return;
-
-	// TODO save value somewhere
-	temperatureUnit = u;
-	emit temperatureUnitChanged();
 }
 
 int GuiSettings::getTimezone() const

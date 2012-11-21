@@ -14,6 +14,7 @@ MenuColumn {
     ListView {
         id: view
         anchors.fill: parent
+        interactive: false
         delegate: MenuItemDelegate {
             name: model.name
             onClicked: textLanguageChanged(model.type)

@@ -9,18 +9,32 @@ MenuColumn {
 
     Component {
         id: networkState
-        NetworkState {}
+        NetworkState {
+            platform: privateProps.model
+        }
     }
 
     Component {
         id: ipConfigurations
-        IPConfigurations {}
+        IPConfigurations {
+            platform: privateProps.model
+        }
     }
 
     // object model to retrieve network data
     ObjectModel {
         id: objectModel
         filters: [{objectId: ObjectInterface.IdPlatformSettings}]
+    }
+
+    function alertCancelClicked() {
+        privateProps.model.reset()
+        column.closeColumn()
+    }
+
+    function alertOkClicked() {
+        privateProps.model.apply()
+        column.closeColumn()
     }
 
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
@@ -45,34 +59,18 @@ MenuColumn {
     onChildDestroyed: privateProps.currentIndex = -1
 
     // retrieves actual configuration information and sets the right component
-    Component.onCompleted: {
+    function loadMenu() {
         if (privateProps.model.lanConfig === PlatformSettings.Static)
             configurationLoader.setComponent(optionsItem);
         else
             configurationLoader.setComponent(summaryItem);
     }
 
-    // connects child signals to slots
-    onChildLoaded: {
-        if (child.ipConfigurationChanged)
-            child.ipConfigurationChanged.connect(ipConfigurationChanged)
-        if (child.networkChanged)
-            child.networkChanged.connect(networkChanged)
-    }
+    Component.onCompleted: loadMenu()
 
-    // slot to manage the change of IP configuration type
-    function ipConfigurationChanged(configuration) {
-        if (configuration === PlatformSettings.Dhcp)
-            configurationLoader.setComponent(summaryItem)
-        else if (configuration === PlatformSettings.Static)
-            configurationLoader.setComponent(optionsItem)
-        else
-            Log.logWarning("Unrecognized IP configuration" + configuration)
-    }
-
-    // slot to manage enable/disable of the network adapter
-    function networkChanged(state) {
-        privateProps.model.lanStatus = state;
+    Connections {
+        target: privateProps.model
+        onLanConfigChanged: loadMenu()
     }
 
     PaginatorColumn {
@@ -121,27 +119,39 @@ MenuColumn {
         id: summaryItem
         Item {
             width: 212
-            height: 50 * 5
             Column {
                 ControlTitleValue {
                     title: qsTr("MAC address")
-                    value: privateProps.model.mac
+                    value: privateProps.model.mac || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("IP address")
-                    value: privateProps.model.address
+                    value: privateProps.model.address || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Subnet mask")
-                    value: privateProps.model.subnet
+                    value: privateProps.model.subnet || qsTr("Unknown")
                 }
                 ControlTitleValue {
                     title: qsTr("Gateway")
-                    value: privateProps.model.gateway
+                    value: privateProps.model.gateway || qsTr("Unknown")
                 }
                 ControlTitleValue {
-                    title: qsTr("DNS")
-                    value: privateProps.model.dns
+                    title: qsTr("Primary DNS")
+                    value: privateProps.model.dns1 || qsTr("Unknown")
+                }
+                ControlTitleValue {
+                    title: qsTr("Secondary DNS")
+                    value: privateProps.model.dns2 || qsTr("Unknown")
+                }
+                ButtonOkCancel {
+                    onOkClicked: {
+                        pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
+                    }
+                    onCancelClicked: {
+                        privateProps.model.reset()
+                        column.closeColumn()
+                    }
                 }
             }
         }
@@ -153,7 +163,6 @@ MenuColumn {
 
         // we have some input elements, so a FocusScope is needed to make everything work
         FocusScope {
-            id: optionsFocusScope
             // FocusScope needs to bind to visual properties of the children (I'm not sure is needed)
             x: background.x
             y: background.y
@@ -162,35 +171,55 @@ MenuColumn {
             Item {
                 id: background
                 width: 212
-                height: 50 * 5
                 Column {
                     ControlTitleValue {
                         title: qsTr("MAC address")
-                        value: privateProps.model.mac
+                        value: privateProps.model.mac || qsTr("Unknown")
                     }
                     ControlTitleValue {
                         title: qsTr("IP address")
                         value: privateProps.model.address
                         readOnly: false
+                        inputMask: '000.000.000.000'
                         onAccepted: privateProps.model.address = value
                     }
                     ControlTitleValue {
                         title: qsTr("Subnet mask")
                         value: privateProps.model.subnet
                         readOnly: false
+                        inputMask: '000.000.000.000'
                         onAccepted: privateProps.model.subnet = value
                     }
                     ControlTitleValue {
                         title: qsTr("Gateway")
                         value: privateProps.model.gateway
                         readOnly: false
+                        inputMask: '000.000.000.000'
                         onAccepted: privateProps.model.gateway = value
                     }
                     ControlTitleValue {
-                        title: qsTr("DNS")
-                        value: privateProps.model.dns
+                        title: qsTr("Primary DNS")
+                        value: privateProps.model.dns1
                         readOnly: false
-                        onAccepted: privateProps.model.dns = value
+                        inputMask: '000.000.000.000'
+                        onAccepted: privateProps.model.dns1 = value
+                    }
+                    ControlTitleValue {
+                        title: qsTr("Secondary DNS")
+                        value: privateProps.model.dns2
+                        readOnly: false
+                        inputMask: '000.000.000.000'
+                        onAccepted: privateProps.model.dns2 = value
+                    }
+                    ButtonOkCancel {
+                        onOkClicked: {
+                            focus = true // to accept current value (if any)
+                            pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
+                        }
+                        onCancelClicked: {
+                            privateProps.model.reset()
+                            column.closeColumn()
+                        }
                     }
                 }
             }

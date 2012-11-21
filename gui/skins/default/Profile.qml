@@ -292,7 +292,7 @@ Page {
                         height: parent.height / 100 * 80
                         anchors.top: parent.top
                         anchors.topMargin: parent.height / 100 * 8
-                        source: profilePage.profile.cardImage
+                        source: profilePage.profile.cardImageCached
                         fillMode: Image.PreserveAspectFit
                     }
 
@@ -307,7 +307,7 @@ Page {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.PROFILE})
+                        onClicked: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.PROFILE, navigationData: profilePage.profile})
                     }
 
                     UbuntuLightText {

@@ -36,6 +36,10 @@
   * As soon as the menu is opened and all processing operations are done the
   * loadNextColumn signal is triggered on the newly opened menu and a sort of
   * recursive call processing goes on till all menus are opened.
+  *
+  * In case of dynamic navigation, the SystemPage component has a navigationData
+  * variant property. In the openMenu hook it is possible to use it to navigate to a
+  * particular element (not known a priori).
   */
 
 
@@ -57,7 +61,7 @@ function _init(paths) {
     paths[VDE_MUTE] = ["Systems", "VDE", "VdeMute"]
     paths[SUPERVISION] = ["Supervision"]
     paths[ALARM_CLOCKS] = ["AlarmClock"]
-    paths[PROFILE] = ["Profiles"]
+    paths[PROFILE] = ["Profiles", "Profile"]
 }
 
 // returns a string indicating where to navigate

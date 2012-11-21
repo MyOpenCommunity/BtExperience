@@ -3,7 +3,7 @@
 	<obj cid="11001" id="11001" descr="Amplifier" where="11">
 		<ist uii="10001" descr="Generale" where="0"/>
 		<ist uii="10014" descr="Generale" where="#2"/>
-		<ist uii="10002" descr="Amplificatore 2" where="22"/>
+		<ist uii="10002" descr="Amplificatore 2" where="21"/>
 		<ist uii="10003" descr="Amplificatore 3" where="23"/>
 		<ist uii="10012" descr="Amplificatore 2" where="32"/>
 		<ist uii="10013" descr="Generale" where="#3"/>
@@ -21,6 +21,15 @@
 			<link uii="10002" />
 			<link uii="10004" />
 		</ist>
+		<ist uii="10030" descr="General ambient 2" >
+			<link uii="10014" />
+		</ist>
+		<ist uii="10031" descr="General ambient 3" >
+			<link uii="10013" />
+		</ist>
+		<ist uii="10032" descr="General" >
+			<link uii="10001" />
+		</ist>
 	</obj>
 	<obj cid="11032" id="11032" descr="Source" where="1" radio_num="5">
 		<ist uii="10007" descr="Radio" where="1" />
@@ -31,16 +40,16 @@
 	<obj cid="11034" id="11034" descr="Touch" where="1">
 		<ist uii="10011" descr="Touch" where="4" />
 	</obj>
-	<obj cid="16000" id="16000" descr="Web radio" title="Radio" url="http://">
-		<ist uii="8011" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
-		<ist uii="8014" descr="Fox FM" title="Radio 1" url="http://mediasrv.musicradio.com/FoxFM" />
-		<ist uii="8015" descr="Non funziona" title="Radio 1" url="http://yp.shoutcast.com/sbin/tunein-station.pls?id=2101" />
-	</obj>
 	<obj cid="16007" id="16007" descr="USB">
 		<ist uii="11011" />
 	</obj>
 	<obj cid="16008" id="16008" descr="SD">
 		<ist uii="11012" />
+	</obj>
+	<obj cid="16000" id="16000" descr="Web radio" title="Radio" url="http://">
+		<ist uii="8011" descr="Classic FM" title="Radio 1" url="http://media-ice.musicradio.com:80/ClassicFMMP3" />
+		<ist uii="8014" descr="Fox FM" title="Radio 1" url="http://mediasrv.musicradio.com/FoxFM" />
+		<ist uii="8015" descr="Non funziona" title="Radio 1" url="http://yp.shoutcast.com/sbin/tunein-station.pls?id=2101" />
 	</obj>
 	<obj cid="16006" id="16006" descr="Mediaserver">
 		<ist uii="11013" descr="My Mediaserver" />

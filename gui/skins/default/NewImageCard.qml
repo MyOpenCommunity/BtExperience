@@ -7,7 +7,8 @@ import "js/Stack.js" as Stack
 BasePage {
     id: page
 
-    property variant profile // TODO add saving to right profile!!!
+    property variant containerWithCard
+    property alias fullImage: sourceImage.source
 
     ToolBar {
         id: toolbar
@@ -59,8 +60,9 @@ BasePage {
 
             x: (parent.width - width) / 2
             y: (parent.height - height) / 2
-            width: Math.min(150, sourceImage.width)
-            height: Math.min(208, sourceImage.height)
+            // TODO define some constants?
+            width: 171 //Math.min(171, sourceImage.width)
+            height: 213 //Math.min(213, sourceImage.height)
         }
 
         // to highlight cropping region we need to draw a frame around the
@@ -203,7 +205,7 @@ BasePage {
         font.pixelSize: 14
         onClicked: {
             privateProps.saveCard()
-            // Stack.popPage()
+            Stack.popPage()
         }
         anchors {
             top: bgBottomBar.top
@@ -385,7 +387,17 @@ BasePage {
             var y = transparentRect.mapToItem(null, 0, 0).y
             var w = transparentRect.width
             var h = transparentRect.height
-            global.takeScreenshot(Qt.rect(x, y, w, h), "images/home/newcard.png")
+            // customization filenames are in the form uii.extension
+            // the string concatenation is needed to convert everything to a string
+            var name = "card_" + containerWithCard.uii + "." + getExtension("" + sourceImage.source)
+            containerWithCard.cardImage = global.takeScreenshot(Qt.rect(x, y, w, h), name)
+            // images are internally cached and shared, so a trick is needed
+            // to cause a reload of the image from disk
+            containerWithCard.setCacheDirty()
+        }
+
+        function getExtension(filename) {
+            return filename.split(".").pop()
         }
     }
 }

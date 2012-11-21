@@ -65,10 +65,7 @@ void TestObjectModel::testFilterObjectId()
 	qApp->processEvents();
 	ts.clearSignals();
 
-	QVariantMap filters;
-
-	filters["objectId"] = ObjectInterface::IdLightCustom;
-	obj->setFilters(QVariantList() << filters);
+	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdLightCustom);
 
 	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
@@ -80,8 +77,7 @@ void TestObjectModel::testFilterObjectId()
 	QCOMPARE(obj->getObject(1), light2);
 	QCOMPARE(obj->getObject(2), light3);
 
-	filters["objectId"] = ObjectInterface::IdSoundAmplifier;
-	obj->setFilters(QVariantList() << filters);
+	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdSoundAmplifier);
 
 	QCOMPARE(obj->getCount(), 2);
 	QCOMPARE(obj->rowCount(), 2);
@@ -109,11 +105,8 @@ void TestObjectModel::testFilterObjectKey()
 	qApp->processEvents();
 	ts.clearSignals();
 
-	QVariantMap filters;
-
-	filters["objectId"] = ObjectInterface::IdLightCustom;
-	filters["objectKey"] = "2";
-	obj->setFilters(QVariantList() << filters);
+	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdLightCustom
+					     << "objectKey" << "2");
 
 	QCOMPARE(obj->getCount(), 1);
 	QCOMPARE(obj->rowCount(), 1);
@@ -123,9 +116,8 @@ void TestObjectModel::testFilterObjectKey()
 
 	QCOMPARE(obj->getObject(0), light2);
 
-	filters["objectId"] = ObjectInterface::IdSoundAmplifier;
-	filters["objectKey"] = "3";
-	obj->setFilters(QVariantList() << filters);
+	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdSoundAmplifier
+					     << "objectKey" << "3");
 
 	QCOMPARE(obj->getCount(), 1);
 	QCOMPARE(obj->rowCount(), 1);
@@ -134,6 +126,35 @@ void TestObjectModel::testFilterObjectKey()
 	ts.checkSignals();  // TODO should not emit countChanged()
 
 	QCOMPARE(obj->getObject(0), amplifier2);
+}
+
+void TestObjectModel::testMultipleFilter()
+{
+	*src << light1;
+	*src << light2;
+	*src << light3;
+	*src << amplifier1;
+	*src << amplifier2;
+	qApp->processEvents(); // flush pending countChanged()
+
+	ObjectTester ts(obj, SIGNAL(countChanged()));
+
+	QCOMPARE(obj->getCount(), 5);
+	QCOMPARE(obj->rowCount(), 5);
+	qApp->processEvents();
+	ts.clearSignals();
+
+	obj->setFilters(ObjectModelFilters() << "objectKey" << "2" << "objectId" << ObjectInterface::IdLightCustom <<
+			ObjectModelFilters() << "objectKey" << "3" << "objectId" << ObjectInterface::IdSoundAmplifier);
+
+	QCOMPARE(obj->getCount(), 2);
+	QCOMPARE(obj->rowCount(), 2);
+
+	qApp->processEvents();
+	ts.checkSignals();
+
+	QCOMPARE(obj->getObject(0), light2);
+	QCOMPARE(obj->getObject(1), amplifier2);
 }
 
 void TestObjectModel::testComplexFilter()
@@ -147,10 +168,7 @@ void TestObjectModel::testComplexFilter()
 
 	ObjectTester ts(obj, SIGNAL(countChanged()));
 
-	QVariantMap filters;
-
-	filters["objectId"] = ObjectInterface::IdLightCustom;
-	obj->setFilters(QVariantList() << filters);
+	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdLightCustom);
 
 	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);

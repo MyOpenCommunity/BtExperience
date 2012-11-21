@@ -35,6 +35,11 @@ QtObject {
         container['LANGUAGE']["en"] = qsTr("English")
         container['LANGUAGE']["fr"] = qsTr("French")
 
+        container['KEYBOARD'] = []
+        container['KEYBOARD']["it_bticino"] = qsTr("Italian")
+        container['KEYBOARD']["en_gb_bticino"] = qsTr("English (GB)")
+        container['KEYBOARD']["fr_bticino"] = qsTr("French")
+
         container['CURRENCY'] = []
         container['CURRENCY']["CHF"] = qsTr("Swiss franc")
         container['CURRENCY']["EUR"] = qsTr("Euro €")
@@ -53,8 +58,8 @@ QtObject {
         container['PASSWORD'][1] = qsTr("Disable")
 
         container['BEEP'] = []
-        container['BEEP'][0] = qsTr("Enable")
-        container['BEEP'][1] = qsTr("Disable")
+        container['BEEP'][true] = qsTr("Enable")
+        container['BEEP'][false] = qsTr("Disable")
 
         container['TIMEZONE'] = []
         container['TIMEZONE'][-2] = qsTr("GMT -2")

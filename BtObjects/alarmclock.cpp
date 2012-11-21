@@ -23,11 +23,13 @@ namespace
 	const int MASK_SATURDAY = 0x2;
 	const int MASK_SUNDAY = 0x1;
 
+	const int ALARM_TIME = 120;
+	const int POSTPONE_TIME = 5 * 60;
+	const int MAX_TIME = 30 * 60;
+
 	const int BEEP_INTERVAL = 5000;
-	const int MAX_BEEP_TICK = 24;
 
 	const int SOUND_DIFFUSION_INTERVAL = 3000;
-	const int MAX_SOUND_DIFFUSION_TICK = 39;
 }
 
 
@@ -145,9 +147,14 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	minute = _minute;
 	enabled = false; // starting from a well known state
 	source = 0;
+	amplifier = 0;
 	volume = 0;
 	tick_count = 0;
-	tick = new QTimer(this);
+	timer_tick = new QTimer(this);
+
+	timer_postpone = new QTimer(this);
+	timer_postpone->setSingleShot(true);
+	timer_postpone->setInterval(POSTPONE_TIME * 1000);
 
 	connect(this, SIGNAL(alarmTypeChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(checkRequested()), this, SLOT(checkRequestManagement()));
@@ -158,7 +165,8 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(persistItem()));
 
 	connect(timer_trigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
-	connect(tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
+	connect(timer_tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
+	connect(timer_postpone, SIGNAL(timeout()), this, SLOT(restart()));
 
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(checkRequested()));
 	connect(this, SIGNAL(daysChanged()), this, SIGNAL(checkRequested()));
@@ -226,12 +234,27 @@ void AlarmClock::triggersIfHasTo()
 	emit checkRequested();
 }
 
+void AlarmClock::restart()
+{
+	if (isRinging())
+		return;
+	if (start_time.secsTo(QTime::currentTime()) <= MAX_TIME)
+		startRinging();
+}
+
 void AlarmClock::start()
 {
+	actual_type = alarm_type;
+	start_time = QTime::currentTime();
+	startRinging();
+}
+
+void AlarmClock::startRinging()
+{
 	tick_count = 0;
-	if (alarm_type == AlarmClockBeep)
+	if (actual_type == AlarmClockBeep)
 	{
-		tick->setInterval(BEEP_INTERVAL);
+		timer_tick->setInterval(BEEP_INTERVAL);
 	}
 	else
 	{
@@ -241,23 +264,43 @@ void AlarmClock::start()
 			return;
 		}
 
-		tick->setInterval(SOUND_DIFFUSION_INTERVAL);
+		timer_tick->setInterval(SOUND_DIFFUSION_INTERVAL);
 	}
-	tick->start();
+
+	timer_tick->start();
+	timer_postpone->stop();
 	emit ringingChanged();
+
+	if (actual_type == AlarmClockSoundSystem)
+	{
+		SourceMedia *media = qobject_cast<SourceMedia *>(source);
+
+		if (media)
+		{
+			connect(media, SIGNAL(firstMediaContentStatus(bool)),
+				this, SLOT(mediaSourcePlaybackStatus(bool)));
+			media->playFirstMediaContent();
+		}
+	}
 }
 
 void AlarmClock::stop()
 {
-	tick->stop();
+	timer_tick->stop();
+	timer_postpone->stop();
 	emit ringingChanged();
 }
 
 void AlarmClock::postpone()
 {
-	// TODO postpones alarm if ringing
-	qDebug() << __PRETTY_FUNCTION__;
-	qDebug() << "+++++++++++++++++++++++++++++++++++++++++++++++ Alarm postponed";
+	if (!isRinging())
+		return;
+	if (actual_type == AlarmClockSoundSystem)
+		soundDiffusionStop();
+
+	timer_tick->stop();
+	timer_postpone->start();
+	emit ringingChanged();
 }
 
 void AlarmClock::setDescription(QString new_value)
@@ -401,9 +444,9 @@ void AlarmClock::setTriggerOnWeekdays(bool new_value, int day_mask)
 
 void AlarmClock::alarmTick()
 {
-	if (alarm_type == AlarmClockBeep)
+	if (actual_type == AlarmClockBeep)
 	{
-		if (tick_count == MAX_BEEP_TICK)
+		if (tick_count == (ALARM_TIME * 1000) / BEEP_INTERVAL - 1)
 			stop();
 		else
 			emit ringMe(this);
@@ -427,7 +470,7 @@ void AlarmClock::alarmTick()
 			}
 		}
 
-		if (tick_count == MAX_SOUND_DIFFUSION_TICK)
+		if (tick_count == (ALARM_TIME * 1000) / SOUND_DIFFUSION_INTERVAL - 1)
 		{
 			soundDiffusionStop();
 			stop();
@@ -439,9 +482,28 @@ void AlarmClock::alarmTick()
 	++tick_count;
 }
 
+void AlarmClock::mediaSourcePlaybackStatus(bool status)
+{
+	disconnect(source, SIGNAL(firstMediaContentStatus(bool)),
+		   this, SLOT(mediaSourcePlaybackStatus(bool)));
+
+	if (!isRinging())
+		return;
+
+	if (!status)
+	{
+		qDebug("Unable to start local source, fallback to beep");
+
+		actual_type = AlarmClockBeep;
+		soundDiffusionStop();
+		startRinging();
+	}
+}
+
 void AlarmClock::soundDiffusionStop()
 {
-	amplifier->setActive(false);
+	if (amplifier)
+		amplifier->setActive(false);
 }
 
 void AlarmClock::soundDiffusionSetVolume()
@@ -498,5 +560,5 @@ int AlarmClock::getVolume() const
 
 bool AlarmClock::isRinging() const
 {
-	return tick->isActive();
+	return timer_tick->isActive();
 }

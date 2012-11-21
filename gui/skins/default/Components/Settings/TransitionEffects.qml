@@ -11,7 +11,7 @@ MenuColumn {
     ListView {
         id: itemList
         anchors.fill: parent
-
+        interactive: false
         currentIndex: -1
 
         delegate: MenuItemDelegate {

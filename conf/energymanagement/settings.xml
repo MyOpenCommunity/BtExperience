@@ -28,6 +28,22 @@
 	<obj cid="14110" id="14110" id_ringtone="1">
 		<ist uii="30209" id_ringtone="1"/>
 	</obj>
+	<!-- volume (beep, media, ringtone, vde, intercom) -->
+	<obj cid="14121" id="14121" volume="75">
+		<ist uii="30230" volume="75"/>
+	</obj>
+	<obj cid="14122" id="14122" volume="75">
+		<ist uii="30231" volume="75"/>
+	</obj>
+	<obj cid="14123" id="14123" volume="75">
+		<ist uii="30232" volume="75"/>
+	</obj>
+	<obj cid="14124" id="14124" volume="75">
+		<ist uii="30233" volume="75"/>
+	</obj>
+	<obj cid="14125" id="14125" volume="75">
+		<ist uii="30234" volume="75"/>
+	</obj>
 	<!-- password -->
 	<obj cid="14003" id="14003" mode="0" password="12345">
 		<ist uii="30301" password="1234567" mode="1" />

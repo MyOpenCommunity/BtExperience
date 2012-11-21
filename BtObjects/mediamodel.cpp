@@ -308,6 +308,15 @@ void MediaModel::clear()
 			source->removeRows(source_row, 1, QModelIndex());
 }
 
+int MediaModel::getAbsoluteIndexOf(ItemInterface *obj)
+{
+	MediaDataModel *source = getSource();
+	for (int source_row = 0; source_row < source->rowCount(); ++source_row)
+		if (source->getObject(source_row) == obj)
+			return source_row;
+	return -1;
+}
+
 void MediaModel::append(ItemInterface *obj)
 {
 	getSource()->append(obj);

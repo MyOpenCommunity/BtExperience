@@ -38,6 +38,11 @@ class Container : public ItemInterface
 	Q_PROPERTY(QString cardImage READ getCardImage NOTIFY cardImageChanged)
 
 	/*!
+		\brief Image for profile card. This must be used in QML when file may change.
+	*/
+	Q_PROPERTY(QString cardImageCached READ getCardImageCached NOTIFY cardImageCachedChanged)
+
+	/*!
 		\brief Unique identifier for this container instance.
 
 		Can be used as a filter criterium for MediaModel.
@@ -86,12 +91,15 @@ public:
 
 	Container(int id, int uii, QString image, QString description);
 
+	Q_INVOKABLE void setCacheDirty();
+
 	int getUii() const;
 
 	void setImage(QString image);
 	QString getImage() const;
 
 	virtual QString getCardImage() const;
+	virtual QString getCardImageCached() const;
 
 	void setDescription(QString description);
 	QString getDescription() const;
@@ -102,10 +110,14 @@ signals:
 	void descriptionChanged();
 	void imageChanged();
 	void cardImageChanged();
+	void cardImageCachedChanged();
+
+protected:
+	QString getCacheId() const;
 
 private:
 	QString description, image;
-	int id, uii;
+	int id, uii, cache_id;
 };
 
 
@@ -126,6 +138,7 @@ public:
 
 	void setCardImage(QString image);
 	virtual QString getCardImage() const;
+	virtual QString getCardImageCached() const;
 
 signals:
 	void cardImageChanged();

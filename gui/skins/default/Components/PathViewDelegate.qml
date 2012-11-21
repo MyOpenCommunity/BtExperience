@@ -19,7 +19,9 @@ Item {
         id: imageDelegate
         // the up-navigation is needed because images are referred to project
         // top folder
-        source: "../" + itemObject.cardImage
+        source: itemObject.cardImageCached[0] === "/" ?
+                    itemObject.cardImageCached :
+                    "../" + itemObject.cardImageCached
         anchors {
             fill: bg
             topMargin: bg.height / 100 * 1.65

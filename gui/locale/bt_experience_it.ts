@@ -3786,7 +3786,7 @@
         <location filename="../skins/default/SettingsNames.qml" line="77"/>
         <location filename="../skins/default/SettingsNames.qml" line="81"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Abilita</translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/SettingsNames.qml" line="57"/>
@@ -3796,7 +3796,7 @@
         <location filename="../skins/default/SettingsNames.qml" line="78"/>
         <location filename="../skins/default/SettingsNames.qml" line="82"/>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>Disabilita</translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/SettingsNames.qml" line="60"/>

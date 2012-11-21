@@ -40,7 +40,7 @@ Page {
         }
         pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
         arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
-        onClicked: Stack.goToPage("Room.qml", {'roomName': delegate.description, 'roomUii': delegate.uii, 'floorUii': mainarea.floorUii, 'source': Qt.resolvedUrl(delegate.image)})
+        onClicked: Stack.goToPage("Room.qml", {'room': delegate, 'floorUii': mainarea.floorUii})
     }
 
     CardView {
@@ -55,10 +55,10 @@ Page {
         visible: model.count < 3
         delegate: CardDelegate {
             property variant itemObject: roomsModel.getObject(index)
-            source: itemObject.cardImage
+            source: itemObject.cardImageCached
             label: itemObject.description
 
-            onClicked: Stack.goToPage("Room.qml", {'roomName': itemObject.description, 'roomUii': itemObject.uii, 'floorUii': mainarea.floorUii})
+            onClicked: Stack.goToPage("Room.qml", {'room': itemObject, 'floorUii': mainarea.floorUii})
         }
 
         delegateSpacing: 40

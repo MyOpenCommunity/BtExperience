@@ -6,6 +6,8 @@
 #include <QRect>
 #include <QImage>
 #include <QHash>
+#include <QStringList>
+#include <QVariantList>
 
 class QDeclarativeView;
 class GuiSettings;
@@ -66,8 +68,13 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(QString basePath READ getBasePath CONSTANT)
 	// The extra path for resources.
 	Q_PROPERTY(QString extraPath READ getExtraPath CONSTANT)
+
 	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
 	Q_PROPERTY(QString keyboardLayout READ getKeyboardLayout WRITE setKeyboardLayout NOTIFY keyboardLayoutChanged)
+
+	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
+	Q_PROPERTY(QStringList keyboardLayouts READ getKeyboardLayouts NOTIFY keyboardLayoutsChanged)
+
 	// A property to turn off/on the monitor from QML
 	Q_PROPERTY(bool monitorOff READ isMonitorOff WRITE setMonitorOff NOTIFY monitorOffChanged)
 
@@ -86,6 +93,9 @@ class GlobalProperties : public QObject
 
 	// Debug timing between various GUI events
 	Q_PROPERTY(DebugTiming *debugTiming READ getDebugTiming CONSTANT)
+
+	// Folder containing stock images
+	Q_PROPERTY(QVariantList stockImagesFolder READ getStockImagesFolder CONSTANT)
 
 public:
 	GlobalProperties(logger *log);
@@ -106,11 +116,13 @@ public:
 	bool getDebugTs();
 	DebugTiming *getDebugTiming();
 	QObject *getHardwareKeys() const;
+	QVariantList getStockImagesFolder() const;
 
 	QObject *getDefaultExternalPlace() const;
 
 	void setMainWidget(QDeclarativeView *main_widget);
-	Q_INVOKABLE void takeScreenshot(QRect rect, QString filename);
+	Q_INVOKABLE QString takeScreenshot(QRect rect, QString filename);
+	Q_INVOKABLE QString saveInCustomDirIfNeeded(QString filename, QString new_filename, QSize size = QSize());
 
 	Q_INVOKABLE void reboot()
 	{
@@ -128,6 +140,8 @@ public:
 	QString getKeyboardLayout() const;
 	void setKeyboardLayout(QString layout);
 
+	QStringList getKeyboardLayouts() const;
+
 	void setPassword(QString password);
 	QString getPassword() const;
 
@@ -142,6 +156,7 @@ signals:
 	void lastTimePressChanged();
 	void requestReboot();
 	void keyboardLayoutChanged();
+	void keyboardLayoutsChanged();
 	void audioPlayerChanged();
 	void monitorOffChanged();
 	void systemTimeChanged();
@@ -154,6 +169,7 @@ private slots:
 #endif
 	void beepChanged();
 	void ringtoneChanged(int ringtone, int index);
+	void volumeChanged(int state, int volume);
 	void audioStateChangedManagement();
 	void sendDelayedFrames();
 
@@ -186,7 +202,7 @@ private:
 	void maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings);
 
 	Maliit::SettingsManager *maliit_settings;
-	QSharedPointer<Maliit::SettingsEntry> keyboard_layout;
+	QSharedPointer<Maliit::SettingsEntry> keyboard_layout, allowed_layouts;
 	QHash<QString, QString> language_map;
 #endif
 };

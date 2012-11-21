@@ -1,36 +1,45 @@
 import QtQuick 1.1
 import Components 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
 
 
 MenuColumn {
     id: column
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
-        if (navigationTarget === "HandsFree") {
-            if (privateProps.currentIndex !== 1)
-                privateProps.currentIndex = 1
-            column.loadColumn(handsFreeComponent, handsFreeMenuItem.name)
-            return 0
+    // needed for menu navigation
+    function targetsKnown() {
+        return {
+            "HandsFree": privateProps.openHandsFreeMenu,
+            "AutoOpen": privateProps.openAutoOpenMenu,
+            "VdeMute": privateProps.openVdeMuteMenu,
         }
-        if (navigationTarget === "AutoOpen") {
-            if (privateProps.currentIndex !== 2)
-                privateProps.currentIndex = 2
-            column.loadColumn(autoOpenComponent, autoOpenMenuItem.name)
-            return 0
-        }
-        if (navigationTarget === "VdeMute") {
-            if (privateProps.currentIndex !== 3)
-                privateProps.currentIndex = 3
-            column.loadColumn(vdeMuteComponent, vdeMuteMenuItem.name)
-            return 0
-        }
-        return -2 // wrong target
     }
 
     QtObject {
         id: privateProps
+
         property int currentIndex: -1
+
+        function openHandsFreeMenu(navigationData) {
+            if (privateProps.currentIndex !== 1)
+                privateProps.currentIndex = 1
+            column.loadColumn(handsFreeComponent, handsFreeMenuItem.name)
+            return NavigationConstants.NAVIGATION_FINISHED_OK
+        }
+
+        function openAutoOpenMenu(navigationData) {
+            if (privateProps.currentIndex !== 2)
+                privateProps.currentIndex = 2
+            column.loadColumn(autoOpenComponent, autoOpenMenuItem.name)
+            return NavigationConstants.NAVIGATION_FINISHED_OK
+        }
+
+        function openVdeMuteMenu(navigationData) {
+            if (privateProps.currentIndex !== 3)
+                privateProps.currentIndex = 3
+            column.loadColumn(vdeMuteComponent, vdeMuteMenuItem.name)
+            return NavigationConstants.NAVIGATION_FINISHED_OK
+        }
     }
 
     onChildDestroyed: {

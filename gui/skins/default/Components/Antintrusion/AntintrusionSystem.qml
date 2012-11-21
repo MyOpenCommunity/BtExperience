@@ -3,6 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 import "../../js/navigation.js" as Navigation
+import "../../js/navigationconstants.js" as NavigationConstants
 
 
 MenuColumn {
@@ -32,15 +33,11 @@ MenuColumn {
         onCurrentScenarioChanged: privateProps.setScenarioDescription()
     }
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
-        if (navigationTarget === "AlarmLog") {
-            if (privateProps.currentIndex !== 1)
-                privateProps.currentIndex = 1
-            privateProps.showAlarmLog()
-            return 1
+    // needed for menu navigation
+    function targetsKnown() {
+        return {
+            "AlarmLog": privateProps.openAlarmLogMenu,
         }
-        return -2 // wrong target
     }
 
     Component.onCompleted: privateProps.setScenarioDescription()
@@ -71,6 +68,11 @@ MenuColumn {
         property bool actionPartialize: false
 
         property int currentIndex: -1
+
+        function openAlarmLogMenu(navigationData) {
+            privateProps.showAlarmLog()
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
 
         // 'Public' API
         function scenarioSelected(obj) {

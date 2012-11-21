@@ -1,5 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
+
 
 MenuColumn {
     id: column
@@ -7,15 +9,22 @@ MenuColumn {
     width: 212
     height: Math.max(1, 50 * itemList.count)
 
-    // redefined to implement menu navigation
-    function openMenu(navigationTarget) {
-        if (navigationTarget === "VDE") {
+    // needed for menu navigation
+    function targetsKnown() {
+        return {
+            "VDE": privateProps.openVDEMenu,
+        }
+    }
+
+    QtObject {
+        id: privateProps
+
+        function openVDEMenu(navigationData) {
             var m = modelList.get(2)
             itemList.currentIndex = 2
             column.loadColumn(m.component, m.name)
-            return 1
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
-        return -2 // wrong target
     }
 
     onChildDestroyed: {

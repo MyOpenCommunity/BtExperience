@@ -174,15 +174,7 @@ ItemInterface *GlobalModels::createAlarmClock()
 
 	// retrieves notifier model
 	ObjectModel *notifierModel = new ObjectModel(this);
-	QVariantList filters;
-	QVariantMap filter;
-
-	// sets filters to select alarm clocks objects
-	filter["objectId"] = ObjectInterface::IdAlarmClockNotifier;
-	filters << filter;
-
-	// actually filters
-	notifierModel->setFilters(filters);
+	notifierModel->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdAlarmClockNotifier);
 
 	// retrieves notifiers and add alarm clock connections to them
 	for (int i = 0; i < notifierModel->getCount(); ++i)

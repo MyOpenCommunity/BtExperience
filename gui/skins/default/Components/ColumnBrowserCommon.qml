@@ -14,6 +14,7 @@ MenuColumn {
     property variant theModel
     property bool imageOnly: false
     property alias bgHeight: imageBg.height
+    property bool preview: false
 
     signal selected(variant item)
 
@@ -180,6 +181,7 @@ MenuColumn {
 
         delegate: ColumnBrowserDelegate {
             itemObject: theModel.getObject(index)
+            preview: column.preview
             onDelegateClicked: {
                 var i = index;
                 if (!column.upnp) // local model uses absolute indexes
