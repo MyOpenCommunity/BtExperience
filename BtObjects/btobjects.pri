@@ -34,6 +34,7 @@ HEADERS += \
 	playlistplayer.h \
 	scenariomodulesnotifier.h \
 	scenarioobjects.h \
+	screenstate.h \
 	stopandgoobjects.h \
 	splitadvancedscenario.h \
 	splitbasicscenario.h \
@@ -109,6 +110,7 @@ SOURCES += \
 	playlistplayer.cpp \
 	scenariomodulesnotifier.cpp \
 	scenarioobjects.cpp \
+	screenstate.cpp \
 	stopandgoobjects.cpp \
 	splitadvancedscenario.cpp \
 	splitbasicscenario.cpp \
