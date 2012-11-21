@@ -71,6 +71,11 @@ Page {
             Stack.popPage()
     }
 
+    Component {
+        id: webViewContainerComponent
+        PopupBrowser {}
+    }
+
     QtObject {
         id: privateProps
 

@@ -66,8 +66,11 @@ Flickable {
 
     WebView {
         id: webView
+
+        newWindowComponent: webViewContainerComponent
+        newWindowParent: webView
         transformOrigin: Item.TopLeft
-        settings.javascriptCanOpenWindows: false
+        settings.javascriptCanOpenWindows: true
 
         function fixUrl(url)
         {
