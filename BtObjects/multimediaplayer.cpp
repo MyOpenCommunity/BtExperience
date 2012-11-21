@@ -27,19 +27,7 @@ namespace
 MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	QObject(parent)
 {
-	// Try to load plugin
-	gst_player = 0;
-	QDir pluginsDir = QDir(qApp->applicationDirPath() + "/plugins/");
-
-	foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
-		QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
-		GstMediaPlayerInterface *plugin = qobject_cast<GstMediaPlayerInterface *>(loader.instance());
-		if (plugin)
-			gst_player = qobject_cast<GstMediaPlayer *>(plugin->createPlayer(this));
-	}
-	if (!gst_player)
-		qWarning() << "Could not load GStreamer plugin in directory" << pluginsDir.absolutePath();
-
+	gst_player = new GstExternalMediaPlayer(this);
 	player = new MediaPlayer(this);
 
 	is_video_track = false;
@@ -59,17 +47,14 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	connect(player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
 		SLOT(playerInfoReceived(QMap<QString,QString>)));
 
-	if (gst_player)
-	{
-		connect(gst_player, SIGNAL(gstPlayerStarted()), SLOT(mplayerStarted()));
-		connect(gst_player, SIGNAL(gstPlayerResumed()), SLOT(mplayerResumed()));
-		connect(gst_player, SIGNAL(gstPlayerDone()), SLOT(mplayerDone()));
-		connect(gst_player, SIGNAL(gstPlayerStopped()), SLOT(mplayerStopped()));
-		connect(gst_player, SIGNAL(gstPlayerPaused()), SLOT(mplayerPaused()));
+	connect(gst_player, SIGNAL(gstPlayerStarted()), SLOT(mplayerStarted()));
+	connect(gst_player, SIGNAL(gstPlayerResumed()), SLOT(mplayerResumed()));
+	connect(gst_player, SIGNAL(gstPlayerDone()), SLOT(mplayerDone()));
+	connect(gst_player, SIGNAL(gstPlayerStopped()), SLOT(mplayerStopped()));
+	connect(gst_player, SIGNAL(gstPlayerPaused()), SLOT(mplayerPaused()));
 
-		connect(gst_player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
-				SLOT(gstPlayerInfoReceived(QMap<QString,QString>)));
-	}
+	connect(gst_player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
+		SLOT(gstPlayerInfoReceived(QMap<QString,QString>)));
 
 	info_poll_timer = new QTimer(this);
 	info_poll_timer->setInterval(INFO_POLL_INTERVAL);

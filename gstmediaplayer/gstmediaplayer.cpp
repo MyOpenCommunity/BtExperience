@@ -1,54 +1,21 @@
-#include "gstmediaplayerplugin.h"
-
-#include <gst/gst.h>
+#include "gstmediaplayer.h"
 
 #include <QUrl>
 #include <QDebug>
-#include <QtPlugin>
-
-
-class GstMediaPlayerPrivate : public GstMediaPlayer
-{
-	Q_OBJECT
-public:
-	GstMediaPlayerPrivate(QObject *parent = 0);
-	virtual ~GstMediaPlayerPrivate();
-	virtual bool play(QString track);
-	virtual QMap<QString, QString> getPlayingInfo();
-	virtual void setTrack(QString track);
-
-public slots:
-	virtual void pause();
-	virtual void resume();
-	virtual void stop();
-
-	void handleBusMessage(GstBus *bus, GstMessage *message);
-
-private:
-	// disable copy
-	GstMediaPlayerPrivate(const GstMediaPlayerPrivate&);
-
-	void handleTagMessage(GstMessage *message);
-	void handleStateChange();
-	void queryTime();
-	bool check_for_state_change;
-	GstPipeline *pipeline;
-	QMap<QString, QString> metadata;
-};
 
 
 // Anonymous namespaces are useless with extern "C" linkage, see:
 // https://groups.google.com/d/msg/comp.lang.c++.moderated/bRso4RIDiBI/F2BscJar_qMJ
 extern "C" gboolean gstMediaPlayerBusCallback(GstBus *bus, GstMessage *message, gpointer data)
 {
-	GstMediaPlayerPrivate *player = static_cast<GstMediaPlayerPrivate *>(data);
+	GstMediaPlayerImplementation *player = static_cast<GstMediaPlayerImplementation *>(data);
 	player->handleBusMessage(bus, message);
 	return true;
 }
 
 
-GstMediaPlayerPrivate::GstMediaPlayerPrivate(QObject *parent) :
-	GstMediaPlayer(parent)
+GstMediaPlayerImplementation::GstMediaPlayerImplementation(QObject *parent) :
+	QObject(parent)
 {
 	pipeline = GST_PIPELINE(gst_element_factory_make("playbin2", NULL));
 	check_for_state_change = false;
@@ -60,13 +27,13 @@ GstMediaPlayerPrivate::GstMediaPlayerPrivate(QObject *parent) :
 	gst_object_unref(bus);
 }
 
-GstMediaPlayerPrivate::~GstMediaPlayerPrivate()
+GstMediaPlayerImplementation::~GstMediaPlayerImplementation()
 {
 	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_NULL);
 	gst_object_unref(pipeline);
 }
 
-bool GstMediaPlayerPrivate::play(QString track)
+bool GstMediaPlayerImplementation::play(QString track)
 {
 	setTrack(track);
 	GstStateChangeReturn ret = gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_PLAYING);
@@ -80,7 +47,7 @@ bool GstMediaPlayerPrivate::play(QString track)
 	return true;
 }
 
-void GstMediaPlayerPrivate::setTrack(QString track)
+void GstMediaPlayerImplementation::setTrack(QString track)
 {
 	// Get URI
 	// Assume that the file is either an absolute path of a local file or
@@ -99,13 +66,13 @@ void GstMediaPlayerPrivate::setTrack(QString track)
 	GstState saved_state;
 	gst_element_get_state(GST_ELEMENT(pipeline), &saved_state, NULL, 0);
 	metadata.clear();
-
+	qWarning() << saved_state;
 	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_READY);
 	g_object_set(G_OBJECT(pipeline), "uri", qPrintable(uri.toString()), NULL);
-	gst_element_set_state(GST_ELEMENT(pipeline), saved_state);
+	gst_element_set_state(GST_ELEMENT(pipeline), saved_state == GST_STATE_NULL ? GST_STATE_READY : saved_state);
 }
 
-void GstMediaPlayerPrivate::handleBusMessage(GstBus *bus, GstMessage *message)
+void GstMediaPlayerImplementation::handleBusMessage(GstBus *bus, GstMessage *message)
 {
 	Q_UNUSED(bus);
 
@@ -121,7 +88,7 @@ void GstMediaPlayerPrivate::handleBusMessage(GstBus *bus, GstMessage *message)
 	{
 		GError *err;
 		gst_message_parse_error(message, &err, NULL);
-		qWarning("%s", err->message);
+		qWarning("Error: %s", err->message);
 		g_error_free(err);
 		emit gstPlayerStopped();
 		break;
@@ -153,28 +120,28 @@ void GstMediaPlayerPrivate::handleBusMessage(GstBus *bus, GstMessage *message)
 			check_for_state_change = true; \
 	} while (0)
 
-void GstMediaPlayerPrivate::pause()
+void GstMediaPlayerImplementation::pause()
 {
 	CHANGE_STATE(gstPlayerPaused, GST_STATE_PAUSED);
 }
 
-void GstMediaPlayerPrivate::resume()
+void GstMediaPlayerImplementation::resume()
 {
 	CHANGE_STATE(gstPlayerResumed, GST_STATE_PLAYING);
 }
 
-void GstMediaPlayerPrivate::stop()
+void GstMediaPlayerImplementation::stop()
 {
 	CHANGE_STATE(gstPlayerStopped, GST_STATE_READY);
 }
 
-QMap<QString, QString> GstMediaPlayerPrivate::getPlayingInfo()
+QMap<QString, QString> GstMediaPlayerImplementation::getPlayingInfo()
 {
 	queryTime();
 	return metadata;
 }
 
-void GstMediaPlayerPrivate::handleTagMessage(GstMessage *message)
+void GstMediaPlayerImplementation::handleTagMessage(GstMessage *message)
 {
 	GstTagList *current_tags = NULL;
 	gchar *value = NULL;
@@ -202,7 +169,7 @@ void GstMediaPlayerPrivate::handleTagMessage(GstMessage *message)
 	}
 }
 
-void GstMediaPlayerPrivate::handleStateChange()
+void GstMediaPlayerImplementation::handleStateChange()
 {
 	GstState current, next;
 	gst_element_get_state(GST_ELEMENT(pipeline), &current, &next, 0);
@@ -223,7 +190,7 @@ void GstMediaPlayerPrivate::handleStateChange()
 	}
 }
 
-void GstMediaPlayerPrivate::queryTime()
+void GstMediaPlayerImplementation::queryTime()
 {
 	GstFormat f = GST_FORMAT_TIME;
 	gint64 position, duration;
@@ -233,23 +200,18 @@ void GstMediaPlayerPrivate::queryTime()
 		metadata["total_time"] = QString::number(GST_TIME_AS_SECONDS(duration));
 }
 
-
-GstMediaPlayer *GstMediaPlayerPlugin::createPlayer(QObject *parent)
+bool GstMediaPlayerImplementation::initialize()
 {
 	GError *err;
 
 	if (gst_init_check(NULL, NULL, &err))
 	{
-		return new GstMediaPlayerPrivate(parent);
+		return true;
 	}
 	else
 	{
 		qWarning("Couldn't init GStreamer, error: %s", err->message);
 		g_error_free(err);
-		return 0;
+		return false;
 	}
 }
-
-Q_EXPORT_PLUGIN2(gstmediaplayer, GstMediaPlayerPlugin)
-
-#include "gstmediaplayerplugin.moc"

@@ -10,7 +10,7 @@
 #include <QMetaType>
 
 class MediaPlayer;
-class GstMediaPlayer;
+class GstMediaPlayerImplementation;
 
 class QTimer;
 
@@ -195,7 +195,7 @@ private:
 	void setAudioOutputState(AudioOutputState new_state);
 
 	MediaPlayer *player;
-	GstMediaPlayer *gst_player;
+	GstMediaPlayerImplementation *gst_player;
 	bool is_video_track;
 	QTimer *info_poll_timer;
 

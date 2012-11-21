@@ -1,5 +1,3 @@
-TEMPLATE      = lib
-CONFIG       += plugin qt
 QT -= gui
 
 include(../hwtest.pri)
@@ -13,22 +11,18 @@ include(../hwtest.pri)
 	HARDWARE = arm
 }
 
-INCLUDEPATH  += ../BtObjects
-HEADERS       = gstmediaplayerplugin.h \
-	../BtObjects/gstmediaplayer.h
-SOURCES       = gstmediaplayerplugin.cpp
-TARGET        = $$qtLibraryTarget(gstmediaplayer)
-
-DESTDIR = ../bin/$${HARDWARE}/plugins
+DESTDIR = ../bin/$${HARDWARE}
+HEADERS       = gstmediaplayer.h
+SOURCES       = gstmediaplayer.cpp gstmain.cpp
 
 # Add gstreamer
 CONFIG += link_pkgconfig
 PKGCONFIG += gstreamer-0.10
 
 isEmpty(PREFIX) {
-	target.path = $${OUT_PWD}/../dist/$${HARDWARE}/plugins
+	target.path = $${OUT_PWD}/../dist/$${HARDWARE}
 } else {
-	target.path = $${PREFIX}/plugins
+	target.path = $${PREFIX}
 }
 
 INSTALLS += target
