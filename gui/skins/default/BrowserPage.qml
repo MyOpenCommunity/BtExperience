@@ -91,6 +91,8 @@ Page {
                         topMargin: 5
                         left: delegateItem.left
                         leftMargin: 10
+                        right: parent.right
+                        rightMargin: 10
                     }
                 }
 
@@ -104,7 +106,10 @@ Page {
                         bottomMargin: 5
                         left: delegateItem.left
                         leftMargin: 10
+                        right: parent.right
+                        rightMargin: 10
                     }
+                    elide: Text.ElideMiddle
                 }
             }
         }
