@@ -17,7 +17,7 @@ SOURCES       = gstmediaplayer.cpp gstmain.cpp
 
 # Add gstreamer
 CONFIG += link_pkgconfig
-PKGCONFIG += gstreamer-0.10
+PKGCONFIG += gstreamer-0.10 gstreamer-video-0.10
 
 isEmpty(PREFIX) {
 	target.path = $${OUT_PWD}/../dist/$${HARDWARE}

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMap>
+#include <QRect>
 
 #include <gst/gst.h>
 
@@ -38,6 +39,9 @@ signals:
 private:
 	// disable copy
 	GstMediaPlayerImplementation(const GstMediaPlayerImplementation&);
+
+	QSize getVideoSize();
+	void setOverlayRect(QRect rect);
 
 	void handleTagMessage(GstMessage *message);
 	void handleStateChange();

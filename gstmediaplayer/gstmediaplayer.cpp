@@ -1,7 +1,12 @@
 #include "gstmediaplayer.h"
 
+#include <gst/video/video.h>
+
+#include <QRect>
 #include <QUrl>
 #include <QDebug>
+
+#define TI_SINK_PATH "playsink0::vbin::videosink::videosink-actual-sink-tidisplaysink2"
 
 
 // Anonymous namespaces are useless with extern "C" linkage, see:
@@ -167,6 +172,32 @@ void GstMediaPlayerImplementation::handleTagMessage(GstMessage *message)
 		metadata["meta_album"] = QString(value);
 		g_free(value);
 	}
+}
+
+QSize GstMediaPlayerImplementation::getVideoSize()
+{
+	GstPad *pad;
+	int width = -1, height = -1;
+
+	g_signal_emit_by_name(GST_ELEMENT(pipeline), "get-video-pad", 0, &pad, NULL);
+	GstCaps *caps = gst_pad_get_negotiated_caps(pad);
+
+	gst_structure_get_int(gst_caps_get_structure(caps, 0), "width", &width);
+	gst_structure_get_int(gst_caps_get_structure(caps, 0), "height", &height);
+
+	gst_object_unref(pad);
+
+	return QSize(width, height);
+}
+
+void GstMediaPlayerImplementation::setOverlayRect(QRect rect)
+{
+	gst_child_proxy_set(GST_OBJECT(pipeline),
+			    TI_SINK_PATH "::overlay-top", rect.top(),
+			    TI_SINK_PATH "::overlay-left", rect.left(),
+			    TI_SINK_PATH "::overlay-width", rect.width(),
+			    TI_SINK_PATH "::overlay-height", rect.height(),
+			    NULL);
 }
 
 void GstMediaPlayerImplementation::handleStateChange()
