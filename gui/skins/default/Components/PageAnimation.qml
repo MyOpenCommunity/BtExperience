@@ -13,7 +13,7 @@ import QtQuick 1.1
 
 Item {
     property Item page: null
-    property int transitionDuration: 400
+    property int transitionDuration: 10
     signal animationCompleted
 
     property variant pushIn

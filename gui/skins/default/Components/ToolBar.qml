@@ -86,6 +86,7 @@ Item {
                 id: date
                 color: global.guiSettings.skin === GuiSettings.Clear ? "black":
                                                                        "white"
+                text: DateTime.format()["date"]
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
