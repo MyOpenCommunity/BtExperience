@@ -222,7 +222,9 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 #if defined(BT_HARDWARE_X11)
 	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList(), QStringList());
 #else
-	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList() << "-ao" << "alsa", QStringList() << "-ao" << "alsa");
+	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer",
+							QStringList() << "-ao" << "alsa:device=plughw=0.0",
+							QStringList() << "-ao" << "alsa:device=plughw=0.0");
 #endif
 	SoundPlayer::setGlobalCommandLineArguments("aplay", QStringList() << "<FILE_NAME>");
 

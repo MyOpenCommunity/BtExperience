@@ -838,6 +838,11 @@ void SourceMultiMedia::nextSource()
 
 void SourceMultiMedia::firstMediaContentStatus(bool status)
 {
+	// only handle the case of source switched on from SCS; other users need
+	// set the current source separately
+	if (source_index == -1)
+		return;
+
 	if (!status)
 		nextSource();
 	else

@@ -55,9 +55,7 @@ class GlobalProperties : public QObject
 	// The object to manage the GUI settings
 	Q_PROPERTY(GuiSettings *guiSettings READ getGuiSettings CONSTANT)
 	// The object to manage MPlayer from QML
-	Q_PROPERTY(AudioVideoPlayer *videoPlayer READ getVideoPlayer CONSTANT)
-	// The object to manage MPlayer from QML
-	Q_PROPERTY(AudioVideoPlayer *audioPlayer READ getAudioPlayer NOTIFY audioPlayerChanged)
+	Q_PROPERTY(AudioVideoPlayer *audioVideoPlayer READ getAudioVideoPlayer NOTIFY audioVideoPlayerChanged)
 	// The object to manage image lists
 	Q_PROPERTY(PhotoPlayer *photoPlayer READ getPhotoPlayer CONSTANT)
 	// The object to manage audio/video playback state from QML
@@ -104,8 +102,7 @@ public:
 	int getLastTimePress() const;
 	QObject *getInputWrapper() const;
 	GuiSettings *getGuiSettings() const;
-	AudioVideoPlayer *getVideoPlayer() const;
-	AudioVideoPlayer *getAudioPlayer() const;
+	AudioVideoPlayer *getAudioVideoPlayer() const;
 	PhotoPlayer *getPhotoPlayer() const;
 	QObject *getAudioState() const;
 	QObject *getRingtoneManager() const;
@@ -157,11 +154,11 @@ signals:
 	void requestReboot();
 	void keyboardLayoutChanged();
 	void keyboardLayoutsChanged();
-	void audioPlayerChanged();
 	void monitorOffChanged();
 	void systemTimeChanged();
 	void passwordChanged();
 	void passwordEnabledChanged();
+	void audioVideoPlayerChanged();
 
 private slots:
 #ifdef BT_MALIIT
@@ -181,7 +178,6 @@ private:
 	QDateTime last_press;
 	GuiSettings *settings;
 	AudioVideoPlayer *video_player;
-	AudioVideoPlayer *audio_player;
 	PhotoPlayer *photo_player;
 	AudioState *audio_state;
 	SoundPlayer *sound_player;

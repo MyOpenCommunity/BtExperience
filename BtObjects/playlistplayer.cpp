@@ -39,18 +39,21 @@ PlayListPlayer::PlayListPlayer(QObject *parent) :
 
 void PlayListPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool _is_video)
 {
+	terminate();
 	is_video = _is_video;
 	generate(model, index, total_files);
 }
 
 void PlayListPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int total_files, bool _is_video)
 {
+	terminate();
 	is_video = _is_video;
 	generate(model, index, total_files);
 }
 
 void PlayListPlayer::generatePlaylistWebRadio(QList<QVariant> urls, int index, int total_files)
 {
+	terminate();
 	is_video = false;
 	generate(urls, index, total_files);
 }
@@ -213,6 +216,12 @@ void PlayListPlayer::reset()
 	is_video = false;
 	actual_list = 0;
 	emit playingChanged();
+
+	if (!current.isEmpty())
+	{
+		current = QString();
+		emit currentChanged();
+	}
 }
 
 void PlayListPlayer::updateCurrent()
@@ -430,7 +439,7 @@ void AudioVideoPlayer::trackInfoChanged()
 	if (total == 0)
 		return;
 
-	int p = 100 * current / total;
+	double p = 100.0 * current / total;
 	if (percentage != p)
 	{
 		percentage = p;

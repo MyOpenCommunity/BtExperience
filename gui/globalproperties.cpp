@@ -203,7 +203,6 @@ GlobalProperties::GlobalProperties(logger *log)
 	settings = new GuiSettings(this);
 	photo_player = new PhotoPlayer(this);
 	video_player = 0;
-	audio_player = 0;
 	audio_state = new AudioState(this);
 	sound_player = 0;
 	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", new MultiMediaPlayer(this), audio_state, this);
@@ -251,6 +250,7 @@ void GlobalProperties::initAudio()
 
 	video_player = new AudioVideoPlayer(this);
 	video_player->setVolume(audio_state->getVolume(AudioState::LocalPlaybackVolume));
+	emit audioVideoPlayerChanged();
 
 	sound_player = new SoundPlayer(this);
 
@@ -272,6 +272,8 @@ void GlobalProperties::initAudio()
 
 	if (sound_diffusion_enabled)
 	{
+		AudioVideoPlayer *sound_diffusion_player = 0;
+
 		// find all source objects
 		ObjectModel sources;
 
@@ -283,30 +285,17 @@ void GlobalProperties::initAudio()
 
 			if (source)
 			{
-				audio_player = static_cast<AudioVideoPlayer *>(source->getAudioVideoPlayer());
-				emit audioPlayerChanged();
+				sound_diffusion_player = static_cast<AudioVideoPlayer *>(source->getAudioVideoPlayer());
 				break;
 			}
 		}
 
-		if (audio_player)
+		if (sound_diffusion_player)
 		{
-			MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(audio_player->getMediaPlayer());
+			MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(sound_diffusion_player->getMediaPlayer());
 
 			audio_state->registerSoundDiffusionPlayer(player);
 		}
-		else
-		{
-			// avoid crashing with wrong configuration
-			qWarning("Touch configured as local source but no local source defined");
-			audio_player = video_player;
-			emit audioPlayerChanged();
-		}
-	}
-	else
-	{
-		audio_player = video_player;
-		emit audioPlayerChanged();
 	}
 }
 
@@ -508,14 +497,9 @@ GuiSettings *GlobalProperties::getGuiSettings() const
 	return settings;
 }
 
-AudioVideoPlayer *GlobalProperties::getVideoPlayer() const
+AudioVideoPlayer *GlobalProperties::getAudioVideoPlayer() const
 {
 	return video_player;
-}
-
-AudioVideoPlayer *GlobalProperties::getAudioPlayer() const
-{
-	return audio_player;
 }
 
 PhotoPlayer *GlobalProperties::getPhotoPlayer() const

@@ -14,7 +14,7 @@ Page {
     property int index
     property bool isVideo: true
     property bool upnp
-    property variant mediaPlayer: isVideo ? global.videoPlayer : global.audioPlayer
+    property variant mediaPlayer: global.audioVideoPlayer
 
     source: "images/multimedia.jpg"
     showSystemsButton: true
