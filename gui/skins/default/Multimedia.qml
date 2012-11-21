@@ -76,6 +76,7 @@ Page {
                                    "props": {"containerId": Container.IdMultimediaRss, "type": "rss"}})
         multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/weblink_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaWebRadio, "type": "webradio"}})
-        multimediaModel.append({"description": qsTr("weather"), "target": "WeatherInfoPage.qml", "cardImageCached": "images/multimedia/meteo_card.jpg", "props": {}})
+        multimediaModel.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/meteo_card.jpg",
+                                   "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
     }
 }
