@@ -128,7 +128,7 @@ SvgImage {
         anchors {
             verticalCenter: bgText.verticalCenter
             left: bgText.left
-            right: bgText.right
+            right: loadingIndicator.visible ? loadingIndicator.left : bgText.right
         }
         onUrlEntered: {
             browser.urlString = url
