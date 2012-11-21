@@ -20,6 +20,22 @@ Page {
     text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
     source: page.profile === undefined ? (page.homeCustomization ? "images/home/home.jpg" : "images/profiles.jpg") : "images/profiles.jpg" // TODO profile background image
 
+    onCurrentLinkChanged: {
+        if (page.currentLink < 0) {
+            linkText.text = qsTr("Click to enter link...")
+            nameText.text = qsTr("Click to enter name...")
+        }
+        else {
+            var current = page.actualModel.getObject(page.currentLink)
+
+            if (current.address)
+                linkText.text = current.address
+
+            if (current.name)
+                nameText.text = current.name
+        }
+    }
+
     SystemsModel { id: linksModel; systemId: privateProps.getContainerUii(privateProps.currentChoice, privateProps.dummy); source: myHomeModels.mediaContainers }
 
     MediaModel {
@@ -143,6 +159,7 @@ Page {
         text: qsTr("Click to enter link...")
         font.pixelSize: 14
         color: "#5A5A5A"
+        elide: Text.ElideMiddle
         anchors {
             left: linkBgImage.left
             leftMargin: bg.width / 100 * 3.92
@@ -171,6 +188,7 @@ Page {
         text: qsTr("Click to enter name...")
         font.pixelSize: 14
         color: "#5A5A5A"
+        elide: Text.ElideMiddle
         anchors {
             left: nameBgImage.left
             leftMargin: bg.width / 100 * 3.92
