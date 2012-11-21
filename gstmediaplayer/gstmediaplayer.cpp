@@ -7,6 +7,7 @@
 #include <QDebug>
 
 #define TI_SINK_PATH "playsink0::vbin::videosink::videosink-actual-sink-tidisplaysink2"
+#define READY_TIMEOUT 30
 
 
 // Anonymous namespaces are useless with extern "C" linkage, see:
@@ -30,6 +31,9 @@ GstMediaPlayerImplementation::GstMediaPlayerImplementation(QObject *parent) :
 	bus = gst_pipeline_get_bus(GST_PIPELINE(pipeline));
 	gst_bus_add_watch(bus, gstMediaPlayerBusCallback, this);
 	gst_object_unref(bus);
+
+	// TODO obtain from command line
+	player_rect = QRect(213, 99, 672, 373);
 }
 
 GstMediaPlayerImplementation::~GstMediaPlayerImplementation()
@@ -71,10 +75,45 @@ void GstMediaPlayerImplementation::setTrack(QString track)
 	GstState saved_state;
 	gst_element_get_state(GST_ELEMENT(pipeline), &saved_state, NULL, 0);
 	metadata.clear();
-	qWarning() << saved_state;
+	if (saved_state == GST_STATE_NULL)
+		saved_state = GST_STATE_PAUSED;
+
 	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_READY);
 	g_object_set(G_OBJECT(pipeline), "uri", qPrintable(uri.toString()), NULL);
-	gst_element_set_state(GST_ELEMENT(pipeline), saved_state == GST_STATE_NULL ? GST_STATE_READY : saved_state);
+	gst_element_set_state(GST_ELEMENT(pipeline), saved_state);
+
+	for (int i = 0; i < READY_TIMEOUT; ++i)
+	{
+		GstState state = GST_STATE_NULL;
+
+		// wait for pipeline to become ready
+		gst_element_get_state(GST_ELEMENT(pipeline), &state, NULL, GST_SECOND);
+		if (state == saved_state)
+		{
+			video_size = getVideoSize();
+			centerOverlay();
+			break;
+		}
+	}
+}
+
+void GstMediaPlayerImplementation::centerOverlay()
+{
+	// center over
+	double h_ratio = double(player_rect.width()) / video_size.width();
+	double v_ratio = double(player_rect.height()) / video_size.height();
+	QRect overlay;
+
+	if (h_ratio < 1 || v_ratio < 1)
+	{
+		double ratio = qMin(h_ratio, v_ratio);
+
+		overlay = QRect(0, 0, video_size.width() * ratio, video_size.height() * ratio);
+	}
+	else
+		overlay = QRect(0, 0, video_size.width(), video_size.height());
+
+	setOverlayRect(overlay.translated(-overlay.center() + player_rect.center()));
 }
 
 void GstMediaPlayerImplementation::handleBusMessage(GstBus *bus, GstMessage *message)

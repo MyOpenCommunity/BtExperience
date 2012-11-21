@@ -42,13 +42,17 @@ private:
 
 	QSize getVideoSize();
 	void setOverlayRect(QRect rect);
+	void centerOverlay();
 
 	void handleTagMessage(GstMessage *message);
 	void handleStateChange();
 	void queryTime();
+
 	bool check_for_state_change;
 	GstPipeline *pipeline;
 	QMap<QString, QString> metadata;
+	QSize video_size;
+	QRect player_rect;
 };
 
 
