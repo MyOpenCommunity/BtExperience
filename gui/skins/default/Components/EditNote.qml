@@ -11,6 +11,10 @@ Rectangle {
 
     property alias text: edit.text
 
+    function setInitialText(t) {
+        text = t
+    }
+
     width: 300
     height: 200
     color: "light gray"
