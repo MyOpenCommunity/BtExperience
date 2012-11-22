@@ -27,7 +27,7 @@ namespace
 MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	QObject(parent)
 {
-	gst_player = new GstExternalMediaPlayer(this);
+	gst_player = new GstMediaPlayer(this);
 	player = new MediaPlayer(this);
 
 	is_video_track = false;

@@ -11,7 +11,7 @@
 #include <QRect>
 
 class MediaPlayer;
-class GstMediaPlayerImplementation;
+class GstMediaPlayer;
 
 class QTimer;
 
@@ -204,7 +204,7 @@ private:
 	void setAudioOutputState(AudioOutputState new_state);
 
 	MediaPlayer *player;
-	GstMediaPlayerImplementation *gst_player;
+	GstMediaPlayer *gst_player;
 	bool is_video_track;
 	QTimer *info_poll_timer;
 	QRect video_rect;
