@@ -5,7 +5,7 @@
 #include <QtDebug>
 
 
-GstExternalMediaPlayer::GstExternalMediaPlayer(QObject *parent)
+GstExternalMediaPlayer::GstExternalMediaPlayer(QObject *parent) : GstMediaPlayerImplementation(parent)
 {
 	gstreamer_proc = new QProcess();
 	paused = false;
