@@ -21,6 +21,7 @@ public:
 private slots:
 	void paused();
 	void checkMetadata();
+	void pollGlib();
 
 	void readInput();
 	void parseLine(QString line);
@@ -53,6 +54,19 @@ GstMain::GstMain(GstMediaPlayerImplementation *_player)
 	connect(player, SIGNAL(gstPlayerPaused()), this, SLOT(paused()));
 	connect(player, SIGNAL(gstPlayerDone()), qApp, SLOT(quit()));
 	connect(player, SIGNAL(gstPlayerStopped()), qApp, SLOT(quit()));
+
+#ifdef QT_NO_GLIB
+	// if Qt is compiled without Glib integration, run the Glib event loop from a timer
+	QTimer *glib_integration = new QTimer(this);
+	glib_integration->setInterval(100);
+	glib_integration->start();
+	connect(glib_integration, SIGNAL(timeout()), this, SLOT(pollGlib()));
+#endif
+}
+
+void GstMain::pollGlib()
+{
+	g_main_context_iteration(NULL, FALSE);
 }
 
 void GstMain::start(int argc, char **argv)
