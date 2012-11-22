@@ -370,7 +370,7 @@ void MultiMediaPlayer::mplayerStopped()
 {
 	// this handles the pause() -> change source sequence: MPlayer is stopped,
 	// but the "logical" state is still paused
-	if (player_state == Paused && !current_source.isEmpty())
+	if ((player_state == Paused || player_state == AboutToPause) && !current_source.isEmpty())
 		return;
 
 	playbackStopped();
