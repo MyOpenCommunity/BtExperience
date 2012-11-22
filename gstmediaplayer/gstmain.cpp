@@ -86,7 +86,12 @@ void GstMain::readInput()
 
 void GstMain::parseLine(QString line)
 {
-	Q_UNUSED(line);
+	if (line.startsWith("resize "))
+	{
+		QStringList parts = line.split(" ");
+
+		player->setPlayerRect(parts[1].toInt(), parts[2].toInt(), parts[3].toInt(), parts[4].toInt());
+	}
 }
 
 
