@@ -104,6 +104,7 @@ private:
 	void execCmd(QString command);
 
 	QProcess *gstreamer_proc;
+	QRect video_rect;
 	bool paused, really_paused;
 };
 

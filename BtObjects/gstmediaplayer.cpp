@@ -39,6 +39,8 @@ GstExternalMediaPlayer::GstExternalMediaPlayer(QObject *parent) : GstMediaPlayer
 
 bool GstExternalMediaPlayer::play(QRect rect, QString track)
 {
+	video_rect = rect;
+
 	return runMPlayer(QList<QString>()
 			  << QString("--rect=%1,%2,%3,%4").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height())
 			  << track);
@@ -46,6 +48,7 @@ bool GstExternalMediaPlayer::play(QRect rect, QString track)
 
 void GstExternalMediaPlayer::setPlayerRect(QRect rect)
 {
+	video_rect = rect;
 	execCmd(QString("resize %1 %2 %3 %4").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height()));
 }
 
@@ -109,7 +112,10 @@ void GstExternalMediaPlayer::stop()
 
 void GstExternalMediaPlayer::setTrack(QString track)
 {
-	execCmd("set_track " + track);
+	if (gstreamer_proc->state() == QProcess::Running)
+		execCmd("set_track " + track);
+	else
+		play(video_rect, track);
 }
 
 QMap<QString, QString> GstExternalMediaPlayer::getPlayingInfo()
