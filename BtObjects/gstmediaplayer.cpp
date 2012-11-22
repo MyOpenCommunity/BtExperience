@@ -15,9 +15,16 @@ GstExternalMediaPlayer::GstExternalMediaPlayer(QObject *parent)
 	connect(gstreamer_proc, SIGNAL(error(QProcess::ProcessError)), SLOT(mplayerError(QProcess::ProcessError)));
 }
 
-bool GstExternalMediaPlayer::play(QString track)
+bool GstExternalMediaPlayer::play(QRect rect, QString track)
 {
-	return runMPlayer(QList<QString>() << track);
+	return runMPlayer(QList<QString>()
+			  << QString("--rect=%1,%2,%3,%4").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height())
+			  << track);
+}
+
+void GstExternalMediaPlayer::setPlayerRect(QRect rect)
+{
+	execCmd(QString("resize %1 %2 %3 %4").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height()));
 }
 
 bool GstExternalMediaPlayer::runMPlayer(const QList<QString> &args)
@@ -51,7 +58,6 @@ void GstExternalMediaPlayer::quit()
 			qWarning() << "Couldn't terminate mplayer";
 	}
 }
-
 
 void GstExternalMediaPlayer::stop()
 {
@@ -94,4 +100,10 @@ void GstExternalMediaPlayer::mplayerError(QProcess::ProcessError error)
 	int idx = gstreamer_proc->metaObject()->indexOfEnumerator("ProcessError");
 	QMetaEnum e = gstreamer_proc->metaObject()->enumerator(idx);
 	qDebug() << "[AUDIO] mplayer_proc raised an error: " << "'" << e.key(error) << "'";
+}
+
+void GstExternalMediaPlayer::execCmd(QString command)
+{
+	if (gstreamer_proc->write(command.toAscii() + "\n") < -1)
+		qDebug() << "Error MediaPlayer::execCmd():" << gstreamer_proc->errorString();
 }

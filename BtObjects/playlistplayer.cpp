@@ -268,6 +268,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(currentSourceChanged(QString)), SIGNAL(trackNameChanged()));
 	connect(media_player, SIGNAL(volumeChanged(int)), SIGNAL(volumeChanged()));
 	connect(media_player, SIGNAL(muteChanged(bool)), SIGNAL(muteChanged()));
+	connect(media_player, SIGNAL(videoRectChanged(bool)), SIGNAL(videoRectChanged()));
 
 	connect(this, SIGNAL(currentChanged()), SLOT(play()));
 	connect(this, SIGNAL(deviceUnmounted()), this, SLOT(terminate()));
@@ -327,6 +328,16 @@ void AudioVideoPlayer::setMute(bool newValue)
 bool AudioVideoPlayer::getPlaying() const
 {
 	return media_player->getPlayerState() == MultiMediaPlayer::Playing;
+}
+
+QRect AudioVideoPlayer::getVideoRect() const
+{
+	return media_player->getVideoRect();
+}
+
+void AudioVideoPlayer::setVideoRect(QRect newValue)
+{
+	media_player->setVideoRect(newValue);
 }
 
 void AudioVideoPlayer::incrementVolume()

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include <QProcess>
+#include <QRect>
 
 
 class GstMediaPlayerImplementation : public QObject
@@ -12,7 +13,7 @@ class GstMediaPlayerImplementation : public QObject
 public:
 	GstMediaPlayerImplementation(QObject *parent = 0) : QObject(parent) { }
 
-	virtual bool play(QString track) { Q_UNUSED(track); return false; }
+	virtual bool play(QRect rect, QString track) { Q_UNUSED(track); Q_UNUSED(rect); return false; }
 
 	/*!
 		\brief Return information about the playing audio track
@@ -30,6 +31,8 @@ public:
 	virtual QMap<QString, QString> getPlayingInfo() { return QMap<QString, QString>(); }
 
 	virtual void setTrack(QString track) { Q_UNUSED(track) }
+
+	virtual void setPlayerRect(QRect rect) { Q_UNUSED(rect) }
 
 public slots:
 	virtual void pause() { }
@@ -79,9 +82,11 @@ class GstExternalMediaPlayer : public GstMediaPlayerImplementation
 public:
 	GstExternalMediaPlayer(QObject *parent = 0);
 
-	virtual bool play(QString track);
+	virtual bool play(QRect rect, QString track);
 
 	virtual void stop();
+
+	virtual void setPlayerRect(QRect rect);
 
 private slots:
 	void mplayerFinished(int exit_code, QProcess::ExitStatus exit_status);
@@ -90,6 +95,7 @@ private slots:
 private:
 	void quit();
 	bool runMPlayer(const QList<QString> &args);
+	void execCmd(QString command);
 
 	QProcess *gstreamer_proc;
 	bool paused, really_paused;

@@ -114,6 +114,21 @@ void MultiMediaPlayer::setMute(bool newValue)
 	emit muteChanged(mute);
 }
 
+QRect MultiMediaPlayer::getVideoRect() const
+{
+	return video_rect;
+}
+
+void MultiMediaPlayer::setVideoRect(QRect rect)
+{
+	if (rect == video_rect)
+		return;
+	video_rect = rect;
+	if (gst_player)
+		gst_player->setPlayerRect(video_rect);
+	emit videoRectChanged(video_rect);
+}
+
 void MultiMediaPlayer::readPlayerInfo()
 {
 	if (is_video_track)
@@ -202,7 +217,7 @@ void MultiMediaPlayer::play()
 		return;
 
 	if (is_video_track)
-		gst_player->play(current_source);
+		gst_player->play(video_rect, current_source);
 	else
 		player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 }
