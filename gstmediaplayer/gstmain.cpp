@@ -51,6 +51,8 @@ GstMain::GstMain(GstMediaPlayerImplementation *_player)
 	connect(player, SIGNAL(gstPlayerResumed()), poll, SLOT(start()));
 
 	connect(player, SIGNAL(gstPlayerPaused()), this, SLOT(paused()));
+	connect(player, SIGNAL(gstPlayerDone()), qApp, SLOT(quit()));
+	connect(player, SIGNAL(gstPlayerStopped()), qApp, SLOT(quit()));
 }
 
 void GstMain::start(int argc, char **argv)
