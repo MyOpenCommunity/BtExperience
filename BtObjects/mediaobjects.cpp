@@ -1093,18 +1093,6 @@ AmplifierGroup::AmplifierGroup(QString _name, QList<Amplifier *> _amplifiers)
 	amplifiers = _amplifiers;
 }
 
-void AmplifierGroup::setActive(bool active)
-{
-	foreach (Amplifier *amplifier, amplifiers)
-		amplifier->setActive(active);
-}
-
-void AmplifierGroup::setVolume(int volume)
-{
-	foreach (Amplifier *amplifier, amplifiers)
-		amplifier->setVolume(volume);
-}
-
 void AmplifierGroup::volumeUp() const
 {
 	foreach (Amplifier *amplifier, amplifiers)
