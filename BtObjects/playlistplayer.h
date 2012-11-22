@@ -144,6 +144,11 @@ class AudioVideoPlayer : public PlayListPlayer
 	*/
 	Q_PROPERTY(bool playing READ getPlaying NOTIFY playingChanged)
 
+	/*!
+		\brief Set and get bounding box for video playback
+	*/
+	Q_PROPERTY(QRect videoRect READ getVideoRect WRITE setVideoRect NOTIFY videoRectChanged)
+
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
@@ -157,6 +162,8 @@ public:
 	bool getMute() const;
 	void setMute(bool newValue);
 	bool getPlaying() const;
+	QRect getVideoRect() const;
+	void setVideoRect(QRect newValue);
 
 public slots:
 	void prevTrack();
@@ -175,6 +182,7 @@ signals:
 	void percentageChanged();
 	void muteChanged();
 	void playingChanged();
+	void videoRectChanged();
 
 private slots:
 	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);

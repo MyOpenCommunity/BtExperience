@@ -90,6 +90,7 @@ SOURCES += \
 	energyrate.cpp \
 	folderlistmodel.cpp \
 	globalmodels.cpp \
+	gstmediaplayer.cpp \
 	hardware.cpp \
 	iteminterface.cpp \
 	lightobjects.cpp \

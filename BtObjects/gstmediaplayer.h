@@ -3,14 +3,17 @@
 
 #include <QObject>
 #include <QMap>
+#include <QProcess>
+#include <QRect>
 
-class GstMediaPlayer : public QObject
+
+class GstMediaPlayerImplementation : public QObject
 {
 	Q_OBJECT
 public:
-	GstMediaPlayer(QObject *parent = 0) : QObject(parent) { }
+	GstMediaPlayerImplementation(QObject *parent = 0) : QObject(parent) { }
 
-	virtual bool play(QString track) { Q_UNUSED(track); return false; }
+	virtual bool play(QRect rect, QString track) { Q_UNUSED(track); Q_UNUSED(rect); return false; }
 
 	/*!
 		\brief Return information about the playing audio track
@@ -28,6 +31,8 @@ public:
 	virtual QMap<QString, QString> getPlayingInfo() { return QMap<QString, QString>(); }
 
 	virtual void setTrack(QString track) { Q_UNUSED(track) }
+
+	virtual void setPlayerRect(QRect rect) { Q_UNUSED(rect) }
 
 public slots:
 	virtual void pause() { }
@@ -70,13 +75,32 @@ signals:
 	void playingInfoUpdated(const QMap<QString,QString> &info);
 };
 
-
-class GstMediaPlayerInterface
+class GstExternalMediaPlayer : public GstMediaPlayerImplementation
 {
-public:
-	virtual QObject *createPlayer(QObject *parent = 0) = 0;
-};
+	Q_OBJECT
 
-Q_DECLARE_INTERFACE(GstMediaPlayerInterface, "it.bticino.GstMediaPlayerPluginInterface/1.0")
+public:
+	GstExternalMediaPlayer(QObject *parent = 0);
+
+	virtual bool play(QRect rect, QString track);
+
+	virtual void pause();
+	virtual void resume();
+	virtual void stop();
+
+	virtual void setPlayerRect(QRect rect);
+
+private slots:
+	void mplayerFinished(int exit_code, QProcess::ExitStatus exit_status);
+	void mplayerError(QProcess::ProcessError error);
+
+private:
+	void quit();
+	bool runMPlayer(const QList<QString> &args);
+	void execCmd(QString command);
+
+	QProcess *gstreamer_proc;
+	bool paused, really_paused;
+};
 
 #endif // GSTMEDIAPLAYER_H
