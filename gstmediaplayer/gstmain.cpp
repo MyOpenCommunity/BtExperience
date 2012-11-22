@@ -66,7 +66,8 @@ GstMain::GstMain(GstMediaPlayerImplementation *_player)
 
 void GstMain::pollGlib()
 {
-	g_main_context_iteration(NULL, FALSE);
+	while (g_main_context_iteration(g_main_context_default(), FALSE))
+		;
 }
 
 void GstMain::start(int argc, char **argv)
