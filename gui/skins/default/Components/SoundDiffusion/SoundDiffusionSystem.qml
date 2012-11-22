@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/MenuItem.js" as Script
 
 MenuColumn {
     id: column
@@ -13,8 +14,8 @@ MenuColumn {
         delegate: MenuItemDelegate {
             editable: true
             itemObject: objectModel.getObject(index)
-            status: itemObject.hasActiveAmplifier === undefined ? -1 : itemObject.hasActiveAmplifier
-            hasChild: true
+            status: Script.status(itemObject)
+            hasChild: Script.hasChild(itemObject)
             onClicked:
                 column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
         }
