@@ -83,12 +83,15 @@ void GstExternalMediaPlayer::quit()
 
 void GstExternalMediaPlayer::pause()
 {
+	paused = true;
 	execCmd("pause");
 }
 
 void GstExternalMediaPlayer::resume()
 {
+	paused = really_paused = false;
 	execCmd("resume");
+	emit gstPlayerResumed();
 }
 
 void GstExternalMediaPlayer::stop()
