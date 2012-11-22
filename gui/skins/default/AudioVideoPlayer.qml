@@ -27,6 +27,12 @@ Page {
     SvgImage {
         id: frameBg
 
+        property int innerBorder: 7
+        property int innerX: x + innerBorder
+        property int innerY: y + innerBorder
+        property int innerWidth: width - 2 *innerBorder
+        property int innerHeight: height - 2 *innerBorder
+
         source: "images/common/video_player_bg_frame.svg"
         visible: player.isVideo
         anchors {
@@ -483,6 +489,8 @@ Page {
         // an helper variable for readability
         var p = player
 
+        p.mediaPlayer.videoRect = Qt.rect(frameBg.innerX, frameBg.innerY, frameBg.innerWidth, frameBg.innerHeight)
+
         // if player.model is set assumes a new playlist must be set
         if (p.model) {
             if (p.upnp)
@@ -502,9 +510,21 @@ Page {
 
     states: [
         State {
+            name: ""
+            PropertyChanges {
+                target: mediaPlayer
+                videoRect: Qt.rect(frameBg.innerX, frameBg.innerY, frameBg.innerWidth, frameBg.innerHeight)
+            }
+        },
+        State {
             name: "fullscreen"
             PropertyChanges { target: fullScreenBg; opacity: 1 }
             PropertyChanges { target: fullScreenToggle; status: 1 }
+            PropertyChanges {
+                target: mediaPlayer
+                videoRect: Qt.rect(fullScreenBg.x, fullScreenBg.y,
+                                   fullScreenBg.width, fullScreenBg.height - player.toolbar.height)
+            }
             PropertyChanges {
                 target: bottomBarBg
                 source: "images/common/bg_player_fullscreen.svg"
@@ -561,6 +581,11 @@ Page {
                 NumberAnimation {
                     target: fullScreenBg
                     property: "opacity"
+                    duration: 400
+                }
+                PropertyAnimation {
+                    target: mediaPlayer
+                    property: "videoRect"
                     duration: 400
                 }
                 AnchorAnimation {
