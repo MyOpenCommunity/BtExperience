@@ -165,6 +165,9 @@ void GstMain::checkMetadata()
 
 int main(int argc, char **argv)
 {
+#ifdef QT_NO_GLIB
+	g_thread_init(NULL);
+#endif
 	QCoreApplication app(argc, argv);
 
 	if (!GstMediaPlayerImplementation::initialize())
