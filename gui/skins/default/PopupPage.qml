@@ -41,7 +41,6 @@ BasePage {
     }
 
     function addAlarmPopup(type, zone, number, dateTime) {
-        global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
         var dt = DateTime.format(dateTime)["time"] + " - " + DateTime.format(dateTime)["date"]
 
         var t = privateProps.antintrusionNames.get('ALARM_TYPE', type)
@@ -56,19 +55,22 @@ BasePage {
             z = qsTr("zone") + " " + number
 
         privateProps.update(PopupLogic.addAlarmPopup(t, z, dt))
+
+        // rings the bell
+        global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
     }
 
     function addStopAndGoPopup(device) {
         if (device.status === StopAndGo.Unknown || device.status === StopAndGo.Closed) // not interesting
             return
 
-        // rings the bell
-        global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
-
         // status description
         var t = privateProps.energyManagementNames.get('STOP_GO_STATUS', device.status)
 
         privateProps.update(PopupLogic.addStopAndGoPopup(device.name, t))
+
+        // rings the bell
+        global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
     }
 
     function addScenarioActivationPopup(description) {
