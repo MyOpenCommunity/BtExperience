@@ -64,29 +64,6 @@ Item {
         }
 
         Item {
-            width: 64
-            height: toolbar_top.height
-            visible: probeModel.count > 0
-
-            UbuntuLightText {
-                id: temperature
-                property variant itemObject: probeModel.count > 0 ? probeModel.getObject(0) : undefined
-                text: itemObject !== undefined ? (itemObject.temperature / 10).toFixed(1) + " °C" : ""
-                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
-                                                                       "white"
-                font.pixelSize: toolbar.fontSize
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-        }
-
-        SvgImage {
-            source: imagesPath + "toolbar/toolbar_separator.svg"
-            height: toolbar_top.height
-            visible: probeModel.count > 0
-        }
-
-        Item {
             width: 99
             height: toolbar_top.height
 
@@ -140,6 +117,23 @@ Item {
         SvgImage {
             source: imagesPath + "toolbar/toolbar_separator.svg"
             height: toolbar_top.height
+        }
+
+        Item {
+            width: 64
+            height: toolbar_top.height
+            visible: probeModel.count > 0
+
+            UbuntuLightText {
+                id: temperature
+                property variant itemObject: probeModel.count > 0 ? probeModel.getObject(0) : undefined
+                text: itemObject !== undefined ? (itemObject.temperature / 10).toFixed(1) + " °C" : ""
+                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
+                                                                       "white"
+                font.pixelSize: toolbar.fontSize
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
         }
     }
 
