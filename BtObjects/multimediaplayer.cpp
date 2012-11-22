@@ -238,7 +238,10 @@ void MultiMediaPlayer::resume()
 
 	if (is_video_track)
 	{
-		gst_player->resume();
+		if (gst_player->isInstanceRunning())
+			gst_player->resume();
+		else
+			play();
 	}
 	else
 	{
