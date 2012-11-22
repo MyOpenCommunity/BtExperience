@@ -33,7 +33,7 @@ Item {
 
     ObjectModel {
         id: probeModel
-        containers: [myHomeModels.homepageLinks.uii]
+        containers: myHomeModels.homepageLinks ? [myHomeModels.homepageLinks.uii] : [Container.IdNoContainer]
     }
 
     Row {

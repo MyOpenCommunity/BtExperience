@@ -24,7 +24,7 @@ BasePage {
     MediaModel {
         id: homeLinksModel
         source: myHomeModels.mediaLinks
-        containers: [myHomeModels.homepageLinks.uii]
+        containers: myHomeModels.homepageLinks ? [myHomeModels.homepageLinks.uii] : [Container.IdNoContainer]
     }
 
     ListView {

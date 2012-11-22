@@ -61,6 +61,7 @@ class Container : public ItemInterface
 public:
 	enum ContainerId
 	{
+		IdNoContainer = -1234567, // Invalid container, always has 0 elements inside
 		IdScenarios = 1,
 		IdLights = 2,
 		IdAutomation = 3,
