@@ -56,6 +56,12 @@ bool GstMediaPlayerImplementation::play(QString track)
 	return true;
 }
 
+void GstMediaPlayerImplementation::setPlayerRect(int x, int y, int width, int height)
+{
+	player_rect = QRect(x, y, width, height);
+	centerOverlay();
+}
+
 void GstMediaPlayerImplementation::setTrack(QString track)
 {
 	// Get URI

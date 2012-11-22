@@ -22,6 +22,8 @@ public:
 
 	static bool initialize();
 
+	void setPlayerRect(int x, int y, int width, int height);
+
 public slots:
 	virtual void pause();
 	virtual void resume();
