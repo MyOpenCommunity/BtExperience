@@ -31,9 +31,6 @@ GstMediaPlayerImplementation::GstMediaPlayerImplementation(QObject *parent) :
 	bus = gst_pipeline_get_bus(GST_PIPELINE(pipeline));
 	gst_bus_add_watch(bus, gstMediaPlayerBusCallback, this);
 	gst_object_unref(bus);
-
-	// TODO obtain from command line
-	player_rect = QRect(213, 99, 672, 373);
 }
 
 GstMediaPlayerImplementation::~GstMediaPlayerImplementation()
