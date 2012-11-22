@@ -88,6 +88,8 @@ public:
 	virtual void resume();
 	virtual void stop();
 
+	virtual QMap<QString, QString> getPlayingInfo();
+
 	virtual void setPlayerRect(QRect rect);
 
 private slots:

@@ -4,6 +4,28 @@
 #include <QMetaEnum>
 #include <QtDebug>
 
+namespace
+{
+	QMap<QString, QString> parsePlayerOutput(QString data)
+	{
+		QMap<QString, QString> result;
+
+		foreach (QString line, data.split('\n'))
+		{
+			int colon = line.indexOf(':');
+			if (colon == -1)
+				continue;
+
+			QString key = line.mid(0, colon);
+			QString value = line.mid(colon + 2);
+
+			result[key] = value;
+		}
+
+		return result;
+	}
+}
+
 
 GstExternalMediaPlayer::GstExternalMediaPlayer(QObject *parent) : GstMediaPlayerImplementation(parent)
 {
@@ -80,6 +102,20 @@ void GstExternalMediaPlayer::stop()
 
 	paused = false;
 	quit();
+}
+
+QMap<QString, QString> GstExternalMediaPlayer::getPlayingInfo()
+{
+	QString raw_data = gstreamer_proc->readAll();
+	QMap<QString, QString> info_data = parsePlayerOutput(raw_data);
+
+	if (info_data.value("state") == "paused" && paused)
+	{
+		really_paused = true;
+		emit gstPlayerPaused();
+	}
+
+	return info_data;
 }
 
 void GstExternalMediaPlayer::mplayerFinished(int exit_code, QProcess::ExitStatus exit_status)

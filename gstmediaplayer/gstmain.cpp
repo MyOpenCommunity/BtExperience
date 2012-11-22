@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QStringList>
 #include <QSocketNotifier>
+#include <QTimer>
 #include <QtDebug>
 
 #include <fcntl.h>
@@ -18,11 +19,16 @@ public:
 	void start(int argc, char **argv);
 
 private slots:
+	void paused();
+	void checkMetadata();
+
 	void readInput();
 	void parseLine(QString line);
 
 private:
+	QTimer *poll;
 	GstMediaPlayerImplementation *player;
+	QMap<QString, QString> metadata;
 	QString input;
 };
 
@@ -34,7 +40,17 @@ GstMain::GstMain(GstMediaPlayerImplementation *_player)
 	connect(stdin, SIGNAL(activated(int)), this, SLOT(readInput()));
 	fcntl(0, F_SETFL, (long)O_NONBLOCK);
 
+	poll = new QTimer();
+	poll->setInterval(500);
+	connect(poll, SIGNAL(timeout()), this, SLOT(checkMetadata()));
+
 	player = _player;
+
+	connect(player, SIGNAL(gstPlayerStarted()), poll, SLOT(start()));
+	connect(player, SIGNAL(gstPlayerPaused()), poll, SLOT(stop()));
+	connect(player, SIGNAL(gstPlayerResumed()), poll, SLOT(start()));
+
+	connect(player, SIGNAL(gstPlayerPaused()), this, SLOT(paused()));
 }
 
 void GstMain::start(int argc, char **argv)
@@ -56,6 +72,7 @@ void GstMain::start(int argc, char **argv)
 		}
 	}
 
+	metadata.clear();
 	player->play(QString::fromLocal8Bit(argv[i]));
 }
 
@@ -99,6 +116,28 @@ void GstMain::parseLine(QString line)
 	else if (line == "resume")
 	{
 		player->resume();
+	}
+}
+
+void GstMain::paused()
+{
+	static char buffer[] = "state: paused\n";
+
+	write(1, buffer, sizeof(buffer));
+}
+
+void GstMain::checkMetadata()
+{
+	QMap<QString, QString> new_metadata = player->getPlayingInfo();
+
+	foreach (QString key, new_metadata.keys())
+	{
+		if (metadata.value(key) == new_metadata.value(key))
+			continue;
+		QByteArray line = (key + ": " + new_metadata.value(key) + "\n").toUtf8();
+
+		metadata[key] = new_metadata[key];
+		write(1, line.constData(), line.length());
 	}
 }
 
