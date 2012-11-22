@@ -90,6 +90,8 @@ public:
 
 	virtual QMap<QString, QString> getPlayingInfo();
 
+	virtual void setTrack(QString track);
+
 	virtual void setPlayerRect(QRect rect);
 
 private slots:

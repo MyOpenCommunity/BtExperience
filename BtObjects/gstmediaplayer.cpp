@@ -107,6 +107,11 @@ void GstExternalMediaPlayer::stop()
 	quit();
 }
 
+void GstExternalMediaPlayer::setTrack(QString track)
+{
+	execCmd("set_track " + track);
+}
+
 QMap<QString, QString> GstExternalMediaPlayer::getPlayingInfo()
 {
 	QString raw_data = gstreamer_proc->readAll();

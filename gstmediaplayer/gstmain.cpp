@@ -111,6 +111,11 @@ void GstMain::parseLine(QString line)
 
 		player->setPlayerRect(parts[1].toInt(), parts[2].toInt(), parts[3].toInt(), parts[4].toInt());
 	}
+	else if (line.startsWith("set_track "))
+	{
+		metadata.clear();
+		player->setTrack(line.mid(10));
+	}
 	else if (line == "pause")
 	{
 		player->pause();
