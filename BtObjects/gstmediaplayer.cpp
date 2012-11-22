@@ -59,6 +59,16 @@ void GstExternalMediaPlayer::quit()
 	}
 }
 
+void GstExternalMediaPlayer::pause()
+{
+	execCmd("pause");
+}
+
+void GstExternalMediaPlayer::resume()
+{
+	execCmd("resume");
+}
+
 void GstExternalMediaPlayer::stop()
 {
 	// simulate player termination when the player is logically paused

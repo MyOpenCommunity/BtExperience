@@ -84,6 +84,8 @@ public:
 
 	virtual bool play(QRect rect, QString track);
 
+	virtual void pause();
+	virtual void resume();
 	virtual void stop();
 
 	virtual void setPlayerRect(QRect rect);

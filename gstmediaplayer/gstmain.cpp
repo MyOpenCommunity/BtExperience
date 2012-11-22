@@ -92,6 +92,14 @@ void GstMain::parseLine(QString line)
 
 		player->setPlayerRect(parts[1].toInt(), parts[2].toInt(), parts[3].toInt(), parts[4].toInt());
 	}
+	else if (line == "pause")
+	{
+		player->pause();
+	}
+	else if (line == "resume")
+	{
+		player->resume();
+	}
 }
 
 
