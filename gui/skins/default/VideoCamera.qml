@@ -48,7 +48,24 @@ Page {
 
         Connections {
             target: control.camera
-            onCallAnswered: controlCallManager.state = "terminate"
+            onCallAnswered: {
+                controlCallManager.state = "terminate"
+                controlCallManager.updateVolumeState()
+            }
+            onMuteChanged: controlCallManager.updateVolumeState()
+        }
+
+        function updateVolumeState() {
+            if (state == "terminate") {
+                controlVolume.muteEnabled = true
+                if (control.camera.mute)
+                    controlVolume.state = "mute"
+                else
+                    controlVolume.state = ""
+            } else {
+                controlVolume.muteEnabled = false
+                controlVolume.state = "mute"
+            }
         }
     }
 
@@ -204,5 +221,6 @@ Page {
         redTimer.running = true
         toolbar.z = 1
         navigationBar.z = 1
+        controlCallManager.updateVolumeState()
     }
 }
