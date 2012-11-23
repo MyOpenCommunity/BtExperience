@@ -5,7 +5,9 @@ import Components.Text 1.0
 Image {
     id: controlBalance
     source: "../images/common/bg_dimmer.svg"
-    property int percentage: 30
+    property int value: 1
+    // Range of the component, symmetric. [-range, +range]
+    property int balanceRange: 10
     property string description: qsTr("balance")
 
     signal leftClicked
@@ -26,7 +28,7 @@ Image {
 
     UbuntuLightText {
         id: percentageLabel
-        text: percentage + " %"
+        text: value > 0 ? "+" + value : value
         anchors {
             top: parent.top
             topMargin: 5
@@ -37,7 +39,7 @@ Image {
         color: "white"
     }
 
-    Image {
+    SvgImage {
         id: image1
         anchors {
             top: label.bottom
@@ -47,12 +49,13 @@ Image {
         source: "../images/common/bg_regola_dimmer.svg"
     }
 
-    Image {
+    SvgImage {
         id: image2
-        x: image1.width * controlBalance.percentage / 100
+        x: image1.x + (image1.width - image2.width) * ((value + balanceRange) / (2 * balanceRange))
         anchors.verticalCenter: image1.verticalCenter
         source: "../images/common/cursore_bilanciamento.svg"
     }
+
 
     Row {
         anchors {
@@ -68,7 +71,6 @@ Image {
             defaultImage: "../images/common/ico_freccia_sx.svg"
             pressedImage: "../images/common/ico_freccia_sx_P.svg"
             onClicked: leftClicked()
-            status: 0
         }
 
         ButtonImageThreeStates {
@@ -78,7 +80,6 @@ Image {
             defaultImage: "../images/common/ico_freccia_dx.svg"
             pressedImage: "../images/common/ico_freccia_dx_P.svg"
             onClicked: rightClicked()
-            status: 0
         }
     }
 }
