@@ -838,6 +838,11 @@ void SourceMultiMedia::nextSource()
 
 void SourceMultiMedia::firstMediaContentStatus(bool status)
 {
+	// only handle the case of source switched on from SCS; other users need
+	// set the current source separately
+	if (source_index == -1)
+		return;
+
 	if (!status)
 		nextSource();
 	else
@@ -1086,18 +1091,6 @@ AmplifierGroup::AmplifierGroup(QString _name, QList<Amplifier *> _amplifiers)
 {
 	name = _name;
 	amplifiers = _amplifiers;
-}
-
-void AmplifierGroup::setActive(bool active)
-{
-	foreach (Amplifier *amplifier, amplifiers)
-		amplifier->setActive(active);
-}
-
-void AmplifierGroup::setVolume(int volume)
-{
-	foreach (Amplifier *amplifier, amplifiers)
-		amplifier->setVolume(volume);
 }
 
 void AmplifierGroup::volumeUp() const

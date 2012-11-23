@@ -18,7 +18,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             editable: true
             itemObject: objectModel.getObject(index)
-            hasChild: Script.hasChild()
+            hasChild: Script.hasChild(itemObject)
             onClicked:
                 column.loadColumn(
                     mapping.getComponent(itemObject.objectId),

@@ -132,7 +132,7 @@ class AudioVideoPlayer : public PlayListPlayer
 	/*!
 		\brief Get elapsed time in percentage
 	*/
-	Q_PROPERTY(int percentage READ getPercentage NOTIFY percentageChanged)
+	Q_PROPERTY(double percentage READ getPercentage NOTIFY percentageChanged)
 
 	/*!
 		\brief Set and/or get if player is muted or not
@@ -144,6 +144,11 @@ class AudioVideoPlayer : public PlayListPlayer
 	*/
 	Q_PROPERTY(bool playing READ getPlaying NOTIFY playingChanged)
 
+	/*!
+		\brief Set and get bounding box for video playback
+	*/
+	Q_PROPERTY(QRect videoRect READ getVideoRect WRITE setVideoRect NOTIFY videoRectChanged)
+
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
@@ -153,10 +158,12 @@ public:
 	QString getTrackName() const;
 	int getVolume() const;
 	void setVolume(int newValue);
-	int getPercentage() const { return percentage; }
+	double getPercentage() const { return percentage; }
 	bool getMute() const;
 	void setMute(bool newValue);
 	bool getPlaying() const;
+	QRect getVideoRect() const;
+	void setVideoRect(QRect newValue);
 
 public slots:
 	void prevTrack();
@@ -175,6 +182,7 @@ signals:
 	void percentageChanged();
 	void muteChanged();
 	void playingChanged();
+	void videoRectChanged();
 
 private slots:
 	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);
@@ -186,7 +194,7 @@ private:
 
 	MultiMediaPlayer *media_player;
 	bool user_track_change_request;
-	int percentage;
+	double percentage;
 	QVariant current_time_s, total_time_s;
 };
 

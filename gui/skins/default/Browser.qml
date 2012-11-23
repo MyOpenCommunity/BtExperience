@@ -11,7 +11,7 @@ Page {
     property string _fixedUrlString: privateProps.fixedAddress(webBrowser.urlString)
     property variant profile: undefined
 
-    source: profile === undefined ? 'images/home/home.jpg' : 'images/home/home.jpg' // TODO: profile background image
+    source: profile === undefined ? 'images/home/home.jpg' : profile.image
     text: profile === undefined ? qsTr("Browser") : profile.description
     showSystemsButton: false
 
@@ -71,6 +71,11 @@ Page {
             Stack.popPage()
     }
 
+    Component {
+        id: webViewContainerComponent
+        PopupBrowser {}
+    }
+
     QtObject {
         id: privateProps
 
@@ -79,10 +84,13 @@ Page {
             var isHttp = (fixedAddress.toLowerCase().indexOf("http://") === 0)
             var isHttps = (fixedAddress.toLowerCase().indexOf("https://") === 0)
             var isProcol = (fixedAddress.toLowerCase().indexOf("://") > 0)
+
             if (!isHttp && !isHttps && !isProcol)
                 fixedAddress = "http://" + fixedAddress
             else if (!isProcol)
                 fixedAddress = "http://" + fixedAddress
+
+            console.log("Loading web address: " + fixedAddress)
             return fixedAddress
         }
     }

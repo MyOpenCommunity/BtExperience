@@ -11,7 +11,11 @@ function status(itemObject) {
     case ObjectInterface.IdDimmer100Custom:
     case ObjectInterface.IdSoundAmplifier:
     case ObjectInterface.IdPowerAmplifier:
-        return itemObject.active === true ? 1 : 0;
+        return itemObject.active === true ? 1 : 0
+
+    case ObjectInterface.IdMultiChannelSoundAmbient:
+    case ObjectInterface.IdMonoChannelSoundAmbient:
+        return itemObject.hasActiveAmplifier
     }
     return -1
 }

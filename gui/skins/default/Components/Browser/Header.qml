@@ -84,13 +84,13 @@ SvgImage {
         pressedImage: "../../images/common/ico_aggiorna_P.svg"
         status: 0
         onClicked: {
-            if (state === "") {
+            if (control.state === "") {
                 view.reload.trigger()
             }
-            else if (state === "loading") {
+            else if (control.state === "loading") {
                 view.stop.trigger()
             }
-            else if (state === "editing") {
+            else if (control.state === "editing") {
                 browser.urlString = urlInput.url
                 browser.focus = true
                 control.urlChanged = false
@@ -128,7 +128,7 @@ SvgImage {
         anchors {
             verticalCenter: bgText.verticalCenter
             left: bgText.left
-            right: bgText.right
+            right: loadingIndicator.visible ? loadingIndicator.left : bgText.right
         }
         onUrlEntered: {
             browser.urlString = url

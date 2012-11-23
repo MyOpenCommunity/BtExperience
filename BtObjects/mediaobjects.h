@@ -267,7 +267,8 @@ public:
 		\brief Play the first media content found on the source
 
 		Searches for the first media element available for this source and
-		starts playing it.
+		starts playing it.  The active status for the source is not changed by
+		this method.
 
 		Emits \ref firstMediaContentStatus() to signal completion.  The search might be either
 		sinchronous or asynchronous (depending on the source).
@@ -677,16 +678,6 @@ class AmplifierGroup : public ObjectInterface
 {
 	Q_OBJECT
 
-	/*!
-		\brief Sets or gets the on/off status of the amplifier
-	*/
-	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
-
-	/*!
-		\brief Sets or gets the amplifier volume (1-31)
-	*/
-	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
-
 public:
 	AmplifierGroup(QString name, QList<Amplifier *> amplifiers);
 
@@ -695,23 +686,11 @@ public:
 		return ObjectInterface::IdSoundAmplifierGroup;
 	}
 
-	bool isActive() const { return false; }
-	void setActive(bool active);
-
-	int getVolume() const { return 0; }
-	void setVolume(int volume);
-
 	Q_INVOKABLE void volumeUp() const;
 	Q_INVOKABLE void volumeDown() const;
 
-signals:
-	void activeChanged();
-	void volumeChanged();
-
 private:
 	QList<Amplifier *> amplifiers;
-	bool active;
-	int volume;
 };
 
 

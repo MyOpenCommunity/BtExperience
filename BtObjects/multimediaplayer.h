@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QVariant>
 #include <QMetaType>
+#include <QRect>
 
 class MediaPlayer;
 class GstMediaPlayer;
@@ -80,6 +81,11 @@ class MultiMediaPlayer : public QObject
 	*/
 	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
 
+	/*!
+		\brief Set and get bounding box for video playback
+	*/
+	Q_PROPERTY(QRect videoRect READ getVideoRect WRITE setVideoRect NOTIFY videoRectChanged)
+
 	Q_ENUMS(PlayerState AudioOutputState)
 
 public:
@@ -115,6 +121,8 @@ public:
 	void setVolume(int newValue);
 	bool getMute() const { return mute; }
 	void setMute(bool newValue);
+	QRect getVideoRect() const;
+	void setVideoRect(QRect rect);
 
 	/*!
 		\brief Set the global template for command line arguments
@@ -175,6 +183,7 @@ signals:
 	void audioOutputStateChanged(MultiMediaPlayer::AudioOutputState state);
 	void volumeChanged(int volume);
 	void muteChanged(bool mute);
+	void videoRectChanged(QRect rect);
 
 private slots:
 	void readPlayerInfo();
@@ -198,6 +207,7 @@ private:
 	GstMediaPlayer *gst_player;
 	bool is_video_track;
 	QTimer *info_poll_timer;
+	QRect video_rect;
 
 	QString current_source;
 	QVariantMap track_info;

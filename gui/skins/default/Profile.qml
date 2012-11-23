@@ -96,6 +96,22 @@ Page {
             deletingObject.destroy()
         }
 
+        function getComponentFromType(type) {
+            var component
+            switch (type) {
+            case MediaLink.Web:
+                component = favouriteItemComponent
+                break
+            case MediaLink.Rss:
+                component = rssItemComponent
+                break
+            case MediaLink.Camera:
+                component = cameraItemComponent
+                break
+            }
+            return component
+        }
+
         function createProfileObjects() {
             // here we compute the ref point for QuickLinks; essentially, this is the center of the moving
             // area where QuickLinks will be positioned
@@ -108,18 +124,7 @@ Page {
                 var obj = mediaLinks.getObject(i);
                 var text = obj.name
 
-                var component;
-                switch (obj.type) {
-                case MediaLink.Web:
-                    component = favouriteItemComponent
-                    break
-                case MediaLink.Rss:
-                    component = rssItemComponent
-                    break
-                case MediaLink.Camera:
-                    component = cameraItemComponent
-                    break
-                }
+                var component = getComponentFromType(obj.type)
 
                 // x and y are absolute coordinates
                 var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
@@ -160,6 +165,7 @@ Page {
                 var deltaY = Math.random() * (bgMoveArea.height - 1.5 * privateProps.maxItemHeight)
                 res = pannableChild.mapFromItem(null, absArea.x + deltaX, absArea.y + deltaY)
 
+                component = getComponentFromType(link.type)
                 instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": link})
                 link.position = Qt.point(absArea.x + deltaX, absArea.y + deltaY)
 

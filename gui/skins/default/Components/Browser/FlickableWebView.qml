@@ -66,8 +66,11 @@ Flickable {
 
     WebView {
         id: webView
+
+        newWindowComponent: webViewContainerComponent
+        newWindowParent: webView
         transformOrigin: Item.TopLeft
-        settings.javascriptCanOpenWindows: false
+        settings.javascriptCanOpenWindows: true
 
         function fixUrl(url)
         {
@@ -89,6 +92,9 @@ Flickable {
         focus: true
 
         onAlert: console.log(message)
+        onLoadFailed: console.log("Failed loading: " + url)
+        onLoadFinished: console.log("Finished loading: " + url)
+        onLoadStarted: console.log("Started loading new url")
 
         function doZoom(zoom,centerX,centerY)
         {
