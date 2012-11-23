@@ -122,7 +122,7 @@ Page {
 
         property variant dataObject: control.camera
         description: qsTr("volume")
-        percentage: 50
+        percentage: dataObject.volume
         anchors {
             // anchors are set considering that ControlPullDownVideo contains
             // a loader, so its dimensions are not well defined; topMargin
@@ -221,6 +221,7 @@ Page {
         redTimer.running = true
         toolbar.z = 1
         navigationBar.z = 1
+        control.camera.volume = global.audioState.getStateVolume(AudioState.VdeCallVolume)
         controlCallManager.updateVolumeState()
     }
 }

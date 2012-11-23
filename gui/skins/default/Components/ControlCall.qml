@@ -19,6 +19,7 @@ SvgImage {
         if (dataObject !== undefined) {
             dataObject.callAnswered.connect(privateProps.callAnswered)
             dataObject.callEnded.connect(callEndedCallback)
+            dataObject.volume = global.audioState.getStateVolume(AudioState.IntercomCallVolume)
             connDataObject.target = dataObject
         }
     }
