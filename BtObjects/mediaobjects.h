@@ -678,16 +678,6 @@ class AmplifierGroup : public ObjectInterface
 {
 	Q_OBJECT
 
-	/*!
-		\brief Sets or gets the on/off status of the amplifier
-	*/
-	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
-
-	/*!
-		\brief Sets or gets the amplifier volume (1-31)
-	*/
-	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
-
 public:
 	AmplifierGroup(QString name, QList<Amplifier *> amplifiers);
 
@@ -696,23 +686,11 @@ public:
 		return ObjectInterface::IdSoundAmplifierGroup;
 	}
 
-	bool isActive() const { return false; }
-	void setActive(bool active);
-
-	int getVolume() const { return 0; }
-	void setVolume(int volume);
-
 	Q_INVOKABLE void volumeUp() const;
 	Q_INVOKABLE void volumeDown() const;
 
-signals:
-	void activeChanged();
-	void volumeChanged();
-
 private:
 	QList<Amplifier *> amplifiers;
-	bool active;
-	int volume;
 };
 
 

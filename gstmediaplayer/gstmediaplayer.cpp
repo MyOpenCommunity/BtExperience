@@ -6,7 +6,6 @@
 #include <QUrl>
 #include <QDebug>
 
-#define TI_SINK_PATH "playsink0::vbin::videosink::videosink-actual-sink-tidisplaysink2"
 #define READY_TIMEOUT 30
 
 
@@ -143,7 +142,7 @@ void GstMediaPlayerImplementation::handleBusMessage(GstBus *bus, GstMessage *mes
 	case GST_MESSAGE_STATE_CHANGED:
 		if (check_for_state_change)
 		{
-			handleStateChange();
+			handleStateChange(message);
 			check_for_state_change = false;
 		}
 		break;
@@ -234,18 +233,23 @@ QSize GstMediaPlayerImplementation::getVideoSize()
 
 void GstMediaPlayerImplementation::setOverlayRect(QRect rect)
 {
-	gst_child_proxy_set(GST_OBJECT(pipeline),
-			    TI_SINK_PATH "::overlay-top", rect.top(),
-			    TI_SINK_PATH "::overlay-left", rect.left(),
-			    TI_SINK_PATH "::overlay-width", rect.width(),
-			    TI_SINK_PATH "::overlay-height", rect.height(),
-			    NULL);
+	GstElement *element = gst_bin_get_by_name(GST_BIN(pipeline), "videosink-actual-sink-tidisplaysink2");
+	if (!element)
+		return;
+
+	g_object_set(GST_OBJECT(element),
+		     "overlay-top", rect.top(),
+		     "overlay-left", rect.left(),
+		     "overlay-width", rect.width(),
+		     "overlay-height", rect.height(),
+		     NULL);
+	gst_object_unref(element);
 }
 
-void GstMediaPlayerImplementation::handleStateChange()
+void GstMediaPlayerImplementation::handleStateChange(GstMessage *message)
 {
 	GstState current, next;
-	gst_element_get_state(GST_ELEMENT(pipeline), &current, &next, 0);
+	gst_message_parse_state_changed(message, &current, &next, 0);
 
 	switch (GST_STATE_TRANSITION(current, next))
 	{

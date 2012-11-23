@@ -268,7 +268,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(currentSourceChanged(QString)), SIGNAL(trackNameChanged()));
 	connect(media_player, SIGNAL(volumeChanged(int)), SIGNAL(volumeChanged()));
 	connect(media_player, SIGNAL(muteChanged(bool)), SIGNAL(muteChanged()));
-	connect(media_player, SIGNAL(videoRectChanged(bool)), SIGNAL(videoRectChanged()));
+	connect(media_player, SIGNAL(videoRectChanged(QRect)), SIGNAL(videoRectChanged()));
 
 	connect(this, SIGNAL(currentChanged()), SLOT(play()));
 	connect(this, SIGNAL(deviceUnmounted()), this, SLOT(terminate()));

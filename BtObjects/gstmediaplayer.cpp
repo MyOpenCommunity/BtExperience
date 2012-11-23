@@ -4,8 +4,30 @@
 #include <QMetaEnum>
 #include <QtDebug>
 
+namespace
+{
+	QMap<QString, QString> parsePlayerOutput(QString data)
+	{
+		QMap<QString, QString> result;
 
-GstExternalMediaPlayer::GstExternalMediaPlayer(QObject *parent)
+		foreach (QString line, data.split('\n'))
+		{
+			int colon = line.indexOf(':');
+			if (colon == -1)
+				continue;
+
+			QString key = line.mid(0, colon);
+			QString value = line.mid(colon + 2);
+
+			result[key] = value;
+		}
+
+		return result;
+	}
+}
+
+
+GstMediaPlayer::GstMediaPlayer(QObject *parent) : QObject(parent)
 {
 	gstreamer_proc = new QProcess();
 	paused = false;
@@ -15,19 +37,27 @@ GstExternalMediaPlayer::GstExternalMediaPlayer(QObject *parent)
 	connect(gstreamer_proc, SIGNAL(error(QProcess::ProcessError)), SLOT(mplayerError(QProcess::ProcessError)));
 }
 
-bool GstExternalMediaPlayer::play(QRect rect, QString track)
+bool GstMediaPlayer::isInstanceRunning()
 {
+	return gstreamer_proc->state() != QProcess::NotRunning;
+}
+
+bool GstMediaPlayer::play(QRect rect, QString track)
+{
+	video_rect = rect;
+
 	return runMPlayer(QList<QString>()
 			  << QString("--rect=%1,%2,%3,%4").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height())
 			  << track);
 }
 
-void GstExternalMediaPlayer::setPlayerRect(QRect rect)
+void GstMediaPlayer::setPlayerRect(QRect rect)
 {
+	video_rect = rect;
 	execCmd(QString("resize %1 %2 %3 %4").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height()));
 }
 
-bool GstExternalMediaPlayer::runMPlayer(const QList<QString> &args)
+bool GstMediaPlayer::runMPlayer(const QList<QString> &args)
 {
 	if (gstreamer_proc->state() != QProcess::NotRunning)
 	{
@@ -48,7 +78,7 @@ bool GstExternalMediaPlayer::runMPlayer(const QList<QString> &args)
 	return started;
 }
 
-void GstExternalMediaPlayer::quit()
+void GstMediaPlayer::quit()
 {
 	if (gstreamer_proc->state() == QProcess::Running)
 	{
@@ -59,17 +89,20 @@ void GstExternalMediaPlayer::quit()
 	}
 }
 
-void GstExternalMediaPlayer::pause()
+void GstMediaPlayer::pause()
 {
+	paused = true;
 	execCmd("pause");
 }
 
-void GstExternalMediaPlayer::resume()
+void GstMediaPlayer::resume()
 {
+	paused = really_paused = false;
 	execCmd("resume");
+	emit gstPlayerResumed();
 }
 
-void GstExternalMediaPlayer::stop()
+void GstMediaPlayer::stop()
 {
 	// simulate player termination when the player is logically paused
 	if (paused)
@@ -82,7 +115,29 @@ void GstExternalMediaPlayer::stop()
 	quit();
 }
 
-void GstExternalMediaPlayer::mplayerFinished(int exit_code, QProcess::ExitStatus exit_status)
+void GstMediaPlayer::setTrack(QString track)
+{
+	if (gstreamer_proc->state() == QProcess::Running)
+		execCmd("set_track " + track);
+	else
+		play(video_rect, track);
+}
+
+QMap<QString, QString> GstMediaPlayer::getPlayingInfo()
+{
+	QString raw_data = gstreamer_proc->readAll();
+	QMap<QString, QString> info_data = parsePlayerOutput(raw_data);
+
+	if (info_data.value("state") == "paused" && paused)
+	{
+		really_paused = true;
+		emit gstPlayerPaused();
+	}
+
+	return info_data;
+}
+
+void GstMediaPlayer::mplayerFinished(int exit_code, QProcess::ExitStatus exit_status)
 {
 	if (exit_status == QProcess::CrashExit)
 	{
@@ -105,14 +160,14 @@ void GstExternalMediaPlayer::mplayerFinished(int exit_code, QProcess::ExitStatus
 	}
 }
 
-void GstExternalMediaPlayer::mplayerError(QProcess::ProcessError error)
+void GstMediaPlayer::mplayerError(QProcess::ProcessError error)
 {
 	int idx = gstreamer_proc->metaObject()->indexOfEnumerator("ProcessError");
 	QMetaEnum e = gstreamer_proc->metaObject()->enumerator(idx);
 	qDebug() << "[AUDIO] mplayer_proc raised an error: " << "'" << e.key(error) << "'";
 }
 
-void GstExternalMediaPlayer::execCmd(QString command)
+void GstMediaPlayer::execCmd(QString command)
 {
 	if (gstreamer_proc->write(command.toAscii() + "\n") < -1)
 		qDebug() << "Error MediaPlayer::execCmd():" << gstreamer_proc->errorString();

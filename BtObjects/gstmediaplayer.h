@@ -7,13 +7,14 @@
 #include <QRect>
 
 
-class GstMediaPlayerImplementation : public QObject
+class GstMediaPlayer : public QObject
 {
 	Q_OBJECT
-public:
-	GstMediaPlayerImplementation(QObject *parent = 0) : QObject(parent) { }
 
-	virtual bool play(QRect rect, QString track) { Q_UNUSED(track); Q_UNUSED(rect); return false; }
+public:
+	GstMediaPlayer(QObject *parent = 0);
+
+	bool play(QRect rect, QString track);
 
 	/*!
 		\brief Return information about the playing audio track
@@ -28,16 +29,18 @@ public:
 		- meta_album: track album, as written in ID3 tags
 		- total_time: total track time, either from ID3 tags or guessed by the player
 	 */
-	virtual QMap<QString, QString> getPlayingInfo() { return QMap<QString, QString>(); }
+	QMap<QString, QString> getPlayingInfo();
 
-	virtual void setTrack(QString track) { Q_UNUSED(track) }
+	void setTrack(QString track);
 
-	virtual void setPlayerRect(QRect rect) { Q_UNUSED(rect) }
+	void setPlayerRect(QRect rect);
+
+	bool isInstanceRunning();
 
 public slots:
-	virtual void pause() { }
-	virtual void resume() { }
-	virtual void stop() { }
+	void pause();
+	void resume();
+	void stop();
 
 signals:
 	/*!
@@ -73,22 +76,6 @@ signals:
 		\a info contains the same data returned by getPlayingInfo().
 	 */
 	void playingInfoUpdated(const QMap<QString,QString> &info);
-};
-
-class GstExternalMediaPlayer : public GstMediaPlayerImplementation
-{
-	Q_OBJECT
-
-public:
-	GstExternalMediaPlayer(QObject *parent = 0);
-
-	virtual bool play(QRect rect, QString track);
-
-	virtual void pause();
-	virtual void resume();
-	virtual void stop();
-
-	virtual void setPlayerRect(QRect rect);
 
 private slots:
 	void mplayerFinished(int exit_code, QProcess::ExitStatus exit_status);
@@ -100,6 +87,7 @@ private:
 	void execCmd(QString command);
 
 	QProcess *gstreamer_proc;
+	QRect video_rect;
 	bool paused, really_paused;
 };
 
