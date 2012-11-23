@@ -5,36 +5,32 @@ import Components.Text 1.0
 
 Image {
     id: buttonSlider
-    width: 212
-    height: 100
-    property string description: qsTr("volume")
+    property alias description: label.text
     property string imagePath: "../../"
 
-    source: imagePath + "images/common/bg_UnaRegolazione.png"
+    source: imagePath + "images/common/bg_impostazioni.svg"
 
     signal plusClicked
     signal minusClicked
 
-    UbuntuLightText {
+    UbuntuMediumText {
         id: label
-        x: 85
-        y: 15
-        font {
-            bold: true
-            pixelSize: 16
-        }
+        font.pixelSize: 16
         color: "#444546"
 
-        text: buttonSlider.description
-        anchors.horizontalCenterOffset: 0
-        anchors.horizontalCenter: parent.horizontalCenter
+        text: qsTr("volume")
+        anchors {
+            top: parent.top
+            topMargin: buttonSlider.height * 10 / 100
+            horizontalCenter: parent.horizontalCenter
+        }
     }
 
     ButtonMinusPlus {
         id: buttons
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: buttonSlider.height * 10 / 100
         onPlusClicked: buttonSlider.plusClicked()
         onMinusClicked: buttonSlider.minusClicked()
     }

@@ -7,6 +7,9 @@ import "../../js/MenuItem.js" as Script
 MenuColumn {
     id: column
 
+    property alias amplifierNumber: itemList.elementsOnPage
+    property alias showSourceControl: sourceLoader.visible
+
     Component {
         id: sourceControl
         SourceControl {}
@@ -15,6 +18,12 @@ MenuColumn {
     onChildDestroyed: {
         itemList.currentIndex = -1
         privateProps.currentIndex = -1
+    }
+
+    ObjectModel {
+        id: ambientModel
+        filters: [{objectId: ObjectInterface.IdMultiAmbientAmplifier}]
+        containers: [column.dataModel.uii]
     }
 
     Column {
@@ -32,9 +41,25 @@ MenuColumn {
             }
         }
 
+        Column {
+            id: ambientControl
+            visible: ambientModel.count > 0
+            property variant itemObject: ambientModel.getObject(0)
+
+            VolumeGeneral {
+                onMinusClicked: ambientControl.itemObject.volumeDown()
+                onPlusClicked: ambientControl.itemObject.volumeUp()
+            }
+
+            ControlOnOff {
+                onClicked: ambientControl.itemObject.setActive(newStatus)
+            }
+        }
+
         PaginatorList {
             id: itemList
 
+            elementsOnPage: 4
             delegate: MenuItemDelegate {
                 editable: true
                 itemObject: objectModel.getObject(index)

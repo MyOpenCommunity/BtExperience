@@ -18,6 +18,6 @@ MenuColumn {
     ControlOnOff {
         id: buttonOnOff
         anchors.bottom: parent.bottom
-        onClicked: column.dataModel.active = newStatus
+        onClicked: column.dataModel.setActive(newStatus)
     }
 }

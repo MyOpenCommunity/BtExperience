@@ -9,6 +9,10 @@
 #include <QStringList>
 #include <QVariantList>
 
+#ifdef BT_MALIIT
+#include <maliit/settingsentry.h>
+#endif
+
 class QDeclarativeView;
 class GuiSettings;
 class InputContextWrapper;
@@ -191,6 +195,7 @@ private:
 	HwKeys *hardware_keys;
 	QPoint max_travelled_distance;
 	QString password;
+	QString keyboard_layout_name;
 	bool password_enabled;
 
 #ifdef BT_MALIIT

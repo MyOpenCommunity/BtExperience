@@ -15,6 +15,7 @@
 #include <QDir>
 
 #define REQUEST_FREQUENCY_TIME 1000
+#define GENERAL_AMBIENT_MIN_CID 11041
 
 namespace
 {
@@ -138,7 +139,19 @@ QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
 		AmplifierDevice *d = AmplifierDevice::createDevice(v.value("where"));
 		int area = is_multichannel ? d->getArea().toInt() : 0;
 
-		obj_list << ObjectPair(uii, new Amplifier(area, v.value("descr"), d));
+		Amplifier *amp = new Amplifier(area, v.value("descr"), d);
+		int cid = v.intValue("cid");
+		if (cid >= GENERAL_AMBIENT_MIN_CID)
+		{
+			QList<Amplifier *> amplifiers;
+			amplifiers << amp;
+			obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"),
+				amplifiers, ObjectInterface::IdMultiAmbientAmplifier));
+		}
+		else
+		{
+			obj_list << ObjectPair(uii, amp);
+		}
 	}
 	return obj_list;
 }
@@ -1087,10 +1100,11 @@ void Amplifier::valueReceived(const DeviceValues &values_list)
 }
 
 
-AmplifierGroup::AmplifierGroup(QString _name, QList<Amplifier *> _amplifiers)
+AmplifierGroup::AmplifierGroup(QString _name, QList<Amplifier *> _amplifiers, int _object_id)
 {
 	name = _name;
 	amplifiers = _amplifiers;
+	object_id = _object_id;
 }
 
 void AmplifierGroup::volumeUp() const
@@ -1103,6 +1117,12 @@ void AmplifierGroup::volumeDown() const
 {
 	foreach (Amplifier *amplifier, amplifiers)
 		amplifier->volumeDown();
+}
+
+void AmplifierGroup::setActive(bool active) const
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->setActive(active);
 }
 
 

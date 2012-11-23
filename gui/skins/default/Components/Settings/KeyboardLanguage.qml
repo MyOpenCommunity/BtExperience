@@ -13,8 +13,10 @@ MenuColumn {
         id: view
         anchors.fill: parent
         interactive: false
+        currentIndex: -1
         delegate: MenuItemDelegate {
             name: pageObject.names.get('KEYBOARD', modelData)
+            isSelected: global.keyboardLayout === modelData
             onClicked: global.keyboardLayout = modelData
         }
         model: global.keyboardLayouts

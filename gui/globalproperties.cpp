@@ -23,7 +23,6 @@
 #ifdef BT_MALIIT
 #include <maliit/settingsmanager.h>
 #include <maliit/pluginsettings.h>
-#include <maliit/settingsentry.h>
 #endif
 
 #define EXTRA_PATH "/home/bticino/cfg/extra"
@@ -31,9 +30,11 @@
 #define LAZY_UPDATE_COUNT 2
 
 #if defined(BT_HARDWARE_X11)
+#define CONF_FILE "conf.xml"
 #define SETTINGS_FILE "settings.xml"
 #define EXTRA_11_DIR "11/"
 #else
+#define CONF_FILE "/var/tmp/conf.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
 #define EXTRA_11_DIR "/home/bticino/cfg/extra/11/"
 #endif
@@ -224,6 +225,10 @@ GlobalProperties::GlobalProperties(logger *log)
 	secs_timer->start(1000);
 
 	parseSettings(log);
+
+	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
+
+	keyboard_layout_name = getConfValue(conf, "generale/keyboard_lang");
 
 #ifdef BT_MALIIT
 	maliit_settings = Maliit::SettingsManager::create();
@@ -719,25 +724,53 @@ bool GlobalProperties::isPasswordEnabled() const
 
 QString GlobalProperties::getKeyboardLayout() const
 {
-#ifdef BT_MALIIT
-	return keyboard_layout->value().toString().section(':', 1);
-#else
-	return QString();
-#endif
+	return keyboard_layout_name;
 }
 
 void GlobalProperties::setKeyboardLayout(QString layout)
 {
 #ifdef BT_MALIIT
-	if (!language_map.contains(layout))
-		return;
+	QString maliit_layout = language_map.value(layout), layout_key = layout;
+
+	if (maliit_layout.isEmpty())
+	{
+		foreach (QString key, language_map.keys())
+		{
+			qWarning() << "key" << key;
+			if (key.startsWith(layout + "_"))
+			{
+				layout_key = key;
+				maliit_layout = language_map[key];
+				break;
+			}
+		}
+
+		if (maliit_layout.isEmpty())
+			return;
+	}
 
 	// setting the allowed layout list to the current layout is a roundabout way of disabling
 	// the swipe left/right gesture used to change keyboard layout
-	allowed_layouts->set(QStringList() << language_map[layout]);
-	keyboard_layout->set(language_map[layout]);
+	allowed_layouts->set(QStringList() << maliit_layout);
+	keyboard_layout->set(maliit_layout);
+
+	if (layout != keyboard_layout_name)
+	{
+		QDomDocument conf = configurations->getConfiguration(CONF_FILE);
+
+		setConfValue(conf, "generale/keyboard_lang", layout);
+		configurations->saveConfiguration(CONF_FILE);
+	}
+
+	if (keyboard_layout_name == layout_key)
+		return;
+	keyboard_layout_name = layout_key;
+	emit keyboardLayoutChanged();
 #else
-	Q_UNUSED(layout);
+	if (keyboard_layout_name == layout)
+		return;
+	keyboard_layout_name = layout;
+	emit keyboardLayoutChanged();
 #endif
 }
 
@@ -777,12 +810,7 @@ void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::Plug
 			emit keyboardLayoutsChanged();
 		}
 		else if (entry->key() == "/maliit/onscreen/active")
-		{
 			keyboard_layout = entry;
-
-			connect(keyboard_layout.data(), SIGNAL(valueChanged()),
-				this, SIGNAL(keyboardLayoutChanged()));
-		}
 	}
 
 	// see comment in setKeyboardLayout()
