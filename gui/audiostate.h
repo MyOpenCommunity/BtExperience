@@ -18,6 +18,7 @@ class AudioState : public QObject
 	Q_PROPERTY(bool localAmplifier READ isLocalAmplifier CONSTANT)
 
 	Q_ENUMS(State)
+	Q_ENUMS(Volume)
 
 public:
 	enum State
@@ -63,8 +64,8 @@ public:
 	Q_INVOKABLE int getVolume() const;
 
 	// typically used for settings loading/saving
-	void setVolume(Volume state, int volume);
-	int getVolume(Volume state) const;
+	Q_INVOKABLE void setStateVolume(Volume state, int volume);
+	Q_INVOKABLE int getStateVolume(Volume state) const;
 
 	void registerMediaPlayer(MultiMediaPlayer *player);
 	void registerSoundPlayer(MultiMediaPlayer *player);
