@@ -27,18 +27,20 @@ MenuColumn {
         maxHeight: 400
 
         Column {
-            ControlSlider {
+            ControlBalance {
                 id: treble
                 description: qsTr("treble")
-                // TODO: wrong value (#13411)
-                percentage: column.dataModel.treble
+                value: column.dataModel.treble
+                onLeftClicked: column.dataModel.trebleDown()
+                onRightClicked: column.dataModel.trebleUp()
             }
 
-            ControlSlider {
+            ControlBalance {
                 id: bass
                 description: qsTr("bass")
-                // TODO: this is the wrong value, see ticket #13411
-                percentage: column.dataModel.bass
+                value: column.dataModel.bass
+                onLeftClicked: column.dataModel.bassDown()
+                onRightClicked: column.dataModel.bassUp()
             }
         }
 
@@ -46,6 +48,8 @@ MenuColumn {
             ControlBalance {
                 id: balance
                 value: column.dataModel.balance
+                onLeftClicked: column.dataModel.balanceLeft()
+                onRightClicked: column.dataModel.balanceRight()
             }
 
             MenuItem {
