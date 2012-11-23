@@ -48,6 +48,7 @@ signals:
 	void recordingChanged();
 	void scenarioModuleChanged(ScenarioModule *scenario);
 	void scenarioActivated(QString description);
+	void scenarioProgrammingStopped(ScenarioModule *scenario);
 
 private slots:
 	void updateRecordingInfo();

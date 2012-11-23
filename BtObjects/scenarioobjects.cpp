@@ -243,6 +243,8 @@ void ScenarioModule::valueReceived(const DeviceValues &values_list)
 
 void ScenarioModule::changeStatus(ScenarioModule::Status new_status)
 {
+	if (status == Editing && new_status == Unlocked)
+		emit programmingStopped(this);
 	// Please notice: you need to check if new_status == status outside!
 	status = new_status;
 	emit statusChanged(this);

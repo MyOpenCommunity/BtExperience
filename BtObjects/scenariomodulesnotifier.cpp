@@ -23,6 +23,7 @@ ScenarioModulesNotifier::ScenarioModulesNotifier()
 		Q_ASSERT_X(scenarioModule, __PRETTY_FUNCTION__, "Unexpected NULL object");
 		connect(scenarioModule, SIGNAL(statusChanged(ScenarioModule *)), this, SLOT(updateRecordingInfo()));
 		connect(scenarioModule, SIGNAL(statusChanged(ScenarioModule *)), this, SIGNAL(scenarioModuleChanged(ScenarioModule *)));
+		connect(scenarioModule, SIGNAL(programmingStopped(ScenarioModule*)), this, SIGNAL(scenarioProgrammingStopped(ScenarioModule*)));
 	}
 
 	// creates an ObjectModel to select all scenarios

@@ -294,6 +294,7 @@ Item {
             if (scenario.status === ScenarioModule.Editing)
                 Stack.backToHome()
         }
+        onScenarioProgrammingStopped: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.SCENARIO, navigationData: scenario})
     }
 
     Connections {
