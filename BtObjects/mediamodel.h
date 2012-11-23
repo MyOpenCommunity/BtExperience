@@ -208,7 +208,7 @@ public:
 	/*!
 		\brief Returns absolute index of an element ignoring filters
 	*/
-	Q_INVOKABLE int getAbsoluteIndexOf(ItemInterface *obj);
+	Q_INVOKABLE virtual int getAbsoluteIndexOf(ItemInterface *obj);
 
 	// The range argument is a QVariantList in order to set them from qml. The real
 	// type expected is a couple of int [min, max)

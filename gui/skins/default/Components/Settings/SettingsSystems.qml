@@ -13,6 +13,7 @@ MenuColumn {
     function targetsKnown() {
         return {
             "VDE": privateProps.openVDEMenu,
+            "Scenarios": privateProps.openScenariosMenu,
         }
     }
 
@@ -22,6 +23,13 @@ MenuColumn {
         function openVDEMenu(navigationData) {
             var m = modelList.get(2)
             itemList.currentIndex = 2
+            column.loadColumn(m.component, m.name)
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
+
+        function openScenariosMenu(navigationData) {
+            var m = modelList.get(0)
+            itemList.currentIndex = 0
             column.loadColumn(m.component, m.name)
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
