@@ -23,7 +23,6 @@
 #ifdef BT_MALIIT
 #include <maliit/settingsmanager.h>
 #include <maliit/pluginsettings.h>
-#include <maliit/settingsentry.h>
 #endif
 
 #define EXTRA_PATH "/home/bticino/cfg/extra"

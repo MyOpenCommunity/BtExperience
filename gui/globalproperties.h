@@ -9,6 +9,10 @@
 #include <QStringList>
 #include <QVariantList>
 
+#ifdef BT_MALIIT
+#include <maliit/settingsentry.h>
+#endif
+
 class QDeclarativeView;
 class GuiSettings;
 class InputContextWrapper;
