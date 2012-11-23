@@ -6,6 +6,7 @@ import Components 1.0
 import "../js/Stack.js" as Stack
 import "../js/TurnOffMonitor.js" as TurnOff
 import "../js/EventManager.js" as Script
+import "../js/navigation.js" as Navigation
 
 
 Item {
@@ -23,6 +24,8 @@ Item {
     property bool playing: global.audioVideoPlayer === undefined ? false : global.audioVideoPlayer.playing
     property bool mute: global.audioState === null ? false : (global.audioState.state === AudioState.LocalPlaybackMute || global.audioState.state === AudioState.Mute)
     property bool clocksEnabled: privateProps.clocksModel === null ? false : privateProps.clocksModel.enabled
+
+    property variant scenarioRecorder: privateProps.recordingModel === undefined ? undefined : privateProps.recordingModel.recorder
 
     signal changePageDone
 
@@ -286,6 +289,10 @@ Item {
             }
             else
                 privateProps.scenarioActivation(description)
+        }
+        onScenarioModuleChanged: {
+            if (scenario.status === ScenarioModule.Editing)
+                Stack.backToHome()
         }
     }
 

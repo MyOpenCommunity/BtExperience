@@ -12,7 +12,6 @@ BasePage {
     property alias text: navigationBar.text
     property alias showBackButton: navigationBar.backButton
     property alias showSystemsButton: navigationBar.systemsButton
-    property bool isScenarioRecording: EventManager.eventManager.scenarioRecording && global.guiSettings.scenarioRecordingAlert
 
     function homeButtonClicked() {
         Stack.backToHome()
@@ -55,7 +54,7 @@ BasePage {
 
         height: 45
         z: 2
-        visible: isScenarioRecording
+        opacity: EventManager.eventManager.scenarioRecording ? 1.0 : 0.0
         anchors {
             top: toolbar.bottom
             topMargin: -12

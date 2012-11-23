@@ -7,13 +7,25 @@ import "../../js/Stack.js" as Stack
 MenuColumn {
     id: column
 
+    ObjectModel {
+        id: objectModel
+        filters: [
+            {objectId: ObjectInterface.IdAdvancedScenario},
+            {objectId: ObjectInterface.IdScenarioModule}
+        ]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
     onChildDestroyed: {
-        itemList.currentIndex = -1
+        paginator.currentIndex = -1
     }
 
     PaginatorList {
-        id: itemList
+        id: paginator
+
         currentIndex: -1
+        model: objectModel
+        onCurrentPageChanged: closeChild()
 
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
@@ -28,19 +40,6 @@ MenuColumn {
                     loadColumn(scenario, name, itemObject)
             }
         }
-
-        model: objectModel
-
-        onCurrentPageChanged: closeChild()
-    }
-
-    ObjectModel {
-        id: objectModel
-        filters: [
-            {objectId: ObjectInterface.IdAdvancedScenario},
-            {objectId: ObjectInterface.IdScenarioModule}
-        ]
-        range: itemList.computePageRange(itemList.currentPage, itemList.elementsOnPage)
     }
 
     Component {

@@ -9,8 +9,6 @@ import "js/EventManager.js" as EventManager
 BasePage {
     id: mainarea
 
-    property bool isScenarioRecording: EventManager.eventManager.scenarioRecording && global.guiSettings.scenarioRecordingAlert
-
     source : global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
                                                              "images/home/home_dark.jpg"
 
@@ -19,7 +17,7 @@ BasePage {
         anchors.fill: parent
         color: "silver"
         opacity: 0.6
-        visible: isScenarioRecording
+        visible: EventManager.eventManager.scenarioRecording
         MouseArea {
             anchors.fill: parent
         }
@@ -40,7 +38,7 @@ BasePage {
 
         height: 45
         z: 2
-        visible: isScenarioRecording
+        opacity: EventManager.eventManager.scenarioRecording ? 1.0 : 0.0
         anchors {
             top: toolbar.bottom
             topMargin: -12
@@ -226,7 +224,7 @@ BasePage {
                                                                              "images/home/ico_opzioni.svg"
                 onClicked: Stack.goToPage("Settings.qml")
                 textOption: qsTr("otpions")
-                enabled: isScenarioRecording === false
+                enabled: EventManager.eventManager.scenarioRecording === false
             }
 
             ButtonHomePageLink {
@@ -243,7 +241,7 @@ BasePage {
                                                                              "images/home/ico_multimedia.svg"
                 onClicked: Stack.goToPage("Multimedia.qml")
                 textMultimedia: qsTr ("multimedia")
-                enabled: isScenarioRecording === false
+                enabled: EventManager.eventManager.scenarioRecording === false
             }
         }
     }

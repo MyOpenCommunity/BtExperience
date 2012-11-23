@@ -1,5 +1,7 @@
 import QtQuick 1.1
 import Components.Text 1.0
+import "../js/EventManager.js" as EventManager
+import "../js/navigation.js" as Navigation
 
 
 Item {
@@ -38,6 +40,15 @@ Item {
             right: bottomBg.right
             rightMargin: bottomBg.width / 100 * 1.00
         }
-        onClicked: console.log("scenario ok clicked")
+        onClicked: {
+            if (EventManager.eventManager.scenarioRecording)
+                EventManager.eventManager.scenarioRecorder.stopProgramming()
+            else
+                console.log("Trying to finalize a scenario recording, but no scenario module is in edit mode")
+        }
+    }
+
+    Behavior on opacity {
+        NumberAnimation { duration: 400 }
     }
 }
