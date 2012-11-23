@@ -128,11 +128,6 @@ BasePage {
         model: profilesModel
     }
 
-    MediaModel {
-        source: myHomeModels.rooms
-        id: roomModel
-    }
-
     Item {
         id: homeMenu
         width: menu_bg.width
