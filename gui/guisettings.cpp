@@ -115,7 +115,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	brightness = 50;
 	contrast = 50;
-	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
 	timezone = 0;
 	skin = Clear;
 	beep = false;

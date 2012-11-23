@@ -181,7 +181,6 @@ private:
 	ConfigFile *configurations;
 	int brightness;
 	int contrast;
-	QString keyboardLayout;
 	QString language;
 	int timezone;
 	Skin skin;

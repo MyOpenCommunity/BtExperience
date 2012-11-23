@@ -195,6 +195,7 @@ private:
 	HwKeys *hardware_keys;
 	QPoint max_travelled_distance;
 	QString password;
+	QString keyboard_layout_name;
 	bool password_enabled;
 
 #ifdef BT_MALIIT
