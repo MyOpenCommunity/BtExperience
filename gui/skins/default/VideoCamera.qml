@@ -133,7 +133,14 @@ Page {
             topMargin: 35 + 10
         }
         onPlusClicked: if (dataObject) dataObject.volume += 5
-        onMinusClicked: if (dataObject) dataObject.volume -= 5
+        onMinusClicked: {
+            if (!dataObject)
+                return
+            if (dataObject.volume <= 5)
+                dataObject.mute = true
+            else
+                dataObject.volume -= 5
+        }
         onMuteClicked: if (dataObject) dataObject.mute = !dataObject.mute
     }
 
