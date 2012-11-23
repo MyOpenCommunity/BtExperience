@@ -5,8 +5,6 @@ import Components.Text 1.0
 Item {
     id: control
 
-    property alias text: label.text
-
     Rectangle {
         id: bottomBg
         opacity: 0.8
