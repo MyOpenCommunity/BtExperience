@@ -47,12 +47,14 @@ Page {
         }
     }
 
-    SvgImage {
+    Image {
         id: thePhoto
 
         source: global.photoPlayer.fileName
+        sourceSize: Qt.size(frame.width, frame.height)
         fillMode: Image.PreserveAspectFit
         anchors.fill: frame
+        cache: false
     }
 
     SvgImage {
@@ -234,6 +236,7 @@ Page {
             PropertyChanges {
                 target: thePhoto
                 anchors.fill: fullScreenBg
+                sourceSize: Qt.size(fullScreenBg.width, fullScreenBg.height)
             }
         }
     ]
