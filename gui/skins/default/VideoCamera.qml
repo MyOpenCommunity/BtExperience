@@ -48,7 +48,24 @@ Page {
 
         Connections {
             target: control.camera
-            onCallAnswered: controlCallManager.state = "terminate"
+            onCallAnswered: {
+                controlCallManager.state = "terminate"
+                controlCallManager.updateVolumeState()
+            }
+            onMuteChanged: controlCallManager.updateVolumeState()
+        }
+
+        function updateVolumeState() {
+            if (state == "terminate") {
+                controlVolume.muteEnabled = true
+                if (control.camera.mute)
+                    controlVolume.state = "mute"
+                else
+                    controlVolume.state = ""
+            } else {
+                controlVolume.muteEnabled = false
+                controlVolume.state = "mute"
+            }
         }
     }
 
@@ -105,7 +122,7 @@ Page {
 
         property variant dataObject: control.camera
         description: qsTr("volume")
-        percentage: 50
+        percentage: dataObject.volume
         anchors {
             // anchors are set considering that ControlPullDownVideo contains
             // a loader, so its dimensions are not well defined; topMargin
@@ -116,7 +133,14 @@ Page {
             topMargin: 35 + 10
         }
         onPlusClicked: if (dataObject) dataObject.volume += 5
-        onMinusClicked: if (dataObject) dataObject.volume -= 5
+        onMinusClicked: {
+            if (!dataObject)
+                return
+            if (dataObject.volume <= 5)
+                dataObject.mute = true
+            else
+                dataObject.volume -= 5
+        }
         onMuteClicked: if (dataObject) dataObject.mute = !dataObject.mute
     }
 
@@ -204,5 +228,7 @@ Page {
         redTimer.running = true
         toolbar.z = 1
         navigationBar.z = 1
+        control.camera.volume = global.audioState.getStateVolume(AudioState.VdeCallVolume)
+        controlCallManager.updateVolumeState()
     }
 }

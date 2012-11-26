@@ -66,6 +66,23 @@ namespace
 		smartExecute("amixer", QStringList() << "cset" << "name='HP DAC Playback Volume'" << scaled_volume + "," + scaled_volume);
 	}
 
+	void setZlVolume(int volume)
+	{
+		// 0 -> mute (not used in this function)
+		// 1-100 -> 0 -> 97
+		QString scaled_volume = QString::number(volume * 97 / 100, 16);
+
+		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "046B" << scaled_volume);
+	}
+
+	void setZlMute(bool mute)
+	{
+		if (mute)
+			smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "610C");
+		else
+			smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "600C");
+	}
+
 	void setHardwareVolume(AudioState::Volume state, int volume)
 	{
 		switch (state)
@@ -75,6 +92,10 @@ namespace
 		case AudioState::RingtoneVolume:
 			setHpDacVolume(volume);
 			break;
+		case AudioState::VdeCallVolume:
+		case AudioState::IntercomCallVolume:
+			setZlVolume(volume);
+			break;
 		default:
 			setTpaVolume(volume);
 			break;
@@ -82,8 +103,6 @@ namespace
 	}
 
 	QString scs_source_on     = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
-	QString vde_audio_on      = "/usr/local/bin/Hw-D-Audio-VDE_Conversation.sh";
-	QString vde_audio_off     = "/usr/local/bin/Hw-D-Audio-VDE_Conversation_off.sh";
 }
 
 #define VOLUME_MIN 0
@@ -170,7 +189,7 @@ bool AudioState::isLocalAmplifier() const
 	return !(*bt_global::config)[AMPLIFIER_ADDRESS].isEmpty();
 }
 
-void AudioState::setVolume(Volume state, int volume)
+void AudioState::setStateVolume(Volume state, int volume)
 {
 	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
 	Q_ASSERT_X(volume >= VOLUME_MIN && volume <= VOLUME_MAX, "AudioState::setVolume",
@@ -185,7 +204,7 @@ void AudioState::setVolume(Volume state, int volume)
 		setHardwareVolume(current_volume, volume);
 }
 
-int AudioState::getVolume(Volume state) const
+int AudioState::getStateVolume(Volume state) const
 {
 	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
 
@@ -201,7 +220,7 @@ void AudioState::setVolume(int volume)
 	}
 
 	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't set volume in current audio state");
-	setVolume(current_volume, volume);
+	setStateVolume(current_volume, volume);
 }
 
 int AudioState::getVolume() const
@@ -213,7 +232,7 @@ int AudioState::getVolume() const
 	}
 
 	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't get volume in current audio state");
-	return getVolume(current_volume);;
+	return getStateVolume(current_volume);;
 }
 
 void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
@@ -271,9 +290,8 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	switch (old_state)
 	{
-	case ScsVideoCall:
-	case ScsIntercomCall:
-		smartExecute(vde_audio_off);
+	case Mute:
+		setZlMute(false);
 		break;
 	default:
 		qWarning("Add code to leave old state");
@@ -288,16 +306,16 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	switch (new_state)
 	{
 	case ScsVideoCall:
+		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8A10");
+		break;
 	case ScsIntercomCall:
-		smartExecute(vde_audio_on);
+		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8710");
 		break;
 	case LocalPlaybackMute:
 		setHardwareVolume(LocalPlaybackVolume, 0);
 		break;
 	case Mute:
-		// no need to set both Vde and Intercom volume, since they map to
-		// the same hardware control
-		setHardwareVolume(VdeCallVolume, 0);
+		setZlMute(true);
 		break;
 	default:
 		qWarning("Add code to enter new state");

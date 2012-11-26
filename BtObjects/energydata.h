@@ -29,7 +29,7 @@ class EnergyData;
 class QDomNode;
 
 #ifndef TEST_ENERGY_DATA
-#define TEST_ENERGY_DATA 1
+#define TEST_ENERGY_DATA 0
 #endif
 
 

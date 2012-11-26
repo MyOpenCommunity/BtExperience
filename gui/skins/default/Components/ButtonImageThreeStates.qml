@@ -21,7 +21,7 @@ SvgImage {
 
     property bool enabled: true
     property int status: 0 // 0 - up, 1 - down
-    property bool repetitionOnHold: false // enable repetition when pressed
+    property alias repetitionOnHold: area.repetitionEnabled // enable repetition when pressed
 
     signal clicked
     signal pressed
@@ -29,22 +29,13 @@ SvgImage {
 
     source: defaultImageBg
 
-    BeepingMouseArea {
+    RepetitionMouseArea {
         id: area
         anchors.fill: parent
         onClicked: bg.clicked()
-        onPressed: {
-            bg.pressed()
-            clickTimer.running = repetitionOnHold
-        }
-        onReleased: {
-            bg.released()
-            clickTimer.running = false
-        }
-        onVisibleChanged: {
-            if (visible === false)
-                clickTimer.running = false
-        }
+        onPressed: bg.pressed()
+        onReleased: bg.released()
+        visible: bg.enabled
     }
 
     Rectangle {
@@ -72,28 +63,6 @@ SvgImage {
             right: bg.right
         }
         source: shadowImage
-    }
-
-    Timer {
-        id: clickTimer
-
-        property int activations: 0
-
-        onRunningChanged: {
-            if (running) {
-                activations = 1
-                interval = 500
-            }
-        }
-
-        interval: 500
-        running: false
-        repeat: true
-        onTriggered: {
-            if (++activations === 4)
-                interval = 200
-            bg.clicked()
-        }
     }
 
     // for the reasons behind normal state see ButtonThreeStates
