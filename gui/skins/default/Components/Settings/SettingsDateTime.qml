@@ -111,32 +111,33 @@ MenuColumn {
             }
         }
 
-        // timezone menu item (currentIndex === 3)
-        MenuItem {
-            id: timezoneItem
-            name: qsTr("timezone")
-            description: pageObject.names.get('TIMEZONE', global.guiSettings.timezone)
-            hasChild: true
-            isSelected: privateProps.currentIndex === 3
-            onClicked: {
-                if (privateProps.currentIndex !== 3)
-                    privateProps.currentIndex = 3
-                column.loadColumn(timezone, name)
-            }
-        }
+        // TODO commented out waiting to know how to handle them
+//        // timezone menu item (currentIndex === 3)
+//        MenuItem {
+//            id: timezoneItem
+//            name: qsTr("timezone")
+//            description: pageObject.names.get('TIMEZONE', global.guiSettings.timezone)
+//            hasChild: true
+//            isSelected: privateProps.currentIndex === 3
+//            onClicked: {
+//                if (privateProps.currentIndex !== 3)
+//                    privateProps.currentIndex = 3
+//                column.loadColumn(timezone, name)
+//            }
+//        }
 
-        // daylight saving time menu item (currentIndex === 4)
-        MenuItem {
-            id: daylightSavingTimeItem
-            name: qsTr("daylight saving time")
-            description: pageObject.names.get('SUMMER_TIME', privateProps.model.summerTime)
-            hasChild: true
-            isSelected: privateProps.currentIndex === 4
-            onClicked: {
-                if (privateProps.currentIndex !== 4)
-                    privateProps.currentIndex = 4
-                column.loadColumn(daylightSavingTime, name)
-            }
-        }
+//        // daylight saving time menu item (currentIndex === 4)
+//        MenuItem {
+//            id: daylightSavingTimeItem
+//            name: qsTr("daylight saving time")
+//            description: pageObject.names.get('SUMMER_TIME', privateProps.model.summerTime)
+//            hasChild: true
+//            isSelected: privateProps.currentIndex === 4
+//            onClicked: {
+//                if (privateProps.currentIndex !== 4)
+//                    privateProps.currentIndex = 4
+//                column.loadColumn(daylightSavingTime, name)
+//            }
+//        }
     }
 }
