@@ -11,7 +11,15 @@ namespace
 		if (oid == ObjectInterface::IdIpRadio)
 			return ObjectLink::WebRadio;
 
-		return ObjectLink::Camera;
+		// TODO not sure if all the following are "good" cameras, old code was this way
+		if (oid == ObjectInterface::IdExternalPlace ||
+			oid == ObjectInterface::IdSurveillanceCamera ||
+			oid == ObjectInterface::IdInternalIntercom ||
+			oid == ObjectInterface::IdExternalIntercom ||
+			oid == ObjectInterface::IdSwitchboard)
+			return ObjectLink::Camera;
+
+		return ObjectLink::BtObject;
 	}
 }
 
