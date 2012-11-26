@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 import Components.Settings 1.0
 import "../../js/navigationconstants.js" as NavigationConstants
@@ -69,14 +70,45 @@ MenuColumn {
         model: modelList
     }
 
+    ObjectModel {
+        id: profilesModel
+        source: myHomeModels.profiles
+    }
+
+    MediaModel {
+        id: floorsModel
+        source: myHomeModels.floors
+    }
+
+    ObjectModel {
+        id: scenariosModule
+        filters: [
+            {objectId: ObjectInterface.IdAdvancedScenario},
+            {objectId: ObjectInterface.IdScenarioModule}
+        ]
+    }
+
+    ObjectModel {
+        id: cctvModel
+        filters: [{objectId: ObjectInterface.IdCCTV}]
+    }
+
+    ObjectModel {
+        id: energiesCounters
+        filters: [{objectId: ObjectInterface.IdEnergyData}]
+    }
+
     ListModel {
         id: modelList
         Component.onCompleted: {
             modelList.append({"name": qsTr("Home"), "component": "SettingsHome.qml"})
             modelList.append({"name": qsTr("General"), "component": "SettingsGenerals.qml"})
-            modelList.append({"name": qsTr("Profiles"), "component": "SettingsProfiles.qml"})
-            modelList.append({"name": qsTr("Rooms"), "component": "Floor.qml"})
-            modelList.append({"name": qsTr("Systems"), "component": "SettingsSystems.qml"})
+            if (profilesModel.count > 0)
+                modelList.append({"name": qsTr("Profiles"), "component": "SettingsProfiles.qml"})
+            if (floorsModel.count > 0)
+                modelList.append({"name": qsTr("Rooms"), "component": "Floor.qml"})
+            if (scenariosModule.count + cctvModel.count + energiesCounters.count > 0)
+                modelList.append({"name": qsTr("Systems"), "component": "SettingsSystems.qml"})
             modelList.append({"name": qsTr("Alarm Clock"), "component": "SettingsClocks.qml"})
         }
     }
