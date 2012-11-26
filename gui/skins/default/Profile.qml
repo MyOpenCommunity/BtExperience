@@ -108,6 +108,9 @@ Page {
             case MediaLink.Camera:
                 component = cameraItemComponent
                 break
+            case MediaLink.WebRadio:
+                component = webRadioItemComponent
+                break
             }
             return component
         }
@@ -196,6 +199,11 @@ Page {
     Component {
         id: favouriteItemComponent
         FavoriteItem { }
+    }
+
+    Component {
+        id: webRadioItemComponent
+        WebRadioLink { }
     }
 
     Component {

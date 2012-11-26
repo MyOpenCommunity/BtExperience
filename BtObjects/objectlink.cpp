@@ -2,8 +2,21 @@
 #include "objectinterface.h"
 
 
-ObjectLink::ObjectLink(ObjectInterface *obj, MediaType type, int x, int y, int container_uii) :
-	LinkInterface(container_uii, type, QPoint(x, y))
+namespace
+{
+	ObjectLink::MediaType getMediaTypeFromObjectInterface(ObjectInterface *obj)
+	{
+		int oid = obj->getObjectId();
+
+		if (oid == ObjectInterface::IdIpRadio)
+			return ObjectLink::WebRadio;
+
+		return ObjectLink::Camera;
+	}
+}
+
+ObjectLink::ObjectLink(ObjectInterface *obj, int x, int y, int container_uii) :
+		LinkInterface(container_uii, getMediaTypeFromObjectInterface(obj), QPoint(x, y))
 {
 	bt_object = obj;
 	obj->enableObject();

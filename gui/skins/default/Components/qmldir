@@ -78,6 +78,7 @@ Pannable 1.0 Pannable.qml
 PathViewDelegate 1.0 PathViewDelegate.qml
 PressDot 1.0 PressDot.qml
 QuickLink 1.0 QuickLink.qml
+RepetitionMouseArea 1.0 RepetitionMouseArea.qml
 RoomItem 1.0 RoomItem.qml
 RoomView 1.0 RoomView.qml
 RssItem 1.0 RssItem.qml
@@ -88,3 +89,4 @@ SystemsModel 1.0 SystemsModel.qml
 ToolBar 1.0 ToolBar.qml
 ToolbarButton 1.0 ToolbarButton.qml
 TurnOffMonitor 1.0 TurnOffMonitor.qml
+WebRadioLink 1.0 WebRadioLink.qml

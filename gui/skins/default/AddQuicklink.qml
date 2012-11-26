@@ -14,11 +14,15 @@ Page {
     property bool homeCustomization: false
 
     // the following properties are used by delegates
-    property variant actualModel: privateProps.currentChoice === 0 ? camerasModel : quicklinksModel
+    property variant actualModel: privateProps.currentChoice === 0 ?
+                                      camerasModel :
+                                      privateProps.currentChoice === 6 ?
+                                          webRadiosModel :
+                                          quicklinksModel
     property bool isRemovable: privateProps.currentChoice !== 0
 
     text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
-    source: page.profile === undefined ? (page.homeCustomization ? "images/home/home.jpg" : "images/profiles.jpg") : "images/profiles.jpg" // TODO profile background image
+    source: page.profile === undefined ? (page.homeCustomization ? "images/home/home.jpg" : "images/profiles.jpg") : profile.image
 
     onCurrentLinkChanged: {
         if (page.currentLink < 0) {
@@ -51,6 +55,13 @@ Page {
             {objectId: ObjectInterface.IdExternalPlace},
             {objectId: ObjectInterface.IdSurveillanceCamera}
         ]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    ObjectModel {
+        id: webRadiosModel
+        filters: [{"objectId": ObjectInterface.IdIpRadio}]
+        containers: [linksModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
@@ -119,7 +130,7 @@ Page {
             topMargin: bg.height / 100 * 2.29
         }
         Repeater {
-            model: 6
+            model: privateProps.getKinds()
             delegate: ControlRadioHorizontal {
                 width: bg.width / 100 * 23.55
                 text: privateProps.getTypeText(index)
@@ -484,6 +495,11 @@ Page {
         property bool rssStatus: false
         property bool weatherStatus: false
         property bool scenarioStatus: false
+        property bool webRadioStatus: false
+
+        function getKinds() {
+            return 7
+        }
 
         function getContainerUii(kind, dummy) {
             // camera is not managed by media link model
@@ -497,6 +513,8 @@ Page {
                 return Container.IdMultimediaRssMeteo
             if (kind === 5) // scenario
                 return -1 // TODO what is this?
+            if (kind === 6)
+                return Container.IdMultimediaWebRadio
             return -1
         }
 
@@ -513,6 +531,8 @@ Page {
                 return privateProps.weatherStatus
             if (kind === 5)
                 return privateProps.scenarioStatus
+            if (kind === 6)
+                return privateProps.webRadioStatus
             return false
         }
 
@@ -527,6 +547,7 @@ Page {
             privateProps.rssStatus = false
             privateProps.weatherStatus = false
             privateProps.scenarioStatus = false
+            privateProps.webRadioStatus = false
 
             privateProps.currentChoice = kind
 
@@ -542,6 +563,8 @@ Page {
                 privateProps.weatherStatus = true
             if (kind === 5)
                 privateProps.scenarioStatus = true
+            if (kind === 6)
+                privateProps.webRadioStatus = true
 
             linkText.text = qsTr("Click to enter link...")
             nameText.text = qsTr("Click to enter name...")
@@ -562,6 +585,8 @@ Page {
                 return qsTr("weather")
             if (kind === 5)
                 return qsTr("scenario")
+            if (kind === 6)
+                return qsTr("web radio")
             return " " // a space to avoid zero height text element
         }
 
@@ -578,6 +603,8 @@ Page {
                 return qsTr("Select existing weather forecast link:")
             if (privateProps.currentChoice === 5)
                 return qsTr("Select existing scenario:")
+            if (privateProps.currentChoice === 6)
+                return qsTr("Select existing web radio:")
             return " " // a space to avoid zero height text element
         }
 
@@ -594,6 +621,8 @@ Page {
                 return qsTr("Add new weather forecast link:")
             if (privateProps.currentChoice === 5)
                 return qsTr("Add new scenario:")
+            if (privateProps.currentChoice === 6)
+                return qsTr("Add new web radio:")
             return " " // a space to avoid zero height text element
         }
     }
