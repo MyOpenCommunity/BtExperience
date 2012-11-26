@@ -23,9 +23,8 @@ MenuColumn {
         anchors.top: buttonOnOff.bottom
         description: qsTr("volume")
         percentage: (column.dataModel.volume) * 100 / 31
-        // TODO: add a volumeUp/Down in the model
-//        onMinusClicked: column.dataModel.volume = column.dataModel.volume - 1
-//        onPlusClicked: column.dataModel.volume = column.dataModel.volume + 1
+        onMinusClicked: column.dataModel.volumeDown()
+        onPlusClicked: column.dataModel.volumeUp()
     }
 
     MenuItem {

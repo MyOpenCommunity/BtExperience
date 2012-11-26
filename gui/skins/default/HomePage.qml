@@ -2,20 +2,46 @@ import QtQuick 1.1
 import BtObjects 1.0 // a temporary workaround to load immediately the BtObjects module
 import BtExperience 1.0
 import Components 1.0
-import Components.Text 1.0
-
 import "js/Stack.js" as Stack
+import "js/EventManager.js" as EventManager
 
 
 BasePage {
     id: mainarea
+
     source : global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
                                                              "images/home/home_dark.jpg"
 
+    Rectangle {
+        z: 1
+        anchors.fill: parent
+        color: "silver"
+        opacity: 0.6
+        visible: EventManager.eventManager.scenarioRecording
+        MouseArea {
+            anchors.fill: parent
+        }
+    }
+
     ToolBar {
         id: toolbar
+        z: 2
         anchors {
             top: parent.top
+            left: parent.left
+            right: parent.right
+        }
+    }
+
+    ConfirmationBar {
+        id: scenarioBar
+
+        height: 45
+        z: 2
+        opacity: EventManager.eventManager.scenarioRecording ? 1.0 : 0.0
+        anchors {
+            top: toolbar.bottom
+            topMargin: -12
             left: parent.left
             right: parent.right
         }
@@ -128,15 +154,11 @@ BasePage {
         model: profilesModel
     }
 
-    MediaModel {
-        source: myHomeModels.rooms
-        id: roomModel
-    }
-
     Item {
         id: homeMenu
         width: menu_bg.width
         height: menu_bg.height
+        z: 2
 
         anchors {
             right: parent.right
@@ -202,6 +224,7 @@ BasePage {
                                                                              "images/home/ico_opzioni.svg"
                 onClicked: Stack.goToPage("Settings.qml")
                 textOption: qsTr("otpions")
+                enabled: EventManager.eventManager.scenarioRecording === false
             }
 
             ButtonHomePageLink {
@@ -218,6 +241,7 @@ BasePage {
                                                                              "images/home/ico_multimedia.svg"
                 onClicked: Stack.goToPage("Multimedia.qml")
                 textMultimedia: qsTr ("multimedia")
+                enabled: EventManager.eventManager.scenarioRecording === false
             }
         }
     }

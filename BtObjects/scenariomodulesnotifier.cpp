@@ -8,6 +8,7 @@
 ScenarioModulesNotifier::ScenarioModulesNotifier()
 {
 	is_recording = false;
+	recorder = 0;
 
 	// creates an ObjectModel to select scenario modules objects
 	scenario_modules_model = new ObjectModel(this);
@@ -22,6 +23,7 @@ ScenarioModulesNotifier::ScenarioModulesNotifier()
 		Q_ASSERT_X(scenarioModule, __PRETTY_FUNCTION__, "Unexpected NULL object");
 		connect(scenarioModule, SIGNAL(statusChanged(ScenarioModule *)), this, SLOT(updateRecordingInfo()));
 		connect(scenarioModule, SIGNAL(statusChanged(ScenarioModule *)), this, SIGNAL(scenarioModuleChanged(ScenarioModule *)));
+		connect(scenarioModule, SIGNAL(programmingStopped(ScenarioModule*)), this, SIGNAL(scenarioProgrammingStopped(ScenarioModule*)));
 	}
 
 	// creates an ObjectModel to select all scenarios
@@ -56,6 +58,11 @@ void ScenarioModulesNotifier::updateRecordingInfo()
 		if (st == ScenarioModule::Editing)
 		{
 			is_one_recording = true;
+			if (recorder != scenarioModule)
+			{
+				recorder = scenarioModule;
+				emit recorderChanged();
+			}
 			break;
 		}
 	}
@@ -64,5 +71,11 @@ void ScenarioModulesNotifier::updateRecordingInfo()
 	{
 		is_recording = is_one_recording;
 		emit recordingChanged();
+	}
+
+	if (!is_one_recording && recorder)
+	{
+		recorder = 0;
+		emit recorderChanged();
 	}
 }

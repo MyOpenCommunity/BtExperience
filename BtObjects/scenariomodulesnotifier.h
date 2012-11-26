@@ -27,6 +27,11 @@ class ScenarioModulesNotifier : public ObjectInterface
 	*/
 	Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged)
 
+	/*!
+		\brief The only one possible scenario object in recording state if any
+	*/
+	Q_PROPERTY(ScenarioModule *recorder READ getRecorder NOTIFY recorderChanged)
+
 public:
 	ScenarioModulesNotifier();
 
@@ -36,11 +41,14 @@ public:
 	}
 
 	int getRecording() const { return is_recording; }
+	ScenarioModule *getRecorder() const { return recorder; }
 
 signals:
+	void recorderChanged();
 	void recordingChanged();
 	void scenarioModuleChanged(ScenarioModule *scenario);
 	void scenarioActivated(QString description);
+	void scenarioProgrammingStopped(ScenarioModule *scenario);
 
 private slots:
 	void updateRecordingInfo();
@@ -48,6 +56,7 @@ private slots:
 private:
 	ObjectModel *scenario_modules_model, *scenarios_model;
 	bool is_recording;
+	ScenarioModule *recorder;
 };
 
 #endif // SCENARIO_MODULES_NOTIFIER_H

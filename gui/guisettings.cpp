@@ -115,7 +115,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	brightness = 50;
 	contrast = 50;
-	keyboardLayout = getConfValue(conf, "generale/keyboard_lang");
 	timezone = 0;
 	skin = Clear;
 	beep = false;
@@ -240,8 +239,7 @@ void GuiSettings::setBrightness(int b)
 
 	qDebug() << QString("GuiSettings::setBrightness(%1)").arg(b);
 	// TODO: perform the proper conversion
-	sendCommand(QString("i2cset -y 1 0x4a 0xf0 0x") + QString::number(b, 16));
-	sendCommand(QString("i2cset -y 1 0x4a 0xf9 0x") + QString::number(b, 16));
+	sendCommand(QString("i2cset -y 2 0x38 0x04 0x") + QString::number(b, 16));
 	// TODO save value somewhere
 	brightness = b;
 	emit brightnessChanged();

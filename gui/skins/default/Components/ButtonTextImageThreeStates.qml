@@ -39,24 +39,17 @@ SvgImage {
 
     property bool enabled: true // button accepts input or not
     property int status: 0 // 0 - up, 1 - down
-    property bool repetitionOnHold: false // enable repetion when pressed
+    property alias repetitionOnHold: area.repetitionEnabled // enable repetion when pressed
 
     signal clicked
 
     source: defaultImageBg
 
-    BeepingMouseArea {
+    RepetitionMouseArea {
         id: area
         anchors.fill: parent
         onClicked: bg.clicked()
-        // in some cases I have to disable the button to not accept any input
         visible: bg.enabled
-        onPressed: clickTimer.running = repetitionOnHold
-        onReleased: clickTimer.running = false
-        onVisibleChanged: {
-            if (visible === false)
-                clickTimer.running = false
-        }
     }
 
     UbuntuMediumText {
@@ -89,28 +82,6 @@ SvgImage {
             right: bg.right
         }
         source: shadowImage
-    }
-
-    Timer {
-        id: clickTimer
-
-        property int activations: 0
-
-        onRunningChanged: {
-            if (running) {
-                activations = 1
-                interval = 500
-            }
-        }
-
-        interval: 500
-        running: false
-        repeat: true
-        onTriggered: {
-            if (++activations === 4)
-                interval = 200
-            bg.clicked()
-        }
     }
 
     // for the reasons behind normal state see ButtonThreeStates

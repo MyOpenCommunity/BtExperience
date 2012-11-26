@@ -109,6 +109,7 @@ public slots:
 
 signals:
 	void statusChanged(ScenarioModule *scenario);
+	void programmingStopped(ScenarioModule *scenario);
 
 private slots:
 	void valueReceived(const DeviceValues &values_list);

@@ -17,12 +17,16 @@ MenuColumn {
             percentage: global.guiSettings.brightness
             description: qsTr("brightness")
             onPlusClicked: {
-                global.guiSettings.brightness += 5
-                if (percentage > 100) global.guiSettings.brightness = 100
+                if (percentage >= 100)
+                    global.guiSettings.brightness = 100
+                else
+                    global.guiSettings.brightness += 5
             }
             onMinusClicked: {
-                global.guiSettings.brightness -= 5
-                if (percentage < 0) global.guiSettings.brightness = 0
+                if (percentage <= 10)
+                    global.guiSettings.brightness = 10
+                else
+                    global.guiSettings.brightness -= 5
             }
         }
 

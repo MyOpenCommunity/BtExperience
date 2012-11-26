@@ -35,6 +35,8 @@ public:
 
 	void setPlayerRect(QRect rect);
 
+	bool isInstanceRunning();
+
 public slots:
 	void pause();
 	void resume();

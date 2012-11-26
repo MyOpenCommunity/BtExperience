@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
-
 import "js/Stack.js" as Stack
+
 
 Page {
     id: systemPage
@@ -51,6 +51,8 @@ Page {
 
     Pannable {
         id: pannable
+
+        z: 1
         anchors.left: navigationBar.right
         anchors.top: toolbar.bottom
         anchors.bottom: parent.bottom

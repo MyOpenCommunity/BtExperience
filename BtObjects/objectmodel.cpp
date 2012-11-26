@@ -57,6 +57,14 @@ ItemInterface *ObjectModel::getObject(int row)
 	return obj;
 }
 
+int ObjectModel::getAbsoluteIndexOf(ItemInterface *obj)
+{
+	for (int i = 0; i < getCount(); ++i)
+		if (getObject(i) == obj)
+			return i;
+	return -1;
+}
+
 QVariantList ObjectModel::getFilters() const
 {
 	return input_filters;

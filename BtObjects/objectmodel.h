@@ -98,6 +98,15 @@ public:
 
 	virtual ItemInterface *getObject(int row);
 
+	/*!
+		\brief Returns absolute index of an element considering filtering
+
+		This function may be called with filters set or not; the fundamental
+		thing is to call this function without setting any range otherwise
+		the absolute index computation will be completely wrong.
+	*/
+	Q_INVOKABLE virtual int getAbsoluteIndexOf(ItemInterface *obj);
+
 signals:
 	void filtersChanged();
 

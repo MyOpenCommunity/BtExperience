@@ -147,7 +147,7 @@ public:
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdMultiChannelGeneralAmbient;
+		return ObjectInterface::IdMultiChannelSpecialAmbient;
 	}
 
 public slots:
@@ -679,18 +679,20 @@ class AmplifierGroup : public ObjectInterface
 	Q_OBJECT
 
 public:
-	AmplifierGroup(QString name, QList<Amplifier *> amplifiers);
+	AmplifierGroup(QString _name, QList<Amplifier *> _amplifiers, int _object_id = ObjectInterface::IdSoundAmplifierGroup);
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdSoundAmplifierGroup;
+		return object_id;
 	}
 
 	Q_INVOKABLE void volumeUp() const;
 	Q_INVOKABLE void volumeDown() const;
+	Q_INVOKABLE void setActive(bool active) const;
 
 private:
 	QList<Amplifier *> amplifiers;
+	int object_id;
 };
 
 

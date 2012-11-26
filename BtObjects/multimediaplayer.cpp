@@ -238,7 +238,10 @@ void MultiMediaPlayer::resume()
 
 	if (is_video_track)
 	{
-		gst_player->resume();
+		if (gst_player->isInstanceRunning())
+			gst_player->resume();
+		else
+			play();
 	}
 	else
 	{
@@ -370,7 +373,7 @@ void MultiMediaPlayer::mplayerStopped()
 {
 	// this handles the pause() -> change source sequence: MPlayer is stopped,
 	// but the "logical" state is still paused
-	if (player_state == Paused && !current_source.isEmpty())
+	if ((player_state == Paused || player_state == AboutToPause) && !current_source.isEmpty())
 		return;
 
 	playbackStopped();
@@ -396,6 +399,15 @@ void MultiMediaPlayer::mplayerResumed()
 
 void MultiMediaPlayer::mplayerDone()
 {
+	// this should not be necessary, but sometimes GStreamer fails with an assert with exit code 0
+	// since it should never happen that the player exits with success while paused, we can treat the same way
+	// as if it were an error
+	if (is_video_track && (player_state == Paused || player_state == AboutToPause) && !current_source.isEmpty())
+	{
+		mplayerStopped();
+		return;
+	}
+
 	playbackStopped();
 	// beware: order is important!
 	// Since setCurrentSource() is empty, it will stop the player and emit a

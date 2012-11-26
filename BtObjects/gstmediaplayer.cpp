@@ -37,6 +37,11 @@ GstMediaPlayer::GstMediaPlayer(QObject *parent) : QObject(parent)
 	connect(gstreamer_proc, SIGNAL(error(QProcess::ProcessError)), SLOT(mplayerError(QProcess::ProcessError)));
 }
 
+bool GstMediaPlayer::isInstanceRunning()
+{
+	return gstreamer_proc->state() != QProcess::NotRunning;
+}
+
 bool GstMediaPlayer::play(QRect rect, QString track)
 {
 	video_rect = rect;

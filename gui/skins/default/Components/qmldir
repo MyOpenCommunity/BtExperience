@@ -24,6 +24,7 @@ ColumnBrowserCommon 1.0 ColumnBrowserCommon.qml
 ColumnBrowserDelegate 1.0 ColumnBrowserDelegate.qml
 ColumnBrowserDirectoryModel 1.0 ColumnBrowserDirectoryModel.qml
 ColumnBrowserUpnpModel 1.0 ColumnBrowserUpnpModel.qml
+ConfirmationBar 1.0 ConfirmationBar.qml
 Constants 1.0 Constants.qml
 Control3LinesButton 1.0 Control3LinesButton.qml
 ControlBalance 1.0 ControlBalance.qml
@@ -59,6 +60,7 @@ FavoriteEditPopup 1.0 FavoriteEditPopup.qml
 FavoriteItem 1.0 FavoriteItem.qml
 KeyPad 1.0 KeyPad.qml
 MenuColumn 1.0 MenuColumn.qml
+MenuColumnMouseArea 1.0 MenuColumnMouseArea.qml
 MenuContainer 1.0 MenuContainer.qml
 MenuItem 1.0 MenuItem.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml

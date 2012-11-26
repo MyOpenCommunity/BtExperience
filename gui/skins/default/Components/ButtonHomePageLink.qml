@@ -1,10 +1,11 @@
 import QtQuick 1.1
-import Components.Text 1.0
 import BtExperience 1.0
+import Components.Text 1.0
 
 
 SvgImage {
     id: button
+
     property string text: ""
     property string textSystem: ""
     property string textOption: ""
@@ -12,6 +13,7 @@ SvgImage {
     property url icon: ""
     property url iconPressed: ""
     property url sourcePressed: ""
+    property bool enabled: true
 
     signal clicked
 
@@ -19,6 +21,17 @@ SvgImage {
         id: mouseArea
         anchors.fill: parent
         onClicked: button.clicked()
+    }
+
+    Rectangle {
+        z: 1
+        anchors.fill: parent
+        color: "silver"
+        opacity: 0.6
+        visible: button.enabled === false
+        MouseArea {
+            anchors.fill: parent
+        }
     }
 
     SvgImage {

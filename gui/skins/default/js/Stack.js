@@ -432,8 +432,8 @@ function _showPreviousPage(index) {
     changing_page = true
 
     stack[index].visible = true
-    _transitionBeforePop(index)
     current_index = index
+    _transitionBeforePop(index)
 }
 
 function _getName(filename) {

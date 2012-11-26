@@ -67,7 +67,7 @@ public:
 		IdSoundAmplifierGroup,                  // 10
 
 		IdMultiChannelSoundAmbient = 14,        // Container::IdAmbient
-		IdMultiChannelGeneralAmbient = 16,      // Container::IdSpecialAmbient
+		IdMultiChannelSpecialAmbient = 16,      // Container::IdSpecialAmbient
 
 		IdCCTV = 23,
 		IdRoom,
@@ -178,6 +178,7 @@ public:
 		IdDimmer100Fixed = 10022002, //!< 100-level dimmer with fixed time
 		IdLightCustom = 10012003, //!< A simple light actuator with custom time
 		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
+		IdMultiAmbientAmplifier = 11001000,
 
 		// the last value + 1, used to check the ids requested from qml
 		// NOTE: always verify is the highest value out there!

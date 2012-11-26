@@ -142,7 +142,7 @@ void GstMediaPlayerImplementation::handleBusMessage(GstBus *bus, GstMessage *mes
 	case GST_MESSAGE_STATE_CHANGED:
 		if (check_for_state_change)
 		{
-			handleStateChange();
+			handleStateChange(message);
 			check_for_state_change = false;
 		}
 		break;
@@ -246,10 +246,10 @@ void GstMediaPlayerImplementation::setOverlayRect(QRect rect)
 	gst_object_unref(element);
 }
 
-void GstMediaPlayerImplementation::handleStateChange()
+void GstMediaPlayerImplementation::handleStateChange(GstMessage *message)
 {
 	GstState current, next;
-	gst_element_get_state(GST_ELEMENT(pipeline), &current, &next, 0);
+	gst_message_parse_state_changed(message, &current, &next, 0);
 
 	switch (GST_STATE_TRANSITION(current, next))
 	{

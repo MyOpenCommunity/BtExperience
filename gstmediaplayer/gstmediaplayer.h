@@ -47,7 +47,7 @@ private:
 	void centerOverlay();
 
 	void handleTagMessage(GstMessage *message);
-	void handleStateChange();
+	void handleStateChange(GstMessage *message);
 	void queryTime();
 
 	bool check_for_state_change;
