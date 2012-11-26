@@ -33,6 +33,7 @@ Item {
 
     ObjectModel {
         id: probeModel
+        source: myHomeModels.objectLinks
         containers: myHomeModels.homepageLinks ? [myHomeModels.homepageLinks.uii] : [Container.IdNoContainer]
     }
 
@@ -127,7 +128,7 @@ Item {
             UbuntuLightText {
                 id: temperature
                 property variant itemObject: probeModel.count > 0 ? probeModel.getObject(0) : undefined
-                text: itemObject !== undefined ? (itemObject.temperature / 10).toFixed(1) + " °C" : ""
+                text: itemObject !== undefined ? (itemObject.btObject.temperature / 10).toFixed(1) + " °C" : ""
                 color: global.guiSettings.skin === GuiSettings.Clear ? "black":
                                                                        "white"
                 font.pixelSize: toolbar.fontSize

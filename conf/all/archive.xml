@@ -335,7 +335,6 @@
 	</obj>
 	<obj cid="8002" id="8002" descr="99 Zones" where="1" fancoil="0">
 		<ist uii="2011" descr="zona giorno" where="5" fancoil="1" />
-		<ist uii="2015" descr="zona giorno" where="5" fancoil="1" />
 		<ist uii="2012" descr="zona notte" where="2" />
 		<ist uii="2013" descr="zona taverna" where="3" />
 		<ist uii="2014" descr="zona studio" where="4" />

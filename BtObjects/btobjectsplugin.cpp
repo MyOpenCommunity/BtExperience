@@ -1280,14 +1280,25 @@ void BtObjectsPlugin::parseHomepage(const QDomNode &container)
 			int link_uii = getIntAttribute(link, "uii");
 			ItemInterface *l = uii_map.value<ItemInterface>(link_uii);
 
-			if (!l)
+			// Try to create the link for the thermal probe
+			ObjectInterface *o = qobject_cast<ObjectInterface *>(l);
+			if (o)
 			{
-				qWarning() << "Invalid uii" << link_uii << "in homepage";
-				Q_ASSERT_X(false, "parseHomepage", "Invalid uii");
-				continue;
+				ObjectLink *item = new ObjectLink(o, -1, -1);
+				item->setContainerUii(homepage_uii);
+				object_link_model << item;
 			}
+			else
+			{
+				if (!l)
+				{
+					qWarning() << "Invalid uii" << link_uii << "in homepage";
+					Q_ASSERT_X(false, "parseHomepage", "Invalid uii");
+					continue;
+				}
 
-			l->setContainerUii(homepage_uii);
+				l->setContainerUii(homepage_uii);
+			}
 		}
 	}
 }

@@ -6,10 +6,10 @@ import "../../js/MenuItem.js" as Script
 MenuColumn {
     id: column
 
-    onChildDestroyed: itemList.currentIndex = -1
+    onChildDestroyed: paginator.currentIndex = -1
 
     PaginatorList {
-        id: itemList
+        id: paginator
         currentIndex: -1
 
         delegate: MenuItemDelegate {
@@ -27,6 +27,8 @@ MenuColumn {
 
     BtObjectsMapping { id: mapping }
 
+    SystemsModel { id: systemsModel; systemId: Container.IdThermalRegulation }
+
     ObjectModel {
         id: modelList
         filters: [
@@ -35,6 +37,8 @@ MenuColumn {
             {objectId: ObjectInterface.IdThermalControlledProbe, objectKey: column.dataModel.objectKey},
             {objectId: ObjectInterface.IdThermalControlledProbeFancoil, objectKey: column.dataModel.objectKey}
         ]
+        containers: [systemsModel.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }
 
