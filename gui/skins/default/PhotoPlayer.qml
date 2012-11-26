@@ -40,7 +40,7 @@ Page {
         color: "black"
         opacity: 0
         anchors {
-            top: player.toolbar.bottom
+            top: parent.top
             left: parent.left
             right: parent.right
             bottom: parent.bottom
@@ -124,7 +124,7 @@ Page {
             Timer {
                 id: slideshowTimer
 
-                interval: 4000 // TODO where to take this value?
+                interval: 10000 // TODO where to take this value?
                 running: false
                 repeat: true
                 onTriggered: global.photoPlayer.nextPhoto()
