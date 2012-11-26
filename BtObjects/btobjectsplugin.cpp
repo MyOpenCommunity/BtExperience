@@ -1481,6 +1481,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a AlarmClock instance");
 	qmlRegisterUncreatableType<ExternalPlace>(uri, 1, 0, "ExternalPlace",
 		"unable to create a ExternalPlace instance");
+	qmlRegisterUncreatableType<MountPoint>(uri, 1, 0, "MountPoint",
+										   "unable to create a MountPoint instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)
