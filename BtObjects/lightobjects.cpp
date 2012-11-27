@@ -20,8 +20,6 @@ namespace
 		if (first == ObjectInterface::IdLightCustom || second == ObjectInterface::IdLightCustom
 			|| first == ObjectInterface::IdLightFixed || second == ObjectInterface::IdLightFixed)
 			return ObjectInterface::IdLightFixed;
-		if (first == ObjectInterface::IdLightCommand || second == ObjectInterface::IdLightCommand)
-			return ObjectInterface::IdLightFixed;
 		if (first == ObjectInterface::IdDimmerFixed || second == ObjectInterface::IdDimmerFixed)
 			return ObjectInterface::IdDimmerFixed;
 		if (first == ObjectInterface::IdDimmer100Custom || second == ObjectInterface::IdDimmer100Custom
@@ -133,23 +131,6 @@ QList<ObjectPair> parseLight(const QDomNode &obj)
 	return obj_list;
 }
 
-QList<ObjectPair> parseLightCommand(const QDomNode &obj)
-{
-	QList<ObjectPair> obj_list;
-	// extract default values
-	QString def_where = getAttribute(obj, "where");
-
-	foreach (const QDomNode &ist, getChildren(obj, "ist"))
-	{
-		int uii = getIntAttribute(ist, "uii");
-		QString where = getAttribute(ist, "where", def_where);
-
-		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, PULL));
-		obj_list << ObjectPair(uii, new LightCommand(d));
-	}
-	return obj_list;
-}
-
 QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 {
 	QList<ObjectPair> obj_list;
@@ -182,7 +163,7 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 		switch (dumber_type)
 		{
 		case ObjectInterface::IdLightFixed:
-			obj_list << ObjectPair(uii, new LightGroup(descr, convertQObjectList<LightCommand *>(items)));
+			obj_list << ObjectPair(uii, new LightGroup(descr, convertQObjectList<Light *>(items)));
 			break;
 		case ObjectInterface::IdDimmerFixed:
 			obj_list << ObjectPair(uii, new DimmerGroup(descr, convertQObjectList<Dimmer *>(items)));
@@ -196,28 +177,10 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 }
 
 
-LightCommand::LightCommand(LightingDevice *d) :
+Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType ftime, bool _ectime, LightingDevice *d) :
 	DeviceObjectInterface(d)
 {
 	dev = d;
-}
-
-void LightCommand::setActive(bool st)
-{
-	turn(st);
-}
-
-void LightCommand::turn(bool on)
-{
-	if (on)
-		dev->turnOn();
-	else
-		dev->turnOff();
-}
-
-
-Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType ftime, bool _ectime, LightingDevice *d) : LightCommand(d)
-{
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
 	key = _key;
@@ -329,6 +292,14 @@ QObject *Light::getFTimes() const
 	return const_cast<ChoiceList *>(ftimes);
 }
 
+void Light::turn(bool on)
+{
+	if (on)
+		dev->turnOn();
+	else
+		dev->turnOff();
+}
+
 void Light::setActive(bool on)
 {
 	if (on && autoTurnOff)
@@ -379,7 +350,7 @@ void Light::valueReceived(const DeviceValues &values_list)
 }
 
 
-LightGroup::LightGroup(QString _name, QList<LightCommand *> d)
+LightGroup::LightGroup(QString _name, QList<Light *> d)
 {
 	name = _name;
 	objects = d;
@@ -387,7 +358,7 @@ LightGroup::LightGroup(QString _name, QList<LightCommand *> d)
 
 void LightGroup::setActive(bool status)
 {
-	foreach (LightCommand *l, objects)
+	foreach (Light *l, objects)
 		l->setActive(status);
 }
 
@@ -445,7 +416,7 @@ void Dimmer::valueReceived(const DeviceValues &values_list)
 	}
 }
 
-DimmerGroup::DimmerGroup(QString name, QList<Dimmer *> d) : LightGroup(name, convertQObjectList<LightCommand *>(d))
+DimmerGroup::DimmerGroup(QString name, QList<Dimmer *> d) : LightGroup(name, convertQObjectList<Light *>(d))
 {
 	objects = d;
 }

@@ -359,9 +359,6 @@ void BtObjectsPlugin::createObjects()
 		case ObjectInterface::IdLightGroup:
 			obj_list = parseLightGroup(xml_obj, uii_map);
 			break;
-		case ObjectInterface::IdLightCommand:
-			obj_list = parseLightCommand(xml_obj);
-			break;
 
 		case ObjectInterface::IdAutomation2:
 		case ObjectInterface::IdAutomationDoor:

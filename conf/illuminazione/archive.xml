@@ -14,7 +14,7 @@
 		<ist uii="7" descr="Bedroom light" where="14" ectime="1" ctime="00:00:30" />
 		<ist uii="12" descr="Lampada scrivania di Gianni" where="13" ftime="6"/>
 	</obj>
-	<obj cid="2005" id="2005" descr="Light" where="0">
+	<obj cid="2003" id="2003" descr="Light" where="0">
 		<ist uii="9" descr="room 1" where="1" />
 		<ist uii="10" descr="room 2" where="2" />
 		<ist uii="11" descr="general" />
