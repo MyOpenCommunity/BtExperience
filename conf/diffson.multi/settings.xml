@@ -46,7 +46,7 @@
 	</obj>
 	<!-- password -->
 	<obj cid="14003" id="14003" mode="0" password="12345">
-		<ist uii="30301" password="1234567" mode="1" />
+		<ist uii="30301" password="1234567" mode="0" />
 	</obj>
 	<!-- beep enable -->
 	<obj cid="14001" id="14001">
