@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <QTimer>
 #include <QCoreApplication>
+#include <QMetaEnum>
 
 #include <QDebug>
 
@@ -13,18 +14,6 @@
 
 namespace
 {
-	const char *descriptions[ScreenState::StateCount + 1] =
-	{
-		"Invalid",
-		"ScreenOff",
-		"Screensaver",
-		"Normal",
-		"Freeze",
-		"ForcedNormal",
-		"PasswordCheck",
-		"Calibration",
-	};
-
 	// TODO move this to gui module
 	void setBrightness(int value)
 	{
@@ -45,6 +34,14 @@ namespace
 		display_device.write(qPrintable(QString::number(value)));
 		display_device.close();
 	#endif
+	}
+
+	QString enumerationName(const QObject *obj, const char *enumeration, int value)
+	{
+		int idx = obj->metaObject()->indexOfEnumerator(enumeration);
+		QMetaEnum e = obj->metaObject()->enumerator(idx);
+
+		return e.valueToKey(value);
 	}
 }
 
@@ -121,7 +118,7 @@ void ScreenState::updateState()
 
 void ScreenState::updateScreenState(State old_state, State new_state)
 {
-	qDebug() << "Leaving state" << descriptions[old_state + 1];
+	qDebug() << "Leaving screen state" << enumerationName(this, "State", old_state);
 
 	switch (old_state)
 	{
@@ -139,7 +136,7 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 		break;
 	}
 
-	qDebug() << "Entering state" << descriptions[new_state + 1];
+	qDebug() << "Entering screen state" << enumerationName(this, "State", new_state);
 
 	switch (new_state)
 	{
