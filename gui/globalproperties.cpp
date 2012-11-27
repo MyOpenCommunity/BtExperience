@@ -308,6 +308,7 @@ void GlobalProperties::parseSettings(logger *log)
 			break;
 		case Password:
 			parsePassword(xml_obj, &password, &password_enabled);
+			screen_state->setPasswordEnabled(password_enabled);
 			break;
 		case DebugTouchscreen:
 			debug_touchscreen = parseEnableFlag(xml_obj);
@@ -677,6 +678,7 @@ void GlobalProperties::setPasswordEnabled(bool enabled)
 	if (password_enabled == enabled)
 		return;
 	password_enabled = enabled;
+	screen_state->setPasswordEnabled(enabled);
 	emit passwordEnabledChanged();
 	::setPassword(configurations->getConfiguration(SETTINGS_FILE), Password, password, password_enabled);
 	configurations->saveConfiguration(SETTINGS_FILE);
