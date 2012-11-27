@@ -416,18 +416,6 @@ void SoundAmbient::updateActiveAmplifier()
 }
 
 
-SoundGeneralAmbient::SoundGeneralAmbient(QString name, int uii) :
-	SoundAmbientBase(name, uii)
-{
-	area = 0;
-}
-
-void SoundGeneralAmbient::setSource(SourceObject * source)
-{
-	setCurrentSource(source);
-}
-
-
 SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType t)
 {
 	name = _name;
@@ -451,11 +439,6 @@ void SourceObject::initializeObject()
 void SourceObject::scsSourceActiveAreasChanged()
 {
 	emit activeAreasChanged(this);
-}
-
-void SourceObject::scsSourceForGeneralAmbientChanged()
-{
-	emit sourceForGeneralAmbientChanged(this);
 }
 
 void SourceObject::setActive(int area)
@@ -720,7 +703,6 @@ void SourceBase::setActive(int area)
 	if (area == 0)
 	{
 		dev->turnOn(QString::number(area));
-		source_object->scsSourceForGeneralAmbientChanged();
 	}
 	else if (!isActiveInArea(area))
 		dev->turnOn(QString::number(area));

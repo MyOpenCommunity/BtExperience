@@ -134,29 +134,6 @@ private:
 
 
 /*!
-	\ingroup SoundDiffusion
-	\brief Properties for the general sound diffusion area
-
-	The object id is \a ObjectInterface::IdMultiChannelGeneralAmbient, object key is empty
-*/
-class SoundGeneralAmbient : public SoundAmbientBase
-{
-	Q_OBJECT
-
-public:
-	SoundGeneralAmbient(QString name, int uii);
-
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdMultiChannelSpecialAmbient;
-	}
-
-public slots:
-	void setSource(SourceObject *source);
-};
-
-
-/*!
 	\brief Base class for objects that represent a user visible source, eg. usb, sd, ip radio, rds radio etc.
 
 	Each SourceObject communicates with one SourceBase object, which handles low
@@ -211,7 +188,6 @@ public:
 	}
 
 	void scsSourceActiveAreasChanged();
-	void scsSourceForGeneralAmbientChanged();
 
 	virtual void enableObject();
 	virtual void initializeObject();
@@ -234,7 +210,6 @@ public slots:
 
 signals:
 	void activeAreasChanged(SourceObject *source_object);
-	void sourceForGeneralAmbientChanged(SourceObject *);
 
 private:
 	SourceBase *source;
