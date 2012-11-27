@@ -12,7 +12,9 @@ MenuColumn {
         id: paginator
 
         delegate: MenuItemDelegate {
-            editable: true
+            // multi general ambient is not present in the layout file, so it
+            // must not be editable
+            editable: itemObject.objectId === ObjectInterface.IdMultiGeneral ? false : true
             itemObject: objectModel.getObject(index)
             status: Script.status(itemObject)
             hasChild: Script.hasChild(itemObject)
@@ -30,6 +32,7 @@ MenuColumn {
         filters: [{objectId: ObjectInterface.IdMultiChannelSpecialAmbient},
             {objectId: ObjectInterface.IdMultiChannelSoundAmbient},
             {objectId: ObjectInterface.IdMonoChannelSoundAmbient},
+            {objectId: ObjectInterface.IdMultiGeneral},
         ]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
