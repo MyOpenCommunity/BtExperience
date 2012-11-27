@@ -19,6 +19,7 @@ class InputContextWrapper;
 class AudioVideoPlayer;
 class PhotoPlayer;
 class AudioState;
+class ScreenState;
 class MultiMediaPlayer;
 class SoundPlayer;
 class RingtoneManager;
@@ -64,6 +65,8 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(PhotoPlayer *photoPlayer READ getPhotoPlayer CONSTANT)
 	// The object to manage audio/video playback state from QML
 	Q_PROPERTY(QObject *audioState READ getAudioState CONSTANT)
+	// The object to manage screen state from QML
+	Q_PROPERTY(QObject *screenState READ getScreenState CONSTANT)
 	// The object to play ringtones from QML
 	Q_PROPERTY(QObject *ringtoneManager READ getRingtoneManager CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
@@ -76,9 +79,6 @@ class GlobalProperties : public QObject
 
 	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
 	Q_PROPERTY(QStringList keyboardLayouts READ getKeyboardLayouts NOTIFY keyboardLayoutsChanged)
-
-	// A property to turn off/on the monitor from QML
-	Q_PROPERTY(bool monitorOff READ isMonitorOff WRITE setMonitorOff NOTIFY monitorOffChanged)
 
 	// Hardware key handler
 	Q_PROPERTY(QObject *hardwareKeys READ getHardwareKeys CONSTANT)
@@ -109,11 +109,10 @@ public:
 	AudioVideoPlayer *getAudioVideoPlayer() const;
 	PhotoPlayer *getPhotoPlayer() const;
 	QObject *getAudioState() const;
+	QObject *getScreenState() const;
 	QObject *getRingtoneManager() const;
 	QString getBasePath() const;
 	QString getExtraPath() const;
-	bool isMonitorOff() const;
-	void setMonitorOff(bool newValue);
 	bool getDebugTs();
 	DebugTiming *getDebugTiming();
 	QObject *getHardwareKeys() const;
@@ -158,7 +157,6 @@ signals:
 	void requestReboot();
 	void keyboardLayoutChanged();
 	void keyboardLayoutsChanged();
-	void monitorOffChanged();
 	void systemTimeChanged();
 	void passwordChanged();
 	void passwordEnabledChanged();
@@ -171,7 +169,7 @@ private slots:
 	void beepChanged();
 	void ringtoneChanged(int ringtone, int index);
 	void volumeChanged(int state, int volume);
-	void audioStateChangedManagement();
+	void screenStateChangedManagement();
 	void sendDelayedFrames();
 
 private:
@@ -184,12 +182,12 @@ private:
 	AudioVideoPlayer *video_player;
 	PhotoPlayer *photo_player;
 	AudioState *audio_state;
+	ScreenState *screen_state;
 	SoundPlayer *sound_player;
 	RingtoneManager *ringtone_manager;
 	ExternalPlace *default_external_place;
 	QTimer *delayed_frame_timer;
 	ConfigFile *configurations;
-	bool monitor_off;
 	bool debug_touchscreen;
 	DebugTiming *debug_timing;
 	HwKeys *hardware_keys;

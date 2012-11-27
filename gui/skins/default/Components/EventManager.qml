@@ -4,7 +4,6 @@ import BtExperience 1.0
 import Components 1.0
 
 import "../js/Stack.js" as Stack
-import "../js/TurnOffMonitor.js" as TurnOff
 import "../js/EventManager.js" as Script
 import "../js/navigation.js" as Navigation
 
@@ -35,8 +34,8 @@ Item {
         id: callPopup
         ControlCall {
             onClosePopup: {
-                privateProps.monitorEvent()
-                turnOffMonitor.isEnabled = true
+                global.screenState.enableState(ScreenState.Normal)
+                global.screenState.disableState(ScreenState.ForcedNormal)
                 global.audioState.disableState(AudioState.VdeRingtone)
                 global.audioState.disableState(AudioState.ScsIntercomCall)
                 global.audioState.disableState(AudioState.IpIntercomCall)
@@ -113,11 +112,6 @@ Item {
         }
     }
 
-    TurnOffMonitor {
-        id: turnOffMonitor
-        z: parent.z
-    }
-
     Loader {
         id: loader
         sourceComponent: privateProps.antintrusionModel !== undefined ? alarmsModelComponent : undefined
@@ -151,8 +145,8 @@ Item {
                 global.audioState.enableState(AudioState.ScsVideoCall)
         }
         onCallEnded: {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
+            global.screenState.enableState(ScreenState.Normal)
+            global.screenState.disableState(ScreenState.ForcedNormal)
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsVideoCall)
             global.audioState.disableState(AudioState.IpVideoCall)
@@ -184,8 +178,8 @@ Item {
                 global.audioState.enableState(AudioState.ScsIntercomCall)
         }
         onCallEnded: {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
+            global.screenState.enableState(ScreenState.Normal)
+            global.screenState.disableState(ScreenState.ForcedNormal)
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsIntercomCall)
             global.audioState.disableState(AudioState.IpIntercomCall)
@@ -434,16 +428,6 @@ Item {
             monthlyReportTimer.interval = delta
         }
 
-        // this is needed to manage the activation of the monitor;
-        // this function is used to send an event to reactivate the monitor
-        // even in those cases where an interaction with the user is not performed;
-        // see comments in TurnOffMonitor.js file for more info on this subject
-        function monitorEvent() {
-            // the updateLast call is needed to compute elapsed time correctly
-            // see comments in TurnOffMonitor.js file for more info on this subject
-            TurnOff.updateLast()
-        }
-
         function monthlyReportArriving() {
             privateProps.updateTimerInterval()
             var p = privateProps.preparePopupPage(false)
@@ -452,70 +436,63 @@ Item {
         }
 
         function vctIncomingCall() {
-            turnOffMonitor.isEnabled = false
             if (checkCallInProgress("VideoCamera"))
                 return
+            global.screenState.enableState(ScreenState.ForcedNormal)
             Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
         }
 
         function intercomIncomingCall() {
             if (checkCallInProgress("IntercomPage"))
                 return
-            turnOffMonitor.isEnabled = false
+            global.screenState.enableState(ScreenState.ForcedNormal)
             Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
         }
 
         function alarmArriving(alarm) {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
+            global.screenState.enableState(ScreenState.Normal)
             var p = privateProps.preparePopupPage(true)
             // adds antintrusion alarm
             p.addAlarmPopup(alarm.type, alarm.source, alarm.number, alarm.date_time)
         }
 
         function stopAndGoDeviceChanging(stopGoDevice) {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
+            global.screenState.enableState(ScreenState.Normal)
             var p = privateProps.preparePopupPage(false)
             // adds stop&go alarm
             p.addStopAndGoPopup(stopGoDevice)
         }
 
         function thresholdExceeding(energyDevice) {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
+            global.screenState.enableState(ScreenState.Normal)
             var p = privateProps.preparePopupPage(false)
             // adds threshold alarm
             p.addThresholdExceededPopup(energyDevice)
         }
 
         function goalReaching(energyDevice) {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
+            global.screenState.enableState(ScreenState.Normal)
             var p = privateProps.preparePopupPage(false)
             // adds goal alarm
             p.addGoalReachedPopup(energyDevice)
         }
 
         function unreadMessagesUpdate() {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
+            global.screenState.enableState(ScreenState.Normal)
             var p = privateProps.preparePopupPage(false)
             // updates number of unread messages
             p.updateUnreadMessages(messagesConnection.target.unreadMessages)
         }
 
         function scenarioActivation(description) {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
+            global.screenState.enableState(ScreenState.Normal)
             var p = privateProps.preparePopupPage(false)
             // adds popup for scenario activation
             p.addScenarioActivationPopup(description)
         }
 
         function alarmClockTriggering(alarmClock) {
-            privateProps.monitorEvent()
-            turnOffMonitor.isEnabled = true
+            global.screenState.enableState(ScreenState.Normal)
             var p = privateProps.preparePopupPage(false)
             // adds alarm clock triggering
             p.addAlarmClockTriggering(alarmClock)

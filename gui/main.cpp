@@ -29,6 +29,7 @@
 #include "qmlapplicationviewer.h"
 #include "eventfilters.h"
 #include "globalproperties.h"
+#include "screenstate.h"
 #include "guisettings.h"
 #include "imagereader.h"
 #include "xml_functions.h"
@@ -184,7 +185,7 @@ public slots:
 		else if (signal_number == SIGTERM)
 		{
 			qDebug("Terminating on SIGTERM");
-			global->setMonitorOff(false);
+			static_cast<ScreenState *>(global->getScreenState())->enableState(ScreenState::ForcedNormal);
 			qApp->quit();
 		}
 	}
