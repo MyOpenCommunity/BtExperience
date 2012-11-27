@@ -17,16 +17,6 @@ MenuColumn {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    // the following is needed to call the getAbsoluteIndexOf function (if you set a range
-    // you cannot get items outside the range)
-    ObjectModel {
-        id: unrangedScenariosModule
-        filters: [
-            {objectId: ObjectInterface.IdAdvancedScenario},
-            {objectId: ObjectInterface.IdScenarioModule}
-        ]
-    }
-
     onChildDestroyed: {
         paginator.currentIndex = -1
     }
@@ -42,7 +32,7 @@ MenuColumn {
         id: privateProps
 
         function openScenarioMenu(navigationData) {
-            var absIndex = unrangedScenariosModule.getAbsoluteIndexOf(navigationData)
+            var absIndex = scenariosModule.getAbsoluteIndexOf(navigationData)
             if (absIndex === -1)
                 return NavigationConstants.NAVIGATION_SCENARIO_NOT_FOUND
             var indexes = paginator.getIndexesInPaginator(absIndex)

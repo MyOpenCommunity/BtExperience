@@ -310,11 +310,23 @@ void MediaModel::clear()
 
 int MediaModel::getAbsoluteIndexOf(ItemInterface *obj)
 {
-	MediaDataModel *source = getSource();
-	for (int source_row = 0; source_row < source->rowCount(); ++source_row)
-		if (source->getObject(source_row) == obj)
-			return source_row;
+	MediaModel *unrangedModel = getUnrangedModel();
+	for (int i = 0; i < unrangedModel->getCount(); ++i)
+		if (unrangedModel->getObject(i) == obj)
+			return i;
 	return -1;
+}
+
+MediaModel *MediaModel::getUnrangedModel()
+{
+	// clones this model without range
+	MediaModel *result = new MediaModel(this);
+
+	MediaDataModel *s = this->getSource();
+	result->setSource(this->getSource());
+	result->setContainers(this->getContainers());
+
+	return result;
 }
 
 void MediaModel::append(ItemInterface *obj)
