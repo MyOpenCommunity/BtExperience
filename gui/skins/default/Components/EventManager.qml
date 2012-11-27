@@ -266,6 +266,12 @@ Item {
             else
                 privateProps.alarmClockTriggering(alarmClock)
         }
+        onAlarmActiveChanged: {
+            if (clocksConnection.target.alarmActive)
+                global.screenState.enableState(ScreenState.ForcedNormal)
+            else
+                global.screenState.disableState(ScreenState.ForcedNormal)
+        }
         onBeepAlarmActiveChanged: {
             if (clocksConnection.target.beepAlarmActive)
                 global.audioState.enableState(AudioState.Ringtone)
@@ -492,7 +498,6 @@ Item {
         }
 
         function alarmClockTriggering(alarmClock) {
-            global.screenState.enableState(ScreenState.Normal)
             var p = privateProps.preparePopupPage(false)
             // adds alarm clock triggering
             p.addAlarmClockTriggering(alarmClock)
