@@ -38,6 +38,7 @@ private:
 	UiiMapper uii_map;
 	QHash<int, int> uii_to_id;
 	ConfigFile *configurations;
+	int general_ambient_uii;
 
 	void createObjects();
 	void parseConfig();
@@ -50,6 +51,7 @@ private:
 	void parseMediaContainers(const QDomNode &container);
 	void parseSoundAmbientMulti(const QDomNode &ambient);
 	void parseSoundAmbientMono(const QDomNode &ambient);
+	void createGeneralAmbient();
 
 	QDomDocument findDocumentForId(int id) const;
 

@@ -178,6 +178,7 @@ public:
 		IdLightCustom = 10012003, //!< A simple light actuator with custom time
 		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
 		IdMultiAmbientAmplifier = 11001000,
+		IdAmplifierGeneral,
 
 		// the last value + 1, used to check the ids requested from qml
 		// NOTE: always verify is the highest value out there!
