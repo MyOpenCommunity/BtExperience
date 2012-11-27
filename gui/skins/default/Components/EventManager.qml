@@ -309,6 +309,11 @@ Item {
         }
     }
 
+    Connections {
+        target: global.screenState
+        onDisplayPasswordCheck: Stack.pushPage("PasswordCheck.qml")
+    }
+
     ObjectModel {
         id: cctvModel
         filters: [{objectId: ObjectInterface.IdCCTV}]
