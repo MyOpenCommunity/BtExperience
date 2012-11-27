@@ -113,7 +113,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
 
-	brightness = 50;
 	contrast = 50;
 	timezone = 0;
 	skin = Clear;
@@ -207,13 +206,6 @@ void GuiSettings::setConfValue(QString path, QString value)
 	configurations->saveConfiguration(CONF_FILE);
 }
 
-void GuiSettings::sendCommand(const QString &cmd)
-{
-	// TODO: add error check
-	qDebug() << QString("GuiSettings::sendCommand(%1)").arg(cmd);
-	system(qPrintable(cmd));
-}
-
 QString GuiSettings::getSkinString() const
 {
 	switch(skin)
@@ -225,24 +217,6 @@ QString GuiSettings::getSkinString() const
 	default:
 		return QString("clear");
 	}
-}
-
-int GuiSettings::getBrightness() const
-{
-	return brightness;
-}
-
-void GuiSettings::setBrightness(int b)
-{
-	if (brightness == b)
-		return;
-
-	qDebug() << QString("GuiSettings::setBrightness(%1)").arg(b);
-	// TODO: perform the proper conversion
-	sendCommand(QString("i2cset -y 2 0x38 0x04 0x") + QString::number(b, 16));
-	// TODO save value somewhere
-	brightness = b;
-	emit brightnessChanged();
 }
 
 int GuiSettings::getContrast() const

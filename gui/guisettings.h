@@ -11,11 +11,6 @@ class GuiSettings : public QObject
 	Q_OBJECT
 
 	/*!
-		\brief Sets or gets the brightness level of the display.
-	*/
-	Q_PROPERTY(int brightness READ getBrightness WRITE setBrightness NOTIFY brightnessChanged)
-
-	/*!
 		\brief Sets or gets the contrast level of the display.
 	*/
 	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
@@ -112,9 +107,6 @@ public:
 		Dark
 	};
 
-	// brightness must be [1, 100]
-	int getBrightness() const;
-	void setBrightness(int b);
 	// contrast must be [1, 100]
 	int getContrast() const;
 	void setContrast(int c);
@@ -154,7 +146,6 @@ public:
 	QString getSkinString() const;
 
 signals:
-	void brightnessChanged();
 	void contrastChanged();
 	void languageChanged();
 	void timezoneChanged();
@@ -179,7 +170,6 @@ private:
 	void setConfValue(QString path, QString value);
 
 	ConfigFile *configurations;
-	int brightness;
 	int contrast;
 	QString language;
 	int timezone;

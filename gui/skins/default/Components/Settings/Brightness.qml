@@ -14,19 +14,19 @@ MenuColumn {
 
         ControlSlider {
             id: brightness
-            percentage: global.guiSettings.brightness
+            percentage: global.screenState.normalBrightness
             description: qsTr("brightness")
             onPlusClicked: {
-                if (percentage >= 100)
-                    global.guiSettings.brightness = 100
+                if (percentage >= 95)
+                    global.screenState.normalBrightness = 100
                 else
-                    global.guiSettings.brightness += 5
+                    global.screenState.normalBrightness += 5
             }
             onMinusClicked: {
-                if (percentage <= 10)
-                    global.guiSettings.brightness = 10
+                if (percentage <= 15)
+                    global.screenState.normalBrightness = 10
                 else
-                    global.guiSettings.brightness -= 5
+                    global.screenState.normalBrightness -= 5
             }
         }
 
