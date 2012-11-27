@@ -6,22 +6,6 @@ MenuColumn {
     id: element
 
     Column {
-        PaginatorList {
-            id: listView
-            delegate: MenuItemDelegate {
-                itemObject: listModel.getObject(index)
-                name: itemObject.name
-                description: privateProps.getDescription(itemObject)
-                status: privateProps.loadStatus(itemObject)
-                hasChild: true
-                onDelegateClicked: {
-                    privateProps.currentIndex = -1
-                    element.loadColumn(privateProps.getComponent(itemObject), name, itemObject)
-                }
-            }
-            model: listModel
-        }
-
         MenuItem {
             id: loadDiagnostic
             name: qsTr("load diagnostic")
@@ -38,6 +22,23 @@ MenuColumn {
                 id: component
                 LoadDiagnostic {}
             }
+        }
+
+        PaginatorList {
+            id: listView
+            elementsOnPage: 2
+            delegate: MenuItemDelegate {
+                itemObject: listModel.getObject(index)
+                name: itemObject.name
+                description: privateProps.getDescription(itemObject)
+                status: privateProps.loadStatus(itemObject)
+                hasChild: true
+                onDelegateClicked: {
+                    privateProps.currentIndex = -1
+                    element.loadColumn(privateProps.getComponent(itemObject), name, itemObject)
+                }
+            }
+            model: listModel
         }
     }
 
@@ -107,5 +108,6 @@ MenuColumn {
             {objectId: ObjectInterface.IdStopAndGoPlus},
             {objectId: ObjectInterface.IdStopAndGoBTest}
         ]
+
     }
 }

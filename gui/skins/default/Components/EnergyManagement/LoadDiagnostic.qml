@@ -8,6 +8,7 @@ MenuColumn {
     Column {
         PaginatorList {
             id: listView
+            elementsOnPage: 3
             delegate: MenuItemDelegate {
                 itemObject: listModel.getObject(index)
                 name: itemObject.name
