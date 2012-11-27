@@ -33,12 +33,10 @@ public:
 	static bool isPressed() { return pressed; }
 
 signals:
-	void updateTime();
 	void maxTravelledDistanceOnLastMove(QPoint pos);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev);
-
 
 private:
 	static bool pressed;

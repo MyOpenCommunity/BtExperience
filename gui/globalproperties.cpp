@@ -209,12 +209,6 @@ GlobalProperties::GlobalProperties(logger *log)
 	else
 		default_external_place = 0;
 
-	updateTime();
-	// We emit a signal every second to update the time.
-	QTimer *secs_timer = new QTimer(this);
-	connect(secs_timer, SIGNAL(timeout()), this, SIGNAL(lastTimePressChanged()));
-	secs_timer->start(1000);
-
 	parseSettings(log);
 
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
@@ -500,17 +494,6 @@ QObject *GlobalProperties::getRingtoneManager() const
 QObject *GlobalProperties::getInputWrapper() const
 {
 	return wrapper;
-}
-
-int GlobalProperties::getLastTimePress() const
-{
-	return last_press.secsTo(QDateTime::currentDateTime());
-}
-
-void GlobalProperties::updateTime()
-{
-	last_press = QDateTime::currentDateTime();
-	emit lastTimePressChanged();
 }
 
 void GlobalProperties::setMaxTravelledDistanceOnLastMove(QPoint value)

@@ -64,10 +64,7 @@ bool LastClickTime::eventFilter(QObject *obj, QEvent *ev)
 
 	// Save last click time
 	if (ev->type() == QEvent::MouseButtonPress || ev->type() == QEvent::MouseButtonDblClick)
-	{
-		emit updateTime();
 		pressed = true;
-	}
 
 	if (ev->type() == QEvent::MouseButtonPress)
 	{
@@ -78,7 +75,6 @@ bool LastClickTime::eventFilter(QObject *obj, QEvent *ev)
 
 	if (ev->type() == QEvent::MouseButtonRelease)
 	{
-		emit updateTime();
 		pressed = false;
 		emit maxTravelledDistanceOnLastMove(maxDifferencesOnMove);
 	}
