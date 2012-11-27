@@ -106,7 +106,7 @@ public:
 		IdAutomationGroup2 = 3006, //!< Group of automation 2-state
 		IdAutomationGroup3 = 3005, //!< Group of automation 3-state
 		// antintrusion
-		IdAntintrusionZone = 13001, //!< A signe anti-intrusion zone
+		IdAntintrusionZone = 13000, //!< A signe anti-intrusion zone
 		IdAntintrusionScenario = 13010, //!< Set of anti-intrusion zones
 		IdAntintrusionAux = 13101, //!< Auxiliary alarm channel (for technical alarms)
 		// thermal regulation
