@@ -1126,7 +1126,7 @@ void BtObjectsPlugin::createGeneralAmbient()
 	// don't put the general amplifier into the new ambient, we can retrieve it
 	// anyway in the GUI. This allows the user to put the general amplifier
 	// in another ambient as well (as an amplifier group).
-	objmodel << general_ambient;
+	objmodel.prepend(general_ambient);
 
 	// TODO: connect sources and amplifiers
 //	ambient->connectSources(sources);
