@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
 	<!-- Antintrusion system -->
-	<obj cid="13001" id="13001" descr="Zone" where="#1" mon="0" >
+	<obj cid="13000" id="13000" descr="Zone" where="#1" mon="0" >
 		<ist uii="1001" descr="ingresso" where="#1" />
-		<ist uii="1002" cid="13002" descr="taverna" where="#2" mon="1" />
-		<ist uii="1005" cid="13003" descr="mansarda" where="#3" />
-		<ist uii="1010" cid="13004" descr="box/cantina" where="#4" />
-		<ist uii="1006" cid="13005" descr="soggiorno" where="#5" />
-		<ist uii="1003" cid="13006" descr="cucina" where="#6" />
-		<ist uii="1008" cid="13007" descr="camera" where="#7" />
-		<ist uii="1004" cid="13008" descr="cameretta" where="#8" />
+		<ist uii="1002" descr="taverna" where="#2" mon="1" />
+		<ist uii="1005" descr="mansarda" where="#3" />
+		<ist uii="1010" descr="box/cantina" where="#4" />
+		<ist uii="1006" descr="soggiorno" where="#5" />
+		<ist uii="1003" descr="cucina" where="#6" />
+		<ist uii="1008" descr="camera" where="#7" />
+		<ist uii="1004" descr="cameretta" where="#8" />
 	</obj>
 	<obj cid="13101" id="13101" descr="aux" where="1" >
 		<ist uii="1009" descr="Gas" where="1" />
