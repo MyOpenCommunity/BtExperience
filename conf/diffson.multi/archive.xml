@@ -25,6 +25,9 @@
 			<link uii="10001" />
 		</ist>
 	</obj>
+	<obj cid="11009" id="11003" descr="General" where="0">
+		<ist uii="10005" descr="Generale totale" where="0" />
+	</obj>
 	<obj cid="11032" id="11032" descr="Source" where="1" radio_num="5">
 		<ist uii="10007" descr="Radio" where="1" />
 	</obj>
