@@ -71,6 +71,25 @@ ScreenState::~ScreenState()
 	qApp->removeEventFilter(this);
 }
 
+void ScreenState::setNormalBrightness(int brightness)
+{
+	brightness = qMin(100, qMax(brightness, 1));
+
+	if (brightness == normal_brightness)
+		return;
+	normal_brightness = brightness;
+	emit normalBrightnessChanged();
+
+	if (current_state == Normal || current_state == ForcedNormal ||
+	    current_state == PasswordCheck || current_state == Calibration)
+		setBrightness(normal_brightness);
+}
+
+int ScreenState::getNormalBrightness() const
+{
+	return normal_brightness;
+}
+
 ScreenState::State ScreenState::getState() const
 {
 	return current_state;

@@ -14,6 +14,8 @@ class ScreenState : public QObject
 
 	Q_PROPERTY(State state READ getState NOTIFY stateChanged)
 
+	Q_PROPERTY(int normalBrightness READ getNormalBrightness WRITE setNormalBrightness NOTIFY normalBrightnessChanged)
+
 	Q_ENUMS(State)
 
 public:
@@ -36,11 +38,15 @@ public:
 
 	State getState() const;
 
+	void setNormalBrightness(int brightness);
+	int getNormalBrightness() const;
+
 	Q_INVOKABLE void disableState(State state);
 	Q_INVOKABLE void enableState(State state);
 
 signals:
 	void stateChanged(ScreenState::State old_state, ScreenState::State new_state);
+	void normalBrightnessChanged();
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev);
