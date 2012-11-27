@@ -50,6 +50,7 @@ ScreenState::ScreenState(QObject *parent) : QObject(parent)
 {
 	current_state = Invalid;
 	normal_brightness = 100;
+	password_enabled = screen_locked = false;
 	for (int i = 0; i < StateCount; ++i)
 		states[i] = false;
 
@@ -90,6 +91,27 @@ int ScreenState::getNormalBrightness() const
 	return normal_brightness;
 }
 
+void ScreenState::setPasswordEnabled(bool enabled)
+{
+	if (enabled == password_enabled)
+		return;
+	password_enabled = enabled;
+	emit passwordEnabledChanged();
+}
+
+bool ScreenState::getPasswordEnabled() const
+{
+	return password_enabled;
+}
+
+void ScreenState::unlockScreen()
+{
+	if (!screen_locked)
+		return;
+	screen_locked = false;
+	disableState(PasswordCheck);
+}
+
 ScreenState::State ScreenState::getState() const
 {
 	return current_state;
@@ -109,6 +131,8 @@ void ScreenState::enableState(State state)
 
 	if (state > current_state)
 		updateState();
+	if (state == PasswordCheck)
+		enableState(Normal);
 	if (state != Freeze)
 		disableState(Freeze);
 }
@@ -164,6 +188,7 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 		freeze_timer->start();
 		break;
 	case ScreenOff:
+		screen_locked = password_enabled;
 		setMonitorEnabled(false);
 		break;
 	case Normal:
@@ -197,6 +222,7 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 void ScreenState::startFreeze()
 {
 	enableState(Freeze);
+	disableState(PasswordCheck);
 }
 
 void ScreenState::freezeTick()
@@ -220,10 +246,10 @@ bool ScreenState::updatePressTime()
 	switch (current_state)
 	{
 	case Normal:
+	case PasswordCheck:
 		screensaver_timer->start();
 		return false;
 	case ForcedNormal:
-	case PasswordCheck:
 	case Calibration:
 		return false;
 	case Freeze:
@@ -231,7 +257,6 @@ bool ScreenState::updatePressTime()
 		return true;
 	case Screensaver:
 	case ScreenOff:
-		// TODO password check
 		enableState(Normal);
 		disableState(Screensaver);
 		return true;
@@ -248,7 +273,16 @@ bool ScreenState::eventFilter(QObject *obj, QEvent *ev)
 	if (ev->type() == QEvent::MouseButtonPress ||
 	    ev->type() == QEvent::MouseButtonRelease ||
 	    ev->type() == QEvent::MouseButtonDblClick)
+	{
+		if (screen_locked && current_state != PasswordCheck)
+		{
+			emit displayPasswordCheck();
+
+			return true;
+		}
+
 		return updatePressTime();
+	}
 
 	return false;
 }

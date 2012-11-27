@@ -15,7 +15,8 @@ private slots:
 	void cleanup();
 
 	void testScreensaverTimers();
-	void testFreeze();
+	void testFreezeNormal();
+	void testFreezePasswordCheck();
 
 	void testInvalidClick();
 	void testScreenOffClick();
@@ -24,6 +25,13 @@ private slots:
 	void testForceNormalClick();
 	void testPasswordCheckClick();
 	void testCalibrationClick();
+
+	void testScreenOffLockedClick();
+	void testFreezeLockedClick();
+	void testForceNormalLockedClick();
+	void testPasswordCheckLockedClick();
+
+	void testUnlockSequence();
 
 private:
 	bool filterClick();
