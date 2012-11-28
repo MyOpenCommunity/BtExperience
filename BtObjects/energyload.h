@@ -96,8 +96,6 @@ private:
 
 	Additionally, the object could have consumption meters to read current and cumulative
 	consumption.
-
-	The object id is \a ObjectInterface::IdEnergyLoad, the object key is empty.
 */
 class EnergyLoadManagement : public DeviceObjectInterface
 {
@@ -197,11 +195,11 @@ public:
 		Critical
 	};
 
-	EnergyLoadManagement(LoadsDevice *dev, QString name, EnergyRate *rate, int rate_decimals);
+	EnergyLoadManagement(LoadsDevice *dev, QString name, int oid, EnergyRate *rate, int rate_decimals);
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdEnergyLoad;
+		return oid;
 	}
 
 	LoadStatus getLoadStatus() const;
@@ -266,6 +264,7 @@ private:
 	LoadStatus status;
 	double consumption;
 	QList<EnergyLoadTotal *> period_totals;
+	ObjectInterface::ObjectId oid;
 };
 
 

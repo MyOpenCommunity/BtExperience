@@ -5,14 +5,27 @@ import Components 1.0
 MenuColumn {
     id: element
 
+    SystemsModel { id: systemsModel; systemId: Container.IdSupervision }
+
     ObjectModel {
         id: listModel
+        source: myHomeModels.myHomeObjects
+        containers: [systemsModel.systemUii]
         filters: [
             {objectId: ObjectInterface.IdStopAndGo},
             {objectId: ObjectInterface.IdStopAndGoPlus},
             {objectId: ObjectInterface.IdStopAndGoBTest}
         ]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    ObjectModel {
+        id: loadDiagnosticModel
+        source: myHomeModels.myHomeObjects
+        containers: [systemsModel.systemUii]
+        filters: [
+            {objectId: ObjectInterface.IdLoadDiagnostic}
+        ]
     }
 
     onChildDestroyed: {
@@ -26,6 +39,7 @@ MenuColumn {
             name: qsTr("load diagnostic")
             isSelected: privateProps.currentIndex === 1
             hasChild: true
+            enabled: loadDiagnosticModel.count > 0
             onClicked: {
                 paginator.currentIndex = -1
                 if (privateProps.currentIndex !== 1)

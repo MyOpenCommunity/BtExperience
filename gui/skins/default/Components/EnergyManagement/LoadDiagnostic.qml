@@ -5,10 +5,14 @@ import Components 1.0
 MenuColumn {
     id: element
 
+    SystemsModel { id: systemsModel; systemId: Container.IdSupervision }
+
     ObjectModel {
         id: listModel
+        source: myHomeModels.myHomeObjects
+        containers: [systemsModel.systemUii]
         filters: [
-            {objectId: ObjectInterface.IdEnergyLoad}
+            {objectId: ObjectInterface.IdLoadDiagnostic}
         ]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }

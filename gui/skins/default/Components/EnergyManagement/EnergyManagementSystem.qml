@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 import Components.EnergyManagement 1.0
 import "../../js/navigationconstants.js" as NavigationConstants
@@ -8,6 +9,18 @@ MenuColumn {
     id: element
     width: 212
     height: 150
+
+    SystemsModel { id: systemsModel; systemId: Container.IdLoadControl }
+
+    ObjectModel {
+        id: loadManagementModel
+        source: myHomeModels.myHomeObjects
+        containers: [systemsModel.systemUii]
+        filters: [
+            {objectId: ObjectInterface.IdLoadWithControlUnit},
+            {objectId: ObjectInterface.IdLoadWithoutControlUnit}
+        ]
+    }
 
     // needed for menu navigation
     function targetsKnown() {
@@ -43,6 +56,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             name: model.name
             hasChild: true
+            enabled: model.name === qsTr("load management") ? loadManagementModel.count > 0 : true
             onClicked: element.loadColumn(model.component, model.name)
         }
         model: listModel

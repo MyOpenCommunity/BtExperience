@@ -37,7 +37,7 @@ QList<ObjectPair> parseLoadDiagnostic(const QDomNode &xml_node)
 		int uii = getIntAttribute(ist, "uii");
 
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), 0, 0));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), ObjectInterface::IdLoadDiagnostic, 0, 0));
 	}
 	return obj_list;
 }
@@ -93,7 +93,7 @@ QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node, QHash<int, Energy
 		}
 
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), rate, rate_decimals));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), ObjectInterface::IdLoadWithoutControlUnit, rate, rate_decimals));
 	}
 	return obj_list;
 }
@@ -148,7 +148,7 @@ void EnergyLoadTotal::setResetDateTime(QDateTime reset)
 }
 
 
-EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, EnergyRate *_rate, int _rate_decimals) :
+EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, int _oid, EnergyRate *_rate, int _rate_decimals) :
 	DeviceObjectInterface(_dev)
 {
 	dev = _dev;
@@ -157,6 +157,7 @@ EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, Ene
 	rate_decimals = _rate_decimals;
 	status = Unknown;
 	consumption = 0;
+	oid = static_cast<ObjectInterface::ObjectId>(_oid);
 
 	period_totals.append(new EnergyLoadTotal(this, rate));
 	period_totals.append(new EnergyLoadTotal(this, rate));
@@ -287,7 +288,7 @@ void EnergyLoadManagement::valueReceived(const DeviceValues &values_list)
 
 
 EnergyLoadManagementWithControlUnit::EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool advanced, QString name, EnergyRate *_rate, int _rate_decimals) :
-	EnergyLoadManagement(dev, name, _rate, _rate_decimals)
+	EnergyLoadManagement(dev, name, ObjectInterface::IdLoadWithControlUnit, _rate, _rate_decimals)
 {
 	load_enabled = load_forced = false;
 	is_advanced = advanced;
