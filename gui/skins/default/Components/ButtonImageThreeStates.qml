@@ -21,7 +21,11 @@ SvgImage {
 
     property bool enabled: true
     property int status: 0 // 0 - up, 1 - down
+
     property alias repetitionOnHold: area.repetitionEnabled // enable repetition when pressed
+    property alias repetitionTriggered: area.repetitionTriggered
+    property alias largeInterval: area.largeInterval
+    property alias smallInterval: area.smallInterval
 
     signal clicked
     signal pressed
