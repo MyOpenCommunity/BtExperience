@@ -78,7 +78,7 @@ Page {
     UbuntuLightText {
         id: title
 
-        text: player.mediaPlayer.trackName
+        text: privateProps.buildTrackText(player.mediaPlayer.trackInformation)
         color: "white"
         font.pixelSize: frameBg.height / 100 * 3.63
         anchors {
@@ -624,6 +624,17 @@ Page {
                 global.audioState.enableState(AudioState.LocalPlaybackMute)
             else
                 global.audioState.disableState(AudioState.LocalPlaybackMute)
+        }
+    }
+
+    QtObject {
+        id: privateProps
+        function buildTrackText(info) {
+            if (info["meta_title"])
+                return info["meta_title"] + " - " + info["meta_artist"]
+            else if (info["file_name"])
+                return info["file_name"]
+            else return ""
         }
     }
 }

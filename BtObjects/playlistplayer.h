@@ -149,6 +149,8 @@ class AudioVideoPlayer : public PlayListPlayer
 	*/
 	Q_PROPERTY(bool stopped READ isStopped NOTIFY stoppedChanged)
 
+	Q_PROPERTY(QVariantMap trackInformation READ getTrackInformation NOTIFY trackInformationChanged)
+
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
 
@@ -165,6 +167,7 @@ public:
 	void setVideoRect(QRect newValue);
 	virtual bool isPlaying() const;
 	bool isStopped() const;
+	QVariantMap getTrackInformation() const;
 	Q_INVOKABLE void seek(int seconds);
 
 public slots:
@@ -185,6 +188,7 @@ signals:
 	void muteChanged();
 	void videoRectChanged();
 	void stoppedChanged();
+	void trackInformationChanged();
 
 private slots:
 	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);

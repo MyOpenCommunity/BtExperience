@@ -265,6 +265,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 			SLOT(handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState)));
 	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SLOT(trackInfoChanged()));
+	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SIGNAL(trackInformationChanged()));
 	connect(media_player, SIGNAL(currentSourceChanged(QString)), SIGNAL(trackNameChanged()));
 	connect(media_player, SIGNAL(volumeChanged(int)), SIGNAL(volumeChanged()));
 	connect(media_player, SIGNAL(muteChanged(bool)), SIGNAL(muteChanged()));
@@ -333,6 +334,11 @@ bool AudioVideoPlayer::isPlaying() const
 bool AudioVideoPlayer::isStopped() const
 {
 	return media_player->getPlayerState() == MultiMediaPlayer::Stopped;
+}
+
+QVariantMap AudioVideoPlayer::getTrackInformation() const
+{
+	return media_player->getTrackInfo();
 }
 
 void AudioVideoPlayer::seek(int seconds)
