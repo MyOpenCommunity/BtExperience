@@ -9,6 +9,7 @@
 	<container id="14" descr="Ambient" env="1">
 		<ist uii="410" descr="Discoteca">
 			<link uii="10004" />
+			<link uii="10005" />
 		</ist>
 		<ist uii="411" descr="Cucina" env="2">
 			<link uii="10002" />

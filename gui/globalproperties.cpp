@@ -3,6 +3,7 @@
 #include "inputcontextwrapper.h"
 #include "playlistplayer.h"
 #include "audiostate.h"
+#include "screenstate.h"
 #include "mediaplayer.h" // SoundPlayer
 #include "mediaobjects.h" // SourceMedia
 #include "ringtonemanager.h"
@@ -169,15 +170,6 @@ namespace
 			*enabled = bool(v.intValue("mode"));
 		}
 	}
-
-	void setMonitorEnabled(int value)
-	{
-		QFile display_device("/sys/devices/platform/omapdss/display0/enabled");
-
-		display_device.open(QFile::WriteOnly);
-		display_device.write(qPrintable(QString::number(value)));
-		display_device.close();
-	}
 }
 
 
@@ -187,7 +179,6 @@ GlobalProperties::GlobalProperties(logger *log)
 
 	wrapper = new InputContextWrapper(this);
 	main_widget = NULL;
-	monitor_off = false;
 
 	delayed_frame_timer = new QTimer(this);
 	delayed_frame_timer->setInterval(LAZY_UPDATE_INTERVAL);
@@ -210,19 +201,13 @@ GlobalProperties::GlobalProperties(logger *log)
 	debug_touchscreen = false;
 	debug_timing = 0;
 	hardware_keys = new HwKeys(this);
+	screen_state = new ScreenState(this);
 
 	if (!(*bt_global::config)[DEFAULT_PE].isEmpty())
 		default_external_place = new ExternalPlace(QString(), ObjectInterface::IdExternalPlace,
 							   (*bt_global::config)[DEFAULT_PE]);
 	else
 		default_external_place = 0;
-
-	setMonitorEnabled(1);
-	updateTime();
-	// We emit a signal every second to update the time.
-	QTimer *secs_timer = new QTimer(this);
-	connect(secs_timer, SIGNAL(timeout()), this, SIGNAL(lastTimePressChanged()));
-	secs_timer->start(1000);
 
 	parseSettings(log);
 
@@ -240,10 +225,16 @@ GlobalProperties::GlobalProperties(logger *log)
 	maliit_settings->loadPluginSettings();
 #endif
 
+	screen_state->enableState(ScreenState::Normal);
+	screen_state->enableState(ScreenState::ScreenOff);
+
 	connect(ringtone_manager, SIGNAL(ringtoneChanged(int,int)),
 		this, SLOT(ringtoneChanged(int,int)));
 	connect(audio_state, SIGNAL(volumeChanged(int,int)),
 		this, SLOT(volumeChanged(int,int)));
+	connect(screen_state, SIGNAL(stateChanged(ScreenState::State,ScreenState::State)),
+		this, SLOT(screenStateChangedManagement()));
+
 }
 
 void GlobalProperties::initAudio()
@@ -262,9 +253,6 @@ void GlobalProperties::initAudio()
 	audio_state->registerMediaPlayer(qobject_cast<MultiMediaPlayer *>(video_player->getMediaPlayer()));
 	audio_state->registerBeep(sound_player);
 	audio_state->enableState(AudioState::Idle);
-
-	connect(audio_state, SIGNAL(stateChanged(AudioState::State,AudioState::State)),
-		this, SLOT(audioStateChangedManagement()));
 
 	audio_state->registerSoundPlayer(ringtone_manager->getMediaPlayer());
 
@@ -320,6 +308,7 @@ void GlobalProperties::parseSettings(logger *log)
 			break;
 		case Password:
 			parsePassword(xml_obj, &password, &password_enabled);
+			screen_state->setPasswordEnabled(password_enabled);
 			break;
 		case DebugTouchscreen:
 			debug_touchscreen = parseEnableFlag(xml_obj);
@@ -414,30 +403,6 @@ QString GlobalProperties::getExtraPath() const
 	return extra.canonicalFilePath() + "/";
 }
 
-bool GlobalProperties::isMonitorOff() const
-{
-	return monitor_off;
-}
-
-void GlobalProperties::setMonitorOff(bool newValue)
-{
-	if (monitor_off == newValue)
-		return;
-
-	monitor_off = newValue;
-
-	int transmitted_value = 0; // 0 - turn off, 1 - turn on
-	if (!newValue)
-		transmitted_value = 1;
-
-	qDebug() << "Writing" <<  transmitted_value << "to /sys/devices/platform/omapdss/display0/enabled";
-#if !defined(BT_HARDWARE_X11)
-	setMonitorEnabled(transmitted_value);
-#endif
-
-	emit monitorOffChanged();
-}
-
 bool GlobalProperties::getDebugTs()
 {
 	return debug_touchscreen;
@@ -517,6 +482,11 @@ QObject *GlobalProperties::getAudioState() const
 	return audio_state;
 }
 
+QObject *GlobalProperties::getScreenState() const
+{
+	return screen_state;
+}
+
 QObject *GlobalProperties::getRingtoneManager() const
 {
 	return ringtone_manager;
@@ -525,17 +495,6 @@ QObject *GlobalProperties::getRingtoneManager() const
 QObject *GlobalProperties::getInputWrapper() const
 {
 	return wrapper;
-}
-
-int GlobalProperties::getLastTimePress() const
-{
-	return last_press.secsTo(QDateTime::currentDateTime());
-}
-
-void GlobalProperties::updateTime()
-{
-	last_press = QDateTime::currentDateTime();
-	emit lastTimePressChanged();
 }
 
 void GlobalProperties::setMaxTravelledDistanceOnLastMove(QPoint value)
@@ -679,12 +638,19 @@ void GlobalProperties::ringtoneChanged(int ringtone, int index)
 	configurations->saveConfiguration(SETTINGS_FILE);
 }
 
-void GlobalProperties::audioStateChangedManagement()
+void GlobalProperties::screenStateChangedManagement()
 {
-	if (audio_state->getState() == AudioState::Screensaver)
+	if (screen_state->getState() == ScreenState::Screensaver ||
+	    screen_state->getState() == ScreenState::ScreenOff)
+	{
+		audio_state->enableState(AudioState::Screensaver);
 		delayed_frame_timer->start();
+	}
 	else
+	{
+		audio_state->disableState(AudioState::Screensaver);
 		delayed_frame_timer->stop();
+	}
 }
 
 void GlobalProperties::sendDelayedFrames()
@@ -712,6 +678,7 @@ void GlobalProperties::setPasswordEnabled(bool enabled)
 	if (password_enabled == enabled)
 		return;
 	password_enabled = enabled;
+	screen_state->setPasswordEnabled(enabled);
 	emit passwordEnabledChanged();
 	::setPassword(configurations->getConfiguration(SETTINGS_FILE), Password, password, password_enabled);
 	configurations->saveConfiguration(SETTINGS_FILE);

@@ -24,7 +24,7 @@
 		<ist uii="7" descr="Bedroom light" where="14" ectime="1" ctime="00:00:30" />
 		<ist uii="12" descr="Lampada scrivania di Gianni" where="13" ftime="6"/>
 	</obj>
-	<obj cid="2005" id="2005" descr="Light" where="0">
+	<obj cid="2003" id="2003" descr="Light" where="0">
 		<ist uii="9" descr="room 1" where="1" />
 		<ist uii="10" descr="room 2" where="2" />
 		<ist uii="11" descr="general" />
@@ -529,7 +529,7 @@
 		<ist uii="10007" descr="Radio" where="1" />
 	</obj>
 	<obj cid="11033" id="11033" descr="Source" where="1">
-		<ist uii="10009" descr="Aux" where="2" />
+		<ist uii="10009" descr="Aux" where="3" />
 	</obj>
 	<obj cid="11034" id="11034" descr="Touch" where="1">
 		<ist uii="10011" descr="Touch" where="4" />

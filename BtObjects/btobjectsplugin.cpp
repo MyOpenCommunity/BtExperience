@@ -40,6 +40,7 @@
 #include "alarmclock.h"
 #include "mounts.h"
 #include "alarmclocknotifier.h"
+#include "screenstate.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -244,6 +245,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameReceiver::setClientsMonitor(monitors);
 	FrameSender::setClients(clients);
 
+	general_ambient_uii = -1;
 	configurations = new ConfigFile(this);
 	global_models.setParent(this);
 	note_model.setParent(this);
@@ -357,9 +359,6 @@ void BtObjectsPlugin::createObjects()
 			break;
 		case ObjectInterface::IdLightGroup:
 			obj_list = parseLightGroup(xml_obj, uii_map);
-			break;
-		case ObjectInterface::IdLightCommand:
-			obj_list = parseLightCommand(xml_obj);
 			break;
 
 		case ObjectInterface::IdAutomation2:
@@ -549,6 +548,15 @@ void BtObjectsPlugin::createObjects()
 		case ObjectInterface::IdMonoAmplifierGroup:
 		case ObjectInterface::IdMultiAmplifierGroup:
 			obj_list = parseAmplifierGroup(xml_obj, uii_map);
+			break;
+		case ObjectInterface::IdMultiGeneral:
+			obj_list = parseMultiGeneral(xml_obj);
+			// The line below seems to assume that we can only have one general
+			// amplifier, but above we allow a list of them.
+			// In the end, we don't really care, since they will be always the
+			// same; here we take one uii from the above.
+			Q_ASSERT_X(obj_list.size() > 0, "IdMultiGeneral parsing", "You didn't define at least one ist for the general object");
+			general_ambient_uii = obj_list[0].first;
 			break;
 		case ObjectInterface::IdMonoPowerAmplifier:
 		case ObjectInterface::IdMultiPowerAmplifier:
@@ -1089,6 +1097,40 @@ void BtObjectsPlugin::parseConfig()
 	}
 
 	parseNotes(QFileInfo(QDir(qApp->applicationDirPath()), NOTES_FILE).absoluteFilePath(), &note_model);
+
+	// Since we don't have an ambient for the general, we build one. This way we can
+	// treat it like any other ambient in the GUI; it also naturally handles the concept
+	// of source, which normal amplifiers don't have.
+	if (general_ambient_uii > 0)
+		createGeneralAmbient();
+}
+
+void BtObjectsPlugin::createGeneralAmbient()
+{
+	QDomNode node = findNodeForUii(general_ambient_uii).first;
+
+	int ambient_id = ObjectInterface::IdMultiGeneral;
+	int ambient_uii = uii_map.nextUii();
+	SoundAmbient *general_ambient = new SoundAmbient(0, getAttribute(node, "descr"), ambient_id, ambient_uii);
+	// Never allow the ambient to save itself on the configuration file.
+	disconnect(general_ambient, SIGNAL(nameChanged()), general_ambient, SIGNAL(persistItem()));
+
+	uii_map.insert(ambient_uii, general_ambient);
+	uii_to_id[ambient_uii] = ambient_id;
+	AmplifierGroup *a = uii_map.value<AmplifierGroup>(general_ambient_uii);
+	if (!a)
+	{
+		qWarning() << "Invalid uii" << general_ambient_uii << "for general object";
+		Q_ASSERT_X(false, "createGeneralAmbient", "Invalid uii");
+	}
+	// don't put the general amplifier into the new ambient, we can retrieve it
+	// anyway in the GUI. This allows the user to put the general amplifier
+	// in another ambient as well (as an amplifier group).
+	objmodel.prepend(general_ambient);
+
+	// TODO: connect sources and amplifiers
+//	ambient->connectSources(sources);
+//	ambient->connectAmplifiers(amplifiers);
 }
 
 void BtObjectsPlugin::parseMediaLinks(const QDomNode &xml_obj)
@@ -1495,6 +1537,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a ExternalPlace instance");
 	qmlRegisterUncreatableType<MountPoint>(uri, 1, 0, "MountPoint",
 										   "unable to create a MountPoint instance");
+	qmlRegisterUncreatableType<ScreenState>(uri, 1, 0, "ScreenState",
+						"unable to create a ScreenState instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

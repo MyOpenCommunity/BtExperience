@@ -44,6 +44,7 @@ HEADERS += \
 	test_multimedia_player.h \
 	test_myhome_models.h \
 	test_scenario_objects.h \
+	test_screenstate.h \
 	test_stopandgo_objects.h \
 	test_splitscenarios_object.h \
 	test_thermal_objects.h \
@@ -68,6 +69,7 @@ SOURCES += test_main.cpp \
 	test_multimedia_player.cpp \
 	test_myhome_models.cpp \
 	test_scenario_objects.cpp \
+	test_screenstate.cpp \
 	test_stopandgo_objects.cpp \
 	test_splitscenarios_object.cpp \
 	test_thermal_objects.cpp \

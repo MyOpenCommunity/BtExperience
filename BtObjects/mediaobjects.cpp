@@ -156,6 +156,27 @@ QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
 	return obj_list;
 }
 
+QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node)
+{
+	// The General amplifier is created as an AmplifierGroup so that the graphical
+	// representation is correct, since there's no concept of active or volume
+	// level.
+	XmlObject v(xml_node);
+	QList<ObjectPair> obj_list;
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		AmplifierDevice *d = AmplifierDevice::createDevice(v.value("where"));
+		Amplifier *amp = new Amplifier(0, v.value("descr"), d);
+		QList<Amplifier *> amplifiers;
+		amplifiers << amp;
+		obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"), amplifiers, ObjectInterface::IdAmplifierGeneral));
+	}
+	return obj_list;
+}
+
 QList<ObjectPair> parseAmplifierGroup(const QDomNode &xml_node, const UiiMapper &uii_map)
 {
 	QList<ObjectPair> obj_list;
@@ -229,6 +250,8 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 									       (*bt_global::config)[AMPLIFIER_ADDRESS]);
 		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
 	}
+	SourceDevice::setIsMultichannel(is_multichannel);
+	AmplifierDevice::setIsMultichannel(is_multichannel);
 
 	VirtualSourceDevice *device = 0;
 
@@ -360,17 +383,20 @@ void SoundAmbient::updateActiveSource(SourceObject *source_object)
 	// - source is turned off on the area (isActive is false and current_source == source)
 	if (source->isActiveInArea(area))
 	{
+		// case 2 above
 		if (current_source != source_object)
 		{
 			previous_source = current_source;
 			setCurrentSource(source_object);
 		}
 	}
+	// case 3 above
 	else if (source_object == current_source)
 	{
 		previous_source = current_source;
 		setCurrentSource(0);
 	}
+	// no need to handle case 1
 }
 
 void SoundAmbient::updateActiveAmplifier()
@@ -395,18 +421,6 @@ void SoundAmbient::updateActiveAmplifier()
 }
 
 
-SoundGeneralAmbient::SoundGeneralAmbient(QString name, int uii) :
-	SoundAmbientBase(name, uii)
-{
-	area = 0;
-}
-
-void SoundGeneralAmbient::setSource(SourceObject * source)
-{
-	setCurrentSource(source);
-}
-
-
 SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType t)
 {
 	name = _name;
@@ -417,11 +431,6 @@ SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType
 	source->setSourceObject(this);
 }
 
-void SourceObject::enableObject()
-{
-	source->enableObject();
-}
-
 void SourceObject::initializeObject()
 {
 	source->initializeObject();
@@ -430,11 +439,6 @@ void SourceObject::initializeObject()
 void SourceObject::scsSourceActiveAreasChanged()
 {
 	emit activeAreasChanged(this);
-}
-
-void SourceObject::scsSourceForGeneralAmbientChanged()
-{
-	emit sourceForGeneralAmbientChanged(this);
 }
 
 void SourceObject::setActive(int area)
@@ -667,16 +671,8 @@ SourceBase::SourceBase(SourceDevice *d, SourceType t)
 	type = t;
 	source_object = 0;
 
-	dev->setSupportedInitMode(device::DISABLED_INIT);
-	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
-}
-
-void SourceBase::enableObject()
-{
-	if (dev->getSupportedInitMode() == device::NORMAL_INIT)
-		return;
-
 	dev->setSupportedInitMode(device::DEFERRED_INIT);
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 }
 
 void SourceBase::initializeObject()
@@ -699,7 +695,6 @@ void SourceBase::setActive(int area)
 	if (area == 0)
 	{
 		dev->turnOn(QString::number(area));
-		source_object->scsSourceForGeneralAmbientChanged();
 	}
 	else if (!isActiveInArea(area))
 		dev->turnOn(QString::number(area));

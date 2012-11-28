@@ -1,22 +1,26 @@
 import QtQuick 1.1
-import Components 1.0
 import BtObjects 1.0
+import Components 1.0
+import "../../js/MenuItem.js" as Script
 
 MenuColumn {
     id: column
 
-    property string imagesPath: "../../images/"
+    Component {
+        id: sourceControl
+        SourceControl {}
+    }
 
-    QtObject {
-        id: privateProps
-        property int currentIndex: -1
+    onChildDestroyed: privateProps.currentIndex = -1
+
+    ObjectModel {
+        id: objectModel
+        filters: [{objectId: ObjectInterface.IdAmplifierGeneral}]
     }
 
     Column {
-        id: control
-
         MenuItem {
-            id: sourceItem
+            id: sourceLoader
             property variant itemObject: column.dataModel.currentSource
             isSelected: privateProps.currentIndex === 1
             name: qsTr("source")
@@ -28,27 +32,23 @@ MenuColumn {
             }
         }
 
-        VolumeGeneral {
-            id: volume
-            onPlusClicked: objectModel.getObject(0).volumeUp()
-            onMinusClicked: objectModel.getObject(0).volumeDown()
+        Column {
+            id: ambientControl
+            property variant itemObject: objectModel.getObject(0)
+
+            VolumeGeneral {
+                onMinusClicked: ambientControl.itemObject.volumeDown()
+                onPlusClicked: ambientControl.itemObject.volumeUp()
+            }
+
+            ControlOnOff {
+                onClicked: ambientControl.itemObject.setActive(newStatus)
+            }
         }
-
-        ControlOnOff {
-            id: buttonOnOff
-            onClicked: objectModel.getObject(0).active = newStatus
-        }
     }
 
-    Component {
-        id: sourceControl
-        SourceControl {}
+    QtObject {
+        id: privateProps
+        property int currentIndex: -1
     }
-
-    ObjectModel {
-        id: objectModel
-        filters: [{objectId: ObjectInterface.IdSoundAmplifierGeneral, objectKey: "0"}]
-    }
-
-    onChildDestroyed: privateProps.currentIndex = -1
 }

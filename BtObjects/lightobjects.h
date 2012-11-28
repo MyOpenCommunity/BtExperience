@@ -20,31 +20,7 @@ class ChoiceList;
 QList<ObjectPair> parseDimmer100(const QDomNode &obj);
 QList<ObjectPair> parseDimmer(const QDomNode &obj);
 QList<ObjectPair> parseLight(const QDomNode &obj);
-QList<ObjectPair> parseLightCommand(const QDomNode &obj);
 QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map);
-
-// internal class, used in light groups, not useful to the GUI
-class LightCommand : public DeviceObjectInterface
-{
-	Q_OBJECT
-
-public:
-	LightCommand(LightingDevice *d);
-
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdLightCommand;
-	}
-
-	// manages all the operation related to turn on or off (set timing, for example)
-	virtual void setActive(bool st);
-
-protected:
-	// manages only turn on or off
-	virtual void turn(bool on);
-
-	LightingDevice *dev;
-};
 
 
 /*!
@@ -55,7 +31,7 @@ protected:
 
 	The object id is \a ObjectInterface::IdLight, the key is the SCS where.
 */
-class Light : public LightCommand
+class Light : public DeviceObjectInterface
 {
 	friend class TestLight;
 
@@ -177,6 +153,9 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
+	// manages only turn on or off
+	virtual void turn(bool on);
+
 	QString key;
 	bool active;
 	bool ectime;
@@ -185,6 +164,7 @@ protected:
 
 private:
 	ChoiceList *ftimes;
+	LightingDevice *dev;
 };
 
 
@@ -201,7 +181,7 @@ class LightGroup : public ObjectInterface
 	Q_OBJECT
 
 public:
-	LightGroup(QString name, QList<LightCommand *> d);
+	LightGroup(QString name, QList<Light *> d);
 
 	virtual int getObjectId() const
 	{
@@ -214,7 +194,7 @@ public:
 	Q_INVOKABLE void setActive(bool status);
 
 private:
-	QList<LightCommand *> objects;
+	QList<Light *> objects;
 };
 
 

@@ -94,7 +94,6 @@ public:
 		// lights
 		IdDimmerFixed = 2001, //!< 10-level dimmer
 		IdLightGroup = 2004, //!< A set of lights
-		IdLightCommand = 2005, //!< Command to control the lights for an environment or all the lights
 		// automation
 		IdAutomation2 = 3002, //!< A simple 2-states automation actuator (Fan,watering, controlled socket)
 		IdAutomation3 = 3000, //!< A 3-states automation actuator (Curtain, garage, shutter, gate)
@@ -179,6 +178,7 @@ public:
 		IdLightCustom = 10012003, //!< A simple light actuator with custom time
 		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
 		IdMultiAmbientAmplifier = 11001000,
+		IdAmplifierGeneral,
 
 		// the last value + 1, used to check the ids requested from qml
 		// NOTE: always verify is the highest value out there!

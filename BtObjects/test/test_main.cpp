@@ -44,6 +44,7 @@
 #include "test_energy_data.h"
 #include "test_media_models.h"
 #include "test_myhome_models.h"
+#include "test_screenstate.h"
 #include "main.h"
 
 logger *app_logger;
@@ -105,6 +106,7 @@ int main(int argc, char *argv[])
 	ADD_TEST(TestMultiMediaPlayer);
 	ADD_TEST(TestPlaylistPlayer);
 	ADD_TEST(TestMessagesSystem);
+	ADD_TEST(TestScreenState);
 
 	QStringList arglist = app.arguments();
 	if (arglist.contains("--help"))

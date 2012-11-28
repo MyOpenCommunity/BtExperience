@@ -29,6 +29,7 @@
 #include "qmlapplicationviewer.h"
 #include "eventfilters.h"
 #include "globalproperties.h"
+#include "screenstate.h"
 #include "guisettings.h"
 #include "imagereader.h"
 #include "xml_functions.h"
@@ -184,7 +185,7 @@ public slots:
 		else if (signal_number == SIGTERM)
 		{
 			qDebug("Terminating on SIGTERM");
-			global->setMonitorOff(false);
+			static_cast<ScreenState *>(global->getScreenState())->enableState(ScreenState::ForcedNormal);
 			qApp->quit();
 		}
 	}
@@ -297,7 +298,6 @@ int main(int argc, char *argv[])
 	app.setApplicationVersion(QString("Mobile"));
 	GlobalProperties global(app_logger);
 	ImageReader::setBasePath(global.getBasePath());
-	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateTime()));
 	QObject::connect(last_click, SIGNAL(maxTravelledDistanceOnLastMove(QPoint)), &global, SLOT(setMaxTravelledDistanceOnLastMove(QPoint)));
 	BootManager boot_manager(&global);
 	sh->connect(sh, SIGNAL(signalReceived(int)), &boot_manager, SLOT(handleSignal(int)));

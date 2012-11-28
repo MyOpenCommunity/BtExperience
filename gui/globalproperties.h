@@ -19,6 +19,7 @@ class InputContextWrapper;
 class AudioVideoPlayer;
 class PhotoPlayer;
 class AudioState;
+class ScreenState;
 class MultiMediaPlayer;
 class SoundPlayer;
 class RingtoneManager;
@@ -52,8 +53,6 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(int mainWidth READ getMainWidth CONSTANT)
 	// The height of the app (equal to the screen height on embedded)
 	Q_PROPERTY(int mainHeight READ getMainHeight CONSTANT)
-	// The number of seconds since last click
-	Q_PROPERTY(int lastTimePress READ getLastTimePress NOTIFY lastTimePressChanged)
 	// The input context wrapper, used to manage the virtual keyboard
 	Q_PROPERTY(QObject *inputWrapper READ getInputWrapper CONSTANT)
 	// The object to manage the GUI settings
@@ -64,6 +63,8 @@ class GlobalProperties : public QObject
 	Q_PROPERTY(PhotoPlayer *photoPlayer READ getPhotoPlayer CONSTANT)
 	// The object to manage audio/video playback state from QML
 	Q_PROPERTY(QObject *audioState READ getAudioState CONSTANT)
+	// The object to manage screen state from QML
+	Q_PROPERTY(QObject *screenState READ getScreenState CONSTANT)
 	// The object to play ringtones from QML
 	Q_PROPERTY(QObject *ringtoneManager READ getRingtoneManager CONSTANT)
 	// The base path for the QML application. It is used for import path, for example.
@@ -76,9 +77,6 @@ class GlobalProperties : public QObject
 
 	// The keyboard layout for Maliit (es. "en_gb", "fr", ...)
 	Q_PROPERTY(QStringList keyboardLayouts READ getKeyboardLayouts NOTIFY keyboardLayoutsChanged)
-
-	// A property to turn off/on the monitor from QML
-	Q_PROPERTY(bool monitorOff READ isMonitorOff WRITE setMonitorOff NOTIFY monitorOffChanged)
 
 	// Hardware key handler
 	Q_PROPERTY(QObject *hardwareKeys READ getHardwareKeys CONSTANT)
@@ -103,17 +101,15 @@ public:
 	GlobalProperties(logger *log);
 	int getMainWidth() const;
 	int getMainHeight() const;
-	int getLastTimePress() const;
 	QObject *getInputWrapper() const;
 	GuiSettings *getGuiSettings() const;
 	AudioVideoPlayer *getAudioVideoPlayer() const;
 	PhotoPlayer *getPhotoPlayer() const;
 	QObject *getAudioState() const;
+	QObject *getScreenState() const;
 	QObject *getRingtoneManager() const;
 	QString getBasePath() const;
 	QString getExtraPath() const;
-	bool isMonitorOff() const;
-	void setMonitorOff(bool newValue);
 	bool getDebugTs();
 	DebugTiming *getDebugTiming();
 	QObject *getHardwareKeys() const;
@@ -150,15 +146,12 @@ public:
 	bool isPasswordEnabled() const;
 
 public slots:
-	void updateTime();
 	void setMaxTravelledDistanceOnLastMove(QPoint pos);
 
 signals:
-	void lastTimePressChanged();
 	void requestReboot();
 	void keyboardLayoutChanged();
 	void keyboardLayoutsChanged();
-	void monitorOffChanged();
 	void systemTimeChanged();
 	void passwordChanged();
 	void passwordEnabledChanged();
@@ -171,7 +164,7 @@ private slots:
 	void beepChanged();
 	void ringtoneChanged(int ringtone, int index);
 	void volumeChanged(int state, int volume);
-	void audioStateChangedManagement();
+	void screenStateChangedManagement();
 	void sendDelayedFrames();
 
 private:
@@ -179,17 +172,16 @@ private:
 
 	InputContextWrapper *wrapper;
 	QDeclarativeView *main_widget;
-	QDateTime last_press;
 	GuiSettings *settings;
 	AudioVideoPlayer *video_player;
 	PhotoPlayer *photo_player;
 	AudioState *audio_state;
+	ScreenState *screen_state;
 	SoundPlayer *sound_player;
 	RingtoneManager *ringtone_manager;
 	ExternalPlace *default_external_place;
 	QTimer *delayed_frame_timer;
 	ConfigFile *configurations;
-	bool monitor_off;
 	bool debug_touchscreen;
 	DebugTiming *debug_timing;
 	HwKeys *hardware_keys;

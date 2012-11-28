@@ -5,30 +5,13 @@
 #include "generic_functions.h"
 
 #include <QStringList>
+#include <QMetaEnum>
 
 #include <QtDebug>
 
 
 namespace
 {
-	const char *descriptions[AudioState::StateCount + 1] =
-	{
-		"Invalid",
-		"Idle",
-		"Beep",
-		"Screensaver",
-		"LocalPlayback",
-		"LocalPlaybackMute",
-		"Ringtone",
-		"VdeRingtone",
-		"ScsVideoCall",
-		"IpVideoCall",
-		"ScsIntercomCall",
-		"IpIntercomCall",
-		"Mute",
-		"FloorCall",
-	};
-
 	AudioState::Volume volume_map[AudioState::StateCount + 1] =
 	{
 		AudioState::InvalidVolume,
@@ -100,6 +83,14 @@ namespace
 			setTpaVolume(volume);
 			break;
 		}
+	}
+
+	QString enumerationName(const QObject *obj, const char *enumeration, int value)
+	{
+		int idx = obj->metaObject()->indexOfEnumerator(enumeration);
+		QMetaEnum e = obj->metaObject()->enumerator(idx);
+
+		return e.valueToKey(value);
 	}
 
 	QString scs_source_on     = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
@@ -215,7 +206,7 @@ void AudioState::setVolume(int volume)
 {
 	if (current_volume == InvalidVolume)
 	{
-		qWarning() << "Can't set volume in audio state" << descriptions[current_state + 1];
+		qWarning() << "Can't set volume in audio state" << enumerationName(this, "State", current_state);
 		return;
 	}
 
@@ -227,7 +218,7 @@ int AudioState::getVolume() const
 {
 	if (current_volume == InvalidVolume)
 	{
-		qWarning() << "Can't get volume in audio state" << descriptions[current_state + 1];
+		qWarning() << "Can't get volume in audio state" << enumerationName(this, "State", current_state);
 		return 0;
 	}
 
@@ -286,7 +277,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 {
 	pending_state = Invalid;
 
-	qDebug() << "Leaving state" << descriptions[old_state + 1];
+	qDebug() << "Leaving audio state" << enumerationName(this, "State", old_state);
 
 	switch (old_state)
 	{
@@ -301,7 +292,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 		break;
 	}
 
-	qDebug() << "Entering state" << descriptions[new_state + 1];
+	qDebug() << "Entering audio state" << enumerationName(this, "State", new_state);
 
 	switch (new_state)
 	{

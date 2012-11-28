@@ -9,6 +9,7 @@ AlarmClockNotifier::AlarmClockNotifier()
 {
 	is_one_enabled = false;
 	beep_alarm_ringing = false;
+	alarm_ringing = false;
 
 	// creates an ObjectModel to select alarm clocks objects
 	alarm_clocks_model = new ObjectModel(this);
@@ -29,6 +30,11 @@ AlarmClockNotifier::AlarmClockNotifier()
 bool AlarmClockNotifier::isEnabled() const
 {
 	return is_one_enabled;
+}
+
+bool AlarmClockNotifier::isAlarmActive() const
+{
+	return alarm_ringing;
 }
 
 bool AlarmClockNotifier::isBeepAlarmActive() const
@@ -68,23 +74,34 @@ void AlarmClockNotifier::updateAlarmClocksInfo()
 
 void AlarmClockNotifier::updateAlarmClocksRinging()
 {
-	bool ringing = false;
+	bool ringing = false, beep_ringing = false;
 
 	for (int i = 0; i < alarm_clocks_model->getCount(); ++i)
 	{
 		AlarmClock *alarm = qobject_cast<AlarmClock *>(alarm_clocks_model->getObject(i));
-		if (alarm->isRinging() && alarm->getAlarmType() == AlarmClock::AlarmClockBeep)
+		if (alarm->isRinging())
 		{
 			ringing = true;
-			break;
+
+			if (alarm->getAlarmType() == AlarmClock::AlarmClockBeep)
+			{
+				beep_ringing = true;
+				break;
+			}
 		}
 	}
 
-	if (ringing == beep_alarm_ringing)
-		return;
+	if (ringing != alarm_ringing)
+	{
+		alarm_ringing = ringing;
+		emit alarmActiveChanged();
+	}
 
-	beep_alarm_ringing = ringing;
-	emit beepAlarmActiveChanged();
+	if (beep_ringing != beep_alarm_ringing)
+	{
+		beep_alarm_ringing = beep_ringing;
+		emit beepAlarmActiveChanged();
+	}
 }
 
 void AlarmClockNotifier::emitAlarmStarted()
