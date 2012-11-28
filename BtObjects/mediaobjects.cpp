@@ -381,17 +381,20 @@ void SoundAmbient::updateActiveSource(SourceObject *source_object)
 	// - source is turned off on the area (isActive is false and current_source == source)
 	if (source->isActiveInArea(area))
 	{
+		// case 2 above
 		if (current_source != source_object)
 		{
 			previous_source = current_source;
 			setCurrentSource(source_object);
 		}
 	}
+	// case 3 above
 	else if (source_object == current_source)
 	{
 		previous_source = current_source;
 		setCurrentSource(0);
 	}
+	// no need to handle case 1
 }
 
 void SoundAmbient::updateActiveAmplifier()
@@ -424,11 +427,6 @@ SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType
 
 	source->setParent(this);
 	source->setSourceObject(this);
-}
-
-void SourceObject::enableObject()
-{
-	source->enableObject();
 }
 
 void SourceObject::initializeObject()
@@ -671,16 +669,8 @@ SourceBase::SourceBase(SourceDevice *d, SourceType t)
 	type = t;
 	source_object = 0;
 
-	dev->setSupportedInitMode(device::DISABLED_INIT);
-	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
-}
-
-void SourceBase::enableObject()
-{
-	if (dev->getSupportedInitMode() == device::NORMAL_INIT)
-		return;
-
 	dev->setSupportedInitMode(device::DEFERRED_INIT);
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 }
 
 void SourceBase::initializeObject()

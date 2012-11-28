@@ -189,7 +189,6 @@ public:
 
 	void scsSourceActiveAreasChanged();
 
-	virtual void enableObject();
 	virtual void initializeObject();
 
 public slots:
@@ -412,7 +411,6 @@ public:
 	SourceObject *getSourceObject();
 	void setSourceObject(SourceObject *so);
 
-	void enableObject();
 	void initializeObject();
 
 signals:
