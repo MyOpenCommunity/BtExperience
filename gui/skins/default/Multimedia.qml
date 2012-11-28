@@ -2,13 +2,15 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
+import BtExperience 1.0
 import "js/Stack.js" as Stack
 
 
 Page {
     id: multimedia
 
-    source: "images/multimedia.jpg"
+    source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
+                                                            "images/home/home_dark.jpg"
     text: qsTr("multimedia")
 
     ControlPathView {
