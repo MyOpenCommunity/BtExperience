@@ -49,7 +49,7 @@ MenuColumn {
                 itemObject: modelList.getObject(index)
                 name: itemObject.name
                 hasChild: true
-                enabled: itemObject.mountPoint.mounted
+                enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
                 onDelegateClicked: {
                     privateProps.currentIndex = -1
                     column._isStock = false

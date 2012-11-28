@@ -163,7 +163,7 @@ MenuColumn {
                 name: qsTr("browse")
                 hasChild: true
                 isSelected: privateProps.currentIndex === 1
-                enabled: objModel.mountPoint.mounted
+                enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
                 onClicked: {
                     if (privateProps.currentIndex !== 1)
                         privateProps.currentIndex = 1
