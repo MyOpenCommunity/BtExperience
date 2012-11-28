@@ -265,7 +265,8 @@ void CCTV::answerCall()
 
 void CCTV::endCall()
 {
-	dev->endCall();
+	if (dev->isCalling())
+		dev->endCall();
 	emit callEnded();
 	call_stopped = false;
 	stopVideo();
@@ -490,7 +491,8 @@ void Intercom::answerCall()
 
 void Intercom::endCall()
 {
-	dev->endCall();
+	if (dev->isCalling())
+		dev->endCall();
 	talker = "";
 	emit talkerChanged();
 	emit callEnded();
