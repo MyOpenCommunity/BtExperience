@@ -20,7 +20,7 @@ MenuColumn {
             itemObject: modelList.getObject(index)
             name: itemObject.name
             hasChild: true
-            enabled: itemObject.mountPoint.mounted
+            enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
             onDelegateClicked: {
                 var upnp = itemObject.sourceType === SourceObject.Upnp;
                 var props = {
