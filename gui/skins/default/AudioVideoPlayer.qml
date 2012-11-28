@@ -69,9 +69,10 @@ Page {
 
         source: "images/common/video_player_bg_box.svg"
         anchors {
-            top: frameBg.bottom
-            topMargin: frameBg.height / 100 * 2.59
+            top: player.isVideo ? frameBg.bottom : undefined
+            topMargin: player.isVideo ? frameBg.height / 100 * 2.59 : 0
             horizontalCenter: frameBg.horizontalCenter
+            verticalCenter: player.isVideo ? undefined : player.verticalCenter
         }
     }
 
