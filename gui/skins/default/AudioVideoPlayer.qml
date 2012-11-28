@@ -179,9 +179,9 @@ Page {
             ButtonImageThreeStates {
                 id: playButton
 
-                defaultImageBg: "images/common/btn_play_pause.svg"
-                pressedImageBg: "images/common/btn_play_pause_P.svg"
-                shadowImage: "images/common/ombra_btn_play_pause.svg"
+                defaultImageBg: player.isVideo ? "images/common/btn_play_pause.svg" : "images/common/btn_player_comando.svg"
+                pressedImageBg: player.isVideo ? "images/common/btn_play_pause_P.svg" : "images/common/btn_player_comando_P.svg"
+                shadowImage: player.isVideo ? "images/common/ombra_btn_play_pause.svg" : "images/common/ombra_btn_player_comando.svg"
                 defaultImage: "images/common/ico_play.svg"
                 pressedImage: "images/common/ico_play_P.svg"
                 anchors.centerIn: parent
@@ -206,6 +206,22 @@ Page {
                     }
                 }
             ]
+        }
+
+        ButtonImageThreeStates {
+            id: stopButton
+            visible: !player.isVideo
+
+            defaultImageBg: "images/common/btn_player_comando.svg"
+            pressedImageBg: "images/common/btn_player_comando_P.svg"
+            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImage: "images/common/ico_stop.svg"
+            pressedImage: "images/common/ico_stop_P.svg"
+
+            onClicked: {
+                player.mediaPlayer.terminate()
+                Stack.backToMultimedia()
+            }
         }
 
         ButtonImageThreeStates {
@@ -263,8 +279,6 @@ Page {
             defaultImage: "images/common/ico_mute.svg"
             pressedImage: "images/common/ico_mute.svg"
             anchors.centerIn: parent
-            status: 0
-            visible: player.isVideo || !global.audioState.localSource
 
             onClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
         }
@@ -533,12 +547,12 @@ Page {
                 target: imageSlider
                 anchors.top: undefined
                 anchors.horizontalCenter: undefined
-                anchors.verticalCenter: prevButton.verticalCenter
+                anchors.verticalCenter: playerControl.verticalCenter
                 anchors.left: folderButton.right
                 anchors.right: buttonMuteItem.left
             }
             AnchorChanges {
-                target: prevButton
+                target: playerControl
                 anchors.top: bottomBarBg.top
             }
             PropertyChanges {
