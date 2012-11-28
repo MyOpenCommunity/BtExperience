@@ -5,10 +5,23 @@ import Components 1.0
 MenuColumn {
     id: element
 
+    ObjectModel {
+        id: listModel
+        filters: [
+            {objectId: ObjectInterface.IdEnergyLoad}
+        ]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    onChildDestroyed: {
+        paginator.currentIndex = -1
+    }
+
     Column {
         PaginatorList {
-            id: listView
-            elementsOnPage: 3
+            id: paginator
+            currentIndex: -1
+            onCurrentPageChanged: closeChild()
             delegate: MenuItemDelegate {
                 itemObject: listModel.getObject(index)
                 name: itemObject.name
@@ -62,12 +75,5 @@ MenuColumn {
     Component {
         id: appliance
         Appliance {}
-    }
-
-    ObjectModel {
-        id: listModel
-        filters: [
-            {objectId: ObjectInterface.IdEnergyLoad}
-        ]
     }
 }

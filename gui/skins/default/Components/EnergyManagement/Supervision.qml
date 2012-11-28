@@ -5,6 +5,21 @@ import Components 1.0
 MenuColumn {
     id: element
 
+    ObjectModel {
+        id: listModel
+        filters: [
+            {objectId: ObjectInterface.IdStopAndGo},
+            {objectId: ObjectInterface.IdStopAndGoPlus},
+            {objectId: ObjectInterface.IdStopAndGoBTest}
+        ]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    onChildDestroyed: {
+        paginator.currentIndex = -1
+        privateProps.currentIndex = -1
+    }
+
     Column {
         MenuItem {
             id: loadDiagnostic
@@ -12,7 +27,7 @@ MenuColumn {
             isSelected: privateProps.currentIndex === 1
             hasChild: true
             onClicked: {
-                listView.currentIndex = -1
+                paginator.currentIndex = -1
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 element.loadColumn(component, name)
@@ -25,8 +40,9 @@ MenuColumn {
         }
 
         PaginatorList {
-            id: listView
-            elementsOnPage: 2
+            id: paginator
+            currentIndex: -1
+            onCurrentPageChanged: closeChild()
             delegate: MenuItemDelegate {
                 itemObject: listModel.getObject(index)
                 name: itemObject.name
@@ -40,11 +56,6 @@ MenuColumn {
             }
             model: listModel
         }
-    }
-
-    onChildDestroyed: {
-        listView.currentIndex = -1
-        privateProps.currentIndex = -1
     }
 
     QtObject {
@@ -99,15 +110,5 @@ MenuColumn {
     Component {
         id: stopAndGoBtest
         StopAndGoBtest {}
-    }
-
-    ObjectModel {
-        id: listModel
-        filters: [
-            {objectId: ObjectInterface.IdStopAndGo},
-            {objectId: ObjectInterface.IdStopAndGoPlus},
-            {objectId: ObjectInterface.IdStopAndGoBTest}
-        ]
-
     }
 }
