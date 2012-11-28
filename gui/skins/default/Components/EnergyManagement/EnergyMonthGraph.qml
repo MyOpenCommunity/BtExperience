@@ -6,16 +6,24 @@ import Components.Text 1.0
 import "../../js/datetime.js" as DateTime
 
 Item {
+    id: component
     property bool showCurrency
     property date graphDate
     property variant energyData
 
     signal dayClicked(int year, int month, int day)
 
+    EnergyGraphObject {
+        id: modelGraphValue
+        energyData: component.energyData
+        graphType: EnergyData.CumulativeMonthGraph
+        date: component.graphDate
+        measureType: component.showCurrency ? EnergyData.Currency : EnergyData.Consumption
+    }
+
     QtObject {
         id: privateProps
-        property variant modelGraph: energyData.getGraph(EnergyData.CumulativeMonthGraph, graphDate,
-                                                         showCurrency ? EnergyData.Currency : EnergyData.Consumption)
+        property variant modelGraph: modelGraphValue.graph
         property real maxValue: modelGraph.maxValue * 1.1
         property int columnSpacing: 6
 

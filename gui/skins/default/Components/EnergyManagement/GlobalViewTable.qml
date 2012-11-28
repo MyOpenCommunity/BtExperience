@@ -121,8 +121,15 @@ Column {
                     Row {
                         id: tableRow
                         property variant itemObject: energiesCounters.getObjectWithGoal(model.index + privateProps.currentPage * privateProps.maxRows)
-                        property variant monthItem: itemObject.getValue(EnergyData.CumulativeMonthValue, table.viewDate,
-                                                                        showCurrency ? EnergyData.Currency : EnergyData.Consumption)
+                        property variant monthItem: monthItemValue.item
+
+                        EnergyItemObject {
+                            id: monthItemValue
+                            energyData: tableRow.itemObject
+                            valueType: EnergyData.CumulativeMonthValue
+                            date: table.viewDate
+                            measureType: showCurrency ? EnergyData.Currency : EnergyData.Consumption
+                        }
 
                         function hasRate() {
                             if (monthItem !== undefined && monthItem.rate !== null)

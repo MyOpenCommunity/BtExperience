@@ -109,13 +109,20 @@ Page {
                         return energiesCounters.getMaxValue()
                     }
 
-                    var monthItem = energiesCounters.getObject(index).getValue(EnergyData.CumulativeMonthValue,
-                                                                           new Date(), EnergyData.Consumption)
+                    var monthItem = consumptionObj.item
 
                     if (monthItem.isValid && monthItem.goalEnabled)
                         return Math.max(monthItem.consumptionGoal, monthItem.value)
 
                     return -1
+                }
+
+                EnergyItemObject {
+                    id: consumptionObj
+                    energyData: energiesCounters.getObject(index)
+                    valueType: EnergyData.CumulativeMonthValue
+                    date: new Date()
+                    measureType: EnergyData.Consumption
                 }
             }
             delegateSpacing: 40
@@ -128,13 +135,28 @@ Page {
         id: translations
     }
 
+    Component {
+        id: energyItemObject
+        EnergyItemObject {
+            valueType: EnergyData.CumulativeMonthValue
+            date: new Date()
+            measureType: EnergyData.Consumption
+        }
+    }
+
     ObjectModel {
         id: energiesCounters
+
         function getMaxValue() {
             var max = 0
             for (var i = 0; i < count; i+=1) {
-                var monthItem = getObject(i).getValue(EnergyData.CumulativeMonthValue,
-                                                      new Date(), EnergyData.Consumption)
+                var consumption = energyItemObject.createObject(energiesCounters, {
+                                                                    energyData: getObject(i),
+                                                                    valueType: EnergyData.CumulativeMonthValue,
+                                                                    date: new Date(),
+                                                                    measureType: EnergyData.Consumption,
+                                                                });
+                var monthItem = consumption.item
                 if (monthItem.isValid && monthItem.value > max)
                     max = monthItem.value
 

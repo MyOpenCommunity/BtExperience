@@ -3,15 +3,23 @@ import BtObjects 1.0
 import Components 1.0
 
 Item {
+    id: component
     property bool showCurrency
     property date graphDate
     property variant energyData
 
+    EnergyGraphObject {
+        id: modelGraphValue
+        energyData: component.energyData
+        graphType: EnergyData.CumulativeDayGraph
+        date: component.graphDate
+        measureType: component.showCurrency ? EnergyData.Currency : EnergyData.Consumption
+    }
+
     QtObject {
         id: privateProps
         property int horizontalSpacing: 15
-        property variant modelGraph: energyData.getGraph(EnergyData.CumulativeDayGraph, graphDate,
-                                                         showCurrency ? EnergyData.Currency : EnergyData.Consumption)
+        property variant modelGraph: modelGraphValue.graph
 
         function isRowValid(i) {
             return privateProps.modelGraph.isValid && privateProps.modelGraph.graph[i] !== undefined

@@ -1516,6 +1516,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a StopAndGo instance");
 	qmlRegisterUncreatableType<EnergyData>(uri, 1, 0, "EnergyData",
 		"unable to create an EnergyData instance");
+	qmlRegisterType<EnergyGraphObject>(uri, 1, 0, "EnergyGraphObject");
+	qmlRegisterType<EnergyItemObject>(uri, 1, 0, "EnergyItemObject");
 	qmlRegisterUncreatableType<EnergyFamily>(uri, 1, 0, "EnergyFamily",
 		"unable to create an EnergyFamily instance");
 	qmlRegisterUncreatableType<EnergyRate>(uri, 1, 0, "EnergyRate",

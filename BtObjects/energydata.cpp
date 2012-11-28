@@ -59,13 +59,13 @@ namespace
 {
 	// remove the given value from an hash
 	template<class K, class V>
-	void removeValue(QHash<K, V> &map, const V &value)
+	void removeValue(QHash<K, QWeakPointer<V> > &map, const V *value)
 	{
-		typedef typename QHash<K, V>::iterator iter;
+		typedef typename QHash<K, QWeakPointer<V> >::iterator iter;
 
 		for (iter it = map.begin(), end = map.end(); it != end; ++it)
 		{
-			if (it.value() == value)
+			if (it.value().data() == value || !it.value())
 			{
 				map.erase(it);
 				break;
@@ -160,6 +160,11 @@ namespace
 			return 1000;
 
 		return 1;
+	}
+
+	void doDeleteLater(QObject *obj)
+	{
+		obj->deleteLater();
 	}
 
 	static QStringList goal_names = QStringList()
@@ -287,14 +292,6 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyTy
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 }
 
-EnergyData::~EnergyData()
-{
-	foreach (EnergyItem *value, item_cache.values())
-		delete value;
-	foreach (EnergyGraph *graph, graph_cache.values())
-		delete graph;
-}
-
 QVariantList EnergyData::getGoals() const
 {
 	return goals;
@@ -386,10 +383,10 @@ bool EnergyData::getAdvanced() const
 	return dev->isAdvanced();
 }
 
-QObject *EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
+QSharedPointer<QObject> EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
 {
 	if (measure == Currency && !rate)
-		return 0;
+		return QSharedPointer<QObject>();
 
 	// (re)start trim cache timeout
 	trim_cache.start();
@@ -398,13 +395,13 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
 	QDate actual_date = normalizeDate(type, date);
 	CacheKey key(type, actual_date, measure), value_key(type, actual_date);
 
-	if (EnergyGraph *graph = graph_cache.value(key))
+	if (QWeakPointer<EnergyGraph> graph = graph_cache.value(key))
 	{
 		// re-request for cached timespans that include today's value
 		if (dateContainsToday(type, actual_date))
 			requestUpdate(type, actual_date);
 
-		return graph;
+		return graph.toStrongRef();
 	}
 
 	QVector<double> *cached = value_cache.object(value_key);
@@ -413,10 +410,10 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
 		      !(type == CumulativeLastYearGraph && !checkLastYearGraphDataIsValid(*cached)))
 		values = createGraph(type, *cached, measure == Currency ? rate : 0);
 
-	EnergyGraph *graph = new EnergyGraph(this, type, actual_date, values);
+	QSharedPointer<EnergyGraph> graph(new EnergyGraph(this, type, actual_date, values), doDeleteLater);
 
 	graph_cache[key] = graph;
-	connect(graph, SIGNAL(destroyed(QObject*)), this, SLOT(graphDestroyed(QObject*)));
+	connect(graph.data(), SIGNAL(destroyed(QObject*)), this, SLOT(graphDestroyed(QObject*)));
 
 	// re-request for cached timespans that include today's value
 	if (!cached || dateContainsToday(type, actual_date))
@@ -425,10 +422,10 @@ QObject *EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)
 	return graph;
 }
 
-QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
+QSharedPointer<QObject> EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 {
 	if (measure == Currency && !rate)
-		return 0;
+		return QSharedPointer<QObject>();
 
 	// (re)start trim cache timeout
 	trim_cache.start();
@@ -437,36 +434,35 @@ QObject *EnergyData::getValue(ValueType type, QDate date, MeasureType measure)
 	QDate actual_date = normalizeDate(type, date);
 	CacheKey key(type, actual_date, measure), value_key(type, actual_date);
 
-	if (EnergyItem *item = item_cache.value(key))
+	if (QWeakPointer<EnergyItem> item = item_cache.value(key))
 	{
 		// re-request for cached timespans that include today's value
 		if (dateContainsToday(type, actual_date))
 			requestUpdate(type, actual_date);
 
-		return item;
+		return item.toStrongRef();
 	}
 
 	QVector<double> *cached = value_cache.object(value_key);
 	if (cached)
 		val = (*cached)[0];
 
-
-	EnergyItem *value;
+	QSharedPointer<EnergyItem> value;
 
 	if (type == CurrentValue)
 	{
-		value = new EnergyItemCurrent(this, type, actual_date, val, measure == Currency ? rate : 0);
+		value = QSharedPointer<EnergyItem>(new EnergyItemCurrent(this, type, actual_date, val, measure == Currency ? rate : 0), doDeleteLater);
 
 		connect(this, SIGNAL(thresholdLevelChanged(int)),
-			value, SIGNAL(thresholdLevelChanged(int)));
+			value.data(), SIGNAL(thresholdLevelChanged(int)));
 		connect(this, SIGNAL(thresholdsChanged(QVariantList)),
-			value, SIGNAL(thresholdsChanged(QVariantList)));
+			value.data(), SIGNAL(thresholdsChanged(QVariantList)));
 	}
 	else
-		value = new EnergyItem(this, type, actual_date, val, measure == Currency ? rate : 0);
+		value = QSharedPointer<EnergyItem>(new EnergyItem(this, type, actual_date, val, measure == Currency ? rate : 0), doDeleteLater);
 
 	item_cache[key] = value;
-	connect(value, SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
+	connect(value.data(), SIGNAL(destroyed(QObject*)), this, SLOT(itemDestroyed(QObject*)));
 
 	// re-request for cached timespans that include today's value
 	if (!cached || dateContainsToday(type, actual_date))
@@ -538,9 +534,9 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 	value_cache.insert(CacheKey(type, date), new QVector<double>(1, value / unit_conversion), 1);
 
 	// update values in returned EnergyItem objects
-	if (EnergyItem *item = item_cache.value(CacheKey(type, date, false)))
+	if (EnergyItem *item = item_cache.value(CacheKey(type, date, false)).data())
 		item->setValue(value / unit_conversion);
-	if (EnergyItem *item = item_cache.value(CacheKey(type, date, true)))
+	if (EnergyItem *item = item_cache.value(CacheKey(type, date, true)).data())
 		item->setValue(value / unit_conversion);
 
 	// see comment in valueReceived()
@@ -562,9 +558,9 @@ void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned i
 		(*values)[i] = graph[i + 1] / unit_conversion;
 
 	// update values in returned EnergyGraph objects
-	if (EnergyGraph *graph = graph_cache.value(CacheKey(type, date, false)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(type, date, false)).data())
 		graph->setGraph(createGraph(type, *values));
-	if (EnergyGraph *graph = graph_cache.value(CacheKey(type, date, true)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(type, date, true)).data())
 		graph->setGraph(createGraph(type, *values, rate));
 }
 
@@ -604,14 +600,14 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 	value_cache.insert(CacheKey(CumulativeYearValue, actual_date), new QVector<double>(1, cumulative_value), 1);
 
 	// update year graph objects
-	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeYearGraph, actual_date, false)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeYearGraph, actual_date, false)).data())
 		graph->setGraph(createGraph(CumulativeYearGraph, *values));
-	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeYearGraph, actual_date, true)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeYearGraph, actual_date, true)).data())
 		graph->setGraph(createGraph(CumulativeYearGraph, *values, rate));
 	// update cumulative year value objects
-	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeYearValue, actual_date, false)))
+	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeYearValue, actual_date, false)).data())
 		value->setValue(cumulative_value);
-	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeYearValue, actual_date, true)))
+	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeYearValue, actual_date, true)).data())
 		value->setValue(cumulative_value);
 }
 
@@ -656,14 +652,14 @@ void EnergyData::cacheLastYearGraphData(QDate date, double month_value)
 	value_cache.insert(CacheKey(CumulativeLastYearValue, actual_date), new QVector<double>(1, cumulative_value), 1);
 
 	// update year graph objects
-	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeLastYearGraph, actual_date, false)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeLastYearGraph, actual_date, false)).data())
 		graph->setGraph(createGraph(CumulativeLastYearGraph, *values));
-	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeLastYearGraph, actual_date, true)))
+	if (EnergyGraph *graph = graph_cache.value(CacheKey(CumulativeLastYearGraph, actual_date, true)).data())
 		graph->setGraph(createGraph(CumulativeLastYearGraph, *values, rate));
 	// update cumulative year value objects
-	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeLastYearValue, actual_date, false)))
+	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeLastYearValue, actual_date, false)).data())
 		value->setValue(cumulative_value);
-	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeLastYearValue, actual_date, true)))
+	if (EnergyItem *value = item_cache.value(CacheKey(CumulativeLastYearValue, actual_date, true)).data())
 		value->setValue(cumulative_value);
 }
 
@@ -1100,6 +1096,7 @@ QVariantList EnergyData::getThresholds() const
 
 EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _date, QVariant _value, EnergyRate *_rate)
 {
+	setParent(_data);
 	data = _data;
 	type = _type;
 	date = _date;
@@ -1244,6 +1241,7 @@ QVariant EnergyGraphBar::getValue() const
 
 EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph)
 {
+	setParent(_data);
 	data = _data;
 	type = _type;
 	date = _date;
@@ -1337,3 +1335,164 @@ QVariant EnergyGraph::getMaxValue() const
 	return max_value;
 }
 
+
+EnergyGraphObject::EnergyGraphObject(QObject *parent)
+{
+	graph_type = -1;
+	graph = QSharedPointer<QObject>(0);
+	energy = 0;
+	measure = -1;
+}
+
+void EnergyGraphObject::setGraphType(EnergyData::GraphType type)
+{
+	if (type == graph_type)
+		return;
+	graph_type = type;
+	emit graphTypeChanged();
+	updateGraph();
+}
+
+EnergyData::GraphType EnergyGraphObject::getGraphType() const
+{
+	return static_cast<EnergyData::GraphType>(graph_type);
+}
+
+void EnergyGraphObject::setDate(QDate _date)
+{
+	if (date == _date)
+		return;
+	date = _date;
+	emit dateChanged();
+	updateGraph();
+}
+
+QDate EnergyGraphObject::getDate() const
+{
+	return date;
+}
+
+void EnergyGraphObject::setMeasureType(EnergyData::MeasureType type)
+{
+	if (measure == type)
+		return;
+	measure = type;
+	emit measureTypeChanged();
+	updateGraph();
+}
+
+EnergyData::MeasureType EnergyGraphObject::getMeasureType() const
+{
+	return static_cast<EnergyData::MeasureType>(measure);
+}
+
+void EnergyGraphObject::setEnergyData(EnergyData* data)
+{
+	if (energy == data)
+		return;
+	energy = data;
+	emit energyDataChanged();
+	updateGraph();
+}
+
+EnergyData *EnergyGraphObject::getEnergyData() const
+{
+	return energy;
+}
+
+QObject *EnergyGraphObject::getGraph() const
+{
+	return graph.data();
+}
+
+void EnergyGraphObject::updateGraph()
+{
+	if (!energy || graph_type == -1 || measure == -1 || !date.isValid())
+		return;
+	QSharedPointer<QObject> new_graph = energy->getGraph(getGraphType(), date, getMeasureType());
+	if (new_graph == graph)
+		return;
+	graph = new_graph;
+	emit graphChanged();
+}
+
+
+EnergyItemObject::EnergyItemObject(QObject *parent)
+{
+	value_type = -1;
+	item = QSharedPointer<QObject>(0);
+	energy = 0;
+	measure = -1;
+}
+
+void EnergyItemObject::setValueType(EnergyData::ValueType type)
+{
+	if (type == value_type)
+		return;
+	value_type = type;
+	emit valueTypeChanged();
+	updateItem();
+}
+
+EnergyData::ValueType EnergyItemObject::getValueType() const
+{
+	return static_cast<EnergyData::ValueType>(value_type);
+}
+
+void EnergyItemObject::setDate(QDate _date)
+{
+	if (date == _date)
+		return;
+	date = _date;
+	emit dateChanged();
+	updateItem();
+}
+
+QDate EnergyItemObject::getDate() const
+{
+	return date;
+}
+
+void EnergyItemObject::setMeasureType(EnergyData::MeasureType type)
+{
+	if (measure == type)
+		return;
+	measure = type;
+	emit measureTypeChanged();
+	updateItem();
+}
+
+EnergyData::MeasureType EnergyItemObject::getMeasureType() const
+{
+	return static_cast<EnergyData::MeasureType>(measure);
+}
+
+void EnergyItemObject::setEnergyData(EnergyData* data)
+{
+	if (energy == data)
+		return;
+	energy = data;
+	emit energyDataChanged();
+	updateItem();
+}
+
+EnergyData *EnergyItemObject::getEnergyData() const
+{
+	return energy;
+}
+
+QObject *EnergyItemObject::getItem() const
+{
+	return item.data();
+}
+
+void EnergyItemObject::updateItem()
+{
+	if (!energy || value_type == -1 || measure == -1 || !date.isValid())
+		return;
+	QSharedPointer<QObject> new_item = energy->getValue(getValueType(), date, getMeasureType());
+	if (new_item == item)
+		return;
+	item = new_item;
+	emit itemChanged();
+}

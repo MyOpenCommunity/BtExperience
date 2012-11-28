@@ -23,11 +23,8 @@ Item {
         id: privateProps
 
         property int graphType: energyData.advanced ? EnergyData.CumulativeYearGraph : EnergyData.CumulativeLastYearGraph
-        property variant modelGraph: energyData.getGraph(graphType, graphDate,
-                                                         showCurrency ? EnergyData.Currency : EnergyData.Consumption)
-
-        property variant previousGraph: energyData.getGraph(graphType, _previousYear(graphDate),
-                                                            showCurrency ? EnergyData.Currency : EnergyData.Consumption)
+        property variant modelGraph: modelGraphValue.graph
+        property variant previousGraph: previousGraphValue.graph
 
         function goalIndex(index) {
             if (energyData.advanced)
@@ -93,6 +90,22 @@ Item {
                 darkRect.opacity = 0.3
             }
         }
+    }
+
+    EnergyGraphObject {
+        id: modelGraphValue
+        energyData: itemGraph.energyData
+        graphType: privateProps.graphType
+        date: itemGraph.graphDate
+        measureType: itemGraph.showCurrency ? EnergyData.Currency : EnergyData.Consumption
+    }
+
+    EnergyGraphObject {
+        id: previousGraphValue
+        energyData: itemGraph.energyData
+        graphType: privateProps.graphType
+        date: privateProps._previousYear(itemGraph.graphDate)
+        measureType: itemGraph.showCurrency ? EnergyData.Currency : EnergyData.Consumption
     }
 
     Rectangle {

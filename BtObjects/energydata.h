@@ -20,6 +20,8 @@
 #include <QDate>
 #include <QCache>
 #include <QTimer>
+#include <QSharedPointer>
+#include <QWeakPointer>
 
 class EnergyDevice;
 class EnergyGraph;
@@ -286,7 +288,6 @@ public:
 	};
 
 	EnergyData(EnergyDevice *dev, QString name, EnergyFamily::FamilyType family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate, int rate_decimals);
-	virtual ~EnergyData();
 
 	virtual int getObjectId() const;
 
@@ -301,7 +302,7 @@ public:
 		If this energy device does not have an associated tariff, passing \ref Currency as measure
 		returns NULL.
 	*/
-	Q_INVOKABLE QObject *getGraph(GraphType type, QDate date, MeasureType measure = Consumption);
+	QSharedPointer<QObject> getGraph(GraphType type, QDate date, MeasureType measure = Consumption);
 
 	/*!
 		\brief Returns an \ref EnergyItem holding the value for the specified measure/time
@@ -312,7 +313,7 @@ public:
 		If this energy device does not have an associated tariff, passing \ref Currency as measure
 		returns NULL.
 	*/
-	Q_INVOKABLE QObject *getValue(ValueType type, QDate date, MeasureType measure = Consumption);
+	QSharedPointer<QObject> getValue(ValueType type, QDate date, MeasureType measure = Consumption);
 
 	/*!
 		\brief Checks if the date argument is valid.
@@ -426,8 +427,8 @@ private:
 	EnergyDevice *dev;
 	EnergyRate *rate;
 	// cache for objects returned to QML
-	QHash<CacheKey, EnergyGraph *> graph_cache;
-	QHash<CacheKey, EnergyItem *> item_cache;
+	QHash<CacheKey, QWeakPointer<EnergyGraph> > graph_cache;
+	QHash<CacheKey, QWeakPointer<EnergyItem> > item_cache;
 	// cached values received from the device
 	QCache<CacheKey, QVector<double> > value_cache;
 	// pending requests (all values) and completed requests (for timespans including today)
@@ -753,5 +754,143 @@ private:
 
 Q_DECLARE_METATYPE(EnergyData::ValueType)
 Q_DECLARE_METATYPE(EnergyData::GraphType)
+
+
+/*!
+	\brief Holds a reference to an EnergyGraph object
+
+	Example usage:
+
+	\verbatim
+	EnergyGraphObject {
+		id: modelGraphValue
+		energyData: component.energyData
+		graphType: EnergyData.CumulativeDayGraph
+		date: component.graphDate
+		measureType: component.showCurrency ? EnergyData.Currency : EnergyData.Consumption
+	}
+	\endverbatim
+
+	And in the code use \c modelGraphValue.graph to get the graph reference.
+
+	This class in necessary because of QTBUG-15997 (properties/bindings do not count as
+	object references for JS-owned  objects)
+*/
+class EnergyGraphObject : public QObject
+{
+	Q_OBJECT
+
+	Q_PROPERTY(EnergyData::GraphType graphType READ getGraphType WRITE setGraphType NOTIFY graphTypeChanged)
+
+	Q_PROPERTY(QDate date READ getDate WRITE setDate NOTIFY dateChanged)
+
+	Q_PROPERTY(EnergyData::MeasureType measureType READ getMeasureType WRITE setMeasureType NOTIFY measureTypeChanged)
+
+	Q_PROPERTY(QObject *graph READ getGraph NOTIFY graphChanged)
+
+	Q_PROPERTY(EnergyData *energyData READ getEnergyData WRITE setEnergyData NOTIFY energyDataChanged)
+
+public:
+	EnergyGraphObject(QObject *parent = 0);
+
+	void setGraphType(EnergyData::GraphType type);
+	EnergyData::GraphType getGraphType() const;
+
+	void setDate(QDate date);
+	QDate getDate() const;
+
+	void setMeasureType(EnergyData::MeasureType type);
+	EnergyData::MeasureType getMeasureType() const;
+
+	void setEnergyData(EnergyData* data);
+	EnergyData *getEnergyData() const;
+
+	QObject *getGraph() const;
+
+signals:
+	void graphTypeChanged();
+	void dateChanged();
+	void measureTypeChanged();
+	void graphChanged();
+	void energyDataChanged();
+
+private:
+	void updateGraph();
+
+	EnergyData *energy;
+	int graph_type;
+	int measure;
+	QDate date;
+	QSharedPointer<QObject> graph;
+};
+
+
+/*!
+	\brief Holds a reference to an EnergyItem object
+
+	Example usage:
+
+	\verbatim
+	EnergyItemObject {
+		id: consumptionValue
+		energyData: delegate.itemObject
+		valueType: EnergyData.CumulativeMonthValue
+		date: new Date()
+		measureType: EnergyData.Consumption
+	}
+	\endverbatim
+
+	And in the code use \c consumptionValue.item to get the value reference.
+
+	This class in necessary because of QTBUG-15997 (properties/bindings do not count as
+	object references for JS-owned  objects)
+*/
+class EnergyItemObject : public QObject
+{
+	Q_OBJECT
+
+	Q_PROPERTY(EnergyData::ValueType valueType READ getValueType WRITE setValueType NOTIFY valueTypeChanged)
+
+	Q_PROPERTY(QDate date READ getDate WRITE setDate NOTIFY dateChanged)
+
+	Q_PROPERTY(EnergyData::MeasureType measureType READ getMeasureType WRITE setMeasureType NOTIFY measureTypeChanged)
+
+	Q_PROPERTY(QObject *item READ getItem NOTIFY itemChanged)
+
+	Q_PROPERTY(EnergyData *energyData READ getEnergyData WRITE setEnergyData NOTIFY energyDataChanged)
+
+public:
+	EnergyItemObject(QObject *parent = 0);
+
+	void setValueType(EnergyData::ValueType type);
+	EnergyData::ValueType getValueType() const;
+
+	void setDate(QDate date);
+	QDate getDate() const;
+
+	void setMeasureType(EnergyData::MeasureType type);
+	EnergyData::MeasureType getMeasureType() const;
+
+	void setEnergyData(EnergyData* data);
+	EnergyData *getEnergyData() const;
+
+	QObject *getItem() const;
+
+signals:
+	void valueTypeChanged();
+	void dateChanged();
+	void measureTypeChanged();
+	void itemChanged();
+	void energyDataChanged();
+
+private:
+	void updateItem();
+
+	EnergyData *energy;
+	int value_type;
+	int measure;
+	QDate date;
+	QSharedPointer<QObject> item;
+};
 
 #endif

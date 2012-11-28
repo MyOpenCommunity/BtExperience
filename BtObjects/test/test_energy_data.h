@@ -109,10 +109,13 @@ private slots:
 private:
 	EnergyItem *getValue(EnergyData::ValueType type, QDate date, EnergyData::MeasureType measure = EnergyData::Consumption);
 	EnergyGraph *getGraph(EnergyData::GraphType type, QDate date, EnergyData::MeasureType measure = EnergyData::Consumption);
+	void deleteObject(QObject *v);
 	EnergyGraphBar *getBar(EnergyGraph *graph, int index);
 	QMap<int, unsigned int> graphValues(int size, int start);
 	DeviceValues makeDeviceValues(int dimension, QDate date, qint64 value);
 	DeviceValues makeDeviceValues(int dimension, QDate date, QMap<int, unsigned int> values);
+
+	QList<QSharedPointer<QObject> > temporary_objects;
 
 	EnergyData *obj;
 	EnergyDevice *dev;

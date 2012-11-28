@@ -35,6 +35,9 @@ void TestEnergyData::init()
 
 void TestEnergyData::cleanup()
 {
+	temporary_objects.clear();
+	QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
+
 	delete obj->dev;
 	delete obj;
 	delete dev;
@@ -44,12 +47,31 @@ void TestEnergyData::cleanup()
 
 EnergyItem *TestEnergyData::getValue(EnergyData::ValueType type, QDate date, EnergyData::MeasureType measure)
 {
-	return qobject_cast<EnergyItem *>(obj->getValue(type, date, measure));
+	QSharedPointer<QObject> v = obj->getValue(type, date, measure);
+
+	temporary_objects.append(v);
+
+	return qobject_cast<EnergyItem *>(v.data());
 }
 
 EnergyGraph *TestEnergyData::getGraph(EnergyData::GraphType type, QDate date, EnergyData::MeasureType measure)
 {
-	return qobject_cast<EnergyGraph *>(obj->getGraph(type, date, measure));
+	QSharedPointer<QObject> v = obj->getGraph(type, date, measure);
+
+	temporary_objects.append(v);
+
+	return qobject_cast<EnergyGraph *>(v.data());
+}
+
+void TestEnergyData::deleteObject(QObject *v)
+{
+	for (int i = temporary_objects.count() - 1; i >= 0; --i)
+	{
+		if (temporary_objects[i].data() == v)
+			temporary_objects.removeAt(i);
+	}
+	// force deleteLater() to happen now
+	QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
 }
 
 EnergyGraphBar *TestEnergyData::getBar(EnergyGraph *graph, int index)
@@ -121,7 +143,7 @@ void TestEnergyData::testItemGC()
 	QVERIFY(o1 != o2);
 	QCOMPARE(obj->item_cache.count(), 2);
 
-	delete o1;
+	deleteObject(o1);
 	QCOMPARE(obj->item_cache.count(), 1);
 
 	EnergyItem *o3 = getValue(EnergyData::CumulativeMonthValue, QDate(2012, 05, 17));
@@ -140,7 +162,7 @@ void TestEnergyData::testGraphGC()
 	QVERIFY(o1 != o2);
 	QCOMPARE(obj->graph_cache.count(), 2);
 
-	delete o1;
+	deleteObject(o1);
 	QCOMPARE(obj->graph_cache.count(), 1);
 
 	EnergyGraph *o3 = getGraph(EnergyData::CumulativeMonthGraph, QDate(2012, 05, 17));

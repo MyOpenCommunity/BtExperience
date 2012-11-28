@@ -22,15 +22,36 @@ Column {
         id: energyFunctions
     }
 
+    EnergyItemObject {
+        id: consumptionValue
+        energyData: delegate.itemObject
+        valueType: EnergyData.CumulativeMonthValue
+        date: new Date()
+        measureType: EnergyData.Consumption
+    }
+
+    EnergyItemObject {
+        id: currentConsumptionValue
+        energyData: delegate.itemObject
+        valueType: EnergyData.CurrentValue
+        date: new Date()
+        measureType: delegate.measureType
+    }
+
+    EnergyItemObject {
+        id: monthConsumptionValue
+        energyData: delegate.itemObject
+        valueType: EnergyData.CumulativeMonthValue
+        date: new Date()
+        measureType: delegate.measureType
+    }
+
     QtObject {
         id: privateProps
 
-        function formatValue(energyType) {
-            return energyFunctions.formatValue(itemObject.getValue(energyType, new Date(), measureType))
-        }
-
-        property variant consumptionObj: itemObject.getValue(EnergyData.CumulativeMonthValue,
-                                                             new Date(), EnergyData.Consumption)
+        property variant consumptionObj: consumptionValue.item
+        property variant currentConsumptionObj: currentConsumptionValue.item
+        property variant monthConsumptionObj: monthConsumptionValue.item
 
         function hasGoal() {
             return consumptionObj.goalEnabled && consumptionObj.consumptionGoal > 0.0
@@ -110,7 +131,7 @@ Column {
                     anchors.centerIn: parent
                     font.pixelSize: 18
                     color: "grey"
-                    text: privateProps.formatValue(EnergyData.CumulativeMonthValue)
+                    text: energyFunctions.formatValue(privateProps.monthConsumptionObj)
                 }
             }
         }
@@ -122,7 +143,7 @@ Column {
             spacing: delegate.spacing
             UbuntuLightText {
                 font.pixelSize: 18
-                text: privateProps.formatValue(EnergyData.CumulativeMonthValue)
+                text: energyFunctions.formatValue(privateProps.monthConsumptionObj)
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: "white"
             }
@@ -215,7 +236,7 @@ Column {
                 anchors.centerIn: parent
                 font.pixelSize: 18
                 color: "grey"
-                text: privateProps.formatValue(EnergyData.CurrentValue)
+                text: energyFunctions.formatValue(privateProps.currentConsumptionObj)
             }
         }
     }

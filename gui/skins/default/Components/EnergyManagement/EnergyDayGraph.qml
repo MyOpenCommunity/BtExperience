@@ -4,14 +4,22 @@ import Components 1.0
 import Components.Text 1.0
 
 Item {
+    id: component
     property bool showCurrency
     property date graphDate
     property variant energyData
 
+    EnergyGraphObject {
+        id: modelGraphValue
+        energyData: component.energyData
+        graphType: EnergyData.CumulativeDayGraph
+        date: component.graphDate
+        measureType: component.showCurrency ? EnergyData.Currency : EnergyData.Consumption
+    }
+
     QtObject {
         id: privateProps
-        property variant modelGraph: energyData.getGraph(EnergyData.CumulativeDayGraph, graphDate,
-                                                         showCurrency ? EnergyData.Currency : EnergyData.Consumption)
+        property variant modelGraph: modelGraphValue.graph
         property real maxValue: modelGraph.maxValue * 1.1
         property int columnSpacing: 5
     }

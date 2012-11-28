@@ -381,10 +381,16 @@ Page {
                     topMargin: parent.height / 100 * 24
                     horizontalCenter: parent.horizontalCenter
                 }
+                EnergyItemObject {
+                    id: currentValue
+                    energyData: page.energyData
+                    valueType: EnergyData.CurrentValue
+                    date: new Date()
+                    measureType: privateProps.showCurrency ? EnergyData.Currency :
+                                                             EnergyData.Consumption
+                }
                 UbuntuLightText {
-                    property variant currentItem: energyData.getValue(EnergyData.CurrentValue, new Date(), // the Date does not matter
-                                                                      privateProps.showCurrency ? EnergyData.Currency :
-                                                                                                  EnergyData.Consumption)
+                    property variant currentItem: currentValue.item
 
                     anchors.centerIn: parent
                     text: energyFunctions.formatValue(currentItem)
@@ -413,9 +419,16 @@ Page {
                 property int valueType: EnergyData.CumulativeMonthValue
                 property date referredDate: dateSelector.selectedDate
 
-                property variant consumptionItem: energyData.getValue(valueType, referredDate,
-                                                                      privateProps.showCurrency ? EnergyData.Currency :
-                                                                                                  EnergyData.Consumption)
+                EnergyItemObject {
+                    id: consumptionValue
+                    energyData: page.energyData
+                    valueType: cumulativeConsumptionItem.valueType
+                    date: cumulativeConsumptionItem.referredDate
+                    measureType: privateProps.showCurrency ? EnergyData.Currency :
+                                                             EnergyData.Consumption
+                }
+
+                property variant consumptionItem: consumptionValue.item
 
                 source: "images/energy/livello_cumulative_consumption.svg"
                 anchors {
@@ -443,7 +456,7 @@ Page {
 
                 UbuntuLightText {
                     anchors.centerIn: parent
-                    text: energyFunctions.formatValue(parent.consumptionItem)
+                    text: energyFunctions.formatValue(cumulativeConsumptionItem.consumptionItem)
                     color: "grey"
                     font.pixelSize: 18
                 }
