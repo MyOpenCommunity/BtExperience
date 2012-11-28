@@ -139,6 +139,7 @@ Item {
                 privateProps.vctIncomingCall()
         }
         onCallAnswered: {
+            global.screenState.enableState(ScreenState.ForcedNormal)
             if (vctConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpVideoCall)
             else
@@ -172,6 +173,7 @@ Item {
                 privateProps.intercomIncomingCall()
         }
         onCallAnswered: {
+            global.screenState.enableState(ScreenState.ForcedNormal)
             if (intercomConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpIntercomCall)
             else
