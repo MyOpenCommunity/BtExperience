@@ -32,7 +32,7 @@
 		<ist uii="10007" descr="Radio" where="1" />
 	</obj>
 	<obj cid="11033" id="11033" descr="Source" where="1">
-		<ist uii="10009" descr="Aux" where="2" />
+		<ist uii="10009" descr="Aux" where="3" />
 	</obj>
 	<obj cid="11034" id="11034" descr="Touch" where="1">
 		<ist uii="10011" descr="Touch" where="4" />
