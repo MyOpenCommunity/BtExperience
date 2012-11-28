@@ -162,8 +162,17 @@ Page {
             shadowImage: "images/common/ombra_btn_player_comando.svg"
             defaultImage: "images/common/ico_previous_track.svg"
             pressedImage: "images/common/ico_previous_track_P.svg"
+            repetitionOnHold: player.isVideo ? false : true
+            largeInterval: 500
+            smallInterval: 350
 
-            onClicked: player.mediaPlayer.prevTrack()
+            onClicked: {
+                if (repetitionTriggered && !player.isVideo) {
+                    player.mediaPlayer.seek(-10)
+                }
+                else
+                    player.mediaPlayer.prevTrack()
+            }
         }
 
         Item {
@@ -232,8 +241,18 @@ Page {
             shadowImage: "images/common/ombra_btn_player_comando.svg"
             defaultImage: "images/common/ico_next_track.svg"
             pressedImage: "images/common/ico_next_track_P.svg"
+            repetitionOnHold: player.isVideo ? false : true
+            largeInterval: 500
+            smallInterval: 350
 
-            onClicked: player.mediaPlayer.nextTrack()
+            onClicked: {
+                // seek enabled only for audio
+                if (repetitionTriggered && !player.isVideo) {
+                    player.mediaPlayer.seek(10)
+                }
+                else
+                    player.mediaPlayer.nextTrack()
+            }
         }
     }
 
