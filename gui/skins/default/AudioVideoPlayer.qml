@@ -143,14 +143,9 @@ Page {
         }
     }
 
-    ButtonImageThreeStates {
-        id: prevButton
-
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
-        defaultImage: "images/common/ico_previous_track.svg"
-        pressedImage: "images/common/ico_previous_track_P.svg"
+    Row {
+        id: playerControl
+        spacing: frameBg.width / 100 * 0.58
         anchors {
             top: imageSlider.bottom
             topMargin: frameBg.height / 100 * 1.81
@@ -158,77 +153,72 @@ Page {
             leftMargin: frameBg.width / 100 * 2.48
         }
 
-        onClicked: player.mediaPlayer.prevTrack()
-        status: 0
-    }
 
-    Item {
-        // I used an Item to define some specific states for the playButton
-        // please note that playButton is a ButtonImageThreeStates so it defines
-        // its internal states, it is neither possible nor desirable to redefine
-        // these internal states
-        id: playButtonItem
+        ButtonImageThreeStates {
+            id: prevButton
 
-        width: playButton.width
-        height: playButton.height
+            defaultImageBg: "images/common/btn_player_comando.svg"
+            pressedImageBg: "images/common/btn_player_comando_P.svg"
+            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImage: "images/common/ico_previous_track.svg"
+            pressedImage: "images/common/ico_previous_track_P.svg"
 
-        anchors {
-            top: prevButton.top
-            left: prevButton.right
-            leftMargin: frameBg.width / 100 * 0.58
+            onClicked: player.mediaPlayer.prevTrack()
+        }
+
+        Item {
+            // I used an Item to define some specific states for the playButton
+            // please note that playButton is a ButtonImageThreeStates so it defines
+            // its internal states, it is neither possible nor desirable to redefine
+            // these internal states
+            id: playButtonItem
+
+            width: playButton.width
+            height: playButton.height
+
+            ButtonImageThreeStates {
+                id: playButton
+
+                defaultImageBg: "images/common/btn_play_pause.svg"
+                pressedImageBg: "images/common/btn_play_pause_P.svg"
+                shadowImage: "images/common/ombra_btn_play_pause.svg"
+                defaultImage: "images/common/ico_play.svg"
+                pressedImage: "images/common/ico_play_P.svg"
+                anchors.centerIn: parent
+
+                onClicked: {
+                    if (player.mediaPlayer.playing)
+                        player.mediaPlayer.pause()
+                    else
+                        player.mediaPlayer.resume()
+                }
+            }
+
+            state: player.mediaPlayer.playing ? "play" : ""
+
+            states: [
+                State {
+                    name: "play"
+                    PropertyChanges {
+                        target: playButton
+                        defaultImage: "images/common/ico_pause.svg"
+                        pressedImage: "images/common/ico_pause_P.svg"
+                    }
+                }
+            ]
         }
 
         ButtonImageThreeStates {
-            id: playButton
+            id: nextButton
 
-            defaultImageBg: "images/common/btn_play_pause.svg"
-            pressedImageBg: "images/common/btn_play_pause_P.svg"
-            shadowImage: "images/common/ombra_btn_play_pause.svg"
-            defaultImage: "images/common/ico_play.svg"
-            pressedImage: "images/common/ico_play_P.svg"
-            anchors.centerIn: parent
+            defaultImageBg: "images/common/btn_player_comando.svg"
+            pressedImageBg: "images/common/btn_player_comando_P.svg"
+            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImage: "images/common/ico_next_track.svg"
+            pressedImage: "images/common/ico_next_track_P.svg"
 
-            onClicked: {
-                if (player.mediaPlayer.playing)
-                    player.mediaPlayer.pause()
-                else
-                    player.mediaPlayer.resume()
-            }
-
-            status: 0
+            onClicked: player.mediaPlayer.nextTrack()
         }
-
-        state: player.mediaPlayer.playing ? "play" : ""
-
-        states: [
-            State {
-                name: "play"
-                PropertyChanges {
-                    target: playButton
-                    defaultImage: "images/common/ico_pause.svg"
-                    pressedImage: "images/common/ico_pause_P.svg"
-                }
-            }
-        ]
-    }
-
-    ButtonImageThreeStates {
-        id: nextButton
-
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
-        defaultImage: "images/common/ico_next_track.svg"
-        pressedImage: "images/common/ico_next_track_P.svg"
-        anchors {
-            top: prevButton.top
-            left: playButtonItem.right
-            leftMargin: frameBg.width / 100 * 0.58
-        }
-
-        onClicked: player.mediaPlayer.nextTrack()
-
-        status: 0
     }
 
     ButtonImageThreeStates {
@@ -240,13 +230,12 @@ Page {
         defaultImage: "images/common/ico_browse.svg"
         pressedImage: "images/common/ico_browse_P.svg"
         anchors {
-            top: prevButton.top
-            left: nextButton.right
+            top: playerControl.top
+            left: playerControl.right
             leftMargin: frameBg.width / 100 * 1.90
         }
 
         onClicked: Stack.backToPage("Devices.qml")
-        status: 0
     }
 
     Item {
@@ -260,7 +249,7 @@ Page {
         height: buttonMute.height
 
         anchors {
-            top: prevButton.top
+            top: playerControl.top
             right: buttonMinus.left
             rightMargin: frameBg.width / 100 * 1.90
         }
@@ -302,10 +291,9 @@ Page {
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
         onClicked: player.mediaPlayer.decrementVolume()
-        status: 0
         repetitionOnHold: true
         anchors {
-            top: prevButton.top
+            top: playerControl.top
             right: buttonPlus.left
             rightMargin: frameBg.width / 100 * 0.58
         }
@@ -319,10 +307,9 @@ Page {
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
         onClicked: player.mediaPlayer.incrementVolume()
-        status: 0
         repetitionOnHold: true
         anchors {
-            top: prevButton.top
+            top: playerControl.top
             right: player.isVideo ? fullScreenToggle.left : bottomBarBg.right
             rightMargin: player.isVideo ? frameBg.width / 100 * 1.90 : frameBg.width / 100 * 2.48
         }
@@ -340,7 +327,7 @@ Page {
         selectedImage: "images/common/ico_chiudi_fullscreen.svg"
         visible: player.isVideo
         anchors {
-            top: prevButton.top
+            top: playerControl.top
             right: bottomBarBg.right
             rightMargin: frameBg.width / 100 * 2.48
         }
@@ -351,7 +338,6 @@ Page {
             else
                 player.state = ""
         }
-        status: 0
     }
 
     SvgImage {
