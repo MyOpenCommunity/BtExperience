@@ -113,7 +113,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
 
-	contrast = 50;
 	timezone = 0;
 	skin = Clear;
 	beep = false;
@@ -217,22 +216,6 @@ QString GuiSettings::getSkinString() const
 	default:
 		return QString("clear");
 	}
-}
-
-int GuiSettings::getContrast() const
-{
-	return contrast;
-}
-
-void GuiSettings::setContrast(int c)
-{
-	if (contrast == c)
-		return;
-
-	qDebug() << QString("GuiSettings::setContrast(%1)").arg(c);
-	// TODO save value somewhere
-	contrast = c;
-	emit contrastChanged();
 }
 
 QString GuiSettings::getLanguage() const

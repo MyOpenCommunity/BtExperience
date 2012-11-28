@@ -29,19 +29,5 @@ MenuColumn {
                     global.screenState.normalBrightness -= 5
             }
         }
-
-        ControlSlider {
-            id: contrast
-            percentage: global.guiSettings.contrast
-            description: qsTr("contrast")
-            onPlusClicked: {
-                global.guiSettings.contrast += 5
-                if (percentage > 100) global.guiSettings.contrast = 100
-            }
-            onMinusClicked: {
-                global.guiSettings.contrast -= 5
-                if (percentage < 0) global.guiSettings.contrast = 0
-            }
-        }
     }
 }

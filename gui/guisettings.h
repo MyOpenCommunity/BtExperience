@@ -11,11 +11,6 @@ class GuiSettings : public QObject
 	Q_OBJECT
 
 	/*!
-		\brief Sets or gets the contrast level of the display.
-	*/
-	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
-
-	/*!
 		\brief Sets or gets the language for the interface.
 	*/
 	Q_PROPERTY(QString language READ getLanguage WRITE setLanguage NOTIFY languageChanged)
@@ -107,9 +102,6 @@ public:
 		Dark
 	};
 
-	// contrast must be [1, 100]
-	int getContrast() const;
-	void setContrast(int c);
 	QString getLanguage() const;
 	void setLanguage(QString l);
 	int getTimezone() const;
@@ -146,7 +138,6 @@ public:
 	QString getSkinString() const;
 
 signals:
-	void contrastChanged();
 	void languageChanged();
 	void timezoneChanged();
 	void skinChanged();
@@ -170,7 +161,6 @@ private:
 	void setConfValue(QString path, QString value);
 
 	ConfigFile *configurations;
-	int contrast;
 	QString language;
 	int timezone;
 	Skin skin;
