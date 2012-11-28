@@ -335,6 +335,11 @@ bool AudioVideoPlayer::isStopped() const
 	return media_player->getPlayerState() == MultiMediaPlayer::Stopped;
 }
 
+void AudioVideoPlayer::seek(int seconds)
+{
+	media_player->seek(seconds);
+}
+
 QRect AudioVideoPlayer::getVideoRect() const
 {
 	return media_player->getVideoRect();

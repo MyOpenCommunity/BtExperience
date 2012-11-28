@@ -165,6 +165,7 @@ public:
 	void setVideoRect(QRect newValue);
 	virtual bool isPlaying() const;
 	bool isStopped() const;
+	Q_INVOKABLE void seek(int seconds);
 
 public slots:
 	void prevTrack();
