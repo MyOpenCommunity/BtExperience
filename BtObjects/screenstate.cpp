@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QCoreApplication>
 #include <QMetaEnum>
+#include <QFile>
 
 #include <QDebug>
 
