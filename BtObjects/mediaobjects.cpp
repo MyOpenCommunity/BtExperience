@@ -250,6 +250,8 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 									       (*bt_global::config)[AMPLIFIER_ADDRESS]);
 		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
 	}
+	SourceDevice::setIsMultichannel(is_multichannel);
+	AmplifierDevice::setIsMultichannel(is_multichannel);
 
 	VirtualSourceDevice *device = 0;
 
