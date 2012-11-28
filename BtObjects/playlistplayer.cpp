@@ -58,7 +58,7 @@ void PlayListPlayer::generatePlaylistWebRadio(QList<QVariant> urls, int index, i
 	generate(urls, index, total_files);
 }
 
-bool PlayListPlayer::isPlaying()
+bool PlayListPlayer::isPlaying() const
 {
 	// if actual_list is neither pointing to local_list nor to upnp_list we
 	// assume we are not playing anything and one generatePlaylist* method
@@ -325,9 +325,14 @@ void AudioVideoPlayer::setMute(bool newValue)
 	media_player->setMute(newValue);
 }
 
-bool AudioVideoPlayer::getPlaying() const
+bool AudioVideoPlayer::isPlaying() const
 {
 	return media_player->getPlayerState() == MultiMediaPlayer::Playing;
+}
+
+bool AudioVideoPlayer::isStopped() const
+{
+	return media_player->getPlayerState() == MultiMediaPlayer::Stopped;
 }
 
 QRect AudioVideoPlayer::getVideoRect() const
@@ -361,6 +366,7 @@ void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerStat
 	}
 	user_track_change_request = false;
 	emit playingChanged();
+	emit stoppedChanged();
 }
 
 void AudioVideoPlayer::play()

@@ -33,7 +33,7 @@ public:
 	// methods needed to restore state when coming back to player page
 	Q_INVOKABLE bool isUpnp() const { return ((actual_list == upnp_list) ? true : false); }
 
-	bool isPlaying();
+	virtual bool isPlaying() const;
 
 public slots:
 	virtual void terminate() { }
@@ -140,14 +140,14 @@ class AudioVideoPlayer : public PlayListPlayer
 	Q_PROPERTY(bool mute READ getMute WRITE setMute NOTIFY muteChanged)
 
 	/*!
-		\brief Is player playing anything?
-	*/
-	Q_PROPERTY(bool playing READ getPlaying NOTIFY playingChanged)
-
-	/*!
 		\brief Set and get bounding box for video playback
 	*/
 	Q_PROPERTY(QRect videoRect READ getVideoRect WRITE setVideoRect NOTIFY videoRectChanged)
+
+	/*!
+		\brief True if the player is stopped, false if playing or paused.
+	*/
+	Q_PROPERTY(bool stopped READ isStopped NOTIFY stoppedChanged)
 
 public:
 	explicit AudioVideoPlayer(QObject *parent = 0);
@@ -161,9 +161,10 @@ public:
 	double getPercentage() const { return percentage; }
 	bool getMute() const;
 	void setMute(bool newValue);
-	bool getPlaying() const;
 	QRect getVideoRect() const;
 	void setVideoRect(QRect newValue);
+	virtual bool isPlaying() const;
+	bool isStopped() const;
 
 public slots:
 	void prevTrack();
@@ -181,8 +182,8 @@ signals:
 	void volumeChanged();
 	void percentageChanged();
 	void muteChanged();
-	void playingChanged();
 	void videoRectChanged();
+	void stoppedChanged();
 
 private slots:
 	void handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState new_state);
