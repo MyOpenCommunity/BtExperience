@@ -94,6 +94,8 @@ namespace
 	}
 
 	QString scs_source_on     = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
+	QString vde_audio_on      = "/usr/local/bin/Hw-D-Audio-VDE_Conversation.sh";
+	QString vde_audio_off     = "/usr/local/bin/Hw-D-Audio-VDE_Conversation_off.sh";
 }
 
 #define VOLUME_MIN 0
@@ -281,6 +283,10 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	switch (old_state)
 	{
+	case ScsVideoCall:
+	case ScsIntercomCall:
+		smartExecute(vde_audio_off);
+		break;
 	case Mute:
 		setZlMute(false);
 		break;
@@ -298,9 +304,11 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	{
 	case ScsVideoCall:
 		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8A10");
+		smartExecute(vde_audio_on);
 		break;
 	case ScsIntercomCall:
 		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8710");
+		smartExecute(vde_audio_on);
 		break;
 	case LocalPlaybackMute:
 		setHardwareVolume(LocalPlaybackVolume, 0);
