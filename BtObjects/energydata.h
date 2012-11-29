@@ -20,6 +20,7 @@
 #include <QDate>
 #include <QCache>
 #include <QTimer>
+#include <QVector>
 #include <QSharedPointer>
 #include <QWeakPointer>
 
