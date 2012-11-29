@@ -12,8 +12,8 @@ MenuColumn {
     }
 
     Component {
-        id: backgroundImage
-        Item {}
+        id: quicklinks
+        SettingsHomeQuicklinks {}
     }
 
     function alertOkClicked() {
@@ -72,14 +72,15 @@ MenuColumn {
             }
         }
 
-//        MenuItem {
-//            name: qsTr("Add Quicklink")
-//            isSelected: privateProps.currentIndex === 3
-//            onClicked: {
-//                if (privateProps.currentIndex !== 3)
-//                    privateProps.currentIndex = 3
-//                Stack.pushPage("AddQuicklink.qml", {"homeCustomization": true})
-//            }
-//        }
+        MenuItem {
+            name: qsTr("Quicklinks")
+            isSelected: privateProps.currentIndex === 3
+            hasChild: true
+            onClicked: {
+                if (privateProps.currentIndex !== 3)
+                    privateProps.currentIndex = 3
+                column.loadColumn(quicklinks, qsTr("Quicklinks"))
+            }
+        }
      }
 }
