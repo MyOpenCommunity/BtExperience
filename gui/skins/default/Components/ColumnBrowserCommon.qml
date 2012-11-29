@@ -46,7 +46,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: photoButton
 
-        visible: !column.imageOnly
+        visible: !column.imageOnly && !column.upnp
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -71,7 +71,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: videoButton
 
-        visible: !column.imageOnly
+        visible: !column.imageOnly && !column.upnp
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -95,7 +95,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: audioButton
 
-        visible: !column.imageOnly
+        visible: !column.imageOnly && !column.upnp
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -119,7 +119,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: fileButton
 
-        visible: !column.imageOnly
+        visible: !column.imageOnly && !column.upnp
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
