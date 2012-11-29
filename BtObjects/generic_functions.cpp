@@ -129,6 +129,28 @@ bool smartExecute(const QString &program, QStringList args)
 #endif
 }
 
+bool smartExecute_synch(const QString &program, QStringList args)
+{
+	QProcess process;
+	bool ret;
+#if DEBUG
+	QTime t;
+	t.start();
+	ret = process.execute(program, args);
+	qDebug() << "Executed:" << program << args.join(" ") << "in:" << t.elapsed() << "ms";
+
+	if (!process.waitForFinished())
+		return false;
+#else
+	ret = process.execute(program, args);
+	qDebug() << "Executing:" << program << args.join(" ");
+
+	if (!process.waitForFinished())
+		return false;
+#endif
+	return ret;
+}
+
 bool silentExecute(const QString &program, QStringList args)
 {
 	args << "> /dev/null" << "2>&1";
