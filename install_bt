@@ -31,6 +31,12 @@ ln -s ../../lib/libcommon.so.0.0 libcommon.so.0
 ln -s BtObjects/libbtobjects.so libbtobjects.so
 cd -
 
+# symbolic link for images
+cd ${BTEXPERIENCE_TARGET}/gui/skins/default
+rm -rf images
+ln -s ../../../../../cfg/extra/1/images images
+cd -
+
 #create launcher file
 echo "#!/bin/sh
 
