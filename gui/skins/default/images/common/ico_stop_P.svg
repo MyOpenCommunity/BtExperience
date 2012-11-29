@@ -11,17 +11,13 @@
 	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
 ]>
 <svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="13px"
-	 viewBox="0 0 20 13" enable-background="new 0 0 20 13" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13px" height="13px"
+	 viewBox="0 0 13 13" enable-background="new 0 0 13 13" xml:space="preserve">
 <metadata>
 	<sfw  xmlns="&ns_sfw;">
 		<slices></slices>
-		<sliceSourceBounds  width="20" height="13" y="294" x="501.5" bottomLeftOrigin="true"></sliceSourceBounds>
+		<sliceSourceBounds  width="13" height="13" y="294" x="505" bottomLeftOrigin="true"></sliceSourceBounds>
 	</sfw>
 </metadata>
-<path fill="#FFFFFF" d="M8.164,8.009L2.026,12.58C0.912,13.411,0,12.969,0,11.6V1.401c0-1.369,0.912-1.813,2.026-0.982L8.164,4.99
-	C9.278,5.821,9.278,7.18,8.164,8.009z"/>
-<path fill="#FFFFFF" d="M17.163,8.009l-6.138,4.571C9.912,13.411,9,12.969,9,11.6V1.401c0-1.369,0.912-1.813,2.025-0.982
-	l6.138,4.571C18.277,5.821,18.277,7.18,17.163,8.009z"/>
-<rect x="18" fill="#FFFFFF" width="2" height="13"/>
+<rect fill="#FFFFFF" width="13" height="13"/>
 </svg>

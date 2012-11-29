@@ -58,7 +58,7 @@ void PlayListPlayer::generatePlaylistWebRadio(QList<QVariant> urls, int index, i
 	generate(urls, index, total_files);
 }
 
-bool PlayListPlayer::isPlaying()
+bool PlayListPlayer::isPlaying() const
 {
 	// if actual_list is neither pointing to local_list nor to upnp_list we
 	// assume we are not playing anything and one generatePlaylist* method
@@ -265,6 +265,7 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	connect(media_player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 			SLOT(handleMediaPlayerStateChange(MultiMediaPlayer::PlayerState)));
 	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SLOT(trackInfoChanged()));
+	connect(media_player, SIGNAL(trackInfoChanged(QVariantMap)), SIGNAL(trackInformationChanged()));
 	connect(media_player, SIGNAL(currentSourceChanged(QString)), SIGNAL(trackNameChanged()));
 	connect(media_player, SIGNAL(volumeChanged(int)), SIGNAL(volumeChanged()));
 	connect(media_player, SIGNAL(muteChanged(bool)), SIGNAL(muteChanged()));
@@ -325,9 +326,24 @@ void AudioVideoPlayer::setMute(bool newValue)
 	media_player->setMute(newValue);
 }
 
-bool AudioVideoPlayer::getPlaying() const
+bool AudioVideoPlayer::isPlaying() const
 {
 	return media_player->getPlayerState() == MultiMediaPlayer::Playing;
+}
+
+bool AudioVideoPlayer::isStopped() const
+{
+	return media_player->getPlayerState() == MultiMediaPlayer::Stopped;
+}
+
+QVariantMap AudioVideoPlayer::getTrackInformation() const
+{
+	return media_player->getTrackInfo();
+}
+
+void AudioVideoPlayer::seek(int seconds)
+{
+	media_player->seek(seconds);
 }
 
 QRect AudioVideoPlayer::getVideoRect() const
@@ -361,6 +377,7 @@ void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerStat
 	}
 	user_track_change_request = false;
 	emit playingChanged();
+	emit stoppedChanged();
 }
 
 void AudioVideoPlayer::play()

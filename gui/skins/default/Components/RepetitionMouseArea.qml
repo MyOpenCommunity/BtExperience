@@ -3,6 +3,9 @@ import QtQuick 1.1
 BeepingMouseArea {
     id: mouseArea
     property bool repetitionEnabled: false
+    property bool repetitionTriggered: clickTimer.activations > 1
+    property int largeInterval: 350
+    property int smallInterval: 100
 
     onPressed: clickTimer.running = repetitionEnabled
     onReleased: clickTimer.running = false
@@ -19,16 +22,16 @@ BeepingMouseArea {
         onRunningChanged: {
             if (running) {
                 activations = 1
-                interval = 350
+                interval = largeInterval
             }
         }
 
-        interval: 350
+        interval: largeInterval
         running: false
         repeat: true
         onTriggered: {
             if (++activations === 4)
-                interval = 100
+                interval = smallInterval
             mouseArea.clicked(mouseArea)
         }
     }
