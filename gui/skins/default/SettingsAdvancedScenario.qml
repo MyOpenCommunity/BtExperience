@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 import Components.Settings 1.0
@@ -10,7 +11,8 @@ Page {
     property variant scenarioObject: undefined
 
     text: qsTr("Advanced scenario")
-    source: "images/bg2.jpg"
+    source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
+                                                            "images/home/home_dark.jpg"
 
     Item {
         anchors {

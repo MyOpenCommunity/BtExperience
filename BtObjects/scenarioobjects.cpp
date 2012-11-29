@@ -1,6 +1,7 @@
 #include "scenarioobjects.h"
 #include "scenario_device.h"
 #include "devices_cache.h"
+#include "shared_functions.h"
 #include "xml_functions.h"
 #include "xmlobject.h"
 
@@ -548,19 +549,30 @@ int TimeConditionObject::getHours() const
 
 void TimeConditionObject::setHours(int h)
 {
-	if (h != hours && h >= 0 && h <= 255)
+	QTime t(hours, minutes);
+	QTime new_time = addHours(t, h);
+
+	if (new_time.hour() != hours)
 	{
-		hours = h;
+		hours = new_time.hour();
 		emit hoursChanged();
 	}
 }
 
 void TimeConditionObject::setMinutes(int m)
 {
-	if (m != minutes && m >= 0 && m <= 59)
+	QTime t(hours, minutes);
+	QTime new_time = addMinutes(t, m);
+
+	if (new_time.minute() != minutes)
 	{
-		minutes = m;
+		minutes = new_time.minute();
 		emit minutesChanged();
+	}
+	if (new_time.hour() != hours)
+	{
+		hours = new_time.hour();
+		emit hoursChanged();
 	}
 }
 

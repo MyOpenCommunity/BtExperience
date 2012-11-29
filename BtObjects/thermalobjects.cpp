@@ -3,6 +3,7 @@
 #include "thermal_device.h"
 #include "probe_device.h"
 #include "scaleconversion.h" // bt2Celsius
+#include "shared_functions.h"
 #include "objectmodel.h"
 #include "devices_cache.h"
 #include "xmlobject.h"
@@ -469,11 +470,11 @@ int ThermalControlUnitTimedProgram::getHours() const
 void ThermalControlUnitTimedProgram::setHours(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
-	int oldValue = time.hour();
-	int diff = newValue - oldValue;
-	if (newValue == oldValue)
+	if (newValue == time.hour())
 		return;
-	QTime newTime = time.addSecs(diff * 60 * 60);
+
+	QTime newTime = addHours(time, newValue);
+
 	to_apply[TIME] = newTime;
 	emitTimeSignals(time, newTime);
 }
@@ -487,11 +488,10 @@ int ThermalControlUnitTimedProgram::getMinutes() const
 void ThermalControlUnitTimedProgram::setMinutes(int newValue)
 {
 	QTime time = to_apply[TIME].toTime();
-	int oldValue = time.minute();
-	int diff = newValue - oldValue;
-	if (newValue == oldValue)
+	if (newValue == time.minute())
 		return;
-	QTime newTime = time.addSecs(diff * 60);
+
+	QTime newTime = addMinutes(time, newValue);
 	to_apply[TIME] = newTime;
 	emitTimeSignals(time, newTime);
 }

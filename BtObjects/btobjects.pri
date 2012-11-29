@@ -35,6 +35,7 @@ HEADERS += \
 	scenariomodulesnotifier.h \
 	scenarioobjects.h \
 	screenstate.h \
+	shared_functions.h \
 	stopandgoobjects.h \
 	splitadvancedscenario.h \
 	splitbasicscenario.h \
@@ -111,6 +112,7 @@ SOURCES += \
 	scenariomodulesnotifier.cpp \
 	scenarioobjects.cpp \
 	screenstate.cpp \
+	shared_functions.cpp \
 	stopandgoobjects.cpp \
 	splitadvancedscenario.cpp \
 	splitbasicscenario.cpp \
