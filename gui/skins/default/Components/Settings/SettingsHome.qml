@@ -41,7 +41,7 @@ MenuColumn {
         //privateProps.model.TextLanguage = value;
         // TODO remove when model is implemented
         privateProps.skin = value
-        pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
+        pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
     }
 
     PaginatorColumn {

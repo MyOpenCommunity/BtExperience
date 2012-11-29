@@ -4,57 +4,86 @@ import Components.Text 1.0
 
 Column {
     id: alert
+
     property alias message: text.text
     property Item source: null
+
     signal closeAlert
-    width: 212
 
-    UbuntuMediumText {
-        id: warningText
-        text: qsTr("warning")
-        color: "#ff2e2e"
-        font.capitalization: Font.AllUppercase
-        font.pixelSize: 16
+    spacing: 4
+
+    SvgImage {
+        source: "../images/scenarios/bg_titolo.svg"
+
+        UbuntuMediumText {
+            text: qsTr("Warning")
+            font.pixelSize: 24
+            color: "white"
+            anchors {
+                left: parent.left
+                leftMargin: parent.width / 100 * 2
+                verticalCenter: parent.verticalCenter
+            }
+        }
     }
-    // A kind of spacing
-    Item {
-        height: 5
-        width: parent.width
-    }
 
-    Image {
-        id: alertBg
-        width: parent.width
-        height: 130
-        source: "../images/home/alert.png"
+    SvgImage {
+        source: "../images/scenarios/bg_testo.svg"
 
-        UbuntuLightText {
+        UbuntuMediumText {
             id: text
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            anchors.right: parent.right
-            anchors.rightMargin: 20
-            anchors.top: parent.top
-            anchors.topMargin: 20
-            anchors.bottom: parent.bottom
-            text: qsTr("")
+            anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: 14
-            wrapMode: Text.WordWrap
+            color: "white"
+            text: qsTr("Alert message goes here.")
+            wrapMode: Text.Wrap
+            anchors {
+                right: parent.right
+                rightMargin: parent.width / 100 * 2
+                left: parent.left
+                leftMargin: parent.width / 100 * 2
+            }
         }
     }
 
-    ButtonOkCancel {
-        onOkClicked: {
-            alert.source.alertOkClicked()
-            alert.source = null
-            alert.closeAlert()
-        }
+    SvgImage {
+        source: "../images/scenarios/bg_ok_annulla.svg"
 
-        onCancelClicked: {
-            if (alert.source.alertCancelClicked)
-                alert.source.alertCancelClicked()
-            alert.source = null
-            alert.closeAlert()
+        Row {
+            anchors {
+                right: parent.right
+                rightMargin: parent.width / 100 * 2
+                verticalCenter: parent.verticalCenter
+            }
+
+            ButtonThreeStates {
+                defaultImage: "../images/common/btn_99x35.svg"
+                pressedImage: "../images/common/btn_99x35_P.svg"
+                selectedImage: "../images/common/btn_99x35_S.svg"
+                shadowImage: "../images/common/btn_shadow_99x35.svg"
+                text: qsTr("ok")
+                font.pixelSize: 14
+                onClicked: {
+                    alert.source.alertOkClicked()
+                    alert.source = null
+                    alert.closeAlert()
+                }
+            }
+
+            ButtonThreeStates {
+                defaultImage: "../images/common/btn_99x35.svg"
+                pressedImage: "../images/common/btn_99x35_P.svg"
+                selectedImage: "../images/common/btn_99x35_S.svg"
+                shadowImage: "../images/common/btn_shadow_99x35.svg"
+                text: qsTr("cancel")
+                font.pixelSize: 14
+                onClicked: {
+                    if (alert.source.alertCancelClicked)
+                        alert.source.alertCancelClicked()
+                    alert.source = null
+                    alert.closeAlert()
+                }
+            }
         }
     }
 }

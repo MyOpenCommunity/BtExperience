@@ -106,6 +106,7 @@ MenuColumn {
                 source: "../../images/scenarios/bg_testo.svg"
 
                 UbuntuMediumText {
+                    anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 14
                     color: "white"
                     text: qsTr("If you didn't do a scenario reset, you will add \

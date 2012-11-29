@@ -146,7 +146,7 @@ MenuColumn {
                 }
                 ButtonOkCancel {
                     onOkClicked: {
-                        pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
+                        pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
                     }
                     onCancelClicked: {
                         privateProps.model.reset()
@@ -214,7 +214,7 @@ MenuColumn {
                     ButtonOkCancel {
                         onOkClicked: {
                             focus = true // to accept current value (if any)
-                            pageObject.showAlert(column, qsTr("The selected action will produce a reboot of the GUI. Continue?"))
+                            pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
                         }
                         onCancelClicked: {
                             privateProps.model.reset()
