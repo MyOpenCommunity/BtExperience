@@ -29,6 +29,8 @@ SettingsEnergyThresholds 1.0 SettingsEnergyThresholds.qml
 SettingsGenerals 1.0 SettingsGenerals.qml
 SettingsHandsFree 1.0 SettingsHandsFree.qml
 SettingsHome 1.0 SettingsHome.qml
+SettingsHomeDelete 1.0 SettingsHomeDelete.qml
+SettingsHomeQuicklinks 1.0 SettingsHomeQuicklinks.qml
 SettingsImageBrowser 1.0 SettingsImageBrowser.qml
 SettingsInternational 1.0 SettingsInternational.qml
 SettingsItems 1.0 SettingsItems.qml
