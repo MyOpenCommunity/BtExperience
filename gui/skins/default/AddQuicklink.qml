@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 import Components.Settings 1.0
@@ -22,7 +23,18 @@ Page {
     property bool isRemovable: privateProps.currentChoice !== 0
 
     text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
-    source: page.profile === undefined ? (page.homeCustomization ? "images/home/home.jpg" : "images/profiles.jpg") : profile.image
+    source: {
+        if (page.profile === undefined) {
+            if (page.homeCustomization) {
+                return global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
+                                                                       "images/home/home_dark.jpg"
+            }
+            else
+                return "images/profiles.jpg"
+        }
+        else
+            return profile.image
+    }
 
     onCurrentLinkChanged: {
         if (page.currentLink < 0) {
