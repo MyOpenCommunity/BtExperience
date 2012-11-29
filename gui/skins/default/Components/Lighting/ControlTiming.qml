@@ -127,7 +127,7 @@ SvgImage {
                         itemObject.prevFTime()
                 }
                 onRightClicked: {
-                    if (currentIndex >= itemObject.ftimes.values.length + 1)
+                    if (currentIndex >= itemObject.ftimes.values.length)
                         return
                     if (currentIndex === 0)
                         itemObject.autoTurnOff = true
