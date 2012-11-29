@@ -40,6 +40,7 @@ MenuColumn {
 
         onClicked: theModel.exitDirectory()
         status: 0
+        enabled: theModel.isRoot === false
     }
 
     ButtonImageThreeStates {

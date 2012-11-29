@@ -126,6 +126,7 @@ TreeBrowserListModelBase::TreeBrowserListModelBase(TreeBrowser *_browser, QObjec
 	connect(browser, SIGNAL(directoryChanged()), this, SIGNAL(currentPathChanged()));
 	connect(browser, SIGNAL(directoryChangeError()), this, SIGNAL(directoryChangeError()));
 	connect(browser, SIGNAL(emptyDirectory()), this, SIGNAL(emptyDirectory()));
+	connect(browser, SIGNAL(isRootChanged()), this, SIGNAL(isRootChanged()));
 
 	// in case of success, the flag is reset after reloading the file list
 	connect(browser, SIGNAL(directoryChangeError()), this, SLOT(resetLoadingFlag()));
@@ -144,13 +145,8 @@ void TreeBrowserListModelBase::setRootPath(QVariantList _path)
 	if (path == browser->getRootPath())
 		return;
 
-	bool root = browser->isRoot();
-
 	browser->setRootPath(path);
 	current_path = _path;
-
-	if (root != browser->isRoot())
-		emit isRootChanged();
 	emit rootPathChanged();
 	if (old_current != current_path)
 		emit currentPathChanged();
