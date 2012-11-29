@@ -9,8 +9,7 @@ import "js/Stack.js" as Stack
 BasePage {
     id: control
 
-    source : global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
-                                                             "images/home/home_dark.jpg"
+    source : global.guiSettings.homeBgImage
 
     Rectangle {
         id: passwordRect

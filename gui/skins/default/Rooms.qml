@@ -11,8 +11,7 @@ Page {
 
     property int floorUii
 
-    source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
-                                                            "images/home/home_dark.jpg"
+    source : global.guiSettings.homeBgImage
     text: qsTr("rooms")
 
     MediaModel {

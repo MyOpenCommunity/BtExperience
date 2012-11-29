@@ -1311,7 +1311,7 @@ void BtObjectsPlugin::parseHomepage(const QDomNode &container)
 	{
 		v.setIst(ist);
 		int homepage_uii = getIntAttribute(ist, "uii");
-		Container *homepage = new Container(homepage_id, homepage_uii, v.value("img"), v.value("descr"));
+		Container *homepage = new Container(homepage_id, homepage_uii, QString("Use GuiSettings homeBgImage property, not this"), v.value("descr"));
 
 		global_models.setHomepageLinks(homepage);
 		uii_map.insert(homepage_uii, homepage);

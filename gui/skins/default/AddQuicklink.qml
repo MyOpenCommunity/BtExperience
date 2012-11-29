@@ -26,8 +26,7 @@ Page {
     source: {
         if (page.profile === undefined) {
             if (page.homeCustomization) {
-                return global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
-                                                                       "images/home/home_dark.jpg"
+                return global.guiSettings.homeBgImage
             }
             else
                 return "images/profiles.jpg"

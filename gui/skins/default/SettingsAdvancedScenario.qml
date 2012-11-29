@@ -3,16 +3,16 @@ import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 import Components.Settings 1.0
-
 import "js/Stack.js" as Stack
+
 
 Page {
     id: page
+
     property variant scenarioObject: undefined
 
     text: qsTr("Advanced scenario")
-    source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
-                                                            "images/home/home_dark.jpg"
+    source : global.guiSettings.homeBgImage
 
     Item {
         anchors {

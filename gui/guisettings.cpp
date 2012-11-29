@@ -115,6 +115,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 
 	timezone = 0;
 	skin = Clear;
+	home_bg_image = QString();
 	beep = false;
 	energy_threshold_beep = false;
 	energy_popup = false;
@@ -135,6 +136,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 		if (getIntAttribute(container, "id") == HomePageContainer)
 		{
 			skin = getIntAttribute(container, "img_type", 0) == 0 ? Clear : Dark;
+			home_bg_image = getAttribute(container, "img");
 			break;
 		}
 	}
@@ -256,6 +258,38 @@ void GuiSettings::setSkin(Skin s)
 
 	skin = s;
 	emit skinChanged();
+}
+
+QString GuiSettings::getHomeBgImage() const
+{
+	// if a custom background exists, returns it
+	if (!home_bg_image.isEmpty())
+		return home_bg_image;
+
+	// no custom background is set, choose a standard one based on actual skin
+	if (getSkin() == Dark)
+		return QString("images/home/home_dark.jpg");
+
+	return QString("images/home/home.jpg");
+}
+
+void GuiSettings::setHomeBgImage(QString new_value)
+{
+	if (home_bg_image == new_value)
+		return;
+
+	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
+	{
+		if (getIntAttribute(container, "id") == HomePageContainer)
+		{
+			setAttribute(container, "img", new_value);
+			break;
+		}
+	}
+	configurations->saveConfiguration(LAYOUT_FILE);
+
+	home_bg_image = new_value;
+	emit homeBgImageChanged();
 }
 
 bool GuiSettings::getBeep() const

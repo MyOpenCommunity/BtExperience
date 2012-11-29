@@ -11,7 +11,7 @@ Page {
     property string _fixedUrlString: privateProps.fixedAddress(webBrowser.urlString)
     property variant profile: undefined
 
-    source: profile === undefined ? 'images/home/home.jpg' : profile.image
+    source: profile === undefined ? global.guiSettings.homeBgImage : profile.image
     text: profile === undefined ? qsTr("Browser") : profile.description
     showSystemsButton: false
 

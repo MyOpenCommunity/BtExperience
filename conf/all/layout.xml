@@ -192,7 +192,7 @@
 			<link uii="5005" />
 		</ist>
 	</container>
-	<container id="17" descr="Home page" img="home.png" img_type="0">
+	<container id="17" descr="Home page" img="" img_type="0">
 		<ist uii="316">
 			<link uii="8006" img="Corriere.png"/>
 			<link uii="2011" img="Corriere.png"/>

@@ -21,6 +21,15 @@ class GuiSettings : public QObject
 	Q_PROPERTY(Skin skin READ getSkin WRITE setSkin NOTIFY skinChanged)
 
 	/*!
+		\brief Sets or gets the background image used in home and in main pages.
+
+		Sets or gets the background image used in home and in main pages. It assumes
+		the property value is a path relative to images parent folder or an absolute path.
+		Beware of that.
+	*/
+	Q_PROPERTY(QString homeBgImage READ getHomeBgImage WRITE setHomeBgImage NOTIFY homeBgImageChanged)
+
+	/*!
 		\brief Sets or gets the timezone.
 	*/
 	Q_PROPERTY(int timezone READ getTimezone WRITE setTimezone NOTIFY timezoneChanged)
@@ -108,6 +117,8 @@ public:
 	void setTimezone(int z);
 	Skin getSkin() const;
 	void setSkin(Skin s);
+	QString getHomeBgImage() const;
+	void setHomeBgImage(QString new_value);
 	bool getBeep() const;
 	void setBeep(bool beep);
 	bool getEnergyThresholdBeep() const;
@@ -141,6 +152,7 @@ signals:
 	void languageChanged();
 	void timezoneChanged();
 	void skinChanged();
+	void homeBgImageChanged();
 	void beepChanged();
 	void energyThresholdBeepChanged();
 	void energyPopupChanged();
@@ -161,7 +173,7 @@ private:
 	void setConfValue(QString path, QString value);
 
 	ConfigFile *configurations;
-	QString language;
+	QString language, home_bg_image;
 	int timezone;
 	Skin skin;
 	bool beep;

@@ -68,19 +68,34 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                console.log("Implement modify background image feature")
+                column.loadColumn(settingsImageBrowser, qsTr("Background image"), column.dataModel, {homeCustomization: true})
+            }
+        }
+
+        MenuItem {
+            name: qsTr("Reset background image")
+            isSelected: privateProps.currentIndex === 3
+            onClicked: {
+                if (privateProps.currentIndex !== 3)
+                    privateProps.currentIndex = 3
+                global.guiSettings.homeBgImage = ""
             }
         }
 
         MenuItem {
             name: qsTr("Quicklinks")
-            isSelected: privateProps.currentIndex === 3
+            isSelected: privateProps.currentIndex === 4
             hasChild: true
             onClicked: {
-                if (privateProps.currentIndex !== 3)
-                    privateProps.currentIndex = 3
+                if (privateProps.currentIndex !== 4)
+                    privateProps.currentIndex = 4
                 column.loadColumn(quicklinks, qsTr("Quicklinks"))
             }
         }
      }
+
+    Component {
+        id: settingsImageBrowser
+        SettingsImageBrowser {}
+    }
 }

@@ -10,6 +10,7 @@ MenuColumn {
     id: column
 
     property bool isCard: false
+    property bool homeCustomization: false
     property bool _isStock: false // used internally to know if user selected a stock image
 
     onChildDestroyed: {
@@ -95,6 +96,9 @@ MenuColumn {
                     else
                         Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
                 }
+                else if (column.homeCustomization) {
+                    global.guiSettings.homeBgImage = global.saveInCustomDirIfNeeded(item.path, "home_bg", Qt.size(global.mainWidth, global.mainHeight))
+                }
                 else {
                     column.dataModel.image = global.saveInCustomDirIfNeeded(item.path, "bg_" + column.dataModel.uii, Qt.size(global.mainWidth, global.mainHeight))
                 }
@@ -108,6 +112,8 @@ MenuColumn {
             onSelected: {
                 if (column.isCard)
                     Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
+                else if (column.homeCustomization)
+                    global.guiSettings.homeBgImage = global.saveInCustomDirIfNeeded(item.path, "home_bg", Qt.size(global.mainWidth, global.mainHeight))
                 else
                     column.dataModel.image = global.saveInCustomDirIfNeeded(item.path, "bg_" + column.dataModel.uii, Qt.size(global.mainWidth, global.mainHeight))
             }

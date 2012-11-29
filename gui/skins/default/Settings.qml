@@ -6,8 +6,7 @@ import "js/Stack.js" as Stack
 
 
 SystemPage {
-    source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
-                                                            "images/home/home_dark.jpg"
+    source : global.guiSettings.homeBgImage
     text: qsTr("Settings")
     rootColumn: Component { SettingsItems {} }
     names: SettingsNames {}

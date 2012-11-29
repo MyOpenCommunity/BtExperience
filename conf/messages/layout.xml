@@ -16,4 +16,8 @@
 		<ist uii="905" descr="famiglia" img="images/home/card-home_famiglia.png" >
 		</ist>
 	</container>
+    <container descr="Home page" id="17" img="" img_type="0">
+        <ist uii="316">
+        </ist>
+    </container>
 </layout>

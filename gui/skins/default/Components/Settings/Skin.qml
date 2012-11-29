@@ -13,6 +13,7 @@ MenuColumn {
 
     ListView {
         id: view
+        currentIndex: global.guiSettings.skin
         anchors.fill: parent
         interactive: false
         delegate: MenuItemDelegate {

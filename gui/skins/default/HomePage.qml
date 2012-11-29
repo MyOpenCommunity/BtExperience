@@ -9,8 +9,7 @@ import "js/EventManager.js" as EventManager
 BasePage {
     id: mainarea
 
-    source : global.guiSettings.skin === GuiSettings.Clear ? "images/home/home.jpg" :
-                                                             "images/home/home_dark.jpg"
+    source : global.guiSettings.homeBgImage
 
     Rectangle {
         z: 1
