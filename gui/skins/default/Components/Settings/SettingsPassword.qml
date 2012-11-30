@@ -5,30 +5,25 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    signal passwordChanged(int config)
+    PaginatorList {
+        id: list
+        currentIndex: global.passwordEnabled
 
-    width: 212
-    height: Math.max(1, 50 * view.count)
-
-    ListView {
-        id: view
-        anchors.fill: parent
         delegate: MenuItemDelegate {
             name: model.name
-            onClicked: passwordChanged(model.type)
+            onClicked: global.passwordEnabled = value
         }
-        model: ListModel {
-            id: modelList
-            Component.onCompleted: {
-                var l = [0,
-                         1,
-                        ]
-                for (var i = 0; i < l.length; i++)
-                    append({
-                               "type": l[i],
-                               "name": pageObject.names.get('PASSWORD', l[i])
-                           })
-            }
-        }
+
+        model: modelList
+    }
+
+    ListModel {
+        id: modelList
+    }
+
+    Component.onCompleted: {
+        modelList.append({"value": false, "name": pageObject.names.get('PASSWORD', false)})
+        modelList.append({"value": true, "name": pageObject.names.get('PASSWORD', true)})
+        list.currentIndex = global.passwordEnabled
     }
 }
