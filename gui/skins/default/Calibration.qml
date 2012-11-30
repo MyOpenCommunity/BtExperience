@@ -7,10 +7,14 @@ import "js/Stack.js" as Stack
 BasePage {
     id: page
 
-    property variant points: [{"p": {"x": 20, "y": 20}, "where": Calibration.TopLeft},
-        {"p": {"x": 950, "y": 20}, "where": Calibration.TopRight},
-        {"p": {"x": 950, "y": 550}, "where": Calibration.BottomRight},
-        {"p": {"x": 20, "y": 550}, "where": Calibration.BottomLeft}
+    property int offset: 50
+
+    property variant points: [
+        {"p": {"x": offset, "y": offset}, "where": Calibration.TopLeft},
+        {"p": {"x": width - offset, "y": offset}, "where": Calibration.TopRight},
+        {"p": {"x": width - offset, "y": height - offset}, "where": Calibration.BottomRight},
+        {"p": {"x": offset, "y": height - offset}, "where": Calibration.BottomLeft},
+        {"p": {"x": width / 2, "y": height / 2}, "where": Calibration.Center}
     ]
     property int currentPoint: 0
 
@@ -25,13 +29,20 @@ BasePage {
     UbuntuLightText {
         text: qsTr("Click the crosshair")
         anchors.centerIn: page
+        anchors.verticalCenterOffset: -page.height / 4
+    }
+
+    function updateCrosshair() {
+        var nextPoint = page.points[page.currentPoint].p
+        crosshair.x = nextPoint.x - crosshair.width / 2
+        crosshair.y = nextPoint.y - crosshair.height / 2
     }
 
     MouseArea {
         anchors.fill: parent
         onReleased: {
             global.calibration.setCalibrationPoint(page.points[page.currentPoint].where,
-                                                   page.points[page.currentPoint].p,
+                                                   Qt.point(page.points[page.currentPoint].p.x, page.points[page.currentPoint].p.y),
                                                    Qt.point(mouse.x, mouse.y))
 
             page.currentPoint += 1
@@ -39,20 +50,21 @@ BasePage {
                 console.log("Calibration done")
                 if (global.calibration.applyCalibration()) {
                     global.calibration.saveCalibration()
+                    Stack.popPage()
+                    return
                 }
                 else {
                     global.calibration.resetCalibration()
+                    currentPoint = 0
                 }
+            }
 
-                Stack.popPage()
-            }
-            else {
-                var nextPoint = page.points[page.currentPoint].p
-                crosshair.x = nextPoint.x
-                crosshair.y = nextPoint.y
-            }
+            updateCrosshair()
         }
     }
 
-    Component.onCompleted: global.calibration.startCalibration()
+    Component.onCompleted: {
+        global.calibration.startCalibration()
+        updateCrosshair()
+    }
 }
