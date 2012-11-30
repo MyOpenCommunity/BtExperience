@@ -43,6 +43,11 @@ Calibration::Calibration(QObject *parent) : QObject(parent)
 	pointercal_file = pointercalFile();
 }
 
+bool Calibration::exists() const
+{
+	return QFile::exists(pointercalFile());
+}
+
 bool Calibration::eventFilter(QObject *obj, QEvent *evt)
 {
 	if (evt->type() != QEvent::MouseButtonRelease)

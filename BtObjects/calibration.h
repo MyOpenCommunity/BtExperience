@@ -35,6 +35,9 @@ public:
 
 	Calibration(QObject *parent = 0);
 
+	/// Check whether the calibration data file exists
+	Q_INVOKABLE bool exists() const;
+
 public slots:
 	/*!
 		\brief Put the screen in raw mode and save a backup of the calibration file
