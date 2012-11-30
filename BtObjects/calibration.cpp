@@ -3,6 +3,8 @@
 #include <QFile>
 #include <QScreen>
 #include <QWSServer>
+#include <QMouseEvent>
+#include <QDeclarativeView>
 
 #include <QtDebug>
 
@@ -25,11 +27,31 @@ namespace
 			pointercal_file = QString(pointercal_file_env);
 		return pointercal_file;
 	}
+
+	QDeclarativeView *findDeclarativeView()
+	{
+		foreach (QWidget *w, qApp->topLevelWidgets())
+			if (qobject_cast<QDeclarativeView *>(w))
+				return static_cast<QDeclarativeView *>(w);
+
+		return 0;
+	}
 }
 
 Calibration::Calibration(QObject *parent) : QObject(parent)
 {
 	pointercal_file = pointercalFile();
+}
+
+bool Calibration::eventFilter(QObject *obj, QEvent *evt)
+{
+	if (evt->type() != QEvent::MouseButtonRelease)
+		return false;
+	QMouseEvent *mouse_event = static_cast<QMouseEvent *>(evt);
+
+	emit rawMousePress(mouse_event->pos().x(), mouse_event->pos().y());
+
+	return false;
 }
 
 void Calibration::startCalibration()
@@ -39,7 +61,9 @@ void Calibration::startCalibration()
 		system(qPrintable(QString("cp %1 %1.calibrated").arg(pointercal_file)));
 #if defined(Q_WS_QWS)
 	QWSServer::mouseHandler()->clearCalibration();
+	findDeclarativeView()->grabMouse();
 #endif
+	qApp->installEventFilter(this);
 }
 
 void Calibration::setCalibrationPoint(Point point, QPoint screen, QPoint touch)
@@ -86,6 +110,10 @@ void Calibration::saveCalibration()
 		qDebug() << "Removed calibration backup file";
 		system(qPrintable(QString("rm %1.calibrated").arg(pointercal_file)));
 	}
+#if defined(Q_WS_QWS)
+	findDeclarativeView()->releaseMouse();
+#endif
+	qApp->removeEventFilter(this);
 }
 
 bool Calibration::sanityCheck()

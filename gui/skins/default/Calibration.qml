@@ -38,12 +38,12 @@ BasePage {
         crosshair.y = nextPoint.y - crosshair.height / 2
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onReleased: {
+    Connections {
+        target: global.calibration
+        onRawMousePress: {
             global.calibration.setCalibrationPoint(page.points[page.currentPoint].where,
                                                    Qt.point(page.points[page.currentPoint].p.x, page.points[page.currentPoint].p.y),
-                                                   Qt.point(mouse.x, mouse.y))
+                                                   Qt.point(x, y))
 
             page.currentPoint += 1
             if (page.currentPoint >= page.points.length) {

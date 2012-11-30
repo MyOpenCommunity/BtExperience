@@ -66,6 +66,12 @@ public slots:
 	*/
 	void saveCalibration();
 
+signals:
+	void rawMousePress(int x, int y);
+
+protected:
+	bool eventFilter(QObject *obj, QEvent *evt);
+
 private:
 	bool sanityCheck();
 
