@@ -7,9 +7,6 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    property string imagesPath: "../../images/"
-
-    // object model to retrieve version data
     ObjectModel {
         id: objectModel
         // TODO update filter to retrieve version data
@@ -21,43 +18,18 @@ MenuColumn {
         property variant model: objectModel.getObject(0)
     }
 
-    // retrieves actual version information and sets the right component
-    Component.onCompleted: {
-        versionLoader.setComponent(versionItem)
-    }
-
-    PaginatorColumn {
-        id: paginator
-        anchors.horizontalCenter: parent.horizontalCenter
-        maxHeight: 150
-        // version item: it is a static list of values retrieved from app
-        AnimatedLoader {
-            id: versionLoader
+    Column {
+        ControlTitleValue {
+            title: qsTr("firmware")
+            value: privateProps.model.firmware || qsTr("Unknown")
         }
-    }
-
-    // TODO: use the right background
-    Component {
-        id: versionItem
-        Image {
-            width: 212
-            height: 50 * 3
-            source: imagesPath + "common/bg_zone.png"
-            anchors.bottom: parent.bottom
-            Column {
-                ControlTitleValue {
-                    title: qsTr("firmware")
-                    value: privateProps.model.firmware || qsTr("Unknown")
-                }
-                ControlTitleValue {
-                    title: qsTr("software")
-                    value: privateProps.model.software || qsTr("Unknown")
-                }
-                ControlTitleValue {
-                    title: qsTr("serial number")
-                    value: privateProps.model.serialNumber || qsTr("Unknown")
-                }
-            }
+        ControlTitleValue {
+            title: qsTr("software")
+            value: privateProps.model.software || qsTr("Unknown")
+        }
+        ControlTitleValue {
+            title: qsTr("serial number")
+            value: privateProps.model.serialNumber || qsTr("Unknown")
         }
     }
 }

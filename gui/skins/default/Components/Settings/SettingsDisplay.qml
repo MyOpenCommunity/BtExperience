@@ -5,19 +5,12 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    width: 212
-    height: Math.max(1, 50 * itemList.count)
-
     onChildDestroyed: {
-        itemList.currentIndex = -1
+        paginator.currentIndex = -1
     }
 
-    ListView {
-        id: itemList
-        anchors.fill: parent
-        currentIndex: -1
-        interactive: false
-
+    PaginatorList {
+        id: paginator
         delegate: MenuItemDelegate {
             name: model.name
             hasChild: model.component !== undefined
@@ -36,7 +29,7 @@ MenuColumn {
         id: modelList
         Component.onCompleted: {
             modelList.append({"name": qsTr("Brightness"), "component": brightness})
-            modelList.append({"name": qsTr("Transition effects"), "component": transitionEffects})
+//            modelList.append({"name": qsTr("Transition effects"), "component": transitionEffects})
             modelList.append({"name": qsTr("Calibration"), "component": calibration})
             modelList.append({"name": qsTr("Clean"), "component": clean})
         }
@@ -47,10 +40,10 @@ MenuColumn {
         Brightness {}
     }
 
-    Component {
-        id: transitionEffects
-        TransitionEffects {}
-    }
+//    Component {
+//        id: transitionEffects
+//        TransitionEffects {}
+//    }
 
     Component {
         id: calibration

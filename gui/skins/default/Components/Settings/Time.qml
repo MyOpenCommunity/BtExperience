@@ -45,25 +45,6 @@ MenuColumn {
         }
 
         ControlChoices {
-            id: auto
-            description: qsTr("automatic update")
-            choice: pageObject.names.get('AUTO_UPDATE', currentIndex)
-            property bool currentIndex: privateProps.model.autoUpdate
-            onPlusClicked: {
-                if (currentIndex == true) {
-                    currentIndex = false
-                    choice = pageObject.names.get('AUTO_UPDATE', currentIndex)
-                }
-            }
-            onMinusClicked: {
-                if (currentIndex == false) {
-                    currentIndex = true
-                    choice = pageObject.names.get('AUTO_UPDATE', currentIndex)
-                }
-            }
-        }
-
-        ControlChoices {
             id: format
             description: qsTr("format")
             choice: pageObject.names.get('FORMAT', currentIndex)

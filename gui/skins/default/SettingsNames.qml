@@ -54,8 +54,8 @@ QtObject {
         // TODO from here on, change  wrt to model developments
 
         container['PASSWORD'] = []
-        container['PASSWORD'][0] = qsTr("Enable")
-        container['PASSWORD'][1] = qsTr("Disable")
+        container['PASSWORD'][false] = qsTr("Disable")
+        container['PASSWORD'][true] = qsTr("Enable")
 
         container['BEEP'] = []
         container['BEEP'][true] = qsTr("Enable")
