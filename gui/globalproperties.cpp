@@ -203,6 +203,7 @@ GlobalProperties::GlobalProperties(logger *log)
 	debug_timing = 0;
 	hardware_keys = new HwKeys(this);
 	screen_state = new ScreenState(this);
+	calibration = new Calibration(this);
 
 	if (!(*bt_global::config)[DEFAULT_PE].isEmpty())
 		default_external_place = new ExternalPlace(QString(), ObjectInterface::IdExternalPlace,
