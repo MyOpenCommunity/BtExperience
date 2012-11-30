@@ -143,7 +143,7 @@ bool Calibration::sanityCheck()
 		return false;
 	}
 
-#if defined(BT_HARDWARE_PXA270) || defined(BT_HARDWARE_DM365)
+#if defined(BT_HARDWARE_PXA270) || defined(BT_HARDWARE_DM365) || defined(BT_HARDWARE_DM3730)
 	// The y on the top (in raw device coordinates) must be greater than
 	// the y on the bottom
 	if (tl.y() < bl.y() || tr.y() < br.y())
