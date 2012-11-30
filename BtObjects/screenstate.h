@@ -75,7 +75,7 @@ protected:
 
 private slots:
 	void startFreeze();
-	void freezeTick();
+	void stopFreeze();
 
 private:
 	void updateScreenState(State old_state, State new_state);
@@ -85,7 +85,7 @@ private:
 	QTimer *screensaver_timer;
 	QTimer *freeze_timer;
 	State current_state;
-	int freeze_tick, normal_brightness;
+	int normal_brightness;
 	bool states[StateCount];
 	bool password_enabled, screen_locked;
 };

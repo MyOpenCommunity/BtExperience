@@ -62,44 +62,30 @@ void TestScreenState::testScreensaverTimers()
 
 void TestScreenState::testFreezeNormal()
 {
-	const int max_ticks = 10000; // arbitrary high number
-
 	obj->enableState(ScreenState::ScreenOff);
 	obj->enableState(ScreenState::Normal);
-	obj->freeze_tick = 2;
 
 	obj->startFreeze();
 	QCOMPARE(obj->getState(), ScreenState::Freeze);
-	QCOMPARE(obj->freeze_tick, 0);
 	QVERIFY(obj->freeze_timer->isActive());
 
-	int i;
-	for (i = 0; i < max_ticks && obj->getState() == ScreenState::Freeze; ++i)
-		obj->freezeTick();
+	obj->stopFreeze();
 
-	QVERIFY(i != max_ticks);
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 	QVERIFY(!obj->freeze_timer->isActive());
 }
 
 void TestScreenState::testFreezePasswordCheck()
 {
-	const int max_ticks = 10000; // arbitrary high number
-
 	obj->enableState(ScreenState::ScreenOff);
 	obj->enableState(ScreenState::PasswordCheck);
-	obj->freeze_tick = 2;
 
 	obj->startFreeze();
 	QCOMPARE(obj->getState(), ScreenState::Freeze);
-	QCOMPARE(obj->freeze_tick, 0);
 	QVERIFY(obj->freeze_timer->isActive());
 
-	int i;
-	for (i = 0; i < max_ticks && obj->getState() == ScreenState::Freeze; ++i)
-		obj->freezeTick();
+	obj->stopFreeze();
 
-	QVERIFY(i != max_ticks);
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 	QVERIFY(!obj->freeze_timer->isActive());
 }
@@ -245,8 +231,6 @@ void TestScreenState::testPasswordCheckLockedClick()
 
 void TestScreenState::testUnlockSequence()
 {
-	const int max_ticks = 10000; // arbitrary high number
-
 	ObjectTester t(obj, SIGNAL(displayPasswordCheck()));
 
 	obj->setPasswordEnabled(true);
@@ -275,11 +259,8 @@ void TestScreenState::testUnlockSequence()
 	obj->startFreeze();
 	QCOMPARE(obj->getState(), ScreenState::Freeze);
 
-	int i;
-	for (i = 0; i < max_ticks && obj->getState() == ScreenState::Freeze; ++i)
-		obj->freezeTick();
+	obj->stopFreeze();
 
-	QVERIFY(i != max_ticks);
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 
 	// user click

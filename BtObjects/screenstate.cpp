@@ -9,9 +9,9 @@
 
 #include <QDebug>
 
-#define FREEZE_INTERVAL 200
 #define SCREENSAVER_TIME 50
 #define FREEZE_TIME      10
+#define FREEZE_DELTA     10
 
 namespace
 {
@@ -60,10 +60,10 @@ ScreenState::ScreenState(QObject *parent) : QObject(parent)
 	screensaver_timer->setInterval(SCREENSAVER_TIME * 1000);
 	connect(screensaver_timer, SIGNAL(timeout()), this, SLOT(startFreeze()));
 
-	freeze_tick = 0;
 	freeze_timer = new QTimer();
-	freeze_timer->setInterval(FREEZE_INTERVAL);
-	connect(freeze_timer, SIGNAL(timeout()), this, SLOT(freezeTick()));
+	freeze_timer->setSingleShot(true);
+	freeze_timer->setInterval(FREEZE_TIME * 1000);
+	connect(freeze_timer, SIGNAL(timeout()), this, SLOT(stopFreeze()));
 
 	qApp->installEventFilter(this);
 }
@@ -185,8 +185,8 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 	switch (new_state)
 	{
 	case Freeze:
-		freeze_tick = 0;
 		freeze_timer->start();
+		setBrightness(qMax(normal_brightness - FREEZE_DELTA, 10));
 		break;
 	case ScreenOff:
 		screen_locked = password_enabled;
@@ -226,20 +226,11 @@ void ScreenState::startFreeze()
 	disableState(PasswordCheck);
 }
 
-void ScreenState::freezeTick()
+void ScreenState::stopFreeze()
 {
-	const int max_ticks = FREEZE_TIME * 1000 / FREEZE_INTERVAL;
-
-	++freeze_tick;
-	if (freeze_tick >= max_ticks)
-	{
-		// TODO screensaver
-		disableState(Normal);
-		disableState(Freeze);
-		disableState(PasswordCheck);
-	}
-	else
-		setBrightness(normal_brightness - normal_brightness * freeze_tick / max_ticks);
+	disableState(Normal);
+	disableState(Freeze);
+	disableState(PasswordCheck);
 }
 
 bool ScreenState::updatePressTime()
