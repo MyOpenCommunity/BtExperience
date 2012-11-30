@@ -26,6 +26,7 @@ class RingtoneManager;
 class ConfigFile;
 class DebugTiming;
 class HwKeys;
+class Calibration;
 class ExternalPlace;
 class logger;
 
@@ -97,6 +98,9 @@ class GlobalProperties : public QObject
 	// Folder containing stock images
 	Q_PROPERTY(QVariantList stockImagesFolder READ getStockImagesFolder CONSTANT)
 
+	// Screen calibration object
+	Q_PROPERTY(QObject *calibration READ getCalibration CONSTANT)
+
 public:
 	GlobalProperties(logger *log);
 	int getMainWidth() const;
@@ -113,6 +117,7 @@ public:
 	bool getDebugTs();
 	DebugTiming *getDebugTiming();
 	QObject *getHardwareKeys() const;
+	QObject *getCalibration() const;
 	QVariantList getStockImagesFolder() const;
 
 	QObject *getDefaultExternalPlace() const;
@@ -185,6 +190,7 @@ private:
 	bool debug_touchscreen;
 	DebugTiming *debug_timing;
 	HwKeys *hardware_keys;
+	Calibration *calibration;
 	QPoint max_travelled_distance;
 	QString password;
 	QString keyboard_layout_name;

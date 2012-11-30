@@ -41,6 +41,7 @@
 #include "mounts.h"
 #include "alarmclocknotifier.h"
 #include "screenstate.h"
+#include "calibration.h"
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>
@@ -1541,6 +1542,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 										   "unable to create a MountPoint instance");
 	qmlRegisterUncreatableType<ScreenState>(uri, 1, 0, "ScreenState",
 						"unable to create a ScreenState instance");
+	qmlRegisterUncreatableType<Calibration>(uri, 1, 0, "Calibration",
+						"unable to create a Calibration instance");
 }
 
 Q_EXPORT_PLUGIN2(BtObjects, BtObjectsPlugin)

@@ -13,6 +13,7 @@
 #include "devices_cache.h"
 #include "xmlobject.h"
 #include "hwkeys.h"
+#include "calibration.h"
 #include <logger.h>
 
 #include <QTimer>
@@ -416,6 +417,11 @@ DebugTiming *GlobalProperties::getDebugTiming()
 QObject *GlobalProperties::getHardwareKeys() const
 {
 	return hardware_keys;
+}
+
+QObject *GlobalProperties::getCalibration() const
+{
+	return calibration;
 }
 
 QVariantList GlobalProperties::getStockImagesFolder() const

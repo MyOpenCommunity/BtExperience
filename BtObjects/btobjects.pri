@@ -5,6 +5,7 @@ HEADERS += \
 	alarmclocknotifier.h \
 	antintrusionsystem.h \
 	automationobjects.h \
+	calibration.h \
 	choicelist.h \
 	configfile.h \
 	container.h \
@@ -82,6 +83,7 @@ SOURCES += \
 	alarmclocknotifier.cpp \
 	antintrusionsystem.cpp \
 	automationobjects.cpp \
+	calibration.cpp \
 	choicelist.cpp \
 	configfile.cpp \
 	container.cpp \
