@@ -57,29 +57,37 @@ Image {
     function pushInStart() {
         var animation = Container.mainContainer.animation
         animation.page = page
-        if (animation.pushIn)
+        if (animation.pushIn) {
+            animation.pushIn.complete()
             animation.pushIn.start()
+        }
     }
 
     function popInStart() {
         var animation = Container.mainContainer.animation
         animation.page = page
-        if (animation.popIn)
+        if (animation.popIn) {
+            animation.popIn.complete()
             animation.popIn.start()
+        }
     }
 
     function pushOutStart() {
         var animation = Container.mainContainer.animation
         animation.page = page
-        if (animation.pushOut)
+        if (animation.pushOut) {
+            animation.pushOut.complete()
             animation.pushOut.start()
+        }
     }
 
     function popOutStart() {
         var animation = Container.mainContainer.animation
         animation.page = page
-        if (animation.popOut)
+        if (animation.popOut) {
+            animation.popOut.complete()
             animation.popOut.start()
+        }
     }
 
     // The management for popups using by alerts, keypad, etc..
