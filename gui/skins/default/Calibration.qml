@@ -64,7 +64,10 @@ BasePage {
     }
 
     Component.onCompleted: {
+        global.screenState.enableState(ScreenState.Calibration)
         global.calibration.startCalibration()
         updateCrosshair()
     }
+
+    Component.onDestruction: global.screenState.disableState(ScreenState.Calibration)
 }
