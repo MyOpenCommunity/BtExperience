@@ -11,18 +11,49 @@ BasePage {
 
     source : global.guiSettings.homeBgImage
 
-    Rectangle {
+    SvgImage {
         id: passwordRect
 
-        width: 300
-        height: 20
-
+        source: "images/scenarios/bg_testo.svg"
         anchors.centerIn: parent
 
-        UbuntuMediumTextInput {
-            id: password
-            anchors.fill: parent
-            echoMode: TextInput.Password
+        UbuntuMediumText {
+            id: text
+            anchors.top: parent.top
+            anchors.topMargin: 7
+            font.pixelSize: 18
+            color: "black"
+            text: qsTr("Insert security code")
+            anchors {
+                right: parent.right
+                rightMargin: parent.width / 100 * 2
+                left: parent.left
+                leftMargin: parent.width / 100 * 2
+            }
+        }
+
+        Rectangle {
+            id: passwordRectBg
+
+            width: 300
+            height: 30
+
+            anchors.centerIn: parent
+
+            UbuntuMediumTextInput {
+                id: password
+                anchors.fill: parent
+                font.pixelSize: 14
+                color: "black"
+                echoMode: TextInput.Password
+                horizontalAlignment: Text.AlignHCenter
+                anchors {
+                    right: parent.right
+                    rightMargin: parent.width / 100 * 2
+                    left: parent.left
+                    leftMargin: parent.width / 100 * 2
+                }
+            }
         }
     }
 
@@ -38,7 +69,8 @@ BasePage {
         onClicked: control.confirmPassword()
         anchors {
             horizontalCenter: parent.horizontalCenter
-            top: passwordRect.bottom
+            bottom: passwordRect.bottom
+            bottomMargin: 10
         }
     }
 
