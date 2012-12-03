@@ -561,6 +561,7 @@ Page {
             privateProps.webRadioStatus = false
 
             privateProps.currentChoice = kind
+            page.currentLink = -1
 
             if (kind === 0)
                 privateProps.cameraStatus = true
