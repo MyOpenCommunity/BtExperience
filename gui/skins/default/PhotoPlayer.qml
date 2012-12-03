@@ -66,148 +66,149 @@ Page {
             topMargin: frameBg.height / 100 * 2.44
             horizontalCenter: frameBg.horizontalCenter
         }
-    }
 
-    ButtonImageThreeStates {
-        id: prevButton
+        ButtonImageThreeStates {
+            id: prevButton
 
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
-        defaultImage: "images/common/ico_previous_track.svg"
-        pressedImage: "images/common/ico_previous_track_P.svg"
-        anchors {
-            verticalCenter: bottomBarBg.verticalCenter
-            left: bottomBarBg.left
-            leftMargin: frameBg.height / 100 * 2.81
+            defaultImageBg: "images/common/btn_player_comando.svg"
+            pressedImageBg: "images/common/btn_player_comando_P.svg"
+            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImage: "images/common/ico_previous_track.svg"
+            pressedImage: "images/common/ico_previous_track_P.svg"
+            anchors {
+                verticalCenter: bottomBarBg.verticalCenter
+                left: bottomBarBg.left
+                leftMargin: frameBg.height / 100 * 2.81
+            }
+
+            onClicked: global.photoPlayer.prevPhoto()
+            status: 0
         }
 
-        onClicked: global.photoPlayer.prevPhoto()
-        status: 0
-    }
+        Item {
+            // I used an Item to define some specific states for the playButton
+            // please note that playButton is a ButtonImageThreeStates so it defines
+            // its internal states, it is neither possible nor desirable to redefine
+            // these internal states
+            id: playButtonItem
 
-    Item {
-        // I used an Item to define some specific states for the playButton
-        // please note that playButton is a ButtonImageThreeStates so it defines
-        // its internal states, it is neither possible nor desirable to redefine
-        // these internal states
-        id: playButtonItem
+            width: playButton.width
+            height: playButton.height
 
-        width: playButton.width
-        height: playButton.height
+            anchors {
+                verticalCenter: bottomBarBg.verticalCenter
+                left: prevButton.right
+                leftMargin: frameBg.height / 100 * 0.67
+            }
 
-        anchors {
-            verticalCenter: bottomBarBg.verticalCenter
-            left: prevButton.right
-            leftMargin: frameBg.height / 100 * 0.67
+            ButtonImageThreeStates {
+                id: playButton
+
+                defaultImageBg: "images/common/btn_play_pause.svg"
+                pressedImageBg: "images/common/btn_play_pause_P.svg"
+                shadowImage: "images/common/ombra_btn_play_pause.svg"
+                defaultImage: "images/common/ico_play.svg"
+                pressedImage: "images/common/ico_play_P.svg"
+                anchors.centerIn: parent
+
+                onClicked: {
+                    if (playButtonItem.state === "")
+                        playButtonItem.state = "slideshow"
+                    else
+                        playButtonItem.state = ""
+                }
+
+                status: 0
+
+                Timer {
+                    id: slideshowTimer
+
+                    interval: 10000 // TODO where to take this value?
+                    running: false
+                    repeat: true
+                    onTriggered: global.photoPlayer.nextPhoto()
+                }
+            }
+
+            states: [
+                State {
+                    name: "slideshow"
+                    PropertyChanges {
+                        target: slideshowTimer
+                        running: true
+                    }
+                    PropertyChanges {
+                        target: playButton
+                        defaultImage: "images/common/ico_pause.svg"
+                        pressedImage: "images/common/ico_pause_P.svg"
+                    }
+                }
+            ]
         }
 
         ButtonImageThreeStates {
-            id: playButton
+            id: nextButton
 
-            defaultImageBg: "images/common/btn_play_pause.svg"
-            pressedImageBg: "images/common/btn_play_pause_P.svg"
-            shadowImage: "images/common/ombra_btn_play_pause.svg"
-            defaultImage: "images/common/ico_play.svg"
-            pressedImage: "images/common/ico_play_P.svg"
-            anchors.centerIn: parent
-
-            onClicked: {
-                if (playButtonItem.state === "")
-                    playButtonItem.state = "slideshow"
-                else
-                    playButtonItem.state = ""
+            defaultImageBg: "images/common/btn_player_comando.svg"
+            pressedImageBg: "images/common/btn_player_comando_P.svg"
+            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImage: "images/common/ico_next_track.svg"
+            pressedImage: "images/common/ico_next_track_P.svg"
+            anchors {
+                verticalCenter: bottomBarBg.verticalCenter
+                left: playButtonItem.right
+                leftMargin: frameBg.height / 100 * 0.67
             }
+
+            onClicked: global.photoPlayer.nextPhoto()
 
             status: 0
+        }
 
-            Timer {
-                id: slideshowTimer
+        ButtonImageThreeStates {
+            id: folderButton
 
-                interval: 10000 // TODO where to take this value?
-                running: false
-                repeat: true
-                onTriggered: global.photoPlayer.nextPhoto()
+            defaultImageBg: "images/common/btn_player_comando.svg"
+            pressedImageBg: "images/common/btn_player_comando_P.svg"
+            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImage: "images/common/ico_browse.svg"
+            pressedImage: "images/common/ico_browse_P.svg"
+            anchors {
+                verticalCenter: bottomBarBg.verticalCenter
+                left: nextButton.right
+                leftMargin: frameBg.height / 100 * 2.15
             }
+
+            onClicked: Stack.backToPage("Devices.qml")
+            status: 0
         }
 
-        states: [
-            State {
-                name: "slideshow"
-                PropertyChanges {
-                    target: slideshowTimer
-                    running: true
-                }
-                PropertyChanges {
-                    target: playButton
-                    defaultImage: "images/common/ico_pause.svg"
-                    pressedImage: "images/common/ico_pause_P.svg"
-                }
+        ButtonImageThreeStates {
+            id: fullScreenToggle
+
+            defaultImageBg: "images/common/btn_player_comando.svg"
+            pressedImageBg: "images/common/btn_player_comando_P.svg"
+            selectedImageBg: "images/common/btn_player_comando_S.svg"
+            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImage: "images/common/ico_fullscreen.svg"
+            pressedImage: "images/common/ico_fullscreen.svg"
+            selectedImage: "images/common/ico_chiudi_fullscreen.svg"
+            anchors {
+                verticalCenter: bottomBarBg.verticalCenter
+                right: bottomBarBg.right
+                rightMargin: frameBg.height / 100 * 2.81
             }
-        ]
+
+            onClicked: {
+                if (player.state === "")
+                    player.state = "fullscreen"
+                else
+                    player.state = ""
+            }
+            status: 0
+        }
     }
 
-    ButtonImageThreeStates {
-        id: nextButton
-
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
-        defaultImage: "images/common/ico_next_track.svg"
-        pressedImage: "images/common/ico_next_track_P.svg"
-        anchors {
-            verticalCenter: bottomBarBg.verticalCenter
-            left: playButtonItem.right
-            leftMargin: frameBg.height / 100 * 0.67
-        }
-
-        onClicked: global.photoPlayer.nextPhoto()
-
-        status: 0
-    }
-
-    ButtonImageThreeStates {
-        id: folderButton
-
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
-        defaultImage: "images/common/ico_browse.svg"
-        pressedImage: "images/common/ico_browse_P.svg"
-        anchors {
-            verticalCenter: bottomBarBg.verticalCenter
-            left: nextButton.right
-            leftMargin: frameBg.height / 100 * 2.15
-        }
-
-        onClicked: Stack.backToPage("Devices.qml")
-        status: 0
-    }
-
-    ButtonImageThreeStates {
-        id: fullScreenToggle
-
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        selectedImageBg: "images/common/btn_player_comando_S.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
-        defaultImage: "images/common/ico_fullscreen.svg"
-        pressedImage: "images/common/ico_fullscreen.svg"
-        selectedImage: "images/common/ico_chiudi_fullscreen.svg"
-        anchors {
-            verticalCenter: bottomBarBg.verticalCenter
-            right: bottomBarBg.right
-            rightMargin: frameBg.height / 100 * 2.81
-        }
-
-        onClicked: {
-            if (player.state === "")
-                player.state = "fullscreen"
-            else
-                player.state = ""
-        }
-        status: 0
-    }
 
     function backButtonClicked() {
         Stack.backToMultimedia()
