@@ -45,6 +45,14 @@ Page {
             right: parent.right
             bottom: parent.bottom
         }
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                bottomBarBg.visible = true
+                bottomBarBg.restartAutoHide()
+            }
+        }
     }
 
     Image {
@@ -59,6 +67,12 @@ Page {
 
     SvgImage {
         id: bottomBarBg
+
+        property bool enableAutoHide: player.state === "fullscreen"
+
+        function restartAutoHide() {
+            hidingTimer.restart()
+        }
 
         source: "images/common/bg_player.svg"
         anchors {
@@ -206,6 +220,23 @@ Page {
                     player.state = ""
             }
             status: 0
+        }
+
+        Timer {
+            id: hidingTimer
+            interval: 5000
+            onTriggered: {
+                if (bottomBarBg.enableAutoHide)
+                    bottomBarBg.visible = false
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                mouse.accepted = false
+                bottomBarBg.restartAutoHide()
+            }
         }
     }
 
