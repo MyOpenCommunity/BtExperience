@@ -104,11 +104,7 @@ Item {
             if (!global.guiSettings.energyPopup)
                 return
 
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.MONTHLY_REPORT_ARRIVING})
-            }
-            else
-                privateProps.monthlyReportArriving()
+            privateProps.addNotification({"type": Script.MONTHLY_REPORT_ARRIVING})
         }
     }
 
@@ -131,13 +127,7 @@ Item {
     Connections {
         id: vctConnection
         target: null
-        onIncomingCall: {
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.VCT_INCOMING_CALL})
-            }
-            else
-                privateProps.vctIncomingCall()
-        }
+        onIncomingCall: privateProps.addNotification({"type": Script.VCT_INCOMING_CALL})
         onCallAnswered: {
             global.screenState.enableState(ScreenState.ForcedNormal)
             if (vctConnection.target.isIpCall)
@@ -165,13 +155,7 @@ Item {
     Connections {
         id: intercomConnection
         target: null
-        onIncomingCall: {
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.INTERCOM_INCOMING_CALL})
-            }
-            else
-                privateProps.intercomIncomingCall()
-        }
+        onIncomingCall: privateProps.addNotification({"type": Script.INTERCOM_INCOMING_CALL})
         onCallAnswered: {
             global.screenState.enableState(ScreenState.ForcedNormal)
             if (intercomConnection.target.isIpCall)
@@ -203,56 +187,26 @@ Item {
     Connections {
         id: antintrusionConnection
         target: null
-        onNewAlarm: {
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.ALARM_ARRIVING, "data": alarm})
-            }
-            else
-                privateProps.alarmArriving(alarm)
-        }
+        onNewAlarm: privateProps.addNotification({"type": Script.ALARM_ARRIVING, "data": alarm})
     }
 
     Connections {
         id: stopAndGoConnection
         target: null
-        onStopAndGoDeviceChanged: {
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.STOP_GO_DEVICE_CHANGING, "data": stopGoDevice})
-            }
-            else
-                privateProps.stopAndGoDeviceChanging(stopGoDevice)
-        }
+        onStopAndGoDeviceChanged: privateProps.addNotification({"type": Script.STOP_GO_DEVICE_CHANGING, "data": stopGoDevice})
     }
 
     Connections {
         id: energiesConnection
         target: null
-        onThresholdExceeded: {
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.THRESHOLD_EXCEEDING, "data": energyDevice})
-            }
-            else
-                privateProps.thresholdExceeding(energyDevice)
-        }
-        onGoalReached: {
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.GOAL_REACHING, "data": energyDevice})
-            }
-            else
-                privateProps.goalReaching(energyDevice)
-        }
+        onThresholdExceeded: privateProps.addNotification({"type": Script.THRESHOLD_EXCEEDING, "data": energyDevice})
+        onGoalReached: privateProps.addNotification({"type": Script.GOAL_REACHING, "data": energyDevice})
     }
 
     Connections {
         id: messagesConnection
         target: null
-        onUnreadMessagesChanged: {
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.UNREAD_MESSAGES_UPDATING})
-            }
-            else
-                privateProps.unreadMessagesUpdate()
-        }
+        onUnreadMessagesChanged: privateProps.addNotification({"type": Script.UNREAD_MESSAGES_UPDATING})
     }
 
     Connections {
@@ -261,13 +215,7 @@ Item {
         onRingAlarmClock: {
             global.ringtoneManager.playRingtoneAndKeepState(global.extraPath + "10/alarm.wav", AudioState.Ringtone)
         }
-        onAlarmStarted: {
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.ALARM_CLOCK_TRIGGERING, "data": alarmClock})
-            }
-            else
-                privateProps.alarmClockTriggering(alarmClock)
-        }
+        onAlarmStarted: privateProps.addNotification({"type": Script.ALARM_CLOCK_TRIGGERING, "data": alarmClock})
         onAlarmActiveChanged: {
             if (clocksConnection.target.alarmActive)
                 global.screenState.enableState(ScreenState.ForcedNormal)
@@ -285,13 +233,7 @@ Item {
     Connections {
         id: scenarioConnection
         target: null
-        onScenarioActivated: {
-            if (Stack.isPageChanging(changePageDone)) {
-                Script.delayedNotifications.push({"type": Script.SCENARIO_ACTIVATION, "data": description})
-            }
-            else
-                privateProps.scenarioActivation(description)
-        }
+        onScenarioActivated: privateProps.addNotification({"type": Script.SCENARIO_ACTIVATION, "data": description})
         onScenarioModuleChanged: {
             if (scenario.status === ScenarioModule.Editing)
                 Stack.backToHome()
@@ -322,32 +264,12 @@ Item {
     }
 
     onChangePageDone: {
-        if (Script.delayedNotifications.length === 0)
-            return
+        while (Script.delayedNotifications.length) {
+            var notify = Script.delayedNotifications[0]
+            Script.delayedNotifications.shift()
 
-        var notify = Script.delayedNotifications[0]
-        Script.delayedNotifications.shift()
-
-        if (notify["type"] === Script.ALARM_ARRIVING)
-            privateProps.alarmArriving(notify["data"])
-        else if (notify["type"] === Script.GOAL_REACHING)
-            privateProps.goalReaching(notify["data"])
-        else if (notify["type"] === Script.MONTHLY_REPORT_ARRIVING)
-            privateProps.monthlyReportArriving()
-        else if (notify["type"] === Script.VCT_INCOMING_CALL)
-            privateProps.vctIncomingCall()
-        else if (notify["type"] === Script.INTERCOM_INCOMING_CALL)
-            privateProps.intercomIncomingCall()
-        else if (notify["type"] === Script.STOP_GO_DEVICE_CHANGING)
-            privateProps.stopAndGoDeviceChanging(notify["data"])
-        else if (notify["type"] === Script.THRESHOLD_EXCEEDING)
-            privateProps.thresholdExceeding(notify["data"])
-        else if (notify["type"] === Script.SCENARIO_ACTIVATION)
-            privateProps.scenarioActivation(notify["data"])
-        else if (notify["type"] === Script.ALARM_CLOCK_TRIGGERING)
-            privateProps.alarmClockTriggering(notify["data"])
-        else if (notify["type"] === Script.UNREAD_MESSAGES_UPDATING)
-            privateProps.unreadMessagesUpdate()
+            privateProps.dispatchNotification(notify)
+        }
     }
 
     QtObject {
@@ -359,6 +281,36 @@ Item {
         property variant dangersModel: undefined
         property variant recordingModel: undefined
         property variant clocksModel: undefined
+
+        function addNotification(notify) {
+            if (Stack.isPageChanging(changePageDone))
+                Script.delayedNotifications.push(notify)
+            else
+                dispatchNotification(notify)
+        }
+
+        function dispatchNotification(notify) {
+            if (notify["type"] === Script.ALARM_ARRIVING)
+                privateProps.alarmArriving(notify["data"])
+            else if (notify["type"] === Script.GOAL_REACHING)
+                privateProps.goalReaching(notify["data"])
+            else if (notify["type"] === Script.MONTHLY_REPORT_ARRIVING)
+                privateProps.monthlyReportArriving()
+            else if (notify["type"] === Script.VCT_INCOMING_CALL)
+                privateProps.vctIncomingCall()
+            else if (notify["type"] === Script.INTERCOM_INCOMING_CALL)
+                privateProps.intercomIncomingCall()
+            else if (notify["type"] === Script.STOP_GO_DEVICE_CHANGING)
+                privateProps.stopAndGoDeviceChanging(notify["data"])
+            else if (notify["type"] === Script.THRESHOLD_EXCEEDING)
+                privateProps.thresholdExceeding(notify["data"])
+            else if (notify["type"] === Script.SCENARIO_ACTIVATION)
+                privateProps.scenarioActivation(notify["data"])
+            else if (notify["type"] === Script.ALARM_CLOCK_TRIGGERING)
+                privateProps.alarmClockTriggering(notify["data"])
+            else if (notify["type"] === Script.UNREAD_MESSAGES_UPDATING)
+                privateProps.unreadMessagesUpdate()
+        }
 
         // ends the right call type
         function endActualCall(pagename) {
