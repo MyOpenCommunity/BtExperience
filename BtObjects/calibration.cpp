@@ -46,7 +46,11 @@ Calibration::Calibration(QObject *parent) : QObject(parent)
 
 bool Calibration::exists() const
 {
+#if defined(BT_HARDWARE_X11)
+	return true;
+#else
 	return QFile::exists(pointercalFile());
+#endif
 }
 
 bool Calibration::eventFilter(QObject *obj, QEvent *evt)
