@@ -283,7 +283,7 @@ Item {
         property variant clocksModel: undefined
 
         function addNotification(notify) {
-            if (Stack.isPageChanging(changePageDone))
+            if (Stack.isPageChanging(changePageDone) || global.screenState.state === ScreenState.Calibration)
                 Script.delayedNotifications.push(notify)
             else
                 dispatchNotification(notify)
