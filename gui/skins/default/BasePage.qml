@@ -40,6 +40,11 @@ Image {
         }
     }
 
+    // Warning: please note that popupLoader doesn't take ownership of the
+    // component that you have created. If you try to install a component which
+    // may be destroyed before user input finished, it will not work.
+    // Example: create a popup from a MenuColumn that immediately after is
+    // destroyed.
     function installPopup(sourceComponent) {
         popupLoader.sourceComponent = sourceComponent
         popupLoader.item.closePopup.connect(closePopup)
