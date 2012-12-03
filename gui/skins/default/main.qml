@@ -31,6 +31,9 @@ Item {
         Stack.mainContainer = container
         Stack.debugTiming = global.debugTiming
         Stack.pushPage("HomePage.qml")
+
+        if (!global.calibration.exists())
+            Stack.pushPage("Calibration.qml")
     }
 
     FontLoader {
