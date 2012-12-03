@@ -1,7 +1,5 @@
 import QtQuick 1.1
 import Components 1.0
-import "../../js/Stack.js" as Stack
-
 
 MenuColumn {
     id: column
@@ -16,33 +14,17 @@ MenuColumn {
         SettingsHomeQuicklinks {}
     }
 
-    function alertOkClicked() {
-        skinItem.description = pageObject.names.get('SKIN', privateProps.skin);
-        global.guiSettings.skin = privateProps.skin
-        Stack.backToHome()
-    }
-
-    // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
         id: privateProps
         property int currentIndex: -1
-        property int skin: -1
+    }
+
+    Connections {
+        target: global.guiSettings
+        onSkinChanged: skinItem.description = pageObject.names.get('SKIN', global.guiSettings.skin)
     }
 
     onChildDestroyed: privateProps.currentIndex = -1
-
-    onChildLoaded: {
-        if (child.skinChanged)
-            child.skinChanged.connect(skinChanged)
-    }
-
-    function skinChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.TextLanguage = value;
-        // TODO remove when model is implemented
-        privateProps.skin = value
-        pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
-    }
 
     PaginatorColumn {
         id: paginator
