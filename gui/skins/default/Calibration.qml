@@ -50,6 +50,7 @@ BasePage {
                 console.log("Calibration done")
                 if (global.calibration.applyCalibration()) {
                     global.calibration.saveCalibration()
+                    global.screenState.disableState(ScreenState.Calibration)
                     Stack.popPage()
                     return
                 }
@@ -68,6 +69,4 @@ BasePage {
         global.calibration.startCalibration()
         updateCrosshair()
     }
-
-    Component.onDestruction: global.screenState.disableState(ScreenState.Calibration)
 }
