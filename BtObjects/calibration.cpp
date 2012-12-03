@@ -5,6 +5,7 @@
 #include <QWSServer>
 #include <QMouseEvent>
 #include <QDeclarativeView>
+#include <QTimer>
 
 #include <QtDebug>
 
@@ -59,6 +60,16 @@ bool Calibration::eventFilter(QObject *obj, QEvent *evt)
 	return false;
 }
 
+void Calibration::grabDeclarativeViewMouse()
+{
+	QWidget *view = findDeclarativeView();
+
+	if (view->isVisible())
+		view->grabMouse();
+	else
+		QTimer::singleShot(1, this, SLOT(grabDeclarativeViewMouse()));
+}
+
 void Calibration::startCalibration()
 {
 	// Backup the old calibration file
@@ -66,7 +77,7 @@ void Calibration::startCalibration()
 		system(qPrintable(QString("cp %1 %1.calibrated").arg(pointercal_file)));
 #if defined(Q_WS_QWS)
 	QWSServer::mouseHandler()->clearCalibration();
-	findDeclarativeView()->grabMouse();
+	grabDeclarativeViewMouse();
 #endif
 	qApp->installEventFilter(this);
 }
