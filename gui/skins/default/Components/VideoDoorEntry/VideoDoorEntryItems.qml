@@ -29,7 +29,7 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("CCTV"), "component": cctv})
+            modelList.append({"name": qsTr("video control"), "component": cctv})
             modelList.append({"name": qsTr("intercom"), "component": intercom})
             modelList.append({"name": qsTr("pager"), "component": pager})
         }
