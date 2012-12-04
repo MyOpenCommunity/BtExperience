@@ -21,6 +21,7 @@ MenuColumn {
             name: itemObject.name
             hasChild: true
             enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
+            onEnabledChanged: column.closeChild()
             onDelegateClicked: {
                 var upnp = itemObject.sourceType === SourceObject.Upnp;
                 var props = {

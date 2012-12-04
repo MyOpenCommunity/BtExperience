@@ -51,6 +51,7 @@ MenuColumn {
                 name: itemObject.name
                 hasChild: true
                 enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
+                onEnabledChanged: column.closeChild()
                 onDelegateClicked: {
                     privateProps.currentIndex = -1
                     column._isStock = false
