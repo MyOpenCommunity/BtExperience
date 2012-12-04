@@ -163,6 +163,9 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(hourChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(sourceChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(amplifierChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(volumeChanged()), this, SIGNAL(persistItem()));
 
 	connect(timer_trigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
 	connect(timer_tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
