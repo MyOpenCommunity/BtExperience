@@ -42,7 +42,7 @@ MenuColumn {
             upperLabelVisible: false
             source: "../../images/termo/4-zone_temporizzato/bg_imposta-ora.svg"
             bottomLabel: qsTr("ringtone")
-            bottomText: qsTr("beep")
+            bottomText: column.dataModel.alarmType === AlarmClock.AlarmClockBeep ? qsTr("beep") : qsTr("sound diffusion")
             onEditClicked: Stack.pushPage("AlarmClockRingtonePage.qml", {"alarmClock": column.dataModel})
         }
 
