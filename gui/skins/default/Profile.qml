@@ -125,7 +125,6 @@ Page {
 
             for (var i = 0; i < mediaLinks.count; ++i) {
                 var obj = mediaLinks.getObject(i);
-                var text = obj.name
 
                 var component = getComponentFromType(obj.type)
 
@@ -169,7 +168,7 @@ Page {
                 res = pannableChild.mapFromItem(null, absArea.x + deltaX, absArea.y + deltaY)
 
                 component = getComponentFromType(link.type)
-                instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": link})
+                instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": link, "profile": profilePage.profile})
                 link.position = Qt.point(absArea.x + deltaX, absArea.y + deltaY)
 
                 // area margins are set to maximum quicklink size / 2; this info is used to draw
