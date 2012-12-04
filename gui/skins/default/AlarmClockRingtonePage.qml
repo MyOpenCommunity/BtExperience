@@ -10,10 +10,15 @@ Page {
     id: page
 
     property variant alarmClock: undefined
-    property int currentLink: -1
+
+    property int currentSourceIdx: -1
+    property int currentAmbientIdx: 0
+    property int currentAmplifierIdx: -1
 
     // the following properties are used by delegates
-    property variant actualModel: privateProps.currentChoice === 0 ? beepModel : kindModel
+    property variant actualModel: privateProps.currentChoice === 0 ? beepModel : _choicesModel
+    // the following properties are state dependant
+    property variant _choicesModel: kindModel
 
     text: qsTr("Alarm settings")
     source: "images/profiles.jpg"
@@ -22,37 +27,36 @@ Page {
         id: beepModel
     }
 
-    ListModel {
+    ObjectModel {
         id: kindModel
-
-        function getObject(index) {
-            return get(index)
-        }
-
-        Component.onCompleted: {
-            kindModel.append({"name": qsTr("aux")})
-            kindModel.append({"name": qsTr("radio")})
-            kindModel.append({"name": qsTr("radio ip")})
-            kindModel.append({"name": qsTr("sd")})
-            kindModel.append({"name": qsTr("usb")})
-        }
+        filters: [
+            {objectId: ObjectInterface.IdSoundSource}
+        ]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-//    MediaModel {
-//        id: soundDiffusionModel
-//        source: myHomeModels.mediaLinks
-//        containers: [-1] // not assigned yet
-//        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-//    }
+    ObjectModel {
+        id: ambientModel
+        filters: [
+            {objectId: ObjectInterface.IdMultiChannelSpecialAmbient},
+            {objectId: ObjectInterface.IdMultiChannelSoundAmbient},
+            {objectId: ObjectInterface.IdMonoChannelSoundAmbient},
+            {objectId: ObjectInterface.IdMultiGeneral},
+        ]
+    }
 
-//    ObjectModel {
-//        id: beepModel
-//        filters: [
-//            {objectId: ObjectInterface.IdExternalPlace},
-//            {objectId: ObjectInterface.IdSurveillanceCamera}
-//        ]
-//        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-//    }
+    ObjectModel {
+        id: amplifierModel
+        filters: [
+            {objectId: ObjectInterface.IdMultiAmbientAmplifier},
+            {objectId: ObjectInterface.IdSoundAmplifierGroup},
+            {objectId: ObjectInterface.IdSoundAmplifier},
+            {objectId: ObjectInterface.IdPowerAmplifier},
+            {objectId: ObjectInterface.IdAmplifierGeneral},
+        ]
+        containers: [privateProps.ambientUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
 
     SvgImage {
         id: bg
@@ -112,6 +116,7 @@ Page {
     }
 
     Column {
+        id: choices
         spacing: bg.height / 100 * 2.29
         anchors {
             left: bg.left
@@ -130,6 +135,32 @@ Page {
         }
     }
 
+    UbuntuLightText {
+        id: volumeText
+        text: qsTr("Volume")
+        font.pixelSize: 14
+        color: "white"
+        anchors {
+            left: bg.left
+            leftMargin: bg.width / 100 * 3.92
+            top: choices.bottom
+            topMargin: bg.height / 100 * 3
+        }
+    }
+
+    ControlSpin {
+        id: volumeSpin
+        text: page.alarmClock.volume + qsTr("%")
+        anchors {
+            left: bg.left
+            leftMargin: bg.width / 100 * 3.92
+            top: volumeText.bottom
+            topMargin: bg.height / 100 * 1.57
+        }
+        onMinusClicked: page.alarmClock.decrementVolume()
+        onPlusClicked: page.alarmClock.incrementVolume()
+    }
+
     // upper-right panel
     UbuntuLightText {
         id: sourceText
@@ -140,7 +171,72 @@ Page {
             left: verticalSeparator.left
             leftMargin: bg.width / 100 * 3.92
             top: horizontalSeparator.bottom
-            topMargin: bg.height / 100 * 1.57
+            topMargin: bg.height / 100 * 2
+        }
+    }
+
+    ButtonImageThreeStates {
+        id: leftAmbient
+
+        visible: privateProps.currentChoice === 1
+        opacity: 0
+        defaultImageBg: "images/common/button_pager.svg"
+        pressedImageBg: "images/common/button_pager_press.svg"
+        shadowImage: "images/common/shadow_button_pager.svg"
+        defaultImage: "images/common/icon_pager_arrow_prev.svg"
+        pressedImage: "images/common/icon_pager_arrow_prev_p.svg"
+        anchors {
+            left: verticalSeparator.left
+            leftMargin: bg.width / 100 * 3.92
+            top: sourceText.bottom
+            topMargin: bg.height / 100 * 2
+        }
+        onClicked: {
+            if (page.currentAmbientIdx > 0) {
+                page.currentAmplifierIdx = -1
+                page.currentAmbientIdx -= 1
+            }
+        }
+    }
+
+    UbuntuLightText {
+        id: ambientText
+
+        visible: privateProps.currentChoice === 1
+        opacity: 0
+        text: ambientModel.getObject(page.currentAmbientIdx).name
+        horizontalAlignment: Text.AlignHCenter
+        font.pixelSize: 14
+        color: "white"
+        anchors {
+            left: leftAmbient.right
+            right: rightAmbient.left
+            top: sourceText.bottom
+            topMargin: bg.height / 100 * 2
+        }
+    }
+
+    ButtonImageThreeStates {
+        id: rightAmbient
+
+        visible: privateProps.currentChoice === 1
+        opacity: 0
+        defaultImageBg: "images/common/button_pager.svg"
+        pressedImageBg: "images/common/button_pager_press.svg"
+        shadowImage: "images/common/shadow_button_pager.svg"
+        defaultImage: "images/common/icon_pager_arrow.svg"
+        pressedImage: "images/common/icon_pager_arrow_p.svg"
+        anchors {
+            right: pageChanger.left
+            rightMargin: bg.width / 100 * 3.92
+            top: sourceText.bottom
+            topMargin: bg.height / 100 * 2
+        }
+        onClicked: {
+            if (page.currentAmbientIdx < ambientModel.count - 1) {
+                page.currentAmplifierIdx = -1
+                page.currentAmbientIdx += 1
+            }
         }
     }
 
@@ -151,15 +247,18 @@ Page {
         buttonVisible: false
         spacing: 5
         anchors {
-            top: sourceText.bottom
-            topMargin: bg.height / 100 * 1.57
+            top: ambientText.bottom
+            topMargin: bg.height / 100 * 5
             left: verticalSeparator.left
             leftMargin: bg.width / 100 * 3.92
             right: verticalSeparator.right
             bottom: bg.bottom
             bottomMargin: bg.width / 100 * 4.58
         }
-        onCurrentPageChanged: page.currentLink = -1
+        onCurrentPageChanged: {
+            page.currentSourceIdx = -1
+            page.currentAmplifierIdx = -1
+        }
         model: page.actualModel
         delegate: Item {
             width: delegateRadio.width
@@ -170,12 +269,33 @@ Page {
 
                 property variant itemObject: page.actualModel.getObject(index)
 
-                width: bg.width / 100 * 54.95
+                width: bg.width / 100 * 40
                 text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name
-                onClicked: page.currentLink = index
-                status: page.currentLink === index
+                onClicked: {
+                    if (page.state === "")
+                        page.currentSourceIdx = index
+                    else
+                        page.currentAmplifierIdx = index
+                }
+                status: (page.state === "" && page.currentSourceIdx === index) ||
+                        (page.state === "amplifiers" && page.currentAmplifierIdx === index)
             }
         }
+    }
+
+    ButtonThreeStates {
+        id: pageChanger
+
+        visible: privateProps.currentChoice === 1
+        defaultImage: "images/common/alarm_clock/freccia_dx.svg"
+        pressedImage: "images/common/alarm_clock/freccia_dx_P.svg"
+        anchors {
+            top: horizontalSeparator.bottom
+            topMargin: bg.height / 100 * 5.72
+            right: bg.right
+            rightMargin: bg.width / 100 * 3.92
+        }
+        onClicked:page.state = page.state === "" ? "amplifiers" : ""
     }
 
     // bottom bar
@@ -215,25 +335,11 @@ Page {
             right: cancelButton.left
         }
         onClicked: {
-            console.log("_______________________ onClicked ___________________________")
-            console.log("save data!!!")
-//            if (page.currentLink >= 0) {
-//                // saves selection on current profile
-//                var current = page.actualModel.getObject(page.currentLink)
-
-//                var name = ""
-//                if (current.name)
-//                    name = current.name
-//                var address = ""
-//                if (current.address)
-//                    address = current.address
-//                var btObject = current
-//                var x = -1
-//                var y = -1
-//                var media = privateProps.getTypeText(privateProps.currentChoice)
-
-//                soundDiffusionModel.append(myHomeModels.createQuicklink(page.profile.uii, media, name, address, btObject, x, y))
-//            }
+            page.alarmClock.alarmType = (privateProps.currentChoice === 0 ? AlarmClock.AlarmClockBeep : AlarmClock.AlarmClockSoundSystem)
+            if (page.currentSourceIdx >= 0)
+                page.alarmClock.source = kindModel.getObject(page.currentSourceIdx)
+            if (page.currentAmplifierIdx >= 0)
+                page.alarmClock.setAmplifierFromQObject(amplifierModel.getObject(page.currentAmplifierIdx))
             Stack.popPage()
         }
     }
@@ -255,6 +361,33 @@ Page {
         onClicked: Stack.popPage()
     }
 
+    states: [
+        State {
+            name: "amplifiers"
+            PropertyChanges {
+                target: pageChanger
+                defaultImage: "images/common/alarm_clock/freccia_sx.svg"
+                pressedImage: "images/common/alarm_clock/freccia_sx_P.svg"
+            }
+            PropertyChanges {
+                target: page
+                _choicesModel: amplifierModel
+            }
+            PropertyChanges {
+                target: ambientText
+                opacity: 1
+            }
+            PropertyChanges {
+                target: leftAmbient
+                opacity: 1
+            }
+            PropertyChanges {
+                target: rightAmbient
+                opacity: 1
+            }
+        }
+    ]
+
     QtObject {
         id: privateProps
 
@@ -264,6 +397,7 @@ Page {
 
         property bool beepStatus: true
         property bool soundDiffusionStatus: false
+        property int ambientUii: ambientModel.getObject(page.currentAmbientIdx).uii
 
         function getStatus(kind, dummy) {
             if (kind === 0)
@@ -282,6 +416,11 @@ Page {
             privateProps.soundDiffusionStatus = false
 
             privateProps.currentChoice = kind
+            page.currentSourceIdx = -1
+            page.currentAmplifierIdx = -1
+            page.currentAmbientIdx = 0
+            if (kind === 0)
+                page.state = ""
 
             if (kind === 0)
                 privateProps.beepStatus = true
