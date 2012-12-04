@@ -7,10 +7,16 @@ Item {
     id: buttonsColumn
     property bool backButton: true
     property bool systemsButton: true
+    property bool settingsButton: true
+    property bool roomsButton: true
+    property bool multimediaButton: true
     property alias text: label.text
 
     signal backClicked
     signal systemsClicked
+    signal settingsClicked
+    signal roomsClicked
+    signal multimediaClicked
 
     // private implementation
     width: backButton.width
@@ -29,6 +35,21 @@ Item {
         ButtonSystems {
             visible: buttonsColumn.systemsButton
             onClicked: buttonsColumn.systemsClicked()
+        }
+
+        ButtonSettings {
+            visible: buttonsColumn.settingsButton
+            onClicked: buttonsColumn.settingsClicked()
+        }
+
+        ButtonRooms {
+            visible: buttonsColumn.roomsButton
+            onClicked: buttonsColumn.roomsClicked()
+        }
+
+        ButtonMultimedia {
+            visible: buttonsColumn.multimediaButton
+            onClicked: buttonsColumn.multimediaClicked()
         }
     }
     Rectangle {

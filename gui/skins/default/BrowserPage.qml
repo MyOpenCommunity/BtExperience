@@ -19,6 +19,16 @@ Page {
     source: "images/multimedia.jpg"
     text: qsTr("multimedia")
 
+    function multimediaButtonClicked() {
+        Stack.backToMultimedia()
+    }
+
+    function systemPageClosed() {
+        Stack.backToMultimedia()
+    }
+
+    showMultimediaButton: true
+
     SystemsModel { id: linksModel; systemId: page.containerId; source: myHomeModels.mediaContainers }
 
     MediaModel {

@@ -10,11 +10,13 @@ SystemPage {
     rootColumn: Component { DevicesSystem {} }
     names: MultimediaNames {}
 
-    function systemsButtonClicked() {
+    function multimediaButtonClicked() {
         Stack.backToMultimedia()
     }
 
     function systemPageClosed() {
         Stack.backToMultimedia()
     }
+
+    showMultimediaButton: true
 }

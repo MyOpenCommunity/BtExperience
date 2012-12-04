@@ -9,7 +9,10 @@ ButtonHomePageLink 1.0 ButtonHomePageLink.qml
 ButtonImageThreeStates 1.0 ButtonImageThreeStates.qml
 ButtonMediaControl 1.0 ButtonMediaControl.qml
 ButtonMinusPlus 1.0 ButtonMinusPlus.qml
+ButtonMultimedia 1.0 ButtonMultimedia.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
+ButtonRooms 1.0 ButtonRooms.qml
+ButtonSettings 1.0 ButtonSettings.qml
 ButtonSystems 1.0 ButtonSystems.qml
 ButtonTextImageThreeStates 1.0 ButtonTextImageThreeStates.qml
 ButtonThreeStates 1.0 ButtonThreeStates.qml

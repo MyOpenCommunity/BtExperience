@@ -13,7 +13,12 @@ Page {
         Stack.backToSystemOrHome()
     }
 
+    function settingsButtonClicked() {
+        Stack.backToOptions()
+    }
+
     showSystemsButton: true
+    showSettingsButton: true
     text: qsTr("energy consumption")
     source: "images/energy.jpg"
 

@@ -15,7 +15,12 @@ Page {
         Stack.backToPage("EnergyManagement.qml")
     }
 
+    function settingsButtonClicked() {
+        Stack.backToOptions()
+    }
+
     showSystemsButton: true
+    showSettingsButton: true
     text: qsTr("energy consumption")
     source: "images/energy.jpg"
 

@@ -12,13 +12,17 @@ Page {
 
     source: room.image
 
-    function systemsButtonClicked() {
+    function roomsButtonClicked() {
         Stack.backToRoom()
     }
 
     text: room.description
-    showBackButton: false
-    showSystemsButton: true
+    showBackButton: true
+    showRoomsButton: true
+
+    function backButtonClicked() {
+        Stack.backToRoom()
+    }
 
     Names {
         id: translations
