@@ -1,4 +1,5 @@
 AdvancedScenario 1.0 AdvancedScenario.qml
+ScenarioFeedback 1.0 ScenarioFeedback.qml
 ScenarioSystem 1.0 ScenarioSystem.qml
 ScheduledScenario 1.0 ScheduledScenario.qml
 SimpleScenario 1.0 SimpleScenario.qml

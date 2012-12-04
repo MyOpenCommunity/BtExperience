@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
+import Components.Scenarios 1.0
 
 
 MenuColumn {
@@ -50,32 +51,9 @@ MenuColumn {
 
     Component {
         id: scenarioLocked
-        SvgImage {
-            signal closePopup
-
-            source: "../../images/scenarios/bg_feedback.svg"
-
-            SvgImage {
-                id: icon
-                source: "../../images/scenarios/ico_error.svg"
-                anchors.left: parent.left
-            }
-
-            UbuntuMediumText {
-                text: qsTr("programming impossible")
-                anchors {
-                    left: icon.right
-                    leftMargin: parent.width / 100 * 2
-                    verticalCenter: parent.verticalCenter
-                }
-                font.pixelSize: 18
-            }
-
-            Timer {
-                interval: privateProps.errorTimeout
-                running: true
-                onTriggered: parent.closePopup()
-            }
+        ScenarioFeedback {
+            text: qsTr("programming impossible")
+            isOk: false
         }
     }
 

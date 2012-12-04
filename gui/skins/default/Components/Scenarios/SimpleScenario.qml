@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import Components.Text 1.0
 
 MenuColumn {
     id: column
@@ -7,7 +8,20 @@ MenuColumn {
         name: qsTr("activate")
         onClicked: {
             column.dataModel.activate()
-            column.closeColumn();
+            pageObject.installPopup(feedback)
+        }
+    }
+
+    Connections {
+        target: pageObject.popupLoader.item
+        onClosePopup: column.closeColumn()
+    }
+
+    Component {
+        id: feedback
+        ScenarioFeedback {
+            text: column.dataModel.name + qsTr(" activated")
+            isOk: true
         }
     }
 }
