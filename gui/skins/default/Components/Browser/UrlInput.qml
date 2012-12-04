@@ -30,7 +30,22 @@ import Components.Text 1.0
      UbuntuMediumTextInput {
          id: urlText
          horizontalAlignment: TextEdit.AlignLeft
-         font.pixelSize: 14;
+         font.pixelSize: 14
+         selectedTextColor: "white"
+         selectionColor: "royalblue"
+         onFocusChanged: {
+             if (focus)
+                 focusTimer.start()
+         }
+
+         // We get a focus event then a mouse click, so we immediately lose the
+         // selection. Workaround suggested in:
+         // http://comments.gmane.org/gmane.comp.lib.qt.qml/2650
+         Timer {
+             id: focusTimer
+             interval: 1
+             onTriggered: urlText.selectAll()
+         }
 
          onTextChanged: container.urlChanged()
 
