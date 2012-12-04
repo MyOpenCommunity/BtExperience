@@ -222,7 +222,7 @@ BasePage {
                 iconPressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_opzioni_P.svg" :
                                                                              "images/home/ico_opzioni.svg"
                 onClicked: Stack.goToPage("Settings.qml")
-                textOption: qsTr("otpions")
+                textOption: qsTr("options")
                 enabled: EventManager.eventManager.scenarioRecording === false
             }
 

@@ -75,6 +75,9 @@ signals:
 protected:
 	bool eventFilter(QObject *obj, QEvent *evt);
 
+private slots:
+	void grabDeclarativeViewMouse();
+
 private:
 	bool sanityCheck();
 

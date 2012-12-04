@@ -9,6 +9,7 @@
 
 #if defined(Q_WS_QWS)
 #include <QScreen>
+#include <QWSServer>
 #endif
 
 #include <QtGui/QApplication>
@@ -252,6 +253,10 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	SignalsHandler *sh = installSignalsHandler();
+
+#ifdef Q_WS_QWS
+	QWSServer::instance()->setBackground(QColor("black"));
+#endif
 
 	GeneralConfig general_config;
 	loadGeneralConfig(general_config);
