@@ -4,6 +4,6 @@ import QtQuick 1.1
 QuickLink {
     id: favoriteItem
 
-    page: "Browser.qml"
+    page: "ExternalBrowser.qml"
     imageSource: "../images/profiles/web.jpg"
 }

@@ -58,8 +58,11 @@ target.commands += true
 SOURCES += \
     main.cpp \
     audiostate.cpp \
+    applicationcommon.cpp \
+    browserprocess.cpp \
     eventfilters.cpp \
     globalproperties.cpp \
+    globalpropertiescommon.cpp \
     guisettings.cpp \
     hwkeys.cpp \
     imagereader.cpp \
@@ -71,8 +74,11 @@ SOURCES += \
 
 HEADERS += \
     audiostate.h \
+    applicationcommon.h \
+    browserprocess.h \
     eventfilters.h \
     globalproperties.h \
+    globalpropertiescommon.h \
     guisettings.h \
     hwkeys.h \
     imagereader.h \
