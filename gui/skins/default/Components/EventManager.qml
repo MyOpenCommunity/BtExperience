@@ -57,8 +57,6 @@ Item {
             {objectId: ObjectInterface.IdAlarmClockNotifier}
         ]
         Component.onCompleted: {
-            privateProps.updateTimerInterval()
-            monthlyReportTimer.start()
             for (var i = 0; i < listModel.count; ++i) {
                 var obj = listModel.getObject(i)
                 switch (obj.objectId) {
@@ -99,12 +97,41 @@ Item {
 
     Timer {
         id: monthlyReportTimer
+
+        property bool notify: false
+
         repeat: true
+        interval: 10000 // first shot in 10s
+        running: true
         onTriggered: {
+            updateTimer()
             if (!global.guiSettings.energyPopup)
                 return
-
+            if (!notify)
+                return
             privateProps.addNotification({"type": Script.MONTHLY_REPORT_ARRIVING})
+        }
+
+        // function to update triggering interval and notify property
+        //
+        // the interval property is an int, so it can handle values only in the
+        // range [-2147483648, 2147483647]; a month can have more than 2147483647ms
+        // so we cannot set the interval to the next month 1st day, but we have to
+        // update the interval every day
+        function updateTimer() {
+            // stops the timer
+            monthlyReportTimer.stop()
+            // computes if it is first month day
+            var n = new Date()
+            var dayInMonth = n.getDate()
+            if (dayInMonth === 1)
+                notify = true // it is 1st, so notify
+            // computes next day 1s after midnight
+            var n2 = new Date(n.getFullYear(), n.getMonth(), dayInMonth + 1, 0, 0, 1, 0)
+            // updates interval to trigger tomorrow at midnight
+            monthlyReportTimer.interval = n2.getTime() - n.getTime()
+            // restarts timer
+            monthlyReportTimer.start()
         }
     }
 
@@ -382,19 +409,7 @@ Item {
             return false
         }
 
-        function updateTimerInterval() {
-            monthlyReportTimer.stop()
-            var n = new Date()
-            var n2 = new Date(n.getFullYear(), n.getMonth() + 1, 1)
-            var delta = n2.getTime() - n.getTime()
-            if (delta <= 0)
-                n2 = new Date(n.getFullYear(), n.getMonth() + 2, 1)
-            delta = n2.getTime() - n.getTime()
-            monthlyReportTimer.interval = delta
-        }
-
         function monthlyReportArriving() {
-            privateProps.updateTimerInterval()
             var p = privateProps.preparePopupPage(false)
             // adds monthly report notification
             p.addMonthlyReportNotification()
