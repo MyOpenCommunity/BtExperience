@@ -3,6 +3,7 @@
 #include "mediaobjects.h"
 #include "xml_functions.h"
 #include "xmlobject.h"
+#include "shared_functions.h"
 
 
 #include <QFile>
@@ -344,20 +345,31 @@ void AlarmClock::setDays(int new_value)
 
 void AlarmClock::setHour(int new_value)
 {
-	if (hour == new_value || new_value < 0 || new_value > 23)
-		return;
+	QTime t(hour, minute);
+	QTime new_time = addHours(t, new_value);
 
-	hour = new_value;
-	emit hourChanged();
+	if (new_time.hour() != hour)
+	{
+		hour = new_time.hour();
+		emit hourChanged();
+	}
 }
 
 void AlarmClock::setMinute(int new_value)
 {
-	if (minute == new_value || new_value < 0 || new_value > 59)
-		return;
+	QTime t(hour, minute);
+	QTime new_time = addMinutes(t, new_value);
 
-	minute = new_value;
-	emit minuteChanged();
+	if (new_time.minute() != minute)
+	{
+		minute = new_time.minute();
+		emit minuteChanged();
+	}
+	if (new_time.hour() != hour)
+	{
+		hour = new_time.hour();
+		emit hourChanged();
+	}
 }
 
 bool AlarmClock::isTriggerOnMondays() const
