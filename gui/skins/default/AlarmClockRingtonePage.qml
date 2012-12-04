@@ -388,6 +388,15 @@ Page {
         }
     ]
 
+    transitions: [
+        Transition {
+            ParallelAnimation {
+                NumberAnimation { property: "opacity"; duration: 400 }
+                AnchorAnimation { duration: 400 }
+            }
+        }
+    ]
+
     QtObject {
         id: privateProps
 
