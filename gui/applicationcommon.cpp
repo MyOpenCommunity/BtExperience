@@ -159,8 +159,6 @@ void ApplicationCommon::initialize()
 		// is inputmethod-enabled and tries to create the input method
 		QString module = env.value("QT_IM_MODULE");
 
-		unsetenv("QT_IM_MODULE");
-
 		QInputContext *ic = QInputContextFactory::create(module, qApp);
 
 		if (!ic)
