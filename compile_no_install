@@ -11,7 +11,7 @@ then
 fi
 
 MACHINE=$1
-POINTERCAL=/etc/pointercal
+POINTERCAL=/home/bticino/cfg/extra/pointercal
 
 if [ "$MACHINE" = "TS10" ]
 then

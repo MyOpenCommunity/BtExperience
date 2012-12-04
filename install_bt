@@ -49,9 +49,7 @@ export QWS_MOUSE_PROTO=Tslib:/dev/input/touchscreen0
 export QWS_DISPLAY=powervr
 export QT_IM_MODULE=MaliitDirect
 export LD_LIBRARY_PATH=/home/bticino/lib:
-export TSLIB_CALIBFILE=/home/bticino/cfg/extra/pointercal
-export POINTERCAL=\$TSLIB_CALIBFILE
-[ ! -e \$TSLIB_CALIBFILE ] && ts_calibrate
+export POINTERCAL_FILE=/home/bticino/cfg/extra/pointercal
 bin/BtExperience/BtExperience -qws -noswcursor &
 
 
