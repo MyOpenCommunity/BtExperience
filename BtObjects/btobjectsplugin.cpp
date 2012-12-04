@@ -1507,6 +1507,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a SourceBase instance");
 	qmlRegisterUncreatableType<SourceObject>(uri, 1, 0, "SourceObject",
 		"unable to create an SourceObject instance");
+	qmlRegisterUncreatableType<Amplifier>(uri, 1, 0, "Amplifier",
+		"unable to create an Amplifier instance");
 	qmlRegisterUncreatableType<MultiMediaPlayer>(uri, 1, 0, "MultiMediaPlayer",
 		"unable to create a MultiMediaPlayer instance");
 	qmlRegisterUncreatableType<SplitAdvancedProgram>(uri, 1, 0, "SplitAdvancedProgram",

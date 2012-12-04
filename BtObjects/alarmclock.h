@@ -106,6 +106,9 @@ public:
 
 	Q_INVOKABLE void stop();
 	Q_INVOKABLE void postpone();
+	Q_INVOKABLE void incrementVolume();
+	Q_INVOKABLE void decrementVolume();
+	Q_INVOKABLE void setAmplifierFromQObject(QObject *amplifier);
 
 	QString getDescription() const { return description; }
 	void setDescription(QString new_value);

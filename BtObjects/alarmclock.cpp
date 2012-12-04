@@ -547,6 +547,29 @@ Amplifier *AlarmClock::getAmplifier() const
 	return amplifier;
 }
 
+void AlarmClock::incrementVolume()
+{
+	int desired = getVolume() + 5;
+	if (desired > 100)
+		desired = 100;
+	setVolume(desired);
+}
+
+void AlarmClock::decrementVolume()
+{
+	int desired = getVolume() - 5;
+	if (desired < 0)
+		desired = 0;
+	setVolume(desired);
+}
+
+void AlarmClock::setAmplifierFromQObject(QObject *amplifier)
+{
+	Amplifier *candidate = qobject_cast<Amplifier *>(amplifier);
+	if (candidate)
+		setAmplifier(candidate);
+}
+
 void AlarmClock::setVolume(int _volume)
 {
 	if (_volume == volume)
