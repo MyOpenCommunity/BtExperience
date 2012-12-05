@@ -30,6 +30,9 @@ void BrowserProcess::readStatusUpdate()
 
 		QString key = line.mid(0, colon);
 		QString value = line.mid(colon + 2);
+
+		if (key == "last_click")
+			emit clicked();
 	}
 }
 

@@ -6,6 +6,7 @@
 
 #include <logger.h>
 
+#include "eventfilters.h"
 #include "applicationcommon.h"
 #include "globalpropertiescommon.h"
 #include "imagereader.h"
@@ -44,6 +45,7 @@ public:
 
 public slots:
 	void quit();
+	void updateClick();
 
 signals:
 	void urlChanged();
@@ -83,6 +85,11 @@ QString BrowserProperties::getUrl() const
 void BrowserProperties::quit()
 {
 	qApp->quit();
+}
+
+void BrowserProperties::updateClick()
+{
+	printf("last_click: %ld\n", time(NULL));
 }
 
 void BrowserProperties::readInput()
@@ -132,6 +139,11 @@ int main(int argc, char *argv[])
 
 	qmlRegisterType<ImageReader>("BtExperience", 1, 0, "ImageReader");
 
+	LastClickTime *last_click = new LastClickTime;
+	// To receive all the events, even if there is some qml elements which manage
+	// their, we have to install the event filter in the QApplication
+	app.installEventFilter(last_click);
+
 	//Set user-agent of the application in order to see the Mobile version of the web sites
 	app.setApplicationName(QString("Nokia"));
 	app.setApplicationVersion(QString("Mobile"));
@@ -140,6 +152,7 @@ int main(int argc, char *argv[])
 	if (argc > 1)
 		global.setUrl(argv[1]);
 	ImageReader::setBasePath(global.getBasePath());
+	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateClick()));
 	qml_application.start(&global, "browsermain.qml");
 
 	return app.exec();

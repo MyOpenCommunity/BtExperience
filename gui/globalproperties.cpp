@@ -203,7 +203,7 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 		this, SLOT(volumeChanged(int,int)));
 	connect(screen_state, SIGNAL(stateChanged(ScreenState::State,ScreenState::State)),
 		this, SLOT(screenStateChangedManagement()));
-
+	connect(browser, SIGNAL(clicked()), screen_state, SLOT(simulateClick()));
 }
 
 void GlobalProperties::initAudio()
