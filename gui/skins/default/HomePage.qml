@@ -80,6 +80,11 @@ BasePage {
         }
 
         Component {
+            id: webRadioDelegate
+            WebRadioLink {}
+        }
+
+        Component {
             id: favouritesDelegate
 
             Item {
@@ -91,11 +96,16 @@ BasePage {
                 height: 130
 
                 function bestDelegate(t) {
-                    if (t === LinkInterface.Camera)
+                    switch (t) {
+                    case LinkInterface.Camera:
                         return cameraDelegate
-                    if (t === LinkInterface.Web)
+                    case LinkInterface.Web:
                         return webDelegate
-                    return rssDelegate
+                    case LinkInterface.WebRadio:
+                        return webRadioDelegate
+                    default:
+                        return rssDelegate
+                    }
                 }
 
                 Loader {
