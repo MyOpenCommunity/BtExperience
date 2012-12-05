@@ -18,7 +18,7 @@ public:
 	~ApplicationCommon();
 
 	void initialize();
-	void start(GlobalPropertiesCommon *g, QString qml_file);
+	void start(GlobalPropertiesCommon *g, QString qml_file, bool visible = true);
 
 public slots:
 	void handleSignal(int signal_number);

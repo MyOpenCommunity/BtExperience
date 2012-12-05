@@ -18,6 +18,7 @@ void BrowserProcess::displayUrl(QString url)
 {
 	startProcess();
 	sendCommand("load_url " + url);
+	setVisible(true);
 }
 
 void BrowserProcess::setVisible(bool visible)

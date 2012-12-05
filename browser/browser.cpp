@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
 		global.setUrl(argv[1]);
 	ImageReader::setBasePath(global.getBasePath());
 	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateClick()));
-	qml_application.start(&global, "browsermain.qml");
+	qml_application.start(&global, "browsermain.qml", false);
 
 	return app.exec();
 }

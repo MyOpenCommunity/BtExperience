@@ -172,7 +172,7 @@ void ApplicationCommon::initialize()
 #endif
 }
 
-void ApplicationCommon::start(GlobalPropertiesCommon *g, QString qml_file)
+void ApplicationCommon::start(GlobalPropertiesCommon *g, QString qml_file, bool visible)
 {
 	global = g;
 	viewer = new QmlApplicationViewer;
@@ -199,10 +199,12 @@ void ApplicationCommon::start(GlobalPropertiesCommon *g, QString qml_file)
 
 #if defined(Q_WS_X11) || defined(Q_WS_MAC)
 	viewer->resize(global->getMainWidth(), global->getMainHeight());
-	viewer->showExpanded();
+	if (visible)
+		viewer->showExpanded();
 #else
 	viewer->setWindowFlags(Qt::FramelessWindowHint);
-	viewer->showFullScreen();
+	if (visible)
+		viewer->showFullScreen();
 #endif
 }
 
