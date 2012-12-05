@@ -5,6 +5,33 @@
 #include <QtDebug>
 
 
+/*
+  Browser output lines are key-value pairs, for example:
+
+    last_click: 1234567890
+    visible: 1
+    ...
+
+  - last_click
+
+  Last click time (in seconds)
+
+  - visible
+
+  Whether the browser window is visible or not
+
+  Commands are terminaed by a newline:
+
+  - set_visible <0|1>
+
+  Show/hide browser window.
+
+  - load_url url
+
+  Load specified URL
+*/
+
+
 BrowserProcess::BrowserProcess(QObject *parent) : QObject(parent)
 {
 	browser = new QProcess(this);
