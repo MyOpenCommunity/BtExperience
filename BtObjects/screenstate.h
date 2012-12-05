@@ -64,6 +64,9 @@ public:
 	Q_INVOKABLE void disableState(State state);
 	Q_INVOKABLE void enableState(State state);
 
+public slots:
+	void simulateClick();
+
 signals:
 	void stateChanged(ScreenState::State old_state, ScreenState::State new_state);
 	void normalBrightnessChanged();

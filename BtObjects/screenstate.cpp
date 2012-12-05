@@ -235,6 +235,13 @@ void ScreenState::stopFreeze()
 
 bool ScreenState::updatePressTime()
 {
+	if (screen_locked && current_state != PasswordCheck)
+	{
+		emit displayPasswordCheck();
+
+		return true;
+	}
+
 	switch (current_state)
 	{
 	case Normal:
@@ -265,16 +272,12 @@ bool ScreenState::eventFilter(QObject *obj, QEvent *ev)
 	if (ev->type() == QEvent::MouseButtonPress ||
 	    ev->type() == QEvent::MouseButtonRelease ||
 	    ev->type() == QEvent::MouseButtonDblClick)
-	{
-		if (screen_locked && current_state != PasswordCheck)
-		{
-			emit displayPasswordCheck();
-
-			return true;
-		}
-
 		return updatePressTime();
-	}
 
 	return false;
+}
+
+void ScreenState::simulateClick()
+{
+	updatePressTime();
 }
