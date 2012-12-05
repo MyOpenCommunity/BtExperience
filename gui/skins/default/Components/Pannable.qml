@@ -52,6 +52,20 @@ Item {
         ignoreUnknownSignals: true
     }
 
+    // Temporary workaround for focus handling: the mouse area below is resized to the same size as the
+    // on-screen keyboard.
+    //
+    // For some reason, when the keyboard is used in the browser process, the url bar loses
+    // focus after clicking the first letter, and the focus goes to the web view; it seems that
+    // somehow the web view gets the mouse event even if it is handled by the keyboard, and steals
+    // the focus from the url input.  This does not happen with the same web view hosted in
+    // main BtExperience process.
+    MouseArea {
+        id: blockClicks
+        z: 1
+        enabled: false
+    }
+
     // sets the area covered by the keyboard, in screen coordinates
     function setKeyboardRect(rect) {
         var mapped = mapFromItem(null, 0, rect.y)
@@ -64,6 +78,12 @@ Item {
             childOffset = 0.0
             mappedVisibleTop = mappedVisibleBottom = 0
         }
+
+        blockClicks.visible = keyboardVisible
+        blockClicks.height = rect.height
+        blockClicks.width = rect.width
+        blockClicks.x = rect.x
+        blockClicks.y = rect.y
     }
 
     // sets the area used by the input cursor, in screen coordinates
