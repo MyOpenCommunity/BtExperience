@@ -44,6 +44,9 @@ private slots:
 	void testIgnoringFramesIfNotActive();
 	void testFloorCall();
 	void testRingtone();
+	void testOutgoingPagerCall();
+	void testIncomingPagerCallIAnswer();
+	void testIncomingPagerCallAnotherAnswer();
 
 	void testCCTVIgnoringFramesIfNotActive();
 	void testCCTVOutgoingCallTerminatedByTouch();
@@ -53,7 +56,7 @@ private slots:
 	void testHandsFree();
 
 protected:
-	void compareClientCommand(int timeout = 0);
+	void compareClientCommandThatWorks(int timeout = 0);
 
 private:
 	CCTV *cctv;

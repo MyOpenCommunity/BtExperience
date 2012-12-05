@@ -58,6 +58,7 @@ target.commands += true
 SOURCES += \
     main.cpp \
     audiostate.cpp \
+    calibration.cpp \
     eventfilters.cpp \
     globalproperties.cpp \
     guisettings.cpp \
@@ -71,6 +72,7 @@ SOURCES += \
 
 HEADERS += \
     audiostate.h \
+    calibration.h \
     eventfilters.h \
     globalproperties.h \
     guisettings.h \

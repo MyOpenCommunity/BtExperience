@@ -489,12 +489,17 @@ void Intercom::answerCall()
 	dev->answerCall();
 }
 
+void Intercom::answerPagerCall()
+{
+	dev->answerPagerCall();
+	setTalkerFromWhere(dev->callerAddress());
+}
+
 void Intercom::endCall()
 {
 	if (dev->isCalling())
 		dev->endCall();
-	talker = "";
-	emit talkerChanged();
+	setTalkerFromWhere(QString());
 	emit callEnded();
 }
 
@@ -516,6 +521,12 @@ Intercom::Ringtone Intercom::getRingtone() const
 bool Intercom::getRingExclusion() const
 {
 	return ring_exclusion;
+}
+
+void Intercom::startPagerCall()
+{
+	dev->pagerCall();
+	activateCall();
 }
 
 QString Intercom::getTalker() const
@@ -571,13 +582,18 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			emit incomingCall();
 			activateCall();
 			break;
+		case VideoDoorEntryDevice::PAGER_CALL:
+			qDebug() << "Received VideoDoorEntryDevice::PAGER_CALL";
+			// TODO: many many other things...but this should be enough for now.
+			emit incomingCall();
+			activateCall();
+			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::END_OF_CALL";
 			if (!callActive()) // ignore
 				break;
-			talker = "";
+			setTalkerFromWhere(QString());
 			emit callEnded();
-			emit talkerChanged();
 			disactivateCall();
 			break;
 		case VideoDoorEntryDevice::ANSWER_CALL:
@@ -613,7 +629,14 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 
 void Intercom::setTalkerFromWhere(QString where)
 {
-	// helper function used in startCall and valueReceived to set the talker where
+	if (where.isEmpty() && !talker.isEmpty())
+	{
+		talker = "";
+		emit talkerChanged();
+		return;
+	}
+
+	// helper function used in startCall, answerPagerCall and valueReceived to set the talker where
 	// depending on if we are making or receiving a call we have to set the
 	// talker where's field in 2 different ways, so this function refactor
 	// common code for both cases

@@ -191,6 +191,7 @@ GlobalProperties::GlobalProperties(logger *log)
 	qmlRegisterUncreatableType<AudioState>("BtExperience", 1, 0, "AudioState", "");
 	qmlRegisterUncreatableType<RingtoneManager>("BtExperience", 1, 0, "RingtoneManager", "");
 	qmlRegisterUncreatableType<DebugTiming>("BtExperience", 1, 0, "DebugTiming", "");
+	qmlRegisterUncreatableType<Calibration>("BtExperience", 1, 0, "Calibration", "");
 
 	configurations = new ConfigFile(this);
 	settings = new GuiSettings(this);
