@@ -301,9 +301,11 @@ public:
 	}
 
 	Q_INVOKABLE void answerCall();
+	Q_INVOKABLE void answerPagerCall();
 	Q_INVOKABLE void endCall();
 	Q_INVOKABLE void startCall(ExternalPlace *place);
 	Q_INVOKABLE bool getRingExclusion() const;
+	Q_INVOKABLE void startPagerCall();
 
 	QString getTalker() const;
 	Ringtone getRingtone() const;

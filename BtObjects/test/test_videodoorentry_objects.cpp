@@ -86,8 +86,7 @@ void TestVideoDoorEntry::testIncomingCallNoAnswer()
 	v[VideoDoorEntryDevice::END_OF_CALL] = 0;
 
 	ObjectTester t2(intercom, SignalList()
-					<< SIGNAL(callEnded())
-					<< SIGNAL(talkerChanged()));
+					<< SIGNAL(callEnded()));
 	intercom->valueReceived(v);
 	t2.checkSignals();
 }
@@ -267,6 +266,99 @@ void TestVideoDoorEntry::testRingtone()
 	intercom->valueReceived(v);
 	t.checkSignals();
 	QCOMPARE(intercom->getRingtone(), Intercom::External);
+}
+
+void TestVideoDoorEntry::testOutgoingPagerCall()
+{
+	DeviceValues v;
+	ObjectTester t(intercom, SignalList()
+				   << SIGNAL(callEnded())
+				   << SIGNAL(talkerChanged())
+				   << SIGNAL(callAnswered()));
+
+	// starts a call
+	intercom->startPagerCall();
+	dev->pagerCall();
+
+	compareClientCommandThatWorks();
+
+	// talker answers
+	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
+	v[VideoDoorEntryDevice::CALLER_ADDRESS] = "21";
+	intercom->valueReceived(v);
+	v.clear();
+	QCOMPARE(QString("portone"), intercom->getTalker());
+
+	// call terminated by talker
+	v[VideoDoorEntryDevice::END_OF_CALL] = 0;
+	intercom->valueReceived(v);
+	QCOMPARE(QString(""), intercom->getTalker());
+
+	t.checkSignalCount(SIGNAL(callEnded()), 1);
+	t.checkSignalCount(SIGNAL(talkerChanged()), 2);
+	t.checkSignalCount(SIGNAL(callAnswered()), 1);
+}
+
+void TestVideoDoorEntry::testIncomingPagerCallIAnswer()
+{
+	// call arrives
+	DeviceValues v;
+	dev->is_calling = true;
+	intercom->dev->caller_address = dev->caller_address = "21#2";
+	v[VideoDoorEntryDevice::PAGER_CALL] = 0;
+
+	ObjectTester t(intercom, SIGNAL(incomingCall()));
+	intercom->valueReceived(v);
+	t.checkSignals();
+
+	ObjectTester t2(intercom, SIGNAL(talkerChanged()));
+
+	// answering
+	intercom->answerPagerCall();
+	dev->answerPagerCall();
+
+	t2.checkSignals();
+	QCOMPARE(QString("garage"), intercom->getTalker());
+
+	compareClientCommandThatWorks();
+
+	// call terminates
+	v.clear();
+	v[VideoDoorEntryDevice::END_OF_CALL] = 0;
+
+	ObjectTester t3(intercom, SignalList()
+					<< SIGNAL(callEnded())
+					<< SIGNAL(talkerChanged()));
+	intercom->valueReceived(v);
+	t3.checkSignals();
+}
+
+void TestVideoDoorEntry::testIncomingPagerCallAnotherAnswer()
+{
+	// call arrives
+	DeviceValues v;
+	dev->is_calling = true;
+	intercom->dev->caller_address = dev->caller_address = "21#2";
+	QCOMPARE(QString(), intercom->getTalker());
+	QCOMPARE(false, intercom->callActive());
+	v[VideoDoorEntryDevice::PAGER_CALL] = 0;
+
+	ObjectTester t(intercom, SIGNAL(incomingCall()));
+	intercom->valueReceived(v);
+	t.checkSignals();
+	QCOMPARE(true, intercom->callActive());
+
+	ObjectTester t2(intercom, SIGNAL(talkerChanged()));
+
+	// someone else answers
+	v.clear();
+	v[VideoDoorEntryDevice::END_OF_CALL] = 0;
+	intercom->valueReceived(v);
+	v.clear();
+	QCOMPARE(QString(), intercom->getTalker());
+	QCOMPARE(false, intercom->callActive());
+
+	t2.checkNoSignals();
 }
 
 void TestVideoDoorEntry::testFloorCall()

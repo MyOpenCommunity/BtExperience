@@ -44,6 +44,9 @@ private slots:
 	void testIgnoringFramesIfNotActive();
 	void testFloorCall();
 	void testRingtone();
+	void testOutgoingPagerCall();
+	void testIncomingPagerCallIAnswer();
+	void testIncomingPagerCallAnotherAnswer();
 
 	void testCCTVIgnoringFramesIfNotActive();
 	void testCCTVOutgoingCallTerminatedByTouch();
