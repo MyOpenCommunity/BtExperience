@@ -587,6 +587,11 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			// TODO: many many other things...but this should be enough for now.
 			emit incomingCall();
 			activateCall();
+			if (!pager_call)
+			{
+				pager_call = true;
+				emit pagerCallChanged();
+			}
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::END_OF_CALL";
@@ -664,6 +669,11 @@ void Intercom::activateCall()
 void Intercom::disactivateCall()
 {
 	call_active = false;
+	if (pager_call)
+	{
+		pager_call = false;
+		emit pagerCallChanged();
+	}
 }
 
 bool Intercom::callActive()

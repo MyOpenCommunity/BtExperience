@@ -278,6 +278,11 @@ class Intercom : public VDEBase
 	*/
 	Q_PROPERTY(Ringtone ringtone READ getRingtone NOTIFY ringtoneChanged)
 
+	/*!
+		\brief Is a pager call ringing?
+	*/
+	Q_PROPERTY(bool pagerCall READ isPagerCall NOTIFY pagerCallChanged)
+
 	Q_ENUMS(Ringtone)
 
 public:
@@ -309,6 +314,7 @@ public:
 
 	QString getTalker() const;
 	Ringtone getRingtone() const;
+	bool isPagerCall() const { return pager_call; }
 
 signals:
 	void incomingCall();
@@ -318,6 +324,7 @@ signals:
 	void ringtoneChanged();
 	void ringtoneReceived();
 	void floorRingtoneReceived();
+	void pagerCallChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -332,7 +339,7 @@ private:
 	void disactivateCall();
 	bool callActive();
 
-	bool call_active;
+	bool call_active, pager_call;
 	Ringtone ringtone;
 	QString talker;
 };
