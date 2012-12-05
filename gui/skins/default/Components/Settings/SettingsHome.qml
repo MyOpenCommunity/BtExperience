@@ -6,7 +6,7 @@ MenuColumn {
 
     Component {
         id: skin
-        Skin {}
+        SettingsSkin {}
     }
 
     Component {
