@@ -30,20 +30,6 @@ Item {
 
     anchors.fill: parent
 
-    Component {
-        id: callPopup
-        ControlCall {
-            onClosePopup: {
-                global.screenState.enableState(ScreenState.Normal)
-                global.screenState.disableState(ScreenState.ForcedNormal)
-                global.audioState.disableState(AudioState.VdeRingtone)
-                global.audioState.disableState(AudioState.ScsIntercomCall)
-                global.audioState.disableState(AudioState.IpIntercomCall)
-                global.audioState.disableState(AudioState.Mute)
-            }
-        }
-    }
-
     ObjectModel {
         id: listModel
         filters: [
