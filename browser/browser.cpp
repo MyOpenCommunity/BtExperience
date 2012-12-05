@@ -119,7 +119,22 @@ void BrowserProperties::readInput()
 
 void BrowserProperties::parseLine(QString line)
 {
-	if (line.startsWith("load_url "))
+	if (line.startsWith("set_visible "))
+	{
+		bool visible = line.split(" ")[1].toInt();
+
+		if (visible)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
+			main_widget->show();
+#else
+			main_widget->showFullScreen();
+#endif
+		else
+			main_widget->hide();
+
+		printf("visible: %d\n", int(visible));
+	}
+	else if (line.startsWith("load_url "))
 	{
 		QString url = line.split(" ")[1];
 

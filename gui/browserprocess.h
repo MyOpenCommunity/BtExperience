@@ -10,15 +10,22 @@ class BrowserProcess : public QObject
 {
 	Q_OBJECT
 
+	Q_PROPERTY(bool visible READ getVisible WRITE setVisible NOTIFY visibleChanged)
+
 public:
 	BrowserProcess(QObject *parent = 0);
 
 	Q_INVOKABLE void displayUrl(QString url);
 
+	void setVisible(bool visible);
+	bool getVisible() const;
+
 signals:
+	void visibleChanged();
 	void clicked();
 
 private slots:
+	void terminated();
 	void readStatusUpdate();
 
 private:

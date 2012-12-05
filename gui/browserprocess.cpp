@@ -8,7 +8,9 @@
 BrowserProcess::BrowserProcess(QObject *parent) : QObject(parent)
 {
 	browser = new QProcess(this);
+	visible = false;
 
+	connect(browser, SIGNAL(finished(int)), this, SLOT(terminated()));
 	connect(browser, SIGNAL(readyReadStandardOutput()), this, SLOT(readStatusUpdate()));
 }
 
@@ -16,6 +18,29 @@ void BrowserProcess::displayUrl(QString url)
 {
 	startProcess();
 	sendCommand("load_url " + url);
+}
+
+void BrowserProcess::setVisible(bool visible)
+{
+	sendCommand("set_visible " + QString::number(visible));
+}
+
+void BrowserProcess::updateVisible(bool _visible)
+{
+	if (visible == _visible)
+		return;
+	visible = _visible;
+	emit visibleChanged();
+}
+
+bool BrowserProcess::getVisible() const
+{
+	return visible;
+}
+
+void BrowserProcess::terminated()
+{
+	updateVisible(false);
 }
 
 void BrowserProcess::readStatusUpdate()
@@ -31,7 +56,9 @@ void BrowserProcess::readStatusUpdate()
 		QString key = line.mid(0, colon);
 		QString value = line.mid(colon + 2);
 
-		if (key == "last_click")
+		if (key == "visible")
+			updateVisible(value.toInt());
+		else if (key == "last_click")
 			emit clicked();
 	}
 }
