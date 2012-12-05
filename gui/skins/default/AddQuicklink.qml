@@ -174,24 +174,24 @@ Page {
             top: addTextText.bottom
             topMargin: bg.height / 100 * 2.29
         }
-    }
 
-    UbuntuLightText {
-        id: linkText
-        text: qsTr("Click to enter link...")
-        font.pixelSize: 14
-        color: "#5A5A5A"
-        elide: Text.ElideMiddle
-        anchors {
-            left: linkBgImage.left
-            leftMargin: bg.width / 100 * 3.92
-            verticalCenter: linkBgImage.verticalCenter
+        UbuntuLightText {
+            id: linkText
+            text: qsTr("Click to enter link...")
+            font.pixelSize: 14
+            color: "#5A5A5A"
+            elide: Text.ElideMiddle
+            anchors {
+                left: linkBgImage.left
+                leftMargin: bg.width / 100 * 3.92
+                verticalCenter: linkBgImage.verticalCenter
+            }
         }
-    }
 
-    BeepingMouseArea {
-        anchors.fill: linkBgImage
-        onClicked: installPopup(popupEditLink)
+        BeepingMouseArea {
+            anchors.fill: linkBgImage
+            onClicked: installPopup(popupEditLink)
+        }
     }
 
     SvgImage {
@@ -203,24 +203,24 @@ Page {
             top: linkBgImage.bottom
             topMargin: bg.height / 100 * 2.29
         }
-    }
 
-    UbuntuLightText {
-        id: nameText
-        text: qsTr("Click to enter name...")
-        font.pixelSize: 14
-        color: "#5A5A5A"
-        elide: Text.ElideMiddle
-        anchors {
-            left: nameBgImage.left
-            leftMargin: bg.width / 100 * 3.92
-            verticalCenter: nameBgImage.verticalCenter
+        UbuntuLightText {
+            id: nameText
+            text: qsTr("Click to enter name...")
+            font.pixelSize: 14
+            color: "#5A5A5A"
+            elide: Text.ElideMiddle
+            anchors {
+                left: nameBgImage.left
+                leftMargin: bg.width / 100 * 3.92
+                verticalCenter: nameBgImage.verticalCenter
+            }
         }
-    }
 
-    BeepingMouseArea {
-        anchors.fill: nameBgImage
-        onClicked: installPopup(popupEditName)
+        BeepingMouseArea {
+            anchors.fill: nameBgImage
+            onClicked: installPopup(popupEditName)
+        }
     }
 
     ButtonThreeStates {
@@ -439,10 +439,6 @@ Page {
             when: privateProps.currentChoice === 0
             PropertyChanges { target: addTextText; opacity: 0 }
             PropertyChanges { target: linkBgImage; opacity: 0 }
-            PropertyChanges { target: linkText; opacity: 0 }
-            PropertyChanges { target: linkBgImage; opacity: 0 }
-            PropertyChanges { target: nameBgImage; opacity: 0 }
-            PropertyChanges { target: nameText; opacity: 0 }
             PropertyChanges { target: nameBgImage; opacity: 0 }
             PropertyChanges { target: addButton; opacity: 0 }
             PropertyChanges { target: horizontalRightSeparator; opacity: 0 }
@@ -455,10 +451,6 @@ Page {
             when: paginator.currentPage > 1
             PropertyChanges { target: addTextText; opacity: 0 }
             PropertyChanges { target: linkBgImage; opacity: 0 }
-            PropertyChanges { target: linkText; opacity: 0 }
-            PropertyChanges { target: linkBgImage; opacity: 0 }
-            PropertyChanges { target: nameBgImage; opacity: 0 }
-            PropertyChanges { target: nameText; opacity: 0 }
             PropertyChanges { target: nameBgImage; opacity: 0 }
             PropertyChanges { target: addButton; opacity: 0 }
             PropertyChanges { target: horizontalRightSeparator; opacity: 0 }
@@ -471,10 +463,6 @@ Page {
             when: { return true }
             PropertyChanges { target: addTextText; opacity: 1 }
             PropertyChanges { target: linkBgImage; opacity: 1 }
-            PropertyChanges { target: linkText; opacity: 1 }
-            PropertyChanges { target: linkBgImage; opacity: 1 }
-            PropertyChanges { target: nameBgImage; opacity: 1 }
-            PropertyChanges { target: nameText; opacity: 1 }
             PropertyChanges { target: nameBgImage; opacity: 1 }
             PropertyChanges { target: addButton; opacity: 1 }
             PropertyChanges { target: horizontalRightSeparator; opacity: 1 }
