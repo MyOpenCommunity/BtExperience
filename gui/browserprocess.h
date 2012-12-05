@@ -15,6 +15,9 @@ public:
 
 	Q_INVOKABLE void displayUrl(QString url);
 
+private slots:
+	void readStatusUpdate();
+
 private:
 	void startProcess();
 	void sendCommand(QString command);
