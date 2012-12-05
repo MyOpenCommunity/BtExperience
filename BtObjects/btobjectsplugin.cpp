@@ -1323,13 +1323,20 @@ void BtObjectsPlugin::parseHomepage(const QDomNode &container)
 			int link_uii = getIntAttribute(link, "uii");
 			ItemInterface *l = uii_map.value<ItemInterface>(link_uii);
 
-			// Try to create the link for the thermal probe
+			// Did we find a thermal probe?
+			ThermalNonControlledProbe *p1 = qobject_cast<ThermalNonControlledProbe *>(l);
+			ThermalControlledProbe *p2 = qobject_cast<ThermalControlledProbe *>(l);
 			ObjectInterface *o = qobject_cast<ObjectInterface *>(l);
-			if (o)
+			if (p1 || p2)
 			{
 				ObjectLink *item = new ObjectLink(o, -1, -1);
 				item->setContainerUii(homepage_uii);
 				object_link_model << item;
+			}
+			else if (o) {
+				ObjectLink *item = new ObjectLink(o, -1, -1);
+				item->setContainerUii(homepage_uii);
+				media_link_model << item;
 			}
 			else
 			{
