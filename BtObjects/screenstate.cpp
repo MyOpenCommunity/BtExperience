@@ -11,7 +11,7 @@
 
 #define SCREENSAVER_TIME 50
 #define FREEZE_TIME      10
-#define FREEZE_DELTA     10
+#define FREEZE_DELTA     100
 
 namespace
 {
