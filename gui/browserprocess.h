@@ -13,12 +13,14 @@ class BrowserProcess : public QObject
 public:
 	BrowserProcess(QObject *parent = 0);
 
-	Q_INVOKABLE void start(QString url);
-
-signals:
-	void terminated();
+	Q_INVOKABLE void displayUrl(QString url);
 
 private:
+	void startProcess();
+	void sendCommand(QString command);
+	void updateVisible(bool visible);
+
+	bool visible;
 	QProcess *browser;
 };
 

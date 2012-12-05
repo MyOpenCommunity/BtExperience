@@ -11,6 +11,7 @@
 #include "xmlobject.h"
 #include "hwkeys.h"
 #include "calibration.h"
+#include "browserprocess.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -183,6 +184,7 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	hardware_keys = new HwKeys(this);
 	screen_state = new ScreenState(this);
 	calibration = new Calibration(this);
+	browser = new BrowserProcess(this);
 
 	if (!(*bt_global::config)[DEFAULT_PE].isEmpty())
 		default_external_place = new ExternalPlace(QString(), ObjectInterface::IdExternalPlace,
@@ -339,6 +341,11 @@ QObject *GlobalProperties::getHardwareKeys() const
 QObject *GlobalProperties::getCalibration() const
 {
 	return calibration;
+}
+
+QObject *GlobalProperties::getBrowser() const
+{
+	return browser;
 }
 
 QVariantList GlobalProperties::getStockImagesFolder() const

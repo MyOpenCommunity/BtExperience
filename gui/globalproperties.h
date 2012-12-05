@@ -18,6 +18,7 @@ class RingtoneManager;
 class HwKeys;
 class Calibration;
 class ExternalPlace;
+class BrowserProcess;
 
 
 // This class is designed to be used as a sigle object that contains all the
@@ -36,6 +37,8 @@ class GlobalProperties : public GlobalPropertiesCommon
 	Q_PROPERTY(QObject *screenState READ getScreenState CONSTANT)
 	// The object to play ringtones from QML
 	Q_PROPERTY(QObject *ringtoneManager READ getRingtoneManager CONSTANT)
+
+	Q_PROPERTY(QObject *browser READ getBrowser CONSTANT)
 
 	// Hardware key handler
 	Q_PROPERTY(QObject *hardwareKeys READ getHardwareKeys CONSTANT)
@@ -63,6 +66,7 @@ public:
 	QObject *getRingtoneManager() const;
 	QObject *getHardwareKeys() const;
 	QObject *getCalibration() const;
+	QObject *getBrowser() const;
 	QVariantList getStockImagesFolder() const;
 
 	QObject *getDefaultExternalPlace() const;
@@ -110,6 +114,7 @@ private:
 	SoundPlayer *sound_player;
 	RingtoneManager *ringtone_manager;
 	ExternalPlace *default_external_place;
+	BrowserProcess *browser;
 	QTimer *delayed_frame_timer;
 	HwKeys *hardware_keys;
 	Calibration *calibration;
