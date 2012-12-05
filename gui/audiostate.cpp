@@ -34,7 +34,7 @@ namespace
 	{
 		QString scaled_volume = QString::number(volume * 30 / 100);
 
-		smartExecute("amixer", QStringList() << "-c" << "0" << "sset" << "TPA2016D2 Gain" << scaled_volume);
+		//smartExecute("amixer", QStringList() << "-c" << "0" << "sset" << "TPA2016D2 Gain" << scaled_volume);
 	}
 
 	void setHpDacVolume(int volume)
@@ -45,8 +45,9 @@ namespace
 		QString scaled_volume = QString::number(volume == 0 ? 0 :
 							volume == 1 ? 20 :
 								      (volume - 2) * 97 / 98 + 21);
-
-		smartExecute("amixer", QStringList() << "cset" << "name='HP DAC Playback Volume'" << scaled_volume + "," + scaled_volume);
+		smartExecute_synch("amixer", QStringList() << "cset" << "name='Baia Tpa Power'" << "On");
+		smartExecute_synch("amixer", QStringList() << "cset" << "name='HP Playback Switch'" << "on,on");
+		smartExecute_synch("amixer", QStringList() << "cset" << "name='HP DAC Playback Volume'" << scaled_volume + "," + scaled_volume);
 	}
 
 	void setZlVolume(int volume)
@@ -55,15 +56,16 @@ namespace
 		// 1-100 -> 0 -> 97
 		QString scaled_volume = QString::number(volume * 97 / 100, 16);
 
-		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "046B" << scaled_volume);
+		//Viene fatta dopo la chiamata_vde_silent --> deve essere fatta prima!!!!
+		//smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "046B" << scaled_volume);
 	}
 
 	void setZlMute(bool mute)
 	{
 		if (mute)
-			smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "610C");
+			smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "6104");
 		else
-			smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "600C");
+			smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "6004");
 	}
 
 	void setHardwareVolume(AudioState::Volume state, int volume)
@@ -94,8 +96,8 @@ namespace
 	}
 
 	QString scs_source_on     = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
-	QString vde_audio_on      = "/usr/local/bin/Hw-D-Audio-VDE_Conversation.sh";
-	QString vde_audio_off     = "/usr/local/bin/Hw-D-Audio-VDE_Conversation_off.sh";
+	QString vde_audio_on      = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_silent.sh";
+	QString vde_audio_off     = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_off_silent.sh";
 }
 
 #define VOLUME_MIN 0
@@ -283,9 +285,13 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	switch (old_state)
 	{
+	case AudioState::BeepVolume:
+	case AudioState::LocalPlaybackVolume:
+	case AudioState::RingtoneVolume:
+		break;
 	case ScsVideoCall:
 	case ScsIntercomCall:
-		smartExecute(vde_audio_off);
+		smartExecute_synch(vde_audio_off);
 		break;
 	case Mute:
 		setZlMute(false);
@@ -303,12 +309,12 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	switch (new_state)
 	{
 	case ScsVideoCall:
-		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8A10");
-		smartExecute(vde_audio_on);
+		//smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8A10");
+		smartExecute_synch(vde_audio_on);
 		break;
 	case ScsIntercomCall:
-		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8710");
-		smartExecute(vde_audio_on);
+		//smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8710");
+		//smartExecute(vde_audio_on);
 		break;
 	case LocalPlaybackMute:
 		setHardwareVolume(LocalPlaybackVolume, 0);
