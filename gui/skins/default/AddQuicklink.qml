@@ -422,6 +422,7 @@ Page {
     Component {
         id: popupEditLink
         EditNote {
+            title: qsTr("Insert address")
             onOkClicked: linkText.text = text
         }
     }
@@ -429,6 +430,7 @@ Page {
     Component {
         id: popupEditName
         EditNote {
+            title: qsTr("Insert description")
             onOkClicked: nameText.text = text
         }
     }

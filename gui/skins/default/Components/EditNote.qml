@@ -2,7 +2,7 @@ import QtQuick 1.1
 import Components.Text 1.0
 
 
-Rectangle {
+SvgImage {
     id: bg
 
     signal closePopup
@@ -10,16 +10,16 @@ Rectangle {
     signal cancelClicked
 
     property alias text: edit.text
+    property alias title: titleLabel.text
 
     function setInitialText(t) {
         text = t
     }
 
-    width: 300
-    height: 200
-    color: "light gray"
+    source: "../images/scenarios/bg_testo.svg"
 
     UbuntuLightText {
+        id: titleLabel
         text: qsTr("Note")
         anchors.left: parent.left
         anchors.leftMargin: 10
@@ -77,7 +77,6 @@ Rectangle {
                 containerWidget: bg
             }
         }
-
     }
 
     Row {
@@ -91,39 +90,29 @@ Rectangle {
             rightMargin: 10
         }
 
-        Image {
-            id: buttonOk
-            source: "../images/common/btn_OKAnnulla.png"
-
-            UbuntuLightText {
-                anchors.centerIn: parent
-                text: qsTr("ok")
-            }
-
-            BeepingMouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    bg.okClicked()
-                    bg.closePopup()
-                }
+        ButtonThreeStates {
+            defaultImage: "../images/common/btn_99x35.svg"
+            pressedImage: "../images/common/btn_99x35_P.svg"
+            selectedImage: "../images/common/btn_99x35_S.svg"
+            shadowImage: "../images/common/btn_shadow_99x35.svg"
+            text: qsTr("OK")
+            font.pixelSize: 14
+            onClicked: {
+                bg.okClicked()
+                bg.closePopup()
             }
         }
 
-        Image {
-            id: buttonCancel
-            source: "../images/common/btn_OKAnnulla.png"
-
-            UbuntuLightText {
-                anchors.centerIn: parent
-                text: qsTr("cancel")
-            }
-
-            BeepingMouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    bg.cancelClicked()
-                    bg.closePopup()
-                }
+        ButtonThreeStates {
+            defaultImage: "../images/common/btn_99x35.svg"
+            pressedImage: "../images/common/btn_99x35_P.svg"
+            selectedImage: "../images/common/btn_99x35_S.svg"
+            shadowImage: "../images/common/btn_shadow_99x35.svg"
+            text: qsTr("CANCEL")
+            font.pixelSize: 14
+            onClicked: {
+                bg.cancelClicked()
+                bg.closePopup()
             }
         }
     }
