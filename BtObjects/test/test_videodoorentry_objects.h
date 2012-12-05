@@ -53,7 +53,7 @@ private slots:
 	void testHandsFree();
 
 protected:
-	void compareClientCommand(int timeout = 0);
+	void compareClientCommandThatWorks(int timeout = 0);
 
 private:
 	CCTV *cctv;

@@ -58,15 +58,18 @@ void TestVideoDoorEntry::cleanup()
 	delete cctv->dev;
 	delete cctv;
 	delete dev;
+
+	TestBtObject::clearAllClients();
 }
 
-void TestVideoDoorEntry::compareClientCommand(int timeout)
+void TestVideoDoorEntry::compareClientCommandThatWorks(int timeout)
 {
 	TestBtObject::flushCompressedFrames(dev);
 	TestBtObject::flushCompressedFrames(cctv->dev);
 	TestBtObject::flushCompressedFrames(intercom->dev);
 
 	TestBtObject::compareClientCommand();
+	TestBtObject::clearAllClients();
 }
 
 void TestVideoDoorEntry::testIncomingCallNoAnswer()
@@ -93,6 +96,7 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTalker()
 {
 	// call arrives
 	DeviceValues v;
+	dev->is_calling = true;
 	v[VideoDoorEntryDevice::INTERCOM_CALL] = 0;
 
 	ObjectTester t(intercom, SIGNAL(incomingCall()));
@@ -103,7 +107,7 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTalker()
 	intercom->answerCall();
 	dev->answerCall();
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 
 	// talker address arrives
 	v.clear();
@@ -133,9 +137,16 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
 				   << SIGNAL(callEnded())
 				   << SIGNAL(talkerChanged()));
 
-	v[VideoDoorEntryDevice::INTERCOM_CALL] = 0;
+	// sets internal state on devices
+	dev->is_calling = true;
+	dev->kind = 6;
+	dev->mmtype = 2;
+	intercom->dev->is_calling = true;
+	intercom->dev->kind = 6;
+	intercom->dev->mmtype = 2;
 
 	// call arrives
+	v[VideoDoorEntryDevice::INTERCOM_CALL] = 0;
 	intercom->valueReceived(v);
 	v.clear();
 
@@ -143,7 +154,7 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
 	intercom->answerCall();
 	dev->answerCall();
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 
 	// talker address arrives
 	v[VideoDoorEntryDevice::CALLER_ADDRESS] = "21#2";
@@ -152,6 +163,7 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
 	QCOMPARE(QString("garage"), intercom->getTalker());
 
 	// call terminates
+	QCOMPARE(true, dev->isCalling());
 	intercom->endCall();
 	dev->endCall();
 	QCOMPARE(QString(""), intercom->getTalker());
@@ -160,7 +172,7 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
 	t.checkSignalCount(SIGNAL(callEnded()), 1);
 	t.checkSignalCount(SIGNAL(talkerChanged()), 2);
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 }
 
 void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
@@ -177,7 +189,7 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 	dev->internalIntercomCall("21");
 	QCOMPARE(QString("portone"), intercom->getTalker());
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 
 	// talker answers
 	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
@@ -315,7 +327,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	cctv->cameraOn(&ep);
 	dev->cameraOn("21");
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 
 	// talker answers
 	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
@@ -328,7 +340,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	cctv->answerCall();
 	dev->answerCall();
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 
 	// answer confirmation
 	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
@@ -358,7 +370,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	cctv->cameraOn(&ep);
 	dev->cameraOn("21");
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 
 	// talker answers
 	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
@@ -367,11 +379,19 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 
 	QVERIFY(ti.waitForSignal(GRABBER_START_TIME));
 
+	// sets internal state on devices
+	dev->is_calling = true;
+	dev->kind = 4;
+	dev->mmtype = 2;
+	cctv->dev->is_calling = true;
+	cctv->dev->kind = 4;
+	cctv->dev->mmtype = 2;
+
 	// protocol for CCTV needs the following
 	cctv->answerCall();
 	dev->answerCall();
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 
 	// answer confirmation
 	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
@@ -437,7 +457,7 @@ void TestVideoDoorEntry::testAutoOpen()
 	dev->openLock();
 	dev->releaseLock();
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 }
 
 void TestVideoDoorEntry::testHandsFree()
@@ -464,7 +484,7 @@ void TestVideoDoorEntry::testHandsFree()
 	// auto answer
 	dev->answerCall();
 
-	compareClientCommand();
+	compareClientCommandThatWorks();
 
 	// answer confirmation
 	v[VideoDoorEntryDevice::ANSWER_CALL] = true;
