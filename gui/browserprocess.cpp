@@ -2,8 +2,11 @@
 
 #include <QProcess>
 #include <QCoreApplication>
+#include <QTimer>
 #include <QtDebug>
 
+#define KEEP_ALIVE_INTERVAL 5000
+#define KEEP_ALIVE_MAX      4
 
 /*
   Browser output lines are key-value pairs, for example:
@@ -29,16 +32,26 @@
   - load_url url
 
   Load specified URL
+
+  - ping
+
+  Browser process prints "pong" in response.
 */
 
 
 BrowserProcess::BrowserProcess(QObject *parent) : QObject(parent)
 {
 	browser = new QProcess(this);
+	keep_alive = new QTimer(this);
 	visible = false;
+	keep_alive_ticks = 0;
+
+	keep_alive->setInterval(KEEP_ALIVE_INTERVAL);
+	connect(keep_alive, SIGNAL(timeout()), this, SLOT(sendKeepAlive()));
 
 	connect(browser, SIGNAL(finished(int)), this, SLOT(terminated()));
 	connect(browser, SIGNAL(readyReadStandardOutput()), this, SLOT(readStatusUpdate()));
+	connect(browser, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(processStateChanged()));
 }
 
 void BrowserProcess::displayUrl(QString url)
@@ -77,6 +90,12 @@ void BrowserProcess::readStatusUpdate()
 
 	foreach (QString line, data.split('\n'))
 	{
+		if (line == "pong")
+		{
+			keep_alive_ticks = 0;
+			continue;
+		}
+
 		int colon = line.indexOf(':');
 		if (colon == -1)
 			continue;
@@ -106,4 +125,32 @@ void BrowserProcess::sendCommand(QString command)
 		return;
 	if (browser->write(command.toAscii() + "\n") < -1)
 		qDebug() << "Error BrowserProcess::sendCommand():" << browser->errorString();
+}
+
+void BrowserProcess::processStateChanged()
+{
+	if (browser->state() == QProcess::Running)
+	{
+		keep_alive_ticks = 0;
+		keep_alive->start();
+	}
+	else
+		keep_alive->stop();
+}
+
+void BrowserProcess::sendKeepAlive()
+{
+	if (keep_alive_ticks == KEEP_ALIVE_MAX)
+	{
+		qWarning("Terminating unresponsive browser with SIGTERM");
+		browser->terminate();
+	}
+	else if (keep_alive_ticks > KEEP_ALIVE_MAX)
+	{
+		qWarning("Terminating unresponsive browser with SIGKILL");
+		browser->kill();
+	}
+	else
+		sendCommand("ping");
+	keep_alive_ticks++;
 }

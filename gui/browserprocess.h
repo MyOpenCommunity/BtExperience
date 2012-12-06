@@ -4,6 +4,7 @@
 #include <QObject>
 
 class QProcess;
+class QTimer;
 
 
 class BrowserProcess : public QObject
@@ -27,6 +28,8 @@ signals:
 private slots:
 	void terminated();
 	void readStatusUpdate();
+	void processStateChanged();
+	void sendKeepAlive();
 
 private:
 	void startProcess();
@@ -34,7 +37,9 @@ private:
 	void updateVisible(bool visible);
 
 	bool visible;
+	int keep_alive_ticks;
 	QProcess *browser;
+	QTimer *keep_alive;
 };
 
 #endif // BROWSERPROCESS_H

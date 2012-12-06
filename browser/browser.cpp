@@ -140,6 +140,8 @@ void BrowserProperties::parseLine(QString line)
 
 		setUrl(url);
 	}
+	else if (line == "ping")
+		printf("pong\n");
 }
 
 
