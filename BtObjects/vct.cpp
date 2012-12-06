@@ -318,13 +318,6 @@ void CCTV::callerAddress(QString address)
 		is_autoswitch = autoswitch;
 		emit autoSwitchChanged();
 	}
-
-	// we want to open the door (only if the call does not come from an autoswitch)
-	if (prof_studio && !is_autoswitch)
-	{
-		dev->openLock();
-		dev->releaseLock();
-	}
 }
 
 void CCTV::setRingtone(int vde_ringtone)
@@ -374,19 +367,26 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		switch (it.key())
 		{
 		case VideoDoorEntryDevice::VCT_CALL:
+		{
+			qDebug() << "Received VCT_CALL";
+			// normal call: manage hands free and professional studio options
+			if (hands_free)
+				dev->answerCall();
+			if (prof_studio)
+			{
+				dev->openLock();
+				dev->releaseLock();
+			}
+		}
 		case VideoDoorEntryDevice::AUTO_VCT_CALL:
+			// if we arrived here directly is an autoswitch call, if we
+			// fell here from the case before it is a normal call
 			qDebug() << "Received VCT_(AUTO)_CALL";
 			// TODO: many many other things...but this should be enough for now.
 			if (call_stopped && it.key() == VideoDoorEntryDevice::VCT_CALL)
-			{
 				resumeVideo();
-			}
 			else
-			{
 				startVideo();
-				if (hands_free) // auto answer?
-					dev->answerCall();
-			}
 			activateCall();
 			if (values_list.contains(VideoDoorEntryDevice::CALLER_ADDRESS))
 				callerAddress(values_list[VideoDoorEntryDevice::CALLER_ADDRESS].toString());
