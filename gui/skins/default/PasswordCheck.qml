@@ -85,7 +85,8 @@ BasePage {
     Connections {
         target: global.screenState
         onStateChanged: {
-            if (global.screenState.state !== ScreenState.PasswordCheck)
+            if (global.screenState.state !== ScreenState.PasswordCheck &&
+                global.screenState.state !== ScreenState.Freeze)
                 Stack.popPage()
         }
     }
