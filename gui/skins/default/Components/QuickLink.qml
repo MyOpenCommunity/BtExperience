@@ -313,7 +313,7 @@ Item {
     BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
-        onPressAndHold: bgQuick.state = "selected"
+        onPressAndHold: if (editable) bgQuick.state = "selected"
         onPressed:  {
             bgQuickPressed.visible = true
             containerPressed.visible = true
@@ -370,15 +370,14 @@ Item {
             name: "selected"
             PropertyChanges {
                 target: column
-                anchors.margins: editable ? 0 : column.margins
+                anchors.margins: 0
             }
             PropertyChanges {
                 target: editColumn
-                opacity: editable ? 1 : editColumn.opacity
+                opacity: 1
             }
             StateChangeScript {
-                // execute selected script when not editable?
-                script: editable ? bgQuick.selected(bgQuick) : ""
+                script: bgQuick.selected(bgQuick)
             }
         }
     ]
