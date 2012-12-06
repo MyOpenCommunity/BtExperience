@@ -32,7 +32,7 @@ Page {
         }
         pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
         arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
-        onClicked: Stack.goToPage(delegate.target, delegate.props)
+        onClicked: handleClick(delegate)
     }
 
     CardView {
@@ -51,7 +51,7 @@ Page {
             source: itemObject.cardImageCached
             label: itemObject.description
 
-            onClicked: Stack.goToPage(itemObject.target, itemObject.props)
+            onClicked: handleClick(itemObject)
         }
 
         delegateSpacing: 40
@@ -68,9 +68,16 @@ Page {
         }
     }
 
+    function handleClick(item) {
+        if (item.target === global.browser)
+            global.browser.displayUrl(item.props.urlString)
+        else
+            Stack.goToPage(item.target, item.props)
+    }
+
     Component.onCompleted: {
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/multimedia/devices_card.jpg", "props": {} })
-        multimediaModel.append({"description": qsTr("web browser"), "target": "Browser.qml", "cardImageCached": "images/multimedia/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
+        multimediaModel.append({"description": qsTr("web browser"), "target": global.browser, "cardImageCached": "images/multimedia/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
         multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/browser_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
         multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/rss_card.jpg",
