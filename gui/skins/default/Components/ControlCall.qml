@@ -31,8 +31,12 @@ SvgImage {
                 return
 
             // answer call on hw key 0 press, open lock on hw key 1
-            if (index === 0)
-                control.dataObject.answerCall()
+            if (index === 0) {
+                if (control.dataObject.pagerCall)
+                    control.dataObject.answerPagerCall()
+                else
+                    control.dataObject.answerCall()
+            }
         }
     }
 
@@ -73,7 +77,10 @@ SvgImage {
 
         onClicked: {
             if (dataObject !== undefined) {
-                dataObject.startCall(intercom)
+                if (control.intercom === undefined)
+                    dataObject.startPagerCall()
+                else
+                    dataObject.startCall(intercom)
                 control.state = "callTo"
             }
         }
@@ -93,8 +100,12 @@ SvgImage {
             left: parent.left
         }
         onLeftClicked: {
-            if (dataObject !== undefined)
-                dataObject.answerCall()
+            if (dataObject !== undefined) {
+                if (control.dataObject.pagerCall)
+                    control.dataObject.answerPagerCall()
+                else
+                    control.dataObject.answerCall()
+            }
         }
         onRightClicked: {
             if (dataObject !== undefined)

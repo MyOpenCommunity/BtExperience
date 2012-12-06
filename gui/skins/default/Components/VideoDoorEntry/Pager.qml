@@ -7,29 +7,21 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
-    PaginatorList {
-        id: paginator
-        delegate: MenuItemDelegate {
-            editable: true
-            itemObject: model
-            hasChild: true
-        }
-        model: ListModel {
-            id: fakeModel
-            ListElement {
-                name: "generale"
-            }
-            ListElement {
-                name: "cucina"
-            }
-            ListElement {
-                name: "camera"
-            }
-            ListElement {
-                name: "box"
-            }
-        }
+    SystemsModel {id: systemsModel; systemId: Container.IdVideoDoorEntry }
+    ObjectModel {
+        id: modelList
+        filters: [{objectId: ObjectInterface.IdIntercom}]
+    }
 
-        onCurrentPageChanged: column.closeChild()
+    Column {
+        MenuItem {
+            name: qsTr("pager")
+            hasChild: false
+            height: controlCall.height
+            ControlCall {
+                id: controlCall
+                dataObject: modelList.getObject(0)
+            }
+        }
     }
 }
