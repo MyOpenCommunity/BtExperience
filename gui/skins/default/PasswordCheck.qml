@@ -16,6 +16,7 @@ BasePage {
 
         source: "images/scenarios/bg_testo.svg"
         anchors.centerIn: parent
+        anchors.verticalCenterOffset: -control.height / 6
 
         UbuntuMediumText {
             id: text
@@ -45,6 +46,7 @@ BasePage {
                 anchors.fill: parent
                 font.pixelSize: 14
                 color: "black"
+                focus: true
                 echoMode: TextInput.Password
                 horizontalAlignment: Text.AlignHCenter
                 anchors {
