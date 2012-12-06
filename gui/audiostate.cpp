@@ -26,9 +26,23 @@ namespace
 		AudioState::VdeCallVolume,
 		AudioState::IntercomCallVolume,
 		AudioState::IntercomCallVolume,
+		AudioState::SenderPagerCallVolume,
+		AudioState::ReceiverPagerCallVolume,
 		AudioState::InvalidVolume,
 		AudioState::RingtoneVolume,
 	};
+
+	void setPagerSpeakersVolume(int volume)
+	{
+		qDebug() << __PRETTY_FUNCTION__;
+		qDebug() << "Setting speakers volume to" << volume << "for incoming pager call (ringing phase)";
+	}
+
+	void setPagerMicrophoneVolume(int volume)
+	{
+		qDebug() << __PRETTY_FUNCTION__;
+		qDebug() << "Setting microphone volume to" << volume << "for outgoing pager call (ringing phase)";
+	}
 
 	void setTpaVolume(int volume)
 	{
@@ -79,6 +93,12 @@ namespace
 		case AudioState::IntercomCallVolume:
 			setZlVolume(volume);
 			break;
+		case AudioState::SenderPagerCallVolume:
+			setPagerMicrophoneVolume(volume);
+			break;
+		case AudioState::ReceiverPagerCallVolume:
+			setPagerSpeakersVolume(volume);
+			break;
 		default:
 			setTpaVolume(volume);
 			break;
@@ -93,9 +113,14 @@ namespace
 		return e.valueToKey(value);
 	}
 
-	QString scs_source_on     = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
-	QString vde_audio_on      = "/usr/local/bin/Hw-D-Audio-VDE_Conversation.sh";
-	QString vde_audio_off     = "/usr/local/bin/Hw-D-Audio-VDE_Conversation_off.sh";
+	QString scs_source_on        = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
+	QString vde_audio_on         = "/usr/local/bin/Hw-D-Audio-VDE_Conversation.sh";
+	QString vde_audio_off        = "/usr/local/bin/Hw-D-Audio-VDE_Conversation_off.sh";
+	// TODO put the right commands here
+	QString pager_speakers_on    = "ls";
+	QString pager_speakers_off   = "ls";
+	QString pager_microphone_on  = "ls";
+	QString pager_microphone_off = "ls";
 }
 
 #define VOLUME_MIN 0
@@ -290,6 +315,12 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	case Mute:
 		setZlMute(false);
 		break;
+	case SenderPagerCall:
+		smartExecute(pager_microphone_off);
+		break;
+	case ReceiverPagerCall:
+		smartExecute(pager_speakers_off);
+		break;
 	default:
 		qWarning("Add code to leave old state");
 		break;
@@ -315,6 +346,12 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 		break;
 	case Mute:
 		setZlMute(true);
+		break;
+	case SenderPagerCall:
+		smartExecute(pager_microphone_on);
+		break;
+	case ReceiverPagerCall:
+		smartExecute(pager_speakers_on);
 		break;
 	default:
 		qWarning("Add code to enter new state");

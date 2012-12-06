@@ -35,6 +35,8 @@ public:
 		IpVideoCall,
 		ScsIntercomCall,
 		IpIntercomCall,
+		SenderPagerCall,
+		ReceiverPagerCall,
 		Mute,
 		FloorCall,
 		// this must be last
@@ -49,6 +51,8 @@ public:
 		RingtoneVolume,
 		VdeCallVolume,
 		IntercomCallVolume,
+		SenderPagerCallVolume,
+		ReceiverPagerCallVolume,
 		// this must be last
 		VolumeCount
 	};
