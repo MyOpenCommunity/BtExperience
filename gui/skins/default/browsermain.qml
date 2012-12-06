@@ -39,9 +39,11 @@ Item {
             id: browserItem
             anchors.fill: parent
 
+            property string _fixedUrlString: privateProps.fixedAddress(webBrowser.urlString)
+
             Header {
                 id: header
-                editUrl: webBrowser.urlString
+                editUrl: browserItem.browserItem
                 view: webView
                 browser: webBrowser
                 anchors {
@@ -59,7 +61,7 @@ Item {
                 FlickableWebView {
                     id: webView
                     clip: true
-                    url: webBrowser.urlString
+                    url: browserItem._fixedUrlString
                     onProgressChanged: header.urlChanged = false
                     x: 0
                     y: parent.childOffset
@@ -76,6 +78,25 @@ Item {
             ScrollBar {
                 scrollArea: webView; height: 8; orientation: Qt.Horizontal
                 anchors { right: parent.right; rightMargin: 8; left: parent.left; bottom: parent.bottom }
+            }
+
+            QtObject {
+                id: privateProps
+
+                function fixedAddress(address) {
+                    var fixedAddress = address
+                    var isHttp = (fixedAddress.toLowerCase().indexOf("http://") === 0)
+                    var isHttps = (fixedAddress.toLowerCase().indexOf("https://") === 0)
+                    var isProcol = (fixedAddress.toLowerCase().indexOf("://") > 0)
+
+                    if (!isHttp && !isHttps && !isProcol)
+                        fixedAddress = "http://" + fixedAddress
+                    else if (!isProcol)
+                        fixedAddress = "http://" + fixedAddress
+
+                    console.log("Loading web address: " + fixedAddress)
+                    return fixedAddress
+                }
             }
         }
     }
