@@ -146,6 +146,13 @@ namespace
 		return link_node;
 	}
 
+	void createLinkHomepage(QDomNode parent, int uii)
+	{
+		QDomElement link_node = createLink(parent, uii);
+
+		link_node.setAttribute("img", "");
+	}
+
 	template<class T>
 	void createLink(QDomNode parent, int uii, T *obj)
 	{
@@ -817,6 +824,9 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
 	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
 
+	// If we are in homepage, we don't want to update the position of the link
+	bool is_home_page = (global_models.getHomepageLinks()->getUii() == obj->getContainerUii());
+
 	if (obj_int)
 	{
 		updateObjectName(node_path.first, obj_int);
@@ -852,13 +862,15 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		QPair<QDomNode, QString> archive_path = findNodeForUii(findLinkedUiiForObject(obj));
 
 		updateMediaNameAddress(archive_path.first, obj_media);
-		updateLinkPosition(node_path.first, obj_media);
+		if (!is_home_page)
+			updateLinkPosition(node_path.first, obj_media);
 
 		configurations->saveConfiguration(archive_path.second);
 	}
 	else if (obj_link)
 	{
-		updateLinkPosition(node_path.first, obj_link);
+		if (!is_home_page)
+			updateLinkPosition(node_path.first, obj_link);
 	}
 	else
 	{
@@ -937,12 +949,22 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 	if (uii == -1 || container_path.first.isNull())
 		return;
 
-	if (obj_link)
-		createLink(container_path.first, uii, obj_link);
-	else if (obj_media)
-		createLink(container_path.first, uii, obj_media);
+	// Homepage links don't have a position but they have an 'img' tag
+	bool is_home_page = (global_models.getHomepageLinks()->getUii() == obj->getContainerUii());
+
+	if (is_home_page)
+	{
+		createLinkHomepage(container_path.first, uii);
+	}
 	else
-		createLink(container_path.first, uii);
+	{
+		if (obj_link)
+			createLink(container_path.first, uii, obj_link);
+		else if (obj_media)
+			createLink(container_path.first, uii, obj_media);
+		else
+			createLink(container_path.first, uii);
+	}
 
 	configurations->saveConfiguration(container_path.second);
 }
