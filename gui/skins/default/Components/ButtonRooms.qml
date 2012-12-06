@@ -5,8 +5,8 @@ Image {
     source: "../images/common/button_navigation_column.svg"
     signal clicked
     Image {
-        id: systemIcon
-        source: "../images/common/ico_sistemi.svg"
+        id: roomIcon
+        source: "../images/common/ico_stanze.svg"
         anchors.centerIn: parent
     }
     BeepingMouseArea {
@@ -22,8 +22,8 @@ Image {
             source: "../images/common/button_navigation_column_p.svg"
         }
         PropertyChanges {
-            target: systemIcon
-            source: "../images/common/ico_sistemi_P.svg"
+            target: roomIcon
+            source: "../images/common/ico_stanze_P.svg"
         }
     }
 }

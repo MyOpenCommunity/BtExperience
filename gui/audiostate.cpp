@@ -26,29 +26,15 @@ namespace
 		AudioState::VdeCallVolume,
 		AudioState::IntercomCallVolume,
 		AudioState::IntercomCallVolume,
-		AudioState::SenderPagerCallVolume,
-		AudioState::ReceiverPagerCallVolume,
 		AudioState::InvalidVolume,
 		AudioState::RingtoneVolume,
 	};
-
-	void setPagerSpeakersVolume(int volume)
-	{
-		qDebug() << __PRETTY_FUNCTION__;
-		qDebug() << "Setting speakers volume to" << volume << "for incoming pager call (ringing phase)";
-	}
-
-	void setPagerMicrophoneVolume(int volume)
-	{
-		qDebug() << __PRETTY_FUNCTION__;
-		qDebug() << "Setting microphone volume to" << volume << "for outgoing pager call (ringing phase)";
-	}
 
 	void setTpaVolume(int volume)
 	{
 		QString scaled_volume = QString::number(volume * 30 / 100);
 
-		smartExecute("amixer", QStringList() << "-c" << "0" << "sset" << "TPA2016D2 Gain" << scaled_volume);
+		//smartExecute("amixer", QStringList() << "-c" << "0" << "sset" << "TPA2016D2 Gain" << scaled_volume);
 	}
 
 	void setHpDacVolume(int volume)
@@ -59,8 +45,9 @@ namespace
 		QString scaled_volume = QString::number(volume == 0 ? 0 :
 							volume == 1 ? 20 :
 								      (volume - 2) * 97 / 98 + 21);
-
-		smartExecute("amixer", QStringList() << "cset" << "name='HP DAC Playback Volume'" << scaled_volume + "," + scaled_volume);
+		smartExecute_synch("amixer", QStringList() << "cset" << "name='Baia Tpa Power'" << "On");
+		smartExecute_synch("amixer", QStringList() << "cset" << "name='HP Playback Switch'" << "on,on");
+		smartExecute_synch("amixer", QStringList() << "cset" << "name='HP DAC Playback Volume'" << scaled_volume + "," + scaled_volume);
 	}
 
 	void setZlVolume(int volume)
@@ -69,15 +56,16 @@ namespace
 		// 1-100 -> 0 -> 97
 		QString scaled_volume = QString::number(volume * 97 / 100, 16);
 
-		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "046B" << scaled_volume);
+		//Viene fatta dopo la chiamata_vde_silent --> deve essere fatta prima!!!!
+		//smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "046B" << scaled_volume);
 	}
 
 	void setZlMute(bool mute)
 	{
 		if (mute)
-			smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "610C");
+			smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "6104");
 		else
-			smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "600C");
+			smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "044a" << "6004");
 	}
 
 	void setHardwareVolume(AudioState::Volume state, int volume)
@@ -93,12 +81,6 @@ namespace
 		case AudioState::IntercomCallVolume:
 			setZlVolume(volume);
 			break;
-		case AudioState::SenderPagerCallVolume:
-			setPagerMicrophoneVolume(volume);
-			break;
-		case AudioState::ReceiverPagerCallVolume:
-			setPagerSpeakersVolume(volume);
-			break;
 		default:
 			setTpaVolume(volume);
 			break;
@@ -113,14 +95,9 @@ namespace
 		return e.valueToKey(value);
 	}
 
-	QString scs_source_on        = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
-	QString vde_audio_on         = "/usr/local/bin/Hw-D-Audio-VDE_Conversation.sh";
-	QString vde_audio_off        = "/usr/local/bin/Hw-D-Audio-VDE_Conversation_off.sh";
-	// TODO put the right commands here
-	QString pager_speakers_on    = "ls";
-	QString pager_speakers_off   = "ls";
-	QString pager_microphone_on  = "ls";
-	QString pager_microphone_off = "ls";
+	QString scs_source_on     = "/usr/local/bin/Hw-D-Audio-SCS_Multimedia.sh";
+	QString vde_audio_on      = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_silent.sh";
+	QString vde_audio_off     = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_off_silent.sh";
 }
 
 #define VOLUME_MIN 0
@@ -174,7 +151,7 @@ void AudioState::updateState()
 		}
 	}
 
-	Q_ASSERT_X(i >= 0, __PRETTY_FUNCTION__, "Idle state not set in audio state machine");
+	Q_ASSERT_X(i >= 0, "AudioState::updateState", "Idle state not set in audio state machine");
 
 	if (new_state == pending_state || new_state == current_state)
 		return;
@@ -209,8 +186,8 @@ bool AudioState::isLocalAmplifier() const
 
 void AudioState::setStateVolume(Volume state, int volume)
 {
-	Q_ASSERT_X(state != InvalidVolume, __PRETTY_FUNCTION__, "invalid volume");
-	Q_ASSERT_X(volume >= VOLUME_MIN && volume <= VOLUME_MAX, __PRETTY_FUNCTION__,
+	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
+	Q_ASSERT_X(volume >= VOLUME_MIN && volume <= VOLUME_MAX, "AudioState::setVolume",
 		qPrintable(QString("Volume value %1 out of range for volume %2!").arg(volume).arg(state)));
 
 	if (volumes[state] == volume)
@@ -224,7 +201,7 @@ void AudioState::setStateVolume(Volume state, int volume)
 
 int AudioState::getStateVolume(Volume state) const
 {
-	Q_ASSERT_X(state != InvalidVolume, __PRETTY_FUNCTION__, "invalid volume");
+	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
 
 	return volumes[state];
 }
@@ -237,7 +214,7 @@ void AudioState::setVolume(int volume)
 		return;
 	}
 
-	Q_ASSERT_X(current_volume != InvalidVolume, __PRETTY_FUNCTION__, "Can't set volume in current audio state");
+	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't set volume in current audio state");
 	setStateVolume(current_volume, volume);
 }
 
@@ -249,8 +226,8 @@ int AudioState::getVolume() const
 		return 0;
 	}
 
-	Q_ASSERT_X(current_volume != InvalidVolume, __PRETTY_FUNCTION__, "Can't get volume in current audio state");
-	return getStateVolume(current_volume);
+	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't get volume in current audio state");
+	return getStateVolume(current_volume);;
 }
 
 void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
@@ -308,18 +285,16 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	switch (old_state)
 	{
+	case AudioState::BeepVolume:
+	case AudioState::LocalPlaybackVolume:
+	case AudioState::RingtoneVolume:
+		break;
 	case ScsVideoCall:
 	case ScsIntercomCall:
-		smartExecute(vde_audio_off);
+		smartExecute_synch(vde_audio_off);
 		break;
 	case Mute:
 		setZlMute(false);
-		break;
-	case SenderPagerCall:
-		smartExecute(pager_microphone_off);
-		break;
-	case ReceiverPagerCall:
-		smartExecute(pager_speakers_off);
 		break;
 	default:
 		qWarning("Add code to leave old state");
@@ -334,12 +309,12 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	switch (new_state)
 	{
 	case ScsVideoCall:
-		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8A10");
-		smartExecute(vde_audio_on);
+		//smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8A10");
+		smartExecute_synch(vde_audio_on);
 		break;
 	case ScsIntercomCall:
-		smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8710");
-		smartExecute(vde_audio_on);
+		//smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8710");
+		//smartExecute(vde_audio_on);
 		break;
 	case LocalPlaybackMute:
 		setHardwareVolume(LocalPlaybackVolume, 0);
@@ -347,17 +322,11 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	case Mute:
 		setZlMute(true);
 		break;
-	case SenderPagerCall:
-		smartExecute(pager_microphone_on);
-		break;
-	case ReceiverPagerCall:
-		smartExecute(pager_speakers_on);
-		break;
 	default:
 		qWarning("Add code to enter new state");
 		break;
 	case Invalid:
-		Q_ASSERT_X(false, __PRETTY_FUNCTION__, "Entering invalid audio state");
+		Q_ASSERT_X(false, "AudioState::updateAudioPaths", "Entering invalid audio state");
 		break;
 	}
 
@@ -379,7 +348,7 @@ void AudioState::completeTransition(bool state)
 	if (pending_state == Invalid)
 		return;
 
-	Q_ASSERT_X(!state, __PRETTY_FUNCTION__, "Inconsistent state during transition");
+	Q_ASSERT_X(!state, "AudioState::completeTransition", "Inconsistent state during transition");
 
 	updateAudioPaths(current_state, pending_state);
 }

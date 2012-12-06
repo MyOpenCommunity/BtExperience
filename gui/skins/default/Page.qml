@@ -12,6 +12,9 @@ BasePage {
     property alias text: navigationBar.text
     property alias showBackButton: navigationBar.backButton
     property alias showSystemsButton: navigationBar.systemsButton
+    property alias showSettingsButton: navigationBar.settingsButton
+    property alias showRoomsButton: navigationBar.roomsButton
+    property alias showMultimediaButton: navigationBar.multimediaButton
 
     function homeButtonClicked() {
         Stack.backToHome()
@@ -22,6 +25,15 @@ BasePage {
     }
 
     function systemsButtonClicked() {
+    }
+
+    function settingsButtonClicked() {
+    }
+
+    function roomsButtonClicked() {
+    }
+
+    function multimediaButtonClicked() {
     }
 
     ToolBar {
@@ -44,9 +56,15 @@ BasePage {
         }
         backButton: true
         systemsButton: false
+        settingsButton: false
+        roomsButton: false
+        multimediaButton: false
 
         onBackClicked: backButtonClicked()
         onSystemsClicked: systemsButtonClicked()
+        onSettingsClicked: settingsButtonClicked()
+        onRoomsClicked: roomsButtonClicked()
+        onMultimediaClicked: multimediaButtonClicked()
     }
 
     ConfirmationBar {

@@ -16,6 +16,8 @@ SystemPage {
     }
 
     function systemPageClosed() {
-        Stack.popPage()
+        Stack.backToHome()
     }
+
+    showSystemsButton: false
 }
