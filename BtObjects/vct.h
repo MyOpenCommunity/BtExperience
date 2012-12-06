@@ -325,6 +325,8 @@ signals:
 	void ringtoneReceived();
 	void floorRingtoneReceived();
 	void pagerCallChanged();
+	void microphoneOnRequested();
+	void speakersOnRequested();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);

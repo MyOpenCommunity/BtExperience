@@ -171,6 +171,8 @@ Item {
         onIncomingCall: privateProps.addNotification({"type": Script.INTERCOM_INCOMING_CALL})
         onCallAnswered: {
             global.screenState.enableState(ScreenState.ForcedNormal)
+            global.audioState.disableState(AudioState.SenderPagerCall)
+            global.audioState.disableState(AudioState.ReceiverPagerCall)
             if (intercomConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpIntercomCall)
             else
@@ -195,6 +197,8 @@ Item {
             if (!intercomConnection.target.getRingExclusion())
                 global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.FloorCall)
         }
+        onMicrophoneOnRequested: global.audioState.enableState(AudioState.SenderPagerCall)
+        onSpeakersOnRequested: global.audioState.enableState(AudioState.ReceiverPagerCall)
     }
 
     Connections {

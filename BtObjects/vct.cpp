@@ -527,6 +527,7 @@ void Intercom::startPagerCall()
 {
 	dev->pagerCall();
 	activateCall();
+	emit microphoneOnRequested();
 }
 
 QString Intercom::getTalker() const
@@ -591,6 +592,7 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			{
 				pager_call = true;
 				emit pagerCallChanged();
+				emit speakersOnRequested();
 			}
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
