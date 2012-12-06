@@ -113,7 +113,10 @@ BasePage {
                     sourceComponent: bestDelegate(itemObject.type)
                     anchors.centerIn: favouriteItem
                     z: 1
-                    onLoaded: item.itemObject = favouriteItem.itemObject
+                    onLoaded: {
+                        item.itemObject = favouriteItem.itemObject
+                        item.editable = false
+                    }
                 }
             }
         }
