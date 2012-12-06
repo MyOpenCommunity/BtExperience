@@ -174,7 +174,7 @@ void AudioState::updateState()
 		}
 	}
 
-	Q_ASSERT_X(i >= 0, "AudioState::updateState", "Idle state not set in audio state machine");
+	Q_ASSERT_X(i >= 0, __PRETTY_FUNCTION__, "Idle state not set in audio state machine");
 
 	if (new_state == pending_state || new_state == current_state)
 		return;
@@ -209,8 +209,8 @@ bool AudioState::isLocalAmplifier() const
 
 void AudioState::setStateVolume(Volume state, int volume)
 {
-	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
-	Q_ASSERT_X(volume >= VOLUME_MIN && volume <= VOLUME_MAX, "AudioState::setVolume",
+	Q_ASSERT_X(state != InvalidVolume, __PRETTY_FUNCTION__, "invalid volume");
+	Q_ASSERT_X(volume >= VOLUME_MIN && volume <= VOLUME_MAX, __PRETTY_FUNCTION__,
 		qPrintable(QString("Volume value %1 out of range for volume %2!").arg(volume).arg(state)));
 
 	if (volumes[state] == volume)
@@ -224,7 +224,7 @@ void AudioState::setStateVolume(Volume state, int volume)
 
 int AudioState::getStateVolume(Volume state) const
 {
-	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
+	Q_ASSERT_X(state != InvalidVolume, __PRETTY_FUNCTION__, "invalid volume");
 
 	return volumes[state];
 }
@@ -237,7 +237,7 @@ void AudioState::setVolume(int volume)
 		return;
 	}
 
-	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't set volume in current audio state");
+	Q_ASSERT_X(current_volume != InvalidVolume, __PRETTY_FUNCTION__, "Can't set volume in current audio state");
 	setStateVolume(current_volume, volume);
 }
 
@@ -249,8 +249,8 @@ int AudioState::getVolume() const
 		return 0;
 	}
 
-	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't get volume in current audio state");
-	return getStateVolume(current_volume);;
+	Q_ASSERT_X(current_volume != InvalidVolume, __PRETTY_FUNCTION__, "Can't get volume in current audio state");
+	return getStateVolume(current_volume);
 }
 
 void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
@@ -357,7 +357,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 		qWarning("Add code to enter new state");
 		break;
 	case Invalid:
-		Q_ASSERT_X(false, "AudioState::updateAudioPaths", "Entering invalid audio state");
+		Q_ASSERT_X(false, __PRETTY_FUNCTION__, "Entering invalid audio state");
 		break;
 	}
 
@@ -379,7 +379,7 @@ void AudioState::completeTransition(bool state)
 	if (pending_state == Invalid)
 		return;
 
-	Q_ASSERT_X(!state, "AudioState::completeTransition", "Inconsistent state during transition");
+	Q_ASSERT_X(!state, __PRETTY_FUNCTION__, "Inconsistent state during transition");
 
 	updateAudioPaths(current_state, pending_state);
 }
