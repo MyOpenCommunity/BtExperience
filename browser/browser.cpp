@@ -138,7 +138,8 @@ void BrowserProperties::parseLine(QString line)
 	{
 		QString url = line.split(" ")[1];
 
-		setUrl(url);
+		if (!url.isEmpty())
+			setUrl(url);
 	}
 	else if (line == "ping")
 		printf("pong\n");
