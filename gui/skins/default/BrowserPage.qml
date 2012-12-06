@@ -68,7 +68,7 @@ Page {
                 pressedImage: "images/common/btn_weblink_P.svg"
                 onClicked: {
                     if (type === "browser")
-                        global.browser.displayUrl(itemObject.address)
+                        Stack.pushPage("ExternalBrowser.qml", {"urlString": itemObject.address})
                     else if (type === "rss")
                         Stack.pushPage("RssPage.qml", {"urlString": itemObject.address})
                     else if (type === "webradio") {
