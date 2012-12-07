@@ -24,14 +24,33 @@ MenuColumn {
         id: paginator
 
         MenuItem {
-            name: qsTr("Delete")
+            name: qsTr("Rename")
             isSelected: privateProps.currentIndex === 1
             onClicked: {
-                if (privateProps.currentIndex !== 1)
-                    privateProps.currentIndex = 1
+                pageObject.installPopup(quicklinkEditComponent)
+                pageObject.popupLoader.item.favoriteItem = column.dataModel
+            }
+        }
+
+        MenuItem {
+            name: qsTr("Delete")
+            isSelected: privateProps.currentIndex === 2
+            onClicked: {
+                if (privateProps.currentIndex !== 2)
+                    privateProps.currentIndex = 2
                 quicklinksModel.remove(column.dataModel)
                 column.closeColumn()
             }
         }
-     }
+    }
+
+    Connections {
+        target: pageObject.popupLoader.item
+        onClosePopup: column.closeColumn()
+    }
+
+    Component {
+        id: quicklinkEditComponent
+        FavoriteEditPopup {}
+    }
 }
