@@ -18,7 +18,8 @@ Column {
     function okClicked() {
         if (favoriteItem) {
             favoriteItem.name = descriptionInput.text
-            favoriteItem.address = addressInput.text
+            if (favoriteItem.address)
+                favoriteItem.address = addressInput.text
         }
     }
 
@@ -27,8 +28,14 @@ Column {
     onFavoriteItemChanged: {
         if (favoriteItem !== undefined)
         {
-            addressInput.text = favoriteItem.address
             descriptionInput.text = favoriteItem.name
+            if (favoriteItem.address) {
+                addressInput.text = favoriteItem.address
+            }
+            else {
+                addressInputBg.visible = false
+                addressText.visible = false
+            }
         }
     }
 
@@ -104,6 +111,7 @@ Column {
             }
 
             SvgImage {
+                id: addressInputBg
                 source: "../images/common/bg_text-input.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 UbuntuLightTextInput {
