@@ -31,7 +31,7 @@ namespace
 			if (id == ObjectInterface::IdSwitchboard)
 				where = (*bt_global::config)[GUARD_UNIT_ADDRESS];
 			else
-				where = v.value("where");
+				where = v.value("dev") + v.value("where");
 
 			obj_list << ObjectPair(uii, new ExternalPlace(v.value("descr"), id, where));
 		}
