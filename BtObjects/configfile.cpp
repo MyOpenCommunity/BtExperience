@@ -9,14 +9,9 @@
 #include <QtDebug>
 
 #include "xml_functions.h"
+#include "xmlobject.h"
 
 #define FILE_SAVE_INTERVAL 10000
-
-#if defined(BT_HARDWARE_X11)
-#define CONF_FILE "conf.xml"
-#else
-#define CONF_FILE "/var/tmp/conf.xml"
-#endif
 
 
 namespace
@@ -107,6 +102,42 @@ void setConfValue(QDomDocument document, QString path, QString value)
 QString getConfValue(QDomDocument document, QString path)
 {
 	return getDeviceValue(getElement(document.documentElement(), "setup"), path);
+}
+
+void setIntSetting(QDomDocument document, int id, QString attribute, int value)
+{
+	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+	{
+		if (getIntAttribute(xml_obj, "id") == id)
+		{
+			foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+				setAttribute(ist, attribute, QString::number(value));
+			break;
+		}
+	}
+}
+
+int parseIntSetting(QDomNode xml_node, QString attribute)
+{
+	int result = 0;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		result = v.intValue(attribute);
+	}
+	return result;
+}
+
+void setEnableFlag(QDomDocument document, int id, bool enable)
+{
+	setIntSetting(document, id, "enable", enable);
+}
+
+bool parseEnableFlag(QDomNode xml_node)
+{
+	return parseIntSetting(xml_node, "enable");
 }
 
 

@@ -22,7 +22,7 @@ MenuColumn {
                     if (model.type === "column")
                         column.loadColumn(model.component, model.name)
                     else
-                        Stack.pushPage("Calibration.qml")
+                        Stack.pushPage(model.component)
                 }
             }
         }
@@ -35,8 +35,8 @@ MenuColumn {
         Component.onCompleted: {
             modelList.append({"name": qsTr("Brightness"), "component": brightness, "type": "column"})
 //            modelList.append({"name": qsTr("Transition effects"), "component": transitionEffects})
-            modelList.append({"name": qsTr("Calibration"), "component": undefined, "type": "page"})
-            modelList.append({"name": qsTr("Clean"), "component": clean, "type": "column"})
+            modelList.append({"name": qsTr("Calibration"), "component": "Calibration.qml", "type": "page"})
+            modelList.append({"name": qsTr("Clean"), "component": "Clean.qml", "type": "page"})
         }
     }
 
@@ -49,9 +49,4 @@ MenuColumn {
 //        id: transitionEffects
 //        TransitionEffects {}
 //    }
-
-    Component {
-        id: clean
-        Item {}
-    }
 }

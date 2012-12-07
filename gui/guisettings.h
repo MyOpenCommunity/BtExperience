@@ -100,6 +100,11 @@ class GuiSettings : public QObject
 	*/
 	Q_PROPERTY(bool scenarioRecordingAlert READ getScenarioRecordingAlert WRITE setScenarioRecordingAlert NOTIFY scenarioRecordingAlertChanged)
 
+	/*!
+		\brief Sets or gets clean screen time
+	*/
+	Q_PROPERTY(int cleanScreenTime READ getCleanScreenTime WRITE setCleanScreenTime NOTIFY cleanScreenTimeChanged)
+
 	Q_ENUMS(Skin)
 
 public:
@@ -145,6 +150,8 @@ public:
 	void setMessageAlert(bool enable);
 	bool getScenarioRecordingAlert() const;
 	void setScenarioRecordingAlert(bool enable);
+	int getCleanScreenTime() const;
+	void setCleanScreenTime(int seconds);
 
 	QString getSkinString() const;
 
@@ -166,6 +173,7 @@ signals:
 	void playerAlertChanged();
 	void messageAlertChanged();
 	void scenarioRecordingAlertChanged();
+	void cleanScreenTimeChanged();
 
 private:
 	void parseSettings();
@@ -189,6 +197,7 @@ private:
 	bool player_alert;
 	bool message_alert;
 	bool scenario_recording_alert;
+	int clean_screen_time;
 
 private:
 	void sendCommand(const QString &cmd);

@@ -23,12 +23,14 @@
 #define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
 
+
 namespace
 {
 	enum Parsing
 	{
 		Beep = 14001,
 		Password = 14003,
+		Brightness = 14151,
 		RingtoneS0 = 14101,
 		RingtoneS1,
 		RingtoneS2,
@@ -45,69 +47,34 @@ namespace
 		VolumeIntercomCall
 	};
 
-	void setEnableFlag(QDomDocument document, int id, bool enable)
-	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-					setAttribute(ist, "enable", QString::number(int(enable)));
-				break;
-			}
-		}
-	}
-
 	void setRingtone(QDomDocument document, int id, int ringtone)
 	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-					setAttribute(ist, "id_ringtone", QString::number(ringtone));
-				break;
-			}
-		}
+		setIntSetting(document, id, "id_ringtone", ringtone);
 	}
 
 	int parseRingtone(QDomNode xml_node)
 	{
-		int result = -1;
-		XmlObject v(xml_node);
-
-		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-		{
-			v.setIst(ist);
-			result = v.intValue("id_ringtone");
-		}
-		return result;
+		return parseIntSetting(xml_node, "id_ringtone");
 	}
 
-	void setVolume(QDomDocument document, int id, int ringtone)
+	void setVolume(QDomDocument document, int id, int volume)
 	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-					setAttribute(ist, "volume", QString::number(ringtone));
-				break;
-			}
-		}
+		setIntSetting(document, id, "volume", volume);
 	}
 
 	int parseVolume(QDomNode xml_node)
 	{
-		int result = -1;
-		XmlObject v(xml_node);
+		return parseIntSetting(xml_node, "volume");
+	}
 
-		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-		{
-			v.setIst(ist);
-			result = v.intValue("volume");
-		}
-		return result;
+	void setBrightness(QDomDocument document, int id, int brightness)
+	{
+		setIntSetting(document, id, "brightness", brightness);
+	}
+
+	int parseBrightness(QDomNode xml_node)
+	{
+		return parseIntSetting(xml_node, "brightness");
 	}
 
 	void setPassword(QDomDocument document, int id, QString password, bool enabled)
@@ -183,6 +150,8 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	connect(screen_state, SIGNAL(stateChanged(ScreenState::State,ScreenState::State)),
 		this, SLOT(screenStateChangedManagement()));
 	connect(browser, SIGNAL(clicked()), screen_state, SLOT(simulateClick()));
+	connect(screen_state, SIGNAL(normalBrightnessChanged()),
+		this, SLOT(brightnessChanged()));
 }
 
 void GlobalProperties::initAudio()
@@ -256,6 +225,9 @@ void GlobalProperties::parseSettings()
 		case Password:
 			parsePassword(xml_obj, &password, &password_enabled);
 			screen_state->setPasswordEnabled(password_enabled);
+			break;
+		case Brightness:
+			screen_state->setNormalBrightness(parseBrightness(xml_obj));
 			break;
 		case RingtoneS0:
 			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace1, parseRingtone(xml_obj));
@@ -502,6 +474,14 @@ void GlobalProperties::ringtoneChanged(int ringtone, int index)
 		setRingtone(document, RingtoneDoor, index);
 		break;
 	}
+	configurations->saveConfiguration(SETTINGS_FILE);
+}
+
+void GlobalProperties::brightnessChanged()
+{
+	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
+
+	setBrightness(document, Brightness, screen_state->getNormalBrightness());
 	configurations->saveConfiguration(SETTINGS_FILE);
 }
 

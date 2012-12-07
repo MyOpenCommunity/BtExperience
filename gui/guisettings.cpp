@@ -15,16 +15,6 @@
 
 #include <limits>
 
-#if defined(BT_HARDWARE_X11)
-#define CONF_FILE "conf.xml"
-#define LAYOUT_FILE "layout.xml"
-#define SETTINGS_FILE "settings.xml"
-#else
-#define CONF_FILE "/var/tmp/conf.xml"
-#define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
-#define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
-#endif
-
 
 namespace
 {
@@ -32,6 +22,7 @@ namespace
 	{
 		HomePageContainer = 17,
 
+		CleanScreen = 14152,
 		EnergyThresholdBeep = 14255,
 		EnergyConsumptionPopup = 14256,
 		BurglarAlarmAlert = 14257,
@@ -45,32 +36,6 @@ namespace
 		MessagesAlert = 14265,
 		ScenarioRecordingAlert = 14266
 	};
-
-	void setEnableFlag(QDomDocument document, int id, bool enable)
-	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-					setAttribute(ist, "enable", QString::number(int(enable)));
-				break;
-			}
-		}
-	}
-
-	bool parseEnableFlag(QDomNode xml_node)
-	{
-		bool result = false;
-		XmlObject v(xml_node);
-
-		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-		{
-			v.setIst(ist);
-			result = v.intValue("enable");
-		}
-		return result;
-	}
 
 	// Sets a language on the GUI; the GUI must be restarted for changes to have effect
 	void setLanguageTranslator(QString language)
@@ -130,6 +95,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 	message_alert = false;
 	scenario_recording_alert = false;
 	language = getConfValue(conf, "generale/language");
+	clean_screen_time = 10;
 
 	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
 	{
@@ -155,6 +121,9 @@ void GuiSettings::parseSettings()
 
 		switch (id)
 		{
+		case CleanScreen:
+			clean_screen_time = parseIntSetting(xml_obj, "clean_time") / 1000;
+			break;
 		case EnergyThresholdBeep:
 			energy_threshold_beep = parseEnableFlag(xml_obj);
 			break;
@@ -487,4 +456,21 @@ void GuiSettings::setScenarioRecordingAlert(bool enable)
 	scenario_recording_alert = enable;
 	emit scenarioRecordingAlertChanged();
 	setSettingsEnableFlag(ScenarioRecordingAlert, enable);
+}
+
+int GuiSettings::getCleanScreenTime() const
+{
+	return clean_screen_time;
+}
+
+void GuiSettings::setCleanScreenTime(int seconds)
+{
+	if (seconds == clean_screen_time)
+		return;
+	clean_screen_time = seconds;
+	emit cleanScreenTimeChanged();
+
+	QDomDocument conf = configurations->getConfiguration(SETTINGS_FILE);
+	setIntSetting(conf, CleanScreen, "clean_time", clean_screen_time * 1000);
+	configurations->saveConfiguration(SETTINGS_FILE);
 }
