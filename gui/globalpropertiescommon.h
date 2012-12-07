@@ -15,6 +15,7 @@ class DebugTiming;
 class GuiSettings;
 class InputContextWrapper;
 class logger;
+class QDomNode;
 
 #define MAIN_WIDTH 1024
 #define MAIN_HEIGHT 600
@@ -30,6 +31,15 @@ namespace Maliit
 }
 #endif
 
+#if defined(BT_HARDWARE_X11)
+#define SETTINGS_FILE "settings.xml"
+#define EXTRA_11_DIR "11/"
+#else
+#define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
+#define EXTRA_11_DIR "/home/bticino/cfg/extra/11/"
+#endif
+
+bool parseEnableFlag(const QDomNode &xml_node);
 
 class GlobalPropertiesCommon : public QObject
 {
@@ -101,6 +111,7 @@ protected:
 	QDeclarativeView *main_widget;
 
 private:
+	void parseSettings(logger *log);
 	InputContextWrapper *wrapper;
 	QString keyboard_layout_name;
 

@@ -105,7 +105,7 @@ private slots:
 	void sendDelayedFrames();
 
 private:
-	void parseSettings(logger *log);
+	void parseSettings();
 
 	AudioVideoPlayer *video_player;
 	PhotoPlayer *photo_player;

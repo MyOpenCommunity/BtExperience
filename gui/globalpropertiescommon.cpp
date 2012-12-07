@@ -2,6 +2,8 @@
 #include "guisettings.h"
 #include "inputcontextwrapper.h"
 #include "configfile.h"
+#include "xml_functions.h"
+#include "xmlobject.h"
 
 #include <logger.h>
 
@@ -26,6 +28,28 @@
 #define CONF_FILE "/var/tmp/conf.xml"
 #endif
 
+namespace
+{
+	enum Parsing
+	{
+		DebugTouchscreen = 123456,
+		DebugEventTiming
+	};
+}
+
+bool parseEnableFlag(const QDomNode &xml_node)
+{
+	bool result = false;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		result = v.intValue("enable");
+	}
+	return result;
+}
+
 
 GlobalPropertiesCommon::GlobalPropertiesCommon(logger *log)
 {
@@ -44,6 +68,8 @@ GlobalPropertiesCommon::GlobalPropertiesCommon(logger *log)
 
 	keyboard_layout_name = getConfValue(conf, "generale/keyboard_lang");
 
+	parseSettings(log);
+
 #ifdef BT_MALIIT
 	maliit_settings = Maliit::SettingsManager::create();
 	maliit_settings->setParent(this);
@@ -53,6 +79,29 @@ GlobalPropertiesCommon::GlobalPropertiesCommon(logger *log)
 
 	maliit_settings->loadPluginSettings();
 #endif
+}
+
+void GlobalPropertiesCommon::parseSettings(logger *log)
+{
+	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
+
+	bool debug_timing_enabled = false;
+	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+	{
+		int id = getIntAttribute(xml_obj, "id");
+
+		switch (id)
+		{
+		case DebugTouchscreen:
+			debug_touchscreen = parseEnableFlag(xml_obj);
+			break;
+		case DebugEventTiming:
+			debug_timing_enabled = parseEnableFlag(xml_obj);
+			break;
+		}
+	}
+
+	debug_timing = new DebugTiming(log, debug_timing_enabled, this);
 }
 
 QString GlobalPropertiesCommon::getBasePath() const

@@ -5,9 +5,22 @@ import Components.Text 1.0
 Column {
     id: popup
 
+    property alias title: popupTitle.text
+    property alias topInputLabel: titleText.text
+    property alias topInputText: descriptionInput.text
+    property alias bottomInputLabel: addressText.text
+    property alias bottomInputText: addressInput.text
+    property bool bottomInputIsPassword: false
     property variant favoriteItem: undefined
 
     signal closePopup
+
+    function okClicked() {
+        if (favoriteItem) {
+            favoriteItem.name = descriptionInput.text
+            favoriteItem.address = addressInput.text
+        }
+    }
 
     spacing: 4
 
@@ -23,6 +36,7 @@ Column {
         source: "../images/scenarios/bg_titolo.svg"
 
         UbuntuMediumText {
+            id: popupTitle
             text: qsTr("Edit quicklink properties")
             font.pixelSize: 24
             color: "white"
@@ -106,6 +120,7 @@ Column {
                     }
                     activeFocusOnPress: false
                     containerWidget: popup
+                    echoMode: popup.bottomInputIsPassword ? TextInput.Password : TextInput.Normal
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -136,8 +151,7 @@ Column {
                 text: qsTr("ok")
                 font.pixelSize: 14
                 onClicked: {
-                    favoriteItem.name = descriptionInput.text
-                    favoriteItem.address = addressInput.text
+                    popup.okClicked()
                     closePopup()
                 }
             }

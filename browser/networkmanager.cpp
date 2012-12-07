@@ -35,13 +35,11 @@ BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
 
 void BtNetworkAccessManager::setUsername(const QString &user)
 {
-	qDebug() << "Username" << user;
 	username = user;
 }
 
 void BtNetworkAccessManager::setPassword(const QString &pass)
 {
-	qDebug() << "password:" << password;
 	password = pass;
 }
 
