@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-	<obj id="10050" cid="10050" descr="Entrance panel" where="0" device="2" staircase="0" lock="0">
-		<ist uii="9011" descr="Entrance panel 1" where="14" staircase="1" />
-		<ist uii="9012" descr="Entrance panel 2" where="15" />
-		<ist uii="9013" descr="Entrance panel 3" where="16" lock="1" />
+	<obj id="10050" cid="10050" descr="Entrance panel" where="0" dev="2" staircase="0" lock="0">
+		<ist uii="9011" descr="Entrance panel 1" where="4" staircase="1" />
+		<ist uii="9012" descr="Entrance panel 2" where="5" />
+		<ist uii="9013" descr="Entrance panel 3" where="6" lock="1" />
 	</obj>
-	<obj id="10051" cid="10051" descr="Camera" where="0" device="2">
-		<ist uii="9014" descr="Monoblocco" where="21" />
-		<ist uii="9015" descr="Camera bikini" where="20" />
+	<obj id="10051" cid="10051" descr="Camera" where="0" dev="2">
+		<ist uii="9014" descr="Monoblocco" where="1" />
+		<ist uii="9015" descr="Camera bikini" where="0" />
 	</obj>
-	<obj id="10052" cid="10052" descr="Internal intercom" where="0" device="1">
-		<ist uii="9016" descr="Internal 1" where="17" />
-		<ist uii="9017" descr="Internal 2" where="14" />
-		<ist uii="9018" descr="Internal 3 - no layout" where="19" />
+	<obj id="10052" cid="10052" descr="Internal intercom" where="0" dev="1">
+		<ist uii="9016" descr="Internal 1" where="7" />
+		<ist uii="9017" descr="Internal 2" where="4" />
+		<ist uii="9018" descr="Internal 3 - no layout" where="9" />
 	</obj>
-	<obj id="10053" cid="10053" descr="External intercom" where="0" device="1">
-		<ist uii="9019" descr="External 1" where="23" />
-		<ist uii="9020" descr="External 2" where="24" />
-		<ist uii="9021" descr="External 3 - no layout" where="25" />
+	<obj id="10053" cid="10053" descr="External intercom" where="0" dev="1">
+		<ist uii="9019" descr="External 1" where="3" />
+		<ist uii="9020" descr="External 2" where="4" />
+		<ist uii="9021" descr="External 3 - no layout" where="5" />
 	</obj>
-	<obj id="10054" cid="10054" descr="Switchboard" where="26" device="3">
+	<obj id="10054" cid="10054" descr="Switchboard" where="6" dev="3">
 		<ist uii="9022" descr="Switchboard 1" />
 	</obj>
 </archive>
