@@ -22,6 +22,7 @@ namespace
 	{
 		HomePageContainer = 17,
 
+		CleanScreen = 14152,
 		EnergyThresholdBeep = 14255,
 		EnergyConsumptionPopup = 14256,
 		BurglarAlarmAlert = 14257,
@@ -94,6 +95,7 @@ GuiSettings::GuiSettings(QObject *parent) :
 	message_alert = false;
 	scenario_recording_alert = false;
 	language = getConfValue(conf, "generale/language");
+	clean_screen_time = 10;
 
 	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
 	{
@@ -119,6 +121,9 @@ void GuiSettings::parseSettings()
 
 		switch (id)
 		{
+		case CleanScreen:
+			clean_screen_time = parseIntSetting(xml_obj, "clean_time") / 1000;
+			break;
 		case EnergyThresholdBeep:
 			energy_threshold_beep = parseEnableFlag(xml_obj);
 			break;
@@ -451,4 +456,21 @@ void GuiSettings::setScenarioRecordingAlert(bool enable)
 	scenario_recording_alert = enable;
 	emit scenarioRecordingAlertChanged();
 	setSettingsEnableFlag(ScenarioRecordingAlert, enable);
+}
+
+int GuiSettings::getCleanScreenTime() const
+{
+	return clean_screen_time;
+}
+
+void GuiSettings::setCleanScreenTime(int seconds)
+{
+	if (seconds == clean_screen_time)
+		return;
+	clean_screen_time = seconds;
+	emit cleanScreenTimeChanged();
+
+	QDomDocument conf = configurations->getConfiguration(SETTINGS_FILE);
+	setIntSetting(conf, CleanScreen, "clean_time", clean_screen_time * 1000);
+	configurations->saveConfiguration(SETTINGS_FILE);
 }
