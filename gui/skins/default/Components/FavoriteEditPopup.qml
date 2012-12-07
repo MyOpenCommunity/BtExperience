@@ -62,7 +62,13 @@ Column {
                     text: qsTr("Title goes here.")
                     font.pixelSize: 14
                     color: "#5A5A5A"
-                    anchors.centerIn: parent
+                    anchors {
+                        left: parent.left
+                        leftMargin: 10
+                        right: parent.right
+                        rightMargin: 10
+                        verticalCenter: parent.verticalCenter
+                    }
                     activeFocusOnPress: false
                     containerWidget: popup
                 }
@@ -91,7 +97,13 @@ Column {
                     text: qsTr("Address goes here.")
                     font.pixelSize: 14
                     color: "#5A5A5A"
-                    anchors.centerIn: parent
+                    anchors {
+                        left: parent.left
+                        leftMargin: 10
+                        right: parent.right
+                        rightMargin: 10
+                        verticalCenter: parent.verticalCenter
+                    }
                     activeFocusOnPress: false
                     containerWidget: popup
                 }
