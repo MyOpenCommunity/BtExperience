@@ -22,12 +22,6 @@
 
 #define EXTRA_PATH "/home/bticino/cfg/extra"
 
-#if defined(BT_HARDWARE_X11)
-#define CONF_FILE "conf.xml"
-#else
-#define CONF_FILE "/var/tmp/conf.xml"
-#endif
-
 namespace
 {
 	enum Parsing
@@ -35,19 +29,6 @@ namespace
 		DebugTouchscreen = 123456,
 		DebugEventTiming
 	};
-}
-
-bool parseEnableFlag(const QDomNode &xml_node)
-{
-	bool result = false;
-	XmlObject v(xml_node);
-
-	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-	{
-		v.setIst(ist);
-		result = v.intValue("enable");
-	}
-	return result;
 }
 
 

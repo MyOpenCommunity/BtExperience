@@ -23,6 +23,7 @@
 #define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
 
+
 namespace
 {
 	enum Parsing
@@ -46,95 +47,34 @@ namespace
 		VolumeIntercomCall
 	};
 
-	void setEnableFlag(QDomDocument document, int id, bool enable)
-	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-					setAttribute(ist, "enable", QString::number(int(enable)));
-				break;
-			}
-		}
-	}
-
 	void setRingtone(QDomDocument document, int id, int ringtone)
 	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-					setAttribute(ist, "id_ringtone", QString::number(ringtone));
-				break;
-			}
-		}
+		setIntSetting(document, id, "id_ringtone", ringtone);
 	}
 
 	int parseRingtone(QDomNode xml_node)
 	{
-		int result = -1;
-		XmlObject v(xml_node);
-
-		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-		{
-			v.setIst(ist);
-			result = v.intValue("id_ringtone");
-		}
-		return result;
+		return parseIntSetting(xml_node, "id_ringtone");
 	}
 
-	void setVolume(QDomDocument document, int id, int ringtone)
+	void setVolume(QDomDocument document, int id, int volume)
 	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-					setAttribute(ist, "volume", QString::number(ringtone));
-				break;
-			}
-		}
+		setIntSetting(document, id, "volume", volume);
 	}
 
 	int parseVolume(QDomNode xml_node)
 	{
-		int result = -1;
-		XmlObject v(xml_node);
-
-		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-		{
-			v.setIst(ist);
-			result = v.intValue("volume");
-		}
-		return result;
+		return parseIntSetting(xml_node, "volume");
 	}
 
-	void setBrightness(QDomDocument document, int id, int ringtone)
+	void setBrightness(QDomDocument document, int id, int brightness)
 	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-					setAttribute(ist, "brightness", QString::number(ringtone));
-				break;
-			}
-		}
+		setIntSetting(document, id, "brightness", brightness);
 	}
 
 	int parseBrightness(QDomNode xml_node)
 	{
-		int result = -1;
-		XmlObject v(xml_node);
-
-		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-		{
-			v.setIst(ist);
-			result = v.intValue("brightness");
-		}
-		return result;
+		return parseIntSetting(xml_node, "brightness");
 	}
 
 	void setPassword(QDomDocument document, int id, QString password, bool enabled)

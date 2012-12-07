@@ -15,16 +15,6 @@
 
 #include <limits>
 
-#if defined(BT_HARDWARE_X11)
-#define CONF_FILE "conf.xml"
-#define LAYOUT_FILE "layout.xml"
-#define SETTINGS_FILE "settings.xml"
-#else
-#define CONF_FILE "/var/tmp/conf.xml"
-#define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
-#define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
-#endif
-
 
 namespace
 {
@@ -45,32 +35,6 @@ namespace
 		MessagesAlert = 14265,
 		ScenarioRecordingAlert = 14266
 	};
-
-	void setEnableFlag(QDomDocument document, int id, bool enable)
-	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-					setAttribute(ist, "enable", QString::number(int(enable)));
-				break;
-			}
-		}
-	}
-
-	bool parseEnableFlag(QDomNode xml_node)
-	{
-		bool result = false;
-		XmlObject v(xml_node);
-
-		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-		{
-			v.setIst(ist);
-			result = v.intValue("enable");
-		}
-		return result;
-	}
 
 	// Sets a language on the GUI; the GUI must be restarted for changes to have effect
 	void setLanguageTranslator(QString language)
