@@ -2,14 +2,14 @@ import QtQuick 1.1
 import Components.Text 1.0
 
 
-Item {
+Column {
     id: popup
 
-    width: background.width
-    height: background.height
     property variant favoriteItem: undefined
 
     signal closePopup
+
+    spacing: 4
 
     onFavoriteItemChanged: {
         if (favoriteItem !== undefined)
@@ -19,138 +19,125 @@ Item {
         }
     }
 
-    Image {
-        id: background
-        width: 300
-        height: 250
-        source: "../images/common/bg_tastiera_codice.png"
+    SvgImage {
+        source: "../images/scenarios/bg_titolo.svg"
+
+        UbuntuMediumText {
+            text: qsTr("Edit quicklink properties")
+            font.pixelSize: 24
+            color: "white"
+            anchors {
+                left: parent.left
+                leftMargin: parent.width / 100 * 2
+                verticalCenter: parent.verticalCenter
+            }
+        }
     }
 
+    SvgImage {
+        source: "../images/scenarios/bg_testo.svg"
 
-    UbuntuLightText {
-        id: header
-        text: qsTr("Edit favorite item")
-        anchors.top:parent.top
-        anchors.topMargin: 10
-        anchors.horizontalCenter: background.horizontalCenter
-    }
-
-    UbuntuLightText {
-        id: addressText
-        text: qsTr("Address:")
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.top: header.bottom
-        anchors.topMargin: 10
-    }
-
-    Item {
-        id: addressRow
-        height: rect.height
-        anchors.top: addressText.bottom
-        anchors.topMargin: 10
-        anchors.left: background.left
-        anchors.leftMargin: 10
-        anchors.right: background.right
-        anchors.rightMargin: 10
-
-        Rectangle {
-            id: rect
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: 20
-            UbuntuLightTextInput {
-                id: addressInput
-                anchors.fill: parent
-                activeFocusOnPress: false
-                text: "www.corriere.it"
-                containerWidget: popup
+        Column {
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                right: parent.right
             }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    addressInput.forceActiveFocus()
-                    addressInput.openSoftwareInputPanel()
+            spacing: 3
+
+            UbuntuLightText {
+                id: titleText
+                font.pixelSize: 14
+                color: "white"
+                text: qsTr("Title:")
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            SvgImage {
+                source: "../images/common/bg_text-input.svg"
+                anchors.horizontalCenter: parent.horizontalCenter
+                UbuntuLightTextInput {
+                    id: descriptionInput
+                    text: qsTr("Title goes here.")
+                    font.pixelSize: 14
+                    color: "#5A5A5A"
+                    anchors.centerIn: parent
+                    activeFocusOnPress: false
+                    containerWidget: popup
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        descriptionInput.forceActiveFocus()
+                        descriptionInput.openSoftwareInputPanel()
+                    }
+                }
+            }
+
+            UbuntuLightText {
+                id: addressText
+                font.pixelSize: 14
+                color: "white"
+                text: qsTr("Address:")
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            SvgImage {
+                source: "../images/common/bg_text-input.svg"
+                anchors.horizontalCenter: parent.horizontalCenter
+                UbuntuLightTextInput {
+                    id: addressInput
+                    text: qsTr("Address goes here.")
+                    font.pixelSize: 14
+                    color: "#5A5A5A"
+                    anchors.centerIn: parent
+                    activeFocusOnPress: false
+                    containerWidget: popup
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        addressInput.forceActiveFocus()
+                        addressInput.openSoftwareInputPanel()
+                    }
                 }
             }
         }
     }
 
-    UbuntuLightText {
-        id: titleText
-        text: qsTr("Favorite label:")
-        anchors.top: addressRow.bottom
-        anchors.topMargin: 15
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-    }
+    SvgImage {
+        source: "../images/scenarios/bg_ok_annulla.svg"
 
-    Rectangle {
-        anchors.top: titleText.bottom
-        anchors.topMargin: 10
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        height: 20
-        UbuntuLightTextInput {
-            id: descriptionInput
-            anchors.fill: parent
-            activeFocusOnPress: false
-            text: "www.corriere.it"
-            containerWidget: popup
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                descriptionInput.forceActiveFocus()
-                descriptionInput.openSoftwareInputPanel()
+        Row {
+            anchors {
+                right: parent.right
+                rightMargin: parent.width / 100 * 2
+                verticalCenter: parent.verticalCenter
             }
-        }
-    }
 
-    Row {
-        spacing: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-
-        Image {
-            id: buttonOk
-            source: "../images/common/btn_OKAnnulla.png"
-
-            UbuntuLightText {
-                anchors.centerIn: parent
+            ButtonThreeStates {
+                defaultImage: "../images/common/btn_99x35.svg"
+                pressedImage: "../images/common/btn_99x35_P.svg"
+                selectedImage: "../images/common/btn_99x35_S.svg"
+                shadowImage: "../images/common/btn_shadow_99x35.svg"
                 text: qsTr("ok")
-            }
-
-            BeepingMouseArea {
-                anchors.fill: parent
+                font.pixelSize: 14
                 onClicked: {
-                    console.log("Confirm editing")
                     favoriteItem.name = descriptionInput.text
                     favoriteItem.address = addressInput.text
                     closePopup()
                 }
             }
-        }
 
-        Image {
-            id: buttonCancel
-            source: "../images/common/btn_OKAnnulla.png"
-
-            UbuntuLightText {
-                anchors.centerIn: parent
+            ButtonThreeStates {
+                defaultImage: "../images/common/btn_99x35.svg"
+                pressedImage: "../images/common/btn_99x35_P.svg"
+                selectedImage: "../images/common/btn_99x35_S.svg"
+                shadowImage: "../images/common/btn_shadow_99x35.svg"
                 text: qsTr("cancel")
-            }
-
-            BeepingMouseArea {
-                anchors.fill: parent
+                font.pixelSize: 14
                 onClicked: {
-                    console.log("Discard editing")
                     closePopup()
                 }
             }
