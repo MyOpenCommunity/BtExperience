@@ -233,7 +233,7 @@ Item {
             bgMoveArea.selectedItem.itemObject.position = Qt.point(itemPos.x, itemPos.y)
         }
         maxItemWidth: 212 // assumes menu width is always this value
-        maxItemHeight: 50 // assumes menu height is always this value
+        maxItemHeight: 70 // assumes menu height is always this value (must consider shadow!)
 
         z: roomView.z + 2 // must be on top of quicklinks
         anchors.fill: parent
