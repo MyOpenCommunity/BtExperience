@@ -172,7 +172,7 @@ void ApplicationCommon::initialize()
 #endif
 }
 
-void ApplicationCommon::start(GlobalPropertiesCommon *g, QString qml_file, bool visible)
+void ApplicationCommon::start(GlobalPropertiesCommon *g, QString qml_file, QDeclarativeNetworkAccessManagerFactory *f, bool visible)
 {
 	global = g;
 	viewer = new QmlApplicationViewer;
@@ -184,6 +184,7 @@ void ApplicationCommon::start(GlobalPropertiesCommon *g, QString qml_file, bool 
 
 	viewer->engine()->rootContext()->setContextProperty("global", global);
 	viewer->engine()->addImportPath(global->getBasePath());
+	viewer->engine()->setNetworkAccessManagerFactory(f);
 	viewer->setMainQmlFile(QLatin1String(global->getBasePath().append(qml_file).toLatin1()));
 	global->setMainWidget(viewer);
 

@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 	GlobalProperties global(app_logger);
 	ImageReader::setBasePath(global.getBasePath());
 	QObject::connect(last_click, SIGNAL(maxTravelledDistanceOnLastMove(QPoint)), &global, SLOT(setMaxTravelledDistanceOnLastMove(QPoint)));
-	qml_application.start(&global, "main.qml");
+	qml_application.start(&global, "main.qml", 0);
 
 	Watchdog *watchdog = new Watchdog;
 	watchdog->start(WATCHDOG_INTERVAL);

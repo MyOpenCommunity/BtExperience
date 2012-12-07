@@ -6,6 +6,8 @@ qtcAddDeployment()
 
 include(../config.pri)
 
+QT += network declarative
+
 !mac {
     # '\$\$' outputs $$ to the Makefile, make transforms $$ into a single $, then you need a backslash for the shell
     LIBS += -Wl,-rpath=\\'\$\$'ORIGIN:\\'\$\$'ORIGIN/BtObjects
@@ -42,7 +44,9 @@ SOURCES += \
     ../gui/globalpropertiescommon.cpp \
     ../gui/guisettings.cpp \
     ../gui/imagereader.cpp \
-    ../gui/inputcontextwrapper.cpp
+    ../gui/inputcontextwrapper.cpp \
+	networkmanager.cpp \
+    browserproperties.cpp
 
 HEADERS += \
     ../BtObjects/configfile.h \
@@ -53,4 +57,6 @@ HEADERS += \
     ../gui/globalpropertiescommon.h \
     ../gui/guisettings.h \
     ../gui/imagereader.h \
-    ../gui/inputcontextwrapper.h
+    ../gui/inputcontextwrapper.h \
+	networkmanager.h \
+    browserproperties.h

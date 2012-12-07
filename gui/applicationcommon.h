@@ -6,6 +6,7 @@
 class GlobalPropertiesCommon;
 class QmlApplicationViewer;
 class QGraphicsScene;
+class QDeclarativeNetworkAccessManagerFactory;
 
 
 // Manage the boot (or reboot) of the gui part
@@ -18,7 +19,7 @@ public:
 	~ApplicationCommon();
 
 	void initialize();
-	void start(GlobalPropertiesCommon *g, QString qml_file, bool visible = true);
+	void start(GlobalPropertiesCommon *g, QString qml_file, QDeclarativeNetworkAccessManagerFactory *f, bool visible = true);
 
 public slots:
 	void handleSignal(int signal_number);
