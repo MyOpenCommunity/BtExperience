@@ -110,6 +110,7 @@ MenuColumn {
             if (scenariosModule.count + cctvModel.count + energiesCounters.count > 0)
                 modelList.append({"name": qsTr("Systems"), "component": "SettingsSystems.qml"})
             modelList.append({"name": qsTr("Alarm Clock"), "component": "SettingsClocks.qml"})
+            modelList.append({"name": qsTr("Multimedia"), "component": "SettingsMultimedia.qml"})
         }
     }
 

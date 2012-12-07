@@ -7,10 +7,12 @@ import "../../js/Stack.js" as Stack
 MenuColumn {
     id: column
 
+    property int uii: myHomeModels.homepageLinks.uii
+
     ObjectModel {
         id: quicklinksModel
         source: myHomeModels.mediaLinks
-        containers: [myHomeModels.homepageLinks.uii]
+        containers: [uii]
     }
 
     QtObject {

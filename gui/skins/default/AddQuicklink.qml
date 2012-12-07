@@ -353,6 +353,7 @@ Page {
             bottom: parent.bottom
             bottomMargin: bg.height / 100 * 2.29
         }
+        visible: page.homeCustomization || page.profile !== undefined
     }
 
     UbuntuLightText {
@@ -364,6 +365,7 @@ Page {
             right: okButton.left
             rightMargin: bg.width / 100 * 1.10
         }
+        visible: page.homeCustomization || page.profile !== undefined
     }
 
     ButtonThreeStates {
@@ -379,6 +381,7 @@ Page {
             verticalCenter: bottomBg.verticalCenter
             right: cancelButton.left
         }
+        visible: page.homeCustomization || page.profile !== undefined
         onClicked: {
             if (page.currentLink >= 0) {
                 // saves selection on current profile
@@ -416,6 +419,7 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
+        visible: page.homeCustomization || page.profile !== undefined
         onClicked: Stack.popPage()
     }
 

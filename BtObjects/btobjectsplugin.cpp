@@ -1385,6 +1385,7 @@ void BtObjectsPlugin::parseMediaContainers(const QDomNode &container)
 		v.setIst(ist);
 		int media_uii = getIntAttribute(ist, "uii");
 		Container *media = new Container(media_id, media_uii, v.value("img"), v.value("descr"));
+		media->setContainerUii(media_uii);
 
 		media_model << media;
 		uii_map.insert(media_uii, media);
