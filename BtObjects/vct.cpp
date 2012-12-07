@@ -469,12 +469,18 @@ void CCTV::resumeVideo()
 
 void CCTV::activateCall()
 {
+	if (call_active)
+		return;
 	call_active = true;
+	emit activeChanged();
 }
 
 void CCTV::disactivateCall()
 {
+	if (!call_active)
+		return;
 	call_active = false;
+	emit activeChanged();
 }
 
 
@@ -666,15 +672,22 @@ void Intercom::setTalkerFromWhere(QString where)
 
 void Intercom::activateCall()
 {
+	if (call_active)
+		return;
 	call_active = true;
+	emit activeChanged();
 }
 
 void Intercom::disactivateCall()
 {
-	call_active = false;
 	if (pager_call)
 	{
 		pager_call = false;
 		emit pagerCallChanged();
+	}
+	if (call_active)
+	{
+		call_active = false;
+		emit activeChanged();
 	}
 }

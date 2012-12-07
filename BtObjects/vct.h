@@ -85,6 +85,11 @@ class VDEBase : public ObjectInterface
 	*/
 	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
 
+	/*!
+		\brief Whether there is an active call or not
+	*/
+	Q_PROPERTY(bool callActive READ callActive NOTIFY activeChanged)
+
 public:
 	ObjectDataModel *getExternalPlaces() const;
 
@@ -99,6 +104,7 @@ signals:
 	void volumeChanged();
 	void muteChanged();
 	void isIpCallChanged();
+	void activeChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list) = 0;
