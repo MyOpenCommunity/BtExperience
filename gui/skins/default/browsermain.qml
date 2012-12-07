@@ -84,6 +84,9 @@ BasePage {
                 id: privateProps
 
                 function fixedAddress(address) {
+                    if (address === "")
+                        return address
+
                     var fixedAddress = address
                     var isHttp = (fixedAddress.toLowerCase().indexOf("http://") === 0)
                     var isHttps = (fixedAddress.toLowerCase().indexOf("https://") === 0)

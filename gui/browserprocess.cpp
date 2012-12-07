@@ -52,6 +52,7 @@ BrowserProcess::BrowserProcess(QObject *parent) : QObject(parent)
 	connect(browser, SIGNAL(finished(int)), this, SLOT(terminated()));
 	connect(browser, SIGNAL(readyReadStandardOutput()), this, SLOT(readStatusUpdate()));
 	connect(browser, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(processStateChanged()));
+	connect(browser, SIGNAL(stateChanged(QProcess::ProcessState)), this, SIGNAL(runningChanged()));
 }
 
 void BrowserProcess::displayUrl(QString url)
@@ -77,6 +78,11 @@ void BrowserProcess::updateVisible(bool _visible)
 bool BrowserProcess::getVisible() const
 {
 	return visible;
+}
+
+bool BrowserProcess::getRunning() const
+{
+	return browser->state() != QProcess::NotRunning;
 }
 
 void BrowserProcess::terminated()

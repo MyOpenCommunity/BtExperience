@@ -13,6 +13,8 @@ class BrowserProcess : public QObject
 
 	Q_PROPERTY(bool visible READ getVisible WRITE setVisible NOTIFY visibleChanged)
 
+	Q_PROPERTY(bool running READ getRunning NOTIFY runningChanged)
+
 public:
 	BrowserProcess(QObject *parent = 0);
 
@@ -21,8 +23,11 @@ public:
 	void setVisible(bool visible);
 	bool getVisible() const;
 
+	bool getRunning() const;
+
 signals:
 	void visibleChanged();
+	void runningChanged();
 	void clicked();
 
 private slots:
