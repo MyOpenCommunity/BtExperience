@@ -101,6 +101,7 @@ private slots:
 	void beepChanged();
 	void ringtoneChanged(int ringtone, int index);
 	void volumeChanged(int state, int volume);
+	void brightnessChanged();
 	void screenStateChangedManagement();
 	void sendDelayedFrames();
 

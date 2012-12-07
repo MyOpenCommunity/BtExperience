@@ -29,6 +29,7 @@ namespace
 	{
 		Beep = 14001,
 		Password = 14003,
+		Brightness = 14151,
 		RingtoneS0 = 14101,
 		RingtoneS1,
 		RingtoneS2,
@@ -110,6 +111,32 @@ namespace
 		return result;
 	}
 
+	void setBrightness(QDomDocument document, int id, int ringtone)
+	{
+		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == id)
+			{
+				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+					setAttribute(ist, "brightness", QString::number(ringtone));
+				break;
+			}
+		}
+	}
+
+	int parseBrightness(QDomNode xml_node)
+	{
+		int result = -1;
+		XmlObject v(xml_node);
+
+		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+		{
+			v.setIst(ist);
+			result = v.intValue("brightness");
+		}
+		return result;
+	}
+
 	void setPassword(QDomDocument document, int id, QString password, bool enabled)
 	{
 		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
@@ -183,6 +210,8 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	connect(screen_state, SIGNAL(stateChanged(ScreenState::State,ScreenState::State)),
 		this, SLOT(screenStateChangedManagement()));
 	connect(browser, SIGNAL(clicked()), screen_state, SLOT(simulateClick()));
+	connect(screen_state, SIGNAL(normalBrightnessChanged()),
+		this, SLOT(brightnessChanged()));
 }
 
 void GlobalProperties::initAudio()
@@ -256,6 +285,9 @@ void GlobalProperties::parseSettings()
 		case Password:
 			parsePassword(xml_obj, &password, &password_enabled);
 			screen_state->setPasswordEnabled(password_enabled);
+			break;
+		case Brightness:
+			screen_state->setNormalBrightness(parseBrightness(xml_obj));
 			break;
 		case RingtoneS0:
 			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace1, parseRingtone(xml_obj));
@@ -502,6 +534,14 @@ void GlobalProperties::ringtoneChanged(int ringtone, int index)
 		setRingtone(document, RingtoneDoor, index);
 		break;
 	}
+	configurations->saveConfiguration(SETTINGS_FILE);
+}
+
+void GlobalProperties::brightnessChanged()
+{
+	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
+
+	setBrightness(document, Brightness, screen_state->getNormalBrightness());
 	configurations->saveConfiguration(SETTINGS_FILE);
 }
 
