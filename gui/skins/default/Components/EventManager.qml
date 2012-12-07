@@ -142,15 +142,12 @@ Item {
         target: null
         onIncomingCall: privateProps.addNotification({"type": Script.VCT_INCOMING_CALL})
         onCallAnswered: {
-            global.screenState.enableState(ScreenState.ForcedNormal)
             if (vctConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpVideoCall)
             else
                 global.audioState.enableState(AudioState.ScsVideoCall)
         }
         onCallEnded: {
-            global.screenState.enableState(ScreenState.Normal)
-            global.screenState.disableState(ScreenState.ForcedNormal)
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsVideoCall)
             global.audioState.disableState(AudioState.IpVideoCall)
@@ -163,6 +160,14 @@ Item {
             else
                 global.audioState.enableState(AudioState.VdeRingtone)
         }
+        onCallActiveChanged: {
+            if (vctConnection.target.callActive) {
+                global.screenState.enableState(ScreenState.ForcedNormal)
+            } else {
+                global.screenState.enableState(ScreenState.Normal)
+                global.screenState.disableState(ScreenState.ForcedNormal)
+            }
+        }
     }
 
     Connections {
@@ -170,7 +175,6 @@ Item {
         target: null
         onIncomingCall: privateProps.addNotification({"type": Script.INTERCOM_INCOMING_CALL})
         onCallAnswered: {
-            global.screenState.enableState(ScreenState.ForcedNormal)
             global.audioState.disableState(AudioState.SenderPagerCall)
             global.audioState.disableState(AudioState.ReceiverPagerCall)
             if (intercomConnection.target.isIpCall)
@@ -179,8 +183,6 @@ Item {
                 global.audioState.enableState(AudioState.ScsIntercomCall)
         }
         onCallEnded: {
-            global.screenState.enableState(ScreenState.Normal)
-            global.screenState.disableState(ScreenState.ForcedNormal)
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsIntercomCall)
             global.audioState.disableState(AudioState.IpIntercomCall)
@@ -199,6 +201,14 @@ Item {
         }
         onMicrophoneOnRequested: global.audioState.enableState(AudioState.SenderPagerCall)
         onSpeakersOnRequested: global.audioState.enableState(AudioState.ReceiverPagerCall)
+        onCallActiveChanged: {
+            if (intercomConnection.target.callActive) {
+                global.screenState.enableState(ScreenState.ForcedNormal)
+            } else {
+                global.screenState.enableState(ScreenState.Normal)
+                global.screenState.disableState(ScreenState.ForcedNormal)
+            }
+        }
     }
 
     Connections {
