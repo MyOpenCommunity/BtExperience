@@ -23,23 +23,12 @@
 #define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
 
-#if defined(BT_HARDWARE_X11)
-#define SETTINGS_FILE "settings.xml"
-#define EXTRA_11_DIR "11/"
-#else
-#define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
-#define EXTRA_11_DIR "/home/bticino/cfg/extra/11/"
-#endif
-
-
 namespace
 {
 	enum Parsing
 	{
 		Beep = 14001,
 		Password = 14003,
-		DebugTouchscreen = 123456,
-		DebugEventTiming,
 		RingtoneS0 = 14101,
 		RingtoneS1,
 		RingtoneS2,
@@ -67,19 +56,6 @@ namespace
 				break;
 			}
 		}
-	}
-
-	bool parseEnableFlag(QDomNode xml_node)
-	{
-		bool result = false;
-		XmlObject v(xml_node);
-
-		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-		{
-			v.setIst(ist);
-			result = v.intValue("enable");
-		}
-		return result;
 	}
 
 	void setRingtone(QDomDocument document, int id, int ringtone)
@@ -195,7 +171,7 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	else
 		default_external_place = 0;
 
-	parseSettings(log);
+	parseSettings();
 
 	screen_state->enableState(ScreenState::Normal);
 	screen_state->enableState(ScreenState::ScreenOff);
@@ -264,11 +240,10 @@ void GlobalProperties::initAudio()
 	}
 }
 
-void GlobalProperties::parseSettings(logger *log)
+void GlobalProperties::parseSettings()
 {
 	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
 
-	bool debug_timing_enabled = false;
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
 	{
 		int id = getIntAttribute(xml_obj, "id");
@@ -281,12 +256,6 @@ void GlobalProperties::parseSettings(logger *log)
 		case Password:
 			parsePassword(xml_obj, &password, &password_enabled);
 			screen_state->setPasswordEnabled(password_enabled);
-			break;
-		case DebugTouchscreen:
-			debug_touchscreen = parseEnableFlag(xml_obj);
-			break;
-		case DebugEventTiming:
-			debug_timing_enabled = parseEnableFlag(xml_obj);
 			break;
 		case RingtoneS0:
 			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace1, parseRingtone(xml_obj));
@@ -332,8 +301,6 @@ void GlobalProperties::parseSettings(logger *log)
 			break;
 		}
 	}
-
-	debug_timing = new DebugTiming(log, debug_timing_enabled, this);
 }
 
 QObject *GlobalProperties::getHardwareKeys() const
