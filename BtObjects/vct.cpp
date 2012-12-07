@@ -273,6 +273,7 @@ void CCTV::endCall()
 	if (dev->isCalling())
 		dev->endCall();
 	emit callEnded();
+	disactivateCall();
 	call_stopped = false;
 	stopVideo();
 }
@@ -500,6 +501,7 @@ void Intercom::endCall()
 		dev->endCall();
 	setTalkerFromWhere(QString());
 	emit callEnded();
+	disactivateCall();
 }
 
 void Intercom::startCall(ExternalPlace *place)
