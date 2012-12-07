@@ -5,7 +5,7 @@ import Components.Browser 1.0
 import "js/MainContainer.js" as Container
 
 
-Item {
+BasePage {
     id: webBrowser
 
     property alias ubuntuLight: ubuntuLightLoader
@@ -104,5 +104,139 @@ Item {
     Component {
         id: webViewContainerComponent
         PopupBrowser {}
+    }
+
+    Component {
+        id: credentialsPopup
+
+        Rectangle {
+            id: credentials
+
+            signal closePopup
+
+            width: 300
+            height: 300
+            color: "gray"
+
+            Text {
+                id: text1
+                x: 35
+                y: 65
+                text: qsTr("Username")
+                font.pixelSize: 12
+            }
+
+            Rectangle {
+                id: rectangle1
+                x: 35
+                y: 86
+                width: 236
+                height: 20
+                color: "#ffffff"
+
+                TextInput {
+                    id: userInput
+                    x: 0
+                    y: 0
+                    width: 236
+                    height: 20
+                    text: qsTr("")
+                    font.pixelSize: 12
+                }
+            }
+
+            Text {
+                id: text2
+                x: 35
+                y: 143
+                text: qsTr("Password")
+                font.pixelSize: 12
+            }
+
+            Rectangle {
+                id: rectangle2
+                x: 35
+                y: 164
+                width: 236
+                height: 20
+                color: "#ffffff"
+                TextInput {
+                    id: passwordInput
+                    x: 0
+                    y: 0
+                    width: 236
+                    height: 20
+                    text: qsTr("")
+                    echoMode: TextInput.Password
+                    font.pixelSize: 12
+                }
+            }
+
+            Text {
+                id: text3
+                x: 84
+                y: 15
+                text: qsTr("Authentication required")
+                font.pixelSize: 12
+            }
+            Rectangle {
+                id: rectangle3
+                x: 189
+                y: 240
+                width: 82
+                height: 39
+                color: "#ffffff"
+
+                Text {
+                    id: text4
+                    x: 24
+                    y: 12
+                    text: qsTr("cancel")
+                    font.pixelSize: 12
+                }
+
+                MouseArea {
+                    id: mouse_area2
+                    x: -105
+                    y: 0
+                    anchors.fill: parent
+                    onClicked: credentials.closePopup()
+                }
+            }
+
+            Rectangle {
+                id: rectangle4
+                x: 84
+                y: 240
+                width: 82
+                height: 39
+                color: "#ffffff"
+                Text {
+                    id: text5
+                    x: 24
+                    y: 12
+                    text: qsTr("ok")
+                    font.pixelSize: 12
+                }
+
+                MouseArea {
+                    id: mouse_area1
+                    anchors.fill: parent
+                    onClicked: {
+                        global.setUsername(userInput.text)
+                        global.setPassword(passwordInput.text)
+                        credentials.closePopup()
+                    }
+                }
+            }
+        }
+    }
+
+    Connections {
+        target: global
+        onAuthenticationRequired: {
+            console.log("Require authentication")
+            webBrowser.installPopup(credentialsPopup)
+        }
     }
 }
