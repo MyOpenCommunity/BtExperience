@@ -100,9 +100,11 @@ Page {
             var component
             switch (type) {
             case MediaLink.Web:
+            case MediaLink.Webcam:
                 component = favouriteItemComponent
                 break
             case MediaLink.Rss:
+            case MediaLink.RssMeteo:
                 component = rssItemComponent
                 break
             case MediaLink.Camera:
@@ -111,6 +113,8 @@ Page {
             case MediaLink.WebRadio:
                 component = webRadioItemComponent
                 break
+            default:
+                console.log("Unrecognized type: "+type)
             }
             return component
         }
