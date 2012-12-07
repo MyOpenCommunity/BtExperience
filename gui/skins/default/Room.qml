@@ -69,6 +69,7 @@ Page {
         interactive: false
         currentIndex: findCurrentIndex()
         model: roomsModel
+        visible: model.count > 1
 
         delegate: Image {
             id: listDelegate
