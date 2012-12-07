@@ -26,6 +26,34 @@ namespace
 	}
 }
 
+/*
+  Player output lines are key-value pairs, for example:
+
+    current_time: 0
+    meta_album: Laundry Service
+    meta_artist: Shakira
+    meta_title: Underneath your clothes
+    total_time: 227
+    current_time: 1
+    current_time: 2
+    ...
+
+   The metadata keys can be: meta_title, meta_artist, meta_album, current_time (seconds), total_time (seconds)
+
+   Commands are terminaed by a newline:
+
+   - resize <x> <y> <width> <height>
+
+   Display the video inside the specified rectangle, preserving aspect ratio.
+
+   - pause
+
+   - resume
+
+   - set_track <url>
+
+   Stop current playback and load the specified URL
+*/
 
 GstMediaPlayer::GstMediaPlayer(QObject *parent) : QObject(parent)
 {

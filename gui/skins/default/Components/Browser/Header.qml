@@ -71,7 +71,7 @@ SvgImage {
             top: parent.top
             topMargin: 6
             right: parent.right
-            rightMargin: 30 + actionButton.width
+            rightMargin: 30 + actionButton.width + closeBrowser.width
         }
     }
 
@@ -120,6 +120,23 @@ SvgImage {
             repeat: true
             onTriggered: loadingIndicator.rotation += 45
         }
+    }
+
+    ButtonImageThreeStates {
+        id: closeBrowser
+
+        defaultImageBg: "../../images/common/btn_browser.svg"
+        pressedImageBg: "../../images/common/btn_browser_P.svg"
+        shadowImage: "../../images/common/ombra_btn_browser.svg"
+        defaultImage: "../../images/common/ico_elimina.svg"
+        //pressedImage: "../../images/common/ico_elimina.svg"
+        visible: true
+        anchors {
+            top: bgText.top
+            left: actionButton.right
+            leftMargin: 10
+        }
+        onClicked: global.quit()
     }
 
     UrlInput {

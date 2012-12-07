@@ -11,7 +11,7 @@ Item {
 
     property alias imageSource: icon.source
     property string text: itemObject.name
-    property string page: "Browser.qml"
+    property string page: "ExternalBrowser.qml"
     property bool editable: true
     property variant itemObject
     property int refX: -1 // used for editColumn placement, -1 means not used

@@ -1,20 +1,17 @@
 #include "globalproperties.h"
 #include "guisettings.h"
-#include "inputcontextwrapper.h"
 #include "playlistplayer.h"
 #include "audiostate.h"
 #include "screenstate.h"
 #include "mediaplayer.h" // SoundPlayer
 #include "mediaobjects.h" // SourceMedia
 #include "ringtonemanager.h"
-#include "xml_functions.h"
-#include "ts/main.h"
 #include "configfile.h"
 #include "devices_cache.h"
 #include "xmlobject.h"
 #include "hwkeys.h"
 #include "calibration.h"
-#include <logger.h>
+#include "browserprocess.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -22,21 +19,14 @@
 #include <QPixmap>
 #include <QDeclarativeView>
 #include <QtDeclarative>
-#ifdef BT_MALIIT
-#include <maliit/settingsmanager.h>
-#include <maliit/pluginsettings.h>
-#endif
 
-#define EXTRA_PATH "/home/bticino/cfg/extra"
 #define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
 
 #if defined(BT_HARDWARE_X11)
-#define CONF_FILE "conf.xml"
 #define SETTINGS_FILE "settings.xml"
 #define EXTRA_11_DIR "11/"
 #else
-#define CONF_FILE "/var/tmp/conf.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
 #define EXTRA_11_DIR "/home/bticino/cfg/extra/11/"
 #endif
@@ -174,37 +164,30 @@ namespace
 }
 
 
-GlobalProperties::GlobalProperties(logger *log)
+GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 {
-	parseConfFile();
-
-	wrapper = new InputContextWrapper(this);
-	main_widget = NULL;
-
 	delayed_frame_timer = new QTimer(this);
 	delayed_frame_timer->setInterval(LAZY_UPDATE_INTERVAL);
 
 	connect(delayed_frame_timer, SIGNAL(timeout()),
 		this, SLOT(sendDelayedFrames()));
 
-	qmlRegisterUncreatableType<GuiSettings>("BtExperience", 1, 0, "GuiSettings", "");
 	qmlRegisterUncreatableType<AudioState>("BtExperience", 1, 0, "AudioState", "");
 	qmlRegisterUncreatableType<RingtoneManager>("BtExperience", 1, 0, "RingtoneManager", "");
 	qmlRegisterUncreatableType<DebugTiming>("BtExperience", 1, 0, "DebugTiming", "");
 	qmlRegisterUncreatableType<Calibration>("BtExperience", 1, 0, "Calibration", "");
 
+
 	configurations = new ConfigFile(this);
-	settings = new GuiSettings(this);
 	photo_player = new PhotoPlayer(this);
 	video_player = 0;
 	audio_state = new AudioState(this);
 	sound_player = 0;
 	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", new MultiMediaPlayer(this), audio_state, this);
-	debug_touchscreen = false;
-	debug_timing = 0;
 	hardware_keys = new HwKeys(this);
 	screen_state = new ScreenState(this);
 	calibration = new Calibration(this);
+	browser = new BrowserProcess(this);
 
 	if (!(*bt_global::config)[DEFAULT_PE].isEmpty())
 		default_external_place = new ExternalPlace(QString(), ObjectInterface::IdExternalPlace,
@@ -213,20 +196,6 @@ GlobalProperties::GlobalProperties(logger *log)
 		default_external_place = 0;
 
 	parseSettings(log);
-
-	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
-
-	keyboard_layout_name = getConfValue(conf, "generale/keyboard_lang");
-
-#ifdef BT_MALIIT
-	maliit_settings = Maliit::SettingsManager::create();
-	maliit_settings->setParent(this);
-
-	connect(maliit_settings, SIGNAL(pluginSettingsReceived(QList<QSharedPointer<Maliit::PluginSettings> >)),
-		this, SLOT(pluginSettingsReceived(QList<QSharedPointer<Maliit::PluginSettings> >)));
-
-	maliit_settings->loadPluginSettings();
-#endif
 
 	screen_state->enableState(ScreenState::Normal);
 	screen_state->enableState(ScreenState::ScreenOff);
@@ -237,7 +206,7 @@ GlobalProperties::GlobalProperties(logger *log)
 		this, SLOT(volumeChanged(int,int)));
 	connect(screen_state, SIGNAL(stateChanged(ScreenState::State,ScreenState::State)),
 		this, SLOT(screenStateChangedManagement()));
-
+	connect(browser, SIGNAL(clicked()), screen_state, SLOT(simulateClick()));
 }
 
 void GlobalProperties::initAudio()
@@ -367,55 +336,6 @@ void GlobalProperties::parseSettings(logger *log)
 	debug_timing = new DebugTiming(log, debug_timing_enabled, this);
 }
 
-QString GlobalProperties::getBasePath() const
-{
-	QFileInfo path = qApp->applicationDirPath();
-
-#ifdef Q_WS_MAC
-	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
-#endif
-
-	// use canonicalFilePath to resolve symlinks, otherwise some files
-	// will be loaded with the symlinked path and some with the canonical
-	// path, and this confuses the code that handles ".pragma library"
-	QFileInfo base(QDir(path.absoluteFilePath()), "gui/skins/default/");
-
-	if (!base.exists())
-		qFatal("Unable to find path for skin files");
-
-	return base.canonicalFilePath() + "/";
-}
-
-QString GlobalProperties::getExtraPath() const
-{
-	QFileInfo path = qApp->applicationDirPath();
-
-#ifdef Q_WS_MAC
-	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
-#endif
-
-#if defined(BT_HARDWARE_X11)
-	QFileInfo extra(QDir(path.absoluteFilePath()), "extra");
-#else
-	QFileInfo extra(EXTRA_PATH);
-#endif
-
-	if (!extra.exists())
-		qFatal("Unable to find path for extra files");
-
-	return extra.canonicalFilePath() + "/";
-}
-
-bool GlobalProperties::getDebugTs()
-{
-	return debug_touchscreen;
-}
-
-DebugTiming *GlobalProperties::getDebugTiming()
-{
-	return debug_timing;
-}
-
 QObject *GlobalProperties::getHardwareKeys() const
 {
 	return hardware_keys;
@@ -424,6 +344,11 @@ QObject *GlobalProperties::getHardwareKeys() const
 QObject *GlobalProperties::getCalibration() const
 {
 	return calibration;
+}
+
+QObject *GlobalProperties::getBrowser() const
+{
+	return browser;
 }
 
 QVariantList GlobalProperties::getStockImagesFolder() const
@@ -452,29 +377,6 @@ QObject *GlobalProperties::getDefaultExternalPlace() const
 	return default_external_place;
 }
 
-int GlobalProperties::getMainWidth() const
-{
-#ifdef Q_WS_QWS
-	return QScreen::instance()->width();
-#else
-	return MAIN_WIDTH;
-#endif
-}
-
-int GlobalProperties::getMainHeight() const
-{
-#ifdef Q_WS_QWS
-	return QScreen::instance()->height();
-#else
-	return MAIN_HEIGHT;
-#endif
-}
-
-GuiSettings *GlobalProperties::getGuiSettings() const
-{
-	return settings;
-}
-
 AudioVideoPlayer *GlobalProperties::getAudioVideoPlayer() const
 {
 	return video_player;
@@ -500,19 +402,9 @@ QObject *GlobalProperties::getRingtoneManager() const
 	return ringtone_manager;
 }
 
-QObject *GlobalProperties::getInputWrapper() const
-{
-	return wrapper;
-}
-
 void GlobalProperties::setMaxTravelledDistanceOnLastMove(QPoint value)
 {
 	max_travelled_distance = value;
-}
-
-void GlobalProperties::setMainWidget(QDeclarativeView *_viewport)
-{
-	main_widget = _viewport;
 }
 
 QString GlobalProperties::takeScreenshot(QRect rect, QString filename)
@@ -695,129 +587,4 @@ void GlobalProperties::setPasswordEnabled(bool enabled)
 bool GlobalProperties::isPasswordEnabled() const
 {
 	return password_enabled;
-}
-
-QString GlobalProperties::getKeyboardLayout() const
-{
-	return keyboard_layout_name;
-}
-
-void GlobalProperties::setKeyboardLayout(QString layout)
-{
-#ifdef BT_MALIIT
-	QString maliit_layout = language_map.value(layout), layout_key = layout;
-
-	if (maliit_layout.isEmpty())
-	{
-		foreach (QString key, language_map.keys())
-		{
-			qWarning() << "key" << key;
-			if (key.startsWith(layout + "_"))
-			{
-				layout_key = key;
-				maliit_layout = language_map[key];
-				break;
-			}
-		}
-
-		if (maliit_layout.isEmpty())
-			return;
-	}
-
-	// setting the allowed layout list to the current layout is a roundabout way of disabling
-	// the swipe left/right gesture used to change keyboard layout
-	allowed_layouts->set(QStringList() << maliit_layout);
-	keyboard_layout->set(maliit_layout);
-
-	if (layout != keyboard_layout_name)
-	{
-		QDomDocument conf = configurations->getConfiguration(CONF_FILE);
-
-		setConfValue(conf, "generale/keyboard_lang", layout);
-		configurations->saveConfiguration(CONF_FILE);
-	}
-
-	if (keyboard_layout_name == layout_key)
-		return;
-	keyboard_layout_name = layout_key;
-	emit keyboardLayoutChanged();
-#else
-	if (keyboard_layout_name == layout)
-		return;
-	keyboard_layout_name = layout;
-	emit keyboardLayoutChanged();
-#endif
-}
-
-QStringList GlobalProperties::getKeyboardLayouts() const
-{
-#ifdef BT_MALIIT
-	return language_map.keys();
-#else
-	return QStringList();
-#endif
-}
-
-#ifdef BT_MALIIT
-void GlobalProperties::pluginSettingsReceived(const QList<QSharedPointer<Maliit::PluginSettings> > &settings)
-{
-	foreach (const QSharedPointer<Maliit::PluginSettings> &setting, settings)
-	{
-		if (setting->pluginName() == "server")
-			maliitFrameworkSettings(setting);
-		else if (setting->pluginName() == "libmaliit-keyboard-plugin.so")
-			maliitKeyboardSettings(setting);
-	}
-}
-
-void GlobalProperties::maliitFrameworkSettings(const QSharedPointer<Maliit::PluginSettings> &settings)
-{
-	foreach (const QSharedPointer<Maliit::SettingsEntry> &entry, settings->configurationEntries())
-	{
-		if (entry->key() == "/maliit/onscreen/enabled")
-		{
-			allowed_layouts = entry;
-
-			foreach (QString value, entry->attributes()[Maliit::SettingEntryAttributes::valueDomain].toStringList())
-				if (value.section(':', 1).endsWith("_bticino"))
-					language_map[value.section(':', 1)] = value;
-
-			emit keyboardLayoutsChanged();
-		}
-		else if (entry->key() == "/maliit/onscreen/active")
-			keyboard_layout = entry;
-	}
-
-	// see comment in setKeyboardLayout()
-	setKeyboardLayout(getKeyboardLayout());
-}
-
-void GlobalProperties::maliitKeyboardSettings(const QSharedPointer<Maliit::PluginSettings> &settings)
-{
-	foreach (const QSharedPointer<Maliit::SettingsEntry> &entry, settings->configurationEntries())
-	{
-		if (entry->key() == "/maliit/pluginsettings/libmaliit-keyboard-plugin.so/current_style")
-		{
-			QString style = QString("maliit-%1x%2").arg(getMainWidth()).arg(getMainHeight());
-
-			entry->set(style);
-		}
-	}
-}
-#endif
-
-
-DebugTiming::DebugTiming(logger *log, bool enabled, QObject *parent) :
-	QObject(parent)
-{
-	app_logger = log;
-	last_message.start();
-	is_enabled = enabled;
-}
-
-void DebugTiming::logTiming(const QString &message)
-{
-	if (is_enabled)
-		app_logger->debug(LOG_CRITICAL, (char *) qPrintable(message +
-			", TIME since last log (ms): " + QString::number(last_message.restart())));
 }

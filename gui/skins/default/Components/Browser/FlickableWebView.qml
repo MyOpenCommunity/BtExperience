@@ -124,7 +124,7 @@ Flickable {
             html = errorHtml.replace("$SERVER", serverAddress)
         }
         onLoadFinished: console.log("Finished loading: " + url)
-        onLoadStarted: console.log("Started loading new url")
+        onLoadStarted: console.log("Started loading new url " + url)
 
         function doZoom(zoom,centerX,centerY)
         {

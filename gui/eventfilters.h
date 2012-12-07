@@ -29,10 +29,12 @@ private:
 class LastClickTime : public QObject
 {
 	Q_OBJECT
+
 public:
 	static bool isPressed() { return pressed; }
 
 signals:
+	void updateTime();
 	void maxTravelledDistanceOnLastMove(QPoint pos);
 
 protected:
