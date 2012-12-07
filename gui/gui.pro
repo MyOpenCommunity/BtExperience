@@ -58,13 +58,16 @@ target.commands += true
 SOURCES += \
     main.cpp \
     audiostate.cpp \
-    calibration.cpp \
-    eventfilters.cpp \
+	calibration.cpp \
+	applicationcommon.cpp \
+    browserprocess.cpp \
+	eventfilters.cpp \
     globalproperties.cpp \
+    globalpropertiescommon.cpp \
     guisettings.cpp \
     hwkeys.cpp \
     imagereader.cpp \
-    inputcontextwrapper.cpp \
+	inputcontextwrapper.cpp \
 	ringtonemanager.cpp \
 	watchdog.cpp \
 	../BtObjects/ts/signalshandler.cpp
@@ -72,9 +75,12 @@ SOURCES += \
 
 HEADERS += \
     audiostate.h \
-    calibration.h \
-    eventfilters.h \
+	calibration.h \
+	applicationcommon.h \
+    browserprocess.h \
+	eventfilters.h \
     globalproperties.h \
+    globalpropertiescommon.h \
     guisettings.h \
     hwkeys.h \
     imagereader.h \

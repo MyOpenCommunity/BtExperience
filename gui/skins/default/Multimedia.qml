@@ -70,7 +70,7 @@ Page {
 
     Component.onCompleted: {
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/multimedia/devices_card.jpg", "props": {} })
-        multimediaModel.append({"description": qsTr("web browser"), "target": "Browser.qml", "cardImageCached": "images/multimedia/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
+        multimediaModel.append({"description": qsTr("web browser"), "target": "ExternalBrowser.qml", "cardImageCached": "images/multimedia/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
         multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/browser_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
         multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/rss_card.jpg",

@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
 SUBDIRS += gui
-SUBDIRS += BtObjects gstmediaplayer
+SUBDIRS += BtObjects gstmediaplayer browser
 
 gui.depends += BtObjects
