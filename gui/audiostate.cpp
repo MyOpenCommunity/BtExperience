@@ -55,9 +55,8 @@ namespace
 		// 0 -> mute (not used in this function)
 		// 1-100 -> 0 -> 97
 		QString scaled_volume = QString::number(volume * 97 / 100, 16);
-
-		//Viene fatta dopo la chiamata_vde_silent --> deve essere fatta prima!!!!
-		//smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "046B" << scaled_volume);
+		scaled_volume = QString("%1").arg(scaled_volume, 4, '0');
+		smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "046B" << scaled_volume);
 	}
 
 	void setZlMute(bool mute)
@@ -76,6 +75,8 @@ namespace
 		case AudioState::LocalPlaybackVolume:
 		case AudioState::RingtoneVolume:
 			setHpDacVolume(volume);
+			break;
+		case AudioState::Mute:
 			break;
 		case AudioState::VdeCallVolume:
 		case AudioState::IntercomCallVolume:
@@ -285,16 +286,19 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	switch (old_state)
 	{
-	case AudioState::BeepVolume:
-	case AudioState::LocalPlaybackVolume:
-	case AudioState::RingtoneVolume:
+	case Beep:
+	case LocalPlayback:
+	case Ringtone:
 		break;
 	case ScsVideoCall:
 	case ScsIntercomCall:
-		smartExecute_synch(vde_audio_off);
+		if(new_state != AudioState::Mute)
+			smartExecute_synch(vde_audio_off);
 		break;
 	case Mute:
 		setZlMute(false);
+		if(new_state != AudioState::ScsVideoCall && new_state != AudioState::ScsIntercomCall)
+			smartExecute_synch(vde_audio_off);
 		break;
 	default:
 		qWarning("Add code to leave old state");
@@ -306,15 +310,34 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	qDebug() << "Entering audio state" << enumerationName(this, "State", new_state);
 
+	current_volume = volume_map[new_state + 1];
+
 	switch (new_state)
 	{
+	case Beep:
+	case LocalPlayback:
+	case Ringtone:
+	case VdeRingtone:
+		if (current_volume != InvalidVolume)
+			setHardwareVolume(current_volume, volumes[current_volume]);
+		break;
 	case ScsVideoCall:
-		//smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8A10");
-		smartExecute_synch(vde_audio_on);
+		if(old_state != AudioState::Mute)
+		{
+			smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8A10");
+			if (current_volume != InvalidVolume)
+		                setHardwareVolume(current_volume, volumes[current_volume]);
+			smartExecute_synch(vde_audio_on);
+		}
 		break;
 	case ScsIntercomCall:
-		//smartExecute("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8710");
-		//smartExecute(vde_audio_on);
+		if(old_state != AudioState::Mute)
+		{
+			smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8710");
+			if (current_volume != InvalidVolume)
+				setHardwareVolume(current_volume, volumes[current_volume]);
+			smartExecute_synch(vde_audio_on);
+		}
 		break;
 	case LocalPlaybackMute:
 		setHardwareVolume(LocalPlaybackVolume, 0);
@@ -330,12 +353,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 		break;
 	}
 
-	current_volume = volume_map[new_state + 1];
 	current_state = new_state;
-
-	// restore volume level
-	if (current_volume != InvalidVolume)
-		setHardwareVolume(current_volume, volumes[current_volume]);
 
 	emit stateChanged(old_state, new_state);
 
