@@ -38,6 +38,11 @@ QString ObjectLink::getName() const
 	return bt_object->getName();
 }
 
+void ObjectLink::setName(QString new_value)
+{
+	bt_object->setName(new_value);
+}
+
 ObjectInterface *ObjectLink::getBtObject() const
 {
 	bt_object->initializeObject();
