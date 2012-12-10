@@ -15,11 +15,7 @@ Page {
     property bool homeCustomization: false
 
     // the following properties are used by delegates
-    property variant actualModel: privateProps.currentChoice === 0 ?
-                                      camerasModel :
-                                      privateProps.currentChoice === 6 ?
-                                          webRadiosModel :
-                                          quicklinksModel
+    property variant actualModel: privateProps.currentChoice === 0 ? camerasModel : quicklinksModel
     property bool isRemovable: privateProps.currentChoice !== 0
 
     text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
@@ -66,13 +62,6 @@ Page {
             {objectId: ObjectInterface.IdExternalPlace},
             {objectId: ObjectInterface.IdSurveillanceCamera}
         ]
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-    }
-
-    ObjectModel {
-        id: webRadiosModel
-        filters: [{"objectId": ObjectInterface.IdIpRadio}]
-        containers: [linksModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 

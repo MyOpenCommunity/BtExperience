@@ -11,7 +11,7 @@ QuickLink {
 
     onClicked: {
         var urls = []
-        urls.push(itemObject.btObject.path)
+        urls.push(itemObject.address)
         global.audioVideoPlayer.generatePlaylistWebRadio(urls, 0, 1)
         Stack.pushPage("AudioVideoPlayer.qml", {"isVideo": false})
     }

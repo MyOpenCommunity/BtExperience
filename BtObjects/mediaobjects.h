@@ -267,23 +267,6 @@ protected:
 	SourceMultiMedia *source;
 };
 
-
-/*!
-	\brief Wrapper class for a single IP radio address
-*/
-class IpRadio : public FileObject
-{
-	Q_OBJECT
-
-public:
-	IpRadio(const EntryInfo &info) : FileObject(info, QVariantList()) { }
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdIpRadio;
-	}
-};
-
-
 /*!
 	\brief Web radio played through local source
 */

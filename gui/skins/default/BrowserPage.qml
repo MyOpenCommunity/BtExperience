@@ -14,7 +14,7 @@ Page {
     property string type: "browser"
     // TODO: find a way (if any) to put this into paginator and make it work for
     // real.
-    property variant realModel: type === "webradio" ? ipRadiosModel : objectLinksModel
+    property variant realModel: objectLinksModel
 
     source: "images/multimedia.jpg"
     text: qsTr("multimedia")
@@ -34,13 +34,6 @@ Page {
     MediaModel {
         id: objectLinksModel
         source: myHomeModels.mediaLinks
-        containers: [linksModel.systemUii]
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-    }
-
-    ObjectModel {
-        id: ipRadiosModel
-        filters: [{"objectId": ObjectInterface.IdIpRadio}]
         containers: [linksModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
@@ -83,10 +76,8 @@ Page {
                         Stack.pushPage("RssPage.qml", {"urlString": itemObject.address})
                     else if (type === "webradio") {
                         var urls = []
-                        for (var i = 0; i < ipRadiosModel.count; ++i) {
-                            urls.push(ipRadiosModel.getObject(i).path)
-                        }
-                        global.audioVideoPlayer.generatePlaylistWebRadio(urls, index, ipRadiosModel.count)
+                        urls.push(itemObject.address)
+                        global.audioVideoPlayer.generatePlaylistWebRadio(urls, 0, 1)
                         Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false})
                     }
                 }
@@ -108,7 +99,7 @@ Page {
 
                 UbuntuLightText {
                     id: link
-                    text: type === "webradio" ? itemObject.path : itemObject.address
+                    text: itemObject.address
                     font.pixelSize: 14
                     color: delegateItem.state === "pressed" ? "white" : "black"
                     anchors {

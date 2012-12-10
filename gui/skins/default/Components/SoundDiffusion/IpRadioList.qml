@@ -23,6 +23,7 @@ MenuColumn {
 
     ObjectModel {
         id: radioModel
+        source: myHomeModels.mediaLinks
         containers: [linksModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
@@ -31,7 +32,7 @@ MenuColumn {
         var urls = []
 
         for (var i = 0; i < model.count; ++i)
-            urls.push(model.getObject(i).path)
+            urls.push(model.getObject(i).address)
 
         return urls
     }

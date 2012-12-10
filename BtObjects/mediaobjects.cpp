@@ -6,13 +6,17 @@
 #include "xml_functions.h"
 #include "xmlobject.h"
 #include "mounts.h"
+#include "globalmodels.h"
+#include "medialink.h"
 
 #include <QDebug>
-#include <QStringList>
 #include <QFutureWatcher>
 #include <QtConcurrentRun>
 #include <QFileInfo>
 #include <QDir>
+#include <QDeclarativeView>
+#include <QDeclarativeContext>
+#include <QWSServer>
 
 #define REQUEST_FREQUENCY_TIME 1000
 #define GENERAL_AMBIENT_MIN_CID 11041
@@ -53,25 +57,19 @@ namespace
 
 		return res;
 	}
+
+	QDeclarativeView *findDeclarativeView()
+	{
+		foreach (QWidget *w, qApp->topLevelWidgets())
+			if (qobject_cast<QDeclarativeView *>(w))
+				return static_cast<QDeclarativeView *>(w);
+
+		return 0;
+	}
 }
 
 #define standard_presets_size int(sizeof(standard_presets) / sizeof(standard_presets[0]))
 
-
-QList<ObjectPair> parseIpRadio(const QDomNode &xml_node)
-{
-	QList<ObjectPair> obj_list;
-	XmlObject v(xml_node);
-
-	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-	{
-		v.setIst(ist);
-		int uii = getIntAttribute(ist, "uii");
-
-		obj_list << ObjectPair(uii, new IpRadio(EntryInfo(v.value("descr"), EntryInfo::AUDIO, v.value("url"))));
-	}
-	return obj_list;
-}
 
 QList<ObjectPair> parseAuxSource(const QDomNode &xml_node)
 {
@@ -146,7 +144,7 @@ QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
 			QList<Amplifier *> amplifiers;
 			amplifiers << amp;
 			obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"),
-				amplifiers, ObjectInterface::IdMultiAmbientAmplifier));
+														   amplifiers, ObjectInterface::IdMultiAmbientAmplifier));
 		}
 		else
 		{
@@ -246,8 +244,8 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 	if (!(*bt_global::config)[SOURCE_ADDRESS].isEmpty() || !(*bt_global::config)[AMPLIFIER_ADDRESS].isEmpty())
 	{
 		QString init_frame = VirtualSourceDevice::createMediaInitFrame(is_multichannel,
-									       (*bt_global::config)[SOURCE_ADDRESS],
-									       (*bt_global::config)[AMPLIFIER_ADDRESS]);
+																	   (*bt_global::config)[SOURCE_ADDRESS],
+																	   (*bt_global::config)[AMPLIFIER_ADDRESS]);
 		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
 	}
 	SourceDevice::setIsMultichannel(is_multichannel);
@@ -516,13 +514,22 @@ void SourceIpRadio::startPlay(QList<QVariant> urls, int index, int total_files)
 
 void SourceIpRadio::playFirstMediaContent()
 {
-	ObjectModel ip_radios;
+	MediaModel ip_radios;
 	QList<QVariant> urls;
 
-	ip_radios.setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdIpRadio);
+	QDeclarativeView *view = findDeclarativeView();
+	QObject *o = view->rootContext()->contextProperty("myHomeModels").value<QObject*>();
+	GlobalModels *globals = qobject_cast<GlobalModels *>(o);
+	MediaDataModel *m = globals->getMediaLinks();
+
+	ip_radios.setSource(m);
 
 	for (int i = 0; i < ip_radios.getCount(); ++i)
-		urls.append(static_cast< ::IpRadio *>(ip_radios.getObject(i))->getPath());
+	{
+		MediaLink *l = qobject_cast<MediaLink *>(ip_radios.getObject(i));
+		if (l && l->getType() == MediaLink::WebRadio)
+			urls.append(l->getAddress());
+	}
 
 	if (urls.count())
 		startPlay(urls, 0, urls.count());

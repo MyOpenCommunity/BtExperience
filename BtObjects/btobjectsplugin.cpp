@@ -539,10 +539,6 @@ void BtObjectsPlugin::createObjects()
 			obj_list = parsePowerAmplifier(xml_obj, is_multichannel);
 			break;
 
-		case ObjectInterface::IdIpRadio:
-			multimedia.append(xml_obj);
-			obj_list = parseIpRadio(xml_obj);
-			break;
 		case ObjectInterface::IdDeviceUPnP:
 		case ObjectInterface::IdDeviceUSB:
 		case ObjectInterface::IdDeviceSD:
@@ -553,6 +549,8 @@ void BtObjectsPlugin::createObjects()
 			objmodel << parseMessageObject(xml_obj);
 			break;
 
+		case MediaLink::WebRadio:
+			multimedia.append(xml_obj);
 		case MediaLink::Rss:
 		case MediaLink::RssMeteo:
 		case MediaLink::Web:
@@ -1231,7 +1229,6 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 			int link_uii = getIntAttribute(link, "uii");
 			MediaLink *l = uii_map.value<MediaLink>(link_uii);
 			ExternalPlace *e = uii_map.value<ExternalPlace>(link_uii);
-			IpRadio *i = uii_map.value<IpRadio>(link_uii);
 			QPoint pos(getIntAttribute(link, "x"), getIntAttribute(link, "y"));
 
 			if (l)
@@ -1239,7 +1236,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 				l->setContainerUii(profile_uii);
 				l->setPosition(pos);
 			}
-			else if (e || i)
+			else if (e)
 			{
 				// for surveillance cameras, create a media link object on the fly using
 				// the data from the camera object
