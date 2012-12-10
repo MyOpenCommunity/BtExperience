@@ -6,7 +6,8 @@
 #include <QTime>
 #include <QDebug>
 #include <QNetworkReply>
-#include <QSslError>
+#include <QSslSocket>
+#include <QSslConfiguration>
 
 #define USER_INPUT_TIMEOUT_MS 30000  // 30 secs
 
@@ -33,32 +34,32 @@ BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
 {
 }
 
-void BtNetworkAccessManager::setUsername(const QString &user)
+void BtNetworkAccessManager::setAuthentication(const QString &user, const QString &pass)
 {
 	username = user;
+	password = pass;
+	loop.quit();
 }
 
-void BtNetworkAccessManager::setPassword(const QString &pass)
+void BtNetworkAccessManager::abortConnection()
 {
-	password = pass;
+	loop.quit();
 }
 
 void BtNetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
 {
 	foreach (QSslError e, errors)
-		qDebug() << "error:" << e.error() << "string: " << e.errorString();
+		qDebug() << "error:" << int(e.error()) << "string: " << e.errorString();
+	qDebug() << "Certificate chain: " << reply->sslConfiguration().peerCertificateChain();
+	QSslSocket::addDefaultCaCertificates(reply->sslConfiguration().peerCertificateChain());
 	reply->ignoreSslErrors();
 }
 
 void BtNetworkAccessManager::requireAuthentication(QNetworkReply *reply, QAuthenticator *auth)
 {
 	emit credentialsRequired(this, reply);
-	QTime timeout;
-	timeout.start();
-	while (username.isEmpty() && password.isEmpty() && timeout.elapsed() < USER_INPUT_TIMEOUT_MS)
-		QCoreApplication::processEvents();
-	if (timeout.elapsed() > USER_INPUT_TIMEOUT_MS)
-		qWarning() << "Timeout while waiting for username and password";
+
+	loop.exec();
 	auth->setUser(username);
 	auth->setPassword(password);
 }

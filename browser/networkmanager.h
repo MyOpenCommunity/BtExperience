@@ -3,6 +3,7 @@
 
 #include <QDeclarativeNetworkAccessManagerFactory>
 #include <QNetworkAccessManager>
+#include <QEventLoop>
 
 class BrowserProperties;
 
@@ -22,11 +23,12 @@ class BtNetworkAccessManager : public QNetworkAccessManager
 
 public:
 	BtNetworkAccessManager(QObject *parent = 0);
-	void setUsername(const QString &user);
-	void setPassword(const QString &pass);
+	void setAuthentication(const QString &user, const QString &pass);
+	void abortConnection();
 
 signals:
 	void credentialsRequired(BtNetworkAccessManager *, QNetworkReply *);
+	void invalidCertificate(BtNetworkAccessManager *, QNetworkReply *);
 
 private slots:
 	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
@@ -34,6 +36,7 @@ private slots:
 
 private:
 	QString username, password;
+	QEventLoop loop;
 };
 
 #endif // NETWORKMANAGER_H

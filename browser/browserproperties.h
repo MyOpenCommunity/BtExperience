@@ -19,8 +19,8 @@ public:
 
 	void setUrl(QString url);
 	QString getUrl() const;
-	Q_INVOKABLE void setUsername(const QString &user);
-	Q_INVOKABLE void setPassword(const QString &pass);
+	Q_INVOKABLE void setSslAuthentication(const QString &user, const QString &pass);
+	Q_INVOKABLE void abortConnection();
 
 public slots:
 	void quit();
