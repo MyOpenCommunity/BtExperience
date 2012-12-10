@@ -115,9 +115,11 @@ BasePage {
         FavoriteEditPopup {
             id: credentials
             function okClicked() {
-                global.setUsername(topInputText)
-                global.setPassword(bottomInputText)
-                credentials.closePopup()
+                global.setSslAuthentication(topInputText, bottomInputText)
+            }
+
+            function cancelClicked() {
+                global.abortConnection()
             }
 
             title: qsTr("Authentication required")

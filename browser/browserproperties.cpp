@@ -31,14 +31,14 @@ QString BrowserProperties::getUrl() const
 	return url;
 }
 
-void BrowserProperties::setUsername(const QString &user)
+void BrowserProperties::setSslAuthentication(const QString &user, const QString &pass)
 {
-	access_manager->setUsername(user);
+	access_manager->setAuthentication(user, pass);
 }
 
-void BrowserProperties::setPassword(const QString &pass)
+void BrowserProperties::abortConnection()
 {
-	access_manager->setPassword(pass);
+	access_manager->abortConnection();
 }
 
 void BrowserProperties::quit()

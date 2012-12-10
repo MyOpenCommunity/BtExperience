@@ -23,6 +23,9 @@ Column {
         }
     }
 
+    function cancelClicked() {
+    }
+
     spacing: 4
 
     onFavoriteItemChanged: {
@@ -172,7 +175,8 @@ Column {
                 text: qsTr("cancel")
                 font.pixelSize: 14
                 onClicked: {
-                    closePopup()
+                    popup.cancelClicked()
+                    popup.closePopup()
                 }
             }
         }
