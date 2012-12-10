@@ -25,7 +25,7 @@ class AudioVideoPlayer;
 class MountPoint;
 
 
-QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multimedia);
+QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multimedia, MediaDataModel *model);
 
 QList<ObjectPair> parseAuxSource(const QDomNode &xml_node);
 QList<ObjectPair> parseMultimediaSource(const QDomNode &xml_node);
@@ -274,12 +274,15 @@ class SourceIpRadio : public SourceMedia
 {
 	Q_OBJECT
 public:
-	SourceIpRadio(const QString &name, SourceMultiMedia *s);
+	SourceIpRadio(const QString &name, SourceMultiMedia *s, MediaDataModel *model);
 
 	/// Start media playback at the given index
 	Q_INVOKABLE void startPlay(QList<QVariant> urls, int index, int total_files);
 
 	virtual void playFirstMediaContent();
+
+private:
+	MediaDataModel *model;
 };
 
 

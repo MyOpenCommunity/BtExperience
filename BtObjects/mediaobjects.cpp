@@ -235,7 +235,7 @@ QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multicha
 	return obj_list;
 }
 
-QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multimedia)
+QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multimedia, MediaDataModel * model)
 {
 	QList<ObjectPair> sources;
 
@@ -270,7 +270,7 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 		switch (id)
 		{
 		case ObjectInterface::IdIpRadio:
-			sources << ObjectPair(-1, new SourceIpRadio(QObject::tr("IP radio"), source));
+			sources << ObjectPair(-1, new SourceIpRadio(QObject::tr("IP radio"), source, model));
 			break;
 		case ObjectInterface::IdDeviceUSB:
 		case ObjectInterface::IdDeviceSD:
@@ -501,10 +501,10 @@ void SourceMedia::playFirstMediaContent()
 	emit firstMediaContentStatus(false);
 }
 
-
-SourceIpRadio::SourceIpRadio(const QString &name, SourceMultiMedia *s) :
-	SourceMedia(name, s, IpRadio)
+SourceIpRadio::SourceIpRadio(const QString &name, SourceMultiMedia *s, MediaDataModel *_model)
+	: SourceMedia(name, s, IpRadio)
 {
+	model = _model;
 }
 
 void SourceIpRadio::startPlay(QList<QVariant> urls, int index, int total_files)
@@ -517,12 +517,7 @@ void SourceIpRadio::playFirstMediaContent()
 	MediaModel ip_radios;
 	QList<QVariant> urls;
 
-	QDeclarativeView *view = findDeclarativeView();
-	QObject *o = view->rootContext()->contextProperty("myHomeModels").value<QObject*>();
-	GlobalModels *globals = qobject_cast<GlobalModels *>(o);
-	MediaDataModel *m = globals->getMediaLinks();
-
-	ip_radios.setSource(m);
+	ip_radios.setSource(model);
 
 	for (int i = 0; i < ip_radios.getCount(); ++i)
 	{

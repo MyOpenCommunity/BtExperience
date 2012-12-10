@@ -574,7 +574,7 @@ void BtObjectsPlugin::createObjects()
 	// the objects are used to construct the item list for multimedia
 	//
 	// source objects are used for alarm clock construction
-	foreach (ObjectPair p, createLocalSources(is_multichannel, multimedia))
+	foreach (ObjectPair p, createLocalSources(is_multichannel, multimedia, &media_link_model))
 	{
 		if (p.first != -1)
 			uii_map.insert(p.first, p.second);
