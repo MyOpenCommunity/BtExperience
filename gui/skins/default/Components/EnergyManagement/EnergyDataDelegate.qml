@@ -241,6 +241,35 @@ Column {
         }
     }
 
+
+    function updatesEnabled(screen_state) {
+        switch (screen_state) {
+        case ScreenState.ScreenOff:
+        case ScreenState.Screensaver:
+        case ScreenState.PasswordCheck:
+        case ScreenState.Calibration:
+        case ScreenState.ForcedNormal:
+        {
+            return false;
+        }
+        case ScreenState.Normal:
+        case ScreenState.Freeze:
+        {
+            return true;
+        }
+        }
+    }
+
+    Connections {
+        target: global.screenState
+        onStateChangedInt: {
+            if (updatesEnabled(old_state) && !updatesEnabled(new_state))
+                itemObject.requestCurrentUpdateStop()
+            else if (!updatesEnabled(old_state) && updatesEnabled(new_state))
+                itemObject.requestCurrentUpdateStart()
+        }
+    }
+
     Component.onCompleted: itemObject.requestCurrentUpdateStart()
     Component.onDestruction: itemObject.requestCurrentUpdateStop()
 
