@@ -35,6 +35,9 @@ private slots:
 	void requireAuthentication(QNetworkReply *reply, QAuthenticator *auth);
 
 private:
+	enum {
+		AbortAuthentication = -1,   // Abort the authentication procedure
+	};
 	QString username, password;
 	QEventLoop loop;
 };

@@ -43,7 +43,7 @@ void BtNetworkAccessManager::setAuthentication(const QString &user, const QStrin
 
 void BtNetworkAccessManager::abortConnection()
 {
-	loop.quit();
+	loop.exit(AbortAuthentication);
 }
 
 void BtNetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
@@ -59,7 +59,9 @@ void BtNetworkAccessManager::requireAuthentication(QNetworkReply *reply, QAuthen
 {
 	emit credentialsRequired(this, reply);
 
-	loop.exec();
-	auth->setUser(username);
-	auth->setPassword(password);
+	if (loop.exec() != AbortAuthentication)
+	{
+		auth->setUser(username);
+		auth->setPassword(password);
+	}
 }
