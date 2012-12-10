@@ -25,6 +25,8 @@ QNetworkAccessManager *NetworkAccessManagerFactory::create(QObject *parent)
 		n, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
 	QObject::connect(n, SIGNAL(credentialsRequired(BtNetworkAccessManager*,QNetworkReply*)),
 		global_properties, SLOT(credentialsRequired(BtNetworkAccessManager*,QNetworkReply*)));
+	QObject::connect(n, SIGNAL(invalidCertificate(BtNetworkAccessManager*,QNetworkReply*)),
+		global_properties, SLOT(certificatesError(BtNetworkAccessManager*,QNetworkReply*)));
 	return n;
 }
 
@@ -46,13 +48,23 @@ void BtNetworkAccessManager::abortConnection()
 	loop.exit(AbortAuthentication);
 }
 
+void BtNetworkAccessManager::addSecurityException()
+{
+	// TODO: save certificates
+	loop.exit(IgnoreCertificateErrors);
+}
+
 void BtNetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
 {
 	foreach (QSslError e, errors)
 		qDebug() << "error:" << int(e.error()) << "string: " << e.errorString();
-	qDebug() << "Certificate chain: " << reply->sslConfiguration().peerCertificateChain();
-	QSslSocket::addDefaultCaCertificates(reply->sslConfiguration().peerCertificateChain());
-	reply->ignoreSslErrors();
+
+	emit invalidCertificate(this, reply);
+
+	if (loop.exec() == IgnoreCertificateErrors)
+	{
+		reply->ignoreSslErrors();
+	}
 }
 
 void BtNetworkAccessManager::requireAuthentication(QNetworkReply *reply, QAuthenticator *auth)
