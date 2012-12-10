@@ -8,8 +8,15 @@
 #include <QNetworkReply>
 #include <QSslSocket>
 #include <QSslConfiguration>
+#include <QFile>
 
 #define USER_INPUT_TIMEOUT_MS 30000  // 30 secs
+#define DEFAULT_CA_CERT_ADDRESS "http://curl.haxx.se/ca/cacert.pem"
+#if defined(BT_HARDWARE_X11)
+#define EXTRA_12_PATH "extra/12/"
+#else
+#define EXTRA_12_PATH "/home/bticino/cfg/extra/12/"
+#endif
 
 NetworkAccessManagerFactory::NetworkAccessManagerFactory(BrowserProperties *props)
 {
@@ -34,6 +41,16 @@ QNetworkAccessManager *NetworkAccessManagerFactory::create(QObject *parent)
 BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
 	QNetworkAccessManager(parent)
 {
+	// TODO: only update CA certificates every X days
+	// TODO: only download the updated certificates once
+	QFile ca_conf_file(QString(EXTRA_12_PATH) + "ca_cert_address");
+	QByteArray address = DEFAULT_CA_CERT_ADDRESS;
+	if (ca_conf_file.open(QIODevice::ReadOnly))
+	{
+		address = ca_conf_file.readAll();
+	}
+	QNetworkReply *r = get(QNetworkRequest(QUrl(address)));
+	connect(r, SIGNAL(readChannelFinished()), this, SLOT(downloadCaFinished()));
 }
 
 void BtNetworkAccessManager::setAuthentication(const QString &user, const QString &pass)
@@ -76,4 +93,16 @@ void BtNetworkAccessManager::requireAuthentication(QNetworkReply *reply, QAuthen
 		auth->setUser(username);
 		auth->setPassword(password);
 	}
+}
+
+void BtNetworkAccessManager::downloadCaFinished()
+{
+	QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+	QFile cacert(QString(EXTRA_12_PATH) + "cacert.pem");
+	QByteArray cert = reply->readAll();
+	if (!cacert.open(QIODevice::WriteOnly))
+		qWarning() << "Cannot open" << cacert.fileName() << "for writing";
+	else
+		cacert.write(cert);
+	QSslSocket::addDefaultCaCertificates(QString(EXTRA_12_PATH) + "cacert.pem");
 }

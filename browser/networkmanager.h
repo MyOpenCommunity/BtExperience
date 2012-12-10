@@ -34,6 +34,7 @@ signals:
 private slots:
 	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 	void requireAuthentication(QNetworkReply *reply, QAuthenticator *auth);
+	void downloadCaFinished();
 
 private:
 	enum {
