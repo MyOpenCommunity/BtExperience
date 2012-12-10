@@ -264,9 +264,35 @@ Item {
             if (!cctvModel.count === 0)
                 return
 
-            // call default external point on hardware key 2
-            if (index === 2 && global.defaultExternalPlace)
+            // call default external point on hardware key 2, turn off screen on hardware key 3
+            if (index === 2 && global.defaultExternalPlace) {
                 cctvModel.getObject(0).cameraOn(global.defaultExternalPlace)
+            } else if (index == 3) {
+                switch (global.screenState.state) {
+                case ScreenState.ScreenOff:
+                case ScreenState.Screensaver:
+                {
+                    global.screenState.simulateClick()
+                    break;
+                }
+                case ScreenState.Normal:
+                case ScreenState.Freeze:
+                case ScreenState.PasswordCheck:
+                {
+                    // go to screen-off state
+                    global.screenState.disableState(ScreenState.Normal);
+                    global.screenState.disableState(ScreenState.Freeze);
+                    global.screenState.disableState(ScreenState.PasswordCheck);
+                    break;
+                }
+                case ScreenState.ForcedNormal:
+                case ScreenState.Calibration:
+                {
+                    // Ignore button press
+                    break;
+                }
+                }
+            }
         }
     }
 
