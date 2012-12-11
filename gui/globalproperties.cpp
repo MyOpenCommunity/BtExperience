@@ -356,10 +356,10 @@ QString GlobalProperties::takeScreenshot(QRect rect, QString filename)
 	QImage image = QPixmap::grabWidget(viewport, rect).toImage();
 
 #if defined(BT_HARDWARE_X11)
-	QDir().mkdir(EXTRA_11_DIR);
+        QDir().mkdir(EXTRA_12_DIR);
 #endif
 
-	QDir customDir = QDir(EXTRA_11_DIR);
+        QDir customDir = QDir(EXTRA_12_DIR);
 	QString fn = customDir.canonicalPath() + "/" + filename;
 	image.save(fn);
 
@@ -371,10 +371,10 @@ QString GlobalProperties::saveInCustomDirIfNeeded(QString filename, QString new_
 	QString result;
 
 #if defined(BT_HARDWARE_X11)
-	QDir().mkdir(EXTRA_11_DIR);
+        QDir().mkdir(EXTRA_12_DIR);
 #endif
 
-	QDir customDir = QDir(EXTRA_11_DIR);
+        QDir customDir = QDir(EXTRA_12_DIR);
 
 	if (filename.startsWith(customDir.canonicalPath() + "/"))
 		result = filename;

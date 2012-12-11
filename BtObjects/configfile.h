@@ -10,13 +10,13 @@
 #define ARCHIVE_FILE "archive.xml"
 #define LAYOUT_FILE "layout.xml"
 #define SETTINGS_FILE "settings.xml"
-#define EXTRA_11_DIR "11/"
+#define EXTRA_12_DIR "12/"
 #else
 #define CONF_FILE "/var/tmp/conf.xml"
 #define ARCHIVE_FILE "/home/bticino/cfg/extra/0/archive.xml"
 #define LAYOUT_FILE "/home/bticino/cfg/extra/0/layout.xml"
 #define SETTINGS_FILE "/home/bticino/cfg/extra/0/settings.xml"
-#define EXTRA_11_DIR "/home/bticino/cfg/extra/11/"
+#define EXTRA_12_DIR "/home/bticino/cfg/extra/12/"
 #endif
 
 class QTimer;
