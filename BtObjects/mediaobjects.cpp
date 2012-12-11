@@ -14,8 +14,6 @@
 #include <QtConcurrentRun>
 #include <QFileInfo>
 #include <QDir>
-#include <QDeclarativeView>
-#include <QDeclarativeContext>
 #include <QWSServer>
 
 #define REQUEST_FREQUENCY_TIME 1000
@@ -56,15 +54,6 @@ namespace
 			res << dir;
 
 		return res;
-	}
-
-	QDeclarativeView *findDeclarativeView()
-	{
-		foreach (QWidget *w, qApp->topLevelWidgets())
-			if (qobject_cast<QDeclarativeView *>(w))
-				return static_cast<QDeclarativeView *>(w);
-
-		return 0;
 	}
 }
 
