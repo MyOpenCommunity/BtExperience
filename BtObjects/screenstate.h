@@ -2,6 +2,7 @@
 #define SCREENSTATE_H
 
 #include <QObject>
+#include <QMetaType>
 
 class QTimer;
 
@@ -92,5 +93,7 @@ private:
 	bool states[StateCount];
 	bool password_enabled, screen_locked;
 };
+
+Q_DECLARE_METATYPE(ScreenState::State)
 
 #endif // SCREENSTATE_H

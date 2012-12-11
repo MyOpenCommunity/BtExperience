@@ -65,6 +65,8 @@ ScreenState::ScreenState(QObject *parent) : QObject(parent)
 	freeze_timer->setInterval(FREEZE_TIME * 1000);
 	connect(freeze_timer, SIGNAL(timeout()), this, SLOT(stopFreeze()));
 
+	qRegisterMetaType<ScreenState::State>();
+
 	qApp->installEventFilter(this);
 }
 
