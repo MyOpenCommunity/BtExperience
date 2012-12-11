@@ -12,9 +12,6 @@ Page {
 
     property int containerId: -1
     property string type: "browser"
-    // TODO: find a way (if any) to put this into paginator and make it work for
-    // real.
-    property variant realModel: objectLinksModel
 
     source: "images/multimedia.jpg"
     text: qsTr("multimedia")
@@ -31,11 +28,17 @@ Page {
 
     SystemsModel { id: linksModel; systemId: page.containerId; source: myHomeModels.mediaContainers }
 
-    MediaModel {
+    ObjectModel {
         id: objectLinksModel
         source: myHomeModels.mediaLinks
         containers: [linksModel.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    ObjectModel {
+        id: ipAllLinksModel
+        source: myHomeModels.mediaLinks
+        containers: [linksModel.systemUii]
     }
 
     SvgImage {
@@ -54,7 +57,7 @@ Page {
 
             elementsOnPage: 7
             buttonVisible: false
-            model: page.realModel
+            model: objectLinksModel
             anchors {
                 top: parent.top
                 topMargin: parent.height / 100 * 2
@@ -66,7 +69,7 @@ Page {
 
             delegate: ButtonThreeStates {
                 id: delegateItem
-                property variant itemObject: page.realModel.getObject(index)
+                property variant itemObject: objectLinksModel.getObject(index)
                 defaultImage: "images/common/btn_weblink.svg"
                 pressedImage: "images/common/btn_weblink_P.svg"
                 onClicked: {
@@ -76,8 +79,13 @@ Page {
                         Stack.pushPage("RssPage.qml", {"urlString": itemObject.address})
                     else if (type === "webradio") {
                         var urls = []
-                        urls.push(itemObject.address)
-                        global.audioVideoPlayer.generatePlaylistWebRadio(urls, 0, 1)
+                        var found = 0
+                        for (var i = 0; i < ipAllLinksModel.count; ++i) {
+                            urls.push(ipAllLinksModel.getObject(i).address)
+                            if (itemObject === ipAllLinksModel.getObject(i))
+                                found = i
+                        }
+                        global.audioVideoPlayer.generatePlaylistWebRadio(urls, found, ipAllLinksModel.count)
                         Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false})
                     }
                 }
