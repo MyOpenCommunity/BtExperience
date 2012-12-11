@@ -162,7 +162,7 @@ void GlobalProperties::initAudio()
 	Q_ASSERT_X(bt_global::config, "GlobalProperties::initAudio", "BtObjects plugin not initialized yet");
 
 	video_player = new AudioVideoPlayer(this);
-	video_player->setVolume(audio_state->getStateVolume(AudioState::LocalPlaybackVolume));
+	video_player->setVolume(audio_state->getVolume(AudioState::LocalPlaybackVolume));
 	emit audioVideoPlayerChanged();
 
 	sound_player = new SoundPlayer(this);
@@ -257,19 +257,19 @@ void GlobalProperties::parseSettings()
 			ringtone_manager->setRingtone(RingtoneManager::Message, parseRingtone(xml_obj));
 			break;
 		case VolumeBeep:
-			audio_state->setStateVolume(AudioState::BeepVolume, parseVolume(xml_obj));
+			audio_state->setVolume(AudioState::BeepVolume, parseVolume(xml_obj));
 			break;
 		case VolumeLocalPlayback:
-			audio_state->setStateVolume(AudioState::LocalPlaybackVolume, parseVolume(xml_obj));
+			audio_state->setVolume(AudioState::LocalPlaybackVolume, parseVolume(xml_obj));
 			break;
 		case VolumeRingtone:
-			audio_state->setStateVolume(AudioState::RingtoneVolume, parseVolume(xml_obj));
+			audio_state->setVolume(AudioState::RingtoneVolume, parseVolume(xml_obj));
 			break;
 		case VolumeVdeCall:
-			audio_state->setStateVolume(AudioState::VdeCallVolume, parseVolume(xml_obj));
+			audio_state->setVolume(AudioState::VdeCallVolume, parseVolume(xml_obj));
 			break;
 		case VolumeIntercomCall:
-			audio_state->setStateVolume(AudioState::IntercomCallVolume, parseVolume(xml_obj));
+			audio_state->setVolume(AudioState::IntercomCallVolume, parseVolume(xml_obj));
 			break;
 		}
 	}

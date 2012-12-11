@@ -65,6 +65,8 @@ ScreenState::ScreenState(QObject *parent) : QObject(parent)
 	freeze_timer->setInterval(FREEZE_TIME * 1000);
 	connect(freeze_timer, SIGNAL(timeout()), this, SLOT(stopFreeze()));
 
+	qRegisterMetaType<ScreenState::State>();
+
 	qApp->installEventFilter(this);
 }
 
@@ -218,6 +220,7 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 		screensaver_timer->stop();;
 
 	emit stateChanged(old_state, new_state);
+	emit stateChangedInt(old_state, new_state);
 }
 
 void ScreenState::startFreeze()

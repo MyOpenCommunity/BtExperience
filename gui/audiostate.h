@@ -64,12 +64,8 @@ public:
 
 	State getState() const;
 
-	Q_INVOKABLE void setVolume(int volume);
-	Q_INVOKABLE int getVolume() const;
-
-	// typically used for settings loading/saving
-	Q_INVOKABLE void setStateVolume(Volume state, int volume);
-	Q_INVOKABLE int getStateVolume(Volume state) const;
+	Q_INVOKABLE void setVolume(Volume state, int volume);
+	Q_INVOKABLE int getVolume(Volume state) const;
 
 	void registerMediaPlayer(MultiMediaPlayer *player);
 	void registerSoundPlayer(MultiMediaPlayer *player);

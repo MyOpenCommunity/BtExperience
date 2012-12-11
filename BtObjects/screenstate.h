@@ -2,6 +2,7 @@
 #define SCREENSTATE_H
 
 #include <QObject>
+#include <QMetaType>
 
 class QTimer;
 
@@ -69,6 +70,8 @@ public slots:
 
 signals:
 	void stateChanged(ScreenState::State old_state, ScreenState::State new_state);
+	// QTBUG-27041 QML can't use enum values as signal arguments
+	void stateChangedInt(int old_state, int new_state);
 	void normalBrightnessChanged();
 	void passwordEnabledChanged();
 	void displayPasswordCheck();
@@ -92,5 +95,7 @@ private:
 	bool states[StateCount];
 	bool password_enabled, screen_locked;
 };
+
+Q_DECLARE_METATYPE(ScreenState::State)
 
 #endif // SCREENSTATE_H

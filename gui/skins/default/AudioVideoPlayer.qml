@@ -618,7 +618,7 @@ Page {
     Connections {
         target: mediaPlayer
         onVolumeChanged: {
-            global.audioState.setVolume(mediaPlayer.volume)
+            global.audioState.setVolume(AudioState.LocalPlaybackVolume, mediaPlayer.volume)
         }
         onMuteChanged: {
             if (mediaPlayer.mute)
