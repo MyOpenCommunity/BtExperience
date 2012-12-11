@@ -220,6 +220,7 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 		screensaver_timer->stop();;
 
 	emit stateChanged(old_state, new_state);
+	emit stateChangedInt(old_state, new_state);
 }
 
 void ScreenState::startFreeze()

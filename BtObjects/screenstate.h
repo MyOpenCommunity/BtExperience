@@ -70,6 +70,8 @@ public slots:
 
 signals:
 	void stateChanged(ScreenState::State old_state, ScreenState::State new_state);
+	// QTBUG-27041 QML can't use enum values as signal arguments
+	void stateChangedInt(int old_state, int new_state);
 	void normalBrightnessChanged();
 	void passwordEnabledChanged();
 	void displayPasswordCheck();
