@@ -110,26 +110,41 @@ BasePage {
         font.pixelSize: 14
         onClicked: {
             console.log("button2 clicked")
+            backoutTimer.stop()
             global.calibration.saveCalibration()
             global.screenState.disableState(ScreenState.Calibration)
             Stack.popPage()
         }
     }
 
+    Timer {
+        id: backoutTimer
+        interval: 5000
+        onTriggered: {
+            console.log("User didn't click on buttons on time, re-start calibration")
+            testButtons = false
+            global.calibration.resetCalibration()
+            currentPoint = 0
+            updateCrosshair()
+            page.state = ""
+        }
+    }
+
     states: [
         State {
-            name: "testButtons"
+            name: "buttonsVisible"
             PropertyChanges { target: centerText; text: qsTr("Click the button") }
             PropertyChanges { target: crosshair; visible: false }
+            PropertyChanges { target: backoutTimer; running: true }
         },
         State {
             name: "testButton1"
-            extend: "testButtons"
+            extend: "buttonsVisible"
             PropertyChanges { target: button1; visible: true }
         },
         State {
             name: "testButton2"
-            extend: "testButtons"
+            extend: "buttonsVisible"
             PropertyChanges { target: button2; visible: true }
         }
     ]
