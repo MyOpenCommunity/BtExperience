@@ -39,7 +39,7 @@ function addAlarmPopup(type, zone, dateTime) {
 
     _alarmPopups.push(data)
 
-    return _highestPriorityPopup()
+    return highestPriorityPopup()
 }
 
 /**
@@ -65,7 +65,7 @@ function addStopAndGoPopup(descr, status) {
 
     _stopGoPopups.push(data)
 
-    return _highestPriorityPopup()
+    return highestPriorityPopup()
 }
 
 /**
@@ -93,7 +93,7 @@ function addAlarmClockPopup(device) {
 
     _alarmClockPopups.push(data)
 
-    return _highestPriorityPopup()
+    return highestPriorityPopup()
 }
 
 /**
@@ -120,7 +120,7 @@ function addScenarioActivationPopup(descr) {
 
     _scenarioActivationPopups.push(data)
 
-    return _highestPriorityPopup()
+    return highestPriorityPopup()
 }
 
 /**
@@ -147,7 +147,7 @@ function addThresholdExceededPopup(descr, level) {
 
     _thresholdGoalPopups.push(data)
 
-    return _highestPriorityPopup()
+    return highestPriorityPopup()
 }
 
 /**
@@ -174,7 +174,7 @@ function addGoalReachedPopup(descr, level) {
 
     _thresholdGoalPopups.push(data)
 
-    return _highestPriorityPopup()
+    return highestPriorityPopup()
 }
 
 /**
@@ -209,7 +209,7 @@ function updateUnreadMessages(unreadMessages) {
     else
         _unreadMessagesPopups.push(data)
 
-    return _highestPriorityPopup()
+    return highestPriorityPopup()
 }
 
 /**
@@ -230,7 +230,7 @@ function addMonthlyReportNotification() {
 
     _thresholdGoalPopups.push(data)
 
-    return _highestPriorityPopup()
+    return highestPriorityPopup()
 }
 
 /**
@@ -242,7 +242,7 @@ function addMonthlyReportNotification() {
   * Returns a string to navigate on the correct application page.
   */
 function confirm() {
-    var p = _highestPriorityPopup() // last popup gives me info on what to do next
+    var p = highestPriorityPopup() // last popup gives me info on what to do next
 
     // resets all popups
     _alarmPopups = []
@@ -294,41 +294,41 @@ function confirm() {
 function dismiss() {
     if (_alarmPopups.length > 0) {
         _alarmPopups.pop()
-        return _highestPriorityPopup()
+        return highestPriorityPopup()
     }
 
     if (_alarmClockPopups.length > 0) {
         // in case of alarm clock dismiss we have to postpone the alarm
-        var actual = _highestPriorityPopup()
+        var actual = highestPriorityPopup()
         _alarmClockPopups.pop()
         actual["_device"].postpone()
-        return _highestPriorityPopup()
+        return highestPriorityPopup()
     }
 
     if (_stopGoPopups.length > 0) {
         _stopGoPopups.pop()
-        return _highestPriorityPopup()
+        return highestPriorityPopup()
     }
 
     if (_scenarioActivationPopups.length > 0) {
         _scenarioActivationPopups.pop()
-        return _highestPriorityPopup()
+        return highestPriorityPopup()
     }
 
     if (_unreadMessagesPopups.length > 0) {
         _unreadMessagesPopups.pop()
-        return _highestPriorityPopup()
+        return highestPriorityPopup()
     }
 
     if (_thresholdGoalPopups.length > 0) {
         _thresholdGoalPopups.pop()
-        return _highestPriorityPopup()
+        return highestPriorityPopup()
     }
 
     return undefined
 }
 
-function _highestPriorityPopup() {
+function highestPriorityPopup() {
     // scans all lists to find the popup to show
 
     if (_alarmPopups.length > 0) {

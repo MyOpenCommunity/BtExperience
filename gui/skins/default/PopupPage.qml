@@ -17,6 +17,15 @@ BasePage {
 
     opacity: 0
 
+    Timer {
+        id: dismissTimer
+
+        running: false
+        interval: 2000
+        repeat: false
+        onTriggered: privateProps.dismissTimerTriggered()
+    }
+
     Component {
         id: popupComponent
         ControlPopup {
@@ -102,6 +111,12 @@ BasePage {
 
         property variant alarmClock
 
+        function dismissTimerTriggered() {
+            var p = PopupLogic.highestPriorityPopup()
+            if (p["_kind"] === "scenario")
+                privateProps.update(PopupLogic.dismiss())
+        }
+
         function navigate(data) {
             if (data === "") {
                 // no navigation data, simply closes the popup page
@@ -143,6 +158,9 @@ BasePage {
             popupLoader.item.line3 = data.line3
             popupLoader.item.confirmText = data.confirmText
             popupLoader.item.dismissText = data.dismissText
+
+            if (data["_kind"] === "scenario")
+                dismissTimer.start()
 
             if (page.opacity < 1)
                 page.opacity = 1
