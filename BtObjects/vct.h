@@ -85,6 +85,11 @@ class VDEBase : public ObjectInterface
 	*/
 	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
 
+	/*!
+		\brief Whether there is an active call or not
+	*/
+	Q_PROPERTY(bool callActive READ callActive NOTIFY activeChanged)
+
 public:
 	ObjectDataModel *getExternalPlaces() const;
 
@@ -99,6 +104,7 @@ signals:
 	void volumeChanged();
 	void muteChanged();
 	void isIpCallChanged();
+	void activeChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list) = 0;
@@ -106,9 +112,12 @@ protected slots:
 protected:
 	explicit VDEBase(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
+	bool callActive();
+
 	int volume;
 	bool mute;
 	bool ip_mode;
+	bool call_active;
 	ObjectDataModel external_places;
 	VideoDoorEntryDevice *dev;
 };
@@ -244,10 +253,8 @@ private:
 	void resumeVideo();
 	void activateCall();
 	void disactivateCall();
-	bool callActive();
 
 	bool call_stopped;
-	bool call_active;
 	bool prof_studio;
 	bool hands_free;
 	bool is_autoswitch;
@@ -339,9 +346,8 @@ private:
 	void setTalkerFromWhere(QString where);
 	void activateCall();
 	void disactivateCall();
-	bool callActive();
 
-	bool call_active, pager_call;
+	bool pager_call;
 	Ringtone ringtone;
 	QString talker;
 };

@@ -25,6 +25,7 @@ public:
 	BtNetworkAccessManager(QObject *parent = 0);
 	void setAuthentication(const QString &user, const QString &pass);
 	void abortConnection();
+	void addSecurityException();
 
 signals:
 	void credentialsRequired(BtNetworkAccessManager *, QNetworkReply *);
@@ -33,8 +34,13 @@ signals:
 private slots:
 	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 	void requireAuthentication(QNetworkReply *reply, QAuthenticator *auth);
+	void downloadCaFinished();
 
 private:
+	enum {
+		AbortAuthentication = -1,   // Abort the authentication procedure
+		IgnoreCertificateErrors = -2,
+	};
 	QString username, password;
 	QEventLoop loop;
 };

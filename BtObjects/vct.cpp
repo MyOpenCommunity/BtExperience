@@ -110,6 +110,7 @@ VDEBase::VDEBase(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 
 	volume = 50;
 	mute = false;
+	call_active = false;
 	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
 
 	foreach (ExternalPlace *ep, list)
@@ -155,6 +156,11 @@ bool VDEBase::isIpCall() const
 	return ip_mode;
 }
 
+bool VDEBase::callActive()
+{
+	return call_active;
+}
+
 
 CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list, d)
 {
@@ -163,7 +169,6 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	contrast = 50;
 	saturation = 50;
 	call_stopped = false;
-	call_active = false;
 	prof_studio = false;
 	hands_free = false;
 	ringtone = ExternalPlace1;
@@ -268,6 +273,7 @@ void CCTV::endCall()
 	if (dev->isCalling())
 		dev->endCall();
 	emit callEnded();
+	disactivateCall();
 	call_stopped = false;
 	stopVideo();
 }
@@ -463,24 +469,24 @@ void CCTV::resumeVideo()
 
 void CCTV::activateCall()
 {
+	if (call_active)
+		return;
 	call_active = true;
+	emit activeChanged();
 }
 
 void CCTV::disactivateCall()
 {
+	if (!call_active)
+		return;
 	call_active = false;
-}
-
-bool CCTV::callActive()
-{
-	return call_active;
+	emit activeChanged();
 }
 
 
 Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d) : VDEBase(l, d)
 {
 	// initial values
-	call_active = false;
 	ringtone = Internal;
 }
 
@@ -501,6 +507,7 @@ void Intercom::endCall()
 		dev->endCall();
 	setTalkerFromWhere(QString());
 	emit callEnded();
+	disactivateCall();
 }
 
 void Intercom::startCall(ExternalPlace *place)
@@ -665,20 +672,22 @@ void Intercom::setTalkerFromWhere(QString where)
 
 void Intercom::activateCall()
 {
+	if (call_active)
+		return;
 	call_active = true;
+	emit activeChanged();
 }
 
 void Intercom::disactivateCall()
 {
-	call_active = false;
 	if (pager_call)
 	{
 		pager_call = false;
 		emit pagerCallChanged();
 	}
-}
-
-bool Intercom::callActive()
-{
-	return call_active;
+	if (call_active)
+	{
+		call_active = false;
+		emit activeChanged();
+	}
 }

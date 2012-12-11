@@ -131,10 +131,95 @@ BasePage {
         }
     }
 
+    // TODO: refactor and share code!
+    Component {
+        id: scenarioProgramming
+        Column {
+            id: scenarioProgrammingColumn
+            signal closePopup
+
+            spacing: 4
+
+            SvgImage {
+                source: "images/scenarios/bg_titolo.svg"
+
+                UbuntuMediumText {
+                    text: qsTr("Untrusted SSL connection")
+                    font.pixelSize: 24
+                    color: "red"
+                    anchors {
+                        left: parent.left
+                        leftMargin: parent.width / 100 * 2
+                        verticalCenter: parent.verticalCenter
+                    }
+                }
+            }
+
+            SvgImage {
+                source: "images/scenarios/bg_testo.svg"
+
+                UbuntuMediumText {
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 14
+                    color: "white"
+                    text: qsTr("This connection is untrusted. Do you wish to continue?")
+                    wrapMode: Text.Wrap
+                    anchors {
+                        right: parent.right
+                        rightMargin: parent.width / 100 * 2
+                        left: parent.left
+                        leftMargin: parent.width / 100 * 2
+                    }
+                }
+            }
+
+            SvgImage {
+                source: "images/scenarios/bg_ok_annulla.svg"
+
+                Row {
+                    anchors {
+                        right: parent.right
+                        rightMargin: parent.width / 100 * 2
+                        verticalCenter: parent.verticalCenter
+                    }
+
+                    ButtonThreeStates {
+                        defaultImage: "images/common/btn_99x35.svg"
+                        pressedImage: "images/common/btn_99x35_P.svg"
+                        selectedImage: "images/common/btn_99x35_S.svg"
+                        shadowImage: "images/common/btn_shadow_99x35.svg"
+                        text: qsTr("ok")
+                        font.pixelSize: 14
+                        onClicked: {
+                            global.addSecurityException()
+                            scenarioProgrammingColumn.closePopup()
+                        }
+                    }
+
+                    ButtonThreeStates {
+                        defaultImage: "images/common/btn_99x35.svg"
+                        pressedImage: "images/common/btn_99x35_P.svg"
+                        selectedImage: "images/common/btn_99x35_S.svg"
+                        shadowImage: "images/common/btn_shadow_99x35.svg"
+                        text: qsTr("cancel")
+                        font.pixelSize: 14
+                        onClicked: {
+                            global.abortConnection()
+                            scenarioProgrammingColumn.closePopup()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     Connections {
         target: global
         onAuthenticationRequired: {
             webBrowser.installPopup(credentialsPopup)
+        }
+        onUntrustedSslConnection: {
+            webBrowser.installPopup(scenarioProgramming)
         }
     }
 }

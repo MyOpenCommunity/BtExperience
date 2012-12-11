@@ -41,6 +41,11 @@ void BrowserProperties::abortConnection()
 	access_manager->abortConnection();
 }
 
+void BrowserProperties::addSecurityException()
+{
+	access_manager->addSecurityException();
+}
+
 void BrowserProperties::quit()
 {
 	qApp->quit();
@@ -58,6 +63,14 @@ void BrowserProperties::credentialsRequired(BtNetworkAccessManager *am, QNetwork
 	qDebug() << "Requesting credentials";
 
 	emit authenticationRequired();
+}
+
+void BrowserProperties::certificatesError(BtNetworkAccessManager *am, QNetworkReply *r)
+{
+	Q_UNUSED(r);
+	access_manager = am;
+
+	emit untrustedSslConnection();
 }
 
 void BrowserProperties::readInput()

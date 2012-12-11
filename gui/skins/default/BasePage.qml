@@ -95,13 +95,18 @@ Image {
         }
     }
 
-    // The management for popups using by alerts, keypad, etc..
+    // When the interval between two popups installations is smaller than the
+    // opacity transition duration, the blackBg remains visible even if page
+    // state is default. Example: wrong credentials in the HTTPS authentication
+    // window.
+    // As a workaround use the visible property.
     Rectangle {
         id: blackBg
         anchors.fill: parent
         color: "black"
         opacity: 0
         z: 9
+        visible: false
 
         // A trick to block mouse events handled by the underlying page
         MouseArea {
@@ -144,12 +149,12 @@ Image {
         State {
             name: "alert"
             PropertyChanges { target: popupLoader; opacity: 1 }
-            PropertyChanges { target: blackBg; opacity: 0.85 }
+            PropertyChanges { target: blackBg; opacity: 0.85; visible: true }
         },
         State {
             name: "popup"
             PropertyChanges { target: popupLoader; opacity: 1 }
-            PropertyChanges { target: blackBg; opacity: 0.7 }
+            PropertyChanges { target: blackBg; opacity: 0.7; visible: true }
         }
     ]
 }

@@ -21,15 +21,18 @@ public:
 	QString getUrl() const;
 	Q_INVOKABLE void setSslAuthentication(const QString &user, const QString &pass);
 	Q_INVOKABLE void abortConnection();
+	Q_INVOKABLE void addSecurityException();
 
 public slots:
 	void quit();
 	void updateClick();
 	void credentialsRequired(BtNetworkAccessManager *, QNetworkReply *);
+	void certificatesError(BtNetworkAccessManager *, QNetworkReply *);
 
 signals:
 	void urlChanged();
 	void authenticationRequired();
+	void untrustedSslConnection();
 
 private slots:
 	void readInput();
