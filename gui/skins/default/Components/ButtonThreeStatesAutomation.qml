@@ -22,14 +22,17 @@ SvgImage {
     property bool enabled: true
     property int status: 0 // 0 - up, 1 - down
 
+    signal pressed(variant mouse)
     signal clicked(variant mouse)
+    signal released(variant mouse)
 
     source: defaultImage
 
     BeepingMouseArea {
         id: area
         anchors.fill: parent
-        onClicked: bg.clicked(mouse)
+        onPressed: {bg.pressed(mouse)} //;console.log("ButtonThreeStatesAutomation.qml clicked!")}
+        onReleased: {bg.released(mouse)} //;console.log("ButtonThreeStatesAutomation.qml released!")}
         // in some cases I have to disable the button to not accept any input
         visible: bg.enabled
     }

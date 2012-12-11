@@ -5,6 +5,6 @@ MenuColumn {
     id: column
 
     ControlOnOff {
-        onClicked: column.dataModel.setActive(newStatus)
+        onPressed: column.dataModel.setActive(newStatus)
     }
 }

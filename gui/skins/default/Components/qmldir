@@ -42,6 +42,9 @@ ControlMinusPlusOld 1.0 ControlMinusPlusOld.qml
 ControlOn 1.0 ControlOn.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
+ControlOpenCloseStopSafe 1.0 ControlOpenCloseStopSafe.qml
+ControlUpDownStop 1.0 ControlUpDownStop.qml
+ControlUpDownStopSafe 1.0 ControlUpDownStopSafe.qml
 ControlPathView 1.0 ControlPathView.qml
 ControlPathViewInternal 1.0 ControlPathViewInternal.qml
 ControlPopup 1.0 ControlPopup.qml
