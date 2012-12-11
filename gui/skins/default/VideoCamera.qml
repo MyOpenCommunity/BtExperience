@@ -26,7 +26,7 @@ Page {
                 global.audioState.disableState(AudioState.Mute)
         }
         onVolumeChanged: {
-            global.audioState.setVolume(connDataObject.target.volume)
+            global.audioState.setVolume(AudioState.VdeCallVolume, connDataObject.target.volume)
         }
     }
 
@@ -228,7 +228,7 @@ Page {
         redTimer.running = true
         toolbar.z = 1
         navigationBar.z = 1
-        control.camera.volume = global.audioState.getStateVolume(AudioState.VdeCallVolume)
+        control.camera.volume = global.audioState.getVolume(AudioState.VdeCallVolume)
         controlCallManager.updateVolumeState()
     }
 }

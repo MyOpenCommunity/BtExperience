@@ -185,7 +185,7 @@ bool AudioState::isLocalAmplifier() const
 	return !(*bt_global::config)[AMPLIFIER_ADDRESS].isEmpty();
 }
 
-void AudioState::setStateVolume(Volume state, int volume)
+void AudioState::setVolume(Volume state, int volume)
 {
 	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
 	Q_ASSERT_X(volume >= VOLUME_MIN && volume <= VOLUME_MAX, "AudioState::setVolume",
@@ -200,35 +200,11 @@ void AudioState::setStateVolume(Volume state, int volume)
 		setHardwareVolume(current_volume, volume);
 }
 
-int AudioState::getStateVolume(Volume state) const
+int AudioState::getVolume(Volume state) const
 {
 	Q_ASSERT_X(state != InvalidVolume, "AudioState::setVolume", "invalid volume");
 
 	return volumes[state];
-}
-
-void AudioState::setVolume(int volume)
-{
-	if (current_volume == InvalidVolume)
-	{
-		qWarning() << "Can't set volume in audio state" << enumerationName(this, "State", current_state);
-		return;
-	}
-
-	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't set volume in current audio state");
-	setStateVolume(current_volume, volume);
-}
-
-int AudioState::getVolume() const
-{
-	if (current_volume == InvalidVolume)
-	{
-		qWarning() << "Can't get volume in audio state" << enumerationName(this, "State", current_state);
-		return 0;
-	}
-
-	Q_ASSERT_X(current_volume != InvalidVolume, "AudioState::setVolume", "Can't get volume in current audio state");
-	return getStateVolume(current_volume);;
 }
 
 void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
