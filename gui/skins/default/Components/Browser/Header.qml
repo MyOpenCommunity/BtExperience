@@ -136,7 +136,25 @@ SvgImage {
             left: actionButton.right
             leftMargin: 10
         }
-        onClicked: global.quit()
+        onClicked: {
+            // looks for last visible browser window and hides it
+            // if the to be hidden window is the last one, quits
+            var children = webBrowser.children
+            var windows = 0
+            var ghost = undefined
+            for (var i = 0; i < children.length; ++i) {
+                var child = children[i]
+                if (child._fixedUrlString) // this is a browserItem
+                    if (child.visible) { // last visible one must be hidden
+                        ++windows
+                        ghost = child
+                    }
+            }
+            if (windows <= 1) // last window
+                global.quit()
+            else
+                ghost.visible = false
+        }
     }
 
     UrlInput {

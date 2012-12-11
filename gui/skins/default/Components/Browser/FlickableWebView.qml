@@ -67,8 +67,8 @@ Flickable {
     WebView {
         id: webView
 
-        newWindowComponent: webViewContainerComponent
-        newWindowParent: webView
+        newWindowComponent: browserComponent
+        newWindowParent: webBrowser
         transformOrigin: Item.TopLeft
         settings.javascriptCanOpenWindows: true
 

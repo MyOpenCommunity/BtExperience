@@ -41,6 +41,12 @@ BasePage {
 
             property string _fixedUrlString: privateProps.fixedAddress(webBrowser.urlString)
 
+            Rectangle {
+                // this is needed to hide pages below the current one
+                anchors.fill: parent
+                color: "white"
+            }
+
             Header {
                 id: header
                 editUrl: browserItem.browserItem
@@ -102,11 +108,6 @@ BasePage {
                 }
             }
         }
-    }
-
-    Component {
-        id: webViewContainerComponent
-        PopupBrowser {}
     }
 
     Component {
