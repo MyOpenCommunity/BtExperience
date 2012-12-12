@@ -265,7 +265,10 @@ ScheduledScenario::ScheduledScenario(QString _name, QString enable, QString star
 void ScheduledScenario::start()
 {
 	if (!start_frame.isEmpty())
+	{
 		dev->sendCommand(start_frame);
+		emit started(getName());
+	}
 }
 
 void ScheduledScenario::stop()

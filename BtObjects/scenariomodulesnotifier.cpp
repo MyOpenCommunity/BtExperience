@@ -28,14 +28,20 @@ ScenarioModulesNotifier::ScenarioModulesNotifier()
 
 	// creates an ObjectModel to select all scenarios
 	scenarios_model = new ObjectModel(this);
-	scenarios_model->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdAdvancedScenario);
+	scenarios_model->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdAdvancedScenario
+								<< ObjectModelFilters() << "objectId" << ObjectInterface::IdScheduledScenario);
 
 	for(int i = 0; i < scenarios_model->getCount(); ++i)
 	{
 		ItemInterface *item = scenarios_model->getObject(i);
 		AdvancedScenario *scenario = qobject_cast<AdvancedScenario *>(item);
-		Q_ASSERT_X(scenario, __PRETTY_FUNCTION__, "Unexpected NULL object");
-		connect(scenario, SIGNAL(started(QString)), this, SIGNAL(scenarioActivated(QString)));
+		ScheduledScenario *sched_scenario = qobject_cast<ScheduledScenario *>(item);
+		if (scenario)
+			connect(scenario, SIGNAL(started(QString)), this, SIGNAL(scenarioActivated(QString)));
+		else if (sched_scenario)
+			connect(sched_scenario, SIGNAL(started(QString)), this, SIGNAL(scenarioActivated(QString)));
+		else
+			Q_ASSERT_X(false, __PRETTY_FUNCTION__, "Unexpected NULL object");
 	}
 
 	// inits everything

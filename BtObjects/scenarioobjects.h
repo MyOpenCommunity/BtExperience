@@ -174,6 +174,9 @@ public slots:
 	*/
 	void disable();
 
+signals:
+	void started(QString description);
+
 protected:
 	QString enable_frame, start_frame, stop_frame, disable_frame;
 	RawDevice *dev;
