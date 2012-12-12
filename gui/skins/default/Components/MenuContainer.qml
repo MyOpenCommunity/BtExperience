@@ -76,11 +76,6 @@ Item {
                 NumberAnimation { id: defaultanimation; duration: constants.elementTransitionDuration }
             }
 
-            Loader {
-                id: itemHighlighed
-                z: 10
-            }
-
             Rectangle {
                 id: line
                 color: "#f27021"
