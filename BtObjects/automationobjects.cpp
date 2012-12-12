@@ -130,6 +130,7 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul", 0);
+	int def_cid = getIntAttribute(obj, "cid");
 	QString def_mode = getAttribute(obj, "mode");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
@@ -139,9 +140,26 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
 		QString mode = getAttribute(ist, "mode", def_mode);
+		int cid = getIntAttribute(ist, "cid");
 
+		//this should not happen if the software works correctly, but just in case...
+		if (cid < 0) cid = ObjectInterface::CidAutomation3OpenClose;
+		
 		AutomationDevice *d = bt_global::add_device_to_cache(new AutomationDevice(where, pul));
-		obj_list << ObjectPair(uii, new Automation3(descr, where, mode, d));
+
+		switch (cid){
+			case ObjectInterface::CidAutomation3OpenClose:
+				if (mode.toInt()!=0) obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3OpenCloseSafe, d));
+				else obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3OpenClose, d));
+				break;
+			case ObjectInterface::CidAutomation3UpDown:
+				if (mode.toInt()!=0) obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3UpDownSafe, d));
+				else obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3UpDown, d));
+				break;
+			default: 
+				qWarning() << "Invalid Cid " << cid << " in Automation Set";
+				break;
+		}
 	}
 	return obj_list;
 }
@@ -151,11 +169,13 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 	QList<ObjectPair> obj_list;
 	// extract default values
 	QString def_descr = getAttribute(obj, "descr");
+	int def_cid = getIntAttribute(obj, "cid");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
 		int uii = getIntAttribute(ist, "uii");
 		QString descr = getAttribute(ist, "descr", def_descr);
+		int cid = getIntAttribute(ist, "cid");
 		QList<ObjectInterface *> items;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
@@ -172,7 +192,18 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 
 			items.append(item);
 		}
-		obj_list << ObjectPair(uii, new AutomationGroup3(descr, convertQObjectList<AutomationCommand3 *>(items)));
+		switch (cid){
+			case ObjectInterface::CidAutomationGroup3OpenClose:
+				obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3OpenClose, convertQObjectList<AutomationCommand3 *>(items)));
+				break;
+			case ObjectInterface::CidAutomationGroup3UpDown:
+				obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3UpDown, convertQObjectList<AutomationCommand3 *>(items)));
+				break;
+			default:
+				qWarning() << "Invalid Cid " << cid << " in Automation Set";
+				break;
+		}
+		
 	}
 	return obj_list;
 }
@@ -267,19 +298,20 @@ void AutomationCommand3::stop()
 	dev->stop();
 }
 
-Automation3::Automation3(QString _name, QString _key, QString _mode, AutomationDevice *d) : AutomationCommand3(d)
+Automation3::Automation3(QString _name, QString _key, QString _mode, int _id, AutomationDevice *d) : AutomationCommand3(d)
 {
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
 	key = _key;
 	name = _name;
 	mode = _mode;
+	id = _id;
 	status = 0; // initial value
 }
 
 int Automation3::getObjectId() const
 {
-	return ObjectInterface::IdAutomation3;
+	return id;
 }
 
 QString Automation3::getObjectKey() const
@@ -311,10 +343,11 @@ void Automation3::valueReceived(const DeviceValues &values_list)
 	}
 }
 
-AutomationGroup3::AutomationGroup3(QString _name, QList<AutomationCommand3 *> d)
+AutomationGroup3::AutomationGroup3(QString _name, int _id, QList<AutomationCommand3 *> d)
 {
 	name = _name;
 	objects = d;
+	id = _id;
 }
 
 void AutomationGroup3::goUp()

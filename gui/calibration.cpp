@@ -110,6 +110,7 @@ bool Calibration::applyCalibration()
 	qDebug() << "Saving calibration data";
 #if defined(Q_WS_QWS)
 	QWSServer::mouseHandler()->calibrate(&calibration_data);
+	findDeclarativeView()->releaseMouse();
 #endif
 	return true;
 }
@@ -121,6 +122,10 @@ void Calibration::resetCalibration()
 		qDebug() << "Reset calibration file";
 		system(qPrintable(QString("mv %1.calibrated %1").arg(pointercal_file)));
 	}
+#if defined(Q_WS_QWS)
+	QWSServer::mouseHandler()->clearCalibration();
+	grabDeclarativeViewMouse();
+#endif
 }
 
 void Calibration::saveCalibration()

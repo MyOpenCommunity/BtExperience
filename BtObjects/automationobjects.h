@@ -50,7 +50,7 @@ public:
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdAutomationCommand2;
+		return ObjectInterface::IdAutomation2;
 	}
 
 	virtual void setActive(bool st);
@@ -77,7 +77,7 @@ public:
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdAutomationCommand2;
+		return ObjectInterface::IdAutomation2;
 	}
 
 	/*!
@@ -102,7 +102,7 @@ public:
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdAutomationCommand3;
+		return ObjectInterface::IdAutomation3;
 	}
 
 	virtual void goUp();
@@ -135,7 +135,7 @@ class Automation3 : public AutomationCommand3
 
 public:
 
-	Automation3(QString name, QString key, QString safe, AutomationDevice *d);
+	Automation3(QString name, QString key, QString safe, int _id, AutomationDevice *d);
 
 	virtual int getObjectId() const;
 	virtual QString getObjectKey() const;
@@ -152,6 +152,7 @@ protected:
 	QString mode;
 	int status;
 	bool safe;
+	int id;
 };
 
 
@@ -166,11 +167,11 @@ class AutomationGroup3 : public ObjectInterface
 	Q_OBJECT
 
 public:
-	AutomationGroup3(QString name, QList<AutomationCommand3 *> d);
+	AutomationGroup3(QString name, int _id, QList<AutomationCommand3 *> d);
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdAutomationGroup3;
+		return id;
 	}
 
 	/*!
@@ -188,6 +189,7 @@ public:
 
 private:
 	QList<AutomationCommand3 *> objects;
+	int id;
 };
 
 

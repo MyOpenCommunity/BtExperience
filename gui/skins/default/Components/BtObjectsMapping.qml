@@ -30,8 +30,14 @@ QtObject {
         case ObjectInterface.IdAutomation2:
         case ObjectInterface.IdAutomationContact:
             return Qt.createComponent("Automation/Automation2.qml")
-        case ObjectInterface.IdAutomation3:
-            return Qt.createComponent("Automation/Automation3.qml")
+        case ObjectInterface.IdAutomation3OpenClose:
+            return Qt.createComponent("Automation/Automation3OpenClose.qml")
+        case ObjectInterface.IdAutomation3OpenCloseSafe:
+            return Qt.createComponent("Automation/Automation3OpenCloseSafe.qml")
+        case ObjectInterface.IdAutomation3UpDown:
+            return Qt.createComponent("Automation/Automation3UpDown.qml")
+        case ObjectInterface.IdAutomation3UpDownSafe:
+            return Qt.createComponent("Automation/Automation3UpDownSafe.qml")
         case ObjectInterface.IdAutomationVDE:
         case ObjectInterface.IdAutomationDoor:
             return Qt.createComponent("Automation/Automation1.qml")
@@ -39,8 +45,10 @@ QtObject {
         //case ObjectInterface.IdAutomationCommand3: //!< Automation 3-states AMB, GEN, GR
         case ObjectInterface.IdAutomationGroup2:
             return Qt.createComponent("Automation/AutomationGroup2.qml")
-        case ObjectInterface.IdAutomationGroup3:
-            return Qt.createComponent("Automation/AutomationGroup3.qml")
+        case ObjectInterface.IdAutomationGroup3OpenClose:
+            return Qt.createComponent("Automation/AutomationGroup3OpenClose.qml")
+        case ObjectInterface.IdAutomationGroup3UpDown:
+            return Qt.createComponent("Automation/AutomationGroup3UpDown.qml")
         case ObjectInterface.IdThermalControlUnit4:
             return Qt.createComponent("ThermalRegulation/ThermalControlUnit.qml")
         case ObjectInterface.IdThermalControlUnit99:

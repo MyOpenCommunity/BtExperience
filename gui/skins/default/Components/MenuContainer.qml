@@ -95,6 +95,12 @@ Item {
                 }
             }
         }
+
+        MouseArea {
+            id: interactivityArea
+            anchors.fill: parent
+            visible: !interactive
+        }
     }
 
     Component.onCompleted: {
@@ -102,3 +108,5 @@ Item {
         mainContainer.rootObject.columnClicked.connect(rootColumnClicked)
     }
 }
+
+

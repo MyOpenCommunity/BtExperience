@@ -32,7 +32,6 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 
 	is_video_track = false;
 	player_state = Stopped;
-	output_state = AudioOutputStopped;
 	mediaplayer_output_mode = MediaPlayer::OutputAll;
 	seek_tick_count = 0;
 	volume = 100;
@@ -91,7 +90,10 @@ MultiMediaPlayer::PlayerState MultiMediaPlayer::getPlayerState() const
 
 MultiMediaPlayer::AudioOutputState MultiMediaPlayer::getAudioOutputState() const
 {
-	return output_state;
+	if (player_state == Playing || player_state == AboutToPause)
+		return AudioOutputActive;
+	else
+		return AudioOutputStopped;
 }
 
 void MultiMediaPlayer::setVolume(int newValue)
@@ -336,18 +338,12 @@ void MultiMediaPlayer::setPlayerState(PlayerState new_state)
 {
 	if (new_state == player_state)
 		return;
+	AudioOutputState old_audio_output = getAudioOutputState();
 
 	player_state = new_state;
 	emit playerStateChanged(player_state);
-}
-
-void MultiMediaPlayer::setAudioOutputState(AudioOutputState new_state)
-{
-	if (new_state == output_state)
-		return;
-
-	output_state = new_state;
-	emit audioOutputStateChanged(output_state);
+	if (getAudioOutputState() != old_audio_output)
+		emit audioOutputStateChanged(getAudioOutputState());
 }
 
 // handle player signals
@@ -366,7 +362,6 @@ void MultiMediaPlayer::mplayerStarted()
 {
 	playbackStarted();
 	setPlayerState(Playing);
-	setAudioOutputState(AudioOutputActive);
 }
 
 void MultiMediaPlayer::mplayerStopped()
@@ -380,21 +375,18 @@ void MultiMediaPlayer::mplayerStopped()
 	// for instructions order see comment in mplayerDone
 	setCurrentSource("");
 	setPlayerState(Stopped);
-	setAudioOutputState(AudioOutputStopped);
 }
 
 void MultiMediaPlayer::mplayerPaused()
 {
 	playbackStopped();
 	setPlayerState(Paused);
-	setAudioOutputState(AudioOutputStopped);
 }
 
 void MultiMediaPlayer::mplayerResumed()
 {
 	playbackStarted();
 	setPlayerState(Playing);
-	setAudioOutputState(AudioOutputActive);
 }
 
 void MultiMediaPlayer::mplayerDone()
@@ -421,5 +413,4 @@ void MultiMediaPlayer::mplayerDone()
 	// TODO: can we avoid calling setCurrentSource()?
 	setCurrentSource("");
 	setPlayerState(Stopped);
-	setAudioOutputState(AudioOutputStopped);
 }
