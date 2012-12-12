@@ -8,7 +8,7 @@ MenuColumn {
 
         ControlOpenCloseStop {
             status: dataModel.status
-            onClicked: dataModel.status = newStatus
+            onPressed: dataModel.status = newStatus
         }
     }
 }

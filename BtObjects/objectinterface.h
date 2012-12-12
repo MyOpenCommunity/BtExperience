@@ -96,13 +96,18 @@ public:
 		// automation
 		IdAutomation2 = 3002, //!< A simple 2-states automation actuator (Fan,watering, controlled socket)
 		IdAutomation3 = 3000, //!< A 3-states automation actuator (Curtain, garage, shutter, gate)
-		IdAutomationVDE = 3001, //!< A 1-state VDE Gate/Door actuator
-		IdAutomationDoor = 3003, //!< A 1-state Door lock actuator
+		IdAutomation3Safe = 3007, //!< A 3-states automation actuator (Safe Mode)
+			CidAutomation3OpenClose = 3000,
+			CidAutomation3UpDown = 3001,
+		IdAutomationVDE = 3008, //!< A 1-state VDE Gate/Door actuator
+		IdAutomationDoor = 3001, //!< A 1-state Door lock actuator
 		IdAutomationContact = 3004, //!< Automation Contact actuator
-		IdAutomationCommand2 = 3007, //!< Automation AMB, GEN, GR
-		IdAutomationCommand3 = 3008, //!< Automation 3-states AMB, GEN, GR
+		//IdAutomationCommand2 = 3007, //!< Automation AMB, GEN, GR
+		//IdAutomationCommand3 = 3008, //!< Automation 3-states AMB, GEN, GR
 		IdAutomationGroup2 = 3006, //!< Group of automation 2-state
 		IdAutomationGroup3 = 3005, //!< Group of automation 3-state
+			CidAutomationGroup3OpenClose = 3014,
+			CidAutomationGroup3UpDown = 3016,
 		// antintrusion
 		IdAntintrusionZone = 13000, //!< A signe anti-intrusion zone
 		IdAntintrusionScenario = 13010, //!< Set of anti-intrusion zones
@@ -177,6 +182,13 @@ public:
 		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
 		IdMultiAmbientAmplifier = 11001000,
 		IdAmplifierGeneral,
+
+		IdAutomation3OpenClose = 30003000,
+		IdAutomation3OpenCloseSafe = 30073000,
+		IdAutomation3UpDown = 30003001,
+		IdAutomation3UpDownSafe = 30073001,
+		IdAutomationGroup3OpenClose = 30053014,
+		IdAutomationGroup3UpDown = 30053016,
 
 		// the last value + 1, used to check the ids requested from qml
 		// NOTE: always verify is the highest value out there!

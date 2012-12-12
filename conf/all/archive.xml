@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-	<obj cid="3003" id="3003" descr="Door" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
+	<obj cid="3005" id="3001" descr="Door" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
 		<ist uii="15" descr="Door Lock" where="34"/>
 	</obj>
-	<obj cid="3002" id="3002" descr="Fan" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
+	<obj cid="3008" id="3002" descr="Fan" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
 		<ist uii="16" descr="Fan" where="35"/>
 	</obj>
 	<obj cid="3000" id="3000" descr="3 State actuator" where="11" pul="0" mode="0" >
-		<ist uii="17" cid="3000" descr="Shutter" where="41" />
+		<ist uii="17" cid="3000" descr="Shutter" where="39" />
+		<ist uii="18" cid="3001" descr="Gate" where="37" mode="1" />
 	</obj>
-
+	<obj cid="3000" id="3000" descr="Automation" where="0">
+		<ist uii="19" cid="3001" descr="room 1" where="1" />
+		<ist uii="20" cid="3000" descr="General" />
+	</obj>
 	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="2">
 		<ist uii="1" descr="lamp downstair" where="11#4#01" />
 		<ist uii="2" descr="lamp upstair"  where="12" pul="1" />

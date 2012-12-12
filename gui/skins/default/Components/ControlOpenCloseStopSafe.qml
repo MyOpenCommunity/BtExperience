@@ -8,6 +8,7 @@ Item {
     property int status: -1
 
     signal pressed(int newStatus)
+    signal released
 
     width: bg.width
     height: bg.height
@@ -28,8 +29,9 @@ Item {
             defaultIcon: "../images/common/ico_apri.svg"
             pressedIcon: "../images/common/ico_apri_P.svg"
             selectedIcon: ""
-            onPressed: {control.pressed(status == 0 ? 1 : 0)} //; console.log("ControlOpenCloseStop.qml A STATUS "+status+" CONTROL "+control.status)}
-            status: control.status === -1 ? 0 : (control.status == 1 ? 1 : 0)
+            onPressed: control.pressed(1)
+            onReleased: control.pressed(0)
+            // status: control.status === -1 ? 0 : (control.status == 1 ? 1 : 0)
 
         }
 
@@ -41,8 +43,9 @@ Item {
             defaultIcon: "../images/common/ico_chiudi.svg"
             pressedIcon: "../images/common/ico_chiudi_P.svg"
             selectedIcon: ""
-            onPressed: {control.pressed(status == 0 ? 2 : 0)} //; console.log("ControlOpenCloseStop.qml B STATUS "+status+" CONTROL "+control.status)}
-            status: control.status === -1 ? 0 : (control.status == 2 ? 1 : 0)
+            onPressed: control.pressed(2)
+            onReleased: control.pressed(0)
+            // status: control.status === -1 ? 0 : (control.status == 2 ? 1 : 0)
         }
     }
 
