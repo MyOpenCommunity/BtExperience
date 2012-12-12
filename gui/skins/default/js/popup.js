@@ -115,7 +115,7 @@ function addScenarioActivationPopup(descr) {
     data["line2"] = qsTr("activated")
     data["line3"] = ""
 
-    data["confirmText"] = qsTr("Show")
+    data["confirmText"] = qsTr("Close")
     data["dismissText"] = ""
 
     _scenarioActivationPopups.push(data)
