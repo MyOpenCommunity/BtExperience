@@ -123,8 +123,7 @@
 		</ist>
 	</container>
 	<container id="15" descr="messages">
-		<ist uii="315" img="images/systems/messages_card.jpg">
-
+		<ist uii="17000" img="images/systems/messages_card.jpg">
 		</ist>
 	</container>
 	<container id="100" > <!-- rooms -->

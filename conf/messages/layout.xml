@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 	<container id="15" descr="messages">
-		<ist uii="315" img="images/systems/messaggi.jpg">
+		<ist uii="17000" img="images/systems/messages_card.jpg">
 		</ist>
 	</container>
 	<container id="101" descr="profile" img="profile.png"> <!-- profile -->
