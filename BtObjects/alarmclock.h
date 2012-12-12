@@ -5,6 +5,7 @@
 
 #include <QHash>
 #include <QTime>
+#include <QVariant>
 
 
 class MediaDataModel;
@@ -13,6 +14,7 @@ class QTimer;
 class Amplifier;
 class SourceObject;
 class UiiMapper;
+class QMLCache;
 
 
 QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node, QList<SourceObject *> sources, const UiiMapper &uii_map);
@@ -104,23 +106,26 @@ public:
 		return ObjectInterface::IdAlarmClock;
 	}
 
+	Q_INVOKABLE void reset();
+	Q_INVOKABLE void apply();
+
 	Q_INVOKABLE void stop();
 	Q_INVOKABLE void postpone();
 	Q_INVOKABLE void incrementVolume();
 	Q_INVOKABLE void decrementVolume();
 	Q_INVOKABLE void setAmplifierFromQObject(QObject *amplifier);
 
-	QString getDescription() const { return description; }
+	QString getDescription() const;
 	void setDescription(QString new_value);
 	bool isEnabled() const { return enabled; }
 	void setEnabled(bool new_value);
-	AlarmClockType getAlarmType() const { return alarm_type; }
+	AlarmClockType getAlarmType() const;
 	void setAlarmType(AlarmClockType new_value);
-	int getDays() const { return days; }
+	int getDays() const;
 	void setDays(int new_value);
-	int getHour() const { return hour; }
+	int getHour() const;
 	void setHour(int new_value);
-	int getMinute() const { return minute; }
+	int getMinute() const;
 	void setMinute(int new_value);
 	bool isTriggerOnMondays() const;
 	bool isTriggerOnTuesdays() const;
@@ -171,6 +176,7 @@ private slots:
 	void alarmTick();
 	void restart();
 	void mediaSourcePlaybackStatus(bool status);
+	void qmlValueChanged(int key, QVariant value);
 
 private:
 	void start();
@@ -179,10 +185,10 @@ private:
 	void soundDiffusionStop();
 	void soundDiffusionSetVolume();
 
-	AlarmClockType alarm_type, actual_type;
-	QString description;
+	QMLCache *cache;
+
+	AlarmClockType actual_type;
 	bool enabled;
-	int days, hour, minute;
 	QTimer *timer_trigger;
 	QTimer *timer_tick;
 	QTimer *timer_postpone;
@@ -192,7 +198,6 @@ private:
 	// sound diffusion alarm clock
 	Amplifier *amplifier;
 	SourceObject *source;
-	int volume;
 };
 
 #endif // ALARMCLOCK_H

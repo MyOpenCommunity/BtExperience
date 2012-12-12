@@ -13,7 +13,7 @@ Page {
     property variant alarmClock: undefined
 
     text: qsTr("Alarm settings")
-    source: "images/profiles.jpg"
+    source : global.guiSettings.homeBgImage
 
     SvgImage {
         id: bg
@@ -210,6 +210,7 @@ Page {
         onClicked: {
             if (nameText.text !== qsTr("Click to enter description..."))
                 page.alarmClock.description = nameText.text
+            page.alarmClock.apply()
             Stack.popPage()
         }
     }
@@ -228,7 +229,10 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
-        onClicked: Stack.popPage()
+        onClicked: {
+            page.alarmClock.reset()
+            Stack.popPage()
+        }
     }
 
     QtObject {

@@ -4,6 +4,7 @@
 #include "xml_functions.h"
 #include "xmlobject.h"
 #include "shared_functions.h"
+#include "qmlcache.h"
 
 
 #include <QFile>
@@ -31,6 +32,14 @@ namespace
 	const int BEEP_INTERVAL = 5000;
 
 	const int SOUND_DIFFUSION_INTERVAL = 3000;
+
+	// constants for QMLCache
+	const int QML_ALARM_TYPE = 1;
+	const int QML_DESCRIPTION = 2;
+	const int QML_DAYS = 3;
+	const int QML_HOUR = 4;
+	const int QML_MINUTE = 5;
+	const int QML_VOLUME = 6;
 }
 
 
@@ -44,45 +53,47 @@ QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node, QList<SourceObject 
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
 		AlarmClock *alarm = new AlarmClock(v.value("descr"), v.intValue("enabled"), v.intValue("type"),
-						   v.intValue("days"), v.intValue("hour"), v.intValue("minutes"));
+										   v.intValue("days"), v.intValue("hour"), v.intValue("minutes"));
 
-		if (alarm->getAlarmType() == AlarmClock::AlarmClockSoundSystem)
+		alarm->setVolume(v.intValue("volume"));
+		alarm->setAmplifier(uii_map.value<Amplifier>(v.intValue("amplifier_uii")));
+
+		SourceObject::SourceObjectType source_type;
+
+		int t = v.intValue("source_type");
+		switch (t)
 		{
-			alarm->setVolume(v.intValue("volume"));
-			alarm->setAmplifier(uii_map.value<Amplifier>(v.intValue("amplifier_uii")));
+		case 0:
+			source_type = SourceObject::Aux;
+			break;
+		case 1:
+			source_type = SourceObject::RdsRadio;
+			break;
+		case 2:
+			source_type = SourceObject::IpRadio;
+			break;
+		case 3:
+			source_type = SourceObject::Sd;
+			break;
+		case 4:
+			source_type = SourceObject::Usb;
+			break;
+		default:
+			qFatal("Invalid source type for alarm clock (%d)", t);
+		}
 
-			SourceObject::SourceObjectType source_type;
-
-			switch (v.intValue("source_type"))
+		foreach (SourceObject *source, sources)
+		{
+			if (source->getSourceType() == source_type)
 			{
-			case 0:
-				source_type = SourceObject::Aux;
+				alarm->setSource(source);
 				break;
-			case 1:
-				source_type = SourceObject::RdsRadio;
-				break;
-			case 2:
-				source_type = SourceObject::IpRadio;
-				break;
-			case 3:
-				source_type = SourceObject::Sd;
-				break;
-			case 4:
-				source_type = SourceObject::Usb;
-				break;
-			default:
-				qFatal("Invalid source type for alarm clock");
-			}
-
-			foreach (SourceObject *source, sources)
-			{
-				if (source->getSourceType() == source_type)
-				{
-					alarm->setSource(source);
-					break;
-				}
 			}
 		}
+
+		// we have set values with set methods; applies modifications to object
+		// and make them persistent (original values will be set to right ones)
+		alarm->apply();
 
 		obj_list << ObjectPair(uii, alarm);
 	}
@@ -129,27 +140,31 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &
 	}
 }
 
-AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days, int _hour, int _minute, QObject *parent)
+AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, int hour, int minute, QObject *parent)
 	: ObjectInterface(parent)
 {
+	cache = new QMLCache(this);
+
 	timer_trigger = new QTimer(this);
-	description = _description;
-	switch(_type)
+
+	switch(type)
 	{
 	case 1:
-		alarm_type = AlarmClockSoundSystem;
+		cache->setOriginalValue(QML_ALARM_TYPE, AlarmClockSoundSystem);
 		break;
 	default:
-		alarm_type = AlarmClockBeep;
+		cache->setOriginalValue(QML_ALARM_TYPE, AlarmClockBeep);
 		break;
 	}
-	days = _days;
-	hour = _hour;
-	minute = _minute;
+	cache->setOriginalValue(QML_DESCRIPTION, description);
+	cache->setOriginalValue(QML_DAYS, days);
+	cache->setOriginalValue(QML_HOUR, hour);
+	cache->setOriginalValue(QML_MINUTE, minute);
+	cache->setOriginalValue(QML_VOLUME, 0);
+
 	enabled = false; // starting from a well known state
 	source = 0;
 	amplifier = 0;
-	volume = 0;
 	tick_count = 0;
 	timer_tick = new QTimer(this);
 
@@ -157,16 +172,9 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	timer_postpone->setSingleShot(true);
 	timer_postpone->setInterval(POSTPONE_TIME * 1000);
 
-	connect(this, SIGNAL(alarmTypeChanged()), this, SIGNAL(persistItem()));
-	connect(this, SIGNAL(checkRequested()), this, SLOT(checkRequestManagement()));
-	connect(this, SIGNAL(daysChanged()), this, SIGNAL(persistItem()));
-	connect(this, SIGNAL(descriptionChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
-	connect(this, SIGNAL(hourChanged()), this, SIGNAL(persistItem()));
-	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(sourceChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(amplifierChanged()), this, SIGNAL(persistItem()));
-	connect(this, SIGNAL(volumeChanged()), this, SIGNAL(persistItem()));
 
 	connect(timer_trigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
 	connect(timer_tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
@@ -177,7 +185,51 @@ AlarmClock::AlarmClock(QString _description, bool _enabled, int _type, int _days
 	connect(this, SIGNAL(hourChanged()), this, SIGNAL(checkRequested()));
 	connect(this, SIGNAL(minuteChanged()), this, SIGNAL(checkRequested()));
 
+	connect(this, SIGNAL(checkRequested()), this, SLOT(checkRequestManagement()));
+
+	connect(cache, SIGNAL(qmlValueChanged(int,QVariant)), this, SLOT(qmlValueChanged(int,QVariant)));
+	connect(cache, SIGNAL(persistItemRequested()), this, SIGNAL(persistItem()));
+
 	setEnabled(_enabled); // sets real value
+}
+
+void AlarmClock::reset()
+{
+	cache->reset();
+}
+
+void AlarmClock::apply()
+{
+	cache->apply();
+}
+
+void AlarmClock::qmlValueChanged(int key, QVariant value)
+{
+	Q_UNUSED(value);
+
+	switch(key)
+	{
+	case QML_ALARM_TYPE:
+		emit alarmTypeChanged();
+		break;
+	case QML_DESCRIPTION:
+		emit descriptionChanged();
+		break;
+	case QML_DAYS:
+		emit daysChanged();
+		break;
+	case QML_HOUR:
+		emit hourChanged();
+		break;
+	case QML_MINUTE:
+		emit minuteChanged();
+		break;
+	case QML_VOLUME:
+		emit volumeChanged();
+		break;
+	default:
+		qWarning() << __PRETTY_FUNCTION__ << "an unknown key (" << key << ") has arrived";
+	}
 }
 
 void AlarmClock::checkRequestManagement()
@@ -188,7 +240,7 @@ void AlarmClock::checkRequestManagement()
 		QDateTime actual_date_time = QDateTime::currentDateTime();
 
 		// gets triggering date&time
-		QDateTime triggering_date_time = QDateTime(actual_date_time.date(), QTime(hour, minute));
+		QDateTime triggering_date_time = QDateTime(actual_date_time.date(), QTime(getHour(), getMinute()));
 
 		// computes difference in seconds between actual and candidate date&time
 		int delta_seconds = actual_date_time.secsTo(triggering_date_time);
@@ -209,7 +261,7 @@ void AlarmClock::checkRequestManagement()
 
 void AlarmClock::triggersIfHasTo()
 {
-	if (days == 0)
+	if (getDays() == 0)
 	{
 		// once alarm: ring and disable
 		start();
@@ -248,7 +300,7 @@ void AlarmClock::restart()
 
 void AlarmClock::start()
 {
-	actual_type = alarm_type;
+	actual_type = getAlarmType();
 	start_time = QTime::currentTime();
 	startRinging();
 }
@@ -282,7 +334,7 @@ void AlarmClock::startRinging()
 		if (media)
 		{
 			connect(media, SIGNAL(firstMediaContentStatus(bool)),
-				this, SLOT(mediaSourcePlaybackStatus(bool)));
+					this, SLOT(mediaSourcePlaybackStatus(bool)));
 			media->playFirstMediaContent();
 		}
 	}
@@ -307,15 +359,6 @@ void AlarmClock::postpone()
 	emit ringingChanged();
 }
 
-void AlarmClock::setDescription(QString new_value)
-{
-	if (description == new_value)
-		return;
-
-	description = new_value;
-	emit descriptionChanged();
-}
-
 void AlarmClock::setEnabled(bool new_value)
 {
 	if (enabled == new_value)
@@ -325,86 +368,39 @@ void AlarmClock::setEnabled(bool new_value)
 	emit enabledChanged();
 }
 
-void AlarmClock::setAlarmType(AlarmClockType new_value)
-{
-	if (alarm_type == new_value)
-		return;
-
-	alarm_type = new_value;
-	emit alarmTypeChanged();
-}
-
-void AlarmClock::setDays(int new_value)
-{
-	if (days == new_value || new_value < 0 || new_value > 0x7F)
-		return;
-
-	days = new_value;
-	emit daysChanged();
-}
-
-void AlarmClock::setHour(int new_value)
-{
-	QTime t(hour, minute);
-	QTime new_time = addHours(t, new_value);
-
-	if (new_time.hour() != hour)
-	{
-		hour = new_time.hour();
-		emit hourChanged();
-	}
-}
-
-void AlarmClock::setMinute(int new_value)
-{
-	QTime t(hour, minute);
-	QTime new_time = addMinutes(t, new_value);
-
-	if (new_time.minute() != minute)
-	{
-		minute = new_time.minute();
-		emit minuteChanged();
-	}
-	if (new_time.hour() != hour)
-	{
-		hour = new_time.hour();
-		emit hourChanged();
-	}
-}
-
 bool AlarmClock::isTriggerOnMondays() const
 {
-	return ((days & MASK_MONDAY) > 0);
+	return ((getDays() & MASK_MONDAY) > 0);
 }
 
 bool AlarmClock::isTriggerOnTuesdays() const
 {
-	return ((days & MASK_TUESDAY) > 0);
+	return ((getDays() & MASK_TUESDAY) > 0);
 }
 
 bool AlarmClock::isTriggerOnWednesdays() const
 {
-	return ((days & MASK_WEDNESDAY) > 0);
+	return ((getDays() & MASK_WEDNESDAY) > 0);
 }
 
 bool AlarmClock::isTriggerOnThursdays() const
 {
-	return ((days & MASK_THURSDAY) > 0);
+	return ((getDays() & MASK_THURSDAY) > 0);
 }
 
 bool AlarmClock::isTriggerOnFridays() const
 {
-	return ((days & MASK_FRIDAY) > 0);
+	return ((getDays() & MASK_FRIDAY) > 0);
 }
 
 bool AlarmClock::isTriggerOnSaturdays() const
 {
-	return ((days & MASK_SATURDAY) > 0);
+	return ((getDays() & MASK_SATURDAY) > 0);
 }
 
 bool AlarmClock::isTriggerOnSundays() const
 {
-	return ((days & MASK_SUNDAY) > 0);
+	return ((getDays() & MASK_SUNDAY) > 0);
 }
 
 void AlarmClock::setTriggerOnMondays(bool new_value)
@@ -444,15 +440,12 @@ void AlarmClock::setTriggerOnSundays(bool new_value)
 
 void AlarmClock::setTriggerOnWeekdays(bool new_value, int day_mask)
 {
-	int old_days = days;
+	int old_days = getDays();
 
 	if (new_value) // set
 		old_days |= day_mask;
 	else // reset
 		old_days &= ~day_mask;
-
-	if (old_days == days)
-		return;
 
 	setDays(old_days);
 }
@@ -500,7 +493,7 @@ void AlarmClock::alarmTick()
 void AlarmClock::mediaSourcePlaybackStatus(bool status)
 {
 	disconnect(source, SIGNAL(firstMediaContentStatus(bool)),
-		   this, SLOT(mediaSourcePlaybackStatus(bool)));
+			   this, SLOT(mediaSourcePlaybackStatus(bool)));
 
 	if (!isRinging())
 		return;
@@ -523,7 +516,7 @@ void AlarmClock::soundDiffusionStop()
 
 void AlarmClock::soundDiffusionSetVolume()
 {
-	int real_volume = 32 * volume / 10;
+	int real_volume = 32 * getVolume() / 10;
 
 	if (tick_count <= real_volume)
 		amplifier->setVolume(tick_count);
@@ -582,21 +575,85 @@ void AlarmClock::setAmplifierFromQObject(QObject *amplifier)
 		setAmplifier(candidate);
 }
 
-void AlarmClock::setVolume(int _volume)
+bool AlarmClock::isRinging() const
 {
-	if (_volume == volume)
+	return timer_tick->isActive();
+}
+
+AlarmClock::AlarmClockType AlarmClock::getAlarmType() const
+{
+	return static_cast<AlarmClock::AlarmClockType>(cache->getQMLValue(QML_ALARM_TYPE).toInt());
+}
+
+void AlarmClock::setAlarmType(AlarmClockType new_value)
+{
+	if (getAlarmType() != new_value)
+		cache->setQMLValue(QML_ALARM_TYPE, new_value);
+}
+
+int AlarmClock::getDays() const
+{
+	return cache->getQMLValue(QML_DAYS).toInt();
+}
+
+void AlarmClock::setDays(int new_value)
+{
+	// checks if new value is in permitted range
+	if (new_value < 0 || new_value > 0x7F)
 		return;
 
-	volume = _volume;
-	emit volumeChanged();
+	if (getDays() != new_value)
+		cache->setQMLValue(QML_DAYS, new_value);
+}
+
+int AlarmClock::getHour() const
+{
+	return cache->getQMLValue(QML_HOUR).toInt();
+}
+
+void AlarmClock::setHour(int new_value)
+{
+	QTime t(getHour(), getMinute());
+	QTime new_time = addHours(t, new_value);
+
+	if (new_time.hour() != getHour())
+		cache->setQMLValue(QML_HOUR, new_time.hour());
+}
+
+int AlarmClock::getMinute() const
+{
+	return cache->getQMLValue(QML_MINUTE).toInt();
+}
+
+void AlarmClock::setMinute(int new_value)
+{
+	QTime t(getHour(), getMinute());
+	QTime new_time = addMinutes(t, new_value);
+
+	if (new_time.minute() != getMinute())
+		cache->setQMLValue(QML_MINUTE, new_time.minute());
+	if (new_time.hour() != getHour())
+		cache->setQMLValue(QML_HOUR, new_time.hour());
 }
 
 int AlarmClock::getVolume() const
 {
-	return volume;
+	return cache->getQMLValue(QML_VOLUME).toInt();
 }
 
-bool AlarmClock::isRinging() const
+void AlarmClock::setVolume(int new_value)
 {
-	return timer_tick->isActive();
+	if (getVolume() != new_value)
+		cache->setQMLValue(QML_VOLUME, new_value);
+}
+
+QString AlarmClock::getDescription() const
+{
+	return cache->getQMLValue(QML_DESCRIPTION).toString();
+}
+
+void AlarmClock::setDescription(QString new_value)
+{
+	if (getDescription() != new_value)
+		cache->setQMLValue(QML_DESCRIPTION, new_value);
 }

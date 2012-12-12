@@ -32,6 +32,7 @@ HEADERS += \
 	objectlink.h \
 	platform.h \
 	playlistplayer.h \
+	qmlcache.h \
 	scenariomodulesnotifier.h \
 	scenarioobjects.h \
 	screenstate.h \
@@ -109,6 +110,7 @@ SOURCES += \
 	objectlink.cpp \
 	platform.cpp \
 	playlistplayer.cpp \
+	qmlcache.cpp \
 	scenariomodulesnotifier.cpp \
 	scenarioobjects.cpp \
 	screenstate.cpp \

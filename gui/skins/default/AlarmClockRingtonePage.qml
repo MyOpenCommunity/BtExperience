@@ -21,7 +21,7 @@ Page {
     property variant _choicesModel: kindModel
 
     text: qsTr("Alarm settings")
-    source: "images/profiles.jpg"
+    source : global.guiSettings.homeBgImage
 
     ListModel {
         id: beepModel
@@ -340,6 +340,7 @@ Page {
                 page.alarmClock.source = kindModel.getObject(page.currentSourceIdx)
             if (page.currentAmplifierIdx >= 0)
                 page.alarmClock.setAmplifierFromQObject(amplifierModel.getObject(page.currentAmplifierIdx))
+            page.alarmClock.apply()
             Stack.popPage()
         }
     }
@@ -358,7 +359,10 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
-        onClicked: Stack.popPage()
+        onClicked: {
+            page.alarmClock.reset()
+            Stack.popPage()
+        }
     }
 
     states: [
