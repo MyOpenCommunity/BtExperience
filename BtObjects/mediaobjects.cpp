@@ -133,7 +133,7 @@ QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
 			QList<Amplifier *> amplifiers;
 			amplifiers << amp;
 			obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"),
-														   amplifiers, ObjectInterface::IdMultiAmbientAmplifier));
+				amplifiers, ObjectInterface::IdMultiAmbientAmplifier));
 		}
 		else
 		{
@@ -233,8 +233,7 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 	if (!(*bt_global::config)[SOURCE_ADDRESS].isEmpty() || !(*bt_global::config)[AMPLIFIER_ADDRESS].isEmpty())
 	{
 		QString init_frame = VirtualSourceDevice::createMediaInitFrame(is_multichannel,
-																	   (*bt_global::config)[SOURCE_ADDRESS],
-																	   (*bt_global::config)[AMPLIFIER_ADDRESS]);
+			(*bt_global::config)[SOURCE_ADDRESS], (*bt_global::config)[AMPLIFIER_ADDRESS]);
 		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
 	}
 	SourceDevice::setIsMultichannel(is_multichannel);
