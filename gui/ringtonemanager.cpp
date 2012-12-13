@@ -51,7 +51,7 @@ QString RingtoneManager::ringtoneFromType(Ringtone type) const
 	return ringtoneFromIndex(type_to_ringtone[type]);
 }
 
-QString RingtoneManager::descriptionFromType(RingtoneManager::Ringtone type) const
+QString RingtoneManager::descriptionFromType(Ringtone type) const
 {
 	return type_to_description[type];
 }

@@ -111,6 +111,7 @@ MenuColumn {
                 modelList.append({"name": qsTr("Systems"), "component": "SettingsSystems.qml"})
             modelList.append({"name": qsTr("Alarm Clock"), "component": "SettingsClocks.qml"})
             modelList.append({"name": qsTr("Multimedia"), "component": "SettingsMultimedia.qml"})
+            modelList.append({"name": qsTr("Ringtones"), "component": "SettingsRingtones.qml"})
         }
     }
 
