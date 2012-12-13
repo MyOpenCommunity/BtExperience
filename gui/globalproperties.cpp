@@ -408,6 +408,16 @@ QString GlobalProperties::saveInCustomDirIfNeeded(QString filename, QString new_
 	return result;
 }
 
+int GlobalProperties::getPathviewOffset(int pathview_id)
+{
+	return pathview_offsets[pathview_id];
+}
+
+void GlobalProperties::setPathviewOffset(int pathview_id, int value)
+{
+	pathview_offsets[pathview_id] = value;
+}
+
 void GlobalProperties::beep()
 {
 	QString path = getExtraPath() + "10/beep.wav";

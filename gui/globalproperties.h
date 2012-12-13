@@ -74,6 +74,9 @@ public:
 	Q_INVOKABLE QString takeScreenshot(QRect rect, QString filename);
 	Q_INVOKABLE QString saveInCustomDirIfNeeded(QString filename, QString new_filename, QSize size = QSize());
 
+	Q_INVOKABLE int getPathviewOffset(int pathview_id);
+	Q_INVOKABLE void setPathviewOffset(int pathview_id, int value);
+
 	Q_INVOKABLE void beep();
 
 	Q_INVOKABLE QPoint maxTravelledDistanceOnLastMove() const;
@@ -122,6 +125,8 @@ private:
 	QPoint max_travelled_distance;
 	QString password;
 	bool password_enabled;
+
+	QHash<int, int> pathview_offsets;
 };
 
 #endif // GLOBALPROPERTIES_H

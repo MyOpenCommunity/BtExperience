@@ -6,6 +6,7 @@ Item {
     id: control
 
     property int arrowsMargin: 10
+    property int pathviewId: 0
 
     property alias x0FiveElements: pathView.x0FiveElements
     property alias x0ThreeElements: pathView.x0ThreeElements
@@ -20,11 +21,24 @@ Item {
 
     signal clicked(variant delegate)
 
+    Component.onCompleted: {
+        offsetBehavior.enabled = false
+        pathView.offset = global.getPathviewOffset(pathviewId)
+        offsetBehavior.enabled = true
+    }
+
     ControlPathViewInternal {
         id: pathView
 
         anchors.fill: parent
         onClicked: control.clicked(delegate)
+
+        onOffsetChanged: global.setPathviewOffset(pathviewId, Math.round(offset))
+
+        Behavior on offset {
+            id: offsetBehavior
+            NumberAnimation { duration: 300 }
+        }
     }
 
     SvgImage {
@@ -39,7 +53,7 @@ Item {
         BeepingMouseArea {
             id: mouseAreaSx
             anchors.fill: parent
-            onClicked: pathView.incrementCurrentIndex()
+            onClicked: pathView.offset -= 1
         }
 
         states: [
@@ -66,7 +80,7 @@ Item {
         BeepingMouseArea {
             id: mouseAreaDx
             anchors.fill: parent
-            onClicked: pathView.decrementCurrentIndex()
+            onClicked: pathView.offset += 1
         }
 
         states: [

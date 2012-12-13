@@ -29,6 +29,7 @@ Page {
         y1: 160
         x2FiveElements: 740
         x2ThreeElements: 640
+        pathviewId: 2
         model: roomsModel
         anchors {
             right: parent.right

@@ -46,6 +46,7 @@ Page {
             y1: 250
             x2FiveElements: 740
             x2ThreeElements: 640
+            pathviewId: 3
             model: systemsModel
             pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
             arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
