@@ -133,7 +133,7 @@ QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
 			QList<Amplifier *> amplifiers;
 			amplifiers << amp;
 			obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"),
-				amplifiers, ObjectInterface::IdMultiAmbientAmplifier));
+				amplifiers, ObjectInterface::IdAmbientAmplifier));
 		}
 		else
 		{
@@ -152,7 +152,7 @@ QList<ObjectPair> parseGeneralAmplifier(const QDomNode &xml_node, int id)
 	QList<ObjectPair> obj_list;
 
 	ObjectInterface::ObjectId true_id = id == ObjectInterface::IdMultiGeneral ?
-		ObjectInterface::IdAmplifierGeneral : ObjectInterface::IdMultiAmbientAmplifier;
+		ObjectInterface::IdAmplifierGeneral : ObjectInterface::IdAmbientAmplifier;
 	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
 	{
 		v.setIst(ist);

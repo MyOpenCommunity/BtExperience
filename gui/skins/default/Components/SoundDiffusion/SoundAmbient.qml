@@ -22,7 +22,7 @@ MenuColumn {
 
     ObjectModel {
         id: ambientModel
-        filters: [{objectId: ObjectInterface.IdMultiAmbientAmplifier}]
+        filters: [{objectId: ObjectInterface.IdAmbientAmplifier}]
         containers: [column.dataModel.uii]
     }
 
