@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
 	<!-- ringtones -->
-	<obj cid="14101" id="14101" id_ringtone="1">
-		<ist uii="30201" id_ringtone="4"/>
+	<obj cid="14101" id="14101" id_ringtone="1" descr="Ringtone S0">
+		<ist uii="30201" id_ringtone="1"/>
 	</obj>
-	<obj cid="14102" id="14102" id_ringtone="1">
-		<ist uii="30202" id_ringtone="4"/>
+	<obj cid="14102" id="14102" id_ringtone="1" descr="Ringtone S1">
+		<ist uii="30202" id_ringtone="2"/>
 	</obj>
-	<obj cid="14103" id="14103" id_ringtone="1">
-		<ist uii="30203" id_ringtone="4"/>
+	<obj cid="14103" id="14103" id_ringtone="1" descr="Ringtone S2">
+		<ist uii="30203" id_ringtone="3"/>
 	</obj>
-	<obj cid="14104" id="14104" id_ringtone="1">
+	<obj cid="14104" id="14104" id_ringtone="1" descr="Ringtone S3">
 		<ist uii="30204" id_ringtone="4"/>
 	</obj>
-	<obj cid="14105" id="14105" id_ringtone="1">
+	<obj cid="14105" id="14105" id_ringtone="1" descr="Ringtone Internal">
 		<ist uii="30205" id_ringtone="5"/>
 	</obj>
-	<obj cid="14106" id="14106" id_ringtone="1">
-		<ist uii="30206" id_ringtone="5"/>
+	<obj cid="14106" id="14106" id_ringtone="1" descr="Ringtone External">
+		<ist uii="30206" id_ringtone="6"/>
 	</obj>
-	<obj cid="14107" id="14107" id_ringtone="1">
-		<ist uii="30207" id_ringtone="5"/>
+	<obj cid="14107" id="14107" id_ringtone="1" descr="Ringtone Door">
+		<ist uii="30207" id_ringtone="7"/>
 	</obj>
-	<obj cid="14109" id="14109" id_ringtone="1">
-		<ist uii="30208" id_ringtone="1"/>
+	<obj cid="14109" id="14109" id_ringtone="1" descr="Ringtone Alarm">
+		<ist uii="30208" id_ringtone="7"/>
 	</obj>
-	<obj cid="14110" id="14110" id_ringtone="1">
-		<ist uii="30209" id_ringtone="1"/>
+	<obj cid="14109" id="14110" id_ringtone="1" descr="Ringtone Message">
+		<ist uii="30209" id_ringtone="7"/>
 	</obj>
 	<!-- volume (beep, media, ringtone, vde, intercom) -->
 	<obj cid="14121" id="14121" volume="75">
