@@ -25,7 +25,7 @@ MenuColumn {
         interactive: false
 
         delegate: MenuItemDelegate {
-            name: modelData.replace(/^.*[\\\/]/, '').split(".").shift() // some JS magic
+            name: modelData.replace(/^.*[\\\/]/, '').split(".").shift() // some JS magic to extract file name
             hasChild: false
             isSelected: modelData === global.ringtoneManager.ringtoneFromType(column.type)
             onClicked: {
