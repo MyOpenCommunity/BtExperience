@@ -143,7 +143,7 @@ QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
 	return obj_list;
 }
 
-QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node, int id)
+QList<ObjectPair> parseGeneralAmplifier(const QDomNode &xml_node, int id)
 {
 	// The General amplifier is created as an AmplifierGroup so that the graphical
 	// representation is correct, since there's no concept of active or volume
