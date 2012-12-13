@@ -85,7 +85,7 @@ Page {
         Timer {
             id: redTimer
             interval: 1500
-            onTriggered: controlVideo.color = "red"
+            onTriggered: controlVideo.color = "#010203"
         }
     }
 

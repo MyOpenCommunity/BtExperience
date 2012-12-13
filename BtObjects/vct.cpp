@@ -10,7 +10,8 @@
 #if defined(BT_HARDWARE_X11)
 QString video_grabber_path = "/bin/cat";
 #else
-QString video_grabber_path = "/usr/local/bin/Fw-A-LcdOpenGLRenderingQt.sh";
+//QString video_grabber_path = "/usr/local/bin/Fw-A-LcdOpenGLRenderingQt.sh";
+QString video_grabber_path = "/usr/local/bin/Fw-A-VideoInLoopback.sh 66051";
 #endif
 
 namespace
