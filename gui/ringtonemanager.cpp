@@ -51,6 +51,11 @@ QString RingtoneManager::ringtoneFromType(Ringtone type) const
 	return ringtoneFromIndex(type_to_ringtone[type]);
 }
 
+QString RingtoneManager::descriptionFromType(RingtoneManager::Ringtone type) const
+{
+	return type_to_description[type];
+}
+
 void RingtoneManager::setRingtone(Ringtone type, int index, QString description)
 {
 	Q_ASSERT_X(ringtone_to_file.contains(index), __PRETTY_FUNCTION__,
@@ -60,6 +65,26 @@ void RingtoneManager::setRingtone(Ringtone type, int index, QString description)
 	type_to_ringtone[type] = index;
 	type_to_description[type] = description;
 	emit ringtoneChanged(type, index, description);
+}
+
+void RingtoneManager::setRingtoneFromTypeRingtone(Ringtone type, QString ringtone)
+{
+	type_to_ringtone[type] = ringtone_to_file.key(ringtone);
+	emit ringtoneChanged(type, type_to_ringtone[type], descriptionFromType(type));
+}
+
+QStringList RingtoneManager::ringtoneList() const
+{
+	QStringList result;
+
+	QHashIterator<int, QString> it(ringtone_to_file);
+	while (it.hasNext())
+	{
+		it.next();
+		result << it.value();
+	}
+
+	return result;
 }
 
 void RingtoneManager::playRingtone(QString path, int _state)
