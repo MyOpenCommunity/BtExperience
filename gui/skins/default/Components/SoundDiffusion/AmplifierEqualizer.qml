@@ -14,6 +14,7 @@ MenuColumn {
             selectOnClick: true
             onDelegateClicked: {
                 column.dataModel.preset = index + objectModel.range[0]
+                column.closeColumn()
             }
         }
 
