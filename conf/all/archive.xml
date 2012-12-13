@@ -509,11 +509,11 @@
 	</obj>
 	<obj cid="11001" id="11001" descr="Amplifier" where="11">
 		<ist uii="10001" descr="Generale" where="0"/>
-		<ist uii="10014" descr="Generale" where="#2"/>
+		<ist uii="10014" cid="11042" descr="Generale" where="#2"/>
 		<ist uii="10002" descr="Amplificatore 2" where="22"/>
 		<ist uii="10003" descr="Amplificatore 3" where="23"/>
 		<ist uii="10012" descr="Amplificatore 2" where="32"/>
-		<ist uii="10013" descr="Generale" where="#3"/>
+		<ist uii="10013" cid="11043" descr="Generale" where="#3"/>
 	</obj>
 	<obj cid="11004" id="11004" descr="Power Amplifier" where="11" epre11="0" epre12="0" epre13="0" epre14="0" epre15="0" epre16="0" epre17="0" epre18="0" epre19="0" epre20="0">
 		<ist uii="10004" descr="Amplificatore di potenza" where="18" epre11="1" epre12="1" epre13="1">
@@ -528,6 +528,12 @@
 			<link uii="10002" />
 			<link uii="10004" />
 		</ist>
+		<ist uii="10032" descr="General" >
+			<link uii="10001" />
+		</ist>
+	</obj>
+	<obj cid="11009" id="11003" descr="General" where="0">
+		<ist uii="10005" descr="Generale totale" where="0" />
 	</obj>
 	<obj cid="11032" id="11032" descr="Source" where="1" radio_num="5">
 		<ist uii="10007" descr="Radio" where="1" />
