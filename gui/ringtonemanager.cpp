@@ -51,14 +51,15 @@ QString RingtoneManager::ringtoneFromType(Ringtone type) const
 	return ringtoneFromIndex(type_to_ringtone[type]);
 }
 
-void RingtoneManager::setRingtone(Ringtone type, int index)
+void RingtoneManager::setRingtone(Ringtone type, int index, QString description)
 {
-	Q_ASSERT_X(ringtone_to_file.contains(index), "RingtonesManager::setRingtone",
+	Q_ASSERT_X(ringtone_to_file.contains(index), __PRETTY_FUNCTION__,
 		qPrintable(QString("Given ringtone %1 is outside valid range.").arg(index)));
 	if (type_to_ringtone[type] == index)
 		return;
 	type_to_ringtone[type] = index;
-	emit ringtoneChanged(type, index);
+	type_to_description[type] = description;
+	emit ringtoneChanged(type, index, description);
 }
 
 void RingtoneManager::playRingtone(QString path, int _state)

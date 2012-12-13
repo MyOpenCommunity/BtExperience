@@ -99,7 +99,7 @@ signals:
 
 private slots:
 	void beepChanged();
-	void ringtoneChanged(int ringtone, int index);
+	void ringtoneChanged(int ringtone, int index, QString description);
 	void volumeChanged(int state, int volume);
 	void brightnessChanged();
 	void screenStateChangedManagement();

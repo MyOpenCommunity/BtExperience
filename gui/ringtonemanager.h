@@ -41,13 +41,13 @@ public:
 	Q_INVOKABLE QString ringtoneFromIndex(int index) const;
 	Q_INVOKABLE QString ringtoneFromType(Ringtone type) const;
 
-	Q_INVOKABLE void setRingtone(Ringtone type, int index);
+	Q_INVOKABLE void setRingtone(Ringtone type, int index, QString description);
 
 	MultiMediaPlayer *getMediaPlayer() const;
 
 signals:
 	void ringtoneFinished();
-	void ringtoneChanged(int type, int index);
+	void ringtoneChanged(int type, int index, QString description);
 
 private slots:
 	void playerStateChange();
@@ -56,10 +56,12 @@ private slots:
 private:
 	QHash<int, QString> ringtone_to_file;
 	QHash<Ringtone, int> type_to_ringtone;
+	QHash<Ringtone, QString> type_to_description;
+
 
 	bool exit_state;
 	int state;
-	QString ringtone;
+	QString ringtone, description;
 	MultiMediaPlayer *player;
 	AudioState *audio_state;
 };

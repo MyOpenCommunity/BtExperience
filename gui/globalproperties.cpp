@@ -38,7 +38,8 @@ namespace
 		RingtoneInternal,
 		RingtoneExternal,
 		RingtoneDoor,
-		RingtoneAlarm,
+		// 14108 has been removed from possible values
+		RingtoneAlarm = 14109,
 		RingtoneMessage,
 		VolumeBeep = 14121,
 		VolumeLocalPlayback,
@@ -47,14 +48,31 @@ namespace
 		VolumeIntercomCall
 	};
 
-	void setRingtone(QDomDocument document, int id, int ringtone)
+	void setRingtone(QDomDocument document, int id, int ringtone, QString description)
 	{
-		setIntSetting(document, id, "id_ringtone", ringtone);
+		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == id)
+			{
+				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+				{
+					setAttribute(ist, "id_ringtone", QString::number(ringtone));
+					setAttribute(ist, "descr", description);
+				}
+				break;
+			}
+		}
 	}
 
-	int parseRingtone(QDomNode xml_node)
+	void parseRingtone(QDomNode xml_node, RingtoneManager *ringtone_manager, RingtoneManager::Ringtone ringtone)
 	{
-		return parseIntSetting(xml_node, "id_ringtone");
+		XmlObject v(xml_node);
+
+		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+		{
+			v.setIst(ist);
+			ringtone_manager->setRingtone(ringtone, v.intValue("id_ringtone"), v.value("descr"));
+		}
 	}
 
 	void setVolume(QDomDocument document, int id, int volume)
@@ -143,8 +161,8 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	screen_state->enableState(ScreenState::Normal);
 	screen_state->enableState(ScreenState::ScreenOff);
 
-	connect(ringtone_manager, SIGNAL(ringtoneChanged(int,int)),
-		this, SLOT(ringtoneChanged(int,int)));
+	connect(ringtone_manager, SIGNAL(ringtoneChanged(int,int,QString)),
+		this, SLOT(ringtoneChanged(int,int,QString)));
 	connect(audio_state, SIGNAL(volumeChanged(int,int)),
 		this, SLOT(volumeChanged(int,int)));
 	connect(screen_state, SIGNAL(stateChanged(ScreenState::State,ScreenState::State)),
@@ -230,31 +248,31 @@ void GlobalProperties::parseSettings()
 			screen_state->setNormalBrightness(parseBrightness(xml_obj));
 			break;
 		case RingtoneS0:
-			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace1, parseRingtone(xml_obj));
+			parseRingtone(xml_obj, ringtone_manager, RingtoneManager::CCTVExternalPlace1);
 			break;
 		case RingtoneS1:
-			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace2, parseRingtone(xml_obj));
+			parseRingtone(xml_obj, ringtone_manager, RingtoneManager::CCTVExternalPlace2);
 			break;
 		case RingtoneS2:
-			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace3, parseRingtone(xml_obj));
+			parseRingtone(xml_obj, ringtone_manager, RingtoneManager::CCTVExternalPlace3);
 			break;
 		case RingtoneS3:
-			ringtone_manager->setRingtone(RingtoneManager::CCTVExternalPlace4, parseRingtone(xml_obj));
+			parseRingtone(xml_obj, ringtone_manager, RingtoneManager::CCTVExternalPlace4);
 			break;
 		case RingtoneInternal:
-			ringtone_manager->setRingtone(RingtoneManager::InternalIntercom, parseRingtone(xml_obj));
+			parseRingtone(xml_obj, ringtone_manager, RingtoneManager::InternalIntercom);
 			break;
 		case RingtoneExternal:
-			ringtone_manager->setRingtone(RingtoneManager::ExternalIntercom, parseRingtone(xml_obj));
+			parseRingtone(xml_obj, ringtone_manager, RingtoneManager::ExternalIntercom);
 			break;
 		case RingtoneDoor:
-			ringtone_manager->setRingtone(RingtoneManager::IntercomFloorcall, parseRingtone(xml_obj));
+			parseRingtone(xml_obj, ringtone_manager, RingtoneManager::IntercomFloorcall);
 			break;
 		case RingtoneAlarm:
-			ringtone_manager->setRingtone(RingtoneManager::Alarm, parseRingtone(xml_obj));
+			parseRingtone(xml_obj, ringtone_manager, RingtoneManager::Alarm);
 			break;
 		case RingtoneMessage:
-			ringtone_manager->setRingtone(RingtoneManager::Message, parseRingtone(xml_obj));
+			parseRingtone(xml_obj, ringtone_manager, RingtoneManager::Message);
 			break;
 		case VolumeBeep:
 			audio_state->setVolume(AudioState::BeepVolume, parseVolume(xml_obj));
@@ -440,38 +458,38 @@ void GlobalProperties::volumeChanged(int state, int volume)
 	configurations->saveConfiguration(SETTINGS_FILE);
 }
 
-void GlobalProperties::ringtoneChanged(int ringtone, int index)
+void GlobalProperties::ringtoneChanged(int ringtone, int index, QString description)
 {
 	QDomDocument document = configurations->getConfiguration(SETTINGS_FILE);
 
 	switch (ringtone)
 	{
 	case RingtoneManager::Alarm:
-		setRingtone(document, RingtoneAlarm, index);
+		setRingtone(document, RingtoneAlarm, index, description);
 		break;
 	case RingtoneManager::Message:
-		setRingtone(document, RingtoneMessage, index);
+		setRingtone(document, RingtoneMessage, index, description);
 		break;
 	case RingtoneManager::CCTVExternalPlace1:
-		setRingtone(document, RingtoneS0, index);
+		setRingtone(document, RingtoneS0, index, description);
 		break;
 	case RingtoneManager::CCTVExternalPlace2:
-		setRingtone(document, RingtoneS1, index);
+		setRingtone(document, RingtoneS1, index, description);
 		break;
 	case RingtoneManager::CCTVExternalPlace3:
-		setRingtone(document, RingtoneS2, index);
+		setRingtone(document, RingtoneS2, index, description);
 		break;
 	case RingtoneManager::CCTVExternalPlace4:
-		setRingtone(document, RingtoneS3, index);
+		setRingtone(document, RingtoneS3, index, description);
 		break;
 	case RingtoneManager::InternalIntercom:
-		setRingtone(document, RingtoneInternal, index);
+		setRingtone(document, RingtoneInternal, index, description);
 		break;
 	case RingtoneManager::ExternalIntercom:
-		setRingtone(document, RingtoneExternal, index);
+		setRingtone(document, RingtoneExternal, index, description);
 		break;
 	case RingtoneManager::IntercomFloorcall:
-		setRingtone(document, RingtoneDoor, index);
+		setRingtone(document, RingtoneDoor, index, description);
 		break;
 	}
 	configurations->saveConfiguration(SETTINGS_FILE);
