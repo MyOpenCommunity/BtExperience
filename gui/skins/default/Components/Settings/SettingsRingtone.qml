@@ -29,7 +29,7 @@ MenuColumn {
             hasChild: false
             isSelected: modelData === global.ringtoneManager.ringtoneFromType(column.type)
             onClicked: {
-                global.ringtoneManager.setRingtoneFromTypeRingtone(column.type, modelData)
+                global.ringtoneManager.setRingtoneFromFilename(column.type, modelData)
                 column.closeColumn()
             }
         }

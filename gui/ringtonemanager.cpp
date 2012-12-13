@@ -67,7 +67,7 @@ void RingtoneManager::setRingtone(Ringtone type, int index, QString description)
 	emit ringtoneChanged(type, index, description);
 }
 
-void RingtoneManager::setRingtoneFromTypeRingtone(Ringtone type, QString ringtone)
+void RingtoneManager::setRingtoneFromFilename(Ringtone type, QString ringtone)
 {
 	type_to_ringtone[type] = ringtone_to_file.key(ringtone);
 	emit ringtoneChanged(type, type_to_ringtone[type], descriptionFromType(type));

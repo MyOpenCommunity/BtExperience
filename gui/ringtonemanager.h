@@ -43,7 +43,7 @@ public:
 	Q_INVOKABLE QString descriptionFromType(Ringtone type) const;
 
 	Q_INVOKABLE void setRingtone(Ringtone type, int index, QString description);
-	Q_INVOKABLE void setRingtoneFromTypeRingtone(Ringtone type, QString ringtone);
+	Q_INVOKABLE void setRingtoneFromFilename(Ringtone type, QString ringtone);
 
 	Q_INVOKABLE QStringList ringtoneList() const;
 
