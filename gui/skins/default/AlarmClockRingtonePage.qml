@@ -48,7 +48,7 @@ Page {
     ObjectModel {
         id: amplifierModel
         filters: [
-            {objectId: ObjectInterface.IdMultiAmbientAmplifier},
+            {objectId: ObjectInterface.IdAmbientAmplifier},
             {objectId: ObjectInterface.IdSoundAmplifierGroup},
             {objectId: ObjectInterface.IdSoundAmplifier},
             {objectId: ObjectInterface.IdPowerAmplifier},

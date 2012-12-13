@@ -22,7 +22,7 @@ MenuColumn {
 
     ObjectModel {
         id: ambientModel
-        filters: [{objectId: ObjectInterface.IdMultiAmbientAmplifier}]
+        filters: [{objectId: ObjectInterface.IdAmbientAmplifier}]
         containers: [column.dataModel.uii]
     }
 
@@ -90,6 +90,6 @@ MenuColumn {
             {objectId: ObjectInterface.IdPowerAmplifier}
         ]
         containers: [column.dataModel.uii]
-        range: paginator.computePageRange(itemList.currentPage, itemList.elementsOnPage)
+        range: itemList.computePageRange(itemList.currentPage, itemList.elementsOnPage)
     }
 }

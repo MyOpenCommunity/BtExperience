@@ -156,6 +156,7 @@ public:
 		IdMonoAmplifier = 11029,
 		IdMonoAmplifierGroup = 11030,
 		IdMonoPowerAmplifier = 11031,
+		IdMonoGeneral = 11035,
 
 		IdMultiAmplifier = 11001,
 		IdMultiAmplifierGroup = 11002,
@@ -180,7 +181,7 @@ public:
 		IdDimmer100Fixed = 10022002, //!< 100-level dimmer with fixed time
 		IdLightCustom = 10012003, //!< A simple light actuator with custom time
 		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
-		IdMultiAmbientAmplifier = 11001000,
+		IdAmbientAmplifier = 11001000,
 		IdAmplifierGeneral,
 
 		IdAutomation3OpenClose = 30003000,

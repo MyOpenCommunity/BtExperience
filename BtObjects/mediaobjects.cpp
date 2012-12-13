@@ -133,7 +133,7 @@ QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
 			QList<Amplifier *> amplifiers;
 			amplifiers << amp;
 			obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"),
-														   amplifiers, ObjectInterface::IdMultiAmbientAmplifier));
+				amplifiers, ObjectInterface::IdAmbientAmplifier));
 		}
 		else
 		{
@@ -143,7 +143,7 @@ QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
 	return obj_list;
 }
 
-QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node)
+QList<ObjectPair> parseGeneralAmplifier(const QDomNode &xml_node, int id)
 {
 	// The General amplifier is created as an AmplifierGroup so that the graphical
 	// representation is correct, since there's no concept of active or volume
@@ -151,6 +151,8 @@ QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node)
 	XmlObject v(xml_node);
 	QList<ObjectPair> obj_list;
 
+	ObjectInterface::ObjectId true_id = id == ObjectInterface::IdMultiGeneral ?
+		ObjectInterface::IdAmplifierGeneral : ObjectInterface::IdAmbientAmplifier;
 	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
 	{
 		v.setIst(ist);
@@ -159,7 +161,7 @@ QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node)
 		Amplifier *amp = new Amplifier(0, v.value("descr"), d);
 		QList<Amplifier *> amplifiers;
 		amplifiers << amp;
-		obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"), amplifiers, ObjectInterface::IdAmplifierGeneral));
+		obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"), amplifiers, true_id));
 	}
 	return obj_list;
 }
@@ -233,8 +235,7 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 	if (!(*bt_global::config)[SOURCE_ADDRESS].isEmpty() || !(*bt_global::config)[AMPLIFIER_ADDRESS].isEmpty())
 	{
 		QString init_frame = VirtualSourceDevice::createMediaInitFrame(is_multichannel,
-																	   (*bt_global::config)[SOURCE_ADDRESS],
-																	   (*bt_global::config)[AMPLIFIER_ADDRESS]);
+			(*bt_global::config)[SOURCE_ADDRESS], (*bt_global::config)[AMPLIFIER_ADDRESS]);
 		bt_global::devices_cache.addInitCommandFrame(0, init_frame);
 	}
 	SourceDevice::setIsMultichannel(is_multichannel);

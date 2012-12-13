@@ -18,9 +18,9 @@
 			<link uii="10002" />
 			<link uii="10004" />
 		</ist>
-		<ist uii="10020" descr="General" >
-			<link uii="10001" />
-		</ist>
+	</obj>
+	<obj cid="11035" id="11035" descr="General" where="0">
+		<ist uii="10011" descr="Generale totale" />
 	</obj>
 	<obj cid="11032" id="11032" descr="Source" where="1" radio_num="5">
 		<ist uii="10007" descr="Radio" where="1" />

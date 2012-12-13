@@ -75,7 +75,7 @@ QtObject {
         case ObjectInterface.IdPowerAmplifier:
             return Qt.createComponent("SoundDiffusion/PowerAmplifier.qml")
         case ObjectInterface.IdSoundAmplifierGroup:
-        case ObjectInterface.IdMultiAmbientAmplifier:
+        case ObjectInterface.IdAmbientAmplifier:
             return Qt.createComponent("SoundDiffusion/AmplifierGeneral.qml")
         case ObjectInterface.IdSplitBasicScenario:
             return Qt.createComponent("ThermalRegulation/BasicSplit.qml")
