@@ -90,6 +90,6 @@ MenuColumn {
             {objectId: ObjectInterface.IdPowerAmplifier}
         ]
         containers: [column.dataModel.uii]
-        range: paginator.computePageRange(itemList.currentPage, itemList.elementsOnPage)
+        range: itemList.computePageRange(itemList.currentPage, itemList.elementsOnPage)
     }
 }
