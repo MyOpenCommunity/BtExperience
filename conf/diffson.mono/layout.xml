@@ -6,6 +6,7 @@
                         <link uii="10003" />
                         <link uii="10004" />
                         <link uii="10006" />
+                        <link uii="10011" />
 		</ist>
 	</container>
 	<container id="21" descr="Web radio" img="web_radio.png" >

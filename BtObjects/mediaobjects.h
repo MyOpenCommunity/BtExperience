@@ -31,7 +31,7 @@ QList<ObjectPair> parseAuxSource(const QDomNode &xml_node);
 QList<ObjectPair> parseMultimediaSource(const QDomNode &xml_node);
 QList<ObjectPair> parseRadioSource(const QDomNode &xml_node);
 QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel);
-QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node);
+QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node, int id);
 QList<ObjectPair> parseAmplifierGroup(const QDomNode &xml_node, const UiiMapper &uii_map);
 QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multichannel);
 

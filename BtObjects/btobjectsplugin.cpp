@@ -525,13 +525,16 @@ void BtObjectsPlugin::createObjects()
 			obj_list = parseAmplifierGroup(xml_obj, uii_map);
 			break;
 		case ObjectInterface::IdMultiGeneral:
-			obj_list = parseMultiGeneral(xml_obj);
+			obj_list = parseMultiGeneral(xml_obj, id);
 			// The line below seems to assume that we can only have one general
 			// amplifier, but above we allow a list of them.
 			// In the end, we don't really care, since they will be always the
 			// same; here we take one uii from the above.
 			Q_ASSERT_X(obj_list.size() > 0, "IdMultiGeneral parsing", "You didn't define at least one ist for the general object");
 			general_ambient_uii = obj_list[0].first;
+			break;
+		case ObjectInterface::IdMonoGeneral:
+			obj_list = parseMultiGeneral(xml_obj, id);
 			break;
 		case ObjectInterface::IdMonoPowerAmplifier:
 		case ObjectInterface::IdMultiPowerAmplifier:

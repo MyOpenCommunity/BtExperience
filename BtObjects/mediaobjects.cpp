@@ -143,7 +143,7 @@ QList<ObjectPair> parseAmplifier(const QDomNode &xml_node, bool is_multichannel)
 	return obj_list;
 }
 
-QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node)
+QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node, int id)
 {
 	// The General amplifier is created as an AmplifierGroup so that the graphical
 	// representation is correct, since there's no concept of active or volume
@@ -151,6 +151,8 @@ QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node)
 	XmlObject v(xml_node);
 	QList<ObjectPair> obj_list;
 
+	ObjectInterface::ObjectId true_id = id == ObjectInterface::IdMultiGeneral ?
+		ObjectInterface::IdAmplifierGeneral : ObjectInterface::IdMultiAmbientAmplifier;
 	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
 	{
 		v.setIst(ist);
@@ -159,7 +161,7 @@ QList<ObjectPair> parseMultiGeneral(const QDomNode &xml_node)
 		Amplifier *amp = new Amplifier(0, v.value("descr"), d);
 		QList<Amplifier *> amplifiers;
 		amplifiers << amp;
-		obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"), amplifiers, ObjectInterface::IdAmplifierGeneral));
+		obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"), amplifiers, true_id));
 	}
 	return obj_list;
 }

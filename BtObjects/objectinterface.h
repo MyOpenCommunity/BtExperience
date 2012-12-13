@@ -156,6 +156,7 @@ public:
 		IdMonoAmplifier = 11029,
 		IdMonoAmplifierGroup = 11030,
 		IdMonoPowerAmplifier = 11031,
+		IdMonoGeneral = 11035,
 
 		IdMultiAmplifier = 11001,
 		IdMultiAmplifierGroup = 11002,
