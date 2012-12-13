@@ -6,7 +6,6 @@
                         <link uii="10003" />
                         <link uii="10004" />
                         <link uii="10006" />
-                        <link uii="10020" />
 		</ist>
 	</container>
 	<container id="21" descr="Web radio" img="web_radio.png" >
@@ -18,7 +17,7 @@
 	</container>
 	<container id="100" >
                 <ist uii="102" descr="living room" img="images/imgsfondo_sfumato.png" img_card="images/rooms/soggiorno.jpg">
-			<link uii="10020" x="200" y="100" />
+			<link uii="10006" x="200" y="100" />
 		</ist>
                 <ist uii="103" descr="bathroom" img="images/imgsfondo_sfumato.png" img_card="images/rooms/bagno.jpg">
 			<link uii="10002" x="200" y="100" />
