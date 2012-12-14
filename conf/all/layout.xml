@@ -197,6 +197,9 @@
 		<ist uii="316">
 			<link uii="8006" img="Corriere.png"/>
 			<link uii="2011" img="Corriere.png"/>
+			<toolbar>
+				<link uii="2042" />
+			</toolbar>
 		</ist>
 	</container>
 	<container id="19" descr="Rss" img="rss.png" >
