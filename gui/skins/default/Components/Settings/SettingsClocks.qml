@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/EventManager.js" as EventManager
 
 
 MenuColumn {
@@ -26,6 +27,7 @@ MenuColumn {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1
                 objectModel.append(myHomeModels.createAlarmClock())
+                EventManager.eventManager.updateClocksInfo()
             }
         }
 

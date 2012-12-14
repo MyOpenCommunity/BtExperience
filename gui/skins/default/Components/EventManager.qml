@@ -22,7 +22,7 @@ Item {
     property bool scenarioRecording: privateProps.recordingModel === undefined ? false : privateProps.recordingModel.recording
     property bool playing: global.audioVideoPlayer === undefined ? false : !global.audioVideoPlayer.stopped
     property bool mute: global.audioState === null ? false : (global.audioState.state === AudioState.LocalPlaybackMute)
-    property bool clocksEnabled: privateProps.clocksModel === null ? false : privateProps.clocksModel.enabled
+    property int clocks: privateProps.clocksModel === null ? 0 : privateProps.clocksModel.clocks
 
     property variant scenarioRecorder: privateProps.recordingModel === undefined ? undefined : privateProps.recordingModel.recorder
 
@@ -323,6 +323,10 @@ Item {
 
             privateProps.dispatchNotification(notify)
         }
+    }
+
+    function updateClocksInfo() {
+        privateProps.clocksModel.updateAlarmClocksInfo()
     }
 
     QtObject {

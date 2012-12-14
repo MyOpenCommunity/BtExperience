@@ -22,7 +22,7 @@ class AlarmClockNotifier : public ObjectInterface
 {
 	Q_OBJECT
 
-	Q_PROPERTY(bool enabled READ isEnabled NOTIFY enabledChanged)
+	Q_PROPERTY(int clocks READ getClocks NOTIFY clocksChanged)
 
 	Q_PROPERTY(bool alarmActive READ isAlarmActive NOTIFY alarmActiveChanged)
 
@@ -38,27 +38,30 @@ public:
 
 	void addAlarmClockConnections(AlarmClock *alarm);
 
-	bool isEnabled() const;
+	int getClocks() const;
 
 	bool isAlarmActive() const;
 
 	bool isBeepAlarmActive() const;
 
 signals:
-	void enabledChanged();
+	void clocksChanged();
 	void alarmActiveChanged();
 	void beepAlarmActiveChanged();
 	void alarmStarted(AlarmClock *alarmClock);
 	void ringAlarmClock(AlarmClock *alarmClock);
 
-private slots:
+public slots:
 	void updateAlarmClocksInfo();
+
+private slots:
 	void updateAlarmClocksRinging();
 	void emitAlarmStarted();
 
 private:
 	ObjectModel *alarm_clocks_model;
-	bool is_one_enabled, beep_alarm_ringing, alarm_ringing;
+	bool beep_alarm_ringing, alarm_ringing;
+	int clocks;
 };
 
 #endif // ALARM_CLOCK_NOTIFIER_H

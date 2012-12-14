@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
-
+import "../../js/EventManager.js" as EventManager
 import "../../js/Stack.js" as Stack
 
 
@@ -62,6 +62,7 @@ MenuColumn {
 
                 onClicked: {
                     objectModel.remove(column.dataModel)
+                    EventManager.eventManager.updateClocksInfo()
                     column.closeColumn()
                 }
                 status: 0

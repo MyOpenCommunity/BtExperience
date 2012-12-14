@@ -7,7 +7,7 @@
 
 AlarmClockNotifier::AlarmClockNotifier()
 {
-	is_one_enabled = false;
+	clocks = 0;
 	beep_alarm_ringing = false;
 	alarm_ringing = false;
 
@@ -25,11 +25,6 @@ AlarmClockNotifier::AlarmClockNotifier()
 
 	// inits everything
 	updateAlarmClocksInfo();
-}
-
-bool AlarmClockNotifier::isEnabled() const
-{
-	return is_one_enabled;
 }
 
 bool AlarmClockNotifier::isAlarmActive() const
@@ -50,9 +45,14 @@ void AlarmClockNotifier::addAlarmClockConnections(AlarmClock *alarm)
 	connect(alarm, SIGNAL(ringMe(AlarmClock*)), this, SIGNAL(ringAlarmClock(AlarmClock*)));
 }
 
+int AlarmClockNotifier::getClocks() const
+{
+	return clocks;
+}
+
 void AlarmClockNotifier::updateAlarmClocksInfo()
 {
-	bool _is_one_enabled = false;
+	int counter = 0;
 
 	// cycles over all alarm clocks objects to check if any is enabled
 	for (int i = 0; i < alarm_clocks_model->getCount(); ++i)
@@ -60,16 +60,16 @@ void AlarmClockNotifier::updateAlarmClocksInfo()
 		AlarmClock *alarm = qobject_cast<AlarmClock *>(alarm_clocks_model->getObject(i));
 		if (alarm->isEnabled())
 		{
-			_is_one_enabled = true;
+			++counter;
 			break;
 		}
 	}
 
-	if (_is_one_enabled == is_one_enabled)
+	if (counter == clocks)
 		return;
 
-	is_one_enabled = _is_one_enabled;
-	emit enabledChanged();
+	clocks = counter;
+	emit clocksChanged();
 }
 
 void AlarmClockNotifier::updateAlarmClocksRinging()
