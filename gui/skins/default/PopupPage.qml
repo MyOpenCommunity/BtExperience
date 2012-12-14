@@ -100,6 +100,11 @@ BasePage {
 
     function addAlarmClockTriggering(device) {
         privateProps.update(PopupLogic.addAlarmClockPopup(device))
+        device.ringingChanged.connect(removeAlarmClockPopup)
+    }
+
+    function removeAlarmClockPopup() {
+        privateProps.update(PopupLogic.removeAlarmClockPopup())
     }
 
     // needed to translate antintrusion names in alarm popups

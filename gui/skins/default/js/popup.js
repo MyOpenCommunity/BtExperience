@@ -97,6 +97,22 @@ function addAlarmClockPopup(device) {
 }
 
 /**
+  * Removes highest priority alarm clock popup that stopped ringing
+  *
+  * Removes highest priority alarm clock popup that stopped ringing and
+  * returns the new highest priority popup
+  */
+function removeAlarmClockPopup() {
+    for (var i = _alarmClockPopups.length - 1; i >= 0; --i) {
+        var data = _alarmClockPopups[i]
+        if (!data["_device"].ringing)
+            _alarmClockPopups.splice(i, 1)
+        return highestPriorityPopup()
+    }
+    return highestPriorityPopup()
+}
+
+/**
   * Adds a scenario activation popup
   *
   * Adds a scenario activation popup to the stack of scenario popups and show

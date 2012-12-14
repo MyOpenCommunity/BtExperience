@@ -25,7 +25,7 @@ namespace
 	const int MASK_SATURDAY = 0x2;
 	const int MASK_SUNDAY = 0x1;
 
-	const int ALARM_TIME = 120;
+	const int ALARM_TIME = 2 * 60;
 	const int POSTPONE_TIME = 5 * 60;
 	const int MAX_TIME = 30 * 60;
 
