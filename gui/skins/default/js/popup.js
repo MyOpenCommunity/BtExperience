@@ -105,9 +105,10 @@ function addAlarmClockPopup(device) {
 function removeAlarmClockPopup() {
     for (var i = _alarmClockPopups.length - 1; i >= 0; --i) {
         var data = _alarmClockPopups[i]
-        if (!data["_device"].ringing)
+        if (!data["_device"].ringing) {
             _alarmClockPopups.splice(i, 1)
-        return highestPriorityPopup()
+            return highestPriorityPopup()
+        }
     }
     return highestPriorityPopup()
 }
