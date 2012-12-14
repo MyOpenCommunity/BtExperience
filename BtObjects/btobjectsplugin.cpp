@@ -1312,17 +1312,8 @@ void BtObjectsPlugin::parseHomepage(const QDomNode &container)
 			int link_uii = getIntAttribute(link, "uii");
 			ItemInterface *l = uii_map.value<ItemInterface>(link_uii);
 
-			// Did we find a thermal probe?
-			ThermalNonControlledProbe *p1 = qobject_cast<ThermalNonControlledProbe *>(l);
-			ThermalControlledProbe *p2 = qobject_cast<ThermalControlledProbe *>(l);
 			ObjectInterface *o = qobject_cast<ObjectInterface *>(l);
-			if (p1 || p2)
-			{
-				ObjectLink *item = new ObjectLink(o, -1, -1);
-				item->setContainerUii(homepage_uii);
-				object_link_model << item;
-			}
-			else if (o) {
+			if (o) {
 				ObjectLink *item = new ObjectLink(o, -1, -1);
 				item->setContainerUii(homepage_uii);
 				media_link_model << item;
@@ -1332,11 +1323,38 @@ void BtObjectsPlugin::parseHomepage(const QDomNode &container)
 				if (!l)
 				{
 					qWarning() << "Invalid uii" << link_uii << "in homepage";
-					Q_ASSERT_X(false, "parseHomepage", "Invalid uii");
+					Q_ASSERT_X(false, __PRETTY_FUNCTION__, "Invalid uii");
 					continue;
 				}
 
 				l->setContainerUii(homepage_uii);
+			}
+		}
+
+		// looking for child toolbar tag
+		foreach (const QDomNode &toolbar, getChildren(ist, "toolbar"))
+		{
+			foreach (const QDomNode &sub_link, getChildren(toolbar, "link"))
+			{
+				int link_uii = getIntAttribute(sub_link, "uii");
+				ItemInterface *l = uii_map.value<ItemInterface>(link_uii);
+
+				// Did we find a thermal probe?
+				ThermalNonControlledProbe *p1 = qobject_cast<ThermalNonControlledProbe *>(l);
+				ThermalControlledProbe *p2 = qobject_cast<ThermalControlledProbe *>(l);
+				ObjectInterface *o = qobject_cast<ObjectInterface *>(l);
+				if (p1 || p2)
+				{
+					ObjectLink *item = new ObjectLink(o, -1, -1);
+					item->setContainerUii(homepage_uii);
+					object_link_model << item;
+				}
+				else
+				{
+					qWarning() << "Invalid uii" << link_uii << "in homepage/toolbar";
+					Q_ASSERT_X(false, __PRETTY_FUNCTION__, "Invalid uii");
+					continue;
+				}
 			}
 		}
 	}
