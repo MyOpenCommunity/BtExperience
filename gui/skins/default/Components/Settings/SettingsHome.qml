@@ -61,6 +61,7 @@ MenuColumn {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
                 global.guiSettings.homeBgImage = ""
+                column.closeColumn()
             }
         }
 
