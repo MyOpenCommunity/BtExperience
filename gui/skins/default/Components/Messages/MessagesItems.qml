@@ -37,48 +37,11 @@ MenuColumn {
                 column.loadColumn(columnMessages, qsTr("Received messages"))
             }
         }
-
-        MenuItem {
-            name: qsTr("new message")
-            backgroundImage: "../../images/common/bg_automazioni.svg"
-            MouseArea { // to avoid pressed effect
-                anchors.fill: parent
-            }
-            ButtonImageThreeStates {
-                id: newButton
-                anchors {
-                    right: parent.right
-                    rightMargin: 7
-                    top: parent.top
-                    topMargin: 7
-                }
-
-                defaultImageBg: "../../images/common/btn_nuovo_messaggio.svg"
-                pressedImageBg: "../../images/common/btn_nuovo_messaggio_P.svg"
-                selectedImageBg: "../../images/common/btn_nuovo_messaggio_S.svg"
-                shadowImage: "../../images/common/ombra_btn_nuovo_messaggio.svg"
-                defaultImage: "../../images/common/ico_nuovo_messaggio.svg"
-                pressedImage: "../../images/common/ico_nuovo_messaggio_P.svg"
-                selectedImage: "../../images/common/ico_nuovo_messaggio_P.svg"
-                status: (privateProps.currentIndex === 2) ? 1 : 0
-                onClicked: {
-                    if (privateProps.currentIndex !== 2)
-                        privateProps.currentIndex = 2
-                    column.loadColumn(messageEdit, qsTr("New message"))
-                }
-
-            }
-        }
     }
 
     Component {
         id: columnMessages
         ColumnMessages {}
-    }
-
-    Component {
-        id: messageEdit
-        MessageEdit {}
     }
 
     QtObject {
