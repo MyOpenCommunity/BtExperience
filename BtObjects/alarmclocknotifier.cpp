@@ -61,7 +61,6 @@ void AlarmClockNotifier::updateAlarmClocksInfo()
 		if (alarm->isEnabled())
 		{
 			++counter;
-			break;
 		}
 	}
 
