@@ -1,9 +1,6 @@
 import QtQuick 1.1
-import BtObjects 1.0
 import Components 1.0
-import "js/Stack.js" as Stack
 import "js/MainContainer.js" as Container
-import "js/datetime.js" as DateTime
 
 
 Image {
@@ -49,12 +46,6 @@ Image {
         popupLoader.sourceComponent = sourceComponent
         popupLoader.item.closePopup.connect(closePopup)
         page.state = "popup"
-    }
-
-    // needed to translate antintrusion names in popup
-    QtObject {
-        id: privateProps
-        property QtObject antintrusionNames: AntintrusionNames { }
     }
 
     // The hooks called by the Stack javascript manager. See also PageAnimation
@@ -143,7 +134,6 @@ Image {
     Constants {
         id: constants
     }
-
 
     states: [
         State {
