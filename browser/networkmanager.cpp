@@ -10,6 +10,7 @@
 #include <QSslConfiguration>
 #include <QFile>
 #include <QDir>
+#include <QMetaEnum>
 
 #define USER_INPUT_TIMEOUT_MS 30000  // 30 secs
 #define DEFAULT_CA_CERT_ADDRESS "http://curl.haxx.se/ca/cacert.pem"
@@ -18,6 +19,8 @@
 #else
 #define EXTRA_12_PATH "/home/bticino/cfg/extra/12/"
 #endif
+#define LOG_FAILED_REQUESTS 1
+
 
 NetworkAccessManagerFactory::NetworkAccessManagerFactory(BrowserProperties *props)
 {
@@ -56,6 +59,10 @@ BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
 	}
 	QNetworkReply *r = get(QNetworkRequest(QUrl(address)));
 	connect(r, SIGNAL(readChannelFinished()), this, SLOT(downloadCaFinished()));
+
+#if LOG_FAILED_REQUESTS
+	connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(displayErrors(QNetworkReply*)));
+#endif
 }
 
 void BtNetworkAccessManager::setAuthentication(const QString &user, const QString &pass)
@@ -78,6 +85,7 @@ void BtNetworkAccessManager::addSecurityException()
 
 void BtNetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
 {
+	qDebug() << "SSL error for URL" << reply->request().url().toString();
 	foreach (QSslError e, errors)
 		qDebug() << "error:" << int(e.error()) << "string: " << e.errorString();
 
@@ -86,6 +94,17 @@ void BtNetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 	if (loop.exec() == IgnoreCertificateErrors)
 	{
 		reply->ignoreSslErrors();
+	}
+}
+
+void BtNetworkAccessManager::displayErrors(QNetworkReply *reply)
+{
+	if (reply->error() != QNetworkReply::NoError)
+	{
+		int idx = reply->metaObject()->indexOfEnumerator("NetworkError");
+		QMetaEnum e = reply->metaObject()->enumerator(idx);
+
+		qWarning() << "Error" << e.key(reply->error()) << "while loading" << reply->request().url().toString();
 	}
 }
 
