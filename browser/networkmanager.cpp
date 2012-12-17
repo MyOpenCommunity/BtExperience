@@ -42,6 +42,10 @@ QNetworkAccessManager *NetworkAccessManagerFactory::create(QObject *parent)
 BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
 	QNetworkAccessManager(parent)
 {
+	// load certificates file if present
+	if (QFile(QString(EXTRA_12_PATH) + "cacert.pem").exists())
+		QSslSocket::addDefaultCaCertificates(QString(EXTRA_12_PATH) + "cacert.pem");
+
 	// TODO: only update CA certificates every X days
 	// TODO: only download the updated certificates once
 	QFile ca_conf_file(QString(EXTRA_12_PATH) + "ca_cert_address");
