@@ -7,6 +7,10 @@ import "../../js/formatting.js" as Formatting
 
 MenuColumn {
     id: column
+
+    property int view_decimals: 3
+    property int int_decimals: Math.pow(10, view_decimals)
+
     Item {
         id: controls
         width: bg1.width
@@ -32,33 +36,37 @@ MenuColumn {
         ControlDoubleSpin {
             id: spinThreshold1
             property int intPart: Math.floor(dataModel.thresholds[0])
-            property int decPart: (dataModel.thresholds[0] - Math.floor(dataModel.thresholds[0])) * 100
+            property int decPart: (dataModel.thresholds[0] - Math.floor(dataModel.thresholds[0])) * int_decimals
 
             leftText: Formatting.padNumber(intPart, 2)
-            rightText: Formatting.padNumber(decPart, 2)
+            rightText: Formatting.padNumber(decPart, view_decimals)
             onLeftMinusClicked: {
                 if (intPart > 0)
                     intPart -= 1
+                else
+                    intPart = 65
             }
             onLeftPlusClicked: {
-                intPart += 1
+                if (intPart < 65)
+                    intPart += 1
+                else
+                    intPart = 0
             }
             onRightMinusClicked: {
                 if (decPart > 0)
                     decPart -= 1
-                else if (decPart == 0 && intPart > 0) {
-                    decPart = 99
-                    intPart -= 1
+                else {
+                    decPart = int_decimals - 1
+                    spinThreshold1.leftMinusClicked()
                 }
             }
-
             onRightPlusClicked: {
-                if (decPart < 99) {
+                if (decPart < int_decimals - 1) {
                     decPart += 1
                 }
-                else if (decPart === 99) {
+                else {
                     decPart = 0
-                    intPart += 1
+                    spinThreshold1.leftPlusClicked()
                 }
             }
             anchors {
@@ -84,33 +92,37 @@ MenuColumn {
         ControlDoubleSpin {
             id: spinThreshold2
             property int intPart: Math.floor(dataModel.thresholds[1])
-            property int decPart: (dataModel.thresholds[1] - Math.floor(dataModel.thresholds[1])) * 100
+            property int decPart: (dataModel.thresholds[1] - Math.floor(dataModel.thresholds[1])) * int_decimals
 
             leftText: Formatting.padNumber(intPart, 2)
-            rightText: Formatting.padNumber(decPart, 2)
+            rightText: Formatting.padNumber(decPart, view_decimals)
             onLeftMinusClicked: {
                 if (intPart > 0)
                     intPart -= 1
+                else
+                    intPart = 65
             }
             onLeftPlusClicked: {
-                intPart += 1
+                if (intPart < 65)
+                    intPart += 1
+                else
+                    intPart = 0
             }
             onRightMinusClicked: {
                 if (decPart > 0)
                     decPart -= 1
-                else if (decPart == 0 && intPart > 0) {
-                    decPart = 99
-                    intPart -= 1
+                else {
+                    decPart = int_decimals - 1
+                    spinThreshold2.leftMinusClicked()
                 }
             }
-
             onRightPlusClicked: {
-                if (decPart < 99) {
+                if (decPart < int_decimals - 1) {
                     decPart += 1
                 }
-                else if (decPart === 99) {
+                else {
                     decPart = 0
-                    intPart += 1
+                    spinThreshold2.leftPlusClicked()
                 }
             }
 
@@ -131,8 +143,8 @@ MenuColumn {
 
         onCancelClicked: column.closeColumn()
         onOkClicked: {
-            dataModel.thresholds = [spinThreshold1.intPart + spinThreshold1.decPart / 100,
-                                    spinThreshold2.intPart + spinThreshold2.decPart / 100]
+            dataModel.thresholds = [spinThreshold1.intPart + spinThreshold1.decPart / int_decimals,
+                                    spinThreshold2.intPart + spinThreshold2.decPart / int_decimals]
             column.closeColumn()
         }
     }
