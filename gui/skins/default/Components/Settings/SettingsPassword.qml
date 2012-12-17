@@ -10,10 +10,7 @@ MenuColumn {
     Column {
         MenuItem {
             name: qsTr("Change password")
-            onClicked: {
-                console.log("clicked on change password")
-                Stack.pushPage("ChangePassword.qml")
-            }
+            onClicked: Stack.pushPage("ChangePassword.qml")
         }
 
         PaginatorList {
