@@ -1,21 +1,33 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/Stack.js" as Stack
+
 
 MenuColumn {
     id: column
 
-    PaginatorList {
-        id: list
-        currentIndex: global.passwordEnabled
-
-        delegate: MenuItemDelegate {
-            name: model.name
-            onClicked: global.passwordEnabled = value
+    Column {
+        MenuItem {
+            name: qsTr("Change password")
+            onClicked: {
+                console.log("clicked on change password")
+                Stack.pushPage("ChangePassword.qml")
+            }
         }
 
-        model: modelList
-        onCurrentPageChanged: column.closeChild()
+        PaginatorList {
+            id: paginator
+            currentIndex: global.passwordEnabled
+
+            delegate: MenuItemDelegate {
+                name: model.name
+                onClicked: global.passwordEnabled = value
+            }
+
+            model: modelList
+            onCurrentPageChanged: column.closeColumn()
+        }
     }
 
     ListModel {
@@ -25,6 +37,6 @@ MenuColumn {
     Component.onCompleted: {
         modelList.append({"value": false, "name": pageObject.names.get('PASSWORD', false)})
         modelList.append({"value": true, "name": pageObject.names.get('PASSWORD', true)})
-        list.currentIndex = global.passwordEnabled
+        paginator.currentIndex = global.passwordEnabled
     }
 }
