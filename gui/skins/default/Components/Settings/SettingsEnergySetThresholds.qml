@@ -40,11 +40,5 @@ MenuColumn {
                 }
             }
         }
-
-        ControlSwitch {
-            text: qsTr("alerts enabled")
-        }
     }
 }
-
-

@@ -9,16 +9,24 @@ MenuColumn {
         paginator.currentIndex = -1
     }
 
-    PaginatorList {
-        id: paginator
-        delegate: MenuItemDelegate {
-            itemObject: energiesCounters.getObject(index)
-            hasChild: true
-            onClicked: column.loadColumn(thresholdsComponent, itemObject.name, itemObject)
+    Column {
+        ControlSwitch {
+            text: qsTr("alerts %1").arg(global.guiSettings.energyThresholdBeep ? qsTr("enabled") : qsTr("disabled"))
+            status: global.guiSettings.energyThresholdBeep ? 0 : 1
+            onClicked: global.guiSettings.energyThresholdBeep = !global.guiSettings.energyThresholdBeep
         }
 
-        onCurrentPageChanged: column.closeChild()
-        model: energiesCounters
+        PaginatorList {
+            id: paginator
+            delegate: MenuItemDelegate {
+                itemObject: energiesCounters.getObject(index)
+                hasChild: true
+                onClicked: column.loadColumn(thresholdsComponent, itemObject.name, itemObject)
+            }
+
+            onCurrentPageChanged: column.closeChild()
+            model: energiesCounters
+        }
     }
 
     ObjectModel {
