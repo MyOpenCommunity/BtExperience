@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtExperience 1.0
 import "js/Stack.js" as Stack
 import Components 1.0
+import Components.Text 1.0
 
 // This page is only used to keep track of browser position in the page stack
 BasePage {
@@ -12,8 +13,32 @@ BasePage {
     Rectangle {
         id: blackBg
         anchors.fill: parent
-        color: "#4F4F4F"
-        opacity: 1
+
+        Column {
+            anchors.centerIn: parent
+            spacing: 20
+
+            UbuntuMediumText {
+                text: qsTr("Loading browser...")
+                font.pixelSize: 18
+            }
+
+            SvgImage {
+                id: loadingIndicator
+
+                source: "images/common/ico_caricamento.svg"
+                visible: true
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Timer {
+                    id: loadingTimer
+                    interval: 250
+                    repeat: true
+                    onTriggered: loadingIndicator.rotation += 45
+                    running: true
+                }
+            }
+        }
     }
 
     onVisibleChanged: global.browser.visible = visible
