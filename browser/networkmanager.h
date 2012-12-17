@@ -31,6 +31,9 @@ signals:
 	void credentialsRequired(BtNetworkAccessManager *, QNetworkReply *);
 	void invalidCertificate(BtNetworkAccessManager *, QNetworkReply *);
 
+protected:
+	QNetworkReply *createRequest( Operation op, const QNetworkRequest &req, QIODevice * outgoingData=0 );
+
 private slots:
 	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 	void requireAuthentication(QNetworkReply *reply, QAuthenticator *auth);

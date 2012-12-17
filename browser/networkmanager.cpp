@@ -1,5 +1,6 @@
 #include "networkmanager.h"
 #include "browserproperties.h"
+#include "networkreply.h"
 
 #include <QAuthenticator>
 #include <QCoreApplication>
@@ -81,6 +82,16 @@ void BtNetworkAccessManager::addSecurityException()
 {
 	// TODO: save certificates
 	loop.exit(IgnoreCertificateErrors);
+}
+
+QNetworkReply *BtNetworkAccessManager::createRequest(QNetworkAccessManager::Operation op, const QNetworkRequest &req, QIODevice *outgoingData)
+{
+	QNetworkRequest new_req(req);
+	QNetworkReply *reply = QNetworkAccessManager::createRequest(op, new_req, outgoingData);
+
+	// BtNetworkReply is used to provide an error page for network errors; this could be done using QWebPage, but it is
+	// not accessible from QML and the header for the QML item is private
+	return new BtNetworkReply(this, reply);
 }
 
 void BtNetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
