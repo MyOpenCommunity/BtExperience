@@ -73,6 +73,7 @@ MenuColumn {
             }
 
             model: objectModel
+            onCurrentPageChanged: column.closeChild()
         }
     }
 

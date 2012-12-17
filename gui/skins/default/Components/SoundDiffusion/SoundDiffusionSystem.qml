@@ -23,6 +23,7 @@ MenuColumn {
         }
 
         model: objectModel
+        onCurrentPageChanged: column.closeChild()
     }
 
     BtObjectsMapping { id: mapping }

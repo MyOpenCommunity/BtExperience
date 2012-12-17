@@ -17,6 +17,7 @@ MenuColumn {
         }
 
         model: radioModel
+        onCurrentPageChanged: column.closeChild()
     }
 
     SystemsModel { id: linksModel; systemId: Container.IdMultimediaWebRadio; source: myHomeModels.mediaContainers }

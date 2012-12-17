@@ -53,7 +53,7 @@ MenuColumn {
         id: paginator
 
         currentIndex: -1
-        onCurrentPageChanged: closeChild()
+        onCurrentPageChanged: column.closeChild()
         delegate: MenuItemDelegate {
             itemObject: quicklinksModel.getObject(index)
             name: itemObject.description

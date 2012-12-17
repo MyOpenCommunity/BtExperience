@@ -17,6 +17,7 @@ MenuColumn {
             onClicked: column.loadColumn(goalsLineComponent, itemObject.name, itemObject)
         }
 
+        onCurrentPageChanged: column.closeChild()
         model: energiesCounters
     }
 

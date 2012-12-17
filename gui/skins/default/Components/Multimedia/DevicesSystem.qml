@@ -34,6 +34,7 @@ MenuColumn {
         }
 
         model: modelList
+        onCurrentPageChanged: column.closeChild()
     }
 
     SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }

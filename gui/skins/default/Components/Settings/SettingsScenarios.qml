@@ -46,7 +46,7 @@ MenuColumn {
 
         currentIndex: -1
         model: scenariosModule
-        onCurrentPageChanged: closeChild()
+        onCurrentPageChanged: column.closeChild()
 
         delegate: MenuItemDelegate {
             itemObject: scenariosModule.getObject(index)

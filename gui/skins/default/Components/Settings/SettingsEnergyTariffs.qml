@@ -18,6 +18,7 @@ MenuColumn {
             onClicked: column.loadColumn(setTariffsComponent, itemObject.name, itemObject)
         }
 
+        onCurrentPageChanged: column.closeChild()
         model: energiesRates
     }
 

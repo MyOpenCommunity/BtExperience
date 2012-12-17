@@ -28,5 +28,6 @@ MenuColumn {
         Component.onCompleted: {
             paginator.listHeight = column.height = 50 * model.length
         }
+        onCurrentPageChanged: column.closeChild()
     }
 }

@@ -71,6 +71,7 @@ MenuColumn {
             }
 
             model: modelList
+            onCurrentPageChanged: column.closeChild()
         }
     }
 

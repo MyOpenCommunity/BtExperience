@@ -17,6 +17,7 @@ MenuColumn {
             name: itemObject.name
             onClicked: column.sourceSelected(itemObject)
         }
+        onCurrentPageChanged: column.closeChild()
     }
 
     ObjectModel {

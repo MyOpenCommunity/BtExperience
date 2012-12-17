@@ -20,6 +20,7 @@ MenuColumn {
             }
 
             model: energiesFamilies
+            onCurrentPageChanged: column.closeChild()
 
             ObjectModel {
                 id: energiesFamilies

@@ -17,6 +17,7 @@ MenuColumn {
             onClicked: column.loadColumn(thresholdsComponent, itemObject.name, itemObject)
         }
 
+        onCurrentPageChanged: column.closeChild()
         model: energiesCounters
     }
 
