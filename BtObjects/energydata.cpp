@@ -871,7 +871,6 @@ void EnergyData::requestCumulativeLastYear(RequestOptions options)
 
 void EnergyData::valueReceived(const DeviceValues &values_list)
 {
-	// TODO parse thresholds
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
 	{
@@ -910,7 +909,10 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 			int index = it.value().toInt();
 			double value = values_list[EnergyDevice::DIM_THRESHOLD_VALUE].toInt() / unit_conversion;
 
-			if (thresholds[index] != value)
+			// when disabling threshold we get back a threshold value of 0.0: ignore it
+			// so we have the previous value in case the user re-enables the threshold;
+			// the disabled state is update when receiving DIM_THRESHOLD_STATE
+			if (value != 0.0 && thresholds[index] != value)
 			{
 				thresholds[index] = value;
 				emit thresholdsChanged(thresholds);

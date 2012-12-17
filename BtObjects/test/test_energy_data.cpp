@@ -1153,6 +1153,16 @@ void TestEnergyData::testReceiveThresholdValue()
 	t.checkSignals();
 
 	QCOMPARE(obj->getThresholds(), QVariantList() << 0.500 << 0.0);
+
+	// ignore 0 threshold value, and assume we will receive a
+	// separate notification the threshold has been disabled
+	v[EnergyDevice::DIM_THRESHOLD_INDEX] = 0;
+	v[EnergyDevice::DIM_THRESHOLD_VALUE] = 0;
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+
+	QCOMPARE(obj->getThresholds(), QVariantList() << 0.500 << 0.0);
 }
 
 void TestEnergyData::testReceiveThresholdLevel()
