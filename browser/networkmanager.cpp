@@ -9,6 +9,7 @@
 #include <QSslSocket>
 #include <QSslConfiguration>
 #include <QFile>
+#include <QDir>
 
 #define USER_INPUT_TIMEOUT_MS 30000  // 30 secs
 #define DEFAULT_CA_CERT_ADDRESS "http://curl.haxx.se/ca/cacert.pem"
@@ -100,7 +101,7 @@ void BtNetworkAccessManager::downloadCaFinished()
 	QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
 	QFile cacert(QString(EXTRA_12_PATH) + "cacert.pem");
 	QByteArray cert = reply->readAll();
-	if (!cacert.open(QIODevice::WriteOnly))
+	if (!QDir().mkpath(EXTRA_12_PATH) || !cacert.open(QIODevice::WriteOnly))
 		qWarning() << "Cannot open" << cacert.fileName() << "for writing";
 	else
 		cacert.write(cert);
