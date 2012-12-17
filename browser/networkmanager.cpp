@@ -103,6 +103,13 @@ void BtNetworkAccessManager::requireAuthentication(QNetworkReply *reply, QAuthen
 void BtNetworkAccessManager::downloadCaFinished()
 {
 	QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+
+	if (reply->error() != QNetworkReply::NoError)
+	{
+		qWarning() << "Error while updating CA sertificates file";
+		return;
+	}
+
 	QFile cacert(QString(EXTRA_12_PATH) + "cacert.pem");
 	QByteArray cert = reply->readAll();
 	if (!QDir().mkpath(EXTRA_12_PATH) || !cacert.open(QIODevice::WriteOnly))
