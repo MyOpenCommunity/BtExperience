@@ -27,7 +27,7 @@ void TestEnergyData::init()
 	for (int i = 0; i < 12; ++i)
 		goals.append(i + 11);
 
-	obj = new EnergyData(d, "", EnergyFamily::Electricity, "Kw", goals, true, QVariantList() << false << false, rate, 0);
+	obj = new EnergyData(d, "", EnergyFamily::Electricity, "kW", goals, true, QVariantList() << false << false, rate, 0);
 	dev = new EnergyDevice("1", 1, 1);
 
 	rate->setParent(obj);
@@ -1310,7 +1310,7 @@ void TestEnergyItem::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
-	obj = new EnergyData(d, "", EnergyFamily::Electricity, "Kw", QVariantList(), true, QVariantList(), 0, 0);
+	obj = new EnergyData(d, "", EnergyFamily::Electricity, "kW", QVariantList(), true, QVariantList(), 0, 0);
 	dev = new EnergyDevice("1", 1, 1);
 }
 
@@ -1371,7 +1371,7 @@ void TestEnergyGraph::init()
 {
 	EnergyDevice *d = new EnergyDevice("1", 1);
 
-	obj = new EnergyData(d, "", EnergyFamily::Electricity, "Kw", QVariantList(), true, QVariantList(), 0, 0);
+	obj = new EnergyData(d, "", EnergyFamily::Electricity, "kW", QVariantList(), true, QVariantList(), 0, 0);
 	dev = new EnergyDevice("1", 1, 1);
 }
 

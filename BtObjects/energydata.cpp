@@ -156,7 +156,7 @@ namespace
 
 	double unitConversionFactor(EnergyData::EnergyType type, QString unit)
 	{
-		if (type == EnergyData::Electricity && unit == "Kw")
+		if (type == EnergyData::Electricity && unit == "kW")
 			return 1000;
 
 		return 1;
@@ -328,8 +328,8 @@ QString EnergyData::getUnit() const
 QString EnergyData::getCurrentUnit() const
 {
 	// it's more correct to do this per-unit rather than per-energy type; for
-	// example heating/cooling can have Kw and cal in the configuration
-	if (energy_unit == "Kw")
+	// example heating/cooling can have kW and cal in the configuration
+	if (energy_unit == "kW")
 		return energy_unit;
 	else
 		return energy_unit + "/h";
@@ -338,8 +338,8 @@ QString EnergyData::getCurrentUnit() const
 QString EnergyData::getCumulativeUnit() const
 {
 	// see comment in getCurrentUnit()
-	if (energy_unit == "Kw")
-		return "Kwh";
+	if (energy_unit == "kW")
+		return "kWh";
 	else
 		return energy_unit;
 }

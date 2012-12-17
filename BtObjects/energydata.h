@@ -446,7 +446,7 @@ private:
 	bool goals_enabled, goal_exceeded;
 	int goal_month_check;
 
-	// Unit symbol (es. Kw, dm3, ...)
+	// Unit symbol (es. kW, dm3, ...)
 	QString energy_unit;
 	// conversion factor from device units to energy_unit
 	// f.e. if unit is yd3, unit_conversion is 0.0013079506

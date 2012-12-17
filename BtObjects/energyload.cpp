@@ -181,17 +181,17 @@ EnergyLoadManagement::LoadStatus EnergyLoadManagement::getLoadStatus() const
 
 QString EnergyLoadManagement::getUnit() const
 {
-	return "Kw";
+	return "kW";
 }
 
 QString EnergyLoadManagement::getCurrentUnit() const
 {
-	return "Kw";
+	return "kW";
 }
 
 QString EnergyLoadManagement::getCumulativeUnit() const
 {
-	return "Kwh";
+	return "kWh";
 }
 
 double EnergyLoadManagement::getConsumption() const

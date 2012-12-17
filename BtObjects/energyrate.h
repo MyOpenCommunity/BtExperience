@@ -52,7 +52,7 @@ class EnergyRate : public ObjectInterface
 	/// Currency symbol
 	Q_PROPERTY(QString currencySymbol READ getCurrencySymbol CONSTANT)
 
-	/// Energy measure unit (Kwh, m3, ...)
+	/// Energy measure unit (kWh, m3, ...)
 	Q_PROPERTY(QString measureUnit READ getMeasureUnit CONSTANT)
 
 	/// Whether this rate applied to energy consumption or production
