@@ -3,4 +3,5 @@
         <last_update time="2012-12-18T15:53:24Z"/>
         <ca_database_address url="http://curl.haxx.se/ca/cacert.pem"/>
     </conf>
+    <ssl_exceptions />
 </browser>

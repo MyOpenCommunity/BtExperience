@@ -75,6 +75,9 @@ BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
 		connect(r, SIGNAL(readChannelFinished()), this, SLOT(downloadCaFinished()));
 	}
 
+	foreach (QDomNode exception, getChildren(getElement(doc.documentElement(), "ssl_exceptions"), "exception"))
+		ssl_exceptions.insert(getAttribute(exception, "host"));
+
 #if LOG_FAILED_REQUESTS
 	connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(displayErrors(QNetworkReply*)));
 #endif
@@ -111,6 +114,15 @@ QNetworkReply *BtNetworkAccessManager::createRequest(QNetworkAccessManager::Oper
 
 void BtNetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
 {
+	QString host = reply->request().url().host();
+
+	if (ssl_exceptions.contains(host))
+	{
+		qDebug() << "Applying SSL exception for" << host;
+		reply->ignoreSslErrors();
+		return;
+	}
+
 	qDebug() << "SSL error for URL" << reply->request().url().toString();
 	foreach (QSslError e, errors)
 		qDebug() << "error:" << int(e.error()) << "string: " << e.errorString();
@@ -119,7 +131,17 @@ void BtNetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 
 	if (loop.exec() == IgnoreCertificateErrors)
 	{
+		ssl_exceptions.insert(host);
 		reply->ignoreSslErrors();
+
+		QDomDocument doc = configuration->getConfiguration(BROWSER_FILE);
+		QDomElement ssl_exceptions = getElement(doc.documentElement(), "ssl_exceptions");
+		QDomElement exception = doc.createElement("exception");
+
+		exception.setAttribute("host", host);
+		ssl_exceptions.appendChild(exception);
+
+		configuration->saveConfiguration(BROWSER_FILE);
 	}
 }
 
@@ -145,8 +167,12 @@ void BtNetworkAccessManager::checkSslStatus(QNetworkReply *reply)
 	QUrl url = wrapped_reply->request().url();
 	QString host = url.port() == -1 ? url.host() : QString("%1:%2port").arg(url.host()).arg(url.port());
 
+	// for requests in the SSL exceptions list we do not have an API to check whether the
+	// certificate was validated or not (for example because the SSL error was transient and
+	// has not been fixed) so we assume that the certificate has not been validated
 	if (wrapped_reply->error() == QNetworkReply::SslHandshakeFailedError ||
-	    wrapped_reply->sslConfiguration().peerCertificateChain().size() == 0)
+	    wrapped_reply->sslConfiguration().peerCertificateChain().size() == 0 ||
+	    ssl_exceptions.contains(url.host()))
 	{
 		emit requestComplete(wrapped_reply->request().url().scheme() == "https", host, QString());
 		return;
