@@ -11,7 +11,7 @@
 
 #define SCREENSAVER_TIME 50
 #define FREEZE_TIME      10
-#define FREEZE_DELTA     100
+#define FREEZE_BRIGHTNESS 10
 
 namespace
 {
@@ -193,7 +193,7 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 	{
 	case Freeze:
 		freeze_timer->start();
-		setBrightness(qMax(normal_brightness - FREEZE_DELTA, 10));
+		setBrightness(FREEZE_BRIGHTNESS);
 		break;
 	case ScreenOff:
 		screen_locked = password_enabled;
