@@ -6,7 +6,6 @@ import Components.Text 1.0
 SvgImage {
     property alias text: caption.text
 
-    anchors.top: parent.top
     source: "../../images/common/panel_212x50.svg"
 
     SvgImage {

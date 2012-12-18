@@ -72,33 +72,34 @@ MenuColumn {
 
     Component.onCompleted: modalitySelected(dataModel.probeStatus)
 
-    ControlTemperature {
-        id: fixedItem
-        text: (dataModel.temperature / 10).toFixed(1) + qsTr("°C")
-    }
-
-    MenuItem {
-        id: modalityItem
-        hasChild: true
-        name: qsTr("modes")
-        anchors.top: fixedItem.bottom
-        height: visible ? 50 : 0
-        // we can change mode on 99 zones central units, so make mode menu visible
-        visible: is99zones
-
-        onClicked: {
-            if (!modalityItem.isSelected)
-                modalityItem.isSelected = true
-            var m = privateProps.pendingModality
-            if (m === -1)
-                m = column.dataModel.probeStatus
-            column.loadColumn(thermalControlledProbeModalities, modalityItem.name, dataModel, {"idx": m})
+    Column {
+        ControlTemperature {
+            id: fixedItem
+            text: (dataModel.temperature / 10).toFixed(1) + qsTr("°C")
         }
-    }
 
-    AnimatedLoader {
-        id: itemLoader
-        anchors.top: modalityItem.bottom
+        MenuItem {
+            id: modalityItem
+            hasChild: true
+            name: qsTr("modes")
+            height: visible ? 50 : 0
+            // we can change mode on 99 zones central units, so make mode menu visible
+            visible: is99zones
+
+            onClicked: {
+                if (!modalityItem.isSelected)
+                    modalityItem.isSelected = true
+                var m = privateProps.pendingModality
+                if (m === -1)
+                    m = column.dataModel.probeStatus
+                column.loadColumn(thermalControlledProbeModalities, modalityItem.name, dataModel, {"idx": m})
+            }
+        }
+
+        AnimatedLoader {
+            id: itemLoader
+            width: modalityItem.width
+        }
     }
 
     Component {
