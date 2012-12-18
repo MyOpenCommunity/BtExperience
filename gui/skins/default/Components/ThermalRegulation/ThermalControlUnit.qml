@@ -29,8 +29,6 @@ MenuColumn {
         ThermalControlUnitModalities {}
     }
 
-    height: fixedItem.height + seasonItem.height + modalityItem.height + itemLoader.height
-
     QtObject {
         id: privateProps
         property int currentIndex: -1
@@ -148,21 +146,9 @@ MenuColumn {
         ControlTemperature {
             id: fixedItem
             property int temperature: 0
-            property int prevHeight: 0
             // 4 zones central units are zones themselves: we must show the
             // temperature of the linked probe in such cases
             visible: (!is99zones)
-            // trick to compute the right height for menu column
-            onVisibleChanged: {
-                // Fix the case when a video call comes in and the menu is open
-                if (!visible) {
-                    prevHeight = height
-                    height = 0
-                }
-                else {
-                    height = prevHeight
-                }
-            }
             text: (fixedItem.temperature / 10).toFixed(1) + qsTr("°C")
         }
 
@@ -434,6 +420,7 @@ MenuColumn {
 
         AnimatedLoader {
             id: itemLoader
+            // needed to correctly position the loader inside the Column
             width: modalityItem.width
         }
     }

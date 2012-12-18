@@ -138,7 +138,6 @@ MenuColumn {
             ButtonOkCancel {
                 // a trick to avoid wrong menu column height computation
                 visible: is99zones || isFancoil()
-                onVisibleChanged: if (!visible) height = 0
                 onCancelClicked: {
                     if (isFancoil())
                         rootAutomaticComponent.speed = column.dataModel.fancoil
