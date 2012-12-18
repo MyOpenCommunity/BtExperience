@@ -4,6 +4,15 @@
 #include <QNetworkReply>
 
 
+/*
+	Wrapper arount QNetworkReply
+
+	Forwards most methods to the wrapped reply, and provides default error
+	content in case of network errors.
+
+	Note that some methods in QNetworkReply (such as sslConfiguration/setSslConfiguration)
+	are not virtual.
+*/
 class BtNetworkReply : public QNetworkReply
 {
 	Q_OBJECT
@@ -11,6 +20,9 @@ class BtNetworkReply : public QNetworkReply
 public:
 	BtNetworkReply(QObject *parent, QNetworkReply *reply);
 	~BtNetworkReply();
+
+	// must be used to access SSL configuration (accessors aren't virtual)
+	QNetworkReply *originalReply() const { return reply; }
 
 	// QNetworkReply methods
 	virtual void abort();
