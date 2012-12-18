@@ -439,6 +439,17 @@ Item {
             return false
         }
 
+        // checks if the password page is on top; in this case a vct call must be
+        // placed below it
+        function checkPasswordPage() {
+            var p = Stack.currentPage()
+
+            if (p._pageName === "PasswordCheck")
+                return true
+
+            return false
+        }
+
         function monthlyReportArriving() {
             var p = privateProps.preparePopupPage(false)
             // adds monthly report notification
@@ -449,14 +460,20 @@ Item {
             if (checkCallInProgress("VideoCamera"))
                 return
             global.screenState.enableState(ScreenState.ForcedNormal)
-            Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
+            if (checkPasswordPage())
+                Stack.pushPageBelow("VideoCamera.qml", {"camera": vctConnection.target})
+            else
+                Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
         }
 
         function intercomIncomingCall() {
             if (checkCallInProgress("IntercomPage"))
                 return
             global.screenState.enableState(ScreenState.ForcedNormal)
-            Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
+            if (checkPasswordPage())
+                Stack.pushPageBelow("IntercomPage.qml", {"callObject": intercomConnection.target})
+            else
+                Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
         }
 
         function alarmArriving(alarm) {
