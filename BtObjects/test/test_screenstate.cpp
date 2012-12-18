@@ -28,36 +28,43 @@ void TestScreenState::testScreensaverTimers()
 	QCOMPARE(obj->getState(), ScreenState::Invalid);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(!obj->freeze_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 
 	obj->enableState(ScreenState::ScreenOff);
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(!obj->freeze_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 
 	obj->enableState(ScreenState::Normal);
 	QCOMPARE(obj->getState(), ScreenState::Normal);
 	QVERIFY(obj->screensaver_timer->isActive());
 	QVERIFY(!obj->freeze_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 
 	obj->enableState(ScreenState::Freeze);
 	QCOMPARE(obj->getState(), ScreenState::Freeze);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(obj->freeze_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 
 	obj->enableState(ScreenState::ForcedNormal);
 	QCOMPARE(obj->getState(), ScreenState::ForcedNormal);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(!obj->freeze_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 
 	obj->enableState(ScreenState::PasswordCheck);
 	QCOMPARE(obj->getState(), ScreenState::PasswordCheck);
-	QVERIFY(obj->screensaver_timer->isActive());
+	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(!obj->freeze_timer->isActive());
+	QVERIFY(obj->password_timer->isActive());
 
 	obj->enableState(ScreenState::Calibration);
 	QCOMPARE(obj->getState(), ScreenState::Calibration);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(!obj->freeze_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 }
 
 void TestScreenState::testFreezeNormal()
@@ -153,7 +160,7 @@ void TestScreenState::testPasswordCheckClick()
 
 	QVERIFY(!filterClick());
 	QCOMPARE(obj->getState(), ScreenState::PasswordCheck);
-	QVERIFY(obj->screensaver_timer->isActive());
+	QVERIFY(obj->password_timer->isActive());
 }
 
 void TestScreenState::testCalibrationClick()
@@ -225,7 +232,7 @@ void TestScreenState::testPasswordCheckLockedClick()
 
 	QVERIFY(!filterClick());
 	QCOMPARE(obj->getState(), ScreenState::PasswordCheck);
-	QVERIFY(obj->screensaver_timer->isActive());
+	QVERIFY(obj->password_timer->isActive());
 	t.checkNoSignals();
 }
 
@@ -242,16 +249,19 @@ void TestScreenState::testUnlockSequence()
 	QVERIFY(filterClick());
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 	QVERIFY(!obj->screensaver_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 	t.checkSignals();
 
 	// GUI displays unlock screen
 
 	obj->enableState(ScreenState::PasswordCheck);
 	QCOMPARE(obj->getState(), ScreenState::PasswordCheck);
-	QVERIFY(obj->screensaver_timer->isActive());
+	QVERIFY(!obj->screensaver_timer->isActive());
+	QVERIFY(obj->password_timer->isActive());
 
 	QVERIFY(!filterClick());
-	QVERIFY(obj->screensaver_timer->isActive());
+	QVERIFY(!obj->screensaver_timer->isActive());
+	QVERIFY(obj->password_timer->isActive());
 	t.checkNoSignals();
 
 	// timeout -> freeze and turn off screen again
@@ -268,16 +278,19 @@ void TestScreenState::testUnlockSequence()
 	QVERIFY(filterClick());
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 	QVERIFY(!obj->screensaver_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 	t.checkSignals();
 
 	// GUI re-displays unlock screen
 
 	obj->enableState(ScreenState::PasswordCheck);
 	QCOMPARE(obj->getState(), ScreenState::PasswordCheck);
-	QVERIFY(obj->screensaver_timer->isActive());
+	QVERIFY(!obj->screensaver_timer->isActive());
+	QVERIFY(obj->password_timer->isActive());
 
 	QVERIFY(!filterClick());
-	QVERIFY(obj->screensaver_timer->isActive());
+	QVERIFY(!obj->screensaver_timer->isActive());
+	QVERIFY(obj->password_timer->isActive());
 	t.checkNoSignals();
 
 	// screen unlock -> normal mode
@@ -285,9 +298,11 @@ void TestScreenState::testUnlockSequence()
 	obj->unlockScreen();
 	QCOMPARE(obj->getState(), ScreenState::Normal);
 	QVERIFY(obj->screensaver_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 
 	QVERIFY(!filterClick());
 	QVERIFY(obj->screensaver_timer->isActive());
+	QVERIFY(!obj->password_timer->isActive());
 	t.checkNoSignals();
 
 }

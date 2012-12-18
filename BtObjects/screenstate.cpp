@@ -65,6 +65,11 @@ ScreenState::ScreenState(QObject *parent) : QObject(parent)
 	freeze_timer->setInterval(FREEZE_TIME * 1000);
 	connect(freeze_timer, SIGNAL(timeout()), this, SLOT(stopFreeze()));
 
+	password_timer = new QTimer();
+	password_timer->setSingleShot(true);
+	password_timer->setInterval((FREEZE_TIME + SCREENSAVER_TIME) * 1000);
+	connect(password_timer, SIGNAL(timeout()), this, SLOT(stopPassword()));
+
 	qRegisterMetaType<ScreenState::State>();
 
 	qApp->installEventFilter(this);
@@ -211,13 +216,21 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 	current_state = new_state;
 
 	// manage screensaver timer
-	if (current_state == Normal || current_state == PasswordCheck)
+	if (current_state == Normal)
 	{
 		if (!screensaver_timer->isActive())
 			screensaver_timer->start();
 	}
 	else
 		screensaver_timer->stop();;
+
+	if (current_state == PasswordCheck)
+	{
+		if (!password_timer->isActive())
+			password_timer->start();
+	}
+	else
+		password_timer->stop();;
 
 	emit stateChanged(old_state, new_state);
 	emit stateChangedInt(old_state, new_state);
@@ -236,6 +249,13 @@ void ScreenState::stopFreeze()
 	disableState(PasswordCheck);
 }
 
+void ScreenState::stopPassword()
+{
+	disableState(Normal);
+	disableState(Freeze);
+	disableState(PasswordCheck);
+}
+
 bool ScreenState::updatePressTime()
 {
 	if (screen_locked && current_state != PasswordCheck)
@@ -248,8 +268,10 @@ bool ScreenState::updatePressTime()
 	switch (current_state)
 	{
 	case Normal:
-	case PasswordCheck:
 		screensaver_timer->start();
+		return false;
+	case PasswordCheck:
+		password_timer->start();
 		return false;
 	case ForcedNormal:
 	case Calibration:
