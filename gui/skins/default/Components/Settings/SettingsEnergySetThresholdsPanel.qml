@@ -44,10 +44,10 @@ MenuColumn {
                 if (intPart > 0)
                     intPart -= 1
                 else
-                    intPart = 65
+                    intPart = 64
             }
             onLeftPlusClicked: {
-                if (intPart < 65)
+                if (intPart < 64)
                     intPart += 1
                 else
                     intPart = 0
@@ -100,10 +100,10 @@ MenuColumn {
                 if (intPart > 0)
                     intPart -= 1
                 else
-                    intPart = 65
+                    intPart = 64
             }
             onLeftPlusClicked: {
-                if (intPart < 65)
+                if (intPart < 64)
                     intPart += 1
                 else
                     intPart = 0
