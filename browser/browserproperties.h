@@ -33,6 +33,7 @@ signals:
 	void urlChanged();
 	void authenticationRequired();
 	void untrustedSslConnection();
+	void requestComplete(bool ssl, QString host, QString organization);
 
 private slots:
 	void readInput();

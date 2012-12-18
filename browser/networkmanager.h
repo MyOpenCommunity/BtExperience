@@ -31,6 +31,14 @@ signals:
 	void credentialsRequired(BtNetworkAccessManager *, QNetworkReply *);
 	void invalidCertificate(BtNetworkAccessManager *, QNetworkReply *);
 
+	/*!
+		\brief requestComplete
+		\param ssl whether the connection used SSL
+		\param host host (or host:port) string
+		\param organization for verified certificated, the organization name written in the certificate
+	*/
+	void requestComplete(bool ssl, QString host, QString organization);
+
 protected:
 	QNetworkReply *createRequest( Operation op, const QNetworkRequest &req, QIODevice * outgoingData=0 );
 
@@ -39,6 +47,7 @@ private slots:
 	void requireAuthentication(QNetworkReply *reply, QAuthenticator *auth);
 	void downloadCaFinished();
 	void displayErrors(QNetworkReply *reply);
+	void checkSslStatus(QNetworkReply *reply);
 
 private:
 	enum {
