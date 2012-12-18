@@ -30,6 +30,15 @@ Page {
         }
     }
 
+    Connections {
+        target: toolbar
+        onPlayClicked: {
+            privateProps.exitPath = 2
+            controlVideo.color = "black"
+            camera.endCall()
+        }
+    }
+
     ControlCallManager {
         id: controlCallManager
 
@@ -179,12 +188,6 @@ Page {
         camera.endCall()
     }
 
-    function playButtonClicked() {
-        privateProps.exitPath = 2
-        controlVideo.color = "black"
-        camera.endCall()
-    }
-
     function callEndedCallback() {
         // depending on how we end the call we have to do different things
         if (privateProps.exitPath === 1) {
@@ -266,7 +269,6 @@ Page {
     }
 
     Component.onCompleted: {
-        toolbar.playClicked.connect(playButtonClicked)
         redTimer.running = true
         toolbar.z = 1
         navigationBar.z = 1
