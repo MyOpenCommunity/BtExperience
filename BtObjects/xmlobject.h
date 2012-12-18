@@ -54,7 +54,7 @@ public:
 
 	double doubleValue(const QString &name) const
 	{
-		return getIntAttribute(ist, name, objIntValue(name).toInt());
+		return getDoubleAttribute(ist, name, objDoubleValue(name).toDouble());
 	}
 
 	template<class T>
@@ -78,6 +78,14 @@ private:
 			return cache.value(name);
 
 		return cache[name] = getIntAttribute(obj, name);
+	}
+
+	QVariant objDoubleValue(const QString &name) const
+	{
+		if (cache.contains(name))
+			return cache.value(name);
+
+		return cache[name] = getDoubleAttribute(obj, name);
 	}
 
 	mutable QHash<QString, QVariant> cache;
