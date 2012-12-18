@@ -107,6 +107,7 @@ mac {
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../archive.xml $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../settings.xml $${APP_DIR}/MacOS/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../browser.xml $${APP_DIR}/MacOS/ &&
     QMAKE_POST_LINK += cp -L $${DESTDIR}/BtObjects/libbtobjects$${DEBUG_SUFFIX}.dylib $${APP_DIR}/MacOS/BtObjects/libbtobjects.dylib &&
     QMAKE_POST_LINK += cp -L $${PWD}/../BtObjects/qmldir $${APP_DIR}/MacOS/BtObjects/ &&
     QMAKE_POST_LINK += cp -L $${PWD}/common_files/lib/x86/libcommon.dylib.0 $${APP_DIR}/MacOS/ &&
@@ -121,6 +122,7 @@ mac {
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../archive.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../conf.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../settings.xml $${DESTDIR}/ &&
+    QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../browser.xml $${DESTDIR}/ &&
     QMAKE_POST_LINK += $${INSTALL_CMD} $${PWD}/../BtObjects/qmldir $${DESTDIR}/BtObjects/ &&
 
     isArm() {

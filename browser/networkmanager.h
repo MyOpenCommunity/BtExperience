@@ -6,6 +6,8 @@
 #include <QEventLoop>
 
 class BrowserProperties;
+class ConfigFile;
+
 
 class NetworkAccessManagerFactory : public QDeclarativeNetworkAccessManagerFactory
 {
@@ -50,12 +52,15 @@ private slots:
 	void checkSslStatus(QNetworkReply *reply);
 
 private:
-	enum {
+	enum
+	{
 		AbortAuthentication = -1,   // Abort the authentication procedure
 		IgnoreCertificateErrors = -2,
 	};
+
 	QString username, password;
 	QEventLoop loop;
+	ConfigFile *configuration;
 };
 
 #endif // NETWORKMANAGER_H
