@@ -15,7 +15,9 @@ Item {
 
     property string imagesPath: "../images/"
     property int fontSize: 14
+
     signal homeClicked
+    signal playClicked
 
     width: 1024
     height: toolbar_top.height + toolbar_bottom.height
@@ -270,7 +272,10 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_source-play_p.svg" :
                               "../images/toolbar/icon_source-play.svg"
-            onClicked: Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioVideoPlayer.isUpnp()})
+            onClicked: {
+                toolbar.playClicked()
+                Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioVideoPlayer.isUpnp()})
+            }
         }
 
         // message

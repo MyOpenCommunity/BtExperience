@@ -159,7 +159,7 @@ Page {
     }
 
     function endCall() {
-        privateProps.homeClicked = false
+        privateProps.exitPath = 4
         controlVideo.color = "black"
         camera.endCall()
     }
@@ -168,33 +168,74 @@ Page {
     // call when home and back buttons are clicked: this is the reason they
     // are "public"
     function homeButtonClicked() {
-        privateProps.homeClicked = true
+        privateProps.exitPath = 3
         controlVideo.color = "black"
         camera.endCall()
     }
 
     function backButtonClicked() {
-        privateProps.homeClicked = false
+        privateProps.exitPath = 1
+        controlVideo.color = "black"
+        camera.endCall()
+    }
+
+    function playButtonClicked() {
+        privateProps.exitPath = 2
         controlVideo.color = "black"
         camera.endCall()
     }
 
     function callEndedCallback() {
-        if (privateProps.homeClicked) {
+        // depending on how we end the call we have to do different things
+        if (privateProps.exitPath === 1) {
+            // in case we exited the call through the back button, we have to
+            // check if it was an autoswitch call or not; in the former case
+            // returns back to where we were, in the latter one we go to the
+            // VideoDoorEntry page
+            privateProps.exitPath = 0
+            if (control.camera.autoSwitch) {
+                Stack.popPage()
+            }
+            else {
+                Stack.goToPage("VideoDoorEntry.qml")
+            }
+            return
+        }
+
+        if (privateProps.exitPath === 2) {
+            // in case we exited the call through the play button on the toolbar
+            // we do nothing: navigation is already managed in the toolbar
+            privateProps.exitPath = 0
+            return
+        }
+
+        if (privateProps.exitPath === 3) {
+            // in case we exited the call through the home button, we obviously
+            // have to go to the home page
+            privateProps.exitPath = 0
             Stack.backToHome()
+            return
         }
-        else if (control.camera.autoSwitch) {
-            Stack.goToPage("VideoDoorEntry.qml")
-        }
-        else {
-            Stack.popPage()
-        }
+
+        // in all other cases we come back to where we went from
+        privateProps.exitPath = 0
+        Stack.popPage()
     }
 
     QtObject {
         id: privateProps
 
-        property bool homeClicked: false
+        // we may exit from a call through different paths
+        // this value tells us what was the followed path, so we can take
+        // proper further action
+        //
+        // values:
+        //      0 - timeout
+        //      1 - click on back button
+        //      2 - click on play button
+        //      3 - click on home button
+        //      4 - click on terminate button
+        property int exitPath: 0
     }
 
     Connections {
@@ -225,6 +266,7 @@ Page {
     }
 
     Component.onCompleted: {
+        toolbar.playClicked.connect(playButtonClicked)
         redTimer.running = true
         toolbar.z = 1
         navigationBar.z = 1
