@@ -1249,7 +1249,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 			}
 			else
 			{
-				qWarning() << "Invalid uii" << link_uii << "in profile";
+				qWarning() << "The uii" << link_uii << "in profile" << profile_uii << "is neither a camera nor a MediaLink, expect failures.";
 				Q_ASSERT_X(false, "parseProfiles", "Invalid uii");
 				continue;
 			}
