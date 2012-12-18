@@ -42,6 +42,8 @@ BtNetworkReply::BtNetworkReply(QObject *parent, QNetworkReply *_reply) :
 	connect(reply, SIGNAL(finished()), this, SIGNAL(finished()));
 	connect(reply, SIGNAL(uploadProgress(qint64,qint64)), this, SIGNAL(uploadProgress(qint64,qint64)));
 	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SIGNAL(downloadProgress(qint64,qint64)));
+	connect(reply, SIGNAL(readChannelFinished()), this, SIGNAL(readChannelFinished()));
+	connect(reply, SIGNAL(aboutToClose()), this, SIGNAL(aboutToClose()));
 
 	setOpenMode(ReadOnly);
 }
