@@ -34,10 +34,11 @@ MenuColumn {
         MenuItem {
             name: qsTr("Add Quicklink")
             isSelected: privateProps.currentIndex === 1
-            enabled: quicklinksModel.count < 6 // TODO arbitrary value, waiting for specifications for home page
+            enabled: quicklinksModel.count < 7
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
+                column.closeChild()
                 Stack.pushPage("AddQuicklink.qml", {"homeCustomization": true})
             }
         }
