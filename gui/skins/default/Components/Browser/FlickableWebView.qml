@@ -87,42 +87,12 @@ Flickable {
             return url
         }
 
-        function findServerAddress(url) {
-            // convert QUrl to JS string
-            var newUrl = "" + url
-            newUrl = newUrl.replace("http://", "")
-            newUrl = newUrl.replace("https://", "")
-            var index = newUrl.indexOf('/')
-            return newUrl.slice(0, index === -1 ? undefined : index)
-        }
-        property string errorPage:
-"
-<html>
-<head>
-<title>Problem loading page</title>
-</head>
-<body>
-<h1>Server not found</h1>
-<p>Can't find the server at $SERVER. Please try again</p>
-<hr>
-<ul>
-<li>Check the address for typing errors such as <b>ww.example.com</b> instead of <b>www.example.com</b></li>
-<li>If you are unable to load any pages, check the network connection.</li>
-</ul>
-</body>
-</html>
-"
-
         url: fixUrl(webBrowser.urlString)
         smooth: false // We don't want smooth scaling, since we only scale during (fast) transitions
         focus: true
 
         onAlert: console.log(message)
-        onLoadFailed: {
-            var serverAddress = findServerAddress(url)
-            var errorHtml = errorPage
-            html = errorHtml.replace("$SERVER", serverAddress)
-        }
+        onLoadFailed: console.log("Error loading: " + url)
         onLoadFinished: console.log("Finished loading: " + url)
         onLoadStarted: console.log("Started loading new url " + url)
 

@@ -1,5 +1,6 @@
 #include "networkmanager.h"
 #include "browserproperties.h"
+#include "networkreply.h"
 
 #include <QAuthenticator>
 #include <QCoreApplication>
@@ -38,6 +39,8 @@ QNetworkAccessManager *NetworkAccessManagerFactory::create(QObject *parent)
 		global_properties, SLOT(credentialsRequired(BtNetworkAccessManager*,QNetworkReply*)));
 	QObject::connect(n, SIGNAL(invalidCertificate(BtNetworkAccessManager*,QNetworkReply*)),
 		global_properties, SLOT(certificatesError(BtNetworkAccessManager*,QNetworkReply*)));
+	QObject::connect(n, SIGNAL(requestComplete(bool,QString,QString)),
+		global_properties, SIGNAL(requestComplete(bool,QString,QString)));
 	return n;
 }
 
@@ -63,6 +66,7 @@ BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
 #if LOG_FAILED_REQUESTS
 	connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(displayErrors(QNetworkReply*)));
 #endif
+	connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(checkSslStatus(QNetworkReply*)));
 }
 
 void BtNetworkAccessManager::setAuthentication(const QString &user, const QString &pass)
@@ -81,6 +85,16 @@ void BtNetworkAccessManager::addSecurityException()
 {
 	// TODO: save certificates
 	loop.exit(IgnoreCertificateErrors);
+}
+
+QNetworkReply *BtNetworkAccessManager::createRequest(QNetworkAccessManager::Operation op, const QNetworkRequest &req, QIODevice *outgoingData)
+{
+	QNetworkRequest new_req(req);
+	QNetworkReply *reply = QNetworkAccessManager::createRequest(op, new_req, outgoingData);
+
+	// BtNetworkReply is used to provide an error page for network errors; this could be done using QWebPage, but it is
+	// not accessible from QML and the header for the QML item is private
+	return new BtNetworkReply(this, reply);
 }
 
 void BtNetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
@@ -106,6 +120,29 @@ void BtNetworkAccessManager::displayErrors(QNetworkReply *reply)
 
 		qWarning() << "Error" << e.key(reply->error()) << "while loading" << reply->request().url().toString();
 	}
+}
+
+void BtNetworkAccessManager::checkSslStatus(QNetworkReply *reply)
+{
+	QNetworkReply *wrapped_reply = reply;
+	BtNetworkReply *bt_reply = qobject_cast<BtNetworkReply *>(reply);
+
+	if (bt_reply)
+		wrapped_reply = bt_reply->originalReply();
+
+	QUrl url = wrapped_reply->request().url();
+	QString host = url.port() == -1 ? url.host() : QString("%1:%2port").arg(url.host()).arg(url.port());
+
+	if (wrapped_reply->error() == QNetworkReply::SslHandshakeFailedError ||
+	    wrapped_reply->sslConfiguration().peerCertificateChain().size() == 0)
+	{
+		emit requestComplete(wrapped_reply->request().url().scheme() == "https", host, QString());
+		return;
+	}
+
+	QSslCertificate cert = wrapped_reply->sslConfiguration().peerCertificate();
+
+	emit requestComplete(true, host, cert.subjectInfo(QSslCertificate::Organization));
 }
 
 void BtNetworkAccessManager::requireAuthentication(QNetworkReply *reply, QAuthenticator *auth)

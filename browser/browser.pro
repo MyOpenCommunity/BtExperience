@@ -46,6 +46,7 @@ SOURCES += \
     ../gui/imagereader.cpp \
     ../gui/inputcontextwrapper.cpp \
 	networkmanager.cpp \
+	networkreply.cpp \
     browserproperties.cpp
 
 HEADERS += \
@@ -59,4 +60,5 @@ HEADERS += \
     ../gui/imagereader.h \
     ../gui/inputcontextwrapper.h \
 	networkmanager.h \
+	networkreply.h \
     browserproperties.h
