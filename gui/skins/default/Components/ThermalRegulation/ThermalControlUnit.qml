@@ -108,6 +108,7 @@ MenuColumn {
     }
 
     function modalitySelected(obj) {
+        column.closeChild()
         modalityItem.description = obj.name
         var properties = {'objModel': obj}
 
@@ -263,13 +264,6 @@ MenuColumn {
             Column {
                 property variant objModel
 
-                Component {
-                    id: dateSelectTimed
-                    DateSelect {
-                        timeText: qsTr("duration")
-                    }
-                }
-
                 ControlSetDateTime {
                     dateVisible: false
                     source: "../../images/termo/4-zone_temporizzato/bg_imposta-ora.svg"
@@ -282,7 +276,7 @@ MenuColumn {
                         if (privateProps.currentIndex !== 3)
                             privateProps.currentIndex = 3
                         // I don't know why, but here we need only ../ and not ../../
-                        column.loadColumn(dateSelectTimed, column.title, objModel, {dateVisible: false, source: "../images/termo/4-zone_temporizzato/bg_comando-ora.svg"})
+                        column.loadColumn(dateSelect, column.title, objModel, {timeText: qsTr("duration"), dateVisible: false, source: "../images/termo/4-zone_temporizzato/bg_comando-ora.svg"})
                     }
                 }
 
@@ -311,11 +305,6 @@ MenuColumn {
             Column {
                 property variant objModel
 
-                Component {
-                    id: dateSelectWeekday
-                    DateSelect {}
-                }
-
                 ControlSetDateTime {
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
@@ -324,7 +313,7 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentIndex !== 3)
                             privateProps.currentIndex = 3
-                        column.loadColumn(dateSelectWeekday, column.title, objModel)
+                        column.loadColumn(dateSelect, column.title, objModel)
                     }
                 }
 
@@ -355,11 +344,6 @@ MenuColumn {
                 id: holidayColumn
                 property variant objModel
 
-                Component {
-                    id: dateSelectHoliday
-                    DateSelect {}
-                }
-
                 ControlSetDateTime {
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
@@ -368,7 +352,7 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentIndex !== 3)
                             privateProps.currentIndex = 3
-                        column.loadColumn(dateSelectHoliday, column.title, objModel)
+                        column.loadColumn(dateSelect, column.title, objModel)
                     }
                 }
 
@@ -423,5 +407,10 @@ MenuColumn {
             // needed to correctly position the loader inside the Column
             width: modalityItem.width
         }
+    }
+
+    Component {
+        id: dateSelect
+        DateSelect {}
     }
 }
