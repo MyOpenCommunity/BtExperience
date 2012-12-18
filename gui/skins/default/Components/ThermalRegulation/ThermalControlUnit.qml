@@ -93,10 +93,6 @@ MenuColumn {
             if (dataModel.currentModality)
                 modalitySelected(dataModel.currentModality)
         }
-    }
-
-    Connections {
-        target: dataModel
         onSeasonChanged: {
             seasonItem.description = pageObject.names.get('SEASON', dataModel.season)
         }
@@ -146,28 +142,33 @@ MenuColumn {
         privateProps.pendingModality = obj
     }
 
-    Item {
+    Column {
         id: mainItem
-        width: 212
-        height: 326
-        anchors.fill: parent
 
         ControlTemperature {
             id: fixedItem
             property int temperature: 0
-            anchors.top: parent.top
+            property int prevHeight: 0
             // 4 zones central units are zones themselves: we must show the
             // temperature of the linked probe in such cases
             visible: (!is99zones)
             // trick to compute the right height for menu column
-            onVisibleChanged: if (!visible) height = 0
+            onVisibleChanged: {
+                // Fix the case when a video call comes in and the menu is open
+                if (!visible) {
+                    prevHeight = height
+                    height = 0
+                }
+                else {
+                    height = prevHeight
+                }
+            }
             text: (fixedItem.temperature / 10).toFixed(1) + qsTr("°C")
         }
 
         MenuItem {
             id: seasonItem
             hasChild: true
-            anchors.top: fixedItem.bottom
             name: qsTr("season")
             isSelected: privateProps.currentIndex === 1
             onClicked: {
@@ -183,7 +184,6 @@ MenuColumn {
         MenuItem {
             id: modalityItem
             hasChild: true
-            anchors.top: seasonItem.bottom
             name: qsTr("mode")
             isSelected: privateProps.currentIndex === 2
             onClicked: {
@@ -434,7 +434,7 @@ MenuColumn {
 
         AnimatedLoader {
             id: itemLoader
-            anchors.top: modalityItem.bottom
+            width: modalityItem.width
         }
     }
 }
