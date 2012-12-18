@@ -325,6 +325,16 @@ void CCTV::callerAddress(QString address)
 		is_autoswitch = autoswitch;
 		emit autoSwitchChanged();
 	}
+
+	if (getAutoSwitch())
+		return;
+
+	// normal call: manage professional studio
+	if (prof_studio)
+	{
+		dev->openLock();
+		dev->releaseLock();
+	}
 }
 
 void CCTV::setRingtone(int vde_ringtone)
@@ -376,13 +386,10 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::VCT_CALL:
 		{
 			qDebug() << "Received VCT_CALL";
-			// normal call: manage hands free and professional studio options
+			// normal call: manage hands free
 			if (hands_free)
-				dev->answerCall();
-			if (prof_studio)
 			{
-				dev->openLock();
-				dev->releaseLock();
+				dev->answerCall();
 			}
 		}
 		case VideoDoorEntryDevice::AUTO_VCT_CALL:
