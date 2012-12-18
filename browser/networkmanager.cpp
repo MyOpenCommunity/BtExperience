@@ -1,6 +1,8 @@
 #include "networkmanager.h"
 #include "browserproperties.h"
 #include "networkreply.h"
+#include "configfile.h"
+#include "xml_functions.h"
 
 #include <QAuthenticator>
 #include <QCoreApplication>
@@ -16,11 +18,14 @@
 #define USER_INPUT_TIMEOUT_MS 30000  // 30 secs
 #define DEFAULT_CA_CERT_ADDRESS "http://curl.haxx.se/ca/cacert.pem"
 #if defined(BT_HARDWARE_X11)
-#define EXTRA_12_PATH "extra/12/"
+#define BROWSER_DATA_PATH "./"
+#define BROWSER_FILE "browser.xml"
 #else
-#define EXTRA_12_PATH "/home/bticino/cfg/extra/12/"
+#define BROWSER_DATA_PATH "/home/bticino/cfg/extra/12/"
+#define BROWSER_FILE "/home/bticino/cfg/extra/12/browser.xml"
 #endif
 #define LOG_FAILED_REQUESTS 1
+#define CA_UPDATE_INTERVAL_DAYS 15
 
 
 NetworkAccessManagerFactory::NetworkAccessManagerFactory(BrowserProperties *props)
@@ -48,20 +53,27 @@ QNetworkAccessManager *NetworkAccessManagerFactory::create(QObject *parent)
 BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
 	QNetworkAccessManager(parent)
 {
-	// load certificates file if present
-	if (QFile(QString(EXTRA_12_PATH) + "cacert.pem").exists())
-		QSslSocket::addDefaultCaCertificates(QString(EXTRA_12_PATH) + "cacert.pem");
+	configuration = new ConfigFile(this);
 
-	// TODO: only update CA certificates every X days
-	// TODO: only download the updated certificates once
-	QFile ca_conf_file(QString(EXTRA_12_PATH) + "ca_cert_address");
-	QByteArray address = DEFAULT_CA_CERT_ADDRESS;
-	if (ca_conf_file.open(QIODevice::ReadOnly))
+	// load certificates file if present
+	if (QFile(QString(BROWSER_DATA_PATH) + "cacert.pem").exists())
+		QSslSocket::addDefaultCaCertificates(QString(BROWSER_DATA_PATH) + "cacert.pem");
+
+	// update certificates file from time to time
+	QDomDocument doc = configuration->getConfiguration(BROWSER_FILE);
+	QDomElement address_node = getElement(doc.documentElement(), "conf/ca_database_address");
+	QString address = getAttribute(address_node, "url", DEFAULT_CA_CERT_ADDRESS);
+
+	QDomElement last_update_node = getElement(doc.documentElement(), "conf/last_update");
+	QDateTime last_update = QDateTime::fromString(getAttribute(last_update_node, "time", ""), Qt::ISODate);
+
+	if (!last_update.isValid() ||
+	    last_update.daysTo(QDateTime::currentDateTime()) > CA_UPDATE_INTERVAL_DAYS ||
+	    !QFile(QString(BROWSER_DATA_PATH) + "cacert.pem").exists())
 	{
-		address = ca_conf_file.readAll();
+		QNetworkReply *r = get(QNetworkRequest(QUrl(address)));
+		connect(r, SIGNAL(readChannelFinished()), this, SLOT(downloadCaFinished()));
 	}
-	QNetworkReply *r = get(QNetworkRequest(QUrl(address)));
-	connect(r, SIGNAL(readChannelFinished()), this, SLOT(downloadCaFinished()));
 
 #if LOG_FAILED_REQUESTS
 	connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(displayErrors(QNetworkReply*)));
@@ -166,11 +178,23 @@ void BtNetworkAccessManager::downloadCaFinished()
 		return;
 	}
 
-	QFile cacert(QString(EXTRA_12_PATH) + "cacert.pem");
+	QFile cacert(QString(BROWSER_DATA_PATH) + "cacert.pem");
 	QByteArray cert = reply->readAll();
-	if (!QDir().mkpath(EXTRA_12_PATH) || !cacert.open(QIODevice::WriteOnly))
+	if (!QDir().mkpath(BROWSER_DATA_PATH) || !cacert.open(QIODevice::WriteOnly))
+	{
 		qWarning() << "Cannot open" << cacert.fileName() << "for writing";
+	}
 	else
+	{
+		qDebug() << "Got CA database, saving...";
 		cacert.write(cert);
-	QSslSocket::addDefaultCaCertificates(QString(EXTRA_12_PATH) + "cacert.pem");
+
+		// now save the configuration
+		QDomDocument doc = configuration->getConfiguration(BROWSER_FILE);
+		QDomElement last_update_node = getElement(doc.documentElement(), "conf/last_update");
+
+		setAttribute(last_update_node, "time", QDateTime::currentDateTimeUtc().toString(Qt::ISODate));
+		configuration->saveConfiguration(BROWSER_FILE);
+	}
+	QSslSocket::addDefaultCaCertificates(QString(BROWSER_DATA_PATH) + "cacert.pem");
 }
