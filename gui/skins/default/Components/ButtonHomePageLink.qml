@@ -77,7 +77,7 @@ SvgImage {
                                                                "#FFFFFF"
         text: button.textMultimedia
         anchors.centerIn: imageIcon
-         anchors.verticalCenterOffset: width / 1000 * -565
+        anchors.verticalCenterOffset: width / 1000 * -565
         font.pixelSize: 15
     }
 

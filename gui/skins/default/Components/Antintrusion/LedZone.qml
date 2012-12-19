@@ -16,7 +16,7 @@ SvgImage {
         id: label
         color: "black"
         anchors.centerIn: parent
-        font.pixelSize: 8
+        font.pixelSize: 9
     }
 
     states: [

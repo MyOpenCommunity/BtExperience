@@ -26,6 +26,7 @@ Item {
 
         ButtonThreeStates {
             id: onButton
+            font.pixelSize: 15
             defaultImage: "../images/common/btn_99x35.svg"
             pressedImage: "../images/common/btn_99x35_P.svg"
             selectedImage: "../images/common/btn_99x35_S.svg"
@@ -37,6 +38,7 @@ Item {
 
         ButtonThreeStates {
             id: offButton
+            font.pixelSize: 15
             defaultImage: "../images/common/btn_99x35.svg"
             pressedImage: "../images/common/btn_99x35_P.svg"
             selectedImage: "../images/common/btn_99x35_S.svg"
