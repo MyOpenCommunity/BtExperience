@@ -73,10 +73,8 @@ MenuColumn {
         onLanConfigChanged: loadMenu()
     }
 
-    PaginatorColumn {
+    Column {
         id: paginator
-        anchors.horizontalCenter: parent.horizontalCenter
-        maxHeight: 350
 
         // network state menu item (currentIndex === 1)
         MenuItem {
@@ -111,14 +109,57 @@ MenuColumn {
         // (static IP case)
         AnimatedLoader {
             id: configurationLoader
+            width: networkStateItem.width
         }
     }
 
-    // TODO: use the right background
     Component {
         id: summaryItem
-        Item {
-            width: 212
+        Column {
+            ControlTitleValue {
+                title: qsTr("MAC address")
+                value: privateProps.model.mac || qsTr("Unknown")
+            }
+            ControlTitleValue {
+                title: qsTr("IP address")
+                value: privateProps.model.address || qsTr("Unknown")
+            }
+            ControlTitleValue {
+                title: qsTr("Subnet mask")
+                value: privateProps.model.subnet || qsTr("Unknown")
+            }
+            ControlTitleValue {
+                title: qsTr("Gateway")
+                value: privateProps.model.gateway || qsTr("Unknown")
+            }
+            ControlTitleValue {
+                title: qsTr("Primary DNS")
+                value: privateProps.model.dns1 || qsTr("Unknown")
+            }
+            ControlTitleValue {
+                title: qsTr("Secondary DNS")
+                value: privateProps.model.dns2 || qsTr("Unknown")
+            }
+            ButtonOkCancel {
+                onOkClicked: {
+                    pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
+                }
+                onCancelClicked: {
+                    privateProps.model.reset()
+                    column.closeColumn()
+                }
+            }
+        }
+    }
+
+    Component {
+        id: optionsItem
+
+        // we have some input elements, so a FocusScope is needed to make everything work
+        FocusScope {
+            width: childrenRect.width
+            height: childrenRect.height
+            // FocusScope needs to bind to visual properties of the children (I'm not sure is needed)
             Column {
                 ControlTitleValue {
                     title: qsTr("MAC address")
@@ -126,100 +167,47 @@ MenuColumn {
                 }
                 ControlTitleValue {
                     title: qsTr("IP address")
-                    value: privateProps.model.address || qsTr("Unknown")
+                    value: privateProps.model.address
+                    readOnly: false
+                    inputMask: '000.000.000.000'
+                    onAccepted: privateProps.model.address = value
                 }
                 ControlTitleValue {
                     title: qsTr("Subnet mask")
-                    value: privateProps.model.subnet || qsTr("Unknown")
+                    value: privateProps.model.subnet
+                    readOnly: false
+                    inputMask: '000.000.000.000'
+                    onAccepted: privateProps.model.subnet = value
                 }
                 ControlTitleValue {
                     title: qsTr("Gateway")
-                    value: privateProps.model.gateway || qsTr("Unknown")
+                    value: privateProps.model.gateway
+                    readOnly: false
+                    inputMask: '000.000.000.000'
+                    onAccepted: privateProps.model.gateway = value
                 }
                 ControlTitleValue {
                     title: qsTr("Primary DNS")
-                    value: privateProps.model.dns1 || qsTr("Unknown")
+                    value: privateProps.model.dns1
+                    readOnly: false
+                    inputMask: '000.000.000.000'
+                    onAccepted: privateProps.model.dns1 = value
                 }
                 ControlTitleValue {
                     title: qsTr("Secondary DNS")
-                    value: privateProps.model.dns2 || qsTr("Unknown")
+                    value: privateProps.model.dns2
+                    readOnly: false
+                    inputMask: '000.000.000.000'
+                    onAccepted: privateProps.model.dns2 = value
                 }
                 ButtonOkCancel {
                     onOkClicked: {
+                        focus = true // to accept current value (if any)
                         pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
                     }
                     onCancelClicked: {
                         privateProps.model.reset()
                         column.closeColumn()
-                    }
-                }
-            }
-        }
-    }
-
-    // TODO: use the right background; add the keyboard
-    Component {
-        id: optionsItem
-
-        // we have some input elements, so a FocusScope is needed to make everything work
-        FocusScope {
-            // FocusScope needs to bind to visual properties of the children (I'm not sure is needed)
-            x: background.x
-            y: background.y
-            width: background.width
-            height: background.height
-            Item {
-                id: background
-                width: 212
-                Column {
-                    ControlTitleValue {
-                        title: qsTr("MAC address")
-                        value: privateProps.model.mac || qsTr("Unknown")
-                    }
-                    ControlTitleValue {
-                        title: qsTr("IP address")
-                        value: privateProps.model.address
-                        readOnly: false
-                        inputMask: '000.000.000.000'
-                        onAccepted: privateProps.model.address = value
-                    }
-                    ControlTitleValue {
-                        title: qsTr("Subnet mask")
-                        value: privateProps.model.subnet
-                        readOnly: false
-                        inputMask: '000.000.000.000'
-                        onAccepted: privateProps.model.subnet = value
-                    }
-                    ControlTitleValue {
-                        title: qsTr("Gateway")
-                        value: privateProps.model.gateway
-                        readOnly: false
-                        inputMask: '000.000.000.000'
-                        onAccepted: privateProps.model.gateway = value
-                    }
-                    ControlTitleValue {
-                        title: qsTr("Primary DNS")
-                        value: privateProps.model.dns1
-                        readOnly: false
-                        inputMask: '000.000.000.000'
-                        onAccepted: privateProps.model.dns1 = value
-                    }
-                    ControlTitleValue {
-                        title: qsTr("Secondary DNS")
-                        value: privateProps.model.dns2
-                        readOnly: false
-                        inputMask: '000.000.000.000'
-                        onAccepted: privateProps.model.dns2 = value
-                    }
-                    ButtonOkCancel {
-                        onOkClicked: {
-                            focus = true // to accept current value (if any)
-                            pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
-                        }
-                        onCancelClicked: {
-                            privateProps.model.reset()
-                            column.closeColumn()
-                        }
                     }
                 }
             }
