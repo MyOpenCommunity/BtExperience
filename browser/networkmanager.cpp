@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QDir>
 #include <QMetaEnum>
+#include <QWebFrame>
 
 #define USER_INPUT_TIMEOUT_MS 30000  // 30 secs
 #define DEFAULT_CA_CERT_ADDRESS "http://curl.haxx.se/ca/cacert.pem"
@@ -78,6 +79,26 @@ BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
 	foreach (QDomNode exception, getChildren(getElement(doc.documentElement(), "ssl_exceptions"), "exception"))
 		ssl_exceptions.insert(getAttribute(exception, "host"));
 
+	QMap<QString, QString> agents;
+	foreach (QDomNode agent, getChildren(getElement(doc.documentElement(), "user_agents"), "agent"))
+	{
+		QString name = getAttribute(agent, "name");
+		QString user_agent = getAttribute(agent, "string");
+
+		agents[name] = user_agent;
+	}
+
+	foreach (QDomNode match, getChildren(getElement(doc.documentElement(), "user_agents"), "match"))
+	{
+		QString host = getAttribute(match, "url");
+		QString agent = getAttribute(match, "agent");
+
+		host.replace(".", "\\.");
+		host.replace("*", ".*");
+
+		user_agent_map.append(qMakePair(QRegExp(host, Qt::CaseInsensitive), agents[agent]));
+	}
+
 #if LOG_FAILED_REQUESTS
 	connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(displayErrors(QNetworkReply*)));
 #endif
@@ -102,10 +123,33 @@ void BtNetworkAccessManager::addSecurityException()
 	loop.exit(IgnoreCertificateErrors);
 }
 
+QString BtNetworkAccessManager::userAgent(const QNetworkRequest &req)
+{
+	// for webkit requests originator is documented to be a QWebFrame
+	QWebFrame *originator = qobject_cast<QWebFrame *>(req.originatingObject());
+	QUrl match_url = req.url();
+
+	// we try to use the same user agent for all requests originating from the same web page
+	if (originator && !originator->requestedUrl().isEmpty())
+		match_url = originator->requestedUrl();
+
+	foreach (UserAgentEntry entry, user_agent_map)
+	{
+		if (entry.first.exactMatch(match_url.host()))
+			return entry.second;
+	}
+
+	return QString();
+}
+
 QNetworkReply *BtNetworkAccessManager::createRequest(QNetworkAccessManager::Operation op, const QNetworkRequest &req, QIODevice *outgoingData)
 {
 	QNetworkRequest new_req(req);
 	QNetworkReply *reply = QNetworkAccessManager::createRequest(op, new_req, outgoingData);
+	QString user_agent = userAgent(req);
+
+	if (!user_agent.isEmpty())
+		new_req.setRawHeader("User-Agent", user_agent.toAscii());
 
 	// BtNetworkReply is used to provide an error page for network errors; this could be done using QWebPage, but it is
 	// not accessible from QML and the header for the QML item is private
