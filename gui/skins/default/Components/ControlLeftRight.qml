@@ -18,7 +18,7 @@ SvgImage {
             left: parent.left
             leftMargin: 7
         }
-        font.pixelSize: 13
+        font.pixelSize: 15
         color: "white"
         text: control.text
     }

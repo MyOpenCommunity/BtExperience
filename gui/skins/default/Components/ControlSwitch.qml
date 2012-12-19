@@ -18,7 +18,7 @@ SvgImage {
             right: switchId.left
             rightMargin: parent.width / 100 * 4
         }
-        font.pixelSize: 13
+        font.pixelSize: 15
         color: "white"
         wrapMode: Text.WordWrap
     }

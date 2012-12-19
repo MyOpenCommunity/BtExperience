@@ -21,7 +21,7 @@ Image {
             left: parent.left
             leftMargin: 7
         }
-        font.pixelSize: 13
+        font.pixelSize: 15
         color: "#444546"
         text: controlBalance.description
     }
@@ -35,7 +35,7 @@ Image {
             right: parent.right
             rightMargin: 15
         }
-        font.pixelSize: 13
+        font.pixelSize: 15
         color: "white"
     }
 

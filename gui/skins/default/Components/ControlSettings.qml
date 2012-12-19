@@ -25,7 +25,7 @@ SvgImage {
         visible: control.upperLabelVisible
         color: "black"
         text: control.upperLabel
-        font.pixelSize: 13
+        font.pixelSize: 15
         anchors {
             // TODO: use margins in percentage!
             top: parent.top
@@ -53,7 +53,7 @@ SvgImage {
         id: textBottomLabel
         color: "black"
         text: control.bottomLabel
-        font.pixelSize: 13
+        font.pixelSize: 15
         anchors {
             top: control.upperLabelVisible ? textUpperText.bottom : parent.top
             topMargin: 5

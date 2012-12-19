@@ -24,7 +24,7 @@ MenuColumn {
             id: labelThreshold1
             color: "black"
             text: qsTr("threshold 1") + " ("  + dataModel.currentUnit + ")"
-            font.pixelSize: 13
+            font.pixelSize: 15
             anchors {
                 top: parent.top
                 topMargin: parent.height / 100 * 2
@@ -80,7 +80,7 @@ MenuColumn {
             id: labelThreshold2
             color: "black"
             text: qsTr("threshold 2") + " ("  + dataModel.currentUnit + ")"
-            font.pixelSize: 13
+            font.pixelSize: 15
             anchors {
                 top: spinThreshold1.bottom
                 topMargin: parent.height / 100 * 2

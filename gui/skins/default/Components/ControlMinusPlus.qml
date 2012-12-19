@@ -18,7 +18,7 @@ SvgImage {
         id: title
         color: "black"
         text: control.title
-        font.pixelSize: 13
+        font.pixelSize: 15
         anchors {
             top: parent.top
             topMargin: 5
@@ -35,7 +35,7 @@ SvgImage {
             left: parent.left
             leftMargin: 7
         }
-        font.pixelSize: 13
+        font.pixelSize: 15
         color: "white"
         text: control.text
     }
