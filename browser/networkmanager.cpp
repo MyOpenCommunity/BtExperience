@@ -145,11 +145,12 @@ QString BtNetworkAccessManager::userAgent(const QNetworkRequest &req)
 QNetworkReply *BtNetworkAccessManager::createRequest(QNetworkAccessManager::Operation op, const QNetworkRequest &req, QIODevice *outgoingData)
 {
 	QNetworkRequest new_req(req);
-	QNetworkReply *reply = QNetworkAccessManager::createRequest(op, new_req, outgoingData);
 	QString user_agent = userAgent(req);
 
 	if (!user_agent.isEmpty())
 		new_req.setRawHeader("User-Agent", user_agent.toAscii());
+
+	QNetworkReply *reply = QNetworkAccessManager::createRequest(op, new_req, outgoingData);
 
 	// BtNetworkReply is used to provide an error page for network errors; this could be done using QWebPage, but it is
 	// not accessible from QML and the header for the QML item is private
