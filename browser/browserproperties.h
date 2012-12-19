@@ -23,6 +23,12 @@ public:
 	Q_INVOKABLE void abortConnection();
 	Q_INVOKABLE void addSecurityException();
 
+	// only use for browser popup objects!
+	Q_INVOKABLE void destroyQmlItem(QObject *object)
+	{
+		object->deleteLater();
+	}
+
 public slots:
 	void quit();
 	void updateClick();

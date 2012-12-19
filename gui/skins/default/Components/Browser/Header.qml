@@ -153,7 +153,10 @@ SvgImage {
             if (windows <= 1) // last window
                 global.quit()
             else
-                ghost.visible = false
+                // the popup object is created with C++ ownership, hence there is no way
+                // to destroy it from QML; calling deleteLater() from C++ appears to be the
+                // correct way to free the object
+                global.destroyQmlItem(ghost)
         }
     }
 
