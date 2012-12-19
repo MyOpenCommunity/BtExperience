@@ -29,8 +29,6 @@ MenuColumn {
         ThermalControlUnitModalities {}
     }
 
-    height: fixedItem.height + seasonItem.height + modalityItem.height + itemLoader.height
-
     QtObject {
         id: privateProps
         property int currentIndex: -1
@@ -93,10 +91,6 @@ MenuColumn {
             if (dataModel.currentModality)
                 modalitySelected(dataModel.currentModality)
         }
-    }
-
-    Connections {
-        target: dataModel
         onSeasonChanged: {
             seasonItem.description = pageObject.names.get('SEASON', dataModel.season)
         }
@@ -114,6 +108,7 @@ MenuColumn {
     }
 
     function modalitySelected(obj) {
+        column.closeChild()
         modalityItem.description = obj.name
         var properties = {'objModel': obj}
 
@@ -146,28 +141,21 @@ MenuColumn {
         privateProps.pendingModality = obj
     }
 
-    Item {
+    Column {
         id: mainItem
-        width: 212
-        height: 326
-        anchors.fill: parent
 
         ControlTemperature {
             id: fixedItem
             property int temperature: 0
-            anchors.top: parent.top
             // 4 zones central units are zones themselves: we must show the
             // temperature of the linked probe in such cases
             visible: (!is99zones)
-            // trick to compute the right height for menu column
-            onVisibleChanged: if (!visible) height = 0
             text: (fixedItem.temperature / 10).toFixed(1) + qsTr("°C")
         }
 
         MenuItem {
             id: seasonItem
             hasChild: true
-            anchors.top: fixedItem.bottom
             name: qsTr("season")
             isSelected: privateProps.currentIndex === 1
             onClicked: {
@@ -183,7 +171,6 @@ MenuColumn {
         MenuItem {
             id: modalityItem
             hasChild: true
-            anchors.top: seasonItem.bottom
             name: qsTr("mode")
             isSelected: privateProps.currentIndex === 2
             onClicked: {
@@ -277,13 +264,6 @@ MenuColumn {
             Column {
                 property variant objModel
 
-                Component {
-                    id: dateSelectTimed
-                    DateSelect {
-                        timeText: qsTr("duration")
-                    }
-                }
-
                 ControlSetDateTime {
                     dateVisible: false
                     source: "../../images/termo/4-zone_temporizzato/bg_imposta-ora.svg"
@@ -296,7 +276,7 @@ MenuColumn {
                         if (privateProps.currentIndex !== 3)
                             privateProps.currentIndex = 3
                         // I don't know why, but here we need only ../ and not ../../
-                        column.loadColumn(dateSelectTimed, column.title, objModel, {dateVisible: false, source: "../images/termo/4-zone_temporizzato/bg_comando-ora.svg"})
+                        column.loadColumn(dateSelect, column.title, objModel, {timeText: qsTr("duration"), dateVisible: false, source: "../images/termo/4-zone_temporizzato/bg_comando-ora.svg"})
                     }
                 }
 
@@ -325,11 +305,6 @@ MenuColumn {
             Column {
                 property variant objModel
 
-                Component {
-                    id: dateSelectWeekday
-                    DateSelect {}
-                }
-
                 ControlSetDateTime {
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
@@ -338,7 +313,7 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentIndex !== 3)
                             privateProps.currentIndex = 3
-                        column.loadColumn(dateSelectWeekday, column.title, objModel)
+                        column.loadColumn(dateSelect, column.title, objModel)
                     }
                 }
 
@@ -369,11 +344,6 @@ MenuColumn {
                 id: holidayColumn
                 property variant objModel
 
-                Component {
-                    id: dateSelectHoliday
-                    DateSelect {}
-                }
-
                 ControlSetDateTime {
                     date: DateTime.format(privateProps.getDateTime(objModel))["date"]
                     time: DateTime.format(privateProps.getDateTime(objModel))["time"]
@@ -382,7 +352,7 @@ MenuColumn {
                     onEditClicked: {
                         if (privateProps.currentIndex !== 3)
                             privateProps.currentIndex = 3
-                        column.loadColumn(dateSelectHoliday, column.title, objModel)
+                        column.loadColumn(dateSelect, column.title, objModel)
                     }
                 }
 
@@ -434,7 +404,13 @@ MenuColumn {
 
         AnimatedLoader {
             id: itemLoader
-            anchors.top: modalityItem.bottom
+            // needed to correctly position the loader inside the Column
+            width: modalityItem.width
         }
+    }
+
+    Component {
+        id: dateSelect
+        DateSelect {}
     }
 }

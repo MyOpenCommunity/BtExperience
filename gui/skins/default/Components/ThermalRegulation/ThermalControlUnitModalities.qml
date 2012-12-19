@@ -10,12 +10,7 @@ MenuColumn {
 
     signal modalitySelected(variant obj)
 
-    height: Math.max(1, 50 * itemList.count)
-    width: 212
-
-    ListView {
-        id: itemList
-        anchors.fill: parent
+    PaginatorList {
         currentIndex: {
             for (var i = 0; i < model.count; ++i) {
                 if (model.getObject(i) === column.idx)
@@ -23,7 +18,7 @@ MenuColumn {
             }
             return -1
         }
-        interactive: false
+        elementsOnPage: 8
 
         delegate: MenuItemDelegate {
             itemObject: modalitiesModel.getObject(index)

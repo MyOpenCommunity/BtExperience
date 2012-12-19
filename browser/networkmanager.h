@@ -4,6 +4,7 @@
 #include <QDeclarativeNetworkAccessManagerFactory>
 #include <QNetworkAccessManager>
 #include <QEventLoop>
+#include <QSet>
 
 class BrowserProperties;
 class ConfigFile;
@@ -61,6 +62,7 @@ private:
 	QString username, password;
 	QEventLoop loop;
 	ConfigFile *configuration;
+	QSet<QString> ssl_exceptions;
 };
 
 #endif // NETWORKMANAGER_H
