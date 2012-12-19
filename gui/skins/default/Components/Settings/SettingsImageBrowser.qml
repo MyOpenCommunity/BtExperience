@@ -29,7 +29,7 @@ MenuColumn {
                 privateProps.currentIndex = 1
                 column._isStock = true
                 var props = {
-                    rootPath: global.stockImagesFolder,
+                    rootPath: isCard ? global.stockCardImagesFolder : global.stockBackgroundImagesFolder,
                     text: qsTr("Stock images"),
                     upnp: false,
                     imageOnly: true,

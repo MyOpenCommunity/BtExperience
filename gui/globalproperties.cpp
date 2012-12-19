@@ -308,7 +308,7 @@ QObject *GlobalProperties::getBrowser() const
 	return browser;
 }
 
-QVariantList GlobalProperties::getStockImagesFolder() const
+QVariantList GlobalProperties::getCardStockImagesFolder() const
 {
 	QVariantList result;
 
@@ -325,6 +325,31 @@ QVariantList GlobalProperties::getStockImagesFolder() const
 		result.append(comp);
 	result.append("1");
 #endif
+
+	result.append("card");
+
+	return result;
+}
+
+QVariantList GlobalProperties::getBackgroundStockImagesFolder() const
+{
+	QVariantList result;
+
+#if defined(BT_HARDWARE_X11)
+	QString base = getBasePath();
+	QStringList base_list = base.split("/");
+	foreach (const QString &comp, base_list)
+		result.append(comp);
+	result.append("images");
+#else
+	QString extra = getExtraPath();
+	QStringList extra_list = extra.split("/");
+	foreach (const QString &comp, extra_list)
+		result.append(comp);
+	result.append("1");
+#endif
+
+	result.append("background");
 
 	return result;
 }

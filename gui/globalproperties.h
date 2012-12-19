@@ -50,8 +50,9 @@ class GlobalProperties : public GlobalPropertiesCommon
 	Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged)
 	Q_PROPERTY(bool passwordEnabled READ isPasswordEnabled WRITE setPasswordEnabled NOTIFY passwordEnabledChanged)
 
-	// Folder containing stock images
-	Q_PROPERTY(QVariantList stockImagesFolder READ getStockImagesFolder CONSTANT)
+	// Folders containing stock images
+	Q_PROPERTY(QVariantList stockCardImagesFolder READ getCardStockImagesFolder CONSTANT)
+	Q_PROPERTY(QVariantList stockBackgroundImagesFolder READ getBackgroundStockImagesFolder CONSTANT)
 
 	// Screen calibration object
 	Q_PROPERTY(QObject *calibration READ getCalibration CONSTANT)
@@ -67,7 +68,8 @@ public:
 	QObject *getHardwareKeys() const;
 	QObject *getCalibration() const;
 	QObject *getBrowser() const;
-	QVariantList getStockImagesFolder() const;
+	QVariantList getCardStockImagesFolder() const;
+	QVariantList getBackgroundStockImagesFolder() const;
 
 	QObject *getDefaultExternalPlace() const;
 
