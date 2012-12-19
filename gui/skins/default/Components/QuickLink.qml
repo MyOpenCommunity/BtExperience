@@ -171,7 +171,7 @@ Item {
                 font.pixelSize: 15
                 elide: Text.ElideRight
                 anchors.top: parent.top
-                anchors.topMargin: -18
+                anchors.topMargin: -18.5
             }
         }
 
@@ -184,7 +184,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 activeFocusOnPress: false
                 anchors.top: parent.top
-                anchors.topMargin: -18
+                anchors.topMargin: -20
                 onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
             }
         }
