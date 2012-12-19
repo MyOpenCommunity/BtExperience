@@ -48,7 +48,7 @@ SvgImage {
         text: button.text
         anchors.centerIn: imageIcon
         anchors.verticalCenterOffset: width / 1000 * 1000
-        font.pixelSize: 13
+        font.pixelSize: 15
     }
 
     UbuntuMediumText {
@@ -58,7 +58,7 @@ SvgImage {
         text: button.textSystem
         anchors.centerIn: imageIcon
         anchors.verticalCenterOffset: width / 1000 * 750
-        font.pixelSize: 13
+        font.pixelSize: 15
     }
 
     UbuntuMediumText {
@@ -68,7 +68,7 @@ SvgImage {
         text: button.textOption
         anchors.centerIn: imageIcon
         anchors.verticalCenterOffset: width / 1000 * -850
-        font.pixelSize: 13
+        font.pixelSize: 15
     }
 
     UbuntuMediumText {
@@ -78,7 +78,7 @@ SvgImage {
         text: button.textMultimedia
         anchors.centerIn: imageIcon
          anchors.verticalCenterOffset: width / 1000 * -565
-        font.pixelSize: 13
+        font.pixelSize: 15
     }
 
     states: State {

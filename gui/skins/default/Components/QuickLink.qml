@@ -168,7 +168,7 @@ Item {
                 color: global.guiSettings.skin === GuiSettings.Clear ? "#434343":
                                                                        "#FFFFFF"
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 13
+                font.pixelSize: 15
                 elide: Text.ElideRight
                 anchors.top: parent.top
                 anchors.topMargin: -18

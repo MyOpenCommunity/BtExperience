@@ -21,7 +21,7 @@ MenuColumn {
             visible: column.dateVisible
             color: "black"
             text: qsTr("until date")
-            font.pixelSize: 13
+            font.pixelSize: 15
             anchors {
                 top: parent.top
                 topMargin: 5
@@ -47,7 +47,7 @@ MenuColumn {
             id: labelTime
             color: "black"
             text: qsTr("until time")
-            font.pixelSize: 13
+            font.pixelSize: 15
             anchors {
                 top: column.dateVisible ? controlDate.bottom : parent.top
                 topMargin: 5

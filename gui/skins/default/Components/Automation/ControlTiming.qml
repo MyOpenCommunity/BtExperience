@@ -28,7 +28,7 @@ SvgImage {
         id: title
         color: "black"
         text: qsTr("timer")
-        font.pixelSize: 13
+        font.pixelSize: 15
         anchors {
             top: parent.top
             topMargin: 5
@@ -65,7 +65,7 @@ SvgImage {
                     left: parent.left
                     leftMargin: 7
                 }
-                font.pixelSize: 13
+                font.pixelSize: 15
                 color: "white"
                 text: switchTiming.status === 0 ? qsTr("enabled") : qsTr("disabled")
             }

@@ -85,7 +85,7 @@ Image {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             wrapMode: Text.WordWrap
-            font.pixelSize: 13
+            font.pixelSize: 15
             font.capitalization: Font.AllUppercase
         }
 
