@@ -13,7 +13,7 @@ Page {
 
     property alias title: controlVideo.label
 
-    source: "images/videocitofonia.jpg"
+    source: "images/background/videocitofonia.jpg"
     showSystemsButton: true
 
     Connections {

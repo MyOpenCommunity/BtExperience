@@ -3,7 +3,7 @@ import Components.VideoDoorEntry 1.0
 
 
 SystemPage {
-    source: "images/videocitofonia.jpg"
+    source: "images/background/videocitofonia.jpg"
     text: qsTr("video door entry")
     rootColumn: Component { VideoDoorEntryItems {} }
     names: VideoDoorEntryNames {}
