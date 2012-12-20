@@ -14,6 +14,7 @@ MenuColumn {
         delegate: MenuItem {
             id: sourceDelegate
             property variant itemObject: sourceModel.getObject(index)
+            enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
             name: itemObject.name
             onClicked: column.sourceSelected(itemObject)
         }
