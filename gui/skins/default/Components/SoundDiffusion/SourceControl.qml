@@ -57,7 +57,10 @@ MenuColumn {
                 itemLoader.setComponent(mediaPlayer, properties)
                 break
             }
-            sourceObj.setActive(column.dataModel.area)
+            if (column.dataModel.objectId == ObjectInterface.IdMultiGeneral)
+                sourceObj.setActiveGeneral(column.dataModel.area)
+            else
+                sourceObj.setActive(column.dataModel.area)
 
             column.closeChild()
         }

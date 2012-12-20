@@ -224,6 +224,11 @@ public slots:
 	void setActive(int area);
 
 	/*!
+		\brief Activates this source on all areas
+	*/
+	void setActiveGeneral();
+
+	/*!
 		\brief Go to the previous track (memorized station for the radio)
 	*/
 	virtual void previousTrack();
@@ -418,6 +423,7 @@ public:
 	int getCurrentTrack() const;
 
 	void setActive(int area);
+	void setActiveGeneral();
 	void previousTrack();
 	void nextTrack();
 

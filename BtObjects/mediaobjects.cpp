@@ -461,6 +461,12 @@ void SourceObject::setActive(int area)
 	source->setSourceObject(this);
 }
 
+void SourceObject::setActiveGeneral()
+{
+	source->setActiveGeneral();
+	source->setSourceObject(this);
+}
+
 void SourceObject::previousTrack()
 {
 	source->previousTrack();
@@ -710,13 +716,13 @@ SourceBase::SourceType SourceBase::getType() const
 
 void SourceBase::setActive(int area)
 {
-	if (area == 0)
-	{
-		dev->turnOn(QString::number(area));
-		source_object->scsSourceForGeneralAmbientChanged();
-	}
-	else if (!isActiveInArea(area))
-		dev->turnOn(QString::number(area));
+	dev->turnOn(QString::number(area));
+}
+
+void SourceBase::setActiveGeneral()
+{
+	dev->turnOn(QString());
+	source_object->scsSourceForGeneralAmbientChanged();
 }
 
 bool SourceBase::isActive() const
