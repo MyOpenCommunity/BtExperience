@@ -20,13 +20,8 @@ Page {
 
     text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
     source: {
-        if (page.profile === undefined) {
-            if (page.homeCustomization) {
-                return global.guiSettings.homeBgImage
-            }
-            else
-                return "images/profiles.jpg"
-        }
+        if (page.profile === undefined)
+            return global.guiSettings.homeBgImage
         else
             return profile.image
     }
