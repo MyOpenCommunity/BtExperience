@@ -35,6 +35,9 @@ MenuColumn {
         property int currentIndex: -1
 
         function sourceSelected(sourceObj) {
+            if (itemLoader.item && itemLoader.item.objModel === sourceObj)
+                return
+
             sourceSelect.description = sourceObj.name
             var properties = {'objModel': sourceObj}
 
@@ -44,6 +47,7 @@ MenuColumn {
                 itemLoader.setComponent(fmRadio, properties)
                 break
             case SourceObject.Aux:
+            case SourceObject.Touch:
                 itemLoader.setComponent(auxComponent, properties)
                 break
             case SourceObject.IpRadio:
@@ -243,6 +247,14 @@ MenuColumn {
         target: column.child
         ignoreUnknownSignals: true
         onSourceSelected: privateProps.sourceSelected(object)
+    }
+
+    Connections {
+        target: dataModel
+        onCurrentSourceChanged: {
+            if (column.dataModel.currentSource)
+                privateProps.sourceSelected(column.dataModel.currentSource)
+        }
     }
 
     Component.onCompleted: {
