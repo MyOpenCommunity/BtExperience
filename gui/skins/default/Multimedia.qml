@@ -80,5 +80,7 @@ Page {
                                    "props": {"containerId": Container.IdMultimediaWebRadio, "type": "webradio"}})
         multimediaModel.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/card/meteo_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
+        multimediaModel.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
+                                   "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
     }
 }
