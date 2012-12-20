@@ -116,7 +116,7 @@ public:
 
 	QObject *getPreviousSource() const;
 
-	void connectSources(QList<SourceObject *> sources);
+	virtual void connectSources(QList<SourceObject *> sources);
 	void connectAmplifiers(QList<Amplifier *> amplifiers);
 
 signals:
@@ -130,6 +130,31 @@ private slots:
 private:
 	int amplifier_count, object_id;
 	SourceObject *previous_source;
+};
+
+
+/*!
+	\ingroup SoundDiffusion
+	\brief Properties for the general sound diffusion area
+
+	The object id is \a ObjectInterface::IdMultiChannelGeneralAmbient, object key is empty
+*/
+class SoundGeneralAmbient : public SoundAmbientBase
+{
+	Q_OBJECT
+
+public:
+	SoundGeneralAmbient(QString name, int uii);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdMultiGeneral;
+	}
+
+	virtual void connectSources(QList<SourceObject *> sources);
+
+public slots:
+	void setSource(SourceObject *source);
 };
 
 
@@ -188,6 +213,7 @@ public:
 	}
 
 	void scsSourceActiveAreasChanged();
+	void scsSourceForGeneralAmbientChanged();
 
 	virtual void initializeObject();
 
@@ -209,6 +235,7 @@ public slots:
 
 signals:
 	void activeAreasChanged(SourceObject *source_object);
+	void sourceForGeneralAmbientChanged(SourceObject *);
 
 private:
 	SourceBase *source;

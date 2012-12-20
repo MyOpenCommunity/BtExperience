@@ -409,6 +409,27 @@ void SoundAmbient::updateActiveAmplifier()
 }
 
 
+SoundGeneralAmbient::SoundGeneralAmbient(QString name, int uii) :
+	SoundAmbientBase(name, uii)
+{
+	area = 0;
+
+	// Never allow the ambient to save itself on the configuration file.
+	disconnect(this, SIGNAL(nameChanged()), this, SIGNAL(persistItem()));
+}
+
+void SoundGeneralAmbient::setSource(SourceObject * source)
+{
+	setCurrentSource(source);
+}
+
+void SoundGeneralAmbient::connectSources(QList<SourceObject *> sources)
+{
+	foreach(SourceObject *source, sources)
+		connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceObject*)), this, SLOT(setSource(SourceObject*)));
+}
+
+
 SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType t)
 {
 	name = _name;
@@ -427,6 +448,11 @@ void SourceObject::initializeObject()
 void SourceObject::scsSourceActiveAreasChanged()
 {
 	emit activeAreasChanged(this);
+}
+
+void SourceObject::scsSourceForGeneralAmbientChanged()
+{
+	emit sourceForGeneralAmbientChanged(this);
 }
 
 void SourceObject::setActive(int area)
@@ -687,6 +713,7 @@ void SourceBase::setActive(int area)
 	if (area == 0)
 	{
 		dev->turnOn(QString::number(area));
+		source_object->scsSourceForGeneralAmbientChanged();
 	}
 	else if (!isActiveInArea(area))
 		dev->turnOn(QString::number(area));
