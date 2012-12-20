@@ -4,7 +4,7 @@ import BtObjects 1.0
 
 SystemPage {
     id: sounddiffusion
-    source: "images/sound-diffusion.jpg"
+    source: "images/background/sound_diffusion.jpg"
     text: qsTr("Sound System")
 
     ObjectModel {
