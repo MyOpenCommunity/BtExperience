@@ -139,13 +139,16 @@ Item {
         id: textDelegate
         text: itemObject.description
         color: global.guiSettings.skin === GuiSettings.Clear ? "#434343" : "white"
-        font.pixelSize: 18
+        font.pixelSize: 20
         horizontalAlignment: Text.AlignHCenter
+        elide: Text.ElideRight
         anchors {
             bottom: bg.bottom
-            bottomMargin: 10
+            bottomMargin: 15
             left: bg.left
+            leftMargin: 8
             right: bg.right
+            rightMargin: 8
         }
     }
 

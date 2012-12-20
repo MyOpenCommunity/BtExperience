@@ -424,7 +424,7 @@ Page {
                             top: parent.top
                             topMargin: delegate.height / 100 * 9
                         }
-                        font.pixelSize: 13
+                        font.pixelSize: 15
                         wrapMode: Text.Wrap
                         text: delegate.text
                         elide: Text.ElideRight

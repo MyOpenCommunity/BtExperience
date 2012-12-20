@@ -20,7 +20,7 @@ Image {
         anchors.top: parent.top
         anchors.topMargin: 5
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 13
+        font.pixelSize: 15
     }
 
     UbuntuLightText {

@@ -5,6 +5,7 @@
 #include <QNetworkAccessManager>
 #include <QEventLoop>
 #include <QSet>
+#include <QRegExp>
 
 class BrowserProperties;
 class ConfigFile;
@@ -53,16 +54,21 @@ private slots:
 	void checkSslStatus(QNetworkReply *reply);
 
 private:
+	QString userAgent(const QNetworkRequest &req);
+
 	enum
 	{
 		AbortAuthentication = -1,   // Abort the authentication procedure
 		IgnoreCertificateErrors = -2,
 	};
 
+	typedef QPair<QRegExp, QString> UserAgentEntry;
+
 	QString username, password;
 	QEventLoop loop;
 	ConfigFile *configuration;
 	QSet<QString> ssl_exceptions;
+	QList<UserAgentEntry> user_agent_map;
 };
 
 #endif // NETWORKMANAGER_H

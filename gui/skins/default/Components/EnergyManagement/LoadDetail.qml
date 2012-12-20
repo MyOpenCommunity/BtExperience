@@ -31,7 +31,7 @@ MenuColumn {
                         left: parent.left
                         leftMargin: 10
                     }
-                    font.pixelSize: 13
+                    font.pixelSize: 15
                 }
 
                 UbuntuLightText {
@@ -42,7 +42,7 @@ MenuColumn {
                         left: parent.left
                         leftMargin: 10
                     }
-                    font.pixelSize: 13
+                    font.pixelSize: 15
                 }
             }
 

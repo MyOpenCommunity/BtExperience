@@ -42,10 +42,6 @@ int main(int argc, char *argv[])
 	// their, we have to install the event filter in the QApplication
 	app.installEventFilter(last_click);
 
-	//Set user-agent of the application in order to see the Mobile version of the web sites
-	app.setApplicationName(QString("Nokia"));
-	app.setApplicationVersion(QString("Mobile"));
-
 	BrowserProperties global(app_logger);
 	if (argc > 1)
 		global.setUrl(argv[1]);

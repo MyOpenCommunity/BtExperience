@@ -44,7 +44,7 @@ Image {
         anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 13
+        font.pixelSize: 15
     }
 
     UbuntuLightText {

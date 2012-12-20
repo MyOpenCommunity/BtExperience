@@ -77,7 +77,7 @@
     </keyobjects>
     <servizi>
       <abil_gui>1</abil_gui>
-      <abil_djmount>0</abil_djmount>
+      <abil_djmount>1</abil_djmount>
     </servizi>
   </setup>
 </configuratore>

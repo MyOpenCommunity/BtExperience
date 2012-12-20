@@ -41,7 +41,7 @@ Item {
             opacity: 0.75
             UbuntuLightText {
                 id: labelText
-                font.pixelSize: 13
+                font.pixelSize: 15
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter
             }

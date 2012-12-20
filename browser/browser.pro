@@ -6,7 +6,7 @@ qtcAddDeployment()
 
 include(../config.pri)
 
-QT += network declarative
+QT += network declarative webkit
 
 !mac {
     # '\$\$' outputs $$ to the Makefile, make transforms $$ into a single $, then you need a backslash for the shell

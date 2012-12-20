@@ -41,8 +41,9 @@ MenuColumn {
                     height: parent.height
                     width: 147
                     text: qsTr("type")
-                    color: "#4F4F4F"
-                    font.pixelSize: 12
+                    color: "#343434"
+                    font.pixelSize: 15
+                    elide: Text.ElideRight
                 }
 
                 Item {
@@ -54,8 +55,9 @@ MenuColumn {
                     height: parent.height
                     width: 111
                     text: qsTr("zone")
-                    color: "#4F4F4F"
-                    font.pixelSize: 12
+                    color: "#343434"
+                    font.pixelSize: 15
+                    elide: Text.ElideRight
                 }
 
                 Item {
@@ -67,8 +69,9 @@ MenuColumn {
                     height: parent.height
                     width: 106
                     text: qsTr("date and time")
-                    color: "#4F4F4F"
-                    font.pixelSize: 12
+                    color: "#343434"
+                    font.pixelSize: 15
+                    elide: Text.ElideRight
                 }
             }
         }
@@ -113,7 +116,8 @@ MenuColumn {
                             width: 147
                             color: "white"
                             text: itemObject !== undefined ? pageObject.names.get('ALARM_TYPE', itemObject.type) : ""
-                            font.pixelSize: 12
+                            elide: Text.ElideRight
+                            font.pixelSize: 16
                         }
 
                         Item {
@@ -126,8 +130,9 @@ MenuColumn {
                             width: 111
                             color: "white"
                             text: itemObject !== undefined ? itemObject.number + "\n" + itemObject.name : ""
+                            elide: Text.ElideRight
                             wrapMode: Text.WordWrap
-                            font.pixelSize: 12
+                            font.pixelSize: 16
                         }
 
                         Item {
@@ -140,7 +145,7 @@ MenuColumn {
                             width: 106
                             color: "white"
                             text: itemObject !== undefined ? DateTime.format(itemObject.date_time)["date"] + "\n" + DateTime.format(itemObject.date_time)["time"] : ""
-                            font.pixelSize: 12
+                            font.pixelSize: 13
                         }
 
                         Item {

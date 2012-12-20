@@ -67,7 +67,7 @@ Item {
 
     UbuntuLightText {
         id: label
-        color: "black"
+        color: "#343434"
         anchors.centerIn: background
         rotation: 270
         font.pixelSize: 32
