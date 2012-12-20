@@ -70,15 +70,15 @@ Page {
     }
 
     Component.onCompleted: {
-        multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/multimedia/devices_card.jpg", "props": {} })
-        multimediaModel.append({"description": qsTr("web browser"), "target": "ExternalBrowser.qml", "cardImageCached": "images/multimedia/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
-        multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/browser_card.jpg",
+        multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices_card.jpg", "props": {} })
+        multimediaModel.append({"description": qsTr("web browser"), "target": "ExternalBrowser.qml", "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
+        multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
-        multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/rss_card.jpg",
+        multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/card/rss_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaRss, "type": "rss"}})
-        multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/weblink_card.jpg",
+        multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaWebRadio, "type": "webradio"}})
-        multimediaModel.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/multimedia/meteo_card.jpg",
+        multimediaModel.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/card/meteo_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
     }
 }
