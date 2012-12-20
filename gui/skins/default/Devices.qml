@@ -5,7 +5,7 @@ import "js/Stack.js" as Stack
 
 
 SystemPage {
-    source: "images/multimedia.jpg"
+    source: "images/background/devices.jpg"
     text: qsTr("Devices")
     rootColumn: Component { DevicesSystem {} }
     names: MultimediaNames {}
