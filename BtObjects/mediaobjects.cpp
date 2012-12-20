@@ -469,14 +469,17 @@ void SourceObject::scsSourceForGeneralAmbientChanged()
 
 void SourceObject::setActive(int area)
 {
-	source->setActive(area);
+	// for local sources the "on" status notification is synchronous, so we need
+	// to call setSourceObject() before setActive; for other sources order does not matter
 	source->setSourceObject(this);
+	source->setActive(area);
 }
 
 void SourceObject::setActiveGeneral()
 {
-	source->setActiveGeneral();
+	// see comment in setActive
 	source->setSourceObject(this);
+	source->setActiveGeneral();
 }
 
 void SourceObject::previousTrack()
