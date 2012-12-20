@@ -247,16 +247,6 @@ SvgImage {
                 visible: true
                 state: "mute"
             }
-        },
-        // fixes the disappearing of the button when a call to this place
-        // arrives and the menu is shown
-        State {
-            name: "normal"
-            when: { return true }
-            PropertyChanges {
-                target: buttonCommand
-                visible: true
-            }
         }
     ]
 
