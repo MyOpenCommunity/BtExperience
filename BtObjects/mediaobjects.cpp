@@ -361,7 +361,6 @@ QObject *SoundAmbient::getPreviousSource() const
 
 void SoundAmbient::updateActiveSource(SourceObject *source_object)
 {
-	SourceBase *source = source_object->getSource();
 	SourceObject *current_source = static_cast<SourceObject *>(getCurrentSource());
 
 	// there are 3 cases
@@ -369,7 +368,7 @@ void SoundAmbient::updateActiveSource(SourceObject *source_object)
 	// - source is not active on area (isActive is true and current_source != source)
 	// - source is turned on on a new area (isActive is true and current_source == source)
 	// - source is turned off on the area (isActive is false and current_source == source)
-	if (source->isActiveInArea(area))
+	if (source_object->isActiveInArea(area))
 	{
 		// case 2 above
 		if (current_source != source_object)
@@ -436,6 +435,8 @@ SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType
 	source = s;
 	type = t;
 
+	connect(source, SIGNAL(sourceObjectChanged()), this, SLOT(scsSourceObjectChanged()));
+
 	source->setParent(this);
 	source->setSourceObject(this);
 }
@@ -443,6 +444,17 @@ SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType
 void SourceObject::initializeObject()
 {
 	source->initializeObject();
+}
+
+bool SourceObject::isActiveInArea(int area) const
+{
+	return source->getSourceObject() == this && source->isActiveInArea(area);
+}
+
+void SourceObject::scsSourceObjectChanged()
+{
+	if (source->isActive())
+		emit activeAreasChanged(this);
 }
 
 void SourceObject::scsSourceActiveAreasChanged()
@@ -757,7 +769,10 @@ SourceObject *SourceBase::getSourceObject()
 
 void SourceBase::setSourceObject(SourceObject *so)
 {
+	if (source_object == so)
+		return;
 	source_object = so;
+	emit sourceObjectChanged();
 }
 
 void SourceBase::valueReceived(const DeviceValues &values_list)

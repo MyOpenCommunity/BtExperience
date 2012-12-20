@@ -212,6 +212,8 @@ public:
 		return ObjectInterface::IdSoundSource;
 	}
 
+	bool isActiveInArea(int area) const;
+
 	void scsSourceActiveAreasChanged();
 	void scsSourceForGeneralAmbientChanged();
 
@@ -241,6 +243,9 @@ public slots:
 signals:
 	void activeAreasChanged(SourceObject *source_object);
 	void sourceForGeneralAmbientChanged(SourceObject *);
+
+private slots:
+	void scsSourceObjectChanged();
 
 private:
 	SourceBase *source;
@@ -436,6 +441,7 @@ signals:
 	void activeChanged();
 	void activeAreasChanged();
 	void currentTrackChanged();
+	void sourceObjectChanged();
 
 protected:
 	SourceBase(SourceDevice *d, SourceType t);
