@@ -13,7 +13,7 @@ Page {
     property int containerId: -1
     property string type: "browser"
 
-    source: "images/multimedia.jpg"
+    source: "images/background/multimedia.jpg"
     text: qsTr("multimedia")
 
     function multimediaButtonClicked() {

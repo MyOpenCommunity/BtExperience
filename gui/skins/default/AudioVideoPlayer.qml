@@ -16,7 +16,7 @@ Page {
     property bool upnp
     property variant mediaPlayer: global.audioVideoPlayer
 
-    source: "images/multimedia.jpg"
+    source: "images/background/multimedia.jpg"
     showSystemsButton: true
     text: player.isVideo ? qsTr("Video") : qsTr("Audio")
 

@@ -11,7 +11,7 @@ Page {
     property int index
     property bool upnp
 
-    source: "images/multimedia.jpg"
+    source: "images/background/multimedia.jpg"
     showSystemsButton: true
     text: qsTr("Photo")
 
