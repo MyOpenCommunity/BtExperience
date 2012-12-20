@@ -34,7 +34,7 @@ MenuColumn {
         id: privateProps
         property int currentIndex: -1
 
-        function sourceSelected(sourceObj) {
+        function updateSourceItem(sourceObj) {
             if (itemLoader.item && itemLoader.item.objModel === sourceObj)
                 return
 
@@ -57,12 +57,16 @@ MenuColumn {
                 itemLoader.setComponent(mediaPlayer, properties)
                 break
             }
+            column.closeChild()
+        }
+
+        function sourceSelected(sourceObj) {
+            updateSourceItem(sourceObj)
+
             if (column.dataModel.objectId == ObjectInterface.IdMultiGeneral)
                 sourceObj.setActiveGeneral(column.dataModel.area)
             else
                 sourceObj.setActive(column.dataModel.area)
-
-            column.closeChild()
         }
     }
 
@@ -256,13 +260,13 @@ MenuColumn {
         target: dataModel
         onCurrentSourceChanged: {
             if (column.dataModel.currentSource)
-                privateProps.sourceSelected(column.dataModel.currentSource)
+                privateProps.updateSourceItem(column.dataModel.currentSource)
         }
     }
 
     Component.onCompleted: {
         if (column.dataModel.currentSource)
-            privateProps.sourceSelected(column.dataModel.currentSource)
+            privateProps.updateSourceItem(column.dataModel.currentSource)
     }
 
     onChildDestroyed: privateProps.currentIndex = -1
