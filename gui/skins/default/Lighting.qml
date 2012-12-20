@@ -3,7 +3,7 @@ import Components.Lighting 1.0
 
 
 SystemPage {
-    source: "images/lighting.jpg"
+    source: "images/background/lighting.jpg"
     text: qsTr("lighting")
     rootColumn: Component { LightingItems {} }
     names: LightingNames {}
