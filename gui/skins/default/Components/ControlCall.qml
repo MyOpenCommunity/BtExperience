@@ -247,6 +247,13 @@ SvgImage {
                 visible: true
                 state: "mute"
             }
+        },
+        State {
+            name: "normal"
+            PropertyChanges {
+                target: buttonCommand
+                visible: true
+            }
         }
     ]
 
@@ -264,7 +271,7 @@ SvgImage {
         }
 
         function callEnding() {
-            control.state = ""
+            control.state = "normal"
             // it is useful to call closePopup as the very last function: this
             // object is destroyed very shortly after the call returns and doing
             // stuff may lead to random crashes
