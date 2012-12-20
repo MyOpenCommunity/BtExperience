@@ -350,7 +350,6 @@ QVariantList GlobalProperties::getBackgroundStockImagesFolder() const
 #endif
 
 	result.append("background");
-	result.append(QString("%1x%2").arg(getMainWidth()).arg(getMainHeight()));
 
 	return result;
 }

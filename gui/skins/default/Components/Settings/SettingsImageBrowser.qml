@@ -20,7 +20,7 @@ MenuColumn {
 
     Column {
         MenuItem {
-            name: qsTr("Stock images")
+            name: qsTr("Images")
             isSelected: privateProps.currentIndex === 1
             hasChild: true
 
@@ -30,7 +30,7 @@ MenuColumn {
                 column._isStock = true
                 var props = {
                     rootPath: isCard ? global.stockCardImagesFolder : global.stockBackgroundImagesFolder,
-                    text: qsTr("Stock images"),
+                    text: qsTr("Images"),
                     upnp: false,
                     imageOnly: true,
                     filter: FileObject.Image | FileObject.Directory,
@@ -38,7 +38,7 @@ MenuColumn {
                     "paginator.elementsOnPage": 7,
                     preview: true
                 }
-                column.loadColumn(directoryBrowser, qsTr("Stock images"), undefined, props)
+                column.loadColumn(directoryBrowser, qsTr("Images"), undefined, props)
             }
         }
 
