@@ -237,9 +237,9 @@ QString GuiSettings::getHomeBgImage() const
 
 	// no custom background is set, choose a standard one based on actual skin
 	if (getSkin() == Dark)
-		return QString("images/home/home_dark.jpg");
+		return QString("images/background/home_dark.jpg");
 
-	return QString("images/home/home.jpg");
+	return QString("images/background/home.jpg");
 }
 
 void GuiSettings::setHomeBgImage(QString new_value)
