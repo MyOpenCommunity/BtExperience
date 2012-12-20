@@ -55,7 +55,7 @@
     </vdes>
     <scs>
       <coordinate_scs>
-        <my_mmaddress>3</my_mmaddress>
+        <my_mmaddress>2</my_mmaddress>
         <my_maaddress>-1</my_maaddress>
         <bus_scs_type>0</bus_scs_type>
         <mylevel>3</mylevel>
