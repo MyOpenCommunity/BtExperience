@@ -137,7 +137,7 @@ private:
 	\ingroup SoundDiffusion
 	\brief Properties for the general sound diffusion area
 
-	The object id is \a ObjectInterface::IdMultiChannelGeneralAmbient, object key is empty
+	The object id is \a ObjectInterface::IdMultiGeneral, object key is empty
 */
 class SoundGeneralAmbient : public SoundAmbientBase
 {
