@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 	<container id="1" descr="scenarios">
-		<ist uii="301" img="images/systems/scenario_card.jpg">
+                <ist uii="301" img="images/card/scenario_card.jpg">
 			<link uii="6001" />
 			<link uii="6002" />
 			<link uii="6003" />

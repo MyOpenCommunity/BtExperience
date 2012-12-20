@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 	<container id="1" descr="scenarios">
-		<ist uii="301" img="images/systems/scenario_card.jpg">
+                <ist uii="301" img="images/card/scenario_card.jpg">
 			<link uii="6001" />
 			<link uii="6002" />
 			<link uii="6003" />
@@ -18,7 +18,7 @@
 		</ist>
 	</container>
 	<container id="2" descr="lights"> <!-- lights system container -->
-		<ist uii="302" img="images/systems/lighting_card.jpg">
+                <ist uii="302" img="images/card/lighting_card.jpg">
 			<link uii="12" />
 			<link uii="1" />
 			<link uii="2" />
@@ -32,14 +32,14 @@
 		</ist>
 	</container>
 	<container id="3" descr="automation">
-		<ist uii="303" img="images/systems/automation_card.jpg">
+                <ist uii="303" img="images/card/automation_card.jpg">
 			<link uii="15" />
 			<link uii="16" />
 			<link uii="17" />
 		</ist>
 	</container>
 	<container id="4" descr="air conditioning">
-		<ist uii="304" img="images/systems/temperature-control_card.jpg">
+                <ist uii="304" img="images/card/temperature-control_card.jpg">
 			<link uii="7001" />
 			<link uii="7002" />
 			<link uii="7101" />
@@ -51,7 +51,7 @@
 		</ist>
 	</container>
 	<container id="8" descr="thermal regulation">
-		<ist uii="308" img="images/systems/temperature-control_card.jpg">
+                <ist uii="308" img="images/card/temperature-control_card.jpg">
 			<link uii="2001" />
 			<link uii="2011" />
 			<link uii="2012" />
@@ -64,7 +64,7 @@
 		</ist>
 	</container>
 	<container id="9" descr="video door entry system">
-		<ist uii="309" img="images/systems/vde_card.jpg">
+                <ist uii="309" img="images/card/vde_card.jpg">
                         <link uii="9011" />
                         <link uii="9012" />
                         <link uii="9013" />
@@ -106,7 +106,7 @@
 		</ist>
 	</container>
 	<container id="10" descr="sound diffusion">
-		<ist uii="310" img="images/systems/sound-diffusion_card.jpg">
+                <ist uii="310" img="images/card/sound-diffusion_card.jpg">
 			<link uii="410" />
 			<link uii="411" />
 			<link uii="412" />
@@ -116,11 +116,11 @@
 		</ist>
 	</container>
 	<container id="11" descr="antintrusion">
-		<ist uii="311" img="images/systems/burlgar-alarm_card.jpg">
+                <ist uii="311" img="images/card/burlgar-alarm_card.jpg">
 		</ist>
 	</container>
 	<container id="15" descr="messages">
-		<ist uii="315" img="images/systems/messages_card.jpg">
+                <ist uii="315" img="images/card/messages_card.jpg">
 
 		</ist>
 	</container>
@@ -164,14 +164,14 @@
 		</ist>
 	</container>
 	<container id="5" descr="load management">
-		<ist uii="305" img="images/systems/energy_card.jpg">
+                <ist uii="305" img="images/card/energy_card.jpg">
 			<link uii="4004" />
 			<link uii="4005" />
 			<link uii="4006" />
 		</ist>
 	</container>
 	<container id="6" descr="supervision">
-		<ist uii="306" img="images/systems/energy_card.jpg">
+                <ist uii="306" img="images/card/energy_card.jpg">
 			<!-- Stop & go -->
 			<link uii="4001" />
 			<link uii="4002" />
@@ -184,7 +184,7 @@
 		</ist>
 	</container>
 	<container id="7" descr="energy data">
-		<ist uii="307" img="images/systems/energy_card.jpg">
+                <ist uii="307" img="images/card/energy_card.jpg">
 			<link uii="5001" />
 			<link uii="5002" />
 			<link uii="5003" />
