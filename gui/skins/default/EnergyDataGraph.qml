@@ -17,7 +17,7 @@ Page {
 
     showSystemsButton: true
     text: qsTr("energy consumption")
-    source: "images/energy.jpg"
+    source: "images/background/energy.jpg"
 
     EnergyFunctions {
         id: energyFunctions
