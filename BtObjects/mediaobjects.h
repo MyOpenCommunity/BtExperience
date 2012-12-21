@@ -35,8 +35,6 @@ QList<ObjectPair> parseGeneralAmplifier(const QDomNode &xml_node, int id);
 QList<ObjectPair> parseAmplifierGroup(const QDomNode &xml_node, const UiiMapper &uii_map);
 QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multichannel);
 
-QList<ObjectPair> parseIpRadio(const QDomNode &xml_node);
-
 
 // internal class
 class SoundAmbientBase : public ObjectInterface
