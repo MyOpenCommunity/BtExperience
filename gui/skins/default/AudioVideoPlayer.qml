@@ -647,8 +647,10 @@ Page {
     QtObject {
         id: privateProps
         function buildTrackText(info) {
-            if (info["meta_title"])
+            if (info["meta_title"] && info["meta_artist"])
                 return info["meta_title"] + " - " + info["meta_artist"]
+            else if (info["meta_title"])
+                return info["meta_title"]
             else if (info["file_name"])
                 return info["file_name"]
             else return ""
