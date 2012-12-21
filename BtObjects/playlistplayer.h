@@ -42,6 +42,7 @@ protected:
 	explicit PlayListPlayer(QObject *parent = 0);
 
 	QString getCurrent() const { return current; }
+	QString getCurrentName() const { return current_name; }
 	void previous();
 	void next();
 	void generate(DirectoryListModel *model, int index, int total_files);
@@ -69,7 +70,7 @@ private slots:
 
 private:
 	ListManager *local_list, *upnp_list, *actual_list;
-	QString current;
+	QString current, current_name;
 	bool is_video;
 
 	int loop_starting_file; // the index of the song used to detect loop

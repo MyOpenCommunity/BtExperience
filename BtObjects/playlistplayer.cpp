@@ -206,6 +206,8 @@ void PlayListPlayer::generate(QList<QObject *> items, int index, int total_files
 
 		info.type = EntryInfo::AUDIO;
 		info.path = item->getAddress();
+		info.name = item->getName();
+		info.metadata["title"] = info.name;
 
 		entry_list << info;
 	}
@@ -227,7 +229,7 @@ void PlayListPlayer::reset()
 
 	if (!current.isEmpty())
 	{
-		current = QString();
+		current = current_name = QString();
 		emit currentChanged();
 	}
 }
@@ -246,6 +248,7 @@ void PlayListPlayer::updateCurrent()
 	if (candidate.isEmpty())
 		return;
 	current = candidate;
+	current_name = actual_list->currentMeta()["title"];
 	emit currentChanged();
 }
 
@@ -394,8 +397,14 @@ void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerStat
 
 void AudioVideoPlayer::play()
 {
+	QVariantMap default_info;
+
+	default_info["meta_title"] = getCurrentName();
+	default_info["stream_title"] = getCurrentName();
+
 	user_track_change_request = true;
 	media_player->setCurrentSource(getCurrent());
+	media_player->setDefaultTrackInfo(default_info);
 	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)
 		media_player->play();
 }

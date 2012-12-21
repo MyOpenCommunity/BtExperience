@@ -123,6 +123,7 @@ public:
 	void setMute(bool newValue);
 	QRect getVideoRect() const;
 	void setVideoRect(QRect rect);
+	void setDefaultTrackInfo(QVariantMap new_track_info);
 
 	/*!
 		\brief Set the global template for command line arguments

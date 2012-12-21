@@ -298,6 +298,11 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 	emit currentSourceChanged(current_source);
 }
 
+void MultiMediaPlayer::setDefaultTrackInfo(QVariantMap new_track_info)
+{
+	updateTrackInfo(new_track_info);
+}
+
 void MultiMediaPlayer::updateTrackInfo(QMap<QString, QString> new_track_info)
 {
 	QVariantMap info;
