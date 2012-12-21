@@ -42,6 +42,7 @@ namespace
 	const int QML_VOLUME = 6;
 	const int QML_SOURCE = 7;
 	const int QML_AMPLIFIER = 8;
+	const int QML_AMBIENT_UII = 9;
 }
 
 
@@ -163,6 +164,7 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 	cache->setOriginalValue(QML_HOUR, hour);
 	cache->setOriginalValue(QML_MINUTE, minute);
 	cache->setOriginalValue(QML_VOLUME, 0);
+	cache->setOriginalValue(QML_AMBIENT_UII, 0);
 	cache->setOriginalValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(0));
 	cache->setOriginalValue(QML_SOURCE, Converter<SourceObject>::asQVariant(0));
 
@@ -177,6 +179,7 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(sourceChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(amplifierChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(amplifierChanged()), this, SLOT(updateAmbientUii()));
 
 	connect(timer_trigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
 	connect(timer_tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
@@ -234,6 +237,9 @@ void AlarmClock::qmlValueChanged(int key, QVariant value)
 		break;
 	case QML_SOURCE:
 		emit sourceChanged();
+		break;
+	case QML_AMBIENT_UII:
+		emit ambientUiiChanged();
 		break;
 	default:
 		qWarning() << __PRETTY_FUNCTION__ << "an unknown key (" << key << ") has arrived";
@@ -546,6 +552,39 @@ bool AlarmClock::isRinging() const
 	return timer_tick->isActive();
 }
 
+void AlarmClock::updateAmbientUii()
+{
+	// no amplifier, no ambient uii
+	if (getAmplifier() == 0)
+	{
+		cache->setQMLValue(QML_AMBIENT_UII, -1);
+		return;
+	}
+
+	// loop through all ambients to look for the one containing this amplifier
+	QScopedPointer<ObjectModel> ambientModel(new ObjectModel());
+	ambientModel->setFilters(
+				ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSpecialAmbient
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSoundAmbient
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMonoChannelSoundAmbient
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiGeneral);
+	for (int i = 0; i < ambientModel->getCount(); ++i)
+	{
+		ItemInterface *item = ambientModel->getObject(i);
+		SoundAmbientBase *ambient = qobject_cast<SoundAmbientBase *>(item);
+		Q_ASSERT_X(ambient, __PRETTY_FUNCTION__, "Unexpected NULL object");
+		if (ambient && ambient->getArea() == getAmplifier()->getArea())
+		{
+			// found! set ambient uii
+			cache->setQMLValue(QML_AMBIENT_UII, ambient->getUii());
+			return;
+		}
+	}
+
+	// not found, set ambient uii to unknown
+	cache->setQMLValue(QML_AMBIENT_UII, -1);
+}
+
 AlarmClock::AlarmClockType AlarmClock::getAlarmType() const
 {
 	return static_cast<AlarmClock::AlarmClockType>(cache->getQMLValue(QML_ALARM_TYPE).toInt());
@@ -644,4 +683,9 @@ void AlarmClock::setAmplifier(Amplifier *new_value)
 {
 	if (getAmplifier() != new_value)
 		cache->setQMLValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(new_value));
+}
+
+int AlarmClock::getAmbientUii()
+{
+	return cache->getQMLValue(QML_AMBIENT_UII).toInt();
 }

@@ -90,6 +90,11 @@ class AlarmClock : public ObjectInterface
 	*/
 	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
 
+	/*!
+		\brief The ambient uii relative to the amplifier set if any, otherwise is -1
+	*/
+	Q_PROPERTY(int ambientUii READ getAmbientUii NOTIFY ambientUiiChanged)
+
 	Q_ENUMS(AlarmClockType)
 
 public:
@@ -148,9 +153,11 @@ public:
 	void setVolume(int volume);
 	int getVolume() const;
 	bool isRinging() const;
+	int getAmbientUii();
 
 signals:
 	void alarmTypeChanged();
+	void ambientUiiChanged();
 	void checkRequested();
 	void daysChanged();
 	void descriptionChanged();
@@ -177,6 +184,7 @@ private slots:
 	void restart();
 	void mediaSourcePlaybackStatus(bool status);
 	void qmlValueChanged(int key, QVariant value);
+	void updateAmbientUii();
 
 private:
 	void start();
