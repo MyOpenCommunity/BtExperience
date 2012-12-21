@@ -79,6 +79,7 @@
 	cache->setOriginalValue(QML_DAYS, days);
 	cache->setOriginalValue(QML_HOUR, hour);
 	cache->setOriginalValue(QML_MINUTE, minute);
+	cache->setOriginalValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(0));
 	cache->setOriginalValue(QML_VOLUME, 0);
 	\endverbatim
 
@@ -177,6 +178,17 @@
 		if (getDays() != new_value)
 			cache->setQMLValue(QML_DAYS, new_value);
 	}
+
+	SourceObject *AlarmClock::getSource() const
+	{
+		return Converter<SourceObject>::asPointer(cache->getQMLValue(QML_SOURCE));
+	}
+
+	void AlarmClock::setSource(SourceObject *new_value)
+	{
+		if (getSource() != new_value)
+			cache->setQMLValue(QML_SOURCE, Converter<SourceObject>::asQVariant(new_value));
+	}
 	\endverbatim
 
 	Now you are ready to code the QML part.
@@ -242,6 +254,21 @@ private:
 	// registers what values were "originally" set and must be managed
 	QSet<int> keys;
 	QHash<int, QVariant> original_values, values;
+};
+
+// an utility template
+template <class T> class Converter
+{
+public:
+	static T* asPointer(QVariant v)
+	{
+		return reinterpret_cast<T *>(v.value<void *>());
+	}
+
+	static QVariant asQVariant(T* ptr)
+	{
+		return qVariantFromValue((void *) ptr);
+	}
 };
 
 #endif // QML_CACHE_H

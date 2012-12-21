@@ -40,6 +40,8 @@ namespace
 	const int QML_HOUR = 4;
 	const int QML_MINUTE = 5;
 	const int QML_VOLUME = 6;
+	const int QML_SOURCE = 7;
+	const int QML_AMPLIFIER = 8;
 }
 
 
@@ -161,10 +163,10 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 	cache->setOriginalValue(QML_HOUR, hour);
 	cache->setOriginalValue(QML_MINUTE, minute);
 	cache->setOriginalValue(QML_VOLUME, 0);
+	cache->setOriginalValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(0));
+	cache->setOriginalValue(QML_SOURCE, Converter<SourceObject>::asQVariant(0));
 
 	enabled = false; // starting from a well known state
-	source = 0;
-	amplifier = 0;
 	tick_count = 0;
 	timer_tick = new QTimer(this);
 
@@ -226,6 +228,12 @@ void AlarmClock::qmlValueChanged(int key, QVariant value)
 		break;
 	case QML_VOLUME:
 		emit volumeChanged();
+		break;
+	case QML_AMPLIFIER:
+		emit amplifierChanged();
+		break;
+	case QML_SOURCE:
+		emit sourceChanged();
 		break;
 	default:
 		qWarning() << __PRETTY_FUNCTION__ << "an unknown key (" << key << ") has arrived";
@@ -314,7 +322,7 @@ void AlarmClock::startRinging()
 	}
 	else
 	{
-		if (!source || !amplifier)
+		if (!getSource() || !getAmplifier())
 		{
 			qWarning() << "Invalid alarm clock setup: either no source or amplifier enabled";
 			return;
@@ -329,7 +337,7 @@ void AlarmClock::startRinging()
 
 	if (actual_type == AlarmClockSoundSystem)
 	{
-		SourceMedia *media = qobject_cast<SourceMedia *>(source);
+		SourceMedia *media = qobject_cast<SourceMedia *>(getSource());
 
 		if (media)
 		{
@@ -462,7 +470,7 @@ void AlarmClock::alarmTick()
 	else
 	{
 		if (tick_count == 0)
-			source->setActive(amplifier->getArea());
+			getSource()->setActive(getAmplifier()->getArea());
 
 		if (tick_count == (ALARM_TIME * 1000) / SOUND_DIFFUSION_INTERVAL - 1)
 		{
@@ -478,7 +486,7 @@ void AlarmClock::alarmTick()
 
 void AlarmClock::mediaSourcePlaybackStatus(bool status)
 {
-	disconnect(source, SIGNAL(firstMediaContentStatus(bool)),
+	disconnect(getSource(), SIGNAL(firstMediaContentStatus(bool)),
 			   this, SLOT(mediaSourcePlaybackStatus(bool)));
 
 	if (!isRinging())
@@ -496,8 +504,8 @@ void AlarmClock::mediaSourcePlaybackStatus(bool status)
 
 void AlarmClock::soundDiffusionStop()
 {
-	if (amplifier)
-		amplifier->setActive(false);
+	if (getAmplifier())
+		getAmplifier()->setActive(false);
 }
 
 void AlarmClock::soundDiffusionSetVolume()
@@ -505,37 +513,9 @@ void AlarmClock::soundDiffusionSetVolume()
 	int real_volume = 32 * getVolume() / 10;
 
 	if (tick_count <= real_volume)
-		amplifier->setVolume(tick_count);
+		getAmplifier()->setVolume(tick_count);
 	if (tick_count == 0)
-		amplifier->setActive(true);
-}
-
-void AlarmClock::setSource(SourceObject *_source)
-{
-	if (_source == source)
-		return;
-
-	source = _source;
-	emit sourceChanged();
-}
-
-SourceObject *AlarmClock::getSource() const
-{
-	return source;
-}
-
-void AlarmClock::setAmplifier(Amplifier *_amplifier)
-{
-	if (_amplifier == amplifier)
-		return;
-
-	amplifier = _amplifier;
-	emit amplifierChanged();
-}
-
-Amplifier *AlarmClock::getAmplifier() const
-{
-	return amplifier;
+		getAmplifier()->setActive(true);
 }
 
 void AlarmClock::incrementVolume()
@@ -642,4 +622,26 @@ void AlarmClock::setDescription(QString new_value)
 {
 	if (getDescription() != new_value)
 		cache->setQMLValue(QML_DESCRIPTION, new_value);
+}
+
+SourceObject *AlarmClock::getSource() const
+{
+	return Converter<SourceObject>::asPointer(cache->getQMLValue(QML_SOURCE));
+}
+
+void AlarmClock::setSource(SourceObject *new_value)
+{
+	if (getSource() != new_value)
+		cache->setQMLValue(QML_SOURCE, Converter<SourceObject>::asQVariant(new_value));
+}
+
+Amplifier *AlarmClock::getAmplifier() const
+{
+	return Converter<Amplifier>::asPointer(cache->getQMLValue(QML_AMPLIFIER));
+}
+
+void AlarmClock::setAmplifier(Amplifier *new_value)
+{
+	if (getAmplifier() != new_value)
+		cache->setQMLValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(new_value));
 }

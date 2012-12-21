@@ -141,9 +141,9 @@ public:
 	void setTriggerOnFridays(bool new_value);
 	void setTriggerOnSaturdays(bool new_value);
 	void setTriggerOnSundays(bool new_value);
-	void setSource(SourceObject *source);
+	void setSource(SourceObject *new_value);
 	SourceObject *getSource() const;
-	void setAmplifier(Amplifier *amplifier);
+	void setAmplifier(Amplifier *new_value);
 	Amplifier *getAmplifier() const;
 	void setVolume(int volume);
 	int getVolume() const;
@@ -194,10 +194,6 @@ private:
 	QTimer *timer_postpone;
 	int tick_count;
 	QTime start_time;
-
-	// sound diffusion alarm clock
-	Amplifier *amplifier;
-	SourceObject *source;
 };
 
 #endif // ALARMCLOCK_H
