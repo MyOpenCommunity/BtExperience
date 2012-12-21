@@ -10,9 +10,9 @@ QuickLink {
     imageSource: "../images/profiles/webcam.jpg" // TODO use right image when available
 
     onClicked: {
-        var urls = []
-        urls.push(itemObject.address)
-        global.audioVideoPlayer.generatePlaylistWebRadio(urls, 0, 1)
+        var items = []
+        items.push(itemObject)
+        global.audioVideoPlayer.generatePlaylistWebRadio(items, 0, 1)
         Stack.pushPage("AudioVideoPlayer.qml", {"isVideo": false})
     }
 }

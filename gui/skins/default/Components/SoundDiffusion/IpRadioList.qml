@@ -12,7 +12,7 @@ MenuColumn {
             itemObject: radioModel.getObject(index)
             editable: true
             onDelegateClicked: {
-                column.dataModel.startPlay(radioUrls(radioModel), index, radioModel.count)
+                column.dataModel.startPlay(radios(radioModel), index, radioModel.count)
             }
         }
 
@@ -29,12 +29,12 @@ MenuColumn {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    function radioUrls(model) {
-        var urls = []
+    function radios(model) {
+        var radios = []
 
         for (var i = 0; i < model.count; ++i)
-            urls.push(model.getObject(i).address)
+            radios.push(model.getObject(i))
 
-        return urls
+        return radios
     }
 }

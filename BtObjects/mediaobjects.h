@@ -312,7 +312,7 @@ public:
 	SourceIpRadio(const QString &name, SourceMultiMedia *s, MediaDataModel *model);
 
 	/// Start media playback at the given index
-	Q_INVOKABLE void startPlay(QList<QVariant> urls, int index, int total_files);
+	Q_INVOKABLE void startPlay(QList<QObject *> items, int index, int total_files);
 
 	virtual void playFirstMediaContent();
 

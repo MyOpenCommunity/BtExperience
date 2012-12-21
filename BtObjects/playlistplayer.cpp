@@ -2,6 +2,7 @@
 #include "folderlistmodel.h"
 #include "list_manager.h"
 #include "mounts.h"
+#include "medialink.h"
 
 #include <QDebug>
 #include <QTime>
@@ -51,11 +52,11 @@ void PlayListPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int t
 	generate(model, index, total_files);
 }
 
-void PlayListPlayer::generatePlaylistWebRadio(QList<QVariant> urls, int index, int total_files)
+void PlayListPlayer::generatePlaylistWebRadio(QList<QObject *> items, int index, int total_files)
 {
 	terminate();
 	is_video = false;
-	generate(urls, index, total_files);
+	generate(items, index, total_files);
 }
 
 bool PlayListPlayer::isPlaying() const
@@ -182,7 +183,7 @@ void PlayListPlayer::generate(UPnPListModel *model, int index, int total_files)
 	updateCurrent();
 }
 
-void PlayListPlayer::generate(QList<QVariant> urls, int index, int total_files)
+void PlayListPlayer::generate(QList<QObject *> items, int index, int total_files)
 {
 	Q_UNUSED(total_files);
 
@@ -192,12 +193,19 @@ void PlayListPlayer::generate(QList<QVariant> urls, int index, int total_files)
 
 	// creates list of files (of the same type) to play
 	EntryInfoList entry_list;
-	for (int i = 0; i < urls.size(); ++i)
+	foreach (QObject *obj, items)
 	{
+		MediaLink *item = qobject_cast<MediaLink *>(obj);
+		if (!item)
+		{
+			qWarning() << "Invalid object in web radio list" << obj;
+			continue;
+		}
+
 		EntryInfo info;
 
 		info.type = EntryInfo::AUDIO;
-		info.path = urls[i].toString();
+		info.path = item->getAddress();
 
 		entry_list << info;
 	}
