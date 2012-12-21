@@ -168,7 +168,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	// initial values
 	brightness = 50;
 	contrast = 50;
-	saturation = 50;
+	color = 50;
 	call_stopped = false;
 	prof_studio = false;
 	hands_free = false;
@@ -213,18 +213,18 @@ void CCTV::setContrast(int value)
 	emit contrastChanged();
 }
 
-int CCTV::getSaturation() const
+int CCTV::getColor() const
 {
-	return saturation;
+	return color;
 }
 
-void CCTV::setSaturation(int value)
+void CCTV::setColor(int value)
 {
 	// TODO set value on device
-	if (saturation == value || value < 0 || value > 100)
+	if (color == value || value < 0 || value > 100)
 		return;
-	saturation = value;
-	emit saturationChanged();
+	color = value;
+	emit colorChanged();
 }
 
 void CCTV::setHandsFree(bool newValue)
