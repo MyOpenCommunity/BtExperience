@@ -34,7 +34,10 @@ MenuColumn {
         id: privateProps
         property int currentIndex: -1
 
-        function sourceSelected(sourceObj) {
+        function updateSourceItem(sourceObj) {
+            if (itemLoader.item && itemLoader.item.objModel === sourceObj)
+                return
+
             sourceSelect.description = sourceObj.name
             var properties = {'objModel': sourceObj}
 
@@ -44,6 +47,7 @@ MenuColumn {
                 itemLoader.setComponent(fmRadio, properties)
                 break
             case SourceObject.Aux:
+            case SourceObject.Touch:
                 itemLoader.setComponent(auxComponent, properties)
                 break
             case SourceObject.IpRadio:
@@ -53,9 +57,16 @@ MenuColumn {
                 itemLoader.setComponent(mediaPlayer, properties)
                 break
             }
-            sourceObj.setActive(column.dataModel.area)
-
             column.closeChild()
+        }
+
+        function sourceSelected(sourceObj) {
+            updateSourceItem(sourceObj)
+
+            if (column.dataModel.objectId == ObjectInterface.IdMultiGeneral)
+                sourceObj.setActiveGeneral(column.dataModel.area)
+            else
+                sourceObj.setActive(column.dataModel.area)
         }
     }
 
@@ -163,7 +174,7 @@ MenuColumn {
                 name: qsTr("browse")
                 hasChild: true
                 isSelected: privateProps.currentIndex === 1
-                enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
+                enabled: objModel.mountPoint ? objModel.mountPoint.mounted : true
                 onEnabledChanged: column.closeChild()
                 onClicked: {
                     if (privateProps.currentIndex !== 1)
@@ -245,9 +256,17 @@ MenuColumn {
         onSourceSelected: privateProps.sourceSelected(object)
     }
 
+    Connections {
+        target: dataModel
+        onCurrentSourceChanged: {
+            if (column.dataModel.currentSource)
+                privateProps.updateSourceItem(column.dataModel.currentSource)
+        }
+    }
+
     Component.onCompleted: {
         if (column.dataModel.currentSource)
-            privateProps.sourceSelected(column.dataModel.currentSource)
+            privateProps.updateSourceItem(column.dataModel.currentSource)
     }
 
     onChildDestroyed: privateProps.currentIndex = -1

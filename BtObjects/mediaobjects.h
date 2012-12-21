@@ -116,7 +116,7 @@ public:
 
 	QObject *getPreviousSource() const;
 
-	void connectSources(QList<SourceObject *> sources);
+	virtual void connectSources(QList<SourceObject *> sources);
 	void connectAmplifiers(QList<Amplifier *> amplifiers);
 
 signals:
@@ -130,6 +130,31 @@ private slots:
 private:
 	int amplifier_count, object_id;
 	SourceObject *previous_source;
+};
+
+
+/*!
+	\ingroup SoundDiffusion
+	\brief Properties for the general sound diffusion area
+
+	The object id is \a ObjectInterface::IdMultiGeneral, object key is empty
+*/
+class SoundGeneralAmbient : public SoundAmbientBase
+{
+	Q_OBJECT
+
+public:
+	SoundGeneralAmbient(QString name, int uii);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdMultiGeneral;
+	}
+
+	virtual void connectSources(QList<SourceObject *> sources);
+
+public slots:
+	void setSource(SourceObject *source);
 };
 
 
@@ -187,7 +212,10 @@ public:
 		return ObjectInterface::IdSoundSource;
 	}
 
+	bool isActiveInArea(int area) const;
+
 	void scsSourceActiveAreasChanged();
+	void scsSourceForGeneralAmbientChanged();
 
 	virtual void initializeObject();
 
@@ -196,6 +224,11 @@ public slots:
 		\brief Activates this source on the specified area
 	*/
 	void setActive(int area);
+
+	/*!
+		\brief Activates this source on all areas
+	*/
+	void setActiveGeneral();
 
 	/*!
 		\brief Go to the previous track (memorized station for the radio)
@@ -209,6 +242,10 @@ public slots:
 
 signals:
 	void activeAreasChanged(SourceObject *source_object);
+	void sourceForGeneralAmbientChanged(SourceObject *);
+
+private slots:
+	void scsSourceObjectChanged();
 
 private:
 	SourceBase *source;
@@ -391,6 +428,7 @@ public:
 	int getCurrentTrack() const;
 
 	void setActive(int area);
+	void setActiveGeneral();
 	void previousTrack();
 	void nextTrack();
 
@@ -403,6 +441,7 @@ signals:
 	void activeChanged();
 	void activeAreasChanged();
 	void currentTrackChanged();
+	void sourceObjectChanged();
 
 protected:
 	SourceBase(SourceDevice *d, SourceType t);

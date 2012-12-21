@@ -233,7 +233,6 @@ void TestAlarmClockSoundDiffusion::testFirstTick()
 	obj->tick_count = 0;
 	obj->alarmTick();
 
-	source_dev->turnOn("0");
 	source_dev->turnOn("1");
 	amplifier_dev[1]->setVolume(0);
 	amplifier_dev[1]->turnOn();

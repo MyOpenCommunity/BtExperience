@@ -1099,15 +1099,13 @@ void BtObjectsPlugin::parseConfig()
 void BtObjectsPlugin::createGeneralAmbient()
 {
 	QDomNode node = findNodeForUii(general_ambient_uii).first;
+	QList<SourceObject *> sources = getSoundSources(objmodel);
 
-	int ambient_id = ObjectInterface::IdMultiGeneral;
 	int ambient_uii = uii_map.nextUii();
-	SoundAmbient *general_ambient = new SoundAmbient(0, getAttribute(node, "descr"), ambient_id, ambient_uii);
-	// Never allow the ambient to save itself on the configuration file.
-	disconnect(general_ambient, SIGNAL(nameChanged()), general_ambient, SIGNAL(persistItem()));
+	SoundGeneralAmbient *general_ambient = new SoundGeneralAmbient(getAttribute(node, "descr"), ambient_uii);
 
 	uii_map.insert(ambient_uii, general_ambient);
-	uii_to_id[ambient_uii] = ambient_id;
+	uii_to_id[ambient_uii] = general_ambient->getObjectId();
 	AmplifierGroup *a = uii_map.value<AmplifierGroup>(general_ambient_uii);
 	if (!a)
 	{
@@ -1119,9 +1117,7 @@ void BtObjectsPlugin::createGeneralAmbient()
 	// in another ambient as well (as an amplifier group).
 	objmodel.prepend(general_ambient);
 
-	// TODO: connect sources and amplifiers
-//	ambient->connectSources(sources);
-//	ambient->connectAmplifiers(amplifiers);
+	general_ambient->connectSources(sources);
 }
 
 void BtObjectsPlugin::parseMediaLinks(const QDomNode &xml_obj)

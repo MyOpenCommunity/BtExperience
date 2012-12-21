@@ -361,7 +361,6 @@ QObject *SoundAmbient::getPreviousSource() const
 
 void SoundAmbient::updateActiveSource(SourceObject *source_object)
 {
-	SourceBase *source = source_object->getSource();
 	SourceObject *current_source = static_cast<SourceObject *>(getCurrentSource());
 
 	// there are 3 cases
@@ -369,7 +368,7 @@ void SoundAmbient::updateActiveSource(SourceObject *source_object)
 	// - source is not active on area (isActive is true and current_source != source)
 	// - source is turned on on a new area (isActive is true and current_source == source)
 	// - source is turned off on the area (isActive is false and current_source == source)
-	if (source->isActiveInArea(area))
+	if (source_object->isActiveInArea(area))
 	{
 		// case 2 above
 		if (current_source != source_object)
@@ -409,11 +408,34 @@ void SoundAmbient::updateActiveAmplifier()
 }
 
 
+SoundGeneralAmbient::SoundGeneralAmbient(QString name, int uii) :
+	SoundAmbientBase(name, uii)
+{
+	area = 0;
+
+	// Never allow the ambient to save itself on the configuration file.
+	disconnect(this, SIGNAL(nameChanged()), this, SIGNAL(persistItem()));
+}
+
+void SoundGeneralAmbient::setSource(SourceObject * source)
+{
+	setCurrentSource(source);
+}
+
+void SoundGeneralAmbient::connectSources(QList<SourceObject *> sources)
+{
+	foreach(SourceObject *source, sources)
+		connect(source, SIGNAL(sourceForGeneralAmbientChanged(SourceObject*)), this, SLOT(setSource(SourceObject*)));
+}
+
+
 SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType t)
 {
 	name = _name;
 	source = s;
 	type = t;
+
+	connect(source, SIGNAL(sourceObjectChanged()), this, SLOT(scsSourceObjectChanged()));
 
 	source->setParent(this);
 	source->setSourceObject(this);
@@ -424,15 +446,40 @@ void SourceObject::initializeObject()
 	source->initializeObject();
 }
 
+bool SourceObject::isActiveInArea(int area) const
+{
+	return source->getSourceObject() == this && source->isActiveInArea(area);
+}
+
+void SourceObject::scsSourceObjectChanged()
+{
+	if (source->isActive())
+		emit activeAreasChanged(this);
+}
+
 void SourceObject::scsSourceActiveAreasChanged()
 {
 	emit activeAreasChanged(this);
 }
 
+void SourceObject::scsSourceForGeneralAmbientChanged()
+{
+	emit sourceForGeneralAmbientChanged(this);
+}
+
 void SourceObject::setActive(int area)
 {
-	source->setActive(area);
+	// for local sources the "on" status notification is synchronous, so we need
+	// to call setSourceObject() before setActive; for other sources order does not matter
 	source->setSourceObject(this);
+	source->setActive(area);
+}
+
+void SourceObject::setActiveGeneral()
+{
+	// see comment in setActive
+	source->setSourceObject(this);
+	source->setActiveGeneral();
 }
 
 void SourceObject::previousTrack()
@@ -684,12 +731,13 @@ SourceBase::SourceType SourceBase::getType() const
 
 void SourceBase::setActive(int area)
 {
-	if (area == 0)
-	{
-		dev->turnOn(QString::number(area));
-	}
-	else if (!isActiveInArea(area))
-		dev->turnOn(QString::number(area));
+	dev->turnOn(QString::number(area));
+}
+
+void SourceBase::setActiveGeneral()
+{
+	dev->turnOn(QString());
+	source_object->scsSourceForGeneralAmbientChanged();
 }
 
 bool SourceBase::isActive() const
@@ -724,7 +772,10 @@ SourceObject *SourceBase::getSourceObject()
 
 void SourceBase::setSourceObject(SourceObject *so)
 {
+	if (source_object == so)
+		return;
 	source_object = so;
+	emit sourceObjectChanged();
 }
 
 void SourceBase::valueReceived(const DeviceValues &values_list)

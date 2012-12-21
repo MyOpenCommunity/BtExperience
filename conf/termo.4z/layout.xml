@@ -17,30 +17,15 @@
 	</container>
 	<container id="100" > <!-- rooms -->
                 <ist uii="102" descr="living room" img="images/background/soggiorno.jpg" img_card="images/card/soggiorno.jpg">
-			<link uii="1" x="0" y="0"/>
-			<!-- x,y can be absolute (pixel) or percentual -->
-			<link uii="2" x="200" y="100" />
-			<link uii="3" x="300" y="300" />
 		</ist>
                 <ist uii="103" descr="bathroom" img="images/background/bagno.jpg" img_card="images/card/bagno.jpg">
-			<link uii="12" x="200" y="100" />
-			<link uii="7" x="200" y="300" />
 		</ist>
 
                 <ist uii="104" descr="garage" img="images/background/garage.jpg" img_card="images/card/garage.jpg">
-			<link uii="4" x="50" y="100" />
-			<link uii="5" x="200" y="300" />
-			<link uii="6" x="350" y="80" />
 		</ist>
                 <ist uii="105" descr="bedroom" img="images/background/camera_ragazzi.jpg" img_card="images/card/camera_ragazzi.jpg">
-			<link uii="6" x="20" y="10" />
-			<link uii="5" x="200" y="300" />
-			<link uii="12" x="400" y="125" />
 		</ist>
                 <ist uii="106" descr="kitchen" img="images/background/cucina.jpg" img_card="images/card/cucina.jpg">
-			<link uii="12" x="500" y="60" />
-			<link uii="5" x="450" y="300" />
-			<link uii="4" x="200" y="350" />
 		</ist>
 	</container>
 	<container id="13" descr="floor" img="floor.png">

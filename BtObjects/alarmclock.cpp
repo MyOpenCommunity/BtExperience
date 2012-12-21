@@ -462,21 +462,7 @@ void AlarmClock::alarmTick()
 	else
 	{
 		if (tick_count == 0)
-		{
-			bool areas[9];
-
-			memset(areas, 0, sizeof(areas));
-			source->setActive(0);
-			areas[0] = true;
-
-			int area = amplifier->getArea();
-
-			if (!areas[area])
-			{
-				source->setActive(area);
-				areas[area] = true;
-			}
-		}
+			source->setActive(amplifier->getArea());
 
 		if (tick_count == (ALARM_TIME * 1000) / SOUND_DIFFUSION_INTERVAL - 1)
 		{
