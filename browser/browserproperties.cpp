@@ -16,6 +16,12 @@ BrowserProperties::BrowserProperties(logger *log) : GlobalPropertiesCommon(log)
 
 	connect(stdin, SIGNAL(activated(int)), this, SLOT(readInput()));
 	fcntl(0, F_SETFL, (long)O_NONBLOCK);
+
+	clicks_blocked = false;
+
+	// To receive all the events, even if there is some qml elements which manage
+	// their, we have to install the event filter in the QApplication
+	qApp->installEventFilter(this);
 }
 
 void BrowserProperties::setUrl(QString _url)
@@ -115,6 +121,10 @@ void BrowserProperties::parseLine(QString line)
 
 		printf("visible: %d\n", int(visible));
 	}
+	else if (line.startsWith("set_clicks_blocked "))
+	{
+		clicks_blocked = line.split(" ")[1].toInt();
+	}
 	else if (line.startsWith("load_url "))
 	{
 		QString url = line.split(" ")[1];
@@ -123,4 +133,20 @@ void BrowserProperties::parseLine(QString line)
 	}
 	else if (line == "ping")
 		printf("pong\n");
+}
+
+bool BrowserProperties::eventFilter(QObject *obj, QEvent *ev)
+{
+	Q_UNUSED(obj)
+
+	if (ev->type() == QEvent::MouseButtonPress ||
+	    ev->type() == QEvent::MouseButtonRelease ||
+	    ev->type() == QEvent::MouseMove)
+	{
+		updateClick();
+
+		return clicks_blocked;
+	}
+
+	return false;
 }

@@ -15,6 +15,8 @@ class ScreenState : public QObject
 
 	Q_PROPERTY(State state READ getState NOTIFY stateChanged)
 
+	Q_PROPERTY(bool clicksBlocked READ getClicksBlocked NOTIFY stateChanged)
+
 	Q_PROPERTY(int normalBrightness READ getNormalBrightness WRITE setNormalBrightness NOTIFY normalBrightnessChanged)
 
 	/*!
@@ -59,6 +61,8 @@ public:
 
 	void setPasswordEnabled(bool enabled);
 	bool getPasswordEnabled() const;
+
+	bool getClicksBlocked() const;
 
 	Q_INVOKABLE void unlockScreen();
 

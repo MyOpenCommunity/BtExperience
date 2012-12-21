@@ -25,6 +25,8 @@ public:
 
 	bool getRunning() const;
 
+	void setClicksBlocked(bool blocked);
+
 signals:
 	void visibleChanged();
 	void runningChanged();

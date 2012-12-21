@@ -85,6 +85,11 @@ bool BrowserProcess::getRunning() const
 	return browser->state() != QProcess::NotRunning;
 }
 
+void BrowserProcess::setClicksBlocked(bool blocked)
+{
+	sendCommand("set_clicks_blocked " + QString::number(blocked));
+}
+
 void BrowserProcess::terminated()
 {
 	updateVisible(false);

@@ -125,6 +125,19 @@ ScreenState::State ScreenState::getState() const
 	return current_state;
 }
 
+bool ScreenState::getClicksBlocked() const
+{
+	switch (current_state)
+	{
+	case ScreenOff:
+	case Screensaver:
+	case Freeze:
+		return true;
+	default:
+		return false;
+	}
+}
+
 void ScreenState::disableState(State state)
 {
 	states[state] = false;
