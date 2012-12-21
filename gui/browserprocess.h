@@ -31,6 +31,7 @@ signals:
 	void visibleChanged();
 	void runningChanged();
 	void clicked();
+	void aboutToHide();
 
 private slots:
 	void terminated();

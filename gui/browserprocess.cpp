@@ -106,6 +106,11 @@ void BrowserProcess::readStatusUpdate()
 			keep_alive_ticks = 0;
 			continue;
 		}
+		if (line == "about_to_hide")
+		{
+			emit aboutToHide();
+			continue;
+		}
 
 		int colon = line.indexOf(':');
 		if (colon == -1)

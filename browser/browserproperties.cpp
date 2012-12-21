@@ -54,6 +54,7 @@ void BrowserProperties::addSecurityException()
 
 void BrowserProperties::quit()
 {
+	printf("about_to_hide\n");
 	qApp->quit();
 }
 
