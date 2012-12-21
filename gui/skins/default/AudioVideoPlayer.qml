@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
+import Components.Scenarios 1.0
 import Components.Text 1.0
 
 import "js/Stack.js" as Stack
@@ -615,6 +616,14 @@ Page {
         }
     ]
 
+    Component {
+        id: errorFeedback
+        ScenarioFeedback {
+            text: ""
+            isOk: false
+        }
+    }
+
     Connections {
         target: mediaPlayer
         onVolumeChanged: {
@@ -625,6 +634,13 @@ Page {
                 global.audioState.enableState(AudioState.LocalPlaybackMute)
             else
                 global.audioState.disableState(AudioState.LocalPlaybackMute)
+        }
+        onLoopDetected: {
+            player.installPopup(errorFeedback)
+            if (player.model === undefined) // ip radio
+                player.popupLoader.item.text = qsTr("No tunable web radio")
+            else // general case
+                player.popupLoader.item.text = qsTr("Loop detected")
         }
     }
 

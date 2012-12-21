@@ -230,7 +230,11 @@ void PlayListPlayer::updateCurrent()
 		return;
 	QString candidate = actual_list->currentFilePath();
 	if (candidate == current)
+	{
+		if (actual_list->totalFiles() == 1)
+			emit loopDetected();
 		return;
+	}
 	if (candidate.isEmpty())
 		return;
 	current = candidate;
