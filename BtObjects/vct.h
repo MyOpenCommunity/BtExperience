@@ -148,10 +148,10 @@ class CCTV : public VDEBase
 	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
 
 	/*!
-		\brief Sets or gets the saturation level of the display. Saturation must
+		\brief Sets or gets the Color level of the display. Color must
 		be a value between 0 and 100.
 	*/
-	Q_PROPERTY(int saturation READ getSaturation WRITE setSaturation NOTIFY saturationChanged)
+	Q_PROPERTY(int color READ getColor WRITE setColor NOTIFY colorChanged)
 
 	/*!
 		\brief Sets or gets the if door must automatically open when a call arrives.
@@ -200,8 +200,8 @@ public:
 	void setBrightness(int value);
 	int getContrast() const;
 	void setContrast(int value);
-	int getSaturation() const;
-	void setSaturation(int value);
+	int getColor() const;
+	void setColor(int value);
 	bool getAutoOpen() const { return prof_studio; }
 	void setAutoOpen(bool newValue);
 	Ringtone getRingtone() const;
@@ -226,7 +226,7 @@ public slots:
 signals:
 	void brightnessChanged();
 	void contrastChanged();
-	void saturationChanged();
+	void colorChanged();
 	void incomingCall();
 	void callEnded();
 	void autoOpenChanged();
@@ -244,7 +244,7 @@ protected slots:
 protected:
 	int brightness;
 	int contrast;
-	int saturation;
+	int color;
 
 private:
 	void setRingtone(int vde_ringtone);

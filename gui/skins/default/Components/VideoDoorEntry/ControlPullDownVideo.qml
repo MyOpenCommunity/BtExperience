@@ -27,20 +27,20 @@ Item {
                 onMinusClicked: if (control.camera !== undefined) control.camera.brightness -= 5
             }
 
-            ControlSlider {
+/*            ControlSlider {
                 id: contrastSlider
                 percentage: control.camera === undefined ? 0 : control.camera.contrast
                 description: qsTr("Contrast")
                 onPlusClicked: if (control.camera !== undefined) control.camera.contrast += 5
                 onMinusClicked: if (control.camera !== undefined) control.camera.contrast -= 5
-            }
+            }*/
 
             ControlSlider {
-                id: saturationSlider
-                percentage: control.camera === undefined ? 0 : control.camera.saturation
-                description: qsTr("Saturation")
-                onPlusClicked: if (control.camera !== undefined) control.camera.saturation += 5
-                onMinusClicked: if (control.camera !== undefined) control.camera.saturation -= 5
+                id: colorSlider
+                percentage: control.camera === undefined ? 0 : control.camera.color
+                description: qsTr("Color")
+                onPlusClicked: if (control.camera !== undefined) control.camera.color += 5
+                onMinusClicked: if (control.camera !== undefined) control.camera.color -= 5
             }
         }
     }

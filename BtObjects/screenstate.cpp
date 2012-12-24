@@ -207,6 +207,8 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 	case Freeze:
 		freeze_timer->start();
 		setBrightness(FREEZE_BRIGHTNESS);
+		//Touchscreen Reset Workaround
+		smartExecute("cat", QStringList() << "/sys/bus/spi/drivers/tsc2005/spi1.0/selftest");
 		break;
 	case ScreenOff:
 		screen_locked = password_enabled;
