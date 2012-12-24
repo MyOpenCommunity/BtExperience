@@ -31,7 +31,7 @@ Item {
     }
 
     QtObject {
-        id: privateProps
+        id: paglistPrivateProps
 
         function computeDelegateHeight() {
             if (internalList.children.length === 1 &&
@@ -47,7 +47,7 @@ Item {
     // delegateWidth property is never updated
     Connections {
         target: model
-        onCountChanged: privateProps.computeDelegateHeight()
+        onCountChanged: paglistPrivateProps.computeDelegateHeight()
     }
 
     ListView {
@@ -102,6 +102,6 @@ Item {
         }
     }
 
-    Component.onCompleted: privateProps.computeDelegateHeight()
+    Component.onCompleted: paglistPrivateProps.computeDelegateHeight()
 }
 
