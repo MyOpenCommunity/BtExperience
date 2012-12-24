@@ -52,6 +52,11 @@ BasePage {
         containers: myHomeModels.homepageLinks ? [myHomeModels.homepageLinks.uii] : [Container.IdNoContainer]
     }
 
+    MediaModel {
+        id: roomModel
+        source: myHomeModels.rooms
+    }
+
     ListView {
         id: favourites
         model: homeLinksModel
@@ -203,6 +208,8 @@ BasePage {
                     horizontalCenter: parent.horizontalCenter
                     horizontalCenterOffset: -3
                 }
+
+                visible: roomModel.count > 0
 
                 source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_stanze.svg" :
                                                                         "images/home/btn_stanze_P.svg"
