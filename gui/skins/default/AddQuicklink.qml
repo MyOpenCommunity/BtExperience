@@ -210,9 +210,9 @@ Page {
     ButtonThreeStates {
         id: addButton
 
-        defaultImage: "images/common/btn_add.svg"
-        pressedImage: "images/common/btn_add_P.svg"
-        shadowImage: "images/common/ombra_btn_add.svg"
+        defaultImage: "images/common/btn_99x35.svg"
+        pressedImage: "images/common/btn_99x35_P.svg"
+        shadowImage: "images/common/btn_shadow_99x35.svg"
         text: qsTr("ADD")
         font.pixelSize: 14
 
