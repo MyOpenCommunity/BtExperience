@@ -187,16 +187,23 @@ BasePage {
             source: "images/home/home_menu_bg_shadow.svg"
         }
 
-        Grid {
-            id: grid1
-            anchors.centerIn: menu_bg
+        Column {
+            id: rightColumn
+            anchors {
+                verticalCenter: menu_bg.verticalCenter
+                right: leftColumn.left
+                rightMargin: 11
+            }
+
             spacing: menu_bg.height / 100 * 1.5
-            columns: 2
 
             ButtonHomePageLink {
                 id: room
-                anchors.rightMargin: width / 100 * 16
-                anchors.right: system.left
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    horizontalCenterOffset: -3
+                }
+
                 source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_stanze.svg" :
                                                                         "images/home/btn_stanze_P.svg"
                 sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_stanze_P.svg" :
@@ -210,8 +217,37 @@ BasePage {
             }
 
             ButtonHomePageLink {
+                id: option
+                source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_opzioni.svg" :
+                                                                        "images/home/btn_opzioni_P.svg"
+                sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_opzioni_P.svg" :
+                                                                               "images/home/btn_opzioni.svg"
+                icon: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_opzioni.svg" :
+                                                                      "images/home/ico_opzioni_P.svg"
+                iconPressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_opzioni_P.svg" :
+                                                                             "images/home/ico_opzioni.svg"
+                onClicked: Stack.goToPage("Settings.qml")
+                textOption: qsTr("options")
+                enabled: EventManager.eventManager.scenarioRecording === false
+            }
+        }
+
+        Column {
+            id:leftColumn
+            anchors {
+                verticalCenter: menu_bg.verticalCenter
+                horizontalCenter: menu_bg.horizontalCenter
+                horizontalCenterOffset: leftColumn.width / 2
+            }
+
+            spacing: menu_bg.height / 100 * 1.5
+
+            ButtonHomePageLink {
                 id: system
-                anchors.right: parent.right
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    horizontalCenterOffset: 3
+                }
                 source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_sistemi.svg" :
                                                                         "images/home/btn_sistemi_P.svg"
                 sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_sistemi_P.svg" :
@@ -225,26 +261,7 @@ BasePage {
             }
 
             ButtonHomePageLink {
-                id: option
-                anchors.right: multimedia.left
-                anchors.rightMargin: width / 100 * 10
-                source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_opzioni.svg" :
-                                                                        "images/home/btn_opzioni_P.svg"
-                sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_opzioni_P.svg" :
-                                                                               "images/home/btn_opzioni.svg"
-                icon: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_opzioni.svg" :
-                                                                      "images/home/ico_opzioni_P.svg"
-                iconPressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_opzioni_P.svg" :
-                                                                             "images/home/ico_opzioni.svg"
-                onClicked: Stack.goToPage("Settings.qml")
-                textOption: qsTr("options")
-                enabled: EventManager.eventManager.scenarioRecording === false
-            }
-
-            ButtonHomePageLink {
                 id: multimedia
-                anchors.right: parent.right
-                anchors.rightMargin: parent.height / 100 * 1.1
                 source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_multimedia.svg" :
                                                                         "images/home/btn_multimedia_P.svg"
                 sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_multimedia_P.svg" :
