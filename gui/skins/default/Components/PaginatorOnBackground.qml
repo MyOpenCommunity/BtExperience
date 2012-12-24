@@ -9,6 +9,7 @@ Item {
     property alias model: internalList.model
     property alias buttonVisible: button.visible
     property alias spacing: spacing.height
+    property alias bottomRowAnchors: bottomRow.anchors
 
     property int elementsOnPage: 6
     property alias currentPage: paginator.currentPage
