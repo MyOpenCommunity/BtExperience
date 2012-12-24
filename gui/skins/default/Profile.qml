@@ -201,7 +201,9 @@ Page {
 
     Component {
         id: favouriteItemComponent
-        FavoriteItem { }
+        FavoriteItem {
+            onClicked: profilePage.processLaunched(global.browser)
+        }
     }
 
     Component {

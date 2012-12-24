@@ -33,7 +33,13 @@ Page {
         }
         pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
         arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
-        onClicked: Stack.goToPage(delegate.target, delegate.props)
+        onClicked: {
+            if (delegate.target === undefined) {
+                global.browser.displayUrl(delegate.props["urlString"])
+            }
+            else
+                Stack.goToPage(delegate.target, delegate.props)
+        }
     }
 
     CardView {
@@ -52,7 +58,13 @@ Page {
             source: itemObject.cardImageCached
             label: itemObject.description
 
-            onClicked: Stack.goToPage(itemObject.target, itemObject.props)
+            onClicked: {
+                if (itemObject.target === undefined) {
+                    global.browser.displayUrl(itemObject.props["urlString"])
+                }
+                else
+                    Stack.goToPage(itemObject.target, itemObject.props)
+            }
         }
 
         delegateSpacing: 40
@@ -71,7 +83,7 @@ Page {
 
     Component.onCompleted: {
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices_card.jpg", "props": {} })
-        multimediaModel.append({"description": qsTr("web browser"), "target": "ExternalBrowser.qml", "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
+        multimediaModel.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
         multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
         multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/card/rss_card.jpg",

@@ -71,7 +71,9 @@ BasePage {
 
         Component {
             id: webDelegate
-            FavoriteItem {}
+            FavoriteItem {
+                onClicked: mainarea.processLaunched(global.browser)
+            }
         }
 
         Component {
