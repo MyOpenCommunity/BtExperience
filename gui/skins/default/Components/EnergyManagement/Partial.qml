@@ -61,7 +61,7 @@ SvgImage {
 
         defaultImage: "../../images/common/btn_66x35.svg"
         pressedImage: "../../images/common/btn_66x35_P.svg"
-        shadowImage: "../../images/common/ombra_btn_automazioni.svg"
+        shadowImage: "../../images/common/btn_shadow_66x35.svg"
         text: qsTr("reset")
         font.capitalization: Font.AllUppercase
         font.pixelSize: 15

@@ -6,7 +6,6 @@ BtObjectsMapping 1.0 BtObjectsMapping.qml
 ButtonBack 1.0 ButtonBack.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
 ButtonImageThreeStates 1.0 ButtonImageThreeStates.qml
-ButtonMediaControl 1.0 ButtonMediaControl.qml
 ButtonMinusPlus 1.0 ButtonMinusPlus.qml
 ButtonMultimedia 1.0 ButtonMultimedia.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
@@ -19,8 +18,6 @@ ButtonThreeStatesAutomation 1.0 ButtonThreeStatesAutomation.qml
 ButtonThreeStatesIcon 1.0 ButtonThreeStatesIcon.qml
 CameraLink 1.0 CameraLink.qml
 CardDelegate 1.0 CardDelegate.qml
-CardGridDelegate 1.0 CardGridDelegate.qml
-CardGridView 1.0 CardGridView.qml
 CardView 1.0 CardView.qml
 ColumnBrowserCommon 1.0 ColumnBrowserCommon.qml
 ColumnBrowserDelegate 1.0 ColumnBrowserDelegate.qml
@@ -43,8 +40,6 @@ ControlOn 1.0 ControlOn.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
 ControlOpenCloseStopSafe 1.0 ControlOpenCloseStopSafe.qml
-ControlUpDownStop 1.0 ControlUpDownStop.qml
-ControlUpDownStopSafe 1.0 ControlUpDownStopSafe.qml
 ControlPathView 1.0 ControlPathView.qml
 ControlPathViewInternal 1.0 ControlPathViewInternal.qml
 ControlPopup 1.0 ControlPopup.qml
@@ -58,6 +53,8 @@ ControlSpin 1.0 ControlSpin.qml
 ControlSwitch 1.0 ControlSwitch.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
 ControlUpDown 1.0 ControlUpDown.qml
+ControlUpDownStop 1.0 ControlUpDownStop.qml
+ControlUpDownStopSafe 1.0 ControlUpDownStopSafe.qml
 EditNote 1.0 EditNote.qml
 EventManager 1.0 EventManager.qml
 FadeAnimation 1.0 FadeAnimation.qml
