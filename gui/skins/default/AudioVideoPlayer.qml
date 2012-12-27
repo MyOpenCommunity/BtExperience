@@ -424,7 +424,7 @@ Page {
         }
 
         SvgImage {
-            source: "images/common/regola_volume/bg_volume.svg"
+            source: "images/common/bg_regola_dimmer.svg"
             anchors {
                 verticalCenter: muteIcon.verticalCenter
                 left: muteIcon.right
