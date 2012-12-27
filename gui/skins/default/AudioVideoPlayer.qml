@@ -159,9 +159,9 @@ Page {
         ButtonImageThreeStates {
             id: prevButton
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_previous_track.svg"
             pressedImage: "images/common/ico_previous_track_P.svg"
             repetitionOnHold: player.isVideo ? false : true
@@ -190,9 +190,9 @@ Page {
             ButtonImageThreeStates {
                 id: playButton
 
-                defaultImageBg: player.isVideo ? "images/common/btn_play_pause.svg" : "images/common/btn_player_comando.svg"
-                pressedImageBg: player.isVideo ? "images/common/btn_play_pause_P.svg" : "images/common/btn_player_comando_P.svg"
-                shadowImage: player.isVideo ? "images/common/ombra_btn_play_pause.svg" : "images/common/ombra_btn_player_comando.svg"
+                defaultImageBg: player.isVideo ? "images/common/btn_99x35.svg" : "images/common/btn_45x35.svg"
+                pressedImageBg: player.isVideo ? "images/common/btn_99x35_P.svg" : "images/common/btn_45x35_P.svg"
+                shadowImage: player.isVideo ? "images/common/btn_shadow_99x35.svg" : "images/common/btn_shadow_45x35.svg"
                 defaultImage: "images/common/ico_play.svg"
                 pressedImage: "images/common/ico_play_P.svg"
                 anchors.centerIn: parent
@@ -223,9 +223,9 @@ Page {
             id: stopButton
             visible: !player.isVideo
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_stop.svg"
             pressedImage: "images/common/ico_stop_P.svg"
 
@@ -238,9 +238,9 @@ Page {
         ButtonImageThreeStates {
             id: nextButton
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_next_track.svg"
             pressedImage: "images/common/ico_next_track_P.svg"
             repetitionOnHold: player.isVideo ? false : true
@@ -261,9 +261,9 @@ Page {
     ButtonImageThreeStates {
         id: folderButton
 
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_browse.svg"
         pressedImage: "images/common/ico_browse_P.svg"
         anchors {
@@ -294,8 +294,8 @@ Page {
         ButtonImageThreeStates {
             id: buttonMute
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
             shadowImage: "images/common/ombra_btn_mute.svg"
             defaultImage: "images/common/ico_mute.svg"
             pressedImage: "images/common/ico_mute.svg"
@@ -320,9 +320,9 @@ Page {
 
     ButtonImageThreeStates {
         id: buttonMinus
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_piu_meno.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
         onClicked: player.mediaPlayer.decrementVolume()
@@ -336,9 +336,9 @@ Page {
 
     ButtonImageThreeStates {
         id: buttonPlus
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_piu_meno.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
         onClicked: player.mediaPlayer.incrementVolume()
@@ -353,10 +353,10 @@ Page {
     ButtonImageThreeStates {
         id: fullScreenToggle
 
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        selectedImageBg: "images/common/btn_player_comando_S.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        selectedImageBg: "images/common/btn_45x35_S.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_fullscreen.svg"
         pressedImage: "images/common/ico_fullscreen.svg"
         selectedImage: "images/common/ico_chiudi_fullscreen.svg"
