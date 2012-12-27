@@ -17,8 +17,7 @@ SvgImage {
 
     signal editClicked
 
-    // TODO: here and below, move the images in the common path!
-    source: "../images/termo/imposta_data-ora/bg_imposta_data-ora.svg"
+    source: "../images/common/bg_panel_212x100.svg"
 
     UbuntuLightText {
         id: textUpperLabel
@@ -85,11 +84,10 @@ SvgImage {
             bottomMargin: control.upperLabelVisible ? 5 : 10
         }
 
-        // TODO: see the TODO above
-        defaultImageBg: "../images/termo/imposta_data-ora/btn_imposta_data-ora.svg"
-        pressedImageBg: "../images/termo/imposta_data-ora/btn_imposta_data-ora_P.svg"
-        selectedImageBg: "../images/termo/imposta_data-ora/btn_imposta_data-ora_S.svg"
-        shadowImage: "../images/termo/imposta_data-ora/ombra_btn_imposta_data-ora.svg"
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        selectedImageBg: "../images/common/btn_66x35_S.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/termo/imposta_data-ora/ico_imposta_data-ora.svg"
         pressedImage: "../images/termo/imposta_data-ora/ico_imposta_data-ora_P.svg"
         selectedImage: "../images/termo/imposta_data-ora/ico_imposta_data-ora_P.svg" // we don't have a _S version

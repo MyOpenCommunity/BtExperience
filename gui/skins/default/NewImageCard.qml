@@ -47,8 +47,6 @@ BasePage {
         Image {
             id: sourceImage
 
-            // TODO load user choosen image
-            source: "images/common/addams.jpg"
             x: (parent.width - width) / 2
             y: (parent.height - height) / 2
         }
