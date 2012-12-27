@@ -122,9 +122,9 @@ BasePage {
     ButtonImageThreeStates {
         id: buttonZoomOut
 
-        defaultImageBg: "images/common/btn_comando.svg"
-        pressedImageBg: "images/common/btn_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
         status: 0
@@ -141,9 +141,9 @@ BasePage {
     ButtonImageThreeStates {
         id: buttonZoomIn
 
-        defaultImageBg: "images/common/btn_comando.svg"
-        pressedImageBg: "images/common/btn_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
         status: 0
@@ -160,9 +160,9 @@ BasePage {
     ButtonImageThreeStates {
         id: buttonBrowse
 
-        defaultImageBg: "images/common/btn_comando.svg"
-        pressedImageBg: "images/common/btn_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_browse.svg"
         pressedImage: "images/common/ico_browse_P.svg"
         status: 0

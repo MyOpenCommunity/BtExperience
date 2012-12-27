@@ -78,9 +78,9 @@ SvgImage {
     ButtonImageThreeStates {
         id: buttonMute
         z: 2 // must always be enabled
-        defaultImageBg: "../images/common/btn_mute.svg"
-        pressedImageBg: "../images/common/btn_mute_P.svg"
-        shadowImage: "../images/common/ombra_btn_mute.svg"
+        defaultImageBg: "../images/common/btn_45x35.svg"
+        pressedImageBg: "../images/common/btn_45x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_45x35.svg"
         defaultImage: "../images/common/ico_mute.svg"
         pressedImage: "../images/common/ico_mute.svg"
         onClicked: muteClicked()
@@ -134,8 +134,8 @@ SvgImage {
             PropertyChanges {
                 target: buttonMute
                 defaultImageBg: "../images/common/btn_mute_on.svg"
-                pressedImageBg: "../images/common/btn_mute_P.svg"
-                shadowImage: "../images/common/ombra_btn_mute.svg"
+                pressedImageBg: "../images/common/btn_45x35_P.svg"
+                shadowImage: "../images/common/btn_shadow_45x35.svg"
                 defaultImage: "../images/common/ico_mute_on.svg"
                 pressedImage: "../images/common/ico_mute_on.svg"
                 status: 0

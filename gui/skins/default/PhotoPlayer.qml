@@ -84,9 +84,9 @@ Page {
         ButtonImageThreeStates {
             id: prevButton
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_previous_track.svg"
             pressedImage: "images/common/ico_previous_track_P.svg"
             anchors {
@@ -118,9 +118,9 @@ Page {
             ButtonImageThreeStates {
                 id: playButton
 
-                defaultImageBg: "images/common/btn_play_pause.svg"
-                pressedImageBg: "images/common/btn_play_pause_P.svg"
-                shadowImage: "images/common/ombra_btn_play_pause.svg"
+                defaultImageBg: "images/common/btn_99x35.svg"
+                pressedImageBg: "images/common/btn_99x35_P.svg"
+                shadowImage: "images/common/btn_shadow_99x35.svg"
                 defaultImage: "images/common/ico_play.svg"
                 pressedImage: "images/common/ico_play_P.svg"
                 anchors.centerIn: parent
@@ -163,9 +163,9 @@ Page {
         ButtonImageThreeStates {
             id: nextButton
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_next_track.svg"
             pressedImage: "images/common/ico_next_track_P.svg"
             anchors {
@@ -182,9 +182,9 @@ Page {
         ButtonImageThreeStates {
             id: folderButton
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_browse.svg"
             pressedImage: "images/common/ico_browse_P.svg"
             anchors {
@@ -200,10 +200,10 @@ Page {
         ButtonImageThreeStates {
             id: fullScreenToggle
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            selectedImageBg: "images/common/btn_player_comando_S.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            selectedImageBg: "images/common/btn_45x35_S.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_fullscreen.svg"
             pressedImage: "images/common/ico_fullscreen.svg"
             selectedImage: "images/common/ico_chiudi_fullscreen.svg"
