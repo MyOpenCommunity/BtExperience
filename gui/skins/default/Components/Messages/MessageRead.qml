@@ -43,9 +43,9 @@ MenuColumn {
     ButtonImageThreeStates {
         id: deleteButton
 
-        defaultImageBg: "../../images/common/messaggio_ricevuto/btn_elimina.svg"
-        pressedImageBg: "../../images/common/messaggio_ricevuto/btn_elimina_P.svg"
-        shadowImage: "../../images/common/messaggio_ricevuto/ombra_btn_elimina.svg"
+        defaultImageBg: "../../images/common/btn_66x35.svg"
+        pressedImageBg: "../../images/common/btn_66x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_66x35.svg"
         defaultImage: "../../images/common/messaggio_ricevuto/ico_elimina.svg"
         pressedImage: "../../images/common/messaggio_ricevuto/ico_elimina_P.svg"
         anchors {
@@ -65,9 +65,9 @@ MenuColumn {
     ButtonImageThreeStates {
         id: replyButton
 
-        defaultImageBg: "../../images/common/messaggio_ricevuto/btn_elimina.svg"
-        pressedImageBg: "../../images/common/messaggio_ricevuto/btn_elimina_P.svg"
-        shadowImage: "../../images/common/messaggio_ricevuto/ombra_btn_elimina.svg"
+        defaultImageBg: "../../images/common/btn_66x35.svg"
+        pressedImageBg: "../../images/common/btn_66x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_66x35.svg"
         defaultImage: "../../images/common/messaggio_ricevuto/ico_rispondi.svg"
         pressedImage: "../../images/common/messaggio_ricevuto/ico_rispondi_P.svg"
         anchors {
