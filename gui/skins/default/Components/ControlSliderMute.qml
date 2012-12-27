@@ -13,7 +13,7 @@ SvgImage {
     signal minusClicked
     signal muteClicked
 
-    source: "../images/common/bg_regola_volume.svg"
+    source: "../images/common/bg_panel_212x100.svg"
 
     Rectangle {
         id: darkRect

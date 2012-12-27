@@ -4,7 +4,7 @@ import Components.Text 1.0
 
 Image {
     id: controlBalance
-    source: "../images/common/bg_dimmer.svg"
+    source: "../images/common/bg_panel_212x100.svg"
     property int value: 1
     // Range of the component, symmetric. [-range, +range]
     property int balanceRange: 10

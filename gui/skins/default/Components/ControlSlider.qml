@@ -11,7 +11,7 @@ SvgImage {
     signal plusClicked
     signal minusClicked
 
-    source: "../images/common/bg_dimmer.svg"
+    source: "../images/common/bg_panel_212x100.svg"
 
     UbuntuLightText {
         id: label

@@ -22,7 +22,7 @@ ControlCallManager {
 
     property alias place: caption2.text
 
-    source: "../../images/common/bg_chiamata.svg"
+    source: "../../images/common/bg_panel_212x100.svg"
 
     UbuntuLightText {
         id: caption1

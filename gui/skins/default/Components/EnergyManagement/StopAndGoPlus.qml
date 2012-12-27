@@ -9,7 +9,7 @@ MenuColumn {
 
     Column {
         SvgImage {
-            source: "../../images/common/bg_impostazioni.svg"
+            source: "../../images/common/bg_panel_212x100.svg"
 
             UbuntuLightText {
                 id: firstLine

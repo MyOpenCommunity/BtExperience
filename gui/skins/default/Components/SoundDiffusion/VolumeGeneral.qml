@@ -8,7 +8,7 @@ Image {
     property alias description: label.text
     property string imagePath: "../../"
 
-    source: imagePath + "images/common/bg_impostazioni.svg"
+    source: imagePath + "images/common/bg_panel_212x100.svg"
 
     signal plusClicked
     signal minusClicked

@@ -212,12 +212,10 @@ MenuColumn {
     Component {
         id: auxComponent
 
-        Image {
+        SvgImage {
             id: control
             property variant objModel: undefined
-            width: 212
-            height: 100
-            source: imagesPath + "common/bg_UnaRegolazione.png"
+            source: imagesPath + "common/bg_panel_212x100.svg"
 
             UbuntuLightText {
                 y: 10
