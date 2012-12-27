@@ -19,4 +19,5 @@ SystemPage {
     }
 
     showMultimediaButton: true
+    showSystemsButton: false
 }
