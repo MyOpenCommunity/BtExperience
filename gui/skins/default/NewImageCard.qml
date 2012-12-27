@@ -181,9 +181,9 @@ BasePage {
     ButtonThreeStates {
         id: cancelButton
 
-        defaultImage: "images/common/btn_ok-annulla.svg"
-        pressedImage: "images/common/btn_ok-annulla_P.svg"
-        shadowImage: "images/common/ombra_btn_ok-annulla.svg"
+        defaultImage: "images/common/btn_99x35.svg"
+        pressedImage: "images/common/btn_99x35_P.svg"
+        shadowImage: "images/common/btn_shadow_99x35.svg"
         text: qsTr("CANCEL")
         font.pixelSize: 14
         onClicked: Stack.popPage()
@@ -198,9 +198,9 @@ BasePage {
     ButtonThreeStates {
         id: okButton
 
-        defaultImage: "images/common/btn_ok-annulla.svg"
-        pressedImage: "images/common/btn_ok-annulla_P.svg"
-        shadowImage: "images/common/ombra_btn_ok-annulla.svg"
+        defaultImage: "images/common/btn_99x35.svg"
+        pressedImage: "images/common/btn_99x35_P.svg"
+        shadowImage: "images/common/btn_shadow_99x35.svg"
         text: qsTr("OK")
         font.pixelSize: 14
         onClicked: {

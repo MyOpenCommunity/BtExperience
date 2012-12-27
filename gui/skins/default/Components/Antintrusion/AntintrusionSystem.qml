@@ -276,10 +276,10 @@ MenuColumn {
                     textAnchors.right: zoneButton.right
                     font.pixelSize: 12
                     horizontalAlignment: Text.AlignLeft
-                    defaultImage: "../../images/common/button_zones.svg"
-                    pressedImage: "../../images/common/button_zones_press.svg"
-                    selectedImage: "../../images/common/button_zones_select.svg"
-                    shadowImage: "../../images/common/shadow_button_zones.svg"
+                    defaultImage: "../../images/common/btn_99x35.svg"
+                    pressedImage: "../../images/common/btn_99x35_P.svg"
+                    selectedImage: "../../images/common/btn_99x35_S.svg"
+                    shadowImage: "../../images/common/btn_shadow_99x35.svg"
                     text: itemObject.name
                     onClicked: itemObject.selected = !itemObject.selected
                     status: itemObject.selected ? 1 : 0
