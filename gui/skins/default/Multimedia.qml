@@ -12,6 +12,15 @@ Page {
     source : global.guiSettings.homeBgImage
     text: qsTr("multimedia")
 
+    function cardClicked(itemObject) {
+        if (itemObject.target === undefined) {
+            multimedia.processLaunched(global.browser)
+            global.browser.displayUrl(itemObject.props["urlString"])
+        }
+        else
+            Stack.goToPage(itemObject.target, itemObject.props)
+    }
+
     ControlPathView {
         visible: multimediaModel.count >= 3
         x0FiveElements: 150
@@ -33,13 +42,7 @@ Page {
         }
         pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
         arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
-        onClicked: {
-            if (delegate.target === undefined) {
-                global.browser.displayUrl(delegate.props["urlString"])
-            }
-            else
-                Stack.goToPage(delegate.target, delegate.props)
-        }
+        onClicked: cardClicked(delegate)
     }
 
     CardView {
@@ -58,13 +61,7 @@ Page {
             source: itemObject.cardImageCached
             label: itemObject.description
 
-            onClicked: {
-                if (itemObject.target === undefined) {
-                    global.browser.displayUrl(itemObject.props["urlString"])
-                }
-                else
-                    Stack.goToPage(itemObject.target, itemObject.props)
-            }
+            onClicked: cardClicked(itemObject)
         }
 
         delegateSpacing: 40
