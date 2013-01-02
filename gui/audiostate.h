@@ -23,22 +23,22 @@ class AudioState : public QObject
 public:
 	enum State
 	{
-		Invalid = -1,
-		Idle,
-		Beep,
-		Screensaver,
-		LocalPlayback,
-		LocalPlaybackMute,
-		Ringtone,
-		VdeRingtone,
-		ScsVideoCall,
-		IpVideoCall,
-		ScsIntercomCall,
-		IpIntercomCall,
-		SenderPagerCall,
-		ReceiverPagerCall,
-		Mute,
-		FloorCall,
+		Invalid = -1,      //-1
+		Idle,              //0
+		Beep,              //1
+		Screensaver,       //2
+		LocalPlayback,     //3
+		LocalPlaybackMute, //4
+		Ringtone,          //5
+		VdeRingtone,       //6
+		ScsVideoCall,      //7
+		IpVideoCall,       //8
+		ScsIntercomCall,   //9
+		IpIntercomCall,    //10
+		SenderPagerCall,   //11
+		ReceiverPagerCall, //12
+		Mute,              //13
+		FloorCall,         //14
 		// this must be last
 		StateCount
 	};

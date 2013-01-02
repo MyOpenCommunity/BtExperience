@@ -196,9 +196,13 @@ int CCTV::getBrightness() const
 
 void CCTV::setBrightness(int value)
 {
-	// TODO set value on device
 	if (brightness == value || value < 0 || value > 100)
 		return;
+
+	//min 0 max 255 step 1 default 128
+	QString scaled_volume = QString::number(value * 255 / 100);
+	QString process = "yavta -w \'0x00980900 " + scaled_volume + "\' /dev/v4l-subdev8";
+	system(qPrintable(process));
 	brightness = value;
 	emit brightnessChanged();
 }
@@ -210,9 +214,13 @@ int CCTV::getContrast() const
 
 void CCTV::setContrast(int value)
 {
-	// TODO set value on device
 	if (contrast == value || value < 0 || value > 100)
 		return;
+
+	//min 0 max 255 step 1 default 128
+	QString scaled_volume = QString::number(value * 255 / 100);
+	QString process = "yavta -w \'0x00980901 " + scaled_volume + "\' /dev/v4l-subdev8";
+	system(qPrintable(process));
 	contrast = value;
 	emit contrastChanged();
 }
@@ -224,9 +232,13 @@ int CCTV::getColor() const
 
 void CCTV::setColor(int value)
 {
-	// TODO set value on device
 	if (color == value || value < 0 || value > 100)
 		return;
+
+	//min 0 max 255 step 1 default 128
+	QString scaled_volume = QString::number(value * 255 / 100);
+	QString process = "yavta -w \'0x00980902 " + scaled_volume + "\' /dev/v4l-subdev8";
+	system(qPrintable(process));
 	color = value;
 	emit colorChanged();
 }
