@@ -94,9 +94,9 @@ SvgImage {
 
     ButtonImageThreeStates {
         id: buttonMinus
-        defaultImageBg: "../images/common/btn_99x35.svg"
-        pressedImageBg: "../images/common/btn_99x35_P.svg"
-        shadowImage: "../images/common/btn_shadow_99x35.svg"
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         onClicked: minusClicked()
@@ -111,9 +111,9 @@ SvgImage {
 
     ButtonImageThreeStates {
         id: buttonPlus
-        defaultImageBg: "../images/common/btn_99x35.svg"
-        pressedImageBg: "../images/common/btn_99x35_P.svg"
-        shadowImage: "../images/common/btn_shadow_99x35.svg"
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         onClicked: plusClicked()
