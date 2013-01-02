@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
 import "../../js/logging.js" as Log
 
 
@@ -8,6 +9,18 @@ MenuColumn {
 
     onChildDestroyed: {
         itemList.currentIndex = -1
+    }
+
+    SystemsModel {id: systemsModel; systemId: Container.IdVideoDoorEntry }
+    ObjectModel {
+        id: intercomModel
+        filters: [{"objectId": ObjectInterface.IdIntercom}]
+    }
+
+    ObjectModel {
+        id: extPlaceModel
+        containers: [systemsModel.systemUii]
+        source: intercomModel.getObject(0).externalPlaces
     }
 
     PaginatorList {
@@ -31,8 +44,10 @@ MenuColumn {
         id: modelList
         Component.onCompleted: {
             modelList.append({"name": qsTr("video control"), "component": cctv})
-            modelList.append({"name": qsTr("intercom"), "component": intercom})
-            modelList.append({"name": qsTr("pager"), "component": pager})
+            if (extPlaceModel.count > 0) {
+                modelList.append({"name": qsTr("intercom"), "component": intercom})
+                modelList.append({"name": qsTr("pager"), "component": pager})
+            }
         }
     }
 
