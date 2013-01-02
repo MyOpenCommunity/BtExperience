@@ -25,9 +25,7 @@ ColumnBrowserDirectoryModel 1.0 ColumnBrowserDirectoryModel.qml
 ColumnBrowserUpnpModel 1.0 ColumnBrowserUpnpModel.qml
 ConfirmationBar 1.0 ConfirmationBar.qml
 Constants 1.0 Constants.qml
-Control3LinesButton 1.0 Control3LinesButton.qml
 ControlBalance 1.0 ControlBalance.qml
-ControlButton 1.0 ControlButton.qml
 ControlCall 1.0 ControlCall.qml
 ControlChoices 1.0 ControlChoices.qml
 ControlDateTime 1.0 ControlDateTime.qml
@@ -35,7 +33,6 @@ ControlDoubleSpin 1.0 ControlDoubleSpin.qml
 ControlLeftRight 1.0 ControlLeftRight.qml
 ControlLeftRightWithTitle 1.0 ControlLeftRightWithTitle.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
-ControlMinusPlusOld 1.0 ControlMinusPlusOld.qml
 ControlOn 1.0 ControlOn.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
@@ -52,7 +49,6 @@ ControlSliderMute 1.0 ControlSliderMute.qml
 ControlSpin 1.0 ControlSpin.qml
 ControlSwitch 1.0 ControlSwitch.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
-ControlUpDown 1.0 ControlUpDown.qml
 ControlUpDownStop 1.0 ControlUpDownStop.qml
 ControlUpDownStopSafe 1.0 ControlUpDownStopSafe.qml
 EditNote 1.0 EditNote.qml
@@ -61,6 +57,7 @@ FadeAnimation 1.0 FadeAnimation.qml
 FavoriteEditPopup 1.0 FavoriteEditPopup.qml
 FavoriteItem 1.0 FavoriteItem.qml
 KeyPad 1.0 KeyPad.qml
+LoaderWithProps 1.0 LoaderWithProps.qml
 MenuColumn 1.0 MenuColumn.qml
 MenuColumnMouseArea 1.0 MenuColumnMouseArea.qml
 MenuContainer 1.0 MenuContainer.qml
