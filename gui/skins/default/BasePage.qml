@@ -20,10 +20,8 @@ Image {
 
     // The alert management and API.
     function showAlert(sourceElement, message) {
-        popupLoader.sourceComponent = alertComponent
+        popupLoader.setComponent(alertComponent, {"message": message, "source": sourceElement})
         popupLoader.item.closeAlert.connect(closeAlert)
-        popupLoader.item.message = message
-        popupLoader.item.source = sourceElement
         page.state = "alert"
     }
 
@@ -42,8 +40,8 @@ Image {
     // may be destroyed before user input finished, it will not work.
     // Example: create a popup from a MenuColumn that immediately after is
     // destroyed.
-    function installPopup(sourceComponent) {
-        popupLoader.sourceComponent = sourceComponent
+    function installPopup(sourceComponent, properties) {
+        popupLoader.setComponent(sourceComponent, properties)
         popupLoader.item.closePopup.connect(closePopup)
         page.state = "popup"
     }
@@ -119,7 +117,7 @@ Image {
         anchors.fill: parent
         z: 10
 
-        Loader {
+        LoaderWithProps {
             id: popupLoader
             opacity: 0
             anchors.verticalCenter: parent.verticalCenter
@@ -133,7 +131,7 @@ Image {
 
     function closePopup() {
         page.state = ""
-        popupLoader.sourceComponent = undefined
+        popupLoader.setComponent(undefined)
     }
 
     Constants {
