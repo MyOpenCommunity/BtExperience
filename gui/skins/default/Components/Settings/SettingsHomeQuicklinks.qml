@@ -14,15 +14,8 @@ MenuColumn {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    // we don't have a ListView, so we don't have a currentIndex property: let's define it
-    QtObject {
-        id: privateProps
-        property int currentIndex: -1
-    }
-
     onChildDestroyed: {
         paginator.currentIndex = -1
-        privateProps.currentIndex = -1
     }
 
     Component {
@@ -33,11 +26,8 @@ MenuColumn {
     Column {
         MenuItem {
             name: qsTr("Add Quicklink")
-            isSelected: privateProps.currentIndex === 1
             enabled: quicklinksModel.count < 7
             onClicked: {
-                if (privateProps.currentIndex !== 1)
-                    privateProps.currentIndex = 1
                 column.closeChild()
                 Stack.pushPage("AddQuicklink.qml", {"homeCustomization": true})
             }
@@ -53,7 +43,6 @@ MenuColumn {
                 name: itemObject.name
                 hasChild: true
                 onDelegateClicked: {
-                    privateProps.currentIndex = -1
                     column.loadColumn(renameDeleteItem, name, itemObject)
                 }
             }
