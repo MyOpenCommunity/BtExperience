@@ -300,7 +300,7 @@ Page {
                         left: delegateRadio.right
                         leftMargin: bg.width / 100 * 2.51
                     }
-                    onClicked: page.actualModel.remove(delegateRadio.itemObject)
+                    onClicked: page.installPopup(confirmDeleteDialog, {"itemObject": delegateRadio.itemObject})
                 }
             }
         }
@@ -324,6 +324,21 @@ Page {
                         modelSizeWithoutFirstPage / paginator.elementsOnOtherPages
 
             return Math.floor(ret + 1)
+        }
+    }
+
+    Component {
+        id: confirmDeleteDialog
+
+        TextDialog {
+            property variant itemObject
+
+            function okClicked() {
+                page.actualModel.remove(itemObject)
+            }
+
+            title: qsTr("Confirm deletion")
+            text: qsTr("Do you want to remove the selected quicklink?\nName: %1\nAddress: %2").arg(itemObject.name).arg(itemObject.address)
         }
     }
 
