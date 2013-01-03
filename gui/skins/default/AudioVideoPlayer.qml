@@ -636,11 +636,11 @@ Page {
                 global.audioState.disableState(AudioState.LocalPlaybackMute)
         }
         onLoopDetected: {
-            player.installPopup(errorFeedback)
+            var props = {text: qsTr("Loop detected")}
             if (player.model === undefined) // ip radio
-                player.popupLoader.item.text = qsTr("No tunable web radio")
-            else // general case
-                player.popupLoader.item.text = qsTr("Loop detected")
+                props = {text: qsTr("No tunable web radio")}
+
+            player.installPopup(errorFeedback, props)
         }
     }
 

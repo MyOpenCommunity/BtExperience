@@ -190,8 +190,7 @@ Page {
         }
 
         function showEditBox(favorite) {
-            installPopup(popup)
-            popupLoader.item.favoriteItem = favorite.itemObject
+            installPopup(popup, {favoriteItem: favorite.itemObject})
         }
 
         function addNote() {

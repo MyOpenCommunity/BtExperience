@@ -12,12 +12,14 @@ SvgImage {
     property string textInserted
 
     signal cancelClicked
+    signal closePopup
     signal digitClicked(string digit)
 
     source: "../images/common/panel_keypad.svg"
 
     onCancelClicked: {
         textInserted = ""
+        keypad.closePopup()
     }
 
     onDigitClicked: {

@@ -35,6 +35,13 @@ Image {
         }
     }
 
+    Connections {
+        id: popupConnection
+        target: null
+        onClosePopup: closePopup()
+        ignoreUnknownSignals: true
+    }
+
     // Warning: please note that popupLoader doesn't take ownership of the
     // component that you have created. If you try to install a component which
     // may be destroyed before user input finished, it will not work.
@@ -42,7 +49,7 @@ Image {
     // destroyed.
     function installPopup(sourceComponent, properties) {
         popupLoader.setComponent(sourceComponent, properties)
-        popupLoader.item.closePopup.connect(closePopup)
+        popupConnection.target = popupLoader.item
         page.state = "popup"
     }
 

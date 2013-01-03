@@ -7,9 +7,8 @@ Item {
     function setComponent(component, properties) {
         properties = properties || {}
         if (component === undefined) {
-            itemLoader.width = 0
-            itemLoader.height = 0
-            item.destroy()
+            if (item !== null)
+                item.destroy()
             item = null
         }
         else {
