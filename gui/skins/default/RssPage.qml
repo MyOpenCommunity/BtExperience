@@ -1,6 +1,8 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.RssReader 1.0
+import Components.Scenarios 1.0
+import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 Page {
@@ -27,12 +29,9 @@ Page {
         }
         clip: true
 
-        property bool loading: (rssFeedModel.status == XmlListModel.Loading) || (atomFeedModel.status == XmlListModel.Loading)
-        property string currentFeed: rssPage.urlString
-
         XmlListModel {
             id: rssFeedModel
-            source: window.currentFeed
+            source: rssPage.urlString
             query: "/rss/channel/item"
 
             XmlRole { name: "title"; query: "title/string()" }
@@ -42,7 +41,7 @@ Page {
 
         XmlListModel {
             id: atomFeedModel
-            source: window.currentFeed
+            source: rssPage.urlString
             query: "/feed/entry"
             // the following must be present or ATOM feeds will not work
             namespaceDeclarations: "declare default element namespace 'http://www.w3.org/2005/Atom';"
@@ -54,12 +53,70 @@ Page {
 
         ListView {
             id: list
-            width: window.width
-            height: window.height
+            anchors.fill: window
+            visible: false
             model: isRss ? rssFeedModel : atomFeedModel
             delegate: NewsDelegate {}
         }
 
+        SvgImage {
+            id: loadingIndicator
+            source: "images/common/ico_caricamento.svg"
+            anchors.centerIn: window
+
+            Timer {
+                id: loadingTimer
+                interval: 250
+                repeat: true
+                onTriggered: loadingIndicator.rotation += 45
+            }
+        }
+
+        UbuntuMediumText {
+            id: noNewsLabel
+            anchors.centerIn: parent
+            font.pixelSize: 18
+            text: qsTr("No news to display")
+            visible: false
+        }
+
+        Connections {
+            id: modelLoading
+            target: list.model
+            onStatusChanged: {
+                if (status === XmlListModel.Ready) {
+                    if (modelLoading.target.count === 0)
+                        rssPage.state = "noNews"
+                    else
+                        rssPage.state = "loaded"
+                }
+                else if (status === XmlListModel.Error)
+                    installPopup(loadFeedback)
+            }
+        }
+
         ScrollBar { scrollArea: list; height: list.height; width: 8; anchors.right: window.right }
     }
+
+    Component {
+        id: loadFeedback
+        ScenarioFeedback {
+            isOk: false
+            text: qsTr("Rss load failed")
+        }
+    }
+
+    states: [
+        State {
+            name: "loaded"
+            PropertyChanges { target: list; visible: true }
+            PropertyChanges { target: loadingIndicator; visible: false }
+        },
+        State {
+            name: "noNews"
+            PropertyChanges { target: loadingIndicator; visible: false }
+            PropertyChanges { target: noNewsLabel; visible: true }
+        }
+
+    ]
 }
