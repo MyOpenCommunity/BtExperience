@@ -215,8 +215,13 @@ Page {
                         defaultImage: "images/common/ico_pause.svg"
                         pressedImage: "images/common/ico_pause_P.svg"
                     }
+                    PropertyChanges { target: forceScreenOn; enabled: player.isVideo }
                 }
             ]
+        }
+
+        ScreenStateHandler {
+            id: forceScreenOn
         }
 
         ButtonImageThreeStates {
