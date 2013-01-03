@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
-import Components.Scenarios 1.0
+import Components.Popup 1.0
 import Components.Text 1.0
 import "js/Stack.js" as Stack
 
@@ -173,7 +173,7 @@ Page {
 
                         Component {
                             id: wrongPasswordFeedback
-                            ScenarioFeedback {
+                            FeedbackPopup {
                                 text: qsTr("Wrong password")
                                 isOk: false
                             }
@@ -181,7 +181,7 @@ Page {
 
                         Component {
                             id: unmatchPasswordFeedback
-                            ScenarioFeedback {
+                            FeedbackPopup {
                                 text: qsTr("Passwords don't match")
                                 isOk: false
                             }

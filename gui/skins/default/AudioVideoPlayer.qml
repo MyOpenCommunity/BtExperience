@@ -2,7 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
-import Components.Scenarios 1.0
+import Components.Popup 1.0
 import Components.Text 1.0
 
 import "js/Stack.js" as Stack
@@ -618,7 +618,7 @@ Page {
 
     Component {
         id: errorFeedback
-        ScenarioFeedback {
+        FeedbackPopup {
             text: ""
             isOk: false
         }
