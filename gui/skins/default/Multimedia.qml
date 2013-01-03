@@ -21,53 +21,54 @@ Page {
             Stack.goToPage(itemObject.target, itemObject.props)
     }
 
-    ControlPathView {
-        visible: multimediaModel.count >= 3
-        x0FiveElements: 150
-        x0ThreeElements: 250
-        x1: 445
-        x2FiveElements: 740
-        x2ThreeElements: 640
-        pathviewId: 1
-
-        model: multimediaModel
+    Loader {
+        id: viewLoader
         anchors {
+            top: toolbar.bottom
             right: parent.right
             rightMargin: 30
             left: navigationBar.right
             leftMargin: 30
-            top: toolbar.bottom
-            topMargin: 50
             bottom: parent.bottom
         }
-        pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
-        arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
-        onClicked: cardClicked(delegate)
+        sourceComponent: multimediaModel.count >= 3 ? cardPathView : cardList
     }
 
-    CardView {
-        anchors {
-            right: parent.right
-            rightMargin: 30
-            left: navigationBar.right
-            leftMargin: 30
-            top: toolbar.bottom
-            topMargin: 50
-            bottom: parent.bottom
+    Component {
+        id: cardPathView
+
+        ControlPathView {
+            x0FiveElements: 150
+            x0ThreeElements: 250
+            y0: 270
+            x1: 445
+            y1: 250
+            x2FiveElements: 740
+            x2ThreeElements: 640
+            pathviewId: 1
+            model: multimediaModel
+            pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
+            arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
+            onClicked: cardClicked(delegate)
         }
-        visible: model.count < 3
-        delegate: CardDelegate {
-            property variant itemObject: multimediaModel.getObject(index)
-            source: itemObject.cardImageCached
-            label: itemObject.description
+    }
 
-            onClicked: cardClicked(itemObject)
+    Component {
+        id: cardList
+        CardView {
+            delegate: CardDelegate {
+                property variant itemObject: multimediaModel.getObject(index)
+                source: itemObject.cardImageCached
+                label: itemObject.description
+
+                onClicked: cardClicked(delegate)
+            }
+
+            delegateSpacing: 40
+            visibleElements: 2
+
+            model: multimediaModel
         }
-
-        delegateSpacing: 40
-        visibleElements: 2
-
-        model: multimediaModel
     }
 
     ListModel {
