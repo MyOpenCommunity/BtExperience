@@ -26,10 +26,8 @@ MenuColumn {
 
     onChildDestroyed: privateProps.currentIndex = -1
 
-    PaginatorColumn {
+    Column {
         id: paginator
-        anchors.horizontalCenter: parent.horizontalCenter
-        maxHeight: 300
 
         MenuItem {
             id: skinItem

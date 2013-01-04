@@ -50,11 +50,7 @@ MenuColumn {
         pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
     }
 
-    PaginatorColumn {
-        id: paginator
-        anchors.horizontalCenter: parent.horizontalCenter
-        maxHeight: 300
-
+    Column {
         MenuItem {
             id: textLanguageItem
             name: qsTr("text language")
