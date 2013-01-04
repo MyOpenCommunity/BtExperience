@@ -25,11 +25,11 @@ MenuColumn {
     Column {
         ControlTitleValue {
             title: qsTr("Firmware version")
-            value: privateProps.model.firmware || qsTr("Unknown")
+            value: privateProps.model.firmwareVersion || qsTr("Unknown")
         }
         ControlTitleValue {
             title: qsTr("Kernel version")
-            value: privateProps.model.software || qsTr("Unknown")
+            value: privateProps.model.kernelVersion || qsTr("Unknown")
         }
         ControlTitleValue {
             title: qsTr("Serial number")

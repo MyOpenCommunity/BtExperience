@@ -105,9 +105,9 @@ void PlatformSettings::setDns2(QString d)
 	emit dns2Changed();
 }
 
-QString PlatformSettings::getFirmware() const
+QString PlatformSettings::getFirmwareVersion() const
 {
-	return firmware;
+	return firmware_version;
 }
 
 QString PlatformSettings::getGateway() const
@@ -171,9 +171,9 @@ QString PlatformSettings::getSerialNumber() const
 	return serial_number;
 }
 
-QString PlatformSettings::getSoftware() const
+QString PlatformSettings::getKernelVersion() const
 {
-	return software;
+	return kernel_version;
 }
 
 QString PlatformSettings::getSubnet() const
@@ -272,18 +272,17 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 			}
 			break;
 		case PlatformDevice::DIM_FW_VERS:
-			if (it.value().toString() != firmware)
+			if (it.value().toString() != firmware_version)
 			{
-				firmware = it.value().toString();
-				emit firmwareChanged();
+				firmware_version = it.value().toString();
+				emit firmwareVersionChanged();
 			}
 			break;
-		// TODO kernel == software is a guess of mine: check it is right!
 		case PlatformDevice::DIM_KERN_VERS:
-			if (it.value().toString() != software)
+			if (it.value().toString() != kernel_version)
 			{
-				software = it.value().toString();
-				emit softwareChanged();
+				kernel_version = it.value().toString();
+				emit kernelVersionChanged();
 			}
 			break;
 		// TODO discover how to retrieve serial number information

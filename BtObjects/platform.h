@@ -48,7 +48,7 @@ class PlatformSettings : public ObjectInterface
 	/*!
 		\brief Gets the firmware version.
 	*/
-	Q_PROPERTY(QString firmware READ getFirmware NOTIFY firmwareChanged)
+	Q_PROPERTY(QString firmwareVersion READ getFirmwareVersion NOTIFY firmwareVersionChanged)
 
 	/*!
 		\brief Sets and gets the gateway address
@@ -66,9 +66,9 @@ class PlatformSettings : public ObjectInterface
 	Q_PROPERTY(QString serialNumber READ getSerialNumber NOTIFY serialNumberChanged)
 
 	/*!
-		\brief Gets the software version.
+		\brief Gets the kernel version.
 	*/
-	Q_PROPERTY(QString software READ getSoftware NOTIFY softwareChanged)
+	Q_PROPERTY(QString kernelVersion READ getKernelVersion NOTIFY kernelVersionChanged)
 
 	/*!
 		\brief Sets and gets the subnet mask
@@ -127,7 +127,7 @@ public:
 	void setDns1(QString d);
 	QString getDns2() const;
 	void setDns2(QString d);
-	QString getFirmware() const;
+	QString getFirmwareVersion() const;
 	QString getGateway() const;
 	void setGateway(QString g);
 	LanConfig getLanConfig() const;
@@ -136,7 +136,7 @@ public:
 	void setLanStatus(LanStatus ls);
 	QString getMac() const;
 	QString getSerialNumber() const;
-	QString getSoftware() const;
+	QString getKernelVersion() const;
 	QString getSubnet() const;
 	void setSubnet(QString s);
 	void setConnectionStatus(InternetConnectionStatus status);
@@ -152,13 +152,13 @@ signals:
 	void addressChanged();
 	void dns1Changed();
 	void dns2Changed();
-	void firmwareChanged();
+	void firmwareVersionChanged();
 	void gatewayChanged();
 	void lanConfigChanged();
 	void lanStatusChanged();
 	void macChanged();
 	void serialNumberChanged();
-	void softwareChanged();
+	void kernelVersionChanged();
 	void subnetChanged();
 	void connectionStatusChanged();
 
@@ -172,11 +172,11 @@ private:
 	QVariant value(int id) const;
 
 	QHash<int, QVariant> current, to_apply;
-	QString firmware;
+	QString firmware_version;
 	LanStatus lan_status;
 	QString mac;
 	QString serial_number;
-	QString software;
+	QString kernel_version;
 	PlatformDevice *dev;
 	ConfigFile *configurations;
 
