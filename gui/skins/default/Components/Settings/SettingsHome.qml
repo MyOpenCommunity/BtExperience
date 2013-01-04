@@ -45,7 +45,8 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("Modify background image")
+            name: qsTr("Change background image")
+            hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {
                 if (privateProps.currentIndex !== 2)
