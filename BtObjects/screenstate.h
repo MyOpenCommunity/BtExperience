@@ -19,6 +19,8 @@ class ScreenState : public QObject
 
 	Q_PROPERTY(int normalBrightness READ getNormalBrightness WRITE setNormalBrightness NOTIFY normalBrightnessChanged)
 
+	Q_PROPERTY(int contrast READ getContrast WRITE setContrast NOTIFY contrastChanged)
+
 	/*!
 		\brief Enable/disable password check
 
@@ -59,6 +61,9 @@ public:
 	void setNormalBrightness(int brightness);
 	int getNormalBrightness() const;
 
+	void setContrast(int c);
+	int getContrast() const;
+
 	void setPasswordEnabled(bool enabled);
 	bool getPasswordEnabled() const;
 
@@ -77,6 +82,7 @@ signals:
 	// QTBUG-27041 QML can't use enum values as signal arguments
 	void stateChangedInt(int old_state, int new_state);
 	void normalBrightnessChanged();
+	void contrastChanged();
 	void passwordEnabledChanged();
 	void displayPasswordCheck();
 
@@ -97,7 +103,7 @@ private:
 	QTimer *freeze_timer;
 	QTimer *password_timer;
 	State current_state;
-	int normal_brightness;
+	int normal_brightness, contrast;
 	bool states[StateCount];
 	bool password_enabled, screen_locked;
 };

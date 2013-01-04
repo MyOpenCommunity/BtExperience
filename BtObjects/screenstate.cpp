@@ -24,6 +24,12 @@ namespace
 	#endif
 	}
 
+	void setHardwareContrast(int value)
+	{
+		Q_UNUSED(value);
+		qDebug() << __PRETTY_FUNCTION__ << "TODO set contrast hardware value";
+	}
+
 	void setMonitorEnabled(int value)
 	{
 		qDebug() << "Writing" <<  value << "to /sys/devices/platform/omapdss/display0/enabled";
@@ -51,6 +57,7 @@ ScreenState::ScreenState(QObject *parent) : QObject(parent)
 {
 	current_state = Invalid;
 	normal_brightness = 100;
+	contrast = 100;
 	password_enabled = screen_locked = false;
 	for (int i = 0; i < StateCount; ++i)
 		states[i] = false;
@@ -97,6 +104,23 @@ void ScreenState::setNormalBrightness(int brightness)
 int ScreenState::getNormalBrightness() const
 {
 	return normal_brightness;
+}
+
+void ScreenState::setContrast(int c)
+{
+	c = qMin(100, qMax(c, 1));
+	if (c == contrast)
+		return;
+
+	contrast = c;
+	emit contrastChanged();
+
+	setHardwareContrast(contrast);
+}
+
+int ScreenState::getContrast() const
+{
+	return contrast;
 }
 
 void ScreenState::setPasswordEnabled(bool enabled)
