@@ -1,8 +1,6 @@
 import QtQuick 1.1
 // will contain all created delegates, assume we can index it from 0 to model.count
 import "../js/CustomView.js" as Vars
-import "../js/CardView.js" as CardViewScript
-
 
 Item {
     id: cardView
@@ -11,7 +9,7 @@ Item {
     property int delegateSpacing: 10
     property variant model
     property Component delegate
-    property int delegateWidth: CardViewScript.listDelegateWidth
+    property int delegateWidth: 150
 
     Connections {
         target: model

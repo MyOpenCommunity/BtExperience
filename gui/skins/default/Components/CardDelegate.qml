@@ -2,8 +2,6 @@ import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
 import BtExperience 1.0
-import "../js/CardView.js" as CardViewScript
-
 
 Item {
     id: itemDelegate
