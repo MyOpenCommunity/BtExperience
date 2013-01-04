@@ -9,8 +9,12 @@ MenuColumn {
 
     ObjectModel {
         id: objectModel
-        // TODO update filter to retrieve version data
         filters: [{objectId: ObjectInterface.IdPlatformSettings}]
+    }
+
+    ObjectModel {
+        id: vctModel
+        filters: [{objectId: ObjectInterface.IdCCTV}]
     }
 
     QtObject {
@@ -20,16 +24,26 @@ MenuColumn {
 
     Column {
         ControlTitleValue {
-            title: qsTr("firmware")
+            title: qsTr("Firmware version")
             value: privateProps.model.firmware || qsTr("Unknown")
         }
         ControlTitleValue {
-            title: qsTr("software")
+            title: qsTr("Kernel version")
             value: privateProps.model.software || qsTr("Unknown")
         }
         ControlTitleValue {
-            title: qsTr("serial number")
+            title: qsTr("Serial number")
             value: privateProps.model.serialNumber || qsTr("Unknown")
+        }
+        ControlTitleValue {
+            title: qsTr("Internal unit address")
+            visible: vctModel.count > 0
+            value: global.getPIAddress() || qsTr("Unknown")
+        }
+        ControlTitleValue {
+            title: qsTr("External unit associated")
+            visible: vctModel.count > 0
+            value: global.defaultExternalPlace.where || qsTr("Unknown")
         }
     }
 }
