@@ -13,7 +13,7 @@ SvgImage {
     signal minusClicked
     signal muteClicked
 
-    source: "../images/common/bg_regola_volume.svg"
+    source: "../images/common/bg_panel_212x100.svg"
 
     Rectangle {
         id: darkRect
@@ -52,7 +52,7 @@ SvgImage {
         anchors.top: label.bottom
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
-        source: "../images/common/bar_dimmer_bg.svg"
+        source: "../images/common/bg_regola_dimmer.svg"
 
         Rectangle {
             height: parent.height + 2
@@ -78,9 +78,9 @@ SvgImage {
     ButtonImageThreeStates {
         id: buttonMute
         z: 2 // must always be enabled
-        defaultImageBg: "../images/common/btn_mute.svg"
-        pressedImageBg: "../images/common/btn_mute_P.svg"
-        shadowImage: "../images/common/ombra_btn_mute.svg"
+        defaultImageBg: "../images/common/btn_45x35.svg"
+        pressedImageBg: "../images/common/btn_45x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_45x35.svg"
         defaultImage: "../images/common/ico_mute.svg"
         pressedImage: "../images/common/ico_mute.svg"
         onClicked: muteClicked()
@@ -94,9 +94,9 @@ SvgImage {
 
     ButtonImageThreeStates {
         id: buttonMinus
-        defaultImageBg: "../images/common/btn_piu_meno.svg"
-        pressedImageBg: "../images/common/btn_piu_meno_P.svg"
-        shadowImage: "../images/common/ombra_btn_piu_meno.svg"
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         onClicked: minusClicked()
@@ -111,9 +111,9 @@ SvgImage {
 
     ButtonImageThreeStates {
         id: buttonPlus
-        defaultImageBg: "../images/common/btn_piu_meno.svg"
-        pressedImageBg: "../images/common/btn_piu_meno_P.svg"
-        shadowImage: "../images/common/ombra_btn_piu_meno.svg"
+        defaultImageBg: "../images/common/btn_66x35.svg"
+        pressedImageBg: "../images/common/btn_66x35_P.svg"
+        shadowImage: "../images/common/btn_shadow_66x35.svg"
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         onClicked: plusClicked()
@@ -134,8 +134,8 @@ SvgImage {
             PropertyChanges {
                 target: buttonMute
                 defaultImageBg: "../images/common/btn_mute_on.svg"
-                pressedImageBg: "../images/common/btn_mute_P.svg"
-                shadowImage: "../images/common/ombra_btn_mute.svg"
+                pressedImageBg: "../images/common/btn_45x35_P.svg"
+                shadowImage: "../images/common/btn_shadow_45x35.svg"
                 defaultImage: "../images/common/ico_mute_on.svg"
                 pressedImage: "../images/common/ico_mute_on.svg"
                 status: 0

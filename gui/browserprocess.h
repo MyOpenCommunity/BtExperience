@@ -25,10 +25,13 @@ public:
 
 	bool getRunning() const;
 
+	void setClicksBlocked(bool blocked);
+
 signals:
 	void visibleChanged();
 	void runningChanged();
 	void clicked();
+	void aboutToHide();
 
 private slots:
 	void terminated();

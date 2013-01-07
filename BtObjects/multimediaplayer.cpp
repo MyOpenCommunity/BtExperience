@@ -148,8 +148,6 @@ namespace
 
 void MultiMediaPlayer::playerInfoReceived(QMap<QString, QString> new_track_info)
 {
-	QVariantMap new_info = track_info;
-
 	// if we're paused, and the timer is active, it means it was reactivated by seek(),
 	// so we can stop it now
 	if (player_state != Playing && info_poll_timer->isActive())
@@ -159,30 +157,11 @@ void MultiMediaPlayer::playerInfoReceived(QMap<QString, QString> new_track_info)
 			info_poll_timer->stop();
 	}
 
-	// TODO maybe handle here out-of-band metadata from UPnP
-	foreach (QString key, COMMON_ATTRIBUTES)
-		if (new_track_info.contains(key))
-			new_info[key] = new_track_info[key];
-
-	if (new_track_info.contains("total_time"))
-		new_info["total_time"] = parseMPlayerTime(new_track_info["total_time"]);
-
-	if (new_track_info.contains("current_time"))
-		new_info["current_time"] = parseMPlayerTime(new_track_info["current_time"]);
-	else if (new_track_info.contains("current_time_only"))
-		new_info["current_time"] = parseMPlayerTime(new_track_info["current_time_only"]);
-
-	if (new_info == track_info)
-		return;
-
-	track_info = new_info;
-	emit trackInfoChanged(track_info);
+	updateTrackInfo(new_track_info);
 }
 
 void MultiMediaPlayer::gstPlayerInfoReceived(QMap<QString, QString> new_track_info)
 {
-	QVariantMap new_info = track_info;
-
 	// if we're paused, and the timer is active, it means it was reactivated by seek(),
 	// so we can stop it now
 	if (player_state != Playing && info_poll_timer->isActive())
@@ -192,22 +171,7 @@ void MultiMediaPlayer::gstPlayerInfoReceived(QMap<QString, QString> new_track_in
 			info_poll_timer->stop();
 	}
 
-	// TODO maybe handle here out-of-band metadata from UPnP
-	foreach (QString key, COMMON_ATTRIBUTES)
-		if (new_track_info.contains(key))
-			new_info[key] = new_track_info[key];
-
-	if (new_track_info.contains("total_time"))
-		new_info["total_time"] = QTime().addSecs(new_track_info["total_time"].toInt());
-
-	if (new_track_info.contains("current_time"))
-		new_info["current_time"] = QTime().addSecs(new_track_info["current_time"].toInt());
-
-	if (new_info == track_info)
-		return;
-
-	track_info = new_info;
-	emit trackInfoChanged(track_info);
+	updateTrackInfo(new_track_info);
 }
 
 void MultiMediaPlayer::play()
@@ -332,6 +296,44 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 	if (had_track_info)
 		emit trackInfoChanged(track_info);
 	emit currentSourceChanged(current_source);
+}
+
+void MultiMediaPlayer::setDefaultTrackInfo(QVariantMap new_track_info)
+{
+	updateTrackInfo(new_track_info);
+}
+
+void MultiMediaPlayer::updateTrackInfo(QMap<QString, QString> new_track_info)
+{
+	QVariantMap info;
+
+	foreach (QString key, new_track_info.keys())
+		info[key] = new_track_info[key];
+
+	updateTrackInfo(info);
+}
+
+void MultiMediaPlayer::updateTrackInfo(QVariantMap new_track_info)
+{
+	QVariantMap new_info = track_info;
+
+	foreach (QString key, COMMON_ATTRIBUTES)
+		if (new_track_info.contains(key))
+			new_info[key] = new_track_info[key];
+
+	if (new_track_info.contains("total_time"))
+		new_info["total_time"] = parseMPlayerTime(new_track_info["total_time"].toString());
+
+	if (new_track_info.contains("current_time"))
+		new_info["current_time"] = parseMPlayerTime(new_track_info["current_time"].toString());
+	else if (new_track_info.contains("current_time_only"))
+		new_info["current_time"] = parseMPlayerTime(new_track_info["current_time_only"].toString());
+
+	if (new_info == track_info)
+		return;
+
+	track_info = new_info;
+	emit trackInfoChanged(track_info);
 }
 
 void MultiMediaPlayer::setPlayerState(PlayerState new_state)

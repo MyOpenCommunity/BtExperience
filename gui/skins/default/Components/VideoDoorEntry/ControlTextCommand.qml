@@ -37,9 +37,9 @@ SvgImage {
     ButtonImageThreeStates {
         id: button
 
-        defaultImageBg: "../../images/common/btn_automazioni.svg"
-        pressedImageBg: "../../images/common/btn_automazioni_P.svg"
-        shadowImage: "../../images/common/ombra_btn_automazioni.svg"
+        defaultImageBg: "../../images/common/btn_66x35.svg"
+        pressedImageBg: "../../images/common/btn_66x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_66x35.svg"
         defaultImage: "../../images/common/ico_cancelletto.svg"
         pressedImage: "../../images/common/ico_cancelletto_P.svg"
         onClicked: control.clicked()

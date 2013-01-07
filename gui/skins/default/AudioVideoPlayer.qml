@@ -2,7 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
-import Components.Scenarios 1.0
+import Components.Popup 1.0
 import Components.Text 1.0
 
 import "js/Stack.js" as Stack
@@ -159,9 +159,9 @@ Page {
         ButtonImageThreeStates {
             id: prevButton
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_previous_track.svg"
             pressedImage: "images/common/ico_previous_track_P.svg"
             repetitionOnHold: player.isVideo ? false : true
@@ -190,9 +190,9 @@ Page {
             ButtonImageThreeStates {
                 id: playButton
 
-                defaultImageBg: player.isVideo ? "images/common/btn_play_pause.svg" : "images/common/btn_player_comando.svg"
-                pressedImageBg: player.isVideo ? "images/common/btn_play_pause_P.svg" : "images/common/btn_player_comando_P.svg"
-                shadowImage: player.isVideo ? "images/common/ombra_btn_play_pause.svg" : "images/common/ombra_btn_player_comando.svg"
+                defaultImageBg: player.isVideo ? "images/common/btn_99x35.svg" : "images/common/btn_45x35.svg"
+                pressedImageBg: player.isVideo ? "images/common/btn_99x35_P.svg" : "images/common/btn_45x35_P.svg"
+                shadowImage: player.isVideo ? "images/common/btn_shadow_99x35.svg" : "images/common/btn_shadow_45x35.svg"
                 defaultImage: "images/common/ico_play.svg"
                 pressedImage: "images/common/ico_play_P.svg"
                 anchors.centerIn: parent
@@ -215,17 +215,22 @@ Page {
                         defaultImage: "images/common/ico_pause.svg"
                         pressedImage: "images/common/ico_pause_P.svg"
                     }
+                    PropertyChanges { target: forceScreenOn; enabled: player.isVideo }
                 }
             ]
+        }
+
+        ScreenStateHandler {
+            id: forceScreenOn
         }
 
         ButtonImageThreeStates {
             id: stopButton
             visible: !player.isVideo
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_stop.svg"
             pressedImage: "images/common/ico_stop_P.svg"
 
@@ -238,9 +243,9 @@ Page {
         ButtonImageThreeStates {
             id: nextButton
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_player_comando.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_next_track.svg"
             pressedImage: "images/common/ico_next_track_P.svg"
             repetitionOnHold: player.isVideo ? false : true
@@ -261,9 +266,9 @@ Page {
     ButtonImageThreeStates {
         id: folderButton
 
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_browse.svg"
         pressedImage: "images/common/ico_browse_P.svg"
         anchors {
@@ -294,9 +299,9 @@ Page {
         ButtonImageThreeStates {
             id: buttonMute
 
-            defaultImageBg: "images/common/btn_player_comando.svg"
-            pressedImageBg: "images/common/btn_player_comando_P.svg"
-            shadowImage: "images/common/ombra_btn_mute.svg"
+            defaultImageBg: "images/common/btn_45x35.svg"
+            pressedImageBg: "images/common/btn_45x35_P.svg"
+            shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_mute.svg"
             pressedImage: "images/common/ico_mute.svg"
             anchors.centerIn: parent
@@ -320,9 +325,9 @@ Page {
 
     ButtonImageThreeStates {
         id: buttonMinus
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_piu_meno.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
         onClicked: player.mediaPlayer.decrementVolume()
@@ -336,9 +341,9 @@ Page {
 
     ButtonImageThreeStates {
         id: buttonPlus
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_piu_meno.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
         onClicked: player.mediaPlayer.incrementVolume()
@@ -353,10 +358,10 @@ Page {
     ButtonImageThreeStates {
         id: fullScreenToggle
 
-        defaultImageBg: "images/common/btn_player_comando.svg"
-        pressedImageBg: "images/common/btn_player_comando_P.svg"
-        selectedImageBg: "images/common/btn_player_comando_S.svg"
-        shadowImage: "images/common/ombra_btn_player_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        selectedImageBg: "images/common/btn_45x35_S.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_fullscreen.svg"
         pressedImage: "images/common/ico_fullscreen.svg"
         selectedImage: "images/common/ico_chiudi_fullscreen.svg"
@@ -424,7 +429,7 @@ Page {
         }
 
         SvgImage {
-            source: "images/common/regola_volume/bg_volume.svg"
+            source: "images/common/bg_regola_dimmer.svg"
             anchors {
                 verticalCenter: muteIcon.verticalCenter
                 left: muteIcon.right
@@ -498,35 +503,12 @@ Page {
         Stack.backToMultimedia()
     }
 
-    Component.onCompleted: player._initMediaPlayer()
+    Component.onCompleted: privateProps.initMediaPlayer()
     Component.onDestruction: {
         if (player.isVideo) {
             player.mediaPlayer.terminate()
             player.mediaPlayer.mute = false
         }
-    }
-
-    function _initMediaPlayer() {
-        // an helper variable for readability
-        var p = player
-
-        p.mediaPlayer.videoRect = Qt.rect(frameBg.innerX, frameBg.innerY, frameBg.innerWidth, frameBg.innerHeight)
-
-        // if player.model is set assumes a new playlist must be set
-        if (p.model) {
-            if (p.upnp)
-                p.mediaPlayer.generatePlaylistUPnP(p.model, p.index, p.model.count, p.isVideo)
-            else
-                p.mediaPlayer.generatePlaylistLocal(p.model, p.index, p.model.count, p.isVideo)
-            return
-        }
-
-        // player.model is not set, checks if playlist is set
-        if (p.mediaPlayer.playing)
-            return // everything is fine
-
-        // we don't have a model and we don't have a playlist: something is wrong somewhere...
-        console.log("Impossible to init MediaPlayer in QML: no model and no playlist to play")
     }
 
     states: [
@@ -618,7 +600,7 @@ Page {
 
     Component {
         id: errorFeedback
-        ScenarioFeedback {
+        FeedbackPopup {
             text: ""
             isOk: false
         }
@@ -636,22 +618,47 @@ Page {
                 global.audioState.disableState(AudioState.LocalPlaybackMute)
         }
         onLoopDetected: {
-            player.installPopup(errorFeedback)
+            var props = {text: qsTr("Loop detected")}
             if (player.model === undefined) // ip radio
-                player.popupLoader.item.text = qsTr("No tunable web radio")
-            else // general case
-                player.popupLoader.item.text = qsTr("Loop detected")
+                props = {text: qsTr("No tunable web radio")}
+
+            player.installPopup(errorFeedback, props)
         }
     }
 
     QtObject {
         id: privateProps
         function buildTrackText(info) {
-            if (info["meta_title"])
+            if (info["meta_title"] && info["meta_artist"])
                 return info["meta_title"] + " - " + info["meta_artist"]
+            else if (info["meta_title"])
+                return info["meta_title"]
             else if (info["file_name"])
                 return info["file_name"]
             else return ""
+        }
+
+        function initMediaPlayer() {
+            // an helper variable for readability
+            var p = player
+
+            p.mediaPlayer.videoRect = Qt.rect(frameBg.innerX, frameBg.innerY, frameBg.innerWidth, frameBg.innerHeight)
+
+            // if player.model is set assumes a new playlist must be set
+            if (p.model) {
+                if (p.upnp)
+                    p.mediaPlayer.generatePlaylistUPnP(p.model, p.index, p.model.count, p.isVideo)
+                else
+                    p.mediaPlayer.generatePlaylistLocal(p.model, p.index, p.model.count, p.isVideo)
+                return
+            }
+
+            // player.model is not set, checks if playlist is set
+            if (p.mediaPlayer.playing)
+                return // everything is fine
+
+            // we don't have a model and we don't have a playlist: something is wrong somewhere...
+            console.log("Impossible to init MediaPlayer in QML: no model and no playlist to play")
         }
     }
 }

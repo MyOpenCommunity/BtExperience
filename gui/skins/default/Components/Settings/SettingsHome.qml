@@ -26,10 +26,8 @@ MenuColumn {
 
     onChildDestroyed: privateProps.currentIndex = -1
 
-    PaginatorColumn {
+    Column {
         id: paginator
-        anchors.horizontalCenter: parent.horizontalCenter
-        maxHeight: 300
 
         MenuItem {
             id: skinItem
@@ -45,7 +43,8 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("Modify background image")
+            name: qsTr("Change background image")
+            hasChild: true
             isSelected: privateProps.currentIndex === 2
             onClicked: {
                 if (privateProps.currentIndex !== 2)

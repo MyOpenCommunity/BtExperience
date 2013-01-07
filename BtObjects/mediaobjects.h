@@ -35,8 +35,6 @@ QList<ObjectPair> parseGeneralAmplifier(const QDomNode &xml_node, int id);
 QList<ObjectPair> parseAmplifierGroup(const QDomNode &xml_node, const UiiMapper &uii_map);
 QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multichannel);
 
-QList<ObjectPair> parseIpRadio(const QDomNode &xml_node);
-
 
 // internal class
 class SoundAmbientBase : public ObjectInterface
@@ -314,7 +312,7 @@ public:
 	SourceIpRadio(const QString &name, SourceMultiMedia *s, MediaDataModel *model);
 
 	/// Start media playback at the given index
-	Q_INVOKABLE void startPlay(QList<QVariant> urls, int index, int total_files);
+	Q_INVOKABLE void startPlay(QList<QObject *> items, int index, int total_files);
 
 	virtual void playFirstMediaContent();
 

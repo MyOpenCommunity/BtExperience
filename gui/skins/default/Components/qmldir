@@ -6,7 +6,6 @@ BtObjectsMapping 1.0 BtObjectsMapping.qml
 ButtonBack 1.0 ButtonBack.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
 ButtonImageThreeStates 1.0 ButtonImageThreeStates.qml
-ButtonMediaControl 1.0 ButtonMediaControl.qml
 ButtonMinusPlus 1.0 ButtonMinusPlus.qml
 ButtonMultimedia 1.0 ButtonMultimedia.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
@@ -19,8 +18,6 @@ ButtonThreeStatesAutomation 1.0 ButtonThreeStatesAutomation.qml
 ButtonThreeStatesIcon 1.0 ButtonThreeStatesIcon.qml
 CameraLink 1.0 CameraLink.qml
 CardDelegate 1.0 CardDelegate.qml
-CardGridDelegate 1.0 CardGridDelegate.qml
-CardGridView 1.0 CardGridView.qml
 CardView 1.0 CardView.qml
 ColumnBrowserCommon 1.0 ColumnBrowserCommon.qml
 ColumnBrowserDelegate 1.0 ColumnBrowserDelegate.qml
@@ -28,9 +25,7 @@ ColumnBrowserDirectoryModel 1.0 ColumnBrowserDirectoryModel.qml
 ColumnBrowserUpnpModel 1.0 ColumnBrowserUpnpModel.qml
 ConfirmationBar 1.0 ConfirmationBar.qml
 Constants 1.0 Constants.qml
-Control3LinesButton 1.0 Control3LinesButton.qml
 ControlBalance 1.0 ControlBalance.qml
-ControlButton 1.0 ControlButton.qml
 ControlCall 1.0 ControlCall.qml
 ControlChoices 1.0 ControlChoices.qml
 ControlDateTime 1.0 ControlDateTime.qml
@@ -38,13 +33,10 @@ ControlDoubleSpin 1.0 ControlDoubleSpin.qml
 ControlLeftRight 1.0 ControlLeftRight.qml
 ControlLeftRightWithTitle 1.0 ControlLeftRightWithTitle.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
-ControlMinusPlusOld 1.0 ControlMinusPlusOld.qml
 ControlOn 1.0 ControlOn.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
 ControlOpenCloseStopSafe 1.0 ControlOpenCloseStopSafe.qml
-ControlUpDownStop 1.0 ControlUpDownStop.qml
-ControlUpDownStopSafe 1.0 ControlUpDownStopSafe.qml
 ControlPathView 1.0 ControlPathView.qml
 ControlPathViewInternal 1.0 ControlPathViewInternal.qml
 ControlPopup 1.0 ControlPopup.qml
@@ -57,13 +49,15 @@ ControlSliderMute 1.0 ControlSliderMute.qml
 ControlSpin 1.0 ControlSpin.qml
 ControlSwitch 1.0 ControlSwitch.qml
 ControlTitleValue 1.0 ControlTitleValue.qml
-ControlUpDown 1.0 ControlUpDown.qml
+ControlUpDownStop 1.0 ControlUpDownStop.qml
+ControlUpDownStopSafe 1.0 ControlUpDownStopSafe.qml
 EditNote 1.0 EditNote.qml
 EventManager 1.0 EventManager.qml
 FadeAnimation 1.0 FadeAnimation.qml
 FavoriteEditPopup 1.0 FavoriteEditPopup.qml
 FavoriteItem 1.0 FavoriteItem.qml
 KeyPad 1.0 KeyPad.qml
+LoaderWithProps 1.0 LoaderWithProps.qml
 MenuColumn 1.0 MenuColumn.qml
 MenuColumnMouseArea 1.0 MenuColumnMouseArea.qml
 MenuContainer 1.0 MenuContainer.qml
@@ -87,6 +81,7 @@ RepetitionMouseArea 1.0 RepetitionMouseArea.qml
 RoomItem 1.0 RoomItem.qml
 RoomView 1.0 RoomView.qml
 RssItem 1.0 RssItem.qml
+ScreenStateHandler 1.0 ScreenStateHandler.qml
 SlideAnimation 1.0 SlideAnimation.qml
 SvgImage 1.0 SvgImage.qml
 Switch 1.0 Switch.qml

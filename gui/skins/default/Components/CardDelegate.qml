@@ -2,8 +2,6 @@ import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
 import BtExperience 1.0
-import "../js/CardView.js" as CardViewScript
-
 
 Item {
     id: itemDelegate
@@ -17,8 +15,8 @@ Item {
     signal clicked
     signal removeAnimationFinished()
 
-    width: bg.width
-    height: bg.height
+    width: cardShadow.width
+    height: cardShadow.height
     onHeightChanged: itemDelegate.view.height = height // needed to correctly dimension the view
 
     Image { // placed here because the background must mask part of the image
@@ -49,10 +47,21 @@ Item {
 
     SvgImage {
         id: bg
+        anchors.centerIn: parent
 
         source: global.guiSettings.skin === GuiSettings.Clear ?
                     "../images/profiles/scheda_profili.svg" :
                     "../images/profiles/scheda_profili_P.svg"
+    }
+
+    BorderImage {
+        id: cardShadow
+        source: "../images/profiles/card_shadow.png"
+        width: 238
+        height: 331
+        border { left: 24; top: 22; right: 24; bottom: 22 }
+        horizontalTileMode: BorderImage.Stretch
+        verticalTileMode: BorderImage.Stretch
     }
 
     UbuntuLightText {

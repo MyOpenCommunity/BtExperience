@@ -29,9 +29,9 @@ SvgImage {
 
     ButtonImageThreeStates {
         id: backButton
-        defaultImageBg: "../../images/common/btn_browser.svg"
-        pressedImageBg: "../../images/common/btn_browser_P.svg"
-        shadowImage: "../../images/common/ombra_btn_browser.svg"
+        defaultImageBg: "../../images/common/btn_45x35.svg"
+        pressedImageBg: "../../images/common/btn_45x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_indietro.svg"
         pressedImage: "../../images/common/ico_indietro_P.svg"
         status: 0
@@ -46,9 +46,9 @@ SvgImage {
 
     ButtonImageThreeStates {
         id: forwardButton
-        defaultImageBg: "../../images/common/btn_browser.svg"
-        pressedImageBg: "../../images/common/btn_browser_P.svg"
-        shadowImage: "../../images/common/ombra_btn_browser.svg"
+        defaultImageBg: "../../images/common/btn_45x35.svg"
+        pressedImageBg: "../../images/common/btn_45x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_avanti.svg"
         pressedImage: "../../images/common/ico_avanti_P.svg"
         status: 0
@@ -77,9 +77,9 @@ SvgImage {
 
     ButtonImageThreeStates {
         id: actionButton
-        defaultImageBg: "../../images/common/btn_browser.svg"
-        pressedImageBg: "../../images/common/btn_browser_P.svg"
-        shadowImage: "../../images/common/ombra_btn_browser.svg"
+        defaultImageBg: "../../images/common/btn_45x35.svg"
+        pressedImageBg: "../../images/common/btn_45x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_aggiorna.svg"
         pressedImage: "../../images/common/ico_aggiorna_P.svg"
         status: 0
@@ -125,9 +125,9 @@ SvgImage {
     ButtonImageThreeStates {
         id: closeBrowser
 
-        defaultImageBg: "../../images/common/btn_browser.svg"
-        pressedImageBg: "../../images/common/btn_browser_P.svg"
-        shadowImage: "../../images/common/ombra_btn_browser.svg"
+        defaultImageBg: "../../images/common/btn_45x35.svg"
+        pressedImageBg: "../../images/common/btn_45x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_elimina.svg"
         //pressedImage: "../../images/common/ico_elimina.svg"
         visible: true

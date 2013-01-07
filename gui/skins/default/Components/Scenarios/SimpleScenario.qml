@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
+import Components.Popup 1.0
 
 MenuColumn {
     id: column
@@ -19,7 +20,7 @@ MenuColumn {
 
     Component {
         id: feedback
-        ScenarioFeedback {
+        FeedbackPopup {
             text: column.dataModel.name + qsTr(" activated")
             isOk: true
         }

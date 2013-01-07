@@ -20,10 +20,8 @@ Image {
 
     // The alert management and API.
     function showAlert(sourceElement, message) {
-        popupLoader.sourceComponent = alertComponent
+        popupLoader.setComponent(alertComponent, {"message": message, "source": sourceElement})
         popupLoader.item.closeAlert.connect(closeAlert)
-        popupLoader.item.message = message
-        popupLoader.item.source = sourceElement
         page.state = "alert"
     }
 
@@ -37,15 +35,27 @@ Image {
         }
     }
 
+    Connections {
+        id: popupConnection
+        target: null
+        onClosePopup: closePopup()
+        ignoreUnknownSignals: true
+    }
+
     // Warning: please note that popupLoader doesn't take ownership of the
     // component that you have created. If you try to install a component which
     // may be destroyed before user input finished, it will not work.
     // Example: create a popup from a MenuColumn that immediately after is
     // destroyed.
-    function installPopup(sourceComponent) {
-        popupLoader.sourceComponent = sourceComponent
-        popupLoader.item.closePopup.connect(closePopup)
+    function installPopup(sourceComponent, properties) {
+        popupLoader.setComponent(sourceComponent, properties)
+        popupConnection.target = popupLoader.item
         page.state = "popup"
+    }
+
+    function processLaunched(processHandle) {
+        page.state = "processRunning"
+        privateProps.process = processHandle
     }
 
     // The hooks called by the Stack javascript manager. See also PageAnimation
@@ -114,7 +124,7 @@ Image {
         anchors.fill: parent
         z: 10
 
-        Loader {
+        LoaderWithProps {
             id: popupLoader
             opacity: 0
             anchors.verticalCenter: parent.verticalCenter
@@ -128,11 +138,66 @@ Image {
 
     function closePopup() {
         page.state = ""
-        popupLoader.sourceComponent = undefined
+        popupLoader.setComponent(undefined)
     }
 
     Constants {
         id: constants
+    }
+
+    QtObject {
+        id: privateProps
+        property QtObject process: null
+
+        function processHide() {
+            page.state = ""
+            process = null
+        }
+    }
+
+    SvgImage {
+        id: loadingIndicator
+
+        source: "images/common/ico_caricamento.svg"
+        anchors.centerIn: blackBg
+        visible: false
+        z: blackBg.z + 1
+
+        Timer {
+            id: loadingTimer
+            interval: 250
+            repeat: true
+            onTriggered: loadingIndicator.rotation += 45
+        }
+
+        states: [
+            State {
+                name: "processShown"
+                when: privateProps.process !== null
+                PropertyChanges { target: loadingIndicator; visible: true }
+                PropertyChanges { target: loadingTimer; running: true }
+            }
+        ]
+    }
+
+    Connections {
+        id: processConnection
+        target: privateProps.process
+        onRunningChanged: {
+            if (!global.browser.running)
+                privateProps.processHide()
+        }
+
+        onAboutToHide: privateProps.processHide()
+    }
+
+    onVisibleChanged: {
+        if (privateProps.process)
+            privateProps.process.visible = visible
+    }
+    Component.onDestruction: {
+        if (privateProps.process)
+            privateProps.process.visible = false
     }
 
     states: [
@@ -144,6 +209,10 @@ Image {
         State {
             name: "popup"
             PropertyChanges { target: popupLoader; opacity: 1 }
+            PropertyChanges { target: blackBg; opacity: 0.7; visible: true }
+        },
+        State {
+            name: "processRunning"
             PropertyChanges { target: blackBg; opacity: 0.7; visible: true }
         }
     ]

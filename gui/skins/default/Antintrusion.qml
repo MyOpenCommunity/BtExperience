@@ -13,12 +13,7 @@ SystemPage {
 
     // KeyPad management and API
     function showKeyPad(title, errorMessage, okMessage) {
-        popupLoader.sourceComponent = keypadComponent
-        popupLoader.item.cancelClicked.connect(closeKeyPad)
-        popupLoader.item.mainLabel = title
-        popupLoader.item.errorLabel = errorMessage
-        popupLoader.item.okLabel = okMessage
-        antintrusion.state = "popup"
+        installPopup(keypadComponent, {"mainLabel": title, "errorLabel": errorMessage, "okLabel": okMessage})
     }
 
     function closeKeyPad() {

@@ -34,9 +34,10 @@ Item {
         }
 
         BeepingMouseArea {
-            anchors.fill: parent
+            anchors.centerIn: parent
+            width: parent.width + (parent.width / 100 * 3.3)
+            height: parent.height + (parent.height / 100 * 3.3)
             onClicked: control.clicked()
         }
     }
-
 }

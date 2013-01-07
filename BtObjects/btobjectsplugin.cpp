@@ -186,7 +186,8 @@ namespace
 		IdEnergyCustom = 6110,
 		IdHandsFree = 14251,
 		IdProfessionalStudio = 14252,
-		IdRingExclusion = 14253
+		IdRingExclusion = 14253,
+		IdVideoSettings = 14268,
 	};
 }
 
@@ -276,6 +277,7 @@ void BtObjectsPlugin::createObjects()
 	QList<QDomNode> multimedia;
 	bool is_multichannel = false;
 	bool hands_free = false, professional_studio = false, ring_exclusion = false;
+	int video_brightness = 50, video_contrast = 50, video_color = 50;
 
 	foreach (const QDomNode &xml_obj, getChildren(settings.documentElement(), "obj"))
 	{
@@ -302,6 +304,11 @@ void BtObjectsPlugin::createObjects()
 			break;
 		case IdRingExclusion:
 			ring_exclusion = parseEnableFlag(xml_obj);
+			break;
+		case IdVideoSettings:
+			video_brightness = parseIntSetting(xml_obj, "brightness");
+			video_contrast = parseIntSetting(xml_obj, "contrast");
+			video_color = parseIntSetting(xml_obj, "color");
 			break;
 		}
 
@@ -618,6 +625,10 @@ void BtObjectsPlugin::createObjects()
 		cctv->setHandsFree(hands_free);
 		cctv->setRingExclusion(ring_exclusion);
 
+		cctv->setColor(video_color);
+		cctv->setBrightness(video_brightness);
+		cctv->setContrast(video_contrast);
+
 		objmodel << cctv;
 		objmodel << createIntercom(intercom);
 	}
@@ -778,6 +789,9 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		setEnableFlag(document, IdHandsFree, cctv->getHandsFree());
 		setEnableFlag(document, IdProfessionalStudio, cctv->getAutoOpen());
 		setEnableFlag(document, IdRingExclusion, cctv->getRingExclusion());
+		setIntSetting(document, IdVideoSettings, "brightness", cctv->getBrightness());
+		setIntSetting(document, IdVideoSettings, "color", cctv->getColor());
+		setIntSetting(document, IdVideoSettings, "contrast", cctv->getContrast());
 
 		configurations->saveConfiguration(SETTINGS_FILE);
 		return;

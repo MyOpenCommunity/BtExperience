@@ -190,8 +190,7 @@ Page {
         }
 
         function showEditBox(favorite) {
-            installPopup(popup)
-            popupLoader.item.favoriteItem = favorite.itemObject
+            installPopup(popup, {favoriteItem: favorite.itemObject})
         }
 
         function addNote() {
@@ -201,7 +200,9 @@ Page {
 
     Component {
         id: favouriteItemComponent
-        FavoriteItem { }
+        FavoriteItem {
+            onClicked: profilePage.processLaunched(global.browser)
+        }
     }
 
     Component {
@@ -255,7 +256,7 @@ Page {
             leftMargin: parent.width / 100 * 1
             top: navigationBar.top
             bottom: parent.bottom
-            bottomMargin: parent.height / 100 * 5
+            bottomMargin: parent.height / 100 * 1.67
             right: parent.right
             rightMargin: parent.width / 100 * 3
         }
@@ -290,18 +291,25 @@ Page {
                 anchors.top: parent.top
                 anchors.right: parent.right
 
-                UbuntuMediumText {
-                    id: headerProfileRect
-                    text: qsTr("profile")
-                    font.capitalization: Font.AllUppercase
-                    font.pixelSize: 16
-                }
-
-                Image {
+                SvgImage {
                     id: profileRect
                     source: "images/profile-settings/bg_settings_profile.svg"
-                    width: 212
-                    height: 100
+
+                    ButtonImageThreeStates {
+                        anchors {
+                            right: parent.right
+                            rightMargin: parent.height / 100 * 10
+                            bottom: parent.bottom
+                            bottomMargin: parent.height / 100 * 10
+                        }
+
+                        defaultImageBg: "images/common/btn_66x35.svg"
+                        pressedImageBg: "images/common/btn_66x35_P.svg"
+                        defaultImage: "images/profile-settings/icon_settings_profile.svg"
+                        pressedImage: "images/profile-settings/icon_settings_profile_P.svg"
+                        shadowImage: "images/common/btn_shadow_66x35.svg"
+                        onClicked: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.PROFILE, navigationData: profilePage.profile})
+                    }
 
                     Image {
                         id: imageProfile
@@ -313,20 +321,6 @@ Page {
                         fillMode: Image.PreserveAspectFit
                     }
 
-                    Image {
-                        id: imageProfileSettings
-                        anchors.right: parent.right
-                        anchors.rightMargin: parent.width / 100 * 6
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: parent.height / 100 * 8
-                        source: "images/profile-settings/icon_settings_profile.svg"
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.PROFILE, navigationData: profilePage.profile})
-                    }
-
                     UbuntuLightText {
                         anchors {
                             left: imageProfile.right
@@ -336,94 +330,118 @@ Page {
                         }
                         horizontalAlignment: Text.AlignLeft
                         font.pixelSize: 16
+                        color: "white"
                         text: profilePage.profile.description
                     }
                 }
 
                 Item {
-                    height: 30
+                    height: 8
                     width: parent.width
-                }
-
-                UbuntuMediumText {
-                    id: headerNote
-                    text: qsTr("note")
-                    font.capitalization: Font.AllUppercase
-                    font.pixelSize: 16
                 }
 
                 SvgImage {
                     id: addNote
-                    source: "images/common/menu_column_item_bg.svg";
-                    anchors.right: parent.right
+                    source: "images/profile-settings/bg_pager_panel.svg"
 
-                    UbuntuLightText {
-                        anchors {
-                            left: parent.left
-                            leftMargin: 5
-                            top: parent.top
-                            topMargin: 5
-                        }
-                        font.pixelSize: 14
+                    ButtonTextImageThreeStates {
+                        anchors.centerIn: parent
                         text: qsTr("Add note")
-                    }
 
-                    SvgImage {
-                        source: "images/common/symbol_plus.svg"
-                        anchors {
-                            right: parent.right
-                            rightMargin: parent.width / 100 * 2
-                            top: parent.top
-                            topMargin:  parent.height / 100 * 10
-                        }
-                    }
-                    BeepingMouseArea {
-                        anchors.fill: parent
+                        defaultImageBg: "images/common/btn_cercapersone.svg"
+                        pressedImageBg: "images/common/btn_cercapersone_P.svg"
+
+                        defaultImage: "images/common/ico_piu.svg"
+                        pressedImage: "images/common/ico_piu_P.svg"
+                        imageAnchors.rightMargin: parent.width / 100 * 5
+
+                        shadowImage: "images/common/ombra_btn_cercapersone.svg"
+
                         onClicked: privateProps.addNote()
                     }
                 }
             }
 
-            PaginatorList {
-                id: paginator
+            Column {
+                id: paginatorBackground
 
                 anchors {
                     top: rightArea.bottom
-                    topMargin: 10
-                    right: rightArea.right
+                    left: rightArea.left
                 }
 
-                width: addNote.width
-                elementsOnPage: 3
-                // a line from the paginator background remains visible if I
-                // delete all notes; the following line avoids to see it in
-                // such a case
-                opacity: model.count === 0 ? 0 : 1
+                SvgImage {
+                    source: "images/profile-settings/bg_note_panel.svg"
+                }
 
-                delegate: Rectangle {
+                SvgImage {
+                    source: "images/profile-settings/bg_pager_panel.svg"
+                }
+            }
+
+            PaginatorOnBackground {
+                id: paginator
+
+                anchors {
+                    top: paginatorBackground.top
+                    bottom: paginatorBackground.bottom
+                    left: paginatorBackground.left
+                    right: paginatorBackground.right
+                }
+                bottomRowAnchors.bottomMargin: paginatorBackground.height / 100 * 3
+                bottomRowAnchors.leftMargin: paginatorBackground.width / 100 * 9
+
+                width: addNote.width
+                elementsOnPage: 2
+
+                delegate: Item {
                     id: delegate
 
                     property variant obj: userNotes.getObject(index)
                     property string text: delegate.obj === undefined ? "" : delegate.obj.text
 
-                    color: index % 2 !== 0 ? "light gray" : "gray"
-                    // TODO: this should probably be a background image.
-                    // It's a bad idea to have delegates of different sizes
-                    // (think empty space at bottom, think moving paginator
-                    // at bottom and so on)
-                    // Leave size hardcoded for now.
-                    width: 212
-                    height: 60
+                    width: bgDelegate.width + 14
+                    height: bgDelegate.height + 8
+
+                    SvgImage {
+                        id: bgDelegate
+                        source: "images/profile-settings/bg_note.svg"
+                        anchors {
+                            bottom: parent.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
+                    SvgImage {
+                        id: closeButton
+
+                        source: "images/profile-settings/icon_delete.svg"
+                        anchors {
+                            right: bgDelegate.right
+                            rightMargin: delegate.width / 100 * 2
+                            top: bgDelegate.top
+                            topMargin: delegate.height / 100 * 9
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.centerIn: closeButton
+                        width: 15
+                        height: 15
+                        onClicked: userNotes.remove(index)
+                        z: 1
+                    }
 
                     UbuntuLightText {
                         anchors {
-                            left: parent.left
+                            left: bgDelegate.left
                             leftMargin: delegate.width / 100 * 2
-                            right: parent.right
+                            right: bgDelegate.right
                             rightMargin: delegate.width / 100 * 2
-                            top: parent.top
+                            top: closeButton.bottom
                             topMargin: delegate.height / 100 * 9
                         }
+                        color: "gray"
                         font.pixelSize: 15
                         wrapMode: Text.Wrap
                         text: delegate.text
@@ -466,6 +484,7 @@ Page {
                         }
                     ]
                 }
+
                 model: userNotes
                 onCurrentPageChanged: privateProps.unselectObj()
             }

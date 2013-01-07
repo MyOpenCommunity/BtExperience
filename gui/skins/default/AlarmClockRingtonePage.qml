@@ -271,7 +271,7 @@ Page {
         visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
                  sourceModel.count > 0
         defaultImage: "images/common/alarm_clock/freccia_dx.svg"
-        pressedImage: "images/common/alarm_clock/freccia_dx_P.svg"
+        pressedImage: "images/common/freccia_dx_P.svg"
         anchors {
             top: horizontalSeparator.bottom
             topMargin: bg.height / 100 * 5.72
@@ -349,7 +349,7 @@ Page {
             PropertyChanges {
                 target: pageChanger
                 defaultImage: "images/common/alarm_clock/freccia_sx.svg"
-                pressedImage: "images/common/alarm_clock/freccia_sx_P.svg"
+                pressedImage: "images/common/freccia_sx_P.svg"
             }
             PropertyChanges {
                 target: ambientText

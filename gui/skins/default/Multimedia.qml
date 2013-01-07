@@ -12,53 +12,63 @@ Page {
     source : global.guiSettings.homeBgImage
     text: qsTr("multimedia")
 
-    ControlPathView {
-        visible: multimediaModel.count >= 3
-        x0FiveElements: 150
-        x0ThreeElements: 250
-        x1: 445
-        x2FiveElements: 740
-        x2ThreeElements: 640
-        pathviewId: 1
-
-        model: multimediaModel
-        anchors {
-            right: parent.right
-            rightMargin: 30
-            left: navigationBar.right
-            leftMargin: 30
-            top: toolbar.bottom
-            topMargin: 50
-            bottom: parent.bottom
+    function cardClicked(itemObject) {
+        if (itemObject.target === undefined) {
+            multimedia.processLaunched(global.browser)
+            global.browser.displayUrl(itemObject.props["urlString"])
         }
-        pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
-        arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
-        onClicked: Stack.goToPage(delegate.target, delegate.props)
+        else
+            Stack.goToPage(itemObject.target, itemObject.props)
     }
 
-    CardView {
+    Loader {
+        id: viewLoader
         anchors {
+            top: toolbar.bottom
             right: parent.right
             rightMargin: 30
             left: navigationBar.right
             leftMargin: 30
-            top: toolbar.bottom
-            topMargin: 50
             bottom: parent.bottom
         }
-        visible: model.count < 3
-        delegate: CardDelegate {
-            property variant itemObject: multimediaModel.getObject(index)
-            source: itemObject.cardImageCached
-            label: itemObject.description
+        sourceComponent: multimediaModel.count >= 3 ? cardPathView : cardList
+    }
 
-            onClicked: Stack.goToPage(itemObject.target, itemObject.props)
+    Component {
+        id: cardPathView
+
+        ControlPathView {
+            x0FiveElements: 150
+            x0ThreeElements: 250
+            y0: 270
+            x1: 445
+            y1: 250
+            x2FiveElements: 740
+            x2ThreeElements: 640
+            pathviewId: 1
+            model: multimediaModel
+            pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
+            arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
+            onClicked: cardClicked(delegate)
         }
+    }
 
-        delegateSpacing: 40
-        visibleElements: 2
+    Component {
+        id: cardList
+        CardView {
+            delegate: CardDelegate {
+                property variant itemObject: multimediaModel.getObject(index)
+                source: itemObject.cardImageCached
+                label: itemObject.description
 
-        model: multimediaModel
+                onClicked: cardClicked(delegate)
+            }
+
+            delegateSpacing: 40
+            visibleElements: 2
+
+            model: multimediaModel
+        }
     }
 
     ListModel {
@@ -71,7 +81,7 @@ Page {
 
     Component.onCompleted: {
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices_card.jpg", "props": {} })
-        multimediaModel.append({"description": qsTr("web browser"), "target": "ExternalBrowser.qml", "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
+        multimediaModel.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
         multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
                                    "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
         multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/card/rss_card.jpg",

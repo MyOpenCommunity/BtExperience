@@ -40,10 +40,7 @@ BasePage {
         NumberAnimation { duration: constants.alertTransitionDuration }
     }
 
-    Component.onCompleted: {
-        popupLoader.sourceComponent = popupComponent
-        state = "popup"
-    }
+    Component.onCompleted: installPopup(popupComponent)
 
     function updateUnreadMessages(unreadMessages) {
         privateProps.update(PopupLogic.updateUnreadMessages(unreadMessages))
@@ -130,22 +127,18 @@ BasePage {
             }
 
             if (data === "Antintrusion") {
-                popupLoader.sourceComponent = undefined
                 Stack.goToPage("Antintrusion.qml", {"navigationTarget": Navigation.ALARM_LOG})
             }
 
             if (data === "Supervision") {
-                popupLoader.sourceComponent = undefined
                 Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
             }
 
             if (data === "Messages") {
-                popupLoader.sourceComponent = undefined
                 Stack.goToPage("Messages.qml")
             }
 
             if (data === "GlobalView") {
-                popupLoader.sourceComponent = undefined
                 Stack.goToPage("EnergyGlobalView.qml")
             }
         }
@@ -172,7 +165,6 @@ BasePage {
         }
 
         function closePopup() {
-            popupLoader.sourceComponent = undefined
             Stack.popPage()
         }
     }

@@ -359,6 +359,11 @@ QObject *GlobalProperties::getDefaultExternalPlace() const
 	return default_external_place;
 }
 
+QString GlobalProperties::getPIAddress() const
+{
+	return (*bt_global::config)[PI_ADDRESS];
+}
+
 AudioVideoPlayer *GlobalProperties::getAudioVideoPlayer() const
 {
 	return video_player;
@@ -551,6 +556,8 @@ void GlobalProperties::screenStateChangedManagement()
 		audio_state->disableState(AudioState::Screensaver);
 		delayed_frame_timer->stop();
 	}
+
+	browser->setClicksBlocked(screen_state->getClicksBlocked());
 }
 
 void GlobalProperties::sendDelayedFrames()

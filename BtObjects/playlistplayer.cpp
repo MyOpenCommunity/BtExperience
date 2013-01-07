@@ -2,6 +2,7 @@
 #include "folderlistmodel.h"
 #include "list_manager.h"
 #include "mounts.h"
+#include "medialink.h"
 
 #include <QDebug>
 #include <QTime>
@@ -51,11 +52,11 @@ void PlayListPlayer::generatePlaylistUPnP(UPnPListModel *model, int index, int t
 	generate(model, index, total_files);
 }
 
-void PlayListPlayer::generatePlaylistWebRadio(QList<QVariant> urls, int index, int total_files)
+void PlayListPlayer::generatePlaylistWebRadio(QList<QObject *> items, int index, int total_files)
 {
 	terminate();
 	is_video = false;
-	generate(urls, index, total_files);
+	generate(items, index, total_files);
 }
 
 bool PlayListPlayer::isPlaying() const
@@ -182,7 +183,7 @@ void PlayListPlayer::generate(UPnPListModel *model, int index, int total_files)
 	updateCurrent();
 }
 
-void PlayListPlayer::generate(QList<QVariant> urls, int index, int total_files)
+void PlayListPlayer::generate(QList<QObject *> items, int index, int total_files)
 {
 	Q_UNUSED(total_files);
 
@@ -192,12 +193,21 @@ void PlayListPlayer::generate(QList<QVariant> urls, int index, int total_files)
 
 	// creates list of files (of the same type) to play
 	EntryInfoList entry_list;
-	for (int i = 0; i < urls.size(); ++i)
+	foreach (QObject *obj, items)
 	{
+		MediaLink *item = qobject_cast<MediaLink *>(obj);
+		if (!item)
+		{
+			qWarning() << "Invalid object in web radio list" << obj;
+			continue;
+		}
+
 		EntryInfo info;
 
 		info.type = EntryInfo::AUDIO;
-		info.path = urls[i].toString();
+		info.path = item->getAddress();
+		info.name = item->getName();
+		info.metadata["title"] = info.name;
 
 		entry_list << info;
 	}
@@ -219,7 +229,7 @@ void PlayListPlayer::reset()
 
 	if (!current.isEmpty())
 	{
-		current = QString();
+		current = current_name = QString();
 		emit currentChanged();
 	}
 }
@@ -238,6 +248,7 @@ void PlayListPlayer::updateCurrent()
 	if (candidate.isEmpty())
 		return;
 	current = candidate;
+	current_name = actual_list->currentMeta()["title"];
 	emit currentChanged();
 }
 
@@ -386,8 +397,14 @@ void AudioVideoPlayer::handleMediaPlayerStateChange(MultiMediaPlayer::PlayerStat
 
 void AudioVideoPlayer::play()
 {
+	QVariantMap default_info;
+
+	default_info["meta_title"] = getCurrentName();
+	default_info["stream_title"] = getCurrentName();
+
 	user_track_change_request = true;
 	media_player->setCurrentSource(getCurrent());
+	media_player->setDefaultTrackInfo(default_info);
 	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)
 		media_player->play();
 }

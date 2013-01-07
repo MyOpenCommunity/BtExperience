@@ -73,19 +73,21 @@ Page {
                 defaultImage: "images/common/btn_weblink.svg"
                 pressedImage: "images/common/btn_weblink_P.svg"
                 onClicked: {
-                    if (type === "browser")
-                        Stack.pushPage("ExternalBrowser.qml", {"urlString": itemObject.address})
+                    if (type === "browser") {
+                        global.browser.displayUrl(itemObject.address)
+                        page.processLaunched(global.browser)
+                    }
                     else if (type === "rss")
                         Stack.pushPage("RssPage.qml", {"urlString": itemObject.address})
                     else if (type === "webradio") {
-                        var urls = []
+                        var items = []
                         var found = 0
                         for (var i = 0; i < ipAllLinksModel.count; ++i) {
-                            urls.push(ipAllLinksModel.getObject(i).address)
+                            items.push(ipAllLinksModel.getObject(i))
                             if (itemObject === ipAllLinksModel.getObject(i))
                                 found = i
                         }
-                        global.audioVideoPlayer.generatePlaylistWebRadio(urls, found, ipAllLinksModel.count)
+                        global.audioVideoPlayer.generatePlaylistWebRadio(items, found, ipAllLinksModel.count)
                         Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false})
                     }
                 }

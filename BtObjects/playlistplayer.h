@@ -29,7 +29,7 @@ public:
 	// attention when using them in QML code
 	Q_INVOKABLE void generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool is_video);
 	Q_INVOKABLE void generatePlaylistUPnP(UPnPListModel *model, int index, int total_files, bool is_video);
-	Q_INVOKABLE void generatePlaylistWebRadio(QList<QVariant> urls, int index, int total_files);
+	Q_INVOKABLE void generatePlaylistWebRadio(QList<QObject *> items, int index, int total_files);
 	// methods needed to restore state when coming back to player page
 	Q_INVOKABLE bool isUpnp() const { return ((actual_list == upnp_list) ? true : false); }
 
@@ -42,11 +42,12 @@ protected:
 	explicit PlayListPlayer(QObject *parent = 0);
 
 	QString getCurrent() const { return current; }
+	QString getCurrentName() const { return current_name; }
 	void previous();
 	void next();
 	void generate(DirectoryListModel *model, int index, int total_files);
 	void generate(UPnPListModel *model, int index, int total_files);
-	void generate(QList<QVariant> urls, int index, int total_files);
+	void generate(QList<QObject *> items, int index, int total_files);
 	void reset();
 
 signals:
@@ -69,7 +70,7 @@ private slots:
 
 private:
 	ListManager *local_list, *upnp_list, *actual_list;
-	QString current;
+	QString current, current_name;
 	bool is_video;
 
 	int loop_starting_file; // the index of the song used to detect loop

@@ -15,19 +15,9 @@ MenuColumn {
         containers: [uii]
     }
 
-    QtObject {
-        id: privateProps
-        property int currentIndex: -1
-    }
-
-    onChildDestroyed: privateProps.currentIndex = -1
-
-    PaginatorColumn {
-        id: paginator
-
+    Column {
         MenuItem {
             name: qsTr("Rename")
-            isSelected: privateProps.currentIndex === 1
             onClicked: {
                 pageObject.installPopup(quicklinkEditComponent)
                 pageObject.popupLoader.item.favoriteItem = column.dataModel
@@ -36,10 +26,7 @@ MenuColumn {
 
         MenuItem {
             name: qsTr("Delete")
-            isSelected: privateProps.currentIndex === 2
             onClicked: {
-                if (privateProps.currentIndex !== 2)
-                    privateProps.currentIndex = 2
                 quicklinksModel.remove(column.dataModel)
                 column.closeColumn()
             }

@@ -41,12 +41,16 @@ signals:
 	void untrustedSslConnection();
 	void requestComplete(bool ssl, QString host, QString organization);
 
+protected:
+	bool eventFilter(QObject *obj, QEvent *ev);
+
 private slots:
 	void readInput();
 
 private:
 	void parseLine(QString line);
 
+	bool clicks_blocked;
 	QString url;
 	QString input;
 	BtNetworkAccessManager *access_manager;

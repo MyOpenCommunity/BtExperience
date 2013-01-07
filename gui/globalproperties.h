@@ -72,6 +72,7 @@ public:
 	QVariantList getBackgroundStockImagesFolder() const;
 
 	QObject *getDefaultExternalPlace() const;
+	Q_INVOKABLE QString getPIAddress() const;
 
 	Q_INVOKABLE QString takeScreenshot(QRect rect, QString filename);
 	Q_INVOKABLE QString saveInCustomDirIfNeeded(QString filename, QString new_filename, QSize size = QSize());

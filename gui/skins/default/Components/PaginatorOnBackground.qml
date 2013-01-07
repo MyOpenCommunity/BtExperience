@@ -9,6 +9,7 @@ Item {
     property alias model: internalList.model
     property alias buttonVisible: button.visible
     property alias spacing: spacing.height
+    property alias bottomRowAnchors: bottomRow.anchors
 
     property int elementsOnPage: 6
     property alias currentPage: paginator.currentPage
@@ -31,7 +32,7 @@ Item {
     }
 
     QtObject {
-        id: privateProps
+        id: paglistPrivateProps
 
         function computeDelegateHeight() {
             if (internalList.children.length === 1 &&
@@ -47,7 +48,7 @@ Item {
     // delegateWidth property is never updated
     Connections {
         target: model
-        onCountChanged: privateProps.computeDelegateHeight()
+        onCountChanged: paglistPrivateProps.computeDelegateHeight()
     }
 
     ListView {
@@ -102,6 +103,6 @@ Item {
         }
     }
 
-    Component.onCompleted: privateProps.computeDelegateHeight()
+    Component.onCompleted: paglistPrivateProps.computeDelegateHeight()
 }
 

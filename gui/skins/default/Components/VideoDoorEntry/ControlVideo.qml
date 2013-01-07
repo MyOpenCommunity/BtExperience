@@ -60,9 +60,9 @@ SvgImage {
     ButtonImageThreeStates {
         id: nextButton
 
-        defaultImageBg: "../../images/common/btn_cicla.svg"
-        pressedImageBg: "../../images/common/btn_cicla_P.svg"
-        shadowImage: "../../images/common/ombra_btn_cicla.svg"
+        defaultImageBg: "../../images/common/btn_45x35.svg"
+        pressedImageBg: "../../images/common/btn_45x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_cicla.svg"
         pressedImage: "../../images/common/ico_cicla_P.svg"
         status: 0

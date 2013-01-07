@@ -24,6 +24,12 @@ namespace
 	#endif
 	}
 
+	void setHardwareContrast(int value)
+	{
+		Q_UNUSED(value);
+		qDebug() << __PRETTY_FUNCTION__ << "TODO set contrast hardware value";
+	}
+
 	void setMonitorEnabled(int value)
 	{
 		qDebug() << "Writing" <<  value << "to /sys/devices/platform/omapdss/display0/enabled";
@@ -51,6 +57,7 @@ ScreenState::ScreenState(QObject *parent) : QObject(parent)
 {
 	current_state = Invalid;
 	normal_brightness = 100;
+	contrast = 100;
 	password_enabled = screen_locked = false;
 	for (int i = 0; i < StateCount; ++i)
 		states[i] = false;
@@ -99,6 +106,23 @@ int ScreenState::getNormalBrightness() const
 	return normal_brightness;
 }
 
+void ScreenState::setContrast(int c)
+{
+	c = qMin(100, qMax(c, 1));
+	if (c == contrast)
+		return;
+
+	contrast = c;
+	emit contrastChanged();
+
+	setHardwareContrast(contrast);
+}
+
+int ScreenState::getContrast() const
+{
+	return contrast;
+}
+
 void ScreenState::setPasswordEnabled(bool enabled)
 {
 	if (enabled == password_enabled)
@@ -123,6 +147,19 @@ void ScreenState::unlockScreen()
 ScreenState::State ScreenState::getState() const
 {
 	return current_state;
+}
+
+bool ScreenState::getClicksBlocked() const
+{
+	switch (current_state)
+	{
+	case ScreenOff:
+	case Screensaver:
+	case Freeze:
+		return true;
+	default:
+		return false;
+	}
 }
 
 void ScreenState::disableState(State state)
@@ -194,6 +231,8 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 	case Freeze:
 		freeze_timer->start();
 		setBrightness(FREEZE_BRIGHTNESS);
+		//Touchscreen Reset Workaround
+		smartExecute("cat", QStringList() << "/sys/bus/spi/drivers/tsc2005/spi1.0/selftest");
 		break;
 	case ScreenOff:
 		screen_locked = password_enabled;

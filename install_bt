@@ -48,7 +48,7 @@ export TSLIB_TSDEVICE=/dev/input/touchscreen0
 export QWS_MOUSE_PROTO=Tslib:/dev/input/touchscreen0
 export QWS_DISPLAY=powervr
 export QT_IM_MODULE=MaliitDirect
-export LD_LIBRARY_PATH=/home/bticino/lib:
+export LD_LIBRARY_PATH=/home/bticino/lib:$LD_LIBRARY_PATH
 export POINTERCAL_FILE=/home/bticino/cfg/extra/pointercal
 bin/BtExperience/BtExperience -qws -noswcursor &
 

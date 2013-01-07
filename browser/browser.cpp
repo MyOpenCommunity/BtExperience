@@ -5,7 +5,6 @@
 
 #include <logger.h>
 
-#include "eventfilters.h"
 #include "applicationcommon.h"
 #include "browserproperties.h"
 #include "imagereader.h"
@@ -37,16 +36,10 @@ int main(int argc, char *argv[])
 
 	qmlRegisterType<ImageReader>("BtExperience", 1, 0, "ImageReader");
 
-	LastClickTime *last_click = new LastClickTime;
-	// To receive all the events, even if there is some qml elements which manage
-	// their, we have to install the event filter in the QApplication
-	app.installEventFilter(last_click);
-
 	BrowserProperties global(app_logger);
 	if (argc > 1)
 		global.setUrl(argv[1]);
 	ImageReader::setBasePath(global.getBasePath());
-	QObject::connect(last_click, SIGNAL(updateTime()), &global, SLOT(updateClick()));
 	qml_application.start(&global, "browsermain.qml", new NetworkAccessManagerFactory(&global), false);
 
 	return app.exec();

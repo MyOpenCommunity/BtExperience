@@ -36,11 +36,11 @@ Item {
             }
 
             ControlSlider {
-                id: saturationSlider
-                percentage: control.camera === undefined ? 0 : control.camera.saturation
-                description: qsTr("Saturation")
-                onPlusClicked: if (control.camera !== undefined) control.camera.saturation += 5
-                onMinusClicked: if (control.camera !== undefined) control.camera.saturation -= 5
+                id: colorSlider
+                percentage: control.camera === undefined ? 0 : control.camera.color
+                description: qsTr("Color")
+                onPlusClicked: if (control.camera !== undefined) control.camera.color += 5
+                onMinusClicked: if (control.camera !== undefined) control.camera.color -= 5
             }
         }
     }

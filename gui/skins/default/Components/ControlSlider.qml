@@ -11,7 +11,7 @@ SvgImage {
     signal plusClicked
     signal minusClicked
 
-    source: "../images/common/bg_dimmer.svg"
+    source: "../images/common/bg_panel_212x100.svg"
 
     UbuntuLightText {
         id: label
@@ -40,7 +40,7 @@ SvgImage {
         anchors.top: label.bottom
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
-        source: "../images/common/bar_dimmer_bg.svg"
+        source: "../images/common/bg_regola_dimmer.svg"
 
         Rectangle {
             height: parent.height + 2

@@ -14,20 +14,22 @@ namespace
 {
 	AudioState::Volume volume_map[AudioState::StateCount + 1] =
 	{
-		AudioState::InvalidVolume,
-		AudioState::InvalidVolume,
-		AudioState::BeepVolume,
-		AudioState::InvalidVolume,
-		AudioState::LocalPlaybackVolume,
-		AudioState::InvalidVolume,
-		AudioState::RingtoneVolume,
-		AudioState::RingtoneVolume,
-		AudioState::VdeCallVolume,
-		AudioState::VdeCallVolume,
-		AudioState::IntercomCallVolume,
-		AudioState::IntercomCallVolume,
-		AudioState::InvalidVolume,
-		AudioState::RingtoneVolume,
+		AudioState::InvalidVolume,      //-1
+		AudioState::InvalidVolume,      //0
+		AudioState::BeepVolume,         //1
+		AudioState::InvalidVolume,      //2
+		AudioState::LocalPlaybackVolume,//3
+		AudioState::InvalidVolume,      //4
+		AudioState::RingtoneVolume,     //5
+		AudioState::RingtoneVolume,     //6
+		AudioState::VdeCallVolume,      //7
+		AudioState::VdeCallVolume,      //8
+		AudioState::IntercomCallVolume, //9
+		AudioState::IntercomCallVolume, //10
+		AudioState::VdeCallVolume,      //11
+		AudioState::VdeCallVolume,      //12
+		AudioState::InvalidVolume,      //13
+		AudioState::RingtoneVolume,     //14
 	};
 
 	void setTpaVolume(int volume)
@@ -45,8 +47,6 @@ namespace
 		QString scaled_volume = QString::number(volume == 0 ? 0 :
 							volume == 1 ? 20 :
 								      (volume - 2) * 97 / 98 + 21);
-		smartExecute_synch("amixer", QStringList() << "cset" << "name='Baia Tpa Power'" << "On");
-		smartExecute_synch("amixer", QStringList() << "cset" << "name='HP Playback Switch'" << "on,on");
 		smartExecute_synch("amixer", QStringList() << "cset" << "name='HP DAC Playback Volume'" << scaled_volume + "," + scaled_volume);
 	}
 

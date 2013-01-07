@@ -47,8 +47,6 @@ BasePage {
         Image {
             id: sourceImage
 
-            // TODO load user choosen image
-            source: "images/common/addams.jpg"
             x: (parent.width - width) / 2
             y: (parent.height - height) / 2
         }
@@ -122,9 +120,9 @@ BasePage {
     ButtonImageThreeStates {
         id: buttonZoomOut
 
-        defaultImageBg: "images/common/btn_comando.svg"
-        pressedImageBg: "images/common/btn_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
         status: 0
@@ -141,9 +139,9 @@ BasePage {
     ButtonImageThreeStates {
         id: buttonZoomIn
 
-        defaultImageBg: "images/common/btn_comando.svg"
-        pressedImageBg: "images/common/btn_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
         status: 0
@@ -160,9 +158,9 @@ BasePage {
     ButtonImageThreeStates {
         id: buttonBrowse
 
-        defaultImageBg: "images/common/btn_comando.svg"
-        pressedImageBg: "images/common/btn_comando_P.svg"
-        shadowImage: "images/common/ombra_btn_comando.svg"
+        defaultImageBg: "images/common/btn_45x35.svg"
+        pressedImageBg: "images/common/btn_45x35_P.svg"
+        shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_browse.svg"
         pressedImage: "images/common/ico_browse_P.svg"
         status: 0
@@ -181,9 +179,9 @@ BasePage {
     ButtonThreeStates {
         id: cancelButton
 
-        defaultImage: "images/common/btn_ok-annulla.svg"
-        pressedImage: "images/common/btn_ok-annulla_P.svg"
-        shadowImage: "images/common/ombra_btn_ok-annulla.svg"
+        defaultImage: "images/common/btn_99x35.svg"
+        pressedImage: "images/common/btn_99x35_P.svg"
+        shadowImage: "images/common/btn_shadow_99x35.svg"
         text: qsTr("CANCEL")
         font.pixelSize: 14
         onClicked: Stack.popPage()
@@ -198,9 +196,9 @@ BasePage {
     ButtonThreeStates {
         id: okButton
 
-        defaultImage: "images/common/btn_ok-annulla.svg"
-        pressedImage: "images/common/btn_ok-annulla_P.svg"
-        shadowImage: "images/common/ombra_btn_ok-annulla.svg"
+        defaultImage: "images/common/btn_99x35.svg"
+        pressedImage: "images/common/btn_99x35_P.svg"
+        shadowImage: "images/common/btn_shadow_99x35.svg"
         text: qsTr("OK")
         font.pixelSize: 14
         onClicked: {

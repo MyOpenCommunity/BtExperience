@@ -87,7 +87,7 @@ MenuColumn {
 
         MenuItem {
             id: vdeMuteMenuItem
-            name: qsTr("vde mute")
+            name: qsTr("Ringtone exclusion")
             hasChild: true
             isSelected: privateProps.currentIndex === 3
             onClicked: {

@@ -1,6 +1,4 @@
 Appliance 1.0 Appliance.qml
-ControlUpDownReset 1.0 ControlUpDownReset.qml
-DisableLoadPopup 1.0 DisableLoadPopup.qml
 EnergyDataDelegate 1.0 EnergyDataDelegate.qml
 EnergyDateSelector 1.0 EnergyDateSelector.qml
 EnergyDayGraph 1.0 EnergyDayGraph.qml
@@ -15,11 +13,9 @@ EnergyTableRow 1.0 EnergyTableRow.qml
 EnergyYearGraph 1.0 EnergyYearGraph.qml
 EnergyYearTable 1.0 EnergyYearTable.qml
 GlobalViewTable 1.0 GlobalViewTable.qml
-LoadDetail 1.0 LoadDetail.qml
 LoadDiagnostic 1.0 LoadDiagnostic.qml
 LoadManagement 1.0 LoadManagement.qml
 Partial 1.0 Partial.qml
-SelfTest 1.0 SelfTest.qml
 StopAndGoBtest 1.0 StopAndGoBtest.qml
 StopAndGoMenu 1.0 StopAndGoMenu.qml
 StopAndGoPlus 1.0 StopAndGoPlus.qml

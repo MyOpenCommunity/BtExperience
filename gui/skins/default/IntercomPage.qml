@@ -27,10 +27,7 @@ BasePage {
     }
 
     Component.onCompleted: {
-        popupLoader.sourceComponent = popupComponent
-        state = "popup"
-        popupLoader.item.dataObject = page.callObject
-        popupLoader.item.state = "callFrom"
+        installPopup(popupComponent, {dataObject: page.callObject, state: "callFrom"})
         popupLoader.item.dataObject.callEnded.connect(popupLoader.item.callEndedCallBack)
     }
 }

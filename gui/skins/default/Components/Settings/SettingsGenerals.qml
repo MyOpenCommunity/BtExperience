@@ -34,7 +34,7 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Version"), "component": settingsVersion})
+            modelList.append({"name": qsTr("Info"), "component": settingsVersion})
             modelList.append({"name": qsTr("Date & Time"), "component": settingsDateTime})
             modelList.append({"name": qsTr("Network"), "component": settingsNetwork})
             modelList.append({"name": qsTr("Display"), "component": settingsDisplay})

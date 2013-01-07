@@ -85,6 +85,11 @@ bool BrowserProcess::getRunning() const
 	return browser->state() != QProcess::NotRunning;
 }
 
+void BrowserProcess::setClicksBlocked(bool blocked)
+{
+	sendCommand("set_clicks_blocked " + QString::number(blocked));
+}
+
 void BrowserProcess::terminated()
 {
 	updateVisible(false);
@@ -99,6 +104,11 @@ void BrowserProcess::readStatusUpdate()
 		if (line == "pong")
 		{
 			keep_alive_ticks = 0;
+			continue;
+		}
+		if (line == "about_to_hide")
+		{
+			emit aboutToHide();
 			continue;
 		}
 

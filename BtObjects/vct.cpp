@@ -168,7 +168,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	// initial values
 	brightness = 50;
 	contrast = 50;
-	saturation = 50;
+	color = 50;
 	call_stopped = false;
 	prof_studio = false;
 	hands_free = false;
@@ -183,6 +183,10 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	connect(this, SIGNAL(autoOpenChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(handsFreeChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(ringExclusionChanged()), this, SIGNAL(persistItem()));
+
+	connect(this, SIGNAL(brightnessChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(colorChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(contrastChanged()), this, SIGNAL(persistItem()));
 }
 
 int CCTV::getBrightness() const
@@ -192,9 +196,13 @@ int CCTV::getBrightness() const
 
 void CCTV::setBrightness(int value)
 {
-	// TODO set value on device
 	if (brightness == value || value < 0 || value > 100)
 		return;
+
+	//min 0 max 255 step 1 default 128
+	QString scaled_volume = QString::number(value * 255 / 100);
+	QString process = "yavta -w \'0x00980900 " + scaled_volume + "\' /dev/v4l-subdev8";
+	system(qPrintable(process));
 	brightness = value;
 	emit brightnessChanged();
 }
@@ -206,25 +214,33 @@ int CCTV::getContrast() const
 
 void CCTV::setContrast(int value)
 {
-	// TODO set value on device
 	if (contrast == value || value < 0 || value > 100)
 		return;
+
+	//min 0 max 255 step 1 default 128
+	QString scaled_volume = QString::number(value * 255 / 100);
+	QString process = "yavta -w \'0x00980901 " + scaled_volume + "\' /dev/v4l-subdev8";
+	system(qPrintable(process));
 	contrast = value;
 	emit contrastChanged();
 }
 
-int CCTV::getSaturation() const
+int CCTV::getColor() const
 {
-	return saturation;
+	return color;
 }
 
-void CCTV::setSaturation(int value)
+void CCTV::setColor(int value)
 {
-	// TODO set value on device
-	if (saturation == value || value < 0 || value > 100)
+	if (color == value || value < 0 || value > 100)
 		return;
-	saturation = value;
-	emit saturationChanged();
+
+	//min 0 max 255 step 1 default 128
+	QString scaled_volume = QString::number(value * 255 / 100);
+	QString process = "yavta -w \'0x00980902 " + scaled_volume + "\' /dev/v4l-subdev8";
+	system(qPrintable(process));
+	color = value;
+	emit colorChanged();
 }
 
 void CCTV::setHandsFree(bool newValue)
