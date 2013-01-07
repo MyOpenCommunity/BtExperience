@@ -91,9 +91,9 @@ class AlarmClock : public ObjectInterface
 	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
 
 	/*!
-		\brief The ambient uii relative to the amplifier set if any, otherwise is -1
+		\brief The ambient relative to the amplifier set if any, otherwise is NULL
 	*/
-	Q_PROPERTY(int ambientUii READ getAmbientUii NOTIFY ambientUiiChanged)
+	Q_PROPERTY(QObject *ambient READ getAmbient NOTIFY ambientChanged)
 
 	Q_ENUMS(AlarmClockType)
 
@@ -118,6 +118,8 @@ public:
 	Q_INVOKABLE void postpone();
 	Q_INVOKABLE void incrementVolume();
 	Q_INVOKABLE void decrementVolume();
+	Q_INVOKABLE void incrementAmbient();
+	Q_INVOKABLE void decrementAmbient();
 	Q_INVOKABLE void setAmplifierFromQObject(QObject *amplifier);
 
 	QString getDescription() const;
@@ -153,11 +155,11 @@ public:
 	void setVolume(int volume);
 	int getVolume() const;
 	bool isRinging() const;
-	int getAmbientUii();
+	QObject *getAmbient();
 
 signals:
 	void alarmTypeChanged();
-	void ambientUiiChanged();
+	void ambientChanged();
 	void checkRequested();
 	void daysChanged();
 	void descriptionChanged();
@@ -184,7 +186,7 @@ private slots:
 	void restart();
 	void mediaSourcePlaybackStatus(bool status);
 	void qmlValueChanged(int key, QVariant value);
-	void updateAmbientUii();
+	void updateAmbient();
 
 private:
 	void start();
@@ -202,6 +204,7 @@ private:
 	QTimer *timer_postpone;
 	int tick_count;
 	QTime start_time;
+	QList<QObject *> ambientList;
 };
 
 #endif // ALARMCLOCK_H

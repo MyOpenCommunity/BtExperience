@@ -42,7 +42,7 @@ namespace
 	const int QML_VOLUME = 6;
 	const int QML_SOURCE = 7;
 	const int QML_AMPLIFIER = 8;
-	const int QML_AMBIENT_UII = 9;
+	const int QML_AMBIENT = 9;
 }
 
 
@@ -164,7 +164,7 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 	cache->setOriginalValue(QML_HOUR, hour);
 	cache->setOriginalValue(QML_MINUTE, minute);
 	cache->setOriginalValue(QML_VOLUME, 0);
-	cache->setOriginalValue(QML_AMBIENT_UII, 0);
+	cache->setOriginalValue(QML_AMBIENT, 0);
 	cache->setOriginalValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(0));
 	cache->setOriginalValue(QML_SOURCE, Converter<SourceObject>::asQVariant(0));
 
@@ -179,7 +179,7 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(sourceChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(amplifierChanged()), this, SIGNAL(persistItem()));
-	connect(this, SIGNAL(amplifierChanged()), this, SLOT(updateAmbientUii()));
+	connect(this, SIGNAL(amplifierChanged()), this, SLOT(updateAmbient()));
 
 	connect(timer_trigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
 	connect(timer_tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
@@ -238,8 +238,8 @@ void AlarmClock::qmlValueChanged(int key, QVariant value)
 	case QML_SOURCE:
 		emit sourceChanged();
 		break;
-	case QML_AMBIENT_UII:
-		emit ambientUiiChanged();
+	case QML_AMBIENT:
+		emit ambientChanged();
 		break;
 	default:
 		qWarning() << __PRETTY_FUNCTION__ << "an unknown key (" << key << ") has arrived";
@@ -540,6 +540,20 @@ void AlarmClock::decrementVolume()
 	setVolume(desired);
 }
 
+void AlarmClock::incrementAmbient()
+{
+	int index = ambientList.indexOf(getAmbient()) + 1;
+	if (index < ambientList.count())
+		cache->setQMLValue(QML_AMBIENT, index);
+}
+
+void AlarmClock::decrementAmbient()
+{
+	int index = ambientList.indexOf(getAmbient()) - 1;
+	if (index >= 0)
+		cache->setQMLValue(QML_AMBIENT, index);
+}
+
 void AlarmClock::setAmplifierFromQObject(QObject *amplifier)
 {
 	Amplifier *candidate = qobject_cast<Amplifier *>(amplifier);
@@ -552,16 +566,16 @@ bool AlarmClock::isRinging() const
 	return timer_tick->isActive();
 }
 
-void AlarmClock::updateAmbientUii()
+void AlarmClock::updateAmbient()
 {
-	// no amplifier, no ambient uii
+	cache->setQMLValue(QML_AMBIENT, -1);
+
+	// no amplifier, no ambient
 	if (getAmplifier() == 0)
-	{
-		cache->setQMLValue(QML_AMBIENT_UII, -1);
 		return;
-	}
 
 	// loop through all ambients to look for the one containing this amplifier
+	ambientList.clear();
 	QScopedPointer<ObjectModel> ambientModel(new ObjectModel());
 	ambientModel->setFilters(
 				ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSpecialAmbient
@@ -573,16 +587,13 @@ void AlarmClock::updateAmbientUii()
 		ItemInterface *item = ambientModel->getObject(i);
 		SoundAmbientBase *ambient = qobject_cast<SoundAmbientBase *>(item);
 		Q_ASSERT_X(ambient, __PRETTY_FUNCTION__, "Unexpected NULL object");
-		if (ambient && ambient->getArea() == getAmplifier()->getArea())
+		if (ambient)
 		{
-			// found! set ambient uii
-			cache->setQMLValue(QML_AMBIENT_UII, ambient->getUii());
-			return;
+			ambientList << ambient;
+			if (ambient->getArea() == getAmplifier()->getArea())
+				cache->setQMLValue(QML_AMBIENT, i);
 		}
 	}
-
-	// not found, set ambient uii to unknown
-	cache->setQMLValue(QML_AMBIENT_UII, -1);
 }
 
 AlarmClock::AlarmClockType AlarmClock::getAlarmType() const
@@ -685,7 +696,14 @@ void AlarmClock::setAmplifier(Amplifier *new_value)
 		cache->setQMLValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(new_value));
 }
 
-int AlarmClock::getAmbientUii()
+QObject *AlarmClock::getAmbient()
 {
-	return cache->getQMLValue(QML_AMBIENT_UII).toInt();
+	// ambients are parsed after alarm clocks parsing, so checks if ambientList
+	// is empty and updates ambientList
+	if (ambientList.count() == 0)
+		updateAmbient();
+	int index = cache->getQMLValue(QML_AMBIENT).toInt();
+	if (index >= 0 && index < ambientList.count())
+		return ambientList.at(index);
+	return 0;
 }

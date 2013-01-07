@@ -11,14 +11,12 @@ Page {
 
     property variant alarmClock: undefined
 
-    property int currentSourceIdx: -1
-    property int currentAmbientIdx: 0
-    property int currentAmplifierIdx: -1
-
     // the following properties are used by delegates
-    property variant actualModel: privateProps.currentChoice === 0 ? beepModel : _choicesModel
-    // the following properties are state dependant
-    property variant _choicesModel: kindModel
+    property variant actualModel: page.alarmClock.alarmType === AlarmClock.AlarmClockBeep ?
+                                      beepModel :
+                                      (page.state === "" ?
+                                           sourceModel :
+                                           amplifierModel)
 
     text: qsTr("Alarm settings")
     source : global.guiSettings.homeBgImage
@@ -28,21 +26,12 @@ Page {
     }
 
     ObjectModel {
-        id: kindModel
+        id: sourceModel
         filters: [
             {objectId: ObjectInterface.IdSoundSource}
         ]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-    }
-
-    ObjectModel {
-        id: ambientModel
-        filters: [
-            {objectId: ObjectInterface.IdMultiChannelSpecialAmbient},
-            {objectId: ObjectInterface.IdMultiChannelSoundAmbient},
-            {objectId: ObjectInterface.IdMonoChannelSoundAmbient},
-            {objectId: ObjectInterface.IdMultiGeneral},
-        ]
+        containers: [Container.IdSoundDiffusionMulti, Container.IdSoundDiffusionMono]
     }
 
     ObjectModel {
@@ -54,7 +43,7 @@ Page {
             {objectId: ObjectInterface.IdPowerAmplifier},
             {objectId: ObjectInterface.IdAmplifierGeneral},
         ]
-        containers: [privateProps.ambientUii]
+        containers: [page.alarmClock.ambient === null ? -1 : page.alarmClock.ambient.uii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
@@ -129,8 +118,9 @@ Page {
             delegate: ControlRadioHorizontal {
                 width: bg.width / 100 * 23.55
                 text: privateProps.getTypeText(index)
-                onClicked: privateProps.setStatus(index)
-                status: privateProps.getStatus(index, privateProps.dummy)
+                onClicked: privateProps.setAlarmType(index)
+                status: index === page.alarmClock.alarmType
+                visible: privateProps.getTypeVisible(index, sourceModel.count)
             }
         }
     }
@@ -138,6 +128,7 @@ Page {
     UbuntuLightText {
         id: volumeText
         text: qsTr("Volume")
+        visible: sourceModel.count > 0
         font.pixelSize: 14
         color: "white"
         anchors {
@@ -151,6 +142,7 @@ Page {
     ControlSpin {
         id: volumeSpin
         text: page.alarmClock.volume + qsTr("%")
+        visible: sourceModel.count > 0
         anchors {
             left: bg.left
             leftMargin: bg.width / 100 * 3.92
@@ -164,7 +156,8 @@ Page {
     // upper-right panel
     UbuntuLightText {
         id: sourceText
-        text: privateProps.currentChoice === 0 ? "" : qsTr("Select a source:")
+        text: page.alarmClock.alarmType === AlarmClock.AlarmClockBeep ? "" : qsTr("Select a source:")
+        visible: sourceModel.count > 0
         font.pixelSize: 14
         color: "white"
         anchors {
@@ -178,7 +171,8 @@ Page {
     ButtonImageThreeStates {
         id: leftAmbient
 
-        visible: privateProps.currentChoice === 1
+        visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
+                 sourceModel.count > 0
         opacity: 0
         defaultImageBg: "images/common/button_pager.svg"
         pressedImageBg: "images/common/button_pager_press.svg"
@@ -191,20 +185,16 @@ Page {
             top: sourceText.bottom
             topMargin: bg.height / 100 * 2
         }
-        onClicked: {
-            if (page.currentAmbientIdx > 0) {
-                page.currentAmplifierIdx = -1
-                page.currentAmbientIdx -= 1
-            }
-        }
+        onClicked: page.alarmClock.decrementAmbient()
     }
 
     UbuntuLightText {
         id: ambientText
 
-        visible: privateProps.currentChoice === 1
+        visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
+                 sourceModel.count > 0
         opacity: 0
-        text: ambientModel.getObject(page.currentAmbientIdx).name
+        text: page.alarmClock.ambient ? page.alarmClock.ambient.name : ""
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 14
         color: "white"
@@ -219,7 +209,8 @@ Page {
     ButtonImageThreeStates {
         id: rightAmbient
 
-        visible: privateProps.currentChoice === 1
+        visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
+                 sourceModel.count > 0
         opacity: 0
         defaultImageBg: "images/common/button_pager.svg"
         pressedImageBg: "images/common/button_pager_press.svg"
@@ -232,18 +223,13 @@ Page {
             top: sourceText.bottom
             topMargin: bg.height / 100 * 2
         }
-        onClicked: {
-            if (page.currentAmbientIdx < ambientModel.count - 1) {
-                page.currentAmplifierIdx = -1
-                page.currentAmbientIdx += 1
-            }
-        }
+        onClicked: page.alarmClock.incrementAmbient()
     }
 
     PaginatorOnBackground {
         id: paginator
 
-        elementsOnPage: 9
+        elementsOnPage: 7
         buttonVisible: false
         spacing: 5
         anchors {
@@ -254,10 +240,6 @@ Page {
             right: verticalSeparator.right
             bottom: bg.bottom
             bottomMargin: bg.width / 100 * 4.58
-        }
-        onCurrentPageChanged: {
-            page.currentSourceIdx = -1
-            page.currentAmplifierIdx = -1
         }
         model: page.actualModel
         delegate: Item {
@@ -273,12 +255,12 @@ Page {
                 text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name
                 onClicked: {
                     if (page.state === "")
-                        page.currentSourceIdx = index
+                        page.alarmClock.source = itemObject
                     else
-                        page.currentAmplifierIdx = index
+                        page.alarmClock.setAmplifierFromQObject(itemObject)
                 }
-                status: (page.state === "" && page.currentSourceIdx === index) ||
-                        (page.state === "amplifiers" && page.currentAmplifierIdx === index)
+                status: (page.state === "" && page.alarmClock.source === itemObject) ||
+                        (page.state === "amplifiers" && page.alarmClock.amplifier === itemObject)
             }
         }
     }
@@ -286,7 +268,8 @@ Page {
     ButtonThreeStates {
         id: pageChanger
 
-        visible: privateProps.currentChoice === 1
+        visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
+                 sourceModel.count > 0
         defaultImage: "images/common/alarm_clock/freccia_dx.svg"
         pressedImage: "images/common/alarm_clock/freccia_dx_P.svg"
         anchors {
@@ -295,7 +278,7 @@ Page {
             right: bg.right
             rightMargin: bg.width / 100 * 3.92
         }
-        onClicked:page.state = page.state === "" ? "amplifiers" : ""
+        onClicked: page.state = page.state === "" ? "amplifiers" : ""
     }
 
     // bottom bar
@@ -335,11 +318,6 @@ Page {
             right: cancelButton.left
         }
         onClicked: {
-            page.alarmClock.alarmType = (privateProps.currentChoice === 0 ? AlarmClock.AlarmClockBeep : AlarmClock.AlarmClockSoundSystem)
-            if (page.currentSourceIdx >= 0)
-                page.alarmClock.source = kindModel.getObject(page.currentSourceIdx)
-            if (page.currentAmplifierIdx >= 0)
-                page.alarmClock.setAmplifierFromQObject(amplifierModel.getObject(page.currentAmplifierIdx))
             page.alarmClock.apply()
             Stack.popPage()
         }
@@ -374,10 +352,6 @@ Page {
                 pressedImage: "images/common/alarm_clock/freccia_sx_P.svg"
             }
             PropertyChanges {
-                target: page
-                _choicesModel: amplifierModel
-            }
-            PropertyChanges {
                 target: ambientText
                 opacity: 1
             }
@@ -404,43 +378,11 @@ Page {
     QtObject {
         id: privateProps
 
-        property int currentChoice: 0
-
-        property bool dummy: false // this is only to trigger updates on all radios
-
-        property bool beepStatus: true
-        property bool soundDiffusionStatus: false
-        property int ambientUii: ambientModel.getObject(page.currentAmbientIdx).uii
-
-        function getStatus(kind, dummy) {
-            if (kind === 0)
-                return privateProps.beepStatus
-            if (kind === 1)
-                return privateProps.soundDiffusionStatus
-            return false
-        }
-
-        function setStatus(kind) {
-            if (privateProps.currentChoice === kind)
-                return
-
-            privateProps.dummy = !privateProps.dummy // triggers updates
-            privateProps.beepStatus = false
-            privateProps.soundDiffusionStatus = false
-
-            privateProps.currentChoice = kind
-            page.currentSourceIdx = -1
-            page.currentAmplifierIdx = -1
-            page.currentAmbientIdx = 0
-            if (kind === 0)
-                page.state = ""
-
-            if (kind === 0)
-                privateProps.beepStatus = true
-            if (kind === 1)
-                privateProps.soundDiffusionStatus = true
-
-            paginator.currentPage = 1
+        function setAlarmType(t) {
+            if (t === 0)
+                page.alarmClock.alarmType = AlarmClock.AlarmClockBeep
+            else if (t === 1)
+                page.alarmClock.alarmType = AlarmClock.AlarmClockSoundSystem
         }
 
         function getTypeText(kind) {
@@ -449,6 +391,14 @@ Page {
             if (kind === 1)
                 return qsTr("sound diffusion")
             return " " // a space to avoid zero height text element
+        }
+
+        function getTypeVisible(kind, count) {
+            if (kind === 0)
+                return true
+            if (kind === 1)
+                return count > 0
+            return false
         }
     }
 }
