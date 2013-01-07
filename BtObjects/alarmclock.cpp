@@ -526,17 +526,19 @@ void AlarmClock::soundDiffusionSetVolume()
 
 void AlarmClock::incrementVolume()
 {
-	int desired = getVolume() + 5;
+	int desired = getVolume() + 10;
 	if (desired > 100)
 		desired = 100;
+	desired = desired - desired % 10;
 	setVolume(desired);
 }
 
 void AlarmClock::decrementVolume()
 {
-	int desired = getVolume() - 5;
-	if (desired < 0)
-		desired = 0;
+	int desired = getVolume() - 10;
+	if (desired < 10)
+		desired = 10;
+	desired = desired - desired % 10;
 	setVolume(desired);
 }
 
