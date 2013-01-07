@@ -103,7 +103,6 @@ bool PlayListPlayer::checkLoop()
 		if (loop_time_counter.elapsed() < loop_total_time)
 		{
 			qWarning() << "MediaPlayer: loop detected, force stop";
-			terminate();
 			emit loopDetected();
 
 			return true;
@@ -311,7 +310,18 @@ void AudioVideoPlayer::pause()
 
 void AudioVideoPlayer::resume()
 {
-	media_player->resume();
+	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)
+	{
+		if (!getCurrent().isEmpty())
+		{
+			resetLoopCheck();
+			play();
+		}
+		else
+			qWarning("There is no previous playback to resume");
+	}
+	else
+		media_player->resume();
 }
 
 void AudioVideoPlayer::terminate()
