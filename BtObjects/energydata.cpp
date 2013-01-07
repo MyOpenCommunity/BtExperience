@@ -156,7 +156,7 @@ namespace
 
 	double unitConversionFactor(EnergyData::EnergyType type, QString unit)
 	{
-		if (type == EnergyData::Electricity && unit == "kW")
+		if (type == EnergyData::Electricity && unit.toLower() == "kw")
 			return 1000;
 
 		return 1;
@@ -332,7 +332,7 @@ QString EnergyData::getCurrentUnit() const
 {
 	// it's more correct to do this per-unit rather than per-energy type; for
 	// example heating/cooling can have kW and cal in the configuration
-	if (energy_unit == "kW")
+	if (energy_unit.toLower() == "kw")
 		return energy_unit;
 	else
 		return energy_unit + "/h";
@@ -341,8 +341,8 @@ QString EnergyData::getCurrentUnit() const
 QString EnergyData::getCumulativeUnit() const
 {
 	// see comment in getCurrentUnit()
-	if (energy_unit == "kW")
-		return "kWh";
+	if (energy_unit.toLower() == "kw")
+		return energy_unit + "h";
 	else
 		return energy_unit;
 }
@@ -1087,7 +1087,7 @@ void EnergyData::setThresholds(QVariantList _thresholds)
 	// set to device
 	for (int i = 0; i < 2; ++i)
 		if (thresholds_enabled[i].toBool())
-			dev->setThresholdValue(i, _thresholds[i].toDouble() * 1000);
+			dev->setThresholdValue(i, _thresholds[i].toDouble() * unit_conversion);
 
 	thresholds = _thresholds;
 	emit thresholdsChanged(thresholds);
