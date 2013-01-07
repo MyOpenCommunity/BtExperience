@@ -25,13 +25,21 @@ Page {
         id: beepModel
     }
 
+    SystemsModel { id: modelIdSoundDiffusionMulti; systemId: Container.IdSoundDiffusionMulti }
+    SystemsModel { id: modelIdSoundDiffusionMono; systemId: Container.IdSoundDiffusionMono }
+
+    ObjectModel {
+        id: soundDiffusionModel
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+        containers: [modelIdSoundDiffusionMulti.systemUii, modelIdSoundDiffusionMono.systemUii]
+    }
+
     ObjectModel {
         id: sourceModel
         filters: [
             {objectId: ObjectInterface.IdSoundSource}
         ]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-        containers: [Container.IdSoundDiffusionMulti, Container.IdSoundDiffusionMono]
     }
 
     ObjectModel {
@@ -120,7 +128,7 @@ Page {
                 text: privateProps.getTypeText(index)
                 onClicked: privateProps.setAlarmType(index)
                 status: index === page.alarmClock.alarmType
-                visible: privateProps.getTypeVisible(index, sourceModel.count)
+                visible: privateProps.getTypeVisible(index, soundDiffusionModel.count)
             }
         }
     }
@@ -128,7 +136,7 @@ Page {
     UbuntuLightText {
         id: volumeText
         text: qsTr("Volume")
-        visible: sourceModel.count > 0
+        visible: soundDiffusionModel.count > 0
         font.pixelSize: 14
         color: "white"
         anchors {
@@ -142,7 +150,7 @@ Page {
     ControlSpin {
         id: volumeSpin
         text: page.alarmClock.volume + qsTr("%")
-        visible: sourceModel.count > 0
+        visible: soundDiffusionModel.count > 0
         anchors {
             left: bg.left
             leftMargin: bg.width / 100 * 3.92
@@ -157,7 +165,7 @@ Page {
     UbuntuLightText {
         id: sourceText
         text: page.alarmClock.alarmType === AlarmClock.AlarmClockBeep ? "" : qsTr("Select a source:")
-        visible: sourceModel.count > 0
+        visible: soundDiffusionModel.count > 0
         font.pixelSize: 14
         color: "white"
         anchors {
@@ -172,7 +180,7 @@ Page {
         id: leftAmbient
 
         visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
-                 sourceModel.count > 0
+                 soundDiffusionModel.count > 0
         opacity: 0
         defaultImageBg: "images/common/button_pager.svg"
         pressedImageBg: "images/common/button_pager_press.svg"
@@ -192,7 +200,7 @@ Page {
         id: ambientText
 
         visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
-                 sourceModel.count > 0
+                 soundDiffusionModel.count > 0
         opacity: 0
         text: page.alarmClock.ambient ? page.alarmClock.ambient.name : ""
         horizontalAlignment: Text.AlignHCenter
@@ -210,7 +218,7 @@ Page {
         id: rightAmbient
 
         visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
-                 sourceModel.count > 0
+                 soundDiffusionModel.count > 0
         opacity: 0
         defaultImageBg: "images/common/button_pager.svg"
         pressedImageBg: "images/common/button_pager_press.svg"
@@ -229,6 +237,7 @@ Page {
     PaginatorOnBackground {
         id: paginator
 
+        visible: soundDiffusionModel.count > 0
         elementsOnPage: 7
         buttonVisible: false
         spacing: 5
@@ -269,7 +278,7 @@ Page {
         id: pageChanger
 
         visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
-                 sourceModel.count > 0
+                 soundDiffusionModel.count > 0
         defaultImage: "images/common/alarm_clock/freccia_dx.svg"
         pressedImage: "images/common/freccia_dx_P.svg"
         anchors {
