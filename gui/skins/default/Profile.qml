@@ -110,6 +110,9 @@ Page {
             case MediaLink.Camera:
                 component = cameraItemComponent
                 break
+            case MediaLink.Scenario:
+                component = scenarioItemComponent
+                break
             case MediaLink.WebRadio:
                 component = webRadioItemComponent
                 break
@@ -213,6 +216,11 @@ Page {
     Component {
         id: cameraItemComponent
         CameraLink { }
+    }
+
+    Component {
+        id: scenarioItemComponent
+        ScenarioLink { }
     }
 
     Component {

@@ -19,6 +19,13 @@ namespace
 			oid == ObjectInterface::IdSwitchboard)
 			return ObjectLink::Camera;
 
+		if (oid == ObjectInterface::IdSimpleScenario ||
+			oid == ObjectInterface::IdScenarioModule ||
+			oid == ObjectInterface::IdScenarioPlus ||
+			oid == ObjectInterface::IdAdvancedScenario ||
+			oid == ObjectInterface::IdScheduledScenario)
+			return ObjectLink::Scenario;
+
 		return ObjectLink::BtObject;
 	}
 }

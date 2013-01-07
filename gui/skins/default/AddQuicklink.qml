@@ -15,8 +15,10 @@ Page {
     property bool homeCustomization: false
 
     // the following properties are used by delegates
-    property variant actualModel: privateProps.currentChoice === 0 ? camerasModel : quicklinksModel
-    property bool isRemovable: privateProps.currentChoice !== 0
+    property variant actualModel: privateProps.currentChoice === 0 ?
+                                      camerasModel :
+                                      privateProps.currentChoice === 5 ? scenariosModel : quicklinksModel
+    property bool isRemovable: privateProps.currentChoice !== 0 && privateProps.currentChoice !== 5
 
     text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
     source: {
@@ -56,6 +58,18 @@ Page {
         filters: [
             {objectId: ObjectInterface.IdExternalPlace},
             {objectId: ObjectInterface.IdSurveillanceCamera}
+        ]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    ObjectModel {
+        id: scenariosModel
+        filters: [
+            {objectId: ObjectInterface.IdSimpleScenario },
+            {objectId: ObjectInterface.IdScenarioModule },
+            {objectId: ObjectInterface.IdScenarioPlus },
+            {objectId: ObjectInterface.IdAdvancedScenario },
+            {objectId: ObjectInterface.IdScheduledScenario}
         ]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
@@ -283,7 +297,7 @@ Page {
                 property variant itemObject: page.actualModel.getObject(index)
 
                 width: bg.width / 100 * 54.95
-                text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name // address, type (MediaType), position
+                text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name
                 onClicked: page.currentLink = index
                 status: page.currentLink === index
 
@@ -452,6 +466,18 @@ Page {
             AnchorChanges { target: paginator; anchors.top: horizontalSeparator.bottom }
         },
         State {
+            name: "scenarios"
+            when: privateProps.currentChoice === 5
+            PropertyChanges { target: addTextText; opacity: 0 }
+            PropertyChanges { target: linkBgImage; opacity: 0 }
+            PropertyChanges { target: nameBgImage; opacity: 0 }
+            PropertyChanges { target: addButton; opacity: 0 }
+            PropertyChanges { target: horizontalRightSeparator; opacity: 0 }
+            PropertyChanges { target: selectTextText; opacity: 0 }
+            PropertyChanges { target: paginator; elementsOnPage: 9; elementsOnFirstPage: 9 }
+            AnchorChanges { target: paginator; anchors.top: horizontalSeparator.bottom }
+        },
+        State {
             name: "second_page"
             when: paginator.currentPage > 1
             PropertyChanges { target: addTextText; opacity: 0 }
@@ -515,8 +541,7 @@ Page {
                 return Container.IdMultimediaRss
             if (kind === 4)
                 return Container.IdMultimediaRssMeteo
-            if (kind === 5) // scenario
-                return -1 // TODO what is this?
+            // scenario is not managed by media link model
             if (kind === 6)
                 return Container.IdMultimediaWebRadio
             return -1

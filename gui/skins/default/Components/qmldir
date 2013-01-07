@@ -81,6 +81,7 @@ RepetitionMouseArea 1.0 RepetitionMouseArea.qml
 RoomItem 1.0 RoomItem.qml
 RoomView 1.0 RoomView.qml
 RssItem 1.0 RssItem.qml
+ScenarioLink 1.0 ScenarioLink.qml
 ScreenStateHandler 1.0 ScreenStateHandler.qml
 SlideAnimation 1.0 SlideAnimation.qml
 SvgImage 1.0 SvgImage.qml

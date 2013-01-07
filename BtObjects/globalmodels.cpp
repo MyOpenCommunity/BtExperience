@@ -93,7 +93,8 @@ ItemInterface *GlobalModels::createQuicklink(int uii, QString media_type, QStrin
 											 QString address, ObjectInterface *bt_object,
 											 int x, int y, bool is_home_link)
 {
-	if ((QString::compare("camera", media_type, Qt::CaseInsensitive) == 0))
+	if ((QString::compare("camera", media_type, Qt::CaseInsensitive) == 0) ||
+		(QString::compare("scenario", media_type, Qt::CaseInsensitive) == 0))
 	{
 		ObjectLink *result = new ObjectLink(bt_object, x, y, uii);
 		getMediaLinks()->prepend(result);

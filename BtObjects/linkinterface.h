@@ -45,7 +45,8 @@ public:
 		Webcam = 16001,  //!< Webcam link, address is an URL
 		WebRadio = 16000, //!< Web radio link, address is an URL
 		Camera = 3, //!< Video-surveillance camera link
-		BtObject = 4 //!< Generic BtObject link
+		BtObject = 4, //!< Generic BtObject link
+		Scenario = 5 //!< Scenario link
 	};
 
 	LinkInterface(int container_uii, MediaType type, QPoint position);
