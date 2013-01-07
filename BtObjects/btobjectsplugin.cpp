@@ -1242,6 +1242,9 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 			int link_uii = getIntAttribute(link, "uii");
 			MediaLink *l = uii_map.value<MediaLink>(link_uii);
 			ExternalPlace *e = uii_map.value<ExternalPlace>(link_uii);
+			SimpleScenario *ss = uii_map.value<SimpleScenario>(link_uii);
+			ScheduledScenario *hs = uii_map.value<ScheduledScenario>(link_uii);
+			AdvancedScenario *as = uii_map.value<AdvancedScenario>(link_uii);
 			QPoint pos(getIntAttribute(link, "x"), getIntAttribute(link, "y"));
 
 			if (l)
@@ -1249,10 +1252,10 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 				l->setContainerUii(profile_uii);
 				l->setPosition(pos);
 			}
-			else if (e)
+			else if (e || ss || hs || as)
 			{
-				// for surveillance cameras, create a media link object on the fly using
-				// the data from the camera object
+				// for surveillance cameras and scenarios, create a media link
+				// object on the fly using the data from the camera object
 				ObjectLink *o = new ObjectLink(uii_map.value<ObjectInterface>(link_uii), pos.x(), pos.y());
 				o->setContainerUii(profile_uii);
 				media_link_model << o;

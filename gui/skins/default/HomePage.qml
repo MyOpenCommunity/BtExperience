@@ -75,6 +75,11 @@ BasePage {
         }
 
         Component {
+            id: scenarioDelegate
+            ScenarioLink {}
+        }
+
+        Component {
             id: webDelegate
             FavoriteItem {
                 onClicked: mainarea.processLaunched(global.browser)
@@ -107,9 +112,12 @@ BasePage {
                     case LinkInterface.Camera:
                         return cameraDelegate
                     case LinkInterface.Web:
+                    case MediaLink.Webcam:
                         return webDelegate
                     case LinkInterface.WebRadio:
                         return webRadioDelegate
+                    case MediaLink.Scenario:
+                        return scenarioDelegate
                     default:
                         return rssDelegate
                     }
