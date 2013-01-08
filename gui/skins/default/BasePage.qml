@@ -158,7 +158,7 @@ Image {
     SvgImage {
         id: loadingIndicator
 
-        source: "images/common/ico_caricamento.svg"
+        source: "images/common/ico_caricamento_white.svg"
         anchors.centerIn: blackBg
         visible: false
         z: blackBg.z + 1
