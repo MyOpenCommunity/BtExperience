@@ -15,6 +15,31 @@ Page {
         Stack.backToSystemOrHome()
     }
 
+    // this function is used externally when clicking on confirm for threshold
+    // and we need to open the day graph
+    function setComponentOnGraphLoader() {
+        if (page.state === "year") {
+            // Change the energy graph/table is an operation that ideally
+            // should be put inside the state change, but in this way
+            // (because is a very slow operation) the user experience
+            // is better because the ui does not appears blocked.
+            graphLoader.setComponent(privateProps.showTable ? energyYearTableComponent : energyYearGraphComponent)
+            dateSelector.selectedDate = new Date()
+        }
+        else if (page.state === "day") {
+            // Change the energy graph is an operation that ideally
+            // should be put inside the state change, but in this way
+            // (because is a very slow operation) the user experience
+            // is better because the ui does not appears blocked.
+            graphLoader.setComponent(privateProps.showTable ? energyDayTableComponent : energyDayGraphComponent)
+            dateSelector.selectedDate = new Date()
+        }
+        else {
+            graphLoader.setComponent(privateProps.showTable ? energyMonthTableComponent : energyMonthGraphComponent)
+            dateSelector.selectedDate = new Date()
+        }
+    }
+
     showSystemsButton: true
     text: qsTr("energy consumption")
     source: "images/background/energy.jpg"
@@ -95,12 +120,7 @@ Page {
                             return
 
                         page.state = "day"
-                        // Change the energy graph is an operation that ideally
-                        // should be put inside the state change, but in this way
-                        // (because is a very slow operation) the user experience
-                        // is better because the ui does not appears blocked.
-                        graphLoader.setComponent(privateProps.showTable ? energyDayTableComponent : energyDayGraphComponent)
-                        dateSelector.selectedDate = new Date()
+                        setComponentOnGraphLoader()
                     }
                 }
 
@@ -118,8 +138,7 @@ Page {
                             return
 
                         page.state = ""
-                        graphLoader.setComponent(privateProps.showTable ? energyMonthTableComponent : energyMonthGraphComponent)
-                        dateSelector.selectedDate = new Date()
+                        setComponentOnGraphLoader()
                     }
                 }
                 ButtonThreeStates {
@@ -136,12 +155,7 @@ Page {
                             return
 
                         page.state = "year"
-                        // Change the energy graph/table is an operation that ideally
-                        // should be put inside the state change, but in this way
-                        // (because is a very slow operation) the user experience
-                        // is better because the ui does not appears blocked.
-                        graphLoader.setComponent(privateProps.showTable ? energyYearTableComponent : energyYearGraphComponent)
-                        dateSelector.selectedDate = new Date()
+                        setComponentOnGraphLoader()
                     }
                 }
             }
@@ -264,7 +278,7 @@ Page {
                 }
 
                 duration: 200
-                Component.onCompleted: setComponent(energyMonthGraphComponent)
+                Component.onCompleted: if (page.state === "") setComponent(energyMonthGraphComponent)
             }
 
             Component {

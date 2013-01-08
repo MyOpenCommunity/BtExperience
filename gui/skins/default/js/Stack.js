@@ -80,6 +80,8 @@ function pushPageBelow(filename, properties) {
 
     // see comment above
     changing_page = false
+
+    return new_page
 }
 
 // Find the given page on the stack and return a reference to it, or null if not

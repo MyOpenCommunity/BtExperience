@@ -84,11 +84,11 @@ BasePage {
     }
 
     function addThresholdExceededPopup(energyDevice) {
-        privateProps.update(PopupLogic.addThresholdExceededPopup(energyDevice.name, energyDevice.thresholdLevel))
+        privateProps.update(PopupLogic.addThresholdExceededPopup(energyDevice))
     }
 
     function addGoalReachedPopup(energyDevice) {
-        privateProps.update(PopupLogic.addGoalReachedPopup(energyDevice.name, energyDevice.goalLevel))
+        privateProps.update(PopupLogic.addGoalReachedPopup(energyDevice))
     }
 
     function addMonthlyReportNotification() {
@@ -127,11 +127,11 @@ BasePage {
             }
 
             if (data === "Antintrusion") {
-                Stack.goToPage("Antintrusion.qml", {"navigationTarget": Navigation.ALARM_LOG})
+                Stack.goToPage("Antintrusion.qml", {navigationTarget: Navigation.ALARM_LOG})
             }
 
             if (data === "Supervision") {
-                Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
+                Stack.goToPage("EnergyManagement.qml", {navigationTarget: Navigation.SUPERVISION})
             }
 
             if (data === "Messages") {
@@ -140,6 +140,18 @@ BasePage {
 
             if (data === "GlobalView") {
                 Stack.goToPage("EnergyGlobalView.qml")
+            }
+
+            if (data[0] === "ThresholdExceeded") {
+                Stack.pushPageBelow("EnergyDataGraph.qml", {energyData: data[1], state: "day"}).setComponentOnGraphLoader()
+                closePopup()
+                return
+            }
+
+            if (data[0] === "GoalReached") {
+                Stack.pushPageBelow("EnergyDataGraph.qml", {energyData: data[1]})
+                closePopup()
+                return
             }
         }
 

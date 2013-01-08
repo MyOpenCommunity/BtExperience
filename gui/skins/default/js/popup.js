@@ -149,14 +149,16 @@ function addScenarioActivationPopup(descr) {
   * descr: line name/description
   * level: number of levels exceeded
   */
-function addThresholdExceededPopup(descr, level) {
+function addThresholdExceededPopup(device) {
     var data = []
 
-    data["_kind"] = "threshold_goal"
+    data["_kind"] = "threshold_exceeded"
+    data["_device"] = device // saved for later use
+
     data["title"] = qsTr("ENERGY MANAGEMENT")
 
-    data["line1"] = descr
-    data["line2"] = qsTr("Threshold %n exceeded", "", level)
+    data["line1"] = device.name
+    data["line2"] = qsTr("Threshold %n exceeded", "", device.thresholdLevel)
     data["line3"] = ""
 
     data["confirmText"] = qsTr("Show")
@@ -176,13 +178,15 @@ function addThresholdExceededPopup(descr, level) {
   * descr: line name/description
   * level: number of levels exceeded
   */
-function addGoalReachedPopup(descr, level) {
+function addGoalReachedPopup(device) {
     var data = []
 
-    data["_kind"] = "threshold_goal"
+    data["_kind"] = "goal_reached"
+    data["_device"] = device // saved for later use
+
     data["title"] = qsTr("ENERGY MANAGEMENT")
 
-    data["line1"] = descr
+    data["line1"] = device.name
     data["line2"] = qsTr("Monthly goal reached")
     data["line3"] = ""
 
@@ -281,8 +285,12 @@ function confirm() {
         return "Supervision"
     }
 
-    if (p["_kind"] === "threshold_goal") {
-        return "GlobalView"
+    if (p["_kind"] === "threshold_exceeded") {
+        return ["ThresholdExceeded", p["_device"]]
+    }
+
+    if (p["_kind"] === "goal_reached") {
+        return ["GoalReached", p["_device"]]
     }
 
     if (p["_kind"] === "report") {
