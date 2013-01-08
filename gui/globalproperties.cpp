@@ -431,9 +431,17 @@ QString GlobalProperties::saveInCustomDirIfNeeded(QString filename, QString new_
 
 	QImage image = QImage(filename);
 	if (size.isValid())
-		image = image.scaled(size);
+		image = image.scaled(size, Qt::KeepAspectRatio);
 
-	image.save(result);
+	QImage destImage = QImage(size, image.format());
+	destImage.fill(Qt::black);
+	QPoint destPos = QPoint((destImage.width() - image.width()) / 2, (destImage.height() - image.height()) / 2);
+
+	QPainter painter(&destImage);
+	painter.drawImage(destPos, image);
+	painter.end();
+
+	destImage.save(result);
 
 	return result;
 }
