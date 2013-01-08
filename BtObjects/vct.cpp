@@ -439,6 +439,8 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			qDebug() << "Received ANSWER_CALL";
 			if (!callActive()) // ignore
 				break;
+			// for the case when we received a STOP_VIDEO frame from the camera
+			startVideo();
 			emit callAnswered();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
