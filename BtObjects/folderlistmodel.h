@@ -274,9 +274,11 @@ protected slots:
 
 private slots:
 	void gotFileList(EntryInfoList list);
+	void changeRootDirectory();
 
 private:
 	void requestFirstPage();
+	void resetInternalState();
 
 	PagedTreeBrowser *browser;
 

@@ -358,6 +358,7 @@ PagedFolderListModel::PagedFolderListModel(PagedTreeBrowser *_browser, QObject *
 	connect(browser, SIGNAL(listReceived(EntryInfoList)), this, SLOT(gotFileList(EntryInfoList)));
 
 	connect(browser, SIGNAL(listRetrieveError()), this, SLOT(resetLoadingFlag()));
+	connect(browser, SIGNAL(rootDirectoryEntered()), this, SLOT(changeRootDirectory()));
 }
 
 void PagedFolderListModel::setLoadingIfAsynchronous()
@@ -383,14 +384,10 @@ void PagedFolderListModel::requestFirstPage()
 	// ignore the result of the current operation, if in progress
 	discard_pending = pending_operation;
 
-	// prepare the item list cache
-	clearList(item_list);
-	for (int i = min_range; i < max_range; ++i)
-		item_list.append(new FileObject(this));
+	resetInternalState();
 
 	// if no pending operation, request the first page, otherwise wait for
 	// the current operation to complete
-	start_index = current_index = min_range;
 	if (!pending_operation)
 	{
 		browser->getFileList(current_index + 1);
@@ -398,6 +395,16 @@ void PagedFolderListModel::requestFirstPage()
 	}
 
 	reset();
+}
+
+void PagedFolderListModel::resetInternalState()
+{
+	// prepare the item list cache
+	clearList(item_list);
+	for (int i = min_range; i < max_range; ++i)
+		item_list.append(new FileObject(this));
+
+	start_index = current_index = min_range;
 }
 
 void PagedFolderListModel::setRange(QVariantList range)
@@ -507,6 +514,11 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 	}
 
 	discard_pending = false;
+}
+
+void PagedFolderListModel::changeRootDirectory()
+{
+	resetInternalState();
 }
 
 
