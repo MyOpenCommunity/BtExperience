@@ -56,11 +56,30 @@ BasePage {
                     top: parent.top
                     horizontalCenter: parent.horizontalCenter
                 }
+                onHidingBarClicked: {
+                    if (hidingBar.state === "hidden")
+                        hidingBar.state = "visible"
+                    else
+                        hidingBar.state = "hidden"
+                    updateImages(hidingBar.state)
+                }
+            }
+
+            HidingBar {
+                id: hidingBar
+                state: "hidden"
+                anchors {
+                    top: header.bottom
+                    left: header.left
+                    right: header.right
+                }
+                onZoomInClicked: zoomPercentage = (100.0 * webView.zoom(0.1)).toFixed(0)
+                onZoomOutClicked: zoomPercentage = (100.0 * webView.zoom(-0.1)).toFixed(0)
             }
 
             Pannable {
                 id: webViewContaineer
-                anchors.top: header.bottom
+                anchors.top: hidingBar.bottom
                 anchors.bottom: parent.bottom
                 width: parent.width
 

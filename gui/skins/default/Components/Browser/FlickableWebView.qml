@@ -58,6 +58,10 @@ Flickable {
     contentHeight: Math.max(parent.height,webView.height)
     pressDelay: 200
 
+    function zoom(delta) {
+        return webView.changeZoom(delta)
+    }
+
     onWidthChanged : {
         // Expand (but not above 1:1) if otherwise would be smaller that available width.
         if (width > webView.width*webView.contentsScale && webView.contentsScale < 1.0)
@@ -111,8 +115,18 @@ Flickable {
             }
         }
 
-        Keys.onLeftPressed: webView.contentsScale -= 0.1
-        Keys.onRightPressed: webView.contentsScale += 0.1
+        Keys.onLeftPressed: changeZoom(-0.1)
+        Keys.onRightPressed: changeZoom(0.1)
+
+        function changeZoom(delta) {
+            if (webView.contentsScale + delta < 1.0)
+                return webView.contentsScale
+            if (webView.contentsScale + delta > 10.0)
+                return webView.contentsScale
+
+            webView.contentsScale += delta
+            return webView.contentsScale
+        }
 
         preferredWidth: flickable.width
         preferredHeight: flickable.height
@@ -127,14 +141,6 @@ Flickable {
             flickable.contentY = 0
             if (url !== null) { header.editUrl = url.toString(); }
         }
-        onDoubleClick: {
-                        if (!heuristicZoom(clickX,clickY,2.5)) {
-                            var zf = flickable.width / contentsSize.width
-                            if (zf >= contentsScale)
-                                zf = 2.0*contentsScale // zoom in (else zooming out)
-                            doZoom(zf,clickX*zf,clickY*zf)
-                         }
-                       }
 
         SequentialAnimation {
             id: quickZoom
