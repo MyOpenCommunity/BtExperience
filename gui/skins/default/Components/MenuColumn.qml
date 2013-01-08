@@ -105,12 +105,12 @@ Item {
 
     Behavior on x {
         enabled: column.enableAnimation
-        NumberAnimation { id: defaultanimation; duration: constants.elementTransitionDuration; easing.type: Easing.InSine }
+        NumberAnimation { id: defaultanimation; duration: constants.elementTransitionDuration }
     }
 
     Behavior on opacity {
         enabled: column.enableAnimation
-        NumberAnimation { duration: constants.elementTransitionDuration; easing.type: Easing.InSine }
+        NumberAnimation { duration: constants.elementTransitionDuration }
     }
 
     property QtObject dataModel: null
