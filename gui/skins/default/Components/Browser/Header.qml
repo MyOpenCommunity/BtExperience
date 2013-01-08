@@ -153,41 +153,45 @@ SvgImage {
         }
     }
 
-    ButtonImageThreeStates {
+    Item {
         id: closeBrowser
-
-        defaultImageBg: "../../images/common/btn_45x35.svg"
-        pressedImageBg: "../../images/common/btn_45x35_P.svg"
-        shadowImage: "../../images/common/btn_shadow_45x35.svg"
-        defaultImage: "../../images/common/ico_elimina.svg"
-        //pressedImage: "../../images/common/ico_elimina.svg"
-        visible: true
+        width: 45
+        height: 35
         anchors {
             top: bgText.top
             left: actionButton.right
             leftMargin: 10
         }
-        onClicked: {
-            // looks for last visible browser window and hides it
-            // if the to be hidden window is the last one, quits
-            var children = webBrowser.children
-            var windows = 0
-            var ghost = undefined
-            for (var i = 0; i < children.length; ++i) {
-                var child = children[i]
-                if (child._fixedUrlString) // this is a browserItem
-                    if (child.visible) { // last visible one must be hidden
-                        ++windows
-                        ghost = child
-                    }
+
+        SvgImage {
+            anchors.right: parent.right
+            source: "../../images/profile-settings/icon_delete.svg"
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                // looks for last visible browser window and hides it
+                // if the to be hidden window is the last one, quits
+                var children = webBrowser.children
+                var windows = 0
+                var ghost = undefined
+                for (var i = 0; i < children.length; ++i) {
+                    var child = children[i]
+                    if (child._fixedUrlString) // this is a browserItem
+                        if (child.visible) { // last visible one must be hidden
+                            ++windows
+                            ghost = child
+                        }
+                }
+                if (windows <= 1) // last window
+                    global.quit()
+                else
+                    // the popup object is created with C++ ownership, hence there is no way
+                    // to destroy it from QML; calling deleteLater() from C++ appears to be the
+                    // correct way to free the object
+                    global.destroyQmlItem(ghost)
             }
-            if (windows <= 1) // last window
-                global.quit()
-            else
-                // the popup object is created with C++ ownership, hence there is no way
-                // to destroy it from QML; calling deleteLater() from C++ appears to be the
-                // correct way to free the object
-                global.destroyQmlItem(ghost)
         }
     }
 
