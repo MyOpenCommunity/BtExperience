@@ -75,25 +75,6 @@ Item {
                 id: animation
                 NumberAnimation { id: defaultanimation; duration: constants.elementTransitionDuration }
             }
-
-            Rectangle {
-                id: line
-                color: "#f27021"
-                height: 2
-                width: 0
-                y: 0
-                property bool enableAnimation: true
-
-                Behavior on width {
-                    enabled: line.enableAnimation
-                    NumberAnimation { duration: constants.lineTransitionDuration }
-                }
-
-                Behavior on x {
-                    enabled: line.enableAnimation
-                    NumberAnimation { duration: constants.lineTransitionDuration }
-                }
-            }
         }
 
         MouseArea {

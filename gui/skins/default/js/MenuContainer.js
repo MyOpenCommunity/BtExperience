@@ -26,7 +26,7 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     properties["menuLevel"] = menuLevel + 1
     properties["parent"] = elementsContainer
     properties["opacity"] = 0
-    properties["y"] = titleObj.height
+    properties["y"] = titleObj.height + 2 // a little space
     properties["dataModel"] = dataModel
     properties["pageObject"] = pageObject
 
@@ -248,7 +248,6 @@ function _openItem() {
         elementsContainer.width += item.width - horizontalOverlap
 
         var last_item = stackObjects[stackObjects.length - 1]['item']
-        hideLine(last_item, RIGHT_TO_LEFT)
 
         title.opacity = 1
         item.opacity = 1
@@ -265,7 +264,6 @@ function _doOpenItem() {
         return
 
     debugMsg('_doOpenItem')
-    showLine(item, RIGHT_TO_LEFT)
     var title = pendingOperations[0]['title']
     var shadow = pendingOperations[0]['shadow']
 
@@ -289,36 +287,10 @@ function _doOpenItem() {
     mainContainer.loadNextColumn() // see navigation.js for further details
 }
 
-var RIGHT_TO_LEFT = 1
-var LEFT_TO_RIGHT = 2
-
-function hideLine(item, direction) {
-    line.width = 0
-    if (direction === RIGHT_TO_LEFT)
-        line.x = item.x
-    else
-        line.x = item.x + item.width
-}
-
-function showLine(item, direction) {
-    line.enableAnimation = false
-    line.y = item.y - (line.height + 2) // 2 is a little space
-    line.width = 0
-    if (direction === RIGHT_TO_LEFT)
-        line.x = item.x + item.width
-    else
-        line.x = item.x
-
-    line.enableAnimation = true
-    line.width = item.width
-    line.x = item.x
-}
-
 function _closeItem() {
     debugMsg("_closeItem")
     var item = stackObjects[stackObjects.length - 1]['item']
     var title = stackObjects[stackObjects.length - 1]['title']
-    hideLine(item, LEFT_TO_RIGHT)
     item.animationRunningChanged.connect(_doCloseItem)
     if (stackObjects.length > 1) {
         item.x = stackObjects[stackObjects.length - 2]['item'].x
@@ -346,7 +318,6 @@ function _doCloseItem() {
         last_item.childDestroyed()
 
     mainContainer.currentObject = last_item
-    showLine(last_item, LEFT_TO_RIGHT)
     pendingOperations.shift()
     processOperations()
 }
