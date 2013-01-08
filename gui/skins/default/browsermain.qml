@@ -63,6 +63,7 @@ BasePage {
                         hidingBar.state = "hidden"
                     updateImages(hidingBar.state)
                 }
+                onUrlEntered: global.url = url
             }
 
             HidingBar {

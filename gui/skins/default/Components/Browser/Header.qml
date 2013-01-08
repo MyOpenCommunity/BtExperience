@@ -15,6 +15,7 @@ SvgImage {
     property variant browser
 
     signal hidingBarClicked
+    signal urlEntered(string url)
 
     function updateImages(s) {
         if (s === "hidden") {
@@ -199,9 +200,9 @@ SvgImage {
             right: loadingIndicator.visible ? loadingIndicator.left : bgText.right
         }
         onUrlEntered: {
-            browser.urlString = url
             browser.focus = true
             control.urlChanged = false
+            control.urlEntered(url)
         }
         onUrlChanged: control.urlChanged = true
     }
