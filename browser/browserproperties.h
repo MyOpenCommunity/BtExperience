@@ -48,6 +48,7 @@ private slots:
 	void readInput();
 
 private:
+	void setVisible(bool visible);
 	void parseLine(QString line);
 
 	bool clicks_blocked;

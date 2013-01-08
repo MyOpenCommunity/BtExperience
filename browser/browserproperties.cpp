@@ -52,10 +52,25 @@ void BrowserProperties::addSecurityException()
 	access_manager->addSecurityException();
 }
 
+void BrowserProperties::setVisible(bool visible)
+{
+	if (visible)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
+		main_widget->show();
+#else
+		main_widget->showFullScreen();
+#endif
+	else
+		main_widget->hide();
+
+	printf("visible: %d\n", int(visible));
+}
+
 void BrowserProperties::quit()
 {
+	setUrl("");
 	printf("about_to_hide\n");
-	qApp->quit();
+	setVisible(false);
 }
 
 void BrowserProperties::updateClick()
@@ -111,16 +126,7 @@ void BrowserProperties::parseLine(QString line)
 	{
 		bool visible = line.split(" ")[1].toInt();
 
-		if (visible)
-#if defined(Q_WS_X11) || defined(Q_WS_MAC)
-			main_widget->show();
-#else
-			main_widget->showFullScreen();
-#endif
-		else
-			main_widget->hide();
-
-		printf("visible: %d\n", int(visible));
+		setVisible(visible);
 	}
 	else if (line.startsWith("set_clicks_blocked "))
 	{
