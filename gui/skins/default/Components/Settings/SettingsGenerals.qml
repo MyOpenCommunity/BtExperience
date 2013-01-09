@@ -1,5 +1,7 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
+
 
 MenuColumn {
     id: column
@@ -9,6 +11,12 @@ MenuColumn {
 
     onChildDestroyed: {
         itemList.currentIndex = -1
+    }
+
+    // object model to retrieve network data
+    ObjectModel {
+        id: objectModel
+        filters: [{objectId: ObjectInterface.IdPlatformSettings}]
     }
 
     QtObject {
@@ -27,6 +35,13 @@ MenuColumn {
                     return qsTr("Enabled")
                 else
                     return qsTr("Disabled")
+            }
+
+            if (item === qsTr("Network")) {
+                if (objectModel.getObject(0).connectionStatus === PlatformSettings.Down)
+                    return qsTr("Disconnected")
+                else
+                    return qsTr("Connected")
             }
 
             return ""

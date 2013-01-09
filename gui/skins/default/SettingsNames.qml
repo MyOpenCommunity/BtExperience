@@ -8,7 +8,7 @@ QtObject {
     function _init(container) {
         container['CONFIG'] = []
         container['CONFIG'][PlatformSettings.Dhcp] = qsTr("DHCP")
-        container['CONFIG'][PlatformSettings.Static] = qsTr("static IP address")
+        container['CONFIG'][PlatformSettings.Static] = qsTr("Static IP address")
 
         container['STATE'] = []
         container['STATE'][PlatformSettings.Enabled] = qsTr("Connect")
