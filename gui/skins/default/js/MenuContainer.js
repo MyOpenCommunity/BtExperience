@@ -123,6 +123,14 @@ function _addItem(item, title, shadow) {
     debugMsg("_addItem level: " + item.menuLevel)
     for (var i = stackObjects.length - 1; i >= item.menuLevel; i--) {
         pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': false})
+        // Here we must remember to update the UI once in a while to avoid that
+        // the menus are closed behind the clipping container.
+        // Example: enter the energy goal settings, then click on the alarm
+        // clock in the toolbar
+        //
+        // Heuristic: only update the UI every 2 closed menus
+        if (i & 0x01)
+            pendingOperations.push({'id': OP_UPDATE_UI})
     }
 
     pendingOperations.push({'id': OP_UPDATE_UI, 'newItem': item})
