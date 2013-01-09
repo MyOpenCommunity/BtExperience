@@ -11,6 +11,28 @@ MenuColumn {
         itemList.currentIndex = -1
     }
 
+    QtObject {
+        id: privateProps
+
+        function description(item) {
+            if (item === qsTr("Password")) {
+                if (global.passwordEnabled)
+                    return qsTr("Enabled")
+                else
+                    return qsTr("Disabled")
+            }
+
+            if (item === qsTr("Beep")) {
+                if (global.guiSettings.beep)
+                    return qsTr("Enabled")
+                else
+                    return qsTr("Disabled")
+            }
+
+            return ""
+        }
+    }
+
     ListView {
         id: itemList
         anchors.fill: parent
@@ -19,9 +41,7 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             name: model.name
-            description: model.name === qsTr("Password")
-                         ? (global.passwordEnabled ? qsTr("Enabled") : qsTr("Disabled"))
-                         : ""
+            description: privateProps.description(model.name)
             hasChild: model.component !== undefined
                       && model.component !== null
 
