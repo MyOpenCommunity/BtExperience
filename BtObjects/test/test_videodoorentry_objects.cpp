@@ -246,25 +246,40 @@ void TestVideoDoorEntry::testRingtone()
 	DeviceValues v;
 	ObjectTester t(intercom, SIGNAL(ringtoneChanged()));
 	ObjectTester tfc(intercom, SIGNAL(floorRingtoneReceived()));
+	ObjectTester trr(intercom, SIGNAL(ringtoneReceived()));
 
 	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::FLOORCALL;
 	intercom->valueReceived(v);
 	t.checkSignals();
 	tfc.checkSignals();
+	trr.checkNoSignals();
 	QCOMPARE(intercom->getRingtone(), Intercom::Floorcall);
 
 	intercom->valueReceived(v);
 	t.checkNoSignals();
+	tfc.checkSignals();
+	trr.checkNoSignals();
 	QCOMPARE(intercom->getRingtone(), Intercom::Floorcall);
 
 	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PI_INTERCOM;
 	intercom->valueReceived(v);
 	t.checkSignals();
+	tfc.checkNoSignals();
+	trr.checkSignals();
 	QCOMPARE(intercom->getRingtone(), Intercom::Internal);
 
 	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE_INTERCOM;
 	intercom->valueReceived(v);
 	t.checkSignals();
+	tfc.checkNoSignals();
+	trr.checkSignals();
+	QCOMPARE(intercom->getRingtone(), Intercom::External);
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE3;
+	intercom->valueReceived(v);
+	t.checkNoSignals();
+	tfc.checkNoSignals();
+	trr.checkNoSignals();
 	QCOMPARE(intercom->getRingtone(), Intercom::External);
 }
 
@@ -504,29 +519,47 @@ void TestVideoDoorEntry::testCCTVRingtone()
 {
 	DeviceValues v;
 	ObjectTester t(cctv, SIGNAL(ringtoneChanged()));
+	ObjectTester trr(cctv, SIGNAL(ringtoneReceived()));
 
 	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE4;
 	cctv->valueReceived(v);
 	t.checkSignals();
+	trr.checkSignals();
 	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace4);
 
 	cctv->valueReceived(v);
 	t.checkNoSignals();
+	trr.checkSignals();
 	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace4);
 
 	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE1;
 	cctv->valueReceived(v);
 	t.checkSignals();
+	trr.checkSignals();
 	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace1);
 
 	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE2;
 	cctv->valueReceived(v);
 	t.checkSignals();
+	trr.checkSignals();
 	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace2);
 
 	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PE3;
 	cctv->valueReceived(v);
 	t.checkSignals();
+	trr.checkSignals();
+	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace3);
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::PI_INTERCOM;
+	cctv->valueReceived(v);
+	t.checkNoSignals();
+	trr.checkNoSignals();
+	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace3);
+
+	v[VideoDoorEntryDevice::RINGTONE] = VideoDoorEntryDevice::FLOORCALL;
+	cctv->valueReceived(v);
+	t.checkNoSignals();
+	trr.checkNoSignals();
 	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace3);
 }
 

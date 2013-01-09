@@ -372,7 +372,7 @@ void CCTV::setRingtone(int vde_ringtone)
 		new_ringtone = ExternalPlace4;
 		break;
 	default:
-		break;
+		return;
 	}
 
 	if (new_ringtone != ringtone)
@@ -380,6 +380,7 @@ void CCTV::setRingtone(int vde_ringtone)
 		ringtone = new_ringtone;
 		emit ringtoneChanged();
 	}
+	emit ringtoneReceived();
 }
 
 void CCTV::valueReceived(const DeviceValues &values_list)
@@ -439,6 +440,8 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			qDebug() << "Received ANSWER_CALL";
 			if (!callActive()) // ignore
 				break;
+			// for the case when we received a STOP_VIDEO frame from the camera
+			startVideo();
 			emit callAnswered();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
@@ -452,7 +455,6 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::RINGTONE:
 			qDebug() << "Received VideoDoorEntryDevice::RINGTONE" << *it;
 			setRingtone(it.value().toInt());
-			emit ringtoneReceived();
 			break;
 		default:
 			qDebug() << "CCTV::valueReceived, unhandled value" << it.key() << *it;
@@ -582,7 +584,7 @@ void Intercom::setRingtone(int vde_ringtone)
 		new_ringtone = Floorcall;
 		break;
 	default:
-		break;
+		return;
 	}
 
 	if (new_ringtone != ringtone)
@@ -590,6 +592,11 @@ void Intercom::setRingtone(int vde_ringtone)
 		ringtone = new_ringtone;
 		emit ringtoneChanged();
 	}
+
+	if (VideoDoorEntryDevice::FLOORCALL == vde_ringtone)
+		emit floorRingtoneReceived();
+	else
+		emit ringtoneReceived();
 }
 
 void Intercom::valueReceived(const DeviceValues &values_list)
@@ -649,12 +656,7 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::RINGTONE:
 		{
 			qDebug() << "Received VideoDoorEntryDevice::RINGTONE" << *it;
-			int rt = it.value().toInt();
-			setRingtone(rt);
-			if (VideoDoorEntryDevice::FLOORCALL == rt)
-				emit floorRingtoneReceived();
-			else
-				emit ringtoneReceived();
+			setRingtone(it.value().toInt());
 			break;
 		}
 		default:
