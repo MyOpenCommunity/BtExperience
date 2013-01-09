@@ -26,16 +26,10 @@ function description(itemObject) {
     switch (itemObject.objectId) {
     case ObjectInterface.IdThermalControlledProbe:
     case ObjectInterface.IdThermalControlledProbeFancoil:
-        var localProbeStatus = itemObject.localProbeStatus
         var probeStatus = itemObject.probeStatus
-
         // show 'protection' or 'off'
-        if (localProbeStatus === ThermalControlledProbe.Antifreeze ||
-                localProbeStatus === ThermalControlledProbe.Off) {
-            return pageObject.names.get('PROBE_STATUS', localProbeStatus)
-        }
-        else if (probeStatus === ThermalControlledProbe.Antifreeze ||
-                 probeStatus === ThermalControlledProbe.Off) {
+        if (probeStatus === ThermalControlledProbe.Antifreeze ||
+            probeStatus === ThermalControlledProbe.Off) {
             return pageObject.names.get('PROBE_STATUS', probeStatus)
         }
 
