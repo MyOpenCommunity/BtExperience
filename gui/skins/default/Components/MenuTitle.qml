@@ -50,5 +50,14 @@ Column {
         enabled: title.enableAnimation
         NumberAnimation { duration: constants.elementTransitionDuration }
     }
+
+    states: [
+        State {
+            name: "selected"
+            when: menuColumn.isLastColumn
+            PropertyChanges { target: background; source: "../images/menu_column/label_column-title_p.svg" }
+            PropertyChanges { target: label; color: "white" }
+        }
+    ]
 }
 

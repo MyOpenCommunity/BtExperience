@@ -70,6 +70,7 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             property bool animationRunning: defaultanimation.running
+            property int currentLevel: -1
 
             Behavior on x {
                 id: animation

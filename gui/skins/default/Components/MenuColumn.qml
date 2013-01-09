@@ -89,6 +89,10 @@ Item {
     // This signal is emitted from the MenuContainer when the child is destroyed
     signal childDestroyed
 
+    // Supreme HACK: we rely on parent being MenuContainer.elementsContainer
+    // TODO: find a better way to fetch currentLevel from MenuContainer
+    property bool isLastColumn: menuLevel === parent.currentLevel
+
     // private stuff
     property int menuLevel: -1
 

@@ -237,6 +237,7 @@ function _openItem() {
     var item = pendingOperations[0]['item']
     var title = pendingOperations[0]['title']
     var shadow = pendingOperations[0]['shadow']
+    elementsContainer.currentLevel++
 
     _setStartProps()
     if (stackObjects.length === 0) {
@@ -309,6 +310,7 @@ function _doCloseItem() {
     if (item.animationRunning)
         return
 
+    elementsContainer.currentLevel--
     elementsContainer.width -= item.width
     item.destroy()
     stackObjects.length -= 1
