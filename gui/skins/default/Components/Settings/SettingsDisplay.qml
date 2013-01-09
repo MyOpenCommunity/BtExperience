@@ -47,5 +47,4 @@ MenuColumn {
         id: contrast
         Contrast {}
     }
-//    }
 }
