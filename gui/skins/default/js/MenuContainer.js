@@ -222,7 +222,6 @@ function _setStartProps() {
     var shadow = pendingOperations[0]['shadow']
 
     item.enableAnimation = false
-    title.enableAnimation = false
 
     if (stackObjects.length === 0) {
         shadow.opacity = 1
@@ -236,7 +235,6 @@ function _setStartProps() {
         title.x = last_item.x
     }
     item.enableAnimation = true
-    title.enableAnimation = true
 }
 
 function _openItem() {

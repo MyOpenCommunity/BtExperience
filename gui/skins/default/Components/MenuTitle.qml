@@ -4,7 +4,7 @@ import Components.Text 1.0
 Column {
     id: title
 
-    property alias menuColumn: conn.target
+    property Item menuColumn: null
     property alias text: label.text
 
     SvgImage {
@@ -32,7 +32,7 @@ Column {
 
     Connections {
         id: conn
-        target: null
+        target: title.menuColumn
         onDestroyed: title.destroy()
     }
 
@@ -40,14 +40,13 @@ Column {
         id: constants
     }
 
-    property bool enableAnimation: true
     Behavior on x {
-        enabled: title.enableAnimation
+        enabled: menuColumn === null ? false : menuColumn.enableAnimation
         NumberAnimation { duration: constants.elementTransitionDuration }
     }
 
     Behavior on opacity {
-        enabled: title.enableAnimation
+        enabled: menuColumn === null ? false : menuColumn.enableAnimation
         NumberAnimation { duration: constants.elementTransitionDuration }
     }
 
