@@ -19,6 +19,9 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             name: model.name
+            description: model.name === qsTr("Password")
+                         ? (global.passwordEnabled ? qsTr("Enabled") : qsTr("Disabled"))
+                         : ""
             hasChild: model.component !== undefined
                       && model.component !== null
 
