@@ -242,7 +242,7 @@ Item {
         // volume (and mute)
         ToolbarButton {
             height: toolbar_top.height
-            visible: global.guiSettings.volumeAlert
+            visible: EventManager.eventManager.playing && global.guiSettings.volumeAlert
             defaultImage: EventManager.eventManager.mute ?
                               (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_source-audio-mute.svg" :
