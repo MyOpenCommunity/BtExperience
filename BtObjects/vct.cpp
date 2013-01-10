@@ -112,6 +112,7 @@ VDEBase::VDEBase(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	volume = 50;
 	mute = false;
 	call_in_progress = false;
+	call_active = false;
 	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
 
 	foreach (ExternalPlace *ep, list)
@@ -160,6 +161,11 @@ bool VDEBase::isIpCall() const
 bool VDEBase::callInProgress()
 {
 	return call_in_progress;
+}
+
+bool VDEBase::callActive()
+{
+	return call_active;
 }
 
 
@@ -442,6 +448,11 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 				break;
 			// for the case when we received a STOP_VIDEO frame from the camera
 			startVideo();
+			if (!call_active)
+			{
+				call_active = true;
+				emit callActiveChanged();
+			}
 			emit callAnswered();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
@@ -503,10 +514,17 @@ void CCTV::activateCall()
 
 void CCTV::disactivateCall()
 {
-	if (!call_in_progress)
-		return;
-	call_in_progress = false;
-	emit callInProgressChanged();
+	if (call_active)
+	{
+		call_active = false;
+		emit callActiveChanged();
+	}
+
+	if (call_in_progress)
+	{
+		call_in_progress = false;
+		emit callInProgressChanged();
+	}
 }
 
 
@@ -645,6 +663,11 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			qDebug() << "Received VideoDoorEntryDevice::ANSWER_CALL: " << *it;
 			if (!callInProgress()) // ignore
 				break;
+			if (!call_active)
+			{
+				call_active = true;
+				emit callActiveChanged();
+			}
 			emit callAnswered();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
@@ -706,6 +729,11 @@ void Intercom::activateCall()
 
 void Intercom::disactivateCall()
 {
+	if (call_active)
+	{
+		call_active = false;
+		emit callActiveChanged();
+	}
 	if (pager_call)
 	{
 		pager_call = false;

@@ -90,6 +90,11 @@ class VDEBase : public ObjectInterface
 	*/
 	Q_PROPERTY(bool callInProgress READ callInProgress NOTIFY callInProgressChanged)
 
+	/*!
+		\brief Whether the active call has been answered or not
+	*/
+	Q_PROPERTY(bool callActive READ callActive NOTIFY callActiveChanged)
+
 public:
 	ObjectDataModel *getExternalPlaces() const;
 
@@ -105,6 +110,7 @@ signals:
 	void muteChanged();
 	void isIpCallChanged();
 	void callInProgressChanged();
+	void callActiveChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list) = 0;
@@ -113,11 +119,12 @@ protected:
 	explicit VDEBase(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
 	bool callInProgress();
+	bool callActive();
 
 	int volume;
 	bool mute;
 	bool ip_mode;
-	bool call_in_progress;
+	bool call_in_progress, call_active;
 	ObjectDataModel external_places;
 	VideoDoorEntryDevice *dev;
 };
