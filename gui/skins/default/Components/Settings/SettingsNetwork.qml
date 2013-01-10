@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import "../../js/logging.js" as Log
 import "../../js/Stack.js" as Stack
+import "../../js/EventManager.js" as EventManager
 import Components 1.0
 
 
@@ -35,6 +36,7 @@ MenuColumn {
 
     function alertOkClicked() {
         privateProps.model.apply()
+        EventManager.eventManager.enableNotifications = false
         Stack.backToHome({state: "pageLoading"})
     }
 
