@@ -128,7 +128,7 @@ function addScenarioActivationPopup(descr) {
     data["_kind"] = "scenario"
     data["title"] = qsTr("SCENARIO")
 
-    data["line1"] = descr + qsTr(": command sent")
+    data["line1"] = qsTr("Command sent")
     data["line2"] = qsTr("activated")
     data["line3"] = ""
 

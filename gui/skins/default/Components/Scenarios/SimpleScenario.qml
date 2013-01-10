@@ -21,7 +21,7 @@ MenuColumn {
     Component {
         id: feedback
         FeedbackPopup {
-            text: column.dataModel.name + qsTr(": command sent")
+            text: qsTr("Command sent")
             isOk: true
         }
     }

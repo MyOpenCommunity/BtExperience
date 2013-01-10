@@ -5,6 +5,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import Components.Popup 1.0
 import BtExperience 1.0
 import "js/Stack.js" as Stack
 import "js/datetime.js" as DateTime
@@ -27,7 +28,7 @@ BasePage {
     }
 
     Component {
-        id: popupComponent
+        id: generalPopupComponent
         ControlPopup {
             id: popupControl
 
@@ -36,11 +37,16 @@ BasePage {
         }
     }
 
+    Component {
+        id: scenarioPopupComponent
+        FeedbackPopup {
+            isOk: true
+        }
+    }
+
     Behavior on opacity {
         NumberAnimation { duration: constants.alertTransitionDuration }
     }
-
-    Component.onCompleted: installPopup(popupComponent)
 
     function updateUnreadMessages(unreadMessages) {
         privateProps.update(PopupLogic.updateUnreadMessages(unreadMessages))
@@ -162,12 +168,21 @@ BasePage {
                 return
             }
 
-            popupLoader.item.title = data.title
-            popupLoader.item.line1 = data.line1
-            popupLoader.item.line2 = data.line2
-            popupLoader.item.line3 = data.line3
-            popupLoader.item.confirmText = data.confirmText
-            popupLoader.item.dismissText = data.dismissText
+            if (data["_kind"] === "scenario") {
+                installPopup(scenarioPopupComponent)
+
+                popupLoader.item.text = data.line1
+            }
+            else {
+                installPopup(generalPopupComponent)
+
+                popupLoader.item.title = data.title
+                popupLoader.item.line1 = data.line1
+                popupLoader.item.line2 = data.line2
+                popupLoader.item.line3 = data.line3
+                popupLoader.item.confirmText = data.confirmText
+                popupLoader.item.dismissText = data.dismissText
+            }
 
             if (data["_kind"] === "scenario")
                 dismissTimer.start()
