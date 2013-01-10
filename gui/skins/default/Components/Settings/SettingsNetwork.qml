@@ -1,6 +1,8 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import "../../js/logging.js" as Log
+import "../../js/Stack.js" as Stack
+import "../../js/EventManager.js" as EventManager
 import Components 1.0
 
 
@@ -34,7 +36,8 @@ MenuColumn {
 
     function alertOkClicked() {
         privateProps.model.apply()
-        column.closeColumn()
+        EventManager.eventManager.enableNotifications = false
+        Stack.backToHome({state: "pageLoading"})
     }
 
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
@@ -142,7 +145,7 @@ MenuColumn {
             }
             ButtonOkCancel {
                 onOkClicked: {
-                    pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
+                    pageObject.showAlert(column, pageObject.names.get('REBOOT', 0))
                 }
                 onCancelClicked: {
                     privateProps.model.reset()
@@ -203,7 +206,7 @@ MenuColumn {
                 ButtonOkCancel {
                     onOkClicked: {
                         focus = true // to accept current value (if any)
-                        pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
+                        pageObject.showAlert(column, pageObject.names.get('REBOOT', 0))
                     }
                     onCancelClicked: {
                         privateProps.model.reset()

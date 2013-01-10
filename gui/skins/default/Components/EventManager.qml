@@ -25,6 +25,7 @@ Item {
     property int clocks: privateProps.clocksModel === null ? 0 : privateProps.clocksModel.clocks
 
     property variant scenarioRecorder: privateProps.recordingModel === undefined ? undefined : privateProps.recordingModel.recorder
+    property bool enableNotifications: true
 
     signal changePageDone
 
@@ -154,6 +155,11 @@ Item {
             global.audioState.disableState(AudioState.Mute)
         }
         onRingtoneReceived: {
+            if (!enableNotifications) {
+                console.log("Notifications disabled, ignore VDE ringtone")
+                return
+            }
+
             // VdeRingtone state should always be enabled to stop multimedia playback during call
             if (!vctConnection.target.ringExclusion)
                 global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(vctConnection.target.ringtone), AudioState.VdeRingtone)
@@ -189,6 +195,11 @@ Item {
             global.audioState.disableState(AudioState.Mute)
         }
         onRingtoneReceived: {
+            if (!enableNotifications) {
+                console.log("Notifications disabled, ignore intercom ringtone")
+                return
+            }
+
             // VdeRingtone state should always be enabled to stop multimedia playback during call
             if (!intercomConnection.target.getRingExclusion())
                 global.ringtoneManager.playRingtoneAndKeepState(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.VdeRingtone)
@@ -196,6 +207,11 @@ Item {
                 global.audioState.enableState(AudioState.VdeRingtone)
         }
         onFloorRingtoneReceived: {
+            if (!enableNotifications) {
+                console.log("Notifications disabled, ignore floor call ringtone")
+                return
+            }
+
             if (!intercomConnection.target.getRingExclusion())
                 global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(intercomConnection.target.ringtone), AudioState.FloorCall)
         }
@@ -240,6 +256,11 @@ Item {
         id: clocksConnection
         target: null
         onRingAlarmClock: {
+            if (!enableNotifications) {
+                console.log("Notifications disabled, ignore alarm clock")
+                return
+            }
+
             global.ringtoneManager.playRingtoneAndKeepState(global.extraPath + "10/alarm.wav", AudioState.Ringtone)
         }
         onAlarmStarted: privateProps.addNotification({"type": Script.ALARM_CLOCK_TRIGGERING, "data": alarmClock})
@@ -340,6 +361,10 @@ Item {
         property variant clocksModel: undefined
 
         function addNotification(notify) {
+            if (!enableNotifications) {
+                console.log("Notification disabled, type: " + notify["type"])
+                return
+            }
             if (Stack.isPageChanging(changePageDone) || global.screenState.state === ScreenState.Calibration)
                 Script.delayedNotifications.push(notify)
             else

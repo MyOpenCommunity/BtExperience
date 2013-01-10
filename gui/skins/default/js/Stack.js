@@ -146,8 +146,8 @@ function currentPage() {
 }
 
 // returns to home page
-function backToHome() {
-    backToPage("HomePage.qml")
+function backToHome(properties) {
+    backToPage("HomePage.qml", properties)
 }
 
 // returns to systems page

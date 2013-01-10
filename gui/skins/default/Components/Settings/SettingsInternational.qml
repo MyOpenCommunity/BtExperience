@@ -3,6 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 import "../../js/logging.js" as Log
 import "../../js/Stack.js" as Stack
+import "../../js/EventManager.js" as EventManager
 
 
 MenuColumn {
@@ -19,9 +20,13 @@ MenuColumn {
     }
 
     function alertOkClicked() {
-        textLanguageItem.description = pageObject.names.get('LANGUAGE', privateProps.language);
-        global.guiSettings.language = privateProps.language
-        Stack.backToHome()
+        if (privateProps.currentIndex === 1)
+            global.guiSettings.language = privateProps.language
+        else if (privateProps.currentIndex === 2)
+            global.keyboardLayout = privateProps.keyboardLayout
+
+        EventManager.eventManager.enableNotifications = false
+        Stack.backToHome({state: "pageLoading"})
     }
 
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
@@ -32,22 +37,25 @@ MenuColumn {
         //  1 -> text language menu
         //  2 -> keyboard language menu
         property string language: ''
+        property string keyboardLayout: ""
+
+        function showAlert() {
+            pageObject.showAlert(column, pageObject.names.get('REBOOT', 0))
+        }
     }
 
     onChildDestroyed: privateProps.currentIndex = -1
-
-    // connects child signals to slots
-    onChildLoaded: {
-        if (child.textLanguageChanged)
-            child.textLanguageChanged.connect(textLanguageChanged)
-    }
-
-    function textLanguageChanged(value) {
-        // TODO assign to a model property
-        //privateProps.model.TextLanguage = value;
-        // TODO remove when model is implemented
-        privateProps.language = value
-        pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot as soon as possible.\nPlease, do not use the touch till it is restarted.\nContinue?"))
+    Connections {
+        target: column.child
+        ignoreUnknownSignals: true
+        onTextLanguageChanged: {
+            privateProps.language = config
+            privateProps.showAlert()
+        }
+        onKeyboardLayoutChanged: {
+            privateProps.keyboardLayout = config
+            privateProps.showAlert()
+        }
     }
 
     Column {

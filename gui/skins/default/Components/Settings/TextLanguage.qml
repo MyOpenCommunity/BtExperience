@@ -15,8 +15,9 @@ MenuColumn {
         id: view
         anchors.fill: parent
         interactive: false
-        delegate: MenuItemDelegate {
+        delegate: MenuItem {
             name: model.name
+            isSelected: global.guiSettings.language === model.type
             onClicked: textLanguageChanged(model.type)
         }
         model: ListModel {
