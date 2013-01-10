@@ -32,7 +32,7 @@ Page {
 
     Connections {
         target: toolbar
-        onPlayClicked: {
+        onToolbarNavigationClicked: {
             privateProps.exitPath = 2
             controlVideo.color = "black"
             camera.endCall()
