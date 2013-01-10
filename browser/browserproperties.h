@@ -54,10 +54,13 @@ private slots:
 	void pageDeleted(QObject *page);
 
 private:
+	void clearHistory();
+	void setHistorySize(int size);
 	void setVisible(bool visible);
 	void parseLine(QString line);
 
-	bool clicks_blocked;
+	bool clicks_blocked, persistent_history;
+	int persistent_history_size;
 	QString url;
 	QString input;
 	BtNetworkAccessManager *access_manager;

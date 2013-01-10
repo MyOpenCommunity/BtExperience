@@ -5,6 +5,7 @@
 #include <QCoreApplication>
 #include <QDeclarativeView>
 #include <QWebPage>
+#include <QWebHistory>
 #include <QDebug>
 
 #include <stdio.h>
@@ -19,6 +20,8 @@ BrowserProperties::BrowserProperties(logger *log) : GlobalPropertiesCommon(log)
 	connect(stdin, SIGNAL(activated(int)), this, SLOT(readInput()));
 	fcntl(0, F_SETFL, (long)O_NONBLOCK);
 
+	persistent_history = true;
+	persistent_history_size = 0;
 	clicks_blocked = false;
 
 	// To receive all the events, even if there is some qml elements which manage
@@ -73,6 +76,8 @@ void BrowserProperties::quit()
 	setUrl("");
 	printf("about_to_hide\n");
 	setVisible(false);
+	if (!persistent_history)
+		clearHistory();
 }
 
 void BrowserProperties::updateClick()
@@ -140,6 +145,20 @@ void BrowserProperties::parseLine(QString line)
 
 		setUrl(url);
 	}
+	else if (line.startsWith("set_history_size "))
+	{
+		QString size = line.split(" ")[1];
+
+		setHistorySize(size.toInt());
+	}
+	else if (line.startsWith("set_persistent_history "))
+	{
+		QString persistent = line.split(" ")[1];
+
+		persistent_history = persistent.toInt();
+	}
+	else if (line == "clear_history")
+		clearHistory();
 	else if (line == "ping")
 		printf("pong\n");
 }
@@ -165,6 +184,8 @@ void BrowserProperties::registerPage(QWebPage *page)
 	if (pages.contains(page))
 		return;
 
+	if (persistent_history_size != 0)
+		page->history()->setMaximumItemCount(persistent_history_size);
 	pages.insert(page);
 
 	connect(page, SIGNAL(destroyed(QObject*)), this, SLOT(pageDeleted(QObject*)));
@@ -173,4 +194,17 @@ void BrowserProperties::registerPage(QWebPage *page)
 void BrowserProperties::pageDeleted(QObject *page)
 {
 	pages.remove(static_cast<QWebPage *>(page));
+}
+
+void BrowserProperties::clearHistory()
+{
+	foreach (QWebPage *page, pages)
+		page->history()->clear();
+}
+
+void BrowserProperties::setHistorySize(int history)
+{
+	persistent_history_size = history;
+	foreach (QWebPage *page, pages)
+		page->history()->setMaximumItemCount(history);
 }
