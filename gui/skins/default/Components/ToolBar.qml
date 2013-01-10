@@ -17,7 +17,7 @@ Item {
     property int fontSize: 14
 
     signal homeClicked
-    signal playClicked
+    signal toolbarNavigationClicked
 
     width: 1024
     height: toolbar_top.height + toolbar_bottom.height
@@ -170,7 +170,10 @@ Item {
                                (global.guiSettings.skin === GuiSettings.Clear ?
                                     "../images/toolbar/icon_alarm-disabled_p.svg" :
                                     "../images/toolbar/icon_alarm-disabled.svg")
-            onClicked: Stack.goToPage(Script.getTarget(Container.IdAntintrusion))
+            onClicked: {
+                toolbar.toolbarNavigationClicked()
+                Stack.goToPage(Script.getTarget(Container.IdAntintrusion))
+            }
         }
 
         // alarm clock
@@ -183,7 +186,10 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm-clock_p.svg" :
                               "../images/toolbar/icon_alarm-clock.svg"
-            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ALARM_CLOCKS})
+            onClicked: {
+                toolbar.toolbarNavigationClicked()
+                Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ALARM_CLOCKS})
+            }
         }
 
         // auto open
@@ -196,7 +202,10 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-open_p.svg" :
                               "../images/toolbar/icon_vde-auto-open.svg"
-            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.AUTO_OPEN})
+            onClicked: {
+                toolbar.toolbarNavigationClicked()
+                Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.AUTO_OPEN})
+            }
         }
 
         // auto answer
@@ -209,7 +218,10 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-auto-answer_p.svg" :
                               "../images/toolbar/icon_vde-auto-answer.svg"
-            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.HANDS_FREE})
+            onClicked: {
+                toolbar.toolbarNavigationClicked()
+                Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.HANDS_FREE})
+            }
         }
 
         // vde mute
@@ -222,7 +234,10 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_vde-mute_p.svg" :
                               "../images/toolbar/icon_vde-mute.svg"
-            onClicked: Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.VDE_MUTE})
+            onClicked: {
+                toolbar.toolbarNavigationClicked()
+                Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.VDE_MUTE})
+            }
         }
 
         // alerts
@@ -236,7 +251,10 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_alarm_p.svg" :
                               "../images/toolbar/icon_alarm.svg"
-            onClicked: Stack.goToPage("Antintrusion.qml", {"navigationTarget": Navigation.ALARM_LOG})
+            onClicked: {
+                toolbar.toolbarNavigationClicked()
+                Stack.goToPage("Antintrusion.qml", {"navigationTarget": Navigation.ALARM_LOG})
+            }
         }
 
         // volume (and mute)
@@ -257,9 +275,13 @@ Item {
                               (global.guiSettings.skin === GuiSettings.Clear ?
                                    "../images/toolbar/icon_audio-source-on_p.svg" :
                                    "../images/toolbar/icon_audio-source-on.svg")
-            onClicked: EventManager.eventManager.playing ?
-                           Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioVideoPlayer.isUpnp()}) :
-                           console.log("TODO: navigation to volume settings menu")
+            onClicked: {
+                if (EventManager.eventManager.playing) {
+                    toolbar.toolbarNavigationClicked()
+                    Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioVideoPlayer.isUpnp()})
+                } else
+                    console.log("TODO: navigation to volume settings menu")
+            }
         }
 
         // play
@@ -273,7 +295,7 @@ Item {
                               "../images/toolbar/icon_source-play_p.svg" :
                               "../images/toolbar/icon_source-play.svg"
             onClicked: {
-                toolbar.playClicked()
+                toolbar.toolbarNavigationClicked()
                 Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioVideoPlayer.isUpnp()})
             }
         }
@@ -289,7 +311,10 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_new-message_p.svg" :
                               "../images/toolbar/icon_new-message.svg"
-            onClicked: Stack.goToPage(Script.getTarget(Container.IdMessages))
+            onClicked: {
+                toolbar.toolbarNavigationClicked()
+                Stack.goToPage(Script.getTarget(Container.IdMessages))
+            }
         }
 
         Row {
@@ -343,7 +368,10 @@ Item {
             pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
                               "../images/toolbar/icon_energy_p.svg" :
                               "../images/toolbar/icon_energy.svg"
-            onClicked: Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
+            onClicked: {
+                toolbar.toolbarNavigationClicked()
+                Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
+            }
         }
 
     }

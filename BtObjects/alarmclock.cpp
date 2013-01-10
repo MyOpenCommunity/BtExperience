@@ -111,10 +111,10 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &
 	setAttribute(node, "days", QString::number(alarm_clock->getDays()));
 	setAttribute(node, "hour", QString::number(alarm_clock->getHour()));
 	setAttribute(node, "minutes", QString::number(alarm_clock->getMinute()));
+	setAttribute(node, "volume", QString::number(alarm_clock->getVolume()));
 
 	if (alarm_clock->getAlarmType() == AlarmClock::AlarmClockSoundSystem)
 	{
-		setAttribute(node, "volume", QString::number(alarm_clock->getVolume()));
 		setAttribute(node, "amplifier_uii", QString::number(uii_map.findUii(alarm_clock->getAmplifier())));
 
 		int type;
