@@ -111,7 +111,7 @@ VDEBase::VDEBase(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 
 	volume = 50;
 	mute = false;
-	call_active = false;
+	call_in_progress = false;
 	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
 
 	foreach (ExternalPlace *ep, list)
@@ -157,9 +157,9 @@ bool VDEBase::isIpCall() const
 	return ip_mode;
 }
 
-bool VDEBase::callActive()
+bool VDEBase::callInProgress()
 {
-	return call_active;
+	return call_in_progress;
 }
 
 
@@ -431,14 +431,14 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			break;
 		case VideoDoorEntryDevice::STOP_VIDEO:
 			qDebug() << "Received STOP_VIDEO";
-			if (!callActive()) // ignore
+			if (!callInProgress()) // ignore
 				break;
 			call_stopped = true;
 			stopVideo();
 			break;
 		case VideoDoorEntryDevice::ANSWER_CALL:
 			qDebug() << "Received ANSWER_CALL";
-			if (!callActive()) // ignore
+			if (!callInProgress()) // ignore
 				break;
 			// for the case when we received a STOP_VIDEO frame from the camera
 			startVideo();
@@ -446,7 +446,7 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
 			qDebug() << "Received CALLER_ADDRESS: " << *it;
-			if (!callActive()) // ignore
+			if (!callInProgress()) // ignore
 				break;
 			if (!values_list.contains(VideoDoorEntryDevice::VCT_CALL) &&
 				!values_list.contains(VideoDoorEntryDevice::AUTO_VCT_CALL))
@@ -495,18 +495,18 @@ void CCTV::resumeVideo()
 
 void CCTV::activateCall()
 {
-	if (call_active)
+	if (call_in_progress)
 		return;
-	call_active = true;
-	emit activeChanged();
+	call_in_progress = true;
+	emit callInProgressChanged();
 }
 
 void CCTV::disactivateCall()
 {
-	if (!call_active)
+	if (!call_in_progress)
 		return;
-	call_active = false;
-	emit activeChanged();
+	call_in_progress = false;
+	emit callInProgressChanged();
 }
 
 
@@ -635,7 +635,7 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::END_OF_CALL";
-			if (!callActive()) // ignore
+			if (!callInProgress()) // ignore
 				break;
 			setTalkerFromWhere(QString());
 			emit callEnded();
@@ -643,13 +643,13 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			break;
 		case VideoDoorEntryDevice::ANSWER_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::ANSWER_CALL: " << *it;
-			if (!callActive()) // ignore
+			if (!callInProgress()) // ignore
 				break;
 			emit callAnswered();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
 			qDebug() << "Received VideoDoorEntryDevice::CALLER_ADDRESS: " << *it;
-			if (!callActive()) // ignore
+			if (!callInProgress()) // ignore
 				break;
 			setTalkerFromWhere(it.value().toString());
 			break;
@@ -698,10 +698,10 @@ void Intercom::setTalkerFromWhere(QString where)
 
 void Intercom::activateCall()
 {
-	if (call_active)
+	if (call_in_progress)
 		return;
-	call_active = true;
-	emit activeChanged();
+	call_in_progress = true;
+	emit callInProgressChanged();
 }
 
 void Intercom::disactivateCall()
@@ -711,9 +711,9 @@ void Intercom::disactivateCall()
 		pager_call = false;
 		emit pagerCallChanged();
 	}
-	if (call_active)
+	if (call_in_progress)
 	{
-		call_active = false;
-		emit activeChanged();
+		call_in_progress = false;
+		emit callInProgressChanged();
 	}
 }

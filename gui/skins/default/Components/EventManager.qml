@@ -166,8 +166,8 @@ Item {
             else
                 global.audioState.enableState(AudioState.VdeRingtone)
         }
-        onCallActiveChanged: {
-            if (vctConnection.target.callActive) {
+        onCallInProgressChanged: {
+            if (vctConnection.target.callInProgress) {
                 global.screenState.enableState(ScreenState.ForcedNormal)
             } else {
                 global.screenState.enableState(ScreenState.Normal)
@@ -217,8 +217,8 @@ Item {
         }
         onMicrophoneOnRequested: global.audioState.enableState(AudioState.SenderPagerCall)
         onSpeakersOnRequested: global.audioState.enableState(AudioState.ReceiverPagerCall)
-        onCallActiveChanged: {
-            if (intercomConnection.target.callActive) {
+        onCallInProgressChanged: {
+            if (intercomConnection.target.callInProgress) {
                 global.screenState.enableState(ScreenState.ForcedNormal)
             } else {
                 global.screenState.enableState(ScreenState.Normal)
