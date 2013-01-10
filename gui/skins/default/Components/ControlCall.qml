@@ -27,15 +27,19 @@ SvgImage {
     Connections {
         target: global.hardwareKeys
         onPressed: {
-            if (!control.dataObject)
+            if (!control.dataObject || !control.dataObject.callInProgress)
                 return
 
             // answer call on hw key 0 press, open lock on hw key 1
             if (index === 0) {
-                if (control.dataObject.pagerCall)
-                    control.dataObject.answerPagerCall()
-                else
-                    control.dataObject.answerCall()
+                if (control.dataObject.callActive) {
+                    control.dataObject.endCall()
+                } else {
+                    if (control.dataObject.pagerCall)
+                        control.dataObject.answerPagerCall()
+                    else
+                        control.dataObject.answerCall()
+                }
             }
         }
     }
