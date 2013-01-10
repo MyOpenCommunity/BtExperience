@@ -60,6 +60,13 @@ SvgImage {
             id: icon
             width: 25
             height: 25
+            // limit the buffer size for this icon to 25x25, this is
+            // particularly important for very large images otherwise
+            // RAM usage can be very high (sourceSize defines the image
+            // buffer dimensions for the cache)
+            sourceSize.width: 25
+            sourceSize.height: 25
+            asynchronous: true
             source: privateProps.getDefaultImage()
         }
     }
