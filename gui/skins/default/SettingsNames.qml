@@ -6,6 +6,9 @@ import BtExperience 1.0
 QtObject {
     // internal function to load values into the container
     function _init(container) {
+        container['REBOOT'] = []
+        container['REBOOT'][0] = qsTr("Pressing ok will cause a device reboot in a few moments.\nContinue?")
+
         container['CONFIG'] = []
         container['CONFIG'][PlatformSettings.Dhcp] = qsTr("DHCP")
         container['CONFIG'][PlatformSettings.Static] = qsTr("Static IP address")
