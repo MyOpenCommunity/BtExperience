@@ -12,7 +12,7 @@ Page {
 
     property variant profile
 
-    source: profilePage.profile.image
+    source: profile.image === "" ? global.guiSettings.homeBgImage : profile.image
     text: profile.description
     showSystemsButton: false
 
