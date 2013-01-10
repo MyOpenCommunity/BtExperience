@@ -15,6 +15,10 @@ Item {
         id: lightingNames
     }
 
+    MultimediaNames {
+        id: multimediaNames
+    }
+
     SettingsNames {
         id: settingsNames
     }
@@ -32,6 +36,7 @@ Item {
         antintrusionNames._init(container)
         energyManagementNames._init(container)
         lightingNames._init(container)
+        multimediaNames._init(container)
         settingsNames._init(container)
         thermalNames._init(container)
         videoDoorEntryNames._init(container)
