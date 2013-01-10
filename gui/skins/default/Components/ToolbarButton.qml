@@ -2,7 +2,7 @@ import QtQuick 1.1
 import Components.Text 1.0
 
 
-Row {
+Item {
     id: control
 
     property alias defaultImage: button.defaultImage
@@ -13,6 +13,7 @@ Row {
     signal clicked
 
     visible: quantity > 0
+    width: separator.width + button.width
 
     // separator
     SvgImage {
@@ -21,6 +22,7 @@ Row {
         visible: control.visible
         source: "../images/toolbar/toolbar_separator.svg"
         height: control.height
+        anchors.left: parent.left
     }
 
     // button
@@ -32,6 +34,8 @@ Row {
         pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
         onClicked: control.clicked()
         status: 0
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
 
         SvgImage {
             id: quantityBg
