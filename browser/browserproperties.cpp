@@ -4,11 +4,13 @@
 #include <QSocketNotifier>
 #include <QCoreApplication>
 #include <QDeclarativeView>
+#include <QWebPage>
 #include <QDebug>
 
 #include <stdio.h>
 #include <fcntl.h>
 #include <time.h>
+
 
 BrowserProperties::BrowserProperties(logger *log) : GlobalPropertiesCommon(log)
 {
@@ -156,4 +158,19 @@ bool BrowserProperties::eventFilter(QObject *obj, QEvent *ev)
 	}
 
 	return false;
+}
+
+void BrowserProperties::registerPage(QWebPage *page)
+{
+	if (pages.contains(page))
+		return;
+
+	pages.insert(page);
+
+	connect(page, SIGNAL(destroyed(QObject*)), this, SLOT(pageDeleted(QObject*)));
+}
+
+void BrowserProperties::pageDeleted(QObject *page)
+{
+	pages.remove(static_cast<QWebPage *>(page));
 }
