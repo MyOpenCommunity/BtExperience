@@ -30,8 +30,6 @@ Row {
         visible: control.visible
         defaultImageBg: "../images/toolbar/_bg_alert.svg"
         pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-        defaultImage: "../images/toolbar/icon_vde-mute.svg"
-        pressedImage: "../images/toolbar/icon_vde-mute.svg"
         onClicked: control.clicked()
         status: 0
 
