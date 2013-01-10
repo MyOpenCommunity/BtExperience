@@ -6,6 +6,12 @@ import BtObjects 1.0
 MenuColumn {
     id: column
 
+    ObjectModel {
+        id: objectModel
+        source: column.dataModel.presets
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
     PaginatorList {
         id: paginator
         delegate: MenuItemDelegate {
@@ -20,11 +26,5 @@ MenuColumn {
 
         model: objectModel
         onCurrentPageChanged: column.closeChild()
-    }
-
-    ObjectModel {
-        id: objectModel
-        source: column.dataModel.presets
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }

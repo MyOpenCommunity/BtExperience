@@ -8,6 +8,22 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
+    BtObjectsMapping { id: mapping }
+
+    SystemsModel { id: systemsModel; systemId: Container.IdThermalRegulation }
+
+    ObjectModel {
+        id: modelList
+        filters: [
+            {objectId: ObjectInterface.IdThermalControlUnit99, objectKey: column.dataModel.objectKey},
+            {objectId: ObjectInterface.IdThermalControlUnit4, objectKey: column.dataModel.objectKey},
+            {objectId: ObjectInterface.IdThermalControlledProbe, objectKey: column.dataModel.objectKey},
+            {objectId: ObjectInterface.IdThermalControlledProbeFancoil, objectKey: column.dataModel.objectKey}
+        ]
+        containers: [systemsModel.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
     PaginatorList {
         id: paginator
         currentIndex: -1
@@ -23,22 +39,6 @@ MenuColumn {
 
         model: modelList
         onCurrentPageChanged: column.closeChild()
-    }
-
-    BtObjectsMapping { id: mapping }
-
-    SystemsModel { id: systemsModel; systemId: Container.IdThermalRegulation }
-
-    ObjectModel {
-        id: modelList
-        filters: [
-            {objectId: ObjectInterface.IdThermalControlUnit99, objectKey: column.dataModel.objectKey},
-            {objectId: ObjectInterface.IdThermalControlUnit4, objectKey: column.dataModel.objectKey},
-            {objectId: ObjectInterface.IdThermalControlledProbe, objectKey: column.dataModel.objectKey},
-            {objectId: ObjectInterface.IdThermalControlledProbeFancoil, objectKey: column.dataModel.objectKey}
-        ]
-        containers: [systemsModel.systemUii]
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }
 

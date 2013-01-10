@@ -9,6 +9,11 @@ MenuColumn {
         paginator.currentIndex = -1
     }
 
+    ObjectModel {
+        id: energiesCounters
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: EnergyData.Electricity}]
+    }
+
     Column {
         ControlSwitch {
             text: qsTr("alerts %1").arg(global.guiSettings.energyThresholdBeep ? qsTr("enabled") : qsTr("disabled"))
@@ -27,11 +32,6 @@ MenuColumn {
             onCurrentPageChanged: column.closeChild()
             model: energiesCounters
         }
-    }
-
-    ObjectModel {
-        id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: EnergyData.Electricity}]
     }
 
     Component {

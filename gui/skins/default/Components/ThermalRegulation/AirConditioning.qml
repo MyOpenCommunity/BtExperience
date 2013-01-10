@@ -7,6 +7,16 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
+    BtObjectsMapping { id: mapping }
+
+    ObjectModel {
+        id: objectModel
+        filters: [
+            {objectId: ObjectInterface.IdSplitBasicScenario},
+            {objectId: ObjectInterface.IdSplitAdvancedScenario}
+        ]
+    }
+
     PaginatorList {
         id: paginator
         delegate: MenuItemDelegate {
@@ -21,15 +31,5 @@ MenuColumn {
         model: objectModel
 
         onCurrentPageChanged: column.closeChild()
-    }
-
-    BtObjectsMapping { id: mapping }
-
-    ObjectModel {
-        id: objectModel
-        filters: [
-            {objectId: ObjectInterface.IdSplitBasicScenario},
-            {objectId: ObjectInterface.IdSplitAdvancedScenario}
-        ]
     }
 }

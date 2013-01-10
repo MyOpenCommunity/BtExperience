@@ -13,6 +13,13 @@ MenuColumn {
     BtObjectsMapping { id: mapping }
     SystemsModel { id: systemsModel; systemId: Container.IdScenarios }
 
+    ObjectModel {
+        id: objectModel
+        source: myHomeModels.myHomeObjects
+        containers: [systemsModel.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
     PaginatorList {
         id: paginator
         delegate: MenuItemDelegate {
@@ -30,12 +37,4 @@ MenuColumn {
 
         onCurrentPageChanged: column.closeChild()
     }
-
-    ObjectModel {
-        id: objectModel
-        source: myHomeModels.myHomeObjects
-        containers: [systemsModel.systemUii]
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
-    }
-
 }

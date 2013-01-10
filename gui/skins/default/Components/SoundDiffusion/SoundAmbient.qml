@@ -26,6 +26,18 @@ MenuColumn {
         containers: [column.dataModel.uii]
     }
 
+    BtObjectsMapping { id: mapping }
+
+    ObjectModel {
+        id: objectModel
+        filters: [{objectId: ObjectInterface.IdSoundAmplifierGroup},
+            {objectId: ObjectInterface.IdSoundAmplifier},
+            {objectId: ObjectInterface.IdPowerAmplifier}
+        ]
+        containers: [column.dataModel.uii]
+        range: itemList.computePageRange(itemList.currentPage, itemList.elementsOnPage)
+    }
+
     Column {
         MenuItem {
             id: sourceLoader
@@ -80,17 +92,5 @@ MenuColumn {
     QtObject {
         id: privateProps
         property int currentIndex: -1
-    }
-
-    BtObjectsMapping { id: mapping }
-
-    ObjectModel {
-        id: objectModel
-        filters: [{objectId: ObjectInterface.IdSoundAmplifierGroup},
-            {objectId: ObjectInterface.IdSoundAmplifier},
-            {objectId: ObjectInterface.IdPowerAmplifier}
-        ]
-        containers: [column.dataModel.uii]
-        range: itemList.computePageRange(itemList.currentPage, itemList.elementsOnPage)
     }
 }

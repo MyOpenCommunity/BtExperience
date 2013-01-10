@@ -10,6 +10,16 @@ MenuColumn {
         paginator.currentIndex = -1
     }
 
+    BtObjectsMapping { id: mapping }
+    SystemsModel { id: systemsModel; systemId: Container.IdLights }
+
+    ObjectModel {
+        id: objectModel
+        source: myHomeModels.myHomeObjects
+        containers: [systemsModel.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
     PaginatorList {
         id: paginator
 
@@ -30,15 +40,5 @@ MenuColumn {
         model: objectModel
 
         onCurrentPageChanged: column.closeChild()
-    }
-
-    BtObjectsMapping { id: mapping }
-    SystemsModel { id: systemsModel; systemId: Container.IdLights }
-
-    ObjectModel {
-        id: objectModel
-        source: myHomeModels.myHomeObjects
-        containers: [systemsModel.systemUii]
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }

@@ -12,6 +12,13 @@ MenuColumn {
         itemList.currentIndex = -1
     }
 
+    SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
+
+    ObjectModel {
+        id: modelList
+        containers: [deviceModel.systemUii]
+    }
+
     PaginatorList {
         id: itemList
         currentIndex: -1
@@ -35,13 +42,6 @@ MenuColumn {
 
         model: modelList
         onCurrentPageChanged: column.closeChild()
-    }
-
-    SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
-
-    ObjectModel {
-        id: modelList
-        containers: [deviceModel.systemUii]
     }
 
     Component {

@@ -8,6 +8,18 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
+    BtObjectsMapping { id: mapping }
+
+    ObjectModel {
+        id: objectModel
+        filters: [{objectId: ObjectInterface.IdMultiChannelSpecialAmbient},
+            {objectId: ObjectInterface.IdMultiChannelSoundAmbient},
+            {objectId: ObjectInterface.IdMonoChannelSoundAmbient},
+            {objectId: ObjectInterface.IdMultiGeneral},
+        ]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
     PaginatorList {
         id: paginator
 
@@ -24,17 +36,5 @@ MenuColumn {
 
         model: objectModel
         onCurrentPageChanged: column.closeChild()
-    }
-
-    BtObjectsMapping { id: mapping }
-
-    ObjectModel {
-        id: objectModel
-        filters: [{objectId: ObjectInterface.IdMultiChannelSpecialAmbient},
-            {objectId: ObjectInterface.IdMultiChannelSoundAmbient},
-            {objectId: ObjectInterface.IdMonoChannelSoundAmbient},
-            {objectId: ObjectInterface.IdMultiGeneral},
-        ]
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 }

@@ -9,6 +9,7 @@ MenuColumn {
     onChildDestroyed: paginator.currentIndex = -1
 
     SystemsModel {id: systemsModel; systemId: Container.IdVideoDoorEntry }
+
     ObjectModel {
         id: cctvModel
         filters: [{objectId: ObjectInterface.IdCCTV}]

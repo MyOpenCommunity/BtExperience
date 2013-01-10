@@ -5,6 +5,15 @@ import BtObjects 1.0
 MenuColumn {
     id: column
 
+    SystemsModel { id: linksModel; systemId: Container.IdMultimediaWebRadio; source: myHomeModels.mediaContainers }
+
+    ObjectModel {
+        id: radioModel
+        source: myHomeModels.mediaLinks
+        containers: [linksModel.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
     PaginatorList {
         id: paginator
         elementsOnPage: 8
@@ -18,15 +27,6 @@ MenuColumn {
 
         model: radioModel
         onCurrentPageChanged: column.closeChild()
-    }
-
-    SystemsModel { id: linksModel; systemId: Container.IdMultimediaWebRadio; source: myHomeModels.mediaContainers }
-
-    ObjectModel {
-        id: radioModel
-        source: myHomeModels.mediaLinks
-        containers: [linksModel.systemUii]
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     function radios(model) {

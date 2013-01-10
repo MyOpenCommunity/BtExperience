@@ -20,6 +20,11 @@ Page {
         containers: [floorUii]
     }
 
+    MediaModel {
+        source: myHomeModels.floors
+        id: floorsModel
+    }
+
     ControlPathView {
         visible: roomsModel.count >= 3
         x0FiveElements: 150
@@ -97,11 +102,6 @@ Page {
 
         onCurrentIndexChanged: {
             mainarea.floorUii = floorsModel.getObject(currentIndex).uii
-        }
-
-        MediaModel {
-            source: myHomeModels.floors
-            id: floorsModel
         }
 
         model: floorsModel

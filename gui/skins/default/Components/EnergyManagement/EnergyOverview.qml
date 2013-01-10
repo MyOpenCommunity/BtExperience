@@ -7,6 +7,16 @@ import "../../js/Stack.js" as Stack
 MenuColumn {
     id: element
 
+    ObjectModel {
+        id: energiesFamilies
+        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
+    }
+
+    ObjectModel {
+        id: energiesCounters
+        filters: [{objectId: ObjectInterface.IdEnergyData}]
+    }
+
     Column {
         PaginatorList {
             id: paginator
@@ -21,11 +31,6 @@ MenuColumn {
 
             model: energiesFamilies
             onCurrentPageChanged: column.closeChild()
-
-            ObjectModel {
-                id: energiesFamilies
-                filters: [{objectId: ObjectInterface.IdEnergyFamily}]
-            }
         }
 
         MenuItem {
@@ -45,13 +50,6 @@ MenuColumn {
                 }
                 return false
             }
-
-            ObjectModel {
-                id: energiesCounters
-
-                filters: [{objectId: ObjectInterface.IdEnergyData}]
-            }
-
         }
     }
 

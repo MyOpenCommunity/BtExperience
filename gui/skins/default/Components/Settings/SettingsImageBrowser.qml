@@ -18,6 +18,13 @@ MenuColumn {
         itemList.currentIndex = -1
     }
 
+    SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
+
+    ObjectModel {
+        id: modelList
+        containers: [deviceModel.systemUii]
+    }
+
     Column {
         MenuItem {
             name: qsTr("Images")
@@ -73,13 +80,6 @@ MenuColumn {
             model: modelList
             onCurrentPageChanged: column.closeChild()
         }
-    }
-
-    SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
-
-    ObjectModel {
-        id: modelList
-        containers: [deviceModel.systemUii]
     }
 
     QtObject {

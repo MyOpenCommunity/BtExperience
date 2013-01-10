@@ -9,6 +9,11 @@ MenuColumn {
         paginator.currentIndex = -1
     }
 
+    ObjectModel {
+        id: energiesCounters
+        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
+    }
+
     PaginatorList {
         id: paginator
         delegate: MenuItemDelegate {
@@ -19,11 +24,6 @@ MenuColumn {
 
         onCurrentPageChanged: column.closeChild()
         model: energiesCounters
-    }
-
-    ObjectModel {
-        id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
     }
 
     Component {

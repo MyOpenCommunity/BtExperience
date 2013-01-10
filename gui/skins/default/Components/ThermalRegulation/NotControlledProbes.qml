@@ -7,6 +7,15 @@ MenuColumn {
 
     onChildDestroyed: itemList.currentIndex = -1
 
+    BtObjectsMapping { id: mapping }
+
+    ObjectModel {
+        id: modelList
+        filters: [
+            {objectId: ObjectInterface.IdThermalNonControlledProbe}
+        ]
+    }
+
     PaginatorList {
         id: itemList
 
@@ -19,14 +28,5 @@ MenuColumn {
 
         model: modelList
         onCurrentPageChanged: column.closeChild()
-    }
-
-    BtObjectsMapping { id: mapping }
-
-    ObjectModel {
-        id: modelList
-        filters: [
-            {objectId: ObjectInterface.IdThermalNonControlledProbe}
-        ]
     }
 }

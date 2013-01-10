@@ -7,6 +7,11 @@ MenuColumn {
 
     signal sourceSelected(variant object)
 
+    ObjectModel {
+        id: sourceModel
+        filters: [{objectId: ObjectInterface.IdSoundSource}]
+    }
+
     PaginatorList {
         id: paginator
         elementsOnPage: 8
@@ -19,10 +24,5 @@ MenuColumn {
             onClicked: column.sourceSelected(itemObject)
         }
         onCurrentPageChanged: column.closeChild()
-    }
-
-    ObjectModel {
-        id: sourceModel
-        filters: [{objectId: ObjectInterface.IdSoundSource}]
     }
 }

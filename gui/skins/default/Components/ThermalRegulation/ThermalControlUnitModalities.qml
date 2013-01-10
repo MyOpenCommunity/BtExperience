@@ -10,6 +10,11 @@ MenuColumn {
 
     signal modalitySelected(variant obj)
 
+    ObjectModel {
+        id: modalitiesModel
+        source: column.dataModel.modalities
+    }
+
     PaginatorList {
         currentIndex: {
             for (var i = 0; i < model.count; ++i) {
@@ -28,10 +33,5 @@ MenuColumn {
             }
         }
         model: modalitiesModel
-    }
-
-    ObjectModel {
-        id: modalitiesModel
-        source: column.dataModel.modalities
     }
 }
