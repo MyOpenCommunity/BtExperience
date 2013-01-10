@@ -108,8 +108,8 @@ function goToPage(filename, properties) {
     var entering = _goPage(filename, properties)
 
     if (current._pageName !== entering._pageName) {
-        current.pushOutStart()
-        entering.pushInStart()
+        entering.popInStart()
+        current.popOutStart()
     }
     else {
         primeMenuNavigation(current, properties)
