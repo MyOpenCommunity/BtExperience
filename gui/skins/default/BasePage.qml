@@ -54,7 +54,7 @@ Image {
     }
 
     function processLaunched(processHandle) {
-        page.state = "processRunning"
+        page.state = "pageLoading"
         privateProps.process = processHandle
     }
 
@@ -172,8 +172,7 @@ Image {
 
         states: [
             State {
-                name: "processShown"
-                when: privateProps.process !== null
+                name: "indicatorShown"
                 PropertyChanges { target: loadingIndicator; visible: true }
                 PropertyChanges { target: loadingTimer; running: true }
             }
@@ -212,8 +211,9 @@ Image {
             PropertyChanges { target: blackBg; opacity: 0.7; visible: true }
         },
         State {
-            name: "processRunning"
+            name: "pageLoading"
             PropertyChanges { target: blackBg; opacity: 0.7; visible: true }
+            PropertyChanges { target: loadingIndicator; state: "indicatorShown" }
         }
     ]
 }
