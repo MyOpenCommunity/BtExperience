@@ -46,11 +46,19 @@ MenuColumn {
 
     Component {
         id: directoryBrowser
-        ColumnBrowserDirectoryModel {}
+        ColumnBrowserDirectoryModel {
+            onImageClicked: Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onAudioClicked: Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": index, "isVideo": false, "upnp": upnp})
+            onVideoClicked: Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+        }
     }
 
     Component {
         id: upnpBrowser
-        ColumnBrowserUpnpModel {}
+        ColumnBrowserUpnpModel {
+            onImageClicked: Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onAudioClicked: Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": index, "isVideo": false, "upnp": upnp})
+            onVideoClicked: Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+        }
     }
 }

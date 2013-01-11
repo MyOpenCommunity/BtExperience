@@ -4,7 +4,6 @@ import Components 1.0
 import Components.Text 1.0
 import "../js/Stack.js" as Stack
 
-
 MenuColumn {
     id: column
 
@@ -16,7 +15,10 @@ MenuColumn {
     property alias bgHeight: imageBg.height
     property bool preview: false
 
-    signal selected(variant item)
+    // Index of the clicked item inside the model
+    signal imageClicked(variant item, int index)
+    signal audioClicked(variant item, int index)
+    signal videoClicked(variant item, int index)
 
     SvgImage {
         id: imageBg
@@ -189,39 +191,25 @@ MenuColumn {
                     i += theModel.range[0];
                 switch (itemObject.fileType)
                 {
-                case FileObject.Audio:
+                case FileObject.Audio: {
                     // we need braces due to bug
                     // https://bugreports.qt-project.org/browse/QTBUG-17012
-                {
-                    // the index we need is the absolute index in the unfiltered model;
-                    // the delegate index property is relative to actual page, so let's
-                    // make some math to compute the right value
-                    Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": i, "isVideo": false, "upnp": column.upnp})
+                    column.audioClicked(itemObject, i)
                     break
                 }
-                case FileObject.Image:
-                {
-                    if (column.imageOnly) {
-                        column.selected(itemObject)
-                        column.closeColumn()
-                    }
-                    else {
-                        Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
-                    }
+                case FileObject.Image: {
+                    column.imageClicked(itemObject, i)
                     break
                 }
-                case FileObject.Video:
-                {
-                    Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": i, "upnp": column.upnp})
+                case FileObject.Video: {
+                    column.videoClicked(itemObject, i)
                     break
                 }
-                case FileObject.Directory:
-                {
+                case FileObject.Directory: {
                     theModel.enterDirectory(itemObject.name)
                     break
                 }
-                default:
-                {
+                default: {
                     console.log("Unexpected file type: " + itemObject.fileType + " for index: " + i + " (upnp: " + column.upnp + ")")
                 }
                 }

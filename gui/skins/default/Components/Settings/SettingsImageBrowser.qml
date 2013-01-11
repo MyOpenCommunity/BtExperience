@@ -91,7 +91,7 @@ MenuColumn {
     Component {
         id: directoryBrowser
         ColumnBrowserDirectoryModel {
-            onSelected: {
+            onImageClicked: {
                 if (column.isCard) {
                     if (column._isStock)
                         column.dataModel.cardImage = item.path
@@ -111,7 +111,7 @@ MenuColumn {
     Component {
         id: upnpBrowser
         ColumnBrowserUpnpModel {
-            onSelected: {
+            onImageClicked: {
                 if (column.isCard)
                     Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
                 else if (column.homeCustomization)
