@@ -27,7 +27,7 @@ then
   export PKG_CONFIG_PATH="/home/sources/TS10_PREMIUM/TS10_PACKAGES/ti-dvsdk_dm3730-evm_04_03_00_06/linux-devkit/arm-arago-linux-gnueabi/usr/lib/pkgconfig/"
   export PKG_CONFIG_SYSROOT_DIR="/home/sources/TS10_PREMIUM/TS10_PACKAGES/ti-dvsdk_dm3730-evm_04_03_00_06/linux-devkit/arm-arago-linux-gnueabi/"
   
-  /usr/lib/qt/bin/qmake CONFIG+=maliit  
+  /usr/lib/qt/bin/qmake CONFIG+=maliit CONFIG+=release 
   make -j$CPU4COMPILE || exit 1
   make install || exit 1  #It's necessary to create the folder dist with the executable file
 
