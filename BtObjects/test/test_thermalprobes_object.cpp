@@ -215,8 +215,8 @@ void TestThermalControlledProbes::testReceiveLocalStatus()
 	testReceiveLocalStatus(ControlledProbeDevice::ST_NORMAL, ThermalControlledProbe::Manual, true);
 
 	testReceiveStatus(ControlledProbeDevice::ST_PROTECTION, ThermalControlledProbe::Antifreeze);
-	testReceiveLocalStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Off, true);
-	testReceiveLocalStatus(ControlledProbeDevice::ST_PROTECTION, ThermalControlledProbe::Antifreeze, true);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_OFF, ThermalControlledProbe::Antifreeze, false);
+	testReceiveLocalStatus(ControlledProbeDevice::ST_PROTECTION, ThermalControlledProbe::Antifreeze, false);
 	testReceiveLocalStatus(ControlledProbeDevice::ST_NORMAL, ThermalControlledProbe::Antifreeze, false);
 
 	testReceiveStatus(ControlledProbeDevice::ST_AUTO, ThermalControlledProbe::Auto);
