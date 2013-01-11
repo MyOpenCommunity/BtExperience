@@ -239,6 +239,7 @@ MenuColumn {
     Component {
         id: upnpBrowser
         ColumnBrowserUpnpModel {
+            typeFilterEnabled: false
             onAudioClicked: dataModel.startUpnpPlay(theModel, index, theModel.count)
         }
     }
@@ -246,6 +247,7 @@ MenuColumn {
     Component {
         id: directoryBrowser
         ColumnBrowserDirectoryModel {
+            typeFilterEnabled: false
             onAudioClicked: dataModel.startPlay(theModel, index, theModel.count)
         }
     }

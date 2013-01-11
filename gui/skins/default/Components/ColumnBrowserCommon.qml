@@ -11,7 +11,8 @@ MenuColumn {
     property alias paginator: paginator
     property bool upnp
     property variant theModel
-    property bool imageOnly: false
+    property bool typeFilterEnabled: true
+
     property alias bgHeight: imageBg.height
     property bool preview: false
 
@@ -48,7 +49,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: photoButton
 
-        visible: !column.imageOnly && !column.upnp
+        visible: column.typeFilterEnabled && !column.upnp
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -73,7 +74,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: videoButton
 
-        visible: !column.imageOnly && !column.upnp
+        visible: column.typeFilterEnabled && !column.upnp
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -97,7 +98,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: audioButton
 
-        visible: !column.imageOnly && !column.upnp
+        visible: column.typeFilterEnabled && !column.upnp
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
@@ -121,7 +122,7 @@ MenuColumn {
     ButtonImageThreeStates {
         id: fileButton
 
-        visible: !column.imageOnly && !column.upnp
+        visible: column.typeFilterEnabled && !column.upnp
         defaultImageBg: "../images/common/btn_tipo_file.svg"
         pressedImageBg: "../images/common/btn_tipo_file_P.svg"
         selectedImageBg: "../images/common/btn_tipo_file_S.svg"
