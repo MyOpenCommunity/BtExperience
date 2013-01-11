@@ -42,8 +42,7 @@ MenuColumn {
         }
 
         onClicked: theModel.exitDirectory()
-        status: 0
-        enabled: theModel.isRoot === false
+        visible: !theModel.isRoot
     }
 
     ButtonImageThreeStates {
@@ -155,12 +154,13 @@ MenuColumn {
         color: "white"
         anchors {
             top: backButton.bottom
-            topMargin: 15
+            topMargin: 10
             left: imageBg.left
             leftMargin: 10
             right: imageBg.right
             rightMargin: 10
         }
+        elide: Text.ElideRight
     }
 
     // TODO make an header
@@ -171,7 +171,7 @@ MenuColumn {
         id: paginator
         anchors {
             top: caption.bottom
-            topMargin: 15
+            topMargin: 10
             left: imageBg.left
             leftMargin: 10
             right: imageBg.right
@@ -214,6 +214,16 @@ MenuColumn {
                 }
                 }
             }
+        }
+
+        buttonComponent: ButtonImageThreeStates {
+            visible: !column.upnp
+            defaultImageBg: "../images/common/btn_66x35.svg"
+            pressedImageBg: "../images/common/btn_66x35_P.svg"
+            shadowImage: "../images/common/btn_shadow_66x35.svg"
+            defaultImage: "../images/common/icon_eject.svg"
+            pressedImage: "../images/common/icon_eject_p.svg"
+            onClicked: dataModel.mountPoint.unmount()
         }
 
         model: theModel

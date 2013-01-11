@@ -8,6 +8,7 @@ ColumnBrowserCommon {
     property alias filter: localModel.filter
 
     theModel: localModel
+    text: localModel.currentPath[localModel.currentPath.length - 1]
 
     DirectoryListModel {
         id: localModel

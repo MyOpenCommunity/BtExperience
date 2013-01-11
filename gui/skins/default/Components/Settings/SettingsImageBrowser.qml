@@ -62,7 +62,6 @@ MenuColumn {
                     var upnp = itemObject.sourceType === SourceObject.Upnp;
                     var props = {
                         rootPath: itemObject.rootPath,
-                        text: itemObject.name,
                         upnp: upnp,
                         bgHeight: 422,
                         "paginator.elementsOnPage": 7,

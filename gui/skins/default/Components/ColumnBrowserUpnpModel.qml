@@ -8,6 +8,7 @@ ColumnBrowserCommon {
     property alias filter: upnpModel.filter
 
     theModel: upnpModel
+    text: upnpModel.currentPath[upnpModel.currentPath.length - 1] || "Media server"
 
     UPnPListModel {
         id: upnpModel

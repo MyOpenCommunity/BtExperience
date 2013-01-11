@@ -33,7 +33,6 @@ MenuColumn {
                 var upnp = itemObject.sourceType === SourceObject.Upnp;
                 var props = {
                     rootPath: itemObject.rootPath,
-                    text: itemObject.name,
                     upnp: upnp
                 }
                 column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
