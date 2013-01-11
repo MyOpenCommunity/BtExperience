@@ -120,7 +120,8 @@ bool PlayListPlayer::checkLoop()
 
 void PlayListPlayer::resetLoopCheck()
 {
-	loop_starting_file = -1;
+	// this is necessary to trigger loop detection for single-file lists
+	loop_starting_file = actual_list ? actual_list->currentIndex() : -1;
 }
 
 void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_files)
@@ -178,8 +179,8 @@ void PlayListPlayer::generate(UPnPListModel *model, int index, int total_files)
 	list->setCurrentIndex(index);
 	list->setTotalFiles(total_files);
 
-	// updates reference to current (emits currentChanged)
-	updateCurrent();
+	// no need to call updateCurrent(): it is called when receiving the status update
+	// from XmlDevice
 }
 
 void PlayListPlayer::generate(QList<QObject *> items, int index, int total_files)
@@ -238,12 +239,6 @@ void PlayListPlayer::updateCurrent()
 	if (!actual_list)
 		return;
 	QString candidate = actual_list->currentFilePath();
-	if (candidate == current)
-	{
-		if (actual_list->totalFiles() == 1)
-			emit loopDetected();
-		return;
-	}
 	if (candidate.isEmpty())
 		return;
 	current = candidate;
@@ -412,6 +407,9 @@ void AudioVideoPlayer::play()
 	default_info["meta_title"] = getCurrentName();
 	default_info["stream_title"] = getCurrentName();
 
+	// force player restart for single-file lists
+	if (media_player->getCurrentSource() == getCurrent())
+		media_player->stop();
 	user_track_change_request = true;
 	media_player->setCurrentSource(getCurrent());
 	media_player->setDefaultTrackInfo(default_info);
