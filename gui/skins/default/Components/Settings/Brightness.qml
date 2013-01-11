@@ -11,17 +11,7 @@ MenuColumn {
         id: brightness
         percentage: global.screenState.normalBrightness
         description: qsTr("brightness")
-        onPlusClicked: {
-            if (percentage >= 95)
-                global.screenState.normalBrightness = 100
-            else
-                global.screenState.normalBrightness += 5
-        }
-        onMinusClicked: {
-            if (percentage <= 15)
-                global.screenState.normalBrightness = 10
-            else
-                global.screenState.normalBrightness -= 5
-        }
+        onPlusClicked: global.screenState.normalBrightness += 5
+        onMinusClicked: global.screenState.normalBrightness -= 5
     }
 }

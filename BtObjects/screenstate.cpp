@@ -89,7 +89,7 @@ ScreenState::~ScreenState()
 
 void ScreenState::setNormalBrightness(int brightness)
 {
-	brightness = qMin(100, qMax(brightness, 1));
+	brightness = qMin(100, qMax(brightness, 10));
 
 	if (brightness == normal_brightness)
 		return;
@@ -108,7 +108,7 @@ int ScreenState::getNormalBrightness() const
 
 void ScreenState::setContrast(int c)
 {
-	c = qMin(100, qMax(c, 1));
+	c = qMin(100, qMax(c, 10));
 	if (c == contrast)
 		return;
 

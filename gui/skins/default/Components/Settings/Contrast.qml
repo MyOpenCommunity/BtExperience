@@ -9,17 +9,7 @@ MenuColumn {
     ControlSlider {
         percentage: global.screenState.contrast
         description: qsTr("Contrast")
-        onPlusClicked: {
-            if (percentage >= 95)
-                global.screenState.contrast = 100
-            else
-                global.screenState.contrast += 5
-        }
-        onMinusClicked: {
-            if (percentage <= 15)
-                global.screenState.contrast = 10
-            else
-                global.screenState.contrast -= 5
-        }
+        onPlusClicked: global.screenState.contrast += 5
+        onMinusClicked: global.screenState.contrast -= 5
     }
 }
