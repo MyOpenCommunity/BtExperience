@@ -82,9 +82,9 @@ BasePage {
 
         anchors {
             top: parent.top
-            topMargin: parent.height / 100 * 10
+            topMargin: offset - height / 2
             left: parent.left
-            leftMargin: parent.width / 100 * 10
+            leftMargin: offset - width / 4
         }
         visible: false
 
@@ -105,9 +105,9 @@ BasePage {
 
         anchors {
             bottom: parent.bottom
-            bottomMargin: parent.height / 100 * 10
+            bottomMargin: offset - height / 2
             right: parent.right
-            rightMargin: parent.width / 100 * 10
+            rightMargin: offset - width / 4
         }
         visible: false
 
