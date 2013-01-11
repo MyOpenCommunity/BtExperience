@@ -8,6 +8,7 @@ class AmplifierDevice;
 class SourceDevice;
 class Amplifier;
 class SourceObject;
+class ObjectDataModel;
 
 
 class TestAlarmClockBeep : public TestBtObject
@@ -38,6 +39,9 @@ class TestAlarmClockSoundDiffusion : public TestBtObject
 	Q_OBJECT
 
 private slots:
+	void initTestCase();
+	void cleanupTestCase();
+
 	void init();
 	void cleanup();
 
@@ -52,6 +56,7 @@ private slots:
 	void testLastTick();
 
 private:
+	ObjectDataModel *dummy;
 	AlarmClock *obj;
 	QList<AmplifierDevice *> amplifier_dev;
 	SourceDevice *source_dev;

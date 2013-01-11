@@ -9,7 +9,6 @@
 
 #define FRAME_TIMEOUT 500
 
-
 void TestAlarmClockBeep::init()
 {
 	obj = new AlarmClock("", true, AlarmClock::AlarmClockBeep, 0, 0, 0);
@@ -121,6 +120,20 @@ void TestAlarmClockBeep::testLastTick()
 	t.checkNoSignals();
 }
 
+
+void TestAlarmClockSoundDiffusion::initTestCase()
+{
+	dummy = new ObjectDataModel();
+
+	ObjectModel::setGlobalSource(dummy);
+}
+
+void TestAlarmClockSoundDiffusion::cleanupTestCase()
+{
+	delete dummy;
+
+	ObjectModel::setGlobalSource(0);
+}
 
 void TestAlarmClockSoundDiffusion::init()
 {
