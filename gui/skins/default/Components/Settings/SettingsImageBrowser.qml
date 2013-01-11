@@ -39,11 +39,8 @@ MenuColumn {
                     rootPath: isCard ? global.stockCardImagesFolder : global.stockBackgroundImagesFolder,
                     text: qsTr("Images"),
                     upnp: false,
-                    typeFilterEnabled: false,
-                    filter: FileObject.Image | FileObject.Directory,
                     bgHeight: 422,
                     "paginator.elementsOnPage": 7,
-                    preview: true
                 }
                 column.loadColumn(directoryBrowser, qsTr("Images"), undefined, props)
             }
@@ -67,11 +64,8 @@ MenuColumn {
                         rootPath: itemObject.rootPath,
                         text: itemObject.name,
                         upnp: upnp,
-                        typeFilterEnabled: false,
-                        filter: FileObject.Image | FileObject.Directory,
                         bgHeight: 422,
                         "paginator.elementsOnPage": 7,
-                        preview: true
                     }
                     column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
                 }
@@ -91,6 +85,9 @@ MenuColumn {
     Component {
         id: directoryBrowser
         ColumnBrowserDirectoryModel {
+            typeFilterEnabled: false
+            filter: FileObject.Image | FileObject.Directory
+            preview: true
             onImageClicked: {
                 if (column.isCard) {
                     if (column._isStock)
@@ -111,6 +108,9 @@ MenuColumn {
     Component {
         id: upnpBrowser
         ColumnBrowserUpnpModel {
+            typeFilterEnabled: false
+            filter: FileObject.Image | FileObject.Directory
+            preview: true
             onImageClicked: {
                 if (column.isCard)
                     Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})

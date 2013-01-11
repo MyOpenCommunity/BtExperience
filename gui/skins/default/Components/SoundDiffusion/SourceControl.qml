@@ -182,7 +182,6 @@ MenuColumn {
                     var comp = objModel.sourceType === SourceObject.Upnp ? upnpBrowser : directoryBrowser
                     var props = {rootPath: objModel.rootPath,
                         upnp: objModel.sourceType === SourceObject.Upnp,
-                        filter: FileObject.Audio | FileObject.Directory
                     }
                     column.loadColumn(comp, name, mediaPlayerColumn.objModel, props)
                 }
@@ -240,6 +239,7 @@ MenuColumn {
         id: upnpBrowser
         ColumnBrowserUpnpModel {
             typeFilterEnabled: false
+            filter: FileObject.Audio | FileObject.Directory
             onAudioClicked: dataModel.startUpnpPlay(theModel, index, theModel.count)
         }
     }
@@ -248,6 +248,7 @@ MenuColumn {
         id: directoryBrowser
         ColumnBrowserDirectoryModel {
             typeFilterEnabled: false
+            filter: FileObject.Audio | FileObject.Directory
             onAudioClicked: dataModel.startPlay(theModel, index, theModel.count)
         }
     }
