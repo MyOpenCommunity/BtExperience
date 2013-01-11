@@ -44,6 +44,7 @@ void TestObjectModel::cleanup()
 	delete src;
 
 	clearDeviceCache(); // deletes dev2
+	ObjectModel::setGlobalSource(0);
 
 	delete bt_global::config;
 	bt_global::config = 0;
