@@ -10,6 +10,15 @@ BasePage {
     property variant containerWithCard
     property alias fullImage: sourceImage.source
 
+    Rectangle {
+        id: bg
+        color: "white"
+        anchors.fill: parent
+        MouseArea {
+            anchors.fill: parent
+        }
+    }
+
     ToolBar {
         id: toolbar
         anchors {

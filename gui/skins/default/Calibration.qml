@@ -20,6 +20,15 @@ BasePage {
     property int currentPoint: 0
     property bool testButtons: false
 
+    Rectangle {
+        id: bg
+        color: "white"
+        anchors.fill: parent
+        MouseArea {
+            anchors.fill: parent
+        }
+    }
+
     Image {
         id: crosshair
         source: "images/common/ico_elimina.svg"
