@@ -80,13 +80,13 @@ MenuColumn {
             id: paginator
             anchors {
                 top: realHeader.bottom
-                topMargin: parent.height / 100 * 2
+                topMargin: parent.height / 100 * 1.5
                 left: parent.left
                 leftMargin: parent.width / 100 * 2.5
                 right: parent.right
                 bottom: parent.bottom
             }
-            spacing: parent.height / 100 * 1
+            spacing: parent.height / 100 * 2
             elementsOnPage: privateProps.elementsOnPage
 
             delegate: SvgImage {
