@@ -43,8 +43,7 @@ QVariant PlatformSettings::value(int id) const
 
 void PlatformSettings::apply()
 {
-	if (to_apply.count() == 0)
-		return;
+	// Always save the configuration even if there are no changes
 	foreach (int k, to_apply.keys())
 		current[k] = to_apply[k];
 	to_apply.clear();

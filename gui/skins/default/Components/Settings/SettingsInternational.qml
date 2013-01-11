@@ -48,13 +48,21 @@ MenuColumn {
     Connections {
         target: column.child
         ignoreUnknownSignals: true
+
+        // The if() below is needed: we want to avoid going into 'wait for reboot'
+        // state in case the C++ property doesn't change value and conf.xml is
+        // not written
         onTextLanguageChanged: {
-            privateProps.language = config
-            privateProps.showAlert()
+            if (global.guiSettings.language !== config) {
+                privateProps.language = config
+                privateProps.showAlert()
+            }
         }
         onKeyboardLayoutChanged: {
-            privateProps.keyboardLayout = config
-            privateProps.showAlert()
+            if (global.keyboardLayout !== config) {
+                privateProps.keyboardLayout = config
+                privateProps.showAlert()
+            }
         }
     }
 
