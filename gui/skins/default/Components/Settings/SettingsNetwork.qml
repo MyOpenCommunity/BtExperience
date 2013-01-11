@@ -36,7 +36,7 @@ MenuColumn {
 
     function alertOkClicked() {
         privateProps.model.apply()
-        EventManager.eventManager.enableNotifications = false
+        EventManager.eventManager.notificationsEnabled = false
         Stack.backToHome({state: "pageLoading"})
     }
 

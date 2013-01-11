@@ -25,7 +25,7 @@ Item {
     property int clocks: privateProps.clocksModel === null ? 0 : privateProps.clocksModel.clocks
 
     property variant scenarioRecorder: privateProps.recordingModel === undefined ? undefined : privateProps.recordingModel.recorder
-    property bool enableNotifications: true
+    property bool notificationsEnabled: true
 
     signal changePageDone
 
@@ -155,7 +155,7 @@ Item {
             global.audioState.disableState(AudioState.Mute)
         }
         onRingtoneReceived: {
-            if (!enableNotifications) {
+            if (!notificationsEnabled) {
                 console.log("Notifications disabled, ignore VDE ringtone")
                 return
             }
@@ -195,7 +195,7 @@ Item {
             global.audioState.disableState(AudioState.Mute)
         }
         onRingtoneReceived: {
-            if (!enableNotifications) {
+            if (!notificationsEnabled) {
                 console.log("Notifications disabled, ignore intercom ringtone")
                 return
             }
@@ -207,7 +207,7 @@ Item {
                 global.audioState.enableState(AudioState.VdeRingtone)
         }
         onFloorRingtoneReceived: {
-            if (!enableNotifications) {
+            if (!notificationsEnabled) {
                 console.log("Notifications disabled, ignore floor call ringtone")
                 return
             }
@@ -256,7 +256,7 @@ Item {
         id: clocksConnection
         target: null
         onRingAlarmClock: {
-            if (!enableNotifications) {
+            if (!notificationsEnabled) {
                 console.log("Notifications disabled, ignore alarm clock")
                 return
             }
@@ -361,7 +361,7 @@ Item {
         property variant clocksModel: undefined
 
         function addNotification(notify) {
-            if (!enableNotifications) {
+            if (!notificationsEnabled) {
                 console.log("Notification disabled, type: " + notify["type"])
                 return
             }

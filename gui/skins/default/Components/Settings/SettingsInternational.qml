@@ -25,7 +25,7 @@ MenuColumn {
         else if (privateProps.currentIndex === 2)
             global.keyboardLayout = privateProps.keyboardLayout
 
-        EventManager.eventManager.enableNotifications = false
+        EventManager.eventManager.notificationsEnabled = false
         Stack.backToHome({state: "pageLoading"})
     }
 
