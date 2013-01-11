@@ -63,7 +63,12 @@ BasePage {
                         hidingBar.state = "hidden"
                     updateImages(hidingBar.state)
                 }
-                onUrlEntered: global.url = url
+                onUrlEntered: {
+                    if (url === global.url)
+                        webView.reload.trigger()
+                    else
+                        global.url = url
+                }
             }
 
             HidingBar {
