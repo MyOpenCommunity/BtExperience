@@ -239,7 +239,6 @@ Page {
 
         visible: soundDiffusionModel.count > 0
         elementsOnPage: 7
-        buttonVisible: false
         spacing: 5
         anchors {
             top: ambientText.bottom

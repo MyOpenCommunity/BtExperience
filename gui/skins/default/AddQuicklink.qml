@@ -274,7 +274,6 @@ Page {
         property int elementsOnOtherPages: 9
 
         elementsOnPage: 3
-        buttonVisible: false
         spacing: 5
         anchors {
             top: selectTextText.bottom

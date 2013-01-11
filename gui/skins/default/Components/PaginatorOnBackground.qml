@@ -7,15 +7,13 @@ Item {
     // expose some ListView properties
     property alias delegate: internalList.delegate
     property alias model: internalList.model
-    property alias buttonVisible: button.visible
     property alias spacing: spacing.height
     property alias bottomRowAnchors: bottomRow.anchors
+    property alias buttonComponent: button.sourceComponent
 
     property int elementsOnPage: 6
     property alias currentPage: paginator.currentPage
     property alias totalPages: paginator.totalPages
-
-    signal buttonClicked
 
     // Convenience function to compute the visible range of a model
     function computePageRange(page, elementsOnPage) {
@@ -79,7 +77,7 @@ Item {
             bottom: parent.bottom
             bottomMargin: parent.height / 100 * 1
         }
-        opacity: ((paginator.visible === true) || (button.visible === true)) ? 1 : 0
+        opacity: ((paginator.visible === true) || (button.sourceComponent !== undefined)) ? 1 : 0
         height: Math.max(paginator.height, button.height)
 
         Paginator {
@@ -88,18 +86,9 @@ Item {
             anchors.left: parent.left
         }
 
-        ButtonThreeStates {
+        Loader {
             id: button
-            visible: false
             anchors.right: parent.right
-            defaultImage: "../images/common/button_delete_all.svg"
-            pressedImage: "../images/common/button_delete_all_press.svg"
-            shadowImage: "../images/common/shadow_button_delete_all.svg"
-            text: qsTr("remove all")
-            font.capitalization: Font.AllUppercase
-            font.pixelSize: 12
-            onClicked: paginatorItem.buttonClicked()
-            status: 0
         }
     }
 

@@ -87,10 +87,7 @@ MenuColumn {
                 bottom: parent.bottom
             }
             spacing: parent.height / 100 * 1
-            buttonVisible: modelList.count !== 0
             elementsOnPage: privateProps.elementsOnPage
-
-            onButtonClicked: modelList.clear()
 
             delegate: SvgImage {
                 id: itemBackground
@@ -163,6 +160,18 @@ MenuColumn {
                         }
                     }
                 }
+            }
+
+            buttonComponent: ButtonThreeStates {
+                id: button
+                defaultImage: "../../images/common/button_delete_all.svg"
+                pressedImage: "../../images/common/button_delete_all_press.svg"
+                shadowImage: "../../images/common/shadow_button_delete_all.svg"
+                visible: modelList.count !== 0
+                text: qsTr("remove all")
+                font.capitalization: Font.AllUppercase
+                font.pixelSize: 12
+                onClicked: modelList.clear()
             }
 
             model: modelList

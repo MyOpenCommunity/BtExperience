@@ -180,7 +180,6 @@ MenuColumn {
             bottomMargin: 6
         }
         elementsOnPage: 9
-        buttonVisible: false
         spacing: 5
 
         delegate: ColumnBrowserDelegate {

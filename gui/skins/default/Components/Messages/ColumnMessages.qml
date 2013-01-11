@@ -44,7 +44,6 @@ MenuColumn {
         id: paginator
 
         elementsOnPage: 9
-        buttonVisible: model.count !== 0
         spacing: 5
 
         anchors {
@@ -67,7 +66,17 @@ MenuColumn {
             }
         }
 
-        onButtonClicked: theModel.clear()
+        buttonComponent: ButtonThreeStates {
+            id: button
+            defaultImage: "../../images/common/button_delete_all.svg"
+            pressedImage: "../../images/common/button_delete_all_press.svg"
+            shadowImage: "../../images/common/shadow_button_delete_all.svg"
+            visible: model.count !== 0
+            text: qsTr("remove all")
+            font.capitalization: Font.AllUppercase
+            font.pixelSize: 12
+            onClicked: theModel.clear()
+        }
         model: theModel
     }
 

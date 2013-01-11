@@ -56,7 +56,6 @@ Page {
             id: paginator
 
             elementsOnPage: 7
-            buttonVisible: false
             model: objectLinksModel
             anchors {
                 top: parent.top
