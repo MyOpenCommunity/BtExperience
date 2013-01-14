@@ -98,7 +98,7 @@ class VDEBase : public ObjectInterface
 	/*!
 		\brief Whether I made the call (exiting) or not
 	*/
-	Q_PROPERTY(bool exitCall READ exitCall NOTIFY exitCallChanged)
+	Q_PROPERTY(bool exitingCall READ exitingCall NOTIFY exitingCallChanged)
 
 public:
 	ObjectDataModel *getExternalPlaces() const;
@@ -116,7 +116,7 @@ signals:
 	void isIpCallChanged();
 	void callInProgressChanged();
 	void callActiveChanged();
-	void exitCallChanged();
+	void exitingCallChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list) = 0;
@@ -126,7 +126,7 @@ protected:
 
 	bool callInProgress();
 	bool callActive();
-	bool exitCall();
+	bool exitingCall();
 
 	int volume;
 	bool mute;

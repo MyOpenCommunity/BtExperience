@@ -122,9 +122,9 @@ SvgImage {
             target: dataObject
             onCallAnswered: {
                 if (dataObject !== undefined) {
-                    if (!dataObject.exitCall && control.callerMode)
+                    if (!dataObject.exitingCall && control.callerMode)
                         return
-                    if (dataObject.exitCall && !control.callerMode)
+                    if (dataObject.exitingCall && !control.callerMode)
                         return
                 }
                 control.state = "activeCall"
@@ -281,9 +281,9 @@ SvgImage {
 
         function callAnswered() {
             if (dataObject !== undefined) {
-                if (!dataObject.exitCall && control.callerMode)
+                if (!dataObject.exitingCall && control.callerMode)
                     return
-                if (dataObject.exitCall && !control.callerMode)
+                if (dataObject.exitingCall && !control.callerMode)
                     return
             }
             control.state = "activeCall"

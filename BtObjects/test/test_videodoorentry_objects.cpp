@@ -79,10 +79,10 @@ void TestVideoDoorEntry::testIncomingCallNoAnswer()
 	v[VideoDoorEntryDevice::INTERCOM_CALL] = 0;
 
 	ObjectTester t(intercom, SIGNAL(incomingCall()));
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 	intercom->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	// call terminates
 	v[VideoDoorEntryDevice::END_OF_CALL] = 0;
@@ -91,14 +91,14 @@ void TestVideoDoorEntry::testIncomingCallNoAnswer()
 					<< SIGNAL(callEnded()));
 	intercom->valueReceived(v);
 	t2.checkSignals();
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 }
 
 void TestVideoDoorEntry::testIncomingCallTerminatedByTalker()
 {
 	// call arrives
 	DeviceValues v;
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 	dev->is_calling = true;
 	v[VideoDoorEntryDevice::INTERCOM_CALL] = 0;
 
@@ -107,14 +107,14 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTalker()
 	t.checkSignals();
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	// answering
 	intercom->answerCall();
 	dev->answerCall();
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	compareClientCommandThatWorks();
 
@@ -128,7 +128,7 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTalker()
 	QCOMPARE(QString("garage"), intercom->getTalker());
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	// call terminates
 	v.clear();
@@ -141,7 +141,7 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTalker()
 	t3.checkSignals();
 	QCOMPARE(false, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 }
 
 void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
@@ -166,14 +166,14 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
 	v.clear();
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	// answering
 	intercom->answerCall();
 	dev->answerCall();
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	compareClientCommandThatWorks();
 
@@ -184,7 +184,7 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
 	QCOMPARE(QString("garage"), intercom->getTalker());
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	// call terminates
 	QCOMPARE(true, dev->isCalling());
@@ -193,7 +193,7 @@ void TestVideoDoorEntry::testIncomingCallTerminatedByTouch()
 	QCOMPARE(QString(""), intercom->getTalker());
 	QCOMPARE(false, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	t.checkSignalCount(SIGNAL(incomingCall()), 1);
 	t.checkSignalCount(SIGNAL(callEnded()), 1);
@@ -217,7 +217,7 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 	QCOMPARE(QString("portone"), intercom->getTalker());
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(true, intercom->exitCall());
+	QCOMPARE(true, intercom->exitingCall());
 
 	compareClientCommandThatWorks();
 
@@ -227,7 +227,7 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 	v.clear();
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(true, intercom->callActive());
-	QCOMPARE(true, intercom->exitCall());
+	QCOMPARE(true, intercom->exitingCall());
 
 	// call terminated by talker
 	v[VideoDoorEntryDevice::END_OF_CALL] = 0;
@@ -235,7 +235,7 @@ void TestVideoDoorEntry::testOutgoingCallTerminatedByTalker()
 	QCOMPARE(QString(""), intercom->getTalker());
 	QCOMPARE(false, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	t.checkSignalCount(SIGNAL(callEnded()), 1);
 	t.checkSignalCount(SIGNAL(talkerChanged()), 2);
@@ -248,7 +248,7 @@ void TestVideoDoorEntry::testIgnoringFramesIfNotActive()
 	ObjectTester t(intercom, SIGNAL(callEnded()));
 
 	QCOMPARE(false, intercom->callInProgress());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	// sending a "spurious" VideoDoorEntryDevice::END_OF_CALL signal
 	v[VideoDoorEntryDevice::END_OF_CALL] = true;
@@ -256,7 +256,7 @@ void TestVideoDoorEntry::testIgnoringFramesIfNotActive()
 	v.clear();
 
 	QCOMPARE(false, intercom->callInProgress());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	t.checkNoSignals();
 
@@ -266,7 +266,7 @@ void TestVideoDoorEntry::testIgnoringFramesIfNotActive()
 	v.clear();
 
 	QCOMPARE(false, intercom->callInProgress());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	t.checkNoSignals();
 
@@ -276,7 +276,7 @@ void TestVideoDoorEntry::testIgnoringFramesIfNotActive()
 	v.clear();
 
 	QCOMPARE(false, intercom->callInProgress());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 	QCOMPARE(QString(""), intercom->getTalker());
 
 	t.checkNoSignals();
@@ -337,7 +337,7 @@ void TestVideoDoorEntry::testOutgoingPagerCall()
 	dev->pagerCall();
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(true, intercom->exitCall());
+	QCOMPARE(true, intercom->exitingCall());
 
 	compareClientCommandThatWorks();
 
@@ -349,7 +349,7 @@ void TestVideoDoorEntry::testOutgoingPagerCall()
 	QCOMPARE(QString("portone"), intercom->getTalker());
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(true, intercom->callActive());
-	QCOMPARE(true, intercom->exitCall());
+	QCOMPARE(true, intercom->exitingCall());
 
 	// call terminated by talker
 	v[VideoDoorEntryDevice::END_OF_CALL] = 0;
@@ -357,7 +357,7 @@ void TestVideoDoorEntry::testOutgoingPagerCall()
 	QCOMPARE(QString(""), intercom->getTalker());
 	QCOMPARE(false, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	t.checkSignalCount(SIGNAL(callEnded()), 1);
 	t.checkSignalCount(SIGNAL(talkerChanged()), 2);
@@ -377,7 +377,7 @@ void TestVideoDoorEntry::testIncomingPagerCallIAnswer()
 	t.checkSignals();
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	ObjectTester t2(intercom, SIGNAL(talkerChanged()));
 
@@ -386,7 +386,7 @@ void TestVideoDoorEntry::testIncomingPagerCallIAnswer()
 	dev->answerPagerCall();
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	t2.checkSignals();
 	QCOMPARE(QString("garage"), intercom->getTalker());
@@ -404,7 +404,7 @@ void TestVideoDoorEntry::testIncomingPagerCallIAnswer()
 	t3.checkSignals();
 	QCOMPARE(false, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 }
 
 void TestVideoDoorEntry::testIncomingPagerCallAnotherAnswer()
@@ -415,7 +415,7 @@ void TestVideoDoorEntry::testIncomingPagerCallAnotherAnswer()
 	intercom->dev->caller_address = dev->caller_address = "21#2";
 	QCOMPARE(QString(), intercom->getTalker());
 	QCOMPARE(false, intercom->callInProgress());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 	v[VideoDoorEntryDevice::PAGER_CALL] = 0;
 
 	ObjectTester t(intercom, SIGNAL(incomingCall()));
@@ -423,7 +423,7 @@ void TestVideoDoorEntry::testIncomingPagerCallAnotherAnswer()
 	t.checkSignals();
 	QCOMPARE(true, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	ObjectTester t2(intercom, SIGNAL(talkerChanged()));
 
@@ -435,7 +435,7 @@ void TestVideoDoorEntry::testIncomingPagerCallAnotherAnswer()
 	QCOMPARE(QString(), intercom->getTalker());
 	QCOMPARE(false, intercom->callInProgress());
 	QCOMPARE(false, intercom->callActive());
-	QCOMPARE(false, intercom->exitCall());
+	QCOMPARE(false, intercom->exitingCall());
 
 	t2.checkNoSignals();
 }
@@ -464,7 +464,7 @@ void TestVideoDoorEntry::testCCTVIgnoringFramesIfNotActive()
 	ObjectTester t(cctv, SIGNAL(callEnded()));
 
 	QCOMPARE(false, cctv->callInProgress());
-	QCOMPARE(false, cctv->exitCall());
+	QCOMPARE(false, cctv->exitingCall());
 
 	// sending a "spurious" VideoDoorEntryDevice::STOP_VIDEO signal
 	v[VideoDoorEntryDevice::STOP_VIDEO] = true;
@@ -472,7 +472,7 @@ void TestVideoDoorEntry::testCCTVIgnoringFramesIfNotActive()
 	v.clear();
 
 	QCOMPARE(false, cctv->callInProgress());
-	QCOMPARE(false, cctv->exitCall());
+	QCOMPARE(false, cctv->exitingCall());
 
 	t.checkNoSignals();
 
@@ -482,7 +482,7 @@ void TestVideoDoorEntry::testCCTVIgnoringFramesIfNotActive()
 	v.clear();
 
 	QCOMPARE(false, cctv->callInProgress());
-	QCOMPARE(false, cctv->exitCall());
+	QCOMPARE(false, cctv->exitingCall());
 
 	t.checkNoSignals();
 }
@@ -502,7 +502,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	dev->cameraOn("21");
 	QCOMPARE(false, cctv->callInProgress());
 	QCOMPARE(false, cctv->callActive());
-	QCOMPARE(true, cctv->exitCall());
+	QCOMPARE(true, cctv->exitingCall());
 
 	compareClientCommandThatWorks();
 
@@ -512,7 +512,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
 	QCOMPARE(false, cctv->callActive());
-	QCOMPARE(true, cctv->exitCall());
+	QCOMPARE(true, cctv->exitingCall());
 
 	QVERIFY(ti.waitForSignal(GRABBER_START_TIME));
 
@@ -521,7 +521,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	dev->answerCall();
 	QCOMPARE(true, cctv->callInProgress());
 	QCOMPARE(false, cctv->callActive());
-	QCOMPARE(true, cctv->exitCall());
+	QCOMPARE(true, cctv->exitingCall());
 
 	compareClientCommandThatWorks();
 
@@ -531,12 +531,12 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
 	QCOMPARE(true, cctv->callActive());
-	QCOMPARE(true, cctv->exitCall());
+	QCOMPARE(true, cctv->exitingCall());
 
 	// caller terminates call
 	cctv->endCall();
 	dev->endCall();
-	QCOMPARE(false, cctv->exitCall());
+	QCOMPARE(false, cctv->exitingCall());
 
 	t.checkSignalCount(SIGNAL(incomingCall()), 1);
 	t.checkSignalCount(SIGNAL(callAnswered()), 1);
@@ -556,7 +556,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	// starts a call
 	cctv->cameraOn(&ep);
 	dev->cameraOn("21");
-	QCOMPARE(true, cctv->exitCall());
+	QCOMPARE(true, cctv->exitingCall());
 
 	compareClientCommandThatWorks();
 
@@ -566,7 +566,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
 	QCOMPARE(false, cctv->callActive());
-	QCOMPARE(true, cctv->exitCall());
+	QCOMPARE(true, cctv->exitingCall());
 
 	QVERIFY(ti.waitForSignal(GRABBER_START_TIME));
 
@@ -590,7 +590,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
 	QCOMPARE(true, cctv->callActive());
-	QCOMPARE(true, cctv->exitCall());
+	QCOMPARE(true, cctv->exitingCall());
 
 	// callee terminates call
 	v[VideoDoorEntryDevice::END_OF_CALL] = true;
@@ -598,7 +598,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	v.clear();
 	QCOMPARE(false, cctv->callInProgress());
 	QCOMPARE(false, cctv->callActive());
-	QCOMPARE(false, cctv->exitCall());
+	QCOMPARE(false, cctv->exitingCall());
 
 	t.checkSignalCount(SIGNAL(incomingCall()), 1);
 	t.checkSignalCount(SIGNAL(callAnswered()), 1);
@@ -695,7 +695,7 @@ void TestVideoDoorEntry::testHandsFree()
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
 	QCOMPARE(false, cctv->callActive());
-	QCOMPARE(false, cctv->exitCall());
+	QCOMPARE(false, cctv->exitingCall());
 
 	QVERIFY(ti.waitForSignal(GRABBER_START_TIME));
 
@@ -710,7 +710,7 @@ void TestVideoDoorEntry::testHandsFree()
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
 	QCOMPARE(true, cctv->callActive());
-	QCOMPARE(false, cctv->exitCall());
+	QCOMPARE(false, cctv->exitingCall());
 
 	// callee terminates call
 	v[VideoDoorEntryDevice::END_OF_CALL] = true;
@@ -718,7 +718,7 @@ void TestVideoDoorEntry::testHandsFree()
 	v.clear();
 	QCOMPARE(false, cctv->callInProgress());
 	QCOMPARE(false, cctv->callActive());
-	QCOMPARE(false, cctv->exitCall());
+	QCOMPARE(false, cctv->exitingCall());
 
 	t2.checkSignalCount(SIGNAL(incomingCall()), 1);
 	t2.checkSignalCount(SIGNAL(callAnswered()), 1);

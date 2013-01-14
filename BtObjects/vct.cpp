@@ -169,7 +169,7 @@ bool VDEBase::callActive()
 	return call_active;
 }
 
-bool VDEBase::exitCall()
+bool VDEBase::exitingCall()
 {
 	return exit_call;
 }
@@ -310,7 +310,7 @@ void CCTV::endCall()
 void CCTV::cameraOn(ExternalPlace *place)
 {
 	exit_call = true;
-	emit exitCallChanged();
+	emit exitingCallChanged();
 	dev->cameraOn(place->getWhere());
 }
 
@@ -537,7 +537,7 @@ void CCTV::disactivateCall()
 	if (exit_call)
 	{
 		exit_call = false;
-		emit exitCallChanged();
+		emit exitingCallChanged();
 	}
 }
 
@@ -577,7 +577,7 @@ void Intercom::startCall(ExternalPlace *place)
 	setTalkerFromWhere(place->getWhere());
 	activateCall();
 	exit_call = true;
-	emit exitCallChanged();
+	emit exitingCallChanged();
 }
 
 Intercom::Ringtone Intercom::getRingtone() const
@@ -595,7 +595,7 @@ void Intercom::startPagerCall()
 	dev->pagerCall();
 	activateCall();
 	exit_call = true;
-	emit exitCallChanged();
+	emit exitingCallChanged();
 	emit microphoneOnRequested();
 }
 
@@ -765,6 +765,6 @@ void Intercom::disactivateCall()
 	if (exit_call)
 	{
 		exit_call = false;
-		emit exitCallChanged();
+		emit exitingCallChanged();
 	}
 }
