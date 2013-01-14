@@ -83,6 +83,11 @@ Image {
     // interface
     property string _pageName: ""
 
+    MouseArea {
+        id: blockClicks
+        anchors.fill: parent
+    }
+
     Component {
         id: alertComponent
         Alert {

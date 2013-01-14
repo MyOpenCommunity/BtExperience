@@ -24,9 +24,6 @@ BasePage {
         id: bg
         color: "white"
         anchors.fill: parent
-        MouseArea {
-            anchors.fill: parent
-        }
     }
 
     Image {
