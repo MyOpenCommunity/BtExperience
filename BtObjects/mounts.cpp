@@ -183,8 +183,11 @@ void MountWatcher::mountComplete()
 {
 	qDebug() << "Mount/umount command complete";
 
-	// dequeue the next command, if any
-	runQueue();
+	if (command_queue.empty())
+		// explicit call required for the cases when mtab is a symlink to /proc/mounts
+		mtabChanged();
+	else
+		runQueue();
 }
 
 void MountWatcher::unmount(const QString &dir)
