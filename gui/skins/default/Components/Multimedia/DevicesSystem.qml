@@ -3,6 +3,7 @@ import Components 1.0
 import BtObjects 1.0
 
 import "../../js/Stack.js" as Stack
+import "../../js/MediaItem.js" as Script
 
 
 MenuColumn {
@@ -27,7 +28,7 @@ MenuColumn {
             itemObject: modelList.getObject(index)
             name: itemObject.name
             hasChild: true
-            enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
+            enabled: Script.mediaItemEnabled(itemObject)
             onEnabledChanged: column.closeChild()
             onDelegateClicked: {
                 var upnp = itemObject.sourceType === SourceObject.Upnp;

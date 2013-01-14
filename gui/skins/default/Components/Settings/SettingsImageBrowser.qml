@@ -4,6 +4,7 @@ import BtExperience 1.0
 import Components 1.0
 
 import "../../js/Stack.js" as Stack
+import "../../js/MediaItem.js" as Script
 
 
 MenuColumn {
@@ -54,7 +55,7 @@ MenuColumn {
                 itemObject: modelList.getObject(index)
                 name: itemObject.name
                 hasChild: true
-                enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
+                enabled: Script.mediaItemEnabled(itemObject)
                 onEnabledChanged: column.closeChild()
                 onDelegateClicked: {
                     privateProps.currentIndex = -1

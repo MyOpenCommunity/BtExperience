@@ -3,6 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 
+import "../../js/MediaItem.js" as Script
 
 MenuColumn {
     id: column
@@ -174,7 +175,7 @@ MenuColumn {
                 name: qsTr("browse")
                 hasChild: true
                 isSelected: privateProps.currentIndex === 1
-                enabled: objModel.mountPoint ? objModel.mountPoint.mounted : true
+                enabled: Script.mediaItemEnabled(objModel)
                 onEnabledChanged: column.closeChild()
                 onClicked: {
                     if (privateProps.currentIndex !== 1)
