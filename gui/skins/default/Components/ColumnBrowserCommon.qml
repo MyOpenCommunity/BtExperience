@@ -217,7 +217,7 @@ MenuColumn {
         }
 
         buttonComponent: ButtonImageThreeStates {
-            visible: !column.upnp
+            visible: !column.upnp && (dataModel ? true : false) && dataModel.mountPoint.mounted
             defaultImageBg: "../images/common/btn_66x35.svg"
             pressedImageBg: "../images/common/btn_66x35_P.svg"
             shadowImage: "../images/common/btn_shadow_66x35.svg"
