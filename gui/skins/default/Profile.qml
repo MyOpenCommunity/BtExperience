@@ -296,8 +296,10 @@ Page {
             Column {
                 id: rightArea
 
-                anchors.top: parent.top
-                anchors.right: parent.right
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                }
 
                 SvgImage {
                     id: profileRect
@@ -426,9 +428,9 @@ Page {
                         source: "images/profile-settings/icon_delete.svg"
                         anchors {
                             right: bgDelegate.right
-                            rightMargin: delegate.width / 100 * 2
+                            rightMargin: delegate.width / 100 * 5
                             top: bgDelegate.top
-                            topMargin: delegate.height / 100 * 9
+                            topMargin: delegate.height / 100 * 5
                         }
                     }
 
@@ -447,14 +449,14 @@ Page {
                             right: bgDelegate.right
                             rightMargin: delegate.width / 100 * 2
                             top: closeButton.bottom
-                            topMargin: delegate.height / 100 * 9
+                            topMargin: delegate.height / 100 * 5
                         }
                         color: "gray"
                         font.pixelSize: 15
                         wrapMode: Text.Wrap
                         text: delegate.text
                         elide: Text.ElideRight
-                        maximumLineCount: 3
+                        maximumLineCount: 6
                     }
 
                     MouseArea {
