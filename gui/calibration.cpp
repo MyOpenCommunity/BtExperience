@@ -6,9 +6,13 @@
 #include <QMouseEvent>
 #include <QDeclarativeView>
 #include <QTimer>
+#if defined(Q_WS_QWS)
+#include <QWSMouseHandler> // QWSCalibratedMouseHandler
+#endif
 
 #include <QtDebug>
 
+#define QWS_MOUSE_FILTER 5  // Qt default
 
 namespace
 {
@@ -37,6 +41,22 @@ namespace
 
 		return 0;
 	}
+
+#if defined(Q_WS_QWS)
+	class QWSCalibratedMouseHandlerUnprotect : public QWSCalibratedMouseHandler
+	{
+	public:
+		using QWSCalibratedMouseHandler::setFilterSize;
+	};
+
+	void setMouseCalibrationFilterSize(int size)
+	{
+		QWSCalibratedMouseHandlerUnprotect *handler = static_cast<QWSCalibratedMouseHandlerUnprotect *>(QWSServer::mouseHandler());
+
+		handler->clearCalibration();
+		handler->setFilterSize(size);
+	}
+#endif
 }
 
 Calibration::Calibration(QObject *parent) : QObject(parent)
@@ -82,6 +102,7 @@ void Calibration::startCalibration()
 #if defined(Q_WS_QWS)
 	QWSServer::mouseHandler()->clearCalibration();
 	grabDeclarativeViewMouse();
+	setMouseCalibrationFilterSize(QWS_MOUSE_FILTER);
 #endif
 	qApp->installEventFilter(this);
 }
