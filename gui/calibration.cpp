@@ -87,16 +87,6 @@ bool Calibration::exists() const
 
 bool Calibration::eventFilter(QObject *obj, QEvent *evt)
 {
-#if 0 // temporary for debug
-	if (evt->type() == QEvent::MouseButtonPress ||
-	    evt->type() == QEvent::MouseButtonRelease ||
-	    evt->type() == QEvent::MouseMove ||
-	    evt->type() == QEvent::MouseButtonDblClick) {
-		QMouseEvent *mouse_event = static_cast<QMouseEvent *>(evt);
-		qWarning() << evt->type() << mouse_event->pos().x() << mouse_event->pos().y();
-	}
-#endif
-
 	if (evt->type() != QEvent::MouseButtonRelease)
 		return false;
 	QMouseEvent *mouse_event = static_cast<QMouseEvent *>(evt);
