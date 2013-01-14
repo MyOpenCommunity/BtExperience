@@ -18,6 +18,7 @@ BasePage {
         id: popupComponent
         ControlCall {
             id: popupControl
+            callerMode: false // incoming calls
             onClosePopup: Stack.popPage()
         }
     }

@@ -10,6 +10,7 @@ SvgImage {
 
     property variant dataObject: undefined
     property variant intercom // used only to make calls
+    property bool callerMode: true // if true I make calls, if false I receive calls
 
     signal closePopup
 
@@ -119,7 +120,15 @@ SvgImage {
 
         Connections {
             target: dataObject
-            onCallAnswered: control.state = "activeCall"
+            onCallAnswered: {
+                if (dataObject !== undefined) {
+                    if (!dataObject.exitCall && control.callerMode)
+                        return
+                    if (dataObject.exitCall && !control.callerMode)
+                        return
+                }
+                control.state = "activeCall"
+            }
         }
     }
 
@@ -271,6 +280,12 @@ SvgImage {
         property string oldState: ""
 
         function callAnswered() {
+            if (dataObject !== undefined) {
+                if (!dataObject.exitCall && control.callerMode)
+                    return
+                if (dataObject.exitCall && !control.callerMode)
+                    return
+            }
             control.state = "activeCall"
         }
 

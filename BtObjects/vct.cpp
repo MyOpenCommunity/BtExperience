@@ -113,6 +113,7 @@ VDEBase::VDEBase(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	mute = false;
 	call_in_progress = false;
 	call_active = false;
+	exit_call = false;
 	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
 
 	foreach (ExternalPlace *ep, list)
@@ -166,6 +167,11 @@ bool VDEBase::callInProgress()
 bool VDEBase::callActive()
 {
 	return call_active;
+}
+
+bool VDEBase::exitCall()
+{
+	return exit_call;
 }
 
 
@@ -303,6 +309,8 @@ void CCTV::endCall()
 
 void CCTV::cameraOn(ExternalPlace *place)
 {
+	exit_call = true;
+	emit exitCallChanged();
 	dev->cameraOn(place->getWhere());
 }
 
@@ -525,6 +533,12 @@ void CCTV::disactivateCall()
 		call_in_progress = false;
 		emit callInProgressChanged();
 	}
+
+	if (exit_call)
+	{
+		exit_call = false;
+		emit exitCallChanged();
+	}
 }
 
 
@@ -562,6 +576,8 @@ void Intercom::startCall(ExternalPlace *place)
 		dev->externalIntercomCall(place->getWhere());
 	setTalkerFromWhere(place->getWhere());
 	activateCall();
+	exit_call = true;
+	emit exitCallChanged();
 }
 
 Intercom::Ringtone Intercom::getRingtone() const
@@ -578,6 +594,8 @@ void Intercom::startPagerCall()
 {
 	dev->pagerCall();
 	activateCall();
+	exit_call = true;
+	emit exitCallChanged();
 	emit microphoneOnRequested();
 }
 
@@ -743,5 +761,10 @@ void Intercom::disactivateCall()
 	{
 		call_in_progress = false;
 		emit callInProgressChanged();
+	}
+	if (exit_call)
+	{
+		exit_call = false;
+		emit exitCallChanged();
 	}
 }
