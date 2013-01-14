@@ -6,9 +6,17 @@
 #include <QMouseEvent>
 #include <QDeclarativeView>
 #include <QTimer>
+#if defined(Q_WS_QWS)
+#include <QWSMouseHandler> // QWSCalibratedMouseHandler
+#endif
 
 #include <QtDebug>
 
+#if defined(BT_HARDWARE_DM3730)
+#define QWS_MOUSE_FILTER 1
+#else
+#define QWS_MOUSE_FILTER 5  // Qt default
+#endif
 
 namespace
 {
@@ -37,6 +45,22 @@ namespace
 
 		return 0;
 	}
+
+#if defined(Q_WS_QWS)
+	class QWSCalibratedMouseHandlerUnprotect : public QWSCalibratedMouseHandler
+	{
+	public:
+		using QWSCalibratedMouseHandler::setFilterSize;
+	};
+
+	void setMouseCalibrationFilterSize(int size)
+	{
+		QWSCalibratedMouseHandlerUnprotect *handler = static_cast<QWSCalibratedMouseHandlerUnprotect *>(QWSServer::mouseHandler());
+
+		handler->clearCalibration();
+		handler->setFilterSize(size);
+	}
+#endif
 }
 
 Calibration::Calibration(QObject *parent) : QObject(parent)
@@ -55,6 +79,16 @@ bool Calibration::exists() const
 
 bool Calibration::eventFilter(QObject *obj, QEvent *evt)
 {
+#if 0 // temporary for debug
+	if (evt->type() == QEvent::MouseButtonPress ||
+	    evt->type() == QEvent::MouseButtonRelease ||
+	    evt->type() == QEvent::MouseMove ||
+	    evt->type() == QEvent::MouseButtonDblClick) {
+		QMouseEvent *mouse_event = static_cast<QMouseEvent *>(evt);
+		qWarning() << evt->type() << mouse_event->pos().x() << mouse_event->pos().y();
+	}
+#endif
+
 	if (evt->type() != QEvent::MouseButtonRelease)
 		return false;
 	QMouseEvent *mouse_event = static_cast<QMouseEvent *>(evt);
@@ -82,6 +116,7 @@ void Calibration::startCalibration()
 #if defined(Q_WS_QWS)
 	QWSServer::mouseHandler()->clearCalibration();
 	grabDeclarativeViewMouse();
+	setMouseCalibrationFilterSize(QWS_MOUSE_FILTER);
 #endif
 	qApp->installEventFilter(this);
 }
