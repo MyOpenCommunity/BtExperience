@@ -18,6 +18,14 @@
 #define QWS_MOUSE_FILTER 5  // Qt default
 #endif
 
+#if defined(BT_HARDWARE_PXA270)
+#define MINIMUM_RAW_X_SIZE 3350
+#define MINIMUM_RAW_Y_SIZE 3088
+#elif defined(BT_HARDWARE_DM3730)
+#define MINIMUM_RAW_X_SIZE 3400
+#define MINIMUM_RAW_Y_SIZE 2850
+#endif
+
 namespace
 {
 	QPoint fromDevice(const QPoint &p)
@@ -245,14 +253,14 @@ bool Calibration::sanityCheck()
 		return false;
 	}
 
-#ifdef BT_HARDWARE_PXA270
-	if (qMin(qAbs(tl.x() - tr.x()), qAbs(bl.x() - br.x())) < MINUMUM_RAW_X_SIZE)
+#if defined(BT_HARDWARE_PXA270) ||defined(BT_HARDWARE_DM3730)
+	if (qMin(qAbs(tl.x() - tr.x()), qAbs(bl.x() - br.x())) < MINIMUM_RAW_X_SIZE)
 	{
 		qDebug() << "Calibration: the points on the left are too close to the points on the right.";
 		return false;
 	}
 
-	if (qMin(qAbs(tl.y() - bl.y()), qAbs(tr.y() - br.y())) < MINUMUM_RAW_Y_SIZE)
+	if (qMin(qAbs(tl.y() - bl.y()), qAbs(tr.y() - br.y())) < MINIMUM_RAW_Y_SIZE)
 	{
 		qDebug() << "Calibration: the points on the top are too close to the points on the bottom.";
 		return false;
