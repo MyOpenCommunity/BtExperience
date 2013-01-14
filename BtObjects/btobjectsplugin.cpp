@@ -349,7 +349,7 @@ void BtObjectsPlugin::createObjects()
 			obj_list = parseAutomation2(xml_obj);
 			break;
 		case ObjectInterface::IdAutomationVDE:
-			obj_list = parseAutomation2(xml_obj);
+			obj_list = parseAutomationVDE(xml_obj);
 			break;
 		case ObjectInterface::IdAutomation3:
 			obj_list = parseAutomation3(xml_obj);

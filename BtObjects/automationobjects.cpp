@@ -1,6 +1,7 @@
 #include "automationobjects.h"
 #include "automation_device.h"
 #include "lighting_device.h"
+#include "videodoorentry_device.h"
 #include "lightobjects.h"
 #include "xml_functions.h"
 #include "devices_cache.h"
@@ -34,12 +35,21 @@ namespace
 }
 
 
-
 QList<ObjectPair> parseAutomationVDE(const QDomNode &obj)
 {
-	Q_UNUSED(obj);
-	// TODO VDE door object
 	QList<ObjectPair> obj_list;
+	XmlObject v(obj);
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QString where = v.value("dev") + v.value("where");
+
+		VideoDoorEntryDevice *d = bt_global::add_device_to_cache(new VideoDoorEntryDevice(where));
+		obj_list << ObjectPair(uii, new AutomationVDE(v.value("descr"), d));
+	}
+
 	return obj_list;
 }
 
@@ -227,6 +237,24 @@ AutomationLight::AutomationLight(QString name, QString key, QTime ctime, FixedTi
 int AutomationLight::getObjectId() const
 {
 	return myid;
+}
+
+void AutomationLight::activate()
+{
+	setActive(true);
+}
+
+AutomationVDE::AutomationVDE(QString _name, VideoDoorEntryDevice *d) :
+	DeviceObjectInterface(d)
+{
+	name = _name;
+	dev = d;
+}
+
+void AutomationVDE::activate()
+{
+	dev->openLock();
+	dev->releaseLock();
 }
 
 AutomationCommand2::AutomationCommand2(LightingDevice *d) :
