@@ -57,6 +57,16 @@ class GlobalProperties : public GlobalPropertiesCommon
 	// Screen calibration object
 	Q_PROPERTY(QObject *calibration READ getCalibration CONSTANT)
 
+	/*!
+		\brief Sets or gets URL used as home page for the browser
+	*/
+	Q_PROPERTY(QString homePageUrl READ getHomePageUrl WRITE setHomePageUrl NOTIFY homePageUrlChanged)
+
+	/*!
+		\brief Enables or disables history keeping
+	*/
+	Q_PROPERTY(bool keepingHistory READ getKeepingHistory WRITE setKeepingHistory NOTIFY keepingHistoryChanged)
+
 public:
 	GlobalProperties(logger *log);
 
@@ -70,6 +80,10 @@ public:
 	QObject *getBrowser() const;
 	QVariantList getCardStockImagesFolder() const;
 	QVariantList getBackgroundStockImagesFolder() const;
+	QString getHomePageUrl() const;
+	void setHomePageUrl(QString new_value);
+	bool getKeepingHistory() const;
+	void setKeepingHistory(bool new_value);
 
 	QObject *getDefaultExternalPlace() const;
 	Q_INVOKABLE QString getPIAddress() const;
@@ -88,6 +102,8 @@ public:
 	// configuration file parsing
 	Q_INVOKABLE void initAudio();
 
+	Q_INVOKABLE void deleteHistory();
+
 	void setPassword(QString password);
 	QString getPassword() const;
 
@@ -102,6 +118,8 @@ signals:
 	void passwordChanged();
 	void passwordEnabledChanged();
 	void audioVideoPlayerChanged();
+	void homePageUrlChanged();
+	void keepingHistoryChanged();
 
 private slots:
 	void beepChanged();
@@ -126,8 +144,8 @@ private:
 	HwKeys *hardware_keys;
 	Calibration *calibration;
 	QPoint max_travelled_distance;
-	QString password;
-	bool password_enabled;
+	QString password, home_page_url;
+	bool password_enabled, keeping_history;
 
 	QHash<int, int> pathview_offsets;
 };

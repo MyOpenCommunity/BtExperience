@@ -49,22 +49,53 @@ MenuColumn {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    PaginatorList {
-        id: paginator
-
-        currentIndex: -1
-        onCurrentPageChanged: column.closeChild()
-        delegate: MenuItemDelegate {
-            itemObject: quicklinksModel.getObject(index)
-            name: itemObject.description
+    Column {
+        MenuItem {
+            name: qsTr("Browser")
+            isSelected: privateProps.currentIndex === 1
             hasChild: true
-            onDelegateClicked: column.loadColumn(multimediaComponent, name, itemObject)
+            onClicked: {
+                paginator.currentIndex = -1
+                privateProps.currentIndex = 1
+                column.loadColumn(browserComponent, name)
+            }
         }
-        model: quicklinksModel
+
+        PaginatorList {
+            id: paginator
+
+            currentIndex: -1
+            onCurrentPageChanged: column.closeChild()
+            delegate: MenuItemDelegate {
+                itemObject: quicklinksModel.getObject(index)
+                name: itemObject.description
+                hasChild: true
+                onDelegateClicked: {
+                    privateProps.currentIndex = -1
+                    column.loadColumn(multimediaComponent, name, itemObject)
+                }
+            }
+            model: quicklinksModel
+        }
     }
 
     Component {
         id: multimediaComponent
         SettingsMultimediaQuicklinks {}
+    }
+
+    Component {
+        id: browserComponent
+        SettingsBrowser {}
+    }
+
+    onChildDestroyed: {
+        privateProps.currentIndex = -1
+        paginator.currentIndex = -1
+    }
+
+    QtObject {
+        id: privateProps
+        property int currentIndex: -1
     }
 }

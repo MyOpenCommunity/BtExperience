@@ -149,6 +149,8 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	screen_state = new ScreenState(this);
 	calibration = new Calibration(this);
 	browser = new BrowserProcess(this);
+	home_page_url = QString("http://www.google.com");
+	keeping_history = true;
 
 	if (!(*bt_global::config)[DEFAULT_PE].isEmpty())
 		default_external_place = new ExternalPlace(QString(), ObjectInterface::IdExternalPlace,
@@ -225,6 +227,37 @@ void GlobalProperties::initAudio()
 			audio_state->registerSoundDiffusionPlayer(player);
 		}
 	}
+}
+
+void GlobalProperties::deleteHistory()
+{
+	qWarning() << __PRETTY_FUNCTION__ << "not implemented yet!";
+}
+
+QString GlobalProperties::getHomePageUrl() const
+{
+	return home_page_url;
+}
+
+void GlobalProperties::setHomePageUrl(QString new_value)
+{
+	if (home_page_url == new_value)
+		return;
+	home_page_url = new_value;
+	emit homePageUrlChanged();
+}
+
+bool GlobalProperties::getKeepingHistory() const
+{
+	return keeping_history;
+}
+
+void GlobalProperties::setKeepingHistory(bool new_value)
+{
+	if (keeping_history == new_value)
+		return;
+	keeping_history = new_value;
+	emit keepingHistoryChanged();
 }
 
 void GlobalProperties::parseSettings()
