@@ -130,7 +130,6 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul", 0);
-	int def_cid = getIntAttribute(obj, "cid");
 	QString def_mode = getAttribute(obj, "mode");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
@@ -147,7 +146,8 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 		
 		AutomationDevice *d = bt_global::add_device_to_cache(new AutomationDevice(where, pul));
 
-		switch (cid){
+		switch (cid)
+		{
 			case ObjectInterface::CidAutomation3OpenClose:
 				if (mode.toInt()!=0) obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3OpenCloseSafe, d));
 				else obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3OpenClose, d));
@@ -169,7 +169,6 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 	QList<ObjectPair> obj_list;
 	// extract default values
 	QString def_descr = getAttribute(obj, "descr");
-	int def_cid = getIntAttribute(obj, "cid");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -192,7 +191,8 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 
 			items.append(item);
 		}
-		switch (cid){
+		switch (cid)
+		{
 			case ObjectInterface::CidAutomationGroup3OpenClose:
 				obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3OpenClose, convertQObjectList<AutomationCommand3 *>(items)));
 				break;
