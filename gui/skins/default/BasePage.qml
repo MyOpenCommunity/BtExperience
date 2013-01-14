@@ -9,15 +9,6 @@ Image {
     property alias popupLoader: popupLoader
     property alias constants: constants
 
-    width: 1024
-    height: 600
-    sourceSize.width: 1024
-    sourceSize.height: 600
-
-    // Warning: this property is an internal detail, it's not part of the public
-    // interface
-    property string _pageName: ""
-
     // The alert management and API.
     function showAlert(sourceElement, message) {
         popupLoader.setComponent(alertComponent, {"message": message, "source": sourceElement})
@@ -27,19 +18,6 @@ Image {
 
     function closeAlert() {
         closePopup()
-    }
-
-    Component {
-        id: alertComponent
-        Alert {
-        }
-    }
-
-    Connections {
-        id: popupConnection
-        target: null
-        onClosePopup: closePopup()
-        ignoreUnknownSignals: true
     }
 
     // Warning: please note that popupLoader doesn't take ownership of the
@@ -94,6 +72,28 @@ Image {
             animation.popOut.complete()
             animation.popOut.start()
         }
+    }
+
+    width: 1024
+    height: 600
+    sourceSize.width: 1024
+    sourceSize.height: 600
+
+    // Warning: this property is an internal detail, it's not part of the public
+    // interface
+    property string _pageName: ""
+
+    Component {
+        id: alertComponent
+        Alert {
+        }
+    }
+
+    Connections {
+        id: popupConnection
+        target: null
+        onClosePopup: closePopup()
+        ignoreUnknownSignals: true
     }
 
     // When the interval between two popups installations is smaller than the
