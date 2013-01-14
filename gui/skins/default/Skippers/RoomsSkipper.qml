@@ -16,7 +16,7 @@ Item {
 
     function pageSkip() {
         if (roomModel.count === 1)
-            return {"page": "Room.qml", "properties": {room: roomModel.getObject(0), floorUii: floorsModel.getObject(0).uii}}
+            return {"page": "Room.qml", "properties": {room: roomModel.getObject(0)}}
 
         return {"page": "", "properties": {}}
     }

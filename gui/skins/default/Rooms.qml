@@ -9,20 +9,18 @@ import "js/Stack.js" as Stack
 Page {
     id: mainarea
 
-    property int floorUii
-
     source : global.guiSettings.homeBgImage
     text: qsTr("rooms")
 
     MediaModel {
-        source: myHomeModels.rooms
-        id: roomsModel
-        containers: [floorUii]
+        source: myHomeModels.floors
+        id: floorsModel
     }
 
     MediaModel {
-        source: myHomeModels.floors
-        id: floorsModel
+        source: myHomeModels.rooms
+        id: roomsModel
+        containers: [floorsModel.getObject(0).uii]
     }
 
     ControlPathView {
@@ -47,7 +45,7 @@ Page {
         }
         pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
         arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
-        onClicked: Stack.goToPage("Room.qml", {'room': delegate, 'floorUii': mainarea.floorUii})
+        onClicked: Stack.goToPage("Room.qml", {'room': delegate, 'floorUii': privateProps.floorUii})
     }
 
     CardView {
@@ -65,7 +63,7 @@ Page {
             source: itemObject.cardImageCached
             label: itemObject.description
 
-            onClicked: Stack.goToPage("Room.qml", {'room': itemObject, 'floorUii': mainarea.floorUii})
+            onClicked: Stack.goToPage("Room.qml", {'room': itemObject, 'floorUii': privateProps.floorUii})
         }
 
         delegateSpacing: 40
@@ -101,12 +99,18 @@ Page {
         }
 
         onCurrentIndexChanged: {
-            mainarea.floorUii = floorsModel.getObject(currentIndex).uii
+            roomsModel.containers = [floorsModel.getObject(currentIndex).uii]
+            privateProps.floorUii = floorsModel.getObject(currentIndex).uii
         }
 
         model: floorsModel
     }
 
+    QtObject {
+        id: privateProps
+
+        property int floorUii
+    }
 }
 
 
