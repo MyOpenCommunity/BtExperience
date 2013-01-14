@@ -97,6 +97,9 @@ public:
 	Q_INVOKABLE void prevPhoto();
 	Q_INVOKABLE void nextPhoto();
 
+public slots:
+	virtual void terminate();
+
 signals:
 	// the following is needed because I didn't manage to compile if using currentChanged directly
 	void fileNameChanged();
