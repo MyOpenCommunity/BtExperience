@@ -12,7 +12,11 @@
 
 #include <QtDebug>
 
+#if defined(BT_HARDWARE_DM3730)
+#define QWS_MOUSE_FILTER 1
+#else
 #define QWS_MOUSE_FILTER 5  // Qt default
+#endif
 
 namespace
 {
