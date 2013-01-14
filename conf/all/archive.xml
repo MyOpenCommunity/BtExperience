@@ -14,6 +14,9 @@
 		<ist uii="19" cid="3001" descr="room 1" where="1" />
 		<ist uii="20" cid="3000" descr="General" />
 	</obj>
+	<obj cid="3005" id="3008" dev="2" where="11" descr="1 State Actuator" type="0" time="00*00*01">
+		<ist uii="21" descr="Lock vde" type="1" where="13" />
+	</obj>
 	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="2">
 		<ist uii="1" descr="lamp downstair" where="11#4#01" />
 		<ist uii="2" descr="lamp upstair"  where="12" pul="1" />
