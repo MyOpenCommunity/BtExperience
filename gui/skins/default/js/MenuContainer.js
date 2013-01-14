@@ -97,6 +97,8 @@ function closeLastItem() {
     }
 }
 
+var NOTIFY_CHILD_DESTROYED = true
+
 function closeItem(menuLevel) {
     if (pendingOperations.length > 0) // we are during an operation
         return
@@ -109,29 +111,34 @@ function closeItem(menuLevel) {
     mainContainer.interactive = false
 
     debugMsg("closeItem level to close: " + menuLevel)
-    for (var i = stackObjects.length - 1; i >= menuLevel; i--) {
-        pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': true})
-    }
+    _closeItems(menuLevel, NOTIFY_CHILD_DESTROYED)
 
     pendingOperations.push({'id': OP_UPDATE_UI})
     processOperations()
 }
 
-
-function _addItem(item, title, shadow) {
-    mainContainer.interactive = false
-    debugMsg("_addItem level: " + item.menuLevel)
-    for (var i = stackObjects.length - 1; i >= item.menuLevel; i--) {
-        pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': false})
+function _closeItems(targetLevel, notifyChildDestroyed) {
+    notifyChildDestroyed = notifyChildDestroyed || false
+    var removingObjectsWidth = 0
+    for (var i = stackObjects.length - 1; i >= targetLevel; i--) {
         // Here we must remember to update the UI once in a while to avoid that
         // the menus are closed behind the clipping container.
         // Example: enter the energy goal settings, then click on the alarm
         // clock in the toolbar
-        //
-        // Heuristic: only update the UI every 2 closed menus
-        if (i & 0x01)
+        removingObjectsWidth += stackObjects[i].item.width
+        if (removingObjectsWidth > mainContainer.width) {
+            debugMsg("Removing width of elements is too much, adding an UPDATE_UI op")
             pendingOperations.push({'id': OP_UPDATE_UI})
+            removingObjectsWidth = 0
+        }
+        pendingOperations.push({'id': OP_CLOSE, 'notifyChildDestroyed': notifyChildDestroyed})
     }
+}
+
+function _addItem(item, title, shadow) {
+    mainContainer.interactive = false
+    debugMsg("_addItem level: " + item.menuLevel)
+    _closeItems(item.menuLevel)
 
     pendingOperations.push({'id': OP_UPDATE_UI, 'newItem': item})
     pendingOperations.push({'id': OP_OPEN, 'item': item, 'title': title, 'shadow': shadow})
