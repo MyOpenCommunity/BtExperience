@@ -5,6 +5,7 @@
 #include "xml_functions.h"
 #include "devices_cache.h"
 #include "uiimapper.h"
+#include "xmlobject.h"
 
 #include <QDebug>
 #include <QStringList>
@@ -43,31 +44,23 @@ QList<ObjectPair> parseAutomationVDE(const QDomNode &obj)
 }
 
 
-
 QList<ObjectPair> parseAutomation2(const QDomNode &obj)
 {
 	QList<ObjectPair> obj_list;
-	// extract default values
-	QString def_descr = getAttribute(obj, "descr");
-	QString def_where = getAttribute(obj, "where");
-	int def_pul = getIntAttribute(obj, "pul", 0);
-	QTime def_ctime = getTimeAttribute(obj, "ctime");
-	Light::FixedTimingType def_ftime = static_cast<Light::FixedTimingType>(getIntAttribute(obj, "ftime"));
-	int def_ectime = getIntAttribute(obj, "ectime", 0);
-	int myid = getIntAttribute(obj, "id");
+	XmlObject v(obj);
+	int id = getIntAttribute(obj, "id");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
+		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		QString descr = getAttribute(ist, "descr", def_descr);
-		QString where = getAttribute(ist, "where", def_where);
-		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
-		QTime ctime = getTimeAttribute(ist, "ctime", def_ctime);
-		Light::FixedTimingType ftime = static_cast<Light::FixedTimingType>(getIntAttribute(ist, "ftime", def_ftime));
-		int ectime = getIntAttribute(ist, "ectime", def_ectime);
+
+		QString where = v.value("where");
+		PullMode pul = v.intValue("pul") ? PULL : NOT_PULL;
+		Light::FixedTimingType ftime = v.intValue<Light::FixedTimingType>("ftime");
 
 		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
-		obj_list << ObjectPair(uii, new AutomationLight(descr, where, ctime, ftime, ectime, d, myid));
+		obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, v.timeValue("ctime"), ftime, v.intValue("ectime"), d, id));
 	}
 
 	return obj_list;

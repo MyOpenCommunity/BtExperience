@@ -57,6 +57,11 @@ public:
 		return getDoubleAttribute(ist, name, objDoubleValue(name).toDouble());
 	}
 
+	QTime timeValue(const QString &name) const
+	{
+		return getTimeAttribute(ist, name, objTimeValue(name).toTime());
+	}
+
 	template<class T>
 	T intValue(const QString &name) const
 	{
@@ -86,6 +91,14 @@ private:
 			return cache.value(name);
 
 		return cache[name] = getDoubleAttribute(obj, name);
+	}
+
+	QVariant objTimeValue(const QString &name) const
+	{
+		if (cache.contains(name))
+			return cache.value(name);
+
+		return cache[name] = getTimeAttribute(obj, name);
 	}
 
 	mutable QHash<QString, QVariant> cache;

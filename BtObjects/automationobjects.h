@@ -33,9 +33,13 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 
 class AutomationLight: public Light
 {
+	Q_OBJECT
+
 public:
 	AutomationLight(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, LightingDevice *d, int _myid);
+
 	int getObjectId() const;
+
 protected:
 	int myid;
 };
