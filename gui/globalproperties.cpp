@@ -317,7 +317,6 @@ QVariantList GlobalProperties::getCardStockImagesFolder() const
 	QStringList base_list = base.split("/");
 	foreach (const QString &comp, base_list)
 		result.append(comp);
-	result.append("images");
 #else
 	QString extra = getExtraPath();
 	QStringList extra_list = extra.split("/");
@@ -326,7 +325,7 @@ QVariantList GlobalProperties::getCardStockImagesFolder() const
 	result.append("1");
 #endif
 
-	result.append("card");
+	result << "images" << "card";
 
 	return result;
 }
@@ -340,7 +339,6 @@ QVariantList GlobalProperties::getBackgroundStockImagesFolder() const
 	QStringList base_list = base.split("/");
 	foreach (const QString &comp, base_list)
 		result.append(comp);
-	result.append("images");
 #else
 	QString extra = getExtraPath();
 	QStringList extra_list = extra.split("/");
@@ -348,8 +346,7 @@ QVariantList GlobalProperties::getBackgroundStockImagesFolder() const
 		result.append(comp);
 	result.append("1");
 #endif
-
-	result.append("background");
+	result << "images" << "background";
 
 	return result;
 }
