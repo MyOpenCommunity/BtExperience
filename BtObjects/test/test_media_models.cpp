@@ -137,7 +137,7 @@ void TestMediaModel::testRemove2()
 	obj->remove(1);
 	obj->remove(0);
 	qApp->processEvents();
-	ts.checkSignalCount(SIGNAL(countChanged()), 4);
+	ts.checkSignalCount(SIGNAL(countChanged()), 2);
 
 	QCOMPARE(obj->getCount(), 0);
 	QCOMPARE(obj->getRangeCount(), 0);
@@ -221,7 +221,7 @@ void TestMediaModel::testRemoveAll()
 
 	obj->clear();
 	qApp->processEvents();
-	ts.checkSignalCount(SIGNAL(countChanged), 5);
+	ts.checkSignalCount(SIGNAL(countChanged), 1);
 
 	QCOMPARE(obj->getCount(), 0);
 	QCOMPARE(obj->rowCount(), 0);
@@ -252,7 +252,7 @@ void TestMediaModel::testRemoveAllFiltered()
 
 	obj->clear();
 	qApp->processEvents();
-	ts.checkSignalCount(SIGNAL(countChanged), 3);
+	ts.checkSignalCount(SIGNAL(countChanged), 1);
 
 	QCOMPARE(obj->getCount(), 0);
 	QCOMPARE(obj->rowCount(), 0);
@@ -278,7 +278,7 @@ void TestMediaModel::testRemoveAllWithRange()
 
 	obj->clear();
 	qApp->processEvents();
-	ts.checkSignalCount(SIGNAL(countChanged), 6);
+	ts.checkSignalCount(SIGNAL(countChanged), 2);
 
 	QCOMPARE(obj->getCount(), 0);
 	QCOMPARE(obj->rowCount(), 0);

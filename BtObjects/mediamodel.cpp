@@ -131,6 +131,7 @@ MediaModel::MediaModel(QObject *parent)
 	min_range = -1;
 	max_range = -1;
 	counter = 0;
+	pending_reset = false;
 	connect(this, SIGNAL(modelAboutToBeReset()), SLOT(resetCounter()));
 }
 
@@ -257,6 +258,7 @@ void MediaModel::resetCounter()
 
 void MediaModel::resetFilter()
 {
+	pending_reset = false;
 	reset();
 	emit countChanged();
 }
@@ -272,6 +274,9 @@ void MediaModel::waitResetFilter()
 	// reacting to a row change: if we reset() and emit, a new calculation is
 	// triggered before the base class has finished doing its things.
 	// This instruction lets the base class finish its work before.
+	if (pending_reset)
+		return;
+	pending_reset = true;
 	QTimer::singleShot(0, this, SLOT(resetFilter()));
 }
 
