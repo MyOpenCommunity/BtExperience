@@ -121,7 +121,7 @@
 		<ist uii="30403" id="14253" />
 	</obj>
 	<!-- tele loop enable -->
-	<obj cid="14254" id="14254" enable="0">
+	<obj cid="14254" id="14254" enable="0" mode="0">
 		<ist uii="30404" id="14254" />
 	</obj>
 	<!-- External unit video settings -->
