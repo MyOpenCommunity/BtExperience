@@ -11,10 +11,6 @@ Page {
     property int index
     property bool upnp
 
-    source: "images/background/multimedia.jpg"
-    showSystemsButton: true
-    text: qsTr("Photo")
-
     Rectangle {
         id: fullScreenBg
 
@@ -207,11 +203,6 @@ Page {
 
     ScreenStateHandler {
         id: forceScreenOn
-    }
-
-
-    function backButtonClicked() {
-        Stack.backToMultimedia()
     }
 
     Component.onCompleted: player.upnp ?
