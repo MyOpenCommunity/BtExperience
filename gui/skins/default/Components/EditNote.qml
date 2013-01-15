@@ -11,6 +11,7 @@ SvgImage {
 
     property alias text: edit.text
     property alias title: titleLabel.text
+    property int maxLength: 0
 
     function setInitialText(t) {
         text = t
@@ -69,6 +70,12 @@ SvgImage {
                 wrapMode: TextEdit.Wrap
                 onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
                 onTextChanged: {
+                    if (maxLength > 0) { // limit length to max if defined
+                        var p = edit.cursorPosition
+                        if (text.length > maxLength)
+                            text = text.slice(0, maxLength)
+                        edit.cursorPosition = Math.min(p, text.length)
+                    }
                     if (initialized)
                         return
                     edit.cursorPosition = text.length

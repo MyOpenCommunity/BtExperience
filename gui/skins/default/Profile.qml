@@ -241,6 +241,7 @@ Page {
                 privateProps.unselectObj()
             }
             onCancelClicked: privateProps.unselectObj()
+            maxLength: 130
         }
     }
 
@@ -253,6 +254,7 @@ Page {
                 privateProps.unselectObj()
             }
             onCancelClicked: privateProps.unselectObj()
+            maxLength: 130
         }
     }
 
