@@ -227,23 +227,27 @@ void GuiSettings::setSkin(Skin s)
 
 	skin = s;
 	emit skinChanged();
+
+	// resets home background image to right value for skin
+	setHomeBgImage(QString(""));
 }
 
 QString GuiSettings::getHomeBgImage() const
 {
-	// if a custom background exists, returns it
-	if (!home_bg_image.isEmpty())
-		return home_bg_image;
-
-	// no custom background is set, choose a standard one based on actual skin
-	if (getSkin() == Dark)
-		return QString("images/background/home_dark.jpg");
-
-	return QString("images/background/home.jpg");
+	return home_bg_image;
 }
 
 void GuiSettings::setHomeBgImage(QString new_value)
 {
+	if (new_value.isEmpty())
+	{
+		// empty string means default one which is dependent on skin
+		if (getSkin() == Clear)
+			new_value = QString("images/background/home.jpg");
+		else
+			new_value = QString("images/background/home_dark.jpg");
+	}
+
 	if (home_bg_image == new_value)
 		return;
 
