@@ -8,6 +8,8 @@ Image {
 
     property alias popupLoader: popupLoader
     property alias constants: constants
+    // Warning: this property must be considered constant.
+    property string _pageName: ""
 
     // The alert management and API.
     function showAlert(sourceElement, message) {
@@ -78,10 +80,6 @@ Image {
     height: 600
     sourceSize.width: 1024
     sourceSize.height: 600
-
-    // Warning: this property is an internal detail, it's not part of the public
-    // interface
-    property string _pageName: ""
 
     MouseArea {
         id: blockClicks

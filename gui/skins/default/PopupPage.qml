@@ -17,6 +17,7 @@ BasePage {
     id: page
 
     opacity: 0
+    _pageName: "PopupPage"
 
     Timer {
         id: dismissTimer

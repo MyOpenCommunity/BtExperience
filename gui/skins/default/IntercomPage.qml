@@ -13,6 +13,7 @@ BasePage {
     property variant callObject
 
     opacity: 0
+    _pageName: "IntercomPage"
 
     Component {
         id: popupComponent
