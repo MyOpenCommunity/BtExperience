@@ -16,9 +16,16 @@ void TestScreenState::cleanup()
 	delete obj;
 }
 
-bool TestScreenState::filterClick()
+bool TestScreenState::filterPress()
 {
 	QEvent ev(QEvent::MouseButtonPress);
+
+	return obj->eventFilter(this, &ev);
+}
+
+bool TestScreenState::filterRelease()
+{
+	QEvent ev(QEvent::MouseButtonRelease);
 
 	return obj->eventFilter(this, &ev);
 }
@@ -101,7 +108,7 @@ void TestScreenState::testInvalidClick()
 {
 	QCOMPARE(obj->getState(), ScreenState::Invalid);
 
-	QVERIFY(!filterClick());
+	QVERIFY(!filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::Invalid);
 	QVERIFY(!obj->screensaver_timer->isActive());
 }
@@ -111,7 +118,7 @@ void TestScreenState::testScreenOffClick()
 	obj->enableState(ScreenState::ScreenOff);
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 
-	QVERIFY(filterClick());
+	QVERIFY(filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::Normal);
 	QVERIFY(obj->screensaver_timer->isActive());
 }
@@ -122,7 +129,7 @@ void TestScreenState::testNormalClick()
 	obj->enableState(ScreenState::Normal);
 	QCOMPARE(obj->getState(), ScreenState::Normal);
 
-	QVERIFY(!filterClick());
+	QVERIFY(!filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::Normal);
 	QVERIFY(obj->screensaver_timer->isActive());
 }
@@ -134,7 +141,7 @@ void TestScreenState::testFreezeClick()
 	obj->enableState(ScreenState::Freeze);
 	QCOMPARE(obj->getState(), ScreenState::Freeze);
 
-	QVERIFY(filterClick());
+	QVERIFY(filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::Normal);
 	QVERIFY(obj->screensaver_timer->isActive());
 }
@@ -146,7 +153,7 @@ void TestScreenState::testForceNormalClick()
 	obj->enableState(ScreenState::ForcedNormal);
 	QCOMPARE(obj->getState(), ScreenState::ForcedNormal);
 
-	QVERIFY(!filterClick());
+	QVERIFY(!filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::ForcedNormal);
 	QVERIFY(!obj->screensaver_timer->isActive());
 }
@@ -158,7 +165,7 @@ void TestScreenState::testPasswordCheckClick()
 	obj->enableState(ScreenState::PasswordCheck);
 	QCOMPARE(obj->getState(), ScreenState::PasswordCheck);
 
-	QVERIFY(!filterClick());
+	QVERIFY(!filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::PasswordCheck);
 	QVERIFY(obj->password_timer->isActive());
 }
@@ -170,7 +177,7 @@ void TestScreenState::testCalibrationClick()
 	obj->enableState(ScreenState::Calibration);
 	QCOMPARE(obj->getState(), ScreenState::Calibration);
 
-	QVERIFY(!filterClick());
+	QVERIFY(!filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::Calibration);
 	QVERIFY(!obj->screensaver_timer->isActive());
 }
@@ -183,7 +190,7 @@ void TestScreenState::testScreenOffLockedClick()
 	obj->enableState(ScreenState::ScreenOff);
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 
-	QVERIFY(filterClick());
+	QVERIFY(filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	t.checkSignals();
@@ -199,7 +206,7 @@ void TestScreenState::testFreezeLockedClick()
 	obj->enableState(ScreenState::Freeze);
 	QCOMPARE(obj->getState(), ScreenState::Freeze);
 
-	QVERIFY(filterClick());
+	QVERIFY(filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::Freeze);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	t.checkSignals();
@@ -215,7 +222,7 @@ void TestScreenState::testForceNormalLockedClick()
 	obj->enableState(ScreenState::ForcedNormal);
 	QCOMPARE(obj->getState(), ScreenState::ForcedNormal);
 
-	QVERIFY(filterClick());
+	QVERIFY(filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::ForcedNormal);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	t.checkSignals();
@@ -230,7 +237,7 @@ void TestScreenState::testPasswordCheckLockedClick()
 	obj->enableState(ScreenState::PasswordCheck);
 	QCOMPARE(obj->getState(), ScreenState::PasswordCheck);
 
-	QVERIFY(!filterClick());
+	QVERIFY(!filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::PasswordCheck);
 	QVERIFY(obj->password_timer->isActive());
 	t.checkNoSignals();
@@ -246,7 +253,7 @@ void TestScreenState::testUnlockSequence()
 
 	// user click
 
-	QVERIFY(filterClick());
+	QVERIFY(filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(!obj->password_timer->isActive());
@@ -259,7 +266,7 @@ void TestScreenState::testUnlockSequence()
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(obj->password_timer->isActive());
 
-	QVERIFY(!filterClick());
+	QVERIFY(!filterRelease());
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(obj->password_timer->isActive());
 	t.checkNoSignals();
@@ -275,7 +282,7 @@ void TestScreenState::testUnlockSequence()
 
 	// user click
 
-	QVERIFY(filterClick());
+	QVERIFY(filterRelease());
 	QCOMPARE(obj->getState(), ScreenState::ScreenOff);
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(!obj->password_timer->isActive());
@@ -288,7 +295,7 @@ void TestScreenState::testUnlockSequence()
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(obj->password_timer->isActive());
 
-	QVERIFY(!filterClick());
+	QVERIFY(!filterRelease());
 	QVERIFY(!obj->screensaver_timer->isActive());
 	QVERIFY(obj->password_timer->isActive());
 	t.checkNoSignals();
@@ -300,9 +307,23 @@ void TestScreenState::testUnlockSequence()
 	QVERIFY(obj->screensaver_timer->isActive());
 	QVERIFY(!obj->password_timer->isActive());
 
-	QVERIFY(!filterClick());
+	QVERIFY(!filterRelease());
 	QVERIFY(obj->screensaver_timer->isActive());
 	QVERIFY(!obj->password_timer->isActive());
 	t.checkNoSignals();
+}
 
+void TestScreenState::testNoScreensaverOnPress()
+{
+	obj->enableState(ScreenState::ScreenOff);
+	obj->enableState(ScreenState::Normal);
+	QCOMPARE(obj->getState(), ScreenState::Normal);
+
+	QVERIFY(!filterPress());
+	QCOMPARE(obj->getState(), ScreenState::Normal);
+	QVERIFY(!obj->screensaver_timer->isActive());
+
+	QVERIFY(!filterRelease());
+	QCOMPARE(obj->getState(), ScreenState::Normal);
+	QVERIFY(obj->screensaver_timer->isActive());
 }

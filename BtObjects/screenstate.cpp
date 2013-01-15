@@ -57,6 +57,7 @@ ScreenState::ScreenState(QObject *parent) : QObject(parent)
 {
 	current_state = Invalid;
 	normal_brightness = 100;
+	screen_pressed = false;
 	contrast = 100;
 	password_enabled = screen_locked = false;
 	for (int i = 0; i < StateCount; ++i)
@@ -259,7 +260,7 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 	// manage screensaver timer
 	if (current_state == Normal)
 	{
-		if (!screensaver_timer->isActive())
+		if (!screensaver_timer->isActive() && !screen_pressed)
 			screensaver_timer->start();
 	}
 	else
@@ -267,7 +268,7 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 
 	if (current_state == PasswordCheck)
 	{
-		if (!password_timer->isActive())
+		if (!password_timer->isActive() && !screen_pressed)
 			password_timer->start();
 	}
 	else
@@ -297,6 +298,14 @@ void ScreenState::stopPassword()
 	disableState(PasswordCheck);
 }
 
+void ScreenState::setTimerEnabled(QTimer *timer, bool enabled)
+{
+	if (enabled)
+		timer->start();
+	else
+		timer->stop();
+}
+
 bool ScreenState::updatePressTime()
 {
 	if (screen_locked && current_state != PasswordCheck)
@@ -309,10 +318,10 @@ bool ScreenState::updatePressTime()
 	switch (current_state)
 	{
 	case Normal:
-		screensaver_timer->start();
+		setTimerEnabled(screensaver_timer, !screen_pressed);
 		return false;
 	case PasswordCheck:
-		password_timer->start();
+		setTimerEnabled(password_timer, !screen_pressed);
 		return false;
 	case ForcedNormal:
 	case Calibration:
@@ -338,7 +347,11 @@ bool ScreenState::eventFilter(QObject *obj, QEvent *ev)
 	if (ev->type() == QEvent::MouseButtonPress ||
 	    ev->type() == QEvent::MouseButtonRelease ||
 	    ev->type() == QEvent::MouseButtonDblClick)
+	{
+		screen_pressed = ev->type() != QEvent::MouseButtonRelease;
+
 		return updatePressTime();
+	}
 
 	return false;
 }
