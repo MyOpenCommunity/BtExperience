@@ -5,16 +5,13 @@ AmplifierSettings 1.0 AmplifierSettings.qml
 ControlFMRadio 1.0 ControlFMRadio.qml
 ControlIPRadio 1.0 ControlIPRadio.qml
 ControlMediaPlayer 1.0 ControlMediaPlayer.qml
-DirectoryBrowser 1.0 DirectoryBrowser.qml
 GeneralAmbient 1.0 GeneralAmbient.qml
 IpRadioList 1.0 IpRadioList.qml
 Loudness 1.0 Loudness.qml
 PowerAmplifier 1.0 PowerAmplifier.qml
-SongBrowser 1.0 SongBrowser.qml
-SongBrowserDelegate 1.0 SongBrowserDelegate.qml
 SoundAmbient 1.0 SoundAmbient.qml
 SoundDiffusionSystem 1.0 SoundDiffusionSystem.qml
 SourceControl 1.0 SourceControl.qml
 SourceList 1.0 SourceList.qml
-UPnPBrowser 1.0 UPnPBrowser.qml
+SpecialAmbient 1.0 SpecialAmbient.qml
 VolumeGeneral 1.0 VolumeGeneral.qml

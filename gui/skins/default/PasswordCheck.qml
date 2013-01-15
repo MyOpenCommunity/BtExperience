@@ -10,6 +10,7 @@ BasePage {
     id: control
 
     source : global.guiSettings.homeBgImage
+    _pageName: "PasswordCheck"
 
     SvgImage {
         id: passwordRect

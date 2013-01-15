@@ -15,6 +15,7 @@ Page {
 
     source: "images/background/videocitofonia.jpg"
     showSystemsButton: true
+    _pageName: "VideoCamera"
 
     Connections {
         id: connDataObject
