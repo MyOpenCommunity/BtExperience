@@ -53,7 +53,7 @@
 			<link uii="105" />
 		</ist>
 	</container>
-    <container descr="Home page" id="17" img="" img_type="0">
+    <container descr="Home page" id="17" img="images/background/home.jpg" img_type="0">
         <ist uii="316">
         </ist>
     </container>
