@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-        <obj cid="8001" id="8001" descr="99 Zones Control Unit">
+        <obj cid="8001" id="8001" descr="99 Zones Control Unit" mode="31">
 		<ist uii="2001" descr="unità centrale">
 			<programs>
 				<program descr="Winter program" type="0" num="2" />

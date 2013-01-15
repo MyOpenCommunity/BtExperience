@@ -13,7 +13,7 @@
 	<obj cid="8007" id="8007" descr="Zona 4" where="4" fancoil="0" >
 		<ist uii="3017" descr="Zona 3 - CU 2" where="15" />
 	</obj>
-	<obj cid="8003" id="8003" descr="Control Unit" where="1" >
+	<obj cid="8003" id="8003" descr="Control Unit" where="1" mode="31">
 		<ist uii="3001" descr="4 zones CU 1" where="4">
 			<zones>
 				<link uii="3012" />
