@@ -13,9 +13,6 @@ Page {
     property int containerId: -1
     property string type: "browser"
 
-    source: "images/background/multimedia.jpg"
-    text: qsTr("multimedia")
-
     function multimediaButtonClicked() {
         Stack.backToMultimedia()
     }
@@ -24,6 +21,12 @@ Page {
         Stack.backToMultimedia()
     }
 
+    function backButtonClicked() {
+        Stack.backToMultimedia()
+    }
+
+    source: "images/background/multimedia.jpg"
+    text: qsTr("multimedia")
     showMultimediaButton: true
 
     SystemsModel { id: linksModel; systemId: page.containerId; source: myHomeModels.mediaContainers }
@@ -125,7 +128,5 @@ Page {
         }
     }
 
-    function backButtonClicked() {
-        Stack.backToMultimedia()
-    }
+
 }
