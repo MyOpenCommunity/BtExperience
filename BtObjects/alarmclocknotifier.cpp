@@ -23,8 +23,8 @@ AlarmClockNotifier::AlarmClockNotifier()
 		addAlarmClockConnections(alarm);
 	}
 
-	// inits everything
-	updateAlarmClocksInfo();
+	// called at startup by the filter above
+	connect(alarm_clocks_model, SIGNAL(modelReset()), this, SLOT(updateAlarmClocksInfo()));
 }
 
 bool AlarmClockNotifier::isAlarmActive() const

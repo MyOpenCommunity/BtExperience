@@ -346,10 +346,6 @@ Item {
         }
     }
 
-    function updateClocksInfo() {
-        privateProps.clocksModel.updateAlarmClocksInfo()
-    }
-
     QtObject {
         id: privateProps
 

@@ -62,7 +62,6 @@ MenuColumn {
 
                 onClicked: {
                     objectModel.remove(column.dataModel)
-                    EventManager.eventManager.updateClocksInfo()
                     column.closeColumn()
                 }
                 status: 0
