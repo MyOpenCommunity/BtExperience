@@ -2,6 +2,7 @@ Amplifier 1.0 Amplifier.qml
 AmplifierEqualizer 1.0 AmplifierEqualizer.qml
 AmplifierGeneral 1.0 AmplifierGeneral.qml
 AmplifierSettings 1.0 AmplifierSettings.qml
+ControlAudio 1.0 ControlAudio.qml
 ControlFMRadio 1.0 ControlFMRadio.qml
 ControlIPRadio 1.0 ControlIPRadio.qml
 ControlMediaPlayer 1.0 ControlMediaPlayer.qml

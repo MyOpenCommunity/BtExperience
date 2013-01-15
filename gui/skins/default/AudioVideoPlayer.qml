@@ -4,6 +4,7 @@ import BtExperience 1.0
 import Components 1.0
 import Components.Popup 1.0
 import Components.Text 1.0
+import Components.SoundDiffusion 1.0
 
 import "js/Stack.js" as Stack
 
@@ -280,79 +281,16 @@ Page {
         onClicked: Stack.backToPage("Devices.qml")
     }
 
-    Item {
-        // I used an Item to define some specific states for the buttonMute
-        // please note that buttonMute is a ButtonImageThreeStates so it defines
-        // its internal states, it is neither possible nor desirable to redefine
-        // these internal states
-        id: buttonMuteItem
-
-        width: buttonMute.width
-        height: buttonMute.height
-
-        anchors {
-            top: playerControl.top
-            right: buttonMinus.left
-            rightMargin: frameBg.width / 100 * 1.90
-        }
-
-        ButtonImageThreeStates {
-            id: buttonMute
-
-            defaultImageBg: "images/common/btn_45x35.svg"
-            pressedImageBg: "images/common/btn_45x35_P.svg"
-            shadowImage: "images/common/btn_shadow_45x35.svg"
-            defaultImage: "images/common/ico_mute.svg"
-            pressedImage: "images/common/ico_mute.svg"
-            anchors.centerIn: parent
-
-            onClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
-        }
-
-        state: player.mediaPlayer.mute ? "mute" : ""
-
-        states: [
-            State {
-                name: "mute"
-                PropertyChanges {
-                    target: buttonMute
-                    defaultImage: "images/common/ico_mute_on.svg"
-                    pressedImage: "images/common/ico_mute_on.svg"
-                }
-            }
-        ]
-    }
-
-    ButtonImageThreeStates {
-        id: buttonMinus
-        defaultImageBg: "images/common/btn_45x35.svg"
-        pressedImageBg: "images/common/btn_45x35_P.svg"
-        shadowImage: "images/common/btn_shadow_45x35.svg"
-        defaultImage: "images/common/ico_meno.svg"
-        pressedImage: "images/common/ico_meno_P.svg"
-        onClicked: player.mediaPlayer.decrementVolume()
-        repetitionOnHold: true
-        anchors {
-            top: playerControl.top
-            right: buttonPlus.left
-            rightMargin: frameBg.width / 100 * 0.58
-        }
-    }
-
-    ButtonImageThreeStates {
-        id: buttonPlus
-        defaultImageBg: "images/common/btn_45x35.svg"
-        pressedImageBg: "images/common/btn_45x35_P.svg"
-        shadowImage: "images/common/btn_shadow_45x35.svg"
-        defaultImage: "images/common/ico_piu.svg"
-        pressedImage: "images/common/ico_piu_P.svg"
-        onClicked: player.mediaPlayer.incrementVolume()
-        repetitionOnHold: true
+    ControlAudio {
         anchors {
             top: playerControl.top
             right: player.isVideo ? fullScreenToggle.left : bottomBarBg.right
             rightMargin: player.isVideo ? frameBg.width / 100 * 1.90 : frameBg.width / 100 * 2.48
         }
+        isPlayerMute: player.mediaPlayer.mute
+        onMuteClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
+        onDecrementVolume: player.mediaPlayer.decrementVolume()
+        onIncrementVolume: player.mediaPlayer.incrementVolume()
     }
 
     ButtonImageThreeStates {
