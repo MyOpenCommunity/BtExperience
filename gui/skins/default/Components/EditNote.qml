@@ -72,9 +72,15 @@ SvgImage {
                 onTextChanged: {
                     if (maxLength > 0) { // limit length to max if defined
                         var p = edit.cursorPosition
-                        if (text.length > maxLength)
-                            text = text.slice(0, maxLength)
-                        edit.cursorPosition = Math.min(p, text.length)
+                        if (text.length > maxLength) {
+                            // removes p-th character (last inserted)
+                            var pre = text.slice(0, p - 1)
+                            var post = text.slice(p, text.length)
+                            text = pre + post
+                            // repositions cursor on right character
+                            edit.cursorPosition = p - 1
+                            return
+                        }
                     }
                     if (initialized)
                         return
@@ -84,6 +90,19 @@ SvgImage {
                 containerWidget: bg
             }
         }
+    }
+
+    UbuntuLightText {
+        anchors {
+            left: parent.left
+            leftMargin: 10
+            verticalCenter: buttonsRow.verticalCenter
+        }
+        horizontalAlignment: Text.AlignLeft
+        font.pixelSize: 14
+        color: "white"
+        text: edit.text.length + "/" + maxLength
+        visible: maxLength > 0
     }
 
     Row {
