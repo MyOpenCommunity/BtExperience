@@ -263,6 +263,11 @@ void PhotoPlayer::nextPhoto()
 	next();
 }
 
+void PhotoPlayer::terminate()
+{
+	PlayListPlayer::reset();
+}
+
 
 AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 	PlayListPlayer(parent)

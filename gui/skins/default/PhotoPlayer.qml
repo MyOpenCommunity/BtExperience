@@ -11,40 +11,11 @@ Page {
     property int index
     property bool upnp
 
-    source: "images/background/multimedia.jpg"
-    showSystemsButton: true
-    text: qsTr("Photo")
-
-    SvgImage {
-        id: frameBg
-
-        source: "images/common/bordo_finestra.svg"
-        anchors {
-            top: player.toolbar.bottom
-            topMargin: frameBg.height / 100 * 3.67
-            horizontalCenter: parent.horizontalCenter
-            horizontalCenterOffset: player.navigationBar.width / 2
-        }
-    }
-
-    SvgImage {
-        id: frame
-
-        source: "images/common/finestra.svg"
-        anchors.centerIn: frameBg
-    }
-
     Rectangle {
         id: fullScreenBg
 
         color: "black"
-        opacity: 0
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
+        anchors.fill: parent
 
         MouseArea {
             anchors.fill: parent
@@ -59,26 +30,26 @@ Page {
         id: thePhoto
 
         source: global.photoPlayer.fileName
-        sourceSize: Qt.size(frame.width, frame.height)
+        // Shrink memory size preserving the aspect ratio
+        sourceSize.height: fullScreenBg.height
+        // Show photo in fullscreen preserving the aspect ratio
+        // TODO: small photos are really ugly, what to do?
         fillMode: Image.PreserveAspectFit
-        anchors.fill: frame
+        anchors.fill: parent
         cache: false
     }
 
     SvgImage {
         id: bottomBarBg
 
-        property bool enableAutoHide: player.state === "fullscreen"
-
         function restartAutoHide() {
             hidingTimer.restart()
         }
 
-        source: "images/common/bg_player.svg"
+        source: "images/common/bg_player_fullscreen.svg"
         anchors {
-            top: frameBg.bottom
-            topMargin: frameBg.height / 100 * 2.44
-            horizontalCenter: frameBg.horizontalCenter
+            bottom: fullScreenBg.bottom
+            horizontalCenter: fullScreenBg.horizontalCenter
         }
 
         ButtonImageThreeStates {
@@ -92,11 +63,10 @@ Page {
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 left: bottomBarBg.left
-                leftMargin: frameBg.height / 100 * 2.81
+                leftMargin: fullScreenBg.width / 100 * 2
             }
 
             onClicked: global.photoPlayer.prevPhoto()
-            status: 0
         }
 
         Item {
@@ -112,7 +82,7 @@ Page {
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 left: prevButton.right
-                leftMargin: frameBg.height / 100 * 0.67
+                leftMargin: fullScreenBg.width / 100 * 0.5
             }
 
             ButtonImageThreeStates {
@@ -131,8 +101,6 @@ Page {
                     else
                         playButtonItem.state = ""
                 }
-
-                status: 0
 
                 Timer {
                     id: slideshowTimer
@@ -172,12 +140,10 @@ Page {
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 left: playButtonItem.right
-                leftMargin: frameBg.height / 100 * 0.67
+                leftMargin: fullScreenBg.width / 100 * 0.5
             }
 
             onClicked: global.photoPlayer.nextPhoto()
-
-            status: 0
         }
 
         ButtonImageThreeStates {
@@ -191,11 +157,10 @@ Page {
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 left: nextButton.right
-                leftMargin: frameBg.height / 100 * 2.15
+                leftMargin: fullScreenBg.width / 100 * 1.5
             }
 
             onClicked: Stack.backToPage("Devices.qml")
-            status: 0
         }
 
         ButtonImageThreeStates {
@@ -211,24 +176,19 @@ Page {
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 right: bottomBarBg.right
-                rightMargin: frameBg.height / 100 * 2.81
+                rightMargin: fullScreenBg.width / 100 * 2
             }
 
-            onClicked: {
-                if (player.state === "")
-                    player.state = "fullscreen"
-                else
-                    player.state = ""
-            }
-            status: 0
+            onClicked: Stack.backToPage("Devices.qml")
+            status: 1
         }
 
         Timer {
             id: hidingTimer
             interval: 5000
+            running: true
             onTriggered: {
-                if (bottomBarBg.enableAutoHide)
-                    bottomBarBg.visible = false
+                bottomBarBg.visible = false
             }
         }
 
@@ -245,51 +205,8 @@ Page {
         id: forceScreenOn
     }
 
-
-    function backButtonClicked() {
-        Stack.backToMultimedia()
-    }
-
     Component.onCompleted: player.upnp ?
                                global.photoPlayer.generatePlaylistUPnP(player.model, player.index, player.model.count, false) :
                                global.photoPlayer.generatePlaylistLocal(player.model, player.index, player.model.count, false)
-
-    states: [
-        State {
-            name: "fullscreen"
-            PropertyChanges { target: fullScreenBg; opacity: 1 }
-            PropertyChanges { target: fullScreenToggle; status: 1 }
-            PropertyChanges {
-                target: bottomBarBg
-                source: "images/common/bg_player_fullscreen.svg"
-                anchors.topMargin: 0
-            }
-            AnchorChanges {
-                target: bottomBarBg
-                anchors.top:undefined
-                anchors.bottom: fullScreenBg.bottom
-                anchors.horizontalCenter: fullScreenBg.horizontalCenter
-            }
-            PropertyChanges {
-                target: thePhoto
-                anchors.fill: fullScreenBg
-                sourceSize: Qt.size(fullScreenBg.width, fullScreenBg.height)
-            }
-        }
-    ]
-
-    transitions: [
-        Transition {
-            ParallelAnimation {
-                NumberAnimation {
-                    target: fullScreenBg
-                    property: "opacity"
-                    duration: 400
-                }
-                AnchorAnimation {
-                    duration: 400
-                }
-            }
-        }
-    ]
+    Component.onDestruction: global.photoPlayer.terminate()
 }

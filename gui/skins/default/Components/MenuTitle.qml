@@ -25,11 +25,6 @@ Column {
         }
     }
 
-    SvgImage {
-        id: ribbon
-        source: "../images/menu_column/ribbon_column-title.svg"
-    }
-
     Connections {
         id: conn
         target: title.menuColumn

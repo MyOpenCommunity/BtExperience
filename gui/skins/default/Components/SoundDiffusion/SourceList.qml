@@ -2,6 +2,8 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 
+import "../../js/MediaItem.js" as Script
+
 MenuColumn {
     id: column
 
@@ -19,7 +21,7 @@ MenuColumn {
         delegate: MenuItem {
             id: sourceDelegate
             property variant itemObject: sourceModel.getObject(index)
-            enabled: itemObject.mountPoint ? itemObject.mountPoint.mounted : true
+            enabled: Script.mediaItemEnabled(itemObject)
             name: itemObject.name
             onClicked: column.sourceSelected(itemObject)
         }

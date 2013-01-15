@@ -55,7 +55,7 @@ MenuColumn {
             }
 
             column.columnClicked()
-            column.loadColumn(mapping.getComponent(dataModel.objectId), "", object, properties)
+            column.loadColumn(mapping.getComponent(dataModel.objectId), dataModel.name, object, properties)
         }
 
         name: dataModel.name

@@ -142,6 +142,7 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	configurations = new ConfigFile(this);
 	photo_player = new PhotoPlayer(this);
 	video_player = 0;
+	sound_diffusion_player = 0;
 	audio_state = new AudioState(this);
 	sound_player = 0;
 	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", new MultiMediaPlayer(this), audio_state, this);
@@ -151,6 +152,7 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	browser = new BrowserProcess(this);
 	home_page_url = QString("http://www.google.com");
 	keeping_history = true;
+	upnp_status = UpnpInactive;
 
 	if (!(*bt_global::config)[DEFAULT_PE].isEmpty())
 		default_external_place = new ExternalPlace(QString(), ObjectInterface::IdExternalPlace,
@@ -198,12 +200,14 @@ void GlobalProperties::initAudio()
 	if (settings->getBeep())
 		audio_state->enableState(AudioState::Beep);
 
+	connect(video_player->getMediaPlayer(), SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
+		this, SLOT(manageUpnpPlayers()));
+	connect(photo_player, SIGNAL(playingChanged()), this, SLOT(manageUpnpPlayers()));
+
 	bool sound_diffusion_enabled = !(*bt_global::config)[SOURCE_ADDRESS].isEmpty();
 
 	if (sound_diffusion_enabled)
 	{
-		AudioVideoPlayer *sound_diffusion_player = 0;
-
 		// find all source objects
 		ObjectModel sources;
 
@@ -225,6 +229,9 @@ void GlobalProperties::initAudio()
 			MultiMediaPlayer *player = static_cast<MultiMediaPlayer *>(sound_diffusion_player->getMediaPlayer());
 
 			audio_state->registerSoundDiffusionPlayer(player);
+
+			connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
+				this, SLOT(manageUpnpPlayers()));
 		}
 	}
 }
@@ -596,6 +603,49 @@ void GlobalProperties::screenStateChangedManagement()
 	}
 
 	browser->setClicksBlocked(screen_state->getClicksBlocked());
+}
+
+void GlobalProperties::manageUpnpPlayers()
+{
+	bool sound_diffusion = sound_diffusion_player && sound_diffusion_player->isPlaying() && sound_diffusion_player->isUpnp();
+	bool local_media = video_player && video_player->isPlaying() && video_player->isUpnp();
+	bool photo = photo_player && photo_player->isPlaying() && photo_player->isUpnp();
+
+	Q_ASSERT_X(sound_diffusion + local_media + photo <= 1, "GlobalProperties::manageUpnpPlayers",
+		   "More than one player can't be active at the same time for UPnP");
+
+	UpnpStatus new_status = UpnpInactive;
+
+	if (sound_diffusion)
+		new_status = UpnpSoundDiffusion;
+	else if (local_media)
+		new_status = UpnpLocalMedia;
+	else if (photo)
+		new_status = UpnpLocalPhoto;
+
+	// required in case there is a paused UPnP player: resume will not work after another UPnP
+	// player re-used the playlist
+	if (video_player->isUpnp() && new_status != UpnpLocalMedia && new_status != UpnpInactive)
+		video_player->terminate();
+	if (sound_diffusion_player->isUpnp() && new_status != UpnpSoundDiffusion && new_status != UpnpInactive)
+		sound_diffusion_player->terminate();
+	if (photo_player->isUpnp() && new_status != UpnpLocalPhoto && new_status != UpnpInactive)
+		photo_player->terminate();
+
+	if (new_status == upnp_status)
+		return;
+	upnp_status = new_status;
+	emit upnpStatusChanged();
+}
+
+GlobalProperties::UpnpStatus GlobalProperties::getUpnpStatus() const
+{
+	return upnp_status;
+}
+
+bool GlobalProperties::getUpnpPlaying() const
+{
+	return upnp_status != UpnpInactive;
 }
 
 void GlobalProperties::sendDelayedFrames()

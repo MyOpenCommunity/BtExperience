@@ -98,6 +98,7 @@ private:
 	void updateScreenState(State old_state, State new_state);
 	void updateState();
 	bool updatePressTime();
+	void setTimerEnabled(QTimer *timer, bool enabled);
 
 	QTimer *screensaver_timer;
 	QTimer *freeze_timer;
@@ -106,6 +107,7 @@ private:
 	int normal_brightness, contrast;
 	bool states[StateCount];
 	bool password_enabled, screen_locked;
+	bool screen_pressed;
 };
 
 Q_DECLARE_METATYPE(ScreenState::State)

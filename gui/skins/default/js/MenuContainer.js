@@ -239,7 +239,9 @@ function _setStartProps() {
         var last_item = stackObjects[stackObjects.length - 1]['item']
         item.y = last_item.y + verticalOffset
         item.x = last_item.x - horizontalOverlap
+        var last_title = stackObjects[stackObjects.length - 1]['title']
         title.x = last_item.x
+        title.y = last_title.y + verticalOffset
     }
     item.enableAnimation = true
 }

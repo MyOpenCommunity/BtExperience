@@ -32,9 +32,11 @@ private slots:
 	void testPasswordCheckLockedClick();
 
 	void testUnlockSequence();
+	void testNoScreensaverOnPress();
 
 private:
-	bool filterClick();
+	bool filterRelease();
+	bool filterPress();
 
 	ScreenState *obj;
 };

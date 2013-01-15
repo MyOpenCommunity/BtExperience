@@ -67,7 +67,20 @@ class GlobalProperties : public GlobalPropertiesCommon
 	*/
 	Q_PROPERTY(bool keepingHistory READ getKeepingHistory WRITE setKeepingHistory NOTIFY keepingHistoryChanged)
 
+	Q_PROPERTY(UpnpStatus upnpStatus READ getUpnpStatus NOTIFY upnpStatusChanged)
+	Q_PROPERTY(bool upnpPlaying READ getUpnpPlaying NOTIFY upnpStatusChanged)
+
+	Q_ENUMS(UpnpStatus)
+
 public:
+	enum UpnpStatus
+	{
+		UpnpInactive,
+		UpnpLocalMedia,
+		UpnpLocalPhoto,
+		UpnpSoundDiffusion
+	};
+
 	GlobalProperties(logger *log);
 
 	AudioVideoPlayer *getAudioVideoPlayer() const;
@@ -110,6 +123,9 @@ public:
 	void setPasswordEnabled(bool enabled);
 	bool isPasswordEnabled() const;
 
+	UpnpStatus getUpnpStatus() const;
+	bool getUpnpPlaying() const;
+
 public slots:
 	void setMaxTravelledDistanceOnLastMove(QPoint pos);
 
@@ -120,6 +136,7 @@ signals:
 	void audioVideoPlayerChanged();
 	void homePageUrlChanged();
 	void keepingHistoryChanged();
+	void upnpStatusChanged();
 
 private slots:
 	void beepChanged();
@@ -128,11 +145,13 @@ private slots:
 	void brightnessChanged();
 	void screenStateChangedManagement();
 	void sendDelayedFrames();
+	void manageUpnpPlayers();
 
 private:
 	void parseSettings();
 
 	AudioVideoPlayer *video_player;
+	AudioVideoPlayer *sound_diffusion_player;
 	PhotoPlayer *photo_player;
 	AudioState *audio_state;
 	ScreenState *screen_state;
@@ -146,6 +165,7 @@ private:
 	QPoint max_travelled_distance;
 	QString password, home_page_url;
 	bool password_enabled, keeping_history;
+	UpnpStatus upnp_status;
 
 	QHash<int, int> pathview_offsets;
 };
