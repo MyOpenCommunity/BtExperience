@@ -232,7 +232,9 @@ void ScreenState::updateScreenState(State old_state, State new_state)
 		freeze_timer->start();
 		setBrightness(FREEZE_BRIGHTNESS);
 		//Touchscreen Reset Workaround
+#if defined(BT_HARDWARE_DM3730)
 		smartExecute("cat", QStringList() << "/sys/bus/spi/drivers/tsc2005/spi1.0/selftest");
+#endif
 		break;
 	case ScreenOff:
 		screen_locked = password_enabled;
