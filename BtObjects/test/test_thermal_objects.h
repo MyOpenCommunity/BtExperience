@@ -78,6 +78,7 @@ private slots:
 	void cleanup();
 
 	void testModalityScenarios();
+	void testMode();
 
 private:
 	ThermalDevice99Zones *dev;

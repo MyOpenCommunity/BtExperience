@@ -164,7 +164,7 @@ void TestThermalControlUnit99Zones::init()
 {
 	ThermalDevice99Zones *d = new ThermalDevice99Zones("0");
 
-	obj = new ThermalControlUnit99Zones("", "", d);
+	obj = new ThermalControlUnit99Zones("", "", 31, d);
 	dev = new ThermalDevice99Zones("0", 1);
 
 	initObjects(dev, obj);
@@ -186,12 +186,41 @@ void TestThermalControlUnit99Zones::testModalityScenarios()
 	QVERIFY(scen != NULL);
 }
 
+void TestThermalControlUnit99Zones::testMode()
+{
+	ThermalControlUnit99Zones *obj2 = new ThermalControlUnit99Zones("", "", 2, new ThermalDevice99Zones("0"));
+
+	QVERIFY(obj2->getCurrentModality() == NULL);
+
+	DeviceValues v;
+	v[ThermalDevice::DIM_STATUS] = ThermalDevice::ST_SCENARIO;
+
+	ObjectTester t(obj2, SIGNAL(currentModalityChanged()));
+	obj2->valueReceived(v);
+	t.checkNoSignals();
+
+	QVERIFY(obj2->getCurrentModality() == NULL);
+
+	v[ThermalDevice::DIM_STATUS] = ThermalDevice::ST_HOLIDAY;
+
+	ObjectTester t2(obj2, SIGNAL(currentModalityChanged()));
+	obj2->valueReceived(v);
+	t2.checkSignals();
+
+	ThermalControlUnitTimedProgram *mod = qobject_cast<ThermalControlUnitTimedProgram *>(obj2->getCurrentModality());
+	QVERIFY(mod != NULL);
+	QCOMPARE(mod->getObjectId(), (int)ThermalControlUnit::IdHoliday);
+
+	obj2->valueReceived(v);
+	t2.checkNoSignals();
+}
+
 
 void TestThermalControlUnit4Zones::init()
 {
 	ThermalDevice4Zones *d = new ThermalDevice4Zones("1#2");
 
-	obj = new ThermalControlUnit4Zones("", "", d);
+	obj = new ThermalControlUnit4Zones("", "", 31, d);
 	dev = new ThermalDevice4Zones("1#2", 1);
 
 	initObjects(dev, obj);

@@ -113,7 +113,7 @@ public:
 		Winter
 	};
 
-	ThermalControlUnit(QString name, QString key, ThermalDevice *d);
+	ThermalControlUnit(QString name, QString key, int modes, ThermalDevice *d);
 
 	virtual QString getObjectKey() const;
 
@@ -143,6 +143,8 @@ protected slots:
 
 protected:
 	ObjectDataModel modalities;
+	// bitfield for available modes
+	int modes;
 
 private:
 	QString key;
@@ -193,7 +195,7 @@ class ThermalControlUnit4Zones : public ThermalControlUnit
 	Q_OBJECT
 
 public:
-	ThermalControlUnit4Zones(QString name, QString key, ThermalDevice4Zones *d);
+	ThermalControlUnit4Zones(QString name, QString key, int modes, ThermalDevice4Zones *d);
 
 	virtual int getObjectId() const
 	{
@@ -218,7 +220,7 @@ class ThermalControlUnit99Zones : public ThermalControlUnit
 	Q_OBJECT
 
 public:
-	ThermalControlUnit99Zones(QString name, QString key, ThermalDevice99Zones *d);
+	ThermalControlUnit99Zones(QString name, QString key, int modes, ThermalDevice99Zones *d);
 
 	virtual int getObjectId() const
 	{

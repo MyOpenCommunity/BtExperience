@@ -11,6 +11,21 @@
 #include <QDebug>
 
 
+namespace
+{
+	const int CU4_PROGRAMS_MODE = 0x10;
+	const int CU4_MANUAL_MODE = 0x8;
+	const int CU4_WEEKDAY_MODE = 0x4;
+	const int CU4_HOLIDAY_MODE = 0x2;
+	const int CU4_TIME_MANUAL_MODE = 0x1;
+
+	const int CU99_PROGRAMS_MODE = 0x10;
+	const int CU99_SCENARIOS_MODE = 0x8;
+	const int CU99_MANUAL_MODE = 0x4;
+	const int CU99_WEEKDAY_MODE = 0x2;
+	const int CU99_HOLIDAY_MODE = 0x1;
+}
+
 enum ThermalRegulationStateKeys
 {
 	PROGRAM_INDEX,
@@ -69,7 +84,7 @@ QList<ObjectPair> parseControlUnit99(const QDomNode &obj, const QDomNode &zones)
 		int uii = getIntAttribute(ist, "uii");
 
 		ThermalDevice99Zones *d = bt_global::add_device_to_cache(new ThermalDevice99Zones("0"));
-		cu = new ThermalControlUnit99Zones(v.value("descr"), "0", d);
+		cu = new ThermalControlUnit99Zones(v.value("descr"), "0", v.intValue("mode"), d);
 		cu->setPrograms(parsePrograms(ist.firstChildElement("programs"), "program"));
 		cu->setScenarios(parsePrograms(ist.firstChildElement("scenarios"), "scenario"));
 		obj_list << ObjectPair(uii, cu);
@@ -109,7 +124,7 @@ QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNo
 		QString cu_where = v.value("where");
 
 		ThermalDevice4Zones *d = bt_global::add_device_to_cache(new ThermalDevice4Zones("0#" + cu_where));
-		ThermalControlUnit4Zones *cu = new ThermalControlUnit4Zones(v.value("descr"), cu_where, d);
+		ThermalControlUnit4Zones *cu = new ThermalControlUnit4Zones(v.value("descr"), cu_where, v.intValue("mode"), d);
 		cu->setPrograms(parsePrograms(ist.firstChildElement("programs"), "program"));
 		obj_list << ObjectPair(cu_uii, cu);
 
@@ -129,7 +144,7 @@ QList<ObjectPair> parseControlUnit4(const QDomNode &obj, QHash<int, QPair<QDomNo
 	return obj_list;
 }
 
-ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevice *d) :
+ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, int _modes, ThermalDevice *d) :
 	DeviceObjectInterface(d)
 {
 	name = _name;
@@ -139,15 +154,26 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, ThermalDevic
 	season = Summer;
 	programs = &summer_programs;
 	current_modality_index = -1;
+	modes = _modes;
 
+	// loads modalities for which the correspondent bit is 1; bits are different
+	// in the 99 zones and 4 zones cases
 	// The objects list should contain only one item per id
 	// TODO: fix the the timed programs
-	modalities << new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &summer_programs, &winter_programs, dev);
+	if (((d->type() == THERMO_Z4) && ((modes & CU4_PROGRAMS_MODE) > 0)) ||
+		((d->type() == THERMO_Z99) && ((modes & CU99_PROGRAMS_MODE) > 0)))
+		modalities << new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &summer_programs, &winter_programs, dev);
 	// for unknown reasons these are reverted
-	modalities << new ThermalControlUnitTimedProgram("Weekday", ThermalControlUnit::IdHoliday, &summer_programs, &winter_programs, dev);
-	modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdWeekday, &summer_programs, &winter_programs, dev);
+	if (((d->type() == THERMO_Z4) && ((modes & CU4_WEEKDAY_MODE) > 0)) ||
+		((d->type() == THERMO_Z99) && ((modes & CU99_WEEKDAY_MODE) > 0)))
+		modalities << new ThermalControlUnitTimedProgram("Weekday", ThermalControlUnit::IdHoliday, &summer_programs, &winter_programs, dev);
+	if (((d->type() == THERMO_Z4) && ((modes & CU4_HOLIDAY_MODE) > 0)) ||
+		((d->type() == THERMO_Z99) && ((modes & CU99_HOLIDAY_MODE) > 0)))
+		modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdWeekday, &summer_programs, &winter_programs, dev);
 	modalities << new ThermalControlUnitAntifreeze("Antifreeze", dev);
-	modalities << new ThermalControlUnitManual("Manual", dev);
+	if (((d->type() == THERMO_Z4) && ((modes & CU4_MANUAL_MODE) > 0)) ||
+		((d->type() == THERMO_Z99) && ((modes & CU99_MANUAL_MODE) > 0)))
+		modalities << new ThermalControlUnitManual("Manual", dev);
 	modalities << new ThermalControlUnitOff("Off", dev);
 }
 
@@ -303,20 +329,22 @@ void ThermalControlUnit::valueReceived(const DeviceValues &values_list)
 }
 
 
-ThermalControlUnit4Zones::ThermalControlUnit4Zones(QString _name, QString _key, ThermalDevice4Zones *d) :
-	ThermalControlUnit(_name, _key, d)
+ThermalControlUnit4Zones::ThermalControlUnit4Zones(QString _name, QString _key, int _modes, ThermalDevice4Zones *d) :
+	ThermalControlUnit(_name, _key, _modes, d)
 {
 	dev = d;
-	modalities << new ThermalControlUnitTimedManual("Timed Manual", d);
+	if ((modes & CU4_TIME_MANUAL_MODE) > 0)
+		modalities << new ThermalControlUnitTimedManual("Timed Manual", d);
 }
 
 
-ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key, ThermalDevice99Zones *d) :
-	ThermalControlUnit(_name, _key, d)
+ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key, int _modes, ThermalDevice99Zones *d) :
+	ThermalControlUnit(_name, _key, _modes, d)
 {
 	dev = d;
 	scenarios = &summer_scenarios;
-	modalities << new ThermalControlUnitScenario("Scenarios", &summer_scenarios, &winter_scenarios, dev);
+	if ((modes & CU99_SCENARIOS_MODE) > 0)
+		modalities << new ThermalControlUnitScenario("Scenarios", &summer_scenarios, &winter_scenarios, dev);
 }
 
 void ThermalControlUnit99Zones::setScenarios(QList<ThermalRegulationProgram *> _scenarios)

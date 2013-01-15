@@ -71,7 +71,7 @@ void TestThermalControlledProbes::init()
 {
 	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::NORMAL);
 	ThermalDevice99Zones *cud = new ThermalDevice99Zones("0");
-	ThermalControlUnit *cu = new ThermalControlUnit99Zones("", "", cud);
+	ThermalControlUnit *cu = new ThermalControlUnit99Zones("", "", 31, cud);
 
 	cud->setParent(this);
 	cu->setParent(this);
@@ -253,7 +253,7 @@ void TestThermalControlledProbesFancoil::init()
 {
 	ControlledProbeDevice *d = new ControlledProbeDevice("23#1", "1", "23", ControlledProbeDevice::CENTRAL_99ZONES, ControlledProbeDevice::FANCOIL);
 	ThermalDevice99Zones *cud = new ThermalDevice99Zones("0");
-	ThermalControlUnit *cu = new ThermalControlUnit99Zones("", "", cud);
+	ThermalControlUnit *cu = new ThermalControlUnit99Zones("", "", 31, cud);
 
 	cud->setParent(this);
 	cu->setParent(this);
