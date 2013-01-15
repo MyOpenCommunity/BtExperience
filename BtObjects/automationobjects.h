@@ -14,6 +14,7 @@
 #include <QObject>
 
 class LightingDevice;
+class VideoDoorEntryDevice;
 class AutomationDevice;
 //class PPTStatDeviceDevice;
 class QDomNode;
@@ -33,12 +34,38 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 
 class AutomationLight: public Light
 {
+	Q_OBJECT
+
 public:
 	AutomationLight(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, LightingDevice *d, int _myid);
+
 	int getObjectId() const;
+
+	Q_INVOKABLE void activate();
+
 protected:
 	int myid;
 };
+
+
+class AutomationVDE : public DeviceObjectInterface
+{
+	Q_OBJECT
+
+public:
+	AutomationVDE(QString name, VideoDoorEntryDevice *d);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdAutomationVDE;
+	}
+
+	Q_INVOKABLE void activate();
+
+private:
+	VideoDoorEntryDevice *dev;
+};
+
 
 // internal class, used in automation groups, not useful to the GUI
 class AutomationCommand2 : public DeviceObjectInterface

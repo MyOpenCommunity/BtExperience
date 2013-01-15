@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="it_IT">
+<TS version="2.0" language="en_US">
 <context>
     <name>ActionObject</name>
     <message>
@@ -14,7 +14,7 @@
         <location filename="../../BtObjects/scenarioobjects.cpp" line="479"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="512"/>
         <source>OFF</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="355"/>
@@ -25,134 +25,134 @@
         <location filename="../../BtObjects/scenarioobjects.cpp" line="459"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="513"/>
         <source>ON</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="362"/>
         <source>20%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="363"/>
         <source>30%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="364"/>
         <source>40%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="365"/>
         <source>50%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="366"/>
         <source>60%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="367"/>
         <source>70%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="368"/>
         <source>80%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="369"/>
         <source>90%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="370"/>
         <source>100%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="375"/>
         <source>1 min.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="376"/>
         <source>2 min.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="377"/>
         <source>3 min.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="378"/>
         <source>4 min.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="379"/>
         <source>5 min.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="380"/>
         <source>15 min.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="387"/>
         <source>Level</source>
-        <translation>Livello</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="393"/>
         <source>Up</source>
-        <translation>Su</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="394"/>
         <source>Down</source>
-        <translation>Giu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="395"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="403"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="507"/>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="401"/>
         <source>Open</source>
-        <translation>Apri</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="402"/>
         <source>Close</source>
-        <translation>Chiudi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="408"/>
         <source>On 1 sec.</source>
-        <translation>Accendi 1 sec.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="409"/>
         <source>On 2 sec.</source>
-        <translation>Accendi 2 sec.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="425"/>
         <source>Scenario 1.4</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="430"/>
         <source>Scenario 1.16</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="435"/>
@@ -160,7 +160,7 @@
         <location filename="../../BtObjects/scenarioobjects.cpp" line="465"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="478"/>
         <source>Antifreeze/thermal protection</source>
-        <translation>Protezione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="437"/>
@@ -168,73 +168,73 @@
         <location filename="../../BtObjects/scenarioobjects.cpp" line="467"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="480"/>
         <source>Manual Temperature</source>
-        <translation>Temperatura manuale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="438"/>
         <source>Heating scenario</source>
-        <translation>Scenario riscaldamento</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="439"/>
         <source>Air-conditioning scenario</source>
-        <translation>Scenario aria condizionata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="440"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="469"/>
         <source>Heating Program</source>
-        <translation>Programma riscaldamento</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="441"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="470"/>
         <source>Air-conditioning program</source>
-        <translation>Programma aria condizionata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="442"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="471"/>
         <source>Last program</source>
-        <translation>Ultimo programma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="443"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="472"/>
         <source>Set the air conditioning mode</source>
-        <translation>Imposta modo aria condizionata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="444"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="473"/>
         <source>Set the heating mode</source>
-        <translation>Imposta modo riscaldamento</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="445"/>
         <source>Last scenario</source>
-        <translation>Ultimo scenario</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="453"/>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="481"/>
         <source>Automatic</source>
-        <translation>Automatico</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="460"/>
         <source>Volume</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="468"/>
         <source>Timed manual Temperature</source>
-        <translation>Manuale temporizzato</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="482"/>
         <source>Set the fan-coil speed</source>
-        <translation>Imposta velocità fan-coil</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/scenarioobjects.cpp" line="487"/>
@@ -287,19 +287,19 @@
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="19"/>
         <location filename="../skins/default/AddQuicklink.qml" line="23"/>
         <source>Profiles</source>
-        <translation>Profili</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="70"/>
         <location filename="../skins/default/AddQuicklink.qml" line="109"/>
         <source>Add quicklink</source>
-        <translation>Aggiungi quicklink</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="83"/>
         <location filename="../skins/default/AddQuicklink.qml" line="122"/>
         <source>Type:</source>
-        <translation>Tipo:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="140"/>
@@ -308,7 +308,7 @@
         <location filename="../skins/default/AddQuicklink.qml" line="178"/>
         <location filename="../skins/default/AddQuicklink.qml" line="598"/>
         <source>Click to enter link...</source>
-        <translation>Clicca per inserire un link...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="168"/>
@@ -317,144 +317,144 @@
         <location filename="../skins/default/AddQuicklink.qml" line="207"/>
         <location filename="../skins/default/AddQuicklink.qml" line="599"/>
         <source>Click to enter name...</source>
-        <translation>Clicca per inserire un nome...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="189"/>
         <location filename="../skins/default/AddQuicklink.qml" line="230"/>
         <source>ADD</source>
-        <translation>AGGIUNGI</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="316"/>
         <location filename="../skins/default/AddQuicklink.qml" line="372"/>
         <source>Save changes?</source>
-        <translation>Salvare le modifiche?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="333"/>
         <location filename="../skins/default/AddQuicklink.qml" line="390"/>
         <source>OK</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="368"/>
         <location filename="../skins/default/AddQuicklink.qml" line="427"/>
         <source>CANCEL</source>
-        <translation>ANNULLA</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="517"/>
         <location filename="../skins/default/AddQuicklink.qml" line="606"/>
         <source>camera</source>
-        <translation>videocamera</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="519"/>
         <location filename="../skins/default/AddQuicklink.qml" line="608"/>
         <source>web page</source>
-        <translation>pagina web</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="521"/>
         <location filename="../skins/default/AddQuicklink.qml" line="610"/>
         <source>web camera</source>
-        <translation>webcam</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="523"/>
         <location filename="../skins/default/AddQuicklink.qml" line="612"/>
         <source>rss</source>
-        <translation>rss</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="525"/>
         <location filename="../skins/default/AddQuicklink.qml" line="614"/>
         <source>weather</source>
-        <translation>tempo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="527"/>
         <location filename="../skins/default/AddQuicklink.qml" line="616"/>
         <source>scenario</source>
-        <translation>scenario</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="533"/>
         <location filename="../skins/default/AddQuicklink.qml" line="624"/>
         <source>Select existing camera:</source>
-        <translation>Seleziona videocamera:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="535"/>
         <location filename="../skins/default/AddQuicklink.qml" line="626"/>
         <source>Select existing web page link:</source>
-        <translation>Seleziona pagina web:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="537"/>
         <location filename="../skins/default/AddQuicklink.qml" line="628"/>
         <source>Select existing web camera:</source>
-        <translation>Seleziona webcam:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="539"/>
         <location filename="../skins/default/AddQuicklink.qml" line="630"/>
         <source>Select existing rss link:</source>
-        <translation>Seleziona rss:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="541"/>
         <location filename="../skins/default/AddQuicklink.qml" line="632"/>
         <source>Select existing weather forecast link:</source>
-        <translation>Seleziona previsioni del tempo:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="543"/>
         <location filename="../skins/default/AddQuicklink.qml" line="634"/>
         <source>Select existing scenario:</source>
-        <translation>Seleziona scenario:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="549"/>
         <location filename="../skins/default/AddQuicklink.qml" line="642"/>
         <source>Add new camera:</source>
-        <translation>Aggiungi nuova videocamera:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="551"/>
         <location filename="../skins/default/AddQuicklink.qml" line="644"/>
         <source>Add new web page link:</source>
-        <translation>Aggiungi nuova pagina web:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="553"/>
         <location filename="../skins/default/AddQuicklink.qml" line="646"/>
         <source>Add new web camera:</source>
-        <translation>Aggiungi nuova webcam:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="555"/>
         <location filename="../skins/default/AddQuicklink.qml" line="648"/>
         <source>Add new rss link:</source>
-        <translation>Aggiungi nuovo rss:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="557"/>
         <location filename="../skins/default/AddQuicklink.qml" line="650"/>
         <source>Add new weather forecast link:</source>
-        <translation>Aggiungi nuove previsioni del tempo:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AddQuicklink.qml" line="559"/>
         <location filename="../skins/default/AddQuicklink.qml" line="652"/>
         <source>Add new scenario:</source>
-        <translation>Aggiungi nuovo scenario:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/AddQuicklink.qml" line="23"/>
         <source>Home</source>
-        <translation type="unfinished">Home</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/AddQuicklink.qml" line="353"/>
@@ -499,14 +499,14 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Scenarios/AdvancedScenario.qml" line="31"/>
         <location filename="../skins/default/Components/Scenarios/AdvancedScenario.qml" line="31"/>
-        <source>disabled</source>
-        <translation>disattivo</translation>
+        <source>enabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Scenarios/AdvancedScenario.qml" line="31"/>
         <location filename="../skins/default/Components/Scenarios/AdvancedScenario.qml" line="31"/>
-        <source>enabled</source>
-        <translation>attivo</translation>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -515,7 +515,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioAction.qml" line="12"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioAction.qml" line="12"/>
         <source>action</source>
-        <translation>azione</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -524,84 +524,68 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="12"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="12"/>
         <source>activation</source>
-        <translation>attivazione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="23"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="23"/>
         <source>days</source>
-        <translation>giorni</translation>
-    </message>
-    <message>
-        <source>M</source>
-        <translation type="obsolete">L</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <translation type="obsolete">M</translation>
-    </message>
-    <message>
-        <source>W</source>
-        <translation type="obsolete">M</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <translation type="obsolete">G</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="71"/>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="71"/>
-        <source>time</source>
-        <translation type="unfinished">Ora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="36"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="36"/>
         <source>M</source>
         <comment>Monday</comment>
-        <translation>L</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="37"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="37"/>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>M</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="38"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="38"/>
         <source>W</source>
         <comment>Wednesday</comment>
-        <translation>M</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="39"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="39"/>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>G</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="40"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="40"/>
         <source>F</source>
         <comment>Friday</comment>
-        <translation>V</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="41"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="41"/>
         <source>S</source>
         <comment>Saturday</comment>
-        <translation>S</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="42"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="42"/>
         <source>S</source>
         <comment>Sunday</comment>
-        <translation>D</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="71"/>
+        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="71"/>
+        <source>time</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -610,7 +594,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="14"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="14"/>
         <source>device condition</source>
-        <translation>condizione scenario</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="41"/>
@@ -618,43 +602,43 @@ Address: %2</source>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="41"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="52"/>
         <source>ON</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="53"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="53"/>
         <source>OFF</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="83"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="83"/>
         <source>Intensity</source>
-        <translation>Intensità</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="86"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="86"/>
         <source>Volume</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="89"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="89"/>
         <source>Temperature</source>
-        <translation>Temperatura</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="95"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="95"/>
         <source>%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="98"/>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="98"/>
         <source>ºC</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -663,33 +647,13 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="56"/>
         <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="56"/>
         <source>program</source>
-        <translation>programma</translation>
-    </message>
-    <message>
-        <source>morning</source>
-        <translation type="obsolete">mattino</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="69"/>
         <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="69"/>
         <source>modality</source>
-        <translation>modo</translation>
-    </message>
-    <message>
-        <source>warm</source>
-        <translation type="obsolete">riscalda</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="171"/>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="210"/>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="171"/>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="210"/>
-        <source>fancoil</source>
-        <translation>fancoil</translation>
-    </message>
-    <message>
-        <source>high</source>
-        <translation type="obsolete">alta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="114"/>
@@ -699,23 +663,27 @@ Address: %2</source>
         <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="183"/>
         <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="222"/>
         <source>swing</source>
-        <translation>swing</translation>
-    </message>
-    <message>
-        <source>disabled</source>
-        <translation type="obsolete">disattivo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="153"/>
         <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="153"/>
         <source>temperature</source>
-        <translation>temperatura</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="154"/>
         <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="154"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="171"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="210"/>
+        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="171"/>
+        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="210"/>
+        <source>fancoil</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -724,7 +692,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/AirConditioning.qml" line="15"/>
         <location filename="../skins/default/Components/ThermalRegulation/AirConditioning.qml" line="25"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -733,37 +701,37 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="15"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="15"/>
         <source>Alarm settings</source>
-        <translation>Impostazioni sveglia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="39"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="39"/>
         <source>Alarm clock - date and time</source>
-        <translation>Sveglia - data e ora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="71"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="71"/>
         <source>activation</source>
-        <translation>attivazione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="82"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="82"/>
         <source>days</source>
-        <translation>giorni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="109"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="109"/>
         <source>time</source>
-        <translation>Ora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="132"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="132"/>
         <source>description</source>
-        <translation>descrizione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="153"/>
@@ -771,25 +739,25 @@ Address: %2</source>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="153"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="211"/>
         <source>Click to enter description...</source>
-        <translation>Clicca per inserire la descrizione:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="187"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="187"/>
         <source>Save changes?</source>
-        <translation>Salvare le modifiche?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="204"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="204"/>
         <source>OK</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="224"/>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="225"/>
         <source>CANCEL</source>
-        <translation>ANNULLA</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockDateTimePage.qml" line="240"/>
@@ -804,7 +772,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockRingtonePage.qml" line="18"/>
         <location filename="../skins/default/AlarmClockRingtonePage.qml" line="21"/>
         <source>Alarm settings</source>
-        <translation type="unfinished">Impostazioni sveglia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockRingtonePage.qml" line="33"/>
@@ -853,7 +821,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockRingtonePage.qml" line="194"/>
         <location filename="../skins/default/AlarmClockRingtonePage.qml" line="305"/>
         <source>Save changes?</source>
-        <translation type="unfinished">Salvare le modifiche?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockRingtonePage.qml" line="211"/>
@@ -865,7 +833,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockRingtonePage.qml" line="248"/>
         <location filename="../skins/default/AlarmClockRingtonePage.qml" line="341"/>
         <source>CANCEL</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AlarmClockRingtonePage.qml" line="296"/>
@@ -895,17 +863,17 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/AlarmPopup.qml" line="19"/>
         <source>alarm!</source>
-        <translation>allarme!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/AlarmPopup.qml" line="53"/>
         <source>alarm log</source>
-        <translation>registro allarmi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/AlarmPopup.qml" line="71"/>
         <source>ignore</source>
-        <translation>ignora</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -913,12 +881,12 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Alert.qml" line="14"/>
         <source>warning</source>
-        <translation>attenzione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/components/Alert.qml" line="40"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Alert.qml" line="40"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Alert.qml" line="19"/>
@@ -933,12 +901,12 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/Components/Alert.qml" line="64"/>
         <source>ok</source>
-        <translation type="unfinished">ok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Alert.qml" line="78"/>
         <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -947,11 +915,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/Amplifier.qml" line="17"/>
         <location filename="../skins/default/Components/SoundDiffusion/Amplifier.qml" line="17"/>
         <source>volume</source>
-        <translation>volume</translation>
-    </message>
-    <message>
-        <source>settings</source>
-        <translation type="obsolete">impostazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -960,13 +924,13 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="32"/>
         <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="32"/>
         <source>treble</source>
-        <translation>alti</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="39"/>
         <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="40"/>
         <source>bass</source>
-        <translation>bassi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="53"/>
@@ -974,7 +938,7 @@ Address: %2</source>
         <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="57"/>
         <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="62"/>
         <source>equalizer</source>
-        <translation>equalizzatore</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="66"/>
@@ -982,19 +946,19 @@ Address: %2</source>
         <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="70"/>
         <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="75"/>
         <source>loud</source>
-        <translation>loud</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="67"/>
         <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="71"/>
         <source>on</source>
-        <translation>on</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="67"/>
         <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="71"/>
         <source>off</source>
-        <translation>off</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1003,17 +967,13 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Antintrusion.qml" line="10"/>
         <location filename="../skins/default/Antintrusion.qml" line="10"/>
         <source>antintrusion</source>
-        <translation>antintrusione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Antintrusion.qml" line="36"/>
         <location filename="../skins/default/Antintrusion.qml" line="31"/>
         <source>enter code</source>
-        <translation>inserisci il codice</translation>
-    </message>
-    <message>
-        <source>zone %1 - %2</source>
-        <translation type="obsolete">zona %1 - %2</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1022,34 +982,30 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="43"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="43"/>
         <source>type</source>
-        <translation>tipo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="56"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="57"/>
         <source>zone</source>
-        <translation>zona</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="69"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="71"/>
         <source>date and time</source>
-        <translation>data e ora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="170"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="184"/>
         <source>No Alarm Present</source>
-        <translation>Nessun allarme</translation>
-    </message>
-    <message>
-        <source>page %1 of %2</source>
-        <translation type="obsolete">pagina %1 di %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="171"/>
         <source>remove all</source>
-        <translation type="unfinished">elimina tutto</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1058,25 +1014,25 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AntintrusionNames.qml" line="10"/>
         <location filename="../skins/default/AntintrusionNames.qml" line="10"/>
         <source>panic</source>
-        <translation>anti-panico</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AntintrusionNames.qml" line="11"/>
         <location filename="../skins/default/AntintrusionNames.qml" line="11"/>
         <source>intrusion detection</source>
-        <translation>intrusione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AntintrusionNames.qml" line="12"/>
         <location filename="../skins/default/AntintrusionNames.qml" line="12"/>
         <source>technical</source>
-        <translation>tecnico</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/AntintrusionNames.qml" line="13"/>
         <location filename="../skins/default/AntintrusionNames.qml" line="13"/>
         <source>anti-tampering</source>
-        <translation>manomissione</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1085,7 +1041,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="11"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="12"/>
         <source>alarm log</source>
-        <translation>registro allarmi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="88"/>
@@ -1093,7 +1049,7 @@ Address: %2</source>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="90"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="302"/>
         <source>modify zones</source>
-        <translation>imposta zone</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="88"/>
@@ -1101,67 +1057,67 @@ Address: %2</source>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="90"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="163"/>
         <source>wrong code</source>
-        <translation>codice errato</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="88"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="90"/>
         <source>zone settings</source>
-        <translation>zone impostate</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="143"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="145"/>
         <source>system</source>
-        <translation>systema</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="144"/>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="146"/>
-        <source>disabled</source>
-        <translation>disattivo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="144"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="146"/>
         <source>enabled</source>
-        <translation>attivo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="160"/>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="162"/>
-        <source>system disabled</source>
-        <translation>sistema disattivato</translation>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="144"/>
+        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="146"/>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="159"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="161"/>
         <source>enable system</source>
-        <translation>attiva sistema</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="159"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="161"/>
         <source>disable system</source>
-        <translation>disattiva sistema</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="160"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="162"/>
         <source>system enabled</source>
-        <translation>sistema attivato</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="160"/>
+        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="162"/>
+        <source>system disabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="192"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="194"/>
         <source>scenario</source>
-        <translation>scenario</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="229"/>
         <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="231"/>
         <source>zone</source>
-        <translation>zona</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1195,20 +1151,20 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/Appliance.qml" line="124"/>
         <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="124"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <source>enabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/Appliance.qml" line="124"/>
         <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="124"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/Appliance.qml" line="159"/>
         <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="159"/>
         <source>instant consumption</source>
-        <translation type="unfinished">consumo istantaneo</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1275,25 +1231,21 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/BasicSplit.qml" line="31"/>
         <location filename="../skins/default/Components/ThermalRegulation/BasicSplit.qml" line="31"/>
         <source>program</source>
-        <translation>programma</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Brightness</name>
     <message>
-        <source>brightness adjustment</source>
-        <translation type="obsolete">regolazione luminosità</translation>
-    </message>
-    <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/Brightness.qml" line="18"/>
         <location filename="../skins/default/Components/Settings/Brightness.qml" line="13"/>
         <source>brightness</source>
-        <translation>luminosità</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/Brightness.qml" line="32"/>
         <source>contrast</source>
-        <translation>contrasto</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1301,7 +1253,7 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/BrowserIpRadioPage.qml" line="14"/>
         <source>multimedia</source>
-        <translation type="unfinished">multimedia</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1310,7 +1262,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/BrowserPage.qml" line="16"/>
         <location filename="../skins/default/BrowserPage.qml" line="17"/>
         <source>multimedia</source>
-        <translation>multimedia</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1341,13 +1293,13 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ButtonOkCancel.qml" line="19"/>
         <location filename="../skins/default/Components/ButtonOkCancel.qml" line="19"/>
         <source>ok</source>
-        <translation>ok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ButtonOkCancel.qml" line="36"/>
         <location filename="../skins/default/Components/ButtonOkCancel.qml" line="36"/>
         <source>cancel</source>
-        <translation>annulla</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1355,12 +1307,12 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ButtonOnOff.qml" line="16"/>
         <source>on</source>
-        <translation>on</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ButtonOnOff.qml" line="35"/>
         <source>off</source>
-        <translation>off</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1374,7 +1326,7 @@ Address: %2</source>
         <location filename="../skins/default/Calibration.qml" line="95"/>
         <location filename="../skins/default/Calibration.qml" line="118"/>
         <source>ok</source>
-        <translation type="unfinished">ok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Calibration.qml" line="145"/>
@@ -1418,12 +1370,12 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/ChangePassword.qml" line="195"/>
         <source>ok</source>
-        <translation type="unfinished">ok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/ChangePassword.qml" line="216"/>
         <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1432,7 +1384,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ColumnBrowserCommon.qml" line="141"/>
         <location filename="../skins/default/Components/ColumnBrowserCommon.qml" line="153"/>
         <source>Music folder</source>
-        <translation>Cartella musica</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1452,7 +1404,7 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/Components/Messages/ColumnMessages.qml" line="75"/>
         <source>remove all</source>
-        <translation type="unfinished">elimina tutto</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1473,32 +1425,32 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ConsumptionBox.qml" line="31"/>
         <source>yearly cumulative consumption</source>
-        <translation>consumo cumulativo annuale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ConsumptionBox.qml" line="136"/>
         <source>monthly cumulative consumption</source>
-        <translation>consumo cumulativo mensile</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ConsumptionBox.qml" line="143"/>
         <source>daily cumulative consumption</source>
-        <translation>consumo cumulativo giornaliero</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ConsumptionBox.qml" line="150"/>
         <source>yearly average consumption</source>
-        <translation>consumo medio annuale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ConsumptionBox.qml" line="157"/>
         <source>monthly average consumption</source>
-        <translation>consumo medio mensile</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ConsumptionBox.qml" line="164"/>
         <source>daily average consumption</source>
-        <translation>consumo medio giornaliero</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1506,7 +1458,7 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/Components/Settings/Contrast.qml" line="11"/>
         <source>Contrast</source>
-        <translation type="unfinished">Contrasto</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1537,14 +1489,14 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/ControlAlarmClock.qml" line="18"/>
         <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="18"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <source>enabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/ControlAlarmClock.qml" line="18"/>
         <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="18"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/ControlAlarmClock.qml" line="24"/>
@@ -1594,7 +1546,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlBalance.qml" line="9"/>
         <location filename="../skins/default/Components/ControlBalance.qml" line="11"/>
         <source>balance</source>
-        <translation>bilanciamento</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1602,27 +1554,27 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlBar.qml" line="22"/>
         <source>time</source>
-        <translation type="unfinished">Ora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlBar.qml" line="28"/>
         <source>day</source>
-        <translation type="unfinished">giorno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlBar.qml" line="39"/>
         <source>month</source>
-        <translation type="unfinished">mese</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlBar.qml" line="50"/>
         <source>year</source>
-        <translation type="unfinished">anno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlBar.qml" line="61"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlBar.qml" line="67"/>
@@ -1665,7 +1617,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlCall.qml" line="98"/>
         <location filename="../skins/default/Components/ControlCall.qml" line="138"/>
         <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1674,7 +1626,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlChoices.qml" line="10"/>
         <location filename="../skins/default/Components/ControlChoices.qml" line="10"/>
         <source>volume</source>
-        <translation>volume</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1683,7 +1635,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/ControlFMRadio.qml" line="27"/>
         <location filename="../skins/default/Components/SoundDiffusion/ControlFMRadio.qml" line="27"/>
         <source>radio FM</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1692,18 +1644,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/ControlIPRadio.qml" line="27"/>
         <location filename="../skins/default/Components/SoundDiffusion/ControlIPRadio.qml" line="27"/>
         <source>IP radio</source>
-        <translation>radio IP</translation>
-    </message>
-</context>
-<context>
-    <name>ControlMinusPlus</name>
-    <message>
-        <source>title</source>
-        <translation type="obsolete">titolo</translation>
-    </message>
-    <message>
-        <source>label</source>
-        <translation type="obsolete">etichetta</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1711,12 +1652,12 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlMinusPlusOld.qml" line="18"/>
         <source>title</source>
-        <translation>titolo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlMinusPlusOld.qml" line="31"/>
         <source>label</source>
-        <translation>etichetta</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1725,13 +1666,13 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlOnOff.qml" line="9"/>
         <location filename="../skins/default/Components/ControlOnOff.qml" line="9"/>
         <source>ON</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlOnOff.qml" line="10"/>
         <location filename="../skins/default/Components/ControlOnOff.qml" line="10"/>
         <source>OFF</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1740,13 +1681,13 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlPopup.qml" line="106"/>
         <location filename="../skins/default/Components/ControlPopup.qml" line="98"/>
         <source>dismiss</source>
-        <translation>ignora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlPopup.qml" line="125"/>
         <location filename="../skins/default/Components/ControlPopup.qml" line="117"/>
         <source>confirm</source>
-        <translation>conferma</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1755,7 +1696,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlPullDown.qml" line="25"/>
         <location filename="../skins/default/Components/ControlPullDown.qml" line="25"/>
         <source>Video settings</source>
-        <translation>Impostazioni video</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1764,18 +1705,18 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="25"/>
         <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="25"/>
         <source>Brightness</source>
-        <translation>Luminosità</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="33"/>
         <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="33"/>
         <source>Contrast</source>
-        <translation>Contrasto</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="41"/>
         <source>Saturation</source>
-        <translation>Saturazione</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="41"/>
@@ -1804,7 +1745,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlSlider.qml" line="9"/>
         <location filename="../skins/default/Components/ControlSlider.qml" line="9"/>
         <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1813,7 +1754,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlSliderMute.qml" line="9"/>
         <location filename="../skins/default/Components/ControlSliderMute.qml" line="9"/>
         <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1870,24 +1811,16 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Lighting/ControlTiming.qml" line="68"/>
         <location filename="../skins/default/Components/Automation/ControlTiming.qml" line="70"/>
         <location filename="../skins/default/Components/Lighting/ControlTiming.qml" line="68"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <source>enabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Automation/ControlTiming.qml" line="70"/>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Lighting/ControlTiming.qml" line="68"/>
         <location filename="../skins/default/Components/Automation/ControlTiming.qml" line="70"/>
         <location filename="../skins/default/Components/Lighting/ControlTiming.qml" line="68"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="obsolete">minuti</translation>
-    </message>
-    <message>
-        <source>seconds</source>
-        <translation type="obsolete">secondi</translation>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1895,12 +1828,12 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlUpDown.qml" line="42"/>
         <source>title</source>
-        <translation type="unfinished">titolo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ControlUpDown.qml" line="55"/>
         <source>label</source>
-        <translation type="unfinished">etichetta</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1908,12 +1841,12 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlUpDownReset.qml" line="20"/>
         <source>title</source>
-        <translation type="unfinished">titolo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlUpDownReset.qml" line="33"/>
         <source>label</source>
-        <translation type="unfinished">etichetta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlUpDownReset.qml" line="100"/>
@@ -1951,19 +1884,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Lighting/Dimmer.qml" line="14"/>
         <location filename="../skins/default/Components/Lighting/Dimmer.qml" line="14"/>
         <source>light intensity</source>
-        <translation type="unfinished">intensità luce</translation>
-    </message>
-    <message>
-        <source>timed turn off</source>
-        <translation type="obsolete">spegnimento temporizzato</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="obsolete">minuti</translation>
-    </message>
-    <message>
-        <source>seconds</source>
-        <translation type="obsolete">secondi</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1976,12 +1897,12 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/DisableLoadPopup.qml" line="33"/>
         <source>120</source>
-        <translation type="unfinished">120</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/DisableLoadPopup.qml" line="45"/>
         <source>minutes</source>
-        <translation type="unfinished">minuti</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1990,17 +1911,17 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EditNote.qml" line="19"/>
         <location filename="../skins/default/Components/EditNote.qml" line="23"/>
         <source>Note</source>
-        <translation>Nota</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EditNote.qml" line="89"/>
         <source>ok</source>
-        <translation>ok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EditNote.qml" line="107"/>
         <source>cancel</source>
-        <translation>annulla</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/EditNote.qml" line="98"/>
@@ -2010,7 +1931,7 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/Components/EditNote.qml" line="111"/>
         <source>CANCEL</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2019,73 +1940,73 @@ Address: %2</source>
         <location filename="../../BtObjects/energydata.cpp" line="716"/>
         <location filename="../../BtObjects/energydata.cpp" line="731"/>
         <source>Jan</source>
-        <translation>Gen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="716"/>
         <location filename="../../BtObjects/energydata.cpp" line="731"/>
         <source>Feb</source>
-        <translation>Feb</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="716"/>
         <location filename="../../BtObjects/energydata.cpp" line="731"/>
         <source>Mar</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="717"/>
         <location filename="../../BtObjects/energydata.cpp" line="732"/>
         <source>Apr</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="717"/>
         <location filename="../../BtObjects/energydata.cpp" line="732"/>
         <source>May</source>
-        <translation>Mag</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="717"/>
         <location filename="../../BtObjects/energydata.cpp" line="732"/>
         <source>Jun</source>
-        <translation>Giu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="718"/>
         <location filename="../../BtObjects/energydata.cpp" line="733"/>
         <source>Jul</source>
-        <translation>Lug</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="718"/>
         <location filename="../../BtObjects/energydata.cpp" line="733"/>
         <source>Aug</source>
-        <translation>Ago</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="718"/>
         <location filename="../../BtObjects/energydata.cpp" line="733"/>
         <source>Sep</source>
-        <translation>Set</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="719"/>
         <location filename="../../BtObjects/energydata.cpp" line="734"/>
         <source>Oct</source>
-        <translation>Ott</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="719"/>
         <location filename="../../BtObjects/energydata.cpp" line="734"/>
         <source>Nov</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../BtObjects/energydata.cpp" line="719"/>
         <location filename="../../BtObjects/energydata.cpp" line="734"/>
         <source>Dec</source>
-        <translation>Dic</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2100,31 +2021,31 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDataDelegate.qml" line="206"/>
         <location filename="../skins/default/Components/EnergyManagement/EnergyDataDelegate.qml" line="227"/>
         <source>instant consumption</source>
-        <translation type="unfinished">consumo istantaneo</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>EnergyDataDetail</name>
     <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataDetail.qml" line="17"/>
-        <location filename="../skins/default/EnergyDataDetail.qml" line="22"/>
-        <source>energy consumption</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDataDetail.qml" line="179"/>
         <source>day</source>
-        <translation>giorno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDataDetail.qml" line="190"/>
         <source>month</source>
-        <translation>mese</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDataDetail.qml" line="202"/>
         <source>year</source>
-        <translation>anno</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataDetail.qml" line="17"/>
+        <location filename="../skins/default/EnergyDataDetail.qml" line="22"/>
+        <source>energy consumption</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2145,43 +2066,43 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataGraph.qml" line="91"/>
         <location filename="../skins/default/EnergyDataGraph.qml" line="116"/>
         <source>day</source>
-        <translation>giorno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataGraph.qml" line="114"/>
         <location filename="../skins/default/EnergyDataGraph.qml" line="134"/>
         <source>month</source>
-        <translation>mese</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataGraph.qml" line="132"/>
         <location filename="../skins/default/EnergyDataGraph.qml" line="151"/>
         <source>year</source>
-        <translation>anno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataGraph.qml" line="362"/>
         <location filename="../skins/default/EnergyDataGraph.qml" line="377"/>
         <source>instant consumption</source>
-        <translation>consumo istantaneo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataGraph.qml" line="397"/>
         <location filename="../skins/default/EnergyDataGraph.qml" line="418"/>
         <source>month cumulative consumption</source>
-        <translation>consumo cumulativo mensile</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataGraph.qml" line="472"/>
         <location filename="../skins/default/EnergyDataGraph.qml" line="500"/>
         <source>year cumulative consumption</source>
-        <translation>consumo cumulativo annuale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataGraph.qml" line="482"/>
         <location filename="../skins/default/EnergyDataGraph.qml" line="510"/>
         <source>day cumulative consumption</source>
-        <translation>consumo cumulativo giornaliero</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2189,17 +2110,17 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDataOverview.qml" line="159"/>
         <source>day</source>
-        <translation>giorno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDataOverview.qml" line="170"/>
         <source>month</source>
-        <translation>mese</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDataOverview.qml" line="182"/>
         <source>year</source>
-        <translation>anno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataOverview.qml" line="16"/>
@@ -2219,7 +2140,7 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyDataOverview.qml" line="79"/>
         <source>units</source>
-        <translation>unità</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2246,7 +2167,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="110"/>
         <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="112"/>
         <source>month</source>
-        <translation type="unfinished">mese</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="121"/>
@@ -2260,7 +2181,7 @@ Address: %2</source>
         <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="157"/>
         <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="175"/>
         <source>year</source>
-        <translation type="unfinished">anno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="156"/>
@@ -2272,7 +2193,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="164"/>
         <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="166"/>
         <source>day</source>
-        <translation type="unfinished">giorno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="165"/>
@@ -2333,7 +2254,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/EnergyGlobalView.qml" line="97"/>
         <location filename="../skins/default/EnergyGlobalView.qml" line="102"/>
         <source>units</source>
-        <translation type="unfinished">unità</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2494,7 +2415,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyMonthGraph.qml" line="331"/>
         <location filename="../skins/default/Components/EnergyManagement/EnergyMonthGraph.qml" line="339"/>
         <source>day</source>
-        <translation type="unfinished">giorno</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2507,7 +2428,7 @@ Address: %2</source>
         <location filename="../skins/default/Components/EnergyManagement/EnergyMonthTable.qml" line="116"/>
         <location filename="../skins/default/Components/EnergyManagement/EnergyMonthTable.qml" line="170"/>
         <source>day</source>
-        <translation type="unfinished">giorno</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2540,7 +2461,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyYearTable.qml" line="59"/>
         <location filename="../skins/default/Components/EnergyManagement/EnergyYearTable.qml" line="67"/>
         <source>month</source>
-        <translation type="unfinished">mese</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/EnergyYearTable.qml" line="126"/>
@@ -2581,14 +2502,14 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/FavoriteEditPopup.qml" line="127"/>
         <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="162"/>
         <source>ok</source>
-        <translation type="unfinished">ok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/FavoriteEditPopup.qml" line="143"/>
         <location filename="../../build_arm/dist/arm/gui/skins/default/FavoriteEditPopup.qml" line="147"/>
         <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="175"/>
         <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="50"/>
@@ -2627,11 +2548,7 @@ Address: %2</source>
         <location filename="../skins/default/Components/SoundDiffusion/GeneralAmbient.qml" line="26"/>
         <location filename="../skins/default/Components/SoundDiffusion/GeneralAmbient.qml" line="31"/>
         <source>source</source>
-        <translation type="unfinished">sorgente</translation>
-    </message>
-    <message>
-        <source>volume</source>
-        <translation type="obsolete">volume</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2674,29 +2591,29 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/HomePage.qml" line="205"/>
         <location filename="../skins/default/HomePage.qml" line="230"/>
         <source>rooms</source>
-        <translation type="unfinished">stanze</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/HomePage.qml" line="220"/>
         <location filename="../skins/default/HomePage.qml" line="274"/>
         <source>systems</source>
-        <translation type="unfinished">sistemi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/HomePage.qml" line="237"/>
         <source>otpions</source>
-        <translation>ozpioni</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/HomePage.qml" line="245"/>
-        <source>options</source>
-        <translation type="unfinished">opzioni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/HomePage.qml" line="253"/>
         <location filename="../skins/default/HomePage.qml" line="289"/>
         <source>multimedia</source>
-        <translation type="unfinished">multimedia</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/HomePage.qml" line="245"/>
+        <source>options</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2705,15 +2622,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/KeyPad.qml" line="9"/>
         <location filename="../skins/default/Components/KeyPad.qml" line="9"/>
         <source>enter code</source>
-        <translation type="unfinished">inserisci il codice</translation>
-    </message>
-    <message>
-        <source>C</source>
-        <translation type="obsolete">C</translation>
-    </message>
-    <message>
-        <source>cancel</source>
-        <translation type="obsolete">annulla</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2722,7 +2631,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Lighting.qml" line="7"/>
         <location filename="../skins/default/Lighting.qml" line="7"/>
         <source>lighting</source>
-        <translation type="unfinished">illuminazione</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2787,7 +2696,7 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/LoadDetail.qml" line="27"/>
         <source>instant consumption</source>
-        <translation type="unfinished">consumo istantaneo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/LoadDetail.qml" line="54"/>
@@ -2828,7 +2737,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="30"/>
         <location filename="../skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="48"/>
         <source>Open</source>
-        <translation type="unfinished">Apri</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="32"/>
@@ -2875,7 +2784,7 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/js/MenuItem.js" line="38"/>
         <source>°C</source>
-        <translation type="unfinished">°C</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2926,7 +2835,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Multimedia.qml" line="12"/>
         <location filename="../skins/default/Multimedia.qml" line="13"/>
         <source>multimedia</source>
-        <translation type="unfinished">multimedia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Multimedia.qml" line="71"/>
@@ -2941,10 +2850,16 @@ Address: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Multimedia.qml" line="73"/>
+        <location filename="../skins/default/Multimedia.qml" line="85"/>
+        <source>web link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Multimedia.qml" line="74"/>
         <location filename="../skins/default/Multimedia.qml" line="87"/>
         <source>rss</source>
-        <translation type="unfinished">rss</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Multimedia.qml" line="75"/>
@@ -2956,12 +2871,6 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Multimedia.qml" line="76"/>
         <location filename="../skins/default/Multimedia.qml" line="91"/>
         <source>weather</source>
-        <translation type="unfinished">tempo</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Multimedia.qml" line="73"/>
-        <location filename="../skins/default/Multimedia.qml" line="85"/>
-        <source>web link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2973,9 +2882,14 @@ Address: %2</source>
 <context>
     <name>MultimediaNames</name>
     <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/MultimediaNames.qml" line="10"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../skins/default/MultimediaNames.qml" line="10"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2983,7 +2897,7 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/NewImageCard.qml" line="194"/>
         <source>CANCEL</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/NewImageCard.qml" line="211"/>
@@ -3001,7 +2915,7 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/NewProfileCard.qml" line="185"/>
         <source>CANCEL</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/NewProfileCard.qml" line="202"/>
@@ -3015,13 +2929,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>Page</name>
-    <message>
-        <source>zone %1 - %2</source>
-        <translation type="obsolete">zona %1 - %2</translation>
-    </message>
-</context>
-<context>
     <name>Pager</name>
     <message>
         <location filename="../skins/default/Components/VideoDoorEntry/Pager.qml" line="18"/>
@@ -3030,18 +2937,11 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>PaginatorList</name>
-    <message>
-        <source>remove all</source>
-        <translation type="obsolete">elimina tutto</translation>
-    </message>
-</context>
-<context>
     <name>PaginatorOnBackground</name>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/PaginatorOnBackground.qml" line="97"/>
         <source>remove all</source>
-        <translation type="unfinished">elimina tutto</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3089,17 +2989,17 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/PeriodItem.qml" line="34"/>
         <source>year</source>
-        <translation type="unfinished">anno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/PeriodItem.qml" line="133"/>
         <source>month</source>
-        <translation type="unfinished">mese</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/PeriodItem.qml" line="141"/>
         <source>day</source>
-        <translation type="unfinished">giorno</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3125,7 +3025,7 @@ Address: %2</source>
         <location filename="../skins/default/PopupPage.qml" line="65"/>
         <location filename="../skins/default/PopupPage.qml" line="67"/>
         <source>zone</source>
-        <translation type="unfinished">zona</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3134,7 +3034,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/PowerAmplifier.qml" line="24"/>
         <location filename="../skins/default/Components/SoundDiffusion/PowerAmplifier.qml" line="24"/>
         <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/PowerAmplifier.qml" line="34"/>
@@ -3142,7 +3042,7 @@ Address: %2</source>
         <location filename="../skins/default/Components/SoundDiffusion/PowerAmplifier.qml" line="33"/>
         <location filename="../skins/default/Components/SoundDiffusion/PowerAmplifier.qml" line="38"/>
         <source>settings</source>
-        <translation type="unfinished">impostazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3203,18 +3103,18 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Profile.qml" line="277"/>
         <source>profile</source>
-        <translation>profilo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Profile.qml" line="332"/>
         <source>note</source>
-        <translation>note</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Profile.qml" line="350"/>
         <location filename="../skins/default/Profile.qml" line="357"/>
         <source>Add note</source>
-        <translation>Aggiungi nota</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3222,7 +3122,7 @@ Address: %2</source>
     <message>
         <location filename="../../BtObjects/mediaobjects.cpp" line="263"/>
         <source>IP radio</source>
-        <translation type="unfinished">radio IP</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3250,7 +3150,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Rooms.qml" line="14"/>
         <location filename="../skins/default/Rooms.qml" line="15"/>
         <source>rooms</source>
-        <translation>stanze</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3317,14 +3217,14 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/ScenarioModuleSettings.qml" line="197"/>
         <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="112"/>
         <source>ok</source>
-        <translation type="unfinished">ok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/ScenarioModuleSettings.qml" line="151"/>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/ScenarioModuleSettings.qml" line="210"/>
         <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="125"/>
         <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/ScenarioModuleSettings.qml" line="172"/>
@@ -3339,7 +3239,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Scenarios.qml" line="7"/>
         <location filename="../skins/default/Scenarios.qml" line="7"/>
         <source>Scenarios</source>
-        <translation type="unfinished">Scenari</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3367,7 +3267,7 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/ScreenSaverList.qml" line="126"/>
         <source>type</source>
-        <translation type="unfinished">tipo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/ScreenSaverList.qml" line="148"/>
@@ -3410,7 +3310,7 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/SelfTest.qml" line="14"/>
         <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/SelfTest.qml" line="18"/>
@@ -3426,14 +3326,10 @@ Address: %2</source>
 <context>
     <name>Settings</name>
     <message>
-        <source>settings</source>
-        <translation type="obsolete">impostazioni</translation>
-    </message>
-    <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Settings.qml" line="11"/>
         <location filename="../skins/default/Settings.qml" line="10"/>
         <source>Settings</source>
-        <translation>Impostazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3460,7 +3356,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/SettingsAdvancedScenario.qml" line="133"/>
         <location filename="../skins/default/SettingsAdvancedScenario.qml" line="135"/>
         <source>CANCEL</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3499,7 +3395,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsDateTime.qml" line="103"/>
         <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="103"/>
         <source>time</source>
-        <translation type="unfinished">Ora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsDateTime.qml" line="117"/>
@@ -3518,7 +3414,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsDisplay.qml" line="38"/>
         <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="34"/>
         <source>Brightness</source>
-        <translation type="unfinished">Luminosità</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsDisplay.qml" line="39"/>
@@ -3540,7 +3436,7 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="35"/>
         <source>Contrast</source>
-        <translation type="unfinished">Contrasto</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3603,7 +3499,7 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="32"/>
         <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="32"/>
         <source>May</source>
-        <translation type="unfinished">Mag</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="34"/>
@@ -3666,14 +3562,6 @@ Address: %2</source>
     <name>SettingsEnergySetThresholds</name>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="20"/>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="20"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
         <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
         <source>threshold 1 %1</source>
         <translation type="unfinished"></translation>
@@ -3684,7 +3572,15 @@ Address: %2</source>
         <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
         <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="20"/>
         <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="20"/>
+        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
+        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="20"/>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="20"/>
@@ -3743,12 +3639,12 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsEnergyThresholds.qml" line="19"/>
         <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsEnergyThresholds.qml" line="19"/>
         <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3856,12 +3752,12 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsHome.qml" line="66"/>
         <source>Modify background image</source>
-        <translation type="unfinished">Modifica immagine di sfondo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsHome.qml" line="76"/>
         <source>Add Quicklink</source>
-        <translation type="unfinished">Aggiungi quicklink</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="46"/>
@@ -3903,7 +3799,7 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsHomeQuicklinks.qml" line="28"/>
         <source>Add Quicklink</source>
-        <translation type="unfinished">Aggiungi quicklink</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3938,7 +3834,7 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsInternational.qml" line="150"/>
         <source>temperature</source>
-        <translation type="unfinished">temperatura</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsInternational.qml" line="162"/>
@@ -3962,37 +3858,37 @@ Address: %2</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsItems.qml" line="64"/>
         <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="104"/>
         <source>Home</source>
-        <translation>Home</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsItems.qml" line="65"/>
         <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="105"/>
         <source>General</source>
-        <translation>Generale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsItems.qml" line="66"/>
         <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="107"/>
         <source>Profiles</source>
-        <translation>Profili</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsItems.qml" line="67"/>
         <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="109"/>
         <source>Rooms</source>
-        <translation>Stanze</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsItems.qml" line="68"/>
         <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="111"/>
         <source>Systems</source>
-        <translation>Sistemi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsItems.qml" line="69"/>
         <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="112"/>
         <source>Alarm Clock</source>
-        <translation>Sveglia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="113"/>
@@ -4010,7 +3906,7 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsMultimediaQuicklinks.qml" line="35"/>
         <source>Add Quicklink</source>
-        <translation type="unfinished">Aggiungi quicklink</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4143,12 +4039,12 @@ Address: %2</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/SettingsNames.qml" line="52"/>
         <source>12h</source>
-        <translation type="unfinished">12h</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/SettingsNames.qml" line="53"/>
         <source>24h</source>
-        <translation type="unfinished">24h</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/SettingsNames.qml" line="56"/>
@@ -4158,7 +4054,7 @@ Address: %2</source>
         <location filename="../skins/default/SettingsNames.qml" line="61"/>
         <location filename="../skins/default/SettingsNames.qml" line="64"/>
         <source>Enable</source>
-        <translation>Abilita</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/SettingsNames.qml" line="57"/>
@@ -4168,7 +4064,7 @@ Address: %2</source>
         <location filename="../skins/default/SettingsNames.qml" line="60"/>
         <location filename="../skins/default/SettingsNames.qml" line="65"/>
         <source>Disable</source>
-        <translation>Disabilita</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/SettingsNames.qml" line="60"/>
@@ -4414,18 +4310,18 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsProfile.qml" line="13"/>
         <source>Modify card image</source>
-        <translation>Modifica immagine della carta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsProfile.qml" line="23"/>
         <source>Modify background image</source>
-        <translation>Modifica immagine di sfondo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsProfile.qml" line="33"/>
         <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="35"/>
         <source>Add Quicklink</source>
-        <translation>Aggiungi quicklink</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="13"/>
@@ -4468,7 +4364,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsSystems.qml" line="48"/>
         <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="85"/>
         <source>Scenarios</source>
-        <translation>Scenari</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/Settings/SettingsSystems.qml" line="49"/>
@@ -4580,7 +4476,7 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/SideBar.qml" line="118"/>
         <source>instant consumption</source>
-        <translation type="unfinished">consumo istantaneo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/SideBar.qml" line="139"/>
@@ -4610,15 +4506,11 @@ Continue?</source>
         <location filename="../skins/default/Components/SoundDiffusion/SoundAmbient.qml" line="46"/>
         <location filename="../skins/default/Components/SoundDiffusion/SoundAmbient.qml" line="52"/>
         <source>source</source>
-        <translation type="unfinished">sorgente</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SoundDiffusion</name>
-    <message>
-        <source>sound system</source>
-        <translation type="obsolete">diffusione sonora</translation>
-    </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/SoundDiffusion.qml" line="8"/>
         <location filename="../skins/default/SoundDiffusion.qml" line="8"/>
@@ -4633,7 +4525,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SoundSourceItem.qml" line="55"/>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SoundSourceItem.qml" line="68"/>
         <source>source</source>
-        <translation type="unfinished">sorgente</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SoundSourceItem.qml" line="69"/>
@@ -4647,7 +4539,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SourceControl.qml" line="17"/>
         <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="17"/>
         <source>source</source>
-        <translation type="unfinished">sorgente</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SourceControl.qml" line="18"/>
@@ -4659,13 +4551,13 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SourceControl.qml" line="24"/>
         <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="24"/>
         <source>source change</source>
-        <translation type="unfinished">cambia sorgente</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SourceControl.qml" line="135"/>
         <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="146"/>
         <source>saved IP radios</source>
-        <translation type="unfinished">radio IP memorizzate</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SourceControl.qml" line="148"/>
@@ -4679,7 +4571,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SourceControl.qml" line="163"/>
         <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="174"/>
         <source>browse</source>
-        <translation type="unfinished">browse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/SourceControl.qml" line="189"/>
@@ -4689,33 +4581,11 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>SourceSelection</name>
-    <message>
-        <source>source change</source>
-        <translation type="obsolete">cambia sorgente</translation>
-    </message>
-    <message>
-        <source>saved IP radios</source>
-        <translation type="obsolete">radio IP memorizzate</translation>
-    </message>
-    <message>
-        <source>browse</source>
-        <translation type="obsolete">browse</translation>
-    </message>
-</context>
-<context>
     <name>SplitBasicOffProgram</name>
     <message>
         <location filename="../../BtObjects/splitbasicscenario.h" line="54"/>
         <source>off</source>
-        <translation type="unfinished">off</translation>
-    </message>
-</context>
-<context>
-    <name>SplitBasicScenario</name>
-    <message>
-        <source>off</source>
-        <translation type="obsolete">off</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4731,16 +4601,16 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="76"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="29"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="76"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <source>enabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="29"/>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="76"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="29"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="76"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="63"/>
@@ -4772,14 +4642,14 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoMenu.qml" line="28"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoMenu.qml" line="28"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <source>enabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoMenu.qml" line="28"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoMenu.qml" line="28"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4797,16 +4667,16 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="94"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="29"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="94"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <source>enabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="29"/>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="94"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="29"/>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="94"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="81"/>
@@ -4833,7 +4703,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/Supervision.qml" line="67"/>
         <location filename="../skins/default/Components/EnergyManagement/Supervision.qml" line="93"/>
         <source>Open</source>
-        <translation type="unfinished">Apri</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/Supervision.qml" line="69"/>
@@ -4869,26 +4739,10 @@ Continue?</source>
 <context>
     <name>Systems</name>
     <message>
-        <source>antintrusion</source>
-        <translation type="obsolete">antintrusione</translation>
-    </message>
-    <message>
-        <source>temperature control</source>
-        <translation type="obsolete">termoregolazione</translation>
-    </message>
-    <message>
-        <source>lighting</source>
-        <translation type="obsolete">illuminazione</translation>
-    </message>
-    <message>
-        <source>sound diffusion system</source>
-        <translation type="obsolete">diffusione sonora</translation>
-    </message>
-    <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Systems.qml" line="14"/>
         <location filename="../skins/default/Systems.qml" line="13"/>
         <source>systems</source>
-        <translation>sistemi</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4906,12 +4760,12 @@ Continue?</source>
     <message>
         <location filename="../skins/default/Components/TextDialog.qml" line="73"/>
         <source>ok</source>
-        <translation type="unfinished">ok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/TextDialog.qml" line="86"/>
         <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4919,7 +4773,7 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="74"/>
         <source>unsaved changes. continue?</source>
-        <translation>modifiche non salvate. continuare?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="164"/>
@@ -4929,23 +4783,27 @@ Continue?</source>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="193"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="285"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="171"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="159"/>
         <source>season</source>
-        <translation>funzionamento</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="187"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="174"/>
         <source>mode</source>
-        <translation>modalità</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>valid until</source>
-        <translation type="obsolete">attivo fino al</translation>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="205"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="304"/>
+        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="192"/>
+        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="284"/>
+        <source>temperature set</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="256"/>
@@ -4955,19 +4813,7 @@ Continue?</source>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="321"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="360"/>
         <source>next program</source>
-        <translation>programma successivo</translation>
-    </message>
-    <message>
-        <source>programs</source>
-        <translation type="obsolete">programma</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="205"/>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="304"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="192"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="284"/>
-        <source>temperature set</source>
-        <translation>temperatura impostata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="283"/>
@@ -4975,17 +4821,13 @@ Continue?</source>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="273"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="279"/>
         <source>duration</source>
-        <translation>durata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="416"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="386"/>
         <source>next scenario</source>
-        <translation>scenario successivo</translation>
-    </message>
-    <message>
-        <source>scenarios</source>
-        <translation type="obsolete">scenari</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="72"/>
@@ -5000,67 +4842,67 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="27"/>
         <source>data</source>
-        <translation>data</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="37"/>
         <source>mesi</source>
-        <translation>mesi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="45"/>
         <source>giorni</source>
-        <translation type="unfinished">day</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="54"/>
         <source>settembre</source>
-        <translation type="unfinished">september</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="63"/>
         <source>novembre</source>
-        <translation type="unfinished">november</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="72"/>
         <source>dicembre</source>
-        <translation type="unfinished">december</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="81"/>
         <source>26</source>
-        <translation type="unfinished">26</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="90"/>
         <source>27</source>
-        <translation type="unfinished">27</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="99"/>
         <source>ottobre</source>
-        <translation type="unfinished">october</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="108"/>
         <source>gennaio</source>
-        <translation type="unfinished">january</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="117"/>
         <source>28</source>
-        <translation type="unfinished">28</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="126"/>
         <source>29</source>
-        <translation type="unfinished">29</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitDate.qml" line="135"/>
         <source>30</source>
-        <translation type="unfinished">30</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5068,12 +4910,12 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="26"/>
         <source>ore</source>
-        <translation type="unfinished">hour</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="34"/>
         <source>minuti</source>
-        <translation type="unfinished">minuti</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="42"/>
@@ -5083,7 +4925,7 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="50"/>
         <source>26</source>
-        <translation type="unfinished">26</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="58"/>
@@ -5093,7 +4935,7 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="66"/>
         <source>27</source>
-        <translation type="unfinished">27</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="75"/>
@@ -5103,7 +4945,7 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="84"/>
         <source>28</source>
-        <translation type="unfinished">28</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="92"/>
@@ -5118,12 +4960,12 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="108"/>
         <source>29</source>
-        <translation type="unfinished">29</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlUnitTime.qml" line="116"/>
         <source>30</source>
-        <translation type="unfinished">30</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5131,7 +4973,7 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="37"/>
         <source>unsaved changes. continue?</source>
-        <translation>modifiche non salvate. continuare?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="77"/>
@@ -5139,13 +4981,13 @@ Continue?</source>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="78"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="167"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="83"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="84"/>
         <source>modes</source>
-        <translation>modalità</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="112"/>
@@ -5153,21 +4995,13 @@ Continue?</source>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="113"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="182"/>
         <source>fancoil speed</source>
-        <translation>velocità fancoil</translation>
-    </message>
-    <message>
-        <source>fan coil speed</source>
-        <translation type="obsolete">velocità fancoil</translation>
-    </message>
-    <message>
-        <source>high</source>
-        <translation type="obsolete">alta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="166"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="166"/>
         <source>temperature set</source>
-        <translation>temperatura impostata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="37"/>
@@ -5183,161 +5017,13 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="10"/>
         <location filename="../skins/default/ThermalNames.qml" line="10"/>
         <source>summer</source>
-        <translation>estate</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="11"/>
         <location filename="../skins/default/ThermalNames.qml" line="11"/>
         <source>winter</source>
-        <translation>inverno</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="17"/>
-        <location filename="../skins/default/ThermalNames.qml" line="17"/>
-        <source>timed manual</source>
-        <translation>manuale temporizzato</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="18"/>
-        <location filename="../skins/default/ThermalNames.qml" line="18"/>
-        <source>weekly programs</source>
-        <translation>programmi settimanali</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="19"/>
-        <location filename="../skins/default/ThermalNames.qml" line="19"/>
-        <source>scenario</source>
-        <translation>scenario</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="21"/>
-        <location filename="../skins/default/ThermalNames.qml" line="21"/>
-        <source>weekday</source>
-        <translation>feriale</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="22"/>
-        <location filename="../skins/default/ThermalNames.qml" line="22"/>
-        <source>holiday</source>
-        <translation>festivo</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="25"/>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="56"/>
-        <location filename="../skins/default/ThermalNames.qml" line="25"/>
-        <location filename="../skins/default/ThermalNames.qml" line="56"/>
-        <source>auto</source>
-        <translation>auto</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="29"/>
-        <location filename="../skins/default/ThermalNames.qml" line="29"/>
-        <source>--</source>
-        <translation>--</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="32"/>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="48"/>
-        <location filename="../skins/default/ThermalNames.qml" line="32"/>
-        <location filename="../skins/default/ThermalNames.qml" line="48"/>
-        <source>Off</source>
-        <translation>Off</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="33"/>
-        <location filename="../skins/default/ThermalNames.qml" line="33"/>
-        <source>Heating</source>
-        <translation>Riscaldamento</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="34"/>
-        <location filename="../skins/default/ThermalNames.qml" line="34"/>
-        <source>Cooling</source>
-        <translation>Raffreddamento</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="35"/>
-        <location filename="../skins/default/ThermalNames.qml" line="35"/>
-        <source>Fan</source>
-        <translation>Ventilato</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="36"/>
-        <location filename="../skins/default/ThermalNames.qml" line="36"/>
-        <source>Dry</source>
-        <translation>Asciutto</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="37"/>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="40"/>
-        <location filename="../skins/default/ThermalNames.qml" line="37"/>
-        <location filename="../skins/default/ThermalNames.qml" line="40"/>
-        <source>Automatic</source>
-        <translation>Automatico</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="41"/>
-        <location filename="../skins/default/ThermalNames.qml" line="41"/>
-        <source>Low</source>
-        <translation>Basso</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="42"/>
-        <location filename="../skins/default/ThermalNames.qml" line="42"/>
-        <source>Medium</source>
-        <translation>Medio</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="43"/>
-        <location filename="../skins/default/ThermalNames.qml" line="43"/>
-        <source>High</source>
-        <translation>Alto</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="44"/>
-        <location filename="../skins/default/ThermalNames.qml" line="44"/>
-        <source>Silent</source>
-        <translation>Silenzioso</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="49"/>
-        <location filename="../skins/default/ThermalNames.qml" line="49"/>
-        <source>On</source>
-        <translation>On</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="53"/>
-        <location filename="../skins/default/ThermalNames.qml" line="53"/>
-        <source>min</source>
-        <translation>min</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="54"/>
-        <location filename="../skins/default/ThermalNames.qml" line="54"/>
-        <source>med</source>
-        <translation>med</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="55"/>
-        <location filename="../skins/default/ThermalNames.qml" line="55"/>
-        <source>max</source>
-        <translation>max</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="15"/>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="26"/>
-        <location filename="../skins/default/ThermalNames.qml" line="15"/>
-        <location filename="../skins/default/ThermalNames.qml" line="26"/>
-        <source>antifreeze</source>
-        <translation>antigelo</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="16"/>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="27"/>
-        <location filename="../skins/default/ThermalNames.qml" line="16"/>
-        <location filename="../skins/default/ThermalNames.qml" line="27"/>
-        <source>manual</source>
-        <translation>manuale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="14"/>
@@ -5345,12 +5031,175 @@ Continue?</source>
         <location filename="../skins/default/ThermalNames.qml" line="14"/>
         <location filename="../skins/default/ThermalNames.qml" line="28"/>
         <source>off</source>
-        <translation>off</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="15"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="26"/>
+        <location filename="../skins/default/ThermalNames.qml" line="15"/>
+        <location filename="../skins/default/ThermalNames.qml" line="26"/>
+        <source>antifreeze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="16"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="27"/>
+        <location filename="../skins/default/ThermalNames.qml" line="16"/>
+        <location filename="../skins/default/ThermalNames.qml" line="27"/>
+        <source>manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="17"/>
+        <location filename="../skins/default/ThermalNames.qml" line="17"/>
+        <source>timed manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="18"/>
+        <location filename="../skins/default/ThermalNames.qml" line="18"/>
+        <source>weekly programs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="19"/>
+        <location filename="../skins/default/ThermalNames.qml" line="19"/>
+        <source>scenario</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="21"/>
+        <location filename="../skins/default/ThermalNames.qml" line="21"/>
+        <source>weekday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="22"/>
+        <location filename="../skins/default/ThermalNames.qml" line="22"/>
+        <source>holiday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="25"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="56"/>
+        <location filename="../skins/default/ThermalNames.qml" line="25"/>
+        <location filename="../skins/default/ThermalNames.qml" line="56"/>
+        <source>auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="29"/>
+        <location filename="../skins/default/ThermalNames.qml" line="29"/>
+        <source>--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="32"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="48"/>
         <location filename="../skins/default/ThermalNames.qml" line="32"/>
+        <location filename="../skins/default/ThermalNames.qml" line="48"/>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="33"/>
+        <location filename="../skins/default/ThermalNames.qml" line="33"/>
+        <source>Heating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="34"/>
+        <location filename="../skins/default/ThermalNames.qml" line="34"/>
+        <source>Cooling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="35"/>
+        <location filename="../skins/default/ThermalNames.qml" line="35"/>
+        <source>Fan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="36"/>
+        <location filename="../skins/default/ThermalNames.qml" line="36"/>
+        <source>Dry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="37"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="40"/>
+        <location filename="../skins/default/ThermalNames.qml" line="37"/>
+        <location filename="../skins/default/ThermalNames.qml" line="40"/>
+        <source>Automatic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="41"/>
+        <location filename="../skins/default/ThermalNames.qml" line="41"/>
+        <source>Low</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="42"/>
+        <location filename="../skins/default/ThermalNames.qml" line="42"/>
+        <source>Medium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="43"/>
+        <location filename="../skins/default/ThermalNames.qml" line="43"/>
+        <source>High</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="44"/>
+        <location filename="../skins/default/ThermalNames.qml" line="44"/>
+        <source>Silent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="45"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="49"/>
+        <location filename="../skins/default/ThermalNames.qml" line="49"/>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="50"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="53"/>
+        <location filename="../skins/default/ThermalNames.qml" line="53"/>
+        <source>min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="54"/>
+        <location filename="../skins/default/ThermalNames.qml" line="54"/>
+        <source>med</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalNames.qml" line="55"/>
+        <location filename="../skins/default/ThermalNames.qml" line="55"/>
+        <source>max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/ThermalNames.qml" line="45"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/ThermalNames.qml" line="50"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5359,7 +5208,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalNotControlledProbe.qml" line="11"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalNotControlledProbe.qml" line="11"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5368,7 +5217,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/ThermalRegulation.qml" line="7"/>
         <location filename="../skins/default/ThermalRegulation.qml" line="7"/>
         <source>temperature control</source>
-        <translation>termoregolazione</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5377,19 +5226,19 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalRegulationItems.qml" line="65"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalRegulationItems.qml" line="65"/>
         <source>Air Conditioning</source>
-        <translation>Aria condizionata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalRegulationItems.qml" line="66"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalRegulationItems.qml" line="66"/>
         <source>Not Controlled Probes</source>
-        <translation>Sonde non controllate</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalRegulationItems.qml" line="67"/>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalRegulationItems.qml" line="67"/>
         <source>External Probes</source>
-        <translation>Sonde esterne</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5399,7 +5248,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalRegulator.qml" line="109"/>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/ThermalRegulation/ThermalRegulator.qml" line="156"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5449,7 +5298,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/VideoCamera.qml" line="100"/>
         <location filename="../skins/default/VideoCamera.qml" line="133"/>
         <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5489,9 +5338,14 @@ Continue?</source>
 <context>
     <name>VideoDoorEntryNames</name>
     <message>
-        <location filename="../skins/default/VideoDoorEntryNames.qml" line="8"/>
+        <location filename="../../build_arm/dist/arm/gui/skins/default/VideoDoorEntryNames.qml" line="9"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/VideoDoorEntryNames.qml" line="9"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5500,7 +5354,7 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/Components/SoundDiffusion/VolumeGeneral.qml" line="10"/>
         <location filename="../skins/default/Components/SoundDiffusion/VolumeGeneral.qml" line="21"/>
         <source>volume</source>
-        <translation>volume</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5508,7 +5362,7 @@ Continue?</source>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/WeatherInfoPage.qml" line="15"/>
         <source>multimedia</source>
-        <translation type="unfinished">multimedia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/WeatherInfoPage.qml" line="41"/>
@@ -5550,13 +5404,13 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="27"/>
         <location filename="../skins/default/js/popup.js" line="27"/>
         <source>ANTINTRUSION</source>
-        <translation>ANTINTRUSIONE</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="37"/>
         <location filename="../skins/default/js/popup.js" line="37"/>
         <source>More info</source>
-        <translation>Maggiori informazioni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="38"/>
@@ -5572,13 +5426,13 @@ Continue?</source>
         <location filename="../skins/default/js/popup.js" line="223"/>
         <location filename="../skins/default/js/popup.js" line="250"/>
         <source>Ignore</source>
-        <translation>Ignora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="57"/>
         <location filename="../skins/default/js/popup.js" line="57"/>
         <source>SUPERVISION</source>
-        <translation>SUPERVISIONE</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="63"/>
@@ -5591,37 +5445,37 @@ Continue?</source>
         <location filename="../skins/default/js/popup.js" line="193"/>
         <location filename="../skins/default/js/popup.js" line="249"/>
         <source>Show</source>
-        <translation>Visualizza</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="85"/>
         <location filename="../skins/default/js/popup.js" line="85"/>
         <source>ALARM CLOCK</source>
-        <translation>SVEGLIA</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="91"/>
         <location filename="../skins/default/js/popup.js" line="91"/>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="92"/>
         <location filename="../skins/default/js/popup.js" line="92"/>
         <source>Postpone</source>
-        <translation>Rimanda</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="112"/>
         <location filename="../skins/default/js/popup.js" line="129"/>
         <source>SCENARIO</source>
-        <translation>SCENARIO</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="115"/>
         <location filename="../skins/default/js/popup.js" line="132"/>
         <source>activated</source>
-        <translation>attivato</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="139"/>
@@ -5631,14 +5485,14 @@ Continue?</source>
         <location filename="../skins/default/js/popup.js" line="187"/>
         <location filename="../skins/default/js/popup.js" line="243"/>
         <source>ENERGY MANAGEMENT</source>
-        <translation>GESTIONE ENERGETICA</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="142"/>
         <location filename="../skins/default/js/popup.js" line="161"/>
         <source>Threshold %n exceeded</source>
-        <translation>
-            <numerusform>Soglia %n superata</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -5646,20 +5500,20 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="169"/>
         <location filename="../skins/default/js/popup.js" line="190"/>
         <source>Monthly goal reached</source>
-        <translation>Obiettivo mensile raggiunto</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="195"/>
         <location filename="../skins/default/js/popup.js" line="216"/>
         <source>MESSAGES</source>
-        <translation>MESSAGGI</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="198"/>
         <location filename="../skins/default/js/popup.js" line="219"/>
         <source>new message(s)</source>
-        <translation>
-            <numerusform>nuovi messaggi</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -5667,19 +5521,19 @@ Continue?</source>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="201"/>
         <location filename="../skins/default/js/popup.js" line="222"/>
         <source>Read</source>
-        <translation>Leggi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="224"/>
         <location filename="../skins/default/js/popup.js" line="245"/>
         <source>Energy Monthly Report</source>
-        <translation>Report energetico mensile</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../build_arm/dist/arm/gui/skins/default/js/popup.js" line="225"/>
         <location filename="../skins/default/js/popup.js" line="246"/>
         <source>available</source>
-        <translation>disponibile</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../skins/default/js/popup.js" line="131"/>
@@ -5689,7 +5543,7 @@ Continue?</source>
     <message>
         <location filename="../skins/default/js/popup.js" line="135"/>
         <source>Close</source>
-        <translation type="unfinished">Chiudi</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

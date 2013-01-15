@@ -1,10 +1,12 @@
 #include "automationobjects.h"
 #include "automation_device.h"
 #include "lighting_device.h"
+#include "videodoorentry_device.h"
 #include "lightobjects.h"
 #include "xml_functions.h"
 #include "devices_cache.h"
 #include "uiimapper.h"
+#include "xmlobject.h"
 
 #include <QDebug>
 #include <QStringList>
@@ -33,41 +35,42 @@ namespace
 }
 
 
-
 QList<ObjectPair> parseAutomationVDE(const QDomNode &obj)
 {
-	Q_UNUSED(obj);
-	// TODO VDE door object
 	QList<ObjectPair> obj_list;
+	XmlObject v(obj);
+
+	foreach (const QDomNode &ist, getChildren(obj, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+		QString where = v.value("dev") + v.value("where");
+
+		VideoDoorEntryDevice *d = bt_global::add_device_to_cache(new VideoDoorEntryDevice(where));
+		obj_list << ObjectPair(uii, new AutomationVDE(v.value("descr"), d));
+	}
+
 	return obj_list;
 }
-
 
 
 QList<ObjectPair> parseAutomation2(const QDomNode &obj)
 {
 	QList<ObjectPair> obj_list;
-	// extract default values
-	QString def_descr = getAttribute(obj, "descr");
-	QString def_where = getAttribute(obj, "where");
-	int def_pul = getIntAttribute(obj, "pul", 0);
-	QTime def_ctime = getTimeAttribute(obj, "ctime");
-	Light::FixedTimingType def_ftime = static_cast<Light::FixedTimingType>(getIntAttribute(obj, "ftime"));
-	int def_ectime = getIntAttribute(obj, "ectime", 0);
-	int myid = getIntAttribute(obj, "id");
+	XmlObject v(obj);
+	int id = getIntAttribute(obj, "id");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
+		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		QString descr = getAttribute(ist, "descr", def_descr);
-		QString where = getAttribute(ist, "where", def_where);
-		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
-		QTime ctime = getTimeAttribute(ist, "ctime", def_ctime);
-		Light::FixedTimingType ftime = static_cast<Light::FixedTimingType>(getIntAttribute(ist, "ftime", def_ftime));
-		int ectime = getIntAttribute(ist, "ectime", def_ectime);
+
+		QString where = v.value("where");
+		PullMode pul = v.intValue("pul") ? PULL : NOT_PULL;
+		Light::FixedTimingType ftime = v.intValue<Light::FixedTimingType>("ftime");
 
 		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
-		obj_list << ObjectPair(uii, new AutomationLight(descr, where, ctime, ftime, ectime, d, myid));
+		obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, v.timeValue("ctime"), ftime, v.intValue("ectime"), d, id));
 	}
 
 	return obj_list;
@@ -130,7 +133,6 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 	QString def_descr = getAttribute(obj, "descr");
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul", 0);
-	int def_cid = getIntAttribute(obj, "cid");
 	QString def_mode = getAttribute(obj, "mode");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
@@ -147,7 +149,8 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 		
 		AutomationDevice *d = bt_global::add_device_to_cache(new AutomationDevice(where, pul));
 
-		switch (cid){
+		switch (cid)
+		{
 			case ObjectInterface::CidAutomation3OpenClose:
 				if (mode.toInt()!=0) obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3OpenCloseSafe, d));
 				else obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3OpenClose, d));
@@ -169,7 +172,6 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 	QList<ObjectPair> obj_list;
 	// extract default values
 	QString def_descr = getAttribute(obj, "descr");
-	int def_cid = getIntAttribute(obj, "cid");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -192,7 +194,8 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 
 			items.append(item);
 		}
-		switch (cid){
+		switch (cid)
+		{
 			case ObjectInterface::CidAutomationGroup3OpenClose:
 				obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3OpenClose, convertQObjectList<AutomationCommand3 *>(items)));
 				break;
@@ -234,6 +237,24 @@ AutomationLight::AutomationLight(QString name, QString key, QTime ctime, FixedTi
 int AutomationLight::getObjectId() const
 {
 	return myid;
+}
+
+void AutomationLight::activate()
+{
+	setActive(true);
+}
+
+AutomationVDE::AutomationVDE(QString _name, VideoDoorEntryDevice *d) :
+	DeviceObjectInterface(d)
+{
+	name = _name;
+	dev = d;
+}
+
+void AutomationVDE::activate()
+{
+	dev->openLock();
+	dev->releaseLock();
 }
 
 AutomationCommand2::AutomationCommand2(LightingDevice *d) :

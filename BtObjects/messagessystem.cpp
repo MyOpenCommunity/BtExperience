@@ -47,9 +47,11 @@ void MessageItem::setRead(bool read)
 	emit readChanged();
 }
 
-MessagesSystem::MessagesSystem(MessageDevice *d)
+MessagesSystem::MessagesSystem(MessageDevice *d) :
+	message_list(this)
 {
 	dev = d;
+	unreadMessages = 0;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 	connect(&message_list, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this, SLOT(updateUnreadMessagesIfChanged()));
 	// TODO: load messages

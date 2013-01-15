@@ -7,7 +7,7 @@ MenuColumn {
         id: column
 
         ControlOn {
-            onClicked: dataModel.active = true
+            onClicked: dataModel.activate()
         }
     }
 }
