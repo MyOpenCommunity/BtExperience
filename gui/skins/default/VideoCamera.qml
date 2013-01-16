@@ -59,7 +59,7 @@ Page {
         Connections {
             target: control.camera
             onCallAnswered: {
-                controlCallManager.state = "terminate"
+                controlCallManager.state = control.camera.teleloop ? "teleloop" : "terminate"
                 controlCallManager.updateVolumeState()
             }
             onMuteChanged: controlCallManager.updateVolumeState()

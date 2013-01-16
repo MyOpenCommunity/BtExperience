@@ -66,6 +66,11 @@ SvgImage {
                 pressedImageBg: "../../images/common/btn_chiudi_chiamata_P.svg"
                 shadowImage: "../../images/common/ombra_btn_rispondi_L.svg"
             }
+        },
+        State {
+            name: "teleloop"
+            PropertyChanges { target: buttonLeft; enabled: false }
+            PropertyChanges { target: buttonRight; enabled: false }
         }
     ]
 }

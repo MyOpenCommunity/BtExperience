@@ -147,6 +147,8 @@ Item {
                 global.audioState.enableState(AudioState.IpVideoCall)
             else
                 global.audioState.enableState(AudioState.ScsVideoCall)
+            if (vctConnection.target.teleloop)
+                global.audioState.enableState(AudioState.Mute)
         }
         onCallEnded: {
             global.audioState.disableState(AudioState.VdeRingtone)
