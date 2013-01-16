@@ -195,7 +195,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	connect(&video_grabber, SIGNAL(started()), SIGNAL(incomingCall()));
 
 	association_timeout.setSingleShot(true);
-	association_timeout.setInterval(TELELOOP_TIMEOUT_CONNECTION);
+	association_timeout.setInterval(TELELOOP_TIMEOUT_CONNECTION * 1000);
 	connect(&association_timeout, SIGNAL(timeout()), this, SLOT(associationTimeout()));
 
 	connect(this, SIGNAL(autoOpenChanged()), this, SIGNAL(persistItem()));
