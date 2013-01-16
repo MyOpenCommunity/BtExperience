@@ -17,6 +17,7 @@ Item {
     property bool autoOpen: privateProps.vctModel === undefined ? false : privateProps.vctModel.autoOpen
     property bool handsFree: privateProps.vctModel === undefined ? false : privateProps.vctModel.handsFree
     property bool vdeMute: privateProps.vctModel === undefined ? false : privateProps.vctModel.ringExclusion
+    property bool vdeTeleloop: privateProps.vctModel === undefined ? false : privateProps.vctModel.associatedTeleloopId
     property int messages: privateProps.messagesModel === undefined ? 0 : privateProps.messagesModel.unreadMessages
     property int dangers: privateProps.dangersModel === undefined ? 0 : privateProps.dangersModel.openedDevices
     property bool scenarioRecording: privateProps.recordingModel === undefined ? false : privateProps.recordingModel.recording

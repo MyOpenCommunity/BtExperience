@@ -240,6 +240,22 @@ Item {
             }
         }
 
+        // vde teleloop
+        ToolbarButton {
+            height: toolbar_top.height
+            visible: EventManager.eventManager.vdeTeleloop
+            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+                              "../images/toolbar/icon_vde-mute.svg" :
+                              "../images/toolbar/icon_vde-mute_p.svg"
+            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+                              "../images/toolbar/icon_vde-mute_p.svg" :
+                              "../images/toolbar/icon_vde-mute.svg"
+            onClicked: {
+                toolbar.toolbarNavigationClicked()
+                Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.VDE_TELELOOP})
+            }
+        }
+
         // alerts
         ToolbarButton {
             height: toolbar_top.height

@@ -50,6 +50,7 @@ SettingsSkin 1.0 SettingsSkin.qml
 SettingsSystems 1.0 SettingsSystems.qml
 SettingsVDE 1.0 SettingsVDE.qml
 SettingsVdeMute 1.0 SettingsVdeMute.qml
+SettingsTeleloop 1.0 SettingsTeleloop.qml
 SettingsVersion 1.0 SettingsVersion.qml
 TextLanguage 1.0 TextLanguage.qml
 Time 1.0 Time.qml

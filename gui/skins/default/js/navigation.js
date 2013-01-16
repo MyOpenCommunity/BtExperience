@@ -51,6 +51,7 @@ var SUPERVISION = 5
 var ALARM_CLOCKS = 6
 var PROFILE = 7
 var SCENARIO = 8
+var VDE_TELELOOP = 9
 
 var _paths = []
 
@@ -64,6 +65,7 @@ function _init(paths) {
     paths[ALARM_CLOCKS] = ["AlarmClock"]
     paths[PROFILE] = ["Profiles", "Profile"]
     paths[SCENARIO] = ["Systems", "Scenarios", "Scenario"]
+    paths[VDE_TELELOOP] = ["Systems", "VDE", "VdeTeleloop"]
 }
 
 // returns a string indicating where to navigate

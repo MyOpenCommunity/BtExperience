@@ -12,6 +12,7 @@ MenuColumn {
             "HandsFree": privateProps.openHandsFreeMenu,
             "AutoOpen": privateProps.openAutoOpenMenu,
             "VdeMute": privateProps.openVdeMuteMenu,
+            "VdeTeleloop": privateProps.openTeleloopMenu,
         }
     }
 
@@ -38,6 +39,13 @@ MenuColumn {
             if (privateProps.currentIndex !== 3)
                 privateProps.currentIndex = 3
             column.loadColumn(vdeMuteComponent, vdeMuteMenuItem.name)
+            return NavigationConstants.NAVIGATION_FINISHED_OK
+        }
+
+        function openTeleloopMenu(navigationData) {
+            if (privateProps.currentIndex !== 4)
+                privateProps.currentIndex = 4
+            column.loadColumn(teleloopComponent, teleloopMenuItem.name)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
     }
@@ -99,6 +107,24 @@ MenuColumn {
             Component {
                 id: vdeMuteComponent
                 SettingsVdeMute {
+                }
+            }
+        }
+
+        MenuItem {
+            id: teleloopMenuItem
+            name: qsTr("Teleloop")
+            hasChild: true
+            isSelected: privateProps.currentIndex === 4
+            onClicked: {
+                if (privateProps.currentIndex !== 4)
+                    privateProps.currentIndex = 4
+                column.loadColumn(teleloopComponent, name)
+            }
+
+            Component {
+                id: teleloopComponent
+                SettingsTeleloop {
                 }
             }
         }
