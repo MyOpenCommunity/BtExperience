@@ -1,6 +1,6 @@
 .pragma library
 
-function initPlayer(mediaPlayer, model, isUpnp, startIndex, isVideo) {
+function _initPlayer(mediaPlayer, model, isUpnp, startIndex, isVideo) {
     // if player.model is set assumes a new playlist must be set
     if (model) {
         if (isUpnp)
@@ -19,5 +19,9 @@ function initPlayer(mediaPlayer, model, isUpnp, startIndex, isVideo) {
 }
 
 function initVideoPlayer(mediaPlayer, model, isUpnp, startIndex) {
-    initPlayer(mediaPlayer, model, isUpnp, startIndex, true)
+    _initPlayer(mediaPlayer, model, isUpnp, startIndex, true)
+}
+
+function initAudioPlayer(mediaPlayer, model, isUpnp, startIndex) {
+    _initPlayer(mediaPlayer, model, isUpnp, startIndex, false)
 }

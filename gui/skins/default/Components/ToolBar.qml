@@ -278,7 +278,7 @@ Item {
             onClicked: {
                 if (EventManager.eventManager.playing) {
                     toolbar.toolbarNavigationClicked()
-                    Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioVideoPlayer.isUpnp()})
+                    Stack.goToPage("AudioVideoPlayer.qml", {"upnp": global.audioVideoPlayer.isUpnp()})
                 } else
                     console.log("TODO: navigation to volume settings menu")
             }
@@ -296,7 +296,7 @@ Item {
                               "../images/toolbar/icon_source-play.svg"
             onClicked: {
                 toolbar.toolbarNavigationClicked()
-                Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false, "upnp": global.audioVideoPlayer.isUpnp()})
+                Stack.goToPage("AudioVideoPlayer.qml", {"upnp": global.audioVideoPlayer.isUpnp()})
             }
         }
 

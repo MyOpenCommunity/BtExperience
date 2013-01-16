@@ -15,13 +15,12 @@ Page {
 
     property variant model
     property int index
-    property bool isVideo: true
     property bool upnp
     property variant mediaPlayer: global.audioVideoPlayer
 
     source: "images/background/multimedia.jpg"
     showSystemsButton: true
-    text: player.isVideo ? qsTr("Video") : qsTr("Audio")
+    text: qsTr("Audio")
 
     function systemsButtonClicked() {
         Stack.backToMultimedia()
@@ -29,29 +28,8 @@ Page {
 
     SvgImage {
         id: frameBg
-
-        property int innerBorder: 7
-        property int innerX: x + innerBorder
-        property int innerY: y + innerBorder
-        property int innerWidth: width - 2 *innerBorder
-        property int innerHeight: height - 2 *innerBorder
-
         source: "images/common/video_player_bg_frame.svg"
-        visible: player.isVideo
-        anchors {
-            top: player.toolbar.bottom
-            topMargin: frameBg.height / 100 * 3.89
-            horizontalCenter: parent.horizontalCenter
-            horizontalCenterOffset: player.navigationBar.width / 2
-        }
-    }
-
-    SvgImage {
-        id: frame
-
-        source: "images/common/video_player_frame.svg"
-        visible: player.isVideo
-        anchors.centerIn: frameBg
+        visible: false
     }
 
     Rectangle {
@@ -72,10 +50,8 @@ Page {
 
         source: "images/common/video_player_bg_box.svg"
         anchors {
-            top: player.isVideo ? frameBg.bottom : undefined
-            topMargin: player.isVideo ? frameBg.height / 100 * 2.59 : 0
-            horizontalCenter: frameBg.horizontalCenter
-            verticalCenter: player.isVideo ? undefined : player.verticalCenter
+            horizontalCenter: player.horizontalCenter
+            verticalCenter: player.verticalCenter
         }
     }
 
@@ -166,12 +142,12 @@ Page {
             shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_previous_track.svg"
             pressedImage: "images/common/ico_previous_track_P.svg"
-            repetitionOnHold: player.isVideo ? false : true
+            repetitionOnHold: true
             largeInterval: 500
             smallInterval: 350
 
             onClicked: {
-                if (repetitionTriggered && !player.isVideo) {
+                if (repetitionTriggered) {
                     player.mediaPlayer.seek(-10)
                 }
                 else
@@ -192,9 +168,9 @@ Page {
             ButtonImageThreeStates {
                 id: playButton
 
-                defaultImageBg: player.isVideo ? "images/common/btn_99x35.svg" : "images/common/btn_45x35.svg"
-                pressedImageBg: player.isVideo ? "images/common/btn_99x35_P.svg" : "images/common/btn_45x35_P.svg"
-                shadowImage: player.isVideo ? "images/common/btn_shadow_99x35.svg" : "images/common/btn_shadow_45x35.svg"
+                defaultImageBg: "images/common/btn_45x35.svg"
+                pressedImageBg: "images/common/btn_45x35_P.svg"
+                shadowImage: "images/common/btn_shadow_45x35.svg"
                 defaultImage: "images/common/ico_play.svg"
                 pressedImage: "images/common/ico_play_P.svg"
                 anchors.centerIn: parent
@@ -217,18 +193,12 @@ Page {
                         defaultImage: "images/common/ico_pause.svg"
                         pressedImage: "images/common/ico_pause_P.svg"
                     }
-                    PropertyChanges { target: forceScreenOn; enabled: player.isVideo }
                 }
             ]
         }
 
-        ScreenStateHandler {
-            id: forceScreenOn
-        }
-
         ButtonImageThreeStates {
             id: stopButton
-            visible: !player.isVideo
 
             defaultImageBg: "images/common/btn_45x35.svg"
             pressedImageBg: "images/common/btn_45x35_P.svg"
@@ -250,13 +220,13 @@ Page {
             shadowImage: "images/common/btn_shadow_45x35.svg"
             defaultImage: "images/common/ico_next_track.svg"
             pressedImage: "images/common/ico_next_track_P.svg"
-            repetitionOnHold: player.isVideo ? false : true
+            repetitionOnHold: true
             largeInterval: 500
             smallInterval: 350
 
             onClicked: {
                 // seek enabled only for audio
-                if (repetitionTriggered && !player.isVideo) {
+                if (repetitionTriggered) {
                     player.mediaPlayer.seek(10)
                 }
                 else
@@ -285,38 +255,13 @@ Page {
     ControlAudio {
         anchors {
             top: playerControl.top
-            right: player.isVideo ? fullScreenToggle.left : bottomBarBg.right
-            rightMargin: player.isVideo ? frameBg.width / 100 * 1.90 : frameBg.width / 100 * 2.48
+            right: bottomBarBg.right
+            rightMargin: frameBg.width / 100 * 2.48
         }
         isPlayerMute: player.mediaPlayer.mute
         onMuteClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
         onDecrementVolume: player.mediaPlayer.decrementVolume()
         onIncrementVolume: player.mediaPlayer.incrementVolume()
-    }
-
-    ButtonImageThreeStates {
-        id: fullScreenToggle
-
-        defaultImageBg: "images/common/btn_45x35.svg"
-        pressedImageBg: "images/common/btn_45x35_P.svg"
-        selectedImageBg: "images/common/btn_45x35_S.svg"
-        shadowImage: "images/common/btn_shadow_45x35.svg"
-        defaultImage: "images/common/ico_fullscreen.svg"
-        pressedImage: "images/common/ico_fullscreen.svg"
-        selectedImage: "images/common/ico_chiudi_fullscreen.svg"
-        visible: player.isVideo
-        anchors {
-            top: playerControl.top
-            right: bottomBarBg.right
-            rightMargin: frameBg.width / 100 * 2.48
-        }
-
-        onClicked: {
-            if (player.state === "")
-                player.state = "fullscreen"
-            else
-                player.state = ""
-        }
     }
 
     VolumePopup {
@@ -333,100 +278,7 @@ Page {
         Stack.backToMultimedia()
     }
 
-    Component.onCompleted: Helper.initPlayer(mediaPlayer, model, upnp, index, isVideo)
-    Component.onDestruction: {
-        if (player.isVideo) {
-            player.mediaPlayer.terminate()
-            player.mediaPlayer.mute = false
-        }
-    }
-
-    states: [
-        State {
-            name: ""
-            PropertyChanges {
-                target: mediaPlayer
-                videoRect: Qt.rect(frameBg.innerX, frameBg.innerY, frameBg.innerWidth, frameBg.innerHeight)
-            }
-        },
-        State {
-            name: "fullscreen"
-            PropertyChanges { target: fullScreenBg; opacity: 1 }
-            PropertyChanges { target: fullScreenToggle; status: 1 }
-            PropertyChanges {
-                target: mediaPlayer
-                videoRect: Qt.rect(fullScreenBg.x, fullScreenBg.y,
-                                   fullScreenBg.width, fullScreenBg.height - player.toolbar.height)
-            }
-            PropertyChanges {
-                target: bottomBarBg
-                source: "images/common/bg_player_fullscreen.svg"
-                anchors.topMargin: 0
-            }
-            AnchorChanges {
-                target: bottomBarBg
-                anchors.top: undefined
-                anchors.bottom: fullScreenBg.bottom
-                anchors.horizontalCenter: fullScreenBg.horizontalCenter
-            }
-            PropertyChanges {
-                target: imageSlider
-                source: "images/common/bg_tempo_fullscreen.svg"
-                anchors.topMargin: 0
-                anchors.leftMargin: frameBg.width / 100 * 3.80
-                anchors.rightMargin: frameBg.width / 100 * 18.69
-            }
-            AnchorChanges {
-                target: imageSlider
-                anchors.top: undefined
-                anchors.horizontalCenter: undefined
-                anchors.verticalCenter: playerControl.verticalCenter
-                anchors.left: folderButton.right
-                anchors.right: buttonMuteItem.left
-            }
-            AnchorChanges {
-                target: playerControl
-                anchors.top: bottomBarBg.top
-            }
-            PropertyChanges {
-                target: title
-                visible: false
-            }
-            PropertyChanges {
-                target: duration
-                anchors.topMargin: 0
-                anchors.rightMargin: 0
-                anchors.leftMargin: frameBg.width / 100 * 1.02
-            }
-            AnchorChanges {
-                target: duration
-                anchors.top: undefined
-                anchors.right: undefined
-                anchors.left: imageSlider.right
-                anchors.verticalCenter: imageSlider.verticalCenter
-            }
-        }
-    ]
-
-    transitions: [
-        Transition {
-            ParallelAnimation {
-                NumberAnimation {
-                    target: fullScreenBg
-                    property: "opacity"
-                    duration: 400
-                }
-                PropertyAnimation {
-                    target: mediaPlayer
-                    property: "videoRect"
-                    duration: 400
-                }
-                AnchorAnimation {
-                    duration: 400
-                }
-            }
-        }
-    ]
+    Component.onCompleted: Helper.initAudioPlayer(mediaPlayer, model, upnp, index)
 
     Component {
         id: errorFeedback

@@ -13,6 +13,6 @@ QuickLink {
         var items = []
         items.push(itemObject)
         global.audioVideoPlayer.generatePlaylistWebRadio(items, 0, 1)
-        Stack.pushPage("AudioVideoPlayer.qml", {"isVideo": false})
+        Stack.pushPage("AudioVideoPlayer.qml")
     }
 }

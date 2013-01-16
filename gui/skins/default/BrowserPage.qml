@@ -90,7 +90,7 @@ Page {
                                 found = i
                         }
                         global.audioVideoPlayer.generatePlaylistWebRadio(items, found, ipAllLinksModel.count)
-                        Stack.goToPage("AudioVideoPlayer.qml", {"isVideo": false})
+                        Stack.goToPage("AudioVideoPlayer.qml")
                     }
                 }
 
