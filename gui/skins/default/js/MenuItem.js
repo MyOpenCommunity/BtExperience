@@ -16,6 +16,26 @@ function status(itemObject) {
     case ObjectInterface.IdMultiChannelSoundAmbient:
     case ObjectInterface.IdMonoChannelSoundAmbient:
         return itemObject.hasActiveAmplifier
+
+    case ObjectInterface.IdAutomationVDE:
+    case ObjectInterface.IdAutomationDoor:
+    case ObjectInterface.IdAutomationGroup2:
+    case ObjectInterface.IdAutomationGroup3OpenClose:
+    case ObjectInterface.IdAutomationGroup3UpDown:
+        //    case ObjectInterface.IdAutomationGroup3OpenCloseSafe:
+        //    case ObjectInterface.IdAutomationGroup3UpDownSafe:
+        return -1
+
+    case ObjectInterface.IdAutomation2:
+    case ObjectInterface.IdAutomation3:
+    case ObjectInterface.IdAutomation3Safe:
+    case ObjectInterface.IdAutomationContact:
+    case ObjectInterface.IdAutomationGroup3:
+    case ObjectInterface.IdAutomation3OpenClose:
+    case ObjectInterface.IdAutomation3OpenCloseSafe:
+    case ObjectInterface.IdAutomation3UpDown:
+    case ObjectInterface.IdAutomation3UpDownSafe:
+        return itemObject.active === true ? 1 : 0
     }
     return -1
 }
