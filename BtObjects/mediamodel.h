@@ -245,6 +245,7 @@ private slots:
 private:
 	QVariantList containers;
 	int min_range, max_range;
+	bool pending_reset;
 	// used for the pagination. We need a mutable because the filterAcceptRow
 	// is a const method.
 	mutable int counter;

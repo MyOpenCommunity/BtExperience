@@ -27,7 +27,6 @@ MenuColumn {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1
                 objectModel.append(myHomeModels.createAlarmClock())
-                EventManager.eventManager.updateClocksInfo()
             }
         }
 
