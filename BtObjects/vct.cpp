@@ -14,6 +14,8 @@ QString video_grabber_path = "/bin/cat";
 QString video_grabber_path = "/usr/local/bin/Fw-A-VideoInLoopback.sh 66051";
 #endif
 
+#define TELELOOP_TIMEOUT_CONNECTION 11
+
 namespace
 {
 	bool ring_exclusion = false;
@@ -189,8 +191,11 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
-
 	connect(&video_grabber, SIGNAL(started()), SIGNAL(incomingCall()));
+
+	association_timeout.setSingleShot(true);
+	association_timeout.setInterval(TELELOOP_TIMEOUT_CONNECTION);
+	connect(&association_timeout, SIGNAL(timeout()), this, SLOT(associationTimeout()));
 
 	connect(this, SIGNAL(autoOpenChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(handsFreeChanged()), this, SIGNAL(persistItem()));
@@ -290,6 +295,39 @@ void CCTV::setAutoOpen(bool newValue)
 CCTV::Ringtone CCTV::getRingtone() const
 {
 	return ringtone;
+}
+
+int CCTV::getAssociatedTeleloopId() const
+{
+	return dev->getTeleloopId();
+}
+
+void CCTV::setAssociatedTeleloopId(int id)
+{
+	if (id == getAssociatedTeleloopId())
+		return;
+	dev->setTeleloopId(id);
+	emit associatedTeleloopIdChanged();
+}
+
+bool CCTV::associationInProgress() const
+{
+	return association_timeout.isActive();
+}
+
+void CCTV::startTeleloopAssociation()
+{
+	association_timeout.start();
+	dev->startTeleLoop((*bt_global::config)[PI_ADDRESS]);
+	emit teleloopAssociationStarted();
+}
+
+void CCTV::associationTimeout()
+{
+	if (!associationInProgress())
+		return;
+	association_timeout.stop();
+	emit teleloopAssociationTimeout();
 }
 
 void CCTV::answerCall()
@@ -474,6 +512,20 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::RINGTONE:
 			qDebug() << "Received VideoDoorEntryDevice::RINGTONE" << *it;
 			setRingtone(it.value().toInt());
+			break;
+		case VideoDoorEntryDevice::TELE_ANSWER:
+		{
+			qDebug() << "Received VideoDoorEntryDevice::TELE_ANSWER" << *it;
+			if (!associationInProgress())
+				break;
+			association_timeout.stop();
+			setAssociatedTeleloopId(it.value().toInt());
+			emit teleloopAssociationComplete();
+			break;
+		}
+		case VideoDoorEntryDevice::TELE_TIMEOUT:
+			qDebug() << "Received VideoDoorEntryDevice::TELE_TIMEOUT" << *it;
+			associationTimeout();
 			break;
 		default:
 			qDebug() << "CCTV::valueReceived, unhandled value" << it.key() << *it;

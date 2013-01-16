@@ -23,6 +23,7 @@
 #include "openserver_mock.h"
 #include "openclient.h"
 #include "objecttester.h"
+#include "main.h" // bt_global::config
 
 #include "vct.h"
 #include "videodoorentry_device.h"
@@ -37,6 +38,9 @@ void TestVideoDoorEntry::init()
 {
 	dev = new VideoDoorEntryDevice("11", "0", 1);
 
+	bt_global::config = new QHash<GlobalField, QString>();
+	(*bt_global::config)[PI_ADDRESS] = "11";
+
 	// for tests we use the same list of external places, in real code we
 	// expect to have different lists
 	QList<ExternalPlace *> l;
@@ -50,6 +54,9 @@ void TestVideoDoorEntry::init()
 
 void TestVideoDoorEntry::cleanup()
 {
+	delete bt_global::config;
+	bt_global::config = 0;
+
 	cctv->video_grabber.terminate();
 	cctv->video_grabber.waitForFinished(300);
 
@@ -723,4 +730,76 @@ void TestVideoDoorEntry::testHandsFree()
 	t2.checkSignalCount(SIGNAL(incomingCall()), 1);
 	t2.checkSignalCount(SIGNAL(callAnswered()), 1);
 	t2.checkSignalCount(SIGNAL(callEnded()), 1);
+}
+
+void TestVideoDoorEntry::testCCTVTeleloopAssociate()
+{
+	ObjectTester tstart(cctv, SIGNAL(teleloopAssociationStarted()));
+	ObjectTester tcompl(cctv, SIGNAL(teleloopAssociationComplete()));
+	ObjectTester tchange(cctv, SIGNAL(associatedTeleloopIdChanged()));
+	DeviceValues v;
+
+	cctv->startTeleloopAssociation();
+	QVERIFY(cctv->association_timeout.isActive());
+	dev->startTeleLoop((*bt_global::config)[PI_ADDRESS]);
+	compareClientCommand();
+	tstart.checkSignals();
+
+	v[VideoDoorEntryDevice::TELE_ANSWER] = 7;
+	cctv->valueReceived(v);
+	tcompl.checkSignals();
+	tchange.checkSignals();
+
+	QVERIFY(!cctv->association_timeout.isActive());
+	QCOMPARE(cctv->getAssociatedTeleloopId(), 7);
+}
+
+void TestVideoDoorEntry::testCCTVTeleloopTimeouFrame()
+{
+	ObjectTester tstart(cctv, SIGNAL(teleloopAssociationStarted()));
+	ObjectTester ttimeout(cctv, SIGNAL(teleloopAssociationTimeout()));
+	DeviceValues v;
+
+	cctv->startTeleloopAssociation();
+	QVERIFY(cctv->association_timeout.isActive());
+	dev->startTeleLoop((*bt_global::config)[PI_ADDRESS]);
+	compareClientCommand();
+	tstart.checkSignals();
+
+	v[VideoDoorEntryDevice::TELE_TIMEOUT] = true;
+	cctv->valueReceived(v);
+	v.clear();
+	ttimeout.checkSignals();
+
+	QVERIFY(!cctv->association_timeout.isActive());
+	QCOMPARE(cctv->getAssociatedTeleloopId(), 0);
+
+	v[VideoDoorEntryDevice::TELE_TIMEOUT] = true;
+	cctv->valueReceived(v);
+	v.clear();
+	ttimeout.checkNoSignals();
+}
+
+void TestVideoDoorEntry::testCCTVTeleloopTimeouTimer()
+{
+	ObjectTester tstart(cctv, SIGNAL(teleloopAssociationStarted()));
+	ObjectTester ttimeout(cctv, SIGNAL(teleloopAssociationTimeout()));
+	DeviceValues v;
+
+	cctv->startTeleloopAssociation();
+	QVERIFY(cctv->association_timeout.isActive());
+	dev->startTeleLoop((*bt_global::config)[PI_ADDRESS]);
+	compareClientCommand();
+	tstart.checkSignals();
+
+	cctv->associationTimeout();
+	ttimeout.checkSignals();
+
+	QVERIFY(!cctv->association_timeout.isActive());
+	QCOMPARE(cctv->getAssociatedTeleloopId(), 0);
+
+	v[VideoDoorEntryDevice::TELE_TIMEOUT] = true;
+	cctv->valueReceived(v);
+	v.clear();
+	ttimeout.checkNoSignals();
 }

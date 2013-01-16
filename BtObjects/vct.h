@@ -11,6 +11,7 @@
 
 #include <QObject>
 #include <QProcess>
+#include <QTimer>
 
 class VideoDoorEntryDevice;
 class ExternalPlace;
@@ -192,6 +193,11 @@ class CCTV : public VDEBase
 	*/
 	Q_PROPERTY(bool ringExclusion READ getRingExclusion WRITE setRingExclusion NOTIFY ringExclusionChanged)
 
+	/*!
+		\brief Gets the id of the associated teleloop
+	*/
+	Q_PROPERTY(int associatedTeleloopId READ getAssociatedTeleloopId NOTIFY associatedTeleloopIdChanged)
+
 	Q_ENUMS(Ringtone)
 
 public:
@@ -224,6 +230,10 @@ public:
 	void setHandsFree(bool newValue);
 	bool getRingExclusion() const;
 	void setRingExclusion(bool newValue);
+	int getAssociatedTeleloopId() const;
+	// should only be used during initial configuration parsing
+	void setAssociatedTeleloopId(int id);
+	bool associationInProgress() const;
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
@@ -236,6 +246,7 @@ public slots:
 	void stairLightRelease();
 	void nextCamera();
 	void callerAddress(QString address);
+	void startTeleloopAssociation();
 
 signals:
 	void brightnessChanged();
@@ -251,6 +262,10 @@ signals:
 	void autoSwitchChanged();
 	void handsFreeChanged();
 	void ringExclusionChanged();
+	void associatedTeleloopIdChanged();
+	void teleloopAssociationStarted();
+	void teleloopAssociationComplete();
+	void teleloopAssociationTimeout();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -259,6 +274,9 @@ protected:
 	int brightness;
 	int contrast;
 	int color;
+
+private slots:
+	void associationTimeout();
 
 private:
 	void setRingtone(int vde_ringtone);
@@ -274,6 +292,7 @@ private:
 	bool is_autoswitch;
 	Ringtone ringtone;
 	QProcess video_grabber;
+	QTimer association_timeout;
 };
 
 

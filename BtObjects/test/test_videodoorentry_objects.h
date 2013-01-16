@@ -54,6 +54,9 @@ private slots:
 	void testCCTVRingtone();
 	void testAutoOpen();
 	void testHandsFree();
+	void testCCTVTeleloopAssociate();
+	void testCCTVTeleloopTimeouFrame();
+	void testCCTVTeleloopTimeouTimer();
 
 protected:
 	void compareClientCommandThatWorks(int timeout = 0);
