@@ -49,7 +49,7 @@ MenuColumn {
         ColumnBrowserDirectoryModel {
             onImageClicked: Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
             onAudioClicked: Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": index, "isVideo": false, "upnp": upnp})
-            onVideoClicked: Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onVideoClicked: Stack.goToPage("VideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
         }
     }
 
@@ -58,7 +58,7 @@ MenuColumn {
         ColumnBrowserUpnpModel {
             onImageClicked: Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
             onAudioClicked: Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": index, "isVideo": false, "upnp": upnp})
-            onVideoClicked: Stack.goToPage("AudioVideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onVideoClicked: Stack.goToPage("VideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
         }
     }
 }

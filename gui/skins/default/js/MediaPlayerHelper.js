@@ -17,3 +17,7 @@ function initPlayer(mediaPlayer, model, isUpnp, startIndex, isVideo) {
     // we don't have a model and we don't have a playlist: something is wrong somewhere...
     console.log("Impossible to init MediaPlayer in QML: no model and no playlist to play")
 }
+
+function initVideoPlayer(mediaPlayer, model, isUpnp, startIndex) {
+    initPlayer(mediaPlayer, model, isUpnp, startIndex, true)
+}
