@@ -187,6 +187,7 @@ namespace
 		IdHandsFree = 14251,
 		IdProfessionalStudio = 14252,
 		IdRingExclusion = 14253,
+		IdTeleloop = 14254,
 		IdVideoSettings = 14268,
 	};
 }
@@ -277,7 +278,7 @@ void BtObjectsPlugin::createObjects()
 	QList<QDomNode> multimedia;
 	bool is_multichannel = false;
 	bool hands_free = false, professional_studio = false, ring_exclusion = false;
-	int video_brightness = 50, video_contrast = 50, video_color = 50;
+	int video_brightness = 50, video_contrast = 50, video_color = 50, teleloop_id = 0;
 
 	foreach (const QDomNode &xml_obj, getChildren(settings.documentElement(), "obj"))
 	{
@@ -309,6 +310,10 @@ void BtObjectsPlugin::createObjects()
 			video_brightness = parseIntSetting(xml_obj, "brightness");
 			video_contrast = parseIntSetting(xml_obj, "contrast");
 			video_color = parseIntSetting(xml_obj, "color");
+			break;
+		case IdTeleloop:
+			if (parseIntSetting(xml_obj, "enable"))
+				teleloop_id = parseIntSetting(xml_obj, "mode");
 			break;
 		}
 
@@ -629,6 +634,8 @@ void BtObjectsPlugin::createObjects()
 		cctv->setBrightness(video_brightness);
 		cctv->setContrast(video_contrast);
 
+		cctv->setAssociatedTeleloopId(teleloop_id);
+
 		objmodel << cctv;
 		objmodel << createIntercom(intercom);
 	}
@@ -792,6 +799,8 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		setIntSetting(document, IdVideoSettings, "brightness", cctv->getBrightness());
 		setIntSetting(document, IdVideoSettings, "color", cctv->getColor());
 		setIntSetting(document, IdVideoSettings, "contrast", cctv->getContrast());
+		setIntSetting(document, IdTeleloop, "enable", cctv->getAssociatedTeleloopId() != 0);
+		setIntSetting(document, IdTeleloop, "mode", cctv->getAssociatedTeleloopId());
 
 		configurations->saveConfiguration(SETTINGS_FILE);
 		return;

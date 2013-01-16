@@ -204,6 +204,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	connect(this, SIGNAL(brightnessChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(colorChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(contrastChanged()), this, SIGNAL(persistItem()));
+	connect(this, SIGNAL(associatedTeleloopIdChanged()), this, SIGNAL(persistItem()));
 }
 
 int CCTV::getBrightness() const
