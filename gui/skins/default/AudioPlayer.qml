@@ -18,13 +18,17 @@ Page {
     property bool upnp
     property variant mediaPlayer: global.audioVideoPlayer
 
-    source: "images/background/multimedia.jpg"
-    showSystemsButton: true
-    text: qsTr("Audio")
-
     function systemsButtonClicked() {
         Stack.backToMultimedia()
     }
+
+    function backButtonClicked() {
+        Stack.backToMultimedia()
+    }
+
+    source: "images/background/multimedia.jpg"
+    showSystemsButton: true
+    text: qsTr("Audio")
 
     SvgImage {
         id: frameBg
@@ -274,12 +278,6 @@ Page {
         mute: player.mediaPlayer.mute
     }
 
-    function backButtonClicked() {
-        Stack.backToMultimedia()
-    }
-
-    Component.onCompleted: Helper.initAudioPlayer(mediaPlayer, model, upnp, index)
-
     Component {
         id: errorFeedback
         FeedbackPopup {
@@ -320,4 +318,6 @@ Page {
             else return ""
         }
     }
+
+    Component.onCompleted: Helper.initAudioPlayer(mediaPlayer, model, upnp, index)
 }
