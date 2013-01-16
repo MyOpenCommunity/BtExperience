@@ -16,3 +16,4 @@ SourceControl 1.0 SourceControl.qml
 SourceList 1.0 SourceList.qml
 SpecialAmbient 1.0 SpecialAmbient.qml
 VolumeGeneral 1.0 VolumeGeneral.qml
+VolumePopup 1.0 VolumePopup.qml

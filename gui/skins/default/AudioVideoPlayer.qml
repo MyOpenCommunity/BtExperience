@@ -318,123 +318,14 @@ Page {
         }
     }
 
-    SvgImage {
-        id: volumePopup
-
-        source: "images/common/regola_volume/bg_regola_volume.svg"
-        opacity: 0
+    VolumePopup {
         anchors {
             bottom: bottomBarBg.top
             bottomMargin: frameBg.height / 100 * 2.85
             right: bottomBarBg.right
         }
-
-        UbuntuLightText {
-            text: qsTr("mute")
-            color: "white"
-            font.pixelSize: frameBg.height / 100 * 3.63
-            font.capitalization: Font.AllUppercase
-            anchors {
-                top: volumePopup.top
-                topMargin: frameBg.height / 100 * 1.81
-                left: volumePopup.left
-                leftMargin: frameBg.width / 100 * 2.48
-            }
-        }
-
-        UbuntuLightText {
-            text: player.mediaPlayer.volume
-            color: "white"
-            font.pixelSize: frameBg.height / 100 * 3.63
-            anchors {
-                top: volumePopup.top
-                topMargin: frameBg.height / 100 * 1.81
-                right: volumePopup.right
-                rightMargin: frameBg.width / 100 * 2.48
-            }
-        }
-
-        SvgImage {
-            id: muteIcon
-
-            source: player.mediaPlayer.mute ? "images/common/regola_volume/ico_mute.svg" : "images/common/regola_volume/ico_volume.svg"
-            anchors {
-                top: volumePopup.top
-                topMargin: frameBg.height / 100 * 9.33
-                left: volumePopup.left
-                leftMargin: frameBg.width / 100 * 2.48
-            }
-        }
-
-        SvgImage {
-            source: "images/common/bg_regola_dimmer.svg"
-            anchors {
-                verticalCenter: muteIcon.verticalCenter
-                left: muteIcon.right
-                leftMargin: frameBg.width / 100 * 0.58
-            }
-
-            Rectangle {
-                height: parent.height + 2
-                width: parent.width * (player.mediaPlayer.volume < 1 ? 1 : player.mediaPlayer.volume) / 100 + 4
-                radius: 100
-                smooth: true
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    left: parent.left
-                    leftMargin: -2
-                }
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0.0
-                        color: "#a9abad"
-                    }
-                    GradientStop {
-                        position: 1.0
-                        color: "#5c5c5c"
-                    }
-                }
-                Behavior on width {
-                    NumberAnimation { duration: 200 }
-                }
-            }
-        }
-
-        Timer {
-            id: hidingTimer
-
-            interval: 2000
-            onTriggered: volumePopup.state = ""
-        }
-
-        Connections {
-            target: player.mediaPlayer
-            onVolumeChanged: {
-                volumePopup.state = "volumeChanged"
-                hidingTimer.restart() // don't use start or popup will blink when pressedAndHold
-            }
-            onMuteChanged: {
-                volumePopup.state = "volumeChanged"
-                hidingTimer.restart() // don't use start or popup will blink when pressedAndHold
-            }
-        }
-
-        states: [
-            State {
-                name: "volumeChanged"
-                PropertyChanges { target: volumePopup; opacity: 1 }
-            }
-        ]
-
-        transitions: [
-            Transition {
-                NumberAnimation {
-                    target: volumePopup
-                    property: "opacity"
-                    duration: 400
-                }
-            }
-        ]
+        volume: player.mediaPlayer.volume
+        mute: player.mediaPlayer.mute
     }
 
     function backButtonClicked() {
