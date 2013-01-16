@@ -36,19 +36,6 @@ Page {
         visible: false
     }
 
-    Rectangle {
-        id: fullScreenBg
-
-        color: "black"
-        opacity: 0
-        anchors {
-            top: player.toolbar.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
-    }
-
     SvgImage {
         id: bottomBarBg
 
