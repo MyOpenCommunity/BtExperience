@@ -198,6 +198,10 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	association_timeout.setInterval(TELELOOP_TIMEOUT_CONNECTION * 1000);
 	connect(&association_timeout, SIGNAL(timeout()), this, SLOT(associationTimeout()));
 
+	connect(this, SIGNAL(teleloopAssociationStarted()), this, SIGNAL(teleloopAssociatingChanged()));
+	connect(this, SIGNAL(teleloopAssociationComplete()), this, SIGNAL(teleloopAssociatingChanged()));
+	connect(this, SIGNAL(teleloopAssociationTimeout()), this, SIGNAL(teleloopAssociatingChanged()));
+
 	connect(this, SIGNAL(autoOpenChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(handsFreeChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(ringExclusionChanged()), this, SIGNAL(persistItem()));
@@ -317,7 +321,7 @@ void CCTV::setAssociatedTeleloopId(int id)
 	emit associatedTeleloopIdChanged();
 }
 
-bool CCTV::associationInProgress() const
+bool CCTV::getTeleloopAssociating() const
 {
 	return association_timeout.isActive();
 }
@@ -331,7 +335,7 @@ void CCTV::startTeleloopAssociation()
 
 void CCTV::associationTimeout()
 {
-	if (!associationInProgress())
+	if (!getTeleloopAssociating())
 		return;
 	association_timeout.stop();
 	emit teleloopAssociationTimeout();
@@ -529,7 +533,7 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		case VideoDoorEntryDevice::TELE_ANSWER:
 		{
 			qDebug() << "Received VideoDoorEntryDevice::TELE_ANSWER" << *it;
-			if (!associationInProgress())
+			if (!getTeleloopAssociating())
 				break;
 			association_timeout.stop();
 			setAssociatedTeleloopId(it.value().toInt());

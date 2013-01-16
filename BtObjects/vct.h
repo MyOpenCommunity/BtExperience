@@ -203,6 +203,11 @@ class CCTV : public VDEBase
 	*/
 	Q_PROPERTY(int associatedTeleloopId READ getAssociatedTeleloopId NOTIFY associatedTeleloopIdChanged)
 
+	/*!
+		\brief Gets whether a teleloop association is in progress
+	*/
+	Q_PROPERTY(bool teleloopAssociating READ getTeleloopAssociating NOTIFY teleloopAssociatingChanged)
+
 	Q_ENUMS(Ringtone)
 
 public:
@@ -239,7 +244,7 @@ public:
 	int getAssociatedTeleloopId() const;
 	// should only be used during initial configuration parsing
 	void setAssociatedTeleloopId(int id);
-	bool associationInProgress() const;
+	bool getTeleloopAssociating() const;
 
 	Q_INVOKABLE void answerCall();
 	Q_INVOKABLE void endCall();
@@ -273,6 +278,7 @@ signals:
 	void teleloopAssociationStarted();
 	void teleloopAssociationComplete();
 	void teleloopAssociationTimeout();
+	void teleloopAssociatingChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
