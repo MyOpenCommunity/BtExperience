@@ -188,6 +188,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	hands_free = false;
 	ringtone = ExternalPlace1;
 	is_autoswitch = false;
+	is_teleloop = false;
 
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
@@ -296,6 +297,11 @@ void CCTV::setAutoOpen(bool newValue)
 CCTV::Ringtone CCTV::getRingtone() const
 {
 	return ringtone;
+}
+
+bool CCTV::getTeleloop() const
+{
+	return is_teleloop;
 }
 
 int CCTV::getAssociatedTeleloopId() const
@@ -489,8 +495,14 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			call_stopped = true;
 			stopVideo();
 			break;
+		case VideoDoorEntryDevice::TELE_SESSION:
+			qDebug() << "Received TELE_SESSION";
+			if (!callInProgress() || call_active) // ignore
+				break;
+			is_teleloop = true;
+			emit teleloopChanged();
 		case VideoDoorEntryDevice::ANSWER_CALL:
-			qDebug() << "Received ANSWER_CALL";
+			qDebug() << "Received ANSWER_CALL/TELE_SESSION";
 			if (!callInProgress()) // ignore
 				break;
 			// for the case when we received a STOP_VIDEO frame from the camera
@@ -579,6 +591,12 @@ void CCTV::disactivateCall()
 	{
 		call_active = false;
 		emit callActiveChanged();
+	}
+
+	if (is_teleloop)
+	{
+		is_teleloop = false;
+		emit teleloopChanged();
 	}
 
 	if (call_in_progress)

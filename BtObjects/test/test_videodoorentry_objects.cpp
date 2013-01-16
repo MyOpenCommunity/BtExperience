@@ -660,6 +660,63 @@ void TestVideoDoorEntry::testCCTVRingtone()
 	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace3);
 }
 
+void TestVideoDoorEntry::testCCTVTeleloop()
+{
+	DeviceValues v;
+	ObjectTester ti(cctv, SIGNAL(incomingCall()));
+	ObjectTester te(cctv, SIGNAL(callEnded()));
+
+	// sets internal state on devices
+	dev->is_calling = true;
+	dev->kind = 6;
+	dev->mmtype = 2;
+	cctv->dev->is_calling = true;
+	cctv->dev->kind = 6;
+	cctv->dev->mmtype = 2;
+
+	// call arrives
+	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	cctv->valueReceived(v);
+	v.clear();
+	QCOMPARE(true, cctv->callInProgress());
+	QCOMPARE(false, cctv->callActive());
+	QCOMPARE(false, cctv->exitingCall());
+	QCOMPARE(false, cctv->getTeleloop());
+
+	QVERIFY(ti.waitForNewSignal(1000));
+
+	// answered by teleloop
+	v[VideoDoorEntryDevice::TELE_SESSION] = true;
+	cctv->valueReceived(v);
+	v.clear();
+	QCOMPARE(true, cctv->callInProgress());
+	QCOMPARE(true, cctv->callActive());
+	QCOMPARE(false, cctv->exitingCall());
+	QCOMPARE(true, cctv->getTeleloop());
+
+	// caller address arrives
+	v[VideoDoorEntryDevice::CALLER_ADDRESS] = "21#2";
+	cctv->valueReceived(v);
+	v.clear();
+	QCOMPARE(true, cctv->callInProgress());
+	QCOMPARE(true, cctv->callActive());
+	QCOMPARE(false, cctv->exitingCall());
+	QCOMPARE(true, cctv->getTeleloop());
+
+	// call terminates
+	QCOMPARE(true, dev->isCalling());
+	cctv->endCall();
+	dev->endCall();
+	QCOMPARE(false, cctv->callInProgress());
+	QCOMPARE(false, cctv->callActive());
+	QCOMPARE(false, cctv->exitingCall());
+	QCOMPARE(false, cctv->getTeleloop());
+
+	te.checkSignals();
+
+	compareClientCommandThatWorks();
+}
+
 void TestVideoDoorEntry::testAutoOpen()
 {
 	ObjectTester t(cctv, SIGNAL(autoOpenChanged()));

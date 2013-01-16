@@ -189,6 +189,11 @@ class CCTV : public VDEBase
 	Q_PROPERTY(bool autoSwitch READ getAutoSwitch NOTIFY autoSwitchChanged)
 
 	/*!
+		\brief Gets if it is a teleloop call.
+	*/
+	Q_PROPERTY(bool teleloop READ getTeleloop NOTIFY teleloopChanged)
+
+	/*!
 		\brief Sets or gets ring exclusion status
 	*/
 	Q_PROPERTY(bool ringExclusion READ getRingExclusion WRITE setRingExclusion NOTIFY ringExclusionChanged)
@@ -230,6 +235,7 @@ public:
 	void setHandsFree(bool newValue);
 	bool getRingExclusion() const;
 	void setRingExclusion(bool newValue);
+	bool getTeleloop() const;
 	int getAssociatedTeleloopId() const;
 	// should only be used during initial configuration parsing
 	void setAssociatedTeleloopId(int id);
@@ -262,6 +268,7 @@ signals:
 	void autoSwitchChanged();
 	void handsFreeChanged();
 	void ringExclusionChanged();
+	void teleloopChanged();
 	void associatedTeleloopIdChanged();
 	void teleloopAssociationStarted();
 	void teleloopAssociationComplete();
@@ -290,6 +297,7 @@ private:
 	bool prof_studio;
 	bool hands_free;
 	bool is_autoswitch;
+	bool is_teleloop;
 	Ringtone ringtone;
 	QProcess video_grabber;
 	QTimer association_timeout;
