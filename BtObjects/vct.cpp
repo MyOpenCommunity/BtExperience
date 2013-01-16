@@ -335,8 +335,6 @@ void CCTV::startTeleloopAssociation()
 
 void CCTV::associationTimeout()
 {
-	if (!getTeleloopAssociating())
-		return;
 	association_timeout.stop();
 	emit teleloopAssociationTimeout();
 }
@@ -542,6 +540,8 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		}
 		case VideoDoorEntryDevice::TELE_TIMEOUT:
 			qDebug() << "Received VideoDoorEntryDevice::TELE_TIMEOUT" << *it;
+			if (!getTeleloopAssociating())
+				return;
 			associationTimeout();
 			break;
 		default:

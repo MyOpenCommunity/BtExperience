@@ -849,6 +849,7 @@ void TestVideoDoorEntry::testCCTVTeleloopTimeouTimer()
 	compareClientCommand();
 	tstart.checkSignals();
 
+	cctv->association_timeout.stop(); // simulate timer expiration
 	cctv->associationTimeout();
 	ttimeout.checkSignals();
 
