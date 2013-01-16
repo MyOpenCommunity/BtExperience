@@ -7,6 +7,7 @@ import Components.Text 1.0
 import Components.SoundDiffusion 1.0
 
 import "js/Stack.js" as Stack
+import "js/MediaPlayerHelper.js" as Helper
 
 
 Page {
@@ -332,7 +333,7 @@ Page {
         Stack.backToMultimedia()
     }
 
-    Component.onCompleted: privateProps.initMediaPlayer()
+    Component.onCompleted: Helper.initPlayer(mediaPlayer, model, upnp, index, isVideo)
     Component.onDestruction: {
         if (player.isVideo) {
             player.mediaPlayer.terminate()
@@ -465,29 +466,6 @@ Page {
             else if (info["file_name"])
                 return info["file_name"]
             else return ""
-        }
-
-        function initMediaPlayer() {
-            // an helper variable for readability
-            var p = player
-
-            p.mediaPlayer.videoRect = Qt.rect(frameBg.innerX, frameBg.innerY, frameBg.innerWidth, frameBg.innerHeight)
-
-            // if player.model is set assumes a new playlist must be set
-            if (p.model) {
-                if (p.upnp)
-                    p.mediaPlayer.generatePlaylistUPnP(p.model, p.index, p.model.count, p.isVideo)
-                else
-                    p.mediaPlayer.generatePlaylistLocal(p.model, p.index, p.model.count, p.isVideo)
-                return
-            }
-
-            // player.model is not set, checks if playlist is set
-            if (p.mediaPlayer.playing)
-                return // everything is fine
-
-            // we don't have a model and we don't have a playlist: something is wrong somewhere...
-            console.log("Impossible to init MediaPlayer in QML: no model and no playlist to play")
         }
     }
 }
