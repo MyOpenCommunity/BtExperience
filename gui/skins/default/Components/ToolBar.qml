@@ -273,33 +273,6 @@ Item {
             }
         }
 
-        // volume (and mute)
-        ToolbarButton {
-            height: toolbar_top.height
-            visible: EventManager.eventManager.playing && global.guiSettings.volumeAlert
-            defaultImage: EventManager.eventManager.mute ?
-                              (global.guiSettings.skin === GuiSettings.Clear ?
-                                   "../images/toolbar/icon_source-audio-mute.svg" :
-                                   "../images/toolbar/icon_source-audio-mute_p.svg") :
-                              (global.guiSettings.skin === GuiSettings.Clear ?
-                                   "../images/toolbar/icon_audio-source-on.svg" :
-                                   "../images/toolbar/icon_audio-source-on_p.svg")
-            pressedImage: EventManager.eventManager.mute ?
-                              (global.guiSettings.skin === GuiSettings.Clear ?
-                                   "../images/toolbar/icon_source-audio-mute_p.svg" :
-                                   "../images/toolbar/icon_source-audio-mute.svg") :
-                              (global.guiSettings.skin === GuiSettings.Clear ?
-                                   "../images/toolbar/icon_audio-source-on_p.svg" :
-                                   "../images/toolbar/icon_audio-source-on.svg")
-            onClicked: {
-                if (EventManager.eventManager.playing) {
-                    toolbar.toolbarNavigationClicked()
-                    Stack.goToPage("AudioPlayer.qml", {"upnp": global.audioVideoPlayer.isUpnp()})
-                } else
-                    console.log("TODO: navigation to volume settings menu")
-            }
-        }
-
         // play
         ToolbarButton {
             height: toolbar_top.height
