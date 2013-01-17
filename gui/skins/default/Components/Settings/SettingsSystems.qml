@@ -22,17 +22,24 @@ MenuColumn {
         id: privateProps
 
         function openVDEMenu(navigationData) {
-            var m = modelList.get(2)
-            itemList.currentIndex = 2
-            column.loadColumn(m.component, m.name)
+            _openMenu(qsTr("VDE"))
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
 
         function openScenariosMenu(navigationData) {
-            var m = modelList.get(0)
-            itemList.currentIndex = 0
-            column.loadColumn(m.component, m.name)
+            _openMenu(qsTr("Scenarios"))
             return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
+
+        function _openMenu(name) {
+            for (var i = 0; i < modelList.count; ++i) {
+                var m = modelList.get(i)
+                if (name === m.name) {
+                    itemList.currentIndex = i
+                    column.loadColumn(m.component, m.name)
+                    return
+                }
+            }
         }
     }
 

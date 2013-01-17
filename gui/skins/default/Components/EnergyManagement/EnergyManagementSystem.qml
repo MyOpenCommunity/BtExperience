@@ -33,14 +33,18 @@ MenuColumn {
         id: privateProps
 
         function openSupervisionMenu(navigationData) {
-            return _openMenu(0)
+            return _openMenu(qsTr("systems supervision"))
         }
 
-        function _openMenu(index) {
-            var m = listModel.get(index)
-            listView.currentIndex = index
-            element.loadColumn(m.component, m.name)
-            return NavigationConstants.NAVIGATION_FINISHED_OK
+        function _openMenu(name) {
+            for (var i = 0; i < listModel.count; ++i) {
+                var m = listModel.get(i)
+                if (name === m.name) {
+                    listView.currentIndex = i
+                    element.loadColumn(m.component, m.name)
+                    return NavigationConstants.NAVIGATION_FINISHED_OK
+                }
+            }
         }
     }
 

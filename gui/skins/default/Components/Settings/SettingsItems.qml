@@ -24,24 +24,29 @@ MenuColumn {
         id: privateProps
 
         function openAlarmClockMenu(navigationData) {
-            _openMenu(5)
+            _openMenu(qsTr("Alarm Clock"))
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
 
         function openProfilesMenu(navigationData) {
-            _openMenu(2)
+            _openMenu(qsTr("Profiles"))
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
 
         function openSystemsMenu(navigationData) {
-            _openMenu(4)
+            _openMenu(qsTr("Systems"))
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
 
-        function _openMenu(index) {
-            var m = modelList.get(index)
-            itemList.currentIndex = index
-            column.loadColumn(nameToComponent(m.component), m.name)
+        function _openMenu(name) {
+            for (var i = 0; i < modelList.count; ++i) {
+                var m = modelList.get(i)
+                if (name === m.name) {
+                    itemList.currentIndex = i
+                    column.loadColumn(nameToComponent(m.component), m.name)
+                    return
+                }
+            }
         }
     }
 
