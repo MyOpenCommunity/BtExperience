@@ -431,7 +431,7 @@ void GuiSettings::setPlayerAlert(bool enable)
 		return;
 	player_alert = enable;
 	emit playerAlertChanged();
-	setSettingsEnableFlag(VolumeAlert, enable);
+	setSettingsEnableFlag(PlayerAlert, enable);
 }
 
 bool GuiSettings::getMessageAlert() const
