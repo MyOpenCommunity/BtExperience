@@ -228,4 +228,54 @@ MenuColumn {
 
         model: theModel
     }
+
+    Connections {
+        target: theModel
+        onLoadingChanged: {
+            if (!theModel.isLoading) {
+                feedbackTimer.stop()
+                state = ""
+            }
+            else {
+                feedbackTimer.restart()
+            }
+        }
+    }
+
+    Timer {
+        id: feedbackTimer
+        interval: 1000
+        onTriggered: state = "loading"
+    }
+
+    SvgImage {
+        id: loadingIndicator
+
+        source: "../images/common/ico_caricamento_white.svg"
+        anchors.centerIn: imageBg
+        visible: false
+
+        Timer {
+            id: loadingTimer
+            interval: 250
+            repeat: true
+            onTriggered: loadingIndicator.rotation += 45
+        }
+
+        states: [
+            State {
+                name: "indicatorShown"
+                PropertyChanges { target: loadingIndicator; visible: true }
+                PropertyChanges { target: loadingTimer; running: true }
+            }
+        ]
+    }
+
+    states: [
+        State {
+            name: "loading"
+            PropertyChanges { target: paginator; visible: false }
+            PropertyChanges { target: loadingIndicator; state: "indicatorShown" }
+        }
+    ]
 }
