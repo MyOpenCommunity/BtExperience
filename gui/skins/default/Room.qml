@@ -82,16 +82,24 @@ Page {
                 source: itemObject.cardImageCached
                 fillMode: Image.PreserveAspectCrop
                 clip: true
-                width: parent.width - (roomView.currentIndex === index ? 30 : 20)
-                height: parent.height - (roomView.currentIndex === index ? 30 : 20)
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+                width: page.width / 100 * 11.3
+                height: page.height / 100 * 11.7
+                anchors.centerIn: parent
+                anchors.verticalCenterOffset: -page.width / 100 * 0.2
 
                 BeepingMouseArea {
                     anchors.fill: parent
                     onClicked: roomView.currentIndex = index
                 }
+
+                Rectangle {
+                    color: "black"
+                    opacity: 0.7
+                    anchors.fill: parent
+                    visible: roomView.currentIndex === index
+                }
             }
+
         }
 
         onCurrentIndexChanged: page.room = roomsModel.getObject(currentIndex)
