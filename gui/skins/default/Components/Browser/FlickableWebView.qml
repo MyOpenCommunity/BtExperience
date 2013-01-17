@@ -131,10 +131,6 @@ Flickable {
         preferredWidth: flickable.width
         preferredHeight: flickable.height
         contentsScale: 1
-        onContentsSizeChanged: {
-            // zoom out
-            contentsScale = Math.min(1,flickable.width / contentsSize.width)
-        }
         onUrlChanged: {
             // got to topleft
             flickable.contentX = 0
