@@ -72,6 +72,7 @@ void GstMain::pollGlib()
 
 void GstMain::start(int argc, char **argv)
 {
+	bool rect_set = false;
 	int i;
 
 	for (i = 1; i < argc; ++i)
@@ -86,8 +87,12 @@ void GstMain::start(int argc, char **argv)
 			QList<QByteArray> parts = arg.mid(7).split(',');
 
 			player->setPlayerRect(parts[0].toInt(), parts[1].toInt(), parts[2].toInt(), parts[3].toInt());
+			rect_set = true;
 		}
 	}
+
+	if (!rect_set)
+		qFatal("Usage: gstmediaplayer --rect=x,y,w,h <path>\n");
 
 	metadata.clear();
 	player->play(QString::fromLocal8Bit(argv[i]));
