@@ -504,7 +504,8 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 	// if we need more entries, request them, otherwise signal completion
 	if (current_index < qMin(max_range, getCount()))
 	{
-		browser->getNextFileList();
+		browser->getFileList(current_index + 1);
+		pending_operation = true;
 	}
 	else
 	{
