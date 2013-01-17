@@ -44,6 +44,12 @@ trap \"killall BtExperience; trap SIGTERM; trap SIGUSR1; trap SIGUSR2; exit 0\" 
 trap \"killall -SIGUSR1 BtExperience; wait\" SIGUSR1
 trap \"killall -SIGUSR2 BtExperience; wait\" SIGUSR2
 
+# restart thttpd to link extra 30
+start-stop-daemon --stop --quiet --exec /usr/sbin/thttpd -- -u root
+sleep 1    
+echo -n \"Starting thttpd\"                                                                                 
+start-stop-daemon --start --quiet --exec /usr/sbin/thttpd -- -d /home/bticino/cfg/extra/30/ -u root -c \"/cgi-bin/*\"
+
 export TSLIB_TSDEVICE=/dev/input/touchscreen0
 export QWS_MOUSE_PROTO=Tslib:/dev/input/touchscreen0
 export QWS_DISPLAY=powervr
