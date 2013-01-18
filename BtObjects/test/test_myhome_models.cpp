@@ -127,6 +127,28 @@ void TestObjectModel::testFilterObjectKey()
 	ts.checkSignals();  // TODO should not emit countChanged()
 
 	QCOMPARE(obj->getObject(0), amplifier2);
+
+	QVariantList filters;
+	QVariantMap filter;
+
+	// sets filters to select alarm clocks objects
+	filter["objectId"] = ObjectInterface::IdLightCustom;
+	filter["objectKey"] = "1";
+	filters << filter;
+	filter["objectId"] = ObjectInterface::IdLightCustom;
+	filter["objectKey"] = "2";
+	filters << filter;
+
+	obj->setFilters(filters);
+
+	QCOMPARE(obj->getCount(), 2);
+	QCOMPARE(obj->rowCount(), 2);
+
+	qApp->processEvents();
+	ts.checkSignals();
+
+	QCOMPARE(obj->getObject(0), light1);
+	QCOMPARE(obj->getObject(1), light2);
 }
 
 void TestObjectModel::testMultipleFilter()

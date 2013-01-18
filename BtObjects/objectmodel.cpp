@@ -84,7 +84,7 @@ void ObjectModel::setFilters(QVariantList f)
 			qDebug() << "ObjectModel::setFilters: invalid id requested" << id;
 			continue;
 		}
-		filters[id] = m.contains("objectKey") ? m["objectKey"].toString() : QString();
+		filters.insertMulti(id, m.contains("objectKey") ? m["objectKey"].toString() : QString());
 	}
 	reset(); // see comment at the top of MediaModel
 	emit filtersChanged();
@@ -109,9 +109,11 @@ bool ObjectModel::acceptsRow(int source_row) const
 		match_conditions = true;
 	else if (filters.contains(obj->getObjectId()))
 	{
-		QString key = filters[obj->getObjectId()];
-		if (key.isEmpty() || keyMatches(key, obj))
-			match_conditions = true;
+		QList<QString> keys = filters.values(obj->getObjectId());
+		foreach (QString key, keys) {
+			if (key.isEmpty() || keyMatches(key, obj))
+				match_conditions = true;
+		}
 	}
 
 	return match_conditions;

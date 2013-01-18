@@ -441,6 +441,11 @@ SourceObject::SourceObject(const QString &_name, SourceBase *s, SourceObjectType
 	source->setSourceObject(this);
 }
 
+QString SourceObject::getObjectKey() const
+{
+	return QString::number(getSourceType());
+}
+
 void SourceObject::initializeObject()
 {
 	source->initializeObject();

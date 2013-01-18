@@ -210,6 +210,7 @@ public:
 		return ObjectInterface::IdSoundSource;
 	}
 
+	virtual QString getObjectKey() const;
 	bool isActiveInArea(int area) const;
 
 	void scsSourceActiveAreasChanged();

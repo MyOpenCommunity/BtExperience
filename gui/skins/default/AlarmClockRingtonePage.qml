@@ -37,7 +37,11 @@ Page {
     ObjectModel {
         id: sourceModel
         filters: [
-            {objectId: ObjectInterface.IdSoundSource}
+            {objectId: ObjectInterface.IdSoundSource, objectKey: SourceObject.RdsRadio },
+            {objectId: ObjectInterface.IdSoundSource, objectKey: SourceObject.IpRadio },
+            {objectId: ObjectInterface.IdSoundSource, objectKey: SourceObject.Aux },
+            {objectId: ObjectInterface.IdSoundSource, objectKey: SourceObject.Sd },
+            {objectId: ObjectInterface.IdSoundSource, objectKey: SourceObject.Usb }
         ]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
