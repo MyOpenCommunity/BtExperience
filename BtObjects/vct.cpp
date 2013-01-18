@@ -487,6 +487,8 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			activateCall();
 			if (values_list.contains(VideoDoorEntryDevice::CALLER_ADDRESS))
 				callerAddress(values_list[VideoDoorEntryDevice::CALLER_ADDRESS].toString());
+			if (!video_enabled)
+				emit incomingCall();
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received END_OF_CALL";

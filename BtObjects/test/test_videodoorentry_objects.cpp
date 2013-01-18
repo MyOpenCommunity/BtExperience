@@ -662,6 +662,30 @@ void TestVideoDoorEntry::testCCTVRingtone()
 	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace3);
 }
 
+void TestVideoDoorEntry::testCCTVAudioOnly()
+{
+	DeviceValues v;
+	ObjectTester t(cctv, SIGNAL(incomingCall()));
+
+	// sets internal state on devices
+	dev->is_calling = true;
+	dev->kind = 6;
+	dev->mmtype = 2;
+	cctv->dev->is_calling = true;
+	cctv->dev->kind = 6;
+	cctv->dev->mmtype = 2;
+
+	// call arrives
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::ONLY_AUDIO;
+	cctv->valueReceived(v);
+	v.clear();
+	QCOMPARE(true, cctv->callInProgress());
+	QCOMPARE(false, cctv->callActive());
+	QCOMPARE(false, cctv->exitingCall());
+
+	t.checkSignals();
+}
+
 void TestVideoDoorEntry::testCCTVTeleloop()
 {
 	DeviceValues v;

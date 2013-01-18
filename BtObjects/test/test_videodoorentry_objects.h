@@ -52,6 +52,7 @@ private slots:
 	void testCCTVOutgoingCallTerminatedByTouch();
 	void testCCTVOutgoingCallTerminatedByTalker();
 	void testCCTVRingtone();
+	void testCCTVAudioOnly();
 	void testCCTVTeleloop();
 	void testAutoOpen();
 	void testHandsFree();
