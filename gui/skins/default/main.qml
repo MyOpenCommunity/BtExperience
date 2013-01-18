@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import Components.Settings 1.0
 import Components.Text 1.0
 import "js/MainContainer.js" as Container
 import "js/Stack.js" as Stack
@@ -70,4 +71,15 @@ Item {
             mouse.accepted = false
         }
     }
+
+    // precompiling some components
+    Component { SettingsHome {} }
+    Component { SettingsGenerals {} }
+    Component { SettingsProfiles {} }
+    Component { Floor {} }
+    Component { SettingsSystems {} }
+    Component { SettingsClocks {} }
+    Component { SettingsMultimedia {} }
+    Component { SettingsRingtones {} }
+    Component { MenuTitle {} }
 }

@@ -20,6 +20,15 @@ MenuColumn {
         }
     }
 
+    Component { id: settingsHome; SettingsHome {} }
+    Component { id: settingsGenerals; SettingsGenerals {} }
+    Component { id: settingsProfiles; SettingsProfiles {} }
+    Component { id: floor; Floor {} }
+    Component { id: settingsSystems; SettingsSystems {} }
+    Component { id: settingsClocks; SettingsClocks {} }
+    Component { id: settingsMultimedia; SettingsMultimedia {} }
+    Component { id: settingsRingtones; SettingsRingtones {} }
+
     QtObject {
         id: privateProps
 
@@ -43,7 +52,7 @@ MenuColumn {
                 var m = modelList.get(i)
                 if (name === m.name) {
                     itemList.currentIndex = i
-                    column.loadColumn(nameToComponent(m.component), m.name)
+                    column.loadColumn(m.component, m.name)
                     return
                 }
             }
@@ -62,14 +71,8 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             name: model.name
-            hasChild: model.component !== undefined
-                      && model.component !== null
-
-            onClicked: {
-                if (model.name !== "") {
-                    column.loadColumn(nameToComponent(model.component), model.name)
-                }
-            }
+            hasChild: true
+            onClicked: column.loadColumn(model.component, model.name)
         }
 
         model: modelList
@@ -106,26 +109,17 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Home"), "component": "SettingsHome.qml"})
-            modelList.append({"name": qsTr("General"), "component": "SettingsGenerals.qml"})
+            modelList.append({name: qsTr("Home"), component: settingsHome})
+            modelList.append({name: qsTr("General"), component: settingsGenerals})
             if (profilesModel.count > 0)
-                modelList.append({"name": qsTr("Profiles"), "component": "SettingsProfiles.qml"})
+                modelList.append({name: qsTr("Profiles"), component: settingsProfiles})
             if (floorsModel.count > 0)
-                modelList.append({"name": qsTr("Rooms"), "component": "Floor.qml"})
+                modelList.append({name: qsTr("Rooms"), component: floor})
             if (scenariosModule.count + cctvModel.count + energiesCounters.count > 0)
-                modelList.append({"name": qsTr("Systems"), "component": "SettingsSystems.qml"})
-            modelList.append({"name": qsTr("Alarm Clock"), "component": "SettingsClocks.qml"})
-            modelList.append({"name": qsTr("Multimedia"), "component": "SettingsMultimedia.qml"})
-            modelList.append({"name": qsTr("Ringtones"), "component": "SettingsRingtones.qml"})
+                modelList.append({name: qsTr("Systems"), component: settingsSystems})
+            modelList.append({name: qsTr("Alarm Clock"), component: settingsClocks})
+            modelList.append({name: qsTr("Multimedia"), component: settingsMultimedia})
+            modelList.append({name: qsTr("Ringtones"), component: settingsRingtones})
         }
-    }
-
-    function nameToComponent(name) {
-        var component = Qt.createComponent(name)
-        // TODO: handle more states
-        if (component.status === Component.Ready) {
-            return component
-        }
-        console.log("Error on creating component for settings:" + component.errorString())
     }
 }
