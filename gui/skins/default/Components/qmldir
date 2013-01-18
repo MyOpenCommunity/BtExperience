@@ -77,6 +77,7 @@ PaginatorColumn 1.0 PaginatorColumn.qml
 PaginatorList 1.0 PaginatorList.qml
 PaginatorOnBackground 1.0 PaginatorOnBackground.qml
 Pannable 1.0 Pannable.qml
+PasswordInput 1.0 PasswordInput.qml
 PathViewDelegate 1.0 PathViewDelegate.qml
 PressDot 1.0 PressDot.qml
 QuickLink 1.0 QuickLink.qml
