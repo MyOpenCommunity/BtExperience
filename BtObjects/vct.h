@@ -299,6 +299,7 @@ private:
 	void activateCall();
 	void disactivateCall();
 
+	bool video_enabled;
 	bool call_stopped;
 	bool prof_studio;
 	bool hands_free;

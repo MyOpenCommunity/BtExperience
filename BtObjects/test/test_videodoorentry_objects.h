@@ -55,6 +55,8 @@ private slots:
 	void testCCTVTeleloop();
 	void testAutoOpen();
 	void testHandsFree();
+	void testCCTVRearmSession();
+	void testCCTVRearmSessionAudioOnly();
 	void testCCTVTeleloopAssociate();
 	void testCCTVTeleloopTimeouFrame();
 	void testCCTVTeleloopTimeouTimer();
