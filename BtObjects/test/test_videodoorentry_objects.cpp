@@ -514,7 +514,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	compareClientCommandThatWorks();
 
 	// talker answers
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	cctv->valueReceived(v);
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
@@ -568,7 +568,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	compareClientCommandThatWorks();
 
 	// talker answers
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	cctv->valueReceived(v);
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
@@ -675,7 +675,7 @@ void TestVideoDoorEntry::testCCTVTeleloop()
 	cctv->dev->mmtype = 2;
 
 	// call arrives
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	cctv->valueReceived(v);
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
@@ -727,7 +727,7 @@ void TestVideoDoorEntry::testAutoOpen()
 	DeviceValues v;
 
 	// arrives a call
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	v[VideoDoorEntryDevice::CALLER_ADDRESS] = QString("21");
 	cctv->valueReceived(v);
 	v.clear();
@@ -754,7 +754,7 @@ void TestVideoDoorEntry::testHandsFree()
 					<< SIGNAL(callEnded()));
 
 	// arrives a call
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	cctv->valueReceived(v);
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
