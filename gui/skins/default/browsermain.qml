@@ -79,8 +79,15 @@ BasePage {
                     left: header.left
                     right: header.right
                 }
-                onZoomInClicked: zoomPercentage = (100.0 * webView.zoom(0.1)).toFixed(0)
-                onZoomOutClicked: zoomPercentage = (100.0 * webView.zoom(-0.1)).toFixed(0)
+                function changeZoom(delta) {
+
+                    if (zoomPercentage + delta < 100 || zoomPercentage + delta > 500)
+                        return
+                    zoomPercentage += delta
+                }
+
+                onZoomInClicked: changeZoom(10)
+                onZoomOutClicked: changeZoom(-10)
             }
 
             Pannable {
@@ -98,6 +105,7 @@ BasePage {
                     y: parent.childOffset
                     width: parent.width
                     height: parent.height
+                    zoomPercentage: hidingBar.zoomPercentage
                 }
             }
 
