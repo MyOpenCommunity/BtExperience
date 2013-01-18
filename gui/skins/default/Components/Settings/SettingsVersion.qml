@@ -32,18 +32,19 @@ MenuColumn {
             value: privateProps.model.kernelVersion || qsTr("Unknown")
         }
         ControlTitleValue {
-            title: qsTr("Serial number")
-            value: privateProps.model.serialNumber || qsTr("Unknown")
-        }
-        ControlTitleValue {
             title: qsTr("Internal unit address")
             visible: vctModel.count > 0
-            value: global.getPIAddress() || qsTr("Unknown")
+            value: global.getPIAddress().slice(1) || qsTr("Unknown")
         }
         ControlTitleValue {
             title: qsTr("External unit associated")
             visible: vctModel.count > 0
-            value: global.defaultExternalPlace.where || qsTr("Unknown")
+            value: global.defaultExternalPlace.where.slice(1) || qsTr("Unknown")
+        }
+        ControlTitleValue {
+            title: qsTr("Multimedia source address")
+            visible: global.multimediaSourceAddress !== ""
+            value: global.multimediaSourceAddress
         }
     }
 }
