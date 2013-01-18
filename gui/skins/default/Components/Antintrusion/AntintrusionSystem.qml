@@ -173,16 +173,6 @@ MenuColumn {
             boxInfoState: numberOfAlarms > 0 ? "warning" : ""
             boxInfoText: numberOfAlarms
 
-            Rectangle {
-                id: registerDarkRect
-                z: 1
-                anchors.fill: parent
-                color: "black"
-                opacity: 0.7
-                visible: false
-                MouseArea { anchors.fill: parent } // block the mouse clicks
-            }
-
             ObjectModel {
                 id: alarmsModel
                 source: privateProps.model.alarms
@@ -324,7 +314,6 @@ MenuColumn {
             when: privateProps.model.status === true
             PropertyChanges { target: systemIcon; status: 0 }
             PropertyChanges { target: zoneDarkRect; visible: true }
-            PropertyChanges { target: registerDarkRect; visible: true }
             PropertyChanges { target: scenarioDarkRect; visible: true }
         }
     ]
