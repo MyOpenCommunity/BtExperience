@@ -6,8 +6,8 @@ MenuColumn {
     Column {
         id: column
 
-        ControlOn {
-            onPressed: dataModel.active = newStatus
+        ControlOnVDE {
+            onClicked: dataModel.activate()
         }
     }
 }

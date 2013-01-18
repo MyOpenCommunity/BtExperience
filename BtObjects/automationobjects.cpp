@@ -112,14 +112,14 @@ QList<ObjectPair> parseAutomationGroup2(const QDomNode &obj, const UiiMapper &ui
 
 			if (!item)
 			{
-				qWarning() << "Invalid uii" << object_uii << "in light set";
+				qWarning() << "Invalid uii" << object_uii << "in automation 2 set";
 				Q_ASSERT_X(false, "parseLightGroup", "Invalid uii");
 				continue;
 			}
 
 			items.append(item);
 		}
-		obj_list << ObjectPair(uii, new AutomationGroup2(descr, convertQObjectList<AutomationCommand2 *>(items)));
+		obj_list << ObjectPair(uii, new AutomationGroup2(descr, convertQObjectList<AutomationLight *>(items)));
 	}
 	return obj_list;
 }
@@ -160,7 +160,7 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 				else obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3UpDown, d));
 				break;
 			default: 
-				qWarning() << "Invalid Cid " << cid << " in Automation Set";
+				qWarning() << "Invalid Cid " << cid << " in Automation 3 Set";
 				break;
 		}
 	}
@@ -177,7 +177,7 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 	{
 		int uii = getIntAttribute(ist, "uii");
 		QString descr = getAttribute(ist, "descr", def_descr);
-		int cid = getIntAttribute(ist, "cid");
+		int cid = ObjectInterface::CidAutomationGroup3OpenClose;
 		QList<ObjectInterface *> items;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
@@ -191,22 +191,10 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 				Q_ASSERT_X(false, "parseAutomationGroup3", "Invalid uii");
 				continue;
 			}
-
 			items.append(item);
 		}
-		switch (cid)
-		{
-			case ObjectInterface::CidAutomationGroup3OpenClose:
-				obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3OpenClose, convertQObjectList<AutomationCommand3 *>(items)));
-				break;
-			case ObjectInterface::CidAutomationGroup3UpDown:
-				obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3UpDown, convertQObjectList<AutomationCommand3 *>(items)));
-				break;
-			default:
-				qWarning() << "Invalid Cid " << cid << " in Automation Set";
-				break;
-		}
-		
+		obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3OpenClose, convertQObjectList<AutomationCommand3 *>(items)));
+
 	}
 	return obj_list;
 }
@@ -254,6 +242,11 @@ AutomationVDE::AutomationVDE(QString _name, VideoDoorEntryDevice *d) :
 void AutomationVDE::activate()
 {
 	dev->openLock();
+	QTimer::singleShot(2000, this, SLOT(deactivate()));
+}
+
+void AutomationVDE::deactivate()
+{
 	dev->releaseLock();
 }
 
@@ -272,7 +265,7 @@ void AutomationCommand2::setActive(bool st)
 		dev->turnOff();
 }
 
-AutomationGroup2::AutomationGroup2(QString _name, QList<AutomationCommand2 *> d)
+AutomationGroup2::AutomationGroup2(QString _name, QList<AutomationLight *> d)
 {
 	name = _name;
 	objects = d;
@@ -280,8 +273,10 @@ AutomationGroup2::AutomationGroup2(QString _name, QList<AutomationCommand2 *> d)
 
 void AutomationGroup2::setActive(bool status)
 {
-	foreach (AutomationCommand2 *l, objects)
+	foreach (AutomationLight *l, objects)
+	{
 		l->setActive(status);
+	}
 }
 
 

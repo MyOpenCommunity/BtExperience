@@ -34,9 +34,12 @@ ControlLeftRight 1.0 ControlLeftRight.qml
 ControlLeftRightWithTitle 1.0 ControlLeftRightWithTitle.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
 ControlOn 1.0 ControlOn.qml
+ControlOnVDE 1.0 ControlOnVDE.qml
 ControlOnOff 1.0 ControlOnOff.qml
+ControlOnOffGroup 1.0 ControlOnOffGroup.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
 ControlOpenCloseStopSafe 1.0 ControlOpenCloseStopSafe.qml
+ControlOpenCloseStopGroup 1.0 ControlOpenCloseStopGroup.qml
 ControlPathView 1.0 ControlPathView.qml
 ControlPathViewInternal 1.0 ControlPathViewInternal.qml
 ControlPopup 1.0 ControlPopup.qml
