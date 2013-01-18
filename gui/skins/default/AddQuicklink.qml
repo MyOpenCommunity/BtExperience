@@ -22,10 +22,11 @@ Page {
 
     text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
     source: {
-        if (page.profile === undefined)
+        if (page.profile === undefined || profile.image === "")
             return global.guiSettings.homeBgImage
-        else
+        else {
             return profile.image
+        }
     }
 
     onCurrentLinkChanged: {
