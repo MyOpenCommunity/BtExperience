@@ -295,12 +295,15 @@ Item {
     Connections {
         target: global.hardwareKeys
         onPressed: {
-            if (!cctvModel.count === 0)
-                return
-
             // call default external point on hardware key 2, turn off screen on hardware key 3
             if (index === 2 && global.defaultExternalPlace) {
-                cctvModel.getObject(0).cameraOn(global.defaultExternalPlace)
+                if (cctvModel.count === 0)
+                    return
+                var camera = cctvModel.getObject(0)
+                if (camera.callInProgress)
+                    camera.nextCamera()
+                else
+                    camera.cameraOn(global.defaultExternalPlace)
             } else if (index == 3) {
                 switch (global.screenState.state) {
                 case ScreenState.ScreenOff:
