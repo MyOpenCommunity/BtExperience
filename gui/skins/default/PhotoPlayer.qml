@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components 1.0
+import BtObjects 1.0
 
 import "js/Stack.js" as Stack
 
@@ -124,7 +125,6 @@ Page {
                         defaultImage: "images/common/ico_pause.svg"
                         pressedImage: "images/common/ico_pause_P.svg"
                     }
-                    PropertyChanges { target: forceScreenOn; enabled: true }
                 }
             ]
         }
@@ -201,8 +201,12 @@ Page {
         }
     }
 
-    ScreenStateHandler {
-        id: forceScreenOn
+    Connections {
+        target: global.screenState
+        onStateChangedInt: {
+            if (new_state === ScreenState.ScreenOff || new_state === ScreenState.Screensaver)
+                playButtonItem.state = ""
+        }
     }
 
     Component.onCompleted: player.upnp ?
