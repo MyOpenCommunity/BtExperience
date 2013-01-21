@@ -518,7 +518,7 @@
 		<ist uii="80019" descr="La Repubblica" url="http://www.repubblica.it" />
 		<ist uii="80020" descr="La Repubblica" url="http://www.repubblica.it" />
 	</obj>
-	<obj cid="16005" id="16005">
+	<obj cid="16005" id="16005" descr="Browser" homepage_url="http://www.google.com" history_enabled="1">
 		<ist uii="16004"/>
 	</obj>
 	<obj cid="16007" id="16007" descr="USB">

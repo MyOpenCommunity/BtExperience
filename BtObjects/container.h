@@ -86,6 +86,7 @@ public:
 		IdMultimediaWebCam = 22,
 		IdMultimediaDevice = 23,
 		IdMultimediaWebLink = 24,
+		IdMultimediaBrowser = 25,
 		IdRooms = 100,
 		IdProfile = 101
 	};

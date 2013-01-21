@@ -261,6 +261,11 @@
 			<link uii="80020" />
 		</ist>
 	</container>
+	<container id="25" descr="Browser" img="browser.png" >
+		<ist uii="323">
+			<link uii="16004" />
+		</ist>
+	</container>
 	<container id="101" descr="profile" img=""> <!-- profile -->
                 <ist uii="901" descr="camilla" img="" img_card="images/card/card-home_bambina.png" >
 			<link uii="8006" x="250" y="100" />

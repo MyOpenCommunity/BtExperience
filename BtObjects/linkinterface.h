@@ -44,6 +44,7 @@ public:
 		Rss = 16002,  //!< RSS link, address is an URL
 		Webcam = 16001,  //!< Webcam link, address is an URL
 		WebRadio = 16000, //!< Web radio link, address is an URL
+		Browser = 16005, //!< Launch web browser, address is an URL
 		Camera = 3, //!< Video-surveillance camera link
 		BtObject = 4, //!< Generic BtObject link
 		Scenario = 5 //!< Scenario link
