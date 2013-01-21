@@ -213,6 +213,28 @@ void TestDimmer::testReceiveLevel()
 	tperc.checkNoSignals();
 }
 
+void TestDimmer::testBroken()
+{
+	DeviceValues v;
+	ObjectTester t(obj, SIGNAL(brokenChanged()));
+
+	v[LightingDevice::DIM_DIMMER_PROBLEM] = true;
+	obj->valueReceived(v);
+	v.clear();
+	t.checkSignals();
+	QCOMPARE(obj->isBroken(), true);
+
+	obj->valueReceived(v);
+	t.checkNoSignals();
+
+	v[LightingDevice::DIM_DEVICE_ON] = true;
+	v[LightingDevice::DIM_DIMMER_LEVEL] = 3;
+	obj->valueReceived(v);
+	v.clear();
+	t.checkSignals();
+	QCOMPARE(obj->isBroken(), false);
+}
+
 
 void TestDimmer100::init()
 {

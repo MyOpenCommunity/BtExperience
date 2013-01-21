@@ -214,6 +214,11 @@ class Dimmer : public Light
 	Q_OBJECT
 
 	/*!
+		\brief Whether the dimmer is broken
+	*/
+	Q_PROPERTY(bool broken READ isBroken NOTIFY brokenChanged)
+
+	/*!
 		\brief Gets the dimmer level on a 1-100 scale
 
 		Note that the level keeps its value even when the dimmer is off
@@ -225,6 +230,8 @@ public:
 
 	virtual int getObjectId() const;
 	virtual int getPercentage() const;
+
+	bool isBroken() const;
 
 public slots:
 	/*!
@@ -239,6 +246,7 @@ public slots:
 
 signals:
 	void percentageChanged();
+	void brokenChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -246,7 +254,10 @@ protected slots:
 protected:
 	Dimmer(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, DimmerDevice *d);
 
+	void setBroken(bool broken);
+
 	int percentage;
+	bool broken;
 
 private:
 	DimmerDevice *dev;
