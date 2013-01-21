@@ -494,10 +494,10 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 	{
 		foreach (const EntryInfo &entry, list)
 		{
-			item_list[current_index - start_index]->setFileInfo(entry, getCurrentPath());
-			++current_index;
 			if (current_index - start_index >= item_list.size())
 				break;
+			item_list[current_index - start_index]->setFileInfo(entry, getCurrentPath());
+			++current_index;
 		}
 	}
 
