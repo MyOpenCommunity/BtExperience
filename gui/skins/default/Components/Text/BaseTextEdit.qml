@@ -15,7 +15,7 @@ TextEdit {
 
         while (pannable) {
             if (pannable.setCursorContainerWidget) {
-                pannable.setCursorContainerWidget(parent, focus, containerWidget)
+                pannable.setCursorContainerWidget(parent, activeFocus, containerWidget)
                 break;
             }
             pannable = pannable.parent
