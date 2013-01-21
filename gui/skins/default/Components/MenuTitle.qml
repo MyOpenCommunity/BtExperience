@@ -18,11 +18,10 @@ SvgImage {
         NumberAnimation { duration: constants.elementTransitionDuration }
     }
 
-    UbuntuLightText {
+    UbuntuMediumText {
         id: label
 
         color: "black"
-        font.bold: true
         font.pixelSize: 14
         font.capitalization: Font.AllUppercase
         anchors {
