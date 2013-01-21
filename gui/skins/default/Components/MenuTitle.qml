@@ -20,7 +20,8 @@ Column {
             }
 
             color: "black"
-            font.pixelSize: 12
+            font.bold: true
+            font.pixelSize: 14
             font.capitalization: Font.AllUppercase
         }
     }
