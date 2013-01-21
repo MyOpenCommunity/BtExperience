@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import Components.ThermalRegulation 1.0
 import "../../js/MenuItem.js" as Script
 
 MenuColumn {
@@ -8,7 +9,8 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
-    BtObjectsMapping { id: mapping }
+    Component { id: thermalControlUnit; ThermalControlUnit {} }
+    Component { id: thermalControlledProbe; ThermalControlledProbe {} }
 
     SystemsModel { id: systemsModel; systemId: Container.IdThermalRegulation }
 
@@ -32,7 +34,17 @@ MenuColumn {
             itemObject: modelList.getObject(index)
             description: Script.description(itemObject)
             hasChild: Script.hasChild(itemObject)
-            onClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
+            onClicked: {
+                var oid = itemObject.objectId
+                if (oid === ObjectInterface.IdThermalControlUnit99)
+                    column.loadColumn(thermalControlUnit, itemObject.name, itemObject)
+                if (oid === ObjectInterface.IdThermalControlUnit4)
+                    column.loadColumn(thermalControlUnit, itemObject.name, itemObject)
+                if (oid === ObjectInterface.IdThermalControlledProbe)
+                    column.loadColumn(thermalControlledProbe, itemObject.name, itemObject)
+                if (oid === ObjectInterface.IdThermalControlledProbeFancoil)
+                    column.loadColumn(thermalControlledProbe, itemObject.name, itemObject)
+            }
             boxInfoState: Script.boxInfoState(itemObject)
             boxInfoText: Script.boxInfoText(itemObject)
         }
