@@ -12,6 +12,11 @@ MenuColumn {
 
     onScenarioSelected: obj.apply()
 
+    ObjectModel {
+        id: scenariosModel
+        source: column.dataModel
+    }
+
     ListView {
         id: itemList
         anchors.fill: parent
@@ -38,10 +43,5 @@ MenuColumn {
         }
 
         model: scenariosModel
-    }
-
-    ObjectModel {
-        id: scenariosModel
-        source: column.dataModel
     }
 }
