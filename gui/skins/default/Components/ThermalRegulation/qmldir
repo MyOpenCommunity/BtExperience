@@ -3,12 +3,16 @@ AdvancedSplitModalities 1.0 AdvancedSplitModalities.qml
 AirConditioning 1.0 AirConditioning.qml
 BasicSplit 1.0 BasicSplit.qml
 ControlSetDateTime 1.0 ControlSetDateTime.qml
+ControlTemperature 1.0 ControlTemperature.qml
 DateSelect 1.0 DateSelect.qml
+ExternalProbes 1.0 ExternalProbes.qml
+NotControlledProbes 1.0 NotControlledProbes.qml
 ProgramListSplit 1.0 ProgramListSplit.qml
 ThermalControlUnit 1.0 ThermalControlUnit.qml
 ThermalControlUnitModalities 1.0 ThermalControlUnitModalities.qml
 ThermalControlUnitSeasons 1.0 ThermalControlUnitSeasons.qml
 ThermalControlledProbe 1.0 ThermalControlledProbe.qml
 ThermalControlledProbeModalities 1.0 ThermalControlledProbeModalities.qml
+ThermalNotControlledProbe 1.0 ThermalNotControlledProbe.qml
 ThermalRegulationItems 1.0 ThermalRegulationItems.qml
 ThermalRegulator 1.0 ThermalRegulator.qml
