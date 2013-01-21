@@ -4,6 +4,8 @@ Qt.include("logging.js")
 
 var stackObjects = []
 
+var horizontalOverlap = 1
+
 function loadComponent(menuLevel, component, title, dataModel, properties) {
     // checks if an operation is in progress and exit in case
     if (pendingOperations.length > 0)
@@ -15,18 +17,10 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     if (dataModel === undefined)
         dataModel = null
 
-
-    var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0})
-    if (!titleObj) {
-        console.log("Error on creating the MenuTitle component")
-        return
-    }
-
     properties = typeof properties !== 'undefined' ? properties : {}
     properties["menuLevel"] = menuLevel + 1
     properties["parent"] = elementsContainer
     properties["opacity"] = 0
-    properties["y"] = titleObj.height + 2 // a little space
     properties["dataModel"] = dataModel
     properties["pageObject"] = pageObject
 
@@ -35,6 +29,13 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     // the width of the children (which are assumed to be all the same width).
     // Unfortunately, we can't use childrenRect because that includes shadows.
     var itemObj = component.createObject(mainContainer, properties)
+
+    var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0, "anchors.left": itemObj.left, "anchors.leftMargin": horizontalOverlap})
+    if (!titleObj) {
+        console.log("Error on creating the MenuTitle component")
+        return
+    }
+    itemObj.y = titleObj.height + 2
 
     var shadowObj = createComponent("MenuShadow.qml", {"parent": elementsContainer, "opacity": 0, "anchors.fill": itemObj})
     if (!shadowObj) {
@@ -171,7 +172,6 @@ function processOperations() {
 }
 
 var verticalOffset = 10
-var horizontalOverlap = 1
 
 function _calculateFirstElement(starting_width) {
     var first_element = 0
@@ -240,7 +240,6 @@ function _setStartProps() {
         item.y = last_item.y + verticalOffset
         item.x = last_item.x - horizontalOverlap
         var last_title = stackObjects[stackObjects.length - 1]['title']
-        title.x = last_item.x
         title.y = last_title.y + verticalOffset
     }
     item.enableAnimation = true
@@ -269,7 +268,6 @@ function _openItem() {
         item.opacity = 1
         shadow.opacity = 1
         item.x = last_item.x + last_item.width - horizontalOverlap
-        title.x = last_item.x + last_item.width
     }
 }
 
@@ -310,11 +308,9 @@ function _closeItem() {
     item.animationRunningChanged.connect(_doCloseItem)
     if (stackObjects.length > 1) {
         item.x = stackObjects[stackObjects.length - 2]['item'].x
-        title.x = stackObjects[stackObjects.length - 2]['title'].x
     }
     else {
         item.x = 0
-        title.x = 0
     }
     item.opacity = 0
     title.opacity = 0
