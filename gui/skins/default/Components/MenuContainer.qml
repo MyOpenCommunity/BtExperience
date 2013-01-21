@@ -46,7 +46,6 @@ Item {
         id: constants
     }
 
-
     // This property is explicitly set to false whenever any operation on columns
     // is requested. This way we filter all inputs on clippingContainer until
     // all pending operations are completed. This avoids the 'double click' bug
@@ -57,9 +56,8 @@ Item {
 
     Item {
         id: clippingContainer
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        width: parent.width
+
+        anchors.fill: parent
         clip: true
 
         Item {
