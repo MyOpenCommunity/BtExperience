@@ -1,8 +1,10 @@
 import QtQuick 1.1
 import Components.Text 1.0
 
+
 Item {
     id: menuItem
+
     height: background.height
     width: background.width
 
@@ -90,112 +92,122 @@ Item {
         }
     }
 
-    Item {
-        anchors.fill: parent
+    SvgImage {
+        id: iconStatus
 
-        SvgImage {
-            id: iconStatus
-            source: iconStatusImage()
-            anchors.left: parent.left
-            anchors.leftMargin: menuItem.width / 100 * 2
-            anchors.topMargin: menuItem.height / 100 * 18
-            anchors.top: parent.top
+        source: iconStatusImage()
+        anchors {
+            top: parent.top
+            topMargin: background.height / 100 * 18
+            left: parent.left
+            leftMargin: background.width / 100 * 2
         }
+    }
 
-        Loader {
-            id: labelLoader
-            property color textColor: "#2d2d2d"
-            anchors.left: parent.left
-            anchors.leftMargin: menuItem.width / 100 * 9
-            anchors.top: parent.top
-            anchors.topMargin: menuItem.height / 100 * 16
-            anchors.right: arrowRight.left
-            sourceComponent: labelComponent
+    Loader {
+        id: labelLoader
+
+        property color textColor: "#2d2d2d"
+        anchors {
+            top: parent.top
+            topMargin: background.height / 100 * 16
+            left: parent.left
+            leftMargin: background.width / 100 * 9
+            right: arrowRight.left
         }
+        sourceComponent: labelComponent
+    }
 
-        Component {
-            id: labelInputComponent
-            UbuntuMediumTextInput {
-                text: menuItem.name
-                activeFocusOnPress: false
-                font.pixelSize: 15
-                color: labelLoader.textColor
-                onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
-            }
-        }
-
-        Component {
-            id: labelComponent
-            UbuntuMediumText {
-                text: menuItem.name
-                font.pixelSize: 15
-                color:  labelLoader.textColor
-                elide: Text.ElideRight
-            }
-        }
-
-        Image {
-            visible: menuItem.hasChild
-            id: arrowRight
-            source: "../images/common/menu_column_item_arrow.svg"
-            anchors.right: parent.right
-            anchors.rightMargin: menuItem.width / 100 * 3
-            anchors.top: parent.top
-            anchors.topMargin: menuItem.height / 100 * 24
-        }
-
-        Item {
-            id: boxInfo
-            visible: false
-            anchors.top: labelLoader.bottom
-            anchors.bottom: parent.bottom
-            anchors.left: labelLoader.left
-            width: 45
-
-            Rectangle {
-                id: boxInfoRect
-                color: "#999"
-                radius: 4
-                height: 17
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                UbuntuLightText {
-                    id: boxInfoText
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: "white"
-                    font.pixelSize: 15
-                }
-            }
-
-            states: [
-                State {
-                    name: "info"
-                    PropertyChanges { target: boxInfoRect; color: "#999999" }
-                    PropertyChanges { target: boxInfo; visible: true }
-
-                },
-                State {
-                    name: "warning"
-                    PropertyChanges { target: boxInfoRect; color: "#ed1b35" }
-                    PropertyChanges { target: boxInfo; visible: true }
-                }
-            ]
-        }
-
-        UbuntuLightText {
-            id: textDescription
-            color: "#626262"
-            wrapMode: Text.NoWrap
+    Component {
+        id: labelInputComponent
+        UbuntuMediumTextInput {
+            text: menuItem.name
+            activeFocusOnPress: false
             font.pixelSize: 15
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: menuItem.height / 100 * 10
-            anchors.top: labelLoader.bottom
-            anchors.left: boxInfo.visible ? boxInfo.right : labelLoader.left
-            anchors.leftMargin: boxInfo.visible ? 5 : 0
-            verticalAlignment: Text.AlignBottom
+            color: labelLoader.textColor
+            onActiveFocusChanged: if (!activeFocus) { privateProps.editDone() }
+        }
+    }
+
+    Component {
+        id: labelComponent
+        UbuntuMediumText {
+            text: menuItem.name
+            font.pixelSize: 15
+            color:  labelLoader.textColor
+            elide: Text.ElideRight
+        }
+    }
+
+    SvgImage {
+        id: arrowRight
+
+        visible: menuItem.hasChild
+        source: "../images/common/menu_column_item_arrow.svg"
+        anchors {
+            top: parent.top
+            topMargin: background.height / 100 * 24
+            right: parent.right
+            rightMargin: background.width / 100 * 3
+        }
+    }
+
+    Item {
+        id: boxInfo
+
+        width: 45
+        visible: false
+        anchors {
+            top: labelLoader.bottom
+            bottom: parent.bottom
+            left: labelLoader.left
+        }
+
+        Rectangle {
+            id: boxInfoRect
+            color: "#999"
+            radius: 4
+            height: 17
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            UbuntuLightText {
+                id: boxInfoText
+                anchors.centerIn: parent
+                color: "white"
+                font.pixelSize: 15
+            }
+        }
+
+        states: [
+            State {
+                name: "info"
+                PropertyChanges { target: boxInfoRect; color: "#999999" }
+                PropertyChanges { target: boxInfo; visible: true }
+
+            },
+            State {
+                name: "warning"
+                PropertyChanges { target: boxInfoRect; color: "#ed1b35" }
+                PropertyChanges { target: boxInfo; visible: true }
+            }
+        ]
+    }
+
+    UbuntuLightText {
+        id: textDescription
+
+        color: "#626262"
+        wrapMode: Text.NoWrap
+        font.pixelSize: 15
+        verticalAlignment: Text.AlignBottom
+        anchors {
+            top: labelLoader.bottom
+            bottom: parent.bottom
+            bottomMargin: background.height / 100 * 10
+            left: boxInfo.visible ? boxInfo.right : labelLoader.left
+            leftMargin: boxInfo.visible ? 5 : 0
         }
     }
 
