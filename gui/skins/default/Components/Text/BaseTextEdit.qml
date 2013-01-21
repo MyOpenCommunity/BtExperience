@@ -8,9 +8,16 @@ TextEdit {
     property variant containerWidget
 
     onActiveFocusChanged: {
-        if (!containerWidget)
-            return
+        if (containerWidget)
+            propagateContainerWidget()
+    }
 
+    Component.onCompleted: {
+        if (containerWidget && activeFocus)
+            propagateContainerWidget()
+    }
+
+    function propagateContainerWidget() {
         var pannable = parent.parent
 
         while (pannable) {
