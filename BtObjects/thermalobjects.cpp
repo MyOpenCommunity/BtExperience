@@ -159,17 +159,15 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, int _modes, 
 	// loads modalities for which the correspondent bit is 1; bits are different
 	// in the 99 zones and 4 zones cases
 	// The objects list should contain only one item per id
-	// TODO: fix the the timed programs
 	if (((d->type() == THERMO_Z4) && ((modes & CU4_PROGRAMS_MODE) > 0)) ||
 		((d->type() == THERMO_Z99) && ((modes & CU99_PROGRAMS_MODE) > 0)))
 		modalities << new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &summer_programs, &winter_programs, dev);
-	// for unknown reasons these are reverted
 	if (((d->type() == THERMO_Z4) && ((modes & CU4_WEEKDAY_MODE) > 0)) ||
 		((d->type() == THERMO_Z99) && ((modes & CU99_WEEKDAY_MODE) > 0)))
-		modalities << new ThermalControlUnitTimedProgram("Weekday", ThermalControlUnit::IdHoliday, &summer_programs, &winter_programs, dev);
+		modalities << new ThermalControlUnitTimedProgram("Weekday", ThermalControlUnit::IdWeekday, &summer_programs, &winter_programs, dev);
 	if (((d->type() == THERMO_Z4) && ((modes & CU4_HOLIDAY_MODE) > 0)) ||
 		((d->type() == THERMO_Z99) && ((modes & CU99_HOLIDAY_MODE) > 0)))
-		modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdWeekday, &summer_programs, &winter_programs, dev);
+		modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdHoliday, &summer_programs, &winter_programs, dev);
 	modalities << new ThermalControlUnitAntifreeze("Antifreeze", dev);
 	if (((d->type() == THERMO_Z4) && ((modes & CU4_MANUAL_MODE) > 0)) ||
 		((d->type() == THERMO_Z99) && ((modes & CU99_MANUAL_MODE) > 0)))

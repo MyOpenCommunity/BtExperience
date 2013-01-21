@@ -17,9 +17,8 @@ QtObject {
         container['CENTRAL_STATUS'][ThermalControlUnit.IdTimedManual] = qsTr("timed manual")
         container['CENTRAL_STATUS'][ThermalControlUnit.IdWeeklyPrograms] = qsTr("weekly programs")
         container['CENTRAL_STATUS'][ThermalControlUnit.IdScenarios] = qsTr("scenario")
-        // for unknown reasons these are reverted
-        container['CENTRAL_STATUS'][ThermalControlUnit.IdHoliday] = qsTr("weekday")
-        container['CENTRAL_STATUS'][ThermalControlUnit.IdWeekday] = qsTr("holiday")
+        container['CENTRAL_STATUS'][ThermalControlUnit.IdHoliday] = qsTr("holiday")
+        container['CENTRAL_STATUS'][ThermalControlUnit.IdWeekday] = qsTr("weekday")
 
         container['PROBE_STATUS'] = []
         container['PROBE_STATUS'][ThermalControlledProbe.Auto] = qsTr("auto")
