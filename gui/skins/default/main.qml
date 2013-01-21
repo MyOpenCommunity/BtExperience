@@ -2,6 +2,7 @@ import QtQuick 1.1
 import Components 1.0
 import Components.Settings 1.0
 import Components.Text 1.0
+import Components.ThermalRegulation 1.0
 import "js/MainContainer.js" as Container
 import "js/Stack.js" as Stack
 import "js/EventManager.js" as EventManagerContainer
@@ -31,6 +32,7 @@ Item {
         // http://qt-project.org/forums/viewthread/18372
         Stack.mainContainer = container
         Stack.debugTiming = global.debugTiming
+
         Stack.pushPage("HomePage.qml")
 
         if (!global.calibration.exists())
@@ -73,6 +75,12 @@ Item {
     }
 
     // precompiling some components
+    Component { SvgImage { source: "images/common/menu_column_item_arrow_white.svg" } }
+    Component { SvgImage { source: "images/common/menu_column_item_bg_pressed.svg" } }
+    Component { SvgImage { source: "images/menu_column/label_column-title.svg" } }
+    Component { SvgImage { source: "images/menu_column/label_column-title_p.svg" } }
+    Component { Paginator {} }
+    Component { MenuTitle {} }
     Component { SettingsHome {} }
     Component { SettingsGenerals {} }
     Component { SettingsProfiles {} }
@@ -81,5 +89,13 @@ Item {
     Component { SettingsClocks {} }
     Component { SettingsMultimedia {} }
     Component { SettingsRingtones {} }
-    Component { MenuTitle {} }
+    Component { ThermalRegulationItems {} }
+    Component { ThermalRegulator {} }
+    Component { ThermalControlUnit {} }
+    Component { ThermalControlledProbe {} }
+    Component { BasicSplit {} }
+    Component { AdvancedSplit {} }
+    Component { AirConditioning {} }
+    Component { NotControlledProbes {} }
+    Component { ExternalProbes {} }
 }
