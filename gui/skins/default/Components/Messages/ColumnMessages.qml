@@ -29,7 +29,7 @@ MenuColumn {
 
         font.pixelSize: 14
 
-        text: paginator.model.count === 0 ? "" : paginator.model.count + (paginator.model.count === 1 ? qsTr(" message") : qsTr(" messages"))
+        text: theModel.count === 0 ? "" : theModel.count + (theModel.count === 1 ? qsTr(" message") : qsTr(" messages"))
         verticalAlignment: Text.AlignVCenter
         color: "gray"
         anchors {
@@ -71,7 +71,7 @@ MenuColumn {
             defaultImage: "../../images/common/button_delete_all.svg"
             pressedImage: "../../images/common/button_delete_all_press.svg"
             shadowImage: "../../images/common/shadow_button_delete_all.svg"
-            visible: model.count !== 0
+            visible: theModel.count !== 0
             text: qsTr("remove all")
             font.capitalization: Font.AllUppercase
             font.pixelSize: 12
