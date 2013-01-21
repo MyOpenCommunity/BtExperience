@@ -61,7 +61,7 @@ BasePage {
         var z = ""
         // computes zone description
         if (type === AntintrusionAlarm.Technical)
-            z = qsTr("aux") + " " + number
+            z = zone.name
         else if (number >= 1 && number <= 8 && zone !== null)
             z = qsTr("zone") + " " + zone.name
         else

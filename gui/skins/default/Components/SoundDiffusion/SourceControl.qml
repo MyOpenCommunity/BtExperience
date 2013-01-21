@@ -76,7 +76,6 @@ MenuColumn {
         Column {
             id: radioColumn
             property variant objModel: undefined
-            property int maxStations: 15
 
             ControlFMRadio {
                 radioName: "radio - " + objModel.source.rdsText
@@ -91,12 +90,12 @@ MenuColumn {
             }
 
             Image {
-                source: radioColumn.maxStations === 5 ? imagesPath + "sound_diffusion/bg_5stazioni_radio.svg" :
-                                                        imagesPath + "sound_diffusion/bg_15stazioni_radio.svg"
+                source: objModel.source.savedStationsCount === 5 ? imagesPath + "sound_diffusion/bg_5stazioni_radio.svg" :
+                                                                   imagesPath + "sound_diffusion/bg_15stazioni_radio.svg"
                 Grid {
                     id: grid
                     columns: 5
-                    rows: radioColumn.maxStations / columns
+                    rows: objModel.source.savedStationsCount / columns
                     spacing: 3
                     anchors {
                         top: parent.top

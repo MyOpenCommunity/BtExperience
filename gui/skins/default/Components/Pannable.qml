@@ -156,6 +156,14 @@ Item {
         }
     }
 
+    Timer {
+        id: updateWidget
+        interval: 1
+        repeat: false
+        running: false
+        onTriggered: updateCursorRect()
+    }
+
     function setCursorContainerWidget(item, focus, widget) {
         if (!focus && focusedItem === item) {
             focusedItem = null
@@ -163,9 +171,9 @@ Item {
         } else if (focus) {
             focusedItem = item
             focusedWidget = widget
-
-            if (keyboardVisible)
-                updateCursorRect()
+            // When called in Component.onCompleted, anchors haven't been evaluated yet:
+            // perform the update a little later
+            updateWidget.running = keyboardVisible
         }
     }
 }

@@ -50,6 +50,8 @@ void TestVideoDoorEntry::init()
 	cctv = new CCTV(l, new VideoDoorEntryDevice("11", "0"));
 
 	intercom = new Intercom(l, new VideoDoorEntryDevice("11", "0"));
+
+	qRegisterMetaType<QProcess::ExitStatus>("QProcess::ExitStatus");
 }
 
 void TestVideoDoorEntry::cleanup()
@@ -514,7 +516,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	compareClientCommandThatWorks();
 
 	// talker answers
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	cctv->valueReceived(v);
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
@@ -568,7 +570,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTalker()
 	compareClientCommandThatWorks();
 
 	// talker answers
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	cctv->valueReceived(v);
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
@@ -660,6 +662,30 @@ void TestVideoDoorEntry::testCCTVRingtone()
 	QCOMPARE(cctv->getRingtone(), CCTV::ExternalPlace3);
 }
 
+void TestVideoDoorEntry::testCCTVAudioOnly()
+{
+	DeviceValues v;
+	ObjectTester t(cctv, SIGNAL(incomingCall()));
+
+	// sets internal state on devices
+	dev->is_calling = true;
+	dev->kind = 6;
+	dev->mmtype = 2;
+	cctv->dev->is_calling = true;
+	cctv->dev->kind = 6;
+	cctv->dev->mmtype = 2;
+
+	// call arrives
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::ONLY_AUDIO;
+	cctv->valueReceived(v);
+	v.clear();
+	QCOMPARE(true, cctv->callInProgress());
+	QCOMPARE(false, cctv->callActive());
+	QCOMPARE(false, cctv->exitingCall());
+
+	t.checkSignals();
+}
+
 void TestVideoDoorEntry::testCCTVTeleloop()
 {
 	DeviceValues v;
@@ -675,7 +701,7 @@ void TestVideoDoorEntry::testCCTVTeleloop()
 	cctv->dev->mmtype = 2;
 
 	// call arrives
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	cctv->valueReceived(v);
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
@@ -727,7 +753,7 @@ void TestVideoDoorEntry::testAutoOpen()
 	DeviceValues v;
 
 	// arrives a call
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	v[VideoDoorEntryDevice::CALLER_ADDRESS] = QString("21");
 	cctv->valueReceived(v);
 	v.clear();
@@ -754,7 +780,7 @@ void TestVideoDoorEntry::testHandsFree()
 					<< SIGNAL(callEnded()));
 
 	// arrives a call
-	v[VideoDoorEntryDevice::VCT_CALL] = QString("21");
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
 	cctv->valueReceived(v);
 	v.clear();
 	QCOMPARE(true, cctv->callInProgress());
@@ -787,6 +813,68 @@ void TestVideoDoorEntry::testHandsFree()
 	t2.checkSignalCount(SIGNAL(incomingCall()), 1);
 	t2.checkSignalCount(SIGNAL(callAnswered()), 1);
 	t2.checkSignalCount(SIGNAL(callEnded()), 1);
+}
+
+void TestVideoDoorEntry::testCCTVRearmSession()
+{
+	DeviceValues v;
+	ObjectTester tstart(&cctv->video_grabber, SIGNAL(started()));
+	ObjectTester tstop(&cctv->video_grabber, SIGNAL(finished(int,QProcess::ExitStatus)));
+
+	// arrives a call
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
+	cctv->valueReceived(v);
+	v.clear();
+
+	QVERIFY(tstart.waitForSignal(GRABBER_START_TIME));
+	QVERIFY(cctv->video_grabber.state() != QProcess::NotRunning);
+
+	// call redirected to a different PI
+	v[VideoDoorEntryDevice::STOP_VIDEO] = true;
+	cctv->valueReceived(v);
+	v.clear();
+
+	QVERIFY(tstop.waitForSignal(GRABBER_START_TIME));
+	QVERIFY(cctv->video_grabber.state() == QProcess::NotRunning);
+
+	// receiving rearm session frame
+	v[VideoDoorEntryDevice::VCT_TYPE] = VideoDoorEntryDevice::AUDIO_VIDEO;
+	cctv->valueReceived(v);
+	v.clear();
+
+	QVERIFY(tstart.waitForSignal(GRABBER_START_TIME));
+	QVERIFY(cctv->video_grabber.state() != QProcess::NotRunning);
+}
+
+void TestVideoDoorEntry::testCCTVRearmSessionAudioOnly()
+{
+	DeviceValues v;
+	ObjectTester tstart(&cctv->video_grabber, SIGNAL(started()));
+	ObjectTester tstop(&cctv->video_grabber, SIGNAL(finished(int,QProcess::ExitStatus)));
+
+	// arrives a call
+	v[VideoDoorEntryDevice::VCT_CALL] = VideoDoorEntryDevice::AUDIO_VIDEO;
+	cctv->valueReceived(v);
+	v.clear();
+
+	QVERIFY(tstart.waitForSignal(GRABBER_START_TIME));
+	QVERIFY(cctv->video_grabber.state() != QProcess::NotRunning);
+
+	// call redirected to a different PI
+	v[VideoDoorEntryDevice::STOP_VIDEO] = true;
+	cctv->valueReceived(v);
+	v.clear();
+
+	QVERIFY(tstop.waitForSignal(GRABBER_START_TIME));
+	QVERIFY(cctv->video_grabber.state() == QProcess::NotRunning);
+
+	// receiving rearm session frame
+	v[VideoDoorEntryDevice::VCT_TYPE] = VideoDoorEntryDevice::ONLY_AUDIO;
+	cctv->valueReceived(v);
+	v.clear();
+
+	QVERIFY(!tstart.waitForSignal(GRABBER_START_TIME));
+	QVERIFY(cctv->video_grabber.state() == QProcess::NotRunning);
 }
 
 void TestVideoDoorEntry::testCCTVTeleloopAssociate()

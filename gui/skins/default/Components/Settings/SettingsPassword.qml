@@ -19,11 +19,31 @@ MenuColumn {
 
             delegate: MenuItemDelegate {
                 name: model.name
-                onClicked: global.passwordEnabled = value
+                onClicked: {
+                    if (global.passwordEnabled)
+                        pageObject.installPopup(passwordInput, {newValue: value})
+                    else
+                        global.passwordEnabled = value
+                }
             }
 
             model: modelList
             onCurrentPageChanged: column.closeColumn()
+        }
+    }
+
+    Component {
+        id: passwordInput
+        PasswordInput {
+            property bool newValue
+            onPasswordConfirmed: {
+                if (global.password === password)
+                    global.passwordEnabled = newValue
+                else
+                    // reset view state
+                    paginator.currentIndex = global.passwordEnabled
+                pageObject.closePopup()
+            }
         }
     }
 

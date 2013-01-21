@@ -183,6 +183,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	brightness = 50;
 	contrast = 50;
 	color = 50;
+	video_enabled = false;
 	call_stopped = false;
 	prof_studio = false;
 	hands_free = false;
@@ -475,6 +476,10 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			// fell here from the case before it is a normal call
 			qDebug() << "Received VCT_(AUTO)_CALL";
 			// TODO: many many other things...but this should be enough for now.
+			if (isIpCall())
+				video_enabled = false;
+			else
+				video_enabled = (it.value().toInt() == VideoDoorEntryDevice::AUDIO_VIDEO);
 			if (call_stopped && it.key() == VideoDoorEntryDevice::VCT_CALL)
 				resumeVideo();
 			else
@@ -482,6 +487,8 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			activateCall();
 			if (values_list.contains(VideoDoorEntryDevice::CALLER_ADDRESS))
 				callerAddress(values_list[VideoDoorEntryDevice::CALLER_ADDRESS].toString());
+			if (!video_enabled)
+				emit incomingCall();
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received END_OF_CALL";
@@ -497,6 +504,26 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			call_stopped = true;
 			stopVideo();
 			break;
+		case VideoDoorEntryDevice::VCT_TYPE:
+		{
+			video_enabled = (it.value().toInt() == VideoDoorEntryDevice::AUDIO_VIDEO);
+			if (isIpCall())
+			{
+				video_enabled = false; // Ip calls has always the video disabled.
+
+				// If we have already answered, we need to resend the answer.
+				if (callActive())
+					dev->answerCall();
+			}
+
+			// Switch from a camera with video to a camera without video and vice-versa
+			if (video_enabled)
+				resumeVideo();
+			else
+				stopVideo();
+
+			break;
+		}
 		case VideoDoorEntryDevice::TELE_SESSION:
 			qDebug() << "Received TELE_SESSION";
 			if (!callInProgress() || call_active) // ignore
@@ -555,7 +582,7 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 void CCTV::startVideo()
 {
 	qDebug() << "CCTV::startVideo";
-	if (video_grabber.state() == QProcess::NotRunning)
+	if (video_enabled && video_grabber.state() == QProcess::NotRunning)
 	{
 		qDebug() << "Starting grabber" << (video_grabber_path);
 		video_grabber.start(video_grabber_path);

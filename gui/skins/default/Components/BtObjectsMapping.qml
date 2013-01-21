@@ -39,6 +39,7 @@ QtObject {
         case ObjectInterface.IdAutomation3UpDownSafe:
             return Qt.createComponent("Automation/Automation3UpDownSafe.qml")
         case ObjectInterface.IdAutomationVDE:
+            return Qt.createComponent("Automation/AutomationVDE.qml")
         case ObjectInterface.IdAutomationDoor:
             return Qt.createComponent("Automation/Automation1.qml")
         //case ObjectInterface.IdAutomationCommand2: //!< Automation AMB, GEN, GR

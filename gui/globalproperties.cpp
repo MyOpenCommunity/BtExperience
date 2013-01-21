@@ -246,6 +246,11 @@ QString GlobalProperties::getHomePageUrl() const
 	return home_page_url;
 }
 
+QString GlobalProperties::getMultimediaSourceAddress() const
+{
+	return (*bt_global::config)[SOURCE_ADDRESS];
+}
+
 void GlobalProperties::setHomePageUrl(QString new_value)
 {
 	if (home_page_url == new_value)

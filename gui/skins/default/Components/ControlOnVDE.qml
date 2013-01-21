@@ -7,8 +7,7 @@ Item {
 
     property int status: -1
 
-    signal pressed(int newStatus)
-    signal released
+    signal clicked(bool newStatus)
 
     width: bg.width
     height: bg.height
@@ -20,11 +19,6 @@ Item {
 
     Row {
         anchors.centerIn: parent // in this way we need no margins
-        Timer {
-            id: delaytimer
-            interval: 1000; running: false; repeat: false;
-            onTriggered: control.pressed(0)
-        }
         ButtonThreeStatesIcon {
             defaultImage: "../images/common/btn_apriporta_ok_on.svg"
             pressedImage: "../images/common/btn_apriporta_ok_on_P.svg"
@@ -33,8 +27,7 @@ Item {
             pressedIcon: "../images/common/ico_apriporta_P.svg"
             selectedIcon: "../images/common/ico_apriporta.svg"
             shadowImage: "../images/common/ombra_btn_apriporta_ok_on.svg"
-            onPressed: control.pressed(1)
-            onReleased: {delaytimer.start()}//;console.log("### Automation1: START TIMER!");}
+            onClicked: control.clicked(true)
             //status: 1
         }
     }

@@ -41,14 +41,18 @@
 void setupOpenGL(QDeclarativeView *v)
 {
 	QGLFormat f = QGLFormat::defaultFormat();
-	f.setSampleBuffers(true);
-	f.setSamples(4);
+	f.setSampleBuffers(false);
 
 	QGLWidget *w = new QGLWidget(f);
 	v->setViewport(w);
 	v->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	v->setRenderHint(QPainter::TextAntialiasing, true);
 	v->setRenderHint(QPainter::SmoothPixmapTransform, true);
+
+	v->setAttribute(Qt::WA_OpaquePaintEvent);
+	v->setAttribute(Qt::WA_NoSystemBackground);
+	v->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
+	v->viewport()->setAttribute(Qt::WA_NoSystemBackground);
 }
 #endif
 

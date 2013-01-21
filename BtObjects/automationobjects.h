@@ -64,6 +64,9 @@ public:
 
 private:
 	VideoDoorEntryDevice *dev;
+	
+protected slots:
+	void deactivate();
 };
 
 
@@ -100,11 +103,11 @@ class AutomationGroup2 : public ObjectInterface
 	Q_OBJECT
 
 public:
-	AutomationGroup2(QString name, QList<AutomationCommand2 *> d);
+	AutomationGroup2(QString name, QList<AutomationLight *> d);
 
 	virtual int getObjectId() const
 	{
-		return ObjectInterface::IdAutomation2;
+		return ObjectInterface::IdAutomationGroup2;
 	}
 
 	/*!
@@ -113,7 +116,7 @@ public:
 	Q_INVOKABLE void setActive(bool status);
 
 private:
-	QList<AutomationCommand2 *> objects;
+	QList<AutomationLight *> objects;
 };
 
 

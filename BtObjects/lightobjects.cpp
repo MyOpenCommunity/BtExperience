@@ -367,6 +367,7 @@ Dimmer::Dimmer(QString name, QString key, FixedTimingType ftime, DimmerDevice *d
 	: Light(name, key, QTime(), ftime, false, d)
 {
 	dev = d;
+	broken = false;
 	percentage = 0; // initial value
 }
 
@@ -374,12 +375,18 @@ Dimmer::Dimmer(QString name, QString key, QTime ctime, Light::FixedTimingType ft
 	: Light(name, key, ctime, ftime, ectime, d)
 {
 	dev = d;
+	broken = false;
 	percentage = 0; // initial value
 }
 
 int Dimmer::getObjectId() const
 {
 	return ObjectInterface::IdDimmerFixed;
+}
+
+bool Dimmer::isBroken() const
+{
+	return broken;
 }
 
 int Dimmer::getPercentage() const
@@ -397,6 +404,14 @@ void Dimmer::increaseLevel()
 	dev->increaseLevel();
 }
 
+void Dimmer::setBroken(bool _broken)
+{
+	if (broken == _broken)
+		return;
+	broken = _broken;
+	emit brokenChanged();
+}
+
 void Dimmer::valueReceived(const DeviceValues &values_list)
 {
 	Light::valueReceived(values_list);
@@ -412,6 +427,11 @@ void Dimmer::valueReceived(const DeviceValues &values_list)
 				emit percentageChanged();
 			}
 		}
+		else if (it.key() == LightingDevice::DIM_DIMMER_PROBLEM)
+			setBroken(true);
+		else if (it.key() == LightingDevice::DIM_DEVICE_ON)
+			// this also covers DIM_DIMMER/DIMMER100_LEVEL
+			setBroken(false);
 		++it;
 	}
 }
@@ -564,6 +584,11 @@ void Dimmer100::valueReceived(const DeviceValues &values_list)
 				emit percentageChanged();
 			}
 		}
+		else if (it.key() == LightingDevice::DIM_DIMMER_PROBLEM)
+			setBroken(true);
+		else if (it.key() == LightingDevice::DIM_DEVICE_ON)
+			// this also covers DIM_DIMMER/DIMMER100_LEVEL
+			setBroken(false);
 		++it;
 	}
 }

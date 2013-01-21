@@ -22,7 +22,8 @@ SvgImage {
         id: label
 
         color: "black"
-        font.pixelSize: 12
+        font.bold: true
+        font.pixelSize: 14
         font.capitalization: Font.AllUppercase
         anchors {
             left: parent.left

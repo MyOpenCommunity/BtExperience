@@ -1,5 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
+import Components.Text 1.0
+import BtObjects 1.0
 
 import "js/Stack.js" as Stack
 
@@ -124,7 +126,6 @@ Page {
                         defaultImage: "images/common/ico_pause.svg"
                         pressedImage: "images/common/ico_pause_P.svg"
                     }
-                    PropertyChanges { target: forceScreenOn; enabled: true }
                 }
             ]
         }
@@ -161,6 +162,60 @@ Page {
             }
 
             onClicked: Stack.backToPage("Devices.qml")
+        }
+
+        Row {
+            id: photoTimeControl
+            anchors {
+                left: folderButton.right
+                leftMargin: fullScreenBg.width / 100 * 10
+                top: folderButton.top
+            }
+            spacing: fullScreenBg.width / 100 * 1
+
+            function updateInterval(delta) {
+                var interval = slideshowTimer.interval
+                if (interval + delta < 8000 || interval + delta > 50000)
+                    return
+                slideshowTimer.interval += delta
+            }
+
+            ButtonImageThreeStates {
+                id: buttonMinus
+
+                defaultImageBg: "images/common/btn_45x35.svg"
+                pressedImageBg: "images/common/btn_45x35_P.svg"
+                shadowImage: "images/common/btn_shadow_45x35.svg"
+                defaultImage: "images/common/ico_meno.svg"
+                pressedImage: "images/common/ico_meno_P.svg"
+                repetitionOnHold: true
+                // avoid hiding the bottom bar when we hold the button
+                onPressed: hidingTimer.stop()
+                onReleased: hidingTimer.restart()
+                onClicked: photoTimeControl.updateInterval(-1000)
+            }
+
+            ButtonImageThreeStates {
+                id: buttonPlus
+
+                defaultImageBg: "images/common/btn_45x35.svg"
+                pressedImageBg: "images/common/btn_45x35_P.svg"
+                shadowImage: "images/common/btn_shadow_45x35.svg"
+                defaultImage: "images/common/ico_piu.svg"
+                pressedImage: "images/common/ico_piu_P.svg"
+                repetitionOnHold: true
+                onPressed: hidingTimer.stop()
+                onReleased: hidingTimer.restart()
+                onClicked: photoTimeControl.updateInterval(1000)
+            }
+
+            UbuntuLightText {
+                id: photoTime
+                anchors.verticalCenter: parent.verticalCenter
+                text: qsTr("%1 seconds").arg(slideshowTimer.interval / 1000)
+                font.pixelSize: bottomBarBg.height / 100 * 28
+                color: "#5A5A5A"
+            }
         }
 
         ButtonImageThreeStates {
@@ -201,8 +256,12 @@ Page {
         }
     }
 
-    ScreenStateHandler {
-        id: forceScreenOn
+    Connections {
+        target: global.screenState
+        onStateChangedInt: {
+            if (new_state === ScreenState.ScreenOff || new_state === ScreenState.Screensaver)
+                playButtonItem.state = ""
+        }
     }
 
     Component.onCompleted: player.upnp ?

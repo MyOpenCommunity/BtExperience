@@ -4,7 +4,7 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    ControlOnOff {
-        onPressed: column.dataModel.setActive(newStatus)
+    ControlOpenCloseStopGroup {
+        onPressed: column.dataModel.setStatus(newStatus)
     }
 }

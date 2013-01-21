@@ -570,6 +570,7 @@ void BtObjectsPlugin::createObjects()
 		case MediaLink::RssMeteo:
 		case MediaLink::Web:
 		case MediaLink::Webcam:
+		case MediaLink::Browser:
 			parseMediaLinks(xml_obj);
 			break;
 		}
@@ -741,6 +742,7 @@ QDomDocument BtObjectsPlugin::findDocumentForId(int id) const
 	case Container::IdMultimediaWebCam:
 	case Container::IdMultimediaDevice:
 	case Container::IdMultimediaWebLink:
+	case Container::IdMultimediaBrowser:
 	case Container::IdHomepage:
 		return configurations->getConfiguration(LAYOUT_FILE);
 	case ObjectInterface::IdEnergyRate:
@@ -1105,6 +1107,7 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdMultimediaWebCam:
 		case Container::IdMultimediaDevice:
 		case Container::IdMultimediaWebLink:
+		case Container::IdMultimediaBrowser:
 			parseMediaContainers(container);
 			break;
 		}
@@ -1153,7 +1156,8 @@ void BtObjectsPlugin::parseMediaLinks(const QDomNode &xml_obj)
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
 		// container and position are filled in when parsing containers
-		MediaLink *l = new MediaLink(-1, static_cast<MediaLink::MediaType>(id), v.value("descr"), v.value("url"), QPoint());
+		QString url = (id == MediaLink::Browser) ? v.value("homepage_url") : v.value("url");
+		MediaLink *l = new MediaLink(-1, static_cast<MediaLink::MediaType>(id), v.value("descr"), url, QPoint());
 
 		media_link_model << l;
 		uii_map.insert(uii, l);

@@ -73,6 +73,7 @@ private slots:
 	void testTurnOnWithFTimeDisabled();
 
 	virtual void testReceiveLevel();
+	void testBroken();
 
 private:
 	Dimmer *obj;

@@ -22,25 +22,26 @@ Page {
 
     text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
     source: {
-        if (page.profile === undefined)
+        if (page.profile === undefined || profile.image === "")
             return global.guiSettings.homeBgImage
-        else
+        else {
             return profile.image
+        }
     }
 
     onCurrentLinkChanged: {
         if (page.currentLink < 0) {
-            linkText.text = qsTr("Click to enter link...")
-            nameText.text = qsTr("Click to enter name...")
+            linkText.realText = ""
+            nameText.realText = ""
         }
         else {
             var current = page.actualModel.getObject(page.currentLink)
 
             if (current.address)
-                linkText.text = current.address
+                linkText.realText = current.address
 
             if (current.name)
-                nameText.text = current.name
+                nameText.realText = current.name
         }
     }
 
@@ -175,7 +176,11 @@ Page {
 
         UbuntuLightText {
             id: linkText
-            text: qsTr("Click to enter link...")
+
+            property string realText: ""
+            onRealTextChanged: console.log("linkText.realText: " + realText)
+
+            text: realText || privateProps.emptyAddressString
             font.pixelSize: 14
             color: "#5A5A5A"
             elide: Text.ElideMiddle
@@ -204,7 +209,11 @@ Page {
 
         UbuntuLightText {
             id: nameText
-            text: qsTr("Click to enter name...")
+
+            property string realText: ""
+            onRealTextChanged: console.log("nameText.realText: " + realText)
+
+            text: realText || privateProps.emptyNameString
             font.pixelSize: 14
             color: "#5A5A5A"
             elide: Text.ElideMiddle
@@ -237,7 +246,9 @@ Page {
             topMargin: bg.height / 100 * 2.29
         }
         onClicked: {
-            myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.text, linkText.text)
+            if (nameText.realText === "" || linkText.realText === "")
+                return
+            myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.realText, linkText.realText)
             page.currentLink = 0 // selects first quicklink (the one just created)
         }
     }
@@ -439,7 +450,7 @@ Page {
         id: popupEditLink
         EditNote {
             title: qsTr("Insert address")
-            onOkClicked: linkText.text = text
+            onOkClicked: linkText.realText = text
         }
     }
 
@@ -447,7 +458,7 @@ Page {
         id: popupEditName
         EditNote {
             title: qsTr("Insert description")
-            onOkClicked: nameText.text = text
+            onOkClicked: nameText.realText = text
         }
     }
 
@@ -526,6 +537,10 @@ Page {
         property bool scenarioStatus: false
         property bool webRadioStatus: false
 
+        // Consider these properties constant
+        property string emptyAddressString: qsTr("Click to enter link...")
+        property string emptyNameString: qsTr("Click to enter name...")
+
         function getKinds() {
             return 7
         }
@@ -595,8 +610,8 @@ Page {
             if (kind === 6)
                 privateProps.webRadioStatus = true
 
-            linkText.text = qsTr("Click to enter link...")
-            nameText.text = qsTr("Click to enter name...")
+            linkText.realText = ""
+            nameText.realText = ""
 
             paginator.currentPage = 1
         }

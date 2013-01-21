@@ -46,6 +46,11 @@ class GlobalProperties : public GlobalPropertiesCommon
 	// default external place
 	Q_PROPERTY(QObject *defaultExternalPlace READ getDefaultExternalPlace CONSTANT)
 
+	/*!
+		\brief Multimedia source address of this touch screen.
+	*/
+	Q_PROPERTY(QString multimediaSourceAddress READ getMultimediaSourceAddress CONSTANT)
+
 	// current password and whether password is enabled or not
 	Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged)
 	Q_PROPERTY(bool passwordEnabled READ isPasswordEnabled WRITE setPasswordEnabled NOTIFY passwordEnabledChanged)
@@ -94,6 +99,7 @@ public:
 	QVariantList getCardStockImagesFolder() const;
 	QVariantList getBackgroundStockImagesFolder() const;
 	QString getHomePageUrl() const;
+	QString getMultimediaSourceAddress() const;
 	void setHomePageUrl(QString new_value);
 	bool getKeepingHistory() const;
 	void setKeepingHistory(bool new_value);
