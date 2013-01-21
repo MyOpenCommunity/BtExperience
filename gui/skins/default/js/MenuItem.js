@@ -54,7 +54,8 @@ function description(itemObject) {
         }
 
         // no special state, show setpoint (if in manual) and local offset
-        if (probeStatus === ThermalControlledProbe.Manual) {
+        if (probeStatus === ThermalControlledProbe.Manual ||
+            probeStatus === ThermalControlledProbe.Auto) {
             descr += (itemObject.setpoint / 10).toFixed(1) + qsTr("°C")
         }
         if (!_isProbeOffsetZero(itemObject))
