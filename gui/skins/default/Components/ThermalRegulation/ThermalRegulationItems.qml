@@ -7,8 +7,21 @@ import "../../js/array.js" as Script
 MenuColumn {
     id: column
 
+    Component { id: thermalRegulator; ThermalRegulator {} }
+    Component { id: airConditioning; AirConditioning {} }
+    Component { id: notControlledProbes; NotControlledProbes {} }
+    Component { id: externalProbes; ExternalProbes {} }
+
     onChildDestroyed: {
         paginator.currentIndex = -1
+    }
+
+    ObjectModel {
+        id: modelCU
+        filters: [
+            {objectId: ObjectInterface.IdThermalControlUnit99},
+            {objectId: ObjectInterface.IdThermalControlUnit4}
+        ]
     }
 
     PaginatorList {
@@ -69,33 +82,5 @@ MenuColumn {
             count = modelCU.count + 3
             calculatePagedModel()
         }
-    }
-
-    ObjectModel {
-        id: modelCU
-        filters: [
-            {objectId: ObjectInterface.IdThermalControlUnit99},
-            {objectId: ObjectInterface.IdThermalControlUnit4}
-        ]
-    }
-
-    Component {
-        id: thermalRegulator
-        ThermalRegulator {}
-    }
-
-    Component {
-        id: airConditioning
-        AirConditioning {}
-    }
-
-    Component {
-        id: notControlledProbes
-        NotControlledProbes {}
-    }
-
-    Component {
-        id: externalProbes
-        ExternalProbes {}
     }
 }
