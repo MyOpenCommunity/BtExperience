@@ -58,6 +58,7 @@ Item {
 
         MouseArea { // prevent mouse events
             anchors.fill: parent
+            onClicked: privateProps.hidePopup()
         }
 
         Behavior on opacity {
@@ -78,6 +79,12 @@ Item {
             anchors.centerIn: parent
             property date referredDate
             source: "../../images/energy/bg_pop-up-date.svg"
+
+            MouseArea {
+                anchors.fill: parent
+            }
+
+            EnergyFunctions { id: energyFunctions }
 
             UbuntuLightText {
                 id: text
@@ -111,6 +118,7 @@ Item {
                         if (referredDate.getDate() > 1)
                             referredDate = DateTime.previousDay(referredDate)
                     }
+                    enabled: energyFunctions.isEnergyDayValid(DateTime.previousDay(referredDate))
                 }
 
                 SvgImage {
@@ -138,6 +146,7 @@ Item {
                         if (referredDate.getDate() < DateTime.daysInMonth(referredDate.getMonth(), referredDate.getFullYear()))
                             referredDate = DateTime.nextDay(referredDate)
                     }
+                    enabled: energyFunctions.isEnergyDayValid(DateTime.nextDay(referredDate))
                 }
             }
 
