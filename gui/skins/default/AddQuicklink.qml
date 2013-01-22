@@ -16,10 +16,8 @@ Page {
     property bool onlyQuicklinks: false
 
     // the following properties are used by delegates
-    property variant actualModel: privateProps.currentChoice === 0 ?
-                                      camerasModel :
-                                      privateProps.currentChoice === 5 ? scenariosModel : quicklinksModel
-    property bool isRemovable: privateProps.currentChoice !== 0 && privateProps.currentChoice !== 5
+    property variant actualModel: privateProps.getActualModel(privateProps.currentIndex, page.onlyQuicklinks)
+    property bool isRemovable: privateProps.isRemovable(privateProps.currentIndex, page.onlyQuicklinks)
 
     text: privateProps.getColumnText(page.profile, page.homeCustomization, page.onlyQuicklinks)
     source: privateProps.getBackgroundImage(page.profile)
@@ -40,7 +38,31 @@ Page {
         }
     }
 
-    SystemsModel { id: linksModel; systemId: privateProps.getContainerUii(privateProps.currentChoice, privateProps.dummy); source: myHomeModels.mediaContainers }
+    ListModel { id: choices }
+
+    Component.onCompleted: {
+        if (!onlyQuicklinks)
+            choices.append({ type: qsTr("camera"), selectText: qsTr("Select existing camera:"),
+                               addText: qsTr("Add new camera:"), containerUii: -1})
+        choices.append({ type: qsTr("web page"), selectText: qsTr("Select existing web page link:"),
+                           addText: qsTr("Add new web page link:"), containerUii: Container.IdMultimediaWebLink})
+        choices.append({ type: qsTr("web camera"), selectText: qsTr("Select existing web camera:"),
+                           addText: qsTr("Add new web camera:"), containerUii: Container.IdMultimediaWebCam})
+        choices.append({ type: qsTr("rss"), selectText: qsTr("Select existing rss link:"),
+                           addText: qsTr("Add new rss link:"), containerUii: Container.IdMultimediaRss})
+        choices.append({ type: qsTr("weather"), selectText: qsTr("Select existing weather forecast link:"),
+                           addText: qsTr("Add new weather forecast link:"), containerUii: Container.IdMultimediaRssMeteo})
+        if (!onlyQuicklinks)
+            choices.append({ type: qsTr("scenario"), selectText: qsTr("Select existing scenario:"),
+                               addText: qsTr("Add new scenario:"), containerUii: -1})
+        choices.append({ type: qsTr("web radio"), selectText: qsTr("Select existing web radio:"),
+                           addText: qsTr("Add new web radio:"), containerUii: Container.IdMultimediaWebRadio})
+
+        repeater.model = choices.count
+        privateProps.currentIndex = 0 // forces update of paginator model
+    }
+
+    SystemsModel { id: linksModel; systemId: choices.get(privateProps.currentIndex).containerUii; source: myHomeModels.mediaContainers }
 
     MediaModel {
         id: quicklinksModel
@@ -135,12 +157,21 @@ Page {
             topMargin: bg.height / 100 * 2.29
         }
         Repeater {
-            model: privateProps.getKinds()
+            id: repeater
+            model: 0
             delegate: ControlRadioHorizontal {
                 width: bg.width / 100 * 23.55
-                text: privateProps.getTypeText(index)
-                onClicked: privateProps.setStatus(index)
-                status: privateProps.getStatus(index, privateProps.dummy)
+                text: choices.get(index).type
+                onClicked: {
+                    if (privateProps.currentIndex === index)
+                        return
+                    privateProps.currentIndex = index
+                    page.currentLink = -1
+                    linkText.realText = ""
+                    nameText.realText = ""
+                    paginator.currentPage = 1
+                }
+                status:  privateProps.currentIndex === index
             }
         }
     }
@@ -148,7 +179,7 @@ Page {
     // upper-right panel
     UbuntuLightText {
         id: addTextText
-        text: privateProps.getAddText(privateProps.currentChoice)
+        text: choices.get(privateProps.currentIndex).addText
         font.pixelSize: 14
         color: "white"
         anchors {
@@ -243,7 +274,7 @@ Page {
         onClicked: {
             if (nameText.realText === "" || linkText.realText === "")
                 return
-            myHomeModels.createQuicklink(-1, privateProps.getTypeText(privateProps.currentChoice), nameText.realText, linkText.realText)
+            myHomeModels.createQuicklink(-1, choices.get(privateProps.currentIndex).type, nameText.realText, linkText.realText)
             page.currentLink = 0 // selects first quicklink (the one just created)
         }
     }
@@ -262,7 +293,7 @@ Page {
 
     UbuntuLightText {
         id: selectTextText
-        text: privateProps.getSelectText(privateProps.currentChoice)
+        text: choices.get(privateProps.currentIndex).selectText
         font.pixelSize: 14
         color: "white"
         anchors {
@@ -414,7 +445,7 @@ Page {
                 var btObject = current
                 var x = -1
                 var y = -1
-                var media = privateProps.getTypeText(privateProps.currentChoice)
+                var media = choices.get(privateProps.currentIndex).type
                 var uii = page.homeCustomization ? myHomeModels.homepageLinks.uii : page.profile.uii
 
                 myHomeModels.createQuicklink(uii, media, name, address, btObject, x, y, page.homeCustomization)
@@ -459,8 +490,18 @@ Page {
 
     states: [
         State {
+            name: "init"
+            when: privateProps.currentIndex === -1
+            PropertyChanges { target: addTextText; opacity: 0 }
+            PropertyChanges { target: linkBgImage; opacity: 0 }
+            PropertyChanges { target: nameBgImage; opacity: 0 }
+            PropertyChanges { target: addButton; opacity: 0 }
+            PropertyChanges { target: horizontalRightSeparator; opacity: 0 }
+            PropertyChanges { target: selectTextText; opacity: 0 }
+        },
+        State {
             name: "cameras"
-            when: privateProps.currentChoice === 0
+            when: privateProps.currentIndex === 0 && !page.onlyQuicklinks
             PropertyChanges { target: addTextText; opacity: 0 }
             PropertyChanges { target: linkBgImage; opacity: 0 }
             PropertyChanges { target: nameBgImage; opacity: 0 }
@@ -472,7 +513,7 @@ Page {
         },
         State {
             name: "scenarios"
-            when: privateProps.currentChoice === 5
+            when: privateProps.currentIndex === 5 && !page.onlyQuicklinks
             PropertyChanges { target: addTextText; opacity: 0 }
             PropertyChanges { target: linkBgImage; opacity: 0 }
             PropertyChanges { target: nameBgImage; opacity: 0 }
@@ -520,150 +561,11 @@ Page {
     QtObject {
         id: privateProps
 
-        property int currentChoice: 0
-
-        property bool dummy: false // this is only to trigger updates on all radios
-
-        property bool cameraStatus: true
-        property bool webPageStatus: false
-        property bool webCameraStatus: false
-        property bool rssStatus: false
-        property bool weatherStatus: false
-        property bool scenarioStatus: false
-        property bool webRadioStatus: false
+        property int currentIndex: -1
 
         // Consider these properties constant
         property string emptyAddressString: qsTr("Click to enter link...")
         property string emptyNameString: qsTr("Click to enter name...")
-
-        function getKinds() {
-            return 7
-        }
-
-        function getContainerUii(kind, dummy) {
-            // camera is not managed by media link model
-            if (kind === 1)
-                return Container.IdMultimediaWebLink
-            if (kind === 2)
-                return Container.IdMultimediaWebCam
-            if (kind === 3)
-                return Container.IdMultimediaRss
-            if (kind === 4)
-                return Container.IdMultimediaRssMeteo
-            // scenario is not managed by media link model
-            if (kind === 6)
-                return Container.IdMultimediaWebRadio
-            return -1
-        }
-
-        function getStatus(kind, dummy) {
-            if (kind === 0)
-                return privateProps.cameraStatus
-            if (kind === 1)
-                return privateProps.webPageStatus
-            if (kind === 2)
-                return privateProps.webCameraStatus
-            if (kind === 3)
-                return privateProps.rssStatus
-            if (kind === 4)
-                return privateProps.weatherStatus
-            if (kind === 5)
-                return privateProps.scenarioStatus
-            if (kind === 6)
-                return privateProps.webRadioStatus
-            return false
-        }
-
-        function setStatus(kind) {
-            if (privateProps.currentChoice === kind)
-                return
-
-            privateProps.dummy = !privateProps.dummy // triggers updates
-            privateProps.cameraStatus = false
-            privateProps.webPageStatus = false
-            privateProps.webCameraStatus = false
-            privateProps.rssStatus = false
-            privateProps.weatherStatus = false
-            privateProps.scenarioStatus = false
-            privateProps.webRadioStatus = false
-
-            privateProps.currentChoice = kind
-            page.currentLink = -1
-
-            if (kind === 0)
-                privateProps.cameraStatus = true
-            if (kind === 1)
-                privateProps.webPageStatus = true
-            if (kind === 2)
-                privateProps.webCameraStatus = true
-            if (kind === 3)
-                privateProps.rssStatus = true
-            if (kind === 4)
-                privateProps.weatherStatus = true
-            if (kind === 5)
-                privateProps.scenarioStatus = true
-            if (kind === 6)
-                privateProps.webRadioStatus = true
-
-            linkText.realText = ""
-            nameText.realText = ""
-
-            paginator.currentPage = 1
-        }
-
-        function getTypeText(kind) {
-            if (kind === 0)
-                return qsTr("camera")
-            if (kind === 1)
-                return qsTr("web page")
-            if (kind === 2)
-                return qsTr("web camera")
-            if (kind === 3)
-                return qsTr("rss")
-            if (kind === 4)
-                return qsTr("weather")
-            if (kind === 5)
-                return qsTr("scenario")
-            if (kind === 6)
-                return qsTr("web radio")
-            return " " // a space to avoid zero height text element
-        }
-
-        function getSelectText(dummy) {
-            if (privateProps.currentChoice === 0)
-                return qsTr("Select existing camera:")
-            if (privateProps.currentChoice === 1)
-                return qsTr("Select existing web page link:")
-            if (privateProps.currentChoice === 2)
-                return qsTr("Select existing web camera:")
-            if (privateProps.currentChoice === 3)
-                return qsTr("Select existing rss link:")
-            if (privateProps.currentChoice === 4)
-                return qsTr("Select existing weather forecast link:")
-            if (privateProps.currentChoice === 5)
-                return qsTr("Select existing scenario:")
-            if (privateProps.currentChoice === 6)
-                return qsTr("Select existing web radio:")
-            return " " // a space to avoid zero height text element
-        }
-
-        function getAddText(dummy) {
-            if (privateProps.currentChoice === 0)
-                return qsTr("Add new camera:")
-            if (privateProps.currentChoice === 1)
-                return qsTr("Add new web page link:")
-            if (privateProps.currentChoice === 2)
-                return qsTr("Add new web camera:")
-            if (privateProps.currentChoice === 3)
-                return qsTr("Add new rss link:")
-            if (privateProps.currentChoice === 4)
-                return qsTr("Add new weather forecast link:")
-            if (privateProps.currentChoice === 5)
-                return qsTr("Add new scenario:")
-            if (privateProps.currentChoice === 6)
-                return qsTr("Add new web radio:")
-            return " " // a space to avoid zero height text element
-        }
 
         function getColumnText(profile, homeCustomization, onlyQuicklinks) {
             if (homeCustomization)
@@ -679,6 +581,26 @@ Page {
             if (profile !== undefined)
                 return profile.image
             return global.guiSettings.homeBgImage
+        }
+
+        function getActualModel(index, onlyQuicklinks) {
+            if (onlyQuicklinks)
+                return quicklinksModel
+            if (index === 0)
+                return camerasModel
+            if (index === 5)
+                return scenariosModel
+            return quicklinksModel
+        }
+
+        function isRemovable(index, onlyQuicklinks) {
+            if (onlyQuicklinks)
+                return true
+            if (index === 0)
+                return false
+            if (index === 5)
+                return false
+            return true
         }
     }
 }
