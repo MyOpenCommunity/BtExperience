@@ -277,7 +277,7 @@ void BtObjectsPlugin::createObjects()
 	QDomNode cu99zones;
 	QList<QDomNode> multimedia;
 	bool is_multichannel = false;
-	bool hands_free = false, professional_studio = false, ring_exclusion = false;
+	bool hands_free = false, professional_studio = false, ring_exclusion = false, pager = false;
 	int video_brightness = 50, video_contrast = 50, video_color = 50, teleloop_id = 0;
 
 	foreach (const QDomNode &xml_obj, getChildren(settings.documentElement(), "obj"))
@@ -517,6 +517,9 @@ void BtObjectsPlugin::createObjects()
 		case ObjectInterface::IdSwitchboard:
 			obj_list = parseSwitchboard(xml_obj);
 			break;
+		case ObjectInterface::IdPager:
+			pager = true;
+			break;
 
 		case ObjectInterface::IdRadioSource:
 			obj_list = parseRadioSource(xml_obj);
@@ -638,7 +641,7 @@ void BtObjectsPlugin::createObjects()
 		cctv->setAssociatedTeleloopId(teleloop_id);
 
 		objmodel << cctv;
-		objmodel << createIntercom(intercom);
+		objmodel << createIntercom(intercom, pager);
 	}
 
 	objmodel << new HardwareSettings;

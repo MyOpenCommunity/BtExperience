@@ -49,7 +49,7 @@ void TestVideoDoorEntry::init()
 
 	cctv = new CCTV(l, new VideoDoorEntryDevice("11", "0"));
 
-	intercom = new Intercom(l, new VideoDoorEntryDevice("11", "0"));
+	intercom = new Intercom(l, new VideoDoorEntryDevice("11", "0"), false);
 
 	qRegisterMetaType<QProcess::ExitStatus>("QProcess::ExitStatus");
 }

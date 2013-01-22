@@ -591,6 +591,9 @@
 	<obj id="10054" cid="10054" descr="Switchboard" where="6" dev="3">
 		<ist uii="9022" descr="Switchboard 1" />
 	</obj>
+	<obj id="10059" cid="10059" descr="Pager" dev="4">
+		<ist uii="13" />
+	</obj>
 	<obj cid="17000" id="17000">
 		<ist uii="17000"/>
 	</obj>

@@ -57,7 +57,7 @@ ObjectInterface *createCCTV(QList<ObjectPair> places)
 	return new CCTV(list, d);
 }
 
-ObjectInterface *createIntercom(QList<ObjectPair> places)
+ObjectInterface *createIntercom(QList<ObjectPair> places, bool pager)
 {
 	VideoDoorEntryDevice *d = bt_global::add_device_to_cache(new VideoDoorEntryDevice((*bt_global::config)[PI_ADDRESS], (*bt_global::config)[PI_MODE]));
 	QList<ExternalPlace *> list;
@@ -69,7 +69,7 @@ ObjectInterface *createIntercom(QList<ObjectPair> places)
 		list.append(place);
 	}
 
-	return new Intercom(list, d);
+	return new Intercom(list, d, pager);
 }
 
 QList<ObjectPair> parseExternalPlace(const QDomNode &xml_node)
@@ -644,10 +644,11 @@ void CCTV::disactivateCall()
 }
 
 
-Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d) : VDEBase(l, d)
+Intercom::Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d, bool _pager) : VDEBase(l, d)
 {
 	// initial values
 	ringtone = Internal;
+	pager_configured = _pager;
 }
 
 void Intercom::answerCall()

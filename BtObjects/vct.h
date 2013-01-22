@@ -24,7 +24,7 @@ QList<ObjectPair> parseExternalIntercom(const QDomNode &xml_node);
 QList<ObjectPair> parseSwitchboard(const QDomNode &xml_node);
 
 ObjectInterface *createCCTV(QList<ObjectPair> places);
-ObjectInterface *createIntercom(QList<ObjectPair> places);
+ObjectInterface *createIntercom(QList<ObjectPair> places, bool pager);
 
 
 /*!
@@ -338,6 +338,11 @@ class Intercom : public VDEBase
 	*/
 	Q_PROPERTY(bool pagerCall READ isPagerCall NOTIFY pagerCallChanged)
 
+	/*!
+		\brief Is a pager configured?
+	*/
+	Q_PROPERTY(bool pagerConfigured READ isPagerConfigured CONSTANT)
+
 	Q_ENUMS(Ringtone)
 
 public:
@@ -348,7 +353,7 @@ public:
 		Floorcall
 	};
 
-	explicit Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
+	explicit Intercom(QList<ExternalPlace *> l, VideoDoorEntryDevice *d, bool pager);
 
 	virtual int getObjectId() const
 	{
@@ -370,6 +375,7 @@ public:
 	QString getTalker() const;
 	Ringtone getRingtone() const;
 	bool isPagerCall() const { return pager_call; }
+	bool isPagerConfigured() const { return pager_configured; }
 
 signals:
 	void incomingCall();
@@ -395,7 +401,7 @@ private:
 	void activateCall();
 	void disactivateCall();
 
-	bool pager_call;
+	bool pager_call, pager_configured;
 	Ringtone ringtone;
 	QString talker;
 };

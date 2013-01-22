@@ -148,6 +148,7 @@ public:
 		IdInternalIntercom = 10052,
 		IdExternalIntercom = 10053,
 		IdSwitchboard = 10054, // a.k.a. guard unit
+		IdPager = 10059,
 
 		IdRadioSource = 11032,
 		IdAuxSource = 11033,
