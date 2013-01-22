@@ -58,6 +58,7 @@ Item {
 
         MouseArea { // prevent mouse events
             anchors.fill: parent
+            onClicked: privateProps.hidePopup()
         }
 
         Behavior on opacity {
@@ -78,6 +79,10 @@ Item {
             anchors.centerIn: parent
             property date referredDate
             source: "../../images/energy/bg_pop-up-date.svg"
+
+            MouseArea {
+                anchors.fill: parent
+            }
 
             UbuntuLightText {
                 id: text
