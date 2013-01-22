@@ -68,7 +68,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
-                Stack.pushPage("AddQuicklink.qml")
+                Stack.pushPage("AddQuicklink.qml", { onlyQuicklinks: true })
             }
         }
 

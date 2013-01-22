@@ -13,6 +13,7 @@ Page {
     property variant profile: undefined
     property int currentLink: -1
     property bool homeCustomization: false
+    property bool onlyQuicklinks: false
 
     // the following properties are used by delegates
     property variant actualModel: privateProps.currentChoice === 0 ?
@@ -20,14 +21,8 @@ Page {
                                       privateProps.currentChoice === 5 ? scenariosModel : quicklinksModel
     property bool isRemovable: privateProps.currentChoice !== 0 && privateProps.currentChoice !== 5
 
-    text: page.profile === undefined ? (page.homeCustomization ? qsTr("Home") : qsTr("Profiles")) : profile.description
-    source: {
-        if (page.profile === undefined || profile.image === "")
-            return global.guiSettings.homeBgImage
-        else {
-            return profile.image
-        }
-    }
+    text: privateProps.getColumnText(page.profile, page.homeCustomization, page.onlyQuicklinks)
+    source: privateProps.getBackgroundImage(page.profile)
 
     onCurrentLinkChanged: {
         if (page.currentLink < 0) {
@@ -668,6 +663,22 @@ Page {
             if (privateProps.currentChoice === 6)
                 return qsTr("Add new web radio:")
             return " " // a space to avoid zero height text element
+        }
+
+        function getColumnText(profile, homeCustomization, onlyQuicklinks) {
+            if (homeCustomization)
+                return qsTr("Home")
+            if (onlyQuicklinks)
+                return qsTr("Multimedia")
+            if (profile === undefined)
+                return qsTr("Profiles")
+            return profile.description
+        }
+
+        function getBackgroundImage(profile, homeCustomization, onlyQuicklinks) {
+            if (profile !== undefined)
+                return profile.image
+            return global.guiSettings.homeBgImage
         }
     }
 }
