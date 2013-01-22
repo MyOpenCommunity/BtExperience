@@ -21,6 +21,17 @@ Page {
             Stack.goToPage(itemObject.target, itemObject.props)
     }
 
+    SystemsModel { id: webLinkSystemUii; systemId: Container.IdMultimediaWebLink; source: myHomeModels.mediaContainers }
+    ObjectModel { id: webLinkModel; source: myHomeModels.mediaLinks; containers: [webLinkSystemUii.systemUii] }
+    SystemsModel { id: rssSystemUii; systemId: Container.IdMultimediaRss; source: myHomeModels.mediaContainers }
+    ObjectModel { id: rssModel; source: myHomeModels.mediaLinks; containers: [rssSystemUii.systemUii] }
+    SystemsModel { id: webRadioSystemUii; systemId: Container.IdMultimediaWebRadio; source: myHomeModels.mediaContainers }
+    ObjectModel { id: webRadioModel; source: myHomeModels.mediaLinks; containers: [webRadioSystemUii.systemUii] }
+    SystemsModel { id: rssMeteoSystemUii; systemId: Container.IdMultimediaRssMeteo; source: myHomeModels.mediaContainers }
+    ObjectModel { id: rssMeteoModel; source: myHomeModels.mediaLinks; containers: [rssMeteoSystemUii.systemUii] }
+    SystemsModel { id: webcamSystemUii; systemId: Container.IdMultimediaWebCam; source: myHomeModels.mediaContainers }
+    ObjectModel { id: webcamModel; source: myHomeModels.mediaLinks; containers: [webcamSystemUii.systemUii] }
+
     Loader {
         id: viewLoader
         anchors {
@@ -82,15 +93,20 @@ Page {
     Component.onCompleted: {
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices_card.jpg", "props": {} })
         multimediaModel.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
-        multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
-                                   "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
-        multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/card/rss_card.jpg",
-                                   "props": {"containerId": Container.IdMultimediaRss, "type": "rss"}})
-        multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
-                                   "props": {"containerId": Container.IdMultimediaWebRadio, "type": "webradio"}})
-        multimediaModel.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/card/meteo_card.jpg",
-                                   "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
-        multimediaModel.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
-                                   "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
+        if (webLinkModel.count > 0)
+            multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
+                                       "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
+        if (rssModel.count > 0)
+            multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/card/rss_card.jpg",
+                                       "props": {"containerId": Container.IdMultimediaRss, "type": "rss"}})
+        if (webRadioModel.count > 0)
+            multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
+                                       "props": {"containerId": Container.IdMultimediaWebRadio, "type": "webradio"}})
+        if (rssMeteoModel.count > 0)
+            multimediaModel.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/card/meteo_card.jpg",
+                                       "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
+        if (webcamModel.count > 0)
+            multimediaModel.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
+                                       "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
     }
 }
