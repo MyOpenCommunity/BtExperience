@@ -27,7 +27,7 @@ MenuColumn {
 
     Component {
         id: renameDeleteItem
-        SettingsHomeDelete {}
+        SettingsHomeDelete { uii: column.dataModel.uii }
     }
 
     Column {
@@ -46,13 +46,13 @@ MenuColumn {
             currentIndex: -1
             onCurrentPageChanged: column.closeChild()
             delegate: MenuItemDelegate {
+                id: delegate
                 editable: true
                 itemObject: quicklinksModel.getObject(index)
-                name: itemObject.name
                 hasChild: true
                 onDelegateClicked: {
                     privateProps.currentIndex = -1
-                    column.loadColumn(renameDeleteItem, name, itemObject, {uii: column.dataModel.uii})
+                    column.loadColumn(renameDeleteItem, name, itemObject)
                 }
             }
             model: quicklinksModel
