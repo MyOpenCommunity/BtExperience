@@ -61,7 +61,7 @@ Page {
                 source: itemObject.cardImageCached
                 label: itemObject.description
 
-                onClicked: cardClicked(delegate)
+                onClicked: cardClicked(itemObject)
             }
 
             delegateSpacing: 40
