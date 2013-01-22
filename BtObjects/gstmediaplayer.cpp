@@ -60,6 +60,7 @@ GstMediaPlayer::GstMediaPlayer(QObject *parent) : QObject(parent)
 	gstreamer_proc = new QProcess();
 	paused = false;
 
+	connect(gstreamer_proc, SIGNAL(readyReadStandardOutput()), SIGNAL(outputAvailable()));
 	// connect(gstreamer_proc, SIGNAL(readyReadStandardError()), SLOT(readStandardError()));
 	connect(gstreamer_proc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(mplayerFinished(int, QProcess::ExitStatus)));
 	connect(gstreamer_proc, SIGNAL(error(QProcess::ProcessError)), SLOT(mplayerError(QProcess::ProcessError)));

@@ -77,6 +77,11 @@ signals:
 	 */
 	void playingInfoUpdated(const QMap<QString,QString> &info);
 
+	/*!
+		\brief Emitted when there is new player output to parse
+	*/
+	void outputAvailable();
+
 private slots:
 	void mplayerFinished(int exit_code, QProcess::ExitStatus exit_status);
 	void mplayerError(QProcess::ProcessError error);

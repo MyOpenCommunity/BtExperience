@@ -152,6 +152,7 @@ private slots:
 	void screenStateChangedManagement();
 	void sendDelayedFrames();
 	void manageUpnpPlayers();
+	void updateCpuFrequency();
 
 private:
 	void parseSettings();
@@ -172,6 +173,7 @@ private:
 	QString password, home_page_url;
 	bool password_enabled, keeping_history;
 	UpnpStatus upnp_status;
+	int cpu_frequency;
 
 	QHash<int, int> pathview_offsets;
 };
