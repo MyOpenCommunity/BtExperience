@@ -33,7 +33,6 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	is_video_track = false;
 	player_state = Stopped;
 	mediaplayer_output_mode = MediaPlayer::OutputAll;
-	seek_tick_count = 0;
 	volume = 100;
 	mute = false;
 
@@ -45,6 +44,7 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 
 	connect(player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
 		SLOT(playerInfoReceived(QMap<QString,QString>)));
+	connect(player, SIGNAL(outputAvailable()), this, SLOT(playerOutputAvailable()));
 
 	connect(gst_player, SIGNAL(gstPlayerStarted()), SLOT(mplayerStarted()));
 	connect(gst_player, SIGNAL(gstPlayerResumed()), SLOT(mplayerResumed()));
@@ -54,8 +54,10 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 
 	connect(gst_player, SIGNAL(playingInfoUpdated(QMap<QString,QString>)),
 		SLOT(gstPlayerInfoReceived(QMap<QString,QString>)));
+	connect(gst_player, SIGNAL(outputAvailable()), this, SLOT(playerOutputAvailable()));
 
 	info_poll_timer = new QTimer(this);
+	info_poll_timer->setSingleShot(true);
 	info_poll_timer->setInterval(INFO_POLL_INTERVAL);
 	connect(info_poll_timer, SIGNAL(timeout()), this, SLOT(readPlayerInfo()));
 
@@ -131,6 +133,13 @@ void MultiMediaPlayer::setVideoRect(QRect rect)
 	emit videoRectChanged(video_rect);
 }
 
+void MultiMediaPlayer::playerOutputAvailable()
+{
+	// calling readPlayerInfo() too often consumes too much CPU
+	if (!info_poll_timer->isActive())
+		info_poll_timer->start();
+}
+
 void MultiMediaPlayer::readPlayerInfo()
 {
 	if (is_video_track)
@@ -148,29 +157,11 @@ namespace
 
 void MultiMediaPlayer::playerInfoReceived(QMap<QString, QString> new_track_info)
 {
-	// if we're paused, and the timer is active, it means it was reactivated by seek(),
-	// so we can stop it now
-	if (player_state != Playing && info_poll_timer->isActive())
-	{
-		++seek_tick_count;
-		if (seek_tick_count > SEEK_TICK_TIMEOUT)
-			info_poll_timer->stop();
-	}
-
 	updateTrackInfo(new_track_info);
 }
 
 void MultiMediaPlayer::gstPlayerInfoReceived(QMap<QString, QString> new_track_info)
 {
-	// if we're paused, and the timer is active, it means it was reactivated by seek(),
-	// so we can stop it now
-	if (player_state != Playing && info_poll_timer->isActive())
-	{
-		++seek_tick_count;
-		if (seek_tick_count > SEEK_TICK_TIMEOUT)
-			info_poll_timer->stop();
-	}
-
 	updateTrackInfo(new_track_info);
 }
 
@@ -230,12 +221,6 @@ void MultiMediaPlayer::seek(int seconds)
 
 	// TODO does not handle the case pause() -> setSource() -> seek()
 	player->seek(seconds);
-	// restart poll timer so we get the new position
-	if (player_state != Playing)
-	{
-		seek_tick_count = 0;
-		info_poll_timer->start();
-	}
 }
 
 void MultiMediaPlayer::setCurrentSource(QString source)
@@ -350,19 +335,8 @@ void MultiMediaPlayer::setPlayerState(PlayerState new_state)
 
 // handle player signals
 
-void MultiMediaPlayer::playbackStarted()
-{
-	info_poll_timer->start();
-}
-
-void MultiMediaPlayer::playbackStopped()
-{
-	info_poll_timer->stop();
-}
-
 void MultiMediaPlayer::mplayerStarted()
 {
-	playbackStarted();
 	setPlayerState(Playing);
 }
 
@@ -373,7 +347,6 @@ void MultiMediaPlayer::mplayerStopped()
 	if ((player_state == Paused || player_state == AboutToPause) && !current_source.isEmpty())
 		return;
 
-	playbackStopped();
 	// for instructions order see comment in mplayerDone
 	setCurrentSource("");
 	setPlayerState(Stopped);
@@ -381,13 +354,11 @@ void MultiMediaPlayer::mplayerStopped()
 
 void MultiMediaPlayer::mplayerPaused()
 {
-	playbackStopped();
 	setPlayerState(Paused);
 }
 
 void MultiMediaPlayer::mplayerResumed()
 {
-	playbackStarted();
 	setPlayerState(Playing);
 }
 
@@ -402,7 +373,6 @@ void MultiMediaPlayer::mplayerDone()
 		return;
 	}
 
-	playbackStopped();
 	// beware: order is important!
 	// Since setCurrentSource() is empty, it will stop the player and emit a
 	// state change signal.

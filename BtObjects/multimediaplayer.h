@@ -187,14 +187,12 @@ signals:
 	void videoRectChanged(QRect rect);
 
 private slots:
+	void playerOutputAvailable();
 	void readPlayerInfo();
 	void playerInfoReceived(QMap<QString, QString> new_track_info);
 	void gstPlayerInfoReceived(QMap<QString, QString> new_track_info);
 	void updateTrackInfo(QVariantMap new_track_info);
 	void updateTrackInfo(QMap<QString, QString> new_track_info);
-
-	void playbackStarted();
-	void playbackStopped();
 
 	void mplayerStarted();
 	void mplayerStopped();
@@ -214,7 +212,6 @@ private:
 	QString current_source;
 	QVariantMap track_info;
 	PlayerState player_state;
-	int seek_tick_count;
 	int mediaplayer_output_mode;
 	int volume;
 	bool mute;

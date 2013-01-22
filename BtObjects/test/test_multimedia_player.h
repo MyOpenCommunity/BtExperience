@@ -43,6 +43,9 @@ private slots:
 	void testDone();
 
 private:
+	bool waitTrackInfo();
+	bool waitTrackInfo(ObjectTester *tester);
+
 	MultiMediaPlayer *player;
 	ObjectTester *state_changed, *output_changed, *track_info_changed, *source_changed;
 };
