@@ -16,12 +16,40 @@ MenuColumn {
         paginator.currentIndex = -1
     }
 
+    SystemsModel { id: systemsModel; systemId: Container.IdThermalRegulation }
+
     ObjectModel {
         id: modelCU
         filters: [
             {objectId: ObjectInterface.IdThermalControlUnit99},
             {objectId: ObjectInterface.IdThermalControlUnit4}
         ]
+        containers: [systemsModel.systemUii]
+    }
+
+    ObjectModel {
+        id: airConditioningModel
+        filters: [
+            {objectId: ObjectInterface.IdSplitBasicScenario},
+            {objectId: ObjectInterface.IdSplitAdvancedScenario}
+        ]
+        containers: [systemsModel.systemUii]
+    }
+
+    ObjectModel {
+        id: notCotrolledProbesModel
+        filters: [
+            {objectId: ObjectInterface.IdThermalNonControlledProbe}
+        ]
+        containers: [systemsModel.systemUii]
+    }
+
+    ObjectModel {
+        id: externalProbesModel
+        filters: [
+            {objectId: ObjectInterface.IdThermalExternalProbe}
+        ]
+        containers: [systemsModel.systemUii]
     }
 
     PaginatorList {
@@ -75,11 +103,21 @@ MenuColumn {
             for (var i = 0; i < modelCU.count; i++)
                 Script.container[i] = {"name": modelCU.getObject(i).name, "component": thermalRegulator, "object": modelCU.getObject(i), "type": "object"}
             // adds additional menus (not contained in the ObjectModel)
-            Script.container[modelCU.count] = {"name": qsTr("Air Conditioning"), "component": airConditioning, "type": "component"}
-            Script.container[modelCU.count + 1] = {"name": qsTr("Not Controlled Probes"), "component": notControlledProbes, "type": "component"}
-            Script.container[modelCU.count + 2] = {"name": qsTr("External Probes"), "component": externalProbes, "type": "component"}
+            var offset = 0
+            if (airConditioningModel.count > 0) {
+                Script.container[modelCU.count + offset] = {"name": qsTr("Air Conditioning"), "component": airConditioning, "type": "component"}
+                offset += 1
+            }
+            if (notCotrolledProbesModel.count > 0) {
+                Script.container[modelCU.count + offset] = {"name": qsTr("Not Controlled Probes"), "component": notControlledProbes, "type": "component"}
+                offset += 1
+            }
+            if (externalProbesModel.count > 0) {
+                Script.container[modelCU.count + offset] = {"name": qsTr("External Probes"), "component": externalProbes, "type": "component"}
+                offset += 1
+            }
             // count must be equal to total elements, not number of elements contained in the model (for pagination)
-            count = modelCU.count + 3
+            count = modelCU.count + offset
             calculatePagedModel()
         }
     }

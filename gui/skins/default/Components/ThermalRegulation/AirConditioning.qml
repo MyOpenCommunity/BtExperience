@@ -9,12 +9,14 @@ MenuColumn {
 
     BtObjectsMapping { id: mapping }
 
+    SystemsModel { id: thermalRegulation; systemId: Container.IdThermalRegulation }
     ObjectModel {
         id: objectModel
         filters: [
             {objectId: ObjectInterface.IdSplitBasicScenario},
             {objectId: ObjectInterface.IdSplitAdvancedScenario}
         ]
+        containers: [thermalRegulation.systemUii]
     }
 
     PaginatorList {

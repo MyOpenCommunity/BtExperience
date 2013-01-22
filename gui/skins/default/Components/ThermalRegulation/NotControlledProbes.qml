@@ -9,11 +9,13 @@ MenuColumn {
 
     BtObjectsMapping { id: mapping }
 
+    SystemsModel { id: thermalRegulation; systemId: Container.IdThermalRegulation }
     ObjectModel {
         id: modelList
         filters: [
             {objectId: ObjectInterface.IdThermalNonControlledProbe}
         ]
+        containers: [thermalRegulation.systemUii]
     }
 
     PaginatorList {
