@@ -23,6 +23,9 @@
 #define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
 
+#define CPU_FREQ_DEVICE   "/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed"
+#define CPU_CLOCK_IDLE    300000
+#define CPU_CLOCK_ACTIVE 1000000
 
 namespace
 {
@@ -153,6 +156,7 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	home_page_url = QString("http://www.google.com");
 	keeping_history = true;
 	upnp_status = UpnpInactive;
+	cpu_frequency = 0;
 
 	if (!(*bt_global::config)[DEFAULT_PE].isEmpty())
 		default_external_place = new ExternalPlace(QString(), ObjectInterface::IdExternalPlace,
@@ -169,6 +173,8 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 		this, SLOT(ringtoneChanged(int,int,QString)));
 	connect(audio_state, SIGNAL(volumeChanged(int,int)),
 		this, SLOT(volumeChanged(int,int)));
+	connect(audio_state, SIGNAL(stateChanged(AudioState::State,AudioState::State)),
+		this, SLOT(updateCpuFrequency()));
 	connect(screen_state, SIGNAL(stateChanged(ScreenState::State,ScreenState::State)),
 		this, SLOT(screenStateChangedManagement()));
 	connect(browser, SIGNAL(clicked()), screen_state, SLOT(simulateClick()));
@@ -232,6 +238,8 @@ void GlobalProperties::initAudio()
 
 			connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 				this, SLOT(manageUpnpPlayers()));
+			connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
+				this, SLOT(updateCpuFrequency()));
 		}
 	}
 }
@@ -641,6 +649,29 @@ void GlobalProperties::manageUpnpPlayers()
 		return;
 	upnp_status = new_status;
 	emit upnpStatusChanged();
+}
+
+void GlobalProperties::updateCpuFrequency()
+{
+	MultiMediaPlayer *player = sound_diffusion_player ? qobject_cast<MultiMediaPlayer *>(sound_diffusion_player->getMediaPlayer()) : 0;
+	int new_cpu_frequency;
+
+	if (audio_state->getState() == AudioState::Screensaver &&
+	    (!player || player->getAudioOutputState() == MultiMediaPlayer::AudioOutputStopped))
+		new_cpu_frequency = CPU_CLOCK_IDLE;
+	else
+		new_cpu_frequency = CPU_CLOCK_ACTIVE;
+
+	if (cpu_frequency == new_cpu_frequency)
+		return;
+	cpu_frequency = new_cpu_frequency;
+
+	QFile dev(CPU_FREQ_DEVICE);
+	QByteArray freq = QByteArray::number(new_cpu_frequency);
+
+	qDebug() << "Setting CPU frequency to" << freq;
+	if (!dev.open(QFile::WriteOnly) || dev.write(freq) != freq.size())
+		qWarning() << "Error setting CPU frequency to" << freq;
 }
 
 GlobalProperties::UpnpStatus GlobalProperties::getUpnpStatus() const
