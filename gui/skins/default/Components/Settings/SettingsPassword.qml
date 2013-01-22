@@ -19,12 +19,7 @@ MenuColumn {
 
             delegate: MenuItemDelegate {
                 name: model.name
-                onClicked: {
-                    if (global.passwordEnabled)
-                        pageObject.installPopup(passwordInput, {newValue: value})
-                    else
-                        global.passwordEnabled = value
-                }
+                onClicked: pageObject.installPopup(passwordInput, {newValue: value})
             }
 
             model: modelList
