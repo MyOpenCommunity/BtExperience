@@ -57,9 +57,9 @@ Page {
             x2FiveElements: 740
             x2ThreeElements: 640
             pathviewId: 1
-            model: multimediaModel
-            pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
-            arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
+            model: emptyModel
+            pathOffset: multimediaModel.count === 4 ? -40 : (multimediaModel.count === 6 ? -40 : 0)
+            arrowsMargin: multimediaModel.count === 4 ? 70 : (multimediaModel.count === 6 ? 30 : 10)
             onClicked: cardClicked(delegate)
         }
     }
@@ -78,7 +78,15 @@ Page {
             delegateSpacing: 40
             visibleElements: 2
 
-            model: multimediaModel
+            model: emptyModel
+        }
+    }
+
+    ListModel {
+        id: emptyModel
+
+        function getObject(index) {
+            return get(index)
         }
     }
 
@@ -91,6 +99,14 @@ Page {
     }
 
     Component.onCompleted: {
+        // it is not possible to load data to multimediaModel if it is binded to both
+        // pathView and listView, because strange things happen (for example, offset
+        // computation is wrong because pathView "thinks" to have only 4 elements)
+        // solution is to define an empty model and initially bind it to views
+        // then load data on true model and bind it to views only when all data
+        // is ready
+        // please note that this problem may actually happen only here because
+        // this is the only model with variable "length" during program execution
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices_card.jpg", "props": {} })
         multimediaModel.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
         if (webLinkModel.count > 0)
@@ -108,5 +124,7 @@ Page {
         if (webcamModel.count > 0)
             multimediaModel.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
                                        "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
+
+        viewLoader.item.model = multimediaModel
     }
 }
