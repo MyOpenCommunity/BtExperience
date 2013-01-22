@@ -84,6 +84,8 @@ Item {
                 anchors.fill: parent
             }
 
+            EnergyFunctions { id: energyFunctions }
+
             UbuntuLightText {
                 id: text
                 text: qsTr("select a date")
@@ -116,6 +118,7 @@ Item {
                         if (referredDate.getDate() > 1)
                             referredDate = DateTime.previousDay(referredDate)
                     }
+                    enabled: energyFunctions.isEnergyDayValid(DateTime.previousDay(referredDate))
                 }
 
                 SvgImage {
@@ -143,6 +146,7 @@ Item {
                         if (referredDate.getDate() < DateTime.daysInMonth(referredDate.getMonth(), referredDate.getFullYear()))
                             referredDate = DateTime.nextDay(referredDate)
                     }
+                    enabled: energyFunctions.isEnergyDayValid(DateTime.nextDay(referredDate))
                 }
             }
 
