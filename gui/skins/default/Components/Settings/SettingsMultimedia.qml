@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/Stack.js" as Stack
 
 
 MenuColumn {
@@ -58,6 +59,16 @@ MenuColumn {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1
                 column.loadColumn(browserComponent, name)
+            }
+        }
+
+        MenuItem {
+            name: qsTr("Add Quicklink")
+            isSelected: privateProps.currentIndex === 2
+            onClicked: {
+                if (privateProps.currentIndex !== 2)
+                    privateProps.currentIndex = 2
+                Stack.pushPage("AddQuicklink.qml")
             }
         }
 
