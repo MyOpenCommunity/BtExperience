@@ -18,9 +18,20 @@ MenuColumn {
     }
 
     ObjectModel {
-        id: extPlaceModel
+        id: cctvModel
+        filters: [{objectId: ObjectInterface.IdCCTV}]
+    }
+
+    ObjectModel {
+        id: intercomPlaceModel
         containers: [systemsModel.systemUii]
         source: intercomModel.getObject(0).externalPlaces
+    }
+
+    ObjectModel {
+        id: cctvPlaceModel
+        containers: [systemsModel.systemUii]
+        source: cctvModel.getObject(0).externalPlaces
     }
 
     PaginatorList {
@@ -43,11 +54,12 @@ MenuColumn {
     ListModel {
         id: modelList
         Component.onCompleted: {
-            modelList.append({"name": qsTr("video control"), "component": cctv})
-            if (extPlaceModel.count > 0) {
+            if (cctvPlaceModel.count > 0)
+                modelList.append({"name": qsTr("video control"), "component": cctv})
+            if (intercomPlaceModel.count > 0)
                 modelList.append({"name": qsTr("intercom"), "component": intercom})
+            if (intercomModel.count > 0 && intercomModel.getObject(0).pagerConfigured)
                 modelList.append({"name": qsTr("pager"), "component": pager})
-            }
         }
     }
 
