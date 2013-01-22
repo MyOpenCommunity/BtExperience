@@ -26,10 +26,7 @@ MenuColumn {
 
         MenuItem {
             name: qsTr("Delete")
-            onClicked: {
-                quicklinksModel.remove(column.dataModel)
-                column.closeColumn()
-            }
+            onClicked: pageObject.installPopup(deleteConfirmDialog)
         }
     }
 
@@ -41,5 +38,17 @@ MenuColumn {
     Component {
         id: quicklinkEditComponent
         FavoriteEditPopup {}
+    }
+
+    Component {
+        id: deleteConfirmDialog
+        TextDialog {
+            function okClicked() {
+                quicklinksModel.remove(column.dataModel)
+            }
+
+            title: qsTr("Confirm deletion")
+            text: qsTr("Are you sure to delete the selected quicklink?")
+        }
     }
 }
