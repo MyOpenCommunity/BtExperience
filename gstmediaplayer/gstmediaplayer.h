@@ -25,9 +25,10 @@ public:
 	void setPlayerRect(int x, int y, int width, int height);
 
 public slots:
-	virtual void pause();
-	virtual void resume();
-	virtual void stop();
+	void pause();
+	void resume();
+	void stop();
+	void seek(int seconds);
 
 	void handleBusMessage(GstBus *bus, GstMessage *message);
 

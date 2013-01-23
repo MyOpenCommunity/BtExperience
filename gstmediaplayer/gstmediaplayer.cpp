@@ -181,6 +181,14 @@ void GstMediaPlayerImplementation::stop()
 	CHANGE_STATE(gstPlayerStopped, GST_STATE_READY);
 }
 
+void GstMediaPlayerImplementation::seek(int seconds)
+{
+	if (!gst_element_seek_simple(GST_ELEMENT(pipeline), GST_FORMAT_TIME,
+				     GstSeekFlags(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT/* | GST_SEEK_FLAG_ACCURATE*/),
+				     seconds * GST_SECOND))
+		qWarning() << "Seek error";
+}
+
 QMap<QString, QString> GstMediaPlayerImplementation::getPlayingInfo()
 {
 	queryTime();

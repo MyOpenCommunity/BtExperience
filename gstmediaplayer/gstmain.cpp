@@ -144,6 +144,12 @@ void GstMain::parseLine(QString line)
 	{
 		player->resume();
 	}
+	else if (line.startsWith("seek "))
+	{
+		QStringList parts = line.split(" ");
+
+		player->seek(parts[1].toInt());
+	}
 }
 
 void GstMain::paused()
