@@ -1496,7 +1496,10 @@ void BtObjectsPlugin::parseSoundAmbientMono(const QDomNode &ambient)
 				continue;
 			}
 
-			o->setContainerUii(ambient_uii);
+			if (o->getObjectId() != ObjectInterface::IdSoundSource)
+				o->setContainerUii(ambient_uii);
+			else
+				o->setContainerUii(system_uii);
 		}
 
 		ambient->connectSources(sources);
