@@ -217,16 +217,29 @@ MenuColumn {
         SvgImage {
             id: control
             property variant objModel: undefined
-            source: imagesPath + "common/bg_panel_212x100.svg"
+            source: imagesPath + "common/bg_on-off.svg"
 
-            UbuntuLightText {
-                y: 10
-                font.bold: true
-                font.pixelSize: 16
-                anchors.horizontalCenter: control.horizontalCenter
-                text: objModel.source.currentTrack
+            Row {
+                anchors.centerIn: parent
+                ButtonImageThreeStates {
+                    defaultImageBg: imagesPath + "common/btn_99x35.svg"
+                    pressedImageBg: imagesPath + "common/btn_99x35_P.svg"
+                    shadowImage: imagesPath + "common/btn_shadow_99x35.svg"
+                    defaultImage: imagesPath + "sound_diffusion/ico_indietro.svg"
+                    pressedImage: imagesPath + "sound_diffusion/ico_indietro_P.svg"
+
+                    onClicked: objModel.previousTrack()
+                }
+                ButtonImageThreeStates {
+                    defaultImageBg: imagesPath + "common/btn_99x35.svg"
+                    pressedImageBg: imagesPath + "common/btn_99x35_P.svg"
+                    shadowImage: imagesPath + "common/btn_shadow_99x35.svg"
+                    defaultImage: imagesPath + "sound_diffusion/ico_avanti.svg"
+                    pressedImage: imagesPath + "sound_diffusion/ico_avanti_P.svg"
+
+                    onClicked: objModel.nextTrack()
+                }
             }
-
         }
     }
 
