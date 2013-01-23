@@ -45,6 +45,9 @@ BrowserProcess::BrowserProcess(QObject *parent) : QObject(parent)
 	keep_alive = new QTimer(this);
 	visible = false;
 	keep_alive_ticks = 0;
+	clear_history = false;
+	history_size = -1;
+	persistent_history = true;
 
 	keep_alive->setInterval(KEEP_ALIVE_INTERVAL);
 	connect(keep_alive, SIGNAL(timeout()), this, SLOT(sendKeepAlive()));
@@ -60,6 +63,28 @@ void BrowserProcess::displayUrl(QString url)
 	startProcess();
 	sendCommand("load_url " + url);
 	setVisible(true);
+}
+
+void BrowserProcess::clearHistory()
+{
+	if (getRunning())
+		sendCommand("clear_history");
+	else
+		clear_history = true;
+}
+
+void BrowserProcess::setHistorySize(int size)
+{
+	history_size = size;
+	if (getRunning())
+		sendCommand("set_history_size " + QString::number(history_size));
+}
+
+void BrowserProcess::setPersistentHistory(bool persistent)
+{
+	persistent_history = persistent;
+	if (getRunning())
+		sendCommand("set_persistent_history " + QString::number(persistent_history));
 }
 
 void BrowserProcess::setVisible(bool visible)
@@ -132,6 +157,15 @@ void BrowserProcess::startProcess()
 	{
 		browser->start(qApp->applicationDirPath() + "/browser");
 		browser->waitForStarted(300);
+		// re-send settings to browser and execute pending clear history
+		if (clear_history)
+		{
+			sendCommand("clear_history");
+			clear_history = false;
+		}
+		if (history_size != -1)
+			sendCommand("set_history_size " + QString::number(history_size));
+		sendCommand("set_persistent_history " + QString::number(persistent_history));
 	}
 }
 
