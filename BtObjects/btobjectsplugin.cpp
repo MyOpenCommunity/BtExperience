@@ -1318,6 +1318,21 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 
 			o->setContainerUii(system_uii);
 		}
+
+		// Also set the container for IpRadio, insert it into the sound diffusion
+		// container.
+		if (system_id == Container::IdSoundDiffusionMulti)
+			setContainerForIpRadio(system_uii);
+	}
+}
+
+void BtObjectsPlugin::setContainerForIpRadio(int container_uii)
+{
+	for (int i = 0; i < objmodel.rowCount(); ++i)
+	{
+		ObjectInterface *o = objmodel.getObject(i);
+		if (o->getObjectId() == ObjectInterface::IdIpRadioSource)
+			o->setContainerUii(container_uii);
 	}
 }
 
@@ -1503,6 +1518,7 @@ void BtObjectsPlugin::parseSoundAmbientMono(const QDomNode &ambient)
 		}
 
 		ambient->connectSources(sources);
+		setContainerForIpRadio(system_uii);
 	}
 }
 

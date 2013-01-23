@@ -184,6 +184,7 @@ public:
 		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
 		IdAmbientAmplifier = 11001000,
 		IdAmplifierGeneral,
+		IdIpRadioSource,
 
 		IdAutomation3OpenClose = 30003000,
 		IdAutomation3OpenCloseSafe = 30073000,
