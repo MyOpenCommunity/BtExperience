@@ -7,7 +7,9 @@ var stackObjects = []
 var debugTiming
 var horizontalOverlap = 1
 
-function loadComponent(menuLevel, component, title, dataModel, properties) {
+var NO_TITLE = 0
+
+function loadComponent(menuLevel, component, title, dataModel, properties, createTitle) {
     // checks if an operation is in progress and exit in case
     if (pendingOperations.length > 0)
         return
@@ -18,6 +20,10 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     // we do this trick.
     if (dataModel === undefined)
         dataModel = null
+
+    // for backwards compatibility, createTitle is practically not used
+    if (createTitle === undefined)
+        createTitle = 1
 
     properties = typeof properties !== 'undefined' ? properties : {}
     properties["menuLevel"] = menuLevel + 1
@@ -45,14 +51,16 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
         return
     }
 
-    var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer,
-                                       "anchors.left": itemObj.left, "anchors.leftMargin": horizontalOverlap,
-                                       "anchors.bottom": itemObj.top, "anchors.bottomMargin": 2, "menuColumn": itemObj})
-    if (!titleObj) {
-        itemObj.destroy()
-        shadowObj.destroy()
-        console.log("Error on creating the MenuTitle component")
-        return
+    if (createTitle) {
+        var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer,
+                                           "anchors.left": itemObj.left, "anchors.leftMargin": horizontalOverlap,
+                                           "anchors.bottom": itemObj.top, "anchors.bottomMargin": 2, "menuColumn": itemObj})
+        if (!titleObj) {
+            itemObj.destroy()
+            shadowObj.destroy()
+            console.log("Error on creating the MenuTitle component")
+            return
+        }
     }
 
     if (itemObj) {
