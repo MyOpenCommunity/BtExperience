@@ -132,7 +132,7 @@ BasePage {
                 id: privateProps
 
                 function fixedAddress(address) {
-                    if (address === "")
+                    if (address === "" || address === "about:blank")
                         return address
 
                     var fixedAddress = address

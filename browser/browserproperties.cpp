@@ -198,6 +198,7 @@ void BrowserProperties::pageDeleted(QObject *page)
 
 void BrowserProperties::clearHistory()
 {
+	setUrl("about:blank");
 	foreach (QWebPage *page, pages)
 		page->history()->clear();
 }
