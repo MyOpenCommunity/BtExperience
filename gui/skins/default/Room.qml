@@ -88,6 +88,7 @@ Page {
                 anchors.verticalCenterOffset: -page.width / 100 * 0.2
 
                 BeepingMouseArea {
+                    id: clickMouseArea
                     anchors.fill: parent
                     onClicked: roomView.currentIndex = index
                 }
@@ -96,7 +97,7 @@ Page {
                     color: "black"
                     opacity: 0.7
                     anchors.fill: parent
-                    visible: roomView.currentIndex === index
+                    visible: clickMouseArea.pressed
                 }
             }
 
