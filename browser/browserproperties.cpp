@@ -73,7 +73,7 @@ void BrowserProperties::setVisible(bool visible)
 
 void BrowserProperties::quit()
 {
-	setUrl("");
+	setUrl("_btexperience:blank");
 	printf("about_to_hide\n");
 	setVisible(false);
 	if (!persistent_history)

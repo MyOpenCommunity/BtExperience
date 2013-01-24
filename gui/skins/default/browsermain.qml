@@ -96,10 +96,19 @@ BasePage {
                 anchors.bottom: parent.bottom
                 width: parent.width
 
+                Connections {
+                    target: webBrowser
+                    onUrlStringChanged: {
+                        if (urlString == "_btexperience:blank")
+                            webView.html = " "
+                        else
+                            webView.url = browserItem._fixedUrlString
+                    }
+                }
+
                 FlickableWebView {
                     id: webView
                     clip: true
-                    url: browserItem._fixedUrlString
                     onProgressChanged: header.urlChanged = false
                     x: 0
                     y: parent.childOffset
