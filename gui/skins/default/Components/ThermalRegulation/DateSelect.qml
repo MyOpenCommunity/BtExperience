@@ -7,6 +7,7 @@ MenuColumn {
 
     property bool dateVisible: true
     property alias source: background.source
+    property alias dateText: labelDate.text
     property alias timeText: labelTime.text
 
     height: background.height

@@ -29,10 +29,6 @@ QtObject {
         container['AUTO_UPDATE'][true] = qsTr("Enabled")
         container['AUTO_UPDATE'][false] = qsTr("Disabled")
 
-        container['SUMMER_TIME'] = []
-        container['SUMMER_TIME'][true] = qsTr("Enable")
-        container['SUMMER_TIME'][false] = qsTr("Disable")
-
         container['LANGUAGE'] = []
         container['LANGUAGE']["it"] = qsTr("Italian")
         container['LANGUAGE']["en"] = qsTr("English")
@@ -63,13 +59,6 @@ QtObject {
         container['BEEP'] = []
         container['BEEP'][true] = qsTr("Enable")
         container['BEEP'][false] = qsTr("Disable")
-
-        container['TIMEZONE'] = []
-        container['TIMEZONE'][-2] = qsTr("GMT -2")
-        container['TIMEZONE'][-1] = qsTr("GMT -1")
-        container['TIMEZONE'][0] = qsTr("GMT 0")
-        container['TIMEZONE'][1] = qsTr("GMT +1")
-        container['TIMEZONE'][2] = qsTr("GMT +2")
     }
 
     // retrieves the requested value from the local array

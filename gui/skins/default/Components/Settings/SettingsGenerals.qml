@@ -61,8 +61,13 @@ MenuColumn {
                       && model.component !== null
 
             onClicked: {
-                if (model.name !== "")
+                if (model.name !== qsTr("Date & Time"))
                     column.loadColumn(model.component, model.name)
+                else {
+                    var o = objectModel.getObject(0)
+                    o.reset() // to have current date & time
+                    column.loadColumn(model.component, model.name, o)
+                }
             }
         }
 

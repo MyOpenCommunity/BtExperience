@@ -4,6 +4,7 @@
 #include "configfile.h"
 
 #include <QDebug>
+#include <QDate>
 
 
 enum
@@ -13,7 +14,9 @@ enum
 	LAN_NETMASK,
 	LAN_GATEWAY,
 	LAN_DNS1,
-	LAN_DNS2
+	LAN_DNS2,
+	BT_TIME,
+	BT_DATE
 };
 
 
@@ -21,6 +24,9 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 {
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
+
+	current[BT_DATE] = QDate::currentDate();
+	current[BT_TIME].setValue(BtTime(QTime::currentTime()));
 
 	configurations = new ConfigFile(this);
 
@@ -46,6 +52,17 @@ void PlatformSettings::apply()
 	// Always save the configuration even if there are no changes
 	foreach (int k, to_apply.keys())
 		current[k] = to_apply[k];
+
+	if (to_apply.contains(BT_DATE))
+		dev->setDate(value(BT_DATE).toDate());
+
+	if (to_apply.contains(BT_TIME))
+	{
+		BtTime t = value(BT_TIME).value<BtTime>();
+		t = t.addSecond(-t.second()); // resetting seconds to zero
+		dev->setTime(t);
+	}
+
 	to_apply.clear();
 
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
@@ -63,6 +80,8 @@ void PlatformSettings::apply()
 void PlatformSettings::reset()
 {
 	to_apply.clear();
+	current[BT_DATE] = QDate::currentDate();
+	current[BT_TIME].setValue(BtTime(QTime::currentTime()));
 }
 
 QString PlatformSettings::getAddress() const
@@ -328,4 +347,161 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 		}
 		++it;
 	}
+}
+
+void PlatformSettings::emitDateSignals(QDate oldDate, QDate newDate)
+{
+	if (!oldDate.isValid() && newDate.isValid())
+	{
+		emit daysChanged();
+		emit monthsChanged();
+		emit yearsChanged();
+		return;
+	}
+	if (oldDate.day() != newDate.day())
+		emit daysChanged();
+	if (oldDate.month() != newDate.month())
+		emit monthsChanged();
+	if (oldDate.year() != newDate.year())
+		emit yearsChanged();
+}
+
+void PlatformSettings::emitTimeSignals(QVariant oldTime, QVariant newTime)
+{
+	BtTime oldBtTime, newBtTime;
+	oldBtTime = oldTime.value<BtTime>();
+	newBtTime = newTime.value<BtTime>();
+
+	if (oldBtTime.hour() != newBtTime.hour())
+		emit hoursChanged();
+	if (oldBtTime.minute() != newBtTime.minute())
+		emit minutesChanged();
+	if (oldBtTime.second() != newBtTime.second())
+		emit secondsChanged();
+}
+
+int PlatformSettings::toHours(const QVariant &btTime) const
+{
+	BtTime t;
+	t = btTime.value<BtTime>();
+	return t.hour();
+}
+
+int PlatformSettings::toMinutes(const QVariant &btTime) const
+{
+	BtTime t;
+	t = btTime.value<BtTime>();
+	return t.minute();
+}
+
+int PlatformSettings::toSeconds(const QVariant &btTime) const
+{
+	BtTime t;
+	t = btTime.value<BtTime>();
+	return t.second();
+}
+
+int PlatformSettings::getHours() const
+{
+	return toHours(value(BT_TIME));
+}
+
+void PlatformSettings::setHours(int newValue)
+{
+	int oldValue = getHours();
+	int diff = newValue - oldValue;
+	if (newValue == oldValue)
+		return;
+
+	QVariant time = value(BT_TIME);
+	to_apply[BT_TIME].setValue(value(BT_TIME).value<BtTime>().addSecond(diff * 60 * 60));
+
+	emitTimeSignals(time, value(BT_TIME));
+}
+
+int PlatformSettings::getMinutes() const
+{
+	return toMinutes(value(BT_TIME));
+}
+
+void PlatformSettings::setMinutes(int newValue)
+{
+	int oldValue = getMinutes();
+	int diff = newValue - oldValue;
+	if (newValue == oldValue)
+		return;
+
+	QVariant time = value(BT_TIME);
+	to_apply[BT_TIME].setValue(value(BT_TIME).value<BtTime>().addSecond(diff * 60));
+
+	emitTimeSignals(time, value(BT_TIME));
+}
+
+int PlatformSettings::getSeconds() const
+{
+	return toSeconds(value(BT_TIME));
+}
+
+void PlatformSettings::setSeconds(int newValue)
+{
+	int oldValue = getSeconds();
+	int diff = newValue - oldValue;
+	if (newValue == oldValue)
+		return;
+
+	QVariant time = value(BT_TIME);
+	to_apply[BT_TIME].setValue(value(BT_TIME).value<BtTime>().addSecond(diff));
+
+	emitTimeSignals(time, value(BT_TIME));
+}
+
+int PlatformSettings::getDays() const
+{
+	const QDate &date = value(BT_DATE).toDate();
+	return date.day();
+}
+
+void PlatformSettings::setDays(int newValue)
+{
+	QDate date = value(BT_DATE).toDate();
+	int oldValue = date.day();
+	if ((newValue - oldValue) == 0)
+		return;
+	QDate newDate = date.addDays(newValue - oldValue);
+	to_apply[BT_DATE] = newDate;
+	emitDateSignals(date, newDate);
+}
+
+int PlatformSettings::getMonths() const
+{
+	const QDate &date = value(BT_DATE).toDate();
+	return date.month();
+}
+
+void PlatformSettings::setMonths(int newValue)
+{
+	QDate date = value(BT_DATE).toDate();
+	int oldValue = date.month();
+	if ((newValue - oldValue) == 0)
+		return;
+	QDate newDate = date.addMonths(newValue - oldValue);
+	to_apply[BT_DATE] = newDate;
+	emitDateSignals(date, newDate);
+}
+
+int PlatformSettings::getYears() const
+{
+	const QDate &date = value(BT_DATE).toDate();
+	return date.year();
+}
+
+void PlatformSettings::setYears(int newValue)
+{
+	QDate date = value(BT_DATE).toDate();
+	int oldValue = date.year();
+	if ((newValue - oldValue) == 0)
+		return;
+	QDate newDate = date.isValid() ? date.addYears(newValue - oldValue) : QDate(newValue, 1, 1);
+	to_apply[BT_DATE] = newDate;
+	emitDateSignals(date, newDate);
 }

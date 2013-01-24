@@ -3,6 +3,7 @@
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
+#include "bttime.h"
 
 #include <QObject>
 
@@ -90,6 +91,14 @@ class PlatformSettings : public ObjectInterface
 	*/
 	Q_PROPERTY(InternetConnectionStatus connectionStatus READ getConnectionStatus WRITE setConnectionStatus NOTIFY connectionStatusChanged)
 
+	// some properties to use this object with ControlDateTime
+	Q_PROPERTY(int hours READ getHours WRITE setHours NOTIFY hoursChanged)
+	Q_PROPERTY(int minutes READ getMinutes WRITE setMinutes NOTIFY minutesChanged)
+	Q_PROPERTY(int seconds READ getSeconds WRITE setSeconds NOTIFY secondsChanged)
+	Q_PROPERTY(int days READ getDays WRITE setDays NOTIFY daysChanged)
+	Q_PROPERTY(int months READ getMonths WRITE setMonths NOTIFY monthsChanged)
+	Q_PROPERTY(int years READ getYears WRITE setYears NOTIFY yearsChanged)
+
 	Q_ENUMS(LanConfig)
 	Q_ENUMS(LanStatus)
 	Q_ENUMS(InternetConnectionStatus)
@@ -141,6 +150,18 @@ public:
 	void setSubnet(QString s);
 	void setConnectionStatus(InternetConnectionStatus status);
 	InternetConnectionStatus getConnectionStatus() const;
+	int getHours() const;
+	void setHours(int newValue);
+	int getMinutes() const;
+	void setMinutes(int newValue);
+	int getSeconds() const;
+	void setSeconds(int newValue);
+	int getDays() const;
+	void setDays(int newValue);
+	int getMonths() const;
+	void setMonths(int newValue);
+	int getYears() const;
+	void setYears(int newValue);
 
 	Q_INVOKABLE void requestNetworkSettings();
 
@@ -161,6 +182,12 @@ signals:
 	void kernelVersionChanged();
 	void subnetChanged();
 	void connectionStatusChanged();
+	void hoursChanged();
+	void minutesChanged();
+	void secondsChanged();
+	void daysChanged();
+	void monthsChanged();
+	void yearsChanged();
 
 private slots:
 	void valueReceived(const DeviceValues &values_list);
@@ -170,6 +197,11 @@ private slots:
 private:
 	void startConnectionTest();
 	QVariant value(int id) const;
+	void emitDateSignals(QDate oldDate, QDate newDate);
+	void emitTimeSignals(QVariant oldTime, QVariant newTime);
+	int toHours(const QVariant &btTime) const;
+	int toMinutes(const QVariant &btTime) const;
+	int toSeconds(const QVariant &btTime) const;
 
 	QHash<int, QVariant> current, to_apply;
 	QString firmware_version;
