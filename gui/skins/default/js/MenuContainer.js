@@ -4,6 +4,7 @@ Qt.include("logging.js")
 
 var stackObjects = []
 
+var debugTiming
 var horizontalOverlap = 1
 
 function loadComponent(menuLevel, component, title, dataModel, properties) {
@@ -11,6 +12,7 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     if (pendingOperations.length > 0)
         return
 
+    debugTiming.logTiming("loadComponent start")
     // We need to pass the dataModel as a variant (because we use it in a signal),
     // but in the end the property is a QtObject. To avoid warning about the type
     // we do this trick.
@@ -56,6 +58,7 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
         ma.menuColumn = itemObj
         titleObj.menuColumn = itemObj
         itemObj.loadComponent.connect(loadComponent)
+        debugTiming.logTiming("Done creating MenuColumn")
         _addItem(itemObj, titleObj, shadowObj)
         return
     }
@@ -137,6 +140,7 @@ function _closeItems(targetLevel, notifyChildDestroyed) {
 }
 
 function _addItem(item, title, shadow) {
+    debugTiming.logTiming("_addItem start")
     mainContainer.interactive = false
     debugMsg("_addItem level: " + item.menuLevel)
     _closeItems(item.menuLevel)
@@ -295,6 +299,7 @@ function _doOpenItem() {
         mainContainer.rootObject = item
 
     mainContainer.currentObject = item
+    debugTiming.logTiming("Open animation finished")
     pendingOperations.shift()
     processOperations()
 

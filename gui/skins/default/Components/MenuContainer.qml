@@ -84,6 +84,7 @@ Item {
     }
 
     Component.onCompleted: {
+        Script.debugTiming = global.debugTiming
         Script.loadComponent(-1, mainContainer.rootColumn, "", rootData)
         mainContainer.rootObject.columnClicked.connect(rootColumnClicked)
     }
