@@ -124,6 +124,7 @@ AudioState::AudioState(QObject *parent) :
 
 void AudioState::disableState(State state)
 {
+	Q_ASSERT_X(state != Invalid, "AudioState::enableState", "Do not use \"Invalid\" state");
 	states[state] = false;
 
 	if (state == current_state)
@@ -132,6 +133,7 @@ void AudioState::disableState(State state)
 
 void AudioState::enableState(State state)
 {
+	Q_ASSERT_X(state != Invalid, "AudioState::enableState", "Do not use \"Invalid\" state");
 	states[state] = true;
 
 	if (state > current_state)
