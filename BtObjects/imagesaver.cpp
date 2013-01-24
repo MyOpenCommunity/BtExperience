@@ -74,6 +74,8 @@ void ImageSaver::startDownload(QObject *_object, QString _property, QString down
 
 void ImageSaver::onDownloadProgress(qint64 bytes_read, qint64 bytes_total)
 {
+	Q_UNUSED(bytes_read);
+	Q_UNUSED(bytes_total);
 //	qDebug() << __PRETTY_FUNCTION__;
 //	qDebug() << "bytes read so far:" << bytes_read;
 //	qDebug() << "total bytes to read:" << bytes_total;
