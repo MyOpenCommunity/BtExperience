@@ -12,6 +12,7 @@
 #include "hwkeys.h"
 #include "calibration.h"
 #include "browserprocess.h"
+#include "imagesaver.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -464,36 +465,30 @@ QString GlobalProperties::takeScreenshot(QRect rect, QString filename)
 	return fn;
 }
 
-QString GlobalProperties::saveInCustomDirIfNeeded(QString filename, QString new_filename, QSize size)
+QString GlobalProperties::saveInCustomDirIfNeeded(QObject *object, QString property, QString filename, QString new_filename, QSize size)
 {
 	QString result;
 
 #if defined(BT_HARDWARE_X11)
-        QDir().mkdir(EXTRA_12_DIR);
+	QDir().mkdir(EXTRA_12_DIR);
 #endif
 
-        QDir customDir = QDir(EXTRA_12_DIR);
+	QDir customDir = QDir(EXTRA_12_DIR);
 
 	if (filename.startsWith(customDir.canonicalPath() + "/"))
 		result = filename;
 	else
 		result = customDir.canonicalPath() + "/" + new_filename + "." + filename.split(".").last();
 
-	QImage image = QImage(filename);
-	if (size.isValid())
-		image = image.scaled(size, Qt::KeepAspectRatio);
-
-	QImage destImage = QImage(size, image.format());
-	destImage.fill(Qt::black);
-	QPoint destPos = QPoint((destImage.width() - image.width()) / 2, (destImage.height() - image.height()) / 2);
-
-	QPainter painter(&destImage);
-	painter.drawImage(destPos, image);
-	painter.end();
-
-	destImage.save(result);
-
+	ImageSaver *downloader = new ImageSaver(this);
+	connect(downloader, SIGNAL(jobDone(ImageSaver*)), this, SLOT(cleanImageSaver(ImageSaver*)));
+	downloader->startDownload(object, property, filename, result, size);
 	return result;
+}
+
+void GlobalProperties::cleanImageSaver(ImageSaver *cleanee)
+{
+	cleanee->deleteLater();
 }
 
 int GlobalProperties::getPathviewOffset(int pathview_id)

@@ -19,6 +19,7 @@ class HwKeys;
 class Calibration;
 class ExternalPlace;
 class BrowserProcess;
+class ImageSaver;
 
 
 // This class is designed to be used as a sigle object that contains all the
@@ -108,7 +109,7 @@ public:
 	Q_INVOKABLE QString getPIAddress() const;
 
 	Q_INVOKABLE QString takeScreenshot(QRect rect, QString filename);
-	Q_INVOKABLE QString saveInCustomDirIfNeeded(QString filename, QString new_filename, QSize size = QSize());
+	Q_INVOKABLE QString saveInCustomDirIfNeeded(QObject *object, QString property, QString filename, QString new_filename, QSize size = QSize());
 
 	Q_INVOKABLE int getPathviewOffset(int pathview_id);
 	Q_INVOKABLE void setPathviewOffset(int pathview_id, int value);
@@ -153,6 +154,7 @@ private slots:
 	void sendDelayedFrames();
 	void manageUpnpPlayers();
 	void updateCpuFrequency();
+	void cleanImageSaver(ImageSaver *cleanee);
 
 private:
 	void parseSettings();
