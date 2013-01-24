@@ -261,6 +261,9 @@ void GlobalProperties::initAudio()
 			connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 				this, SLOT(updateCpuFrequency()));
 		}
+
+		// enable sound diffusion source
+		smartExecute_synch("/usr/local/bin/difson_carrier.sh");
 	}
 }
 
