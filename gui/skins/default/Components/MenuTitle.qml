@@ -8,14 +8,10 @@ SvgImage {
     property alias text: label.text
 
     source: "../images/menu_column/label_column-title.svg"
+    opacity: menuColumn.opacity
 
     Constants {
         id: constants
-    }
-
-    Behavior on opacity {
-        enabled: menuColumn === null ? false : menuColumn.enableAnimation
-        NumberAnimation { duration: constants.elementTransitionDuration }
     }
 
     UbuntuMediumText {

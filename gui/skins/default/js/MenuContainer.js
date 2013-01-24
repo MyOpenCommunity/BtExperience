@@ -66,7 +66,7 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
         ma.menuColumn = itemObj
         itemObj.loadComponent.connect(loadComponent)
         debugTiming.logTiming("Done creating MenuColumn")
-        _addItem(itemObj, titleObj, shadowObj)
+        _addItem(itemObj, shadowObj)
     }
 }
 
@@ -139,14 +139,14 @@ function _closeItems(targetLevel, notifyChildDestroyed) {
     }
 }
 
-function _addItem(item, title, shadow) {
+function _addItem(item, shadow) {
     debugTiming.logTiming("_addItem start")
     mainContainer.interactive = false
     debugMsg("_addItem level: " + item.menuLevel)
     _closeItems(item.menuLevel)
 
     pendingOperations.push({'id': OP_UPDATE_UI, 'newItem': item})
-    pendingOperations.push({'id': OP_OPEN, 'item': item, 'title': title, 'shadow': shadow})
+    pendingOperations.push({'id': OP_OPEN, 'item': item, 'shadow': shadow})
     processOperations()
 }
 
@@ -229,7 +229,6 @@ function _doUpdateView() {
 
 function _setStartProps() {
     var item = pendingOperations[0]['item']
-    var title = pendingOperations[0]['title']
     var shadow = pendingOperations[0]['shadow']
 
     item.enableAnimation = false
@@ -237,14 +236,11 @@ function _setStartProps() {
     if (stackObjects.length === 0) {
         shadow.opacity = 1
         item.opacity = 1
-        title.opacity = 1
     }
     else {
         var last_item = stackObjects[stackObjects.length - 1]['item']
         item.y = last_item.y + verticalOffset
         item.x = last_item.x - horizontalOverlap
-        var last_title = stackObjects[stackObjects.length - 1]['title']
-        title.y = last_title.y + verticalOffset
     }
     item.enableAnimation = true
 }
@@ -253,7 +249,6 @@ function _openItem() {
     debugMsg('_openItem')
 
     var item = pendingOperations[0]['item']
-    var title = pendingOperations[0]['title']
     var shadow = pendingOperations[0]['shadow']
     elementsContainer.currentLevel++
 
@@ -268,7 +263,6 @@ function _openItem() {
 
         var last_item = stackObjects[stackObjects.length - 1]['item']
 
-        title.opacity = 1
         item.opacity = 1
         shadow.opacity = 1
         item.x = last_item.x + last_item.width - horizontalOverlap
@@ -282,7 +276,6 @@ function _doOpenItem() {
         return
 
     debugMsg('_doOpenItem')
-    var title = pendingOperations[0]['title']
     var shadow = pendingOperations[0]['shadow']
 
     item.animationRunningChanged.disconnect(_doOpenItem)
@@ -293,7 +286,7 @@ function _doOpenItem() {
         last_item.childLoaded()
     }
 
-    stackObjects.push({'item': item, 'title': title, 'shadow': shadow})
+    stackObjects.push({'item': item, 'shadow': shadow})
 
     if (stackObjects.length === 1)
         mainContainer.rootObject = item
@@ -309,7 +302,6 @@ function _doOpenItem() {
 function _closeItem() {
     debugMsg("_closeItem")
     var item = stackObjects[stackObjects.length - 1]['item']
-    var title = stackObjects[stackObjects.length - 1]['title']
     item.animationRunningChanged.connect(_doCloseItem)
     if (stackObjects.length > 1) {
         item.x = stackObjects[stackObjects.length - 2]['item'].x
@@ -318,7 +310,6 @@ function _closeItem() {
         item.x = 0
     }
     item.opacity = 0
-    title.opacity = 0
 }
 
 function _doCloseItem() {
