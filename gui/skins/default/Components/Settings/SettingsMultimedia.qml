@@ -66,8 +66,10 @@ MenuColumn {
             name: qsTr("Add Quicklink")
             isSelected: privateProps.currentIndex === 2
             onClicked: {
-                if (privateProps.currentIndex !== 2)
+                if (privateProps.currentIndex !== 2) {
                     privateProps.currentIndex = 2
+                    paginator.currentIndex = -1
+                }
                 Stack.pushPage("AddQuicklink.qml", { onlyQuicklinks: true })
             }
         }
