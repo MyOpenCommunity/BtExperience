@@ -62,7 +62,7 @@
         <int_mylevel>-1</int_mylevel>
         <ack_scs>0</ack_scs>
         <scs_addr>110</scs_addr>
-        <diag_addr>0</diag_addr>
+        <diag_addr>800</diag_addr>
       </coordinate_scs>
     </scs>
     <sicurezza>
