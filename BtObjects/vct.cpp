@@ -385,6 +385,7 @@ void CCTV::stairLightRelease()
 void CCTV::nextCamera()
 {
 	dev->cycleExternalUnits();
+	stopVideo();
 }
 
 void CCTV::callerAddress(QString address)
