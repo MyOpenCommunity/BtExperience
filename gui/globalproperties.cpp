@@ -13,6 +13,7 @@
 #include "calibration.h"
 #include "browserprocess.h"
 #include "imagesaver.h"
+#include "medialink.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -27,6 +28,8 @@
 #define CPU_FREQ_DEVICE   "/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed"
 #define CPU_CLOCK_IDLE    300000
 #define CPU_CLOCK_ACTIVE 1000000
+
+#define BROWSER_HISTORY_SIZE 10
 
 namespace
 {
@@ -126,6 +129,22 @@ namespace
 			*enabled = bool(v.intValue("mode"));
 		}
 	}
+
+	void setBrowser(QDomDocument document, int id, QString home_page, bool keep_history)
+	{
+		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+		{
+			if (getIntAttribute(xml_obj, "id") == id)
+			{
+				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
+				{
+					setAttribute(ist, "homepage_url", home_page);
+					setAttribute(ist, "history_enabled", QString::number(keep_history));
+				}
+				break;
+			}
+		}
+	}
 }
 
 
@@ -141,7 +160,6 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	qmlRegisterUncreatableType<RingtoneManager>("BtExperience", 1, 0, "RingtoneManager", "");
 	qmlRegisterUncreatableType<DebugTiming>("BtExperience", 1, 0, "DebugTiming", "");
 	qmlRegisterUncreatableType<Calibration>("BtExperience", 1, 0, "Calibration", "");
-
 
 	configurations = new ConfigFile(this);
 	photo_player = new PhotoPlayer(this);
@@ -166,6 +184,7 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 		default_external_place = 0;
 
 	parseSettings();
+	parseBrowser();
 
 	screen_state->enableState(ScreenState::Normal);
 	screen_state->enableState(ScreenState::ScreenOff);
@@ -247,7 +266,7 @@ void GlobalProperties::initAudio()
 
 void GlobalProperties::deleteHistory()
 {
-	qWarning() << __PRETTY_FUNCTION__ << "not implemented yet!";
+	browser->clearHistory();
 }
 
 QString GlobalProperties::getHomePageUrl() const
@@ -266,6 +285,8 @@ void GlobalProperties::setHomePageUrl(QString new_value)
 		return;
 	home_page_url = new_value;
 	emit homePageUrlChanged();
+	::setBrowser(configurations->getConfiguration(ARCHIVE_FILE), MediaLink::Browser, home_page_url, keeping_history);
+	configurations->saveConfiguration(ARCHIVE_FILE);
 }
 
 bool GlobalProperties::getKeepingHistory() const
@@ -279,6 +300,9 @@ void GlobalProperties::setKeepingHistory(bool new_value)
 		return;
 	keeping_history = new_value;
 	emit keepingHistoryChanged();
+	browser->setPersistentHistory(keeping_history);
+	::setBrowser(configurations->getConfiguration(ARCHIVE_FILE), MediaLink::Browser, home_page_url, keeping_history);
+	configurations->saveConfiguration(ARCHIVE_FILE);
 }
 
 void GlobalProperties::parseSettings()
@@ -343,6 +367,35 @@ void GlobalProperties::parseSettings()
 		case VolumeIntercomCall:
 			audio_state->setVolume(AudioState::IntercomCallVolume, parseVolume(xml_obj));
 			break;
+		}
+	}
+}
+
+void GlobalProperties::parseBrowser()
+{
+	QDomDocument document = configurations->getConfiguration(ARCHIVE_FILE);
+
+	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
+	{
+		int id = getIntAttribute(xml_obj, "id");
+
+		switch (id)
+		{
+		case MediaLink::Browser:
+		{
+			XmlObject v(xml_obj);
+
+			foreach (const QDomNode &ist, getChildren(xml_obj, "ist"))
+			{
+				v.setIst(ist);
+				home_page_url = v.value("homepage_url");
+				keeping_history = v.intValue("history_enabled");
+				browser->setHistorySize(BROWSER_HISTORY_SIZE);
+				browser->setPersistentHistory(keeping_history);
+			}
+
+			break;
+		}
 		}
 	}
 }

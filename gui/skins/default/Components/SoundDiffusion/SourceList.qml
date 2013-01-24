@@ -9,9 +9,22 @@ MenuColumn {
 
     signal sourceSelected(variant object)
 
+    SystemsModel { id: multiModel; systemId: Container.IdSoundDiffusionMulti }
+    SystemsModel { id: monoModel; systemId: Container.IdSoundDiffusionMono }
+    SystemsModel { id: devicesModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
+
+    SystemsModel { id: ipradioContainer; systemId: Container.IdMultimediaWebRadio; source: myHomeModels.mediaContainers }
+    MediaModel {
+        id: ipradioModel
+        containers: [ipradioContainer.systemUii]
+        source: myHomeModels.mediaLinks
+    }
+
     ObjectModel {
         id: sourceModel
-        filters: [{objectId: ObjectInterface.IdSoundSource}]
+        containers: [multiModel.systemUii, monoModel.systemUii, devicesModel.systemUii]
+        filters: ipradioModel.count === 0 ? [{objectId: ObjectInterface.IdSoundSource}]:
+                                            [{objectId: ObjectInterface.IdSoundSource}, {objectId: ObjectInterface.IdIpRadioSource}]
     }
 
     PaginatorList {

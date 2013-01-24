@@ -158,6 +158,7 @@ private slots:
 
 private:
 	void parseSettings();
+	void parseBrowser();
 
 	AudioVideoPlayer *video_player;
 	AudioVideoPlayer *sound_diffusion_player;

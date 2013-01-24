@@ -36,7 +36,7 @@ NetworkAccessManagerFactory::NetworkAccessManagerFactory(BrowserProperties *prop
 
 QNetworkAccessManager *NetworkAccessManagerFactory::create(QObject *parent)
 {
-	BtNetworkAccessManager *n = new BtNetworkAccessManager(parent);
+	BtNetworkAccessManager *n = new BtNetworkAccessManager(global_properties, parent);
 	QObject::connect(n, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)),
 		n, SLOT(requireAuthentication(QNetworkReply*,QAuthenticator*)));
 	QObject::connect(n, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)),
@@ -51,10 +51,11 @@ QNetworkAccessManager *NetworkAccessManagerFactory::create(QObject *parent)
 }
 
 
-BtNetworkAccessManager::BtNetworkAccessManager(QObject *parent) :
+BtNetworkAccessManager::BtNetworkAccessManager(BrowserProperties *_global_properties, QObject *parent) :
 	QNetworkAccessManager(parent)
 {
 	configuration = new ConfigFile(this);
+	global_properties = _global_properties;
 
 	// load certificates file if present
 	if (QFile(QString(BROWSER_DATA_PATH) + "cacert.pem").exists())
@@ -128,6 +129,9 @@ QString BtNetworkAccessManager::userAgent(const QNetworkRequest &req)
 	// for webkit requests originator is documented to be a QWebFrame
 	QWebFrame *originator = qobject_cast<QWebFrame *>(req.originatingObject());
 	QUrl match_url = req.url();
+
+	if (originator)
+		global_properties->registerPage(originator->page());
 
 	// we try to use the same user agent for all requests originating from the same web page
 	if (originator && !originator->requestedUrl().isEmpty())

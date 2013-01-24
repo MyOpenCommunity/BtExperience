@@ -312,6 +312,11 @@ class SourceIpRadio : public SourceMedia
 public:
 	SourceIpRadio(const QString &name, SourceMultiMedia *s, MediaDataModel *model);
 
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdIpRadioSource;
+	}
+
 	/// Start media playback at the given index
 	Q_INVOKABLE void startPlay(QList<QObject *> items, int index, int total_files);
 

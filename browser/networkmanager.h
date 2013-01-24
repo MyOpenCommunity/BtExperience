@@ -26,7 +26,7 @@ class BtNetworkAccessManager : public QNetworkAccessManager
 	Q_OBJECT
 
 public:
-	BtNetworkAccessManager(QObject *parent = 0);
+	BtNetworkAccessManager(BrowserProperties *global_properties, QObject *parent = 0);
 	void setAuthentication(const QString &user, const QString &pass);
 	void abortConnection();
 	void addSecurityException();
@@ -69,6 +69,7 @@ private:
 	ConfigFile *configuration;
 	QSet<QString> ssl_exceptions;
 	QList<UserAgentEntry> user_agent_map;
+	BrowserProperties *global_properties;
 };
 
 #endif // NETWORKMANAGER_H

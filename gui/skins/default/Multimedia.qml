@@ -108,7 +108,7 @@ Page {
         // please note that this problem may actually happen only here because
         // this is the only model with variable "length" during program execution
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices_card.jpg", "props": {} })
-        multimediaModel.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": "http://www.google.it"}})
+        multimediaModel.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": global.homePageUrl}})
         if (webLinkModel.count > 0)
             multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
                                        "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})

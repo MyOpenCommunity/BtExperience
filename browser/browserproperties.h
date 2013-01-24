@@ -4,9 +4,12 @@
 #include "globalpropertiescommon.h"
 
 #include <QObject>
+#include <QSet>
 
 class BtNetworkAccessManager;
 class QNetworkReply;
+class QWebPage;
+
 
 class BrowserProperties : public GlobalPropertiesCommon
 {
@@ -29,6 +32,8 @@ public:
 		object->deleteLater();
 	}
 
+	void registerPage(QWebPage *page);
+
 public slots:
 	void quit();
 	void updateClick();
@@ -46,15 +51,20 @@ protected:
 
 private slots:
 	void readInput();
+	void pageDeleted(QObject *page);
 
 private:
+	void clearHistory();
+	void setHistorySize(int size);
 	void setVisible(bool visible);
 	void parseLine(QString line);
 
-	bool clicks_blocked;
+	bool clicks_blocked, persistent_history;
+	int persistent_history_size;
 	QString url;
 	QString input;
 	BtNetworkAccessManager *access_manager;
+	QSet<QWebPage *> pages;
 };
 
 #endif // BROWSERPROPERTIES_H

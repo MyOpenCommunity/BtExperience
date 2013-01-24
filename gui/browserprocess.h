@@ -20,6 +20,10 @@ public:
 
 	Q_INVOKABLE void displayUrl(QString url);
 
+	void clearHistory();
+	void setHistorySize(int size);
+	void setPersistentHistory(bool persistent);
+
 	void setVisible(bool visible);
 	bool getVisible() const;
 
@@ -44,8 +48,8 @@ private:
 	void sendCommand(QString command);
 	void updateVisible(bool visible);
 
-	bool visible;
-	int keep_alive_ticks;
+	bool visible, clear_history, persistent_history;
+	int keep_alive_ticks, history_size;
 	QProcess *browser;
 	QTimer *keep_alive;
 };

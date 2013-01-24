@@ -59,6 +59,7 @@ MenuColumn {
             property variant itemObject: ambientModel.getObject(0)
 
             VolumeGeneral {
+                description: ambientControl.itemObject.name
                 onMinusClicked: ambientControl.itemObject.volumeDown()
                 onPlusClicked: ambientControl.itemObject.volumeUp()
             }

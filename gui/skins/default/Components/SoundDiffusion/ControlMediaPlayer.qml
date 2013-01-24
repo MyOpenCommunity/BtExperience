@@ -97,8 +97,8 @@ SvgImage {
             defaultImageBg: "../../images/sound_diffusion/btn_45x35.svg"
             pressedImageBg: "../../images/sound_diffusion/btn_45x35_P.svg"
             shadowImage: "../../images/sound_diffusion/btn_45x35_shadow.svg"
-            defaultImage: "../../images/sound_diffusion/ico_indietro.svg"
-            pressedImage: "../../images/sound_diffusion/ico_indietro_P.svg"
+            defaultImage: "../../images/common/ico_previous_track.svg"
+            pressedImage: "../../images/common/ico_previous_track_P.svg"
             onClicked: control.previousClicked()
             status: 0
         }
@@ -118,8 +118,8 @@ SvgImage {
             defaultImageBg: "../../images/sound_diffusion/btn_45x35.svg"
             pressedImageBg: "../../images/sound_diffusion/btn_45x35_P.svg"
             shadowImage: "../../images/sound_diffusion/btn_45x35_shadow.svg"
-            defaultImage: "../../images/sound_diffusion/ico_avanti.svg"
-            pressedImage: "../../images/sound_diffusion/ico_avanti_P.svg"
+            defaultImage: "../../images/common/ico_next_track.svg"
+            pressedImage: "../../images/common/ico_next_track_P.svg"
             onClicked: control.nextClicked()
             status: 0
         }
