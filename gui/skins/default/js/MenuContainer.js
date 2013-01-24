@@ -23,6 +23,8 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     properties["menuLevel"] = menuLevel + 1
     properties["parent"] = elementsContainer
     properties["opacity"] = 0
+    // The magic number in Constants.qml
+    properties["y"] = 33
     properties["dataModel"] = dataModel
     properties["pageObject"] = pageObject
 
@@ -31,19 +33,25 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
     // the width of the children (which are assumed to be all the same width).
     // Unfortunately, we can't use childrenRect because that includes shadows.
     var itemObj = component.createObject(mainContainer, properties)
-
-    var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer, "opacity": 0, "anchors.left": itemObj.left, "anchors.leftMargin": horizontalOverlap})
-    if (!titleObj) {
-        console.log("Error on creating the MenuTitle component")
+    if (!itemObj) {
+        console.log("Error on creating the Component: " + component + "error: " + component.errorString())
         return
     }
-    itemObj.y = titleObj.height + 2
 
     var shadowObj = createComponent("MenuShadow.qml", {"parent": elementsContainer, "opacity": 0, "anchors.fill": itemObj})
     if (!shadowObj) {
         itemObj.destroy()
-        titleObj.destroy()
         console.log("Error on creating the MenuShadow component")
+        return
+    }
+
+    var titleObj = createComponent("MenuTitle.qml", {"text": title, "parent": elementsContainer,
+                                       "anchors.left": itemObj.left, "anchors.leftMargin": horizontalOverlap,
+                                       "anchors.bottom": itemObj.top, "anchors.bottomMargin": 2, "menuColumn": itemObj})
+    if (!titleObj) {
+        itemObj.destroy()
+        shadowObj.destroy()
+        console.log("Error on creating the MenuTitle component")
         return
     }
 
@@ -56,18 +64,10 @@ function loadComponent(menuLevel, component, title, dataModel, properties) {
         // Use a Connections object to be more declarative.
         shadowObj.menuColumn = itemObj
         ma.menuColumn = itemObj
-        titleObj.menuColumn = itemObj
         itemObj.loadComponent.connect(loadComponent)
         debugTiming.logTiming("Done creating MenuColumn")
         _addItem(itemObj, titleObj, shadowObj)
-        return
     }
-    else {
-        console.log("Error on creating the Component: " + component + "error: " + component.errorString())
-        shadowObj.destroy()
-        titleObj.destroy()
-    }
-
 }
 
 var OP_CLOSE = 1
