@@ -269,9 +269,12 @@ void MountWatcher::startWatching()
 	mtabChanged();
 
 	// USB mount/umount
-	watcher->addPath(MTAB);   // for x86/desktop
-	watcher->addPath("/tmp"); // for touch
-	watcher->addPath(MOUNT_PATH); // for touch
+#if defined(BT_HARDWARE_X11)
+	watcher->addPath(MTAB);
+#else
+	watcher->addPath("/tmp");
+	watcher->addPath(MOUNT_PATH);
+#endif
 }
 
 void MountWatcher::fileChanged(const QString &file)
