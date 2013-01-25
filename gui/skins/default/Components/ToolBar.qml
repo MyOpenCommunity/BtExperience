@@ -140,13 +140,6 @@ Item {
         }
     }
 
-    SvgImage {
-        source: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/toolbar_logo_black.svg" :
-                                                                imagesPath + "toolbar/toolbar_logo_white.svg"
-        anchors.verticalCenter: toolbar_top.verticalCenter
-        anchors.horizontalCenter: toolbar_top.horizontalCenter
-    }
-
     Row {
         id: toolbarRight
         anchors.right: toolbar_top.right
