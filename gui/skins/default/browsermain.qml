@@ -74,6 +74,7 @@ BasePage {
             HidingBar {
                 id: hidingBar
                 state: "hidden"
+                z: webViewContaineer.z + 1
                 anchors {
                     top: header.bottom
                     right: header.right
@@ -91,7 +92,7 @@ BasePage {
 
             Pannable {
                 id: webViewContaineer
-                anchors.top: hidingBar.bottom
+                anchors.top: header.bottom
                 anchors.bottom: parent.bottom
                 width: parent.width
 
