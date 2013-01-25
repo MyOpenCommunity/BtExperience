@@ -130,10 +130,10 @@
 	</obj>
 	<!-- alarm clock -->
 	<obj cid="14201" id="14201" enabled="0" type="0" days="0" hour="0" minutes="0" source_type="0">
-		<ist uii="30501" enabled="1" type="0" volume="1" descr="Beep" hour="13" minutes="30"/>
-		<ist uii="30502" enabled="1" type="1" days="127" volume="9" source_type="1" amplifier_uii="10003" descr="Sound diff RDS" hour="14" minutes="30"/>
-		<ist uii="30503" enabled="1" type="1" days="127" volume="9" source_type="4" amplifier_uii="10003" descr="Sound diff USB" hour="15" minutes="30"/>
-		<ist uii="30504" enabled="1" type="1" days="127" volume="9" source_type="2" amplifier_uii="10003" descr="Sound diff WebRadio" hour="16" minutes="30"/>
+		<ist uii="30501" enabled="0" type="0" volume="1" descr="Beep" hour="13" minutes="30"/>
+		<ist uii="30502" enabled="0" type="1" days="127" volume="9" source_type="1" amplifier_uii="10003" descr="Sound diff RDS" hour="14" minutes="30"/>
+		<ist uii="30503" enabled="0" type="1" days="127" volume="9" source_type="4" amplifier_uii="10003" descr="Sound diff USB" hour="15" minutes="30"/>
+		<ist uii="30504" enabled="0" type="1" days="127" volume="9" source_type="2" amplifier_uii="10003" descr="Sound diff WebRadio" hour="16" minutes="30"/>
 	</obj>
 	<!-- debug settings -->
 	<obj id="123456" internal_descr="debug touchscreen">
