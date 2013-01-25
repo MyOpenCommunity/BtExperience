@@ -155,7 +155,7 @@ SvgImage {
 
     Item {
         id: closeBrowser
-        width: 45
+        width: 36
         height: 35
         anchors {
             top: bgText.top
@@ -164,8 +164,18 @@ SvgImage {
         }
 
         SvgImage {
+            id: closeIcon
             anchors.right: parent.right
-            source: "../../images/profile-settings/icon_delete.svg"
+            source: "../../images/common/button_close.svg"
+            states: [
+                State {
+                    name: "pressed"
+                    PropertyChanges {
+                        target: closeIcon
+                        source: "../../images/common/button_close_p.svg"
+                    }
+                }
+            ]
         }
 
         MouseArea {
@@ -192,6 +202,8 @@ SvgImage {
                     // correct way to free the object
                     global.destroyQmlItem(ghost)
             }
+            onPressed: closeIcon.state = "pressed"
+            onReleased: closeIcon.state = ""
         }
     }
 
