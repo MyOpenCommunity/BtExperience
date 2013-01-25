@@ -4,12 +4,12 @@
 
 #include <QObject>
 #include <QSize>
+#include <QNetworkAccessManager>
+#include <QImage>
+#include <QTemporaryFile>
 
 
-class QNetworkAccessManager;
 class QNetworkReply;
-class QTemporaryFile;
-class QImage;
 
 class ImageSaver : public QObject
 {
@@ -17,7 +17,6 @@ class ImageSaver : public QObject
 
 public:
 	explicit ImageSaver(QObject *parent = 0);
-	virtual ~ImageSaver();
 
 	void startDownload(QObject *object, QString property, QString download_url, QString save_file_path, QSize size);
 
@@ -37,14 +36,14 @@ private:
 	void saveDestinationFile();
 
 private:
-	QNetworkAccessManager *manager;
+	QNetworkAccessManager manager;
 	QNetworkReply *reply;
-	QTemporaryFile *file;
+	QTemporaryFile file;
 	QSize size;
 	QString save_file_path;
 	QObject *object;
 	QString property;
-	QImage *image_buffer;
+	QImage image_buffer;
 	static unsigned int progressive_id;
 };
 

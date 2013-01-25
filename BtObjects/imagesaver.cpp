@@ -1,11 +1,8 @@
 #include "imagesaver.h"
 
 #include <QtDebug>
-#include <QImage>
-#include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-#include <QTemporaryFile>
 #include <QPainter>
 #include <QDir>
 #include <QFileInfo>
@@ -17,21 +14,6 @@ unsigned int ImageSaver::progressive_id = 0;
 ImageSaver::ImageSaver(QObject *parent) :
 	QObject(parent)
 {
-	manager = new QNetworkAccessManager;
-	image_buffer = new QImage;
-	file = 0;
-}
-
-ImageSaver::~ImageSaver()
-{
-	manager->deleteLater();
-	delete image_buffer;
-	if (file)
-	{
-		if (file->isOpen())
-			file->close();
-		file->deleteLater();
-	}
 }
 
 void ImageSaver::startDownload(QObject *_object, QString _property, QString download_url, QString _save_file_path, QSize _size)
@@ -41,16 +23,15 @@ void ImageSaver::startDownload(QObject *_object, QString _property, QString down
 	size = _size;
 	save_file_path = _save_file_path;
 
-	image_buffer->load(download_url);
+	image_buffer.load(download_url);
 
-	if (image_buffer->isNull())
+	if (image_buffer.isNull())
 	{
 		QNetworkRequest request;
 		request.setUrl(QUrl(download_url));
-		reply = manager->get(request);
+		reply = manager.get(request);
 
-		file = new QTemporaryFile;
-		if (!file->open())
+		if (!file.open())
 		{
 			qWarning() << __PRETTY_FUNCTION__;
 			qWarning() << "Error opening temporary file. Aborting";
@@ -59,7 +40,7 @@ void ImageSaver::startDownload(QObject *_object, QString _property, QString down
 		}
 
 		connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(onDownloadProgress(qint64,qint64)));
-		connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFinished(QNetworkReply*)));
+		connect(&manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFinished(QNetworkReply*)));
 		connect(reply,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		connect(reply, SIGNAL(finished()), this, SLOT(onReplyFinished()));
 
@@ -91,7 +72,7 @@ void ImageSaver::onFinished(QNetworkReply *reply)
 		return;
 	}
 
-	image_buffer->load(file->fileName());
+	image_buffer.load(file.fileName());
 
 	computeMaxId();
 	computeSaveFilePath();
@@ -101,7 +82,7 @@ void ImageSaver::onFinished(QNetworkReply *reply)
 
 void ImageSaver::onReadyRead()
 {
-	file->write(reply->readAll());
+	file.write(reply->readAll());
 }
 
 void ImageSaver::onReplyFinished()
@@ -167,25 +148,21 @@ void ImageSaver::computeSaveFilePath()
 void ImageSaver::saveDestinationFile()
 {
 	if (size.isValid())
-	{
-		QImage *tmp = new QImage(image_buffer->scaled(size, Qt::KeepAspectRatio));
-		delete image_buffer;
-		image_buffer = tmp;
-	}
+		image_buffer = image_buffer.scaled(size, Qt::KeepAspectRatio);
 
-	if (image_buffer->isNull())
+	if (image_buffer.isNull())
 	{
 		qWarning() << __PRETTY_FUNCTION__;
 		qWarning() << "Rescale operation failed. Aborting";
 		return;
 	}
 
-	QImage destImage = QImage(size, image_buffer->format());
+	QImage destImage = QImage(size, image_buffer.format());
 	destImage.fill(Qt::black);
-	QPoint destPos = QPoint((destImage.width() - image_buffer->width()) / 2, (destImage.height() - image_buffer->height()) / 2);
+	QPoint destPos = QPoint((destImage.width() - image_buffer.width()) / 2, (destImage.height() - image_buffer.height()) / 2);
 
 	QPainter painter(&destImage);
-	painter.drawImage(destPos, *image_buffer);
+	painter.drawImage(destPos, image_buffer);
 	painter.end();
 
 	destImage.save(save_file_path);

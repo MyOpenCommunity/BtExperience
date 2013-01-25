@@ -30,7 +30,7 @@ maliit {
     DEFINES += BT_MALIIT
 }
 
-QT += opengl xml
+QT += network opengl xml
 
 DESTDIR = ../bin/$${HARDWARE}
 
