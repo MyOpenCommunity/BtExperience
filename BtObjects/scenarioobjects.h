@@ -267,6 +267,7 @@ signals:
 
 private slots:
 	void resetTimer();
+	void valueReceived(const DeviceValues &values_list);
 
 private:
 	int hours, minutes;

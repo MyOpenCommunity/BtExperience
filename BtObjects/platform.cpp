@@ -347,6 +347,10 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 		}
 		++it;
 	}
+
+	if (values_list.contains(PlatformDevice::DIM_DATE) ||
+	    values_list.contains(PlatformDevice::DIM_TIME))
+		emit systemTimeChanged();
 }
 
 void PlatformSettings::emitDateSignals(QDate oldDate, QDate newDate)

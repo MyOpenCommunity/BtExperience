@@ -44,8 +44,9 @@ Page {
         // the following properties are used to compute margins for the moving area
         // we have to be sure that elements moved on the bottom and right part of
         // the area don't overlap the area margins
-        property int maxItemWidth: 0
-        property int maxItemHeight: 0
+        // Default values are useful when no item is already present.
+        property int maxItemWidth: 130
+        property int maxItemHeight: 120
 
         function selectObj(favorite) {
             unselectObj()

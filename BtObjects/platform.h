@@ -188,6 +188,7 @@ signals:
 	void daysChanged();
 	void monthsChanged();
 	void yearsChanged();
+	void systemTimeChanged();
 
 private slots:
 	void valueReceived(const DeviceValues &values_list);
