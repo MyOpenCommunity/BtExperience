@@ -67,10 +67,10 @@ Item {
                 }
             }
 
-            UbuntuMediumText {
+            UbuntuLightText {
                 id: title
                 text: zoomPercentage + "%"
-                font.pixelSize: 18
+                font.pixelSize: 16
                 color: "white"
                 anchors {
                     left: plusBarButton.right
