@@ -19,12 +19,12 @@ SvgImage {
 
     function updateImages(s) {
         if (s === "hidden") {
-            hidingBarButton.defaultImage = "../../images/common/ico_basso.svg"
-            hidingBarButton.pressedImage = "../../images/common/ico_basso_P.svg"
+            hidingBarButton.defaultImage = "../../images/common/icon_browser-option.svg"
+            hidingBarButton.pressedImage = "../../images/common/icon_browser-option_p.svg"
         }
         else {
-            hidingBarButton.defaultImage = "../../images/common/ico_alto.svg"
-            hidingBarButton.pressedImage = "../../images/common/ico_alto_P.svg"
+            hidingBarButton.defaultImage = "../../images/common/icon_browser-option_open.svg"
+            hidingBarButton.pressedImage = "../../images/common/icon_browser-option_open_p.svg"
         }
     }
 
@@ -59,23 +59,6 @@ SvgImage {
     }
 
     ButtonImageThreeStates {
-        id: hidingBarButton
-        defaultImageBg: "../../images/common/btn_45x35.svg"
-        pressedImageBg: "../../images/common/btn_45x35_P.svg"
-        shadowImage: "../../images/common/btn_shadow_45x35.svg"
-        defaultImage: "../../images/common/ico_basso.svg"
-        pressedImage: "../../images/common/ico_basso_P.svg"
-        status: 0
-        onClicked: control.hidingBarClicked()
-        anchors {
-            left: backButton.right
-            leftMargin: 4
-            top: parent.top
-            topMargin: 6
-        }
-    }
-
-    ButtonImageThreeStates {
         id: forwardButton
         defaultImageBg: "../../images/common/btn_45x35.svg"
         pressedImageBg: "../../images/common/btn_45x35_P.svg"
@@ -85,7 +68,7 @@ SvgImage {
         status: 0
         onClicked: view.forward.trigger()
         anchors {
-            left: hidingBarButton.right
+            left: backButton.right
             leftMargin: 4
             top: parent.top
             topMargin: 6
@@ -102,7 +85,24 @@ SvgImage {
             top: parent.top
             topMargin: 6
             right: parent.right
-            rightMargin: 30 + actionButton.width + closeBrowser.width
+            rightMargin: 30 + actionButton.width + closeBrowser.width + hidingBarButton.width
+        }
+    }
+
+    ButtonImageThreeStates {
+        id: hidingBarButton
+        defaultImageBg: "../../images/common/btn_45x35.svg"
+        pressedImageBg: "../../images/common/btn_45x35_P.svg"
+        shadowImage: "../../images/common/btn_shadow_45x35.svg"
+        defaultImage: "../../images/common/icon_browser-option.svg"
+        pressedImage: "../../images/common/icon_browser-option_p.svg"
+        status: 0
+        onClicked: control.hidingBarClicked()
+        anchors {
+            left: bgText.right
+            leftMargin: 10
+            top: parent.top
+            topMargin: 6
         }
     }
 
@@ -128,8 +128,8 @@ SvgImage {
             }
         }
         anchors {
-            left: bgText.right
-            leftMargin: 10
+            left: hidingBarButton.right
+            leftMargin: 4
             top: parent.top
             topMargin: 6
         }
