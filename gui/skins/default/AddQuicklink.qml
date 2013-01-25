@@ -578,7 +578,7 @@ Page {
         }
 
         function getBackgroundImage(profile, homeCustomization, onlyQuicklinks) {
-            if (profile !== undefined)
+            if (profile !== undefined && profile.image !== "")
                 return profile.image
             return global.guiSettings.homeBgImage
         }
