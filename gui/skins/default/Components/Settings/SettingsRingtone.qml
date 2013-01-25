@@ -9,31 +9,43 @@ MenuColumn {
 
     property int type
 
-    // using a ListView, so I have to hardcode dim
-    height: 350
-    width: 212
-
-    onChildDestroyed: {
-        itemList.currentIndex = -1
+    QtObject {
+        id: privateProps
+        property variant ringtones: global.ringtoneManager.ringtoneList()
+        property int currentIndex: 0
     }
 
-    ListView {
-        id: itemList
 
-        anchors.fill: parent
-        currentIndex: -1
-        interactive: false
+    ControlLeftRightWithTitle {
+        title: qsTr("Ringtones")
+        text: privateProps.ringtones[privateProps.currentIndex].replace(/^.*[\\\/]/, '').split(".").shift() // some JS magic to extract file name
+        onLeftClicked: {
+            privateProps.currentIndex = (privateProps.currentIndex - 1 + privateProps.ringtones.length) % privateProps.ringtones.length
+            global.ringtoneManager.setRingtoneFromFilename(type, privateProps.ringtones[privateProps.currentIndex])
+            previewTimer.restart()
+        }
+        onRightClicked: {
+            privateProps.currentIndex = (privateProps.currentIndex + 1) % privateProps.ringtones.length
+            global.ringtoneManager.setRingtoneFromFilename(type, privateProps.ringtones[privateProps.currentIndex])
+            previewTimer.restart()
+        }
+    }
 
-        delegate: MenuItemDelegate {
-            name: modelData.replace(/^.*[\\\/]/, '').split(".").shift() // some JS magic to extract file name
-            hasChild: false
-            isSelected: modelData === global.ringtoneManager.ringtoneFromType(column.type)
-            onClicked: {
-                global.ringtoneManager.setRingtoneFromFilename(column.type, modelData)
-                column.closeColumn()
+    Timer {
+        id: previewTimer
+        interval: 1000
+        onTriggered: global.ringtoneManager.playRingtone(privateProps.ringtones[privateProps.currentIndex], AudioState.Ringtone)
+    }
+
+    Component.onCompleted: {
+        // search the current active ringtone for type
+        var currentString = global.ringtoneManager.ringtoneFromType(type)
+        for (var i = 0; i < privateProps.ringtones.length; ++i) {
+            if (currentString === privateProps.ringtones[i]) {
+                privateProps.currentIndex = i
+                break
             }
         }
-
-        model: global.ringtoneManager.ringtoneList()
+        previewTimer.start()
     }
 }
