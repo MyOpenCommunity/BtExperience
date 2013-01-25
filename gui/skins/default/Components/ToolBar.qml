@@ -181,7 +181,10 @@ Item {
                               "../images/toolbar/icon_alarm-clock.svg"
             onClicked: {
                 toolbar.toolbarNavigationClicked()
-                Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ALARM_CLOCKS})
+                if (EventManager.eventManager.clockRinging)
+                    EventManager.eventManager.resendAlarmStarted()
+                else
+                    Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ALARM_CLOCKS})
             }
         }
 

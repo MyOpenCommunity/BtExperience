@@ -51,10 +51,13 @@ signals:
 	void alarmStarted(AlarmClock *alarmClock);
 	void ringAlarmClock(AlarmClock *alarmClock);
 
+public slots:
+	void reemitAlarmStarted();
+
 private slots:
+	void emitAlarmStarted();
 	void updateAlarmClocksInfo();
 	void updateAlarmClocksRinging();
-	void emitAlarmStarted();
 
 private:
 	ObjectModel *alarm_clocks_model;

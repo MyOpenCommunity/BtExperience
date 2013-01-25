@@ -27,6 +27,9 @@ Item {
 
     property variant scenarioRecorder: privateProps.recordingModel === undefined ? undefined : privateProps.recordingModel.recorder
     property bool notificationsEnabled: true
+    property bool clockRinging: privateProps.clocksModel === null ?
+                                    false :
+                                    (privateProps.clocksModel.alarmActive || privateProps.clocksModel.beepAlarmActive)
 
     signal changePageDone
 
@@ -253,6 +256,10 @@ Item {
         id: messagesConnection
         target: null
         onUnreadMessagesChanged: privateProps.addNotification({"type": Script.UNREAD_MESSAGES_UPDATING})
+    }
+
+    function resendAlarmStarted() {
+        privateProps.clocksModel.reemitAlarmStarted()
     }
 
     Connections {

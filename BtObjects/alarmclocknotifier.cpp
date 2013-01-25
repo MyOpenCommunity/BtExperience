@@ -103,6 +103,16 @@ void AlarmClockNotifier::updateAlarmClocksRinging()
 	}
 }
 
+void AlarmClockNotifier::reemitAlarmStarted()
+{
+	for (int i = 0; i < alarm_clocks_model->getCount(); ++i)
+	{
+		AlarmClock *alarm = qobject_cast<AlarmClock *>(alarm_clocks_model->getObject(i));
+		if (alarm->isRinging())
+			emit alarmStarted(alarm);
+	}
+}
+
 void AlarmClockNotifier::emitAlarmStarted()
 {
 	AlarmClock *alarm = qobject_cast<AlarmClock*>(sender());
