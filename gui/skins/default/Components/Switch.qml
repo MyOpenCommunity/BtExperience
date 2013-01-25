@@ -18,6 +18,7 @@ SvgImage {
     source: "../images/common/option_switch_background.svg"
 
     BeepingMouseArea {
+        id: mouseArea
         anchors.fill: parent
         onClicked: systemIcon.clicked()
     }
@@ -34,6 +35,15 @@ SvgImage {
             source: "../images/common/symbol_lock_close.svg"
             anchors.centerIn: parent
         }
+    }
+
+    SvgImage {
+        id: pressedImage
+        source: "../images/common/button_switch_p.svg"
+        anchors.centerIn: locked
+        visible: mouseArea.pressed
+        z: 1
+        opacity: 0.7
     }
 
     SvgImage {
@@ -85,6 +95,7 @@ SvgImage {
                 target: unlockedArrow
                 visible: false
             }
+            PropertyChanges { target: pressedImage; anchors.centerIn: unlocked }
         },
         State {
             name: "normal"
@@ -105,6 +116,7 @@ SvgImage {
                 target: unlockedArrow
                 visible: true
             }
+            PropertyChanges { target: pressedImage; anchors.centerIn: locked }
         }
     ]
 }
