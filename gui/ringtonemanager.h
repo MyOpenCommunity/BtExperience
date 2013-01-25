@@ -34,8 +34,23 @@ public:
 
 	RingtoneManager(QString ringtone_file, MultiMediaPlayer *player, AudioState *audio_state, QObject *parent);
 
+	/**
+	  \brief Enters the given audio state and plays the ringtone
+
+	  The state is automatically left when the playback is finished.
+	*/
 	Q_INVOKABLE void playRingtone(QString path, int audio_state);
+
+	/**
+	  \brief Enters the given audio state and plays the ringtone.
+
+	  The state is maintained when playback is finished.
+	*/
 	Q_INVOKABLE void playRingtoneAndKeepState(QString path, int audio_state);
+
+	/**
+	  \brief Stop the playback of the current playing ringtone.
+	*/
 	Q_INVOKABLE void stopRingtone();
 
 	Q_INVOKABLE QString ringtoneFromIndex(int index) const;
