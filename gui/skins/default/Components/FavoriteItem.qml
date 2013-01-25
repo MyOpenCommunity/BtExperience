@@ -5,7 +5,7 @@ QuickLink {
     id: favoriteItem
 
     page: ""
-    imageSource: "../images/profiles/web.jpg"
+    imageSource: "../images/profiles/webcam.jpg"
 
     onClicked: {
         global.browser.displayUrl(itemObject.address)

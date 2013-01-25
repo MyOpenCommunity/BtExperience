@@ -104,8 +104,10 @@ Page {
                 component = favouriteItemComponent
                 break
             case MediaLink.Rss:
-            case MediaLink.RssMeteo:
                 component = rssItemComponent
+                break
+            case MediaLink.RssMeteo:
+                component = meteoItemComponent
                 break
             case MediaLink.Camera:
                 component = cameraItemComponent
@@ -226,6 +228,11 @@ Page {
     Component {
         id: rssItemComponent
         RssItem { }
+    }
+
+    Component {
+        id: meteoItemComponent
+        MeteoItem {}
     }
 
     Component {

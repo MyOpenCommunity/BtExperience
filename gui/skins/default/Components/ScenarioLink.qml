@@ -6,7 +6,7 @@ QuickLink {
     id: favoriteItem
 
     page: ""
-    imageSource: "../images/profiles/webcam.jpg"
+    imageSource: "../images/profiles/scenario_quicklink.png"
 
     onClicked: {
         if (itemObject.btObject.activate) {
