@@ -131,6 +131,7 @@ void ImageSaver::computeSaveFilePath()
 
 void ImageSaver::saveDestinationFile()
 {
+	// size argument is optional, if specified rescales image to desired size
 	if (size.isValid())
 		image_buffer = image_buffer.scaled(size, Qt::KeepAspectRatio);
 
