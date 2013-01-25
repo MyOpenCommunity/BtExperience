@@ -7,22 +7,13 @@ import Components 1.0
 import Components.Text 1.0
 
 
-Item {
+Loader {
     id: control
 
     property int zoomPercentage: 100
 
     signal zoomOutClicked
     signal zoomInClicked
-
-    height: if (loaderItem.item) loaderItem.item.height
-    width: 180
-
-    Loader {
-        id: loaderItem
-
-        anchors.fill: parent
-    }
 
     Component {
         id: theBar
@@ -31,6 +22,7 @@ Item {
             id: bg
 
             source: "../../images/common/bg_barra.svg"
+            width: 180
 
             ButtonImageThreeStates {
                 id: minusBarButton
@@ -91,7 +83,7 @@ Item {
         State {
             name: "visible"
             PropertyChanges {
-                target: loaderItem
+                target: control
                 sourceComponent: theBar
             }
         }
