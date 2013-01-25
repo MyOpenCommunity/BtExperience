@@ -92,6 +92,11 @@ BasePage {
         }
 
         Component {
+            id: meteoDelegate
+            MeteoItem {}
+        }
+
+        Component {
             id: webRadioDelegate
             WebRadioLink {}
         }
@@ -118,8 +123,10 @@ BasePage {
                         return webRadioDelegate
                     case MediaLink.Scenario:
                         return scenarioDelegate
-                    default:
+                    case MediaLink.Rss:
                         return rssDelegate
+                    default:
+                        return meteoDelegate
                     }
                 }
 

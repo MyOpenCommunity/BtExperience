@@ -110,19 +110,19 @@ Page {
         multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices_card.jpg", "props": {} })
         multimediaModel.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": global.homePageUrl}})
         if (webLinkModel.count > 0)
-            multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
+            multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
                                        "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
         if (rssModel.count > 0)
             multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/card/rss_card.jpg",
                                        "props": {"containerId": Container.IdMultimediaRss, "type": "rss"}})
         if (webRadioModel.count > 0)
-            multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
+            multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
                                        "props": {"containerId": Container.IdMultimediaWebRadio, "type": "webradio"}})
         if (rssMeteoModel.count > 0)
             multimediaModel.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/card/meteo_card.jpg",
                                        "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
         if (webcamModel.count > 0)
-            multimediaModel.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
+            multimediaModel.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/webcam_card.jpg",
                                        "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
 
         viewLoader.item.model = multimediaModel

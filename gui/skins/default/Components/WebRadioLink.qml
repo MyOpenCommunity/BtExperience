@@ -7,7 +7,7 @@ QuickLink {
     id: favoriteItem
 
     page: ""
-    imageSource: "../images/profiles/webcam.jpg" // TODO use right image when available
+    imageSource: "../images/profiles/web.jpg"
 
     onClicked: {
         var items = []

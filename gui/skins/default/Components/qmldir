@@ -34,12 +34,12 @@ ControlLeftRight 1.0 ControlLeftRight.qml
 ControlLeftRightWithTitle 1.0 ControlLeftRightWithTitle.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
 ControlOn 1.0 ControlOn.qml
-ControlOnVDE 1.0 ControlOnVDE.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlOnOffGroup 1.0 ControlOnOffGroup.qml
+ControlOnVDE 1.0 ControlOnVDE.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
-ControlOpenCloseStopSafe 1.0 ControlOpenCloseStopSafe.qml
 ControlOpenCloseStopGroup 1.0 ControlOpenCloseStopGroup.qml
+ControlOpenCloseStopSafe 1.0 ControlOpenCloseStopSafe.qml
 ControlPathView 1.0 ControlPathView.qml
 ControlPathViewInternal 1.0 ControlPathViewInternal.qml
 ControlPopup 1.0 ControlPopup.qml
@@ -68,6 +68,7 @@ MenuItem 1.0 MenuItem.qml
 MenuItemDelegate 1.0 MenuItemDelegate.qml
 MenuShadow 1.0 MenuShadow.qml
 MenuTitle 1.0 MenuTitle.qml
+MeteoItem 1.0 MeteoItem.qml
 MoveArea 1.0 MoveArea.qml
 NavigationBar 1.0 NavigationBar.qml
 NoteActions 1.0 NoteActions.qml
