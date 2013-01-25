@@ -42,7 +42,8 @@ Item {
             {objectId: ObjectInterface.IdDangers},
             {objectId: ObjectInterface.IdEnergies},
             {objectId: ObjectInterface.IdScenarioModulesNotifier},
-            {objectId: ObjectInterface.IdAlarmClockNotifier}
+            {objectId: ObjectInterface.IdAlarmClockNotifier},
+            {objectId: ObjectInterface.IdPlatformSettings}
         ]
         Component.onCompleted: {
             for (var i = 0; i < listModel.count; ++i) {
@@ -77,6 +78,9 @@ Item {
                 case ObjectInterface.IdAlarmClockNotifier:
                     clocksConnection.target = obj
                     privateProps.clocksModel = obj
+                    break
+                case ObjectInterface.IdPlatformSettings:
+                    systemTimeChanged.target = obj
                     break
                 }
             }
@@ -121,6 +125,11 @@ Item {
             // restarts timer
             monthlyReportTimer.start()
         }
+    }
+
+    Connections {
+        id: systemTimeChanged
+        onSystemTimeChanged: monthlyReportTimer.updateTimer()
     }
 
     Loader {

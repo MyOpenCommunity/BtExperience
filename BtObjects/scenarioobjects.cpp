@@ -1,6 +1,7 @@
 #include "scenarioobjects.h"
 #include "scenario_device.h"
 #include "devices_cache.h"
+#include "platform_device.h"
 #include "shared_functions.h"
 #include "xml_functions.h"
 #include "xmlobject.h"
@@ -522,10 +523,13 @@ void ActionObject::buildDescriptionMap()
 
 TimeConditionObject::TimeConditionObject(int _hours, int _minutes)
 {
+	PlatformDevice *dev = bt_global::add_device_to_cache(new PlatformDevice);
+
 	hours = condition_hours = _hours;
 	minutes = condition_minutes = _minutes;
 	timer.setSingleShot(true);
 
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 	connect(&timer, SIGNAL(timeout()), this, SIGNAL(satisfied()));
 	connect(&timer, SIGNAL(timeout()), this, SLOT(resetTimer()));
 
@@ -595,6 +599,13 @@ void TimeConditionObject::resetTimer()
 
 	qDebug("(re)starting timer with interval of msecs = %d", msecsto);
 	timer.start(msecsto);
+}
+
+void TimeConditionObject::valueReceived(const DeviceValues &values_list)
+{
+	if (values_list.contains(PlatformDevice::DIM_DATE) ||
+	    values_list.contains(PlatformDevice::DIM_TIME))
+		resetTimer();
 }
 
 

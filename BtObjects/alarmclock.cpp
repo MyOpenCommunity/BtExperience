@@ -4,6 +4,8 @@
 #include "xml_functions.h"
 #include "xmlobject.h"
 #include "shared_functions.h"
+#include "devices_cache.h"
+#include "platform_device.h"
 #include "qmlcache.h"
 
 
@@ -146,6 +148,8 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &
 AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, int hour, int minute, QObject *parent)
 	: ObjectInterface(parent)
 {
+	PlatformDevice *dev = bt_global::add_device_to_cache(new PlatformDevice);
+
 	cache = new QMLCache(this);
 
 	timer_trigger = new QTimer(this);
@@ -175,6 +179,8 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 	timer_postpone = new QTimer(this);
 	timer_postpone->setSingleShot(true);
 	timer_postpone->setInterval(POSTPONE_TIME * 1000);
+
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(sourceChanged()), this, SIGNAL(persistItem()));
@@ -246,6 +252,13 @@ void AlarmClock::qmlValueChanged(int key, QVariant value)
 	}
 }
 
+void AlarmClock::valueReceived(const DeviceValues &values_list)
+{
+	if (values_list.contains(PlatformDevice::DIM_DATE) ||
+	    values_list.contains(PlatformDevice::DIM_TIME))
+		checkRequestManagement();
+}
+
 void AlarmClock::checkRequestManagement()
 {
 	if (enabled)
@@ -264,6 +277,7 @@ void AlarmClock::checkRequestManagement()
 			delta_seconds = actual_date_time.secsTo(triggering_date_time.addDays(1));
 
 		// finally, sets trigger timer
+		qDebug("(re)starting timer with interval of msecs = %d", delta_seconds * 1000);
 		timer_trigger->setSingleShot(true);
 		timer_trigger->start(delta_seconds * 1000);
 	}

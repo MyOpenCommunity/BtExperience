@@ -2,6 +2,7 @@
 #define ALARMCLOCK_H
 
 #include "objectinterface.h"
+#include "device.h" // DeviceValues
 
 #include <QHash>
 #include <QTime>
@@ -187,6 +188,7 @@ private slots:
 	void mediaSourcePlaybackStatus(bool status);
 	void qmlValueChanged(int key, QVariant value);
 	void updateAmbient();
+	void valueReceived(const DeviceValues &values_list);
 
 private:
 	void start();
