@@ -25,7 +25,6 @@ SvgImage {
         defaultImage: "../../images/common/ico_rispondi.svg"
         pressedImage: "../../images/common/ico_rispondi_P.svg"
         onClicked: control.leftClicked()
-        status: 0
         anchors {
             bottom: parent.bottom
             bottomMargin: 9
@@ -43,7 +42,6 @@ SvgImage {
         defaultImage: "../../images/common/ico_rifiuta.svg"
         pressedImage: "../../images/common/ico_rifiuta_P.svg"
         onClicked: control.rightClicked()
-        status: 0
         anchors {
             bottom: parent.bottom
             bottomMargin: 9

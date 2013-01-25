@@ -78,7 +78,6 @@ SvgImage {
             pressedImage: "../images/common/ico_meno_P.svg"
             onClicked: minusClicked()
             repetitionOnHold: true
-            status: 0
         }
 
         ButtonImageThreeStates {
@@ -89,7 +88,6 @@ SvgImage {
             pressedImage: "../images/common/ico_piu_P.svg"
             onClicked: plusClicked()
             repetitionOnHold: true
-            status: 0
         }
     }
 }

@@ -27,7 +27,6 @@ Item {
         textAnchors.leftMargin: bg.width / 100 * 8.70
 
         onClicked: delegateClicked()
-        status: 0
     }
 
     SvgImage {

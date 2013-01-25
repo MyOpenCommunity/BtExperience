@@ -31,7 +31,6 @@ Loader {
                 shadowImage: "../../images/common/btn_shadow_45x35.svg"
                 defaultImage: "../../images/common/icon_zoom-out.svg"
                 pressedImage: "../../images/common/icon_zoom-out_p.svg"
-                status: 0
                 repetitionOnHold: true
                 onClicked: control.zoomOutClicked()
                 anchors {
@@ -49,7 +48,6 @@ Loader {
                 shadowImage: "../../images/common/btn_shadow_45x35.svg"
                 defaultImage: "../../images/common/icon_zoom-in.svg"
                 pressedImage: "../../images/common/icon_zoom-in_p.svg"
-                status: 0
                 repetitionOnHold: true
                 onClicked: control.zoomInClicked()
                 anchors {

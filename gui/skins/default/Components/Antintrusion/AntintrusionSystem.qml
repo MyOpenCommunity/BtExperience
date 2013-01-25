@@ -293,7 +293,6 @@ MenuColumn {
                 font.capitalization: Font.AllUppercase
                 font.pixelSize: 15
                 onClicked: privateProps.partialize()
-                status: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: parent.height / 100 * 3
                 anchors.horizontalCenter: parent.horizontalCenter

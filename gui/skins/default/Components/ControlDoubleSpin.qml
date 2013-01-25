@@ -32,7 +32,6 @@ Item {
         shadowImage: "../images/common/btn_shadow_99x35.svg"
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
-        status: 0
         repetitionOnHold: true
         onClicked: control.leftPlusClicked()
     }
@@ -50,7 +49,6 @@ Item {
         shadowImage: "../images/common/btn_shadow_99x35.svg"
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
-        status: 0
         repetitionOnHold: true
         onClicked: control.rightPlusClicked()
     }
@@ -78,7 +76,6 @@ Item {
         shadowImage: "../images/common/btn_shadow_99x35.svg"
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
-        status: 0
         repetitionOnHold: true
         onClicked: control.leftMinusClicked()
     }
@@ -96,7 +93,6 @@ Item {
         shadowImage: "../images/common/btn_shadow_99x35.svg"
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
-        status: 0
         repetitionOnHold: true
         onClicked: control.rightMinusClicked()
     }

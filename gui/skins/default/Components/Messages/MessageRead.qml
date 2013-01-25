@@ -59,7 +59,6 @@ MenuColumn {
             theModel.remove(column.dataModel)
             column.closeColumn()
         }
-        status: 0
     }
 
     ButtonImageThreeStates {
@@ -81,6 +80,5 @@ MenuColumn {
             console.log("reply pressed")
             column.closeColumn()
         }
-        status: 0
     }
 }

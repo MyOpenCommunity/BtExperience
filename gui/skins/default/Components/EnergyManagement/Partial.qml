@@ -66,7 +66,6 @@ SvgImage {
         font.capitalization: Font.AllUppercase
         font.pixelSize: 15
         onClicked: element.clicked()
-        status: 0
         anchors {
             bottom: parent.bottom
             bottomMargin: parent.height / 100 * 10

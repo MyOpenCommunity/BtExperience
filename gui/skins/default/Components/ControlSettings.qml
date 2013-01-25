@@ -91,7 +91,6 @@ SvgImage {
         defaultImage: "../images/termo/imposta_data-ora/ico_imposta_data-ora.svg"
         pressedImage: "../images/termo/imposta_data-ora/ico_imposta_data-ora_P.svg"
         selectedImage: "../images/termo/imposta_data-ora/ico_imposta_data-ora_P.svg" // we don't have a _S version
-        status: 0
         onClicked: control.editClicked()
     }
 }

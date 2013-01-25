@@ -114,7 +114,6 @@ Page {
                     selectedImage: "images/common/btn_84x35_S.svg"
                     shadowImage: "images/common/btn_shadow_84x35.svg"
                     text: qsTr("day")
-                    status: 0
                     onClicked: {
                         if (page.state === "day")
                             return
@@ -149,7 +148,6 @@ Page {
                     selectedImage: "images/common/btn_84x35_S.svg"
                     shadowImage: "images/common/btn_shadow_84x35.svg"
                     text: qsTr("year")
-                    status: 0
                     onClicked: {
                         if (page.state === "year")
                             return

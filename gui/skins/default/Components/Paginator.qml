@@ -108,7 +108,6 @@ Item {
             selectedImage: "../images/common/button_pager_select.svg"
             shadowImage: "../images/common/shadow_button_pager.svg"
             onClicked: privateProps.previousPage()
-            status: 0
 
             SvgImage {
                 id: image1
@@ -151,7 +150,6 @@ Item {
             selectedImage: "../images/common/button_pager_select.svg"
             shadowImage: "../images/common/shadow_button_pager.svg"
             onClicked: privateProps.nextPage()
-            status: 0
 
             SvgImage {
                 id: image2

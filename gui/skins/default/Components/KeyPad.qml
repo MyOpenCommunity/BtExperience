@@ -220,7 +220,6 @@ SvgImage {
                     shadowImage: "../images/common/shadow_button_key_delete.svg"
                     text: ""
                     onClicked: keypad.digitClicked("C")
-                    status: 0
 
                     SvgImage {
                         source: parent.state === "pressed" ? "../images/common/key_delete_press.svg" : "../images/common/key_delete.svg"
@@ -234,7 +233,6 @@ SvgImage {
                     shadowImage: "../images/common/shadow_button_keypad.svg"
                     text: "0"
                     onClicked: keypad.digitClicked(text)
-                    status: 0
                 }
             }
         }

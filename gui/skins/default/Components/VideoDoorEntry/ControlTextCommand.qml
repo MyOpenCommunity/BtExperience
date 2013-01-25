@@ -45,7 +45,6 @@ SvgImage {
         onClicked: control.clicked()
         onPressed: control.pressed()
         onReleased: control.released()
-        status: 0
         anchors {
             bottom: parent.bottom
             bottomMargin: 12

@@ -49,7 +49,6 @@ SvgImage {
         pressedImage: "../images/common/ico_meno_P.svg"
         repetitionOnHold: true
         onClicked: minusClicked()
-        status: 0
         anchors {
             bottom: parent.bottom
             bottomMargin: 11
@@ -68,7 +67,6 @@ SvgImage {
         pressedImage: "../images/common/ico_piu_P.svg"
         repetitionOnHold: true
         onClicked: plusClicked()
-        status: 0
         anchors {
             bottom: parent.bottom
             bottomMargin: 11

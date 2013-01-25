@@ -30,7 +30,6 @@ SvgImage {
         defaultImage: "../images/common/ico_freccia_sx.svg"
         pressedImage: "../images/common/ico_freccia_sx_P.svg"
         onClicked: leftClicked()
-        status: 0
         anchors {
             bottom: parent.bottom
             bottomMargin: 11
@@ -47,7 +46,6 @@ SvgImage {
         defaultImage: "../images/common/ico_freccia_dx.svg"
         pressedImage: "../images/common/ico_freccia_dx_P.svg"
         onClicked: rightClicked()
-        status: 0
         anchors {
             bottom: parent.bottom
             bottomMargin: 11

@@ -94,7 +94,6 @@ SvgImage {
             defaultImage: "../../images/sound_diffusion/ico_indietro.svg"
             pressedImage: "../../images/sound_diffusion/ico_indietro_P.svg"
             onClicked: previousTrack()
-            status: 0
         }
 
         ButtonImageThreeStates {
@@ -104,7 +103,6 @@ SvgImage {
             defaultImage: "../../images/sound_diffusion/ico_avanti.svg"
             pressedImage: "../../images/sound_diffusion/ico_avanti_P.svg"
             onClicked: nextTrack()
-            status: 0
         }
     }
 

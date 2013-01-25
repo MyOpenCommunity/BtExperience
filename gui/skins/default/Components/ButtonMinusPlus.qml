@@ -15,7 +15,6 @@ Item {
         shadowImage: "../images/common/shadow_button_1-2.svg"
         defaultImage: "../images/common/symbol_minus.svg"
         pressedImage: "../images/common/symbol_minus.svg"
-        status: 0
         repetitionOnHold: true
         onClicked: button.minusClicked()
         anchors {
@@ -32,7 +31,6 @@ Item {
         shadowImage: "../images/common/shadow_button_1-2.svg"
         defaultImage: "../images/common/symbol_plus.svg"
         pressedImage: "../images/common/symbol_plus.svg"
-        status: 0
         repetitionOnHold: true
         onClicked: button.plusClicked()
         anchors {

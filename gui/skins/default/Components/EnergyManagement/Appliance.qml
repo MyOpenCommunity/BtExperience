@@ -89,7 +89,6 @@ MenuColumn {
                     font.capitalization: Font.AllUppercase
                     font.pixelSize: 15
                     onClicked: element.dataModel.forceOn(element.dataModel.forceDuration)
-                    status: 0
                     anchors.centerIn: parent
                 }
             }

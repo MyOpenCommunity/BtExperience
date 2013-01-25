@@ -48,7 +48,6 @@ SvgImage {
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_indietro.svg"
         pressedImage: "../../images/common/ico_indietro_P.svg"
-        status: 0
         onClicked: view.back.trigger()
         anchors {
             left: parent.left
@@ -65,7 +64,6 @@ SvgImage {
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_avanti.svg"
         pressedImage: "../../images/common/ico_avanti_P.svg"
-        status: 0
         onClicked: view.forward.trigger()
         anchors {
             left: backButton.right
@@ -96,7 +94,6 @@ SvgImage {
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/icon_browser-option.svg"
         pressedImage: "../../images/common/icon_browser-option_p.svg"
-        status: 0
         onClicked: control.hidingBarClicked()
         anchors {
             left: bgText.right
@@ -113,7 +110,6 @@ SvgImage {
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_aggiorna.svg"
         pressedImage: "../../images/common/ico_aggiorna_P.svg"
-        status: 0
         onClicked: {
             if (control.state === "") {
                 view.reload.trigger()

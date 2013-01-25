@@ -84,7 +84,6 @@ SvgImage {
         defaultImage: "../images/common/ico_mute.svg"
         pressedImage: "../images/common/ico_mute.svg"
         onClicked: muteClicked()
-        status: 0
         anchors {
             top: imageSlider.bottom
             topMargin: 5
@@ -100,7 +99,6 @@ SvgImage {
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         onClicked: minusClicked()
-        status: 0
         anchors {
             top: imageSlider.bottom
             topMargin: 5
@@ -117,7 +115,6 @@ SvgImage {
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         onClicked: plusClicked()
-        status: 0
         anchors {
             top: imageSlider.bottom
             topMargin: 5

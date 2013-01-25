@@ -64,7 +64,6 @@ MenuColumn {
                     objectModel.remove(column.dataModel)
                     column.closeColumn()
                 }
-                status: 0
             }
         }
     }

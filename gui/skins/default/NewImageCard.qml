@@ -134,7 +134,6 @@ BasePage {
         shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_meno.svg"
         pressedImage: "images/common/ico_meno_P.svg"
-        status: 0
         repetitionOnHold: true
         anchors {
             top: bgBottomBar.top
@@ -153,7 +152,6 @@ BasePage {
         shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_piu.svg"
         pressedImage: "images/common/ico_piu_P.svg"
-        status: 0
         repetitionOnHold: true
         anchors {
             top: bgBottomBar.top
@@ -172,7 +170,6 @@ BasePage {
         shadowImage: "images/common/btn_shadow_45x35.svg"
         defaultImage: "images/common/ico_browse.svg"
         pressedImage: "images/common/ico_browse_P.svg"
-        status: 0
         repetitionOnHold: true
         anchors {
             top: bgBottomBar.top
@@ -243,7 +240,6 @@ BasePage {
         pressedImageBg: "images/common/bg_freccia.svg"
         defaultImage: "images/common/freccia_dx.svg"
         pressedImage: "images/common/freccia_dx_P.svg"
-        status: 0
         repetitionOnHold: true
         anchors {
             bottom: bgImage.bottom
@@ -262,7 +258,6 @@ BasePage {
         pressedImageBg: "images/common/bg_freccia.svg"
         defaultImage: "images/common/freccia_dx.svg"
         pressedImage: "images/common/freccia_dx_P.svg"
-        status: 0
         repetitionOnHold: true
         anchors {
             bottom: bgImage.bottom
@@ -281,7 +276,6 @@ BasePage {
         pressedImageBg: "images/common/bg_freccia.svg"
         defaultImage: "images/common/freccia_dx.svg"
         pressedImage: "images/common/freccia_dx_P.svg"
-        status: 0
         repetitionOnHold: true
         anchors {
             bottom: bgImage.bottom
@@ -300,7 +294,6 @@ BasePage {
         pressedImageBg: "images/common/bg_freccia.svg"
         defaultImage: "images/common/freccia_dx.svg"
         pressedImage: "images/common/freccia_dx_P.svg"
-        status: 0
         repetitionOnHold: true
         anchors {
             bottom: arrowLeft.top

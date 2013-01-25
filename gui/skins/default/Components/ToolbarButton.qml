@@ -33,7 +33,6 @@ Item {
         defaultImageBg: "../images/toolbar/_bg_alert.svg"
         pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
         onClicked: control.clicked()
-        status: 0
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
 

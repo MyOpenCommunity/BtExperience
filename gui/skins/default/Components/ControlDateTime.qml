@@ -78,7 +78,6 @@ Item {
                 shadowImage: "../images/common/btn_shadow_66x35.svg"
                 defaultImage: "../images/common/ico_piu.svg"
                 pressedImage: "../images/common/ico_piu_P.svg"
-                status: 0
                 repetitionOnHold: true
                 onClicked: mode === 0 ? itemObject.hours += 1 : itemObject.days += 1
             }
@@ -96,7 +95,6 @@ Item {
                 shadowImage: "../images/common/btn_shadow_66x35.svg"
                 defaultImage: "../images/common/ico_piu.svg"
                 pressedImage: "../images/common/ico_piu_P.svg"
-                status: 0
                 repetitionOnHold: true
                 onClicked: mode === 0 ? itemObject.minutes += 1 : itemObject.months += 1
             }
@@ -114,7 +112,6 @@ Item {
                 shadowImage: "../images/common/btn_shadow_66x35.svg"
                 defaultImage: "../images/common/ico_piu.svg"
                 pressedImage: "../images/common/ico_piu_P.svg"
-                status: 0
                 repetitionOnHold: true
                 onClicked: mode === 0 ? itemObject.seconds += 1 : itemObject.years += 1
             }
@@ -142,7 +139,6 @@ Item {
                 shadowImage: "../images/common/btn_shadow_66x35.svg"
                 defaultImage: "../images/common/ico_meno.svg"
                 pressedImage: "../images/common/ico_meno_P.svg"
-                status: 0
                 repetitionOnHold: true
                 onClicked: mode === 0 ? itemObject.hours -= 1 : itemObject.days -= 1
             }
@@ -160,7 +156,6 @@ Item {
                 shadowImage: "../images/common/btn_shadow_66x35.svg"
                 defaultImage: "../images/common/ico_meno.svg"
                 pressedImage: "../images/common/ico_meno_P.svg"
-                status: 0
                 repetitionOnHold: true
                 onClicked: mode === 0 ? itemObject.minutes -= 1 : itemObject.months -= 1
             }
@@ -178,7 +173,6 @@ Item {
                 shadowImage: "../images/common/btn_shadow_66x35.svg"
                 defaultImage: "../images/common/ico_meno.svg"
                 pressedImage: "../images/common/ico_meno_P.svg"
-                status: 0
                 repetitionOnHold: true
                 onClicked: mode === 0 ? itemObject.seconds -= 1 : itemObject.years -= 1
             }
