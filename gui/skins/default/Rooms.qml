@@ -87,9 +87,17 @@ Page {
             source: index === floorView.currentIndex ? "images/common/pianoS.png" : "images/common/piano.png"
             UbuntuLightText {
                 text: itemObject.description
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                color: index === floorView.currentIndex === true ? "white" : "black"
+                anchors {
+                    // the image is a png and it has borders, so I'm using
+                    // fixed values here.
+                    left: parent.left
+                    leftMargin: 14
+                    right: parent.right
+                    rightMargin: 14
+                    verticalCenter: parent.verticalCenter
+                }
+                horizontalAlignment: Text.AlignHCenter
+                color: index === floorView.currentIndex ? "white" : "black"
             }
 
             BeepingMouseArea {

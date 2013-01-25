@@ -16,6 +16,8 @@ SvgImage {
         anchors {
             verticalCenter: rightButton.verticalCenter
             left: parent.left
+            right: leftButton.left
+            rightMargin: 4
             leftMargin: 7
         }
         font.pixelSize: 15
@@ -24,6 +26,7 @@ SvgImage {
     }
 
     ButtonImageThreeStates {
+        id: leftButton
         defaultImageBg: "../images/common/btn_frecce.svg"
         pressedImageBg: "../images/common/btn_frecce_P.svg"
         shadowImage: "../images/common/ombra_btn_frecce.svg"

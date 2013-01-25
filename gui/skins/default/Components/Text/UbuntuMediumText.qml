@@ -9,4 +9,5 @@ Text {
         else
             return ""
     }
+    elide: Text.ElideRight
 }
