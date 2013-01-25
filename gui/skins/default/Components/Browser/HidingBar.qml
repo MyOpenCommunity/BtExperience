@@ -16,6 +16,7 @@ Item {
     signal zoomInClicked
 
     height: if (loaderItem.item) loaderItem.item.height
+    width: 180
 
     Loader {
         id: loaderItem
@@ -31,31 +32,19 @@ Item {
 
             source: "../../images/common/bg_barra.svg"
 
-            UbuntuMediumText {
-                id: title
-                text: zoomPercentage + "%"
-                font.pixelSize: 24
-                color: "white"
-                anchors {
-                    right: minusBarButton.left
-                    rightMargin: 10
-                    verticalCenter: minusBarButton.verticalCenter
-                }
-            }
-
             ButtonImageThreeStates {
                 id: minusBarButton
                 defaultImageBg: "../../images/common/btn_45x35.svg"
                 pressedImageBg: "../../images/common/btn_45x35_P.svg"
                 shadowImage: "../../images/common/btn_shadow_45x35.svg"
-                defaultImage: "../../images/common/ico_meno.svg"
-                pressedImage: "../../images/common/ico_meno_P.svg"
+                defaultImage: "../../images/common/icon_zoom-out.svg"
+                pressedImage: "../../images/common/icon_zoom-out_p.svg"
                 status: 0
                 repetitionOnHold: true
                 onClicked: control.zoomOutClicked()
                 anchors {
-                    right: plusBarButton.left
-                    rightMargin: 10
+                    left: parent.left
+                    leftMargin: 10
                     top: parent.top
                     topMargin: 6
                 }
@@ -66,16 +55,27 @@ Item {
                 defaultImageBg: "../../images/common/btn_45x35.svg"
                 pressedImageBg: "../../images/common/btn_45x35_P.svg"
                 shadowImage: "../../images/common/btn_shadow_45x35.svg"
-                defaultImage: "../../images/common/ico_piu.svg"
-                pressedImage: "../../images/common/ico_piu_P.svg"
+                defaultImage: "../../images/common/icon_zoom-in.svg"
+                pressedImage: "../../images/common/icon_zoom-in_p.svg"
                 status: 0
                 repetitionOnHold: true
                 onClicked: control.zoomInClicked()
                 anchors {
-                    right: parent.right
-                    rightMargin: 10
-                    top: parent.top
-                    topMargin: 6
+                    left: minusBarButton.right
+                    leftMargin: 10
+                    verticalCenter: minusBarButton.verticalCenter
+                }
+            }
+
+            UbuntuMediumText {
+                id: title
+                text: zoomPercentage + "%"
+                font.pixelSize: 18
+                color: "white"
+                anchors {
+                    left: plusBarButton.right
+                    leftMargin: 10
+                    verticalCenter: plusBarButton.verticalCenter
                 }
             }
         }

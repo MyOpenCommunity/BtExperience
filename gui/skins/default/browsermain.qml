@@ -76,7 +76,6 @@ BasePage {
                 state: "hidden"
                 anchors {
                     top: header.bottom
-                    left: header.left
                     right: header.right
                 }
                 function changeZoom(delta) {
