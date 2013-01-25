@@ -102,6 +102,11 @@ BasePage {
         }
 
         Component {
+            id: webcamDelegate
+            WebcamLink {}
+        }
+
+        Component {
             id: favouritesDelegate
 
             Item {
@@ -117,8 +122,9 @@ BasePage {
                     case LinkInterface.Camera:
                         return cameraDelegate
                     case LinkInterface.Web:
-                    case MediaLink.Webcam:
                         return webDelegate
+                    case MediaLink.Webcam:
+                        return webcamDelegate
                     case LinkInterface.WebRadio:
                         return webRadioDelegate
                     case MediaLink.Scenario:

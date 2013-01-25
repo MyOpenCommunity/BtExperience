@@ -101,8 +101,10 @@ Page {
             var component
             switch (type) {
             case MediaLink.Web:
-            case MediaLink.Webcam:
                 component = favouriteItemComponent
+                break
+            case MediaLink.Webcam:
+                component = webcamItemComponent
                 break
             case MediaLink.Rss:
                 component = rssItemComponent
@@ -209,6 +211,11 @@ Page {
         FavoriteItem {
             onClicked: profilePage.processLaunched(global.browser)
         }
+    }
+
+    Component {
+        id: webcamItemComponent
+        WebcamLink { }
     }
 
     Component {
