@@ -39,10 +39,8 @@ void ImageSaver::startDownload(QObject *_object, QString _property, QString down
 			return;
 		}
 
-		connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(onDownloadProgress(qint64,qint64)));
 		connect(&manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFinished(QNetworkReply*)));
 		connect(reply,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		connect(reply, SIGNAL(finished()), this, SLOT(onReplyFinished()));
 
 		return;
 	}
@@ -51,15 +49,6 @@ void ImageSaver::startDownload(QObject *_object, QString _property, QString down
 	computeSaveFilePath();
 
 	saveDestinationFile();
-}
-
-void ImageSaver::onDownloadProgress(qint64 bytes_read, qint64 bytes_total)
-{
-	Q_UNUSED(bytes_read);
-	Q_UNUSED(bytes_total);
-//	qDebug() << __PRETTY_FUNCTION__;
-//	qDebug() << "bytes read so far:" << bytes_read;
-//	qDebug() << "total bytes to read:" << bytes_total;
 }
 
 void ImageSaver::onFinished(QNetworkReply *reply)
@@ -83,11 +72,6 @@ void ImageSaver::onFinished(QNetworkReply *reply)
 void ImageSaver::onReadyRead()
 {
 	file.write(reply->readAll());
-}
-
-void ImageSaver::onReplyFinished()
-{
-	//	qDebug() << __PRETTY_FUNCTION__;
 }
 
 void ImageSaver::computeMaxId()

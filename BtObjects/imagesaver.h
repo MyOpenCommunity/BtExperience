@@ -24,10 +24,8 @@ signals:
 	void jobDone(ImageSaver *cleanee);
 
 private slots:
-	void onDownloadProgress(qint64,qint64);
 	void onFinished(QNetworkReply *);
 	void onReadyRead();
-	void onReplyFinished();
 
 private:
 	void computeMaxId();
