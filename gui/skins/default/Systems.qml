@@ -9,7 +9,7 @@ import "js/Systems.js" as Script
 Page {
     id: systems
 
-    source : global.guiSettings.homeBgImage
+    source : homeProperties.homeBgImage
     text: qsTr("systems")
 
     ObjectModel {

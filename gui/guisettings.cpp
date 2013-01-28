@@ -20,8 +20,6 @@ namespace
 {
 	enum Parsing
 	{
-		HomePageContainer = 17,
-
 		CleanScreen = 14152,
 		EnergyThresholdBeep = 14255,
 		EnergyConsumptionPopup = 14256,
@@ -75,12 +73,9 @@ GuiSettings::GuiSettings(QObject *parent) :
 	QObject(parent)
 {
 	configurations = new ConfigFile(this);
-
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
 
 	timezone = 0;
-	skin = Clear;
-	home_bg_image = QString();
 	beep = false;
 	energy_threshold_beep = false;
 	energy_popup = false;
@@ -96,16 +91,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 	scenario_recording_alert = false;
 	language = getConfValue(conf, "generale/language");
 	clean_screen_time = 10;
-
-	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
-	{
-		if (getIntAttribute(container, "id") == HomePageContainer)
-		{
-			skin = getIntAttribute(container, "img_type", 0) == 0 ? Clear : Dark;
-			home_bg_image = getAttribute(container, "img");
-			break;
-		}
-	}
 
 	setLanguageTranslator(language);
 	parseSettings();
@@ -176,19 +161,6 @@ void GuiSettings::setConfValue(QString path, QString value)
 	configurations->saveConfiguration(CONF_FILE);
 }
 
-QString GuiSettings::getSkinString() const
-{
-	switch(skin)
-	{
-	case Clear:
-		return QString("clear");
-	case Dark:
-		return QString("dark");
-	default:
-		return QString("clear");
-	}
-}
-
 QString GuiSettings::getLanguage() const
 {
 	return language;
@@ -203,66 +175,6 @@ void GuiSettings::setLanguage(QString l)
 	emit languageChanged();
 	setConfValue("generale/language", language);
 	setLanguageTranslator(language);
-}
-
-GuiSettings::Skin GuiSettings::getSkin() const
-{
-	return skin;
-}
-
-void GuiSettings::setSkin(Skin s)
-{
-	if (skin == s)
-		return;
-
-	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
-	{
-		if (getIntAttribute(container, "id") == HomePageContainer)
-		{
-			setAttribute(container, "img_type", QString::number(s == Clear ? 0 : 1));
-			break;
-		}
-	}
-	configurations->saveConfiguration(LAYOUT_FILE);
-
-	skin = s;
-	emit skinChanged();
-
-	// resets home background image to right value for skin
-	setHomeBgImage(QString(""));
-}
-
-QString GuiSettings::getHomeBgImage() const
-{
-	return home_bg_image;
-}
-
-void GuiSettings::setHomeBgImage(QString new_value)
-{
-	if (new_value.isEmpty())
-	{
-		// empty string means default one which is dependent on skin
-		if (getSkin() == Clear)
-			new_value = QString("images/background/home.jpg");
-		else
-			new_value = QString("images/background/home_dark.jpg");
-	}
-
-	if (home_bg_image == new_value)
-		return;
-
-	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
-	{
-		if (getIntAttribute(container, "id") == HomePageContainer)
-		{
-			setAttribute(container, "img", new_value);
-			break;
-		}
-	}
-	configurations->saveConfiguration(LAYOUT_FILE);
-
-	home_bg_image = new_value;
-	emit homeBgImageChanged();
 }
 
 bool GuiSettings::getBeep() const

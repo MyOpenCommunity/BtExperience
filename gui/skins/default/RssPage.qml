@@ -14,7 +14,7 @@ Page {
     property variant profile: undefined
 
     text: "rss"
-    source: profile === undefined ? global.guiSettings.homeBgImage : profile.image
+    source: profile === undefined ? homeProperties.homeBgImage : profile.image
 
     Item {
         id: window

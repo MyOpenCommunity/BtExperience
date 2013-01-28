@@ -16,20 +16,6 @@ class GuiSettings : public QObject
 	Q_PROPERTY(QString language READ getLanguage WRITE setLanguage NOTIFY languageChanged)
 
 	/*!
-		\brief Sets or gets the skin for the interface.
-	*/
-	Q_PROPERTY(Skin skin READ getSkin WRITE setSkin NOTIFY skinChanged)
-
-	/*!
-		\brief Sets or gets the background image used in home and in main pages.
-
-		Sets or gets the background image used in home and in main pages. It assumes
-		the property value is a path relative to images parent folder or an absolute path.
-		Beware of that.
-	*/
-	Q_PROPERTY(QString homeBgImage READ getHomeBgImage WRITE setHomeBgImage NOTIFY homeBgImageChanged)
-
-	/*!
 		\brief Sets or gets the timezone.
 	*/
 	Q_PROPERTY(int timezone READ getTimezone WRITE setTimezone NOTIFY timezoneChanged)
@@ -105,23 +91,13 @@ class GuiSettings : public QObject
 	*/
 	Q_PROPERTY(int cleanScreenTime READ getCleanScreenTime WRITE setCleanScreenTime NOTIFY cleanScreenTimeChanged)
 
-	Q_ENUMS(Skin)
-
 public:
 	explicit GuiSettings(QObject *parent = 0);
-
-	enum Skin
-	{
-		Clear,
-		Dark
-	};
 
 	QString getLanguage() const;
 	void setLanguage(QString l);
 	int getTimezone() const;
 	void setTimezone(int z);
-	Skin getSkin() const;
-	void setSkin(Skin s);
 	QString getHomeBgImage() const;
 	void setHomeBgImage(QString new_value);
 	bool getBeep() const;
@@ -153,12 +129,9 @@ public:
 	int getCleanScreenTime() const;
 	void setCleanScreenTime(int seconds);
 
-	QString getSkinString() const;
-
 signals:
 	void languageChanged();
 	void timezoneChanged();
-	void skinChanged();
 	void homeBgImageChanged();
 	void beepChanged();
 	void energyThresholdBeepChanged();
@@ -181,9 +154,8 @@ private:
 	void setConfValue(QString path, QString value);
 
 	ConfigFile *configurations;
-	QString language, home_bg_image;
+	QString language;
 	int timezone;
-	Skin skin;
 	bool beep;
 	bool energy_threshold_beep;
 	bool energy_popup;

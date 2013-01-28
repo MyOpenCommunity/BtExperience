@@ -47,8 +47,8 @@ QtObject {
         container['CURRENCY']["USD"] = qsTr("U.S. dollar $")
 
         container['SKIN'] = []
-        container['SKIN'][GuiSettings.Clear] = qsTr("Clear")
-        container['SKIN'][GuiSettings.Dark] = qsTr("Dark")
+        container['SKIN'][HomeProperties.Clear] = qsTr("Clear")
+        container['SKIN'][HomeProperties.Dark] = qsTr("Dark")
 
         // TODO from here on, change  wrt to model developments
 

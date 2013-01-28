@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import BtExperience 1.0
 import Components.Text 1.0
 
@@ -43,7 +44,7 @@ SvgImage {
 
     UbuntuMediumText {
         id: text
-        color: global.guiSettings.skin === GuiSettings.Clear ? "#434343" :
+        color: homeProperties.skin === HomeProperties.Clear ? "#434343" :
                                                               "#FFFFFF"
         text: button.text
         anchors.centerIn: imageIcon
@@ -53,7 +54,7 @@ SvgImage {
 
     UbuntuMediumText {
         id: textSystem
-        color: global.guiSettings.skin === GuiSettings.Clear ? "#434343" :
+        color: homeProperties.skin === HomeProperties.Clear ? "#434343" :
                                                               "#FFFFFF"
         text: button.textSystem
         anchors.centerIn: imageIcon
@@ -63,7 +64,7 @@ SvgImage {
 
     UbuntuMediumText {
         id: textOption
-        color: global.guiSettings.skin === GuiSettings.Clear ? "#434343" :
+        color: homeProperties.skin === HomeProperties.Clear ? "#434343" :
                                                                "#FFFFFF"
         text: button.textOption
         anchors.centerIn: imageIcon
@@ -73,7 +74,7 @@ SvgImage {
 
     UbuntuMediumText {
         id: textMultimedia
-        color: global.guiSettings.skin === GuiSettings.Clear ? "#434343" :
+        color: homeProperties.skin === HomeProperties.Clear ? "#434343" :
                                                                "#FFFFFF"
         text: button.textMultimedia
         anchors.centerIn: imageIcon
@@ -92,25 +93,25 @@ SvgImage {
 
         PropertyChanges {
             target: text
-            color: global.guiSettings.skin === GuiSettings.Clear ? "#FFFFFF" :
+            color: homeProperties.skin === HomeProperties.Clear ? "#FFFFFF" :
                                                                    "#434343"
         }
 
         PropertyChanges {
             target: textSystem
-            color: global.guiSettings.skin === GuiSettings.Clear ? "#FFFFFF" :
+            color: homeProperties.skin === HomeProperties.Clear ? "#FFFFFF" :
                                                                    "#434343"
         }
 
         PropertyChanges {
             target: textOption
-            color: global.guiSettings.skin === GuiSettings.Clear ? "#FFFFFF" :
+            color: homeProperties.skin === HomeProperties.Clear ? "#FFFFFF" :
                                                                    "#434343"
         }
 
         PropertyChanges {
             target: textMultimedia
-            color: global.guiSettings.skin === GuiSettings.Clear ? "#FFFFFF" :
+            color: homeProperties.skin === HomeProperties.Clear ? "#FFFFFF" :
                                                                    "#434343"
         }
 

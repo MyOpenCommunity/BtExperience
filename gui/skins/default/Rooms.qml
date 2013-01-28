@@ -9,7 +9,7 @@ import "js/Stack.js" as Stack
 Page {
     id: mainarea
 
-    source : global.guiSettings.homeBgImage
+    source : homeProperties.homeBgImage
     text: qsTr("rooms")
 
     MediaModel {

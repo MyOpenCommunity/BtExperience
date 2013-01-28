@@ -13,7 +13,7 @@ Page {
     property variant alarmClock: undefined
 
     text: qsTr("Alarm settings")
-    source : global.guiSettings.homeBgImage
+    source : homeProperties.homeBgImage
 
     SvgImage {
         id: bg

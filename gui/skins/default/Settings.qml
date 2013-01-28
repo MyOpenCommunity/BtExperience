@@ -6,7 +6,7 @@ import "js/Stack.js" as Stack
 
 
 SystemPage {
-    source : global.guiSettings.homeBgImage
+    source : homeProperties.homeBgImage
     text: qsTr("Settings")
     rootColumn: Component { SettingsItems {} }
     names: SettingsNames {}

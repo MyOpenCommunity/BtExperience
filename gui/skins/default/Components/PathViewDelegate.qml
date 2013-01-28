@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components.Text 1.0
 import BtExperience 1.0
 
@@ -46,7 +47,7 @@ Item {
     SvgImage {
         id: bg
 
-        source: global.guiSettings.skin === GuiSettings.Clear ?
+        source: homeProperties.skin === HomeProperties.Clear ?
                     "../images/profiles/scheda_profili.svg" :
                     "../images/profiles/scheda_profili_P.svg"
     }
@@ -65,7 +66,7 @@ Item {
     UbuntuLightText {
         id: textDelegate
         text: itemObject.description
-        color: global.guiSettings.skin === GuiSettings.Clear ? "#434343" : "white"
+        color: homeProperties.skin === HomeProperties.Clear ? "#434343" : "white"
         font.pixelSize: 20
         horizontalAlignment: Text.AlignHCenter
         elide: Text.ElideRight
@@ -90,13 +91,13 @@ Item {
         when: pathViewDelegate.PathView.view.currentPressed === index
         PropertyChanges {
             target: bg
-            source: global.guiSettings.skin === GuiSettings.Clear ?
+            source: homeProperties.skin === HomeProperties.Clear ?
                         "../images/profiles/scheda_profili_P.svg" :
                         "../images/profiles/scheda_profili.svg"
         }
         PropertyChanges {
             target: textDelegate
-            color: global.guiSettings.skin === GuiSettings.Clear ? "white" : "#434343"
+            color: homeProperties.skin === HomeProperties.Clear ? "white" : "#434343"
         }
         PropertyChanges {
             target: bgProfilePressed

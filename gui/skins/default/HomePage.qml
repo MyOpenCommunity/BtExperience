@@ -9,7 +9,7 @@ import "js/EventManager.js" as EventManager
 BasePage {
     id: mainarea
 
-    source : global.guiSettings.homeBgImage
+    source : homeProperties.homeBgImage
 
     Rectangle {
         z: 1
@@ -232,13 +232,13 @@ BasePage {
 
                 visible: roomModel.count > 0
 
-                source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_stanze.svg" :
+                source: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_stanze.svg" :
                                                                         "images/home/btn_stanze_P.svg"
-                sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_stanze_P.svg" :
+                sourcePressed: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_stanze_P.svg" :
                                                                                "images/home/btn_stanze.svg"
-                icon: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_stanze.svg" :
+                icon: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_stanze.svg" :
                                                                       "images/home/ico_stanze_P.svg"
-                iconPressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_stanze_P.svg" :
+                iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_stanze_P.svg" :
                                                                              "images/home/ico_stanze.svg"
                 text: qsTr("rooms")
                 onClicked: Stack.goToPage("Rooms.qml")
@@ -246,13 +246,13 @@ BasePage {
 
             ButtonHomePageLink {
                 id: option
-                source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_opzioni.svg" :
+                source: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_opzioni.svg" :
                                                                         "images/home/btn_opzioni_P.svg"
-                sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_opzioni_P.svg" :
+                sourcePressed: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_opzioni_P.svg" :
                                                                                "images/home/btn_opzioni.svg"
-                icon: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_opzioni.svg" :
+                icon: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_opzioni.svg" :
                                                                       "images/home/ico_opzioni_P.svg"
-                iconPressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_opzioni_P.svg" :
+                iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_opzioni_P.svg" :
                                                                              "images/home/ico_opzioni.svg"
                 onClicked: Stack.goToPage("Settings.qml")
                 textOption: qsTr("options")
@@ -276,13 +276,13 @@ BasePage {
                     horizontalCenter: parent.horizontalCenter
                     horizontalCenterOffset: 3
                 }
-                source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_sistemi.svg" :
+                source: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_sistemi.svg" :
                                                                         "images/home/btn_sistemi_P.svg"
-                sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_sistemi_P.svg" :
+                sourcePressed: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_sistemi_P.svg" :
                                                                                "images/home/btn_sistemi.svg"
-                icon: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_sistemi.svg" :
+                icon: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_sistemi.svg" :
                                                                       "images/home/ico_sistemi_P.svg"
-                iconPressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_sistemi_P.svg" :
+                iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_sistemi_P.svg" :
                                                                              "images/home/ico_sistemi.svg"
                 textSystem: qsTr("systems")
                 onClicked: Stack.goToPage("Systems.qml")
@@ -290,13 +290,13 @@ BasePage {
 
             ButtonHomePageLink {
                 id: multimedia
-                source: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_multimedia.svg" :
+                source: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_multimedia.svg" :
                                                                         "images/home/btn_multimedia_P.svg"
-                sourcePressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/btn_multimedia_P.svg" :
+                sourcePressed: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_multimedia_P.svg" :
                                                                                "images/home/btn_multimedia.svg"
-                icon: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_multimedia.svg" :
+                icon: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_multimedia.svg" :
                                                                       "images/home/ico_multimedia_P.svg"
-                iconPressed: global.guiSettings.skin === GuiSettings.Clear ? "images/home/ico_multimedia_P.svg" :
+                iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_multimedia_P.svg" :
                                                                              "images/home/ico_multimedia.svg"
                 onClicked: Stack.goToPage("Multimedia.qml")
                 textMultimedia: qsTr ("multimedia")

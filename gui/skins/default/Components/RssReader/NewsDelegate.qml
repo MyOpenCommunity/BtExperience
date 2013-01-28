@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
+import BtObjects 1.0
 import BtExperience 1.0
 import Components.Text 1.0
 
@@ -59,7 +60,7 @@ Item {
             text: title; width: parent.width; wrapMode: Text.WordWrap
             font { bold: true; pixelSize: 16 }
             textFormat: Text.RichText
-            color: global.guiSettings.skin === GuiSettings.Clear ? "#434343" :
+            color: homeProperties.skin === HomeProperties.Clear ? "#434343" :
                                                                   "#FFFFFF"
         }
 
@@ -68,7 +69,7 @@ Item {
             width: parent.width; text: description
             wrapMode: Text.WordWrap
             textFormat: Text.RichText
-            color: global.guiSettings.skin === GuiSettings.Clear ? "#434343" :
+            color: homeProperties.skin === HomeProperties.Clear ? "#434343" :
                                                                   "#FFFFFF"
         }
     }

@@ -11,7 +11,7 @@ MenuColumn {
     height: Math.max(1, 50 * view.count)
 
     function alertOkClicked() {
-        global.guiSettings.skin = privateProps.skin
+        homeProperties.skin = privateProps.skin
         Stack.backToHome()
     }
 
@@ -22,7 +22,7 @@ MenuColumn {
 
     ListView {
         id: view
-        currentIndex: global.guiSettings.skin
+        currentIndex: homeProperties.skin
         anchors.fill: parent
         interactive: false
         delegate: MenuItemDelegate {
@@ -32,7 +32,7 @@ MenuColumn {
                 pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?"))
             }
         }
-        model: [GuiSettings.Clear,
-                GuiSettings.Dark]
+        model: [HomeProperties.Clear,
+                HomeProperties.Dark]
     }
 }

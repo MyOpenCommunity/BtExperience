@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
@@ -20,8 +21,8 @@ MenuColumn {
     }
 
     Connections {
-        target: global.guiSettings
-        onSkinChanged: skinItem.description = pageObject.names.get('SKIN', global.guiSettings.skin)
+        target: homeProperties
+        onSkinChanged: skinItem.description = pageObject.names.get('SKIN', homeProperties.skin)
     }
 
     onChildDestroyed: privateProps.currentIndex = -1
@@ -32,7 +33,7 @@ MenuColumn {
         MenuItem {
             id: skinItem
             name: qsTr("skin home")
-            description: pageObject.names.get('SKIN', global.guiSettings.skin)
+            description: pageObject.names.get('SKIN', homeProperties.skin)
             hasChild: true
             isSelected: privateProps.currentIndex === 1
             onClicked: {
@@ -59,7 +60,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
-                global.guiSettings.homeBgImage = ""
+                homeProperties.homeBgImage = ""
                 column.closeColumn()
             }
         }

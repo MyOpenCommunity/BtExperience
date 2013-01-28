@@ -119,7 +119,7 @@ MenuColumn {
                         Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
                 }
                 else if (column.homeCustomization) {
-                    global.saveInCustomDirIfNeeded(global.guiSettings, "homeBgImage", item.path, "home_bg", Qt.size(global.mainWidth, global.mainHeight))
+                    global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", item.path, "home_bg", Qt.size(global.mainWidth, global.mainHeight))
                 }
                 else {
                     global.saveInCustomDirIfNeeded(column.dataModel, "image", item.path, "bg_" + column.dataModel.uii, Qt.size(global.mainWidth, global.mainHeight))
@@ -141,7 +141,7 @@ MenuColumn {
                 if (column.isCard)
                     Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
                 else if (column.homeCustomization)
-                    global.saveInCustomDirIfNeeded(global.guiSettings, "homeBgImage", item.path, "home_bg", Qt.size(global.mainWidth, global.mainHeight))
+                    global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", item.path, "home_bg", Qt.size(global.mainWidth, global.mainHeight))
                 else
                     global.saveInCustomDirIfNeeded(column.dataModel, "image", item.path, "bg_" + column.dataModel.uii, Qt.size(global.mainWidth, global.mainHeight))
             }

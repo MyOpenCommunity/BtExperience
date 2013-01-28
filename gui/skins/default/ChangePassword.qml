@@ -8,7 +8,7 @@ import "js/Stack.js" as Stack
 Page {
     id: page
 
-    source: global.guiSettings.homeBgImage
+    source: homeProperties.homeBgImage
     showSystemsButton: false
     text: qsTr("Change password")
 

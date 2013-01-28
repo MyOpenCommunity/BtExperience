@@ -17,6 +17,7 @@ HEADERS += \
 	globalmodels.h \
 	gstmediaplayer.h \
 	hardware.h \
+	homeproperties.h \
 	imagesaver.h \
 	iteminterface.h \
 	lightobjects.h \
@@ -96,6 +97,7 @@ SOURCES += \
 	globalmodels.cpp \
 	gstmediaplayer.cpp \
 	hardware.cpp \
+	homeproperties.cpp \
 	imagesaver.cpp \
 	iteminterface.cpp \
 	lightobjects.cpp \

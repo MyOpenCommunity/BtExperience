@@ -28,7 +28,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        source: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/toolbar_bg_top.svg":
+        source: homeProperties.skin === HomeProperties.Clear ? imagesPath + "toolbar/toolbar_bg_top.svg":
                                                                 imagesPath + "toolbar/toolbar_bg_top_dark.svg"
         width: parent.width
     }
@@ -51,9 +51,9 @@ Item {
             ButtonImageThreeStates {
                 defaultImageBg: imagesPath + "toolbar/bg_home.svg"
                 pressedImageBg: imagesPath + "toolbar/bg_home_pressed.svg"
-                defaultImage: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/icon_home.svg":
+                defaultImage: homeProperties.skin === HomeProperties.Clear ? imagesPath + "toolbar/icon_home.svg":
                                                                               imagesPath + "toolbar/icon_home_pressed.svg"
-                pressedImage: global.guiSettings.skin === GuiSettings.Clear ? imagesPath + "toolbar/icon_home_pressed.svg":
+                pressedImage: homeProperties.skin === HomeProperties.Clear ? imagesPath + "toolbar/icon_home_pressed.svg":
                                                                               imagesPath + "toolbar/icon_home.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -72,7 +72,7 @@ Item {
 
             UbuntuLightText {
                 id: date
-                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
+                color: homeProperties.skin === HomeProperties.Clear ? "black":
                                                                        "white"
                 text: DateTime.format()["date"]
                 font.pixelSize: toolbar.fontSize
@@ -96,7 +96,7 @@ Item {
 
             UbuntuLightText {
                 id: time
-                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
+                color: homeProperties.skin === HomeProperties.Clear ? "black":
                                                                        "white"
                 text: DateTime.format()["time"]
                 font.pixelSize: toolbar.fontSize
@@ -131,7 +131,7 @@ Item {
                 id: temperature
                 property variant itemObject: probeModel.count > 0 ? probeModel.getObject(0) : undefined
                 text: itemObject !== undefined ? (itemObject.btObject.temperature / 10).toFixed(1) + " °C" : ""
-                color: global.guiSettings.skin === GuiSettings.Clear ? "black":
+                color: homeProperties.skin === HomeProperties.Clear ? "black":
                                                                        "white"
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
@@ -150,17 +150,17 @@ Item {
             height: toolbar_top.height
             visible: EventManager.eventManager.antintrusionPresent && global.guiSettings.burglarAlarmAlert
             defaultImage: EventManager.eventManager.isAntintrusionInserted ?
-                              (global.guiSettings.skin === GuiSettings.Clear ?
+                              (homeProperties.skin === HomeProperties.Clear ?
                                    "../images/toolbar/icon_burlgar-alarm-on.svg" :
                                    "../images/toolbar/icon_burlgar-alarm-on_p.svg") :
-                              (global.guiSettings.skin === GuiSettings.Clear ?
+                              (homeProperties.skin === HomeProperties.Clear ?
                                    "../images/toolbar/icon_alarm-disabled.svg" :
                                    "../images/toolbar/icon_alarm-disabled_p.svg")
             pressedImage:  EventManager.eventManager.isAntintrusionInserted ?
-                               (global.guiSettings.skin === GuiSettings.Clear ?
+                               (homeProperties.skin === HomeProperties.Clear ?
                                     "../images/toolbar/icon_burlgar-alarm-on_p.svg" :
                                     "../images/toolbar/icon_burlgar-alarm-on.svg") :
-                               (global.guiSettings.skin === GuiSettings.Clear ?
+                               (homeProperties.skin === HomeProperties.Clear ?
                                     "../images/toolbar/icon_alarm-disabled_p.svg" :
                                     "../images/toolbar/icon_alarm-disabled.svg")
             onClicked: {
@@ -173,10 +173,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.clocks > 0 && global.guiSettings.alarmClockAlert
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_alarm-clock.svg" :
                               "../images/toolbar/icon_alarm-clock_p.svg"
-            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_alarm-clock_p.svg" :
                               "../images/toolbar/icon_alarm-clock.svg"
             onClicked: {
@@ -192,10 +192,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.autoOpen && global.guiSettings.professionalStudioAlert
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-auto-open.svg" :
                               "../images/toolbar/icon_vde-auto-open_p.svg"
-            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-auto-open_p.svg" :
                               "../images/toolbar/icon_vde-auto-open.svg"
             onClicked: {
@@ -208,10 +208,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.handsFree && global.guiSettings.handsFreeAlert
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-auto-answer.svg" :
                               "../images/toolbar/icon_vde-auto-answer_p.svg"
-            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-auto-answer_p.svg" :
                               "../images/toolbar/icon_vde-auto-answer.svg"
             onClicked: {
@@ -224,10 +224,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.vdeMute && global.guiSettings.callExclusionAlert
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-mute.svg" :
                               "../images/toolbar/icon_vde-mute_p.svg"
-            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-mute_p.svg" :
                               "../images/toolbar/icon_vde-mute.svg"
             onClicked: {
@@ -240,10 +240,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.vdeTeleloop
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-mute.svg" :
                               "../images/toolbar/icon_vde-mute_p.svg"
-            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-mute_p.svg" :
                               "../images/toolbar/icon_vde-mute.svg"
             onClicked: {
@@ -257,10 +257,10 @@ Item {
             height: toolbar_top.height
             visible: EventManager.eventManager.alarms > 0 && global.guiSettings.burglarAlarmDangerAlert
             quantity: EventManager.eventManager.alarms
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_alarm.svg" :
                               "../images/toolbar/icon_alarm_p.svg"
-            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_alarm_p.svg" :
                               "../images/toolbar/icon_alarm.svg"
             onClicked: {
@@ -273,10 +273,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             visible: EventManager.eventManager.playing && global.guiSettings.playerAlert
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_source-play.svg" :
                               "../images/toolbar/icon_source-play_p.svg"
-            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_source-play_p.svg" :
                               "../images/toolbar/icon_source-play.svg"
             onClicked: {
@@ -290,10 +290,10 @@ Item {
             height: toolbar_top.height
             visible: EventManager.eventManager.messages > 0 && global.guiSettings.messageAlert
             quantity: EventManager.eventManager.messages
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_new-message.svg" :
                               "../images/toolbar/icon_new-message_p.svg"
-            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_new-message_p.svg" :
                               "../images/toolbar/icon_new-message.svg"
             onClicked: {
@@ -320,7 +320,7 @@ Item {
                 SvgImage {
                     id: recordingImg
 
-                    source: global.guiSettings.skin === GuiSettings.Clear ?
+                    source: homeProperties.skin === HomeProperties.Clear ?
                                 "../images/toolbar/icon_scenario-recording.svg" :
                                 "../images/toolbar/icon_scenario-recording_p.svg"
                     anchors.centerIn: parent
@@ -347,10 +347,10 @@ Item {
         ToolbarButton {
             height: toolbar_top.height
             quantity: EventManager.eventManager.dangers
-            defaultImage: global.guiSettings.skin === GuiSettings.Clear ?
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_energy.svg" :
                               "../images/toolbar/icon_energy_p.svg"
-            pressedImage: global.guiSettings.skin === GuiSettings.Clear ?
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_energy_p.svg" :
                               "../images/toolbar/icon_energy.svg"
             onClicked: {

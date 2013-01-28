@@ -12,7 +12,7 @@ Page {
     property variant scenarioObject: undefined
 
     text: qsTr("Advanced scenario")
-    source : global.guiSettings.homeBgImage
+    source : homeProperties.homeBgImage
 
     Item {
         anchors {

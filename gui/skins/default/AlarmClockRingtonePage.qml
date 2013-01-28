@@ -19,7 +19,7 @@ Page {
                                            amplifierModel)
 
     text: qsTr("Alarm settings")
-    source : global.guiSettings.homeBgImage
+    source : homeProperties.homeBgImage
 
     ListModel {
         id: beepModel

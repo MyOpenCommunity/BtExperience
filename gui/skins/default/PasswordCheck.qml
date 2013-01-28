@@ -9,7 +9,7 @@ import "js/Stack.js" as Stack
 BasePage {
     id: control
 
-    source : global.guiSettings.homeBgImage
+    source : homeProperties.homeBgImage
     _pageName: "PasswordCheck"
 
     PasswordInput {

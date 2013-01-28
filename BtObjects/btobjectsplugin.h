@@ -4,6 +4,7 @@
 #include "objectmodel.h"
 #include "globalmodels.h"
 #include "uiimapper.h"
+#include "homeproperties.h"
 
 #include <QDeclarativeExtensionPlugin>
 #include <QDomDocument>
@@ -39,6 +40,7 @@ private:
 	QHash<int, int> uii_to_id;
 	ConfigFile *configurations;
 	int general_ambient_uii;
+	HomeProperties home_properties;
 
 	void createObjects();
 	void parseConfig();

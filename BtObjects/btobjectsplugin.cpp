@@ -226,6 +226,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	configurations = new ConfigFile(this);
 	global_models.setParent(this);
 	note_model.setParent(this);
+	home_properties.setParent(this);
 
 	global_models.setFloors(&floor_model);
 	global_models.setRooms(&room_model);
@@ -1527,6 +1528,7 @@ void BtObjectsPlugin::initializeEngine(QDeclarativeEngine *engine, const char *u
 	Q_UNUSED(uri);
 
 	engine->rootContext()->setContextProperty("myHomeModels", &global_models);
+	engine->rootContext()->setContextProperty("homeProperties", &home_properties);
 }
 
 void BtObjectsPlugin::registerTypes(const char *uri)
@@ -1534,6 +1536,7 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	// @uri BtObjects
 	qmlRegisterUncreatableType<ObjectDataModel>(uri, 1, 0, "ObjectDataModel", "");
 	qmlRegisterUncreatableType<MediaDataModel>(uri, 1, 0, "MediaDataModel", "");
+	qmlRegisterUncreatableType<HomeProperties>(uri, 1, 0, "HomeProperties", "");
 	qmlRegisterType<MediaModel>(uri, 1, 0, "MediaModel");
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "ObjectModel");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");

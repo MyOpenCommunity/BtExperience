@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
@@ -34,7 +35,7 @@ Item {
 
         Image {
             id: container
-            source: global.guiSettings.skin === GuiSettings.Clear ? "../images/profiles/scheda_preferiti.svg" :
+            source: homeProperties.skin === HomeProperties.Clear ? "../images/profiles/scheda_preferiti.svg" :
                                                                     "../images/profiles/scheda_preferiti_P.svg"
 
             Image {
@@ -55,7 +56,7 @@ Item {
             {
                 id: containerPressed
                 anchors.fill: container
-                source: global.guiSettings.skin === GuiSettings.Clear ? "../images/profiles/scheda_preferiti_P.svg" :
+                source: homeProperties.skin === HomeProperties.Clear ? "../images/profiles/scheda_preferiti_P.svg" :
                                                                         "../images/profiles/scheda_preferiti.svg"
                 visible: false
                 anchors.left: container.left
@@ -165,7 +166,7 @@ Item {
             id: labelComponent
             UbuntuLightText {
                 text: bgQuick.text
-                color: global.guiSettings.skin === GuiSettings.Clear ? "#434343":
+                color: homeProperties.skin === HomeProperties.Clear ? "#434343":
                                                                        "#FFFFFF"
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 15
@@ -179,7 +180,7 @@ Item {
             id: labelInputComponent
             UbuntuLightTextInput {
                 text: bgQuick.text
-                color: global.guiSettings.skin === GuiSettings.Clear ? "#434343":
+                color: homeProperties.skin === HomeProperties.Clear ? "#434343":
                                                                        "#FFFFFF"
                 horizontalAlignment: Text.AlignHCenter
                 activeFocusOnPress: false

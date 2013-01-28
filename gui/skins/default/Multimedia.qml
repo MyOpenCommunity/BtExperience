@@ -9,7 +9,7 @@ import "js/Stack.js" as Stack
 Page {
     id: multimedia
 
-    source : global.guiSettings.homeBgImage
+    source : homeProperties.homeBgImage
     text: qsTr("multimedia")
 
     function cardClicked(itemObject) {
