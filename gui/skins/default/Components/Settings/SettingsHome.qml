@@ -54,7 +54,7 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("Reset background image")
+            name: qsTr("Restore background image")
             isSelected: privateProps.currentIndex === 3
             onClicked: {
                 if (privateProps.currentIndex !== 3)
