@@ -30,6 +30,15 @@ MenuColumn {
                 column.loadColumn(settingsImageBrowser, qsTr("Background image"), column.dataModel)
             }
         }
+
+        MenuItem {
+            name: qsTr("Restore background image")
+            isSelected: privateProps.currentIndex === 3
+            onClicked: {
+                privateProps.currentIndex = -1
+                pageObject.installPopup(okCancelDialogRestore, {"item": column.dataModel})
+            }
+        }
     }
 
     QtObject {
@@ -40,5 +49,21 @@ MenuColumn {
     Component {
         id: settingsImageBrowser
         SettingsImageBrowser {}
+    }
+
+    Component {
+        id: okCancelDialogRestore
+
+        TextDialog {
+            property variant item
+
+            title: qsTr("Confirm operation")
+            text: qsTr("Do you want to restore background to default value?")
+
+            function okClicked() {
+                item.image = ""
+                column.closeColumn()
+            }
+        }
     }
 }
