@@ -3,6 +3,8 @@ import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
 import "../../js/Stack.js" as Stack
+import "../../js/default.js" as Default
+
 
 MenuColumn {
     id: column
@@ -11,7 +13,15 @@ MenuColumn {
     height: Math.max(1, 50 * view.count)
 
     function alertOkClicked() {
+        var isDefault = false
+        if (homeProperties.homeBgImage === Default.getDefaultHomeBg())
+            isDefault = true
+
         homeProperties.skin = privateProps.skin
+
+        if (isDefault)
+            homeProperties.homeBgImage = Default.getDefaultHomeBg()
+
         Stack.backToHome()
     }
 

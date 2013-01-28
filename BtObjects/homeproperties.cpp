@@ -5,9 +5,6 @@
 
 #include <QDebug>
 
-#define HOME_BG_CLEAR "images/background/home.jpg"
-#define HOME_BG_DARK "images/background/home_dark.jpg"
-
 
 namespace
 {
@@ -23,7 +20,7 @@ HomeProperties::HomeProperties(QObject *parent) : QObject(parent)
 	configurations = new ConfigFile(this);
 
 	skin = Clear;
-	home_bg_image = HOME_BG_CLEAR;
+	home_bg_image = "images/background/home.jpg";
 
 	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
 	{
@@ -34,8 +31,6 @@ HomeProperties::HomeProperties(QObject *parent) : QObject(parent)
 			break;
 		}
 	}
-
-	connect(this, SIGNAL(skinChanged()), this, SLOT(updateHomeBgImageOnSkinChanged()));
 }
 
 QString HomeProperties::getHomeBgImage() const
@@ -45,15 +40,6 @@ QString HomeProperties::getHomeBgImage() const
 
 void HomeProperties::setHomeBgImage(QString new_value)
 {
-	if (new_value.isEmpty())
-	{
-		// empty string means default one which is dependent on skin
-		if (getSkin() == Clear)
-			new_value = QString(HOME_BG_CLEAR);
-		else
-			new_value = QString(HOME_BG_DARK);
-	}
-
 	if (home_bg_image == new_value)
 		return;
 
@@ -93,16 +79,4 @@ void HomeProperties::setSkin(HomeProperties::Skin s)
 
 	skin = s;
 	emit skinChanged();
-}
-
-void HomeProperties::updateHomeBgImageOnSkinChanged()
-{
-	QString homeBg = getHomeBgImage();
-
-	// custom bg must not be reset
-	if (homeBg != HOME_BG_CLEAR && homeBg != HOME_BG_DARK)
-		return;
-
-	// skin changed, default background must be reset
-	setHomeBgImage(QString(""));
 }

@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/default.js" as Default
 
 MenuColumn {
     id: column
@@ -18,6 +19,7 @@ MenuColumn {
     QtObject {
         id: privateProps
         property int currentIndex: -1
+
     }
 
     Connections {
@@ -88,7 +90,7 @@ MenuColumn {
             text: qsTr("Do you want to restore background to default value?")
 
             function okClicked() {
-                homeProperties.homeBgImage = ""
+                homeProperties.homeBgImage = Default.getDefaultHomeBg()
                 column.closeColumn()
             }
         }

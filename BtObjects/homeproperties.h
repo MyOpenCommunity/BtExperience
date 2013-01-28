@@ -50,9 +50,6 @@ signals:
 	void homeBgImageChanged();
 	void skinChanged();
 
-private slots:
-	void updateHomeBgImageOnSkinChanged();
-
 private:
 	QString home_bg_image;
 	Skin skin;
