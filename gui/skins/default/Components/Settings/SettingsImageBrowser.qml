@@ -88,7 +88,7 @@ MenuColumn {
             typeFilterEnabled: false
             filter: FileObject.Image | FileObject.Directory
             preview: true
-            onImageClicked: pageObject.installPopup(okCancelDialogLocal, {"item": item})
+            onImageClicked: pageObject.installPopup(okCancelDialog, {"item": item})
         }
     }
 
@@ -98,12 +98,12 @@ MenuColumn {
             typeFilterEnabled: false
             filter: FileObject.Image | FileObject.Directory
             preview: true
-            onImageClicked: pageObject.installPopup(okCancelDialogUpnp, {"item": item})
+            onImageClicked: pageObject.installPopup(okCancelDialog, {"item": item})
         }
     }
 
     Component {
-        id: okCancelDialogLocal
+        id: okCancelDialog
 
         TextDialog {
             property variant item
@@ -124,26 +124,6 @@ MenuColumn {
                 else {
                     global.saveInCustomDirIfNeeded(column.dataModel, "image", item.path, "bg_" + column.dataModel.uii, Qt.size(global.mainWidth, global.mainHeight))
                 }
-            }
-        }
-    }
-
-    Component {
-        id: okCancelDialogUpnp
-
-        TextDialog {
-            property variant item
-
-            title: qsTr("Confirm operation")
-            text: qsTr("Do you want to change actual image with the one selected?")
-
-            function okClicked() {
-                if (column.isCard)
-                    Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
-                else if (column.homeCustomization)
-                    global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", item.path, "home_bg", Qt.size(global.mainWidth, global.mainHeight))
-                else
-                    global.saveInCustomDirIfNeeded(column.dataModel, "image", item.path, "bg_" + column.dataModel.uii, Qt.size(global.mainWidth, global.mainHeight))
             }
         }
     }
