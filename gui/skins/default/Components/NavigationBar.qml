@@ -65,12 +65,26 @@ Item {
         }
     }
 
-    UbuntuLightText {
-        id: label
-        color: "#343434"
+    // This Item is only a positioner element for the text. Text is rotated
+    // relative to the original position of the text (excluding alignment etc)
+    // but centering and anchoring is done relative to the size of the Item
+    // class (which is a parent of Text element).
+    // Using an Item for positioning makes it easier to get it right.
+    Item {
+        // swap width <-> height because we are rotating, anchors.fill is not
+        // going to work
+        width: background.height
+        height: background.width
         anchors.centerIn: background
-        width: background.height - 10 // little margin
         rotation: 270
-        font.pixelSize: 32
+
+        UbuntuLightText {
+            id: label
+            anchors.fill: parent
+            color: "#343434"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.pixelSize: 32
+        }
     }
 }
