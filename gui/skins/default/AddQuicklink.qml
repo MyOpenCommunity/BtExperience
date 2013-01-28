@@ -212,7 +212,9 @@ Page {
             elide: Text.ElideMiddle
             anchors {
                 left: linkBgImage.left
-                leftMargin: bg.width / 100 * 3.92
+                leftMargin: bg.width / 100 * 1.5
+                right: linkBgImage.right
+                rightMargin: bg.width / 100 * 1.5
                 verticalCenter: linkBgImage.verticalCenter
             }
         }
@@ -245,7 +247,9 @@ Page {
             elide: Text.ElideMiddle
             anchors {
                 left: nameBgImage.left
-                leftMargin: bg.width / 100 * 3.92
+                leftMargin: bg.width / 100 * 1.5
+                right: nameBgImage.right
+                rightMargin: bg.width / 100 * 1.5
                 verticalCenter: nameBgImage.verticalCenter
             }
         }

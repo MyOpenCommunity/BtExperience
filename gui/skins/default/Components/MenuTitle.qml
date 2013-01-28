@@ -23,6 +23,8 @@ SvgImage {
         anchors {
             left: parent.left
             leftMargin: parent.width / 100 * 5
+            right: parent.right
+            rightMargin: parent.width / 100 * 5
             verticalCenter: parent.verticalCenter
         }
     }

@@ -69,6 +69,7 @@ Item {
         id: label
         color: "#343434"
         anchors.centerIn: background
+        width: background.height - 10 // little margin
         rotation: 270
         font.pixelSize: 32
     }
