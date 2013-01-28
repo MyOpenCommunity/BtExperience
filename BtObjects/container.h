@@ -6,6 +6,7 @@
 class QDomNode;
 class Container;
 class ContainerWithCard;
+class HomeProperties;
 
 
 void updateContainerNameImage(QDomNode node, Container *item);
@@ -91,7 +92,7 @@ public:
 		IdProfile = 101
 	};
 
-	Container(int id, int uii, QString image, QString description);
+	Container(int id, int uii, QString image, QString description, HomeProperties *home_properties = 0);
 
 	Q_INVOKABLE void setCacheDirty();
 
@@ -120,6 +121,7 @@ protected:
 private:
 	QString description, image;
 	int id, uii, cache_id;
+	HomeProperties *home_properties;
 };
 
 
@@ -136,7 +138,7 @@ class ContainerWithCard : public Container
 	Q_PROPERTY(QString cardImage READ getCardImage WRITE setCardImage NOTIFY cardImageChanged)
 
 public:
-	ContainerWithCard(int id, int uii, QString image, QString card_image, QString description);
+	ContainerWithCard(int id, int uii, QString image, QString card_image, QString description, HomeProperties *home_properties = 0);
 
 	void setCardImage(QString image);
 	virtual QString getCardImage() const;

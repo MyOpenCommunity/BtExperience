@@ -1,7 +1,11 @@
 #include "container.h"
 #include "xml_functions.h"
+#include "homeproperties.h"
 
 #include <QDebug>
+
+#define HOME_BG_CLEAR "images/background/home.jpg"
+#define HOME_BG_DARK "images/background/home_dark.jpg"
 
 
 void updateContainerNameImage(QDomNode node, Container *item)
@@ -16,17 +20,21 @@ void updateProfileCardImage(QDomNode node, ContainerWithCard *item)
 }
 
 
-Container::Container(int _id, int _uii, QString _image, QString _description)
+Container::Container(int _id, int _uii, QString _image, QString _description, HomeProperties *_home_properties)
 {
 	id = _id;
 	uii = _uii;
 	image = _image;
 	description = _description;
 	cache_id = 0;
+	home_properties = _home_properties;
 
 	connect(this, SIGNAL(descriptionChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(imageChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(cardImageChanged()), this, SIGNAL(cardImageCachedChanged()));
+
+	if (home_properties)
+		connect(home_properties, SIGNAL(skinChanged()), this, SIGNAL(imageChanged()));
 }
 
 void Container::setCacheDirty()
@@ -56,6 +64,20 @@ void Container::setImage(QString _image)
 
 QString Container::getImage() const
 {
+	// if image is set and not a default one, returns it
+	if (image != "" && image != HOME_BG_CLEAR && image != HOME_BG_DARK)
+		return image;
+
+	// if image is not set, returns a default one depending on skin
+	if (home_properties)
+	{
+		if (home_properties->getSkin() == HomeProperties::Clear)
+			return QString(HOME_BG_CLEAR);
+		else
+			return QString(HOME_BG_DARK);
+	}
+
+	// image is not set, but we don't have a pointer to home page, so returns what we have
 	return image;
 }
 
@@ -89,8 +111,8 @@ QString Container::getCacheId() const
 }
 
 
-ContainerWithCard::ContainerWithCard(int id, int uii, QString image, QString _card_image, QString description) :
-	Container(id, uii, image, description)
+ContainerWithCard::ContainerWithCard(int id, int uii, QString image, QString _card_image, QString description, HomeProperties *_home_properties) :
+	Container(id, uii, image, description, _home_properties)
 {
 	card_image = _card_image;
 

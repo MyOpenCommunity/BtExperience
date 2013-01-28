@@ -23,13 +23,13 @@ HomeProperties::HomeProperties(QObject *parent) : QObject(parent)
 	configurations = new ConfigFile(this);
 
 	skin = Clear;
-	setHomeBgImage(QString(""));
+	home_bg_image = HOME_BG_CLEAR;
 
 	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
 	{
 		if (getIntAttribute(container, "id") == HomePageContainer)
 		{
-			skin = getIntAttribute(container, "img_type", 0) == 0 ? Clear : Dark;
+			setSkin(getIntAttribute(container, "img_type", 0) == 0 ? Clear : Dark);
 			setHomeBgImage(getAttribute(container, "img"));
 			break;
 		}

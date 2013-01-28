@@ -1178,7 +1178,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 	{
 		v.setIst(instance);
 		int room_uii = getIntAttribute(instance, "uii");
-		Container *room = new ContainerWithCard(room_id, room_uii, v.value("img"), v.value("img_card"), v.value("descr"));
+		Container *room = new ContainerWithCard(room_id, room_uii, v.value("img"), v.value("img_card"), v.value("descr"), &home_properties);
 
 		room_model << room;
 		uii_map.insert(room_uii, room);
@@ -1248,7 +1248,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 	{
 		v.setIst(ist);
 		int profile_uii = getIntAttribute(ist, "uii");
-		Container *profile = new ContainerWithCard(profile_id, profile_uii, v.value("img"), v.value("img_card"), v.value("descr"));
+		Container *profile = new ContainerWithCard(profile_id, profile_uii, v.value("img"), v.value("img_card"), v.value("descr"), &home_properties);
 
 		profile_model << profile;
 		uii_map.insert(profile_uii, profile);

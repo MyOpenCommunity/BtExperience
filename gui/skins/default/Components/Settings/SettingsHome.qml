@@ -58,10 +58,8 @@ MenuColumn {
             name: qsTr("Restore background image")
             isSelected: privateProps.currentIndex === 3
             onClicked: {
-                if (privateProps.currentIndex !== 3)
-                    privateProps.currentIndex = 3
-                homeProperties.homeBgImage = ""
-                column.closeColumn()
+                privateProps.currentIndex = -1
+                pageObject.installPopup(okCancelDialogRestore)
             }
         }
 
@@ -80,5 +78,19 @@ MenuColumn {
     Component {
         id: settingsImageBrowser
         SettingsImageBrowser {}
+    }
+
+    Component {
+        id: okCancelDialogRestore
+
+        TextDialog {
+            title: qsTr("Confirm operation")
+            text: qsTr("Do you want to restore background to default value?")
+
+            function okClicked() {
+                homeProperties.homeBgImage = ""
+                column.closeColumn()
+            }
+        }
     }
 }
