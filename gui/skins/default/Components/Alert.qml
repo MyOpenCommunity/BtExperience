@@ -35,7 +35,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: 14
             color: "white"
-            text: qsTr("Alert message goes here.")
+            text: "Alert message goes here."
             wrapMode: Text.Wrap
             anchors {
                 right: parent.right

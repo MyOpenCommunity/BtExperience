@@ -153,7 +153,7 @@ Page {
 
     ControlSpin {
         id: volumeSpin
-        text: page.alarmClock.volume + qsTr("%")
+        text: page.alarmClock.volume + "%"
         visible: soundDiffusionModel.count > 0
         anchors {
             left: bg.left
