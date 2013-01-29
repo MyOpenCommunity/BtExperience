@@ -225,8 +225,8 @@ void TestMultiMediaPlayer::testPauseResume()
 	QVERIFY(state_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
 
-	QVERIFY(output_changed->waitForSignal(TIMEOUT));
-	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputStopped);
+	QVERIFY(!output_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
 
 	QCOMPARE(QString("files/audio/d3.mp3"), player->getCurrentSource());
 
@@ -244,7 +244,7 @@ void TestMultiMediaPlayer::testPauseResume()
 	QVERIFY(state_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
 
-	QVERIFY(output_changed->waitForSignal(TIMEOUT));
+	QVERIFY(!output_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
 
 	QCOMPARE(QString("files/audio/d3.mp3"), player->getCurrentSource());
@@ -256,6 +256,84 @@ void TestMultiMediaPlayer::testPauseResume()
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
 
 	QCOMPARE(QString("files/audio/d3.mp3"), player->getCurrentSource());
+}
+
+void TestMultiMediaPlayer::testPauseReleaseResume()
+{
+	player->setCurrentSource("files/audio/d3.mp3");
+	player->play();
+
+	// wait for first status update
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	QVERIFY(output_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
+
+	// pause() changes status and sends pause command to mplayer
+	player->pause();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::AboutToPause);
+
+	// wait for mplayer to actually pause
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+
+	QVERIFY(!output_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
+	QVERIFY(player->player->isInstanceRunning());
+
+	// calling releaseOutputDevices() stops player and changes audio output, but state is still Paused
+	player->releaseOutputDevices();
+
+	QVERIFY(output_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputStopped);
+	QVERIFY(!player->player->isInstanceRunning());
+
+	// resume() changes status and restarts mplayer
+	player->resume();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+	QVERIFY(player->player->isInstanceRunning());
+
+	QVERIFY(output_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
+}
+
+void TestMultiMediaPlayer::testReleaseResume()
+{
+	player->setCurrentSource("files/audio/d3.mp3");
+	player->play();
+
+	// wait for first status update
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+
+	QVERIFY(output_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
+
+	// calling releaseOutputDevices() stops player and changes audio output, but state is still Paused
+	player->releaseOutputDevices();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Paused);
+
+	QVERIFY(output_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputStopped);
+	QVERIFY(!player->player->isInstanceRunning());
+
+	// resume() changes status and restarts mplayer
+	player->resume();
+
+	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
+	QVERIFY(player->player->isInstanceRunning());
+
+	QVERIFY(output_changed->waitForSignal(TIMEOUT));
+	QCOMPARE(player->getAudioOutputState(), MultiMediaPlayer::AudioOutputActive);
 }
 
 void TestMultiMediaPlayer::testMultiplePauseResume()

@@ -161,6 +161,15 @@ public slots:
 	void stop();
 
 	/*!
+		\brief Pause playback and unlock audio/video output devices
+
+		Might stop the media player instance, but player status is still
+		\ref Paused and \ref resume() work as expected.
+	*/
+	void releaseOutputDevices();
+
+	/*!
+
 		\brief Seek forward/backward
 
 		Moves the playback backward/forward by the given offset.  Due to
@@ -201,18 +210,24 @@ private slots:
 	void mplayerDone();
 
 private:
-	void setPlayerState(PlayerState new_state);
+	void setPlayerState(int new_state);
+
+	// Start reproducing current source at the specified position
+	void playAt(float position);
 
 	MediaPlayer *player;
 	GstMediaPlayer *gst_player;
 	bool is_video_track;
+	// true when the player is stopped to release output devices
+	// but reported state must remain Paused
+	bool is_releasing_device;
 	QTimer *info_poll_timer;
 	QRect video_rect;
 
 	QString current_source;
 	QVariantMap track_info;
-	PlayerState player_state;
-	int mediaplayer_output_mode;
+	int player_state;
+	int mediaplayer_output_mode; // used for tests
 	int volume;
 	bool mute;
 };

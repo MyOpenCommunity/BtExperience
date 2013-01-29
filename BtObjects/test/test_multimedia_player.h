@@ -27,8 +27,10 @@ private slots:
 	// test playback of multiple fiiles
 	void testPlayMulti();
 
-	// test pause/resume sequences
+	// test pause/detach/resume sequences
 	void testPauseResume();
+	void testPauseReleaseResume();
+	void testReleaseResume();
 	void testMultiplePauseResume();
 
 	// change current source

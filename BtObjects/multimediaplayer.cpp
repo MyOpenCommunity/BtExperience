@@ -21,6 +21,11 @@ namespace
 		QString ext = track.mid(track.lastIndexOf(".") + 1);
 		return extensions.contains(ext);
 	}
+
+	// internal state entered after calling releaseOutputDevices: the reported player state is Paused,
+	// output state is AudioOutputStopped and the player process is not running; calling resume() works
+	// as if the player were actually paused
+	const int OutputDeviceReleased = -2;
 }
 
 
@@ -31,6 +36,7 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	player = new MediaPlayer(this);
 
 	is_video_track = false;
+	is_releasing_device = false;
 	player_state = Stopped;
 	mediaplayer_output_mode = MediaPlayer::OutputAll;
 	volume = 100;
@@ -87,15 +93,18 @@ QVariantMap MultiMediaPlayer::getTrackInfo() const
 
 MultiMediaPlayer::PlayerState MultiMediaPlayer::getPlayerState() const
 {
-	return player_state;
+	if (player_state == OutputDeviceReleased)
+		return Paused;
+	else
+		return static_cast<PlayerState>(player_state);
 }
 
 MultiMediaPlayer::AudioOutputState MultiMediaPlayer::getAudioOutputState() const
 {
-	if (player_state == Playing || player_state == AboutToPause)
-		return AudioOutputActive;
-	else
+	if (player_state == Stopped || player_state == OutputDeviceReleased)
 		return AudioOutputStopped;
+	else
+		return AudioOutputActive;
 }
 
 void MultiMediaPlayer::setVolume(int newValue)
@@ -176,7 +185,13 @@ void MultiMediaPlayer::play()
 	if (is_video_track)
 		gst_player->play(video_rect, current_source);
 	else
-		player->play(current_source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
+		player->play(current_source, 0, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
+}
+
+void MultiMediaPlayer::playAt(float position)
+{
+	if (!is_video_track)
+		player->play(current_source, position, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 }
 
 void MultiMediaPlayer::pause()
@@ -190,7 +205,7 @@ void MultiMediaPlayer::pause()
 
 void MultiMediaPlayer::resume()
 {
-	if (player_state != Paused && player_state != AboutToPause)
+	if (player_state != Paused && player_state != AboutToPause && player_state != OutputDeviceReleased)
 		return;
 
 	if (is_video_track)
@@ -203,7 +218,15 @@ void MultiMediaPlayer::resume()
 	else
 	{
 		if (player->isInstanceRunning())
+		{
 			player->resume();
+		}
+		else if (player_state == OutputDeviceReleased)
+		{
+			QTime time = track_info["current_time"].toTime();
+
+			playAt(time.hour() * 3600 + time.minute() * 60 + time.second() + time.msec() / 1000.0);
+		}
 		else
 			play();
 	}
@@ -212,6 +235,15 @@ void MultiMediaPlayer::resume()
 void MultiMediaPlayer::stop()
 {
 	setCurrentSource("");
+}
+
+void MultiMediaPlayer::releaseOutputDevices()
+{
+	if (player_state == Stopped || player_state == OutputDeviceReleased)
+		return;
+	is_releasing_device = true;
+	if (!is_video_track)
+		player->stop();
 }
 
 void MultiMediaPlayer::seek(int seconds)
@@ -261,7 +293,7 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 		{
 			if (player->isPlaying())
 			{
-				player->play(source, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
+				player->play(source, 0, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 			}
 			else if (player->isPaused())
 			{
@@ -321,14 +353,15 @@ void MultiMediaPlayer::updateTrackInfo(QVariantMap new_track_info)
 	emit trackInfoChanged(track_info);
 }
 
-void MultiMediaPlayer::setPlayerState(PlayerState new_state)
+void MultiMediaPlayer::setPlayerState(int new_state)
 {
-	if (new_state == player_state)
-		return;
 	AudioOutputState old_audio_output = getAudioOutputState();
 
-	player_state = new_state;
-	emit playerStateChanged(player_state);
+	if (new_state != player_state)
+	{
+		player_state = new_state;
+		emit playerStateChanged(getPlayerState());
+	}
 	if (getAudioOutputState() != old_audio_output)
 		emit audioOutputStateChanged(getAudioOutputState());
 }
@@ -342,10 +375,20 @@ void MultiMediaPlayer::mplayerStarted()
 
 void MultiMediaPlayer::mplayerStopped()
 {
-	// this handles the pause() -> change source sequence: MPlayer is stopped,
-	// but the "logical" state is still paused
-	if ((player_state == Paused || player_state == AboutToPause) && !current_source.isEmpty())
+	// handles the case when player is stopped to release output device
+	if (is_releasing_device)
+	{
+		is_releasing_device = false;
+		setPlayerState(OutputDeviceReleased);
 		return;
+	}
+	if (player_state == Paused || player_state == AboutToPause || player_state == OutputDeviceReleased)
+	{
+		// this handles the pause() -> change source sequence: MPlayer is stopped,
+		// but the "logical" state is still paused
+		if (!current_source.isEmpty())
+			return;
+	}
 
 	// for instructions order see comment in mplayerDone
 	setCurrentSource("");
