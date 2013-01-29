@@ -191,12 +191,47 @@ Page {
     }
 
     SvgImage {
-        id: linkBgImage
+        id: nameBgImage
         source: "images/common/bg_text-input.svg"
         anchors {
             left: verticalSeparator.left
             leftMargin: bg.width / 100 * 3.92
             top: addTextText.bottom
+            topMargin: bg.height / 100 * 2.29
+        }
+
+        UbuntuLightText {
+            id: nameText
+
+            property string realText: ""
+            onRealTextChanged: console.log("nameText.realText: " + realText)
+
+            text: realText || privateProps.emptyNameString
+            font.pixelSize: 14
+            color: "#5A5A5A"
+            elide: Text.ElideMiddle
+            anchors {
+                left: nameBgImage.left
+                leftMargin: bg.width / 100 * 1.5
+                right: nameBgImage.right
+                rightMargin: bg.width / 100 * 1.5
+                verticalCenter: nameBgImage.verticalCenter
+            }
+        }
+
+        BeepingMouseArea {
+            anchors.fill: nameBgImage
+            onClicked: installPopup(popupEditLink)
+        }
+    }
+
+    SvgImage {
+        id: linkBgImage
+        source: "images/common/bg_text-input.svg"
+        anchors {
+            left: verticalSeparator.left
+            leftMargin: bg.width / 100 * 3.92
+            top: nameBgImage.bottom
             topMargin: bg.height / 100 * 2.29
         }
 
@@ -225,41 +260,6 @@ Page {
         }
     }
 
-    SvgImage {
-        id: nameBgImage
-        source: "images/common/bg_text-input.svg"
-        anchors {
-            left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
-            top: linkBgImage.bottom
-            topMargin: bg.height / 100 * 2.29
-        }
-
-        UbuntuLightText {
-            id: nameText
-
-            property string realText: ""
-            onRealTextChanged: console.log("nameText.realText: " + realText)
-
-            text: realText || privateProps.emptyNameString
-            font.pixelSize: 14
-            color: "#5A5A5A"
-            elide: Text.ElideMiddle
-            anchors {
-                left: nameBgImage.left
-                leftMargin: bg.width / 100 * 1.5
-                right: nameBgImage.right
-                rightMargin: bg.width / 100 * 1.5
-                verticalCenter: nameBgImage.verticalCenter
-            }
-        }
-
-        BeepingMouseArea {
-            anchors.fill: nameBgImage
-            onClicked: installPopup(popupEditName)
-        }
-    }
-
     ButtonThreeStates {
         id: addButton
 
@@ -272,7 +272,7 @@ Page {
         anchors {
             left: verticalSeparator.left
             leftMargin: bg.width / 100 * 3.92
-            top: nameBgImage.bottom
+            top: linkBgImage.bottom
             topMargin: bg.height / 100 * 2.29
         }
         onClicked: {
@@ -478,17 +478,17 @@ Page {
 
     Component {
         id: popupEditLink
-        EditNote {
-            title: qsTr("Insert address")
-            onOkClicked: linkText.realText = text
-        }
-    }
+        FavoriteEditPopup {
+            title: qsTr("Edit quicklink properties")
+            topInputLabel: qsTr("Title:")
+            topInputText: nameText.realText
+            bottomInputLabel: qsTr("Address:")
+            bottomInputText: linkText.realText
 
-    Component {
-        id: popupEditName
-        EditNote {
-            title: qsTr("Insert description")
-            onOkClicked: nameText.realText = text
+            function okClicked() {
+                nameText.realText = topInputText
+                linkText.realText = bottomInputText
+            }
         }
     }
 
