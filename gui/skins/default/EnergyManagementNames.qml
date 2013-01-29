@@ -8,7 +8,6 @@ QtObject {
     // internal function to load values into the container
     function _init(container) {
         container['ENERGY_TYPE'] = []
-        container['ENERGY_UNIT'] = []
         container['STOP_GO_STATUS'] = []
 
         // stop&go status translations
@@ -30,14 +29,6 @@ QtObject {
         container['ENERGY_TYPE'][EnergyData.HotWater] = qsTr("HotWater")
         container['ENERGY_TYPE'][EnergyData.Heat] = qsTr("Heat")
 //        container['ENERGY_TYPE'][EnergyData.???] = qsTr("Liquid Gas")
-
-        // EnergyUnit
-        container['ENERGY_UNIT'][EnergyData.Electricity] = qsTr("kWh")
-        container['ENERGY_UNIT'][EnergyData.Water] = qsTr("l")
-        container['ENERGY_UNIT'][EnergyData.Gas] = qsTr("l")
-        container['ENERGY_UNIT'][EnergyData.HotWater] = qsTr("l")
-        container['ENERGY_UNIT'][EnergyData.Heat] = qsTr("cal")
-//        container['ENERGY_UNIT'][EnergyData.???] = qsTr("???s")
     }
 
     // retrieves the requested value from the local array

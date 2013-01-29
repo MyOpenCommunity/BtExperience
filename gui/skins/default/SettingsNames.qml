@@ -17,14 +17,6 @@ QtObject {
         container['STATE'][PlatformSettings.Enabled] = qsTr("Connect")
         container['STATE'][PlatformSettings.Disabled] = qsTr("Disconnect")
 
-        container['SCREEN_SAVER_TYPE'] = []
-        container['SCREEN_SAVER_TYPE'][GuiSettings.None] = qsTr("None")
-        container['SCREEN_SAVER_TYPE'][GuiSettings.Image] = qsTr("Image")
-        container['SCREEN_SAVER_TYPE'][GuiSettings.Text] = qsTr("Text")
-        container['SCREEN_SAVER_TYPE'][GuiSettings.DateTime] = qsTr("Date and Time")
-        container['SCREEN_SAVER_TYPE'][GuiSettings.Rectangles] = qsTr("Rectangles")
-        container['SCREEN_SAVER_TYPE'][GuiSettings.Slideshow] = qsTr("Slideshow")
-
         container['AUTO_UPDATE'] = []
         container['AUTO_UPDATE'][true] = qsTr("Enabled")
         container['AUTO_UPDATE'][false] = qsTr("Disabled")
@@ -39,18 +31,9 @@ QtObject {
         container['KEYBOARD']["en_gb_bticino"] = qsTr("English (GB)")
         container['KEYBOARD']["fr_bticino"] = qsTr("French")
 
-        container['CURRENCY'] = []
-        container['CURRENCY']["CHF"] = qsTr("Swiss franc")
-        container['CURRENCY']["EUR"] = qsTr("Euro €")
-        container['CURRENCY']["GBP"] = qsTr("British pound £")
-        container['CURRENCY']["JPY"] = qsTr("Japanese yen ¥")
-        container['CURRENCY']["USD"] = qsTr("U.S. dollar $")
-
         container['SKIN'] = []
         container['SKIN'][HomeProperties.Clear] = qsTr("Clear")
         container['SKIN'][HomeProperties.Dark] = qsTr("Dark")
-
-        // TODO from here on, change  wrt to model developments
 
         container['PASSWORD'] = []
         container['PASSWORD'][false] = qsTr("Disable")

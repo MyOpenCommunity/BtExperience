@@ -25,7 +25,7 @@ QtObject {
         container['PROBE_STATUS'][ThermalControlledProbe.Antifreeze] = qsTr("antifreeze")
         container['PROBE_STATUS'][ThermalControlledProbe.Manual] = qsTr("manual")
         container['PROBE_STATUS'][ThermalControlledProbe.Off] = qsTr("off")
-        container['PROBE_STATUS'][ThermalControlledProbe.Unknown] = qsTr("--")
+        container['PROBE_STATUS'][ThermalControlledProbe.Unknown] = "--"
 
         container['MODE'] = []
         container['MODE'][SplitAdvancedProgram.ModeOff] = qsTr("Off")
@@ -41,12 +41,12 @@ QtObject {
         container['SPEED'][SplitAdvancedProgram.SpeedMed] = qsTr("Medium")
         container['SPEED'][SplitAdvancedProgram.SpeedMax] = qsTr("High")
         container['SPEED'][SplitAdvancedProgram.SpeedSilent] = qsTr("Silent")
-        container['SPEED'][SplitAdvancedProgram.SpeedInvalid] = qsTr("")
+        container['SPEED'][SplitAdvancedProgram.SpeedInvalid] = ""
 
         container['SWING'] = []
         container['SWING'][SplitAdvancedProgram.SwingOff] = qsTr("Off")
         container['SWING'][SplitAdvancedProgram.SwingOn] = qsTr("On")
-        container['SWING'][SplitAdvancedProgram.SwingInvalid] = qsTr("")
+        container['SWING'][SplitAdvancedProgram.SwingInvalid] = ""
 
         container['FANCOIL_SPEED'] = []
         container['FANCOIL_SPEED'][ThermalControlledProbeFancoil.FancoilMin] = qsTr("min")
