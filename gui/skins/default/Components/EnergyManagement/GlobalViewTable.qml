@@ -183,7 +183,7 @@ Column {
                                     leftMargin: privateProps.textMargin
                                     verticalCenter: parent.verticalCenter
                                 }
-                                text: tableRow.hasRate() ? energyFunctions.formatValue(tableRow.monthItem) : qsTr("---")
+                                text: tableRow.hasRate() ? energyFunctions.formatValue(tableRow.monthItem) : "---"
                                 font.pixelSize: 14
                                 color: "white"
                             }
@@ -193,7 +193,7 @@ Column {
                                     leftMargin: privateProps.textMargin + tableHeader.spacing + privateProps.cellWidth
                                     verticalCenter: parent.verticalCenter
                                 }
-                                text: tableRow.hasRate() ? tableRow.monthItem.consumptionGoal.toFixed(tableRow.itemObject.decimals) + " " + tableRow.monthItem.measureUnit : qsTr("---")
+                                text: tableRow.hasRate() ? tableRow.monthItem.consumptionGoal.toFixed(tableRow.itemObject.decimals) + " " + tableRow.monthItem.measureUnit : "---"
                                 font.pixelSize: 14
                                 color: "white"
                             }
@@ -206,7 +206,7 @@ Column {
                                 }
                                 text: {
                                     if (!tableRow.hasRate())
-                                        return qsTr("---")
+                                        return "---"
                                     var delta = parent.calculateDelta()
                                     return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(tableRow.itemObject.decimals) +  " " + tableRow.monthItem.measureUnit
                                 }

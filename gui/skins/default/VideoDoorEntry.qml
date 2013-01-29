@@ -6,6 +6,5 @@ SystemPage {
     source: "images/background/videocitofonia.jpg"
     text: qsTr("video door entry")
     rootColumn: Component { VideoDoorEntryItems {} }
-    names: VideoDoorEntryNames {}
 }
 

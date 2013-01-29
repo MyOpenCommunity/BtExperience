@@ -8,7 +8,6 @@ SystemPage {
     source: "images/background/devices.jpg"
     text: qsTr("Devices")
     rootColumn: Component { DevicesSystem {} }
-    names: MultimediaNames {}
 
     function multimediaButtonClicked() {
         Stack.backToMultimedia()

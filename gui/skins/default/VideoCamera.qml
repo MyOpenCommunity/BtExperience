@@ -84,7 +84,7 @@ Page {
         // place
         id: controlVideo
 
-        label: qsTr("CAMERA EXTERNAL PLACE #1")
+        label: "CAMERA EXTERNAL PLACE #1"
         anchors {
             right: controlCallManager.left
             rightMargin: 16

@@ -140,7 +140,7 @@ BasePage {
                 leftMargin: page.width / 100 * 1
             }
 
-            onClicked: Stack.backToPage("Devices.qml")
+            onClicked: Stack.popPage()
         }
 
         SvgImage {
@@ -227,7 +227,7 @@ BasePage {
             selectedImage: "images/common/ico_chiudi_fullscreen.svg"
             status: 1
 
-            onClicked: Stack.backToPage("Devices.qml")
+            onClicked: Stack.popPage()
         }
 
         Timer {

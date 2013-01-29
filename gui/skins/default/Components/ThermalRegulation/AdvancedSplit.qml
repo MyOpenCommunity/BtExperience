@@ -151,7 +151,7 @@ MenuColumn {
             ControlMinusPlus {
                 id: temp
                 title: qsTr("temperature")
-                text: (tempColumn.setpoint / 10).toFixed(1) + qsTr("°C")
+                text: (tempColumn.setpoint / 10).toFixed(1) + "°C"
                 onMinusClicked: {
                     if (tempColumn.setpoint - dataModel.setPointStep < dataModel.setPointMin)
                         return

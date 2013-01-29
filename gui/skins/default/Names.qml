@@ -15,10 +15,6 @@ Item {
         id: lightingNames
     }
 
-    MultimediaNames {
-        id: multimediaNames
-    }
-
     SettingsNames {
         id: settingsNames
     }
@@ -27,19 +23,13 @@ Item {
         id: thermalNames
     }
 
-    VideoDoorEntryNames {
-        id: videoDoorEntryNames
-    }
-
     // internal function to load values into the container
     function _init(container) {
         antintrusionNames._init(container)
         energyManagementNames._init(container)
         lightingNames._init(container)
-        multimediaNames._init(container)
         settingsNames._init(container)
         thermalNames._init(container)
-        videoDoorEntryNames._init(container)
     }
 
     // retrieves the requested value from the local array

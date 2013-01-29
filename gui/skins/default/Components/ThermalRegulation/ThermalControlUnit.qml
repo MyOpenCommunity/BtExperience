@@ -150,7 +150,7 @@ MenuColumn {
             // 4 zones central units are zones themselves: we must show the
             // temperature of the linked probe in such cases
             visible: (!is99zones)
-            text: (fixedItem.temperature / 10).toFixed(1) + qsTr("°C")
+            text: (fixedItem.temperature / 10).toFixed(1) + "°C"
         }
 
         MenuItem {
@@ -190,7 +190,7 @@ MenuColumn {
 
                 ControlMinusPlus {
                     title: qsTr("temperature set")
-                    text: (objModel.temperature / 10).toFixed(1) + qsTr("°C")
+                    text: (objModel.temperature / 10).toFixed(1) + "°C"
                     onMinusClicked: objModel.temperature -= 5
                     onPlusClicked: objModel.temperature += 5
                 }
@@ -282,7 +282,7 @@ MenuColumn {
 
                 ControlMinusPlus {
                     title: qsTr("temperature set")
-                    text: (objModel.temperature / 10).toFixed(1) + qsTr("°C")
+                    text: (objModel.temperature / 10).toFixed(1) + "°C"
                     onMinusClicked: objModel.temperature -= 5
                     onPlusClicked: objModel.temperature += 5
                 }

@@ -33,6 +33,7 @@ MenuColumn {
             Component {
                 id: popupEditUrl
                 EditNote {
+                    title: qsTr("Insert new home page")
                     onOkClicked: global.homePageUrl = text
                 }
             }

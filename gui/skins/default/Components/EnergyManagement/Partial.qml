@@ -32,7 +32,7 @@ SvgImage {
     UbuntuLightText {
         id: since
 
-        text: qsTr("since 24/07/2012 18:35")
+        text: "since 24/07/2012 18:35"
         color: "gray"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
@@ -46,7 +46,7 @@ SvgImage {
     UbuntuLightText {
         id: consumption
 
-        text: qsTr("45.51 kWh")
+        text: "45.51 kWh"
         color: "white"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft

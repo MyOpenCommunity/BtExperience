@@ -13,15 +13,9 @@ MenuColumn {
         filters: [{objectId: ObjectInterface.IdIntercom}]
     }
 
-    Column {
-        MenuItem {
-            name: qsTr("pager")
-            hasChild: false
-            height: controlCall.height
-            ControlCall {
-                id: controlCall
-                dataObject: modelList.getObject(0)
-            }
-        }
+
+    ControlCall {
+        id: controlCall
+        dataObject: modelList.getObject(0)
     }
 }

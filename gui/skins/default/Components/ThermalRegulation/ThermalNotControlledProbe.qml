@@ -8,6 +8,6 @@ MenuColumn {
     id: column
 
     ControlTemperature {
-        text: (dataModel.temperature / 10).toFixed(1) + qsTr("°C")
+        text: (dataModel.temperature / 10).toFixed(1) + "°C"
     }
 }

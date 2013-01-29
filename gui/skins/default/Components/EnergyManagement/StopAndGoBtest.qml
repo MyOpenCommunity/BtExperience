@@ -104,7 +104,7 @@ MenuColumn {
 
         ControlMinusPlus {
             title: qsTr("Test every")
-            text: element.dataModel.autoTestFrequency === -1 ? "---" : element.dataModel.autoTestFrequency + qsTr(" days")
+            text: element.dataModel.autoTestFrequency === -1 ? "---" : qsTr("%1 days").arg(element.dataModel.autoTestFrequency)
             changeable: element.dataModel.autoTestFrequency !== -1
             onMinusClicked: element.dataModel.decreaseAutoTestFrequency()
             onPlusClicked: element.dataModel.increaseAutoTestFrequency()

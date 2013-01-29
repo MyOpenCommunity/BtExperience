@@ -92,7 +92,7 @@ Column {
             function representValues(values, type) {
 
                 if (type === DeviceConditionObject.Dimming || type === DeviceConditionObject.Dimming100 || type === DeviceConditionObject.Amplifier)
-                    return values[0] + ' - ' + values[1] + qsTr("%")
+                    return values[0] + ' - ' + values[1] + "%"
 
                 if (type === DeviceConditionObject.Probe || type === DeviceConditionObject.ExternalProbe || type === DeviceConditionObject.Temperature)
                     return values[0] + qsTr("\272C")

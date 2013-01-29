@@ -75,7 +75,7 @@ MenuColumn {
     Column {
         ControlTemperature {
             id: fixedItem
-            text: (dataModel.temperature / 10).toFixed(1) + qsTr("°C")
+            text: (dataModel.temperature / 10).toFixed(1) + "°C"
         }
 
         MenuItem {
@@ -164,7 +164,7 @@ MenuColumn {
 
             ControlMinusPlus {
                 title: qsTr("temperature set")
-                text: (setpoint / 10).toFixed(1) + qsTr("°C")
+                text: (setpoint / 10).toFixed(1) + "°C"
                 changeable: is99zones
                 onMinusClicked: {
                     if (rootManualComponent.setpoint - 5 < column.dataModel.minimumManualTemperature)

@@ -6,7 +6,7 @@ SvgImage {
     id: keypad
 
     property string mainLabel
-    property string helperLabel: qsTr("enter code")
+    property string helperLabel: "enter code"
     property string errorLabel
     property string okLabel
     property string textInserted

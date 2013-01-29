@@ -49,7 +49,7 @@ ControlCallManager {
         }
         font.pixelSize: 14
         color: "white"
-        text: qsTr("Site #1")
+        text: "Site #1"
     }
 
     SvgImage {

@@ -167,6 +167,7 @@ Page {
     Component {
         id: popupEditName
         EditNote {
+            title: qsTr("New alarm name")
             onOkClicked: nameText.text = text
         }
     }

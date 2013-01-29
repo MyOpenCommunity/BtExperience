@@ -83,7 +83,7 @@ Column {
                 anchors.horizontalCenter: parent.horizontalCenter
                 UbuntuLightTextInput {
                     id: descriptionInput
-                    text: qsTr("Title goes here.")
+                    text: "Title goes here."
                     font.pixelSize: 14
                     color: "#5A5A5A"
                     anchors {
@@ -119,7 +119,7 @@ Column {
                 anchors.horizontalCenter: parent.horizontalCenter
                 UbuntuLightTextInput {
                     id: addressInput
-                    text: qsTr("Address goes here.")
+                    text: "Address goes here."
                     font.pixelSize: 14
                     color: "#5A5A5A"
                     anchors {

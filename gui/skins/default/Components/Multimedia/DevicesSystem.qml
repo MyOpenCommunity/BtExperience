@@ -29,7 +29,6 @@ MenuColumn {
             name: itemObject.name
             hasChild: true
             enabled: Script.mediaItemEnabled(itemObject)
-            onEnabledChanged: column.closeChild()
             onDelegateClicked: {
                 var upnp = itemObject.sourceType === SourceObject.Upnp;
                 var props = {
@@ -47,18 +46,18 @@ MenuColumn {
     Component {
         id: directoryBrowser
         ColumnBrowserDirectoryModel {
-            onImageClicked: Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
-            onAudioClicked: Stack.goToPage("AudioPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
-            onVideoClicked: Stack.goToPage("VideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onImageClicked: Stack.pushPage("PhotoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onAudioClicked: Stack.pushPage("AudioPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onVideoClicked: Stack.pushPage("VideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
         }
     }
 
     Component {
         id: upnpBrowser
         ColumnBrowserUpnpModel {
-            onImageClicked: Stack.goToPage("PhotoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
-            onAudioClicked: Stack.goToPage("AudioPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
-            onVideoClicked: Stack.goToPage("VideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onImageClicked: Stack.pushPage("PhotoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onAudioClicked: Stack.pushPage("AudioPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
+            onVideoClicked: Stack.pushPage("VideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
         }
     }
 }

@@ -161,7 +161,7 @@ Page {
                 leftMargin: fullScreenBg.width / 100 * 1.5
             }
 
-            onClicked: Stack.backToPage("Devices.qml")
+            onClicked: Stack.popPage()
         }
 
         Row {
@@ -234,7 +234,7 @@ Page {
                 rightMargin: fullScreenBg.width / 100 * 2
             }
 
-            onClicked: Stack.backToPage("Devices.qml")
+            onClicked: Stack.popPage()
             status: 1
         }
 
