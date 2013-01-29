@@ -3,12 +3,8 @@ import Components 1.0
 
 
 MenuColumn {
-    Column {
-        id: column
-
-        ControlOpenCloseStop {
-            status: dataModel.status
-            onPressed: dataModel.status = newStatus
-        }
+    ControlOpenCloseStop {
+        status: dataModel.status
+        onPressed: dataModel.status = newStatus
     }
 }

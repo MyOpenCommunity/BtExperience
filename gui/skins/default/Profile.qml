@@ -230,7 +230,7 @@ Page {
 
     Component {
         id: scenarioItemComponent
-        ScenarioLink { }
+        ScenarioLink { pageObject: profilePage }
     }
 
     Component {

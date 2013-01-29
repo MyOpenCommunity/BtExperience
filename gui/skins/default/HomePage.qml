@@ -76,7 +76,7 @@ BasePage {
 
         Component {
             id: scenarioDelegate
-            ScenarioLink {}
+            ScenarioLink { pageObject: mainarea }
         }
 
         Component {

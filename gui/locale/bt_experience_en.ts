@@ -4,279 +4,279 @@
 <context>
     <name>ActionObject</name>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="354"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="360"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="385"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="436"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="451"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="458"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="466"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="479"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="512"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="355"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="361"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="386"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="437"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="452"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="459"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="467"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="480"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="513"/>
         <source>OFF</source>
         <translation>OFF</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="355"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="361"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="386"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="415"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="420"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="459"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="513"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="356"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="362"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="387"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="416"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="421"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="460"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="514"/>
         <source>ON</source>
         <translation>ON</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="362"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="363"/>
         <source>20%</source>
         <translation>20%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="363"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="364"/>
         <source>30%</source>
         <translation>30%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="364"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="365"/>
         <source>40%</source>
         <translation>40%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="365"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="366"/>
         <source>50%</source>
         <translation>50%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="366"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="367"/>
         <source>60%</source>
         <translation>60%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="367"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="368"/>
         <source>70%</source>
         <translation>70%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="368"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="369"/>
         <source>80%</source>
         <translation>80%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="369"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="370"/>
         <source>90%</source>
         <translation>90%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="370"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="371"/>
         <source>100%</source>
         <translation>100%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="375"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="376"/>
         <source>1 min.</source>
         <translation>1 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="376"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="377"/>
         <source>2 min.</source>
         <translation>2 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="377"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="378"/>
         <source>3 min.</source>
         <translation>3 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="378"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="379"/>
         <source>4 min.</source>
         <translation>4 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="379"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="380"/>
         <source>5 min.</source>
         <translation>5 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="380"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="381"/>
         <source>15 min.</source>
         <translation>15 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="387"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="388"/>
         <source>Level</source>
         <translation>Level</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="393"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="394"/>
         <source>Up</source>
         <translation>Up</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="394"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="395"/>
         <source>Down</source>
         <translation>Down</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="395"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="403"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="507"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="396"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="404"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="508"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="401"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="402"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="402"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="403"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="408"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="409"/>
         <source>On 1 sec.</source>
         <translation>On 1 sec.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="409"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="410"/>
         <source>On 2 sec.</source>
         <translation>On 2 sec.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="425"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="426"/>
         <source>Scenario 1.4</source>
         <translation>Scenario 1.4</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="430"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="431"/>
         <source>Scenario 1.16</source>
         <translation>Scenario 1.16</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="435"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="450"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="465"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="478"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="436"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="451"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="466"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="479"/>
         <source>Antifreeze/thermal protection</source>
         <translation>Antifreeze/thermal protection</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="437"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="452"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="467"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="480"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="438"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="453"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="468"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="481"/>
         <source>Manual Temperature</source>
         <translation>Manual Temperature</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="438"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="439"/>
         <source>Heating scenario</source>
         <translation>Heating scenario</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="439"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="440"/>
         <source>Air-conditioning scenario</source>
         <translation>Air-conditioning scenario</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="440"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="469"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="441"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="470"/>
         <source>Heating Program</source>
         <translation>Heating Program</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="441"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="470"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="442"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="471"/>
         <source>Air-conditioning program</source>
         <translation>Air-conditioning program</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="442"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="471"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="443"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="472"/>
         <source>Last program</source>
         <translation>Last program</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="443"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="472"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="444"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="473"/>
         <source>Set the air conditioning mode</source>
         <translation>Set the air conditioning mode</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="444"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="473"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="445"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="474"/>
         <source>Set the heating mode</source>
         <translation>Set the heating mode</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="445"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="446"/>
         <source>Last scenario</source>
         <translation>Last scenario</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="453"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="481"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="454"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="482"/>
         <source>Automatic</source>
         <translation>Automatic</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="460"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="461"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="468"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="469"/>
         <source>Timed manual Temperature</source>
         <translation>Timed manual Temperature</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="482"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="483"/>
         <source>Set the fan-coil speed</source>
         <translation>Set the fan-coil speed</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="487"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="496"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="488"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="497"/>
         <source>Start pressure button</source>
         <translation>Start pressure button</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="488"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="495"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="489"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="496"/>
         <source>Short pressure button</source>
         <translation>Short pressure button</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="489"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="497"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="490"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="498"/>
         <source>Release after extended pressure button</source>
         <translation>Release after extended pressure button</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="490"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="498"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="491"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="499"/>
         <source>Extended pressure button</source>
         <translation>Extended pressure button</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="503"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="504"/>
         <source>Activate Scenarios</source>
         <translation>Activate Scenarios</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="504"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="505"/>
         <source>Scenario OFF</source>
         <translation>Scenario OFF</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="505"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="506"/>
         <source>Increase level</source>
         <translation>Increase level</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="506"/>
+        <location filename="../../BtObjects/scenarioobjects.cpp" line="507"/>
         <source>Decrease level</source>
         <translation>Decrease level</translation>
     </message>
@@ -284,7 +284,7 @@
 <context>
     <name>AddQuicklink</name>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="576"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="578"/>
         <source>Profiles</source>
         <translation>Profiles</translation>
     </message>
@@ -299,32 +299,32 @@
         <translation>Type:</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="567"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="569"/>
         <source>Click to enter link...</source>
         <translation>Click to enter link...</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="568"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="570"/>
         <source>Click to enter name...</source>
         <translation>Click to enter name...</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="265"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="267"/>
         <source>ADD</source>
         <translation>ADD</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="409"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="411"/>
         <source>Save changes?</source>
         <translation>Save changes?</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="427"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="429"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="464"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="466"/>
         <source>CANCEL</source>
         <translation>CANCEL</translation>
     </message>
@@ -419,22 +419,22 @@
         <translation>Add new scenario:</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="572"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="574"/>
         <source>Home</source>
         <translation>Home</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="574"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="576"/>
         <source>Multimedia</source>
         <translation type="unfinished">Multimedia</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="390"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="392"/>
         <source>Confirm deletion</source>
         <translation>Confirm deletion</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="391"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="393"/>
         <source>Do you want to remove the selected quicklink?
 Name: %1
 Address: %2</source>
@@ -443,12 +443,12 @@ Name: %1
 Address: %2</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="478"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="480"/>
         <source>Insert address</source>
         <translation>Insert address</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="486"/>
+        <location filename="../skins/default/AddQuicklink.qml" line="488"/>
         <source>Insert description</source>
         <translation>Insert description</translation>
     </message>
@@ -590,9 +590,8 @@ Address: %2</translation>
         <translation>Temperature</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="95"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="98"/>
@@ -625,9 +624,8 @@ Address: %2</translation>
         <translation>temperature</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="154"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="obsolete">°C</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="171"/>
@@ -639,9 +637,8 @@ Address: %2</translation>
 <context>
     <name>AirConditioning</name>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/AirConditioning.qml" line="27"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="obsolete">°C</translation>
     </message>
 </context>
 <context>
@@ -678,27 +675,32 @@ Address: %2</translation>
     </message>
     <message>
         <location filename="../skins/default/AlarmClockDateTimePage.qml" line="153"/>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="211"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="212"/>
         <source>Click to enter description...</source>
         <translation>Click to enter description...</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="187"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="170"/>
+        <source>New alarm name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="188"/>
         <source>Save changes?</source>
         <translation>Save changes?</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="204"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="205"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="225"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="226"/>
         <source>CANCEL</source>
         <translation>CANCEL</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="244"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="245"/>
         <source>MTWTFSS</source>
         <translation>MTWTFSS</translation>
     </message>
@@ -776,9 +778,8 @@ Address: %2</translation>
         <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="156"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
 </context>
 <context>
@@ -813,9 +814,8 @@ Address: %2</translation>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Alert.qml" line="38"/>
         <source>Alert message goes here.</source>
-        <translation>Alert message goes here.</translation>
+        <translation type="obsolete">Alert message goes here.</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Alert.qml" line="64"/>
@@ -1024,22 +1024,22 @@ Address: %2</translation>
         <translation> minutes</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="108"/>
+        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="107"/>
         <source>device</source>
         <translation>device</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="124"/>
+        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="123"/>
         <source>enabled</source>
         <translation>enabled</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="124"/>
+        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="123"/>
         <source>disabled</source>
         <translation>disabled</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="159"/>
+        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="158"/>
         <source>instant consumption</source>
         <translation>instant consumption</translation>
     </message>
@@ -1478,9 +1478,8 @@ Address: %2</translation>
 <context>
     <name>ControlChoices</name>
     <message>
-        <location filename="../skins/default/Components/ControlChoices.qml" line="10"/>
         <source>volume</source>
-        <translation>volume</translation>
+        <translation type="obsolete">volume</translation>
     </message>
 </context>
 <context>
@@ -1526,14 +1525,12 @@ Address: %2</translation>
 <context>
     <name>ControlOnOffGroup</name>
     <message>
-        <location filename="../skins/default/Components/ControlOnOffGroup.qml" line="9"/>
         <source>ON</source>
-        <translation type="unfinished">ON</translation>
+        <translation type="obsolete">ON</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ControlOnOffGroup.qml" line="10"/>
         <source>OFF</source>
-        <translation type="unfinished">OFF</translation>
+        <translation type="obsolete">OFF</translation>
     </message>
 </context>
 <context>
@@ -1544,7 +1541,7 @@ Address: %2</translation>
         <translation>dismiss</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ControlPopup.qml" line="117"/>
+        <location filename="../skins/default/Components/ControlPopup.qml" line="116"/>
         <source>confirm</source>
         <translation>confirm</translation>
     </message>
@@ -1616,9 +1613,8 @@ Address: %2</translation>
         <translation>Incoming call from</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlTextImageCallManager.qml" line="52"/>
         <source>Site #1</source>
-        <translation>Site #1</translation>
+        <translation type="obsolete">Site #1</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/VideoDoorEntry/ControlTextImageCallManager.qml" line="74"/>
@@ -1688,12 +1684,12 @@ Address: %2</translation>
 <context>
     <name>DateSelect</name>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/DateSelect.qml" line="23"/>
+        <location filename="../skins/default/Components/ThermalRegulation/DateSelect.qml" line="24"/>
         <source>until date</source>
         <translation>until date</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/DateSelect.qml" line="49"/>
+        <location filename="../skins/default/Components/ThermalRegulation/DateSelect.qml" line="50"/>
         <source>until time</source>
         <translation>until time</translation>
     </message>
@@ -1732,7 +1728,7 @@ Address: %2</translation>
 <context>
     <name>EditNote</name>
     <message>
-        <location filename="../skins/default/Components/EditNote.qml" line="24"/>
+        <location filename="../skins/default/Components/EditNote.qml" line="25"/>
         <source>Note</source>
         <translation>Note</translation>
     </message>
@@ -1745,12 +1741,12 @@ Address: %2</translation>
         <translation type="obsolete">cancel</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EditNote.qml" line="124"/>
+        <location filename="../skins/default/Components/EditNote.qml" line="125"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EditNote.qml" line="137"/>
+        <location filename="../skins/default/Components/EditNote.qml" line="138"/>
         <source>CANCEL</source>
         <translation>CANCEL</translation>
     </message>
@@ -1881,32 +1877,32 @@ Address: %2</translation>
         <translation>day</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="134"/>
+        <location filename="../skins/default/EnergyDataGraph.qml" line="133"/>
         <source>month</source>
         <translation>month</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="151"/>
+        <location filename="../skins/default/EnergyDataGraph.qml" line="150"/>
         <source>year</source>
         <translation>year</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="377"/>
+        <location filename="../skins/default/EnergyDataGraph.qml" line="375"/>
         <source>instant consumption</source>
         <translation>instant consumption</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="418"/>
+        <location filename="../skins/default/EnergyDataGraph.qml" line="416"/>
         <source>month cumulative consumption</source>
         <translation>month cumulative consumption</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="500"/>
+        <location filename="../skins/default/EnergyDataGraph.qml" line="498"/>
         <source>year cumulative consumption</source>
         <translation>year cumulative consumption</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="510"/>
+        <location filename="../skins/default/EnergyDataGraph.qml" line="508"/>
         <source>day cumulative consumption</source>
         <translation>day cumulative consumption</translation>
     </message>
@@ -2048,86 +2044,81 @@ Address: %2</translation>
 <context>
     <name>EnergyManagementNames</name>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="15"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="14"/>
         <source>Unknown</source>
         <translation>Unknown</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="16"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="15"/>
         <source>Closed</source>
         <translation>Closed</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="17"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="16"/>
         <source>Opened</source>
         <translation>Opened</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="18"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="17"/>
         <source>Locked</source>
         <translation>Locked</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="19"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="18"/>
         <source>ShortCircuit</source>
         <translation>ShortCircuit</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="20"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="19"/>
         <source>GroundFail</source>
         <translation>GroundFail</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="21"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="20"/>
         <source>Overtension</source>
         <translation>Overtension</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="24"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="23"/>
         <source>Consumption Management</source>
         <translation>Consumption Management</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="27"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="26"/>
         <source>Electricity</source>
         <translation>Electricity</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="28"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="27"/>
         <source>Water</source>
         <translation>Water</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="29"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="28"/>
         <source>Gas</source>
         <translation>Gas</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="30"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="29"/>
         <source>HotWater</source>
         <translation>HotWater</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="31"/>
+        <location filename="../skins/default/EnergyManagementNames.qml" line="30"/>
         <source>Heat</source>
         <translation>Heat</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="35"/>
         <source>kWh</source>
-        <translation>kWh</translation>
+        <translation type="obsolete">kWh</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="36"/>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="37"/>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="38"/>
         <source>l</source>
-        <translation>l</translation>
+        <translation type="obsolete">l</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="39"/>
         <source>cal</source>
-        <translation>cal</translation>
+        <translation type="obsolete">cal</translation>
     </message>
 </context>
 <context>
@@ -2258,14 +2249,12 @@ Address: %2</translation>
         <translation>Title:</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="86"/>
         <source>Title goes here.</source>
-        <translation>Title goes here.</translation>
+        <translation type="obsolete">Title goes here.</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="122"/>
         <source>Address goes here.</source>
-        <translation>Address goes here.</translation>
+        <translation type="obsolete">Address goes here.</translation>
     </message>
 </context>
 <context>
@@ -2308,22 +2297,19 @@ Address: %2</translation>
         <translation>delta</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/GlobalViewTable.qml" line="186"/>
-        <location filename="../skins/default/Components/EnergyManagement/GlobalViewTable.qml" line="196"/>
-        <location filename="../skins/default/Components/EnergyManagement/GlobalViewTable.qml" line="209"/>
         <source>---</source>
-        <translation>---</translation>
+        <translation type="obsolete">---</translation>
     </message>
 </context>
 <context>
     <name>HomePage</name>
     <message>
-        <location filename="../skins/default/HomePage.qml" line="230"/>
+        <location filename="../skins/default/HomePage.qml" line="243"/>
         <source>rooms</source>
         <translation>rooms</translation>
     </message>
     <message>
-        <location filename="../skins/default/HomePage.qml" line="274"/>
+        <location filename="../skins/default/HomePage.qml" line="287"/>
         <source>systems</source>
         <translation>systems</translation>
     </message>
@@ -2332,12 +2318,12 @@ Address: %2</translation>
         <translation type="obsolete">otpions</translation>
     </message>
     <message>
-        <location filename="../skins/default/HomePage.qml" line="289"/>
+        <location filename="../skins/default/HomePage.qml" line="302"/>
         <source>multimedia</source>
         <translation>multimedia</translation>
     </message>
     <message>
-        <location filename="../skins/default/HomePage.qml" line="245"/>
+        <location filename="../skins/default/HomePage.qml" line="258"/>
         <source>options</source>
         <translation>options</translation>
     </message>
@@ -2345,9 +2331,8 @@ Address: %2</translation>
 <context>
     <name>KeyPad</name>
     <message>
-        <location filename="../skins/default/Components/KeyPad.qml" line="9"/>
         <source>enter code</source>
-        <translation>enter code</translation>
+        <translation type="obsolete">enter code</translation>
     </message>
 </context>
 <context>
@@ -2482,7 +2467,7 @@ Address: %2</translation>
 <context>
     <name>MenuItem</name>
     <message>
-        <location filename="../skins/default/js/MenuItem.js" line="59"/>
+        <location filename="../skins/default/js/MenuItem.js" line="58"/>
         <source>°C</source>
         <translation>°C</translation>
     </message>
@@ -2577,17 +2562,17 @@ Address: %2</translation>
 <context>
     <name>NewImageCard</name>
     <message>
-        <location filename="../skins/default/NewImageCard.qml" line="194"/>
+        <location filename="../skins/default/NewImageCard.qml" line="191"/>
         <source>CANCEL</source>
         <translation>CANCEL</translation>
     </message>
     <message>
-        <location filename="../skins/default/NewImageCard.qml" line="211"/>
+        <location filename="../skins/default/NewImageCard.qml" line="208"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../skins/default/NewImageCard.qml" line="225"/>
+        <location filename="../skins/default/NewImageCard.qml" line="222"/>
         <source>Save configuration changes?</source>
         <translation>Save configuration changes?</translation>
     </message>
@@ -2610,9 +2595,8 @@ Address: %2</translation>
 <context>
     <name>Pager</name>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/Pager.qml" line="18"/>
         <source>pager</source>
-        <translation>pager</translation>
+        <translation type="obsolete">pager</translation>
     </message>
 </context>
 <context>
@@ -2630,14 +2614,12 @@ Address: %2</translation>
         <translation>partial </translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Partial.qml" line="35"/>
         <source>since 24/07/2012 18:35</source>
-        <translation>since 24/07/2012 18:35</translation>
+        <translation type="obsolete">since 24/07/2012 18:35</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Partial.qml" line="49"/>
         <source>45.51 kWh</source>
-        <translation>45.51 kWh</translation>
+        <translation type="obsolete">45.51 kWh</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/EnergyManagement/Partial.qml" line="65"/>
@@ -2787,7 +2769,7 @@ Address: %2</translation>
         <translation type="obsolete">note</translation>
     </message>
     <message>
-        <location filename="../skins/default/Profile.qml" line="361"/>
+        <location filename="../skins/default/Profile.qml" line="376"/>
         <source>Add note</source>
         <translation>Add note</translation>
     </message>
@@ -3014,27 +2996,32 @@ Address: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="43"/>
+        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="36"/>
+        <source>Insert new home page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="44"/>
         <source>Enable history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="44"/>
+        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="45"/>
         <source>Enabled</source>
         <translation type="unfinished">Enabled</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="44"/>
+        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="45"/>
         <source>Disabled</source>
         <translation type="unfinished">Disabled</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="62"/>
+        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="63"/>
         <source>Clear History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="67"/>
+        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="68"/>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
         <translation type="unfinished"></translation>
@@ -3051,14 +3038,12 @@ Continue?</source>
 <context>
     <name>SettingsDateTime</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="89"/>
         <source>date</source>
-        <translation>date</translation>
+        <translation type="obsolete">date</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="103"/>
         <source>time</source>
-        <translation>time</translation>
+        <translation type="obsolete">time</translation>
     </message>
     <message>
         <source>timezone</source>
@@ -3067,6 +3052,16 @@ Continue?</source>
     <message>
         <source>daylight saving time</source>
         <translation type="obsolete">daylight saving time</translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="13"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="14"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3281,35 +3276,36 @@ Continue?</source>
         <translation type="obsolete">Version</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="76"/>
+        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="64"/>
+        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="81"/>
         <source>Date &amp; Time</source>
         <translation>Date &amp; Time</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="40"/>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="77"/>
+        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="82"/>
         <source>Network</source>
         <translation>Network</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="78"/>
+        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="83"/>
         <source>Display</source>
         <translation>Display</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="79"/>
+        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="84"/>
         <source>International</source>
         <translation>International</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="26"/>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="80"/>
+        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="85"/>
         <source>Password</source>
         <translation>Password</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="33"/>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="81"/>
+        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="86"/>
         <source>Beep</source>
         <translation>Beep</translation>
     </message>
@@ -3336,7 +3332,7 @@ Continue?</source>
         <translation>Connected</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="75"/>
+        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="80"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
@@ -3374,7 +3370,7 @@ Continue?</source>
         <translation type="obsolete">The selected action will produce a reboot of the GUI. Continue?</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="34"/>
+        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="37"/>
         <source>skin home</source>
         <translation>skin home</translation>
     </message>
@@ -3387,23 +3383,37 @@ Continue?</source>
         <translation type="obsolete">Add Quicklink</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="46"/>
+        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="49"/>
         <source>Change background image</source>
         <translation>Change background image</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="52"/>
+        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="55"/>
         <source>Background image</source>
         <translation>Background image</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="57"/>
-        <source>Reset background image</source>
-        <translation>Reset background image</translation>
+        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="60"/>
+        <source>Restore background image</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="68"/>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="74"/>
+        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="89"/>
+        <source>Confirm operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="90"/>
+        <source>Do you want to restore background to default value?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset background image</source>
+        <translation type="obsolete">Reset background image</translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="69"/>
+        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="75"/>
         <source>Quicklinks</source>
         <translation>Quicklinks</translation>
     </message>
@@ -3447,6 +3457,16 @@ Continue?</source>
         <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="46"/>
         <source>Images</source>
         <translation>Images</translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="111"/>
+        <source>Confirm operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="112"/>
+        <source>Do you want to change actual image with the one selected?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3570,34 +3590,28 @@ Continue?</source>
         <translation>Disconnect</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="21"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation type="obsolete">None</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="22"/>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation type="obsolete">Image</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="23"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation type="obsolete">Text</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="24"/>
         <source>Date and Time</source>
-        <translation>Date and Time</translation>
+        <translation type="obsolete">Date and Time</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="25"/>
         <source>Rectangles</source>
-        <translation>Rectangles</translation>
+        <translation type="obsolete">Rectangles</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="26"/>
         <source>Slideshow</source>
-        <translation>Slideshow</translation>
+        <translation type="obsolete">Slideshow</translation>
     </message>
     <message>
         <source>15 sec</source>
@@ -3636,12 +3650,12 @@ Continue?</source>
         <translation type="obsolete">never</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="29"/>
+        <location filename="../skins/default/SettingsNames.qml" line="21"/>
         <source>Enabled</source>
         <translation>Enabled</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="30"/>
+        <location filename="../skins/default/SettingsNames.qml" line="22"/>
         <source>Disabled</source>
         <translation>Disabled</translation>
     </message>
@@ -3654,33 +3668,31 @@ Continue?</source>
         <translation type="obsolete">24h</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="33"/>
-        <location filename="../skins/default/SettingsNames.qml" line="61"/>
-        <location filename="../skins/default/SettingsNames.qml" line="64"/>
+        <location filename="../skins/default/SettingsNames.qml" line="40"/>
+        <location filename="../skins/default/SettingsNames.qml" line="43"/>
         <source>Enable</source>
         <translation>Enable</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="34"/>
-        <location filename="../skins/default/SettingsNames.qml" line="60"/>
-        <location filename="../skins/default/SettingsNames.qml" line="65"/>
+        <location filename="../skins/default/SettingsNames.qml" line="39"/>
+        <location filename="../skins/default/SettingsNames.qml" line="44"/>
         <source>Disable</source>
         <translation>Disable</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="37"/>
-        <location filename="../skins/default/SettingsNames.qml" line="42"/>
+        <location filename="../skins/default/SettingsNames.qml" line="25"/>
+        <location filename="../skins/default/SettingsNames.qml" line="30"/>
         <source>Italian</source>
         <translation>Italian</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="38"/>
+        <location filename="../skins/default/SettingsNames.qml" line="26"/>
         <source>English</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="39"/>
-        <location filename="../skins/default/SettingsNames.qml" line="44"/>
+        <location filename="../skins/default/SettingsNames.qml" line="27"/>
+        <location filename="../skins/default/SettingsNames.qml" line="32"/>
         <source>French</source>
         <translation>French</translation>
     </message>
@@ -3705,39 +3717,34 @@ Continue?</source>
         <translation type="obsolete">USD</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="54"/>
+        <location filename="../skins/default/SettingsNames.qml" line="35"/>
         <source>Clear</source>
         <translation>Clear</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="55"/>
+        <location filename="../skins/default/SettingsNames.qml" line="36"/>
         <source>Dark</source>
         <translation>Dark</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="68"/>
         <source>GMT -2</source>
-        <translation>GMT -2</translation>
+        <translation type="obsolete">GMT -2</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="69"/>
         <source>GMT -1</source>
-        <translation>GMT -1</translation>
+        <translation type="obsolete">GMT -1</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="70"/>
         <source>GMT 0</source>
-        <translation>GMT 0</translation>
+        <translation type="obsolete">GMT 0</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="71"/>
         <source>GMT +1</source>
-        <translation>GMT +1</translation>
+        <translation type="obsolete">GMT +1</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="72"/>
         <source>GMT +2</source>
-        <translation>GMT +2</translation>
+        <translation type="obsolete">GMT +2</translation>
     </message>
     <message>
         <location filename="../skins/default/SettingsNames.qml" line="10"/>
@@ -3752,34 +3759,29 @@ Continue?</translation>
         <translation>Static IP address</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="43"/>
+        <location filename="../skins/default/SettingsNames.qml" line="31"/>
         <source>English (GB)</source>
         <translation>English (GB)</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="47"/>
         <source>Swiss franc</source>
-        <translation>Swiss franc</translation>
+        <translation type="obsolete">Swiss franc</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="48"/>
         <source>Euro €</source>
-        <translation>Euro €</translation>
+        <translation type="obsolete">Euro €</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="49"/>
         <source>British pound £</source>
-        <translation>British pound £</translation>
+        <translation type="obsolete">British pound £</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="50"/>
         <source>Japanese yen ¥</source>
-        <translation>Japanese yen ¥</translation>
+        <translation type="obsolete">Japanese yen ¥</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="51"/>
         <source>U.S. dollar $</source>
-        <translation>U.S. dollar $</translation>
+        <translation type="obsolete">U.S. dollar $</translation>
     </message>
 </context>
 <context>
@@ -3909,6 +3911,21 @@ Continue?</translation>
         <source>Change background image</source>
         <translation>Change background image</translation>
     </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="45"/>
+        <source>Restore background image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="70"/>
+        <source>Confirm operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="71"/>
+        <source>Do you want to restore background to default value?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsQuickLinks</name>
@@ -3918,9 +3935,17 @@ Continue?</translation>
     </message>
 </context>
 <context>
+    <name>SettingsRingtone</name>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsRingtone.qml" line="20"/>
+        <source>Ringtones</source>
+        <translation type="unfinished">Ringtones</translation>
+    </message>
+</context>
+<context>
     <name>SettingsSkin</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsSkin.qml" line="32"/>
+        <location filename="../skins/default/Components/Settings/SettingsSkin.qml" line="42"/>
         <source>Pressing ok will cause a device reboot in a few moments.
 Please, do not use the touch till it is restarted.
 Continue?</source>
@@ -4189,8 +4214,12 @@ Continue?</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="107"/>
+        <source>%1 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source> days</source>
-        <translation> days</translation>
+        <translation type="obsolete"> days</translation>
     </message>
 </context>
 <context>
@@ -4221,18 +4250,18 @@ Continue?</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="29"/>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="94"/>
+        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="93"/>
         <source>enabled</source>
         <translation>enabled</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="29"/>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="94"/>
+        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="93"/>
         <source>disabled</source>
         <translation>disabled</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="81"/>
+        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="80"/>
         <source>check</source>
         <translation>check</translation>
     </message>
@@ -4318,11 +4347,8 @@ Continue?</translation>
         <translation type="obsolete">unsaved changes. continue?</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="153"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="193"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="285"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="obsolete">°C</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="159"/>
@@ -4394,10 +4420,8 @@ Continue?</translation>
         <translation type="obsolete">unsaved changes. continue?</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="78"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="167"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="obsolete">°C</translation>
     </message>
     <message>
         <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="84"/>
@@ -4487,9 +4511,8 @@ Continue?</translation>
         <translation>auto</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="28"/>
         <source>--</source>
-        <translation>--</translation>
+        <translation type="obsolete">--</translation>
     </message>
     <message>
         <location filename="../skins/default/ThermalNames.qml" line="31"/>
@@ -4572,9 +4595,8 @@ Continue?</translation>
 <context>
     <name>ThermalNotControlledProbe</name>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalNotControlledProbe.qml" line="11"/>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation type="obsolete">°C</translation>
     </message>
 </context>
 <context>
@@ -4617,25 +4639,22 @@ Continue?</translation>
         <translation type="obsolete">automatic update</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/Time.qml" line="49"/>
         <source>format</source>
-        <translation>format</translation>
+        <translation type="obsolete">format</translation>
     </message>
 </context>
 <context>
     <name>Timezone</name>
     <message>
-        <location filename="../skins/default/Components/Settings/Timezone.qml" line="17"/>
         <source>time zone</source>
-        <translation>time zone</translation>
+        <translation type="obsolete">time zone</translation>
     </message>
 </context>
 <context>
     <name>VideoCamera</name>
     <message>
-        <location filename="../skins/default/VideoCamera.qml" line="87"/>
         <source>CAMERA EXTERNAL PLACE #1</source>
-        <translation>CAMERA EXTERNAL PLACE #1</translation>
+        <translation type="obsolete">CAMERA EXTERNAL PLACE #1</translation>
     </message>
     <message>
         <location filename="../skins/default/VideoCamera.qml" line="105"/>
@@ -4729,27 +4748,27 @@ Continue?</translation>
 <context>
     <name>browsermain</name>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="159"/>
+        <location filename="../skins/default/browsermain.qml" line="168"/>
         <source>Authentication required</source>
         <translation>Authentication required</translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="160"/>
+        <location filename="../skins/default/browsermain.qml" line="169"/>
         <source>User name</source>
         <translation>User name</translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="162"/>
+        <location filename="../skins/default/browsermain.qml" line="171"/>
         <source>Password</source>
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="180"/>
+        <location filename="../skins/default/browsermain.qml" line="189"/>
         <source>Untrusted SSL connection</source>
         <translation>Untrusted SSL connection</translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="182"/>
+        <location filename="../skins/default/browsermain.qml" line="191"/>
         <source>This connection is untrusted. Do you wish to continue?</source>
         <translation>This connection is untrusted. Do you wish to continue?</translation>
     </message>
