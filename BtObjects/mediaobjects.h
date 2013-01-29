@@ -253,6 +253,46 @@ private:
 
 
 /*!
+	\brief Multimedia browse point
+
+	A subset of the properties of a local source object, used to display devices in multimedia section
+*/
+class MediaDevice : public ObjectInterface
+{
+	Q_OBJECT
+
+	/// Type of source object, can only be Usb, Sd or Upnp
+	Q_PROPERTY(SourceObject::SourceObjectType sourceType READ getSourceType CONSTANT)
+
+	/// Root path for browsing, empty for Upnp
+	Q_PROPERTY(QVariantList rootPath READ getRootPath CONSTANT)
+
+	/// Object used to monitor mounted state, NULL for Upnp
+	Q_PROPERTY(MountPoint *mountPoint READ getMountPoint CONSTANT)
+
+public:
+	MediaDevice(const QString &name, MountPoint *mount_point, SourceObject::SourceObjectType t);
+
+	QVariantList getRootPath() const;
+	MountPoint *getMountPoint() const;
+
+	SourceObject::SourceObjectType getSourceType() const
+	{
+		return type;
+	}
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdMediaDevice;
+	}
+
+private:
+	MountPoint *mount_point;
+	SourceObject::SourceObjectType type;
+};
+
+
+/*!
 	\brief Multimedia played through local source
 
 	All SourceMedia instances share the same \ref MultiMediaPlayer/\ref AudioVideoPlayer instance

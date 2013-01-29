@@ -65,6 +65,7 @@ public:
 		IdPlatformSettings,
 		IdMonoChannelSoundAmbient,
 		IdSoundAmplifierGroup,                  // 10
+		IdMediaDevice,
 
 		IdMultiChannelSoundAmbient = 14,        // Container::IdAmbient
 		IdMultiChannelSpecialAmbient = 16,      // Container::IdSpecialAmbient
