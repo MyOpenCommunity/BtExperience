@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components.Scenarios 1.0
 import "js/Stack.js" as Stack
+import "js/navigation.js" as Navigation
 
 SystemPage {
     source: "images/background/scenario.jpg"
@@ -8,7 +9,7 @@ SystemPage {
     rootColumn: Component { ScenarioSystem {} }
 
     function settingsButtonClicked() {
-        Stack.backToOptions()
+        Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.SCENARIO_SETTINGS})
     }
 
     showSettingsButton: true
