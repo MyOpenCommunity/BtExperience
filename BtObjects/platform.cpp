@@ -26,7 +26,10 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
 	current[BT_DATE] = QDate::currentDate();
-	current[BT_TIME].setValue(BtTime(QTime::currentTime()));
+	QVariant v;
+	BtTime bt(QTime::currentTime());
+	v.setValue(bt);
+	current[BT_TIME] = v;
 
 	configurations = new ConfigFile(this);
 
@@ -40,30 +43,23 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 	connection_tester = new ConnectionTester(this);
 	connect(connection_tester, SIGNAL(testFailed()), this, SLOT(connectionDown()));
 	connect(connection_tester, SIGNAL(testPassed()), this, SLOT(connectionUp()));
-}
 
-QVariant PlatformSettings::value(int id) const
-{
-	return to_apply.value(id, current.value(id));
+	to_apply = current;
 }
 
 void PlatformSettings::apply()
 {
-	// Always save the configuration even if there are no changes
-	foreach (int k, to_apply.keys())
-		current[k] = to_apply[k];
+	if (to_apply[BT_DATE] != current[BT_DATE])
+		dev->setDate(to_apply[BT_DATE].toDate());
 
-	if (to_apply.contains(BT_DATE))
-		dev->setDate(value(BT_DATE).toDate());
-
-	if (to_apply.contains(BT_TIME))
+	if (to_apply[BT_TIME] != current[BT_TIME])
 	{
-		BtTime t = value(BT_TIME).value<BtTime>();
+		BtTime t = to_apply[BT_TIME].value<BtTime>();
 		t = t.addSecond(-t.second()); // resetting seconds to zero
 		dev->setTime(t);
 	}
 
-	to_apply.clear();
+	current = to_apply;
 
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
 
@@ -79,7 +75,7 @@ void PlatformSettings::apply()
 
 void PlatformSettings::reset()
 {
-	to_apply.clear();
+	to_apply = current;
 	current[BT_DATE] = QDate::currentDate();
 	current[BT_TIME].setValue(BtTime(QTime::currentTime()));
 
@@ -100,7 +96,7 @@ void PlatformSettings::reset()
 
 QString PlatformSettings::getAddress() const
 {
-	return value(LAN_ADDRESS).toString();
+	return to_apply[LAN_ADDRESS].toString();
 }
 
 void PlatformSettings::setAddress(QString a)
@@ -113,7 +109,7 @@ void PlatformSettings::setAddress(QString a)
 
 QString PlatformSettings::getDns1() const
 {
-	return value(LAN_DNS1).toString();
+	return to_apply[LAN_DNS1].toString();
 }
 
 void PlatformSettings::setDns1(QString d)
@@ -126,7 +122,7 @@ void PlatformSettings::setDns1(QString d)
 
 QString PlatformSettings::getDns2() const
 {
-	return value(LAN_DNS2).toString();
+	return to_apply[LAN_DNS2].toString();
 }
 
 void PlatformSettings::setDns2(QString d)
@@ -144,7 +140,7 @@ QString PlatformSettings::getFirmwareVersion() const
 
 QString PlatformSettings::getGateway() const
 {
-	return value(LAN_GATEWAY).toString();
+	return to_apply[LAN_GATEWAY].toString();
 }
 
 void PlatformSettings::setGateway(QString g)
@@ -157,7 +153,7 @@ void PlatformSettings::setGateway(QString g)
 
 PlatformSettings::LanConfig PlatformSettings::getLanConfig() const
 {
-	return static_cast<LanConfig>(value(LAN_CONFIG).toInt());
+	return static_cast<LanConfig>(to_apply[LAN_CONFIG].toInt());
 }
 
 void PlatformSettings::setLanConfig(LanConfig lc)
@@ -210,7 +206,7 @@ QString PlatformSettings::getKernelVersion() const
 
 QString PlatformSettings::getSubnet() const
 {
-	return value(LAN_NETMASK).toString();
+	return to_apply[LAN_NETMASK].toString();
 }
 
 void PlatformSettings::setSubnet(QString s)
@@ -285,21 +281,21 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 		case PlatformDevice::DIM_IP:
 			if (it.value() != current[LAN_ADDRESS])
 			{
-				current[LAN_ADDRESS] = it.value();
+				to_apply[LAN_ADDRESS] = current[LAN_ADDRESS] = it.value();
 				emit addressChanged();
 			}
 			break;
 		case PlatformDevice::DIM_DNS1:
 			if (it.value() != current[LAN_DNS1])
 			{
-				current[LAN_DNS1] = it.value();
+				to_apply[LAN_DNS1] = current[LAN_DNS1] = it.value();
 				emit dns1Changed();
 			}
 			break;
 		case PlatformDevice::DIM_DNS2:
 			if (it.value() != current[LAN_DNS2])
 			{
-				current[LAN_DNS2] = it.value();
+				to_apply[LAN_DNS2] = current[LAN_DNS2] = it.value();
 				emit dns2Changed();
 			}
 			break;
@@ -328,7 +324,7 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 		case PlatformDevice::DIM_GATEWAY:
 			if (it.value() != current[LAN_GATEWAY])
 			{
-				current[LAN_GATEWAY] = it.value();
+				to_apply[LAN_GATEWAY] = current[LAN_GATEWAY] = it.value();
 				emit gatewayChanged();
 			}
 			break;
@@ -354,7 +350,7 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 		case PlatformDevice::DIM_NETMASK:
 			if (it.value() != current[LAN_NETMASK])
 			{
-				current[LAN_NETMASK] = it.value();
+				to_apply[LAN_NETMASK] = current[LAN_NETMASK] = it.value();
 				emit subnetChanged();
 			}
 			break;
@@ -363,7 +359,7 @@ void PlatformSettings::valueReceived(const DeviceValues &values_list)
 	}
 
 	if (values_list.contains(PlatformDevice::DIM_DATE) ||
-	    values_list.contains(PlatformDevice::DIM_TIME))
+		values_list.contains(PlatformDevice::DIM_TIME))
 		emit systemTimeChanged();
 }
 
@@ -421,7 +417,7 @@ int PlatformSettings::toSeconds(const QVariant &btTime) const
 
 int PlatformSettings::getHours() const
 {
-	return toHours(value(BT_TIME));
+	return toHours(to_apply[BT_TIME]);
 }
 
 void PlatformSettings::setHours(int newValue)
@@ -431,15 +427,15 @@ void PlatformSettings::setHours(int newValue)
 	if (newValue == oldValue)
 		return;
 
-	QVariant time = value(BT_TIME);
-	to_apply[BT_TIME].setValue(value(BT_TIME).value<BtTime>().addSecond(diff * 60 * 60));
+	QVariant time = to_apply[BT_TIME];
+	to_apply[BT_TIME].setValue(to_apply[BT_TIME].value<BtTime>().addSecond(diff * 60 * 60));
 
-	emitTimeSignals(time, value(BT_TIME));
+	emitTimeSignals(time, to_apply[BT_TIME]);
 }
 
 int PlatformSettings::getMinutes() const
 {
-	return toMinutes(value(BT_TIME));
+	return toMinutes(to_apply[BT_TIME]);
 }
 
 void PlatformSettings::setMinutes(int newValue)
@@ -449,15 +445,15 @@ void PlatformSettings::setMinutes(int newValue)
 	if (newValue == oldValue)
 		return;
 
-	QVariant time = value(BT_TIME);
-	to_apply[BT_TIME].setValue(value(BT_TIME).value<BtTime>().addSecond(diff * 60));
+	QVariant time = to_apply[BT_TIME];
+	to_apply[BT_TIME].setValue(to_apply[BT_TIME].value<BtTime>().addSecond(diff * 60));
 
-	emitTimeSignals(time, value(BT_TIME));
+	emitTimeSignals(time, to_apply[BT_TIME]);
 }
 
 int PlatformSettings::getSeconds() const
 {
-	return toSeconds(value(BT_TIME));
+	return toSeconds(to_apply[BT_TIME]);
 }
 
 void PlatformSettings::setSeconds(int newValue)
@@ -467,21 +463,21 @@ void PlatformSettings::setSeconds(int newValue)
 	if (newValue == oldValue)
 		return;
 
-	QVariant time = value(BT_TIME);
-	to_apply[BT_TIME].setValue(value(BT_TIME).value<BtTime>().addSecond(diff));
+	QVariant time = to_apply[BT_TIME];
+	to_apply[BT_TIME].setValue(to_apply[BT_TIME].value<BtTime>().addSecond(diff));
 
-	emitTimeSignals(time, value(BT_TIME));
+	emitTimeSignals(time, to_apply[BT_TIME]);
 }
 
 int PlatformSettings::getDays() const
 {
-	const QDate &date = value(BT_DATE).toDate();
+	const QDate &date = to_apply[BT_DATE].toDate();
 	return date.day();
 }
 
 void PlatformSettings::setDays(int newValue)
 {
-	QDate date = value(BT_DATE).toDate();
+	QDate date = to_apply[BT_DATE].toDate();
 	int oldValue = date.day();
 	if ((newValue - oldValue) == 0)
 		return;
@@ -492,13 +488,13 @@ void PlatformSettings::setDays(int newValue)
 
 int PlatformSettings::getMonths() const
 {
-	const QDate &date = value(BT_DATE).toDate();
+	const QDate &date = to_apply[BT_DATE].toDate();
 	return date.month();
 }
 
 void PlatformSettings::setMonths(int newValue)
 {
-	QDate date = value(BT_DATE).toDate();
+	QDate date = to_apply[BT_DATE].toDate();
 	int oldValue = date.month();
 	if ((newValue - oldValue) == 0)
 		return;
@@ -509,13 +505,13 @@ void PlatformSettings::setMonths(int newValue)
 
 int PlatformSettings::getYears() const
 {
-	const QDate &date = value(BT_DATE).toDate();
+	const QDate &date = to_apply[BT_DATE].toDate();
 	return date.year();
 }
 
 void PlatformSettings::setYears(int newValue)
 {
-	QDate date = value(BT_DATE).toDate();
+	QDate date = to_apply[BT_DATE].toDate();
 	int oldValue = date.year();
 	if ((newValue - oldValue) == 0)
 		return;

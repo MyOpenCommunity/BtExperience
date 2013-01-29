@@ -197,7 +197,6 @@ private slots:
 
 private:
 	void startConnectionTest();
-	QVariant value(int id) const;
 	void emitDateSignals(QDate oldDate, QDate newDate);
 	void emitTimeSignals(QVariant oldTime, QVariant newTime);
 	int toHours(const QVariant &btTime) const;

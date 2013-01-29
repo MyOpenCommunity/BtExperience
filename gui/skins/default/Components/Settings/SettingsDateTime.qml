@@ -15,7 +15,7 @@ MenuColumn {
             dataModel: column.dataModel
         }
         ButtonOkCancel {
-            onCancelClicked: dataModel.reset()
+            onCancelClicked: column.dataModel.reset()
             onOkClicked: pageObject.installPopup(okCancelDialog)
         }
     }
@@ -28,7 +28,7 @@ MenuColumn {
             text: qsTr("Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?")
 
             function okClicked() {
-                dataModel.apply()
+                column.dataModel.apply()
             }
         }
     }
