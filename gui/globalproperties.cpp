@@ -691,7 +691,8 @@ void GlobalProperties::manageUpnpPlayers()
 	// player re-used the playlist
 	if (video_player->isUpnp() && new_status != UpnpLocalMedia && new_status != UpnpInactive)
 		video_player->terminate();
-	if (sound_diffusion_player->isUpnp() && new_status != UpnpSoundDiffusion && new_status != UpnpInactive)
+	if (sound_diffusion_player &&
+	    sound_diffusion_player->isUpnp() && new_status != UpnpSoundDiffusion && new_status != UpnpInactive)
 		sound_diffusion_player->terminate();
 	if (photo_player->isUpnp() && new_status != UpnpLocalPhoto && new_status != UpnpInactive)
 		photo_player->terminate();
