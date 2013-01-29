@@ -197,12 +197,13 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 {
 	parseConfFile();
 
+	QStringList mplayer_seek = QList<QString>() << "-ss" << "<SEEK_TIME>";
 #if defined(BT_HARDWARE_X11)
-	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", QStringList(), QStringList());
+	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer", mplayer_seek, mplayer_seek);
 #else
 	MultiMediaPlayer::setGlobalCommandLineArguments("mplayer",
-							QStringList() << "-ao" << "alsa:device=plughw=0.0",
-							QStringList() << "-ao" << "alsa:device=plughw=0.0");
+							mplayer_seek << "-ao" << "alsa:device=plughw=0.0",
+							mplayer_seek << "-ao" << "alsa:device=plughw=0.0");
 #endif
 	SoundPlayer::setGlobalCommandLineArguments("aplay", QStringList() << "<FILE_NAME>");
 
