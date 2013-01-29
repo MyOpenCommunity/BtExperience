@@ -22,6 +22,8 @@ Item {
 
         anchors {
             left: parent.left
+            right: radioBg.left
+            rightMargin: 5
             bottom: radioBg.bottom
             verticalCenter: radioBg.verticalCenter
         }

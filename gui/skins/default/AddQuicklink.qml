@@ -204,7 +204,6 @@ Page {
             id: linkText
 
             property string realText: ""
-            onRealTextChanged: console.log("linkText.realText: " + realText)
 
             text: realText || privateProps.emptyAddressString
             font.pixelSize: 14
@@ -239,7 +238,6 @@ Page {
             id: nameText
 
             property string realText: ""
-            onRealTextChanged: console.log("nameText.realText: " + realText)
 
             text: realText || privateProps.emptyNameString
             font.pixelSize: 14
