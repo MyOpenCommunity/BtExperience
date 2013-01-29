@@ -492,7 +492,13 @@ QString GlobalProperties::takeScreenshot(QRect rect, QString filename)
 	QDir customDir = QDir(EXTRA_12_DIR);
 
 	QString fn = customDir.canonicalPath() + "/" + filename;
+
+	int progressive_id = computeMaxId(fn) + 1;
+	fn = computeSaveFilePath(fn, progressive_id);
+
 	image.save(fn);
+
+	cleanOldFiles(fn, progressive_id);
 
 	return fn;
 }

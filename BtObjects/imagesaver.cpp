@@ -14,12 +14,17 @@ int computeMaxId(QString no_id_name)
 	QString search_path = no_id_name.mid(no_id_name.lastIndexOf("/") + 1);
 	search_path = search_path.left(search_path.lastIndexOf("."));
 	search_path.append(QString("_*"));
-	search_path.append(no_id_name.mid(no_id_name.lastIndexOf(".")));
 
 	QFileInfo file_info(no_id_name);
 	QDir save_dir = file_info.absolutePath();
 	QStringList search_list;
-	search_list << search_path;
+	// in the specification, only jpg and png types are possible, but
+	// image_files defined in generic_functions.cpp manages gif and jpeg, too;
+	// going with our filter
+	search_list << search_path + ".jpg";
+	search_list << search_path + ".png";
+	search_list << search_path + ".gif";
+	search_list << search_path + ".jpeg";
 	QStringList file_list = save_dir.entryList(search_list);
 	unsigned int max_oid = 0;
 	foreach (QString name, file_list) {

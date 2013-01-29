@@ -8,6 +8,7 @@
 #include <QImage>
 #include <QTemporaryFile>
 
+
 // max number of customized images per type per profile retained in extra/12 folder
 // it is suggested to set a value equal to at least 2 to avoid "losing" setup
 // if application is stopped before configuration files are saved
