@@ -82,6 +82,20 @@ void PlatformSettings::reset()
 	to_apply.clear();
 	current[BT_DATE] = QDate::currentDate();
 	current[BT_TIME].setValue(BtTime(QTime::currentTime()));
+
+	emit addressChanged();
+	emit dns1Changed();
+	emit dns2Changed();
+	emit gatewayChanged();
+	emit lanConfigChanged();
+	emit subnetChanged();
+	emit connectionStatusChanged();
+	emit hoursChanged();
+	emit minutesChanged();
+	emit secondsChanged();
+	emit daysChanged();
+	emit monthsChanged();
+	emit yearsChanged();
 }
 
 QString PlatformSettings::getAddress() const
