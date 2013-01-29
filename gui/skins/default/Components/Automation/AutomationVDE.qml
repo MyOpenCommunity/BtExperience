@@ -3,11 +3,7 @@ import Components 1.0
 
 
 MenuColumn {
-    Column {
-        id: column
-
-        ControlOnVDE {
-            onClicked: dataModel.activate()
-        }
+    ControlOnVDE {
+        onClicked: dataModel.activate()
     }
 }

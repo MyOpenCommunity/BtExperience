@@ -3,11 +3,7 @@ import Components 1.0
 
 
 MenuColumn {
-    Column {
-        id: column
-
-        ControlOn {
-            onPressed: dataModel.active = newStatus
-        }
+    ControlOn {
+        onPressed: dataModel.active = newStatus
     }
 }
