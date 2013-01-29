@@ -29,6 +29,7 @@ MenuColumn {
             name: itemObject.name
             hasChild: true
             enabled: Script.mediaItemEnabled(itemObject)
+            onEnabledChanged: if (!Script.mediaItemMounted(itemObject)) column.closeChild()
             onDelegateClicked: {
                 var upnp = itemObject.sourceType === SourceObject.Upnp;
                 var props = {

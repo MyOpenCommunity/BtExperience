@@ -11,7 +11,6 @@ MenuColumn {
 
     SystemsModel { id: multiModel; systemId: Container.IdSoundDiffusionMulti }
     SystemsModel { id: monoModel; systemId: Container.IdSoundDiffusionMono }
-    SystemsModel { id: devicesModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
 
     SystemsModel { id: ipradioContainer; systemId: Container.IdMultimediaWebRadio; source: myHomeModels.mediaContainers }
     MediaModel {
@@ -22,7 +21,7 @@ MenuColumn {
 
     ObjectModel {
         id: sourceModel
-        containers: [multiModel.systemUii, monoModel.systemUii, devicesModel.systemUii]
+        containers: [multiModel.systemUii, monoModel.systemUii]
         filters: ipradioModel.count === 0 ? [{objectId: ObjectInterface.IdSoundSource}]:
                                             [{objectId: ObjectInterface.IdSoundSource}, {objectId: ObjectInterface.IdIpRadioSource}]
     }

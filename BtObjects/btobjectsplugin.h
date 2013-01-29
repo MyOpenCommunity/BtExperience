@@ -54,7 +54,7 @@ private:
 	void parseSoundAmbientMulti(const QDomNode &ambient);
 	void parseSoundAmbientMono(const QDomNode &ambient);
 	void createGeneralAmbient();
-	void setContainerForIpRadio(int container_uii);
+	void setContainerForLocalSources(int container_uii);
 
 	QDomDocument findDocumentForId(int id) const;
 

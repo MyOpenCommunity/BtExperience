@@ -247,10 +247,8 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 	// objects it's easier to use a dummy device (in any case it will not be used by the UI)
 	if (!(*bt_global::config)[SOURCE_ADDRESS].isEmpty())
 		device = bt_global::add_device_to_cache(new VirtualSourceDevice((*bt_global::config)[SOURCE_ADDRESS]));
-	else
-		device = bt_global::add_device_to_cache(new VirtualSourceDevice("-1"), NO_INIT);
 
-	SourceMultiMedia *source = new SourceMultiMedia(device);
+	SourceMultiMedia *source = device ? new SourceMultiMedia(device) : 0;
 
 	foreach (QDomNode xml_obj, multimedia)
 	{
@@ -260,7 +258,8 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 		switch (id)
 		{
 		case ObjectInterface::IdIpRadio:
-			sources << ObjectPair(-1, new SourceIpRadio(QObject::tr("IP radio"), source, model));
+			if (source)
+				sources << ObjectPair(-1, new SourceIpRadio(QObject::tr("IP radio"), source, model));
 			break;
 		case ObjectInterface::IdDeviceUSB:
 		case ObjectInterface::IdDeviceSD:
@@ -275,17 +274,23 @@ QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multi
 				case ObjectInterface::IdDeviceUSB:
 				{
 					MountPoint *mp = new MountPoint(MountPoint::Usb);
-					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::Usb));
+					sources << ObjectPair(uii, new MediaDevice(v.value("descr"), mp, SourceObject::Usb));
+					if (source)
+						sources << ObjectPair(-1, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::Usb));
 					break;
 				}
 				case ObjectInterface::IdDeviceSD:
 				{
 					MountPoint *mp = new MountPoint(MountPoint::Sd);
-					sources << ObjectPair(uii, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::Sd));
+					sources << ObjectPair(uii, new MediaDevice(v.value("descr"), mp, SourceObject::Sd));
+					if (source)
+						sources << ObjectPair(-1, new SourceLocalMedia(v.value("descr"), mp, source, SourceObject::Sd));
 					break;
 				}
 				case ObjectInterface::IdDeviceUPnP:
-					sources << ObjectPair(uii, new SourceUpnpMedia(v.value("descr"), source));
+					sources << ObjectPair(uii, new MediaDevice(v.value("descr"), 0, SourceObject::Upnp));
+					if (source)
+						sources << ObjectPair(-1, new SourceUpnpMedia(v.value("descr"), source));
 					break;
 				}
 			}
@@ -495,6 +500,23 @@ void SourceObject::previousTrack()
 void SourceObject::nextTrack()
 {
 	source->nextTrack();
+}
+
+MediaDevice::MediaDevice(const QString &_name, MountPoint *_mount_point, SourceObject::SourceObjectType t)
+{
+	name = _name;
+	type = t;
+	mount_point = _mount_point;
+}
+
+QVariantList MediaDevice::getRootPath() const
+{
+	return mount_point ? mount_point->getLogicalPath() : QVariantList();
+}
+
+MountPoint *MediaDevice::getMountPoint() const
+{
+	return mount_point;
 }
 
 SourceMedia::SourceMedia(const QString &name, SourceMultiMedia *s, SourceObjectType t) :
