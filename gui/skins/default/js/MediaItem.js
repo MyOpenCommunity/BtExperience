@@ -9,3 +9,10 @@ function mediaItemEnabled(itemObject) {
 
     return true
 }
+
+function mediaItemMounted(itemObject) {
+    if (itemObject.mountPoint)
+        return itemObject.mountPoint.mounted
+
+    return true
+}
