@@ -47,6 +47,26 @@ MenuColumn {
             }
         }
 
+        MenuItem {
+            name: qsTr("Custom Images")
+            isSelected: privateProps.currentIndex === 2
+            hasChild: true
+
+            onClicked: {
+                itemList.currentIndex = -1
+                privateProps.currentIndex = 2
+                column._isStock = false
+                var props = {
+                    rootPath: isCard ? global.customCardImagesFolder : global.customBackgroundImagesFolder,
+                    text: qsTr("Custom Images"),
+                    upnp: false,
+                    bgHeight: 422,
+                    "paginator.elementsOnPage": 7,
+                }
+                column.loadColumn(directoryBrowser, qsTr("Custom Images"), undefined, props)
+            }
+        }
+
         PaginatorList {
             id: itemList
             currentIndex: -1
@@ -116,13 +136,14 @@ MenuColumn {
                     if (column._isStock)
                         column.dataModel.cardImage = item.path
                     else
-                        Stack.pushPage("NewImageCard.qml", {"containerWithCard": column.dataModel, fullImage: item.path})
+                        Stack.pushPage("NewImageCard.qml", {containerWithCard: column.dataModel, fullImage: item.path, newFilename: "images/card/bg_" + column.dataModel.uii})
                 }
                 else if (column.homeCustomization) {
-                    global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", item.path, "home_bg", Qt.size(global.mainWidth, global.mainHeight))
+                    global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", item.path, "images/background/home_bg", Qt.size(global.mainWidth, global.mainHeight))
                 }
                 else {
-                    global.saveInCustomDirIfNeeded(column.dataModel, "image", item.path, "bg_" + column.dataModel.uii, Qt.size(global.mainWidth, global.mainHeight))
+                    var newFilename = "images/background/bg_" + column.dataModel.uii
+                    global.saveInCustomDirIfNeeded(column.dataModel, "image", item.path, newFilename, Qt.size(global.mainWidth, global.mainHeight))
                 }
             }
         }

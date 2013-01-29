@@ -8,6 +8,7 @@ BasePage {
     id: page
 
     property variant containerWithCard
+    property string newFilename
     property alias fullImage: sourceImage.source
 
     Rectangle {
@@ -389,7 +390,7 @@ BasePage {
             var h = transparentRect.height
             // customization filenames are in the form uii.extension
             // the string concatenation is needed to convert everything to a string
-            var name = "card_" + containerWithCard.uii + "." + getExtension("" + sourceImage.source)
+            var name = page.newFilename + "." + getExtension("" + sourceImage.source)
             containerWithCard.cardImage = global.takeScreenshot(Qt.rect(x, y, w, h), name)
             // images are internally cached and shared, so a trick is needed
             // to cause a reload of the image from disk

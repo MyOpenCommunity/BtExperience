@@ -60,6 +60,10 @@ class GlobalProperties : public GlobalPropertiesCommon
 	Q_PROPERTY(QVariantList stockCardImagesFolder READ getCardStockImagesFolder CONSTANT)
 	Q_PROPERTY(QVariantList stockBackgroundImagesFolder READ getBackgroundStockImagesFolder CONSTANT)
 
+	// Folders containing custom images
+	Q_PROPERTY(QVariantList customCardImagesFolder READ getCardCustomImagesFolder CONSTANT)
+	Q_PROPERTY(QVariantList customBackgroundImagesFolder READ getBackgroundCustomImagesFolder CONSTANT)
+
 	// Screen calibration object
 	Q_PROPERTY(QObject *calibration READ getCalibration CONSTANT)
 
@@ -99,6 +103,8 @@ public:
 	QObject *getBrowser() const;
 	QVariantList getCardStockImagesFolder() const;
 	QVariantList getBackgroundStockImagesFolder() const;
+	QVariantList getCardCustomImagesFolder() const;
+	QVariantList getBackgroundCustomImagesFolder() const;
 	QString getHomePageUrl() const;
 	QString getMultimediaSourceAddress() const;
 	void setHomePageUrl(QString new_value);
@@ -159,6 +165,8 @@ private slots:
 private:
 	void parseSettings();
 	void parseBrowser();
+	void createExtra12Folders();
+	QVariantList getDefaultPathAsVariantList(QString base_dir) const;
 
 	AudioVideoPlayer *video_player;
 	AudioVideoPlayer *sound_diffusion_player;

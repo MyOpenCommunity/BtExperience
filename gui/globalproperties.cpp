@@ -418,11 +418,12 @@ QObject *GlobalProperties::getBrowser() const
 	return browser;
 }
 
-QVariantList GlobalProperties::getCardStockImagesFolder() const
+QVariantList GlobalProperties::getDefaultPathAsVariantList(QString base_dir) const
 {
 	QVariantList result;
 
 #if defined(BT_HARDWARE_X11)
+	Q_UNUSED(base_dir);
 	QString base = getBasePath();
 	QStringList base_list = base.split("/");
 	foreach (const QString &comp, base_list)
@@ -432,32 +433,37 @@ QVariantList GlobalProperties::getCardStockImagesFolder() const
 	QStringList extra_list = extra.split("/");
 	foreach (const QString &comp, extra_list)
 		result.append(comp);
-	result.append("1");
+	result.append(base_dir);
 #endif
 
-	result << "images" << "card";
+	return result;
+}
 
+QVariantList GlobalProperties::getCardStockImagesFolder() const
+{
+	QVariantList result = getDefaultPathAsVariantList("1");
+	result << "images" << "card";
 	return result;
 }
 
 QVariantList GlobalProperties::getBackgroundStockImagesFolder() const
 {
-	QVariantList result;
-
-#if defined(BT_HARDWARE_X11)
-	QString base = getBasePath();
-	QStringList base_list = base.split("/");
-	foreach (const QString &comp, base_list)
-		result.append(comp);
-#else
-	QString extra = getExtraPath();
-	QStringList extra_list = extra.split("/");
-	foreach (const QString &comp, extra_list)
-		result.append(comp);
-	result.append("1");
-#endif
+	QVariantList result = getDefaultPathAsVariantList("1");
 	result << "images" << "background";
+	return result;
+}
 
+QVariantList GlobalProperties::getCardCustomImagesFolder() const
+{
+	QVariantList result = getDefaultPathAsVariantList("12");
+	result << "images" << "card";
+	return result;
+}
+
+QVariantList GlobalProperties::getBackgroundCustomImagesFolder() const
+{
+	QVariantList result = getDefaultPathAsVariantList("12");
+	result << "images" << "background";
 	return result;
 }
 
@@ -501,6 +507,18 @@ void GlobalProperties::setMaxTravelledDistanceOnLastMove(QPoint value)
 	max_travelled_distance = value;
 }
 
+void GlobalProperties::createExtra12Folders()
+{
+#if defined(BT_HARDWARE_X11)
+	QDir().mkdir(EXTRA_12_DIR);
+#endif
+
+	QDir(EXTRA_12_DIR).mkdir("images");
+
+	QDir(QString("%1/%2").arg(EXTRA_12_DIR).arg("images")).mkdir("background");
+	QDir(QString("%1/%2").arg(EXTRA_12_DIR).arg("images")).mkdir("card");
+}
+
 QString GlobalProperties::takeScreenshot(QRect rect, QString filename)
 {
 	QWidget *viewport = main_widget->viewport();
@@ -510,11 +528,9 @@ QString GlobalProperties::takeScreenshot(QRect rect, QString filename)
 
 	QImage image = QPixmap::grabWidget(viewport, rect).toImage();
 
-#if defined(BT_HARDWARE_X11)
-        QDir().mkdir(EXTRA_12_DIR);
-#endif
+	createExtra12Folders();
+	QDir customDir = QDir(EXTRA_12_DIR);
 
-        QDir customDir = QDir(EXTRA_12_DIR);
 	QString fn = customDir.canonicalPath() + "/" + filename;
 	image.save(fn);
 
@@ -525,10 +541,7 @@ QString GlobalProperties::saveInCustomDirIfNeeded(QObject *object, QString prope
 {
 	QString result;
 
-#if defined(BT_HARDWARE_X11)
-	QDir().mkdir(EXTRA_12_DIR);
-#endif
-
+	createExtra12Folders();
 	QDir customDir = QDir(EXTRA_12_DIR);
 
 	if (filename.startsWith(customDir.canonicalPath() + "/"))
