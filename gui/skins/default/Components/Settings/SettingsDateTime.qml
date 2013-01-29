@@ -16,7 +16,20 @@ MenuColumn {
         }
         ButtonOkCancel {
             onCancelClicked: dataModel.reset()
-            onOkClicked: dataModel.apply()
+            onOkClicked: pageObject.installPopup(okCancelDialog)
+        }
+    }
+
+    Component {
+        id: okCancelDialog
+
+        TextDialog {
+            title: qsTr("Confirm operation")
+            text: qsTr("Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?")
+
+            function okClicked() {
+                dataModel.apply()
+            }
         }
     }
 }
