@@ -467,46 +467,6 @@ QVariantList GlobalProperties::getBackgroundCustomImagesFolder() const
 	return result;
 }
 
-QObject *GlobalProperties::getDefaultExternalPlace() const
-{
-	return default_external_place;
-}
-
-QString GlobalProperties::getPIAddress() const
-{
-	return (*bt_global::config)[PI_ADDRESS];
-}
-
-AudioVideoPlayer *GlobalProperties::getAudioVideoPlayer() const
-{
-	return video_player;
-}
-
-PhotoPlayer *GlobalProperties::getPhotoPlayer() const
-{
-	return photo_player;
-}
-
-QObject *GlobalProperties::getAudioState() const
-{
-	return audio_state;
-}
-
-QObject *GlobalProperties::getScreenState() const
-{
-	return screen_state;
-}
-
-QObject *GlobalProperties::getRingtoneManager() const
-{
-	return ringtone_manager;
-}
-
-void GlobalProperties::setMaxTravelledDistanceOnLastMove(QPoint value)
-{
-	max_travelled_distance = value;
-}
-
 void GlobalProperties::createExtra12Folders()
 {
 #if defined(BT_HARDWARE_X11)
@@ -553,6 +513,46 @@ QString GlobalProperties::saveInCustomDirIfNeeded(QObject *object, QString prope
 	connect(downloader, SIGNAL(jobDone(ImageSaver*)), this, SLOT(cleanImageSaver(ImageSaver*)));
 	downloader->startDownload(object, property, filename, result, size);
 	return result;
+}
+
+QObject *GlobalProperties::getDefaultExternalPlace() const
+{
+	return default_external_place;
+}
+
+QString GlobalProperties::getPIAddress() const
+{
+	return (*bt_global::config)[PI_ADDRESS];
+}
+
+AudioVideoPlayer *GlobalProperties::getAudioVideoPlayer() const
+{
+	return video_player;
+}
+
+PhotoPlayer *GlobalProperties::getPhotoPlayer() const
+{
+	return photo_player;
+}
+
+QObject *GlobalProperties::getAudioState() const
+{
+	return audio_state;
+}
+
+QObject *GlobalProperties::getScreenState() const
+{
+	return screen_state;
+}
+
+QObject *GlobalProperties::getRingtoneManager() const
+{
+	return ringtone_manager;
+}
+
+void GlobalProperties::setMaxTravelledDistanceOnLastMove(QPoint value)
+{
+	max_travelled_distance = value;
 }
 
 void GlobalProperties::cleanImageSaver(ImageSaver *cleanee)

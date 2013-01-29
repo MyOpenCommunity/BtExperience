@@ -8,8 +8,19 @@
 #include <QImage>
 #include <QTemporaryFile>
 
+// max number of customized images per type per profile retained in extra/12 folder
+// it is suggested to set a value equal to at least 2 to avoid "losing" setup
+// if application is stopped before configuration files are saved
+#define MAX_CUSTOMIZED_IMAGES_PROFILE 3
+
 
 class QNetworkReply;
+
+
+int computeMaxId(QString no_id_name);
+QString computeSaveFilePath(QString no_id_name, int id);
+void cleanOldFiles(QString id_name, int id);
+
 
 class ImageSaver : public QObject
 {
@@ -28,9 +39,6 @@ private slots:
 	void onReadyRead();
 
 private:
-	void computeMaxId();
-	void cleanOldFiles();
-	void computeSaveFilePath();
 	void saveDestinationFile();
 
 private:

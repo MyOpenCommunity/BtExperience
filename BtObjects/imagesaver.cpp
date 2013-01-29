@@ -9,6 +9,71 @@
 #include <QStringList>
 
 
+int computeMaxId(QString no_id_name)
+{
+	QString search_path = no_id_name.mid(no_id_name.lastIndexOf("/") + 1);
+	search_path = search_path.left(search_path.lastIndexOf("."));
+	search_path.append(QString("_*"));
+	search_path.append(no_id_name.mid(no_id_name.lastIndexOf(".")));
+
+	QFileInfo file_info(no_id_name);
+	QDir save_dir = file_info.absolutePath();
+	QStringList search_list;
+	search_list << search_path;
+	QStringList file_list = save_dir.entryList(search_list);
+	unsigned int max_oid = 0;
+	foreach (QString name, file_list) {
+		QString oid = name.mid(name.lastIndexOf("_") + 1);
+		oid = oid.left(oid.lastIndexOf("."));
+		unsigned int uiid = oid.toUInt();
+		if (uiid > max_oid)
+			max_oid = uiid;
+	}
+	return max_oid;
+}
+
+
+QString computeSaveFilePath(QString no_id_name, int id)
+{
+	QString file_path = no_id_name.left(no_id_name.lastIndexOf("."));
+	file_path.append(QString("_%1").arg(id));
+	file_path.append(no_id_name.mid(no_id_name.lastIndexOf(".")));
+	return file_path;
+}
+
+void cleanOldFiles(QString id_name, int id)
+{
+	QString search_path = id_name.mid(id_name.lastIndexOf("/") + 1);
+	search_path = search_path.left(search_path.lastIndexOf("_"));
+	search_path.append(QString("_*"));
+	search_path.append(id_name.mid(id_name.lastIndexOf(".")));
+
+	QStringList survivors;
+	QString survivor;
+	for (int i = 0; i < MAX_CUSTOMIZED_IMAGES_PROFILE; ++i)
+	{
+		survivor = id_name.mid(id_name.lastIndexOf("/") + 1);
+		survivor = survivor.left(survivor.lastIndexOf("_"));
+		survivor.append(QString("_%1").arg(id - i));
+		survivor.append(id_name.mid(id_name.lastIndexOf(".")));
+
+		survivors << survivor;
+	}
+
+	QFileInfo file_info(id_name);
+	QDir save_dir = file_info.absolutePath();
+	QStringList search_list;
+	search_list << search_path;
+	QStringList file_list = save_dir.entryList(search_list);
+	foreach (QString name, file_list) {
+		if (survivors.contains(name))
+			continue;
+		save_dir.remove(name);
+	}
+}
+
+
+
 unsigned int ImageSaver::progressive_id = 0;
 
 ImageSaver::ImageSaver(QObject *parent) :
@@ -45,8 +110,8 @@ void ImageSaver::startDownload(QObject *_object, QString _property, QString down
 		return;
 	}
 
-	computeMaxId();
-	computeSaveFilePath();
+	progressive_id = computeMaxId(save_file_path) + 1;
+	save_file_path = computeSaveFilePath(save_file_path, progressive_id);
 
 	saveDestinationFile();
 }
@@ -63,8 +128,8 @@ void ImageSaver::onFinished(QNetworkReply *reply)
 
 	image_buffer.load(file.fileName());
 
-	computeMaxId();
-	computeSaveFilePath();
+	progressive_id = computeMaxId(save_file_path) + 1;
+	save_file_path = computeSaveFilePath(save_file_path, progressive_id);
 
 	saveDestinationFile();
 }
@@ -72,61 +137,6 @@ void ImageSaver::onFinished(QNetworkReply *reply)
 void ImageSaver::onReadyRead()
 {
 	file.write(reply->readAll());
-}
-
-void ImageSaver::computeMaxId()
-{
-	QString search_path = save_file_path.mid(save_file_path.lastIndexOf("/") + 1);
-	search_path = search_path.left(search_path.lastIndexOf("."));
-	search_path.append(QString("_*"));
-	search_path.append(save_file_path.mid(save_file_path.lastIndexOf(".")));
-
-	QFileInfo file_info(save_file_path);
-	QDir save_dir = file_info.absolutePath();
-	QStringList search_list;
-	search_list << search_path;
-	QStringList file_list = save_dir.entryList(search_list);
-	unsigned int max_oid = 0;
-	foreach (QString name, file_list) {
-		QString oid = name.mid(name.lastIndexOf("_") + 1);
-		oid = oid.left(oid.lastIndexOf("."));
-		unsigned int uiid = oid.toUInt();
-		if (uiid > max_oid)
-			max_oid = uiid;
-	}
-	progressive_id = max_oid + 1;
-}
-
-void ImageSaver::cleanOldFiles()
-{
-	QString search_path = save_file_path.mid(save_file_path.lastIndexOf("/") + 1);
-	search_path = search_path.left(search_path.lastIndexOf("_"));
-	search_path.append(QString("_*"));
-	search_path.append(save_file_path.mid(save_file_path.lastIndexOf(".")));
-
-	QString last_to_one = save_file_path.mid(save_file_path.lastIndexOf("/") + 1);
-	last_to_one = last_to_one.left(last_to_one.lastIndexOf("_"));
-	last_to_one.append(QString("_%1").arg(progressive_id - 1));
-	last_to_one.append(save_file_path.mid(save_file_path.lastIndexOf(".")));
-
-	QFileInfo file_info(save_file_path);
-	QDir save_dir = file_info.absolutePath();
-	QStringList search_list;
-	search_list << search_path;
-	QStringList file_list = save_dir.entryList(search_list);
-	foreach (QString name, file_list) {
-		if (save_file_path.endsWith(name) || name == last_to_one)
-			continue;
-		save_dir.remove(name);
-	}
-}
-
-void ImageSaver::computeSaveFilePath()
-{
-	QString file_path = save_file_path.left(save_file_path.lastIndexOf("."));
-	file_path.append(QString("_%1").arg(progressive_id));
-	file_path.append(save_file_path.mid(save_file_path.lastIndexOf(".")));
-	save_file_path = file_path;
 }
 
 void ImageSaver::saveDestinationFile()
@@ -154,7 +164,7 @@ void ImageSaver::saveDestinationFile()
 
 	object->setProperty(property.toLocal8Bit().data(), save_file_path);
 
-	cleanOldFiles();
+	cleanOldFiles(save_file_path, progressive_id);
 
 	emit jobDone(this);
 }
