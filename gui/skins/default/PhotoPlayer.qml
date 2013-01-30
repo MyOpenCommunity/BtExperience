@@ -225,9 +225,8 @@ Page {
             pressedImageBg: "images/common/btn_45x35_P.svg"
             selectedImageBg: "images/common/btn_45x35_S.svg"
             shadowImage: "images/common/btn_shadow_45x35.svg"
-            defaultImage: "images/common/ico_fullscreen.svg"
-            pressedImage: "images/common/ico_fullscreen.svg"
-            selectedImage: "images/common/ico_chiudi_fullscreen.svg"
+            defaultImage: "images/common/icon_resize.svg"
+            pressedImage: "images/common/icon_resize_p.svg"
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 right: bottomBarBg.right
@@ -235,7 +234,6 @@ Page {
             }
 
             onClicked: Stack.popPage()
-            status: 1
         }
 
         Timer {
