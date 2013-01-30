@@ -184,6 +184,7 @@ Item {
         }
         onCallInProgressChanged: {
             if (vctConnection.target.callInProgress) {
+                privateProps.stopVideoPlayer()
                 global.screenState.enableState(ScreenState.ForcedNormal)
             } else {
                 global.screenState.enableState(ScreenState.Normal)
@@ -378,6 +379,11 @@ Item {
         property variant dangersModel: undefined
         property variant recordingModel: undefined
         property variant clocksModel: undefined
+
+        function stopVideoPlayer() {
+            if (Stack.currentPage()._pageName === "VideoPlayer")
+                Stack.popPage()
+        }
 
         function addNotification(notify) {
             if (!notificationsEnabled) {
