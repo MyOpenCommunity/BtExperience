@@ -1,6 +1,8 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/MenuItem.js" as Script
+
 
 MenuColumn {
     id: column
@@ -24,8 +26,11 @@ MenuColumn {
         currentIndex: -1
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
-            hasChild: true
             onClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
+            description: Script.description(itemObject)
+            hasChild: Script.hasChild(itemObject)
+            boxInfoState: Script.boxInfoState(itemObject)
+            boxInfoText: Script.boxInfoText(itemObject)
         }
 
         model: modelList

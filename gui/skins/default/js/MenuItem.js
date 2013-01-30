@@ -80,6 +80,8 @@ function boxInfoState(itemObject) {
         return "info"
     case ObjectInterface.IdThermalControlledProbe:
     case ObjectInterface.IdThermalControlledProbeFancoil:
+    case ObjectInterface.IdThermalExternalProbe:
+    case ObjectInterface.IdThermalNonControlledProbe:
         return "info"
     case ObjectInterface.IdThermalControlUnit99:
     case ObjectInterface.IdThermalControlUnit4:
@@ -102,6 +104,8 @@ function boxInfoText(itemObject) {
             return "-"
     case ObjectInterface.IdThermalControlledProbe:
     case ObjectInterface.IdThermalControlledProbeFancoil:
+    case ObjectInterface.IdThermalExternalProbe:
+    case ObjectInterface.IdThermalNonControlledProbe:
         return (itemObject.temperature / 10).toFixed(1) + "°C"
     case ObjectInterface.IdThermalControlUnit99:
     case ObjectInterface.IdThermalControlUnit4:
