@@ -17,17 +17,17 @@ Item {
     property variant menu
     property alias menuAnchors: menuLoader.anchors
 
-    signal clicked
+    signal opened
+    signal closed
+
+    onStateChanged: control.state === "up" ? control.closed() : control.opened()
 
     ButtonTextImageThreeStates {
         id: theButton
 
         text: qsTr("Video settings")
         textColor: "black"
-        onClicked: {
-            control.state = (control.state === "up") ? "down" : "up"
-            control.clicked()
-        }
+        onClicked: control.state = (control.state === "up") ? "down" : "up"
         defaultImageBg: "../images/common/btn_impostazioni.svg"
         pressedImageBg: "../images/common/btn_impostazioni_P.svg"
         defaultImage: "../images/common/ico_apri_impostazioni.svg"

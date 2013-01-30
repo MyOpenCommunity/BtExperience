@@ -111,6 +111,9 @@ Page {
         }
         onPressed: camera.stairLightActivate()
         onReleased: camera.stairLightRelease()
+        Behavior on opacity {
+            NumberAnimation { duration: 400 }
+        }
     }
 
     ControlTextCommand {
@@ -125,6 +128,9 @@ Page {
         }
         onPressed: camera.openLock()
         onReleased: camera.releaseLock()
+        Behavior on opacity {
+            NumberAnimation { duration: 400 }
+        }
     }
 
     ControlSliderMute {
@@ -165,6 +171,15 @@ Page {
             // a loader, so its dimensions are not well defined
             left: controlCallManager.left
             top: controlVideo.top
+        }
+        onOpened: {
+            controlStairLight.opacity = 0
+            controlLock.opacity = 0
+        }
+
+        onClosed: {
+            controlStairLight.opacity = 1
+            controlLock.opacity = 1
         }
     }
 

@@ -11,8 +11,13 @@ Item {
     // object instead of passing 9 properties to the caller because they are really too many
     property variant camera
 
+    signal opened
+    signal closed
+
     ControlPullDown {
         menu: videoMenu
+        onOpened: control.opened()
+        onClosed: control.closed()
     }
 
     Component {
