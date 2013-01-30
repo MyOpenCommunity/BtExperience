@@ -16,7 +16,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                column.loadColumn(settingsImageBrowser, qsTr("Background image"), column.dataModel, {isCard: true})
+                column.loadColumn(settingsImageBrowser, qsTr("Card image"), column.dataModel, {isCard: true})
             }
         }
 
