@@ -15,7 +15,7 @@ MenuColumn {
             dataModel: column.dataModel
         }
         ButtonOkCancel {
-            onCancelClicked: column.dataModel.reset()
+            onCancelClicked: column.closeColumn()
             onOkClicked: pageObject.installPopup(okCancelDialog)
         }
     }
