@@ -169,7 +169,11 @@ void AudioState::updateState()
 			updateAudioPaths(current_state, new_state);
 	}
 	else
+	{
 		updateAudioPaths(current_state, new_state);
+		// called after updateAudioPaths() to avoid player state change triggering another update
+		releasePausedPlayer();
+	}
 }
 
 AudioState::State AudioState::getState() const
@@ -213,8 +217,10 @@ void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
 {
 	players.append(PlayerInfo(player, MultiMedia));
 
-	// this assumes audiioOutputState is changed after playerState
+	// this assumes audioOutputState is changed together with playerState
 	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
+		this, SLOT(checkDirectAudioAccess()));
+	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 		this, SLOT(checkDirectAudioAccess()));
 }
 
@@ -222,8 +228,10 @@ void AudioState::registerSoundPlayer(MultiMediaPlayer *player)
 {
 	players.append(PlayerInfo(player, SoundEffect));
 
-	// this assumes audiioOutputState is changed after playerState
+	// this assumes audioOutputState is changed together with playerState
 	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
+		this, SLOT(checkDirectAudioAccess()));
+	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
 		this, SLOT(checkDirectAudioAccess()));
 }
 
@@ -417,8 +425,38 @@ void AudioState::changeSoundDiffusionAccess()
 	sound_diffusion = new_sound_diffusion;
 }
 
+void AudioState::releasePausedPlayer()
+{
+	for (int i = 0; i < players.count(); ++i)
+	{
+		PlayerInfo &info = players[i];
+
+		if (info.player->getAudioOutputState() == MultiMediaPlayer::AudioOutputActive &&
+		    (info.player->getPlayerState() == MultiMediaPlayer::Paused ||
+		     info.player->getPlayerState() == MultiMediaPlayer::AboutToPause))
+		{
+			if (info.type == MultiMedia)
+			{
+				if (pending_state == LocalPlayback || pending_state == LocalPlaybackMute)
+					return;
+
+				if (pending_state != Idle && pending_state != Screensaver)
+				{
+					qDebug() << "Releasing paused media player output device";
+					info.player->releaseOutputDevices();
+				}
+			}
+		}
+	}
+}
+
 bool AudioState::pauseActivePlayer()
 {
+	releasePausedPlayer();
+
+	// equal to SoundEffect below
+	beep->stop();
+
 	for (int i = 0; i < players.count(); ++i)
 	{
 		PlayerInfo &info = players[i];
@@ -439,10 +477,18 @@ bool AudioState::pauseActivePlayer()
 				if (pending_state == LocalPlayback || pending_state == LocalPlaybackMute)
 					return true;
 
-				qDebug() << "Media player entering temporary pause";
+				if (info.player->getPlayerState() != MultiMediaPlayer::Paused)
+				{
+					qDebug() << "Media player entering temporary pause";
+					info.temporary_pause = true;
+					info.player->pause();
+				}
 
-				info.temporary_pause = true;
-				info.player->pause();
+				if (pending_state != Idle && pending_state != Screensaver)
+				{
+					qDebug() << "Releasing media player device";
+					info.player->releaseOutputDevices();
+				}
 			}
 
 			break;

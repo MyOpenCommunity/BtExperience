@@ -117,6 +117,7 @@ private:
 	};
 
 	bool pauseActivePlayer();
+	void releasePausedPlayer();
 	void resumeActivePlayer();
 
 	void updateState();
