@@ -17,7 +17,7 @@ Page {
 
     // the following properties are used by delegates
     property variant actualModel: privateProps.getActualModel(privateProps.currentIndex, page.onlyQuicklinks)
-    property bool isRemovable: privateProps.isRemovable(privateProps.currentIndex, page.onlyQuicklinks)
+    property bool isRemovable: privateProps.isRemovable(privateProps.currentIndex, page.onlyQuicklinks, page.homeCustomization, page.profile)
 
     text: privateProps.getColumnText(page.profile, page.homeCustomization, page.onlyQuicklinks)
     source: privateProps.getBackgroundImage(page.profile)
@@ -595,12 +595,16 @@ Page {
             return quicklinksModel
         }
 
-        function isRemovable(index, onlyQuicklinks) {
+        function isRemovable(index, onlyQuicklinks, homeCustomization, profile) {
             if (onlyQuicklinks)
                 return true
-            if (index === 0)
+            if (index === 0) // camera are not editable
                 return false
-            if (index === 5)
+            if (index === 5) // scenarios are not editable
+                return false
+            if (homeCustomization) // home quicklink must be removed from dedicated menu
+                return false
+            if (profile !== undefined) // profile quicklink must be removed from profile page
                 return false
             return true
         }
