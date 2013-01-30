@@ -274,6 +274,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	{
 	case Beep:
 	case LocalPlayback:
+	case LocalPlaybackMute:
 	case Ringtone:
 		break;
 	case ScsVideoCall:
@@ -304,6 +305,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	case LocalPlayback:
 	case Ringtone:
 	case VdeRingtone:
+	case FloorCall:
 		if (current_volume != InvalidVolume)
 			setHardwareVolume(current_volume, volumes[current_volume]);
 		break;
