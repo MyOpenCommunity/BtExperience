@@ -132,6 +132,7 @@ Item {
 
     Connections {
         id: systemTimeChanged
+        target: null
         onSystemTimeChanged: monthlyReportTimer.updateTimer()
     }
 
