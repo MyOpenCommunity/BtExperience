@@ -419,6 +419,21 @@
         <translation>Aggiungi nuovo scenario:</translation>
     </message>
     <message>
+        <location filename="../skins/default/AddQuicklink.qml" line="480"/>
+        <source>Edit quicklink properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/AddQuicklink.qml" line="481"/>
+        <source>Title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/AddQuicklink.qml" line="483"/>
+        <source>Address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../skins/default/AddQuicklink.qml" line="574"/>
         <source>Home</source>
         <translation type="unfinished">Home</translation>
@@ -438,16 +453,6 @@
         <source>Do you want to remove the selected quicklink?
 Name: %1
 Address: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="480"/>
-        <source>Insert address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="488"/>
-        <source>Insert description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -661,65 +666,81 @@ Address: %2</source>
     </message>
 </context>
 <context>
+    <name>AlarmClock</name>
+    <message>
+        <location filename="../../BtObjects/alarmclock.cpp" line="38"/>
+        <source>new alarm clock</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AlarmClockDateTimePage</name>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="15"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="16"/>
         <source>Alarm settings</source>
         <translation>Impostazioni sveglia</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="39"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="50"/>
         <source>Alarm clock - date and time</source>
         <translation>Sveglia - data e ora</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="71"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="82"/>
         <source>activation</source>
         <translation>attivazione</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="82"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="93"/>
         <source>days</source>
         <translation>giorni</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="109"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="120"/>
         <source>time</source>
         <translation>Ora</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="132"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="143"/>
         <source>description</source>
         <translation>descrizione</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="153"/>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="212"/>
-        <source>Click to enter description...</source>
-        <translation>Clicca per inserire la descrizione:</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="170"/>
-        <source>New alarm name</source>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="176"/>
+        <source>Edit alarm name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="188"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="177"/>
+        <source>New name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to enter description...</source>
+        <translation type="obsolete">Clicca per inserire la descrizione:</translation>
+    </message>
+    <message>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="200"/>
         <source>Save changes?</source>
         <translation>Salvare le modifiche?</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="205"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="217"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="226"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="227"/>
+        <source>No name set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="243"/>
         <source>CANCEL</source>
         <translation>ANNULLA</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="245"/>
+        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="259"/>
         <source>MTWTFSS</source>
         <translation type="unfinished"></translation>
     </message>
@@ -727,52 +748,62 @@ Address: %2</source>
 <context>
     <name>AlarmClockRingtonePage</name>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="21"/>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="22"/>
         <source>Alarm settings</source>
         <translation type="unfinished">Impostazioni sveglia</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="94"/>
-        <source>Alarm signal settings</source>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="105"/>
+        <source>Alarm clock - sound settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="108"/>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="119"/>
         <source>Signal:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="171"/>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="182"/>
         <source>Select a source:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="309"/>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="320"/>
         <source>Save changes?</source>
         <translation type="unfinished">Salvare le modifiche?</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="326"/>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="337"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="345"/>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="347"/>
+        <source>No amplifier set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="351"/>
+        <source>No source set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="367"/>
         <source>CANCEL</source>
         <translation type="unfinished">ANNULLA</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="402"/>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="421"/>
         <source>beep</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="404"/>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="423"/>
         <source>sound diffusion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="142"/>
+        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="153"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1462,7 +1493,7 @@ Address: %2</source>
 <context>
     <name>ControlPullDown</name>
     <message>
-        <location filename="../skins/default/Components/ControlPullDown.qml" line="25"/>
+        <location filename="../skins/default/Components/ControlPullDown.qml" line="28"/>
         <source>Video settings</source>
         <translation>Impostazioni video</translation>
     </message>
@@ -1470,12 +1501,12 @@ Address: %2</source>
 <context>
     <name>ControlPullDownVideo</name>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="25"/>
+        <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="30"/>
         <source>Brightness</source>
         <translation>Luminosità</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="33"/>
+        <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="38"/>
         <source>Contrast</source>
         <translation>Contrasto</translation>
     </message>
@@ -1484,7 +1515,7 @@ Address: %2</source>
         <translation type="obsolete">Saturazione</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="41"/>
+        <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="46"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1649,7 +1680,7 @@ Address: %2</source>
 <context>
     <name>EditNote</name>
     <message>
-        <location filename="../skins/default/Components/EditNote.qml" line="25"/>
+        <location filename="../skins/default/Components/EditNote.qml" line="24"/>
         <source>Note</source>
         <translation>Nota</translation>
     </message>
@@ -1662,12 +1693,12 @@ Address: %2</source>
         <translation type="obsolete">annulla</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EditNote.qml" line="125"/>
+        <location filename="../skins/default/Components/EditNote.qml" line="124"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EditNote.qml" line="138"/>
+        <location filename="../skins/default/Components/EditNote.qml" line="137"/>
         <source>CANCEL</source>
         <translation type="unfinished">ANNULLA</translation>
     </message>
@@ -1930,7 +1961,7 @@ Address: %2</source>
 <context>
     <name>EnergyManagement</name>
     <message>
-        <location filename="../skins/default/EnergyManagement.qml" line="6"/>
+        <location filename="../skins/default/EnergyManagement.qml" line="8"/>
         <source>Energy management</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2098,27 +2129,27 @@ Address: %2</source>
 <context>
     <name>FavoriteEditPopup</name>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="112"/>
+        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="114"/>
         <source>Address:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="162"/>
+        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="165"/>
         <source>ok</source>
         <translation type="unfinished">ok</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="175"/>
+        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="178"/>
         <source>cancel</source>
         <translation type="unfinished">annulla</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="50"/>
+        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="51"/>
         <source>Edit quicklink properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="77"/>
+        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="78"/>
         <source>Title:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2321,9 +2352,24 @@ Address: %2</source>
 <context>
     <name>MenuItem</name>
     <message>
-        <location filename="../skins/default/js/MenuItem.js" line="58"/>
+        <location filename="../skins/default/js/MenuItem.js" line="62"/>
         <source>°C</source>
         <translation type="unfinished">°C</translation>
+    </message>
+    <message>
+        <location filename="../skins/default/js/MenuItem.js" line="79"/>
+        <source>No amplifier set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/js/MenuItem.js" line="81"/>
+        <source>No source set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/js/MenuItem.js" line="83"/>
+        <source>No name set</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2355,37 +2401,37 @@ Address: %2</source>
         <translation type="unfinished">multimedia</translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="110"/>
+        <location filename="../skins/default/Multimedia.qml" line="116"/>
         <source>devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="111"/>
+        <location filename="../skins/default/Multimedia.qml" line="117"/>
         <source>web browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="116"/>
+        <location filename="../skins/default/Multimedia.qml" line="122"/>
         <source>rss</source>
         <translation type="unfinished">rss</translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="119"/>
+        <location filename="../skins/default/Multimedia.qml" line="125"/>
         <source>ip radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="122"/>
+        <location filename="../skins/default/Multimedia.qml" line="128"/>
         <source>weather</source>
         <translation type="unfinished">tempo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="113"/>
+        <location filename="../skins/default/Multimedia.qml" line="119"/>
         <source>web link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="125"/>
+        <location filename="../skins/default/Multimedia.qml" line="131"/>
         <source>web cam</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2401,17 +2447,17 @@ Address: %2</source>
 <context>
     <name>NewImageCard</name>
     <message>
-        <location filename="../skins/default/NewImageCard.qml" line="191"/>
+        <location filename="../skins/default/NewImageCard.qml" line="192"/>
         <source>CANCEL</source>
         <translation type="unfinished">ANNULLA</translation>
     </message>
     <message>
-        <location filename="../skins/default/NewImageCard.qml" line="208"/>
+        <location filename="../skins/default/NewImageCard.qml" line="209"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/NewImageCard.qml" line="222"/>
+        <location filename="../skins/default/NewImageCard.qml" line="223"/>
         <source>Save configuration changes?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2580,7 +2626,7 @@ Address: %2</source>
         <translation type="obsolete">note</translation>
     </message>
     <message>
-        <location filename="../skins/default/Profile.qml" line="376"/>
+        <location filename="../skins/default/Profile.qml" line="381"/>
         <source>Add note</source>
         <translation>Aggiungi nota</translation>
     </message>
@@ -2588,7 +2634,7 @@ Address: %2</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="263"/>
+        <location filename="../../BtObjects/mediaobjects.cpp" line="262"/>
         <source>IP radio</source>
         <translation type="unfinished">radio IP</translation>
     </message>
@@ -2602,6 +2648,10 @@ Address: %2</source>
     </message>
     <message>
         <location filename="../skins/default/Components/Settings/RoomModify.qml" line="19"/>
+        <source>Card image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../skins/default/Components/Settings/RoomModify.qml" line="30"/>
         <source>Background image</source>
         <translation type="unfinished"></translation>
@@ -2630,6 +2680,14 @@ Address: %2</source>
     <message>
         <location filename="../skins/default/RssPage.qml" line="105"/>
         <source>Rss load failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScenarioLink</name>
+    <message>
+        <location filename="../skins/default/Components/ScenarioLink.qml" line="29"/>
+        <source>Command sent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2684,7 +2742,7 @@ Address: %2</source>
 <context>
     <name>Scenarios</name>
     <message>
-        <location filename="../skins/default/Scenarios.qml" line="7"/>
+        <location filename="../skins/default/Scenarios.qml" line="8"/>
         <source>Scenarios</source>
         <translation type="unfinished">Scenari</translation>
     </message>
@@ -2806,7 +2864,7 @@ Continue?</source>
 <context>
     <name>SettingsClocks</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsClocks.qml" line="23"/>
+        <location filename="../skins/default/Components/Settings/SettingsClocks.qml" line="24"/>
         <source>Add Clock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2818,35 +2876,42 @@ Continue?</source>
         <translation type="obsolete">Ora</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="13"/>
+        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="14"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="14"/>
+        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="15"/>
         <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="28"/>
+        <source>Confirm operation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsDisplay</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="34"/>
+        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="17"/>
+        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="48"/>
         <source>Brightness</source>
         <translation type="unfinished">Luminosità</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="36"/>
+        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="50"/>
         <source>Calibration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="37"/>
+        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="51"/>
         <source>Clean</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="35"/>
+        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="19"/>
+        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="49"/>
         <source>Contrast</source>
         <translation type="unfinished">Contrasto</translation>
     </message>
@@ -3189,12 +3254,19 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="111"/>
+        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="51"/>
+        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="61"/>
+        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="66"/>
+        <source>Custom Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="131"/>
         <source>Confirm operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="112"/>
+        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="132"/>
         <source>Do you want to change actual image with the one selected?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3219,45 +3291,46 @@ Continue?</source>
 <context>
     <name>SettingsItems</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="112"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="118"/>
         <source>Home</source>
         <translation>Home</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="113"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="119"/>
         <source>General</source>
         <translation>Generale</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="41"/>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="115"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="42"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="121"/>
         <source>Profiles</source>
         <translation>Profili</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="117"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="52"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="123"/>
         <source>Rooms</source>
         <translation>Stanze</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="46"/>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="119"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="47"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="125"/>
         <source>Systems</source>
         <translation>Sistemi</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="36"/>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="120"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="37"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="126"/>
         <source>Alarm Clock</source>
         <translation>Sveglia</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="121"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="127"/>
         <source>Multimedia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="122"/>
+        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="128"/>
         <source>Ringtones</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3337,6 +3410,7 @@ Continue?</source>
     </message>
     <message>
         <location filename="../skins/default/SettingsNames.qml" line="26"/>
+        <location filename="../skins/default/SettingsNames.qml" line="31"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3365,11 +3439,6 @@ Continue?</source>
     <message>
         <location filename="../skins/default/SettingsNames.qml" line="14"/>
         <source>Static IP address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/SettingsNames.qml" line="31"/>
-        <source>English (GB)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3482,7 +3551,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="19"/>
         <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="30"/>
         <source>Background image</source>
         <translation type="unfinished"></translation>
@@ -3490,6 +3558,11 @@ Continue?</source>
     <message>
         <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="24"/>
         <source>Change background image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="19"/>
+        <source>Card image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3529,19 +3602,20 @@ Continue?</source>
 <context>
     <name>SettingsSystems</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="30"/>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="92"/>
+        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="31"/>
+        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="98"/>
         <source>Scenarios</source>
         <translation>Scenari</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="94"/>
+        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="36"/>
+        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="100"/>
         <source>Energy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="25"/>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="96"/>
+        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="26"/>
+        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="102"/>
         <source>VDE</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3567,22 +3641,50 @@ Continue?</source>
 <context>
     <name>SettingsVDE</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="60"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="32"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="96"/>
         <source>hands free</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="79"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="34"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="40"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="46"/>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="36"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="42"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="48"/>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="38"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="116"/>
         <source>auto open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="116"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="50"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="155"/>
         <source>Teleloop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="98"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="52"/>
+        <source>Associated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="54"/>
+        <source>Not associated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="44"/>
+        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="136"/>
         <source>Ringtone exclusion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3702,23 +3804,23 @@ Continue?</source>
         <translation type="unfinished">cambia sorgente</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="146"/>
+        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="150"/>
         <source>saved IP radios</source>
         <translation type="unfinished">radio IP memorizzate</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="159"/>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="203"/>
+        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="163"/>
+        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="207"/>
         <source>no title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="174"/>
+        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="178"/>
         <source>browse</source>
         <translation type="unfinished">browse</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="204"/>
+        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="208"/>
         <source>no album</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3984,6 +4086,46 @@ Continue?</source>
 If you choose ok they will be lost.
 Continue?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../BtObjects/thermalobjects.cpp" line="165"/>
+        <source>Weekly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../BtObjects/thermalobjects.cpp" line="169"/>
+        <source>Weekday</source>
+        <translation>Feriale</translation>
+    </message>
+    <message>
+        <location filename="../../BtObjects/thermalobjects.cpp" line="173"/>
+        <source>Holiday</source>
+        <translation>Festivo</translation>
+    </message>
+    <message>
+        <location filename="../../BtObjects/thermalobjects.cpp" line="175"/>
+        <source>Antifreeze</source>
+        <translation>Antigelo</translation>
+    </message>
+    <message>
+        <location filename="../../BtObjects/thermalobjects.cpp" line="178"/>
+        <source>Manual</source>
+        <translation>Manuale</translation>
+    </message>
+    <message>
+        <location filename="../../BtObjects/thermalobjects.cpp" line="179"/>
+        <source>Off</source>
+        <translation>Off</translation>
+    </message>
+    <message>
+        <location filename="../../BtObjects/thermalobjects.cpp" line="339"/>
+        <source>Timed Manual</source>
+        <translation>Manuale temporizzato</translation>
+    </message>
+    <message>
+        <location filename="../../BtObjects/thermalobjects.cpp" line="349"/>
+        <source>Scenarios</source>
+        <translation type="unfinished">Scenari</translation>
     </message>
 </context>
 <context>
@@ -4305,12 +4447,12 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/VideoCamera.qml" line="119"/>
+        <location filename="../skins/default/VideoCamera.qml" line="122"/>
         <source>door lock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/VideoCamera.qml" line="134"/>
+        <location filename="../skins/default/VideoCamera.qml" line="140"/>
         <source>volume</source>
         <translation type="unfinished">volume</translation>
     </message>
@@ -4318,7 +4460,7 @@ Continue?</source>
 <context>
     <name>VideoDoorEntry</name>
     <message>
-        <location filename="../skins/default/VideoDoorEntry.qml" line="7"/>
+        <location filename="../skins/default/VideoDoorEntry.qml" line="8"/>
         <source>video door entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4352,7 +4494,7 @@ Continue?</source>
 <context>
     <name>VideoPlayer</name>
     <message>
-        <location filename="../skins/default/VideoPlayer.qml" line="281"/>
+        <location filename="../skins/default/VideoPlayer.qml" line="279"/>
         <source>Loop detected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4383,27 +4525,27 @@ Continue?</source>
 <context>
     <name>browsermain</name>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="168"/>
+        <location filename="../skins/default/browsermain.qml" line="177"/>
         <source>Authentication required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="169"/>
+        <location filename="../skins/default/browsermain.qml" line="178"/>
         <source>User name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="171"/>
+        <location filename="../skins/default/browsermain.qml" line="180"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="189"/>
+        <location filename="../skins/default/browsermain.qml" line="198"/>
         <source>Untrusted SSL connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="191"/>
+        <location filename="../skins/default/browsermain.qml" line="200"/>
         <source>This connection is untrusted. Do you wish to continue?</source>
         <translation type="unfinished"></translation>
     </message>
