@@ -62,7 +62,7 @@ QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node, QList<SourceObject 
 		AlarmClock *alarm = new AlarmClock(v.value("descr"), v.intValue("enabled"), v.intValue("type"),
 										   v.intValue("days"), v.intValue("hour"), v.intValue("minutes"));
 
-		alarm->setVolume(v.intValue("volume"));
+		alarm->setVolume(v.intValue("volume") * 10);
 
 		int amplifier_uii = v.intValue("amplifier_uii");
 		if (amplifier_uii > 0) // uii must be positive
@@ -127,7 +127,7 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &
 	setAttribute(node, "days", QString::number(alarm_clock->getDays()));
 	setAttribute(node, "hour", QString::number(alarm_clock->getHour()));
 	setAttribute(node, "minutes", QString::number(alarm_clock->getMinute()));
-	setAttribute(node, "volume", QString::number(alarm_clock->getVolume()));
+	setAttribute(node, "volume", QString::number(alarm_clock->getVolume() / 10));
 
 	if (alarm_clock->getAlarmType() == AlarmClock::AlarmClockSoundSystem)
 	{
