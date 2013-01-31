@@ -279,6 +279,8 @@ public slots:
 	*/
 	virtual void reset();
 
+	virtual QString getName() const;
+
 protected:
 	ThermalRegulationState current, to_apply;
 

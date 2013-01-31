@@ -9,6 +9,7 @@
 #include "xmlobject.h"
 
 #include <QDebug>
+#include <QCoreApplication>
 
 
 namespace
@@ -161,18 +162,21 @@ ThermalControlUnit::ThermalControlUnit(QString _name, QString _key, int _modes, 
 	// The objects list should contain only one item per id
 	if (((d->type() == THERMO_Z4) && ((modes & CU4_PROGRAMS_MODE) > 0)) ||
 		((d->type() == THERMO_Z99) && ((modes & CU99_PROGRAMS_MODE) > 0)))
-		modalities << new ThermalControlUnitProgram("Weekly", ThermalControlUnit::IdWeeklyPrograms, &summer_programs, &winter_programs, dev);
+		modalities << new ThermalControlUnitProgram(QT_TRANSLATE_NOOP("ThermalControlUnit", "Weekly"),
+							    ThermalControlUnit::IdWeeklyPrograms, &summer_programs, &winter_programs, dev);
 	if (((d->type() == THERMO_Z4) && ((modes & CU4_WEEKDAY_MODE) > 0)) ||
 		((d->type() == THERMO_Z99) && ((modes & CU99_WEEKDAY_MODE) > 0)))
-		modalities << new ThermalControlUnitTimedProgram("Weekday", ThermalControlUnit::IdWeekday, &summer_programs, &winter_programs, dev);
+		modalities << new ThermalControlUnitTimedProgram(QT_TRANSLATE_NOOP("ThermalControlUnit", "Weekday"),
+								 ThermalControlUnit::IdWeekday, &summer_programs, &winter_programs, dev);
 	if (((d->type() == THERMO_Z4) && ((modes & CU4_HOLIDAY_MODE) > 0)) ||
 		((d->type() == THERMO_Z99) && ((modes & CU99_HOLIDAY_MODE) > 0)))
-		modalities << new ThermalControlUnitTimedProgram("Holiday", ThermalControlUnit::IdHoliday, &summer_programs, &winter_programs, dev);
-	modalities << new ThermalControlUnitAntifreeze("Antifreeze", dev);
+		modalities << new ThermalControlUnitTimedProgram(QT_TRANSLATE_NOOP("ThermalControlUnit", "Holiday"),
+								 ThermalControlUnit::IdHoliday, &summer_programs, &winter_programs, dev);
+	modalities << new ThermalControlUnitAntifreeze(QT_TRANSLATE_NOOP("ThermalControlUnit", "Antifreeze"), dev);
 	if (((d->type() == THERMO_Z4) && ((modes & CU4_MANUAL_MODE) > 0)) ||
 		((d->type() == THERMO_Z99) && ((modes & CU99_MANUAL_MODE) > 0)))
-		modalities << new ThermalControlUnitManual("Manual", dev);
-	modalities << new ThermalControlUnitOff("Off", dev);
+		modalities << new ThermalControlUnitManual(QT_TRANSLATE_NOOP("ThermalControlUnit", "Manual"), dev);
+	modalities << new ThermalControlUnitOff(QT_TRANSLATE_NOOP("ThermalControlUnit", "Off"), dev);
 }
 
 QString ThermalControlUnit::getObjectKey() const
@@ -332,7 +336,7 @@ ThermalControlUnit4Zones::ThermalControlUnit4Zones(QString _name, QString _key, 
 {
 	dev = d;
 	if ((modes & CU4_TIME_MANUAL_MODE) > 0)
-		modalities << new ThermalControlUnitTimedManual("Timed Manual", d);
+		modalities << new ThermalControlUnitTimedManual(QT_TRANSLATE_NOOP("ThermalControlUnit", "Timed Manual"), d);
 }
 
 
@@ -342,7 +346,8 @@ ThermalControlUnit99Zones::ThermalControlUnit99Zones(QString _name, QString _key
 	dev = d;
 	scenarios = &summer_scenarios;
 	if ((modes & CU99_SCENARIOS_MODE) > 0)
-		modalities << new ThermalControlUnitScenario("Scenarios", &summer_scenarios, &winter_scenarios, dev);
+		modalities << new ThermalControlUnitScenario(QT_TRANSLATE_NOOP("ThermalControlUnit", "Scenarios"),
+							     &summer_scenarios, &winter_scenarios, dev);
 }
 
 void ThermalControlUnit99Zones::setScenarios(QList<ThermalRegulationProgram *> _scenarios)
@@ -377,6 +382,11 @@ ThermalControlUnitObject::ThermalControlUnitObject(QString _name, ThermalDevice 
 void ThermalControlUnitObject::reset()
 {
 	to_apply = current;
+}
+
+QString ThermalControlUnitObject::getName() const
+{
+	return QCoreApplication::translate("ThermalControlUnit", name.toUtf8());
 }
 
 
