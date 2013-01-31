@@ -47,7 +47,7 @@ trap \"killall -SIGUSR2 BtExperience; wait\" SIGUSR2
 # restart thttpd to link extra 30
 start-stop-daemon --stop --quiet --exec /usr/sbin/thttpd -- -u root
 sleep 1    
-echo -n \"Starting thttpd\"                                                                                 
+echo \"Starting thttpd\"
 start-stop-daemon --start --quiet --exec /usr/sbin/thttpd -- -d /home/bticino/cfg/extra/30/ -u root -c \"/cgi-bin/*\"
 
 export TSLIB_TSDEVICE=/dev/input/touchscreen0
@@ -55,6 +55,7 @@ export QWS_MOUSE_PROTO=Tslib:/dev/input/touchscreen0
 export QWS_DISPLAY=powervr
 export QT_IM_MODULE=MaliitDirect
 export LD_LIBRARY_PATH=/home/bticino/lib:$LD_LIBRARY_PATH
+export QML_ENABLE_TEXT_IMAGE_CACHE=1
 export POINTERCAL_FILE=/home/bticino/cfg/extra/pointercal
 bin/BtExperience/BtExperience -qws -noswcursor &
 
