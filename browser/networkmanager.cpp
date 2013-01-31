@@ -28,6 +28,14 @@
 #define LOG_FAILED_REQUESTS 1
 #define CA_UPDATE_INTERVAL_DAYS 15
 
+namespace
+{
+	QString fullHostName(QUrl url)
+	{
+		return url.port() == -1 ? url.host() : QString("%1:%2port").arg(url.host()).arg(url.port());
+	}
+}
+
 
 NetworkAccessManagerFactory::NetworkAccessManagerFactory(BrowserProperties *props)
 {
@@ -45,8 +53,8 @@ QNetworkAccessManager *NetworkAccessManagerFactory::create(QObject *parent)
 		global_properties, SLOT(credentialsRequired(BtNetworkAccessManager*,QNetworkReply*)));
 	QObject::connect(n, SIGNAL(invalidCertificate(BtNetworkAccessManager*,QNetworkReply*)),
 		global_properties, SLOT(certificatesError(BtNetworkAccessManager*,QNetworkReply*)));
-	QObject::connect(n, SIGNAL(requestComplete(bool,QString,QString)),
-		global_properties, SIGNAL(requestComplete(bool,QString,QString)));
+	QObject::connect(n, SIGNAL(requestComplete(bool,QString,bool,QString)),
+		global_properties, SIGNAL(requestComplete(bool,QString,bool,QString)));
 	return n;
 }
 
@@ -209,12 +217,17 @@ void BtNetworkAccessManager::checkSslStatus(QNetworkReply *reply)
 {
 	QNetworkReply *wrapped_reply = reply;
 	BtNetworkReply *bt_reply = qobject_cast<BtNetworkReply *>(reply);
+	QWebFrame *originator = qobject_cast<QWebFrame *>(wrapped_reply->request().originatingObject());
 
+	if (!originator)
+		return;
 	if (bt_reply)
 		wrapped_reply = bt_reply->originalReply();
 
 	QUrl url = wrapped_reply->request().url();
-	QString host = url.port() == -1 ? url.host() : QString("%1:%2port").arg(url.host()).arg(url.port());
+	QString host = fullHostName(url);
+	bool originating_request = fullHostName(originator->requestedUrl()) != host;
+	bool is_https = wrapped_reply->request().url().scheme() == "https";
 
 	// for requests in the SSL exceptions list we do not have an API to check whether the
 	// certificate was validated or not (for example because the SSL error was transient and
@@ -223,13 +236,12 @@ void BtNetworkAccessManager::checkSslStatus(QNetworkReply *reply)
 	    wrapped_reply->sslConfiguration().peerCertificateChain().size() == 0 ||
 	    ssl_exceptions.contains(url.host()))
 	{
-		emit requestComplete(wrapped_reply->request().url().scheme() == "https", host, QString());
+		emit requestComplete(is_https, host, originating_request, QString());
 		return;
 	}
 
 	QSslCertificate cert = wrapped_reply->sslConfiguration().peerCertificate();
-
-	emit requestComplete(true, host, cert.subjectInfo(QSslCertificate::Organization));
+	emit requestComplete(is_https, host, originating_request, cert.subjectInfo(QSslCertificate::Organization));
 }
 
 void BtNetworkAccessManager::requireAuthentication(QNetworkReply *reply, QAuthenticator *auth)

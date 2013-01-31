@@ -39,9 +39,10 @@ signals:
 		\brief requestComplete
 		\param ssl whether the connection used SSL
 		\param host host (or host:port) string
+		\param originating_request true for main-page domain, false for page sub-elements
 		\param organization for verified certificated, the organization name written in the certificate
 	*/
-	void requestComplete(bool ssl, QString host, QString organization);
+	void requestComplete(bool ssl, QString host, bool originating_request, QString organization);
 
 protected:
 	QNetworkReply *createRequest( Operation op, const QNetworkRequest &req, QIODevice * outgoingData=0 );

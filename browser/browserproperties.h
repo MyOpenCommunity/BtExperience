@@ -44,7 +44,7 @@ signals:
 	void urlChanged();
 	void authenticationRequired();
 	void untrustedSslConnection();
-	void requestComplete(bool ssl, QString host, QString organization);
+	void requestComplete(bool ssl, QString host, bool originating_request, QString organization);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev);
