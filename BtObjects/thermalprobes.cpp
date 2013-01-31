@@ -89,6 +89,8 @@ ThermalControlledProbe::ProbeStatus ThermalControlledProbe::getProbeStatus() con
 {
 	if (local_status == Off || local_status == Antifreeze)
 		return local_status;
+	else if (control_unit->getCurrentModalityId() == ThermalControlUnit::IdManual)
+		return Auto;
 	else if (local_status == Normal)
 		return plant_status;
 	else
