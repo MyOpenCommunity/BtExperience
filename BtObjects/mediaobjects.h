@@ -654,11 +654,25 @@ private:
 
 /*!
 	\ingroup SoundDiffusion
+	\brief A base interface for Amplifier and AmplifierGroup
+*/
+class AmplifierInterface
+{
+public:
+	virtual void setActiveOnSource(SourceObject *source) = 0;
+	virtual void setActive(bool active) = 0;
+	virtual void setVolume(int volume) = 0;
+	virtual bool belongsToAmbient(SoundAmbientBase *ambient) = 0;
+};
+
+
+/*!
+	\ingroup SoundDiffusion
 	\brief Manages a sound diffusion amplifier
 
 	The object id is \a ObjectInterface::IdSoundAmplifier and area number is the object key
 */
-class Amplifier : public DeviceObjectInterface
+class Amplifier : public DeviceObjectInterface, public AmplifierInterface
 {
 	friend class TestAmplifier;
 	friend class TestSoundAmbient;
@@ -686,15 +700,18 @@ public:
 	}
 
 	bool isActive() const;
-	void setActive(bool active);
+	virtual void setActive(bool active);
 
 	int getVolume() const;
-	void setVolume(int volume);
+	virtual void setVolume(int volume);
 
 	int getArea() const;
 
 	Q_INVOKABLE void volumeUp() const;
 	Q_INVOKABLE void volumeDown() const;
+
+	virtual void setActiveOnSource(SourceObject *source);
+	virtual bool belongsToAmbient(SoundAmbientBase *ambient);
 
 signals:
 	void activeChanged();
@@ -717,7 +734,7 @@ private:
 
 	The object id is \a ObjectInterface::IdSoundAmplifierGroup
 */
-class AmplifierGroup : public ObjectInterface
+class AmplifierGroup : public ObjectInterface, public AmplifierInterface
 {
 	Q_OBJECT
 
@@ -731,7 +748,11 @@ public:
 
 	Q_INVOKABLE void volumeUp() const;
 	Q_INVOKABLE void volumeDown() const;
-	Q_INVOKABLE void setActive(bool active) const;
+	Q_INVOKABLE virtual void setActive(bool active);
+
+	virtual void setActiveOnSource(SourceObject *source);
+	virtual void setVolume(int volume);
+	virtual bool belongsToAmbient(SoundAmbientBase *ambient);
 
 private:
 	QList<Amplifier *> amplifiers;

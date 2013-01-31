@@ -12,7 +12,7 @@
 class MediaDataModel;
 class AlarmClock;
 class QTimer;
-class Amplifier;
+class AmplifierInterface;
 class SourceObject;
 class UiiMapper;
 class QMLCache;
@@ -36,6 +36,11 @@ class AlarmClock : public ObjectInterface
 		\brief The alarm clock description
 	*/
 	Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
+
+	/*!
+		\brief Is description properly set?
+	*/
+	Q_PROPERTY(AlarmClockApplyResult checkValidity READ getCheckValidity NOTIFY checkValidityChanged)
 
 	/*!
 		\brief Is the alarm clock enabled?
@@ -82,9 +87,9 @@ class AlarmClock : public ObjectInterface
 	Q_PROPERTY(SourceObject* source READ getSource WRITE setSource NOTIFY sourceChanged)
 
 	/*!
-		\brief The alarm clock sound diffusion amplifier
+		\brief The alarm clock sound diffusion amplifier (may be a group of amplifiers)
 	*/
-	Q_PROPERTY(Amplifier* amplifier READ getAmplifier WRITE setAmplifier NOTIFY amplifierChanged)
+	Q_PROPERTY(QObject* amplifier READ getAmplifier WRITE setAmplifier NOTIFY amplifierChanged)
 
 	/*!
 		\brief The alarm clock sound diffusion volume
@@ -96,7 +101,7 @@ class AlarmClock : public ObjectInterface
 	*/
 	Q_PROPERTY(QObject *ambient READ getAmbient NOTIFY ambientChanged)
 
-	Q_ENUMS(AlarmClockType)
+	Q_ENUMS(AlarmClockType AlarmClockApplyResult)
 
 public:
 	AlarmClock(QString description, bool enabled, int alarm_type, int days, int hour, int minute, QObject *parent = 0);
@@ -105,6 +110,14 @@ public:
 	{
 		AlarmClockBeep,
 		AlarmClockSoundSystem
+	};
+
+	enum AlarmClockApplyResult
+	{
+		AlarmClockApplyResultOk = 0,
+		AlarmClockApplyResultNoSource,
+		AlarmClockApplyResultNoAmplifier,
+		AlarmClockApplyResultNoName
 	};
 
 	virtual int getObjectId() const
@@ -121,7 +134,6 @@ public:
 	Q_INVOKABLE void decrementVolume();
 	Q_INVOKABLE void incrementAmbient();
 	Q_INVOKABLE void decrementAmbient();
-	Q_INVOKABLE void setAmplifierFromQObject(QObject *amplifier);
 
 	QString getDescription() const;
 	void setDescription(QString new_value);
@@ -151,12 +163,13 @@ public:
 	void setTriggerOnSundays(bool new_value);
 	void setSource(SourceObject *new_value);
 	SourceObject *getSource() const;
-	void setAmplifier(Amplifier *new_value);
-	Amplifier *getAmplifier() const;
+	void setAmplifier(QObject *new_value);
+	QObject *getAmplifier() const;
 	void setVolume(int volume);
 	int getVolume() const;
 	bool isRinging() const;
 	QObject *getAmbient();
+	AlarmClockApplyResult getCheckValidity();
 
 signals:
 	void alarmTypeChanged();
@@ -179,6 +192,7 @@ signals:
 	void amplifierChanged();
 	void volumeChanged();
 	void ringingChanged();
+	void checkValidityChanged();
 
 private slots:
 	void checkRequestManagement();
@@ -196,6 +210,7 @@ private:
 	void setTriggerOnWeekdays(bool new_value, int day_mask);
 	void soundDiffusionStop();
 	void soundDiffusionSetVolume();
+	AmplifierInterface *getAmplifierInterface();
 
 	QMLCache *cache;
 

@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import Components.Popup 1.0
 import Components.Text 1.0
 import Components.Settings 1.0
 
@@ -14,6 +15,16 @@ Page {
 
     text: qsTr("Alarm settings")
     source : homeProperties.homeBgImage
+
+    Component.onDestruction: page.alarmClock.reset()
+
+    Component {
+        id: errorFeedback
+        FeedbackPopup {
+            text: ""
+            isOk: false
+        }
+    }
 
     SvgImage {
         id: bg
@@ -138,21 +149,16 @@ Page {
                 source: "images/common/linea.svg"
             }
 
-            UbuntuLightText {
-                text: page.alarmClock.description
-                font.pixelSize: 14
-                color: "white"
-            }
-
             SvgImage {
                 id: nameBgImage
                 source: "images/common/bg_orario.svg"
 
                 UbuntuLightText {
                     id: nameText
-                    text: qsTr("Click to enter description...")
+                    text: page.alarmClock.description
                     font.pixelSize: 14
                     color: "#5A5A5A"
+                    elide: Text.ElideMiddle
                     anchors.centerIn: nameBgImage
                 }
 
@@ -166,9 +172,15 @@ Page {
 
     Component {
         id: popupEditName
-        EditNote {
-            title: qsTr("New alarm name")
-            onOkClicked: nameText.text = text
+        FavoriteEditPopup {
+            title: qsTr("Edit alarm name")
+            topInputLabel: qsTr("New name:")
+            topInputText: page.alarmClock.description
+            bottomVisible: false
+
+            function okClicked() {
+                page.alarmClock.description = topInputText
+            }
         }
     }
 
@@ -209,8 +221,13 @@ Page {
             right: cancelButton.left
         }
         onClicked: {
-            if (nameText.text !== qsTr("Click to enter description..."))
-                page.alarmClock.description = nameText.text
+            var r = page.alarmClock.checkValidity
+
+            if (r === AlarmClock.AlarmClockApplyResultNoName) {
+                page.installPopup(errorFeedback, { text: qsTr("No name set") })
+                return
+            }
+
             page.alarmClock.apply()
             Stack.popPage()
         }
@@ -230,10 +247,7 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
-        onClicked: {
-            page.alarmClock.reset()
-            Stack.popPage()
-        }
+        onClicked: Stack.popPage()
     }
 
     QtObject {

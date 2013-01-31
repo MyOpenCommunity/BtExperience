@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import "../../js/EventManager.js" as EventManager
+import "../../js/MenuItem.js" as MenuItem
 
 
 MenuColumn {
@@ -40,6 +41,8 @@ MenuColumn {
                 itemObject: objectModel.getObject(index)
                 hasChild: true
                 name: itemObject.description
+                description: MenuItem.description(itemObject)
+                status: MenuItem.status(itemObject)
                 onClicked: {
                     privateProps.currentIndex = -1
                     column.loadColumn(controlAlarmClockComponent, itemObject.description, itemObject)

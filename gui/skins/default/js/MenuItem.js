@@ -35,7 +35,11 @@ function status(itemObject) {
     case ObjectInterface.IdAutomationGroup2:
     case ObjectInterface.IdAutomationGroup3:
         return itemObject.active === true ? 1 : 0
+
+    case ObjectInterface.IdAlarmClock:
+        return (itemObject.checkValidity !== AlarmClock.AlarmClockApplyResultOk) ? 3 : -1
     }
+
     return -1
 }
 
@@ -68,7 +72,16 @@ function description(itemObject) {
         if (currentModalityId !== undefined && currentModalityId >= 0)
             descr += pageObject.names.get('CENTRAL_STATUS', currentModalityId)
         break
+    case ObjectInterface.IdAlarmClock:
+        if (itemObject.checkValidity === AlarmClock.AlarmClockApplyResultNoAmplifier)
+            descr = qsTr("No amplifier set")
+        else if (itemObject.checkValidity === AlarmClock.AlarmClockApplyResultNoSource)
+            descr = qsTr("No source set")
+        else if (itemObject.checkValidity === AlarmClock.AlarmClockApplyResultNoName)
+            descr = qsTr("No name set")
+        break
     }
+
     return descr
 }
 
