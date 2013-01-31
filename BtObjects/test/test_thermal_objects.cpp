@@ -188,7 +188,7 @@ void TestThermalControlUnit99Zones::testModalityScenarios()
 
 void TestThermalControlUnit99Zones::testMode()
 {
-	ThermalControlUnit99Zones *obj2 = new ThermalControlUnit99Zones("", "", 2, new ThermalDevice99Zones("0"));
+	ThermalControlUnit99Zones *obj2 = new ThermalControlUnit99Zones("", "", 1, new ThermalDevice99Zones("0"));
 
 	QVERIFY(obj2->getCurrentModality() == NULL);
 
