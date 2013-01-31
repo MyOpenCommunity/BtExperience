@@ -10,11 +10,25 @@ MenuColumn {
         paginator.currentIndex = -1
     }
 
+    QtObject {
+        id: privateProps
+
+        function description(name) {
+            if (name === qsTr("Brightness"))
+                return global.screenState.normalBrightness + " %"
+            else if (name === qsTr("Contrast"))
+                return global.screenState.contrast + " %"
+
+            return ""
+        }
+    }
+
     PaginatorList {
         id: paginator
         delegate: MenuItemDelegate {
             name: model.name
             hasChild: model.type === "column"
+            description: privateProps.description(model.name)
 
             onClicked: {
                 if (model.type === "column")
