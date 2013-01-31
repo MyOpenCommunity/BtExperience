@@ -57,7 +57,7 @@ Page {
             x2FiveElements: 740
             x2ThreeElements: 640
             pathviewId: 1
-            model: emptyModel
+            model: cardPathViewModel
             pathOffset: cardPathViewModel.count === 4 ? -40 : (cardPathViewModel.count === 6 ? -40 : 0)
             arrowsMargin: cardPathViewModel.count === 4 ? 70 : (cardPathViewModel.count === 6 ? 30 : 10)
             onClicked: cardClicked(delegate)
@@ -79,14 +79,6 @@ Page {
             visibleElements: 2
 
             model: cardListViewModel
-        }
-    }
-
-    ListModel {
-        id: emptyModel
-
-        function getObject(index) {
-            return get(index)
         }
     }
 
@@ -140,12 +132,9 @@ Page {
                                            "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
         }
 
-        if (cardPathViewModel.count >= 3) {
+        if (cardPathViewModel.count >= 3)
             viewLoader.sourceComponent = cardPathView
-            viewLoader.item.model = cardPathViewModel
-        }
-        else {
+        else
             viewLoader.sourceComponent = cardListView
-        }
     }
 }
