@@ -38,7 +38,7 @@ class AlarmClock : public ObjectInterface
 	Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
 
 	/*!
-		\brief Is description properly set?
+		\brief Checks if object is valid to be permanently saved
 	*/
 	Q_PROPERTY(AlarmClockApplyResult checkValidity READ getCheckValidity NOTIFY checkValidityChanged)
 
