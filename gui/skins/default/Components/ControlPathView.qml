@@ -53,7 +53,10 @@ Item {
         BeepingMouseArea {
             id: mouseAreaSx
             anchors.fill: parent
-            onClicked: pathView.offset -= 1
+            onClicked: {
+                if (pathView.offset === Math.round(pathView.offset))
+                    pathView.offset -= 1
+            }
         }
 
         states: [
@@ -80,7 +83,10 @@ Item {
         BeepingMouseArea {
             id: mouseAreaDx
             anchors.fill: parent
-            onClicked: pathView.offset += 1
+            onClicked: {
+                if (pathView.offset === Math.round(pathView.offset))
+                    pathView.offset += 1
+            }
         }
 
         states: [
