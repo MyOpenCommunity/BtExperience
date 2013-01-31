@@ -1164,6 +1164,16 @@ void Amplifier::valueReceived(const DeviceValues &values_list)
 	}
 }
 
+void Amplifier::setActiveOnSource(SourceObject *source)
+{
+	source->setActive(getArea());
+}
+
+bool Amplifier::belongsToAmbient(SoundAmbientBase *ambient)
+{
+	return ambient->getArea() == getArea();
+}
+
 
 AmplifierGroup::AmplifierGroup(QString _name, QList<Amplifier *> _amplifiers, int _object_id)
 {
@@ -1184,11 +1194,34 @@ void AmplifierGroup::volumeDown() const
 		amplifier->volumeDown();
 }
 
-void AmplifierGroup::setActive(bool active) const
+void AmplifierGroup::setActive(bool active)
 {
 	foreach (Amplifier *amplifier, amplifiers)
 		amplifier->setActive(active);
 }
+
+void AmplifierGroup::setActiveOnSource(SourceObject *source)
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		source->setActive(amplifier->getArea());
+}
+
+void AmplifierGroup::setVolume(int volume)
+{
+	foreach (Amplifier *amplifier, amplifiers)
+		amplifier->setVolume(volume);
+}
+
+bool AmplifierGroup::belongsToAmbient(SoundAmbientBase *ambient)
+{
+	// if one amplifier belongs to the ambient, assumes all the group belongs to it
+	int area = ambient->getArea();
+	foreach (Amplifier *amplifier, amplifiers)
+		if (area == amplifier->getArea())
+			return true;
+	return false;
+}
+
 
 
 PowerAmplifierPreset::PowerAmplifierPreset(int number, const QString &name)

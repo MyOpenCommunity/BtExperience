@@ -12,6 +12,7 @@ Column {
     property alias bottomInputText: addressInput.text
     property bool bottomInputIsPassword: false
     property variant favoriteItem: undefined
+    property bool bottomVisible: true
 
     signal closePopup
 
@@ -107,6 +108,7 @@ Column {
 
             UbuntuLightText {
                 id: addressText
+                visible: bottomVisible
                 font.pixelSize: 14
                 color: "white"
                 text: qsTr("Address:")
@@ -115,6 +117,7 @@ Column {
 
             SvgImage {
                 id: addressInputBg
+                visible: bottomVisible
                 source: "../images/common/bg_text-input.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 UbuntuLightTextInput {

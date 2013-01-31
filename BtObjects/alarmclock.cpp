@@ -35,6 +35,8 @@ namespace
 
 	const int SOUND_DIFFUSION_INTERVAL = 3000;
 
+	const QString ALARM_NO_NAME(AlarmClock::tr("new alarm clock"));
+
 	// constants for QMLCache
 	const int QML_ALARM_TYPE = 1;
 	const int QML_DESCRIPTION = 2;
@@ -61,7 +63,19 @@ QList<ObjectPair> parseAlarmClocks(const QDomNode &xml_node, QList<SourceObject 
 										   v.intValue("days"), v.intValue("hour"), v.intValue("minutes"));
 
 		alarm->setVolume(v.intValue("volume"));
-		alarm->setAmplifier(uii_map.value<Amplifier>(v.intValue("amplifier_uii")));
+
+		int amplifier_uii = v.intValue("amplifier_uii");
+		if (amplifier_uii > 0) // uii must be positive
+		{
+			Amplifier *amplifier = uii_map.value<Amplifier>(amplifier_uii);
+			AmplifierGroup *amplifierGroup = uii_map.value<AmplifierGroup>(amplifier_uii);
+			if (amplifier)
+				alarm->setAmplifier(amplifier);
+			else if (amplifierGroup)
+				alarm->setAmplifier(amplifierGroup);
+			else
+				qFatal("Invalid amplifier object for amplifier_uii %d", amplifier_uii);
+		}
 
 		SourceObject::SourceObjectType source_type;
 
@@ -117,31 +131,42 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &
 
 	if (alarm_clock->getAlarmType() == AlarmClock::AlarmClockSoundSystem)
 	{
-		setAttribute(node, "amplifier_uii", QString::number(uii_map.findUii(alarm_clock->getAmplifier())));
+		int amplifier_uii = -1;
+		Amplifier *amplifier = dynamic_cast<Amplifier *>(alarm_clock->getAmplifier());
+		AmplifierGroup *amplifierGroup = dynamic_cast<AmplifierGroup *>(alarm_clock->getAmplifier());
+		if (amplifier)
+			amplifier_uii = uii_map.findUii(amplifier);
+		else if (amplifierGroup)
+			amplifier_uii = uii_map.findUii(amplifierGroup);
 
-		int type;
-		switch (alarm_clock->getSource()->getSourceType())
+		if (amplifier_uii > 0) // uii must be positive
 		{
-		case SourceObject::Aux:
-			type = 0;
-			break;
-		case SourceObject::RdsRadio:
-			type = 1;
-			break;
-		case SourceObject::IpRadio:
-			type = 2;
-			break;
-		case SourceObject::Sd:
-			type = 3;
-			break;
-		case SourceObject::Usb:
-			type = 4;
-			break;
-		default:
-			qFatal("Invalid source object");
-		}
+			setAttribute(node, "amplifier_uii", QString::number(amplifier_uii));
 
-		setAttribute(node, "source_type", QString::number(type));
+			int type;
+			switch (alarm_clock->getSource()->getSourceType())
+			{
+			case SourceObject::Aux:
+				type = 0;
+				break;
+			case SourceObject::RdsRadio:
+				type = 1;
+				break;
+			case SourceObject::IpRadio:
+				type = 2;
+				break;
+			case SourceObject::Sd:
+				type = 3;
+				break;
+			case SourceObject::Usb:
+				type = 4;
+				break;
+			default:
+				qFatal("Invalid source object");
+			}
+
+			setAttribute(node, "source_type", QString::number(type));
+		}
 	}
 }
 
@@ -163,13 +188,13 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 		cache->setOriginalValue(QML_ALARM_TYPE, AlarmClockBeep);
 		break;
 	}
-	cache->setOriginalValue(QML_DESCRIPTION, description);
+	cache->setOriginalValue(QML_DESCRIPTION, description.isEmpty() ? ALARM_NO_NAME : description);
 	cache->setOriginalValue(QML_DAYS, days);
 	cache->setOriginalValue(QML_HOUR, hour);
 	cache->setOriginalValue(QML_MINUTE, minute);
 	cache->setOriginalValue(QML_VOLUME, 0);
 	cache->setOriginalValue(QML_AMBIENT, 0);
-	cache->setOriginalValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(0));
+	cache->setOriginalValue(QML_AMPLIFIER, Converter<QObject>::asQVariant(0));
 	cache->setOriginalValue(QML_SOURCE, Converter<SourceObject>::asQVariant(0));
 
 	enabled = false; // starting from a well known state
@@ -183,9 +208,8 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
-	connect(this, SIGNAL(sourceChanged()), this, SIGNAL(persistItem()));
-	connect(this, SIGNAL(amplifierChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(amplifierChanged()), this, SLOT(updateAmbient()));
+	connect(this, SIGNAL(descriptionChanged()), this, SIGNAL(checkValidityChanged()));
 
 	connect(timer_trigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
 	connect(timer_tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
@@ -207,6 +231,22 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 void AlarmClock::reset()
 {
 	cache->reset();
+}
+
+AlarmClock::AlarmClockApplyResult AlarmClock::getCheckValidity()
+{
+	if (getAlarmType() == AlarmClock::AlarmClockSoundSystem)
+	{
+		if (getAmplifier() == 0)
+			return AlarmClockApplyResultNoAmplifier;
+		if (getSource() == 0)
+			return AlarmClockApplyResultNoSource;
+	}
+
+	if (getDescription() == ALARM_NO_NAME)
+		return AlarmClockApplyResultNoName;
+
+	return AlarmClockApplyResultOk;
 }
 
 void AlarmClock::apply()
@@ -490,7 +530,7 @@ void AlarmClock::alarmTick()
 	else
 	{
 		if (tick_count == 0)
-			getSource()->setActive(getAmplifier()->getArea());
+			getAmplifierInterface()->setActiveOnSource(getSource());
 
 		if (tick_count == (ALARM_TIME * 1000) / SOUND_DIFFUSION_INTERVAL - 1)
 		{
@@ -525,7 +565,7 @@ void AlarmClock::mediaSourcePlaybackStatus(bool status)
 void AlarmClock::soundDiffusionStop()
 {
 	if (getAmplifier())
-		getAmplifier()->setActive(false);
+		getAmplifierInterface()->setActive(false);
 }
 
 void AlarmClock::soundDiffusionSetVolume()
@@ -533,9 +573,9 @@ void AlarmClock::soundDiffusionSetVolume()
 	int real_volume = 32 * getVolume() / 10;
 
 	if (tick_count <= real_volume)
-		getAmplifier()->setVolume(tick_count);
+		getAmplifierInterface()->setVolume(tick_count);
 	if (tick_count == 0)
-		getAmplifier()->setActive(true);
+		getAmplifierInterface()->setActive(true);
 }
 
 void AlarmClock::incrementVolume()
@@ -570,13 +610,6 @@ void AlarmClock::decrementAmbient()
 		cache->setQMLValue(QML_AMBIENT, index);
 }
 
-void AlarmClock::setAmplifierFromQObject(QObject *amplifier)
-{
-	Amplifier *candidate = qobject_cast<Amplifier *>(amplifier);
-	if (candidate)
-		setAmplifier(candidate);
-}
-
 bool AlarmClock::isRinging() const
 {
 	return timer_tick->isActive();
@@ -584,11 +617,9 @@ bool AlarmClock::isRinging() const
 
 void AlarmClock::updateAmbient()
 {
-	cache->setQMLValue(QML_AMBIENT, -1);
+	int ambient_index = 0;
 
-	// no amplifier, no ambient
-	if (getAmplifier() == 0)
-		return;
+	AmplifierInterface *amplifier_interface = getAmplifierInterface();
 
 	// loop through all ambients to look for the one containing this amplifier
 	ambientList.clear();
@@ -606,10 +637,15 @@ void AlarmClock::updateAmbient()
 		if (ambient)
 		{
 			ambientList << ambient;
-			if (ambient->getArea() == getAmplifier()->getArea())
-				cache->setQMLValue(QML_AMBIENT, i);
+			if (amplifier_interface && amplifier_interface->belongsToAmbient(ambient))
+			{
+				ambient_index = i;
+				break;
+			}
 		}
 	}
+
+	cache->setQMLValue(QML_AMBIENT, ambient_index);
 }
 
 AlarmClock::AlarmClockType AlarmClock::getAlarmType() const
@@ -701,15 +737,20 @@ void AlarmClock::setSource(SourceObject *new_value)
 		cache->setQMLValue(QML_SOURCE, Converter<SourceObject>::asQVariant(new_value));
 }
 
-Amplifier *AlarmClock::getAmplifier() const
+AmplifierInterface *AlarmClock::getAmplifierInterface()
 {
-	return Converter<Amplifier>::asPointer(cache->getQMLValue(QML_AMPLIFIER));
+	return dynamic_cast<AmplifierInterface *>(getAmplifier());
 }
 
-void AlarmClock::setAmplifier(Amplifier *new_value)
+QObject *AlarmClock::getAmplifier() const
+{
+	return Converter<QObject>::asPointer(cache->getQMLValue(QML_AMPLIFIER));
+}
+
+void AlarmClock::setAmplifier(QObject *new_value)
 {
 	if (getAmplifier() != new_value)
-		cache->setQMLValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(new_value));
+		cache->setQMLValue(QML_AMPLIFIER, Converter<QObject>::asQVariant(new_value));
 }
 
 QObject *AlarmClock::getAmbient()

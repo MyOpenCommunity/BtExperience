@@ -1,10 +1,11 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import Components.Popup 1.0
 import Components.Text 1.0
 import Components.Settings 1.0
-
 import "js/Stack.js" as Stack
+
 
 Page {
     id: page
@@ -20,6 +21,16 @@ Page {
 
     text: qsTr("Alarm settings")
     source : homeProperties.homeBgImage
+
+    Component.onDestruction: page.alarmClock.reset()
+
+    Component {
+        id: errorFeedback
+        FeedbackPopup {
+            text: ""
+            isOk: false
+        }
+    }
 
     ListModel {
         id: beepModel
@@ -91,7 +102,7 @@ Page {
     }
 
     UbuntuMediumText {
-        text: qsTr("Alarm signal settings")
+        text: qsTr("Alarm clock - sound settings")
         font.pixelSize: 18
         color: "white"
         anchors {
@@ -269,7 +280,7 @@ Page {
                     if (page.state === "")
                         page.alarmClock.source = itemObject
                     else
-                        page.alarmClock.setAmplifierFromQObject(itemObject)
+                        page.alarmClock.amplifier = itemObject
                 }
                 status: (page.state === "" && page.alarmClock.source === itemObject) ||
                         (page.state === "amplifiers" && page.alarmClock.amplifier === itemObject)
@@ -330,6 +341,17 @@ Page {
             right: cancelButton.left
         }
         onClicked: {
+            var r = page.alarmClock.checkValidity
+
+            if (r === AlarmClock.AlarmClockApplyResultNoAmplifier) {
+                page.installPopup(errorFeedback, { text: qsTr("No amplifier set") })
+                return
+            }
+            else if (r === AlarmClock.AlarmClockApplyResultNoSource) {
+                page.installPopup(errorFeedback, { text: qsTr("No source set") })
+                return
+            }
+
             page.alarmClock.apply()
             Stack.popPage()
         }
@@ -349,10 +371,7 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
-        onClicked: {
-            page.alarmClock.reset()
-            Stack.popPage()
-        }
+        onClicked: Stack.popPage()
     }
 
     states: [

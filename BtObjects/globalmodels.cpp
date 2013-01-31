@@ -179,7 +179,7 @@ ItemInterface *GlobalModels::createQuicklink(int uii, QString media_type, QStrin
 
 ItemInterface *GlobalModels::createAlarmClock()
 {
-	AlarmClock *alarmClock = new AlarmClock("new alarm clock", false, AlarmClock::AlarmClockBeep, 0, 0, 0);
+	AlarmClock *alarmClock = new AlarmClock("", false, AlarmClock::AlarmClockBeep, 0, 0, 0);
 
 	// retrieves notifier model
 	ObjectModel *notifierModel = new ObjectModel(this);
