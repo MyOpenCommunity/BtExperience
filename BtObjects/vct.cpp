@@ -15,6 +15,7 @@ QString video_grabber_path = "/usr/local/bin/Fw-A-VideoInLoopback.sh 66051";
 #endif
 
 #define TELELOOP_TIMEOUT_CONNECTION 11
+#define VIDEO_GRABBER_DELAY 1000
 
 namespace
 {
@@ -193,7 +194,10 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
-	connect(&video_grabber, SIGNAL(started()), SIGNAL(incomingCall()));
+
+	grabber_delay.setSingleShot(true);
+	grabber_delay.setInterval(VIDEO_GRABBER_DELAY);
+	connect(&grabber_delay, SIGNAL(timeout()), this, SLOT(startVideo()));
 
 	association_timeout.setSingleShot(true);
 	association_timeout.setInterval(TELELOOP_TIMEOUT_CONNECTION * 1000);
@@ -484,12 +488,11 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			if (call_stopped && it.key() == VideoDoorEntryDevice::VCT_CALL)
 				resumeVideo();
 			else
-				startVideo();
+				grabber_delay.start();
 			activateCall();
 			if (values_list.contains(VideoDoorEntryDevice::CALLER_ADDRESS))
 				callerAddress(values_list[VideoDoorEntryDevice::CALLER_ADDRESS].toString());
-			if (!video_enabled)
-				emit incomingCall();
+			emit incomingCall();
 			break;
 		case VideoDoorEntryDevice::END_OF_CALL:
 			qDebug() << "Received END_OF_CALL";
@@ -583,6 +586,7 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 void CCTV::startVideo()
 {
 	qDebug() << "CCTV::startVideo";
+	grabber_delay.stop();
 	if (video_enabled && video_grabber.state() == QProcess::NotRunning)
 	{
 		qDebug() << "Starting grabber" << (video_grabber_path);
@@ -593,6 +597,7 @@ void CCTV::startVideo()
 void CCTV::stopVideo()
 {
 	qDebug() << "CCTV::stopVideo";
+	grabber_delay.stop();
 	if (video_grabber.state() != QProcess::NotRunning)
 	{
 		qDebug() << "terminate grabber";

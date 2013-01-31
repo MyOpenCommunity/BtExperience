@@ -500,6 +500,7 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 {
 	DeviceValues v;
 	ObjectTester ti(cctv, SIGNAL(incomingCall()));
+	ObjectTester tstart(&cctv->video_grabber, SIGNAL(started()));
 	ObjectTester t(cctv, SignalList()
 				   << SIGNAL(incomingCall())
 				   << SIGNAL(callAnswered())
@@ -522,8 +523,13 @@ void TestVideoDoorEntry::testCCTVOutgoingCallTerminatedByTouch()
 	QCOMPARE(true, cctv->callInProgress());
 	QCOMPARE(false, cctv->callActive());
 	QCOMPARE(true, cctv->exitingCall());
+	QCOMPARE(QProcess::NotRunning, cctv->video_grabber.state());
+	QVERIFY(cctv->grabber_delay.isActive());
 
-	QVERIFY(ti.waitForSignal(GRABBER_START_TIME));
+	ti.checkSignals();
+
+	QVERIFY(tstart.waitForNewSignal(GRABBER_START_TIME));
+	QVERIFY(!cctv->grabber_delay.isActive());
 
 	// protocol for CCTV needs the following
 	cctv->answerCall();
@@ -709,7 +715,7 @@ void TestVideoDoorEntry::testCCTVTeleloop()
 	QCOMPARE(false, cctv->exitingCall());
 	QCOMPARE(false, cctv->getTeleloop());
 
-	QVERIFY(ti.waitForNewSignal(1000));
+	ti.checkSignals();
 
 	// answered by teleloop
 	v[VideoDoorEntryDevice::TELE_SESSION] = true;

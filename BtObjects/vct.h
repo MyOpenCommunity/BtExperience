@@ -290,10 +290,10 @@ protected:
 
 private slots:
 	void associationTimeout();
+	void startVideo();
 
 private:
 	void setRingtone(int vde_ringtone);
-	void startVideo();
 	void stopVideo();
 	void resumeVideo();
 	void activateCall();
@@ -308,6 +308,7 @@ private:
 	Ringtone ringtone;
 	QProcess video_grabber;
 	QTimer association_timeout;
+	QTimer grabber_delay;
 };
 
 
