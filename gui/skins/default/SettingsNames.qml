@@ -28,7 +28,7 @@ QtObject {
 
         container['KEYBOARD'] = []
         container['KEYBOARD']["it_bticino"] = qsTr("Italian")
-        container['KEYBOARD']["en_gb_bticino"] = qsTr("English (GB)")
+        container['KEYBOARD']["en_bticino"] = qsTr("English")
         container['KEYBOARD']["fr_bticino"] = qsTr("French")
 
         container['SKIN'] = []

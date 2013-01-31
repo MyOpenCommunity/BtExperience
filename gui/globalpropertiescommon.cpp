@@ -181,7 +181,6 @@ void GlobalPropertiesCommon::setKeyboardLayout(QString layout)
 	{
 		foreach (QString key, language_map.keys())
 		{
-			qWarning() << "key" << key;
 			if (key.startsWith(layout + "_"))
 			{
 				layout_key = key;
@@ -203,7 +202,7 @@ void GlobalPropertiesCommon::setKeyboardLayout(QString layout)
 	{
 		QDomDocument conf = configurations->getConfiguration(CONF_FILE);
 
-		setConfValue(conf, "generale/keyboard_lang", layout);
+		setConfValue(conf, "generale/keyboard_lang", layout.remove("_bticino"));
 		configurations->saveConfiguration(CONF_FILE);
 	}
 
