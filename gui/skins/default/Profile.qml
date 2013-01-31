@@ -12,9 +12,14 @@ Page {
 
     property variant profile
 
+    function settingsButtonClicked() {
+        Stack.goToPage("Settings.qml", {navigationTarget: Navigation.PROFILE, navigationData: profilePage.profile})
+    }
+
     source: profile.image === "" ? homeProperties.homeBgImage : profile.image
     text: profile.description
     showSystemsButton: false
+    showSettingsButton: true
 
     MediaModel {
         id: userNotes

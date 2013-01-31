@@ -1,11 +1,19 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/Stack.js" as Stack
+import "../../js/navigationconstants.js" as NavigationConstants
 
 MenuColumn {
     id: column
 
     property int floorUii
+
+    function targetsKnown() {
+        return {
+            "Room": privateProps.openRoomMenu,
+        }
+    }
 
     MediaModel {
         id: roomsModel
@@ -21,14 +29,16 @@ MenuColumn {
     Column {
         PaginatorList {
             id: paginator
+            function openColumn(itemObject) {
+                privateProps.currentIndex = -1
+                column.loadColumn(modifyRoom, itemObject.description, itemObject)
+            }
+
             delegate: MenuItemDelegate {
                 itemObject: roomsModel.getObject(index)
                 name: itemObject.description
                 hasChild: true
-                onClicked: {
-                    privateProps.currentIndex = -1
-                    column.loadColumn(modifyRoom, itemObject.description, itemObject)
-                }
+                onClicked: openColumn(itemObject)
             }
             model: roomsModel
         }
@@ -37,6 +47,14 @@ MenuColumn {
     QtObject {
         id: privateProps
         property int currentIndex: -1
+
+        function openRoomMenu(navigationData) {
+            var absIndex = roomsModel.getAbsoluteIndexOf(navigationData[0])
+            if (absIndex === -1)
+                return NavigationConstants.NAVIGATION_ROOM_NOT_FOUND
+            paginator.openDelegate(absIndex, paginator.openColumn)
+            return NavigationConstants.NAVIGATION_FINISHED_OK
+        }
     }
 
     Component {

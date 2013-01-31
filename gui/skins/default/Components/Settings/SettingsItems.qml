@@ -17,6 +17,7 @@ MenuColumn {
             "AlarmClock": privateProps.openAlarmClockMenu,
             "Profiles": privateProps.openProfilesMenu,
             "Systems": privateProps.openSystemsMenu,
+            "Rooms": privateProps.openRoomsMenu,
         }
     }
 
@@ -44,6 +45,11 @@ MenuColumn {
 
         function openSystemsMenu(navigationData) {
             _openMenu(qsTr("Systems"))
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
+
+        function openRoomsMenu(navigationData) {
+            _openMenu(qsTr("Rooms"))
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
 

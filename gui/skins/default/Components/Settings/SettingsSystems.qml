@@ -15,6 +15,7 @@ MenuColumn {
         return {
             "VDE": privateProps.openVDEMenu,
             "Scenarios": privateProps.openScenariosMenu,
+            "Energy": privateProps.openEnergyMenu
         }
     }
 
@@ -28,6 +29,11 @@ MenuColumn {
 
         function openScenariosMenu(navigationData) {
             _openMenu(qsTr("Scenarios"))
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
+
+        function openEnergyMenu(navigationData) {
+            _openMenu(qsTr("Energy"))
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
 

@@ -53,6 +53,9 @@ var PROFILE = 7
 var SCENARIO = 8
 var VDE_TELELOOP = 9
 var SCENARIO_SETTINGS = 10
+var ENERGY_SETTINGS = 11
+var VDE_SETTINGS = 12
+var ROOM_SETTINGS = 13
 
 var _paths = []
 
@@ -68,6 +71,9 @@ function _init(paths) {
     paths[SCENARIO] = ["Systems", "Scenarios", "Scenario"]
     paths[VDE_TELELOOP] = ["Systems", "VDE", "VdeTeleloop"]
     paths[SCENARIO_SETTINGS] = ["Systems", "Scenarios"]
+    paths[ENERGY_SETTINGS] = ["Systems", "Energy"]
+    paths[VDE_SETTINGS] = ["Systems", "VDE"]
+    paths[ROOM_SETTINGS] = ["Rooms", "Floor", "Room"]
 }
 
 // returns a string indicating where to navigate
