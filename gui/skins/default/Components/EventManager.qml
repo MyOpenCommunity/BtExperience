@@ -314,7 +314,9 @@ Item {
         target: global.hardwareKeys
         onPressed: {
             // call default external point on hardware key 2, turn off screen on hardware key 3
-            if (index === 2 && global.defaultExternalPlace) {
+            if (index === 1 && vctConnection.target) {
+                vctConnection.target.openLock()
+            } else if (index === 2 && global.defaultExternalPlace) {
                 if (cctvModel.count === 0)
                     return
                 var camera = cctvModel.getObject(0)
@@ -347,6 +349,11 @@ Item {
                     break;
                 }
                 }
+            }
+        }
+        onReleased: {
+            if (index === 1 && vctConnection.target) {
+                vctConnection.target.releaseLock()
             }
         }
     }

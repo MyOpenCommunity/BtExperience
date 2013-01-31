@@ -31,7 +31,7 @@ SvgImage {
             if (!control.dataObject || !control.dataObject.callInProgress)
                 return
 
-            // answer call on hw key 0 press, open lock on hw key 1
+            // answer call on hw key 0 press
             if (index === 0) {
                 if (control.dataObject.callActive) {
                     control.dataObject.endCall()
