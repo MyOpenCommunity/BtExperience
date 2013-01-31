@@ -96,7 +96,7 @@ namespace
 		return e.valueToKey(value);
 	}
 
-	QString scs_source_on     = "/usr/local/bin/HwBsp-D-Audio-SCS_Multimedia_source.sh";
+	QString scs_source_on     = "/usr/local/bin/HwBsp-D-Audio-SCS_Multimedia.sh";
 	QString vde_audio_on      = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_silent.sh";
 	QString vde_audio_off     = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_off_silent.sh";
 }
