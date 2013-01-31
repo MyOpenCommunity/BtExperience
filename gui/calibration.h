@@ -83,6 +83,7 @@ private:
 
 	QString pointercal_file;
 	QWSPointerCalibrationData calibration_data;
+	QList<QPoint> raw_events;
 };
 
 #endif // CALIBRATION_H
