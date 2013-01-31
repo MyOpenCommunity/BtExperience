@@ -21,16 +21,12 @@ MenuColumn {
         containers: [floorUii]
     }
 
-    onChildDestroyed: {
-        paginator.currentIndex = -1
-        privateProps.currentIndex = -1
-    }
+    onChildDestroyed: paginator.currentIndex = -1
 
     Column {
         PaginatorList {
             id: paginator
             function openColumn(itemObject) {
-                privateProps.currentIndex = -1
                 column.loadColumn(modifyRoom, itemObject.description, itemObject)
             }
 
@@ -46,7 +42,6 @@ MenuColumn {
 
     QtObject {
         id: privateProps
-        property int currentIndex: -1
 
         function openRoomMenu(navigationData) {
             var absIndex = roomsModel.getAbsoluteIndexOf(navigationData[0])
@@ -55,11 +50,6 @@ MenuColumn {
             paginator.openDelegate(absIndex, paginator.openColumn)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
-    }
-
-    Component {
-        id: addRoom
-        Item {}
     }
 
     Component {
