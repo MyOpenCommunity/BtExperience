@@ -106,7 +106,7 @@
 		</ist>
 	</container>
 	<container id="10" descr="sound diffusion">
-                <ist uii="310" img="images/card/sound-diffusion_card.jpg">
+                <ist uii="310" img="images/card/sound-diffusion.jpg">
 			<link uii="410" />
 			<link uii="411" />
 			<link uii="412" />
