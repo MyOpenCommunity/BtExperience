@@ -11,6 +11,7 @@ SvgImage {
 
     property bool urlChanged: false
     property alias editUrl: urlInput.url
+    property alias ssl: urlInput.ssl
     property variant view
     property variant browser
 

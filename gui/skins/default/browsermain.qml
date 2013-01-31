@@ -71,6 +71,15 @@ BasePage {
                 }
             }
 
+            Connections {
+                target: global
+                onRequestComplete: {
+                    // ignore sub-requests
+                    if (originating_request)
+                        header.ssl = ssl
+                }
+            }
+
             HidingBar {
                 id: hidingBar
                 state: "hidden"

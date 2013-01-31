@@ -1,4 +1,5 @@
 import QtQuick 1.0
+import Components 1.0
 import Components.Text 1.0
 
  Item {
@@ -7,6 +8,7 @@ import Components.Text 1.0
      property alias image: bg.source
      property alias url: urlText.text
      property variant view
+     property bool ssl
 
      signal urlEntered(string url)
      signal urlChanged
@@ -66,6 +68,18 @@ import Components.Text 1.0
 
          anchors {
              left: parent.left; right: parent.right; leftMargin: 18; rightMargin: 18
+             verticalCenter: parent.verticalCenter
+         }
+     }
+
+     SvgImage {
+         id: sslIcon
+
+         source: "../../images/common/ico_lock.svg"
+         visible: ssl
+
+         anchors {
+             left: parent.left; leftMargin: 3
              verticalCenter: parent.verticalCenter
          }
      }
