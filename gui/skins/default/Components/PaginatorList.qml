@@ -28,29 +28,13 @@ Item {
         return Math.floor(ret)
     }
 
-    // function to select an internalList element from an absolute index
-    // once the element is selected, it returns the page and the relative index
-    // inside the page
-    function getIndexesInPaginator(absIndex) {
-        // some pages (like AddQuicklink.qml) have a variable number of elements
-        // per page, so a simple division doesn't cut it; we must use computePageRange
-        for (var p = 1; p <= totalPages; ++p) {
-            var r = computePageRange(p, elementsOnPage)
-            if (absIndex >= r[0] && absIndex < r[1])
-                return [p, absIndex - r[0]]
-        }
-        // in case totalPages is zero returns 0
-        return [0, 0]
+    function openDelegate(absIndex, openFunc) {
+        var indexes = paglistPrivateProps.getIndexesInPaginator(absIndex)
+        paginator.goToPage(indexes[0])
+        currentIndex = indexes[1]
+        var itemObject = model.getObject(currentIndex)
+        openFunc(itemObject)
     }
-
-    function goToPage(p) {
-        paginator.goToPage(p)
-    }
-
-    // hook to open a specific delegate (like when clicking on an internalList item)
-    // indexes is an array containing page and relative index inside that page
-    // to be overridden when dynamic navigation is needed
-    function openDelegate(indexes) {}
 
     width: internalList.width
     height: internalList.height + paginator.height * paginator.visible
@@ -101,6 +85,21 @@ Item {
                 internalList.delegateWidth = internalList.children[0].children[0].width
                 internalList.delegateHeight = internalList.children[0].children[0].height
             }
+        }
+
+        // function to select an internalList element from an absolute index
+        // once the element is selected, it returns the page and the relative index
+        // inside the page
+        function getIndexesInPaginator(absIndex) {
+            // some pages (like AddQuicklink.qml) have a variable number of elements
+            // per page, so a simple division doesn't cut it; we must use computePageRange
+            for (var p = 1; p <= totalPages; ++p) {
+                var r = computePageRange(p, elementsOnPage)
+                if (absIndex >= r[0] && absIndex < r[1])
+                    return [p, absIndex - r[0]]
+            }
+            // in case totalPages is zero returns 0
+            return [0, 0]
         }
     }
 

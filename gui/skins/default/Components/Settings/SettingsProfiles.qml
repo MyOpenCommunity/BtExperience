@@ -29,8 +29,7 @@ MenuColumn {
             var absIndex = profilesModel.getAbsoluteIndexOf(navigationData)
             if (absIndex === -1)
                 return NavigationConstants.NAVIGATION_PROFILE_NOT_FOUND
-            var indexes = paginator.getIndexesInPaginator(absIndex)
-            paginator.openDelegate(indexes)
+            paginator.openDelegate(absIndex, paginator.openColumn)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
     }
@@ -45,13 +44,10 @@ MenuColumn {
             itemObject: profilesModel.getObject(index)
             hasChild: true
             name: itemObject.description
-            onClicked: openDelegate([currentPage, index])
+            onClicked: openColumn(itemObject)
         }
 
-        function openDelegate(indexes) {
-            paginator.goToPage(indexes[0])
-            currentIndex = indexes[1]
-            var itemObject = profilesModel.getObject(currentIndex)
+        function openColumn(itemObject) {
             column.loadColumn(settingsProfileComponent, itemObject.description, itemObject)
         }
     }

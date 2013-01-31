@@ -35,8 +35,7 @@ MenuColumn {
             var absIndex = scenariosModule.getAbsoluteIndexOf(navigationData)
             if (absIndex === -1)
                 return NavigationConstants.NAVIGATION_SCENARIO_NOT_FOUND
-            var indexes = paginator.getIndexesInPaginator(absIndex)
-            paginator.openDelegate(indexes)
+            paginator.openDelegate(absIndex, paginator.openColumn)
             return NavigationConstants.NAVIGATION_FINISHED_OK
         }
     }
@@ -52,13 +51,10 @@ MenuColumn {
             itemObject: scenariosModule.getObject(index)
             hasChild: true
 
-            onClicked: openDelegate([currentPage, index])
+            onClicked: openColumn(itemObject)
         }
 
-        function openDelegate(indexes) {
-            paginator.goToPage(indexes[0])
-            currentIndex = indexes[1]
-            var itemObject = scenariosModule.getObject(currentIndex)
+        function openColumn(itemObject) {
             if (itemObject.objectId === ObjectInterface.IdAdvancedScenario) {
                 itemObject.reset()
                 Stack.pushPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
