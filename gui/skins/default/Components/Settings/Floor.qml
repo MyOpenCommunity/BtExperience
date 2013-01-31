@@ -21,17 +21,15 @@ MenuColumn {
         id: privateProps
         function openFloorMenu(navigationData) {
             // we only have the floorUii so we need to find the C++ object
-            var floorUii = navigationData[0]
+            var floorUii = navigationData.shift()
+            pageObject.navigationData = navigationData
+
             var floor
             for (var i = 0; i < floorsModel.count; i++) {
                 floor = floorsModel.getObject(i)
                 if (floor.uii === floorUii)
                     break
             }
-
-            // for now change the navigationData, later we'll see
-            navigationData.shift()
-            pageObject.navigationData = navigationData
 
             var absIndex = floorsModel.getAbsoluteIndexOf(floor)
             if (absIndex === -1)
