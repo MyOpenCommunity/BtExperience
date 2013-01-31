@@ -87,12 +87,12 @@ QString ThermalControlledProbe::getObjectKey() const
 
 ThermalControlledProbe::ProbeStatus ThermalControlledProbe::getProbeStatus() const
 {
-	if (plant_status == Off || plant_status == Antifreeze)
-		return plant_status;
-	else if (local_status == Off || local_status == Antifreeze)
+	if (local_status == Off || local_status == Antifreeze)
 		return local_status;
-	else
+	else if (local_status == Normal)
 		return plant_status;
+	else
+		return local_status;
 }
 
 ThermalControlledProbe::ProbeStatus ThermalControlledProbe::getLocalProbeStatus() const
