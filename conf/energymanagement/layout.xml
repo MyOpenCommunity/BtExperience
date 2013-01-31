@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 	<container id="5" descr="load management">
-                <ist uii="305" img="images/card/energy_card.jpg">
+                <ist uii="305" img="images/card/energy.jpg">
 			<link uii="4004" />
 			<link uii="4005" />
 			<link uii="4006" />
 		</ist>
 	</container>
 	<container id="6" descr="supervision">
-                <ist uii="306" img="images/card/energy_card.jpg">
+                <ist uii="306" img="images/card/energy.jpg">
 			<!-- Stop & go -->
 			<link uii="4001" />
 			<link uii="4002" />
@@ -21,7 +21,7 @@
 		</ist>
 	</container>
 	<container id="7" descr="supervision">
-                <ist uii="307" img="images/card/energy_card.jpg">
+                <ist uii="307" img="images/card/energy.jpg">
 			<link uii="5001" />
 			<link uii="5002" />
 			<link uii="5003" />
