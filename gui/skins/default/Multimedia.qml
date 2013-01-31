@@ -42,7 +42,7 @@ Page {
             leftMargin: 30
             bottom: parent.bottom
         }
-        sourceComponent: multimediaModel.count >= 3 ? cardPathView : cardList
+        sourceComponent: undefined
     }
 
     Component {
@@ -58,17 +58,17 @@ Page {
             x2ThreeElements: 640
             pathviewId: 1
             model: emptyModel
-            pathOffset: multimediaModel.count === 4 ? -40 : (multimediaModel.count === 6 ? -40 : 0)
-            arrowsMargin: multimediaModel.count === 4 ? 70 : (multimediaModel.count === 6 ? 30 : 10)
+            pathOffset: cardPathViewModel.count === 4 ? -40 : (cardPathViewModel.count === 6 ? -40 : 0)
+            arrowsMargin: cardPathViewModel.count === 4 ? 70 : (cardPathViewModel.count === 6 ? 30 : 10)
             onClicked: cardClicked(delegate)
         }
     }
 
     Component {
-        id: cardList
+        id: cardListView
         CardView {
             delegate: CardDelegate {
-                property variant itemObject: multimediaModel.getObject(index)
+                property variant itemObject: cardListViewModel.getObject(index)
                 source: itemObject.cardImageCached
                 label: itemObject.description
 
@@ -78,7 +78,7 @@ Page {
             delegateSpacing: 40
             visibleElements: 2
 
-            model: emptyModel
+            model: cardListViewModel
         }
     }
 
@@ -91,7 +91,15 @@ Page {
     }
 
     ListModel {
-        id: multimediaModel
+        id: cardPathViewModel
+
+        function getObject(index) {
+            return get(index)
+        }
+    }
+
+    ListModel {
+        id: cardListViewModel
 
         function getObject(index) {
             return get(index)
@@ -99,32 +107,45 @@ Page {
     }
 
     Component.onCompleted: {
-        // it is not possible to load data to multimediaModel if it is binded to both
+        // it is not possible to load data to a model if it is binded to both
         // pathView and listView, because strange things happen (for example, offset
         // computation is wrong because pathView "thinks" to have only 4 elements)
-        // solution is to define an empty model and initially bind it to views
-        // then load data on true model and bind it to views only when all data
-        // is ready
+        // solution is to define an empty model and bind it to the pathview loading
+        // items in the onCompleted method; once all data is appended we bind
+        // the model to the pathview
+        // on the other side, the cardview wants to be binded to the model before
+        // we start to append data to it; if we bind it after the append operations
+        // the cardview stays empty
         // please note that this problem may actually happen only here because
         // this is the only model with variable "length" during program execution
-        multimediaModel.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices_card.jpg", "props": {} })
-        multimediaModel.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": global.homePageUrl}})
-        if (webLinkModel.count > 0)
-            multimediaModel.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
-                                       "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
-        if (rssModel.count > 0)
-            multimediaModel.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/card/rss_card.jpg",
-                                       "props": {"containerId": Container.IdMultimediaRss, "type": "rss"}})
-        if (webRadioModel.count > 0)
-            multimediaModel.append({"description": qsTr("ip radio"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
-                                       "props": {"containerId": Container.IdMultimediaWebRadio, "type": "webradio"}})
-        if (rssMeteoModel.count > 0)
-            multimediaModel.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/card/meteo_card.jpg",
-                                       "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
-        if (webcamModel.count > 0)
-            multimediaModel.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/webcam_card.jpg",
-                                       "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
+        var models = [cardPathViewModel, cardListViewModel]
+        for (var i = 0; i < models.length; ++i) {
+            var m = models[i]
+            m.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices_card.jpg", "props": {} })
+            m.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser_card.jpg", "props": {"urlString": global.homePageUrl}})
+            if (webLinkModel.count > 0)
+                m.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink_card.jpg",
+                                           "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
+            if (rssModel.count > 0)
+                m.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/card/rss_card.jpg",
+                                           "props": {"containerId": Container.IdMultimediaRss, "type": "rss"}})
+            if (webRadioModel.count > 0)
+                m.append({"description": qsTr("ip radio"), "target": "BrowserPage.qml", "cardImageCached": "images/card/browser_card.jpg",
+                                           "props": {"containerId": Container.IdMultimediaWebRadio, "type": "webradio"}})
+            if (rssMeteoModel.count > 0)
+                m.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/card/meteo_card.jpg",
+                                           "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
+            if (webcamModel.count > 0)
+                m.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/webcam_card.jpg",
+                                           "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
+        }
 
-        viewLoader.item.model = multimediaModel
+        if (cardPathViewModel.count >= 3) {
+            viewLoader.sourceComponent = cardPathView
+            viewLoader.item.model = cardPathViewModel
+        }
+        else {
+            viewLoader.sourceComponent = cardListView
+        }
     }
 }
