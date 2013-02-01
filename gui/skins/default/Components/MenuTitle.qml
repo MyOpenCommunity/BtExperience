@@ -27,6 +27,7 @@ SvgImage {
             rightMargin: parent.width / 100 * 5
             verticalCenter: parent.verticalCenter
         }
+        elide: Text.ElideRight
     }
 
     Connections {

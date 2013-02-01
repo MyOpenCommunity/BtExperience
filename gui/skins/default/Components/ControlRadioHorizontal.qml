@@ -27,6 +27,7 @@ Item {
             bottom: radioBg.bottom
             verticalCenter: radioBg.verticalCenter
         }
+        elide: Text.ElideRight
     }
 
     SvgImage {

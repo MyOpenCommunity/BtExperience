@@ -23,6 +23,7 @@ SvgImage {
         font.pixelSize: 15
         color: "white"
         text: control.text
+        elide: Text.ElideRight
     }
 
     ButtonImageThreeStates {

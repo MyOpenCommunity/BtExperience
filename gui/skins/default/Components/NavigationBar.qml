@@ -85,6 +85,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 32
+            elide: Text.ElideRight
         }
     }
 }
