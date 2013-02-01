@@ -59,6 +59,7 @@ Flickable {
     contentWidth: Math.max(parent.width,webView.width)
     contentHeight: Math.max(parent.height,webView.height)
     pressDelay: 200
+    boundsBehavior: Flickable.StopAtBounds
 
     onWidthChanged : {
         // Expand (but not above 1:1) if otherwise would be smaller that available width.
