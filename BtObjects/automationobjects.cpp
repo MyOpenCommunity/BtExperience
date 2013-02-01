@@ -12,29 +12,6 @@
 #include <QStringList>
 
 
-
-namespace
-{
-	template<class Tr, class Ts>
-	QList<Tr> convertQObjectList(QList<Ts> list)
-	{
-		QList<Tr> res;
-
-		foreach (Ts i, list)
-		{
-			Tr r = qobject_cast<Tr>(i);
-
-			Q_ASSERT_X(r, "convertQObjectList", "Invalid object type");
-
-			if (r)
-				res.append(r);
-		}
-
-		return res;
-	}
-}
-
-
 QList<ObjectPair> parseAutomationVDE(const QDomNode &obj)
 {
 	QList<ObjectPair> obj_list;
@@ -79,19 +56,18 @@ QList<ObjectPair> parseAutomation2(const QDomNode &obj)
 QList<ObjectPair> parseAutomationGroup2(const QDomNode &obj, const UiiMapper &uii_map)
 {
 	QList<ObjectPair> obj_list;
-	// extract default values
-	QString def_descr = getAttribute(obj, "descr");
+	XmlObject v(obj);
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
 		int uii = getIntAttribute(ist, "uii");
-		QString descr = getAttribute(ist, "descr", def_descr);
-		QList<ObjectInterface *> items;
+		QList<AutomationLight *> items;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
+			v.setIst(ist);
 			int object_uii = getIntAttribute(link, "uii");
-			ObjectInterface *item = uii_map.value<ObjectInterface>(object_uii);
+			AutomationLight *item = uii_map.value<AutomationLight>(object_uii);
 
 			if (!item)
 			{
@@ -102,7 +78,7 @@ QList<ObjectPair> parseAutomationGroup2(const QDomNode &obj, const UiiMapper &ui
 
 			items.append(item);
 		}
-		obj_list << ObjectPair(uii, new AutomationGroup2(descr, convertQObjectList<AutomationLight *>(items)));
+		obj_list << ObjectPair(uii, new AutomationGroup2(v.value("descr"), items));
 	}
 	return obj_list;
 }
@@ -110,39 +86,38 @@ QList<ObjectPair> parseAutomationGroup2(const QDomNode &obj, const UiiMapper &ui
 QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 {
 	QList<ObjectPair> obj_list;
-	// extract default values
-	QString def_descr = getAttribute(obj, "descr");
-	QString def_where = getAttribute(obj, "where");
-	int def_pul = getIntAttribute(obj, "pul", 0);
-	QString def_mode = getAttribute(obj, "mode");
-	int def_cid = getIntAttribute(obj, "cid");
+	XmlObject v(obj);
+	int id = getIntAttribute(obj, "id");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
+		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		QString descr = getAttribute(ist, "descr", def_descr);
-		QString where = getAttribute(ist, "where", def_where);
-		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
-		QString mode = getAttribute(ist, "mode", def_mode);
-		int cid = getIntAttribute(ist, "cid", def_cid);
-
-		//this should not happen if the software works correctly, but just in case...
-		if (cid < 0) cid = ObjectInterface::CidAutomation3OpenClose;
-		
+		QString descr = v.value("descr");
+		QString where = v.value("where");
+		PullMode pul = v.intValue("pul") ? PULL : NOT_PULL;
+		int mode = v.intValue("mode");
+		int cid = v.intValue("cid");
 		AutomationDevice *d = bt_global::add_device_to_cache(new AutomationDevice(where, pul));
+
+		if (bool(mode) != (id == ObjectInterface::IdAutomation3Safe))
+		{
+			qWarning() << "Inconsistend safe mode for 3-state actuator" << uii;
+			Q_ASSERT_X(false, "parseAutomation3", "Inconsistent safe mode");
+		}
 
 		switch (cid)
 		{
 		case ObjectInterface::CidAutomation3OpenClose:
 		case ObjectInterface::CidAutomationGroup3OpenClose:
-			if (mode.toInt()!=0)
+			if (id == ObjectInterface::IdAutomation3Safe)
 				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3OpenCloseSafe, d));
 			else
 				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3OpenClose, d));
 			break;
 		case ObjectInterface::CidAutomation3UpDown:
 		case ObjectInterface::CidAutomationGroup3UpDown:
-			if (mode.toInt()!=0)
+			if (id == ObjectInterface::IdAutomation3Safe)
 				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3UpDownSafe, d));
 			else
 				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3UpDown, d));
@@ -158,22 +133,21 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &uii_map)
 {
 	QList<ObjectPair> obj_list;
-	// extract default values
-	QString def_descr = getAttribute(obj, "descr");
-	int def_cid = getIntAttribute(obj, "cid");
+	XmlObject v(obj);
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
+		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		QString descr = getAttribute(ist, "descr", def_descr);
-		int cid = getIntAttribute(ist, "cid", def_cid);
+		QString descr = v.value("descr");
+		int cid = v.intValue("cid");
 		int id = cid == ObjectInterface::CidAutomationGroup3OpenClose ? ObjectInterface::IdAutomationGroup3OpenClose : ObjectInterface::IdAutomationGroup3UpDown;
-		QList<ObjectInterface *> items;
+		QList<Automation3 *> items;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
 			int object_uii = getIntAttribute(link, "uii");
-			ObjectInterface *item = uii_map.value<ObjectInterface>(object_uii);
+			Automation3 *item = uii_map.value<Automation3>(object_uii);
 
 			if (!item)
 			{
@@ -183,7 +157,7 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 			}
 			items.append(item);
 		}
-		obj_list << ObjectPair(uii, new AutomationGroup3(descr, id, convertQObjectList<Automation3 *>(items)));
+		obj_list << ObjectPair(uii, new AutomationGroup3(descr, id, items));
 
 	}
 	return obj_list;
