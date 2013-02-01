@@ -34,7 +34,7 @@ class AutomationLight: public Light
 	Q_OBJECT
 
 public:
-	AutomationLight(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, LightingDevice *d, int _myid);
+	AutomationLight(QString name, QString key, QTime time, LightingDevice *d, int _myid);
 
 	int getObjectId() const;
 

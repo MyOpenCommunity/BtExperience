@@ -44,7 +44,7 @@ QList<ObjectPair> parseAutomationVDE(const QDomNode &obj)
 	{
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		QString where = v.value("dev") + v.value("where");
+		QString where = v.value("dev") + v.value("addresses");
 
 		VideoDoorEntryDevice *d = bt_global::add_device_to_cache(new VideoDoorEntryDevice(where));
 		obj_list << ObjectPair(uii, new AutomationVDE(v.value("descr"), d));
@@ -67,10 +67,10 @@ QList<ObjectPair> parseAutomation2(const QDomNode &obj)
 
 		QString where = v.value("where");
 		PullMode pul = v.intValue("pul") ? PULL : NOT_PULL;
-		Light::FixedTimingType ftime = v.intValue<Light::FixedTimingType>("ftime");
+		QTime time = id == ObjectInterface::IdAutomationDoor ? v.timeValue("time") : QTime();
 
 		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
-		obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, v.timeValue("ctime"), ftime, v.intValue("ectime"), d, id));
+		obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, time, d, id));
 	}
 
 	return obj_list;
@@ -115,6 +115,7 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 	QString def_where = getAttribute(obj, "where");
 	int def_pul = getIntAttribute(obj, "pul", 0);
 	QString def_mode = getAttribute(obj, "mode");
+	int def_cid = getIntAttribute(obj, "cid");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
@@ -123,7 +124,7 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 		QString where = getAttribute(ist, "where", def_where);
 		PullMode pul = getIntAttribute(ist, "pul", def_pul) ? PULL : NOT_PULL;
 		QString mode = getAttribute(ist, "mode", def_mode);
-		int cid = getIntAttribute(ist, "cid");
+		int cid = getIntAttribute(ist, "cid", def_cid);
 
 		//this should not happen if the software works correctly, but just in case...
 		if (cid < 0) cid = ObjectInterface::CidAutomation3OpenClose;
@@ -187,8 +188,10 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 }
 
 
-AutomationLight::AutomationLight(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, LightingDevice *d, int _myid): Light(name, key, ctime, ftime, ectime, d)
+AutomationLight::AutomationLight(QString name, QString key, QTime time, LightingDevice *d, int _myid) :
+	Light(name, key, time, FixedTimingDisabled, time.isValid(), d)
 {
+	setAutoTurnOff(time.isValid());
 	myid = _myid;
 }
 
