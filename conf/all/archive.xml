@@ -1,41 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
-	<obj cid="3005" id="3001" descr="Door" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
-		<ist uii="15" descr="Door Lock" where="34"/>
-	</obj>
-	<obj cid="3008" id="3002" descr="Fan" where="11" pul="0" ftime="-1" ectime="0" ctime="00:00:00">
-		<ist uii="16" descr="Fan" where="35"/>
-	</obj>
+	<!-- 3 states open/close/stop normal -->
 	<obj cid="3000" id="3000" descr="3 State actuator" where="11" pul="0" mode="0" >
-		<ist uii="17" cid="3000" descr="Shutter" where="39" />
-		<ist uii="18" cid="3001" descr="Gate" where="37" mode="1" />
-	</obj>
-	<obj cid="3000" id="3000" descr="Automation" where="0">
-		<ist uii="19" cid="3001" descr="room 1" where="1" />
-		<ist uii="20" cid="3000" descr="General" />
-	</obj>
-
-	<obj cid="3008" id="3002" where="11" descr="2 States Actuator" pul="0">
-		<ist uii="54" where="23" />
+		<ist uii="17" descr="Gate 39" where="39" />
+		<ist uii="20" descr="General 0" where="0" />
+		<ist uii="25" cid="3014" descr="Ambient 1" where="1" />
 	</obj>
 	<obj cid="3000" id="3000" where="11" descr="3 States actuator" pul="0" mode="0">
-		<ist uii="55" />
-		<ist uii="60" where="13" descr="3 States actuator (Safe)" mode="1" />
+		<ist uii="55" where="11" descr="Open/close 11" />
+		<ist uii="60" where="13" descr="Open/close 13" />
 	</obj>
-	<obj cid="3015" id="3006" descr="2 state automation group">
-		<ist uii="57" id="3006">
-		<link uii="54" />
-		<link uii="16" />
+	<!-- 3 states open/close/stop safe -->
+	<obj cid="3000" id="3007" where="11" descr="3 State Actuator" pul="0" mode="1">
+		<ist uii="22" descr="Curtain 25 safe" where="25" />
+		<ist uii="26" cid="3014" descr="Ambient 2 safe" where="2" />
+	</obj>
+	<!-- 3 states up/down/stop normal -->
+	<obj cid="3001" id="3000" descr="3 State actuator" where="11" pul="0" mode="0" >
+		<ist uii="18" descr="Garage 37" where="37" />
+		<ist uii="19" descr="Ambient 3" where="3" />
+	</obj>
+	<!-- 3 states up/down/stop safe -->
+	<obj cid="3001" id="3007" where="11" descr="3 State Actuator" pul="0" mode="1">
+		<ist uii="23" descr="Shutter 23 safe" />
+		<ist uii="28" cid="3016" descr="Ambient 4 safe" where="4" />
+	</obj>
+	<!-- lock (gate + door) lighting -->
+	<obj cid="3005" id="3001" descr="Door" where="11" pul="0" time="00:00:01" type="0">
+		<ist uii="15" descr="Door Lock 34" where="34"/>
+	</obj>
+	<!-- lock (gate + door) VDE -->
+	<obj cid="3005" id="3008" dev="2" where="11" descr="1 State Actuator" type="1">
+		<ist uii="21" descr="Lock vde 21" device="2" addresses="1" />
+	</obj>
+	<!-- 2 states -->
+	<obj cid="3008" id="3002" descr="Fan" where="11" pul="0">
+		<ist uii="16" descr="Fan 35" where="35"/>
+		<ist uii="61" cid="3015" descr="Ambient 5" where="5" />
+	</obj>
+	<!-- contact -->
+	<obj cid="3013" id="3004" where="31" descr="Contact 31">
+		<ist uii="24" />
+	</obj>
+	<!-- 3 states open/close/stop group (id 3000/3007) -->
+	<obj cid="3014" id="3005" descr="Open/close group">
+		<ist uii="58">
+			<link uii="20" />
+			<link uii="25" />
 		</ist>
 	</obj>
-	<obj cid="3014" id="3005" descr="3 state automation group">
-		<ist uii="58">
-		<link uii="60" />
-		<link uii="55" />
-	</ist>
+	<!-- 3 states up/down/stop group (id 3000/3007) -->
+	<obj cid="3016" id="3005" descr="Up/down group">
+		<ist uii="62">
+			<link uii="18" />
+			<link uii="19" />
+		</ist>
 	</obj>
-	<obj cid="3005" id="3008" dev="2" where="11" descr="1 State Actuator" type="0" time="00*00*01">
-		<ist uii="21" descr="Lock vde" type="1" where="13" />
+	<!-- 2 states group (id 3002) -->
+	<obj cid="3015" id="3006" descr="2 state group">
+		<ist uii="57">
+			<link uii="16" />
+			<link uii="61" />
+		</ist>
 	</obj>
 	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="2">
 		<ist uii="1" descr="lamp downstair" where="11#4#01" />

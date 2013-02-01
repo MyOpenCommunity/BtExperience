@@ -33,18 +33,26 @@
 	</container>
 	<container id="3" descr="automation">
                 <ist uii="303" img="images/card/automation.jpg">
-			<link uii="15" />
-			<link uii="16" />
+			<!-- 3 states open/close/stop normal -->
 			<link uii="17" />
-			<link uii="18" />
-			<link uii="19" />
-			<link uii="20" />
-			<link uii="21" />
-			<link uii="54" />
 			<link uii="55" />
-			<link uii="57" />
+			<!-- 3 states open/close/stop safe -->
+			<link uii="22" />
+			<!-- 3 states up/down/stop normal -->
+			<link uii="18" />
+			<!-- 3 states up/down/stop safe -->
+			<link uii="23" />
+			<!-- lock lighting/VDE -->
+			<link uii="15" />
+			<link uii="21" />
+			<!-- 2 states -->
+			<link uii="16" />
+			<!-- contact -->
+			<link uii="24" />
+			<!-- groups -->
 			<link uii="58" />
-			<link uii="60" />
+			<link uii="62" />
+			<link uii="57" />
 		</ist>
 	</container>
 	<container id="4" descr="air conditioning">
