@@ -359,6 +359,7 @@ void BtObjectsPlugin::createObjects()
 			obj_list = parseAutomationVDE(xml_obj);
 			break;
 		case ObjectInterface::IdAutomation3:
+		case ObjectInterface::IdAutomation3Safe:
 			obj_list = parseAutomation3(xml_obj);
 			break;
 		case ObjectInterface::IdAutomationGroup2:
@@ -367,12 +368,6 @@ void BtObjectsPlugin::createObjects()
 		case ObjectInterface::IdAutomationGroup3:
 			obj_list = parseAutomationGroup3(xml_obj, uii_map);
 			break;
-		//case ObjectInterface::IdAutomationCommand2:
-			//obj_list = parseAutomationCommand2(xml_obj);
-			//break;
-		//case ObjectInterface::IdAutomationCommand3:
-			//obj_list = parseAutomationCommand3(xml_obj);
-			//break;
 
 		case ObjectInterface::IdAntintrusionZone:
 			obj_list = parseAntintrusionZone(xml_obj);
