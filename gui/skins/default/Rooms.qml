@@ -98,6 +98,7 @@ Page {
                 }
                 horizontalAlignment: Text.AlignHCenter
                 color: index === floorView.currentIndex ? "white" : "black"
+                elide: Text.ElideRight
             }
 
             BeepingMouseArea {
