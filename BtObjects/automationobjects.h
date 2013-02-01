@@ -23,9 +23,6 @@ class UiiMapper;
 QList<ObjectPair> parseAutomationVDE(const QDomNode &obj);
 QList<ObjectPair> parseAutomation2(const QDomNode &obj);
 QList<ObjectPair> parseAutomation3(const QDomNode &obj);
-QList<ObjectPair> parseAutomationCommandVDE(const QDomNode &obj);
-QList<ObjectPair> parseAutomationCommand2(const QDomNode &obj);
-QList<ObjectPair> parseAutomationCommand3(const QDomNode &obj);
 QList<ObjectPair> parseAutomationGroup2(const QDomNode &obj, const UiiMapper &uii_map);
 QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &uii_map);
 
@@ -70,26 +67,6 @@ protected slots:
 };
 
 
-// internal class, used in automation groups, not useful to the GUI
-class AutomationCommand2 : public DeviceObjectInterface
-{
-	Q_OBJECT
-
-public:
-	AutomationCommand2(LightingDevice *d);
-
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdAutomation2;
-	}
-
-	virtual void setActive(bool st);
-
-protected:
-	LightingDevice *dev;
-};
-
-
 /*!
 	\ingroup Automation
 	\brief Manages light actuator groups
@@ -118,8 +95,6 @@ public:
 private:
 	QList<AutomationLight *> objects;
 };
-
-
 
 
 // internal class, used in automation groups, not useful to the GUI
@@ -197,7 +172,7 @@ class AutomationGroup3 : public ObjectInterface
 	Q_OBJECT
 
 public:
-	AutomationGroup3(QString name, int _id, QList<AutomationCommand3 *> d);
+	AutomationGroup3(QString name, int _id, QList<Automation3 *> d);
 
 	virtual int getObjectId() const
 	{
@@ -218,7 +193,7 @@ public:
 
 
 private:
-	QList<AutomationCommand3 *> objects;
+	QList<Automation3 *> objects;
 	int id;
 };
 

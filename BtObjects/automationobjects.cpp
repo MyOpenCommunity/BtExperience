@@ -76,23 +76,6 @@ QList<ObjectPair> parseAutomation2(const QDomNode &obj)
 	return obj_list;
 }
 
-QList<ObjectPair> parseAutomationCommand2(const QDomNode &obj)
-{
-	QList<ObjectPair> obj_list;
-	// extract default values
-	QString def_where = getAttribute(obj, "where");
-
-	foreach (const QDomNode &ist, getChildren(obj, "ist"))
-	{
-		int uii = getIntAttribute(ist, "uii");
-		QString where = getAttribute(ist, "where", def_where);
-
-		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, PULL));
-		obj_list << ObjectPair(uii, new AutomationCommand2(d));
-	}
-	return obj_list;
-}
-
 QList<ObjectPair> parseAutomationGroup2(const QDomNode &obj, const UiiMapper &uii_map)
 {
 	QList<ObjectPair> obj_list;
@@ -123,8 +106,6 @@ QList<ObjectPair> parseAutomationGroup2(const QDomNode &obj, const UiiMapper &ui
 	}
 	return obj_list;
 }
-
-
 
 QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 {
@@ -199,25 +180,8 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 			}
 			items.append(item);
 		}
-		obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3OpenClose, convertQObjectList<AutomationCommand3 *>(items)));
+		obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3OpenClose, convertQObjectList<Automation3 *>(items)));
 
-	}
-	return obj_list;
-}
-
-QList<ObjectPair> parseAutomationCommand3(const QDomNode &obj)
-{
-	QList<ObjectPair> obj_list;
-	// extract default values
-	QString def_where = getAttribute(obj, "where");
-
-	foreach (const QDomNode &ist, getChildren(obj, "ist"))
-	{
-		int uii = getIntAttribute(ist, "uii");
-		QString where = getAttribute(ist, "where", def_where);
-
-		AutomationDevice *d = bt_global::add_device_to_cache(new AutomationDevice(where, PULL));
-		obj_list << ObjectPair(uii, new AutomationCommand3(d));
 	}
 	return obj_list;
 }
@@ -254,21 +218,6 @@ void AutomationVDE::activate()
 void AutomationVDE::deactivate()
 {
 	dev->releaseLock();
-}
-
-AutomationCommand2::AutomationCommand2(LightingDevice *d) :
-	DeviceObjectInterface(d)
-{
-	dev = d;
-}
-
-void AutomationCommand2::setActive(bool st)
-{
-	qDebug() << "AutomationCommand2::setActive";
-	if (st)
-		dev->turnOn();
-	else
-		dev->turnOff();
 }
 
 AutomationGroup2::AutomationGroup2(QString _name, QList<AutomationLight *> d)
@@ -365,7 +314,7 @@ void Automation3::valueReceived(const DeviceValues &values_list)
 	}
 }
 
-AutomationGroup3::AutomationGroup3(QString _name, int _id, QList<AutomationCommand3 *> d)
+AutomationGroup3::AutomationGroup3(QString _name, int _id, QList<Automation3 *> d)
 {
 	name = _name;
 	objects = d;
