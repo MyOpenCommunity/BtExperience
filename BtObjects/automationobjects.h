@@ -97,36 +97,13 @@ private:
 };
 
 
-// internal class, used in automation groups, not useful to the GUI
-class AutomationCommand3 : public DeviceObjectInterface
-{
-	Q_OBJECT
-
-public:
-	AutomationCommand3(AutomationDevice *d);
-
-	virtual int getObjectId() const
-	{
-		return ObjectInterface::IdAutomation3;
-	}
-
-	virtual void goUp();
-	virtual void goDown();
-	virtual void stop();
-
-	virtual void setStatus(int st);
-
-protected:
-	AutomationDevice *dev;
-};
-
-
 /*!
 	\ingroup Automation3
 	\brief Manages 3-state automation actuators
+
 	The object id is \a ObjectInterface::IdAutomation3, the key is the SCS where.
 */
-class Automation3 : public AutomationCommand3
+class Automation3 : public DeviceObjectInterface
 {
 	friend class TestAutomation3;
 
@@ -137,22 +114,27 @@ class Automation3 : public AutomationCommand3
 	*/
 	Q_PROPERTY(int status READ getStatus WRITE setStatus NOTIFY statusChanged)
 
-
 public:
-
 	Automation3(QString name, QString key, int _id, AutomationDevice *d);
 
 	virtual int getObjectId() const;
 	virtual QString getObjectKey() const;
-	virtual int getStatus() const;
+
+	void setStatus(int st);
+	int getStatus() const;
+
+	Q_INVOKABLE void goUp();
+	Q_INVOKABLE void goDown();
+	Q_INVOKABLE void stop();
 
 signals:
 	void statusChanged();
 
-protected slots:
+private slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
-protected:
+private:
+	AutomationDevice *dev;
 	QString key;
 	int status;
 	int id;

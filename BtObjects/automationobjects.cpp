@@ -238,48 +238,15 @@ void AutomationGroup2::setActive(bool status)
 }
 
 
-AutomationCommand3::AutomationCommand3(AutomationDevice *d) :
-	DeviceObjectInterface(d)
+Automation3::Automation3(QString _name, QString _key, int _id, AutomationDevice *d) : DeviceObjectInterface(d)
 {
 	dev = d;
-}
-
-void AutomationCommand3::setStatus(int st)
-{
-	qDebug() << "AutomationCommand3::setStatus " << st;
-	if (st == AutomationDevice::DIM_UP)
-		dev->goUp();
-	else if (st == AutomationDevice::DIM_DOWN)
-		dev->goDown();
-	else dev->stop();
-}
-
-void AutomationCommand3::goUp()
-{
-	qDebug() << "AutomationCommand3::goUp";
-	dev->goUp();
-}
-
-void AutomationCommand3::goDown()
-{
-	qDebug() << "AutomationCommand3::goDown";
-	dev->goDown();
-}
-
-void AutomationCommand3::stop()
-{
-	qDebug() << "AutomationCommand3::stop";
-	dev->stop();
-}
-
-Automation3::Automation3(QString _name, QString _key, int _id, AutomationDevice *d) : AutomationCommand3(d)
-{
-	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
-
 	key = _key;
 	name = _name;
 	id = _id;
-	status = 0; // initial value
+	status = 0;
+
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 }
 
 int Automation3::getObjectId() const
@@ -290,6 +257,32 @@ int Automation3::getObjectId() const
 QString Automation3::getObjectKey() const
 {
 	return key;
+}
+
+void Automation3::goUp()
+{
+	dev->goUp();
+}
+
+void Automation3::goDown()
+{
+	dev->goDown();
+}
+
+void Automation3::stop()
+{
+	dev->stop();
+}
+
+
+void Automation3::setStatus(int st)
+{
+	if (st == AutomationDevice::DIM_UP)
+		dev->goUp();
+	else if (st == AutomationDevice::DIM_DOWN)
+		dev->goDown();
+	else
+		dev->stop();
 }
 
 int Automation3::getStatus() const
@@ -325,24 +318,24 @@ AutomationGroup3::AutomationGroup3(QString _name, int _id, QList<Automation3 *> 
 
 void AutomationGroup3::goUp()
 {
-	foreach (AutomationCommand3 *l, objects)
+	foreach (Automation3 *l, objects)
 		l->goUp();
 }
 
 void AutomationGroup3::goDown()
 {
-	foreach (AutomationCommand3 *l, objects)
+	foreach (Automation3 *l, objects)
 		l->goDown();
 }
 
 void AutomationGroup3::stop()
 {
-	foreach (AutomationCommand3 *l, objects)
+	foreach (Automation3 *l, objects)
 		l->stop();
 }
 
 void AutomationGroup3::setStatus(int status)
 {
-	foreach (AutomationCommand3 *l, objects)
+	foreach (Automation3 *l, objects)
 		l->setStatus(status);
 }
