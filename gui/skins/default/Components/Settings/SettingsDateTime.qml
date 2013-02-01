@@ -4,6 +4,7 @@ import Components 1.0
 import Components.ThermalRegulation 1.0
 import "../../js/logging.js" as Log
 import "../../js/EventManager.js" as EventManager
+import "../../js/Stack.js" as Stack
 
 
 MenuColumn {
@@ -25,13 +26,25 @@ MenuColumn {
         id: okCancelDialog
 
         TextDialog {
+            property bool reboot
+
             title: qsTr("Confirm operation")
             text: pageObject.names.get('REBOOT', 0)
 
+            onClosePopup: {
+                if (reboot) {
+                    EventManager.eventManager.notificationsEnabled = false
+                    Stack.backToHome({state: "pageLoading"})
+                }
+            }
+
+            function cancelClicked() {
+                reboot = false
+            }
+
             function okClicked() {
                 column.dataModel.apply()
-                EventManager.eventManager.notificationsEnabled = false
-                Stack.backToHome({state: "pageLoading"})
+                reboot = true
             }
         }
     }
