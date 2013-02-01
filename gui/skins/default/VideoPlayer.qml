@@ -126,29 +126,12 @@ BasePage {
             }
         }
 
-        ButtonImageThreeStates {
-            id: folderButton
-
-            defaultImageBg: "images/common/btn_45x35.svg"
-            pressedImageBg: "images/common/btn_45x35_P.svg"
-            shadowImage: "images/common/btn_shadow_45x35.svg"
-            defaultImage: "images/common/ico_browse.svg"
-            pressedImage: "images/common/ico_browse_P.svg"
-            anchors {
-                top: playerControl.top
-                left: playerControl.right
-                leftMargin: page.width / 100 * 1
-            }
-
-            onClicked: Stack.popPage()
-        }
-
         SvgImage {
             id: imageSlider
 
             source: "images/common/bg_tempo_fullscreen.svg"
             anchors {
-                left: folderButton.right
+                left: playerControl.right
                 leftMargin: page.width / 100 * 2.6
                 right: controlAudio.left
                 rightMargin: page.width / 100 * 12.5

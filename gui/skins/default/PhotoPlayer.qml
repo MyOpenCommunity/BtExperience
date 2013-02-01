@@ -147,29 +147,12 @@ Page {
             onClicked: global.photoPlayer.nextPhoto()
         }
 
-        ButtonImageThreeStates {
-            id: folderButton
-
-            defaultImageBg: "images/common/btn_45x35.svg"
-            pressedImageBg: "images/common/btn_45x35_P.svg"
-            shadowImage: "images/common/btn_shadow_45x35.svg"
-            defaultImage: "images/common/ico_browse.svg"
-            pressedImage: "images/common/ico_browse_P.svg"
-            anchors {
-                verticalCenter: bottomBarBg.verticalCenter
-                left: nextButton.right
-                leftMargin: fullScreenBg.width / 100 * 1.5
-            }
-
-            onClicked: Stack.popPage()
-        }
-
         Row {
             id: photoTimeControl
             anchors {
-                left: folderButton.right
+                left: nextButton.right
                 leftMargin: fullScreenBg.width / 100 * 10
-                top: folderButton.top
+                top: nextButton.top
             }
             spacing: fullScreenBg.width / 100 * 1
 
