@@ -34,12 +34,15 @@ public:
 signals:
 	void thresholdExceeded(EnergyData *energyDevice);
 	void goalReached(EnergyData *energyDevice);
+	void goalsEnabledChanged(int goals);
 
 private slots:
 	void updateThresholdsGoals();
+	void updateGoalsEnabled();
 
 private:
 	ObjectModel *energies_model;
+	int goals_enabled;
 };
 
 #endif // ENERGIES_H

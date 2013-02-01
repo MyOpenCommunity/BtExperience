@@ -94,12 +94,15 @@ Item {
         id: monthlyReportTimer
 
         property bool notify: false
+        property int goals: 0 // lines with a consumption goal enabled
 
         repeat: true
-        interval: 10000 // first shot in 10s
+        interval: 10 * 60 * 1000 // first shot in 10 minutes
         running: true
         onTriggered: {
             updateTimer()
+            if (goals === 0)
+                return
             if (!global.guiSettings.energyPopup)
                 return
             if (!notify)
@@ -261,6 +264,7 @@ Item {
         target: null
         onThresholdExceeded: privateProps.addNotification({"type": Script.THRESHOLD_EXCEEDING, "data": energyDevice})
         onGoalReached: privateProps.addNotification({"type": Script.GOAL_REACHING, "data": energyDevice})
+        onGoalsEnabledChanged: monthlyReportTimer.goals = goals
     }
 
     Connections {
