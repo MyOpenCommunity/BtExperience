@@ -229,6 +229,7 @@ BasePage {
                     horizontalCenter: parent.horizontalCenter
                     horizontalCenterOffset: -3
                 }
+                textVerticalOffset: width / 100 * 45
 
                 visible: roomModel.count > 0
 
@@ -246,6 +247,7 @@ BasePage {
 
             ButtonHomePageLink {
                 id: option
+                textVerticalOffset: -width / 100 * 45
                 source: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_opzioni.svg" :
                                                                         "images/home/btn_opzioni_P.svg"
                 sourcePressed: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_opzioni_P.svg" :
@@ -255,7 +257,7 @@ BasePage {
                 iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_opzioni_P.svg" :
                                                                              "images/home/ico_opzioni.svg"
                 onClicked: Stack.goToPage("Settings.qml")
-                textOption: qsTr("options")
+                text: qsTr("options")
                 enabled: EventManager.eventManager.scenarioRecording === false
             }
         }
@@ -276,6 +278,7 @@ BasePage {
                     horizontalCenter: parent.horizontalCenter
                     horizontalCenterOffset: 3
                 }
+                textVerticalOffset: width / 100 * 45
                 source: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_sistemi.svg" :
                                                                         "images/home/btn_sistemi_P.svg"
                 sourcePressed: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_sistemi_P.svg" :
@@ -284,12 +287,14 @@ BasePage {
                                                                       "images/home/ico_sistemi_P.svg"
                 iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_sistemi_P.svg" :
                                                                              "images/home/ico_sistemi.svg"
-                textSystem: qsTr("systems")
+                text: qsTr("systems")
                 onClicked: Stack.goToPage("Systems.qml")
             }
 
             ButtonHomePageLink {
                 id: multimedia
+                textVerticalOffset: -width / 100 * 45
+
                 source: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_multimedia.svg" :
                                                                         "images/home/btn_multimedia_P.svg"
                 sourcePressed: homeProperties.skin === HomeProperties.Clear ? "images/home/btn_multimedia_P.svg" :
@@ -299,7 +304,7 @@ BasePage {
                 iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_multimedia_P.svg" :
                                                                              "images/home/ico_multimedia.svg"
                 onClicked: Stack.goToPage("Multimedia.qml")
-                textMultimedia: qsTr ("multimedia")
+                text: qsTr ("multimedia")
                 enabled: EventManager.eventManager.scenarioRecording === false
             }
         }
