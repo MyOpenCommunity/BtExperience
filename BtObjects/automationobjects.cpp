@@ -136,16 +136,16 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 		case ObjectInterface::CidAutomation3OpenClose:
 		case ObjectInterface::CidAutomationGroup3OpenClose:
 			if (mode.toInt()!=0)
-				obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3OpenCloseSafe, d));
+				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3OpenCloseSafe, d));
 			else
-				obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3OpenClose, d));
+				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3OpenClose, d));
 			break;
 		case ObjectInterface::CidAutomation3UpDown:
 		case ObjectInterface::CidAutomationGroup3UpDown:
 			if (mode.toInt()!=0)
-				obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3UpDownSafe, d));
+				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3UpDownSafe, d));
 			else
-				obj_list << ObjectPair(uii, new Automation3(descr, where, mode, ObjectInterface::IdAutomation3UpDown, d));
+				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3UpDown, d));
 			break;
 		default:
 			qWarning() << "Invalid Cid " << cid << " in Automation 3 Set";
@@ -272,13 +272,12 @@ void AutomationCommand3::stop()
 	dev->stop();
 }
 
-Automation3::Automation3(QString _name, QString _key, QString _mode, int _id, AutomationDevice *d) : AutomationCommand3(d)
+Automation3::Automation3(QString _name, QString _key, int _id, AutomationDevice *d) : AutomationCommand3(d)
 {
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 
 	key = _key;
 	name = _name;
-	mode = _mode;
 	id = _id;
 	status = 0; // initial value
 }

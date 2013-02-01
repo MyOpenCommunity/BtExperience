@@ -140,7 +140,7 @@ class Automation3 : public AutomationCommand3
 
 public:
 
-	Automation3(QString name, QString key, QString safe, int _id, AutomationDevice *d);
+	Automation3(QString name, QString key, int _id, AutomationDevice *d);
 
 	virtual int getObjectId() const;
 	virtual QString getObjectKey() const;
@@ -154,9 +154,7 @@ protected slots:
 
 protected:
 	QString key;
-	QString mode;
 	int status;
-	bool safe;
 	int id;
 };
 
