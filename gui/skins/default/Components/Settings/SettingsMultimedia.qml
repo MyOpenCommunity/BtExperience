@@ -52,6 +52,19 @@ MenuColumn {
 
     Column {
         MenuItem {
+            name: qsTr("Add Quicklink")
+            onClicked: {
+                if (privateProps.currentIndex !== 2) {
+                    privateProps.currentIndex = 2
+                    if (column.child)
+                        column.closeChild()
+                    paginator.currentIndex = -1
+                }
+                Stack.pushPage("AddQuicklink.qml", { onlyQuicklinks: true })
+            }
+        }
+
+        MenuItem {
             name: qsTr("Browser")
             isSelected: privateProps.currentIndex === 1
             hasChild: true
@@ -59,18 +72,6 @@ MenuColumn {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1
                 column.loadColumn(browserComponent, name)
-            }
-        }
-
-        MenuItem {
-            name: qsTr("Add Quicklink")
-            isSelected: privateProps.currentIndex === 2
-            onClicked: {
-                if (privateProps.currentIndex !== 2) {
-                    privateProps.currentIndex = 2
-                    paginator.currentIndex = -1
-                }
-                Stack.pushPage("AddQuicklink.qml", { onlyQuicklinks: true })
             }
         }
 
