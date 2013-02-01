@@ -16,12 +16,6 @@ class GuiSettings : public QObject
 	Q_PROPERTY(QString language READ getLanguage WRITE setLanguage NOTIFY languageChanged)
 
 	/*!
-		\brief Sets or gets the timezone.
-	*/
-	Q_PROPERTY(int timezone READ getTimezone WRITE setTimezone NOTIFY timezoneChanged)
-	// TODO use an enum for all managed timezones
-
-	/*!
 		\brief Sets or gets the beep status.
 	*/
 	Q_PROPERTY(bool beep READ getBeep WRITE setBeep NOTIFY beepChanged)
@@ -96,8 +90,6 @@ public:
 
 	QString getLanguage() const;
 	void setLanguage(QString l);
-	int getTimezone() const;
-	void setTimezone(int z);
 	QString getHomeBgImage() const;
 	void setHomeBgImage(QString new_value);
 	bool getBeep() const;
@@ -131,7 +123,6 @@ public:
 
 signals:
 	void languageChanged();
-	void timezoneChanged();
 	void homeBgImageChanged();
 	void beepChanged();
 	void energyThresholdBeepChanged();
@@ -155,7 +146,6 @@ private:
 
 	ConfigFile *configurations;
 	QString language;
-	int timezone;
 	bool beep;
 	bool energy_threshold_beep;
 	bool energy_popup;

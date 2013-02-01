@@ -75,7 +75,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 	configurations = new ConfigFile(this);
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
 
-	timezone = 0;
 	beep = false;
 	energy_threshold_beep = false;
 	energy_popup = false;
@@ -189,21 +188,6 @@ void GuiSettings::setBeep(bool b)
 
 	beep = b;
 	emit beepChanged();
-}
-
-int GuiSettings::getTimezone() const
-{
-	return timezone;
-}
-
-void GuiSettings::setTimezone(int z)
-{
-	if (timezone == z)
-		return;
-
-	// TODO save value somewhere
-	timezone = z;
-	emit timezoneChanged();
 }
 
 bool GuiSettings::getEnergyThresholdBeep() const

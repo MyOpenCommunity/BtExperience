@@ -116,6 +116,7 @@ void Calibration::startCalibration()
 	grabDeclarativeViewMouse();
 	setMouseCalibrationFilterSize(QWS_MOUSE_FILTER);
 #endif
+	raw_events.clear();
 	qApp->installEventFilter(this);
 }
 
@@ -130,6 +131,7 @@ void Calibration::setCalibrationPoint(Point point, QPoint screen, QPoint touch)
 #endif
 	calibration_data.screenPoints[point] = screen;
 	calibration_data.devPoints[point] = p;
+	raw_events.append(touch);
 }
 
 bool Calibration::applyCalibration()
@@ -163,6 +165,22 @@ void Calibration::resetCalibration()
 
 void Calibration::saveCalibration()
 {
+	if (!QFile::exists(pointercal_file + ".raw"))
+	{
+		QFile f(pointercal_file + ".raw");
+		if (!f.open(QIODevice::WriteOnly))
+		{
+			qDebug() << "Cannot open raw touch file at" << f.fileName();
+		}
+		else
+		{
+			foreach (const QPoint &p, raw_events)
+				f.write(QByteArray::number(p.x()) + " " + QByteArray::number(p.y()) + "\n");
+		}
+	}
+	else
+		qDebug() << "File" << pointercal_file + ".raw" << "exists";
+
 	if (QFile::exists(QString("%1.calibrated").arg(pointercal_file)))
 	{
 		qDebug() << "Removed calibration backup file";
