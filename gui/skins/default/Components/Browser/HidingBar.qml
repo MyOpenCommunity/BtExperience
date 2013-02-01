@@ -14,9 +14,10 @@ Item {
 
     signal zoomOutClicked
     signal zoomInClicked
+    signal zoomHundredClicked
 
     height: if (loaderItem.item) loaderItem.item.height
-    width: 180
+    width: 230
 
     Loader {
         id: loaderItem
@@ -33,6 +34,23 @@ Item {
             source: "../../images/common/bg_barra.svg"
 
             ButtonImageThreeStates {
+                id: hundredBarButton
+                defaultImageBg: "../../images/common/btn_45x35.svg"
+                pressedImageBg: "../../images/common/btn_45x35_P.svg"
+                shadowImage: "../../images/common/btn_shadow_45x35.svg"
+                defaultImage: "../../images/common/icon_zoom-100.svg"
+                pressedImage: "../../images/common/icon_zoom-100_p.svg"
+                repetitionOnHold: true
+                onClicked: control.zoomHundredClicked()
+                anchors {
+                    left: parent.left
+                    leftMargin: 10
+                    top: parent.top
+                    topMargin: 6
+                }
+            }
+
+            ButtonImageThreeStates {
                 id: minusBarButton
                 defaultImageBg: "../../images/common/btn_45x35.svg"
                 pressedImageBg: "../../images/common/btn_45x35_P.svg"
@@ -42,10 +60,9 @@ Item {
                 repetitionOnHold: true
                 onClicked: control.zoomOutClicked()
                 anchors {
-                    left: parent.left
+                    left: hundredBarButton.right
                     leftMargin: 10
-                    top: parent.top
-                    topMargin: 6
+                    verticalCenter: hundredBarButton.verticalCenter
                 }
             }
 
@@ -61,7 +78,7 @@ Item {
                 anchors {
                     left: minusBarButton.right
                     leftMargin: 10
-                    verticalCenter: minusBarButton.verticalCenter
+                    verticalCenter: hundredBarButton.verticalCenter
                 }
             }
 

@@ -97,6 +97,7 @@ BasePage {
 
                 onZoomInClicked: changeZoom(10)
                 onZoomOutClicked: changeZoom(-10)
+                onZoomHundredClicked: zoomPercentage = 100
             }
 
             Pannable {
