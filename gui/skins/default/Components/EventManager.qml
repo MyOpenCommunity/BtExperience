@@ -552,10 +552,16 @@ Item {
         }
 
         function thresholdExceeding(energyDevice) {
+            var s = global.screenState.state
             global.screenState.enableState(ScreenState.Normal)
-            var p = privateProps.preparePopupPage(false)
-            // adds threshold alarm
-            p.addThresholdExceededPopup(energyDevice)
+            // rings the bell
+            global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
+            // opens popup only if we are below normal screen state
+            if (s < ScreenState.Normal) {
+                var p = privateProps.preparePopupPage(false)
+                // adds threshold alarm
+                p.addThresholdExceededPopup(energyDevice)
+            }
         }
 
         function goalReaching(energyDevice) {
