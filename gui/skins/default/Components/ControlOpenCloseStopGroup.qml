@@ -25,8 +25,8 @@ Item {
             pressedImage: "../images/common/btn_99x35_P.svg"
             selectedImage: "../images/common/btn_99x35_S.svg"
             shadowImage: "../images/common/btn_shadow_99x35.svg"
-            defaultIcon: "../images/common/ico_alza.svg"
-            pressedIcon: "../images/common/ico_alza_P.svg"
+            defaultIcon: "../images/common/ico_apri.svg"
+            pressedIcon: "../images/common/ico_apri_P.svg"
             selectedIcon: ""
             onPressed: control.pressed(1)
             status: control.status === -1 ? 0 : (control.status == 1 ? 1 : 0)
@@ -38,8 +38,8 @@ Item {
             pressedImage: "../images/common/btn_99x35_P.svg"
             selectedImage: "../images/common/btn_99x35_S.svg"
             shadowImage: "../images/common/btn_shadow_99x35.svg"
-            defaultIcon: "../images/common/ico_abbassa.svg"
-            pressedIcon: "../images/common/ico_abbassa_P.svg"
+            defaultIcon: "../images/common/ico_chiudi.svg"
+            pressedIcon: "../images/common/ico_chiudi_P.svg"
             selectedIcon: ""
             onPressed: control.pressed(2)
             status: control.status === -1 ? 0 : (control.status == 2 ? 1 : 0)

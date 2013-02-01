@@ -5,6 +5,6 @@ MenuColumn {
     id: column
 
     ControlUpDownStop {
-        onPressed: column.dataModel.setActive(newStatus)
+        onPressed: column.dataModel.setStatus(newStatus)
     }
 }

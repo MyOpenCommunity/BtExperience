@@ -160,12 +160,14 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 	QList<ObjectPair> obj_list;
 	// extract default values
 	QString def_descr = getAttribute(obj, "descr");
+	int def_cid = getIntAttribute(obj, "cid");
 
 	foreach (const QDomNode &ist, getChildren(obj, "ist"))
 	{
 		int uii = getIntAttribute(ist, "uii");
 		QString descr = getAttribute(ist, "descr", def_descr);
-		int cid = ObjectInterface::CidAutomationGroup3OpenClose;
+		int cid = getIntAttribute(ist, "cid", def_cid);
+		int id = cid == ObjectInterface::CidAutomationGroup3OpenClose ? ObjectInterface::IdAutomationGroup3OpenClose : ObjectInterface::IdAutomationGroup3UpDown;
 		QList<ObjectInterface *> items;
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
@@ -181,7 +183,7 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 			}
 			items.append(item);
 		}
-		obj_list << ObjectPair(uii, new AutomationGroup3(descr, ObjectInterface::IdAutomationGroup3OpenClose, convertQObjectList<Automation3 *>(items)));
+		obj_list << ObjectPair(uii, new AutomationGroup3(descr, id, convertQObjectList<Automation3 *>(items)));
 
 	}
 	return obj_list;
