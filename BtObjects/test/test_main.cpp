@@ -45,6 +45,7 @@
 #include "test_media_models.h"
 #include "test_myhome_models.h"
 #include "test_screenstate.h"
+#include "test_automation_objects.h"
 #include "main.h"
 
 logger *app_logger;
@@ -81,6 +82,7 @@ int main(int argc, char *argv[])
 	ADD_TEST(TestLight);
 	ADD_TEST(TestDimmer);
 	ADD_TEST(TestDimmer100);
+	ADD_TEST(TestAutomation3);
 	ADD_TEST(TestFolderListModel);
 	ADD_TEST(TestPagedFolderListModel);
 	ADD_TEST(TestFileObject);

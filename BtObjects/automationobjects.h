@@ -128,7 +128,7 @@ protected:
 */
 class Automation3 : public AutomationCommand3
 {
-	friend class TestAutomation;
+	friend class TestAutomation3;
 
 	Q_OBJECT
 
