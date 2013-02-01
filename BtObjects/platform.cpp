@@ -49,15 +49,19 @@ PlatformSettings::PlatformSettings(PlatformDevice *d)
 
 void PlatformSettings::apply()
 {
-	if (to_apply[BT_DATE] != current[BT_DATE])
-		dev->setDate(to_apply[BT_DATE].toDate());
-
+	// when applying changes to date and time order is important!
+	// applying date before time (when both need updating) leads to only
+	// the date to be applied; applying changes in order time->date works
+	// as expected
 	if (to_apply[BT_TIME] != current[BT_TIME])
 	{
 		BtTime t = to_apply[BT_TIME].value<BtTime>();
 		t = t.addSecond(-t.second()); // resetting seconds to zero
 		dev->setTime(t);
 	}
+
+	if (to_apply[BT_DATE] != current[BT_DATE])
+		dev->setDate(to_apply[BT_DATE].toDate());
 
 	current = to_apply;
 
