@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+	<!-- ringtones -->
+	<obj cid="14101" id="14101" id_ringtone="1" descr="Ringtone S0">
+		<ist uii="30201" id_ringtone="1"/>
+	</obj>
+	<obj cid="14102" id="14102" id_ringtone="1" descr="Ringtone S1">
+		<ist uii="30202" id_ringtone="2"/>
+	</obj>
+	<obj cid="14103" id="14103" id_ringtone="1" descr="Ringtone S2">
+		<ist uii="30203" id_ringtone="3"/>
+	</obj>
+	<obj cid="14104" id="14104" id_ringtone="1" descr="Ringtone S3">
+		<ist uii="30204" id_ringtone="4"/>
+	</obj>
+	<obj cid="14105" id="14105" id_ringtone="1" descr="Ringtone Internal">
+		<ist uii="30205" id_ringtone="5"/>
+	</obj>
+	<obj cid="14106" id="14106" id_ringtone="1" descr="Ringtone External">
+		<ist uii="30206" id_ringtone="6"/>
+	</obj>
+	<obj cid="14107" id="14107" id_ringtone="1" descr="Ringtone Door">
+		<ist uii="30207" id_ringtone="7"/>
+	</obj>
+	<obj cid="14109" id="14109" id_ringtone="1" descr="Ringtone Alarm">
+		<ist uii="30208" id_ringtone="7"/>
+	</obj>
+	<obj cid="14110" id="14110" id_ringtone="1" descr="Ringtone Message">
+		<ist uii="30209" id_ringtone="7"/>
+	</obj>
+	<!-- volume (beep, media, ringtone, vde, intercom) -->
+	<obj cid="14121" id="14121" volume="75">
+		<ist uii="30230" volume="75"/>
+	</obj>
+	<obj cid="14122" id="14122" volume="75">
+		<ist uii="30231" volume="75"/>
+	</obj>
+	<obj cid="14123" id="14123" volume="75">
+		<ist uii="30232" volume="75"/>
+	</obj>
+	<obj cid="14124" id="14124" volume="75">
+		<ist uii="30233" volume="75"/>
+	</obj>
+	<obj cid="14125" id="14125" volume="75">
+		<ist uii="30234" volume="75"/>
+	</obj>
+	<!-- brightness -->
+	<obj cid="14151" id="14151" brightness="95">
+		<ist uii="30230"/>
+	</obj>
+	<!-- clean screen -->
+	<obj cid="14152" id="14152" clean_time="10000">
+		<ist uii="30230" clean_time="20000"/>
+	</obj>
+	<!-- password -->
+	<obj cid="14003" id="14003" mode="0" password="12345">
+		<ist uii="30301" password="1234567" mode="0" />
+	</obj>
+	<!-- energy rates -->
+	<obj cid="14267" id="14267" rate_id="1" descr="" name="EUR" mode="1" type="0" tariff="0" measure="kW" symbol="" n_decimal="0" n_integer="3" delta="1">
+		<ist uii="30102" rate_id="2" descr="elettricità consumo" name="EUR" mode="3" tariff="2" measure="m3" symbol="&#x20AC;" />
+		<ist uii="30104" rate_id="5" descr="riscaldamento consumo" name="EUR" type="-1" tariff="4" symbol="&#x20AC;" n_decimal="0" n_integer="3" delta="1" />
+	</obj>
+	<!-- beep enable -->
+	<obj cid="14001" id="14001">
+		<ist uii="30105" enable="1" />
+	</obj>
+	<!-- threshold bip -->
+	<obj cid="14255" id="14255" enable="0">
+		<ist uii="30106" enable="1" />
+	</obj>
+	<!-- consume pop up -->
+	<obj cid="14256" id="14256" enable="0">
+		<ist uii="30107" enable="0" />
+	</obj>
+	<!-- burglar alarm (alert) -->
+	<obj cid="14257" id="14257" enable="0">
+		<ist uii="30108" enable="1" />
+	</obj>
+	<!-- alarm clock (alert) -->
+	<obj cid="14258" id="14258" enable="0">
+		<ist uii="30109" enable="1" />
+	</obj>
+	<!-- hands free (alert) -->
+	<obj cid="14259" id="14259" enable="0">
+		<ist uii="30110" enable="1" />
+	</obj>
+	<!-- professional studio (alert) -->
+	<obj cid="14260" id="14260" enable="0">
+		<ist uii="30111" enable="1" />
+	</obj>
+	<!-- call exclusion (alert) -->
+	<obj cid="14261" id="14261" enable="0">
+		<ist uii="30112" enable="1" />
+	</obj>
+	<!-- burglar alarm danger (alert) -->
+	<obj cid="14262" id="14262" enable="0">
+		<ist uii="30113" enable="1" />
+	</obj>
+	<!-- volume (alert) -->
+	<obj cid="14263" id="14263" enable="0">
+		<ist uii="30114" enable="1" />
+	</obj>
+	<!-- player (alert) -->
+	<obj cid="14264" id="14264" enable="0">
+		<ist uii="30115" enable="1" />
+	</obj>
+	<!-- messages (alert) -->
+	<obj cid="14265" id="14265" enable="0">
+		<ist uii="30116" enable="1" />
+	</obj>
+	<!-- scenario recording (alert) -->
+        <obj cid="14266" id="14266" enable="0">
+		<ist uii="30117" enable="1" />
+	</obj>
+	<!-- hands free enable -->
+	<obj cid="14251" id="14251" enable="0">
+		<ist uii="30401" />
+	</obj>
+	<!-- professional studio enable -->
+	<obj cid="14252" id="14252" enable="0">
+		<ist uii="30402" id="14252" enable="1"/>
+	</obj>
+	<!-- ring exclusion enable -->
+	<obj cid="14253" id="14253" enable="0">
+		<ist uii="30403" id="14253" />
+	</obj>
+	<!-- tele loop enable -->
+	<obj cid="14254" id="14254" enable="0" mode="0">
+		<ist uii="30404" id="14254" />
+	</obj>
+	<!-- External unit video settings -->
+	<obj cid="14268" id="14268" brightness="128" color="128" contrast="128">
+		<ist uii="30405" />   
+	</obj>
+	<!-- alarm clock -->
+	<obj cid="14201" id="14201" enabled="0" type="0" days="0" hour="0" minutes="0" source_type="0">
+		<ist uii="30501" enabled="0" type="0" volume="1" descr="Beep" hour="13" minutes="30"/>
+	</obj>
+	<!-- debug settings -->
+	<obj id="123456" internal_descr="debug touchscreen">
+		<ist uii="123456" enable="0" />
+	</obj>
+	<obj id="123457" internal_descr="debug timing">
+		<ist uii="123457" enable="0" />
+	</obj>
+</settings>
