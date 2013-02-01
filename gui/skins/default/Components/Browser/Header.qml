@@ -89,9 +89,7 @@ SvgImage {
                 view.stop.trigger()
             }
             else if (control.state === "editing") {
-                browser.urlString = urlInput.url
-                browser.focus = true
-                control.urlChanged = false
+                urlInput.updateUrl()
             }
         }
         anchors {
@@ -212,11 +210,14 @@ SvgImage {
             left: bgText.left
             right: loadingIndicator.visible ? loadingIndicator.left : bgText.right
         }
-        onUrlEntered: {
+
+        function updateUrl() {
             browser.focus = true
             control.urlChanged = false
             control.urlEntered(url)
         }
+
+        onUrlEntered: updateUrl()
         onUrlChanged: control.urlChanged = true
     }
 
