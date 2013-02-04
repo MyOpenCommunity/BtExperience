@@ -57,13 +57,12 @@ public:
 		return ObjectInterface::IdAutomationVDE;
 	}
 
-	Q_INVOKABLE void activate();
+public slots:
+	void activate();
+	void deactivate();
 
 private:
 	VideoDoorEntryDevice *dev;
-	
-protected slots:
-	void deactivate();
 };
 
 

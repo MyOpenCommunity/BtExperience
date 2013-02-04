@@ -191,7 +191,6 @@ AutomationVDE::AutomationVDE(QString _name, VideoDoorEntryDevice *d) :
 void AutomationVDE::activate()
 {
 	dev->openLock();
-	QTimer::singleShot(2000, this, SLOT(deactivate()));
 }
 
 void AutomationVDE::deactivate()
