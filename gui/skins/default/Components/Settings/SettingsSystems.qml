@@ -99,7 +99,7 @@ MenuColumn {
             if (energiesCounters.count > 0)
                 modelList.append({"name": qsTr("Energy"), "component": settingsEnergy})
             if (cctvModel.count > 0)
-                modelList.append({"name": qsTr("VDE"), "component": settingsVDE})
+                modelList.append({"name": qsTr("Video Door Entry"), "component": settingsVDE})
         }
     }
 

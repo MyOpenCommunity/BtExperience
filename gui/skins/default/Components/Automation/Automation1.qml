@@ -4,6 +4,6 @@ import Components 1.0
 
 MenuColumn {
     ControlOn {
-        onPressed: dataModel.active = newStatus
+        onClicked: dataModel.activate()
     }
 }
