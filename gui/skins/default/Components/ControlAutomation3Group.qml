@@ -5,7 +5,11 @@ import QtQuick 1.1
 Item {
     id: control
 
-    property int status: -1
+    property int status: 0
+    property alias leftIcon: left.defaultIcon
+    property alias leftPressedIcon: left.pressedIcon
+    property alias rightIcon: right.defaultIcon
+    property alias rightPressedIcon: right.pressedIcon
 
     signal pressed(int newStatus)
 
@@ -21,28 +25,32 @@ Item {
         anchors.centerIn: parent // in this way we need no margins
 
         ButtonThreeStatesAutomation {
+            id: left
             defaultImage: "../images/common/btn_99x35.svg"
             pressedImage: "../images/common/btn_99x35_P.svg"
             selectedImage: "../images/common/btn_99x35_S.svg"
             shadowImage: "../images/common/btn_shadow_99x35.svg"
-            defaultIcon: "../images/common/ico_apri.svg"
-            pressedIcon: "../images/common/ico_apri_P.svg"
             selectedIcon: ""
-            onPressed: {control.pressed(status === 0 ? 1 : 0); status=(status === 0 ? 1 : 0)}
-            status: control.status === -1 ? 0 : (control.status == 1 ? 1 : 0)
+            onPressed: {
+                control.status = (status === 0 ? 1 : 0)
+                control.pressed(control.status)
+            }
+            status: control.status == 1 ? 1 : 0
 
         }
 
         ButtonThreeStatesAutomation {
+            id: right
             defaultImage: "../images/common/btn_99x35.svg"
             pressedImage: "../images/common/btn_99x35_P.svg"
             selectedImage: "../images/common/btn_99x35_S.svg"
             shadowImage: "../images/common/btn_shadow_99x35.svg"
-            defaultIcon: "../images/common/ico_chiudi.svg"
-            pressedIcon: "../images/common/ico_chiudi_P.svg"
             selectedIcon: ""
-            onPressed: {control.pressed(status === 0 ? 2: 0); status=(status === 0 ? 1 : 0)}
-            status: control.status === -1 ? 0 : (control.status == 2 ? 1 : 0)
+            onPressed: {
+                control.status = (status === 0 ? 2 : 0)
+                control.pressed(control.status)
+            }
+            status: control.status == 2 ? 1 : 0
         }
     }
 

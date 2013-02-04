@@ -25,6 +25,7 @@ ColumnBrowserDirectoryModel 1.0 ColumnBrowserDirectoryModel.qml
 ColumnBrowserUpnpModel 1.0 ColumnBrowserUpnpModel.qml
 ConfirmationBar 1.0 ConfirmationBar.qml
 Constants 1.0 Constants.qml
+ControlAutomation3Group 1.0 ControlAutomation3Group.qml
 ControlBalance 1.0 ControlBalance.qml
 ControlCall 1.0 ControlCall.qml
 ControlChoices 1.0 ControlChoices.qml
@@ -37,7 +38,6 @@ ControlOn 1.0 ControlOn.qml
 ControlOnOff 1.0 ControlOnOff.qml
 ControlOnOffGroup 1.0 ControlOnOffGroup.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
-ControlOpenCloseStopGroup 1.0 ControlOpenCloseStopGroup.qml
 ControlOpenCloseStopSafe 1.0 ControlOpenCloseStopSafe.qml
 ControlPathView 1.0 ControlPathView.qml
 ControlPathViewInternal 1.0 ControlPathViewInternal.qml
