@@ -23,7 +23,7 @@ MenuColumn {
         id: privateProps
 
         function openVDEMenu(navigationData) {
-            _openMenu(qsTr("VDE"))
+            _openMenu(qsTr("Video Door Entry"))
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
 
