@@ -41,6 +41,7 @@
 
 import QtQuick 1.1
 import QtWebKit 1.0
+import "fragmentloader.js" as Script
 
 Flickable {
     property alias title: webView.title
@@ -79,19 +80,57 @@ Flickable {
         smooth: false // We don't want smooth scaling, since we only scale during (fast) transitions
         focus: true
 
+        javaScriptWindowObjects: QtObject {
+            id: fragmentPosition
+            property int y: 0
+
+            WebView.windowObjectName: "fragmentPosition"
+        }
+
         onAlert: console.log(message)
         onLoadFailed: console.log("Error loading: " + url)
-        onLoadFinished: console.log("Finished loading: " + url)
-        onLoadStarted: console.log("Started loading new url " + url)
+        onLoadFinished: {
+            console.log("Finished loading: " + url)
+            var u = url.toString()
+            var fragment = extractFragment(u)
+            evaluateJavaScript(Script.getFragmentPositionString(fragment))
+            anchorAnimation.toY = Math.min(fragmentPosition.y*contentsScale, flickable.contentHeight-flickable.height)
+            anchorAnimation.running = true
+        }
+        onLoadStarted: {
+            flickable.contentX = 0
+            flickable.contentY = 0
+            console.log("Started loading new url " + url)
+        }
 
         preferredWidth: flickable.width
         preferredHeight: flickable.height
         contentsScale: 1
+
+        function extractFragment(url) {
+            var idx = url.lastIndexOf("#")
+            if (idx === -1)
+                return ""
+            return url.substring(idx + 1)
+        }
+
         onUrlChanged: {
-            // got to topleft
-            flickable.contentX = 0
-            flickable.contentY = 0
-            if (url !== null) { header.editUrl = url.toString(); }
+            fragmentPosition.y = 0
+            if (url !== null)
+                header.editUrl = url.toString()
+        }
+
+        ParallelAnimation {
+            id: anchorAnimation
+            property alias toY: yanim.to
+            NumberAnimation {
+                id: yanim
+                target: flickable
+                property: "contentY"
+                to: 0
+                duration: 500
+                easing.type: Easing.InOutQuad
+            }
         }
     }
 }
