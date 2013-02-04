@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import Components.Popup 1.0
 import "../../js/Stack.js" as Stack
 
 
@@ -33,18 +34,38 @@ MenuColumn {
     }
 
     Component {
+        id: errorFeedback
+        FeedbackPopup {
+            text: qsTr("Incorrect password")
+            isOk: false
+        }
+    }
+
+    Component {
         id: passwordInput
         PasswordInput {
             property bool newValue
             onPasswordConfirmed: {
+                var passOk = true
                 if (global.password === password)
                     global.passwordEnabled = newValue
-                else
+                else {
                     // reset view state
                     paginator.currentIndex = global.passwordEnabled
+                    passOk = false
+                }
                 pageObject.closePopup()
+                if (!passOk)
+                    feedbackTimer.start()
             }
         }
+    }
+
+    Timer {
+        id: feedbackTimer
+        interval: 200
+        repeat: false
+        onTriggered: pageObject.installPopup(errorFeedback)
     }
 
     ListModel {
