@@ -181,10 +181,16 @@ Item {
                               "../images/toolbar/icon_alarm-clock.svg"
             onClicked: {
                 toolbar.toolbarNavigationClicked()
-                if (EventManager.eventManager.clockRinging)
+                if (EventManager.eventManager.clockRinging) {
+                    // the video camera page expects navigation to be managed in toolbar
+                    // let's manage it
+                    if (Stack.currentPage()._pageName === "VideoCamera")
+                        Stack.popPage()
                     EventManager.eventManager.resendAlarmStarted()
-                else
+                }
+                else {
                     Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ALARM_CLOCKS})
+                }
             }
         }
 
