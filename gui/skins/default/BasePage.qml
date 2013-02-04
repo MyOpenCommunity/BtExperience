@@ -8,6 +8,11 @@ Image {
 
     property alias popupLoader: popupLoader
     property alias constants: constants
+    // all pages are visible, so browser must be shown/hidden not depending on
+    // visible property, but we need a new property to know if we are on top
+    // of the stack or not
+    // browser will be visible when the following property is true
+    property bool topPage: false
     // Warning: this property must be considered constant.
     property string _pageName: ""
 
@@ -193,9 +198,9 @@ Image {
         onAboutToHide: privateProps.processHide()
     }
 
-    onVisibleChanged: {
+    onTopPageChanged: {
         if (privateProps.process)
-            privateProps.process.visible = visible
+            privateProps.process.visible = topPage
     }
     Component.onDestruction: {
         if (privateProps.process)

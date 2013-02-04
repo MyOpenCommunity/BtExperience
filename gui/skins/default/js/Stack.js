@@ -192,9 +192,14 @@ function changePageDone() {
         entering_page = undefined
     }
 
-    for (var i = 0; i < stack.length; i++)
+    for (var i = 0; i < stack.length; ++i) {
+        if (i === current_index)
+            stack[i].topPage = true
+        else
+            stack[i].topPage = false
         if (i > current_index)
             stack[i].destroy()
+    }
 
     stack.length = current_index + 1
 
