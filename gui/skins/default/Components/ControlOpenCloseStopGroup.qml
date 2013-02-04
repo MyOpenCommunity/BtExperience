@@ -28,7 +28,7 @@ Item {
             defaultIcon: "../images/common/ico_apri.svg"
             pressedIcon: "../images/common/ico_apri_P.svg"
             selectedIcon: ""
-            onPressed: control.pressed(1)
+            onPressed: {control.pressed(status === 0 ? 1 : 0); status=(status === 0 ? 1 : 0)}
             status: control.status === -1 ? 0 : (control.status == 1 ? 1 : 0)
 
         }
@@ -41,10 +41,11 @@ Item {
             defaultIcon: "../images/common/ico_chiudi.svg"
             pressedIcon: "../images/common/ico_chiudi_P.svg"
             selectedIcon: ""
-            onPressed: control.pressed(2)
+            onPressed: {control.pressed(status === 0 ? 2: 0); status=(status === 0 ? 1 : 0)}
             status: control.status === -1 ? 0 : (control.status == 2 ? 1 : 0)
         }
     }
 
 }
+
 
