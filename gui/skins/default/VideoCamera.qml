@@ -158,6 +158,7 @@ Page {
                 dataObject.volume -= 5
         }
         onMuteClicked: if (dataObject) dataObject.mute = !dataObject.mute
+        onSliderClicked: dataObject.volume = Math.round(desiredPercentage / 5) * 5
     }
 
     ControlPullDownVideo {

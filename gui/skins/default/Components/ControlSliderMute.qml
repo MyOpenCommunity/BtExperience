@@ -6,17 +6,21 @@ SvgImage {
     id: buttonSlider
 
     property int percentage: 70
-    property string description: qsTr("volume")
+    property string description: label.text
     property alias muteEnabled: buttonMute.enabled
 
     signal plusClicked
     signal minusClicked
     signal muteClicked
+    signal sliderClicked(int desiredPercentage)
+
+    onPercentageChanged: slider.actualPercentage = percentage
 
     source: "../images/common/bg_panel_212x100.svg"
 
     Rectangle {
         id: darkRect
+
         z: 1
         anchors.fill: parent
         color: "black"
@@ -25,41 +29,60 @@ SvgImage {
         // please note that mouse clicks are not blocked here
     }
 
-    UbuntuMediumText {
+    UbuntuLightText {
         id: label
-        anchors.top: parent.top
-        anchors.topMargin: 5
-        anchors.left: parent.left
-        anchors.leftMargin: 7
+
+        anchors {
+            top: parent.top
+            topMargin: 5
+            left: parent.left
+            leftMargin: 7
+        }
+
+        text: qsTr("volume")
         font.pixelSize: 14
         color: "gray"
-        text: buttonSlider.description
     }
 
-    UbuntuMediumText {
+    UbuntuLightText {
         id: percentageLabel
+
+        anchors {
+            top: parent.top
+            topMargin: 5
+            right: parent.right
+            rightMargin: 15
+        }
+
         text: percentage + " %"
-        anchors.top: parent.top
-        anchors.topMargin: 5
-        anchors.right: parent.right
-        anchors.rightMargin: 15
         font.pixelSize: 14
         color: "white"
     }
 
     SvgImage {
         id: imageSlider
-        anchors.top: label.bottom
-        anchors.topMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
+
+        anchors {
+            top: label.bottom
+            topMargin: 10
+            horizontalCenter: parent.horizontalCenter
+        }
+
         source: "../images/common/bg_regola_dimmer.svg"
 
         Rectangle {
+            id: slider
+
+            property int actualPercentage: 50
+
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                leftMargin: -2
+            }
+
             height: parent.height + 2
-            width: parent.width * (buttonSlider.percentage < 10 ? 10 : buttonSlider.percentage) / 100 + 4
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: -2
+            width: parent.width * (actualPercentage < 10 ? 10 : actualPercentage) / 100 + 4
             radius: 100
             smooth: true
             gradient: Gradient {
@@ -73,6 +96,26 @@ SvgImage {
                 }
             }
         }
+
+        Timer {
+            id: frameDestormerTimer
+
+            interval: 1000 // arbitrary value
+            repeat: false
+            onTriggered: sliderClicked(slider.actualPercentage)
+        }
+    }
+
+    BeepingMouseArea {
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            bottom: imageSlider.bottom
+        }
+
+        onPositionChanged: slider.actualPercentage = privateProps.getPercentageFromCoordinate(mouse.x)
+        onReleased: frameDestormerTimer.restart()
     }
 
     ButtonImageThreeStates {
@@ -99,6 +142,7 @@ SvgImage {
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         onClicked: minusClicked()
+        repetitionOnHold: true
         anchors {
             top: imageSlider.bottom
             topMargin: 5
@@ -115,10 +159,24 @@ SvgImage {
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         onClicked: plusClicked()
+        repetitionOnHold: true
         anchors {
             top: imageSlider.bottom
             topMargin: 5
             right: imageSlider.right
+        }
+    }
+
+    QtObject {
+        id: privateProps
+
+        property int _tolerance: 5
+
+        function getPercentageFromCoordinate(coordX) {
+            var logicalX = (coordX - _tolerance) / (imageSlider.width - _tolerance * 2)
+            if (logicalX < 0) logicalX = 0
+            if (logicalX > 1) logicalX = 1
+            return Math.round(logicalX * 100)
         }
     }
 
