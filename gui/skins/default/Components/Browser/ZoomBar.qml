@@ -1,5 +1,5 @@
 /**
-  * An hiding bar showing additional commands for browser (for example, zoom +/-)
+  * An hiding bar showing zoom commands for browser
   */
 
 import QtQuick 1.1

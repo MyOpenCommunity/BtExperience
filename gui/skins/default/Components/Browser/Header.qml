@@ -15,17 +15,17 @@ SvgImage {
     property variant view
     property variant browser
 
-    signal hidingBarClicked
+    signal zoomBarClicked
     signal urlEntered(string url)
 
     function updateImages(s) {
         if (s === "hidden") {
-            hidingBarButton.defaultImage = "../../images/common/icon_browser-option.svg"
-            hidingBarButton.pressedImage = "../../images/common/icon_browser-option_p.svg"
+            zoomBarButton.defaultImage = "../../images/common/icon_browser-option.svg"
+            zoomBarButton.pressedImage = "../../images/common/icon_browser-option_p.svg"
         }
         else {
-            hidingBarButton.defaultImage = "../../images/common/icon_browser-option_open.svg"
-            hidingBarButton.pressedImage = "../../images/common/icon_browser-option_open_p.svg"
+            zoomBarButton.defaultImage = "../../images/common/icon_browser-option_open.svg"
+            zoomBarButton.pressedImage = "../../images/common/icon_browser-option_open_p.svg"
         }
     }
 
@@ -110,18 +110,18 @@ SvgImage {
             top: parent.top
             topMargin: 6
             right: parent.right
-            rightMargin: 30 + closeBrowser.width + hidingBarButton.width
+            rightMargin: 30 + closeBrowser.width + zoomBarButton.width
         }
     }
 
     ButtonImageThreeStates {
-        id: hidingBarButton
+        id: zoomBarButton
         defaultImageBg: "../../images/common/btn_45x35.svg"
         pressedImageBg: "../../images/common/btn_45x35_P.svg"
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/icon_browser-option.svg"
         pressedImage: "../../images/common/icon_browser-option_p.svg"
-        onClicked: control.hidingBarClicked()
+        onClicked: control.zoomBarClicked()
         anchors {
             left: bgText.right
             leftMargin: 10
@@ -154,7 +154,7 @@ SvgImage {
         height: 35
         anchors {
             top: bgText.top
-            left: hidingBarButton.right
+            left: zoomBarButton.right
             leftMargin: 10
         }
 

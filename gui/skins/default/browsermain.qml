@@ -56,12 +56,12 @@ BasePage {
                     top: parent.top
                     horizontalCenter: parent.horizontalCenter
                 }
-                onHidingBarClicked: {
-                    if (hidingBar.state === "hidden")
-                        hidingBar.state = "visible"
+                onZoomBarClicked: {
+                    if (zoomBar.state === "hidden")
+                        zoomBar.state = "visible"
                     else
-                        hidingBar.state = "hidden"
-                    updateImages(hidingBar.state)
+                        zoomBar.state = "hidden"
+                    updateImages(zoomBar.state)
                 }
                 onUrlEntered: {
                     if (url === global.url)
@@ -80,8 +80,8 @@ BasePage {
                 }
             }
 
-            HidingBar {
-                id: hidingBar
+            ZoomBar {
+                id: zoomBar
                 state: "hidden"
                 z: webViewContaineer.z + 1
                 anchors {
@@ -124,7 +124,7 @@ BasePage {
                     y: parent.childOffset
                     width: parent.width
                     height: parent.height
-                    zoomPercentage: hidingBar.zoomPercentage
+                    zoomPercentage: zoomBar.zoomPercentage
                 }
             }
 
