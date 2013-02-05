@@ -10,6 +10,9 @@ SvgImage {
 
     signal plusClicked
     signal minusClicked
+    signal sliderClicked(int desiredPercentage)
+
+    onPercentageChanged: slider.actualPercentage = percentage
 
     source: "../images/common/bg_panel_212x100.svg"
 
@@ -44,7 +47,7 @@ SvgImage {
     }
 
     SvgImage {
-        id: image2
+        id: imageSlider
 
         anchors {
             top: label.bottom
@@ -55,6 +58,10 @@ SvgImage {
         source: "../images/common/bg_regola_dimmer.svg"
 
         Rectangle {
+            id: slider
+
+            property int actualPercentage: 50
+
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
@@ -62,7 +69,7 @@ SvgImage {
             }
 
             height: parent.height + 2
-            width: parent.width * (buttonSlider.percentage < 10 ? 10 : buttonSlider.percentage) / 100 + 4
+            width: parent.width * (actualPercentage < 10 ? 10 : actualPercentage) / 100 + 4
             radius: 100
             smooth: true
             gradient: Gradient {
@@ -76,11 +83,31 @@ SvgImage {
                 }
             }
         }
+
+        Timer {
+            id: frameDestormerTimer
+
+            interval: 1000 // arbitrary value
+            repeat: false
+            onTriggered: sliderClicked(slider.actualPercentage)
+        }
+    }
+
+    BeepingMouseArea {
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            bottom: imageSlider.bottom
+        }
+
+        onPositionChanged: slider.actualPercentage = privateProps.getPercentageFromCoordinate(mouse.x)
+        onReleased: frameDestormerTimer.restart()
     }
 
     Row {
         anchors {
-            top: image2.bottom
+            top: imageSlider.bottom
             topMargin: 5
             horizontalCenter: parent.horizontalCenter
         }
@@ -103,6 +130,19 @@ SvgImage {
             pressedImage: "../images/common/ico_piu_P.svg"
             onClicked: plusClicked()
             repetitionOnHold: true
+        }
+    }
+
+    QtObject {
+        id: privateProps
+
+        property int _tolerance: 5
+
+        function getPercentageFromCoordinate(coordX) {
+            var logicalX = (coordX - _tolerance) / (imageSlider.width - _tolerance * 2)
+            if (logicalX < 0) logicalX = 0
+            if (logicalX > 1) logicalX = 1
+            return Math.round(logicalX * 100)
         }
     }
 }

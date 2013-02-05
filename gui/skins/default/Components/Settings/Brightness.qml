@@ -9,9 +9,11 @@ MenuColumn {
 
     ControlSlider {
         id: brightness
+
         percentage: global.screenState.normalBrightness
         description: qsTr("brightness")
         onPlusClicked: global.screenState.normalBrightness += 5
         onMinusClicked: global.screenState.normalBrightness -= 5
+        onSliderClicked: global.screenState.normalBrightness = Math.round(desiredPercentage / 5) * 5
     }
 }

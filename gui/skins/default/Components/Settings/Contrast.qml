@@ -11,5 +11,6 @@ MenuColumn {
         description: qsTr("Contrast")
         onPlusClicked: global.screenState.contrast += 5
         onMinusClicked: global.screenState.contrast -= 5
+        onSliderClicked: global.screenState.contrast = Math.round(desiredPercentage / 5) * 5
     }
 }

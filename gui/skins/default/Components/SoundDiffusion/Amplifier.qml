@@ -18,5 +18,6 @@ MenuColumn {
         percentage: (column.dataModel.volume) * 100 / 31
         onMinusClicked: column.dataModel.volumeDown()
         onPlusClicked: column.dataModel.volumeUp()
+        onSliderClicked: column.dataModel.volume = desiredPercentage
     }
 }

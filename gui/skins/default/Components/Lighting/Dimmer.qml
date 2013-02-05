@@ -15,6 +15,7 @@ MenuColumn {
             percentage: dataModel.percentage
             onPlusClicked: dataModel.increaseLevel()
             onMinusClicked: dataModel.decreaseLevel()
+            onSliderClicked: dataModel.percentage = desiredPercentage
         }
 
         ControlTiming {

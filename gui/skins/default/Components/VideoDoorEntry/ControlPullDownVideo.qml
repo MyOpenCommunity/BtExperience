@@ -30,6 +30,7 @@ Item {
                 description: qsTr("Brightness")
                 onPlusClicked: if (control.camera !== undefined) control.camera.brightness += 5
                 onMinusClicked: if (control.camera !== undefined) control.camera.brightness -= 5
+                onSliderClicked: control.camera.brightness = Math.round(desiredPercentage / 5) * 5
             }
 
             ControlSlider {
@@ -38,6 +39,7 @@ Item {
                 description: qsTr("Contrast")
                 onPlusClicked: if (control.camera !== undefined) control.camera.contrast += 5
                 onMinusClicked: if (control.camera !== undefined) control.camera.contrast -= 5
+                onSliderClicked: control.camera.contrast = Math.round(desiredPercentage / 5) * 5
             }
 
             ControlSlider {
@@ -46,6 +48,7 @@ Item {
                 description: qsTr("Color")
                 onPlusClicked: if (control.camera !== undefined) control.camera.color += 5
                 onMinusClicked: if (control.camera !== undefined) control.camera.color -= 5
+                onSliderClicked: control.camera.color = Math.round(desiredPercentage / 5) * 5
             }
         }
     }
