@@ -111,6 +111,17 @@ public:
 		// not used by TreeBrowserListModel
 	}
 
+	virtual DirectoryBrowserMemento *clone()
+	{
+		// not needed for mock
+		return 0;
+	}
+
+	virtual void restore(DirectoryBrowserMemento *m)
+	{
+		// not needed for mock
+	}
+
 private:
 	QStringList root_path;
 	QStringList current_path;
@@ -181,6 +192,17 @@ public:
 	virtual void reset()
 	{
 		// not used by TreeBrowserListModel
+	}
+
+	virtual DirectoryBrowserMemento *clone()
+	{
+		// not needed for mock
+		return 0;
+	}
+
+	virtual void restore(DirectoryBrowserMemento *m)
+	{
+		// not needed for mock
 	}
 
 	// TODO implement

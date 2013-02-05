@@ -278,6 +278,26 @@ void TreeBrowserListModelBase::setRange(QVariantList range)
 	emit rangeChanged();
 }
 
+FolderListModelMemento *TreeBrowserListModelBase::clone()
+{
+	FolderListModelMemento *m = new FolderListModelMemento;
+	m->tm = browser->clone();
+	m->filter = getFilter();
+	m->range = getRange();
+	m->root_path = getRootPath();
+	m->current_path = getCurrentPath();
+	return m;
+}
+
+void TreeBrowserListModelBase::restore(FolderListModelMemento *m)
+{
+	browser->restore(m->tm);
+	setRootPath(m->root_path);
+	setCurrentPath(m->current_path);
+	setRange(m->range);
+	setFilter(m->filter);
+}
+
 
 FolderListModel::FolderListModel(TreeBrowser *browser, QObject *parent) :
 	TreeBrowserListModelBase(browser, parent)
@@ -531,7 +551,7 @@ void PagedFolderListModel::changeRootDirectory()
 }
 
 
-DirectoryListModelMemento::~DirectoryListModelMemento()
+FolderListModelMemento::~FolderListModelMemento()
 {
 	delete tm;
 }
@@ -540,28 +560,6 @@ DirectoryListModelMemento::~DirectoryListModelMemento()
 DirectoryListModel::DirectoryListModel(QObject *parent) :
 	FolderListModel(new DirectoryTreeBrowser, parent)
 {
-}
-
-DirectoryListModelMemento *DirectoryListModel::clone()
-{
-	DirectoryListModelMemento *m = new DirectoryListModelMemento;
-	DirectoryTreeBrowser *b = static_cast<DirectoryTreeBrowser *>(browser);
-	m->tm = b->clone();
-	m->filter = getFilter();
-	m->range = getRange();
-	m->root_path = getRootPath();
-	m->current_path = getCurrentPath();
-	return m;
-}
-
-void DirectoryListModel::restore(DirectoryListModelMemento *m)
-{
-	DirectoryTreeBrowser *b = static_cast<DirectoryTreeBrowser *>(browser);
-	b->restore(m->tm);
-	setRootPath(m->root_path);
-	setCurrentPath(m->current_path);
-	setRange(m->range);
-	setFilter(m->filter);
 }
 
 

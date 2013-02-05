@@ -609,7 +609,7 @@ void SourceLocalMedia::startPlay(DirectoryListModel *_model, int index, int tota
 {
 	if (_model != model)
 	{
-		DirectoryListModelMemento *state = _model->clone();
+		FolderListModelMemento *state = _model->clone();
 		model->restore(state);
 		// remove any range that may be set
 		model->setRange(QVariantList() << 0 << model->getCount());
@@ -701,7 +701,7 @@ SourceLocalMedia::AsyncRes SourceLocalMedia::scanPath(DirectoryListModel *model,
 
 			m.setRootPath(makeModelPath(files.absolutePath()));
 
-			DirectoryListModelMemento *s = m.clone();
+			FolderListModelMemento *s = m.clone();
 			model->restore(s);
 			delete s;
 
