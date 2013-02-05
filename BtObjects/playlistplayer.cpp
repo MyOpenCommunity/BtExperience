@@ -27,6 +27,8 @@ PlayListPlayer::PlayListPlayer(QObject *parent) :
 
 	is_video = false;
 	actual_list = 0;
+	upnp_state = 0;
+	local_state = 0;
 	local_list = new FileListManager;
 	connect(local_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
 
@@ -36,6 +38,18 @@ PlayListPlayer::PlayListPlayer(QObject *parent) :
 		this, SLOT(directoryUnmounted(QString)));
 
 	emit playingChanged();
+}
+
+PlayListPlayer::~PlayListPlayer()
+{
+	clearListState();
+}
+
+void PlayListPlayer::clearListState()
+{
+	delete upnp_state;
+	delete local_state;
+	upnp_state = local_state = 0;
 }
 
 void PlayListPlayer::generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool _is_video)
@@ -57,6 +71,18 @@ void PlayListPlayer::generatePlaylistWebRadio(QList<QObject *> items, int index,
 	terminate();
 	is_video = false;
 	generate(items, index, total_files);
+}
+
+void PlayListPlayer::restoreLocalState(DirectoryListModel *model)
+{
+	if (local_state)
+		model->restore(local_state);
+}
+
+void PlayListPlayer::restoreUpnpState(UPnPListModel *model)
+{
+	if (upnp_state)
+		model->restore(upnp_state);
 }
 
 bool PlayListPlayer::isPlaying() const
@@ -157,6 +183,9 @@ void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_fi
 	list->setList(entry_list);
 	list->setCurrentIndex(index);
 
+	clearListState();
+	local_state = model->clone();
+
 	// restores range (model belongs to QML!)
 	model->setRange(oldRange);
 
@@ -178,6 +207,9 @@ void PlayListPlayer::generate(UPnPListModel *model, int index, int total_files)
 	list->setStartingFile(file->getEntryInfo());
 	list->setCurrentIndex(index);
 	list->setTotalFiles(total_files);
+
+	clearListState();
+	upnp_state = model->clone();
 
 	// no need to call updateCurrent(): it is called when receiving the status update
 	// from XmlDevice
@@ -216,6 +248,8 @@ void PlayListPlayer::generate(QList<QObject *> items, int index, int total_files
 	FileListManager *list = static_cast<FileListManager *>(local_list);
 	list->setList(entry_list);
 	list->setCurrentIndex(index);
+
+	clearListState();
 
 	// updates reference to current (emits currentChanged)
 	updateCurrent();
