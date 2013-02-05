@@ -42,6 +42,7 @@ Column {
             }
         }
     }
+    Component.onCompleted: descriptionInput.forceActiveFocus()
 
     SvgImage {
         source: "../images/scenarios/bg_titolo.svg"
@@ -62,85 +63,105 @@ Column {
     SvgImage {
         source: "../images/scenarios/bg_testo.svg"
 
-        Column {
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                right: parent.right
+        Flickable {
+            id: flick
+
+            anchors.fill: parent
+            interactive: false
+            clip: true
+
+            function ensureVisible(r) {
+                if (contentX >= r.x)
+                    contentX = r.x;
+                else if (contentX + width <= r.x + r.width)
+                    contentX = r.x + r.width-width;
+                if (contentY >= r.y)
+                    contentY = r.y;
+                else if (contentY + height <= r.y + r.height)
+                    contentY = r.y + r.height - height;
             }
 
-            spacing: 3
+            Column {
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                    right: parent.right
+                }
 
-            UbuntuLightText {
-                id: titleText
-                font.pixelSize: 14
-                color: "white"
-                text: qsTr("Title:")
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
+                spacing: 3
 
-            SvgImage {
-                source: "../images/common/bg_text-input.svg"
-                anchors.horizontalCenter: parent.horizontalCenter
-                UbuntuLightTextInput {
-                    id: descriptionInput
-                    text: "Title goes here."
+                UbuntuLightText {
+                    id: titleText
                     font.pixelSize: 14
-                    color: "#5A5A5A"
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        right: parent.right
-                        rightMargin: 10
-                        verticalCenter: parent.verticalCenter
-                    }
-                    activeFocusOnPress: false
-                    containerWidget: popup
+                    color: "white"
+                    text: qsTr("Title:")
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        descriptionInput.forceActiveFocus()
-                        descriptionInput.openSoftwareInputPanel()
+
+                SvgImage {
+                    source: "../images/common/bg_text-input.svg"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    UbuntuLightTextInput {
+                        id: descriptionInput
+                        text: "Title goes here."
+                        font.pixelSize: 14
+                        color: "#5A5A5A"
+                        focus: true
+                        anchors {
+                            left: parent.left
+                            leftMargin: 10
+                            right: parent.right
+                            rightMargin: 10
+                            verticalCenter: parent.verticalCenter
+                        }
+                        containerWidget: popup
+                        onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            descriptionInput.forceActiveFocus()
+                            descriptionInput.openSoftwareInputPanel()
+                        }
                     }
                 }
-            }
 
-            UbuntuLightText {
-                id: addressText
-                visible: bottomVisible
-                font.pixelSize: 14
-                color: "white"
-                text: qsTr("Address:")
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            SvgImage {
-                id: addressInputBg
-                visible: bottomVisible
-                source: "../images/common/bg_text-input.svg"
-                anchors.horizontalCenter: parent.horizontalCenter
-                UbuntuLightTextInput {
-                    id: addressInput
-                    text: "Address goes here."
+                UbuntuLightText {
+                    id: addressText
+                    visible: bottomVisible
                     font.pixelSize: 14
-                    color: "#5A5A5A"
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        right: parent.right
-                        rightMargin: 10
-                        verticalCenter: parent.verticalCenter
-                    }
-                    activeFocusOnPress: false
-                    containerWidget: popup
-                    echoMode: popup.bottomInputIsPassword ? TextInput.Password : TextInput.Normal
+                    color: "white"
+                    text: qsTr("Address:")
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        addressInput.forceActiveFocus()
-                        addressInput.openSoftwareInputPanel()
+
+                SvgImage {
+                    id: addressInputBg
+                    visible: bottomVisible
+                    source: "../images/common/bg_text-input.svg"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    UbuntuLightTextInput {
+                        id: addressInput
+                        text: "Address goes here."
+                        font.pixelSize: 14
+                        color: "#5A5A5A"
+                        anchors {
+                            left: parent.left
+                            leftMargin: 10
+                            right: parent.right
+                            rightMargin: 10
+                            verticalCenter: parent.verticalCenter
+                        }
+                        containerWidget: popup
+                        onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
+                        echoMode: popup.bottomInputIsPassword ? TextInput.Password : TextInput.Normal
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            addressInput.forceActiveFocus()
+                            addressInput.openSoftwareInputPanel()
+                        }
                     }
                 }
             }
