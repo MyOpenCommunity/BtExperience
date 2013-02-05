@@ -160,7 +160,7 @@ SvgImage {
 
         SvgImage {
             id: closeIcon
-            anchors.right: parent.right
+            anchors.centerIn: parent
             source: "../../images/common/button_close.svg"
             states: [
                 State {
