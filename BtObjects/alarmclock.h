@@ -40,7 +40,7 @@ class AlarmClock : public ObjectInterface
 	/*!
 		\brief Checks if object is valid to be permanently saved
 	*/
-	Q_PROPERTY(AlarmClockApplyResult checkValidity READ getCheckValidity NOTIFY checkValidityChanged)
+	Q_PROPERTY(AlarmClockApplyResult validityStatus READ getValidityStatus NOTIFY validityStatusChanged)
 
 	/*!
 		\brief Is the alarm clock enabled?
@@ -169,7 +169,7 @@ public:
 	int getVolume() const;
 	bool isRinging() const;
 	QObject *getAmbient();
-	AlarmClockApplyResult getCheckValidity();
+	AlarmClockApplyResult getValidityStatus();
 
 signals:
 	void alarmTypeChanged();
@@ -192,7 +192,7 @@ signals:
 	void amplifierChanged();
 	void volumeChanged();
 	void ringingChanged();
-	void checkValidityChanged();
+	void validityStatusChanged();
 
 private slots:
 	void checkRequestManagement();

@@ -227,7 +227,7 @@ Page {
             right: cancelButton.left
         }
         onClicked: {
-            var r = page.alarmClock.checkValidity
+            var r = page.alarmClock.validityStatus
 
             if (r === AlarmClock.AlarmClockApplyResultNoName) {
                 page.installPopup(errorFeedback, { text: qsTr("No name set") })

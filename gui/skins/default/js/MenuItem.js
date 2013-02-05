@@ -37,7 +37,7 @@ function status(itemObject) {
         return itemObject.active === true ? 1 : 0
 
     case ObjectInterface.IdAlarmClock:
-        return (itemObject.checkValidity !== AlarmClock.AlarmClockApplyResultOk) ? 3 : -1
+        return (itemObject.validityStatus !== AlarmClock.AlarmClockApplyResultOk) ? 3 : -1
     }
 
     return -1
@@ -73,11 +73,11 @@ function description(itemObject) {
             descr += pageObject.names.get('CENTRAL_STATUS', currentModalityId)
         break
     case ObjectInterface.IdAlarmClock:
-        if (itemObject.checkValidity === AlarmClock.AlarmClockApplyResultNoAmplifier)
+        if (itemObject.validityStatus === AlarmClock.AlarmClockApplyResultNoAmplifier)
             descr = qsTr("No amplifier set")
-        else if (itemObject.checkValidity === AlarmClock.AlarmClockApplyResultNoSource)
+        else if (itemObject.validityStatus === AlarmClock.AlarmClockApplyResultNoSource)
             descr = qsTr("No source set")
-        else if (itemObject.checkValidity === AlarmClock.AlarmClockApplyResultNoName)
+        else if (itemObject.validityStatus === AlarmClock.AlarmClockApplyResultNoName)
             descr = qsTr("No name set")
         break
     }

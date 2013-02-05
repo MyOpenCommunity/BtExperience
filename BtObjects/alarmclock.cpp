@@ -209,7 +209,7 @@ AlarmClock::AlarmClock(QString description, bool _enabled, int type, int days, i
 
 	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(amplifierChanged()), this, SLOT(updateAmbient()));
-	connect(this, SIGNAL(descriptionChanged()), this, SIGNAL(checkValidityChanged()));
+	connect(this, SIGNAL(descriptionChanged()), this, SIGNAL(validityStatusChanged()));
 
 	connect(timer_trigger, SIGNAL(timeout()), this, SLOT(triggersIfHasTo()));
 	connect(timer_tick, SIGNAL(timeout()), this, SLOT(alarmTick()));
@@ -233,7 +233,7 @@ void AlarmClock::reset()
 	cache->reset();
 }
 
-AlarmClock::AlarmClockApplyResult AlarmClock::getCheckValidity()
+AlarmClock::AlarmClockApplyResult AlarmClock::getValidityStatus()
 {
 	if (getAlarmType() == AlarmClock::AlarmClockSoundSystem)
 	{
