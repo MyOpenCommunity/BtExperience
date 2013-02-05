@@ -6,7 +6,7 @@ SvgImage {
     id: buttonSlider
 
     property int percentage: 70
-    property string description: qsTr("volume")
+    property alias description: label.text
 
     signal plusClicked
     signal minusClicked
@@ -15,39 +15,54 @@ SvgImage {
 
     UbuntuLightText {
         id: label
-        anchors.top: parent.top
-        anchors.topMargin: 5
-        anchors.left: parent.left
-        anchors.leftMargin: 7
+
+        anchors {
+            top: parent.top
+            topMargin: 5
+            left: parent.left
+            leftMargin: 7
+        }
+
+        text: qsTr("volume")
         font.pixelSize: 15
         color: "#444546"
-        text: buttonSlider.description
     }
 
     UbuntuLightText {
         id: percentageLabel
+
+        anchors {
+            top: parent.top
+            topMargin: 5
+            right: parent.right
+            rightMargin: 15
+        }
+
         text: percentage + " %"
-        anchors.top: parent.top
-        anchors.topMargin: 5
-        anchors.right: parent.right
-        anchors.rightMargin: 15
         font.pixelSize: 15
         color: "#444546"
     }
 
     SvgImage {
         id: image2
-        anchors.top: label.bottom
-        anchors.topMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
+
+        anchors {
+            top: label.bottom
+            topMargin: 10
+            horizontalCenter: parent.horizontalCenter
+        }
+
         source: "../images/common/bg_regola_dimmer.svg"
 
         Rectangle {
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                leftMargin: -2
+            }
+
             height: parent.height + 2
             width: parent.width * (buttonSlider.percentage < 10 ? 10 : buttonSlider.percentage) / 100 + 4
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: -2
             radius: 100
             smooth: true
             gradient: Gradient {
