@@ -12,6 +12,8 @@ Page {
     showSystemsButton: false
     text: qsTr("Change password")
 
+    Component.onCompleted: oldPasswordInput.forceActiveFocus()
+
     Pannable {
         anchors.fill: parent
 
@@ -22,8 +24,9 @@ Page {
             height: parent.height
 
             Column {
+                id: mainPanel
                 anchors.centerIn: parent
-                spacing: 4
+                spacing: 2
 
                 SvgImage {
                     source: "images/scenarios/bg_titolo.svg"
@@ -43,7 +46,7 @@ Page {
 
                 SvgImage {
                     source: "images/scenarios/bg_testo.svg"
-                    height: 226
+                    height: 190
 
                     Column {
                         anchors {
@@ -52,7 +55,7 @@ Page {
                             right: parent.right
                         }
 
-                        spacing: 4
+                        spacing: 2
 
                         UbuntuLightText {
                             font.pixelSize: 14
@@ -77,8 +80,7 @@ Page {
                                     rightMargin: 10
                                     verticalCenter: parent.verticalCenter
                                 }
-                                activeFocusOnPress: false
-                                containerWidget: parent
+                                containerWidget: mainPanel
                             }
                             MouseArea {
                                 anchors.fill: parent
@@ -112,8 +114,7 @@ Page {
                                     rightMargin: 10
                                     verticalCenter: parent.verticalCenter
                                 }
-                                activeFocusOnPress: false
-                                containerWidget: parent
+                                containerWidget: mainPanel
                             }
                             MouseArea {
                                 anchors.fill: parent
@@ -147,8 +148,7 @@ Page {
                                     rightMargin: 10
                                     verticalCenter: parent.verticalCenter
                                 }
-                                activeFocusOnPress: false
-                                containerWidget: parent
+                                containerWidget: mainPanel
                             }
                             MouseArea {
                                 anchors.fill: parent
