@@ -236,14 +236,25 @@ public:
 
 public slots:
 	/*!
+		\brief Increase dimmer level using either 10-level or 100-level frames, depending on device
+	*/
+	virtual void increaseLevel();
+
+	/*!
+		\brief Decrease dimmer level using either 10-level or 100-level frames, depending on device
+	*/
+	virtual void decreaseLevel();
+
+	/*!
 		\brief Increase dimmer level by about 10%
 	*/
-	void increaseLevel();
+	void increaseLevel10();
 
 	/*!
 		\brief Decrease dimmer level by about 10%
 	*/
-	void decreaseLevel();
+	void decreaseLevel10();
+
 
 signals:
 	void percentageChanged();
@@ -290,12 +301,12 @@ public slots:
 	/*!
 		\brief Increase dimmer group level by about 10%
 	*/
-	void increaseLevel();
+	virtual void increaseLevel();
 
 	/*!
 		\brief Decrease dimmer group level by about 10%
 	*/
-	void decreaseLevel();
+	virtual void decreaseLevel();
 
 private:
 	QList<Dimmer *> objects;
@@ -366,6 +377,9 @@ public:
 
 	virtual void setActive(bool on);
 	virtual void setPercentage(int percentage);
+
+	virtual void increaseLevel();
+	virtual void decreaseLevel();
 
 public slots:
 	/*!
