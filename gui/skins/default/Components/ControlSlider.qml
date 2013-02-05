@@ -21,9 +21,9 @@ SvgImage {
 
         anchors {
             top: parent.top
-            topMargin: 5
+            topMargin: buttonSlider.height / 100 * 5
             left: parent.left
-            leftMargin: 7
+            leftMargin: buttonSlider.width / 100 * 3.30
         }
 
         text: qsTr("volume")
@@ -36,9 +36,9 @@ SvgImage {
 
         anchors {
             top: parent.top
-            topMargin: 5
+            topMargin: buttonSlider.height / 100 * 5
             right: parent.right
-            rightMargin: 15
+            rightMargin: buttonSlider.width / 100 * 7.07
         }
 
         text: percentage + " %"
@@ -51,7 +51,7 @@ SvgImage {
 
         anchors {
             top: label.bottom
-            topMargin: 10
+            topMargin: buttonSlider.height / 100 * 10
             horizontalCenter: parent.horizontalCenter
         }
 
@@ -65,7 +65,7 @@ SvgImage {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: -2
+                leftMargin: -buttonSlider.width / 100 * 0.94
             }
 
             height: parent.height + 2
@@ -108,7 +108,7 @@ SvgImage {
     Row {
         anchors {
             top: imageSlider.bottom
-            topMargin: 5
+            topMargin: buttonSlider.height / 100 * 5
             horizontalCenter: parent.horizontalCenter
         }
 
