@@ -271,6 +271,7 @@ protected:
 
 protected slots:
 	void directoryChanged();
+	void contextChanged();
 
 private slots:
 	void gotFileList(EntryInfoList list);

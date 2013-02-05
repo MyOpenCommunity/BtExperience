@@ -359,6 +359,7 @@ PagedFolderListModel::PagedFolderListModel(PagedTreeBrowser *_browser, QObject *
 
 	connect(browser, SIGNAL(listRetrieveError()), this, SLOT(resetLoadingFlag()));
 	connect(browser, SIGNAL(rootDirectoryEntered()), this, SLOT(changeRootDirectory()));
+	connect(browser, SIGNAL(contextChanged()), this, SLOT(contextChanged()));
 }
 
 void PagedFolderListModel::setLoadingIfAsynchronous()
@@ -468,6 +469,13 @@ void PagedFolderListModel::directoryChanged()
 		min_range = 0;
 	}
 
+	// here we can't optimize and wait for the range to be set, because the list size
+	// is received with the page list message
+	requestFirstPage();
+}
+
+void PagedFolderListModel::contextChanged()
+{
 	// here we can't optimize and wait for the range to be set, because the list size
 	// is received with the page list message
 	requestFirstPage();
