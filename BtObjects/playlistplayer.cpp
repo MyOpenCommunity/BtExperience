@@ -73,6 +73,16 @@ void PlayListPlayer::generatePlaylistWebRadio(QList<QObject *> items, int index,
 	generate(items, index, total_files);
 }
 
+bool PlayListPlayer::matchesSavedState(bool is_upnp, QVariantList root_path) const
+{
+	if (!is_upnp && local_state && local_state->getRootPath() == root_path)
+		return true;
+	else if (is_upnp && upnp_state)
+		return true;
+	else
+		return false;
+}
+
 void PlayListPlayer::restoreLocalState(DirectoryListModel *model)
 {
 	if (local_state)

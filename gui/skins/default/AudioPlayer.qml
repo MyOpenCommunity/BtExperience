@@ -240,7 +240,7 @@ Page {
             leftMargin: frameBg.width / 100 * 1.90
         }
 
-        onClicked: Stack.popPage()
+        onClicked: Stack.goToPage('Devices.qml', {restoreBrowserState: true})
     }
 
     ControlAudio {

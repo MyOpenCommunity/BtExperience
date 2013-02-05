@@ -32,6 +32,7 @@ public:
 	Q_INVOKABLE void generatePlaylistUPnP(UPnPListModel *model, int index, int total_files, bool is_video);
 	Q_INVOKABLE void generatePlaylistWebRadio(QList<QObject *> items, int index, int total_files);
 
+	Q_INVOKABLE bool matchesSavedState(bool is_upnp, QVariantList root_path) const;
 	Q_INVOKABLE void restoreLocalState(DirectoryListModel *model);
 	Q_INVOKABLE void restoreUpnpState(UPnPListModel *model);
 

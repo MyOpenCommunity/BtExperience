@@ -9,6 +9,8 @@ import "../../js/MediaItem.js" as Script
 MenuColumn {
     id: column
 
+    property bool restoreBrowserState
+
     onChildDestroyed: {
         itemList.currentIndex = -1
     }
@@ -24,24 +26,43 @@ MenuColumn {
         id: itemList
         currentIndex: -1
 
+        property QtObject restoredItem
+
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
             name: itemObject.name
             hasChild: true
-            enabled: Script.mediaItemEnabled(itemObject)
+            enabled: Script.mediaItemEnabled(itemObject, restoredItem)
             onEnabledChanged: if (!Script.mediaItemMounted(itemObject)) column.closeChild()
-            onDelegateClicked: {
-                var upnp = itemObject.sourceType === SourceObject.Upnp;
-                var props = {
-                    rootPath: itemObject.rootPath,
-                    upnp: upnp
-                }
-                column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
-            }
+            onDelegateClicked: itemList._openColumn(itemObject, false)
         }
 
         model: modelList
         onCurrentPageChanged: column.closeChild()
+
+        function _openColumn(itemObject, restoreState) {
+            var upnp = itemObject.sourceType === SourceObject.Upnp;
+            var props = {
+                rootPath: itemObject.rootPath,
+                restoreState: restoreState,
+                upnp: upnp
+            }
+            column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
+        }
+
+        function restoreBrowserState() {
+            for (var i = 0; i < modelList.count; ++i) {
+                var itemObject = modelList.getObject(i)
+                var is_upnp = itemObject.sourceType === SourceObject.Upnp
+
+                if (global.audioVideoPlayer.matchesSavedState(is_upnp, itemObject.rootPath))
+                {
+                    restoredItem = itemObject
+                    _openColumn(itemObject, true)
+                    break
+                }
+            }
+        }
     }
 
     Component {
@@ -60,5 +81,18 @@ MenuColumn {
             onAudioClicked: Stack.pushPage("AudioPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
             onVideoClicked: Stack.pushPage("VideoPlayer.qml", {"model": theModel, "index": index, "upnp": upnp})
         }
+    }
+
+    Timer {
+        id: delayRestore
+        interval: 1
+        repeat: false
+        running: false
+        onTriggered: itemList.restoreBrowserState()
+    }
+
+    Component.onCompleted: {
+        if (restoreBrowserState)
+            delayRestore.start()
     }
 }

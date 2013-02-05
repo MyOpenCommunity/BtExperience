@@ -6,6 +6,7 @@ ColumnBrowserCommon {
 
     property variant rootPath
     property alias filter: upnpModel.filter
+    property bool restoreState
 
     theModel: upnpModel
     text: upnpModel.currentPath[upnpModel.currentPath.length - 1] || "Media server"
@@ -14,5 +15,10 @@ ColumnBrowserCommon {
         id: upnpModel
         filter: FileObject.All
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    Component.onCompleted: {
+        if (restoreState)
+            global.audioVideoPlayer.restoreUpnpState(upnpModel)
     }
 }

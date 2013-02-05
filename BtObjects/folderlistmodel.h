@@ -309,6 +309,8 @@ friend class TreeBrowserListModelBase;
 public:
 	~FolderListModelMemento();
 
+	QVariantList getRootPath() const { return root_path; }
+
 private:
 	DirectoryBrowserMemento *tm;
 	QVariantList range, root_path, current_path;
