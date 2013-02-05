@@ -159,7 +159,13 @@ Page {
                     font.pixelSize: 14
                     color: "#5A5A5A"
                     elide: Text.ElideMiddle
-                    anchors.centerIn: nameBgImage
+                    anchors {
+                        left: nameBgImage.left
+                        leftMargin: bg.width / 100 * 1.5
+                        right: nameBgImage.right
+                        rightMargin: bg.width / 100 * 1.5
+                        verticalCenter: nameBgImage.verticalCenter
+                    }
                 }
 
                 BeepingMouseArea {
