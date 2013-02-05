@@ -107,7 +107,7 @@ Item {
             pressedImage: "../images/common/button_pager_press.svg"
             selectedImage: "../images/common/button_pager_select.svg"
             shadowImage: "../images/common/shadow_button_pager.svg"
-            onClicked: privateProps.previousPage()
+            onPressed: privateProps.previousPage()
 
             SvgImage {
                 id: image1
@@ -137,7 +137,7 @@ Item {
                 pressedImage: "../images/common/button_pager_press.svg"
                 selectedImage: "../images/common/button_pager_select.svg"
                 shadowImage: "../images/common/shadow_button_pager.svg"
-                onClicked: goToPage(pageNumber)
+                onPressed: goToPage(pageNumber)
                 status: privateProps.currentPage === pageNumber ? 1 : 0
             }
         }
@@ -149,7 +149,7 @@ Item {
             pressedImage: "../images/common/button_pager_press.svg"
             selectedImage: "../images/common/button_pager_select.svg"
             shadowImage: "../images/common/shadow_button_pager.svg"
-            onClicked: privateProps.nextPage()
+            onPressed: privateProps.nextPage()
 
             SvgImage {
                 id: image2

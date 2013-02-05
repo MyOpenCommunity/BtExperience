@@ -21,6 +21,7 @@ SvgImage {
 
     signal clicked(variant mouse)
     signal pressAndHold(variant mouse)
+    signal pressed(variant mouse)
 
     source: defaultImage
 
@@ -29,6 +30,7 @@ SvgImage {
         anchors.fill: parent
         onClicked: bg.clicked(mouse)
         onPressAndHold: bg.pressAndHold(mouse)
+        onPressed: bg.pressed(mouse)
     }
 
     Rectangle {
