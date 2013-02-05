@@ -213,6 +213,13 @@ void TestDimmer::testReceiveLevel()
 	tperc.checkNoSignals();
 }
 
+void TestDimmer::testSetLevel()
+{
+	obj->setPercentage(75);
+	dev->setLevel100(75, 9);
+	compareClientCommand();
+}
+
 void TestDimmer::testBroken()
 {
 	DeviceValues v;
@@ -269,6 +276,13 @@ void TestDimmer100::testReceiveLevel()
 	obj->valueReceived(v);
 	tstatus.checkNoSignals();
 	tperc.checkNoSignals();
+}
+
+void TestDimmer100::testSetLevel()
+{
+	obj->setPercentage(75);
+	dev->setLevel100(75, 255);
+	compareClientCommand();
 }
 
 void TestDimmer100::testSetStatus()

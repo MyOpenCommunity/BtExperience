@@ -6,6 +6,7 @@
 #include <QTime>
 
 class DirectoryListModel;
+class FolderListModelMemento;
 class UPnPListModel;
 class ListManager;
 
@@ -30,6 +31,11 @@ public:
 	Q_INVOKABLE void generatePlaylistLocal(DirectoryListModel *model, int index, int total_files, bool is_video);
 	Q_INVOKABLE void generatePlaylistUPnP(UPnPListModel *model, int index, int total_files, bool is_video);
 	Q_INVOKABLE void generatePlaylistWebRadio(QList<QObject *> items, int index, int total_files);
+
+	Q_INVOKABLE bool matchesSavedState(bool is_upnp, QVariantList root_path) const;
+	Q_INVOKABLE void restoreLocalState(DirectoryListModel *model);
+	Q_INVOKABLE void restoreUpnpState(UPnPListModel *model);
+
 	// methods needed to restore state when coming back to player page
 	Q_INVOKABLE bool isUpnp() const { return ((actual_list == upnp_list) ? true : false); }
 
@@ -40,6 +46,7 @@ public slots:
 
 protected:
 	explicit PlayListPlayer(QObject *parent = 0);
+	~PlayListPlayer();
 
 	QString getCurrent() const { return current; }
 	QString getCurrentName() const { return current_name; }
@@ -69,7 +76,10 @@ private slots:
 	void directoryUnmounted(QString dir);
 
 private:
+	void clearListState();
+
 	ListManager *local_list, *upnp_list, *actual_list;
+	FolderListModelMemento *local_state, *upnp_state;
 	QString current, current_name;
 	bool is_video;
 

@@ -5,9 +5,12 @@ import "js/Stack.js" as Stack
 
 
 SystemPage {
+    id: page
     source: "images/background/devices.jpg"
     text: qsTr("Devices")
-    rootColumn: Component { DevicesSystem {} }
+    rootColumn: Component { DevicesSystem { restoreBrowserState: page.restoreBrowserState } }
+
+    property bool restoreBrowserState
 
     function multimediaButtonClicked() {
         Stack.backToMultimedia()

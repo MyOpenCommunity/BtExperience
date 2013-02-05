@@ -394,6 +394,11 @@ int Dimmer::getPercentage() const
 	return percentage;
 }
 
+void Dimmer::setPercentage(int percentage)
+{
+	dev->setLevel100(percentage, DIMMER100_SPEED);
+}
+
 void Dimmer::decreaseLevel()
 {
 	dev->decreaseLevel();
@@ -540,6 +545,11 @@ void Dimmer100::setActive(bool on)
 		else
 			dev->fixedTiming(getFTime());
 	}
+}
+
+void Dimmer100::setPercentage(int percentage)
+{
+	dev->setLevel100(percentage, on_speed);
 }
 
 void Dimmer100::turn(bool on)

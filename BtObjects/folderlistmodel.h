@@ -8,6 +8,7 @@
 
 class TreeBrowser;
 class DirectoryBrowserMemento;
+class FolderListModelMemento;
 class PagedTreeBrowser;
 class XmlDevice;
 
@@ -171,6 +172,9 @@ public:
 
 	virtual int getCount() const = 0;
 
+	virtual FolderListModelMemento *clone();
+	virtual void restore(FolderListModelMemento *m);
+
 public slots:
 	/*!
 		\brief Navigate into a directory
@@ -271,16 +275,18 @@ protected:
 
 protected slots:
 	void directoryChanged();
+	void contextChanged();
 
 private slots:
 	void gotFileList(EntryInfoList list);
 	void changeRootDirectory();
 
+protected:
+	PagedTreeBrowser *browser;
+
 private:
 	void requestFirstPage();
 	void resetInternalState();
-
-	PagedTreeBrowser *browser;
 
 	// item_list is a cache of recently-used objects, starting at index
 	// start_index
@@ -297,11 +303,13 @@ private:
 	// start_index <= min_range <= current_index <= max_range
 };
 
-class DirectoryListModelMemento
+class FolderListModelMemento
 {
-friend class DirectoryListModel;
+friend class TreeBrowserListModelBase;
 public:
-	~DirectoryListModelMemento();
+	~FolderListModelMemento();
+
+	QVariantList getRootPath() const { return root_path; }
 
 private:
 	DirectoryBrowserMemento *tm;
@@ -315,8 +323,6 @@ class DirectoryListModel : public FolderListModel
 
 public:
 	DirectoryListModel(QObject *parent = 0);
-	DirectoryListModelMemento *clone();
-	void restore(DirectoryListModelMemento *m);
 };
 
 

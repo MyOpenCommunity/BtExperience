@@ -223,13 +223,14 @@ class Dimmer : public Light
 
 		Note that the level keeps its value even when the dimmer is off
 	*/
-	Q_PROPERTY(int percentage READ getPercentage NOTIFY percentageChanged)
+	Q_PROPERTY(int percentage READ getPercentage WRITE setPercentage NOTIFY percentageChanged)
 
 public:
 	Dimmer(QString name, QString key, FixedTimingType ftime, DimmerDevice *d);
 
 	virtual int getObjectId() const;
 	virtual int getPercentage() const;
+	virtual void setPercentage(int percentage);
 
 	bool isBroken() const;
 
@@ -364,6 +365,7 @@ public:
 	int getStepAmount() const;
 
 	virtual void setActive(bool on);
+	virtual void setPercentage(int percentage);
 
 public slots:
 	/*!

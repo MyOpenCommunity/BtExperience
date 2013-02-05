@@ -73,6 +73,7 @@ private slots:
 	void testTurnOnWithFTimeDisabled();
 
 	virtual void testReceiveLevel();
+	virtual void testSetLevel();
 	void testBroken();
 
 private:
@@ -104,6 +105,7 @@ private:
 	virtual void testSetStatus();
 	virtual void testSetTiming();
 	virtual void testReceiveLevel();
+	virtual void testSetLevel();
 
 	Dimmer100 *obj;
 	Dimmer100 *obj_ftime;
