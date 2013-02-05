@@ -9,7 +9,7 @@ MenuColumn {
 
     BtObjectsMapping { id: mapping }
 
-    SystemsModel { id: thermalRegulation; systemId: Container.IdThermalRegulation }
+    SystemsModel { id: thermalRegulation; systemId: Container.IdAirConditioning }
     ObjectModel {
         id: objectModel
         filters: [

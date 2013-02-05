@@ -16,7 +16,8 @@ MenuColumn {
         paginator.currentIndex = -1
     }
 
-    SystemsModel { id: systemsModel; systemId: Container.IdThermalRegulation }
+    SystemsModel { id: idThermalRegulationSystem; systemId: Container.IdThermalRegulation }
+    SystemsModel { id: idAirConditioningSystem; systemId: Container.IdAirConditioning }
 
     ObjectModel {
         id: modelCU
@@ -24,7 +25,7 @@ MenuColumn {
             {objectId: ObjectInterface.IdThermalControlUnit99},
             {objectId: ObjectInterface.IdThermalControlUnit4}
         ]
-        containers: [systemsModel.systemUii]
+        containers: [idThermalRegulationSystem.systemUii]
     }
 
     ObjectModel {
@@ -33,7 +34,7 @@ MenuColumn {
             {objectId: ObjectInterface.IdSplitBasicScenario},
             {objectId: ObjectInterface.IdSplitAdvancedScenario}
         ]
-        containers: [systemsModel.systemUii]
+        containers: [idAirConditioningSystem.systemUii]
     }
 
     ObjectModel {
@@ -41,7 +42,7 @@ MenuColumn {
         filters: [
             {objectId: ObjectInterface.IdThermalNonControlledProbe}
         ]
-        containers: [systemsModel.systemUii]
+        containers: [idThermalRegulationSystem.systemUii]
     }
 
     ObjectModel {
@@ -49,7 +50,7 @@ MenuColumn {
         filters: [
             {objectId: ObjectInterface.IdThermalExternalProbe}
         ]
-        containers: [systemsModel.systemUii]
+        containers: [idThermalRegulationSystem.systemUii]
     }
 
     PaginatorList {
