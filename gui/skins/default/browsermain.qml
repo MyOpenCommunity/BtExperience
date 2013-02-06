@@ -88,8 +88,8 @@ BasePage {
                     top: header.bottom
                     right: header.right
                 }
-                function changeZoom(delta) {
 
+                function changeZoom(delta) {
                     if (zoomPercentage + delta < 100 || zoomPercentage + delta > 500)
                         return
                     zoomPercentage += delta
