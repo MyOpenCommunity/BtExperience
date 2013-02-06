@@ -59,7 +59,10 @@ QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node, QHash<int, EnergyRat
 			int rate_id = v.intValue("rate_id");
 
 			if (!rates.contains(rate_id))
+			{
+				qWarning() << "Invalid rate id" << rate_id;
 				qFatal("Invalid rate id %d", rate_id);
+			}
 			rate = rates[rate_id];
 			rate_decimals = v.intValue("rate_n_decimal_view");
 		}
@@ -87,7 +90,10 @@ QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node, QHash<int, Energy
 			int rate_id = v.intValue("rate_id");
 
 			if (!rates.contains(rate_id))
+			{
+				qWarning() << "Invalid rate id" << rate_id;
 				qFatal("Invalid rate id %d", rate_id);
+			}
 			rate = rates[rate_id];
 			rate_decimals = v.intValue("rate_n_decimal_view");
 		}
