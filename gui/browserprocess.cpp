@@ -148,6 +148,20 @@ void BrowserProcess::readStatusUpdate()
 			updateVisible(value.toInt());
 		else if (key == "last_click")
 			emit clicked();
+		else if (key == "create_quicklink")
+		{
+			QStringList tokens = value.split(" ");
+			if (tokens.count() >= 3)
+			{
+				bool ok = false;
+				int t = tokens[0].toInt(&ok);
+				QStringList description;
+				for (int i = 2; i < tokens.count(); ++i)
+					description << tokens[i];
+				if (ok)
+					emit createQuicklink(t, description.join(" "), tokens[1]);
+			}
+		}
 	}
 }
 

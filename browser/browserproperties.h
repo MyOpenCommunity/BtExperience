@@ -39,12 +39,14 @@ public slots:
 	void updateClick();
 	void credentialsRequired(BtNetworkAccessManager *, QNetworkReply *);
 	void certificatesError(BtNetworkAccessManager *, QNetworkReply *);
+	void createQuicklink(int type, QString name, QString address);
 
 signals:
 	void urlChanged();
 	void authenticationRequired();
 	void untrustedSslConnection();
 	void requestComplete(bool ssl, QString host, bool originating_request, QString organization);
+	void aboutToHide();
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev);

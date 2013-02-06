@@ -36,6 +36,7 @@ signals:
 	void runningChanged();
 	void clicked();
 	void aboutToHide();
+	void createQuicklink(int type, QString name, QString address);
 
 private slots:
 	void terminated();

@@ -78,6 +78,7 @@ void BrowserProperties::quit()
 	setVisible(false);
 	if (!persistent_history)
 		clearHistory();
+	emit aboutToHide();
 }
 
 void BrowserProperties::updateClick()
@@ -208,4 +209,10 @@ void BrowserProperties::setHistorySize(int history)
 	persistent_history_size = history;
 	foreach (QWebPage *page, pages)
 		page->history()->setMaximumItemCount(history);
+}
+
+void BrowserProperties::createQuicklink(int type, QString name, QString address)
+{
+	QString command = QString("create_quicklink: %1 %2 %3").arg(type).arg(address).arg(name);
+	printf("%s\n", command.toLatin1().data());
 }
