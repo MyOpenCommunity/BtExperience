@@ -7,6 +7,7 @@ Item {
     id: control
 
     property alias text: radioLabel.text
+    property alias pixelSize: radioLabel.font.pixelSize
     property bool status: false
 
     signal clicked
@@ -45,12 +46,14 @@ Item {
             visible: control.status
             anchors.centerIn: parent
         }
+    }
 
-        BeepingMouseArea {
-            anchors.centerIn: parent
-            width: parent.width + (parent.width / 100 * 3.3)
-            height: parent.height + (parent.height / 100 * 3.3)
-            onClicked: control.clicked()
+    BeepingMouseArea {
+        anchors {
+            fill: parent
+            topMargin: -0.30 * parent.height
+            bottomMargin: -0.30 * parent.height
         }
+        onClicked: control.clicked()
     }
 }

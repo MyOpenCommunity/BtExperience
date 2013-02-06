@@ -138,7 +138,7 @@ Page {
     // left panel
     UbuntuLightText {
         text: qsTr("Type:")
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: "white"
         anchors {
             left: bg.left
@@ -149,12 +149,12 @@ Page {
     }
 
     Column {
-        spacing: bg.height / 100 * 2.29
+        spacing: bg.height / 100 * 4.58
         anchors {
             left: bg.left
             leftMargin: bg.width / 100 * 4.71
-            top: linkBgImage.top
-            topMargin: bg.height / 100 * 2.29
+            top: nameBgImage.top
+            topMargin: bg.height / 100 * 2.70
         }
         Repeater {
             id: repeater
@@ -162,6 +162,7 @@ Page {
             delegate: ControlRadioHorizontal {
                 width: bg.width / 100 * 23.55
                 text: choices.get(index).type
+                pixelSize: 16
                 onClicked: {
                     if (privateProps.currentIndex === index)
                         return
@@ -180,7 +181,7 @@ Page {
     UbuntuLightText {
         id: addTextText
         text: choices.get(privateProps.currentIndex).addText
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: "white"
         anchors {
             left: verticalSeparator.left
@@ -206,7 +207,7 @@ Page {
             property string realText: ""
 
             text: realText || privateProps.emptyNameString
-            font.pixelSize: 14
+            font.pixelSize: 16
             color: "#5A5A5A"
             elide: Text.ElideMiddle
             anchors {
@@ -240,7 +241,7 @@ Page {
             property string realText: ""
 
             text: realText || privateProps.emptyAddressString
-            font.pixelSize: 14
+            font.pixelSize: 16
             color: "#5A5A5A"
             elide: Text.ElideMiddle
             anchors {
@@ -265,7 +266,7 @@ Page {
         pressedImage: "images/common/btn_99x35_P.svg"
         shadowImage: "images/common/btn_shadow_99x35.svg"
         text: qsTr("ADD")
-        font.pixelSize: 14
+        font.pixelSize: 16
 
         anchors {
             left: verticalSeparator.left
@@ -296,7 +297,7 @@ Page {
     UbuntuLightText {
         id: selectTextText
         text: choices.get(privateProps.currentIndex).selectText
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: "white"
         anchors {
             left: verticalSeparator.left
@@ -309,11 +310,11 @@ Page {
     PaginatorOnBackground {
         id: paginator
 
-        property int elementsOnFirstPage: 3
-        property int elementsOnOtherPages: 9
+        property int elementsOnFirstPage: 2
+        property int elementsOnOtherPages: 7
 
-        elementsOnPage: 3
-        spacing: 5
+        elementsOnPage: 2
+        itemSpacing: 5
         anchors {
             top: selectTextText.bottom
             topMargin: bg.height / 100 * 2.29
@@ -336,6 +337,7 @@ Page {
 
                 width: bg.width / 100 * 54.95
                 text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name
+                pixelSize: 16
                 onClicked: page.currentLink = index
                 status: page.currentLink === index
 
@@ -510,7 +512,7 @@ Page {
             PropertyChanges { target: addButton; opacity: 0 }
             PropertyChanges { target: horizontalRightSeparator; opacity: 0 }
             PropertyChanges { target: selectTextText; opacity: 0 }
-            PropertyChanges { target: paginator; elementsOnPage: 9; elementsOnFirstPage: 9 }
+            PropertyChanges { target: paginator; elementsOnPage: 7; elementsOnFirstPage: 7 }
             AnchorChanges { target: paginator; anchors.top: horizontalSeparator.bottom }
         },
         State {
@@ -522,7 +524,7 @@ Page {
             PropertyChanges { target: addButton; opacity: 0 }
             PropertyChanges { target: horizontalRightSeparator; opacity: 0 }
             PropertyChanges { target: selectTextText; opacity: 0 }
-            PropertyChanges { target: paginator; elementsOnPage: 9; elementsOnFirstPage: 9 }
+            PropertyChanges { target: paginator; elementsOnPage: 7; elementsOnFirstPage: 7 }
             AnchorChanges { target: paginator; anchors.top: horizontalSeparator.bottom }
         },
         State {
@@ -534,7 +536,7 @@ Page {
             PropertyChanges { target: addButton; opacity: 0 }
             PropertyChanges { target: horizontalRightSeparator; opacity: 0 }
             PropertyChanges { target: selectTextText; opacity: 0 }
-            PropertyChanges { target: paginator; elementsOnPage: 9 }
+            PropertyChanges { target: paginator; elementsOnPage: 7 }
             AnchorChanges { target: paginator; anchors.top: horizontalSeparator.bottom }
         },
         State {
@@ -546,7 +548,7 @@ Page {
             PropertyChanges { target: addButton; opacity: 1 }
             PropertyChanges { target: horizontalRightSeparator; opacity: 1 }
             PropertyChanges { target: selectTextText; opacity: 1 }
-            PropertyChanges { target: paginator; elementsOnPage: 3 }
+            PropertyChanges { target: paginator; elementsOnPage: 2 }
             AnchorChanges { target: paginator; anchors.top: selectTextText.bottom }
         }
     ]

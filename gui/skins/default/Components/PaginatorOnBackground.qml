@@ -10,6 +10,7 @@ Item {
     property alias spacing: spacing.height
     property alias bottomRowAnchors: bottomRow.anchors
     property alias buttonComponent: button.sourceComponent
+    property alias itemSpacing: internalList.spacing
 
     property int elementsOnPage: 6
     property alias currentPage: paginator.currentPage
