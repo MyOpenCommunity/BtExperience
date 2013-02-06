@@ -141,6 +141,27 @@ namespace
 		return QDate();
 	}
 
+	int getGraphElementCount(EnergyData::GraphType type, QDate date, int current_size)
+	{
+		if (normalizeDate(type, date) != normalizeDate(type, QDate::currentDate()))
+			return current_size;
+
+		switch (type)
+		{
+		case EnergyData::DailyAverageGraph:
+		case EnergyData::CumulativeDayGraph:
+			return QTime::currentTime().hour() + 1;
+		case EnergyData::CumulativeMonthGraph:
+			return QDate::currentDate().day();
+		case EnergyData::CumulativeYearGraph:
+			return QDate::currentDate().month();
+		case EnergyData::CumulativeLastYearGraph:
+			return current_size;
+		}
+
+		return current_size;
+	}
+
 	// retuns true is the time interval for the value includes today
 	bool dateContainsToday(int type, QDate date)
 	{
@@ -553,11 +574,12 @@ void EnergyData::cacheValueData(ValueType type, QDate date, qint64 value)
 
 void EnergyData::cacheGraphData(GraphType type, QDate date, QMap<int, unsigned int> graph)
 {
-	QVector<double> *values = new QVector<double>(graph.size());
+	int graph_elements = getGraphElementCount(type, date, graph.size());
+	QVector<double> *values = new QVector<double>(graph_elements);
 
-	value_cache.insert(CacheKey(type, date), values, graph.size());
+	value_cache.insert(CacheKey(type, date), values, graph_elements);
 
-	for (int i = 0; i < graph.size(); ++i)
+	for (int i = 0; i < graph_elements; ++i)
 		(*values)[i] = graph[i + 1] / unit_conversion;
 
 	// update values in returned EnergyGraph objects
@@ -1343,6 +1365,8 @@ QVariant EnergyGraph::getMaxValue() const
 
 EnergyGraphObject::EnergyGraphObject(QObject *parent)
 {
+	Q_UNUSED(parent);
+
 	graph_type = -1;
 	graph = QSharedPointer<QObject>(0);
 	energy = 0;
@@ -1424,6 +1448,8 @@ void EnergyGraphObject::updateGraph()
 
 EnergyItemObject::EnergyItemObject(QObject *parent)
 {
+	Q_UNUSED(parent);
+
 	value_type = -1;
 	item = QSharedPointer<QObject>(0);
 	energy = 0;
