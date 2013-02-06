@@ -401,10 +401,20 @@ void Dimmer::setPercentage(int percentage)
 
 void Dimmer::decreaseLevel()
 {
-	dev->decreaseLevel();
+	decreaseLevel10();
 }
 
 void Dimmer::increaseLevel()
+{
+	increaseLevel10();
+}
+
+void Dimmer::decreaseLevel10()
+{
+	dev->decreaseLevel();
+}
+
+void Dimmer::increaseLevel10()
 {
 	dev->increaseLevel();
 }
@@ -565,6 +575,16 @@ void Dimmer100::turn(bool on)
 			dev->turnOff(off_speed);
 		else
 			Dimmer::turn(on);
+}
+
+void Dimmer100::decreaseLevel()
+{
+	decreaseLevel100();
+}
+
+void Dimmer100::increaseLevel()
+{
+	increaseLevel100();
 }
 
 void Dimmer100::increaseLevel100()

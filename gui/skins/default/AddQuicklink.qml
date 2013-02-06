@@ -43,20 +43,20 @@ Page {
     Component.onCompleted: {
         if (!onlyQuicklinks)
             choices.append({ type: qsTr("camera"), selectText: qsTr("Select existing camera:"),
-                               addText: qsTr("Add new camera:"), containerUii: -1})
+                               addText: qsTr("Add new camera:"), mediaType: MediaLink.BtObject, containerUii: -1})
         choices.append({ type: qsTr("web page"), selectText: qsTr("Select existing web page link:"),
-                           addText: qsTr("Add new web page link:"), containerUii: Container.IdMultimediaWebLink})
+                           addText: qsTr("Add new web page link:"), mediaType: MediaLink.Web, containerUii: Container.IdMultimediaWebLink})
         choices.append({ type: qsTr("web camera"), selectText: qsTr("Select existing web camera:"),
-                           addText: qsTr("Add new web camera:"), containerUii: Container.IdMultimediaWebCam})
+                           addText: qsTr("Add new web camera:"), mediaType: MediaLink.Webcam, containerUii: Container.IdMultimediaWebCam})
         choices.append({ type: qsTr("rss"), selectText: qsTr("Select existing rss link:"),
-                           addText: qsTr("Add new rss link:"), containerUii: Container.IdMultimediaRss})
+                           addText: qsTr("Add new rss link:"), mediaType: MediaLink.Rss, containerUii: Container.IdMultimediaRss})
         choices.append({ type: qsTr("weather"), selectText: qsTr("Select existing weather forecast link:"),
-                           addText: qsTr("Add new weather forecast link:"), containerUii: Container.IdMultimediaRssMeteo})
+                           addText: qsTr("Add new weather forecast link:"), mediaType: MediaLink.RssMeteo, containerUii: Container.IdMultimediaRssMeteo})
         if (!onlyQuicklinks)
             choices.append({ type: qsTr("scenario"), selectText: qsTr("Select existing scenario:"),
-                               addText: qsTr("Add new scenario:"), containerUii: -1})
+                               addText: qsTr("Add new scenario:"), mediaType: MediaLink.BtObject, containerUii: -1})
         choices.append({ type: qsTr("web radio"), selectText: qsTr("Select existing web radio:"),
-                           addText: qsTr("Add new web radio:"), containerUii: Container.IdMultimediaWebRadio})
+                           addText: qsTr("Add new web radio:"), mediaType: MediaLink.WebRadio, containerUii: Container.IdMultimediaWebRadio})
 
         repeater.model = choices.count
         privateProps.currentIndex = 0 // forces update of paginator model
@@ -276,7 +276,7 @@ Page {
         onClicked: {
             if (nameText.realText === "" || linkText.realText === "")
                 return
-            myHomeModels.createQuicklink(-1, choices.get(privateProps.currentIndex).type, nameText.realText, linkText.realText)
+            myHomeModels.createQuicklink(-1, choices.get(privateProps.currentIndex).mediaType, nameText.realText, linkText.realText)
             page.currentLink = 0 // selects first quicklink (the one just created)
         }
     }
@@ -447,7 +447,7 @@ Page {
                 var btObject = current
                 var x = -1
                 var y = -1
-                var media = choices.get(privateProps.currentIndex).type
+                var media = choices.get(privateProps.currentIndex).mediaType
                 var uii = page.homeCustomization ? myHomeModels.homepageLinks.uii : page.profile.uii
 
                 myHomeModels.createQuicklink(uii, media, name, address, btObject, x, y, page.homeCustomization)
