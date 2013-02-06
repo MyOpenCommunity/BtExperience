@@ -317,6 +317,24 @@ void TestDimmer100::testLevelDown100()
 	compareClientCommand();
 }
 
+void TestDimmer100::testLevelDown()
+{
+	obj->setStepAmount(16);
+	obj->setStepSpeed(126);
+	obj->decreaseLevel();
+	dev->decreaseLevel100(16, 126);
+	compareClientCommand();
+}
+
+void TestDimmer100::testLevelUp()
+{
+	obj->setStepAmount(17);
+	obj->setStepSpeed(127);
+	obj->decreaseLevel();
+	dev->decreaseLevel100(17, 127);
+	compareClientCommand();
+}
+
 void TestDimmer100::testOnSpeed()
 {
 	ObjectTester t(obj, SIGNAL(onSpeedChanged()));
