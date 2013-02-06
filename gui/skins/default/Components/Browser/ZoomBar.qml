@@ -16,8 +16,16 @@ Item {
     signal zoomInClicked
     signal zoomHundredClicked
 
-    height: if (loaderItem.item) loaderItem.item.height
     width: 230
+    height: 49
+
+    Connections {
+        target: global
+        onAboutToHide: {
+            control.state = "hidden"
+            control.zoomPercentage = 100
+        }
+    }
 
     Loader {
         id: loaderItem
@@ -31,7 +39,8 @@ Item {
         SvgImage {
             id: bg
 
-            source: "../../images/common/bg_barra.svg"
+            source: "../../images/common/bg_panel_212x100.svg"
+            anchors.fill: parent
 
             ButtonImageThreeStates {
                 id: hundredBarButton

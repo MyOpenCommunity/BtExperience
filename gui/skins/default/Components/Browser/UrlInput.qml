@@ -12,20 +12,27 @@ Item {
 
     signal urlEntered(string url)
     signal urlChanged
+    signal favoritesClicked
 
-    width: parent.height; height: parent.height
+    width: parent.height
+    height: parent.height
 
     BorderImage {
-        id: bg; rotation: 180
-        x: 8; width: parent.width - 16; height: 30;
+        id: bg
+        rotation: 180
+        x: 8
+        width: parent.width - 16
+        height: 30
         anchors.verticalCenter: parent.verticalCenter
         border { left: 10; top: 10; right: 10; bottom: 10 }
     }
 
     Rectangle {
         anchors.bottom: bg.bottom
-        x: 18; height: 4; color: "#63b1ed"
-        width: (bg.width - 20) * view.progress
+        x: 8
+        height: 4
+        width: (bg.width - 16) * view.progress
+        color: "#63b1ed"
         opacity: view.progress === 1.0 ? 0.0 : 1.0
     }
 
@@ -67,20 +74,52 @@ Item {
         }
 
         anchors {
-            left: parent.left; right: parent.right; leftMargin: 18; rightMargin: 18
+            left: sslIcon.visible ? sslIcon.right : favoritesIcon.right
+            right: parent.right
+            rightMargin: 18
             verticalCenter: parent.verticalCenter
         }
     }
 
-    SvgImage {
+    Item {
+        id: favoritesIcon
+
+        width: 30
+        height: 36
+
+        anchors {
+            left: parent.left
+            verticalCenter: parent.verticalCenter
+        }
+
+        SvgImage {
+            source: "../../images/common/ico_favorites.svg"
+            anchors.centerIn: parent
+            width: 18
+            height: 18
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: favoritesClicked()
+        }
+    }
+
+    Item {
         id: sslIcon
 
-        source: "../../images/common/ico_lock.svg"
+        width: 30
+        height: 36
         visible: ssl
 
         anchors {
-            left: parent.left; leftMargin: 3
+            left: favoritesIcon.right
             verticalCenter: parent.verticalCenter
+        }
+
+        SvgImage {
+            source: "../../images/common/ico_lock.svg"
+            anchors.centerIn: parent
         }
     }
 }

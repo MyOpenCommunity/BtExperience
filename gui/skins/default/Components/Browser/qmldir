@@ -1,4 +1,5 @@
 Button 1.0 Button.qml
+FavoritesBar 1.0 FavoritesBar.qml
 FlickableWebView 1.0 FlickableWebView.qml
 Header 1.0 Header.qml
 ScrollBar 1.0 ScrollBar.qml

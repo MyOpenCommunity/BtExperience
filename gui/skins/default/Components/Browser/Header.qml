@@ -14,9 +14,16 @@ SvgImage {
     property alias ssl: urlInput.ssl
     property variant view
     property variant browser
+    property alias favoritesMargin: urlInput.x
 
     signal zoomBarClicked
+    signal favoritesBarClicked
     signal urlEntered(string url)
+
+    Connections {
+        target: global
+        onAboutToHide: updateImages("hidden")
+    }
 
     function updateImages(s) {
         if (s === "hidden") {
@@ -219,6 +226,7 @@ SvgImage {
 
         onUrlEntered: updateUrl()
         onUrlChanged: control.urlChanged = true
+        onFavoritesClicked: favoritesBarClicked()
     }
 
     states: [

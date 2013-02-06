@@ -56,6 +56,12 @@ BasePage {
                     top: parent.top
                     horizontalCenter: parent.horizontalCenter
                 }
+                onFavoritesBarClicked: {
+                    if (favoritesBar.state === "hidden")
+                        favoritesBar.state = "visible"
+                    else
+                        favoritesBar.state = "hidden"
+                }
                 onZoomBarClicked: {
                     if (zoomBar.state === "hidden")
                         zoomBar.state = "visible"
@@ -98,6 +104,18 @@ BasePage {
                 onZoomInClicked: changeZoom(10)
                 onZoomOutClicked: changeZoom(-10)
                 onZoomHundredClicked: zoomPercentage = 100
+            }
+
+            FavoritesBar {
+                id: favoritesBar
+                page: webBrowser
+                state: "hidden"
+                z: webViewContaineer.z + 1
+                anchors {
+                    top: header.bottom
+                    left: header.left
+                    leftMargin: header.favoritesMargin
+                }
             }
 
             Pannable {
