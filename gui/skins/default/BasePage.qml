@@ -196,6 +196,7 @@ Image {
         }
 
         onAboutToHide: privateProps.processHide()
+        onCreateQuicklink: myHomeModels.createQuicklink(-1, type, name, address)
     }
 
     onTopPageChanged: {
