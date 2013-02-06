@@ -89,12 +89,11 @@ Note *GlobalModels::createNote(int profile_uii, QString text)
 	return new Note(profile_uii, text);
 }
 
-ItemInterface *GlobalModels::createQuicklink(int uii, QString media_type, QString name,
-											 QString address, ObjectInterface *bt_object,
-											 int x, int y, bool is_home_link)
+ItemInterface *GlobalModels::createQuicklink(int uii, int media_type, QString name,
+					     QString address, ObjectInterface *bt_object,
+					     int x, int y, bool is_home_link)
 {
-	if ((QString::compare("camera", media_type, Qt::CaseInsensitive) == 0) ||
-		(QString::compare("scenario", media_type, Qt::CaseInsensitive) == 0))
+	if (media_type == MediaLink::BtObject)
 	{
 		ObjectLink *result = new ObjectLink(bt_object, x, y, uii);
 		getMediaLinks()->prepend(result);
@@ -103,46 +102,30 @@ ItemInterface *GlobalModels::createQuicklink(int uii, QString media_type, QStrin
 
 	// defaults to web link
 	int cid = Container::IdMultimediaWebLink;
-	MediaLink::MediaType t = MediaLink::Web;
 
-	if (QString::compare("web page", media_type, Qt::CaseInsensitive) == 0)
+	switch (media_type)
 	{
+	case MediaLink::Web: // web page
 		cid = Container::IdMultimediaWebLink;
-		t = MediaLink::Web;
-	}
-
-	if (QString::compare("web camera", media_type, Qt::CaseInsensitive) == 0)
-	{
+		break;
+	case MediaLink::Webcam: // web camera
 		cid = Container::IdMultimediaWebCam;
-		t = MediaLink::Webcam;
-	}
-
-	if (QString::compare("rss", media_type, Qt::CaseInsensitive) == 0)
-	{
+		break;
+	case MediaLink::Rss: // rss
 		cid = Container::IdMultimediaRss;
-		t = MediaLink::Rss;
-	}
-
-	if (QString::compare("weather", media_type, Qt::CaseInsensitive) == 0)
-	{
+		break;
+	case MediaLink::RssMeteo: // weather
 		cid = Container::IdMultimediaRssMeteo;
-		t = MediaLink::RssMeteo;
-	}
-
-	if (QString::compare("web radio", media_type, Qt::CaseInsensitive) == 0)
-	{
+		break;
+	case MediaLink::WebRadio: // web radio
 		cid = Container::IdMultimediaWebRadio;
-		t = MediaLink::WebRadio;
+		break;
+	default:
+		qWarning() << "Unexpected media link type in createQuicklink" << media_type;
+		break;
 	}
 
-	if (QString::compare("scenario", media_type, Qt::CaseInsensitive) == 0)
-	{
-		// TODO check these values
-		cid = Container::IdScenarios;
-		t = MediaLink::BtObject;
-	}
-
-	MediaLink *result = new MediaLink(-1, t, name, address, QPoint(x, y));
+	MediaLink *result = new MediaLink(-1, static_cast<MediaLink::MediaType>(media_type), name, address, QPoint(x, y));
 
 	if (is_home_link)
 	{
