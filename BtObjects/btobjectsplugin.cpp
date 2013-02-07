@@ -818,7 +818,8 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
 
 	// If we are in homepage, we don't want to update the position of the link
-	bool is_home_page = (global_models.getHomepageLinks()->getUii() == obj->getContainerUii());
+	bool is_home_page = (global_models.getHomepageLinks() &&
+			     global_models.getHomepageLinks()->getUii() == obj->getContainerUii());
 
 	if (obj_int)
 	{
@@ -943,7 +944,8 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 		return;
 
 	// Homepage links don't have a position but they have an 'img' tag
-	bool is_home_page = (global_models.getHomepageLinks()->getUii() == obj->getContainerUii());
+	bool is_home_page = (global_models.getHomepageLinks() &&
+			     global_models.getHomepageLinks()->getUii() == obj->getContainerUii());
 
 	if (is_home_page)
 	{
