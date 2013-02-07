@@ -56,6 +56,7 @@ var SCENARIO_SETTINGS = 10
 var ENERGY_SETTINGS = 11
 var VDE_SETTINGS = 12
 var ROOM_SETTINGS = 13
+var DATE_TIME_SETTINGS = 14
 
 var _paths = []
 
@@ -74,6 +75,7 @@ function _init(paths) {
     paths[ENERGY_SETTINGS] = ["Systems", "Energy"]
     paths[VDE_SETTINGS] = ["Systems", "VDE"]
     paths[ROOM_SETTINGS] = ["Rooms", "Floor", "Room"]
+    paths[DATE_TIME_SETTINGS] = ["General", "DateTime"]
 }
 
 // returns a string indicating where to navigate
