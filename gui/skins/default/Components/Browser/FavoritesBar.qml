@@ -119,10 +119,17 @@ Item {
                 if (feedbackTimer.checks === 0) {
                     global.createQuicklink(choices.get(privateProps.currentIndex).mediaType, topInputText, bottomInputText)
                     quicklinkTypeClicked()
+                    control.state = "hidden"
+                    privateProps.currentIndex = -1
                 }
                 else {
+                    privateProps.currentIndex = -1
                     feedbackTimer.start()
                 }
+            }
+
+            function cancelClicked() {
+                privateProps.currentIndex = -1
             }
         }
     }
