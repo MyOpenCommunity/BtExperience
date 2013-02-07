@@ -192,7 +192,7 @@ Item {
         anchors.top: graph.top
         anchors.bottom: graph.bottom
         anchors.left: parent.left
-        width: 35
+        width: 55
 
         function calculateValue(index) {
             if (index === numValues)

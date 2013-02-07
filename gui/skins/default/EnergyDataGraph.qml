@@ -257,9 +257,11 @@ Page {
                 }
             }
 
-            SvgImage {
+            Rectangle {
                 id: divisorLine
-                source: "images/energy/linea_grafico.svg"
+                color: "white"
+                width: 649
+                height: 1
                 anchors {
                     top: timeButtonRow.bottom
                     topMargin: parent.height / 100 * 3
