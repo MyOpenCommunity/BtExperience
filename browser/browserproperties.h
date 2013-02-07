@@ -37,6 +37,8 @@ public:
 		object->deleteLater();
 	}
 
+	Q_INVOKABLE QString quoteUrl(QString url) const;
+
 	void registerPage(QWebPage *page);
 
 public slots:

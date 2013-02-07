@@ -13,6 +13,7 @@ Item {
     id: control
 
     property variant page
+    property variant webView
 
     signal quicklinkTypeClicked()
 
@@ -89,7 +90,7 @@ Item {
                             if (privateProps.currentIndex === index)
                                 return
                             privateProps.currentIndex = index
-                            page.installPopup(popupEditLink, {bottomInputText: global.urlString})
+                            page.installPopup(popupEditLink, {bottomInputText: global.quoteUrl(webView.url)})
                         }
                         status:  privateProps.currentIndex === index
                     }

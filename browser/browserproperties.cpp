@@ -46,23 +46,14 @@ QUrl BrowserProperties::getUrl() const
 	return url;
 }
 
+QString BrowserProperties::quoteUrl(QString url) const
+{
+	return QUrl::fromUserInput(url).toEncoded();
+}
+
 void BrowserProperties::setUrlString(QString url)
 {
-	// fixes address to avoid nasty file:// things
-	if (url != "" && url != "about:blank")
-	{
-		QString lowerUrl = url.toLower();
-		bool isHttp = lowerUrl.indexOf("http://") == 0;
-		bool isHttps = lowerUrl.indexOf("https://") == 0;
-		bool isProtocol = lowerUrl.indexOf("://") > 0;
-
-		if (!isHttp && !isHttps && !isProtocol)
-			url = "http://" + url;
-		else if (!isProtocol)
-			url = "http://" + url;
-	}
-
-	setUrl(QUrl(url));
+	setUrl(QUrl::fromUserInput(url));
 }
 
 QString BrowserProperties::getUrlString() const

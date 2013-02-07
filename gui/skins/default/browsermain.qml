@@ -109,6 +109,7 @@ BasePage {
             FavoritesBar {
                 id: favoritesBar
                 page: webBrowser
+                webView: webView
                 state: "hidden"
                 z: webViewContaineer.z + 1
                 anchors {
