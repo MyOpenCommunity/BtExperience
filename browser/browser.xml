@@ -8,12 +8,12 @@
       <agent name="android-2.3" string="Mozilla/5.0 (Linux; U; Android 2.3.5; en-us) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1" />
       <agent name="chrome-1.0" string="Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.50 Safari/525.19" />
       <agent name="fake-chrome-1.0" string="Chrome/1.0" />
+      <agent name="nokia-n9" string="Mozilla/5.0 (MeeGo; NokiaN9) AppleWebKit/533.1 (KHTML, like Gecko) NokiaBrowser/8.5.0 Mobile Safari/533.1" />
 
       <!-- list of rules, matched in order;
            * matches any character (including dots) -->
       <match url="maps.google.*" agent="chrome-1.0"/>
-      <match url="mail.google.*" agent="chrome-1.0"/>
-      <match url="*" agent="android-2.3"/>
+      <match url="*" agent="nokia-n9"/>
     </user_agents>
     <ssl_exceptions />
 </browser>

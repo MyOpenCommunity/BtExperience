@@ -37,6 +37,8 @@ public:
 		object->deleteLater();
 	}
 
+	Q_INVOKABLE QString quoteUrl(QString url) const;
+
 	void registerPage(QWebPage *page);
 
 public slots:
@@ -53,6 +55,7 @@ signals:
 	void untrustedSslConnection();
 	void requestComplete(bool ssl, QString host, bool originating_request, QString organization);
 	void aboutToHide();
+	void addWebRadio(QString url);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev);
@@ -60,6 +63,7 @@ protected:
 private slots:
 	void readInput();
 	void pageDeleted(QObject *page);
+	void unsupportedContent(QNetworkReply *reply);
 
 private:
 	void clearHistory();

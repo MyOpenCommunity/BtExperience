@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 import Components.Browser 1.0
@@ -69,10 +70,10 @@ BasePage {
                     updateImages(zoomBar.state)
                 }
                 onUrlEntered: {
-                    if (url === global.url)
+                    if (url === global.urlString)
                         webView.reload.trigger()
                     else
-                        global.url = url
+                        global.urlString = url
                 }
             }
 
@@ -108,6 +109,7 @@ BasePage {
             FavoritesBar {
                 id: favoritesBar
                 page: webBrowser
+                webView: webView
                 state: "hidden"
                 z: webViewContaineer.z + 1
                 anchors {
@@ -115,6 +117,11 @@ BasePage {
                     left: header.left
                     leftMargin: header.favoritesMargin
                 }
+            }
+
+            Connections {
+                target: global
+                onAddWebRadio: favoritesBar.displayEditPopup(url, MediaLink.WebRadio)
             }
 
             Pannable {

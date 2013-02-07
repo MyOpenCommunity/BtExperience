@@ -13,6 +13,7 @@ Item {
     id: control
 
     property variant page
+    property variant webView
 
     signal quicklinkTypeClicked()
 
@@ -43,6 +44,17 @@ Item {
         choices.append({ type: qsTr("web radio"), mediaType: MediaLink.WebRadio })
 
         privateProps.currentIndex = -1
+    }
+
+    function displayEditPopup(url, mediaType) {
+        for (var i = 0; i < choices.count; ++i) {
+            if (choices.get(i).mediaType === mediaType) {
+                privateProps.currentIndex = i
+                page.installPopup(popupEditLink, {bottomInputText: url})
+
+                break
+            }
+        }
     }
 
     Loader {
@@ -78,7 +90,7 @@ Item {
                             if (privateProps.currentIndex === index)
                                 return
                             privateProps.currentIndex = index
-                            page.installPopup(popupEditLink)
+                            page.installPopup(popupEditLink, {bottomInputText: global.quoteUrl(webView.url)})
                         }
                         status:  privateProps.currentIndex === index
                     }
@@ -94,7 +106,7 @@ Item {
             topInputLabel: qsTr("Title:")
             topInputText: ""
             bottomInputLabel: qsTr("Address:")
-            bottomInputText: global.urlString // "user" or unencoded form
+            bottomInputText: ""
 
             function okClicked() {
                 feedbackTimer.checks = 0
@@ -107,10 +119,17 @@ Item {
                 if (feedbackTimer.checks === 0) {
                     global.createQuicklink(choices.get(privateProps.currentIndex).mediaType, topInputText, bottomInputText)
                     quicklinkTypeClicked()
+                    control.state = "hidden"
+                    privateProps.currentIndex = -1
                 }
                 else {
+                    privateProps.currentIndex = -1
                     feedbackTimer.start()
                 }
+            }
+
+            function cancelClicked() {
+                privateProps.currentIndex = -1
             }
         }
     }
