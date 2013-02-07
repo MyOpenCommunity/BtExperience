@@ -38,6 +38,17 @@ function status(itemObject) {
 
     case ObjectInterface.IdAlarmClock:
         return (itemObject.validityStatus !== AlarmClock.AlarmClockApplyResultOk) ? 3 : -1
+
+    case ObjectInterface.IdLoadWithControlUnit:
+    case ObjectInterface.IdLoadWithoutControlUnit:
+        if (itemObject.loadStatus === EnergyLoadDiagnostic.Unknown)
+            return 0
+        else if (itemObject.loadStatus === EnergyLoadDiagnostic.Ok)
+            return 1
+        else if (itemObject.loadStatus === EnergyLoadDiagnostic.Warning)
+            return 2
+        else if (itemObject.loadStatus === EnergyLoadDiagnostic.Critical)
+            return 3
     }
 
     return -1
@@ -80,6 +91,15 @@ function description(itemObject) {
         else if (itemObject.validityStatus === AlarmClock.AlarmClockApplyResultNoName)
             descr = qsTr("No name set")
         break
+
+    case ObjectInterface.IdLoadWithControlUnit:
+    case ObjectInterface.IdLoadWithoutControlUnit:
+        var infoText = boxInfoText(itemObject)
+        if (boxInfoText(itemObject) === "0")
+            descr =  qsTr("Disabled")
+        else
+            descr = itemObject.consumption + " " + itemObject.currentUnit
+        break
     }
 
     return descr
@@ -102,6 +122,13 @@ function boxInfoState(itemObject) {
                 itemObject.currentModalityId === ThermalControlUnit.IdTimedManual)
             return "info"
         break
+    case ObjectInterface.IdLoadWithControlUnit:
+    case ObjectInterface.IdLoadWithoutControlUnit:
+        if (itemObject.hasControlUnit) {
+            if (itemObject.loadEnabled)
+                return "info"
+            return "warning"
+        }
     }
     return ""
 }
@@ -126,6 +153,13 @@ function boxInfoText(itemObject) {
                 itemObject.currentModalityId === ThermalControlUnit.IdTimedManual)
             return (itemObject.currentModality.temperature / 10).toFixed(1) + "°C"
         break
+    case ObjectInterface.IdLoadWithControlUnit:
+    case ObjectInterface.IdLoadWithoutControlUnit:
+        if (itemObject.hasControlUnit) {
+            if (itemObject.loadEnabled)
+                return "1"
+            return "0"
+        }
     }
     return ""
 }
