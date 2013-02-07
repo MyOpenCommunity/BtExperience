@@ -190,7 +190,7 @@ SvgImage {
                 var ghost = undefined
                 for (var i = 0; i < children.length; ++i) {
                     var child = children[i]
-                    if (child._fixedUrlString) // this is a browserItem
+                    if (child.objectName === "browserItem")
                         if (child.visible) { // last visible one must be hidden
                             ++windows
                             ghost = child

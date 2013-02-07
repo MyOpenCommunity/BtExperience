@@ -37,9 +37,10 @@ BasePage {
 
         Item {
             id: browserItem
-            anchors.fill: parent
 
             property string _fixedUrlString: privateProps.fixedAddress(webBrowser.urlString)
+            anchors.fill: parent
+            objectName: "browserItem"
 
             Rectangle {
                 // this is needed to hide pages below the current one
