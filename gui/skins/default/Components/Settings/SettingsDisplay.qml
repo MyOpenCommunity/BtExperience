@@ -6,9 +6,7 @@ import "../../js/Stack.js" as Stack
 MenuColumn {
     id: column
 
-    onChildDestroyed: {
-        paginator.currentIndex = -1
-    }
+    onChildDestroyed: paginator.currentIndex = -1
 
     QtObject {
         id: privateProps

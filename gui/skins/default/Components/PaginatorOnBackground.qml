@@ -12,7 +12,7 @@ Item {
     property alias buttonComponent: button.sourceComponent
     property alias itemSpacing: internalList.spacing
 
-    property int elementsOnPage: 6
+    property int elementsOnPage: 8
     property alias currentPage: paginator.currentPage
     property alias totalPages: paginator.totalPages
 

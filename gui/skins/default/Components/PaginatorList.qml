@@ -10,7 +10,7 @@ Item {
     property alias currentIndex: internalList.currentIndex
     property alias source: background.source
 
-    property int elementsOnPage: 6
+    property int elementsOnPage: 8
     property alias currentPage: paginator.currentPage
     property alias totalPages: paginator.totalPages
 
