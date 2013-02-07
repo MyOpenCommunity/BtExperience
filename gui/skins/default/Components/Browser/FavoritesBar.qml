@@ -45,6 +45,17 @@ Item {
         privateProps.currentIndex = -1
     }
 
+    function displayEditPopup(url, mediaType) {
+        for (var i = 0; i < choices.count; ++i) {
+            if (choices.get(i).mediaType === mediaType) {
+                privateProps.currentIndex = i
+                page.installPopup(popupEditLink, {bottomInputText: url})
+
+                break
+            }
+        }
+    }
+
     Loader {
         id: loaderItem
 
@@ -78,7 +89,7 @@ Item {
                             if (privateProps.currentIndex === index)
                                 return
                             privateProps.currentIndex = index
-                            page.installPopup(popupEditLink)
+                            page.installPopup(popupEditLink, {bottomInputText: global.urlString})
                         }
                         status:  privateProps.currentIndex === index
                     }
@@ -94,7 +105,7 @@ Item {
             topInputLabel: qsTr("Title:")
             topInputText: ""
             bottomInputLabel: qsTr("Address:")
-            bottomInputText: global.urlString // "user" or unencoded form
+            bottomInputText: ""
 
             function okClicked() {
                 feedbackTimer.checks = 0

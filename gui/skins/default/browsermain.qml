@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 import Components.Browser 1.0
@@ -115,6 +116,11 @@ BasePage {
                     left: header.left
                     leftMargin: header.favoritesMargin
                 }
+            }
+
+            Connections {
+                target: global
+                onAddWebRadio: favoritesBar.displayEditPopup(url, MediaLink.WebRadio)
             }
 
             Pannable {
