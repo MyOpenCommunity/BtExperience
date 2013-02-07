@@ -18,7 +18,8 @@ SvgImage {
 
     // the label on the left
     property string text: "premi per parlare"
-    property alias textColor: caption.color
+    property color textColor: "gray"
+    property color pressedTextColor: "white"
 
     // images for button background
     property url defaultImageBg: ""
@@ -61,7 +62,7 @@ SvgImage {
             leftMargin: 11
         }
         font.pixelSize: 14
-        color: "gray"
+        color: bg.textColor
         text: bg.text
     }
 
@@ -92,7 +93,7 @@ SvgImage {
             PropertyChanges { target: bg; source: pressedImageBg }
             PropertyChanges { target: shadow; visible: false }
             PropertyChanges { target: topImage; source: pressedImage }
-            PropertyChanges { target: caption; color: "white" }
+            PropertyChanges { target: caption; color: bg.pressedTextColor }
         },
         State {
             name: "selected"
@@ -100,7 +101,7 @@ SvgImage {
             PropertyChanges { target: bg; source: selectedImageBg }
             PropertyChanges { target: shadow; visible: false }
             PropertyChanges { target: topImage; source: selectedImage }
-            PropertyChanges { target: caption; color: "white" }
+            PropertyChanges { target: caption; color: bg.pressedTextColor }
         },
         State {
             name: "normal"
@@ -108,7 +109,7 @@ SvgImage {
             PropertyChanges { target: bg; source: defaultImageBg }
             PropertyChanges { target: shadow; visible: true }
             PropertyChanges { target: topImage; source: defaultImage }
-            PropertyChanges { target: caption; color: "gray" }
+            PropertyChanges { target: caption; color: bg.textColor }
         }
     ]
 }
