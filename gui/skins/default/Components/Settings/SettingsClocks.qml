@@ -3,6 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 import "../../js/EventManager.js" as EventManager
 import "../../js/MenuItem.js" as MenuItem
+import "../../js/Stack.js" as Stack
 
 
 MenuColumn {
@@ -27,7 +28,9 @@ MenuColumn {
             onClicked: {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1
-                objectModel.append(myHomeModels.createAlarmClock())
+                var a = myHomeModels.createAlarmClock()
+                objectModel.append(a)
+                Stack.pushPage("AlarmClockDateTimePage.qml", {alarmClock: a, isNewAlarm: true})
             }
         }
 
@@ -40,9 +43,9 @@ MenuColumn {
             delegate: MenuItemDelegate {
                 itemObject: objectModel.getObject(index)
                 hasChild: true
-                name: itemObject.description
-                description: MenuItem.description(itemObject)
-                status: MenuItem.status(itemObject)
+                name: itemObject ? itemObject.description : ""
+                description: itemObject ? MenuItem.description(itemObject) : ""
+                status: itemObject ? MenuItem.status(itemObject) : -1
                 onClicked: {
                     privateProps.currentIndex = -1
                     column.loadColumn(controlAlarmClockComponent, itemObject.description, itemObject)

@@ -12,16 +12,21 @@ Page {
     id: page
 
     property variant alarmClock: undefined
+    property bool isNewAlarm: false
 
     text: qsTr("Alarm settings")
     source : homeProperties.homeBgImage
 
-    Component.onDestruction: page.alarmClock.reset()
+    Component.onDestruction: if (page.alarmClock) page.alarmClock.reset()
+
+    ObjectModel {
+        id: objectModel
+        filters: [{objectId: ObjectInterface.IdAlarmClock}]
+    }
 
     Component {
         id: errorFeedback
         FeedbackPopup {
-            text: ""
             isOk: false
         }
     }
@@ -239,6 +244,14 @@ Page {
         }
     }
 
+    Component {
+        id: cancelFeedback
+        FeedbackPopup {
+            isOk: false
+            onClosePopup: Stack.popPage()
+        }
+    }
+
     ButtonThreeStates {
         id: cancelButton
 
@@ -253,7 +266,14 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
-        onClicked: Stack.popPage()
+        onClicked: {
+            if (isNewAlarm) {
+                objectModel.remove(alarmClock)
+                page.installPopup(cancelFeedback, { text: qsTr("Alarm not saved") })
+                return
+            }
+            Stack.popPage()
+        }
     }
 
     QtObject {

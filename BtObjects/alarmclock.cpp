@@ -35,7 +35,7 @@ namespace
 
 	const int SOUND_DIFFUSION_INTERVAL = 3000;
 
-	const QString ALARM_NO_NAME(AlarmClock::tr("new alarm clock"));
+	const QString ALARM_NO_NAME(AlarmClock::tr("Click to enter name..."));
 
 	// constants for QMLCache
 	const int QML_ALARM_TYPE = 1;
@@ -243,7 +243,7 @@ AlarmClock::AlarmClockApplyResult AlarmClock::getValidityStatus()
 			return AlarmClockApplyResultNoSource;
 	}
 
-	if (getDescription() == ALARM_NO_NAME)
+	if (getDescription() == ALARM_NO_NAME || getDescription().isEmpty())
 		return AlarmClockApplyResultNoName;
 
 	return AlarmClockApplyResultOk;
