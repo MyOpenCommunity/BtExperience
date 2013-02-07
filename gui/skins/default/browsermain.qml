@@ -70,10 +70,10 @@ BasePage {
                     updateImages(zoomBar.state)
                 }
                 onUrlEntered: {
-                    if (url === global.url)
+                    if (url === global.urlString)
                         webView.reload.trigger()
                     else
-                        global.url = url
+                        global.urlString = url
                 }
             }
 
