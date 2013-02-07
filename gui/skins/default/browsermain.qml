@@ -30,7 +30,7 @@ BasePage {
         source: "Components/Text/Ubuntu-M.ttf"
     }
 
-    property string urlString: global.url
+    property url url: global.url
 
     Component {
         id: browserComponent
@@ -38,7 +38,6 @@ BasePage {
         Item {
             id: browserItem
 
-            property string _fixedUrlString: privateProps.fixedAddress(webBrowser.urlString)
             anchors.fill: parent
             objectName: "browserItem"
 
@@ -50,7 +49,6 @@ BasePage {
 
             Header {
                 id: header
-                editUrl: browserItem.browserItem
                 view: webView
                 browser: webBrowser
                 anchors {
@@ -127,11 +125,11 @@ BasePage {
 
                 Connections {
                     target: webBrowser
-                    onUrlStringChanged: {
-                        if (urlString == "_btexperience:blank")
+                    onUrlChanged: {
+                        if (url == "_btexperience:blank")
                             webView.html = " "
                         else
-                            webView.url = browserItem._fixedUrlString
+                            webView.url = url
                     }
                 }
 
@@ -155,28 +153,6 @@ BasePage {
             ScrollBar {
                 scrollArea: webView; height: 8; orientation: Qt.Horizontal
                 anchors { right: parent.right; rightMargin: 8; left: parent.left; bottom: parent.bottom }
-            }
-
-            QtObject {
-                id: privateProps
-
-                function fixedAddress(address) {
-                    if (address === "" || address === "about:blank")
-                        return address
-
-                    var fixedAddress = address
-                    var isHttp = (fixedAddress.toLowerCase().indexOf("http://") === 0)
-                    var isHttps = (fixedAddress.toLowerCase().indexOf("https://") === 0)
-                    var isProcol = (fixedAddress.toLowerCase().indexOf("://") > 0)
-
-                    if (!isHttp && !isHttps && !isProcol)
-                        fixedAddress = "http://" + fixedAddress
-                    else if (!isProcol)
-                        fixedAddress = "http://" + fixedAddress
-
-                    console.log("Loading web address: " + fixedAddress)
-                    return fixedAddress
-                }
             }
         }
     }

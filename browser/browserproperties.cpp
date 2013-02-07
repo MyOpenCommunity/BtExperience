@@ -27,19 +27,46 @@ BrowserProperties::BrowserProperties(logger *log) : GlobalPropertiesCommon(log)
 	// To receive all the events, even if there is some qml elements which manage
 	// their, we have to install the event filter in the QApplication
 	qApp->installEventFilter(this);
+
+	connect(this, SIGNAL(urlChanged()), this, SIGNAL(urlStringChanged()));
 }
 
-void BrowserProperties::setUrl(QString _url)
+void BrowserProperties::setUrl(QUrl _url)
 {
 	if (url == _url)
 		return;
+
 	url = _url;
 	emit urlChanged();
 }
 
-QString BrowserProperties::getUrl() const
+QUrl BrowserProperties::getUrl() const
 {
 	return url;
+}
+
+void BrowserProperties::setUrlString(QString url)
+{
+	// fixes address to avoid nasty file:// things
+	if (url != "" && url != "about:blank")
+	{
+		QString lowerUrl = url.toLower();
+		bool isHttp = lowerUrl.indexOf("http://") == 0;
+		bool isHttps = lowerUrl.indexOf("https://") == 0;
+		bool isProtocol = lowerUrl.indexOf("://") > 0;
+
+		if (!isHttp && !isHttps && !isProtocol)
+			url = "http://" + url;
+		else if (!isProtocol)
+			url = "http://" + url;
+	}
+
+	setUrl(QUrl(url));
+}
+
+QString BrowserProperties::getUrlString() const
+{
+	return url.toString();
 }
 
 void BrowserProperties::setSslAuthentication(const QString &user, const QString &pass)
@@ -73,7 +100,7 @@ void BrowserProperties::setVisible(bool visible)
 
 void BrowserProperties::quit()
 {
-	setUrl("_btexperience:blank");
+	setUrlString("_btexperience:blank");
 	printf("about_to_hide\n");
 	setVisible(false);
 	if (!persistent_history)
@@ -142,9 +169,11 @@ void BrowserProperties::parseLine(QString line)
 	}
 	else if (line.startsWith("load_url "))
 	{
-		QString url = line.split(" ")[1];
+		// urls may contain blanks (they are in "user" or unencoded form),
+		// so takes everything after the first space as is
+		QString url = line.right(line.length() - 1 - line.indexOf(" "));
 
-		setUrl(url);
+		setUrlString(url);
 	}
 	else if (line.startsWith("set_history_size "))
 	{
@@ -199,7 +228,7 @@ void BrowserProperties::pageDeleted(QObject *page)
 
 void BrowserProperties::clearHistory()
 {
-	setUrl("about:blank");
+	setUrlString("about:blank");
 	foreach (QWebPage *page, pages)
 		page->history()->clear();
 }

@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QSet>
+#include <QUrl>
 
 class BtNetworkAccessManager;
 class QNetworkReply;
@@ -15,13 +16,17 @@ class BrowserProperties : public GlobalPropertiesCommon
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QString url READ getUrl WRITE setUrl NOTIFY urlChanged)
+	Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged)
+
+	Q_PROPERTY(QString urlString READ getUrlString WRITE setUrlString NOTIFY urlStringChanged)
 
 public:
 	BrowserProperties(logger *log);
 
-	void setUrl(QString url);
-	QString getUrl() const;
+	void setUrl(QUrl url);
+	QUrl getUrl() const;
+	void setUrlString(QString url);
+	QString getUrlString() const;
 	Q_INVOKABLE void setSslAuthentication(const QString &user, const QString &pass);
 	Q_INVOKABLE void abortConnection();
 	Q_INVOKABLE void addSecurityException();
@@ -43,6 +48,7 @@ public slots:
 
 signals:
 	void urlChanged();
+	void urlStringChanged();
 	void authenticationRequired();
 	void untrustedSslConnection();
 	void requestComplete(bool ssl, QString host, bool originating_request, QString organization);
@@ -63,7 +69,7 @@ private:
 
 	bool clicks_blocked, persistent_history;
 	int persistent_history_size;
-	QString url;
+	QUrl url;
 	QString input;
 	BtNetworkAccessManager *access_manager;
 	QSet<QWebPage *> pages;

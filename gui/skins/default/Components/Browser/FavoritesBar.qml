@@ -94,7 +94,7 @@ Item {
             topInputLabel: qsTr("Title:")
             topInputText: ""
             bottomInputLabel: qsTr("Address:")
-            bottomInputText: global.url
+            bottomInputText: global.urlString // "user" or unencoded form
 
             function okClicked() {
                 feedbackTimer.checks = 0

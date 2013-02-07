@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
 	BrowserProperties global(app_logger);
 	if (argc > 1)
-		global.setUrl(argv[1]);
+		global.setUrlString(argv[1]);
 	ImageReader::setBasePath(global.getBasePath());
 	qml_application.start(&global, "browsermain.qml", new NetworkAccessManagerFactory(&global), false);
 
