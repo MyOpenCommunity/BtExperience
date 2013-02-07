@@ -7,6 +7,7 @@
 #include <QWebPage>
 #include <QWebHistory>
 #include <QDebug>
+#include <QNetworkReply>
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -219,11 +220,53 @@ void BrowserProperties::registerPage(QWebPage *page)
 	pages.insert(page);
 
 	connect(page, SIGNAL(destroyed(QObject*)), this, SLOT(pageDeleted(QObject*)));
+	connect(page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(unsupportedContent(QNetworkReply*)));
+
+	page->setForwardUnsupportedContent(true);
 }
 
 void BrowserProperties::pageDeleted(QObject *page)
 {
 	pages.remove(static_cast<QWebPage *>(page));
+}
+
+void BrowserProperties::unsupportedContent(QNetworkReply *reply)
+{
+	QString content_type = reply->header(QNetworkRequest::ContentTypeHeader).toString();
+	QString url = reply->request().url().toString();
+
+	if (content_type == "video/x-ms-asf" || content_type == "audio/x-scpls")
+	{
+		// video/x-ms-asf (.asx) and audio/x-scpls (.pls) URLs are handled directly by MPlayer
+		emit addWebRadio(url);
+	}
+	else if (content_type == "audio/x-mpegurl")
+	{
+		// audio/x-mpegurl (.m3u) needs -playlist parameter, but it's already handled in MediaPlayer
+		// class if extension is .m3u, otherwise we use the first url contained in the playlist
+		if (url.endsWith(".m3u", Qt::CaseInsensitive))
+		{
+			emit addWebRadio(url);
+		}
+		else
+		{
+			while (reply->bytesAvailable())
+			{
+				QString line = reply->readLine().trimmed();
+
+				if (line.startsWith("http://") ||
+				    line.startsWith("https://") ||
+				    line.startsWith("mms://") ||
+				    line.startsWith("rtsp://"))
+				{
+					emit addWebRadio(line);
+					break;
+				}
+			}
+		}
+	}
+	else
+		qWarning() << "Unsupported content" << content_type << "for URL" << url;
 }
 
 void BrowserProperties::clearHistory()
