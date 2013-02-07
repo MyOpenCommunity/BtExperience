@@ -35,7 +35,10 @@ MenuColumn {
                                                           ],
                                                           column.dataModel.trigger)
             bottomTextFormat: Text.RichText
-            onEditClicked: Stack.pushPage("AlarmClockDateTimePage.qml", {"alarmClock": column.dataModel})
+            onEditClicked: {
+                column.closeColumn()
+                Stack.pushPage("AlarmClockDateTimePage.qml", {"alarmClock": column.dataModel})
+            }
         }
 
         ControlSettings {
@@ -43,7 +46,10 @@ MenuColumn {
             source: "../../images/termo/4-zone_temporizzato/bg_imposta-ora.svg"
             bottomLabel: qsTr("ringtone")
             bottomText: column.dataModel.alarmType === AlarmClock.AlarmClockBeep ? qsTr("beep") : qsTr("sound diffusion")
-            onEditClicked: Stack.pushPage("AlarmClockRingtonePage.qml", {"alarmClock": column.dataModel})
+            onEditClicked: {
+                column.closeColumn()
+                Stack.pushPage("AlarmClockRingtonePage.qml", {"alarmClock": column.dataModel})
+            }
         }
 
         SvgImage {

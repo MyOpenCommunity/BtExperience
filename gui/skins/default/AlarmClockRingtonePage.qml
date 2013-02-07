@@ -179,7 +179,11 @@ Page {
     // upper-right panel
     UbuntuLightText {
         id: sourceText
-        text: page.alarmClock.alarmType === AlarmClock.AlarmClockBeep ? "" : qsTr("Select a source:")
+        text: page.alarmClock.alarmType === AlarmClock.AlarmClockBeep ?
+                  "" :
+                  page.state === "" ?
+                      qsTr("Select a source:") :
+                      qsTr("Select an amplifier:")
         visible: soundDiffusionModel.count > 0
         font.pixelSize: 14
         color: "white"
