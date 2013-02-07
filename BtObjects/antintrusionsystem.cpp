@@ -516,6 +516,8 @@ void AntintrusionSystem::requestPartialization(const QString &password)
 	if (!canPartialize())
 	{
 		qWarning() << "Ignoring partialization request. System is inserted or configuration is not changed.";
+		// a partialization request is in progress, so forces end of request simulating a time out
+		emit codeTimeout();
 		return;
 	}
 	// sets some values to check code correctness for partialization
