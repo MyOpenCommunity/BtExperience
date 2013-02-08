@@ -48,7 +48,7 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("Custom Images")
+            name: qsTr("Last used")
             isSelected: privateProps.currentIndex === 2
             hasChild: true
 
@@ -58,12 +58,12 @@ MenuColumn {
                 column._isStock = false
                 var props = {
                     rootPath: isCard ? global.customCardImagesFolder : global.customBackgroundImagesFolder,
-                    text: qsTr("Custom Images"),
+                    text: qsTr("Last used"),
                     upnp: false,
                     bgHeight: 422,
                     "paginator.elementsOnPage": 7,
                 }
-                column.loadColumn(directoryBrowser, qsTr("Custom Images"), undefined, props)
+                column.loadColumn(directoryBrowser, qsTr("Last used"), undefined, props)
             }
         }
 
