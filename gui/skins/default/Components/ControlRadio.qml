@@ -4,8 +4,11 @@ import Components.Text 1.0
 
 Item {
     id: control
+
     property alias text: radioLabel.text
+    property alias pixelSize: radioLabel.font.pixelSize
     property bool status: false
+
     signal clicked
 
     width: radioBg.width
@@ -13,18 +16,25 @@ Item {
 
     UbuntuLightText {
         id: radioLabel
+
         font.pixelSize: 17
         color: "white"
 
-        anchors.top: parent.top
-        anchors.horizontalCenter: radioBg.horizontalCenter
+        anchors {
+            top: parent.top
+            horizontalCenter: radioBg.horizontalCenter
+        }
     }
 
     SvgImage {
         id: radioBg
-        anchors.left: parent.left
-        anchors.top: radioLabel.bottom
-        anchors.topMargin: 5
+
+        anchors {
+            left: parent.left
+            top: radioLabel.bottom
+            topMargin: 5
+        }
+
         source: "../images/common/btn_giorni.svg"
 
         SvgImage {
@@ -32,12 +42,16 @@ Item {
             visible: control.status
             anchors.centerIn: parent
         }
+    }
 
-        BeepingMouseArea {
-            anchors.centerIn: parent
-            width: parent.width + (parent.width / 100 * 3.3)
-            height: parent.height + (parent.height / 100 * 3.3)
-            onClicked: control.clicked()
+    BeepingMouseArea {
+        anchors {
+            fill: parent
+            topMargin: -0.30 * parent.height
+            bottomMargin: -0.30 * parent.height
+            leftMargin: -0.30 * parent.width
+            rightMargin: -0.30 * parent.width
         }
+        onClicked: control.clicked()
     }
 }

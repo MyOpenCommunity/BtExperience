@@ -53,6 +53,8 @@ Item {
             fill: parent
             topMargin: -0.30 * parent.height
             bottomMargin: -0.30 * parent.height
+            leftMargin: -0.30 * parent.width
+            rightMargin: -0.30 * parent.width
         }
         onClicked: control.clicked()
     }

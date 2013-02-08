@@ -92,6 +92,7 @@ Page {
             SvgImage {
                 id: line
                 source: "images/common/linea.svg"
+                width: parent.width
             }
 
             UbuntuLightText {
@@ -101,7 +102,7 @@ Page {
             }
 
             Row {
-                spacing: 13
+                spacing: 20
                 height: childrenRect.height
 
                 Repeater {
@@ -120,7 +121,24 @@ Page {
                 width: line.width
             }
 
+            ControlRadioHorizontal {
+                width: parent.width * 0.70
+                text: qsTr("Only once")
+                onClicked: privateProps.setStatus()
+                status: page.alarmClock.trigger === 0
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Item { // a spacer
+                height: 10
+                width: line.width
+            }
+
             Column {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                spacing: 10
+
                 UbuntuLightText {
                     text: qsTr("time")
                     font.pixelSize: 14
@@ -152,6 +170,7 @@ Page {
 
             SvgImage {
                 source: "images/common/linea.svg"
+                width: parent.width
             }
 
             SvgImage {
@@ -301,6 +320,15 @@ Page {
                 page.alarmClock.triggerOnSaturdays = !page.alarmClock.triggerOnSaturdays
             else if (index === 6)
                 page.alarmClock.triggerOnSundays = !page.alarmClock.triggerOnSundays
+            else {
+                page.alarmClock.triggerOnMondays = false
+                page.alarmClock.triggerOnTuesdays = false
+                page.alarmClock.triggerOnWednesdays = false
+                page.alarmClock.triggerOnThursdays = false
+                page.alarmClock.triggerOnFridays = false
+                page.alarmClock.triggerOnSaturdays = false
+                page.alarmClock.triggerOnSundays = false
+            }
 
             privateProps.dummy = !privateProps.dummy // triggers updates
         }
