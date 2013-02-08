@@ -34,16 +34,14 @@ Item {
         property int currentIndex: -1
     }
 
-    ListModel { id: choices }
+    ListModel {
+        id: choices
 
-    Component.onCompleted: {
-        choices.append({ type: qsTr("web page"), mediaType: MediaLink.Web })
-        choices.append({ type: qsTr("web camera"), mediaType: MediaLink.Webcam })
-        choices.append({ type: qsTr("rss"), mediaType: MediaLink.Rss })
-        choices.append({ type: qsTr("weather"), mediaType: MediaLink.RssMeteo })
-        choices.append({ type: qsTr("web radio"), mediaType: MediaLink.WebRadio })
-
-        privateProps.currentIndex = -1
+        ListElement { type: QT_TR_NOOP("web page"); mediaType: MediaLink.Web }
+        ListElement { type: QT_TR_NOOP("web camera"); mediaType: MediaLink.Webcam }
+        ListElement { type: QT_TR_NOOP("rss"); mediaType: MediaLink.Rss }
+        ListElement { type: QT_TR_NOOP("weather"); mediaType: MediaLink.RssMeteo }
+        ListElement { type: QT_TR_NOOP("web radio"); mediaType: MediaLink.WebRadio }
     }
 
     function displayEditPopup(url, mediaType) {
@@ -51,7 +49,6 @@ Item {
             if (choices.get(i).mediaType === mediaType) {
                 privateProps.currentIndex = i
                 page.installPopup(popupEditLink, {bottomInputText: url})
-
                 break
             }
         }
@@ -85,7 +82,7 @@ Item {
                     model: choices.count
                     delegate: ControlRadioHorizontal {
                         width: bg.width * 0.8
-                        text: choices.get(index).type
+                        text: qsTr(choices.get(index).type)
                         onClicked: {
                             if (privateProps.currentIndex === index)
                                 return
@@ -114,8 +111,6 @@ Item {
                     feedbackTimer.checks = 1
                 if (topInputText === "")
                     feedbackTimer.checks = 2
-                if (topInputText.indexOf("§") >= 0)
-                    feedbackTimer.checks = 3
                 if (feedbackTimer.checks === 0) {
                     global.createQuicklink(choices.get(privateProps.currentIndex).mediaType, topInputText, bottomInputText)
                     quicklinkTypeClicked()
@@ -150,14 +145,6 @@ Item {
         }
     }
 
-    Component {
-        id: noSepFeedback
-        FeedbackPopup {
-            text: qsTr("Name cannot contain § char")
-            isOk: false
-        }
-    }
-
     Timer {
         id: feedbackTimer
 
@@ -170,8 +157,6 @@ Item {
                 page.installPopup(noChoiceFeedback)
             else if (checks === 2)
                 page.installPopup(noNameFeedback)
-            else if (checks === 3)
-                page.installPopup(noSepFeedback)
         }
     }
 
