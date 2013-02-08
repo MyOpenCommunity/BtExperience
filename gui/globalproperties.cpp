@@ -740,9 +740,11 @@ void GlobalProperties::updateCpuFrequency()
 	QFile dev(CPU_FREQ_DEVICE);
 	QByteArray freq = QByteArray::number(new_cpu_frequency);
 
-	qDebug() << "Setting CPU frequency to" << freq;
-	if (!dev.open(QFile::WriteOnly) || dev.write(freq) != freq.size())
+	qDebug() << "Disabled: Setting CPU frequency to" << freq;
+//Disabled cpu frequency rescaling to prevent error on reboot (Kernel blocked)
+/*	if (!dev.open(QFile::WriteOnly) || dev.write(freq) != freq.size())
 		qWarning() << "Error setting CPU frequency to" << freq;
+*/
 }
 
 GlobalProperties::UpnpStatus GlobalProperties::getUpnpStatus() const

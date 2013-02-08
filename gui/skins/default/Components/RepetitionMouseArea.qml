@@ -30,7 +30,7 @@ BeepingMouseArea {
         running: false
         repeat: true
         onTriggered: {
-            if (++activations === 4)
+            if (activations++ === 5)
                 interval = smallInterval
             mouseArea.clicked(mouseArea)
         }

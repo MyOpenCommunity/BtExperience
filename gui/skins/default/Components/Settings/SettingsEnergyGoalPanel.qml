@@ -13,6 +13,8 @@ MenuColumn {
 
     Column {
         ControlMinusPlus {
+            slowClickInterval: 200
+            fastClickInterval: 60
             onPlusClicked: {
                 if (dataModel.energyType === EnergyData.Electricity)
                     privateProps.goal += .1

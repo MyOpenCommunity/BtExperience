@@ -8,6 +8,8 @@ SvgImage {
     property string text: "7 seconds"
     property string title: "temperature"
     property bool changeable: true
+    property int slowClickInterval: 350
+    property int fastClickInterval: 100
 
     signal minusClicked
     signal plusClicked
@@ -48,6 +50,8 @@ SvgImage {
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         repetitionOnHold: true
+        largeInterval: slowClickInterval
+        smallInterval: fastClickInterval
         onClicked: minusClicked()
         anchors {
             bottom: parent.bottom
@@ -66,6 +70,8 @@ SvgImage {
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         repetitionOnHold: true
+        largeInterval: slowClickInterval
+        smallInterval: fastClickInterval
         onClicked: plusClicked()
         anchors {
             bottom: parent.bottom
