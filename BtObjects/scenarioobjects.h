@@ -176,6 +176,9 @@ public slots:
 
 signals:
 	void started(QString description);
+	void stopped(QString description);
+	void enabled(QString description);
+	void disabled(QString description);
 
 protected:
 	QString enable_frame, start_frame, stop_frame, disable_frame;

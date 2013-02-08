@@ -306,7 +306,7 @@ Item {
     Connections {
         id: scenarioConnection
         target: null
-        onScenarioActivated: privateProps.addNotification({"type": Script.SCENARIO_ACTIVATION, "data": description})
+        onCommandSent: privateProps.addNotification({"type": Script.SCENARIO_ACTIVATION, "data": description})
         onScenarioModuleChanged: {
             if (scenario.status === ScenarioModule.Editing)
                 Stack.backToHome()

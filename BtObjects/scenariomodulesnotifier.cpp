@@ -37,11 +37,20 @@ ScenarioModulesNotifier::ScenarioModulesNotifier()
 		AdvancedScenario *scenario = qobject_cast<AdvancedScenario *>(item);
 		ScheduledScenario *sched_scenario = qobject_cast<ScheduledScenario *>(item);
 		if (scenario)
-			connect(scenario, SIGNAL(started(QString)), this, SIGNAL(scenarioActivated(QString)));
+		{
+			connect(scenario, SIGNAL(started(QString)), this, SIGNAL(commandSent(QString)));
+		}
 		else if (sched_scenario)
-			connect(sched_scenario, SIGNAL(started(QString)), this, SIGNAL(scenarioActivated(QString)));
+		{
+			connect(sched_scenario, SIGNAL(started(QString)), this, SIGNAL(commandSent(QString)));
+			connect(sched_scenario, SIGNAL(stopped(QString)), this, SIGNAL(commandSent(QString)));
+			connect(sched_scenario, SIGNAL(enabled(QString)), this, SIGNAL(commandSent(QString)));
+			connect(sched_scenario, SIGNAL(disabled(QString)), this, SIGNAL(commandSent(QString)));
+		}
 		else
+		{
 			Q_ASSERT_X(false, __PRETTY_FUNCTION__, "Unexpected NULL object");
+		}
 	}
 
 	// inits everything

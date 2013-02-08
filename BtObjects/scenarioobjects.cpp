@@ -275,19 +275,28 @@ void ScheduledScenario::start()
 void ScheduledScenario::stop()
 {
 	if (!stop_frame.isEmpty())
+	{
 		dev->sendCommand(stop_frame);
+		emit stopped(getName());
+	}
 }
 
 void ScheduledScenario::enable()
 {
 	if (!enable_frame.isEmpty())
+	{
 		dev->sendCommand(enable_frame);
+		emit enabled(getName());
+	}
 }
 
 void ScheduledScenario::disable()
 {
 	if (!disable_frame.isEmpty())
+	{
 		dev->sendCommand(disable_frame);
+		emit disabled(getName());
+	}
 }
 
 bool ScheduledScenario::hasStart() const
