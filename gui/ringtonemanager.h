@@ -73,6 +73,8 @@ private slots:
 	void playRingtone();
 
 private:
+	void exitStateIfNeeded();
+
 	QHash<int, QString> ringtone_to_file;
 	QHash<Ringtone, int> type_to_ringtone;
 	QHash<Ringtone, QString> type_to_description;
