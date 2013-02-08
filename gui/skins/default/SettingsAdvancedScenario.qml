@@ -95,7 +95,7 @@ Page {
 
 
                 UbuntuLightText {
-                    text: qsTr("save changes?")
+                    text: qsTr("Save changes?")
                     font.pixelSize: 14
                     color: "white"
                     anchors {

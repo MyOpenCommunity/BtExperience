@@ -327,7 +327,7 @@ Page {
         anchors {
             verticalCenter: bottomBg.verticalCenter
             right: okButton.left
-            rightMargin: bg.width / 100 * 1.10
+            rightMargin: bg.width / 100 * 4.00
         }
     }
 
