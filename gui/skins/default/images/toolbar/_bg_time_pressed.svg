@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:ns="http://ns.adobe.com/SaveForWeb/1.0/"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="64"
+   height="65"
+   viewBox="0 0 64 65"
+   id="Layer_1"
+   xml:space="preserve"><defs
+   id="defs20" />
+<metadata
+   id="metadata3">
+	<ns:sfw>
+		<ns:slices />
+		<ns:sliceSourceBounds
+   bottomLeftOrigin="true"
+   x="451.5"
+   y="268.5"
+   height="65"
+   width="51" />
+	</ns:sfw>
+<rdf:RDF><cc:Work
+     rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata>
+<linearGradient
+   x1="-105.5005"
+   y1="-601.49951"
+   x2="-105.5005"
+   y2="-536.5"
+   id="SVGID_1_"
+   gradientUnits="userSpaceOnUse"
+   gradientTransform="matrix(1.9411765,0,0,-1,254.29412,-536.5)">
+	<stop
+   id="stop6"
+   style="stop-color:#ffffff;stop-opacity:0.75"
+   offset="0" />
+	<stop
+   id="stop8"
+   style="stop-color:#f6f6f6;stop-opacity:0.61330003"
+   offset="0.2278" />
+	<stop
+   id="stop10"
+   style="stop-color:#e5e5e5;stop-opacity:0.44999999"
+   offset="0.5" />
+	<stop
+   id="stop12"
+   style="stop-color:#f6f6f6;stop-opacity:0.61330003"
+   offset="0.77219999" />
+	<stop
+   id="stop14"
+   style="stop-color:#ffffff;stop-opacity:0.75"
+   offset="1" />
+</linearGradient>
+<rect
+   width="99"
+   height="65"
+   x="0"
+   y="0"
+   id="rect16"
+   style="fill:url(#SVGID_1_)" />
+</svg>

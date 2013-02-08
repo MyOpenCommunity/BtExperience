@@ -18,6 +18,7 @@ MenuColumn {
             "Profiles": privateProps.openProfilesMenu,
             "Systems": privateProps.openSystemsMenu,
             "Rooms": privateProps.openRoomsMenu,
+            "General": privateProps.openGeneralMenu,
         }
     }
 
@@ -50,6 +51,11 @@ MenuColumn {
 
         function openRoomsMenu(navigationData) {
             _openMenu(qsTr("Rooms"))
+            return NavigationConstants.NAVIGATION_IN_PROGRESS
+        }
+
+        function openGeneralMenu(navigationData) {
+            _openMenu(qsTr("General"))
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
 

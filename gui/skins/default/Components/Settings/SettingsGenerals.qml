@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/navigationconstants.js" as NavigationConstants
 
 
 MenuColumn {
@@ -11,6 +12,12 @@ MenuColumn {
 
     onChildDestroyed: {
         itemList.currentIndex = -1
+    }
+
+    function targetsKnown() {
+        return {
+            "DateTime": privateProps.navigateDateTimeMenu,
+        }
     }
 
     // object model to retrieve network data
@@ -46,6 +53,24 @@ MenuColumn {
 
             return ""
         }
+
+        function openDateTimeMenu() {
+            var o = objectModel.getObject(0)
+            o.reset() // to have current date & time
+            column.loadColumn(settingsDateTime, qsTr("Date & Time"), o)
+        }
+
+        function navigateDateTimeMenu(navigationData) {
+            for (var i = 0; i < modelList.count; ++i) {
+                var m = modelList.get(i)
+                if (qsTr("Date & Time") === m.name) {
+                    itemList.currentIndex = i
+                    break
+                }
+            }
+            openDateTimeMenu()
+            return NavigationConstants.NAVIGATION_FINISHED_OK
+        }
     }
 
     ListView {
@@ -64,9 +89,7 @@ MenuColumn {
                 if (model.name !== qsTr("Date & Time"))
                     column.loadColumn(model.component, model.name)
                 else {
-                    var o = objectModel.getObject(0)
-                    o.reset() // to have current date & time
-                    column.loadColumn(model.component, model.name, o)
+                    privateProps.openDateTimeMenu()
                 }
             }
         }

@@ -70,17 +70,19 @@ Item {
             width: 99
             height: toolbar_top.height
 
-            UbuntuLightText {
+            ButtonTextImageThreeStates {
                 id: date
-                color: homeProperties.skin === HomeProperties.Clear ? "black":
-                                                                       "white"
+                defaultImageBg: imagesPath + "toolbar/_bg_date.svg"
+                pressedImageBg: imagesPath + "toolbar/_bg_date_pressed.svg"
+                textColor: homeProperties.skin === HomeProperties.Clear ? "black":
+                                                                          "white"
+                pressedTextColor: homeProperties.skin === HomeProperties.Clear ? "white":
+                                                                                 "black"
                 text: DateTime.format()["date"]
-                font.pixelSize: toolbar.fontSize
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
                 function setDate(d) {
                     text = DateTime.format(d)["date"]
                 }
+                onClicked: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.DATE_TIME_SETTINGS})
             }
         }
 
@@ -94,17 +96,19 @@ Item {
             width: 64
             height: toolbar_top.height
 
-            UbuntuLightText {
+            ButtonTextImageThreeStates {
                 id: time
-                color: homeProperties.skin === HomeProperties.Clear ? "black":
-                                                                       "white"
+                defaultImageBg: imagesPath + "toolbar/_bg_time.svg"
+                pressedImageBg: imagesPath + "toolbar/_bg_time_pressed.svg"
+                textColor: homeProperties.skin === HomeProperties.Clear ? "black":
+                                                                          "white"
+                pressedTextColor: homeProperties.skin === HomeProperties.Clear ? "white":
+                                                                                 "black"
                 text: DateTime.format()["time"]
-                font.pixelSize: toolbar.fontSize
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
                 function setTime(d) {
                     text = DateTime.format(d)["time"]
                 }
+                onClicked: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.DATE_TIME_SETTINGS})
             }
         }
 
