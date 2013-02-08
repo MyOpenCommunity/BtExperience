@@ -87,7 +87,7 @@ MenuColumn {
 
             onClicked: {
                 if (model.name !== "Date & Time")
-                    column.loadColumn(model.component, model.name)
+                    column.loadColumn(model.component, qsTr(model.name))
                 else {
                     privateProps.openDateTimeMenu()
                 }
