@@ -3,14 +3,78 @@ import Components.Text 1.0
 
 SvgImage {
     id: control
-    property alias text: textId.text
+
     property alias status: switchId.status
+    property string upperText: ""
+    property string text
+
     signal clicked
 
     source: "../images/common/panel_212x50.svg";
 
-    UbuntuLightText {
-        id: textId
+    Component {
+        id: textComponent
+
+        UbuntuLightText {
+            text: control.text
+            font.pixelSize: 15
+            color: "white"
+            wrapMode: Text.WordWrap
+            elide: Text.ElideMiddle
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                leftMargin: parent.width / 100 * 4
+                right: parent.right
+                rightMargin: parent.width / 100 * 4
+            }
+        }
+    }
+
+    Component {
+        id: labelsComponent
+
+        Item {
+            anchors.fill: parent
+
+            UbuntuLightText {
+                text: control.text
+                font.pixelSize: 15
+                color: "white"
+                wrapMode: Text.WordWrap
+                elide: Text.ElideMiddle
+                anchors {
+                    top: parent.top
+                    topMargin: parent.height / 100 * 4
+                    left: parent.left
+                    leftMargin: parent.width / 100 * 4
+                    right: parent.right
+                    rightMargin: parent.width / 100 * 4
+                }
+            }
+
+            UbuntuLightText {
+                text: control.upperText
+                font.pixelSize: 15
+                color: "white"
+                wrapMode: Text.WordWrap
+                elide: Text.ElideMiddle
+                anchors {
+                    bottom: parent.bottom
+                    bottomMargin: parent.height / 100 * 4
+                    left: parent.left
+                    leftMargin: parent.width / 100 * 4
+                    right: parent.right
+                    rightMargin: parent.width / 100 * 4
+                }
+            }
+        }
+    }
+
+    Loader {
+        id: labelsLoader
+
+        sourceComponent: upperText === "" ? textComponent : labelsComponent
         anchors {
             verticalCenter: parent.verticalCenter
             left: parent.left
@@ -18,9 +82,6 @@ SvgImage {
             right: switchId.left
             rightMargin: parent.width / 100 * 4
         }
-        font.pixelSize: 15
-        color: "white"
-        wrapMode: Text.WordWrap
     }
 
     Switch {
