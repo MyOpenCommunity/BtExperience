@@ -11,38 +11,10 @@ MenuColumn {
         filters: [{objectId: ObjectInterface.IdCCTV}]
     }
 
-    QtObject {
-        id: privateProps
-        property int currentIndex: vctModel.getObject(0) === undefined ? -1 : (vctModel.getObject(0).autoOpen ? 1 : 2)
-        property variant model: vctModel.getObject(0)
-    }
-
-    onChildDestroyed: {
-        privateProps.currentIndex = -1
-    }
-
-    Column {
-        MenuItem {
-            name: qsTr("enable")
-            isSelected: privateProps.currentIndex === 1
-            onClicked: {
-                if (privateProps.currentIndex !== 1)
-                    privateProps.currentIndex = 1
-                if (privateProps.model)
-                    privateProps.model.autoOpen = true
-            }
-        }
-
-        MenuItem {
-            name: qsTr("disable")
-            isSelected: privateProps.currentIndex === 2
-            onClicked: {
-                if (privateProps.currentIndex !== 2)
-                    privateProps.currentIndex = 2
-                if (privateProps.model)
-                    privateProps.model.autoOpen = false
-            }
-        }
+    ControlSwitch {
+        text: pageObject.names.get('AUTO_OPEN', vctModel.getObject(0).autoOpen)
+        onClicked: vctModel.getObject(0).autoOpen = !vctModel.getObject(0).autoOpen
+        status: !vctModel.getObject(0).autoOpen
     }
 }
 

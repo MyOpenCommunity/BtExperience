@@ -11,38 +11,10 @@ MenuColumn {
         filters: [{objectId: ObjectInterface.IdCCTV}]
     }
 
-    QtObject {
-        id: privateProps
-        property int currentIndex: vctModel.getObject(0) === undefined ? -1 : (vctModel.getObject(0).ringExclusion ? 1 : 2)
-        property variant model: vctModel.getObject(0)
-    }
-
-    onChildDestroyed: {
-        privateProps.currentIndex = -1
-    }
-
-    Column {
-        MenuItem {
-            name: qsTr("enable")
-            isSelected: privateProps.currentIndex === 1
-            onClicked: {
-                if (privateProps.currentIndex !== 1)
-                    privateProps.currentIndex = 1
-                if (privateProps.model)
-                    privateProps.model.ringExclusion = true
-            }
-        }
-
-        MenuItem {
-            name: qsTr("disable")
-            isSelected: privateProps.currentIndex === 2
-            onClicked: {
-                if (privateProps.currentIndex !== 2)
-                    privateProps.currentIndex = 2
-                if (privateProps.model)
-                    privateProps.model.ringExclusion = false
-            }
-        }
+    ControlSwitch {
+        text: pageObject.names.get('RING_EXCLUSION', vctModel.getObject(0).ringExclusion)
+        onClicked: vctModel.getObject(0).ringExclusion = !vctModel.getObject(0).ringExclusion
+        status: !vctModel.getObject(0).ringExclusion
     }
 }
 

@@ -40,8 +40,20 @@ QtObject {
         container['PASSWORD'][true] = qsTr("Enable")
 
         container['BEEP'] = []
-        container['BEEP'][true] = qsTr("Enable")
-        container['BEEP'][false] = qsTr("Disable")
+        container['BEEP'][true] = qsTr("Enabled")
+        container['BEEP'][false] = qsTr("Disabled")
+
+        container['HANDS_FREE'] = []
+        container['HANDS_FREE'][true] = qsTr("Enabled")
+        container['HANDS_FREE'][false] = qsTr("Disabled")
+
+        container['AUTO_OPEN'] = []
+        container['AUTO_OPEN'][true] = qsTr("Enabled")
+        container['AUTO_OPEN'][false] = qsTr("Disabled")
+
+        container['RING_EXCLUSION'] = []
+        container['RING_EXCLUSION'][true] = qsTr("Enabled")
+        container['RING_EXCLUSION'][false] = qsTr("Disabled")
     }
 
     // retrieves the requested value from the local array
