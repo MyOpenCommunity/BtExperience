@@ -13,6 +13,7 @@ RingtoneManager::RingtoneManager(QString ringtone_file, MultiMediaPlayer *_playe
 {
 	player = _player;
 	audio_state = _audio_state;
+	exit_state = false;
 
 	QFile fh(ringtone_file);
 	QDomDocument qdom;
@@ -90,6 +91,7 @@ QStringList RingtoneManager::ringtoneList() const
 void RingtoneManager::playRingtone(QString path, int _state)
 {
 	qDebug() << "Requested ringtone" << path;
+	exitStateIfNeeded();
 
 	ringtone = path;
 	exit_state = true;
@@ -101,6 +103,7 @@ void RingtoneManager::playRingtone(QString path, int _state)
 void RingtoneManager::playRingtoneAndKeepState(QString path, int _state)
 {
 	qDebug() << "Requested ringtone" << path;
+	exitStateIfNeeded();
 
 	ringtone = path;
 	exit_state = false;
@@ -130,9 +133,16 @@ void RingtoneManager::playerStateChange()
 	ringtone.clear();
 
 	emit ringtoneFinished();
+	exitStateIfNeeded();
+}
 
+void RingtoneManager::exitStateIfNeeded()
+{
 	if (exit_state)
+	{
+		exit_state = false;
 		audio_state->disableState(static_cast<AudioState::State>(state));
+	}
 }
 
 void RingtoneManager::playRingtone()
