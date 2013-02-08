@@ -411,7 +411,7 @@ Page {
 
     UbuntuLightText {
         text: qsTr("Save changes?")
-        font.pixelSize: 14
+        font.pixelSize: 15
         color: "white"
         anchors {
             verticalCenter: bottomBg.verticalCenter

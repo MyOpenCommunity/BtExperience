@@ -97,7 +97,7 @@ Page {
 
             UbuntuLightText {
                 text: qsTr("days")
-                font.pixelSize: 14
+                font.pixelSize: 16
                 color: "white"
             }
 
@@ -110,6 +110,7 @@ Page {
 
                     ControlRadio {
                         text: privateProps.getDay(index)
+                        pixelSize: 16
                         onClicked: privateProps.setStatus(index)
                         status: privateProps.getStatus(index, privateProps.dummy)
                     }
@@ -117,13 +118,14 @@ Page {
             }
 
             Item { // a spacer
-                height: 10
+                height: 20
                 width: line.width
             }
 
             ControlRadioHorizontal {
                 width: parent.width * 0.70
                 text: qsTr("Only once")
+                pixelSize: 16
                 onClicked: privateProps.setStatus()
                 status: page.alarmClock.trigger === 0
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -141,7 +143,7 @@ Page {
 
                 UbuntuLightText {
                     text: qsTr("time")
-                    font.pixelSize: 14
+                    font.pixelSize: 16
                     color: "white"
                 }
 
@@ -154,7 +156,7 @@ Page {
 
         Item { // a spacer
             height: 1
-            width: bg.width / 100 * 3.92
+            width: bg.width / 100 * 10
         }
 
         Column {
@@ -170,17 +172,19 @@ Page {
 
             SvgImage {
                 source: "images/common/linea.svg"
-                width: parent.width
+                width: 230
             }
 
             SvgImage {
                 id: nameBgImage
+
                 source: "images/common/bg_orario.svg"
+                width: 230
 
                 UbuntuLightText {
                     id: nameText
                     text: page.alarmClock.description
-                    font.pixelSize: 14
+                    font.pixelSize: 16
                     color: "#5A5A5A"
                     elide: Text.ElideMiddle
                     anchors {

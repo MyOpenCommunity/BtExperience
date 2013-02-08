@@ -117,7 +117,7 @@ Page {
     UbuntuLightText {
         id: signalText
         text: qsTr("Signal:")
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: "white"
         anchors {
             left: bg.left
@@ -129,18 +129,19 @@ Page {
 
     Column {
         id: choices
-        spacing: bg.height / 100 * 2.29
+        spacing: bg.height / 100 * 5
         anchors {
             left: bg.left
             leftMargin: bg.width / 100 * 4.71
             top: signalText.bottom
-            topMargin: bg.height / 100 * 1.57
+            topMargin: bg.height / 100 * 5
         }
         Repeater {
             model: 2
             delegate: ControlRadioHorizontal {
                 width: bg.width / 100 * 23.55
                 text: privateProps.getTypeText(index)
+                pixelSize: 16
                 onClicked: privateProps.setAlarmType(index)
                 status: index === page.alarmClock.alarmType
                 visible: privateProps.getTypeVisible(index, soundDiffusionModel.count)
@@ -152,13 +153,13 @@ Page {
         id: volumeText
         text: qsTr("Volume")
         visible: soundDiffusionModel.count > 0
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: "white"
         anchors {
             left: bg.left
             leftMargin: bg.width / 100 * 3.92
             top: choices.bottom
-            topMargin: bg.height / 100 * 3
+            topMargin: bg.height / 100 * 6
         }
     }
 
@@ -167,10 +168,9 @@ Page {
         text: page.alarmClock.volume + "%"
         visible: soundDiffusionModel.count > 0
         anchors {
-            left: bg.left
-            leftMargin: bg.width / 100 * 3.92
+            horizontalCenter: choices.horizontalCenter
             top: volumeText.bottom
-            topMargin: bg.height / 100 * 1.57
+            topMargin: bg.height / 100 * 2
         }
         onMinusClicked: page.alarmClock.decrementVolume()
         onPlusClicked: page.alarmClock.incrementVolume()
@@ -185,7 +185,7 @@ Page {
                       qsTr("Select a source:") :
                       qsTr("Select an amplifier:")
         visible: soundDiffusionModel.count > 0
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: "white"
         anchors {
             left: verticalSeparator.left
@@ -215,21 +215,27 @@ Page {
         onClicked: page.alarmClock.decrementAmbient()
     }
 
-    UbuntuLightText {
-        id: ambientText
+    Item {
+        id: ambientTextItem
 
-        visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
-                 soundDiffusionModel.count > 0
-        opacity: 0
-        text: page.alarmClock.ambient ? page.alarmClock.ambient.name : ""
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 14
-        color: "white"
         anchors {
+            top: leftAmbient.top
+            bottom: leftAmbient.bottom
             left: leftAmbient.right
             right: rightAmbient.left
-            top: sourceText.bottom
-            topMargin: bg.height / 100 * 2
+        }
+
+        UbuntuLightText {
+            id: ambientText
+
+            visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
+                     soundDiffusionModel.count > 0
+            opacity: 0
+            text: page.alarmClock.ambient ? page.alarmClock.ambient.name : ""
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 16
+            color: "white"
+            anchors.centerIn: parent
         }
     }
 
@@ -258,9 +264,9 @@ Page {
 
         visible: soundDiffusionModel.count > 0
         elementsOnPage: 7
-        spacing: 5
+        itemSpacing: 9
         anchors {
-            top: ambientText.bottom
+            top: ambientTextItem.bottom
             topMargin: bg.height / 100 * 5
             left: verticalSeparator.left
             leftMargin: bg.width / 100 * 3.92
@@ -280,6 +286,7 @@ Page {
 
                 width: bg.width / 100 * 40
                 text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name
+                pixelSize: 16
                 onClicked: {
                     if (page.state === "")
                         page.alarmClock.source = itemObject
@@ -322,7 +329,7 @@ Page {
 
     UbuntuLightText {
         text: qsTr("Save changes?")
-        font.pixelSize: 14
+        font.pixelSize: 15
         color: "white"
         anchors {
             verticalCenter: bottomBg.verticalCenter
