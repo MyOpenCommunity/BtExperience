@@ -30,21 +30,21 @@ MenuColumn {
         id: privateProps
 
         function description(item) {
-            if (item === qsTr("Password")) {
+            if (item === "Password") {
                 if (global.passwordEnabled)
                     return qsTr("Enabled")
                 else
                     return qsTr("Disabled")
             }
 
-            if (item === qsTr("Beep")) {
+            if (item === "Beep") {
                 if (global.guiSettings.beep)
                     return qsTr("Enabled")
                 else
                     return qsTr("Disabled")
             }
 
-            if (item === qsTr("Network")) {
+            if (item === "Network") {
                 if (objectModel.getObject(0).connectionStatus === PlatformSettings.Down)
                     return qsTr("Disconnected")
                 else
@@ -63,7 +63,7 @@ MenuColumn {
         function navigateDateTimeMenu(navigationData) {
             for (var i = 0; i < modelList.count; ++i) {
                 var m = modelList.get(i)
-                if (qsTr("Date & Time") === m.name) {
+                if ("Date & Time" === m.name) {
                     itemList.currentIndex = i
                     break
                 }
@@ -80,13 +80,13 @@ MenuColumn {
         interactive: false
 
         delegate: MenuItemDelegate {
-            name: model.name
+            name: qsTr(model.name)
             description: privateProps.description(model.name)
             hasChild: model.component !== undefined
                       && model.component !== null
 
             onClicked: {
-                if (model.name !== qsTr("Date & Time"))
+                if (model.name !== "Date & Time")
                     column.loadColumn(model.component, model.name)
                 else {
                     privateProps.openDateTimeMenu()
@@ -99,14 +99,15 @@ MenuColumn {
 
     ListModel {
         id: modelList
+
         Component.onCompleted: {
-            modelList.append({"name": qsTr("Info"), "component": settingsVersion})
-            modelList.append({"name": qsTr("Date & Time"), "component": settingsDateTime})
-            modelList.append({"name": qsTr("Network"), "component": settingsNetwork})
-            modelList.append({"name": qsTr("Display"), "component": settingsDisplay})
-            modelList.append({"name": qsTr("International"), "component": settingsInternational})
-            modelList.append({"name": qsTr("Password"), "component": settingsPassword})
-            modelList.append({"name": qsTr("Beep"), "component": settingsBeep})
+            modelList.append({"name": QT_TR_NOOP("Info"), "component": settingsVersion})
+            modelList.append({"name": QT_TR_NOOP("Date & Time"), "component": settingsDateTime})
+            modelList.append({"name": QT_TR_NOOP("Network"), "component": settingsNetwork})
+            modelList.append({"name": QT_TR_NOOP("Display"), "component": settingsDisplay})
+            modelList.append({"name": QT_TR_NOOP("International"), "component": settingsInternational})
+            modelList.append({"name": QT_TR_NOOP("Password"), "component": settingsPassword})
+            modelList.append({"name": QT_TR_NOOP("Beep"), "component": settingsBeep})
         }
     }
 
