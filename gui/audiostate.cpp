@@ -76,8 +76,6 @@ namespace
 		case AudioState::RingtoneVolume:
 			setHpDacVolume(volume);
 			break;
-		case AudioState::Mute:
-			break;
 		case AudioState::VdeCallVolume:
 		case AudioState::IntercomCallVolume:
 			setZlVolume(volume);
