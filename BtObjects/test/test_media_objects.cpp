@@ -543,11 +543,11 @@ void TestPowerAmplifier::testTreble()
 void TestPowerAmplifier::testBalance()
 {
 	obj->balanceLeft();
-	dev->balanceDown();
+	dev->balanceLeft();
 	compareClientCommand();
 
 	obj->balanceRight();
-	dev->balanceUp();
+	dev->balanceRight();
 	compareClientCommand();
 }
 

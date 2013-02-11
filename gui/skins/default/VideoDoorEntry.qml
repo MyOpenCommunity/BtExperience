@@ -4,7 +4,7 @@ import "js/Stack.js" as Stack
 import "js/navigation.js" as Navigation
 
 SystemPage {
-    source: "images/background/videocitofonia.jpg"
+    source: "images/background/video_door_entry.jpg"
     text: qsTr("video door entry")
     rootColumn: Component { VideoDoorEntryItems {} }
     showSettingsButton: true

@@ -1332,12 +1332,12 @@ void PowerAmplifier::trebleUp()
 
 void PowerAmplifier::balanceLeft()
 {
-	dev->balanceDown();
+	dev->balanceLeft();
 }
 
 void PowerAmplifier::balanceRight()
 {
-	dev->balanceUp();
+	dev->balanceRight();
 }
 
 void PowerAmplifier::previousPreset()

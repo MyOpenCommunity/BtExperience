@@ -39,7 +39,7 @@
 		</ist>
 	</container>
 	<container id="4" descr="air conditioning">
-                <ist uii="304" img="images/card/temperature-control.jpg">
+                <ist uii="304" img="images/card/temperature_control_heating.jpg">
 			<link uii="7001" />
 			<link uii="7002" />
 			<link uii="7101" />
@@ -51,7 +51,7 @@
 		</ist>
 	</container>
 	<container id="8" descr="thermal regulation">
-                <ist uii="308" img="images/card/temperature-control.jpg">
+                <ist uii="308" img="images/card/temperature_control_heating.jpg">
 			<link uii="2001" />
 			<link uii="2011" />
 			<link uii="2012" />
@@ -64,7 +64,7 @@
 		</ist>
 	</container>
 	<container id="9" descr="video door entry system">
-                <ist uii="309" img="images/card/vde.jpg">
+                <ist uii="309" img="images/card/video_door_entry.jpg">
                         <link uii="9011" />
                         <link uii="9012" />
                         <link uii="9013" />
@@ -106,7 +106,7 @@
 		</ist>
 	</container>
 	<container id="10" descr="sound diffusion">
-                <ist uii="310" img="images/card/sound-diffusion.jpg">
+                <ist uii="310" img="images/card/sound_diffusion.jpg">
 			<link uii="410" />
 			<link uii="411" />
 			<link uii="412" />
@@ -116,7 +116,7 @@
 		</ist>
 	</container>
 	<container id="11" descr="antintrusion">
-                <ist uii="311" img="images/card/burlgar-alarm.jpg">
+                <ist uii="311" img="images/card/burglar_alarm.jpg">
 		</ist>
 	</container>
 	<container id="15" descr="messages">
@@ -125,13 +125,13 @@
 		</ist>
 	</container>
 	<container id="100" > <!-- rooms -->
-                <ist uii="102" descr="living room" img="images/background/soggiorno.jpg" img_card="images/card/soggiorno.jpg">
+                <ist uii="102" descr="living room" img="images/background/living_room.jpg" img_card="images/card/living_room.jpg">
 			<link uii="1" x="0" y="0"/>
 			<!-- x,y can be absolute (pixel) or percentual -->
 			<link uii="2" x="200" y="100" />
 			<link uii="3" x="300" y="300" />
 		</ist>
-                <ist uii="103" descr="bathroom" img="images/background/bagno.jpg" img_card="images/card/bagno.jpg">
+                <ist uii="103" descr="bathroom" img="images/background/bathroom.jpg" img_card="images/card/bathroom.jpg">
 			<link uii="12" x="200" y="100" />
 			<link uii="7" x="200" y="300" />
 		</ist>
@@ -141,12 +141,12 @@
 			<link uii="5" x="200" y="300" />
 			<link uii="6" x="350" y="80" />
 		</ist>
-                <ist uii="105" descr="bedroom" img="images/background/camera_ragazzi.jpg" img_card="images/card/camera_ragazzi.jpg">
+                <ist uii="105" descr="bedroom" img="images/background/kids_room.jpg" img_card="images/card/kids_room.jpg">
 			<link uii="6" x="20" y="10" />
 			<link uii="5" x="200" y="300" />
 			<link uii="12" x="400" y="125" />
 		</ist>
-                <ist uii="106" descr="kitchen" img="images/background/cucina.jpg" img_card="images/card/cucina.jpg">
+                <ist uii="106" descr="kitchen" img="images/background/kitchen.jpg" img_card="images/card/kitchen.jpg">
 			<link uii="12" x="500" y="60" />
 			<link uii="5" x="450" y="300" />
 			<link uii="4" x="200" y="350" />
@@ -237,23 +237,23 @@
 		</ist>
 	</container>
 	<container id="101" descr="profile" img=""> <!-- profile -->
-                <ist uii="901" descr="camilla" img="" img_card="images/card/home_bambina.png" >
+                <ist uii="901" descr="camilla" img="" img_card="images/card/home_girl.png" >
 			<link uii="8006" x="250" y="100" />
 			<link uii="8003" x="250" y="300" />
 		</ist>
-                <ist uii="902" descr="mattia" img="" img_card="images/card/home_bambino.png" >
+                <ist uii="902" descr="mattia" img="" img_card="images/card/home_boy.png" >
 			<link uii="8009" x="250" y="100" />
 			<link uii="9005" x="250" y="300" />
 		</ist>
-                <ist uii="903" descr="papà" img="" img_card="images/card/home_uomo.png" >
+                <ist uii="903" descr="papà" img="" img_card="images/card/home_man.png" >
 			<link uii="8004" x="150" y="100" />
 			<link uii="8008" x="350" y="100" />
 			<link uii="9004" x="250" y="300" />
 		</ist>
-                <ist uii="904" descr="mamma" img="" img_card="images/card/home_donna.png" >
+                <ist uii="904" descr="mamma" img="" img_card="images/card/home_woman.png" >
 			<link uii="8007" x="250" y="100" />
 		</ist>
-                <ist uii="905" descr="famiglia" img="" img_card="images/card/home_famiglia.png" >
+                <ist uii="905" descr="famiglia" img="" img_card="images/card/home_family.png" >
 			<link uii="8010" x="250" y="100" />
 		</ist>
 	</container>

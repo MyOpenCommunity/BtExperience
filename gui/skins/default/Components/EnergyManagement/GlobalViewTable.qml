@@ -10,6 +10,10 @@ Column {
     id: table
     property date viewDate: new Date()
     property bool showCurrency
+    property bool lastItemReached: !energyFunctions.isEnergyMonthValid(DateTime.nextMonth(viewDate)) &&
+                                   (energiesCounters.linesWithGoal < (privateProps.currentPage + 1) * privateProps.maxRows)
+    property bool firstItemReached: !energyFunctions.isEnergyMonthValid(DateTime.previousMonth(viewDate)) &&
+                                    privateProps.currentPage === 0
 
     function scrollLeft() {
         if (privateProps.currentPage > 0)

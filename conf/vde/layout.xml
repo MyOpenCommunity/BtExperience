@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 	<container id="9" descr="video door entry system">
-                <ist uii="309" img="images/card/vde.jpg">
+                <ist uii="309" img="images/card/video_door_entry.jpg">
                         <link uii="9011" />
                         <link uii="9012" />
                         <link uii="9013" />
@@ -15,16 +15,16 @@
 		</ist>
 	</container>
 	<container id="100" > <!-- rooms -->
-                <ist uii="102" descr="living room" img="images/background/soggiorno.jpg" img_card="images/card/soggiorno.jpg">
+                <ist uii="102" descr="living room" img="images/background/living_room.jpg" img_card="images/card/living_room.jpg">
 		</ist>
-                <ist uii="103" descr="bathroom" img="images/background/bagno.jpg" img_card="images/card/bagno.jpg">
+                <ist uii="103" descr="bathroom" img="images/background/bathroom.jpg" img_card="images/card/bathroom.jpg">
 		</ist>
 
                 <ist uii="104" descr="garage" img="images/background/garage.jpg" img_card="images/card/garage.jpg">
 		</ist>
-                <ist uii="105" descr="bedroom" img="images/background/camera_ragazzi.jpg" img_card="images/card/camera_ragazzi.jpg">
+                <ist uii="105" descr="bedroom" img="images/background/kids_room.jpg" img_card="images/card/kids_room.jpg">
 		</ist>
-                <ist uii="106" descr="kitchen" img="images/background/cucina.jpg" img_card="images/card/cucina.jpg">
+                <ist uii="106" descr="kitchen" img="images/background/kitchen.jpg" img_card="images/card/kitchen.jpg">
 		</ist>
 	</container>
 	<container id="13" descr="floor" img="floor.png">

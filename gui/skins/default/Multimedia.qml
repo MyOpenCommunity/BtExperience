@@ -128,7 +128,7 @@ Page {
                 m.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/card/meteo.jpg",
                                            "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
             if (webcamModel.count > 0)
-                m.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/webcam.jpg",
+                m.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/cam.jpg",
                                            "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
         }
 
