@@ -74,9 +74,6 @@ BasePage {
     }
 
     function addStopAndGoPopup(device) {
-        if (device.status === StopAndGo.Unknown || device.status === StopAndGo.Closed) // not interesting
-            return
-
         // status description
         var t = privateProps.energyManagementNames.get('STOP_GO_STATUS', device.status)
 

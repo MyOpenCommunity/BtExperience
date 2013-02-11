@@ -545,6 +545,9 @@ Item {
         }
 
         function stopAndGoDeviceChanging(stopGoDevice) {
+            if (stopGoDevice.status === StopAndGo.Unknown || stopGoDevice.status === StopAndGo.Closed) // not interesting
+                return
+
             global.screenState.enableState(ScreenState.Normal)
             var p = privateProps.preparePopupPage(false)
             // adds stop&go alarm
