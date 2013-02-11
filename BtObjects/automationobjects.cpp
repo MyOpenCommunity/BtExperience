@@ -102,7 +102,7 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 
 		if (bool(mode) != (id == ObjectInterface::IdAutomation3Safe))
 		{
-			qWarning() << "Inconsistend safe mode for 3-state actuator" << uii;
+			qWarning() << "Inconsistend safe mode for 3-state actuator with UII" << uii;
 			Q_ASSERT_X(false, "parseAutomation3", "Inconsistent safe mode");
 		}
 
