@@ -23,6 +23,24 @@ namespace
 			return EnergyLoadManagement::Unknown;
 		}
 	}
+
+	QString getPriorityFrom(const QString& where)
+	{
+		int pos = where.indexOf('#');
+
+		if (pos == -1)
+		{
+			qWarning("%s Device where must have a '#' character: %s", __PRETTY_FUNCTION__, where.toLatin1().data());
+			return QString();
+		}
+
+		// remove part after '#'
+		QString priority = where.left(pos);
+		// remove first 7
+		priority = priority.mid(1);
+
+		return priority;
+	}
 }
 
 
@@ -37,7 +55,7 @@ QList<ObjectPair> parseLoadDiagnostic(const QDomNode &xml_node)
 		int uii = getIntAttribute(ist, "uii");
 
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), ObjectInterface::IdLoadDiagnostic, 0, 0));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), getPriorityFrom(v.value("where")), ObjectInterface::IdLoadDiagnostic, 0, 0));
 	}
 	return obj_list;
 }
@@ -68,7 +86,7 @@ QList<ObjectPair> parseLoadWithCU(const QDomNode &xml_node, QHash<int, EnergyRat
 		}
 
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagementWithControlUnit(d, v.intValue("advanced"), v.value("descr"), rate, rate_decimals));
+		obj_list << ObjectPair(uii, new EnergyLoadManagementWithControlUnit(d, v.intValue("advanced"), v.value("descr"), getPriorityFrom(v.value("where")), rate, rate_decimals));
 	}
 	return obj_list;
 }
@@ -99,7 +117,7 @@ QList<ObjectPair> parseLoadWithoutCU(const QDomNode &xml_node, QHash<int, Energy
 		}
 
 		LoadsDevice *d = bt_global::add_device_to_cache(new LoadsDevice(v.value("where")));
-		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), ObjectInterface::IdLoadWithoutControlUnit, rate, rate_decimals));
+		obj_list << ObjectPair(uii, new EnergyLoadManagement(d, v.value("descr"), getPriorityFrom(v.value("where")), ObjectInterface::IdLoadWithoutControlUnit, rate, rate_decimals));
 	}
 	return obj_list;
 }
@@ -154,7 +172,7 @@ void EnergyLoadTotal::setResetDateTime(QDateTime reset)
 }
 
 
-EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, int _oid, EnergyRate *_rate, int _rate_decimals) :
+EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, QString _priority, int _oid, EnergyRate *_rate, int _rate_decimals) :
 	DeviceObjectInterface(_dev)
 {
 	dev = _dev;
@@ -164,6 +182,7 @@ EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, int
 	status = Unknown;
 	consumption = 0;
 	oid = static_cast<ObjectInterface::ObjectId>(_oid);
+	priority = _priority;
 
 	period_totals.append(new EnergyLoadTotal(this, rate));
 	period_totals.append(new EnergyLoadTotal(this, rate));
@@ -198,6 +217,11 @@ QString EnergyLoadManagement::getCurrentUnit() const
 QString EnergyLoadManagement::getCumulativeUnit() const
 {
 	return "kWh";
+}
+
+QString EnergyLoadManagement::getPriority() const
+{
+	return priority;
 }
 
 double EnergyLoadManagement::getConsumption() const
@@ -293,8 +317,8 @@ void EnergyLoadManagement::valueReceived(const DeviceValues &values_list)
 }
 
 
-EnergyLoadManagementWithControlUnit::EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool advanced, QString name, EnergyRate *_rate, int _rate_decimals) :
-	EnergyLoadManagement(dev, name, ObjectInterface::IdLoadWithControlUnit, _rate, _rate_decimals)
+EnergyLoadManagementWithControlUnit::EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool advanced, QString name, QString priority, EnergyRate *_rate, int _rate_decimals) :
+	EnergyLoadManagement(dev, name, priority, ObjectInterface::IdLoadWithControlUnit, _rate, _rate_decimals)
 {
 	load_enabled = load_forced = false;
 	is_advanced = advanced;

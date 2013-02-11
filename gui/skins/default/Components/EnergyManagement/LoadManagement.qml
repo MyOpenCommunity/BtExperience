@@ -33,7 +33,7 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: listModel.getObject(index)
-            name: itemObject.name
+            name: itemObject.priority ? itemObject.priority + ". " + itemObject.name : itemObject.name
             status: MenuItem.status(itemObject)
             description: MenuItem.description(itemObject)
             boxInfoState: MenuItem.boxInfoState(itemObject)
@@ -42,6 +42,8 @@ MenuColumn {
             onDelegateClicked: element.loadColumn(appliance, itemObject.name, itemObject)
             Component.onCompleted: {
                 itemObject.requestLoadStatus()
+                if (itemObject.hasControlUnit) // eventually used in submenu
+                    itemObject.requestTotals()
                 itemObject.requestConsumptionUpdateStart()
             }
             Component.onDestruction: itemObject.requestConsumptionUpdateStop()

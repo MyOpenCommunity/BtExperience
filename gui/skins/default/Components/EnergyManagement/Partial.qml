@@ -1,23 +1,22 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
+import "../../js/datetime.js" as DateTime
 
 
 SvgImage {
     id: element
 
+    property variant load
     property int partialId: 1
-    property alias text: consumption.text
-    property alias since: since.text
-
-    signal clicked
+    property bool showCurrency
 
     source: "../../images/common/bg_panel_212x100.svg"
 
     UbuntuLightText {
         id: firstLine
 
-        text: qsTr("partial ") + (element.partialId + 1) // expects periodTotals are zero-based
+        text: qsTr("Partial ") + (element.partialId + 1) // expects periodTotals are zero-based
         color: "gray"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
@@ -32,7 +31,7 @@ SvgImage {
     UbuntuLightText {
         id: since
 
-        text: "since 24/07/2012 18:35"
+        text: privateProps.computeSince(load.periodTotals[partialId])
         color: "gray"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
@@ -46,7 +45,7 @@ SvgImage {
     UbuntuLightText {
         id: consumption
 
-        text: "45.51 kWh"
+        text: privateProps.getConsumptionText(showCurrency, load.periodTotals[partialId].total, load.cumulativeUnit, load.periodTotals[partialId].totalExpense, load.rate)
         color: "white"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
@@ -65,12 +64,35 @@ SvgImage {
         text: qsTr("reset")
         font.capitalization: Font.AllUppercase
         font.pixelSize: 15
-        onClicked: element.clicked()
+        onClicked: load.resetTotal(partialId)
         anchors {
             bottom: parent.bottom
             bottomMargin: parent.height / 100 * 10
             right: parent.right
             rightMargin: parent.width / 100 * 4
+        }
+    }
+
+    QtObject {
+        id: privateProps
+
+        function computeSince(period) {
+            // datetime returned from resetDateTime may be invalid; in this
+            // case we have to compare it with empty string, but using the
+            // == operator (and not === operator) because dt is not a string
+            var dt = period.resetDateTime
+            var d = DateTime.format(dt)["date"]
+            if (d == "")
+                return ""
+            var t = DateTime.format(dt)["time"]
+            return qsTr("since ") + d + " - " + t
+        }
+
+        function getConsumptionText(showCurrency, consumption, currentUnit, expense, rate) {
+            if (showCurrency)
+                return expense + " " + rate.currencySymbol
+            else
+                return consumption + " " + currentUnit
         }
     }
 }

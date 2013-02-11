@@ -179,6 +179,11 @@ class EnergyLoadManagement : public DeviceObjectInterface
 	*/
 	Q_PROPERTY(QString cumulativeUnit READ getCumulativeUnit CONSTANT)
 
+	/*!
+		\brief Returns a string containing load priority (as extracted from where)
+	*/
+	Q_PROPERTY(QString priority READ getPriority CONSTANT)
+
 	Q_ENUMS(LoadStatus)
 
 public:
@@ -195,7 +200,7 @@ public:
 		Critical
 	};
 
-	EnergyLoadManagement(LoadsDevice *dev, QString name, int oid, EnergyRate *rate, int rate_decimals);
+	EnergyLoadManagement(LoadsDevice *dev, QString name, QString priority, int oid, EnergyRate *rate, int rate_decimals);
 
 	virtual int getObjectId() const
 	{
@@ -215,6 +220,7 @@ public:
 	QString getUnit() const;
 	QString getCurrentUnit() const;
 	QString getCumulativeUnit() const;
+	QString getPriority() const;
 
 	virtual bool getHasControlUnit() const { return false; }
 	virtual bool getHasConsumptionMeters() const { return true; }
@@ -265,6 +271,7 @@ private:
 	double consumption;
 	QList<EnergyLoadTotal *> period_totals;
 	ObjectInterface::ObjectId oid;
+	QString priority;
 };
 
 
@@ -318,7 +325,7 @@ class EnergyLoadManagementWithControlUnit : public EnergyLoadManagement
 	Q_PROPERTY(int forceDuration READ getForceDuration NOTIFY forceDurationChanged)
 
 public:
-	EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool is_advanced, QString name, EnergyRate *rate, int rate_decimals);
+	EnergyLoadManagementWithControlUnit(LoadsDevice *dev, bool is_advanced, QString name, QString priority, EnergyRate *rate, int rate_decimals);
 
 	virtual bool getHasControlUnit() const { return true; }
 	virtual bool getHasConsumptionMeters() const;

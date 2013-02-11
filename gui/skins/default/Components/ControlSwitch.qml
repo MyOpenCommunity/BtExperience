@@ -7,6 +7,7 @@ SvgImage {
     property alias status: switchId.status
     property string upperText: ""
     property string text
+    property int pixelSize: 15
 
     signal clicked
 
@@ -17,16 +18,14 @@ SvgImage {
 
         UbuntuLightText {
             text: control.text
-            font.pixelSize: 15
+            font.pixelSize: control.pixelSize
             color: "white"
             wrapMode: Text.WordWrap
             elide: Text.ElideMiddle
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: parent.width / 100 * 4
                 right: parent.right
-                rightMargin: parent.width / 100 * 4
             }
         }
     }
@@ -39,7 +38,7 @@ SvgImage {
 
             UbuntuLightText {
                 text: control.text
-                font.pixelSize: 15
+                font.pixelSize: control.pixelSize
                 color: "white"
                 wrapMode: Text.WordWrap
                 elide: Text.ElideMiddle
@@ -47,15 +46,13 @@ SvgImage {
                     top: parent.top
                     topMargin: parent.height / 100 * 4
                     left: parent.left
-                    leftMargin: parent.width / 100 * 4
                     right: parent.right
-                    rightMargin: parent.width / 100 * 4
                 }
             }
 
             UbuntuLightText {
                 text: control.upperText
-                font.pixelSize: 15
+                font.pixelSize: control.pixelSize
                 color: "white"
                 wrapMode: Text.WordWrap
                 elide: Text.ElideMiddle
@@ -63,9 +60,7 @@ SvgImage {
                     bottom: parent.bottom
                     bottomMargin: parent.height / 100 * 4
                     left: parent.left
-                    leftMargin: parent.width / 100 * 4
                     right: parent.right
-                    rightMargin: parent.width / 100 * 4
                 }
             }
         }
@@ -80,7 +75,7 @@ SvgImage {
             left: parent.left
             leftMargin: parent.width / 100 * 4
             right: switchId.left
-            rightMargin: parent.width / 100 * 4
+            rightMargin: parent.width / 100 * 2
         }
     }
 
