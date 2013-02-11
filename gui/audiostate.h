@@ -64,6 +64,11 @@ public:
 
 	State getState() const;
 
+	/*!
+	 \brief Set the volume for the given Volume channel.
+
+	 \param volume Volume in percentage.
+	*/
 	Q_INVOKABLE void setVolume(Volume state, int volume);
 	Q_INVOKABLE int getVolume(Volume state) const;
 
