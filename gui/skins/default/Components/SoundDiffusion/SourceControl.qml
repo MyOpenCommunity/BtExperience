@@ -12,11 +12,13 @@ MenuColumn {
     width: 212
     height: sourceSelect.height + itemLoader.height
 
+    SourceModel { id: sourceModel }
+
     MenuItem {
         id: sourceSelect
         anchors.top: parent.top
         name: qsTr("source")
-        description: column.dataModel.currentSource === null ? qsTr("no active source") : column.dataModel.currentSource.name
+        description: column.dataModel.currentSource === null ? sourceModel.model.getObject(0).name : column.dataModel.currentSource.name
         hasChild: true
         isSelected: privateProps.currentIndex === 0
         onClicked: {
