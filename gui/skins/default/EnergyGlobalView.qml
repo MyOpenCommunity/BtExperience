@@ -124,6 +124,7 @@ Page {
                 rightMargin: 20
                 verticalCenter: parent.verticalCenter
             }
+            visible: !table.firstItemReached
 
             BeepingMouseArea {
                 id: mouseAreaSx
@@ -161,6 +162,7 @@ Page {
                 leftMargin: 20
                 verticalCenter: parent.verticalCenter
             }
+            visible: !table.lastItemReached
 
             BeepingMouseArea {
                 id: mouseAreaDx
