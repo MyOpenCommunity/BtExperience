@@ -49,6 +49,8 @@ StopAndGo::StopAndGo(StopAndGoDevice *_dev, QString _name) :
 	name = _name;
 	auto_reset = false;
 	status = Unknown;
+
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), this, SLOT(valueReceived(DeviceValues)));
 }
 
 StopAndGo::Status StopAndGo::getStatus() const
