@@ -13,7 +13,7 @@ Page {
 
     property alias title: controlVideo.label
 
-    source: "images/background/videocitofonia.jpg"
+    source: "images/background/video_door_entry.jpg"
     showSystemsButton: true
     _pageName: "VideoCamera"
 
