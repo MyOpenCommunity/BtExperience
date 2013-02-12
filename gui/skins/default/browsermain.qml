@@ -144,7 +144,6 @@ BasePage {
                     id: webView
                     clip: true
                     onProgressChanged: header.urlChanged = false
-                    x: 0
                     y: parent.childOffset
                     width: parent.width
                     height: parent.height

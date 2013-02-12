@@ -5,7 +5,6 @@ import Components.Text 1.0
 Item {
     id: container
 
-    property alias image: bg.source
     property alias url: urlText.text
     property variant view
     property bool ssl
@@ -14,18 +13,7 @@ Item {
     signal urlChanged
     signal favoritesClicked
 
-    width: parent.height
     height: parent.height
-
-    BorderImage {
-        id: bg
-        rotation: 180
-        x: 8
-        width: parent.width - 16
-        height: 30
-        anchors.verticalCenter: parent.verticalCenter
-        border { left: 10; top: 10; right: 10; bottom: 10 }
-    }
 
     Rectangle {
         anchors.bottom: bg.bottom

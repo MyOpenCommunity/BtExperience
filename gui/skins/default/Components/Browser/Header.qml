@@ -37,17 +37,6 @@ SvgImage {
     }
 
     source: "../../images/common/bg_barra.svg"
-    x: view.contentX < 0 ?
-           -view.contentX :
-           view.contentX > view.contentWidth-view.width ?
-               -view.contentX+view.contentWidth-view.width :
-               0
-    y: view.progress < 1.0 ?
-           0 :
-           view.contentY < 0 ?
-               -view.contentY :
-               view.contentY > height ?
-                   -height : -view.contentY
 
     ButtonImageThreeStates {
         id: backButton

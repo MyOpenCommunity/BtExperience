@@ -56,7 +56,6 @@ Flickable {
     property int zoomPercentage: 100
 
     id: flickable
-    width: parent.width
     contentWidth: Math.max(parent.width,webView.width)
     contentHeight: Math.max(parent.height,webView.height)
     pressDelay: 200
@@ -74,7 +73,6 @@ Flickable {
 
         newWindowComponent: browserComponent
         newWindowParent: webBrowser
-        transformOrigin: Item.TopLeft
         settings.javascriptCanOpenWindows: true
 
         smooth: false // We don't want smooth scaling, since we only scale during (fast) transitions
