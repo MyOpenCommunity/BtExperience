@@ -662,7 +662,6 @@ public:
 	virtual void setActiveOnSource(SourceObject *source) = 0;
 	virtual void setActive(bool active) = 0;
 	virtual void setVolume(int volume) = 0;
-	virtual bool belongsToAmbient(SoundAmbientBase *ambient) = 0;
 };
 
 
@@ -711,7 +710,6 @@ public:
 	Q_INVOKABLE void volumeDown() const;
 
 	virtual void setActiveOnSource(SourceObject *source);
-	virtual bool belongsToAmbient(SoundAmbientBase *ambient);
 
 signals:
 	void activeChanged();
@@ -752,7 +750,6 @@ public:
 
 	virtual void setActiveOnSource(SourceObject *source);
 	virtual void setVolume(int volume);
-	virtual bool belongsToAmbient(SoundAmbientBase *ambient);
 
 private:
 	QList<Amplifier *> amplifiers;

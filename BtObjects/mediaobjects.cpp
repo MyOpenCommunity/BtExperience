@@ -1169,11 +1169,6 @@ void Amplifier::setActiveOnSource(SourceObject *source)
 	source->setActive(getArea());
 }
 
-bool Amplifier::belongsToAmbient(SoundAmbientBase *ambient)
-{
-	return ambient->getArea() == getArea();
-}
-
 
 AmplifierGroup::AmplifierGroup(QString _name, QList<Amplifier *> _amplifiers, int _object_id)
 {
@@ -1210,16 +1205,6 @@ void AmplifierGroup::setVolume(int volume)
 {
 	foreach (Amplifier *amplifier, amplifiers)
 		amplifier->setVolume(volume);
-}
-
-bool AmplifierGroup::belongsToAmbient(SoundAmbientBase *ambient)
-{
-	// if one amplifier belongs to the ambient, assumes all the group belongs to it
-	int area = ambient->getArea();
-	foreach (Amplifier *amplifier, amplifiers)
-		if (area == amplifier->getArea())
-			return true;
-	return false;
 }
 
 

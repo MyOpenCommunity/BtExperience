@@ -623,22 +623,43 @@ void AlarmClock::updateAmbient()
 
 	// loop through all ambients to look for the one containing this amplifier
 	ambientList.clear();
+
 	QScopedPointer<ObjectModel> ambientModel(new ObjectModel());
 	ambientModel->setFilters(
 				ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSpecialAmbient
 				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSoundAmbient
 				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMonoChannelSoundAmbient
 				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiGeneral);
+
+	QScopedPointer<ObjectModel> amplifierModel(new ObjectModel());
+	amplifierModel->setFilters(
+				ObjectModelFilters() << "objectId" << ObjectInterface::IdAmbientAmplifier
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdSoundAmplifierGroup
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdSoundAmplifier
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdPowerAmplifier
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdAmplifierGeneral);
+
 	for (int i = 0; i < ambientModel->getCount(); ++i)
 	{
 		ItemInterface *item = ambientModel->getObject(i);
 		SoundAmbientBase *ambient = qobject_cast<SoundAmbientBase *>(item);
 		Q_ASSERT_X(ambient, __PRETTY_FUNCTION__, "Unexpected NULL object");
+
 		if (ambient)
 		{
 			ambientList << ambient;
-			if (amplifier_interface && amplifier_interface->belongsToAmbient(ambient))
-				ambient_index = i;
+
+			amplifierModel->setContainers(QVariantList() << ambient->getUii());
+
+			for (int j = 0; j < amplifierModel->getCount(); ++j)
+			{
+				ItemInterface *item = amplifierModel->getObject(j);
+				Q_ASSERT_X(item, __PRETTY_FUNCTION__, "Unexpected NULL object");
+
+				AmplifierInterface *candidate = dynamic_cast<AmplifierInterface *>(item);
+				if (candidate && candidate == amplifier_interface)
+					ambient_index = i;
+			}
 		}
 	}
 
