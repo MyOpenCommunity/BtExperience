@@ -785,6 +785,24 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
 	return QPair<QDomNode, QString>();
 }
 
+bool BtObjectsPlugin::objectLinkWithPosition(ItemInterface *obj)
+{
+	for (int i = 0; i < media_model.getCount(); ++i)
+	{
+		Container *c = qobject_cast<Container *>(media_model.getObject(i));
+
+		switch (c->getContainerId())
+		{
+		case Container::IdRooms:
+		case Container::IdProfile:
+			if (c->getContainerUii() == obj->getContainerUii())
+				return true;
+		}
+	}
+
+	return false;
+}
+
 void BtObjectsPlugin::updateObject(ItemInterface *obj)
 {
 	ObjectInterface *obj_int = qobject_cast<ObjectInterface *>(obj);
@@ -816,10 +834,6 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 	Container *obj_cont = qobject_cast<Container *>(obj);
 	MediaLink *obj_media = qobject_cast<MediaLink *>(obj);
 	ObjectLink *obj_link = qobject_cast<ObjectLink *>(obj);
-
-	// If we are in homepage, we don't want to update the position of the link
-	bool is_home_page = (global_models.getHomepageLinks() &&
-			     global_models.getHomepageLinks()->getUii() == obj->getContainerUii());
 
 	if (obj_int)
 	{
@@ -856,14 +870,14 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 		QPair<QDomNode, QString> archive_path = findNodeForUii(findLinkedUiiForObject(obj));
 
 		updateMediaNameAddress(archive_path.first, obj_media);
-		if (!is_home_page)
+		if (objectLinkWithPosition(obj))
 			updateLinkPosition(node_path.first, obj_media);
 
 		configurations->saveConfiguration(archive_path.second);
 	}
 	else if (obj_link)
 	{
-		if (!is_home_page)
+		if (objectLinkWithPosition(obj))
 			updateLinkPosition(node_path.first, obj_link);
 	}
 	else
@@ -953,7 +967,9 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 	}
 	else
 	{
-		if (obj_link)
+		if (!objectLinkWithPosition(obj))
+			createLink(container_path.first, uii);
+		else if (obj_link)
 			createLink(container_path.first, uii, obj_link);
 		else if (obj_media)
 			createLink(container_path.first, uii, obj_media);

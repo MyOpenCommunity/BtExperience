@@ -55,6 +55,7 @@ private:
 	void parseSoundAmbientMono(const QDomNode &ambient);
 	void createGeneralAmbient();
 	void setContainerForLocalSources(int container_uii);
+	bool objectLinkWithPosition(ItemInterface *obj);
 
 	QDomDocument findDocumentForId(int id) const;
 
