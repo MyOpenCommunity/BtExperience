@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import "../../js/MenuItem.js" as Script
 
 MenuColumn {
     id: element
@@ -60,9 +61,9 @@ MenuColumn {
             delegate: MenuItemDelegate {
                 itemObject: listModel.getObject(index)
                 name: itemObject.name
-                description: privateProps.getDescription(itemObject)
-                status: privateProps.loadStatus(itemObject)
-                hasChild: true
+                description: Script.description(itemObject)
+                status: Script.status(itemObject)
+                hasChild: Script.hasChild(itemObject)
                 onDelegateClicked: {
                     privateProps.currentIndex = -1
                     element.loadColumn(mapping.getComponent(itemObject.objectId), name, itemObject)
@@ -76,30 +77,6 @@ MenuColumn {
         id: privateProps
 
         property int currentIndex: -1
-
-        function getDescription(obj) {
-            if (obj.status === StopAndGo.Closed)
-                return qsTr("Closed")
-            else if (obj.status === StopAndGo.Opened)
-                return qsTr("Open")
-            else if (obj.status === StopAndGo.Locked)
-                return qsTr("Open - Block")
-            else if (obj.status === StopAndGo.ShortCircuit)
-                return qsTr("Open - Short Circuit")
-            else if (obj.status === StopAndGo.GroundFail)
-                return qsTr("Open - Earth Fault")
-            else if (obj.status === StopAndGo.Overtension)
-                return qsTr("Open - Over Current")
-            return qsTr("Unknown")
-        }
-
-        function loadStatus(obj) {
-            if (obj.status === StopAndGo.Closed)
-                return 1
-            if (obj.status === StopAndGo.Unknown)
-                return 0
-            return 3
-        }
     }
 
     BtObjectsMapping { id: mapping }

@@ -46,6 +46,20 @@ function status(itemObject) {
             return 1
         else
             return 0
+
+
+    case ObjectInterface.IdStopAndGo:
+    case ObjectInterface.IdStopAndGoPlus:
+    case ObjectInterface.IdStopAndGoBtest:
+        switch (itemObject.status) {
+        case StopAndGo.Closed:
+            return 1
+        case StopAndGo.Unknown:
+            return 0
+        default:
+            return 3
+        }
+
     }
 
     return -1
@@ -101,6 +115,32 @@ function description(itemObject) {
         if (itemObject.consumption > 0)
             descr = itemObject.consumption + " " + itemObject.currentUnit
         break
+
+    case ObjectInterface.IdStopAndGo:
+    case ObjectInterface.IdStopAndGoPlus:
+    case ObjectInterface.IdStopAndGoBtest:
+        switch (itemObject.status) {
+        case StopAndGo.Closed:
+            descr = qsTr("Closed")
+            break
+        case StopAndGo.Opened:
+            descr = qsTr("Open")
+            break
+        case StopAndGo.Locked:
+            descr = qsTr("Open - Block")
+            break
+        case StopAndGo.ShortCircuit:
+            descr = qsTr("Open - Short Circuit")
+            break
+        case StopAndGo.GroundFail:
+            descr = qsTr("Open - Earth Fault")
+            break
+        case StopAndGo.Overtension:
+            descr = qsTr("Open - Over Current")
+            break
+        default:
+            descr = qsTr("Unknown")
+        }
     }
 
     return descr
