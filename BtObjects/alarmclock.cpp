@@ -295,7 +295,7 @@ void AlarmClock::qmlValueChanged(int key, QVariant value)
 void AlarmClock::valueReceived(const DeviceValues &values_list)
 {
 	if (values_list.contains(PlatformDevice::DIM_DATE) ||
-	    values_list.contains(PlatformDevice::DIM_TIME))
+		values_list.contains(PlatformDevice::DIM_TIME))
 		checkRequestManagement();
 }
 
@@ -638,10 +638,7 @@ void AlarmClock::updateAmbient()
 		{
 			ambientList << ambient;
 			if (amplifier_interface && amplifier_interface->belongsToAmbient(ambient))
-			{
 				ambient_index = i;
-				break;
-			}
 		}
 	}
 
