@@ -10,17 +10,17 @@
 		<ist uii="4003" descr="Stop and go btest" where="5" />
 	</obj>
 	<obj cid="6104" id="6104" descr="Load diagnostic" where="0" phase="0">
-		<ist uii="4007" descr="Washing machine" where="6" />
-		<ist uii="4008" descr="Dishwasher" where="8" />
+		<ist uii="4007" descr="Washing machine" where="76#6" />
+		<ist uii="4008" descr="Dishwasher" where="78#8" />
 	</obj>
 	<obj cid="6111" id="6111" descr="Load with CU" where="1" phase="0" advanced="0" mode="1" measure="Kw" rate_enabled="0" rate_type="0"
-	     rate_n_decimal_view="0">
-		<ist uii="4004" descr="Load 1 w/ CU advanced" where="2" advanced="1" rate_enabled="1" rate_id="5" />
-		<ist uii="4005" descr="Load 2 w/ CU base" where="3" />
+             rate_n_decimal_view="0">
+		<ist uii="4004" descr="Load 1 w/ CU advanced" where="72#2" advanced="1" rate_enabled="1" rate_id="5" />
+		<ist uii="4005" descr="Load 2 w/ CU base" where="73#3" />
 	</obj>
 	<obj cid="6111" id="6112" descr="Load without CU" where="1" phase="0" advanced="1" mode="1" measure="Kw" rate_enabled="0" rate_type="0"
-	     rate_n_decimal_view="5">
-		<ist uii="4006" descr="Load 3 w/o CU" where="2" advanced="1" rate_enabled="1" rate_id="5" />
+             rate_n_decimal_view="0">
+		<ist uii="4006" descr="Load 3 w/o CU" where="74#4" advanced="1" rate_enabled="1" rate_id="5" />
 	</obj>
 	<obj cid="6105" id="6105" descr="Electric line" where="1"
 	     SWmeasure="Kw" measure="Kw" consumption_goal_enabled="0"
