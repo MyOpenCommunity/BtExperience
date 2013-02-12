@@ -8,6 +8,18 @@ MenuColumn {
     id: column
 
     SystemsModel {
+        id: browser
+        systemId: Container.IdMultimediaBrowser
+        source: myHomeModels.mediaContainers
+    }
+
+    ObjectModel {
+        id: browserLink
+        source: myHomeModels.mediaLinks
+        containers: [browser.systemUii]
+    }
+
+    SystemsModel {
         id: weblinks
         systemId: Container.IdMultimediaWebLink
         source: myHomeModels.mediaContainers
@@ -68,6 +80,7 @@ MenuColumn {
             name: qsTr("Browser")
             isSelected: privateProps.currentIndex === 1
             hasChild: true
+            visible: browserLink.count > 0
             onClicked: {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1

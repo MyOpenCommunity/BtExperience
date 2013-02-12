@@ -21,6 +21,8 @@ Page {
             Stack.goToPage(itemObject.target, itemObject.props)
     }
 
+    SystemsModel { id: browserSystemUii; systemId: Container.IdMultimediaBrowser; source: myHomeModels.mediaContainers }
+    ObjectModel { id: browserModel; source: myHomeModels.mediaLinks; containers: [browserSystemUii.systemUii] }
     SystemsModel { id: webLinkSystemUii; systemId: Container.IdMultimediaWebLink; source: myHomeModels.mediaContainers }
     ObjectModel { id: webLinkModel; source: myHomeModels.mediaLinks; containers: [webLinkSystemUii.systemUii] }
     SystemsModel { id: rssSystemUii; systemId: Container.IdMultimediaRss; source: myHomeModels.mediaContainers }
@@ -114,7 +116,10 @@ Page {
         for (var i = 0; i < models.length; ++i) {
             var m = models[i]
             m.append({"description": qsTr("devices"), "target": "Devices.qml", "cardImageCached": "images/card/devices.jpg", "props": {} })
-            m.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser.jpg", "props": {"urlString": global.homePageUrl}})
+
+            if (browserModel.count > 0)
+                m.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser.jpg", "props": {"urlString": global.homePageUrl}})
+
             if (webLinkModel.count > 0)
                 m.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink.jpg",
                                            "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
