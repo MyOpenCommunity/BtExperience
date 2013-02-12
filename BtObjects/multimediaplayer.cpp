@@ -241,9 +241,11 @@ void MultiMediaPlayer::releaseOutputDevices()
 {
 	if (player_state == Stopped || player_state == OutputDeviceReleased)
 		return;
-	is_releasing_device = true;
 	if (!is_video_track)
+	{
+		is_releasing_device = true;
 		player->stop();
+	}
 }
 
 void MultiMediaPlayer::seek(int seconds)
