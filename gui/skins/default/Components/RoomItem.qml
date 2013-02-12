@@ -58,6 +58,25 @@ MenuColumn {
             column.loadColumn(mapping.getComponent(dataModel.objectId), dataModel.name, object, properties)
         }
 
+        function handleOnCompleted() {
+            switch (dataModel.objectId) {
+            case ObjectInterface.IdLoadWithControlUnit:
+            case ObjectInterface.IdLoadWithoutControlUnit:
+                dataModel.requestLoadStatus()
+                dataModel.requestConsumptionUpdateStart()
+                break
+            }
+        }
+
+        function handleOnDestruction() {
+            switch (dataModel.objectId) {
+            case ObjectInterface.IdLoadWithControlUnit:
+            case ObjectInterface.IdLoadWithoutControlUnit:
+                dataModel.requestConsumptionUpdateStop()
+                break
+            }
+        }
+
         name: dataModel.name
         description: Script.description(dataModel)
         status: Script.status(dataModel)
@@ -75,6 +94,9 @@ MenuColumn {
 
             handleClick()
         }
+
+        Component.onCompleted: handleOnCompleted()
+        Component.onDestruction: handleOnDestruction()
 
         ObjectModel {
             id: cctvModel

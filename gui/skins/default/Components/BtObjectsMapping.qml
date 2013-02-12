@@ -92,6 +92,10 @@ QtObject {
         case ObjectInterface.IdExternalIntercom:
         case ObjectInterface.IdInternalIntercom:
             return Qt.createComponent("VideoDoorEntry/Talk.qml")
+        case ObjectInterface.IdLoadWithControlUnit:
+        case ObjectInterface.IdLoadWithoutControlUnit:
+            return Qt.createComponent("EnergyManagement/Appliance.qml")
+
         default:
             console.log("getComponent(): Unknown object id: " + objectId)
             return ""
