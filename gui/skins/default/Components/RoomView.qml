@@ -230,7 +230,7 @@ Item {
             bgMoveArea.selectedItem.yAnimation.to = itemPos.y
             bgMoveArea.selectedItem.xAnimation.start()
             bgMoveArea.selectedItem.yAnimation.start()
-            bgMoveArea.selectedItem.itemObject.position = Qt.point(itemPos.x, itemPos.y)
+            bgMoveArea.selectedItem.itemObject.position = Qt.point(absX, absY)
         }
         maxItemWidth: 212 // assumes menu width is always this value
         maxItemHeight: 70 // assumes menu height is always this value (must consider shadow!)
@@ -292,11 +292,12 @@ Item {
                 var obj = model.getObject(i)
                 var y = obj.position.y
                 var x = obj.position.x
+                var res = content.mapFromItem(null, obj.position.x, obj.position.y - constants.navbarTopMargin)
 
                 privateProps.refX = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).x + 0.5 * bgMoveArea.width
                 privateProps.refY = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).y + 0.5 * bgMoveArea.height
 
-                var object = itemComponent.createObject(content, {"rootData": obj.btObject, 'x': x, 'y': y, 'pageObject': pageObject, "itemObject": obj})
+                var object = itemComponent.createObject(content, {"rootData": obj.btObject, 'x': res.x, 'y': res.y, 'pageObject': pageObject, "itemObject": obj})
                 Script.obj_array.push(object)
             }
         }
