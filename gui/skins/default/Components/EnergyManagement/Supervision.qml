@@ -65,7 +65,7 @@ MenuColumn {
                 hasChild: true
                 onDelegateClicked: {
                     privateProps.currentIndex = -1
-                    element.loadColumn(privateProps.getComponent(itemObject), name, itemObject)
+                    element.loadColumn(mapping.getComponent(itemObject.objectId), name, itemObject)
                 }
             }
             model: listModel
@@ -76,15 +76,6 @@ MenuColumn {
         id: privateProps
 
         property int currentIndex: -1
-
-        function getComponent(obj) {
-            if (obj.objectId === ObjectInterface.IdStopAndGo)
-                return stopAndGo
-            if (obj.objectId === ObjectInterface.IdStopAndGoPlus)
-                return stopAndGoPlus
-            if (obj.objectId === ObjectInterface.IdStopAndGoBTest)
-                return stopAndGoBtest
-        }
 
         function getDescription(obj) {
             if (obj.status === StopAndGo.Closed)
@@ -111,18 +102,5 @@ MenuColumn {
         }
     }
 
-    Component {
-        id: stopAndGo
-        StopAndGoMenu {}
-    }
-
-    Component {
-        id: stopAndGoPlus
-        StopAndGoPlus {}
-    }
-
-    Component {
-        id: stopAndGoBtest
-        StopAndGoBtest {}
-    }
+    BtObjectsMapping { id: mapping }
 }
