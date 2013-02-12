@@ -347,11 +347,22 @@ void SoundAmbient::connectSources(QList<SourceObject *> sources)
 		QObject::connect(source, SIGNAL(activeAreasChanged(SourceObject *)), this, SLOT(updateActiveSource(SourceObject *)));
 }
 
-void SoundAmbient::connectAmplifiers(QList<Amplifier *> amplifiers)
+void SoundAmbient::connectAmplifiers(QList<Amplifier *> _amplifiers)
+{
+	foreach (Amplifier *amplifier, _amplifiers)
+	{
+		if (amplifier->getArea() == getArea())
+		{
+			amplifiers.append(amplifier);
+			QObject::connect(amplifier, SIGNAL(activeChanged()), this, SLOT(updateActiveAmplifier()));
+		}
+	}
+}
+
+void SoundAmbient::initializeObject()
 {
 	foreach (Amplifier *amplifier, amplifiers)
-		if (amplifier->getArea() == getArea())
-			QObject::connect(amplifier, SIGNAL(activeChanged()), this, SLOT(updateActiveAmplifier()));
+		amplifier->initializeObject();
 }
 
 bool SoundAmbient::getHasActiveAmplifier() const
