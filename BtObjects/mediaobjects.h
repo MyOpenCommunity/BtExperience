@@ -117,6 +117,8 @@ public:
 	virtual void connectSources(QList<SourceObject *> sources);
 	void connectAmplifiers(QList<Amplifier *> amplifiers);
 
+	virtual void initializeObject();
+
 signals:
 	void previousSourceChanged();
 	void activeAmplifierChanged();
@@ -128,6 +130,7 @@ private slots:
 private:
 	int amplifier_count, object_id;
 	SourceObject *previous_source;
+	QList<Amplifier *> amplifiers;
 };
 
 
