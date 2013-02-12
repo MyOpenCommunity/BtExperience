@@ -40,15 +40,12 @@ function status(itemObject) {
         return (itemObject.validityStatus !== AlarmClock.AlarmClockApplyResultOk) ? 3 : -1
 
     case ObjectInterface.IdLoadWithControlUnit:
-    case ObjectInterface.IdLoadWithoutControlUnit:
-        if (itemObject.loadStatus === EnergyLoadDiagnostic.Unknown)
-            return 0
-        else if (itemObject.loadStatus === EnergyLoadDiagnostic.Ok)
-            return 1
-        else if (itemObject.loadStatus === EnergyLoadDiagnostic.Warning)
-            return 2
-        else if (itemObject.loadStatus === EnergyLoadDiagnostic.Critical)
+        if (itemObject.loadEnabled && itemObject.loadForced)
             return 3
+        else if (itemObject.loadEnabled && !itemObject.loadForced)
+            return 1
+        else
+            return 0
     }
 
     return -1
@@ -63,13 +60,13 @@ function description(itemObject) {
         var probeStatus = itemObject.probeStatus
         // show 'protection' or 'off'
         if (probeStatus === ThermalControlledProbe.Antifreeze ||
-            probeStatus === ThermalControlledProbe.Off) {
+                probeStatus === ThermalControlledProbe.Off) {
             return pageObject.names.get('PROBE_STATUS', probeStatus)
         }
 
         // no special state, show setpoint (if in manual) and local offset
         if (probeStatus === ThermalControlledProbe.Manual ||
-            probeStatus === ThermalControlledProbe.Auto) {
+                probeStatus === ThermalControlledProbe.Auto) {
             descr += (itemObject.setpoint / 10).toFixed(1) + qsTr("°C")
         }
         if (!_isProbeOffsetZero(itemObject))
@@ -93,11 +90,15 @@ function description(itemObject) {
         break
 
     case ObjectInterface.IdLoadWithControlUnit:
+        if (itemObject.hasControlUnit) {
+            if (itemObject.loadEnabled && itemObject.loadForced)
+                descr =  qsTr("Forced")
+            else if (itemObject.consumption > 0)
+                descr = itemObject.consumption + " " + itemObject.currentUnit
+        }
+        break
     case ObjectInterface.IdLoadWithoutControlUnit:
-        var infoText = boxInfoText(itemObject)
-        if (boxInfoText(itemObject) === "0")
-            descr =  qsTr("Disabled")
-        else
+        if (itemObject.consumption > 0)
             descr = itemObject.consumption + " " + itemObject.currentUnit
         break
     }
@@ -123,11 +124,10 @@ function boxInfoState(itemObject) {
             return "info"
         break
     case ObjectInterface.IdLoadWithControlUnit:
-    case ObjectInterface.IdLoadWithoutControlUnit:
         if (itemObject.hasControlUnit) {
-            if (itemObject.loadEnabled)
-                return "info"
-            return "warning"
+            if (itemObject.loadEnabled && itemObject.loadForced)
+                return "warning"
+            return "info"
         }
     }
     return ""
