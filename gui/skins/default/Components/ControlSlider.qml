@@ -7,6 +7,7 @@ SvgImage {
 
     property int percentage: 70
     property alias description: label.text
+    property bool sliderEnabled: true
 
     signal plusClicked
     signal minusClicked
@@ -134,6 +135,7 @@ SvgImage {
             right: parent.right
             bottom: imageSlider.bottom
         }
+        enabled: sliderEnabled
 
         onPressed: slider.actualPercentage = privateProps.getPercentageFromCoordinate(mouse.x)
         onPositionChanged: slider.actualPercentage = privateProps.getPercentageFromCoordinate(mouse.x)
