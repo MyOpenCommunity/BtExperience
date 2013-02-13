@@ -131,6 +131,7 @@ SvgImage {
             bottom: imageSlider.bottom
         }
 
+        onPressed: slider.actualPercentage = privateProps.getPercentageFromCoordinate(mouse.x)
         onPositionChanged: slider.actualPercentage = privateProps.getPercentageFromCoordinate(mouse.x)
         onReleased: frameDestormerTimer.restart()
     }
