@@ -40,7 +40,7 @@ void TestEnergyLoadManagement::init()
 	LoadsDevice *d = new LoadsDevice("1");
 	EnergyRate *rate = new EnergyRate(0.25);
 
-	obj = new EnergyLoadManagement(d, "", ObjectInterface::IdLoadDiagnostic, rate, 0);
+	obj = new EnergyLoadManagement(d, "", "1", ObjectInterface::IdLoadDiagnostic, rate, 0);
 	dev = new LoadsDevice("1", 1);
 }
 
@@ -237,7 +237,7 @@ void TestEnergyLoadManagementWithControlUnit::init()
 	LoadsDevice *d = new LoadsDevice("1");
 	EnergyRate *rate = new EnergyRate(0.25);
 
-	obj = new EnergyLoadManagementWithControlUnit(d, true, "", rate, 0);
+	obj = new EnergyLoadManagementWithControlUnit(d, true, "", "1", rate, 0);
 	dev = new LoadsDevice("1", 1);
 
 	initObjects(dev, obj);

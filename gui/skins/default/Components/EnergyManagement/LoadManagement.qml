@@ -38,7 +38,7 @@ MenuColumn {
             description: MenuItem.description(itemObject)
             boxInfoState: MenuItem.boxInfoState(itemObject)
             boxInfoText: MenuItem.boxInfoText(itemObject)
-            hasChild: true
+            hasChild: MenuItem.hasChild(itemObject)
             onDelegateClicked: element.loadColumn(appliance, itemObject.name, itemObject)
             Component.onCompleted: {
                 itemObject.requestLoadStatus()

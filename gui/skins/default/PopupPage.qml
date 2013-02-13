@@ -49,6 +49,12 @@ BasePage {
         NumberAnimation { duration: constants.alertTransitionDuration }
     }
 
+    // used to pre-load energy graph values
+    EnergyGraphObject {
+        id: energyGraphCache
+        measureType: EnergyData.Consumption
+    }
+
     function updateUnreadMessages(unreadMessages) {
         privateProps.update(PopupLogic.updateUnreadMessages(unreadMessages))
     }
@@ -184,6 +190,18 @@ BasePage {
 
             if (data["_kind"] === "scenario")
                 dismissTimer.start()
+
+            if (data["_kind"] === "threshold_exceeded") {
+                energyGraphCache.energyData = data["_device"]
+                energyGraphCache.graphType = EnergyData.CumulativeDayGraph
+                energyGraphCache.date = new Date()
+            }
+
+            if (data["_kind"] === "goal_reached") {
+                energyGraphCache.energyData = data["_device"]
+                energyGraphCache.graphType = EnergyData.CumulativeMonthGraph
+                energyGraphCache.date = new Date()
+            }
 
             if (page.opacity < 1)
                 page.opacity = 1
