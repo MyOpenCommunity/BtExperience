@@ -1130,7 +1130,9 @@ int Amplifier::getVolume() const
 
 void Amplifier::setVolume(int volume)
 {
-	dev->setVolume(volume);
+	// convert to [0,31] scale
+	int v = volume * 31 / 100;
+	dev->setVolume(v);
 }
 
 int Amplifier::getArea() const
@@ -1164,7 +1166,8 @@ void Amplifier::valueReceived(const DeviceValues &values_list)
 		}
 		else if (it.key() == AmplifierDevice::DIM_VOLUME)
 		{
-			int val = it.value().toInt();
+			// convert to percentage
+			int val = it.value().toInt() * 100 / 31;
 			if (volume != val)
 			{
 				volume = val;

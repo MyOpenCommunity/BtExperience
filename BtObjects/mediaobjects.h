@@ -687,7 +687,7 @@ class Amplifier : public DeviceObjectInterface, public AmplifierInterface
 	Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
 
 	/*!
-		\brief Sets or gets the amplifier volume (1-31)
+		\brief Sets or gets the amplifier volume. Value in percentage.
 	*/
 	Q_PROPERTY(int volume READ getVolume WRITE setVolume NOTIFY volumeChanged)
 
