@@ -42,7 +42,7 @@ MenuColumn {
             onDelegateClicked: element.loadColumn(appliance, itemObject.name, itemObject)
             Component.onCompleted: {
                 itemObject.requestLoadStatus()
-                if (itemObject.hasControlUnit) // eventually used in submenu
+                if (itemObject.hasConsumptionMeters) // eventually used in submenu
                     itemObject.requestTotals()
                 itemObject.requestConsumptionUpdateStart()
             }
