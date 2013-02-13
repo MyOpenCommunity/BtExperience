@@ -12,10 +12,7 @@ SvgImage {
     signal minusClicked
     signal sliderClicked(int desiredPercentage)
 
-    onPercentageChanged: {
-        slider.opacity = 1
-        slider.actualPercentage = percentage
-    }
+    onPercentageChanged: slider.actualPercentage = percentage
 
     source: "../images/common/bg_panel_212x100.svg"
 
@@ -86,24 +83,33 @@ SvgImage {
                 }
             }
 
-            Behavior on opacity {
-                NumberAnimation { duration: 200 }
-            }
+            SequentialAnimation {
+                id: blinkingAnimation
 
-            Timer {
-                id: blinkingTimer
+                property int totalDuration: 1000
+                loops: Animation.Infinite
 
-                interval: 500 // arbitrary value
-                repeat: true
-                running: false
-                onTriggered: slider.opacity === 0 ? slider.opacity = 1 : slider.opacity = 0
+                NumberAnimation {
+                    target: slider
+                    property: "opacity"
+                    from: 1
+                    to: 0.4
+                    duration: blinkingAnimation.totalDuration / 2
+                }
+                NumberAnimation {
+                    target: slider
+                    property: "opacity"
+                    from: 0.4
+                    to: 1
+                    duration: blinkingAnimation.totalDuration / 2
+                }
             }
 
             states: [
                 State {
                     name: "blinking"
                     when: slider.actualPercentage !== buttonSlider.percentage
-                    PropertyChanges { target: blinkingTimer; running: true }
+                    PropertyChanges { target: blinkingAnimation; running: true }
                 }
             ]
         }
