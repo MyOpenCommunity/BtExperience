@@ -41,6 +41,9 @@ SvgImage {
             rightMargin: buttonSlider.width / 100 * 7.07
         }
 
+        // It's tempting to use slider.actualPercentage to link them together,
+        // but it makes more evident the fact that we are rounding the volume
+        // It doesn't look nice.
         text: percentage + " %"
         font.pixelSize: 15
         color: "#444546"
@@ -83,28 +86,6 @@ SvgImage {
                 }
             }
 
-            SequentialAnimation {
-                id: blinkingAnimation
-
-                property int totalDuration: 1000
-                loops: Animation.Infinite
-
-                NumberAnimation {
-                    target: slider
-                    property: "opacity"
-                    from: 1
-                    to: 0.4
-                    duration: blinkingAnimation.totalDuration / 2
-                }
-                NumberAnimation {
-                    target: slider
-                    property: "opacity"
-                    from: 0.4
-                    to: 1
-                    duration: blinkingAnimation.totalDuration / 2
-                }
-            }
-
             states: [
                 State {
                     name: "blinking"
@@ -120,6 +101,29 @@ SvgImage {
             interval: 1000 // arbitrary value
             repeat: false
             onTriggered: sliderClicked(slider.actualPercentage)
+        }
+    }
+
+    SequentialAnimation {
+        id: blinkingAnimation
+
+        property int totalDuration: 1000
+        loops: Animation.Infinite
+        alwaysRunToEnd: true
+
+        NumberAnimation {
+            targets: [slider, percentageLabel]
+            property: "opacity"
+            from: 1
+            to: 0.4
+            duration: blinkingAnimation.totalDuration / 2
+        }
+        NumberAnimation {
+            targets: [slider, percentageLabel]
+            property: "opacity"
+            from: 0.4
+            to: 1
+            duration: blinkingAnimation.totalDuration / 2
         }
     }
 
