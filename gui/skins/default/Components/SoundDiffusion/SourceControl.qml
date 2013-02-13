@@ -130,7 +130,8 @@ MenuColumn {
                                 font.pixelSize: 12
 
                                 onClicked: radioColumn.objModel.source.currentStation = stationNumber
-                                onPressAndHold: {
+                                pressAndHoldEnabled: true
+                                onHeld: {
                                     objModel.source.saveStation(stationNumber)
                                     if (global.guiSettings.beep)
                                         global.beep()

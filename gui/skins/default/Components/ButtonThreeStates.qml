@@ -15,21 +15,24 @@ SvgImage {
     property alias font: label.font
     property alias textAnchors: label.anchors
     property alias horizontalAlignment: label.horizontalAlignment
+    property alias pressAndHoldEnabled: area.pressAndHoldEnabled
 
     property bool enabled: true
     property int status: 0 // 0 - up, 1 - down
 
     signal clicked(variant mouse)
-    signal pressAndHold(variant mouse)
+    signal held(variant mouse)
     signal pressed(variant mouse)
 
     source: defaultImage
 
     BeepingMouseArea {
         id: area
+
         anchors.fill: parent
+
         onClicked: bg.clicked(mouse)
-        onPressAndHold: bg.pressAndHold(mouse)
+        onHeld: bg.held(mouse)
         onPressed: bg.pressed(mouse)
     }
 
