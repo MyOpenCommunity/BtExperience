@@ -109,7 +109,7 @@ private:
 };
 
 
-QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family, QHash<int, EnergyRate *> rates);
+QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family, QHash<int, EnergyRate *> rates, QString family_name);
 
 void updateEnergyData(QDomNode node, EnergyData *item);
 
@@ -149,6 +149,7 @@ class EnergyData : public ObjectInterface
 
 
 	Q_PROPERTY(EnergyFamily::FamilyType familyType READ getFamilyType CONSTANT)
+	Q_PROPERTY(QString familyName READ getFamilyName CONSTANT)
 
 	/// Energy to currency conversion rate
 	Q_PROPERTY(EnergyRate *rate READ getRate CONSTANT)
@@ -288,7 +289,8 @@ public:
 		Currency    = 1
 	};
 
-	EnergyData(EnergyDevice *dev, QString name, EnergyFamily::FamilyType family, QString unit, QVariantList goals, bool goals_enabled, QVariantList thresholds_enabled, EnergyRate *rate, int rate_decimals);
+	EnergyData(EnergyDevice *dev, QString name, EnergyFamily::FamilyType family, QString unit, QVariantList goals, bool goals_enabled,
+			   QVariantList thresholds_enabled, EnergyRate *rate, int rate_decimals, QString family_name = QString());
 
 	virtual int getObjectId() const;
 
@@ -349,6 +351,8 @@ public:
 	bool getGoalExceeded() const;
 
 	bool getAdvanced() const;
+
+	QString getFamilyName() const;
 
 public slots:
 	/*!
@@ -456,6 +460,7 @@ private:
 	int rate_decimals;
 
 	EnergyFamily::FamilyType family;
+	QString family_name;
 
 #if TEST_ENERGY_DATA
 private slots:

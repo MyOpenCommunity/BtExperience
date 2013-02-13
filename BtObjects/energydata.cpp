@@ -194,7 +194,7 @@ namespace
 }
 
 
-QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family, QHash<int, EnergyRate *> rates)
+QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::FamilyType family, QHash<int, EnergyRate *> rates, QString family_name)
 {
 	QList<ObjectPair> obj_list;
 	XmlObject v(xml_node);
@@ -242,7 +242,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 		thresholds_enabled << bool(v.intValue("threshold_one_enable"));
 		thresholds_enabled << bool(v.intValue("threshold_two_enable"));
 
-		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, goals_enabled, thresholds_enabled, rate, rate_decimals));
+		obj_list << ObjectPair(uii, new EnergyData(d, v.value("descr"), family, v.value("measure"), goals, goals_enabled, thresholds_enabled, rate, rate_decimals, family_name));
 	}
 	return obj_list;
 }
@@ -267,10 +267,12 @@ void updateEnergyData(QDomNode node, EnergyData *item)
 		setTextChild(goals, goal_names[i], QString::number(values[i].toDouble()));
 }
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyType _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate, int _rate_decimals)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyType _family, QString _unit, QVariantList _goals, bool _goals_enabled,
+					   QVariantList _thresholds_enabled, EnergyRate *_rate, int _rate_decimals, QString _family_name)
 {
 	name = _name;
 	family = _family;
+	family_name = _family_name;
 	dev = _dev;
 	rate = _rate;
 	energy_unit = _unit;
@@ -405,6 +407,11 @@ bool EnergyData::getGoalExceeded() const
 bool EnergyData::getAdvanced() const
 {
 	return dev->isAdvanced();
+}
+
+QString EnergyData::getFamilyName() const
+{
+	return family_name;
 }
 
 QSharedPointer<QObject> EnergyData::getGraph(GraphType type, QDate date, MeasureType measure)

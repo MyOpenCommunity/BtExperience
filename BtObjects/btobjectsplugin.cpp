@@ -477,8 +477,9 @@ void BtObjectsPlugin::createObjects()
 				qFatal("Invalid CID value for energy data: %d\n", getIntAttribute(xml_obj, "cid"));
 			}
 
-			objmodel << new EnergyFamily(getAttribute(xml_obj, "descr"), family);
-			obj_list = parseEnergyData(xml_obj, family, rates);
+			EnergyFamily *energy_family = new EnergyFamily(getAttribute(xml_obj, "descr"), family);
+			objmodel << energy_family;
+			obj_list = parseEnergyData(xml_obj, family, rates, energy_family->getName());
 			break;
 		}
 

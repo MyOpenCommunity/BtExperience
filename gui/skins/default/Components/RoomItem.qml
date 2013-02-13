@@ -3,6 +3,8 @@ import BtObjects 1.0
 
 import "../js/anchorspositioning.js" as Positioner
 import "../js/MenuItem.js" as Script
+import "../js/Stack.js" as Stack
+
 
 MenuColumn {
     id: column
@@ -52,6 +54,9 @@ MenuColumn {
                 object = intercomModel.getObject(0)
                 properties["intercom"] = dataModel
                 break
+            case ObjectInterface.IdEnergyData:
+                Stack.pushPage("EnergyDataGraph.qml", {"energyData": object})
+                return
             }
 
             column.columnClicked()

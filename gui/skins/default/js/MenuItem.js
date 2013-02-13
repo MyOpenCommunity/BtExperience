@@ -115,6 +115,9 @@ function description(itemObject) {
         if (itemObject.consumption > 0)
             descr = itemObject.consumption + " " + itemObject.currentUnit
         break
+    case ObjectInterface.IdEnergyData:
+        descr = itemObject.familyName
+        break
 
     case ObjectInterface.IdStopAndGo:
     case ObjectInterface.IdStopAndGoPlus:
@@ -209,6 +212,7 @@ function hasChild(itemObject) {
     case ObjectInterface.IdExternalPlace:
     case ObjectInterface.IdSurveillanceCamera:
     case ObjectInterface.IdSwitchboard:
+    case ObjectInterface.IdEnergyData:
         return false
     }
     return true
