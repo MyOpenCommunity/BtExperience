@@ -177,6 +177,11 @@ bool VDEBase::exitingCall()
 	return exit_call;
 }
 
+bool VDEBase::getTeleloop() const
+{
+	return is_teleloop;
+}
+
 
 CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list, d)
 {
@@ -306,11 +311,6 @@ void CCTV::setAutoOpen(bool newValue)
 CCTV::Ringtone CCTV::getRingtone() const
 {
 	return ringtone;
-}
-
-bool CCTV::getTeleloop() const
-{
-	return is_teleloop;
 }
 
 int CCTV::getAssociatedTeleloopId() const
@@ -786,6 +786,12 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			emit callEnded();
 			disactivateCall();
 			break;
+		case VideoDoorEntryDevice::TELE_SESSION:
+			qDebug() << "Received TELE_SESSION";
+			if (!callInProgress() || call_active) // ignore
+				break;
+			is_teleloop = true;
+			emit teleloopChanged();
 		case VideoDoorEntryDevice::ANSWER_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::ANSWER_CALL: " << *it;
 			if (!callInProgress()) // ignore

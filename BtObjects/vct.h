@@ -101,6 +101,11 @@ class VDEBase : public ObjectInterface
 	*/
 	Q_PROPERTY(bool exitingCall READ exitingCall NOTIFY exitingCallChanged)
 
+	/*!
+		\brief Gets if it is a teleloop call.
+	*/
+	Q_PROPERTY(bool teleloop READ getTeleloop NOTIFY teleloopChanged)
+
 public:
 	ObjectDataModel *getExternalPlaces() const;
 
@@ -110,6 +115,7 @@ public:
 	void setVolume(int value);
 	bool getMute() const;
 	void setMute(bool value);
+	bool getTeleloop() const;
 
 signals:
 	void volumeChanged();
@@ -118,6 +124,7 @@ signals:
 	void callInProgressChanged();
 	void callActiveChanged();
 	void exitingCallChanged();
+	void teleloopChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list) = 0;
@@ -132,6 +139,7 @@ protected:
 	int volume;
 	bool mute;
 	bool ip_mode;
+	bool is_teleloop;
 	bool call_in_progress, call_active, exit_call;
 	ObjectDataModel external_places;
 	VideoDoorEntryDevice *dev;
@@ -189,11 +197,6 @@ class CCTV : public VDEBase
 	Q_PROPERTY(bool autoSwitch READ getAutoSwitch NOTIFY autoSwitchChanged)
 
 	/*!
-		\brief Gets if it is a teleloop call.
-	*/
-	Q_PROPERTY(bool teleloop READ getTeleloop NOTIFY teleloopChanged)
-
-	/*!
 		\brief Sets or gets ring exclusion status
 	*/
 	Q_PROPERTY(bool ringExclusion READ getRingExclusion WRITE setRingExclusion NOTIFY ringExclusionChanged)
@@ -240,7 +243,6 @@ public:
 	void setHandsFree(bool newValue);
 	bool getRingExclusion() const;
 	void setRingExclusion(bool newValue);
-	bool getTeleloop() const;
 	int getAssociatedTeleloopId() const;
 	// should only be used during initial configuration parsing
 	void setAssociatedTeleloopId(int id);
@@ -273,7 +275,6 @@ signals:
 	void autoSwitchChanged();
 	void handsFreeChanged();
 	void ringExclusionChanged();
-	void teleloopChanged();
 	void associatedTeleloopIdChanged();
 	void teleloopAssociationStarted();
 	void teleloopAssociationComplete();
@@ -304,7 +305,6 @@ private:
 	bool prof_studio;
 	bool hands_free;
 	bool is_autoswitch;
-	bool is_teleloop;
 	Ringtone ringtone;
 	QProcess video_grabber;
 	QTimer association_timeout;
