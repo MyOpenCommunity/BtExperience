@@ -133,7 +133,7 @@ void updateEnergyData(QDomNode node, EnergyData *item);
 	Each value is returned as either a \ref EnergyItem or \ref EnergyGraph.  The value is requested asynchronously,
 	hence the returned value will typically be invalid and become valid only some time later.
 */
-class EnergyData : public ObjectInterface
+class EnergyData : public DeviceObjectInterface
 {
 	friend class EnergyGraph;
 	friend class EnergyItem;

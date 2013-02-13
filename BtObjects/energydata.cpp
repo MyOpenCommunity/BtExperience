@@ -267,7 +267,8 @@ void updateEnergyData(QDomNode node, EnergyData *item)
 		setTextChild(goals, goal_names[i], QString::number(values[i].toDouble()));
 }
 
-EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyType _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate, int _rate_decimals)
+EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyType _family, QString _unit, QVariantList _goals, bool _goals_enabled, QVariantList _thresholds_enabled, EnergyRate *_rate, int _rate_decimals) :
+	DeviceObjectInterface(_dev)
 {
 	name = _name;
 	family = _family;
