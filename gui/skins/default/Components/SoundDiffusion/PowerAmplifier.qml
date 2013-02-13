@@ -22,7 +22,8 @@ MenuColumn {
         id: volumeSlider
         anchors.top: buttonOnOff.bottom
         description: qsTr("volume")
-        percentage: (column.dataModel.volume) * 100 / 31
+        percentage: column.dataModel.volume
+        sliderEnabled: column.dataModel.active
         onMinusClicked: column.dataModel.volumeDown()
         onPlusClicked: column.dataModel.volumeUp()
         onSliderClicked: column.dataModel.volume = desiredPercentage

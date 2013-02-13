@@ -268,7 +268,8 @@ void updateEnergyData(QDomNode node, EnergyData *item)
 }
 
 EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyType _family, QString _unit, QVariantList _goals, bool _goals_enabled,
-					   QVariantList _thresholds_enabled, EnergyRate *_rate, int _rate_decimals, QString _family_name)
+					   QVariantList _thresholds_enabled, EnergyRate *_rate, int _rate_decimals, QString _family_name) :
+	DeviceObjectInterface(_dev)
 {
 	name = _name;
 	family = _family;
@@ -382,6 +383,10 @@ int EnergyData::getRateDecimals() const
 
 void EnergyData::setThresholdEnabled(QVariantList enabled)
 {
+	for (int i = 0; i < 2; ++i)
+		if (thresholds[i].toDouble() * unit_conversion < 1)
+			enabled[i] = false;
+
 	if (enabled == thresholds_enabled)
 		return;
 

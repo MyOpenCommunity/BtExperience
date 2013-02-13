@@ -13,6 +13,7 @@ MenuColumn {
         ControlSlider {
             description: qsTr("light intensity")
             percentage: dataModel.percentage
+            sliderEnabled: dataModel.active
             onPlusClicked: dataModel.increaseLevel()
             onMinusClicked: dataModel.decreaseLevel()
             onSliderClicked: dataModel.percentage = desiredPercentage

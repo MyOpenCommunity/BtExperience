@@ -7,15 +7,13 @@ SvgImage {
 
     property int percentage: 70
     property alias description: label.text
+    property bool sliderEnabled: true
 
     signal plusClicked
     signal minusClicked
     signal sliderClicked(int desiredPercentage)
 
-    onPercentageChanged: {
-        slider.opacity = 1
-        slider.actualPercentage = percentage
-    }
+    onPercentageChanged: slider.actualPercentage = percentage
 
     source: "../images/common/bg_panel_212x100.svg"
 
@@ -44,6 +42,9 @@ SvgImage {
             rightMargin: buttonSlider.width / 100 * 7.07
         }
 
+        // It's tempting to use slider.actualPercentage to link them together,
+        // but it makes more evident the fact that we are rounding the volume
+        // It doesn't look nice.
         text: percentage + " %"
         font.pixelSize: 15
         color: "#444546"
@@ -86,24 +87,11 @@ SvgImage {
                 }
             }
 
-            Behavior on opacity {
-                NumberAnimation { duration: 200 }
-            }
-
-            Timer {
-                id: blinkingTimer
-
-                interval: 500 // arbitrary value
-                repeat: true
-                running: false
-                onTriggered: slider.opacity === 0 ? slider.opacity = 1 : slider.opacity = 0
-            }
-
             states: [
                 State {
                     name: "blinking"
                     when: slider.actualPercentage !== buttonSlider.percentage
-                    PropertyChanges { target: blinkingTimer; running: true }
+                    PropertyChanges { target: blinkingAnimation; running: true }
                 }
             ]
         }
@@ -117,6 +105,29 @@ SvgImage {
         }
     }
 
+    SequentialAnimation {
+        id: blinkingAnimation
+
+        property int totalDuration: 1000
+        loops: Animation.Infinite
+        alwaysRunToEnd: true
+
+        NumberAnimation {
+            targets: [slider, percentageLabel]
+            property: "opacity"
+            from: 1
+            to: 0.4
+            duration: blinkingAnimation.totalDuration / 2
+        }
+        NumberAnimation {
+            targets: [slider, percentageLabel]
+            property: "opacity"
+            from: 0.4
+            to: 1
+            duration: blinkingAnimation.totalDuration / 2
+        }
+    }
+
     BeepingMouseArea {
         anchors {
             top: parent.top
@@ -124,7 +135,9 @@ SvgImage {
             right: parent.right
             bottom: imageSlider.bottom
         }
+        enabled: sliderEnabled
 
+        onPressed: slider.actualPercentage = privateProps.getPercentageFromCoordinate(mouse.x)
         onPositionChanged: slider.actualPercentage = privateProps.getPercentageFromCoordinate(mouse.x)
         onReleased: frameDestormerTimer.restart()
     }

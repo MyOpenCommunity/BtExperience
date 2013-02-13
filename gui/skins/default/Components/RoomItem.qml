@@ -1,9 +1,9 @@
 import QtQuick 1.1
 import BtObjects 1.0
-
 import "../js/anchorspositioning.js" as Positioner
 import "../js/MenuItem.js" as Script
 import "../js/Stack.js" as Stack
+import "../js/LoadManagement.js" as LoadScript
 
 
 MenuColumn {
@@ -67,8 +67,7 @@ MenuColumn {
             switch (dataModel.objectId) {
             case ObjectInterface.IdLoadWithControlUnit:
             case ObjectInterface.IdLoadWithoutControlUnit:
-                dataModel.requestLoadStatus()
-                dataModel.requestConsumptionUpdateStart()
+                LoadScript.requestLoadStatus(dataModel)
                 break
             }
         }
@@ -77,7 +76,7 @@ MenuColumn {
             switch (dataModel.objectId) {
             case ObjectInterface.IdLoadWithControlUnit:
             case ObjectInterface.IdLoadWithoutControlUnit:
-                dataModel.requestConsumptionUpdateStop()
+                LoadScript.stopLoadRequests(dataModel)
                 break
             }
         }
