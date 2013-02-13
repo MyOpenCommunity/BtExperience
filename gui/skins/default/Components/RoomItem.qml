@@ -3,6 +3,7 @@ import BtObjects 1.0
 
 import "../js/anchorspositioning.js" as Positioner
 import "../js/MenuItem.js" as Script
+import "../js/LoadManagement.js" as LoadScript
 
 MenuColumn {
     id: column
@@ -62,8 +63,7 @@ MenuColumn {
             switch (dataModel.objectId) {
             case ObjectInterface.IdLoadWithControlUnit:
             case ObjectInterface.IdLoadWithoutControlUnit:
-                dataModel.requestLoadStatus()
-                dataModel.requestConsumptionUpdateStart()
+                LoadScript.requestLoadStatus(dataModel)
                 break
             }
         }
@@ -72,7 +72,7 @@ MenuColumn {
             switch (dataModel.objectId) {
             case ObjectInterface.IdLoadWithControlUnit:
             case ObjectInterface.IdLoadWithoutControlUnit:
-                dataModel.requestConsumptionUpdateStop()
+                LoadScript.stopLoadRequests(dataModel)
                 break
             }
         }

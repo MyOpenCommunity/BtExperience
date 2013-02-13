@@ -2,6 +2,7 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import "../../js/MenuItem.js" as MenuItem
+import "../../js/LoadManagement.js" as Script
 
 
 MenuColumn {
@@ -40,13 +41,8 @@ MenuColumn {
             boxInfoText: MenuItem.boxInfoText(itemObject)
             hasChild: MenuItem.hasChild(itemObject)
             onDelegateClicked: element.loadColumn(appliance, itemObject.name, itemObject)
-            Component.onCompleted: {
-                itemObject.requestLoadStatus()
-                if (itemObject.hasConsumptionMeters) // eventually used in submenu
-                    itemObject.requestTotals()
-                itemObject.requestConsumptionUpdateStart()
-            }
-            Component.onDestruction: itemObject.requestConsumptionUpdateStop()
+            Component.onCompleted: Script.requestLoadStatus(itemObject)
+            Component.onDestruction: Script.stopLoadRequests(itemObject)
         }
     }
 }
