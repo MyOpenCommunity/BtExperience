@@ -207,6 +207,8 @@ Item {
                 global.audioState.enableState(AudioState.IpIntercomCall)
             else
                 global.audioState.enableState(AudioState.ScsIntercomCall)
+            if (intercomConnection.target.teleloop)
+                global.audioState.enableState(AudioState.Mute)
         }
         onCallEnded: {
             global.audioState.disableState(AudioState.VdeRingtone)

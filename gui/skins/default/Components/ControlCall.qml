@@ -127,7 +127,7 @@ SvgImage {
                     if (dataObject.exitingCall && !control.callerMode)
                         return
                 }
-                control.state = "activeCall"
+                control.state = dataObject && dataObject.teleloop ? "teleloopCall" : "activeCall"
             }
         }
     }
@@ -260,6 +260,21 @@ SvgImage {
                 target: controlVolume
                 visible: true
                 state: "mute"
+            }
+        },
+        State {
+            name: "teleloopCall"
+            extend: "muteOn"
+            PropertyChanges {
+                target: callManager
+                visible: true
+                state: "teleloop"
+            }
+            PropertyChanges {
+                target: controlVolume
+                visible: true
+                state: "mute"
+                muteEnabled: false
             }
         },
         State {
