@@ -47,7 +47,6 @@ function status(itemObject) {
         else
             return 0
 
-
     case ObjectInterface.IdStopAndGo:
     case ObjectInterface.IdStopAndGoPlus:
     case ObjectInterface.IdStopAndGoBtest:
@@ -59,7 +58,6 @@ function status(itemObject) {
         default:
             return 3
         }
-
     }
 
     return -1
