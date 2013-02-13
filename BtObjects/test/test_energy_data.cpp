@@ -1124,11 +1124,12 @@ void TestEnergyData::testDuplicateGraphRequests5()
 
 void TestEnergyData::testSetEnableThresholds()
 {
-	obj->setThresholds(QVariantList() << 0.250 << 0.125);
+	obj->setThresholds(QVariantList() << 0.0 << 0.125);
 	// nothing sent (initial state is disabled)
 	compareClientCommand();
 
-	obj->setThresholdEnabled(QVariantList() << false << true);
+	obj->setThresholdEnabled(QVariantList() << true << true);
+	// only non-zero threshold is set as actually enabled
 	dev->setThresholdValue(1, 125);
 	compareClientCommand();
 

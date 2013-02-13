@@ -380,6 +380,10 @@ int EnergyData::getRateDecimals() const
 
 void EnergyData::setThresholdEnabled(QVariantList enabled)
 {
+	for (int i = 0; i < 2; ++i)
+		if (thresholds[i].toDouble() * unit_conversion < 1)
+			enabled[i] = false;
+
 	if (enabled == thresholds_enabled)
 		return;
 
