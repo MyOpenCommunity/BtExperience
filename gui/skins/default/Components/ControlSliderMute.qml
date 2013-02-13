@@ -131,6 +131,7 @@ SvgImage {
     }
 
     BeepingMouseArea {
+        id: sliderArea
         anchors {
             top: parent.top
             left: parent.left
@@ -210,6 +211,7 @@ SvgImage {
             PropertyChanges { target: darkRect; visible: true }
             PropertyChanges { target: buttonMinus; enabled: false }
             PropertyChanges { target: buttonPlus; enabled: false }
+            PropertyChanges { target: sliderArea; enabled: false }
             PropertyChanges {
                 target: buttonMute
                 defaultImageBg: "../images/common/btn_mute_on.svg"
