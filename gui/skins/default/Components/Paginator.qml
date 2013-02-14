@@ -88,11 +88,11 @@ Item {
             if (privateProps.currentPage + privateProps.numSlots - center > privateProps.totalPages) {
                 privateProps.offset = privateProps.currentPage + privateProps.numSlots - privateProps.totalPages
                 return
+            }
         }
-    }
 
-    // Needed when the model changes, eg. in antintrusion the alarms may be
-    // removed from the model
+        // Needed when the model changes, eg. in antintrusion the alarms may be
+        // removed from the model
         onTotalPagesChanged: privateProps.updateWindow()
     }
 
