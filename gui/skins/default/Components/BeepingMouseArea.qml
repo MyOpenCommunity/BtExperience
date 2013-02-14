@@ -22,26 +22,21 @@ MouseArea {
     onPressed: {
         if (global.guiSettings.beep)
             global.beep()
-        privateProps.heldManaged = false // resets internal flag
     }
     onPressAndHold: {
         if (pressAndHoldEnabled) {
             global.debugTiming.logTiming("PressAndHold on icon")
-            privateProps.heldManaged = true // held event, must not emit click
             held(mouse)
         }
     }
     onReleased: {
-        if (!pressAndHoldEnabled || !privateProps.heldManaged) {
+        if (!pressAndHoldEnabled || !mouse.wasHeld) {
             // if pressAndHold is not enabled emits a click
             // if pressAndHold is enabled emits a click only if held is not managed
             global.debugTiming.logTiming("Clicked on icon")
-            clicked(mouse)
+            if (mouse.x >= 0 && mouse.x <= parent.width &&
+                mouse.y >= 0 && mouse.y <= parent.height)
+                clicked(mouse)
         }
-    }
-
-    QtObject {
-        id: privateProps
-        property bool heldManaged // internal flag to know if held was managed or not
     }
 }
