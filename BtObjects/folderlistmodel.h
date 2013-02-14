@@ -212,6 +212,7 @@ protected slots:
 
 protected:
 	virtual void setLoadingIfAsynchronous();
+	virtual void startLoadingItems();
 
 	void resetCurrentRange();
 	void setCurrentRange(QVariantList range);
@@ -292,7 +293,7 @@ protected:
 	PagedTreeBrowser *browser;
 
 private:
-	void requestFirstPage();
+	virtual void startLoadingItems();
 	void resetInternalState();
 
 	// item_list is a cache of recently-used objects, starting at index

@@ -161,7 +161,7 @@ void TreeBrowserListModelBase::setRootPath(QVariantList _path)
 	emit rootPathChanged();
 	if (old_current != current_path)
 		emit currentPathChanged();
-	browser->getFileList();
+	startLoadingItems();
 }
 
 QVariantList TreeBrowserListModelBase::getRootPath() const
@@ -177,6 +177,11 @@ bool TreeBrowserListModelBase::isRoot() const
 void TreeBrowserListModelBase::setLoadingIfAsynchronous()
 {
 	setLoading(false);
+}
+
+void TreeBrowserListModelBase::startLoadingItems()
+{
+	browser->getFileList();
 }
 
 void TreeBrowserListModelBase::setLoading(bool _loading)
@@ -235,7 +240,7 @@ void TreeBrowserListModelBase::setFilter(int mask)
 	// TODO should reload?
 	browser->setFilter(mask);
 	filter = mask;
-	browser->getFileList();
+	startLoadingItems();
 	emit filterChanged();
 }
 
@@ -400,7 +405,7 @@ void FolderListModel::directoryChanged()
 {
 	TreeBrowserListModelBase::directoryChanged();
 
-	browser->getFileList();
+	startLoadingItems();
 }
 
 
@@ -436,7 +441,7 @@ ObjectInterface *PagedFolderListModel::getObject(int row)
 	return item_list[min_range - start_index  + row];
 }
 
-void PagedFolderListModel::requestFirstPage()
+void PagedFolderListModel::startLoadingItems()
 {
 	setLoading(true);
 
@@ -474,7 +479,7 @@ void PagedFolderListModel::setRange(QVariantList range)
 
 	// only request data if the user set the page range, to avoid requesting the full list
 	if ((min != min_range || max != max_range) && (min_range != -1 && max_range != -1))
-		requestFirstPage();
+		startLoadingItems();
 }
 
 void PagedFolderListModel::setRootPath(QVariantList path)
@@ -538,14 +543,14 @@ void PagedFolderListModel::directoryChanged()
 
 	// here we can't optimize and wait for the range to be set, because the list size
 	// is received with the page list message
-	requestFirstPage();
+	startLoadingItems();
 }
 
 void PagedFolderListModel::contextChanged()
 {
 	// here we can't optimize and wait for the range to be set, because the list size
 	// is received with the page list message
-	requestFirstPage();
+	startLoadingItems();
 }
 
 void PagedFolderListModel::gotFileList(EntryInfoList list)
