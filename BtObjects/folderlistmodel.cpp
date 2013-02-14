@@ -41,6 +41,16 @@ namespace
 
 		list.clear();
 	}
+
+	inline QString pathKey(QVariantList path)
+	{
+		QStringList temp;
+
+		foreach (QVariant item, path)
+			temp.append(item.toString());
+
+		return temp.join("\0");
+	}
 }
 
 
@@ -146,6 +156,7 @@ void TreeBrowserListModelBase::setRootPath(QVariantList _path)
 		return;
 
 	browser->setRootPath(path);
+	page_position.clear();
 	current_path = _path;
 	emit rootPathChanged();
 	if (old_current != current_path)
@@ -233,14 +244,39 @@ int TreeBrowserListModelBase::getFilter() const
 	return filter;
 }
 
+void TreeBrowserListModelBase::resetCurrentRange()
+{
+	page_position.remove(pathKey(current_path));
+}
+
+void TreeBrowserListModelBase::setCurrentRange(QVariantList range)
+{
+	page_position[pathKey(current_path)] = range;
+}
+
+QVariantList TreeBrowserListModelBase::getCurrentRange() const
+{
+	return page_position.value(pathKey(current_path), QVariantList() << -1 << -1);
+}
+
 void TreeBrowserListModelBase::directoryChanged()
 {
 	if (!pending_dirchange.isNull())
 	{
 		if (pending_dirchange.isEmpty())
+		{
+			resetCurrentRange();
 			current_path.pop_back();
+			setRange(getCurrentRange());
+		}
 		else
+		{
 			current_path << pending_dirchange;
+			// another correct option might be just resetting the range to (-1, -1),
+			// but setting it to a range of the same size as the current one should
+			// not have any adverse affect and is probably a bit more efficient
+			setRange(QVariantList() << 0 << max_range - min_range);
+		}
 	}
 
 	pending_dirchange = QString();
@@ -274,6 +310,7 @@ void TreeBrowserListModelBase::setRange(QVariantList range)
 
 	min_range = min;
 	max_range = max;
+	setCurrentRange(getRange());
 
 	emit rangeChanged();
 }
@@ -283,7 +320,7 @@ FolderListModelMemento *TreeBrowserListModelBase::clone()
 	FolderListModelMemento *m = new FolderListModelMemento;
 	m->tm = browser->clone();
 	m->filter = getFilter();
-	m->range = getRange();
+	m->page_position = page_position;
 	m->root_path = getRootPath();
 	m->current_path = getCurrentPath();
 	return m;
@@ -293,8 +330,9 @@ void TreeBrowserListModelBase::restore(FolderListModelMemento *m)
 {
 	browser->restore(m->tm);
 	setRootPath(m->root_path);
+	page_position = m->page_position;
 	setCurrentPath(m->current_path);
-	setRange(m->range);
+	setRange(getCurrentRange());
 	setFilter(m->filter);
 }
 
@@ -460,6 +498,17 @@ void PagedFolderListModel::setFilter(int mask)
 	TreeBrowserListModelBase::setFilter(mask);
 }
 
+void PagedFolderListModel::restore(FolderListModelMemento *m)
+{
+	if (item_count != 0)
+	{
+		item_count = 0;
+		emit countChanged();
+	}
+
+	TreeBrowserListModelBase::restore(m);
+}
+
 int PagedFolderListModel::rowCount(const QModelIndex &parent) const
 {
 	Q_UNUSED(parent);
@@ -480,14 +529,6 @@ void PagedFolderListModel::directoryChanged()
 	pending_operation = false;
 
 	TreeBrowserListModelBase::directoryChanged();
-
-	// assume the range size is the same when navigating, and request the
-	// first page
-	if (min_range != -1 && max_range != -1)
-	{
-		max_range -= min_range;
-		min_range = 0;
-	}
 
 	// here we can't optimize and wait for the range to be set, because the list size
 	// is received with the page list message

@@ -213,6 +213,10 @@ protected slots:
 protected:
 	virtual void setLoadingIfAsynchronous();
 
+	void resetCurrentRange();
+	void setCurrentRange(QVariantList range);
+	QVariantList getCurrentRange() const;
+
 	void setLoading(bool loading);
 	void setCurrentPath(QVariantList cp);
 
@@ -227,6 +231,7 @@ private:
 	bool loading;
 	QString pending_dirchange;
 	QVariantList current_path;
+	QHash<QString, QVariantList> page_position;
 };
 
 
@@ -269,6 +274,8 @@ public:
 	virtual void setRootPath(QVariantList path);
 	virtual QVariantList getRootPath() const;
 	void setFilter(int mask);
+
+	virtual void restore(FolderListModelMemento *m);
 
 protected:
 	virtual void setLoadingIfAsynchronous();
@@ -313,7 +320,8 @@ public:
 
 private:
 	DirectoryBrowserMemento *tm;
-	QVariantList range, root_path, current_path;
+	QVariantList root_path, current_path;
+	QHash<QString, QVariantList> page_position;
 	int filter;
 };
 
