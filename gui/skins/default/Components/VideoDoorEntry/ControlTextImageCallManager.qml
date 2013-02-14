@@ -98,6 +98,11 @@ ControlCallManager {
             PropertyChanges { target: caption2; text: qsTr("Mute on"); anchors.topMargin: 7 }
             PropertyChanges { target: callImage; source: "../../images/common/bg_chiamata_incorso.svg" }
             AnchorChanges { target: caption2; anchors.top: parent.top }
+        },
+        State {
+            name: "teleloop"
+            extend: "muteOn"
+            PropertyChanges { target: caption2; text: qsTr("Teleloop"); anchors.topMargin: 7 }
         }
     ]
 }
