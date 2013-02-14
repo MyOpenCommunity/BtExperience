@@ -32,7 +32,7 @@ Item {
         visible: control.visible
         defaultImageBg: "../images/toolbar/_bg_alert.svg"
         pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-        onClicked: control.clicked()
+        onPressed: control.clicked()
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
 

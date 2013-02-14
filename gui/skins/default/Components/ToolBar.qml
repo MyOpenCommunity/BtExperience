@@ -57,7 +57,7 @@ Item {
                                                                               imagesPath + "toolbar/icon_home.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                onClicked: toolbar.homeClicked() //doStuff()
+                onPressed: toolbar.homeClicked() //doStuff()
             }
         }
 
@@ -82,7 +82,7 @@ Item {
                 function setDate(d) {
                     text = DateTime.format(d)["date"]
                 }
-                onClicked: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.DATE_TIME_SETTINGS})
+                onPressed: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.DATE_TIME_SETTINGS})
             }
         }
 
@@ -108,7 +108,7 @@ Item {
                 function setTime(d) {
                     text = DateTime.format(d)["time"]
                 }
-                onClicked: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.DATE_TIME_SETTINGS})
+                onPressed: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.DATE_TIME_SETTINGS})
             }
         }
 
