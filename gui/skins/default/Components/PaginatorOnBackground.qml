@@ -21,6 +21,10 @@ Item {
         return [(page - 1) * elementsOnPage, page * elementsOnPage]
     }
 
+    function goToPage(pageNumber) {
+        paginator.goToPage(pageNumber)
+    }
+
     // Convenience function to compute the number of pages in the paginator
     // from the model size
     function computePagesFromModelSize(modelSize, elementsOnPage) {

@@ -240,6 +240,7 @@ MenuColumn {
                 feedbackTimer.restart()
             }
         }
+        onRangeChanged: paginator.goToPage(theModel.range[0] / paginator.elementsOnPage + 1)
     }
 
     Timer {
