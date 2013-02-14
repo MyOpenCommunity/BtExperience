@@ -263,7 +263,7 @@ Item {
         id: graph
         anchors {
             top: columnsHeader.bottom
-            topMargin: 5
+            topMargin: 15
             left: valuesAxis.right
         }
         spacing: privateProps.columnSpacing - (privateProps.hasPreviousYear() ? previousYearPrototype.width + privateProps.previousYearSpacing : 0)
