@@ -560,7 +560,14 @@ Item {
             var s = global.screenState.state
             global.screenState.enableState(ScreenState.Normal)
             // rings the bell
-            global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
+            if (global.guiSettings.energyThresholdBeep) {
+                if (energyDevice.thresholdLevel === 0)
+                    global.ringtoneManager.playRingtone(global.extraPath + "10/drin.wav", AudioState.Ringtone)
+                else if (energyDevice.thresholdLevel === 1)
+                    global.ringtoneManager.playRingtone(global.extraPath + "10/drin2.wav", AudioState.Ringtone)
+                else if (energyDevice.thresholdLevel === 2)
+                    global.ringtoneManager.playRingtone(global.extraPath + "10/drin3.wav", AudioState.Ringtone)
+            }
             // opens popup only if we are below normal screen state
             if (s < ScreenState.Normal && energyDevice.thresholdLevel > 0) {
                 var p = privateProps.preparePopupPage(false)
