@@ -264,7 +264,7 @@ Item {
     Connections {
         id: energiesConnection
         target: null
-        onThresholdExceeded: privateProps.addNotification({"type": Script.THRESHOLD_EXCEEDING, "data": energyDevice})
+        onThresholdChanged: privateProps.addNotification({"type": Script.THRESHOLD_EXCEEDING, "data": energyDevice})
         onGoalReached: privateProps.addNotification({"type": Script.GOAL_REACHING, "data": energyDevice})
         onGoalsEnabledChanged: monthlyReportTimer.goals = goals
     }

@@ -32,12 +32,13 @@ public:
 	}
 
 signals:
-	void thresholdExceeded(EnergyData *energyDevice);
+	void thresholdChanged(EnergyData *energyDevice);
 	void goalReached(EnergyData *energyDevice);
 	void goalsEnabledChanged(int goals);
 
 private slots:
-	void updateThresholdsGoals();
+	void energyThresholdChanged();
+	void goalExceededChanged();
 	void updateGoalsEnabled();
 
 private:
