@@ -25,7 +25,7 @@ EnergyThresholdsGoals::EnergyThresholdsGoals()
 	}
 
 	// inits everything
-	updateThresholdsGoals();
+	updateGoalsEnabled();
 }
 
 void EnergyThresholdsGoals::updateThresholdsGoals()
