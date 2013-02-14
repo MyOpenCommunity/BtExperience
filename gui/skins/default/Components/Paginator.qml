@@ -89,6 +89,12 @@ Item {
                 privateProps.offset = privateProps.currentPage + privateProps.numSlots - privateProps.totalPages
                 return
             }
+
+            // checks that offset is not outside the range of valid slots
+            if (privateProps.offset >= privateProps.numSlots) {
+                privateProps.offset = privateProps.numSlots - 1
+                return
+            }
         }
 
         // Needed when the model changes, eg. in antintrusion the alarms may be
