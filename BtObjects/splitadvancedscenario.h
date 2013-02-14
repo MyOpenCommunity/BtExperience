@@ -85,13 +85,8 @@ public:
 		return static_cast<Swing>(v);
 	}
 
-	explicit SplitAdvancedProgram(
-			QString name,
-			Mode mode,
-			int temperature,
-			Speed speed,
-			Swing swing,
-			QObject *parent=0);
+	explicit SplitAdvancedProgram(QString name, Mode mode, int temperature, Speed speed,
+			Swing swing, QObject *parent=0);
 
 	explicit SplitAdvancedProgram(QObject *parent=0);
 
@@ -188,15 +183,10 @@ class SplitAdvancedScenario : public DeviceObjectInterface
 	Q_PROPERTY(QObject *swings READ getSwings CONSTANT)
 
 public:
-	explicit SplitAdvancedScenario(QString name,
-								   QString key,
-								   AdvancedAirConditioningDevice *d,
-								   NonControlledProbeDevice *d_probe,
-								   QList<int> modes,
-								   QList<int> speeds,
-								   QList<int> swings,
-								   int setpoint_min, int setpoint_max, int setpoint_step,
-								   QObject *parent = 0);
+	explicit SplitAdvancedScenario(QString name, QString key, AdvancedAirConditioningDevice *d,
+			NonControlledProbeDevice *d_probe, QList<int> modes, QList<int> speeds,
+			QList<int> swings, int setpoint_min, int setpoint_max, int setpoint_step,
+			QObject *parent = 0);
 
 	virtual int getObjectId() const
 	{

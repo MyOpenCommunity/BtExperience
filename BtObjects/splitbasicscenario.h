@@ -90,12 +90,8 @@ class SplitBasicScenario : public DeviceObjectInterface
 	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
 
 public:
-	explicit SplitBasicScenario(QString name,
-								QString key,
-								AirConditioningDevice *d,
-								QString off_command,
-								NonControlledProbeDevice *d_probe,
-								QObject *parent = 0);
+	explicit SplitBasicScenario(QString name, QString key, AirConditioningDevice *d,
+			QString off_command, NonControlledProbeDevice *d_probe, QObject *parent = 0);
 
 	virtual int getObjectId() const
 	{

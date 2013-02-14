@@ -101,12 +101,8 @@ SplitBasicProgram::SplitBasicProgram(const QString &_name, int number)
 	name = _name;
 }
 
-SplitBasicScenario::SplitBasicScenario(QString _name,
-									   QString _key,
-									   AirConditioningDevice *d,
-									   QString off_command,
-									   NonControlledProbeDevice *d_probe,
-									   QObject *parent) :
+SplitBasicScenario::SplitBasicScenario(QString _name, QString _key, AirConditioningDevice *d,
+		QString off_command, NonControlledProbeDevice *d_probe, QObject *parent) :
 	DeviceObjectInterface(d_probe, parent)
 {
 	dev = d;

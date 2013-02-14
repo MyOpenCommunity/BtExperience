@@ -35,10 +35,7 @@ MenuColumn {
             onClicked: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
-                column.loadColumn(
-                            programListSplit,
-                            name,
-                            dataModel)
+                column.loadColumn(programListSplit, name, dataModel)
             }
         }
 
