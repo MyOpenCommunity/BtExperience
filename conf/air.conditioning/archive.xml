@@ -17,6 +17,33 @@
 		<ist uii="7005" descr="Command 3" command="3">
 			<link uii="7002" />
 		</ist>
+		<ist uii="7200" descr="Command 4" command="4">
+			<link uii="7002" />
+		</ist>
+		<ist uii="7201" descr="Command 5" command="5">
+			<link uii="7002" />
+		</ist>
+		<ist uii="7202" descr="Command 6" command="6">
+			<link uii="7002" />
+		</ist>
+		<ist uii="7203" descr="Command 7" command="7">
+			<link uii="7002" />
+		</ist>
+		<ist uii="7204" descr="Command 8" command="8">
+			<link uii="7002" />
+		</ist>
+		<ist uii="7205" descr="Command 9" command="9">
+			<link uii="7002" />
+		</ist>
+		<ist uii="7206" descr="Command 10" command="10">
+			<link uii="7002" />
+		</ist>
+		<ist uii="7207" descr="Command 11" command="11">
+			<link uii="7002" />
+		</ist>
+		<ist uii="7208" descr="Command 12" command="12">
+			<link uii="7002" />
+		</ist>
 	</obj>
 	<obj cid="8012" id="8012" descr="Generic command" where="11" command="1">
 		<ist uii="7006" descr="Generic command 1" where="12" />
