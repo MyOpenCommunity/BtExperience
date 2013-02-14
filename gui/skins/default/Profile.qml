@@ -309,7 +309,7 @@ Page {
                 anchors.fill: parent
                 z: 1
 
-                MouseArea {
+                BeepingMouseArea {
                     anchors.fill: parent
                     onClicked: privateProps.unselectObj()
                 }
@@ -456,7 +456,7 @@ Page {
                         }
                     }
 
-                    MouseArea {
+                    BeepingMouseArea {
                         anchors.centerIn: closeButton
                         width: 15
                         height: 15
@@ -481,9 +481,10 @@ Page {
                         maximumLineCount: 6
                     }
 
-                    MouseArea {
+                    BeepingMouseArea {
                         anchors.fill: parent
-                        onPressAndHold: {
+                        pressAndHoldEnabled: true
+                        onHeld: {
                             privateProps.selectObj(delegate)
                             profilePage.state = "selected"
                             delegate.state = "selected"

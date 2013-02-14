@@ -80,7 +80,7 @@ Item {
         }
     }
 
-    MouseArea {
+    BeepingMouseArea {
         anchors.fill: parent
         onClicked: pathViewDelegate.delegateClicked(itemObject)
         onPressed: pathViewDelegate.PathView.view.currentPressed = index

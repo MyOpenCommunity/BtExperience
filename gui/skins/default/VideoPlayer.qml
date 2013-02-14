@@ -22,7 +22,7 @@ BasePage {
         color: "#010203"
         anchors.fill: parent
 
-        MouseArea {
+        BeepingMouseArea {
             anchors.fill: parent
             onPressed: {
                 bottomBarBg.visible = true
@@ -220,7 +220,7 @@ BasePage {
             }
         }
 
-        MouseArea {
+        BeepingMouseArea {
             anchors.fill: parent
             onPressed: {
                 mouse.accepted = false

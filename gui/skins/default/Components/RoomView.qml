@@ -32,7 +32,7 @@ Item {
                 z: 9
                 visible: false
 
-                MouseArea {
+                BeepingMouseArea {
                     id: areaDarkRect
                     anchors.fill: parent
                     onClicked: {
