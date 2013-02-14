@@ -210,7 +210,7 @@
 	</container>
 	<container id="17" descr="Home page" img="images/background/home.jpg" img_type="0">
 		<ist uii="316">
-			<link uii="8006" img="Corriere.png"/>
+			<link uii="80021" img="Corriere.png"/>
 			<link uii="2011" img="Corriere.png"/>
 			<toolbar>
 				<link uii="2042" />
