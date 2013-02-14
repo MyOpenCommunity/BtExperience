@@ -43,6 +43,7 @@ SvgImage {
     property alias repetitionOnHold: area.repetitionEnabled // enable repetion when pressed
 
     signal clicked
+    signal pressed
 
     source: defaultImageBg
 
@@ -50,6 +51,7 @@ SvgImage {
         id: area
         anchors.fill: parent
         onClicked: bg.clicked()
+        onPressed: bg.pressed()
         visible: bg.enabled
     }
 
