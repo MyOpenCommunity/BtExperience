@@ -199,7 +199,7 @@ Page {
 
             onClicked: {
                 player.mediaPlayer.terminate()
-                Stack.backToMultimedia()
+                Stack.goToPage('Devices.qml', {restoreBrowserState: true})
             }
         }
 
