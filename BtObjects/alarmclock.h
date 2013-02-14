@@ -24,6 +24,13 @@ void updateAlarmClocks(QDomNode node, AlarmClock *alarm_clock, const UiiMapper &
 
 /*!
 	\brief An alarm clock setting
+
+	Each alarm clock can be configured to either use the internal beeper or to
+	use the sound diffusion system.
+	You can set the volume of the alarm clock; the volume will be gradually
+	increased until it reaches the target volume.
+	You can set which amplifier or amplifier group will play the alarm clock.
+	You can postpone the alarm clock with \ref AlarmClock::postpone().
 */
 class AlarmClock : public ObjectInterface
 {
