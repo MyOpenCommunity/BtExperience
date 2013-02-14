@@ -314,7 +314,8 @@ Item {
     BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
-        onPressAndHold: if (editable) bgQuick.state = "selected"
+        pressAndHoldEnabled: true
+        onHeld: if (editable) bgQuick.state = "selected"
         onPressed:  {
             bgQuickPressed.visible = true
             containerPressed.visible = true
@@ -326,7 +327,6 @@ Item {
         onClicked: {
             if (page !== "")
                 Stack.pushPage(page, {'urlString': itemObject.address, 'profile': bgQuick.profile})
-
             bgQuick.clicked()
         }
     }

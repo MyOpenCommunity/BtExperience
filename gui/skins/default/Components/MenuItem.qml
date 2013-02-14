@@ -214,7 +214,8 @@ Item {
     BeepingMouseArea {
         id: mousearea
         anchors.fill: parent
-        onPressAndHold: if (menuItem.editable) { startEdit() }
+        pressAndHoldEnabled: true
+        onHeld: if (menuItem.editable) { startEdit() }
         onClicked: menuItem.clicked(menuItem)
         onPressed: menuItem.pressed(menuItem)
         onReleased: menuItem.released(menuItem)
