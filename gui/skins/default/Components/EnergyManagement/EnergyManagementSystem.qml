@@ -8,14 +8,36 @@ import "../../js/navigationconstants.js" as NavigationConstants
 MenuColumn {
     id: element
     width: 212
-    height: 150
+    height: Math.max(1, 50 * listModel.count)
 
-    SystemsModel { id: systemsModel; systemId: Container.IdLoadControl }
+
+    SystemsModel { id: supervisionUii; systemId: Container.IdSupervision }
+    SystemsModel { id: loadControlUii; systemId: Container.IdLoadControl }
+
+    ObjectModel {
+        id: stopNGoModel
+        source: myHomeModels.myHomeObjects
+        containers: [supervisionUii.systemUii]
+        filters: [
+            {objectId: ObjectInterface.IdStopAndGo},
+            {objectId: ObjectInterface.IdStopAndGoPlus},
+            {objectId: ObjectInterface.IdStopAndGoBTest}
+        ]
+    }
+
+    ObjectModel {
+        id: loadDiagnosticModel
+        source: myHomeModels.myHomeObjects
+        containers: [supervisionUii.systemUii]
+        filters: [
+            {objectId: ObjectInterface.IdLoadDiagnostic}
+        ]
+    }
 
     ObjectModel {
         id: loadManagementModel
         source: myHomeModels.myHomeObjects
-        containers: [systemsModel.systemUii]
+        containers: [loadControlUii.systemUii]
         filters: [
             {objectId: ObjectInterface.IdLoadWithControlUnit},
             {objectId: ObjectInterface.IdLoadWithoutControlUnit}
@@ -69,9 +91,11 @@ MenuColumn {
     ListModel {
         id: listModel
         Component.onCompleted: {
-            listModel.append({"name": qsTr("systems supervision"), "component": supervision})
+            if (stopNGoModel.count + loadDiagnosticModel.count > 0)
+                listModel.append({"name": qsTr("systems supervision"), "component": supervision})
             listModel.append({"name": qsTr("consumption/production"), "component": energyOverview})
-            listModel.append({"name": qsTr("load management"), "component": loadManagement})
+            if (loadManagementModel.count > 0)
+                listModel.append({"name": qsTr("load management"), "component": loadManagement})
         }
     }
 

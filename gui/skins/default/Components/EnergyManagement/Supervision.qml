@@ -40,7 +40,7 @@ MenuColumn {
             name: qsTr("load diagnostic")
             isSelected: privateProps.currentIndex === 1
             hasChild: true
-            enabled: loadDiagnosticModel.count > 0
+            visible: loadDiagnosticModel.count > 0
             onClicked: {
                 paginator.currentIndex = -1
                 if (privateProps.currentIndex !== 1)
