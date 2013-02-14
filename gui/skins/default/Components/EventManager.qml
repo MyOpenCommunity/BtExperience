@@ -562,7 +562,7 @@ Item {
             // rings the bell
             global.ringtoneManager.playRingtone(global.ringtoneManager.ringtoneFromType(RingtoneManager.Alarm), AudioState.Ringtone)
             // opens popup only if we are below normal screen state
-            if (s < ScreenState.Normal) {
+            if (s < ScreenState.Normal && energyDevice.thresholdLevel > 0) {
                 var p = privateProps.preparePopupPage(false)
                 // adds threshold alarm
                 p.addThresholdExceededPopup(energyDevice)

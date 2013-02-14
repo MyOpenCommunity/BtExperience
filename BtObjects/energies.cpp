@@ -32,7 +32,7 @@ void EnergyThresholdsGoals::energyThresholdChanged()
 {
 	EnergyData *energy_data = qobject_cast<EnergyData *>(sender());
 
-	if (energy_data && energy_data->getThresholdLevel() > 0)
+	if (energy_data)
 		emit thresholdChanged(energy_data);
 }
 
