@@ -528,6 +528,12 @@ void PagedFolderListModel::directoryChanged()
 {
 	pending_operation = false;
 
+	if (item_count != 0)
+	{
+		item_count = 0;
+		emit countChanged();
+	}
+
 	TreeBrowserListModelBase::directoryChanged();
 
 	// here we can't optimize and wait for the range to be set, because the list size
