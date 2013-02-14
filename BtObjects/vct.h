@@ -292,6 +292,7 @@ protected:
 private slots:
 	void associationTimeout();
 	void startVideo();
+	void delayedAnswerCall();
 
 private:
 	void setRingtone(int vde_ringtone);
@@ -309,6 +310,7 @@ private:
 	QProcess video_grabber;
 	QTimer association_timeout;
 	QTimer grabber_delay;
+	QTimer hands_free_delay;
 };
 
 

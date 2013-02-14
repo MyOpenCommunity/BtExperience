@@ -16,6 +16,7 @@ QString video_grabber_path = "/usr/local/bin/Fw-A-VideoInLoopback.sh 66051";
 
 #define TELELOOP_TIMEOUT_CONNECTION 11
 #define VIDEO_GRABBER_DELAY 1000
+#define HANDS_FREE_DELAY 1000 * 5 // delay for automatic answer on hands free calls
 
 namespace
 {
@@ -207,6 +208,10 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	association_timeout.setSingleShot(true);
 	association_timeout.setInterval(TELELOOP_TIMEOUT_CONNECTION * 1000);
 	connect(&association_timeout, SIGNAL(timeout()), this, SLOT(associationTimeout()));
+
+	hands_free_delay.setSingleShot(true);
+	hands_free_delay.setInterval(HANDS_FREE_DELAY);
+	connect(&hands_free_delay, SIGNAL(timeout()), this, SLOT(delayedAnswerCall()));
 
 	connect(this, SIGNAL(teleloopAssociationStarted()), this, SIGNAL(teleloopAssociatingChanged()));
 	connect(this, SIGNAL(teleloopAssociationComplete()), this, SIGNAL(teleloopAssociatingChanged()));
@@ -471,10 +476,10 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		{
 			qDebug() << "Received VCT_CALL";
 			// normal call: manage hands free
+			// the timer is needed to introduce a little delay on the automatic
+			// answer to hear the ringtone
 			if (hands_free)
-			{
-				dev->answerCall();
-			}
+				hands_free_delay.start();
 		}
 		case VideoDoorEntryDevice::AUTO_VCT_CALL:
 			// if we arrived here directly is an autoswitch call, if we
@@ -592,6 +597,13 @@ void CCTV::startVideo()
 		qDebug() << "Starting grabber" << (video_grabber_path);
 		video_grabber.start(video_grabber_path);
 	}
+}
+
+void CCTV::delayedAnswerCall()
+{
+	qDebug() << __PRETTY_FUNCTION__;
+	hands_free_delay.stop();
+	dev->answerCall();
 }
 
 void CCTV::stopVideo()
