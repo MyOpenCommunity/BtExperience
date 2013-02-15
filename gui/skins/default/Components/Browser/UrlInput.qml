@@ -16,10 +16,11 @@ Item {
     height: parent.height
 
     Rectangle {
-        anchors.bottom: bg.bottom
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 8
         x: 8
         height: 4
-        width: (bg.width - 16) * view.progress
+        width: (parent.width - 16) * view.progress
         color: "#63b1ed"
         opacity: view.progress === 1.0 ? 0.0 : 1.0
     }
