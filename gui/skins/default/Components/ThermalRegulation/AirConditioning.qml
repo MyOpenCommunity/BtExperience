@@ -24,10 +24,10 @@ MenuColumn {
         delegate: MenuItemDelegate {
             editable: true
             itemObject: objectModel.getObject(index)
-            description: (objectModel.getObject(index).temperature / 10).toFixed() + "°C"
+            description: (itemObject.temperature / 10).toFixed() + "°C"
             hasChild: true
             onClicked: {
-                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, objectModel.getObject(model.index))
+                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
             }
         }
         model: objectModel
