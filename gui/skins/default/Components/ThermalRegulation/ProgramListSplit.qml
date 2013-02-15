@@ -5,29 +5,27 @@ import BtObjects 1.0
 MenuColumn {
     id: column
 
-    signal modeChanged(int mode)
-
-    width: 212 // needed for menu shadow
+    signal programSelected(variant program)
 
     onChildDestroyed: paginator.currentIndex = -1
+
+    ObjectModel {
+        id: listModel
+        source: dataModel.programs
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
 
     PaginatorList {
         id: paginator
 
         delegate: MenuItemDelegate {
-            itemObject: modelData
-            name: modelData
-            status: -1
+            itemObject: listModel.getObject(index)
+            name: itemObject.name
             onClicked: {
-                dataModel.program = modelData
-                modeChanged(dataModel.mode)
+                column.programSelected(itemObject)
                 column.closeColumn()
             }
         }
-        model: dataModel.programs
-        Component.onCompleted: {
-            paginator.listHeight = column.height = 50 * model.length
-        }
-        onCurrentPageChanged: column.closeChild()
+        model: listModel
     }
 }

@@ -8,7 +8,9 @@ MenuColumn {
 
     Component {
         id: programListSplit
-        ProgramListSplit {}
+        ProgramListSplit {
+            onProgramSelected: dataModel.setProgram(program)
+        }
     }
 
     Component {
@@ -33,6 +35,7 @@ MenuColumn {
     }
 
     function modeChanged(mode) {
+        // TODO: cleanup this code, the checks are already done in C++
         if (dataModel.mode !== mode)
             dataModel.resetProgram()
         dataModel.mode = mode
@@ -46,6 +49,11 @@ MenuColumn {
             options.setComponent(temperature)
     }
 
+    Connections {
+        target: dataModel
+        onModeChanged: modeChanged(dataModel.mode)
+    }
+
     PaginatorColumn {
         id: paginator
         anchors.horizontalCenter: parent.horizontalCenter
@@ -54,7 +62,7 @@ MenuColumn {
         MenuItem {
             id: programItem
             name: qsTr("program")
-            description: dataModel.program
+            description: dataModel.programName
             hasChild: true
             isSelected: privateProps.currentIndex === 1
             onClicked: {

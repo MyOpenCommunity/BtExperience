@@ -9,7 +9,9 @@ MenuColumn {
 
     Component {
         id: programListSplit
-        ProgramListSplit {}
+        ProgramListSplit {
+            onProgramSelected: dataModel.program = program
+        }
     }
 
     width: 212
@@ -29,7 +31,7 @@ MenuColumn {
         MenuItem {
             id: programItem
             name: qsTr("program")
-            description: dataModel.program
+            description: dataModel.program.name
             hasChild: true
             isSelected: privateProps.currentIndex === 1
             onClicked: {

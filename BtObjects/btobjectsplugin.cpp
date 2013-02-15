@@ -1595,6 +1595,8 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create an Amplifier instance");
 	qmlRegisterUncreatableType<MultiMediaPlayer>(uri, 1, 0, "MultiMediaPlayer",
 		"unable to create a MultiMediaPlayer instance");
+	qmlRegisterUncreatableType<SplitBasicProgram>(uri, 1, 0, "SplitBasicProgram",
+		"unable to create a SplitBasicProgram instance");
 	qmlRegisterUncreatableType<SplitAdvancedProgram>(uri, 1, 0, "SplitAdvancedProgram",
 		"unable to create a SplitAdvancedProgram instance");
 	qmlRegisterUncreatableType<EnergyLoadManagement>(uri, 1, 0, "EnergyLoadDiagnostic",

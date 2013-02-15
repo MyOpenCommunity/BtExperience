@@ -7,6 +7,7 @@
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues
+#include "objectmodel.h"
 
 #include <QObject>
 #include <QStringList>
@@ -72,17 +73,12 @@ class SplitBasicScenario : public DeviceObjectInterface
 	/*!
 		\brief Gets or sets the actual program
 	*/
-	Q_PROPERTY(QString program READ getProgram WRITE setProgram NOTIFY programChanged)
+	Q_PROPERTY(SplitBasicProgram *program READ getProgram WRITE setProgram NOTIFY programChanged)
 
 	/*!
 		\brief Gets the list of available programs
 	*/
-	Q_PROPERTY(QStringList programs READ getPrograms CONSTANT)
-
-	/*!
-		\brief Gets the number of available programs (off is considered in the count)
-	*/
-	Q_PROPERTY(int count READ getCount CONSTANT)
+	Q_PROPERTY(ObjectDataModel *programs READ getPrograms CONSTANT)
 
 	/*!
 		\brief Gets the temperature of the slave probe
@@ -103,10 +99,9 @@ public:
 		return key;
 	}
 
-	QString getProgram() const;
-	void setProgram(QString program);
-	QStringList getPrograms() const;
-	int getCount() const;
+	SplitBasicProgram *getProgram() const;
+	void setProgram(SplitBasicProgram *program);
+	ObjectDataModel *getPrograms() const;
 	int getTemperature() const;
 
 	Q_INVOKABLE void apply();
@@ -121,11 +116,11 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 private:
+	ObjectDataModel programs;
 	AirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
 	QString key;
 	SplitBasicProgram *actual_program;
-	QList<SplitBasicProgram *> program_list;
 	int temperature;
 };
 

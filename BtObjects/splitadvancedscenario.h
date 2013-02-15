@@ -8,6 +8,7 @@
 #include "objectinterface.h"
 #include "airconditioning_device.h"
 #include "device.h" // DeviceValues
+#include "objectmodel.h"
 
 #include <QObject>
 #include <QStringList>
@@ -34,7 +35,7 @@ QList<ObjectPair> parseSplitAdvancedCommandGroup(const QDomNode &xml_node, QHash
 	string property to hold the program name. Redfines some enums so they can
 	be exported to QML.
 */
-class SplitAdvancedProgram : public QObject
+class SplitAdvancedProgram : public ObjectInterface
 {
 	Q_OBJECT
 
@@ -90,7 +91,6 @@ public:
 
 	explicit SplitAdvancedProgram(QObject *parent=0);
 
-	QString name;
 	Mode mode;
 	Speed speed;
 	Swing swing;
@@ -150,12 +150,12 @@ class SplitAdvancedScenario : public DeviceObjectInterface
 	/*!
 		\brief Gets or sets the actual program
 	*/
-	Q_PROPERTY(QString program READ getProgram WRITE setProgram NOTIFY programChanged)
+	Q_PROPERTY(QString programName READ getProgramName NOTIFY programNameChanged)
 
 	/*!
 		\brief Gets the list of available programs
 	*/
-	Q_PROPERTY(QStringList programs READ getPrograms CONSTANT)
+	Q_PROPERTY(ObjectDataModel *programs READ getPrograms CONSTANT)
 
 	/*!
 		\brief Gets the size of available programs
@@ -200,9 +200,8 @@ public:
 
 	SplitAdvancedProgram::Mode getMode() const;
 	void setMode(SplitAdvancedProgram::Mode mode);
-	QString getProgram() const;
-	void setProgram(QString program);
-	QStringList getPrograms() const;
+	QString getProgramName() const;
+	ObjectDataModel *getPrograms() const;
 	SplitAdvancedProgram::Swing getSwing() const;
 	int getSetPoint() const;
 	void setSetPoint(int setPoint);
@@ -221,16 +220,26 @@ public:
 	Q_INVOKABLE void prevSwing();
 	Q_INVOKABLE void nextSwing();
 	Q_INVOKABLE void resetProgram();
+	Q_INVOKABLE void setProgram(SplitAdvancedProgram *program);
 
+	/*!
+	 * \brief Add an advanced program to the list of configured programs.
+	 *
+	 * The class takes ownership of the given pointer, so the usual pattern for
+	 * adding programs is the following:
+	 * \code
+	 * split_adv_scenario.addProgram(new SplitAdvancedProgram(......));
+	 * \endcode
+	 */
 	void addProgram(SplitAdvancedProgram *program);
 
 signals:
 	void modeChanged();
-	void programChanged();
 	void swingChanged();
 	void setPointChanged();
 	void speedChanged();
 	void temperatureChanged();
+	void programNameChanged();
 
 public slots:
 	void sendScenarioCommand();
@@ -248,7 +257,7 @@ private:
 	NonControlledProbeDevice *dev_probe;
 	QString key;
 	SplitAdvancedProgram actual_program; // name empty means custom programming
-	QList<SplitAdvancedProgram *> program_list;
+	ObjectDataModel programs;
 	int temperature, setpoint_min, setpoint_max, setpoint_step;
 	ChoiceList *modes;
 	ChoiceList *speeds;

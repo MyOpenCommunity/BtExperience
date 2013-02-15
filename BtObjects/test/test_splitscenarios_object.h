@@ -31,6 +31,8 @@ class AirConditioningDevice;
 class NonControlledProbeDevice;
 class SplitAdvancedScenario;
 class SplitBasicScenario;
+class SplitBasicProgram;
+class SplitAdvancedProgram;
 
 
 class TestSplitScenarios : public TestBtObject
@@ -53,6 +55,9 @@ private slots:
 
 private:
 	void compareClientCommand();
+	SplitBasicProgram *findOffProgram();
+	SplitBasicProgram *findProgram(const QString &name);
+	SplitAdvancedProgram *findProgramAdv(const QString &name);
 
 	SplitAdvancedScenario *obj_adv;
 	SplitBasicScenario *obj;
