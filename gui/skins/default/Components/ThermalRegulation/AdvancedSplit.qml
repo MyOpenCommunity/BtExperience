@@ -29,15 +29,7 @@ MenuColumn {
         modeChanged(dataModel.mode)
     }
 
-    onChildLoaded: {
-        if (child.modeChanged)
-            child.modeChanged.connect(modeChanged)
-    }
-
     function modeChanged(mode) {
-        // TODO: cleanup this code, the checks are already done in C++
-        if (dataModel.mode !== mode)
-            dataModel.resetProgram()
         dataModel.mode = mode
         if (mode === SplitAdvancedProgram.ModeFan)
             options.setComponent(fancoil)
@@ -143,34 +135,20 @@ MenuColumn {
 
         Column {
             id: tempColumn
-            property int setpoint
-
-            Component.onCompleted: {
-                tempColumn.setpoint = dataModel.setPoint // we want an assignment, not a binding
-            }
-
-            Connections {
-                target: dataModel
-                onSetPointChanged: {
-                    tempColumn.setpoint = dataModel.setPoint
-                }
-            }
 
             ControlMinusPlus {
                 id: temp
                 title: qsTr("temperature")
-                text: (tempColumn.setpoint / 10).toFixed(1) + "°C"
+                text: (dataModel.setPoint / 10).toFixed(1) + "°C"
                 onMinusClicked: {
-                    if (tempColumn.setpoint - dataModel.setPointStep < dataModel.setPointMin)
+                    if (dataModel.setPoint - dataModel.setPointStep < dataModel.setPointMin)
                         return
-                    dataModel.resetProgram()
-                    tempColumn.setpoint -= dataModel.setPointStep
+                    dataModel.setPoint -= dataModel.setPointStep
                 }
                 onPlusClicked: {
-                    if (tempColumn.setpoint + dataModel.setPointStep > dataModel.setPointMax)
+                    if (dataModel.setPoint + dataModel.setPointStep > dataModel.setPointMax)
                         return
-                    dataModel.resetProgram()
-                    tempColumn.setpoint += dataModel.setPointStep
+                    dataModel.setPoint += dataModel.setPointStep
                 }
             }
             ControlLeftRightWithTitle {
@@ -200,7 +178,6 @@ MenuColumn {
             ButtonOkCancel {
                 onCancelClicked: column.closeColumn()
                 onOkClicked: {
-                    dataModel.setPoint = tempColumn.setpoint
                     dataModel.apply()
                     column.closeColumn()
                 }

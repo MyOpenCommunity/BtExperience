@@ -5,8 +5,6 @@ import BtObjects 1.0
 MenuColumn {
     id: column
 
-    signal modeChanged(int mode)
-
     width: 212 // needed for menu shadow
 
     ListView {
@@ -18,7 +16,7 @@ MenuColumn {
             name: model.name
             selectOnClick: false
             onClicked: {
-                modeChanged(model.type)
+                dataModel.mode = type
                 column.closeColumn()
             }
         }

@@ -251,6 +251,7 @@ void SplitAdvancedScenario::setMode(SplitAdvancedProgram::Mode mode)
 	if (actual_program.mode == mode)
 		// nothing to do
 		return;
+	resetProgram();
 	actual_program.mode = mode;
 	emit modeChanged();
 }
@@ -288,6 +289,7 @@ void SplitAdvancedScenario::setSetPoint(int setpoint)
 	if (actual_program.temperature == setpoint)
 		// nothing to do
 		return;
+	resetProgram();
 	actual_program.temperature = setpoint;
 	emit setPointChanged();
 	sync();
@@ -325,8 +327,16 @@ void SplitAdvancedScenario::setProgram(SplitAdvancedProgram *program)
 	actual_program.setName(program->getName());
 
 	if (program->mode != -1) // a mode must be defined
-		setMode(program->mode);
-	setSetPoint(program->temperature);
+		if (actual_program.mode != program->mode)
+		{
+			actual_program.mode = program->mode;
+			emit modeChanged();
+		}
+	if (actual_program.temperature != program->temperature)
+	{
+		actual_program.temperature = program->temperature;
+		emit temperatureChanged();
+	}
 	if (program->speed != -1) // a speed must exist
 		if (to_apply[SPLIT_SPEED] != program->speed)
 		{

@@ -219,7 +219,6 @@ public:
 	Q_INVOKABLE void nextSpeed();
 	Q_INVOKABLE void prevSwing();
 	Q_INVOKABLE void nextSwing();
-	Q_INVOKABLE void resetProgram();
 	Q_INVOKABLE void setProgram(SplitAdvancedProgram *program);
 
 	/*!
@@ -252,6 +251,7 @@ protected slots:
 
 private:
 	void sync();
+	void resetProgram();
 
 	AdvancedAirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
