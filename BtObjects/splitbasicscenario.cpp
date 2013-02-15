@@ -101,12 +101,9 @@ SplitBasicProgram::SplitBasicProgram(const QString &_name, int number)
 	name = _name;
 }
 
-SplitBasicScenario::SplitBasicScenario(QString _name,
-									   QString _key,
-									   AirConditioningDevice *d,
-									   QString off_command,
-									   NonControlledProbeDevice *d_probe,
-									   QObject *parent) :
+
+SplitBasicScenario::SplitBasicScenario(QString _name, QString _key, AirConditioningDevice *d,
+		QString off_command, NonControlledProbeDevice *d_probe, QObject *parent) :
 	DeviceObjectInterface(d_probe, parent)
 {
 	dev = d;
@@ -121,8 +118,9 @@ SplitBasicScenario::SplitBasicScenario(QString _name,
 	dev->setOffCommand(off_command);
 	if (!off_command.isEmpty())
 	{
-		program_list.append(new SplitBasicOffProgram(off_command.toInt()));
-		actual_program = program_list.front();
+		SplitBasicProgram *p = new SplitBasicOffProgram(off_command.toInt());
+		programs << p;
+		actual_program = p;
 	}
 	temperature = 200;
 }
@@ -146,63 +144,38 @@ void SplitBasicScenario::valueReceived(const DeviceValues &values_list)
 	}
 }
 
-QString SplitBasicScenario::getProgram() const
+SplitBasicProgram *SplitBasicScenario::getProgram() const
 {
-	return actual_program->getName();
+	return actual_program;
 }
 
-QStringList SplitBasicScenario::getPrograms() const
+ObjectDataModel *SplitBasicScenario::getPrograms() const
 {
-	QStringList result;
-	for (int i = 0; i < program_list.size(); ++i)
-		result << program_list.at(i)->getName();
-	return result;
+	return const_cast<ObjectDataModel*>(&programs);
 }
 
-int SplitBasicScenario::getCount() const
+void SplitBasicScenario::setProgram(SplitBasicProgram *program)
 {
-	return program_list.size();
-}
-
-void SplitBasicScenario::setProgram(QString program)
-{
-	if (program.isEmpty())
+	if (actual_program != program)
 	{
-		qWarning() << QString("SplitBasicScenario::setProgram(): "
-							  "program cannot be empty");
-		return;
+		bool found = false;
+		for (int i = 0; i < programs.rowCount(); ++i)
+		{
+			if (programs.getObject(i) == program)
+				found = true;
+		}
+		if (!found)
+			return;
+		actual_program = program;
+		emit programChanged();
 	}
-
-	if (actual_program->getName() == program)
-		// nothing to do
-		return;
-
-	// looks for the program in the program list
-	int p = program_list.size() - 1;
-	for (; p >= 0; --p)
-	{
-		if (program == program_list.at(p)->getName())
-			break;
-	}
-
-	// if not found, print a warning and exit
-	if (p == -1)
-	{
-		qWarning() << QString("SplitBasicScenario::setProgram(%1) didn't "
-							  "find the program inside available ones. "
-							  "Program will not be changed.").arg(program);
-		return;
-	}
-
-	actual_program = program_list.at(p);
-	emit programChanged();
 }
 
 void SplitBasicScenario::addProgram(SplitBasicProgram *program)
 {
-	program_list.append(program);
+	programs << program;
 	if (!actual_program)
-		actual_program = program_list.front();
+		actual_program = program;
 }
 
 void SplitBasicScenario::apply()

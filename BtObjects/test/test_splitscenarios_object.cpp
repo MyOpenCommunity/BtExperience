@@ -42,13 +42,25 @@ namespace {
 
 	SplitBasicProgram PROGRAM_DAY_B(DAY, 77);
 	SplitBasicProgram PROGRAM_NIGHT_B(NIGHT, 79);
+	SplitBasicProgram NOT_CONFIGURED_B(PROGRAM_FOO, 12);
 
 	SplitAdvancedProgram PROGRAM_DAY_A(DAY, SplitAdvancedProgram::ModeDehumidification, 200, SplitAdvancedProgram::SpeedMed, SplitAdvancedProgram::SwingOn);
 	SplitAdvancedProgram PROGRAM_NIGHT_A(NIGHT, SplitAdvancedProgram::ModeDehumidification, 200, SplitAdvancedProgram::SpeedMin, SplitAdvancedProgram::SwingOff);
+	SplitAdvancedProgram NOT_CONFIGURED_A(PROGRAM_FOO, SplitAdvancedProgram::ModeDehumidification, 200, SplitAdvancedProgram::SpeedMed, SplitAdvancedProgram::SwingOn);
 
 	QList<int> modes;
 	QList<int> speeds;
 	QList<int> swings;
+
+	SplitBasicProgram *newBasicFromTemplate(const SplitBasicProgram &original)
+	{
+		return new SplitBasicProgram(original.getName(), original.getObjectId());
+	}
+
+	SplitAdvancedProgram *newAdvancedFromTemplate(const SplitAdvancedProgram &original)
+	{
+		return new SplitAdvancedProgram(original.getName(), original.mode, original.temperature, original.speed, original.swing);
+	}
 }
 
 void TestSplitScenarios::init()
@@ -76,8 +88,8 @@ void TestSplitScenarios::init()
 				new AirConditioningDevice("12"),
 				"15",
 				new NonControlledProbeDevice("11", NonControlledProbeDevice::INTERNAL));
-	obj->addProgram(&PROGRAM_DAY_B);
-	obj->addProgram(&PROGRAM_NIGHT_B);
+	obj->addProgram(newBasicFromTemplate(PROGRAM_DAY_B));
+	obj->addProgram(newBasicFromTemplate(PROGRAM_NIGHT_B));
 
 	obj_adv = new SplitAdvancedScenario(
 				"TestSplitAdvancedScenario",
@@ -87,8 +99,8 @@ void TestSplitScenarios::init()
 				modes,
 				speeds,
 				swings, 150, 300, 10);
-	obj_adv->addProgram(&PROGRAM_DAY_A);
-	obj_adv->addProgram(&PROGRAM_NIGHT_A);
+	obj_adv->addProgram(newAdvancedFromTemplate(PROGRAM_DAY_A));
+	obj_adv->addProgram(newAdvancedFromTemplate(PROGRAM_NIGHT_A));
 }
 
 void TestSplitScenarios::cleanup()
@@ -160,63 +172,63 @@ void TestSplitScenarios::testSetProgram()
 {
 	// sets manual program
 	ObjectTester t(obj, SIGNAL(programChanged()));
-	obj->setProgram(NIGHT);
+	obj->setProgram(findProgram(NIGHT));
 	t.checkSignals();
-	QCOMPARE(NIGHT, obj->getProgram());
+	QCOMPARE(findProgram(NIGHT), obj->getProgram());
 
 	// sets command 1 program
-	obj->setProgram(DAY);
+	obj->setProgram(findProgram(DAY));
 	t.checkSignals();
-	QCOMPARE(DAY, obj->getProgram());
+	QCOMPARE(findProgram(DAY), obj->getProgram());
 
 	// tries to set command 1 program again: nothing happens
-	obj->setProgram(DAY);
+	obj->setProgram(findProgram(DAY));
 	t.checkNoSignals();
-	QCOMPARE(DAY, obj->getProgram());
+	QCOMPARE(findProgram(DAY), obj->getProgram());
 
 	// tries to set empty program: nothing happens
-	obj->setProgram(PROGRAM_EMPTY);
+	obj->setProgram(0);
 	t.checkNoSignals();
-	QCOMPARE(DAY, obj->getProgram());
+	QCOMPARE(findProgram(DAY), obj->getProgram());
 
 	// tries to set a not configured program: nothing happens
-	obj->setProgram(PROGRAM_FOO);
+	obj->setProgram(&NOT_CONFIGURED_B);
 	t.checkNoSignals();
-	QCOMPARE(DAY, obj->getProgram());
+	QCOMPARE(findProgram(DAY), obj->getProgram());
 
 	// sets the off program (it must be always defined)
-	obj->setProgram(PROGRAM_OFF);
+	obj->setProgram(findOffProgram());
 	t.checkSignals();
-	QCOMPARE(PROGRAM_OFF, obj->getProgram());
+	QCOMPARE(findOffProgram(), obj->getProgram());
 }
 
 void TestSplitScenarios::testSetAdvancedProgram()
 {
 	// sets day program
-	ObjectTester t(obj_adv, SIGNAL(programChanged()));
-	obj_adv->setProgram(DAY);
+	ObjectTester t(obj_adv, SIGNAL(programNameChanged()));
+	obj_adv->setProgram(findProgramAdv(DAY));
 	t.checkSignals();
-	QCOMPARE(DAY, obj_adv->getProgram());
+	QCOMPARE(DAY, obj_adv->getProgramName());
 
 	// tries to set empty program: nothing happens
-	obj_adv->setProgram(PROGRAM_EMPTY);
+	obj_adv->setProgram(0);
 	t.checkNoSignals();
-	QCOMPARE(DAY, obj_adv->getProgram());
+	QCOMPARE(DAY, obj_adv->getProgramName());
 
 	// tries to set day program again: nothing happens
-	obj_adv->setProgram(DAY);
+	obj_adv->setProgram(findProgramAdv(DAY));
 	t.checkNoSignals();
-	QCOMPARE(DAY, obj_adv->getProgram());
+	QCOMPARE(DAY, obj_adv->getProgramName());
 
 	// tries to set a not configured program: nothing happens
-	obj_adv->setProgram(PROGRAM_FOO);
+	obj_adv->setProgram(&NOT_CONFIGURED_A);
 	t.checkNoSignals();
-	QCOMPARE(DAY, obj_adv->getProgram());
+	QCOMPARE(DAY, obj_adv->getProgramName());
 
 	// sets night program
-	obj_adv->setProgram(NIGHT);
+	obj_adv->setProgram(findProgramAdv(NIGHT));
 	t.checkSignals();
-	QCOMPARE(NIGHT, obj_adv->getProgram());
+	QCOMPARE(NIGHT, obj_adv->getProgramName());
 }
 
 void TestSplitScenarios::compareClientCommand()
@@ -230,11 +242,49 @@ void TestSplitScenarios::compareClientCommand()
 	TestBtObject::compareClientCommand();
 }
 
+SplitBasicProgram *TestSplitScenarios::findOffProgram()
+{
+	for (int i = 0; i < obj->programs.rowCount(); ++i)
+	{
+		ObjectInterface *oi = obj->programs.getObject(i);
+		SplitBasicOffProgram *p = qobject_cast<SplitBasicOffProgram *>(oi);
+		if (p)
+			return p;
+	}
+	qFatal("Didn't find an off program in a basic split");
+	return 0;
+}
+
+SplitBasicProgram *TestSplitScenarios::findProgram(const QString &name)
+{
+	for (int i = 0; i < obj->programs.rowCount(); ++i)
+	{
+		ObjectInterface *oi = obj->programs.getObject(i);
+		SplitBasicProgram *p = qobject_cast<SplitBasicProgram *>(oi);
+		if (p->getName() == name)
+			return p;
+	}
+	qFatal("Never reached");
+}
+
+SplitAdvancedProgram *TestSplitScenarios::findProgramAdv(const QString &name)
+{
+	for (int i = 0; i < obj_adv->programs.rowCount(); ++i)
+	{
+		ObjectInterface *oi = obj_adv->programs.getObject(i);
+		SplitAdvancedProgram *p = qobject_cast<SplitAdvancedProgram *>(oi);
+		if (p->getName() == name)
+			return p;
+	}
+	qWarning("Cannot find program: %s", qPrintable(name));
+	qFatal("Never reached");
+}
+
 void TestSplitScenarios::testSendCommand()
 {
 	// set command 1 program
-	obj->setProgram(NIGHT);
-	QCOMPARE(NIGHT, obj->getProgram());
+	obj->setProgram(findProgram(NIGHT));
+	QCOMPARE(findProgram(NIGHT), obj->getProgram());
 
 	// confirms operation the frame is sent
 	obj->apply();
@@ -245,8 +295,8 @@ void TestSplitScenarios::testSendCommand()
 void TestSplitScenarios::testSendAdvancedCommand()
 {
 	// set day program
-	obj_adv->setProgram(DAY);
-	QCOMPARE(DAY, obj_adv->getProgram());
+	obj_adv->setProgram(findProgramAdv(DAY));
+	QCOMPARE(DAY, obj_adv->getProgramName());
 
 	// confirms operation the frame is sent
 	obj_adv->apply();
@@ -262,8 +312,9 @@ void TestSplitScenarios::testSendAdvancedCommand()
 void TestSplitScenarios::testSendOffCommand()
 {
 	// set off program
-	obj->setProgram(PROGRAM_OFF);
-	QCOMPARE(PROGRAM_OFF, obj->getProgram());
+	SplitBasicProgram *off_program = findOffProgram();
+	obj->setProgram(off_program);
+	QCOMPARE(off_program, obj->getProgram());
 
 	// confirms operations: the frame is sent
 	obj->apply();
@@ -275,12 +326,12 @@ void TestSplitScenarios::testSendOffCommand()
 void TestSplitScenarios::testSendAdvancedOffCommand()
 {
 	// set day program
-	obj_adv->setProgram(DAY);
-	QCOMPARE(DAY, obj_adv->getProgram());
+	obj_adv->setProgram(findProgramAdv(DAY));
+	QCOMPARE(DAY, obj_adv->getProgramName());
 
 	// set off mode
 	obj_adv->setMode(SplitAdvancedProgram::ModeOff);
-	QCOMPARE(DAY, obj_adv->getProgram());
+	QCOMPARE(DAY, obj_adv->getProgramName());
 
 	// confirms operations: the frame is sent
 	obj_adv->apply();
@@ -291,8 +342,8 @@ void TestSplitScenarios::testSendAdvancedOffCommand()
 void TestSplitScenarios::testSetAdvancedProperties()
 {
 	// sets day program
-	obj_adv->setProgram(DAY);
-	QCOMPARE(DAY, obj_adv->getProgram());
+	obj_adv->setProgram(findProgramAdv(DAY));
+	QCOMPARE(DAY, obj_adv->getProgramName());
 
 	// changes mode
 	ObjectTester t1(obj_adv, SIGNAL(modeChanged()));
@@ -322,13 +373,13 @@ void TestSplitScenarios::testSetAdvancedProperties()
 	// emitted
 	obj_adv->nextSwing();
 	ObjectTester t5(obj_adv, SignalList()
-				   << SIGNAL(programChanged())
+				   << SIGNAL(programNameChanged())
 					<< SIGNAL(modeChanged())
 					<< SIGNAL(speedChanged())
 					<< SIGNAL(swingChanged())
 					<< SIGNAL(setPointChanged()));
-	obj_adv->setProgram(NIGHT);
+	obj_adv->setProgram(findProgramAdv(NIGHT));
 	t5.checkSignals();
-	QCOMPARE(NIGHT, obj_adv->getProgram());
+	QCOMPARE(NIGHT, obj_adv->getProgramName());
 }
 

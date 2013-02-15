@@ -150,8 +150,7 @@ void parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_ma
 }
 
 SplitAdvancedProgram::SplitAdvancedProgram(QObject *parent) :
-	QObject(parent),
-	name(""),
+	ObjectInterface(parent),
 	mode(ModeOff),
 	speed(SpeedAuto),
 	swing(SwingOff),
@@ -164,7 +163,7 @@ SplitAdvancedProgram::SplitAdvancedProgram(
 		int _temperature,
 		Speed speed,
 		Swing swing,
-		QObject *parent) : QObject(parent), mode(mode), speed(speed), swing(swing)
+		QObject *parent) : ObjectInterface(parent), mode(mode), speed(speed), swing(swing)
 {
 	Q_ASSERT_X(!_name.isEmpty(), "SplitAdvancedProgram::SplitAdvancedProgram", "name cannot be empty.");
 	Q_ASSERT_X(_temperature >= 150, "SplitAdvancedProgram::SplitAdvancedProgram", "temperature cannot be less than 15°C.");
@@ -208,7 +207,6 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 	setpoint_min = _setpoint_min;
 	setpoint_max = _setpoint_max;
 	setpoint_step = _setpoint_step;
-	actual_program.name = QString();
 	actual_program.mode = static_cast<SplitAdvancedProgram::Mode>(modes->value());
 	current[SPLIT_SWING] = static_cast<SplitAdvancedProgram::Swing>(swings->value(SplitAdvancedProgram::SwingInvalid));
 	actual_program.temperature = 200;
@@ -216,6 +214,7 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 	temperature = 200;
 	reset();
 	sync();
+	connect(&actual_program, SIGNAL(nameChanged()), SIGNAL(programNameChanged()));
 }
 
 void SplitAdvancedScenario::sync()
@@ -226,79 +225,19 @@ void SplitAdvancedScenario::sync()
 		swings->next();
 }
 
-QString SplitAdvancedScenario::getProgram() const
+ObjectDataModel *SplitAdvancedScenario::getPrograms() const
 {
-	return actual_program.name;
-}
-
-QStringList SplitAdvancedScenario::getPrograms() const
-{
-	QStringList result;
-	for (int i = 0; i < program_list.size(); ++i)
-		result << program_list.at(i)->name;
-	return result;
+	return const_cast<ObjectDataModel *>(&programs);
 }
 
 int SplitAdvancedScenario::getCount() const
 {
-	return program_list.size();
+	return programs.rowCount();
 }
 
 void SplitAdvancedScenario::addProgram(SplitAdvancedProgram *program)
 {
-	program_list.append(program);
-}
-
-void SplitAdvancedScenario::setProgram(QString program)
-{
-	if (program.isEmpty())
-	{
-		qWarning() << QString("SplitAdvancedScenario::setProgram(): "
-							  "program cannot be empty");
-		return;
-	}
-
-	if (actual_program.name == program)
-		// nothing to do
-		return;
-
-	// looks for the program in the program list
-	int p = program_list.size() - 1;
-	for (; p >= 0; --p)
-	{
-		if (program == program_list.at(p)->name)
-			break;
-	}
-
-	// if not found, print a warning and exit
-	if (p == -1)
-	{
-		qWarning() << QString("SplitAdvancedScenario::setProgram(%1) didn't "
-							  "find the program inside available ones. "
-							  "Program will not be changed.").arg(program);
-		return;
-	}
-
-	// sets the choosen program
-	actual_program.name = program_list.at(p)->name;
-	emit programChanged();
-
-	if (program_list.at(p)->mode != -1) // a mode must be defined
-		setMode(program_list.at(p)->mode);
-	setSetPoint(program_list.at(p)->temperature);
-	if (program_list.at(p)->speed != -1) // a speed must exist
-		if (to_apply[SPLIT_SPEED] != program_list.at(p)->speed)
-		{
-			to_apply[SPLIT_SPEED] = program_list.at(p)->speed;
-			emit speedChanged();
-		}
-	if (program_list.at(p)->swing != -1) // a swing must exist
-		if (to_apply[SPLIT_SWING] != program_list.at(p)->swing)
-		{
-			to_apply[SPLIT_SWING] = program_list.at(p)->swing;
-			emit swingChanged();
-		}
-	sync();
+	programs << program;
 }
 
 SplitAdvancedProgram::Mode SplitAdvancedScenario::getMode() const
@@ -362,11 +301,50 @@ SplitAdvancedProgram::Speed SplitAdvancedScenario::getSpeed() const
 void SplitAdvancedScenario::resetProgram()
 {
 	// resets the name of the actual program (but data is still valid as custom)
-	if (actual_program.name.isEmpty())
+	if (actual_program.getName().isEmpty())
 		// nothing to do
 		return;
-	actual_program.name.clear();
-	emit programChanged();
+	actual_program.setName(QString());
+}
+
+void SplitAdvancedScenario::setProgram(SplitAdvancedProgram *program)
+{
+	if (program && actual_program.getName() == program->getName())
+		return;
+
+	bool found = false;
+	for (int i = 0; i < programs.rowCount(); ++i)
+	{
+		if (programs.getObject(i) == program)
+			found = true;
+	}
+	if (!found)
+		return;
+
+	// sets the choosen program
+	actual_program.setName(program->getName());
+
+	if (program->mode != -1) // a mode must be defined
+		setMode(program->mode);
+	setSetPoint(program->temperature);
+	if (program->speed != -1) // a speed must exist
+		if (to_apply[SPLIT_SPEED] != program->speed)
+		{
+			to_apply[SPLIT_SPEED] = program->speed;
+			emit speedChanged();
+		}
+	if (program->swing != -1) // a swing must exist
+		if (to_apply[SPLIT_SWING] != program->swing)
+		{
+			to_apply[SPLIT_SWING] = program->swing;
+			emit swingChanged();
+		}
+	sync();
+}
+
+QString SplitAdvancedScenario::getProgramName() const
+{
+	return actual_program.getName();
 }
 
 void SplitAdvancedScenario::nextSpeed()

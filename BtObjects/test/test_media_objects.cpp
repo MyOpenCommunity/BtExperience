@@ -447,8 +447,19 @@ void TestAmplifier::testSetActive()
 
 void TestAmplifier::testSetVolume()
 {
-	obj->setVolume(10);
-	dev->setVolume(10);
+	// min volume
+	obj->setVolume(0);
+	dev->setVolume(0);
+	compareClientCommand();
+
+	// med volume
+	obj->setVolume(62);
+	dev->setVolume(19);
+	compareClientCommand();
+
+	// max volume
+	obj->setVolume(100);
+	dev->setVolume(31);
 	compareClientCommand();
 }
 
@@ -483,22 +494,21 @@ void TestAmplifier::testReceiveVolume()
 	DeviceValues v;
 	ObjectTester t(obj, SIGNAL(volumeChanged()));
 
-	// on status
 	v[AmplifierDevice::DIM_VOLUME] = 12;
 
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(obj->getVolume(), 12);
+	QCOMPARE(obj->getVolume(), 38);
 
 	obj->valueReceived(v);
 	t.checkNoSignals();
 
-	// off status
+	// double receive
 	v[AmplifierDevice::DIM_VOLUME] = 13;
 
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(obj->getVolume(), 13);
+	QCOMPARE(obj->getVolume(), 41);
 
 	obj->valueReceived(v);
 	t.checkNoSignals();
