@@ -193,11 +193,11 @@ void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_fi
 	list->setList(entry_list);
 	list->setCurrentIndex(index);
 
-	clearListState();
-	local_state = model->clone();
-
 	// restores range (model belongs to QML!)
 	model->setRange(oldRange);
+
+	clearListState();
+	local_state = model->clone();
 
 	// updates reference to current (emits currentChanged)
 	updateCurrent();
