@@ -71,10 +71,10 @@ signals:
 private slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 	void updateUnreadMessagesIfChanged();
+	void saveMessages();
 
 private:
 	void loadMessages();
-	void saveMessages();
 
 	MessageDevice *dev;
 	MediaDataModel message_list;

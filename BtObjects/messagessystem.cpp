@@ -74,17 +74,17 @@ void MessagesSystem::valueReceived(const DeviceValues &values_list)
 	Q_ASSERT_X(values_list[MessageDevice::DIM_MESSAGE].canConvert<Message>(), "MessagesListPage::newMessage", "conversion error");
 	Message message = values_list[MessageDevice::DIM_MESSAGE].value<Message>();
 
-	// TODO: popup pages in GUI must be closed if a message is removed this way.
-
 	// TODO add isRead and sender info!
 	MessageItem *newMessage = new MessageItem(message.text, message.datetime);
 	connect(newMessage, SIGNAL(readChanged()), SLOT(updateUnreadMessagesIfChanged()));
+	connect(newMessage, SIGNAL(readChanged()), SLOT(saveMessages()));
 	message_list << newMessage;
 
 	// limits number of messages to MAX
 	int n = message_list.getCount();
 	while (n > MESSAGES_MAX)
 	{
+		// TODO: popup pages in GUI must be closed if a message is removed this way.
 		MessageItem *message = static_cast<MessageItem *>(message_list.getObject(n - 1));
 		message_list.remove(message);
 		delete message;
@@ -133,10 +133,12 @@ void MessagesSystem::loadMessages()
 	{
 		QDateTime date = QDateTime::fromString(getTextChild(item, "date"), DATE_FORMAT_AS_STRING);
 		QString text = getTextChild(item, "text");
+		QString sender = getTextChild(item, "sender");
 		bool read = getTextChild(item, "read").toInt();
 
-		MessageItem *newMessage = new MessageItem(text, date, read);
+		MessageItem *newMessage = new MessageItem(text, date, read, sender);
 		connect(newMessage, SIGNAL(readChanged()), SLOT(updateUnreadMessagesIfChanged()));
+		connect(newMessage, SIGNAL(readChanged()), SLOT(saveMessages()));
 		message_list << newMessage;
 	}
 
@@ -172,6 +174,7 @@ void MessagesSystem::saveMessages()
 		writer.writeStartElement("item");
 		writer.writeTextElement("date", message->getDateTime().toString(DATE_FORMAT_AS_STRING));
 		writer.writeTextElement("text", message->getText());
+		writer.writeTextElement("sender", message->getSender());
 		writer.writeTextElement("read", QString::number(message->isRead()));
 		writer.writeEndElement();
 	}
