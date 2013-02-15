@@ -416,7 +416,7 @@ PagedFolderListModel::PagedFolderListModel(PagedTreeBrowser *_browser, QObject *
 	activeModel = this;
 	start_index = item_count = current_index = 0;
 	browser = _browser;
-	pending_operation = discard_pending = false;
+	discard_operations = 0;
 
 	connect(browser, SIGNAL(listReceived(EntryInfoList)), this, SLOT(gotFileList(EntryInfoList)));
 
@@ -446,17 +446,13 @@ void PagedFolderListModel::startLoadingItems()
 	setLoading(true);
 
 	// ignore the result of the current operation, if in progress
-	discard_pending = pending_operation;
+	discard_operations = browser->lastQueuedCommand();
 
 	resetInternalState();
 
 	// if no pending operation, request the first page, otherwise wait for
 	// the current operation to complete
-	if (!pending_operation)
-	{
-		browser->getFileList(current_index + 1);
-		pending_operation = true;
-	}
+	browser->getFileList(current_index + 1);
 
 	reset();
 }
@@ -498,7 +494,7 @@ void PagedFolderListModel::setFilter(int mask)
 {
 	activeModel = this;
 	start_index = item_count = current_index = 0;
-	pending_operation = discard_pending = false;
+	discard_operations = browser->lastQueuedCommand();
 
 	TreeBrowserListModelBase::setFilter(mask);
 }
@@ -531,7 +527,7 @@ int PagedFolderListModel::getCount() const
 
 void PagedFolderListModel::directoryChanged()
 {
-	pending_operation = false;
+	discard_operations = browser->lastQueuedCommand();
 
 	if (item_count != 0)
 	{
@@ -550,6 +546,7 @@ void PagedFolderListModel::contextChanged()
 {
 	// here we can't optimize and wait for the range to be set, because the list size
 	// is received with the page list message
+	discard_operations = browser->lastQueuedCommand();
 	startLoadingItems();
 }
 
@@ -557,9 +554,8 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 {
 	if (this != activeModel)
 		return;
-
-	pending_operation = false;
-
+	if (browser->lastAnsweredCommand() <= discard_operations)
+		return;
 	// update list size
 	item_count = 0;
 	if (item_count != browser->getNumElements())
@@ -570,7 +566,7 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 	}
 
 	// update the data in item list
-	if (!discard_pending && min_range != max_range)
+	if (min_range != max_range)
 	{
 		foreach (const EntryInfo &entry, list)
 		{
@@ -585,7 +581,6 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 	if (current_index < qMin(max_range, getCount()))
 	{
 		browser->getFileList(current_index + 1);
-		pending_operation = true;
 	}
 	else
 	{
@@ -593,8 +588,6 @@ void PagedFolderListModel::gotFileList(EntryInfoList list)
 		reset();
 		emit countChanged();
 	}
-
-	discard_pending = false;
 }
 
 void PagedFolderListModel::changeRootDirectory()

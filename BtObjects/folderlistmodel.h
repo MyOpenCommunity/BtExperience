@@ -305,7 +305,7 @@ private:
 	int current_index;
 	// the total number of items in the directory
 	int item_count;
-	bool pending_operation, discard_pending;
+	int discard_operations;
 
 	// when min_range and max_range are set, we always have:
 	// start_index <= min_range <= current_index <= max_range

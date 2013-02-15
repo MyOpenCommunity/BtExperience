@@ -213,10 +213,7 @@ public:
 
 	virtual void getNextFileList()
 	{
-		range_start = range_end;
-		range_end = range_start + 4;
-
-		QTimer::singleShot(ASYNC_DELAY, this, SLOT(fileListComplete()));
+		// not used by TreeBrowserListModel
 	}
 
 	virtual int getNumElements()
@@ -235,6 +232,16 @@ public:
 		range_end = range_start + 4;
 
 		QTimer::singleShot(ASYNC_DELAY, this, SLOT(fileListComplete()));
+	}
+
+	virtual int lastQueuedCommand() const
+	{
+		return 0;
+	}
+
+	virtual int lastAnsweredCommand() const
+	{
+		return 1;
 	}
 
 private slots:
