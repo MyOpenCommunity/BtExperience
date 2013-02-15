@@ -73,6 +73,9 @@ private slots:
 	void updateUnreadMessagesIfChanged();
 
 private:
+	void loadMessages();
+	void saveMessages();
+
 	MessageDevice *dev;
 	MediaDataModel message_list;
 	int unreadMessages;
