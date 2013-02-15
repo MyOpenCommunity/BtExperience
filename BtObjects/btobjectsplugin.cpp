@@ -55,7 +55,7 @@
 #define NOTES_FILE "notes.xml"
 #define CONF_LOADED "BTouch_checkconfok"
 #else
-#define NOTES_FILE "/home/bticino/cfg/extra/0/notes.xml"
+#define NOTES_FILE "/home/bticino/cfg/extra/4/notes.xml"
 #define CONF_LOADED "/var/tmp/flags/BTouch_checkconfok"
 #endif
 

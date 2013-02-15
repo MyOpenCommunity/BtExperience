@@ -11,7 +11,7 @@
 #if defined(BT_HARDWARE_X11)
 #define MESSAGES_FILENAME "messages.xml"
 #else
-#define MESSAGES_FILENAME "cfg/extra/4/messages.xml"
+#define MESSAGES_FILENAME "/home/bticino/cfg/extra/4/messages.xml"
 #endif
 
 #define DATE_FORMAT_AS_STRING "yyyy/MM/dd HH:mm"
