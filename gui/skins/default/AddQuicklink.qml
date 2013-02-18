@@ -274,7 +274,7 @@ Page {
             top: linkBgImage.bottom
             topMargin: bg.height / 100 * 2.29
         }
-        onClicked: {
+        onPressed: {
             if (nameText.realText === "" || linkText.realText === "")
                 return
             myHomeModels.createQuicklink(-1, choices.get(privateProps.currentIndex).mediaType, nameText.realText, linkText.realText)
@@ -354,7 +354,7 @@ Page {
                         left: delegateRadio.right
                         leftMargin: bg.width / 100 * 2.51
                     }
-                    onClicked: page.installPopup(confirmDeleteDialog, {"itemObject": delegateRadio.itemObject})
+                    onPressed: page.installPopup(confirmDeleteDialog, {"itemObject": delegateRadio.itemObject})
                 }
             }
         }

@@ -46,6 +46,6 @@ Item {
 
     BeepingMouseArea {
         anchors.fill: parent
-        onClicked: control.clicked()
+        onPressed: control.clicked()
     }
 }
