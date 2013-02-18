@@ -93,5 +93,10 @@
 			<link uii="7108" />
 			<link uii="7109" />
 		</ist>
+		<ist uii="7112" descr="Group of commands 1-3-4">
+			<link uii="7106" />
+			<link uii="7108" />
+			<link uii="7109" />
+		</ist>
 	</obj>
 </archive>
