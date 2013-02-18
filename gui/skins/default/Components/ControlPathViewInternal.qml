@@ -27,11 +27,7 @@ PathView {
         z: PathView.elementZ
         scale: PathView.elementScale
         opacity: PathView.elementOpacity
-        onDelegateClicked: {
-            if (global.guiSettings.beep)
-                global.beep()
-            control.clicked(delegate)
-        }
+        onDelegateClicked: control.clicked(delegate)
 
         Connections {
             target: control
