@@ -11,6 +11,6 @@ MenuColumn {
         middlePressedIcon: "../../images/common/ico_chiudi_P.svg"
         rightIcon: "../../images/common/ico_chiudi.svg"
         rightPressedIcon: "../../images/common/ico_chiudi_P.svg"
-        onPressed: column.dataModel.setStatus(newStatus)
+        onPressed: dataModel.status = newStatus
     }
 }

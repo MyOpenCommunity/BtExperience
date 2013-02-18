@@ -11,6 +11,5 @@ MenuColumn {
         middlePressedIcon: "../../images/common/ico_alza_P.svg"
         rightIcon: "../../images/common/ico_abbassa.svg"
         rightPressedIcon: "../../images/common/ico_abbassa_P.svg"
-        onPressed: column.dataModel.setStatus(newStatus)
-    }
+        onPressed: dataModel.status = newStatus
 }
