@@ -273,6 +273,7 @@ private:
 */
 class SplitAdvancedCommandGroup : public ObjectInterface
 {
+	Q_OBJECT
 public:
 	SplitAdvancedCommandGroup(QString name, QList<QPair<QString, SplitAdvancedProgram *> > commands);
 

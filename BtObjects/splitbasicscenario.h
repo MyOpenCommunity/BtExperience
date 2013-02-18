@@ -131,6 +131,7 @@ private:
 */
 class SplitBasicCommandGroup : public ObjectInterface
 {
+	Q_OBJECT
 public:
 	SplitBasicCommandGroup(QString name, QList<QPair<QString, SplitBasicProgram *> > commands);
 

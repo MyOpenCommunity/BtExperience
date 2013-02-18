@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import BtObjects 1.0
+import "../../js/MenuItem.js" as Script
 
 MenuColumn {
     id: column
@@ -14,20 +15,29 @@ MenuColumn {
         id: objectModel
         filters: [
             {objectId: ObjectInterface.IdSplitBasicScenario},
-            {objectId: ObjectInterface.IdSplitAdvancedScenario}
+            {objectId: ObjectInterface.IdSplitAdvancedScenario},
+            {objectId: ObjectInterface.IdSplitBasicGenericCommandGroup},
+            {objectId: ObjectInterface.IdSplitAdvancedGenericCommandGroup},
         ]
         containers: [thermalRegulation.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     PaginatorList {
         id: paginator
         delegate: MenuItemDelegate {
-            editable: true
             itemObject: objectModel.getObject(index)
-            description: (itemObject.temperature / 10).toFixed() + "°C"
-            hasChild: true
+            editable: true
+            selectOnClick: itemObject.objectId === ObjectInterface.IdSplitBasicScenario ||
+                           itemObject.objectId === ObjectInterface.IdSplitAdvancedScenario
+            description: Script.description(itemObject)
+            hasChild: Script.hasChild(itemObject)
             onClicked: {
-                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
+                if (itemObject.objectId === ObjectInterface.IdSplitBasicScenario ||
+                        itemObject.objectId === ObjectInterface.IdSplitAdvancedScenario)
+                    column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
+                else
+                    itemObject.apply()
             }
         }
         model: objectModel
