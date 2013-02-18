@@ -63,7 +63,7 @@ Column {
                 shadowImage: "../images/common/btn_shadow_99x35.svg"
                 text: qsTr("ok")
                 font.pixelSize: 14
-                onClicked: {
+                onPressed: {
                     alert.source.alertOkClicked()
                     alert.source = null
                     alert.closeAlert()
@@ -77,7 +77,7 @@ Column {
                 shadowImage: "../images/common/btn_shadow_99x35.svg"
                 text: qsTr("cancel")
                 font.pixelSize: 14
-                onClicked: {
+                onPressed: {
                     if (alert.source.alertCancelClicked)
                         alert.source.alertCancelClicked()
                     alert.source = null
