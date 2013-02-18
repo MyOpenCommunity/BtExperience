@@ -38,7 +38,8 @@ public:
 		SenderPagerCall,   //11
 		ReceiverPagerCall, //12
 		Mute,              //13
-		FloorCall,         //14
+		Teleloop,          //14
+		FloorCall,         //15
 		// this must be last
 		StateCount
 	};

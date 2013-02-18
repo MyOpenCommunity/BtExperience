@@ -29,7 +29,8 @@ namespace
 		AudioState::VdeCallVolume,      //11
 		AudioState::VdeCallVolume,      //12
 		AudioState::InvalidVolume,      //13
-		AudioState::RingtoneVolume,     //14
+		AudioState::InvalidVolume,      //14
+		AudioState::RingtoneVolume,     //15
 	};
 
 	void setTpaVolume(int volume)
