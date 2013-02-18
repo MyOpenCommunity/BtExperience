@@ -80,7 +80,9 @@ Item {
         }
     }
 
-    BeepingMouseArea {
+    // uses a simple MouseArea because beep has to be managed directly in the
+    // control, it cannot be managed here (we don't catch all possible beep "paths")
+    MouseArea {
         anchors.fill: parent
         onClicked: pathViewDelegate.delegateClicked(itemObject)
         onPressed: pathViewDelegate.PathView.view.currentPressed = index

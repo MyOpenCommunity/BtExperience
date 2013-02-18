@@ -27,7 +27,14 @@ PathView {
         z: PathView.elementZ
         scale: PathView.elementScale
         opacity: PathView.elementOpacity
-        onDelegateClicked: control.clicked(delegate)
+        onDelegateClicked: {
+            // here is the entry point to trigger the card action; it is a
+            // good time to beep :) this is useful to catch all beep "paths"
+            // in pathview
+            if (global.guiSettings.beep)
+                global.beep()
+            control.clicked(delegate)
+        }
 
         Connections {
             target: control
