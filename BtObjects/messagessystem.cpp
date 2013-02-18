@@ -18,9 +18,8 @@
 #define MESSAGES_MAX 10
 
 
-ObjectInterface *parseMessageObject(const QDomNode &xml_node)
+ObjectInterface *createMessageObject()
 {
-	Q_UNUSED(xml_node);
 	return new MessagesSystem(bt_global::add_device_to_cache(new MessageDevice));
 }
 

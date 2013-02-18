@@ -561,10 +561,6 @@ void BtObjectsPlugin::createObjects()
 			multimedia.append(xml_obj);
 			break;
 
-		case ObjectInterface::IdMessages:
-			objmodel << parseMessageObject(xml_obj);
-			break;
-
 		case MediaLink::WebRadio:
 			multimedia.append(xml_obj);
 		case MediaLink::Rss:
@@ -1102,6 +1098,10 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdSoundDiffusionMono:
 			parseSoundAmbientMono(container);
 			break;
+		case Container::IdMessages:
+			// messages only have an entry in layout.xml, so we need to create the BtObject here
+			objmodel << createMessageObject();
+			// fall through
 		case Container::IdScenarios:
 		case Container::IdLights:
 		case Container::IdAutomation:
@@ -1114,7 +1114,6 @@ void BtObjectsPlugin::parseConfig()
 		case Container::IdSoundDiffusionMulti:
 		case Container::IdAntintrusion:
 		case Container::IdSettings:
-		case Container::IdMessages:
 			parseSystem(container);
 			break;
 		case Container::IdHomepage:
