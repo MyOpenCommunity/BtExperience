@@ -63,7 +63,20 @@ BasePage {
                 defaultImage: "images/common/ico_previous_track.svg"
                 pressedImage: "images/common/ico_previous_track_P.svg"
 
-                onClicked: page.player.prevTrack()
+                onClicked: {
+                    if (goToPrevTrack.running) {
+                        goToPrevTrack.restart()
+                        page.player.prevTrack()
+                    } else {
+                        goToPrevTrack.start()
+                        page.player.restart()
+                    }
+                }
+
+                Timer {
+                    id: goToPrevTrack
+                    interval: 5000
+                }
             }
 
             Item {

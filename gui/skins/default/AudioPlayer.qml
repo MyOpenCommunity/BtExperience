@@ -141,8 +141,18 @@ Page {
                 if (repetitionTriggered) {
                     player.mediaPlayer.seek(-10)
                 }
-                else
+                else if (goToPrevTrack.running) {
+                    goToPrevTrack.restart()
                     player.mediaPlayer.prevTrack()
+                } else {
+                    goToPrevTrack.start()
+                    player.mediaPlayer.restart()
+                }
+            }
+
+            Timer {
+                id: goToPrevTrack
+                interval: 5000
             }
         }
 
