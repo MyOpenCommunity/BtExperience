@@ -794,9 +794,15 @@ void TestVideoDoorEntry::testHandsFree()
 	QCOMPARE(false, cctv->exitingCall());
 
 	QVERIFY(ti.waitForSignal(GRABBER_START_TIME));
+	QCOMPARE(true, cctv->hands_free_delay.isActive());
 
-	// auto answer
+	compareClientCommandThatWorks(); // check no frame is sent yet
+
+	// auto answer timeout
+	cctv->delayedAnswerCall();
 	dev->answerCall();
+
+	QCOMPARE(false, cctv->hands_free_delay.isActive());
 
 	compareClientCommandThatWorks();
 
