@@ -155,7 +155,7 @@ MenuColumn {
                             BeepingMouseArea {
                                 id: btnArea
                                 anchors.fill: parent
-                                onClicked: modelList.remove(index)
+                                onPressed: modelList.remove(index)
                             }
                         }
                     }
@@ -171,7 +171,7 @@ MenuColumn {
                 text: qsTr("remove all")
                 font.capitalization: Font.AllUppercase
                 font.pixelSize: 12
-                onClicked: modelList.clear()
+                onPressed: modelList.clear()
             }
 
             model: modelList
