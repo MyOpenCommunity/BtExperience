@@ -10,7 +10,7 @@
 
 class MessageDevice;
 
-ObjectInterface *parseMessageObject(const QDomNode &xml_node);
+ObjectInterface *createMessageObject();
 
 class MessageItem : public ItemInterface
 {

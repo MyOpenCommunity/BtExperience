@@ -256,6 +256,22 @@ void PlatformSettings::requestNetworkSettings()
 	}
 }
 
+void PlatformSettings::refreshDateTime()
+{
+	QDate old_date = to_apply[BT_DATE].toDate();
+	QVariant old_time = to_apply[BT_TIME];
+	QDate date = QDate::currentDate();
+	BtTime time = QTime::currentTime();
+	QVariant v;
+
+	v.setValue(time);
+	to_apply[BT_DATE] = date;
+	to_apply[BT_TIME] = v;
+
+	emitDateSignals(old_date, date);
+	emitTimeSignals(old_time, v);
+}
+
 void PlatformSettings::connectionDown()
 {
 	--connection_attempts;
