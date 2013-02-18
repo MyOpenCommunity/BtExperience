@@ -74,7 +74,7 @@ Page {
                 property variant itemObject: objectLinksModel.getObject(index)
                 defaultImage: "images/common/btn_weblink.svg"
                 pressedImage: "images/common/btn_weblink_P.svg"
-                onClicked: {
+                onPressed: {
                     if (type === "browser") {
                         global.browser.displayUrl(itemObject.address)
                         page.processLaunched(global.browser)
