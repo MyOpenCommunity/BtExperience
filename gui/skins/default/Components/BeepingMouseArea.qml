@@ -14,6 +14,8 @@ import BtExperience 1.0
 
 
 MouseArea {
+    id: control
+
     property bool pressAndHoldEnabled: false // set this to receive held signals
 
     signal clicked(variant mouse) // equivalent to MouseArea clicked
@@ -24,19 +26,19 @@ MouseArea {
             global.beep()
     }
     onPressAndHold: {
-        if (pressAndHoldEnabled) {
+        if (control.pressAndHoldEnabled) {
             global.debugTiming.logTiming("PressAndHold on icon")
-            held(mouse)
+            control.held(mouse)
         }
     }
     onReleased: {
-        if (!pressAndHoldEnabled || !mouse.wasHeld) {
+        if (!control.pressAndHoldEnabled || !mouse.wasHeld) {
             // if pressAndHold is not enabled emits a click
             // if pressAndHold is enabled emits a click only if held is not managed
             global.debugTiming.logTiming("Clicked on icon")
             if (mouse.x >= 0 && mouse.x <= parent.width &&
                 mouse.y >= 0 && mouse.y <= parent.height)
-                clicked(mouse)
+                control.clicked(mouse)
         }
     }
 }
