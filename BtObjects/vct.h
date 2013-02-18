@@ -133,8 +133,12 @@ protected:
 	explicit VDEBase(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
 
 	bool callInProgress();
+	void setCallInProgress(bool in_progress);
 	bool callActive();
+	void setCallActive(bool active);
 	bool exitingCall();
+	void setExitingCall(bool exiting);
+	void setTeleloop(bool teleloop);
 
 	int volume;
 	bool mute;
