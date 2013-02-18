@@ -310,12 +310,14 @@ void TreeBrowserListModelBase::setRange(QVariantList range)
 		return;
 	}
 
+	// always save current range even if equal to previous one (directory might have changed)
+	setCurrentRange(QVariantList() << min << max);
+
 	if (min_range == min && max_range == max)
 		return;
 
 	min_range = min;
 	max_range = max;
-	setCurrentRange(getRange());
 
 	emit rangeChanged();
 }
