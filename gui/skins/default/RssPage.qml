@@ -29,6 +29,12 @@ Page {
         }
         clip: true
 
+        Rectangle {
+            anchors.fill: parent
+            color: homeProperties.skin === HomeProperties.Clear ? "white" : "black"
+            opacity: 0.5
+        }
+
         XmlListModel {
             id: rssFeedModel
             source: rssPage.urlString
