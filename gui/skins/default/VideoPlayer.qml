@@ -25,18 +25,15 @@ BasePage {
         MouseArea {
             anchors.fill: parent
             onPressed: {
+                hidingTimer.stop()
                 bottomBarBg.visible = true
-                bottomBarBg.restartAutoHide()
             }
+            onReleased: hidingTimer.restart()
         }
     }
 
     SvgImage {
         id: bottomBarBg
-
-        function restartAutoHide() {
-            hidingTimer.restart()
-        }
 
         source: "images/common/bg_player_fullscreen.svg"
         anchors {
@@ -63,6 +60,7 @@ BasePage {
                 defaultImage: "images/common/ico_previous_track.svg"
                 pressedImage: "images/common/ico_previous_track_P.svg"
 
+                onReleased: hidingTimer.restart()
                 onClicked: page.player.prevTrack()
             }
 
@@ -86,6 +84,7 @@ BasePage {
                     pressedImage: "images/common/ico_play_P.svg"
                     anchors.centerIn: parent
 
+                    onReleased: hidingTimer.restart()
                     onClicked: {
                         if (page.player.playing)
                             page.player.pause()
@@ -122,6 +121,7 @@ BasePage {
                 defaultImage: "images/common/ico_next_track.svg"
                 pressedImage: "images/common/ico_next_track_P.svg"
 
+                onReleased: hidingTimer.restart()
                 onClicked: page.player.nextTrack()
             }
         }
@@ -223,8 +223,11 @@ BasePage {
         MouseArea {
             anchors.fill: parent
             onPressed: {
+                // setting accepted property to false causes released event
+                // to be discarded, so we have to call restart in buttons on top
+                // of this MouseArea
                 mouse.accepted = false
-                bottomBarBg.restartAutoHide()
+                hidingTimer.stop()
             }
         }
     }

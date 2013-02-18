@@ -22,9 +22,10 @@ Page {
         MouseArea {
             anchors.fill: parent
             onPressed: {
+                hidingTimer.stop()
                 bottomBarBg.visible = true
-                bottomBarBg.restartAutoHide()
             }
+            onReleased: hidingTimer.restart()
         }
     }
 
@@ -43,10 +44,6 @@ Page {
 
     SvgImage {
         id: bottomBarBg
-
-        function restartAutoHide() {
-            hidingTimer.restart()
-        }
 
         source: "images/common/bg_player_fullscreen.svg"
         anchors {
@@ -68,6 +65,7 @@ Page {
                 leftMargin: fullScreenBg.width / 100 * 2
             }
 
+            onReleased: hidingTimer.restart()
             onClicked: global.photoPlayer.prevPhoto()
         }
 
@@ -97,6 +95,7 @@ Page {
                 pressedImage: "images/common/ico_play_P.svg"
                 anchors.centerIn: parent
 
+                onReleased: hidingTimer.restart()
                 onClicked: {
                     if (playButtonItem.state === "")
                         playButtonItem.state = "slideshow"
@@ -144,6 +143,7 @@ Page {
                 leftMargin: fullScreenBg.width / 100 * 0.5
             }
 
+            onReleased: hidingTimer.restart()
             onClicked: global.photoPlayer.nextPhoto()
         }
 
@@ -172,8 +172,6 @@ Page {
                 defaultImage: "images/common/ico_meno.svg"
                 pressedImage: "images/common/ico_meno_P.svg"
                 repetitionOnHold: true
-                // avoid hiding the bottom bar when we hold the button
-                onPressed: hidingTimer.stop()
                 onReleased: hidingTimer.restart()
                 onClicked: photoTimeControl.updateInterval(-1000)
             }
@@ -187,7 +185,6 @@ Page {
                 defaultImage: "images/common/ico_piu.svg"
                 pressedImage: "images/common/ico_piu_P.svg"
                 repetitionOnHold: true
-                onPressed: hidingTimer.stop()
                 onReleased: hidingTimer.restart()
                 onClicked: photoTimeControl.updateInterval(1000)
             }
@@ -231,8 +228,11 @@ Page {
         MouseArea {
             anchors.fill: parent
             onPressed: {
+                // setting accepted property to false causes released event
+                // to be discarded, so we have to call restart in buttons on top
+                // of this MouseArea
                 mouse.accepted = false
-                bottomBarBg.restartAutoHide()
+                hidingTimer.stop()
             }
         }
     }
