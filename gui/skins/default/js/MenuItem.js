@@ -144,7 +144,8 @@ function description(itemObject) {
         }
     case ObjectInterface.IdSplitBasicScenario:
     case ObjectInterface.IdSplitAdvancedScenario:
-        descr = (itemObject.temperature / 10).toFixed() + "°C"
+        if (itemObject.temperatureEnabled)
+            descr = (itemObject.temperature / 10).toFixed(1) + "°C"
         break
     }
 

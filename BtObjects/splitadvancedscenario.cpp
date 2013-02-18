@@ -211,7 +211,7 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 	current[SPLIT_SWING] = static_cast<SplitAdvancedProgram::Swing>(swings->value(SplitAdvancedProgram::SwingInvalid));
 	actual_program.temperature = 200;
 	current[SPLIT_SPEED] = static_cast<SplitAdvancedProgram::Speed>(speeds->value(SplitAdvancedProgram::SpeedInvalid));
-	temperature = 200;
+	temperature = 1235; // -23.5
 	reset();
 	sync();
 	connect(&actual_program, SIGNAL(nameChanged()), SIGNAL(programNameChanged()));
@@ -461,6 +461,11 @@ void SplitAdvancedScenario::valueReceived(const DeviceValues &values_list)
 int SplitAdvancedScenario::getTemperature() const
 {
 	return bt2Celsius(temperature);
+}
+
+bool SplitAdvancedScenario::getTemperatureEnabled() const
+{
+	return dev_probe != 0;
 }
 
 QObject *SplitAdvancedScenario::getModes() const

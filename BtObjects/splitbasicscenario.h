@@ -85,6 +85,11 @@ class SplitBasicScenario : public DeviceObjectInterface
 	*/
 	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
 
+	/*!
+		\brief Returns if a temperature probe is associated with the split
+	*/
+	Q_PROPERTY(bool temperatureEnabled READ getTemperatureEnabled CONSTANT)
+
 public:
 	explicit SplitBasicScenario(QString name, QString key, AirConditioningDevice *d,
 			QString off_command, NonControlledProbeDevice *d_probe, QObject *parent = 0);
@@ -103,6 +108,7 @@ public:
 	void setProgram(SplitBasicProgram *program);
 	ObjectDataModel *getPrograms() const;
 	int getTemperature() const;
+	bool getTemperatureEnabled() const;
 
 	Q_INVOKABLE void apply();
 
