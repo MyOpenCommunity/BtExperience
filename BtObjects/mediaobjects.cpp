@@ -557,6 +557,11 @@ void SourceMedia::nextTrack()
 	source->getAudioVideoPlayer()->nextTrack();
 }
 
+void SourceMedia::restart()
+{
+	source->getAudioVideoPlayer()->restart();
+}
+
 void SourceMedia::togglePause()
 {
 	MultiMediaPlayer *media_player = static_cast<MultiMediaPlayer *>(source->getAudioVideoPlayer()->getMediaPlayer());

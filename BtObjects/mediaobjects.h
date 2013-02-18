@@ -330,11 +330,14 @@ public:
 	virtual void playFirstMediaContent();
 
 public slots:
-	/// Go to next track
+	/// Go to previous track
 	virtual void previousTrack();
 
-	/// Go to previous track
+	/// Go to next track
 	virtual void nextTrack();
+
+	/// Restart current track playback
+	void restart();
 
 signals:
 	void firstMediaContentStatus(bool success);
