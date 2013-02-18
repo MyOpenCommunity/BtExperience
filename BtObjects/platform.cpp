@@ -82,9 +82,9 @@ void PlatformSettings::apply()
 
 void PlatformSettings::reset()
 {
-	to_apply = current;
 	current[BT_DATE] = QDate::currentDate();
 	current[BT_TIME].setValue(BtTime(QTime::currentTime()));
+	to_apply = current;
 
 	emit addressChanged();
 	emit dns1Changed();
@@ -254,22 +254,6 @@ void PlatformSettings::requestNetworkSettings()
 		setConnectionStatus(Testing);
 		connection_tester->test();
 	}
-}
-
-void PlatformSettings::refreshDateTime()
-{
-	QDate old_date = to_apply[BT_DATE].toDate();
-	QVariant old_time = to_apply[BT_TIME];
-	QDate date = QDate::currentDate();
-	BtTime time = QTime::currentTime();
-	QVariant v;
-
-	v.setValue(time);
-	to_apply[BT_DATE] = date;
-	to_apply[BT_TIME] = v;
-
-	emitDateSignals(old_date, date);
-	emitTimeSignals(old_time, v);
 }
 
 void PlatformSettings::connectionDown()
