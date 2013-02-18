@@ -14,7 +14,7 @@ Page {
     source: room.image
 
     function roomsButtonClicked() {
-        Stack.backToRoom()
+        Stack.backToRoomOrHome()
     }
 
     function settingsButtonClicked() {
@@ -27,7 +27,7 @@ Page {
     showSettingsButton: true
 
     function backButtonClicked() {
-        Stack.backToRoom()
+        Stack.backToRoomOrHome()
     }
 
     Names {

@@ -152,21 +152,13 @@ function backToHome(properties) {
 
 // returns to systems page
 function backToSystemOrHome() {
-    var ret = _findTargetPage("Systems.qml")
-    if (!ret)
-        return
 
-    // Handle the case of page skippers. If we only have one system and we
-    // press back, using backToPage() will bring us to the same system.
-    if (ret.filename === "Systems.qml")
-        backToPage("Systems.qml")
-    else
-        backToHome()
+    _backToPageOrHome("Systems.qml")
 }
 
 // returns to rooms page
-function backToRoom() {
-    backToPage("Rooms.qml")
+function backToRoomOrHome() {
+    _backToPageOrHome("Rooms.qml")
 }
 
 // returns to multimedia page
@@ -218,6 +210,20 @@ function changePageDone() {
   * private API
   *
   ***************************************************************************/
+
+function _backToPageOrHome(filename) {
+    var ret = _findTargetPage(filename)
+    if (!ret)
+        return
+
+    // Handle the case of page skippers.
+    // For example, if we only have one system and we
+    // press back, using backToPage() will bring us to the same system.
+    if (ret.filename === filename)
+        backToPage(filename)
+    else
+        backToPage("HomePage.qml")
+}
 
 // when navigationTarget property is defined on page, checks if menu navigation is needed
 // and eventually primes menu navigation
