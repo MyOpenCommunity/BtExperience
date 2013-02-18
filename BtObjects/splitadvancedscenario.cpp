@@ -335,7 +335,7 @@ void SplitAdvancedScenario::setProgram(SplitAdvancedProgram *program)
 	if (actual_program.temperature != program->temperature)
 	{
 		actual_program.temperature = program->temperature;
-		emit temperatureChanged();
+		emit setPointChanged();
 	}
 	if (program->speed != -1) // a speed must exist
 		if (to_apply[SPLIT_SPEED] != program->speed)
