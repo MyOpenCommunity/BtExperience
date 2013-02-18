@@ -26,30 +26,50 @@ Item {
         spacing: 1
 
 
-        ButtonBack {
+        ButtonImageThreeStates {
             id: backButton
             visible: buttonsColumn.backButton
-            onClicked: buttonsColumn.backClicked()
+            onPressed: buttonsColumn.backClicked()
+            defaultImage: "../images/common/icon_back.svg"
+            pressedImage: "../images/common/icon_back_p.svg"
+            defaultImageBg: "../images/common/button_navigation_column.svg"
+            pressedImageBg: "../images/common/button_navigation_column_p.svg"
         }
 
-        ButtonSystems {
+        ButtonImageThreeStates {
             visible: buttonsColumn.systemsButton
-            onClicked: buttonsColumn.systemsClicked()
+            onPressed: buttonsColumn.systemsClicked()
+            defaultImage: "../images/common/ico_sistemi.svg"
+            pressedImage: "../images/common/ico_sistemi_P.svg"
+            defaultImageBg: "../images/common/button_navigation_column.svg"
+            pressedImageBg: "../images/common/button_navigation_column_p.svg"
         }
 
-        ButtonSettings {
+        ButtonImageThreeStates {
             visible: buttonsColumn.settingsButton
-            onClicked: buttonsColumn.settingsClicked()
+            onPressed: buttonsColumn.settingsClicked()
+            defaultImage: "../images/common/ico_opzioni.svg"
+            pressedImage: "../images/common/ico_opzioni_P.svg"
+            defaultImageBg: "../images/common/button_navigation_column.svg"
+            pressedImageBg: "../images/common/button_navigation_column_p.svg"
         }
 
-        ButtonRooms {
+        ButtonImageThreeStates {
             visible: buttonsColumn.roomsButton
-            onClicked: buttonsColumn.roomsClicked()
+            onPressed: buttonsColumn.roomsClicked()
+            defaultImage: "../images/common/ico_stanze.svg"
+            pressedImage: "../images/common/ico_stanze_P.svg"
+            defaultImageBg: "../images/common/button_navigation_column.svg"
+            pressedImageBg: "../images/common/button_navigation_column_p.svg"
         }
 
-        ButtonMultimedia {
+        ButtonImageThreeStates {
             visible: buttonsColumn.multimediaButton
-            onClicked: buttonsColumn.multimediaClicked()
+            onPressed: buttonsColumn.multimediaClicked()
+            defaultImage: "../images/common/ico_multimedia.svg"
+            pressedImage: "../images/common/ico_multimedia_P.svg"
+            defaultImageBg: "../images/common/button_navigation_column.svg"
+            pressedImageBg: "../images/common/button_navigation_column_p.svg"
         }
     }
     Rectangle {
