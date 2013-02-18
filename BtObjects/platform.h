@@ -164,6 +164,7 @@ public:
 	void setYears(int newValue);
 
 	Q_INVOKABLE void requestNetworkSettings();
+	Q_INVOKABLE void refreshDateTime();
 
 public slots:
 	void apply();
