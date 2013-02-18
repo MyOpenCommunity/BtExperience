@@ -12,4 +12,5 @@ MenuColumn {
         rightIcon: "../../images/common/ico_abbassa.svg"
         rightPressedIcon: "../../images/common/ico_abbassa_P.svg"
         onPressed: dataModel.status = newStatus
+    }
 }
