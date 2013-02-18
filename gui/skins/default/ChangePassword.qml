@@ -84,7 +84,7 @@ Page {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: {
+                                onPressed: {
                                     oldPasswordInput.forceActiveFocus()
                                     oldPasswordInput.openSoftwareInputPanel()
                                 }
@@ -118,7 +118,7 @@ Page {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: {
+                                onPressed: {
                                     newPasswordInput.forceActiveFocus()
                                     newPasswordInput.openSoftwareInputPanel()
                                 }
@@ -152,7 +152,7 @@ Page {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: {
+                                onPressed: {
                                     repeatPasswordInput.forceActiveFocus()
                                     repeatPasswordInput.openSoftwareInputPanel()
                                 }
@@ -194,7 +194,7 @@ Page {
                             shadowImage: "images/common/btn_shadow_99x35.svg"
                             text: qsTr("ok")
                             font.pixelSize: 14
-                            onClicked: {
+                            onPressed: {
                                 if (global.password !== oldPasswordInput.text) {
                                     page.installPopup(wrongPasswordFeedback)
                                     return
@@ -215,7 +215,7 @@ Page {
                             shadowImage: "images/common/btn_shadow_99x35.svg"
                             text: qsTr("cancel")
                             font.pixelSize: 14
-                            onClicked: Stack.popPage()
+                            onPressed: Stack.popPage()
                         }
                     }
                 }
