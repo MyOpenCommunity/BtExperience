@@ -570,10 +570,10 @@ void AlarmClock::soundDiffusionStop()
 
 void AlarmClock::soundDiffusionSetVolume()
 {
-	int real_volume = 32 * getVolume() / 10;
+	int tick_volume = tick_count * 100 / 31;
 
-	if (tick_count <= real_volume)
-		getAmplifierInterface()->setVolume(tick_count);
+	if (tick_volume <= getVolume())
+		getAmplifierInterface()->setVolume(tick_volume);
 	if (tick_count == 0)
 		getAmplifierInterface()->setActive(true);
 }

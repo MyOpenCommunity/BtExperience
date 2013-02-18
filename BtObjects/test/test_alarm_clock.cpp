@@ -150,7 +150,7 @@ void TestAlarmClockSoundDiffusion::init()
 	source = new SourceObject("", new SourceAux(new SourceDevice("3")), SourceObject::Aux);
 
 	obj = new AlarmClock("", true, AlarmClock::AlarmClockSoundSystem, 0, 0, 0);
-	obj->setVolume(8);
+	obj->setVolume(25); // 8 in 0-31 amplifier scale
 	obj->setSource(source);
 	obj->setAmplifier(amplifiers[1]);
 }
@@ -256,12 +256,17 @@ void TestAlarmClockSoundDiffusion::testFirstTick()
 void TestAlarmClockSoundDiffusion::testTick()
 {
 	obj->actual_type = AlarmClock::AlarmClockSoundSystem;
-	obj->tick_count = 10;
-	obj->alarmTick();
 
-	amplifier_dev[1]->setVolume(10);
+	// tests that the first 9 ticks set the volume from 0 to 8, then stop updating volume
+	for (int i = 1; i < 11; ++i)
+	{
+		obj->tick_count = i;
+		obj->alarmTick();
 
-	compareClientCommand();
+		if (i < 9)
+			amplifier_dev[1]->setVolume(i - 1);
+		compareClientCommand();
+	}
 }
 
 void TestAlarmClockSoundDiffusion::testLastTick()
