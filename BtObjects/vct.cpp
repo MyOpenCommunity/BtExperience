@@ -168,14 +168,46 @@ bool VDEBase::callInProgress()
 	return call_in_progress;
 }
 
+void VDEBase::setCallInProgress(bool in_progress)
+{
+	if (call_in_progress == in_progress)
+		return;
+	call_in_progress = in_progress;
+	emit callInProgressChanged();
+}
+
+void VDEBase::setCallActive(bool active)
+{
+	if (call_active == active)
+		return;
+	call_active = active;
+	emit callActiveChanged();
+}
+
 bool VDEBase::callActive()
 {
 	return call_active;
 }
 
+void VDEBase::setExitingCall(bool exiting)
+{
+	if (exit_call == exiting)
+		return;
+	exit_call = exiting;
+	emit exitingCallChanged();
+}
+
 bool VDEBase::exitingCall()
 {
 	return exit_call;
+}
+
+void VDEBase::setTeleloop(bool teleloop)
+{
+	if (is_teleloop == teleloop)
+		return;
+	is_teleloop = teleloop;
+	emit teleloopChanged();
 }
 
 bool VDEBase::getTeleloop() const
@@ -366,8 +398,7 @@ void CCTV::endCall()
 
 void CCTV::cameraOn(ExternalPlace *place)
 {
-	exit_call = true;
-	emit exitingCallChanged();
+	setExitingCall(true);
 	dev->cameraOn(place->getWhere());
 }
 
@@ -537,19 +568,14 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			qDebug() << "Received TELE_SESSION";
 			if (!callInProgress() || call_active) // ignore
 				break;
-			is_teleloop = true;
-			emit teleloopChanged();
+			setTeleloop(true);
 		case VideoDoorEntryDevice::ANSWER_CALL:
 			qDebug() << "Received ANSWER_CALL/TELE_SESSION";
 			if (!callInProgress()) // ignore
 				break;
 			// for the case when we received a STOP_VIDEO frame from the camera
 			startVideo();
-			if (!call_active)
-			{
-				call_active = true;
-				emit callActiveChanged();
-			}
+			setCallActive(true);
 			emit callAnswered();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
@@ -628,37 +654,16 @@ void CCTV::resumeVideo()
 
 void CCTV::activateCall()
 {
-	if (call_in_progress)
-		return;
-	call_in_progress = true;
-	emit callInProgressChanged();
+	setCallInProgress(true);
 }
 
 void CCTV::disactivateCall()
 {
-	if (call_active)
-	{
-		call_active = false;
-		emit callActiveChanged();
-	}
-
-	if (is_teleloop)
-	{
-		is_teleloop = false;
-		emit teleloopChanged();
-	}
-
-	if (call_in_progress)
-	{
-		call_in_progress = false;
-		emit callInProgressChanged();
-	}
-
-	if (exit_call)
-	{
-		exit_call = false;
-		emit exitingCallChanged();
-	}
+	setCallActive(false);
+	setTeleloop(false);
+	setCallInProgress(false);
+	setExitingCall(false);
+	setMute(false);
 }
 
 
@@ -697,8 +702,7 @@ void Intercom::startCall(ExternalPlace *place)
 		dev->externalIntercomCall(place->getWhere());
 	setTalkerFromWhere(place->getWhere());
 	activateCall();
-	exit_call = true;
-	emit exitingCallChanged();
+	setExitingCall(true);
 }
 
 Intercom::Ringtone Intercom::getRingtone() const
@@ -715,8 +719,7 @@ void Intercom::startPagerCall()
 {
 	dev->pagerCall();
 	activateCall();
-	exit_call = true;
-	emit exitingCallChanged();
+	setExitingCall(true);
 	emit microphoneOnRequested();
 }
 
@@ -802,17 +805,12 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			qDebug() << "Received TELE_SESSION";
 			if (!callInProgress() || call_active) // ignore
 				break;
-			is_teleloop = true;
-			emit teleloopChanged();
+			setTeleloop(true);
 		case VideoDoorEntryDevice::ANSWER_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::ANSWER_CALL: " << *it;
 			if (!callInProgress()) // ignore
 				break;
-			if (!call_active)
-			{
-				call_active = true;
-				emit callActiveChanged();
-			}
+			setCallActive(true);
 			emit callAnswered();
 			break;
 		case VideoDoorEntryDevice::CALLER_ADDRESS:
@@ -866,32 +864,19 @@ void Intercom::setTalkerFromWhere(QString where)
 
 void Intercom::activateCall()
 {
-	if (call_in_progress)
-		return;
-	call_in_progress = true;
-	emit callInProgressChanged();
+	setCallInProgress(true);
 }
 
 void Intercom::disactivateCall()
 {
-	if (call_active)
-	{
-		call_active = false;
-		emit callActiveChanged();
-	}
+	setCallActive(false);
+	setTeleloop(false);
 	if (pager_call)
 	{
 		pager_call = false;
 		emit pagerCallChanged();
 	}
-	if (call_in_progress)
-	{
-		call_in_progress = false;
-		emit callInProgressChanged();
-	}
-	if (exit_call)
-	{
-		exit_call = false;
-		emit exitingCallChanged();
-	}
+	setCallInProgress(false);
+	setExitingCall(false);
+	setMute(false);
 }

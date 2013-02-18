@@ -211,7 +211,7 @@ SplitAdvancedScenario::SplitAdvancedScenario(QString _name,
 	current[SPLIT_SWING] = static_cast<SplitAdvancedProgram::Swing>(swings->value(SplitAdvancedProgram::SwingInvalid));
 	actual_program.temperature = 200;
 	current[SPLIT_SPEED] = static_cast<SplitAdvancedProgram::Speed>(speeds->value(SplitAdvancedProgram::SpeedInvalid));
-	temperature = 200;
+	temperature = 1235; // -23.5
 	reset();
 	sync();
 	connect(&actual_program, SIGNAL(nameChanged()), SIGNAL(programNameChanged()));
@@ -251,6 +251,7 @@ void SplitAdvancedScenario::setMode(SplitAdvancedProgram::Mode mode)
 	if (actual_program.mode == mode)
 		// nothing to do
 		return;
+	resetProgram();
 	actual_program.mode = mode;
 	emit modeChanged();
 }
@@ -288,6 +289,7 @@ void SplitAdvancedScenario::setSetPoint(int setpoint)
 	if (actual_program.temperature == setpoint)
 		// nothing to do
 		return;
+	resetProgram();
 	actual_program.temperature = setpoint;
 	emit setPointChanged();
 	sync();
@@ -325,8 +327,16 @@ void SplitAdvancedScenario::setProgram(SplitAdvancedProgram *program)
 	actual_program.setName(program->getName());
 
 	if (program->mode != -1) // a mode must be defined
-		setMode(program->mode);
-	setSetPoint(program->temperature);
+		if (actual_program.mode != program->mode)
+		{
+			actual_program.mode = program->mode;
+			emit modeChanged();
+		}
+	if (actual_program.temperature != program->temperature)
+	{
+		actual_program.temperature = program->temperature;
+		emit setPointChanged();
+	}
 	if (program->speed != -1) // a speed must exist
 		if (to_apply[SPLIT_SPEED] != program->speed)
 		{
@@ -451,6 +461,11 @@ void SplitAdvancedScenario::valueReceived(const DeviceValues &values_list)
 int SplitAdvancedScenario::getTemperature() const
 {
 	return bt2Celsius(temperature);
+}
+
+bool SplitAdvancedScenario::getTemperatureEnabled() const
+{
+	return dev_probe != 0;
 }
 
 QObject *SplitAdvancedScenario::getModes() const

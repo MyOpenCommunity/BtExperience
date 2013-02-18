@@ -61,7 +61,20 @@ BasePage {
                 pressedImage: "images/common/ico_previous_track_P.svg"
 
                 onReleased: hidingTimer.restart()
-                onClicked: page.player.prevTrack()
+                onClicked: {
+                    if (goToPrevTrack.running) {
+                        goToPrevTrack.restart()
+                        page.player.prevTrack()
+                    } else {
+                        goToPrevTrack.start()
+                        page.player.restart()
+                    }
+                }
+
+                Timer {
+                    id: goToPrevTrack
+                    interval: 5000
+                }
             }
 
             Item {

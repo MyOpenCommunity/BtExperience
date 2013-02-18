@@ -57,6 +57,10 @@ MenuColumn {
             case ObjectInterface.IdEnergyData:
                 Stack.pushPage("EnergyDataGraph.qml", {"energyData": object})
                 return
+            case ObjectInterface.IdSplitBasicGenericCommandGroup:
+            case ObjectInterface.IdSplitAdvancedGenericCommandGroup:
+                dataModel.apply()
+                return
             }
 
             column.columnClicked()

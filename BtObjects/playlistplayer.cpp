@@ -368,6 +368,11 @@ void AudioVideoPlayer::resume()
 		media_player->resume();
 }
 
+void AudioVideoPlayer::restart()
+{
+	play();
+}
+
 void AudioVideoPlayer::terminate()
 {
 	user_track_change_request = true;
@@ -456,10 +461,11 @@ void AudioVideoPlayer::play()
 	default_info["meta_title"] = getCurrentName();
 	default_info["stream_title"] = getCurrentName();
 
+	user_track_change_request = true;
+
 	// force player restart for single-file lists
 	if (media_player->getCurrentSource() == getCurrent())
 		media_player->stop();
-	user_track_change_request = true;
 	media_player->setCurrentSource(getCurrent());
 	media_player->setDefaultTrackInfo(default_info);
 	if (media_player->getPlayerState() == MultiMediaPlayer::Stopped)

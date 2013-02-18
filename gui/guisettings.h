@@ -2,6 +2,7 @@
 #define GUISETTINGS_H
 
 #include <QObject>
+#include <QStringList>
 
 class ConfigFile;
 
@@ -14,6 +15,11 @@ class GuiSettings : public QObject
 		\brief Sets or gets the language for the interface.
 	*/
 	Q_PROPERTY(QString language READ getLanguage WRITE setLanguage NOTIFY languageChanged)
+
+	/*!
+		\brief The list of languages available for \ref language
+	*/
+	Q_PROPERTY(QStringList languages READ getLanguages CONSTANT)
 
 	/*!
 		\brief Sets or gets the beep status.
@@ -89,6 +95,7 @@ public:
 	explicit GuiSettings(QObject *parent = 0);
 
 	QString getLanguage() const;
+	QStringList getLanguages() const;
 	void setLanguage(QString l);
 	QString getHomeBgImage() const;
 	void setHomeBgImage(QString new_value);

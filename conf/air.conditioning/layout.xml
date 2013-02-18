@@ -10,6 +10,20 @@
 			<link uii="7010" />
 			<link uii="7110" />
 			<link uii="7111" />
+			<link uii="7112" />
+		</ist>
+	</container>
+	<container id="100" > <!-- rooms -->
+                <ist uii="102" descr="living room" img="images/background/living_room.jpg" img_card="images/card/living_room.jpg">
+			<link uii="7002" x="95" y="78"/>
+			<link uii="7009" x="200" y="100" />
+			<link uii="7102" x="300" y="300" />
+			<link uii="7110" x="792" y="420" />
+		</ist>
+	</container>
+	<container id="13" descr="floor" img="floor.png">
+		<ist uii="201" descr="ground" >
+			<link uii="102" />
 		</ist>
 	</container>
     <container descr="Home page" id="17" img="images/background/home.jpg" img_type="0">

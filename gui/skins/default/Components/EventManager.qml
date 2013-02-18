@@ -165,7 +165,7 @@ Item {
             else
                 global.audioState.enableState(AudioState.ScsVideoCall)
             if (vctConnection.target.teleloop)
-                global.audioState.enableState(AudioState.Mute)
+                global.audioState.enableState(AudioState.Teleloop)
         }
         onCallEnded: {
             global.audioState.disableState(AudioState.VdeRingtone)
@@ -208,7 +208,7 @@ Item {
             else
                 global.audioState.enableState(AudioState.ScsIntercomCall)
             if (intercomConnection.target.teleloop)
-                global.audioState.enableState(AudioState.Mute)
+                global.audioState.enableState(AudioState.Teleloop)
         }
         onCallEnded: {
             global.audioState.disableState(AudioState.VdeRingtone)

@@ -14,9 +14,6 @@ MenuColumn {
         }
     }
 
-    width: 212
-    height: paginator.height
-
     QtObject {
         id: privateProps
         property int currentIndex: -1
@@ -26,7 +23,6 @@ MenuColumn {
 
     Column {
         id: paginator
-        anchors.horizontalCenter: parent.horizontalCenter
 
         MenuItem {
             id: programItem

@@ -189,6 +189,7 @@ public slots:
 	void nextTrack();
 	void pause();
 	void resume();
+	void restart();
 	virtual void terminate();
 	void incrementVolume();
 	void decrementVolume();

@@ -15,6 +15,11 @@
 
 #include <limits>
 
+#if defined(BT_HARDWARE_X11)
+#define TRANSLATIONS_DIRECTORY "gui/locale/"
+#else
+#define TRANSLATIONS_DIRECTORY "/home/bticino/cfg/extra/2/"
+#endif
 
 namespace
 {
@@ -54,7 +59,7 @@ namespace
 	#endif
 
 		QString lf = QFileInfo(QDir(path.canonicalFilePath()),
-			QString("gui/locale/bt_experience_%1").arg(language.toAscii().constData())).absoluteFilePath();
+			QString(TRANSLATIONS_DIRECTORY "bt_experience_%1").arg(language.toAscii().constData())).absoluteFilePath();
 
 		// tries to install new translation
 		actual_translator = new QTranslator();
@@ -174,6 +179,28 @@ void GuiSettings::setLanguage(QString l)
 	emit languageChanged();
 	setConfValue("generale/language", language);
 	setLanguageTranslator(language);
+}
+
+QStringList GuiSettings::getLanguages() const
+{
+	QStringList result;
+	QFileInfo path = qApp->applicationDirPath();
+
+#ifdef Q_WS_MAC
+	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
+#endif
+
+	QFileInfo locale = QFileInfo(QDir(path.canonicalFilePath()), TRANSLATIONS_DIRECTORY);
+
+	foreach (QString path, QDir(locale.absoluteFilePath()).entryList(QStringList() << "bt_experience_*.qm"))
+	{
+		int underscore = path.lastIndexOf('_');
+		int dot = path.lastIndexOf('.');
+
+		result << path.mid(underscore + 1, dot - (underscore + 1));
+	}
+
+	return result;
 }
 
 bool GuiSettings::getBeep() const

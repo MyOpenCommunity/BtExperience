@@ -16,24 +16,10 @@ MenuColumn {
         anchors.fill: parent
         interactive: false
         delegate: MenuItem {
-            name: model.name
+            name: pageObject.names.get('LANGUAGE', modelData)
             isSelected: global.guiSettings.language === model.type
             onClicked: textLanguageChanged(model.type)
         }
-        model: ListModel {
-            id: modelList
-            Component.onCompleted: {
-                var l = [
-                            "it",
-                            "en",
-                            "fr",
-                        ]
-                for (var i = 0; i < l.length; i++)
-                    append({
-                               "type": l[i],
-                               "name": pageObject.names.get('LANGUAGE', l[i])
-                           })
-            }
-        }
+        model: global.guiSettings.languages
     }
 }

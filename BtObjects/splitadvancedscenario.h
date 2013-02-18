@@ -168,6 +168,11 @@ class SplitAdvancedScenario : public DeviceObjectInterface
 	Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
 
 	/*!
+		\brief Returns if a temperature probe is associated with the split
+	*/
+	Q_PROPERTY(bool temperatureEnabled READ getTemperatureEnabled CONSTANT)
+
+	/*!
 		\brief Gets the modes list
 	*/
 	Q_PROPERTY(QObject *modes READ getModes CONSTANT)
@@ -211,6 +216,7 @@ public:
 	SplitAdvancedProgram::Speed getSpeed() const;
 	int getCount() const;
 	int getTemperature() const;
+	bool getTemperatureEnabled() const;
 	QObject *getModes() const;
 	QObject *getSpeeds() const;
 	QObject *getSwings() const;
@@ -219,7 +225,6 @@ public:
 	Q_INVOKABLE void nextSpeed();
 	Q_INVOKABLE void prevSwing();
 	Q_INVOKABLE void nextSwing();
-	Q_INVOKABLE void resetProgram();
 	Q_INVOKABLE void setProgram(SplitAdvancedProgram *program);
 
 	/*!
@@ -252,6 +257,7 @@ protected slots:
 
 private:
 	void sync();
+	void resetProgram();
 
 	AdvancedAirConditioningDevice *dev;
 	NonControlledProbeDevice *dev_probe;
@@ -273,6 +279,7 @@ private:
 */
 class SplitAdvancedCommandGroup : public ObjectInterface
 {
+	Q_OBJECT
 public:
 	SplitAdvancedCommandGroup(QString name, QList<QPair<QString, SplitAdvancedProgram *> > commands);
 

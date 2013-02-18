@@ -212,8 +212,22 @@ MenuColumn {
                 playerStatus: objModel.mediaPlayer.playerState
 
                 onPlayClicked: objModel.togglePause()
-                onPreviousClicked: objModel.previousTrack()
+                onPreviousClicked: {
+                    if (goToPrevTrack.running) {
+                        goToPrevTrack.restart()
+                        objModel.previousTrack()
+                    } else {
+                        goToPrevTrack.start()
+                        objModel.restart()
+                    }
+                }
+
                 onNextClicked: objModel.nextTrack()
+
+                Timer {
+                    id: goToPrevTrack
+                    interval: 5000
+                }
             }
         }
     }

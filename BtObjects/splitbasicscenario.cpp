@@ -122,7 +122,7 @@ SplitBasicScenario::SplitBasicScenario(QString _name, QString _key, AirCondition
 		programs << p;
 		actual_program = p;
 	}
-	temperature = 200;
+	temperature = 1235; // -23.5
 }
 
 void SplitBasicScenario::valueReceived(const DeviceValues &values_list)
@@ -188,6 +188,11 @@ void SplitBasicScenario::apply()
 int SplitBasicScenario::getTemperature() const
 {
 	return bt2Celsius(temperature);
+}
+
+bool SplitBasicScenario::getTemperatureEnabled() const
+{
+	return dev_probe != 0;
 }
 
 SplitBasicCommandGroup::SplitBasicCommandGroup(QString _name, QList<QPair<QString, SplitBasicProgram *> > _commands)

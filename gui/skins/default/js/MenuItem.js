@@ -142,6 +142,11 @@ function description(itemObject) {
         default:
             descr = qsTr("Unknown")
         }
+    case ObjectInterface.IdSplitBasicScenario:
+    case ObjectInterface.IdSplitAdvancedScenario:
+        if (itemObject.temperatureEnabled)
+            descr = (itemObject.temperature / 10).toFixed(1) + "°C"
+        break
     }
 
     return descr
@@ -211,6 +216,8 @@ function hasChild(itemObject) {
     case ObjectInterface.IdSurveillanceCamera:
     case ObjectInterface.IdSwitchboard:
     case ObjectInterface.IdEnergyData:
+    case ObjectInterface.IdSplitBasicGenericCommandGroup:
+    case ObjectInterface.IdSplitAdvancedGenericCommandGroup:
         return false
     }
     return true
