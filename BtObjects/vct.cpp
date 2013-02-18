@@ -659,6 +659,8 @@ void CCTV::disactivateCall()
 		exit_call = false;
 		emit exitingCallChanged();
 	}
+
+	setMute(false);
 }
 
 
@@ -894,4 +896,5 @@ void Intercom::disactivateCall()
 		exit_call = false;
 		emit exitingCallChanged();
 	}
+	setMute(false);
 }
