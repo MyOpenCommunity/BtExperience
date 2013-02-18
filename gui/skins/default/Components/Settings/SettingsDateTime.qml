@@ -48,4 +48,6 @@ MenuColumn {
             }
         }
     }
+
+    Component.onCompleted: column.dataModel.refreshDateTime()
 }
