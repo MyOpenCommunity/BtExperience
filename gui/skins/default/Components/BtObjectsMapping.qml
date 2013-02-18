@@ -50,6 +50,10 @@ QtObject {
             return Qt.createComponent("Automation/AutomationGroup3OpenClose.qml")
         case ObjectInterface.IdAutomationGroup3UpDown:
             return Qt.createComponent("Automation/AutomationGroup3UpDown.qml")
+        case ObjectInterface.IdAutomationGEN3OpenClose:
+            return Qt.createComponent("Automation/AutomationGEN3OpenClose.qml")
+        case ObjectInterface.IdAutomationGEN3UpDown:
+            return Qt.createComponent("Automation/AutomationGEN3UpDown.qml")
         case ObjectInterface.IdThermalControlUnit4:
             return Qt.createComponent("ThermalRegulation/ThermalControlUnit.qml")
         case ObjectInterface.IdThermalControlUnit99:

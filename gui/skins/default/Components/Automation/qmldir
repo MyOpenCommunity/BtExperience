@@ -9,4 +9,6 @@ Automation3UpDownSafe 1.0 Automation3UpDownSafe.qml
 AutomationGroup2 1.0 AutomationGroup2.qml
 AutomationGroup3OpenClose 1.0 AutomationGroup3OpenClose.qml
 AutomationGroup3UpDown 1.0 AutomationGroup3UpDown.qml
+AutomationGEN3OpenClose 1.0 AutomationGEN3OpenClose.qml
+AutomationGEN3UpDown 1.0 AutomationGEN3UpDown.qml
 AutomationItems 1.0 AutomationItems.qml

@@ -108,15 +108,19 @@ QList<ObjectPair> parseAutomation3(const QDomNode &obj)
 
 		switch (cid)
 		{
-		case ObjectInterface::CidAutomation3OpenClose:
 		case ObjectInterface::CidAutomationGroup3OpenClose:
+			obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomationGEN3OpenClose, d));
+			break;
+		case ObjectInterface::CidAutomationGroup3UpDown:
+			obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomationGEN3UpDown, d));
+			break;
+		case ObjectInterface::CidAutomation3OpenClose:
 			if (id == ObjectInterface::IdAutomation3Safe)
 				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3OpenCloseSafe, d));
 			else
 				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3OpenClose, d));
 			break;
 		case ObjectInterface::CidAutomation3UpDown:
-		case ObjectInterface::CidAutomationGroup3UpDown:
 			if (id == ObjectInterface::IdAutomation3Safe)
 				obj_list << ObjectPair(uii, new Automation3(descr, where, ObjectInterface::IdAutomation3UpDownSafe, d));
 			else

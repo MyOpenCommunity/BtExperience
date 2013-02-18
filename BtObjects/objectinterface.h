@@ -193,6 +193,8 @@ public:
 		IdAutomation3UpDownSafe = 30073001,
 		IdAutomationGroup3OpenClose = 30053014,
 		IdAutomationGroup3UpDown = 30053016,
+		IdAutomationGEN3OpenClose = 30003014,
+		IdAutomationGEN3UpDown = 30003016,
 
 		// the last value + 1, used to check the ids requested from qml
 		// NOTE: always verify is the highest value out there!
