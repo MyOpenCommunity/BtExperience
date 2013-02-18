@@ -254,7 +254,7 @@ Page {
             verticalCenter: bottomBg.verticalCenter
             right: cancelButton.left
         }
-        onClicked: {
+        onPressed: {
             var r = page.alarmClock.validityStatus
 
             if (r === AlarmClock.AlarmClockApplyResultNoName) {
@@ -289,7 +289,7 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
-        onClicked: {
+        onPressed: {
             if (isNewAlarm) {
                 objectModel.remove(alarmClock)
                 page.installPopup(cancelFeedback, { text: qsTr("Alarm not saved") })

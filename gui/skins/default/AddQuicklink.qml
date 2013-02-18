@@ -435,7 +435,7 @@ Page {
             right: cancelButton.left
         }
         visible: page.homeCustomization || page.profile !== undefined
-        onClicked: {
+        onPressed: {
             if (page.currentLink >= 0) {
                 // saves selection on current profile
                 var current = page.actualModel.getObject(page.currentLink)
@@ -473,7 +473,7 @@ Page {
             rightMargin: bg.width / 100 * 1.10
         }
         visible: page.homeCustomization || page.profile !== undefined
-        onClicked: Stack.popPage()
+        onPressed: Stack.popPage()
     }
 
     Component {

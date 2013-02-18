@@ -212,7 +212,7 @@ Page {
             top: sourceText.bottom
             topMargin: bg.height / 100 * 2
         }
-        onClicked: page.alarmClock.decrementAmbient()
+        onPressed: page.alarmClock.decrementAmbient()
     }
 
     Item {
@@ -256,7 +256,7 @@ Page {
             top: sourceText.bottom
             topMargin: bg.height / 100 * 2
         }
-        onClicked: page.alarmClock.incrementAmbient()
+        onPressed: page.alarmClock.incrementAmbient()
     }
 
     PaginatorOnBackground {
@@ -312,7 +312,7 @@ Page {
             right: bg.right
             rightMargin: bg.width / 100 * 3.92
         }
-        onClicked: page.state = page.state === "" ? "amplifiers" : ""
+        onPressed: page.state = page.state === "" ? "amplifiers" : ""
     }
 
     // bottom bar
@@ -351,7 +351,7 @@ Page {
             verticalCenter: bottomBg.verticalCenter
             right: cancelButton.left
         }
-        onClicked: {
+        onPressed: {
             var r = page.alarmClock.validityStatus
 
             if (r === AlarmClock.AlarmClockApplyResultNoAmplifier) {
@@ -382,7 +382,7 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
-        onClicked: Stack.popPage()
+        onPressed: Stack.popPage()
     }
 
     states: [
