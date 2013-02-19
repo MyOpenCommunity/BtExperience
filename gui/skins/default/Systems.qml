@@ -10,7 +10,7 @@ Page {
     id: systems
 
     source : homeProperties.homeBgImage
-    text: qsTr("systems")
+    text: qsTr("functions")
 
     ObjectModel {
         id: systemsModel

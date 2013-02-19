@@ -287,7 +287,7 @@ BasePage {
                                                                       "images/home/ico_sistemi_P.svg"
                 iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_sistemi_P.svg" :
                                                                              "images/home/ico_sistemi.svg"
-                text: qsTr("systems")
+                text: qsTr("functions")
                 onClicked: Stack.goToPage("Systems.qml")
             }
 
