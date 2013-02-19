@@ -66,7 +66,7 @@ Page {
             }
 
             onReleased: hidingTimer.restart()
-            onClicked: global.photoPlayer.prevPhoto()
+            onPressed: global.photoPlayer.prevPhoto()
         }
 
         Item {
@@ -96,7 +96,7 @@ Page {
                 anchors.centerIn: parent
 
                 onReleased: hidingTimer.restart()
-                onClicked: {
+                onPressed: {
                     if (playButtonItem.state === "")
                         playButtonItem.state = "slideshow"
                     else
@@ -144,7 +144,7 @@ Page {
             }
 
             onReleased: hidingTimer.restart()
-            onClicked: global.photoPlayer.nextPhoto()
+            onPressed: global.photoPlayer.nextPhoto()
         }
 
         Row {
@@ -213,7 +213,7 @@ Page {
                 rightMargin: fullScreenBg.width / 100 * 2
             }
 
-            onClicked: Stack.popPage()
+            onPressed: Stack.popPage()
         }
 
         Timer {
