@@ -1547,7 +1547,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<MediaDataModel>(uri, 1, 0, "MediaDataModel", "");
 	qmlRegisterUncreatableType<HomeProperties>(uri, 1, 0, "HomeProperties", "");
 	qmlRegisterType<MediaModel>(uri, 1, 0, "MediaModel");
+	qmlRegisterType<MediaModelSource>(uri, 1, 0, "MediaModelSource");
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "ObjectModel");
+	qmlRegisterType<ObjectModelSource>(uri, 1, 0, "ObjectModelSource");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
 	qmlRegisterUncreatableType<ItemInterface>(uri, 1, 0, "ItemInterface",

@@ -76,6 +76,38 @@ private:
 	QList<ItemInterface *> item_list;
 };
 
+/*!
+	\ingroup Core
+	\brief Create a data model instance from QML
+
+	Can be used when applying a filter to an existing model is not enough, for an
+	example see \ref ObjectModelSource
+*/
+class MediaModelSource : public QObject
+{
+	Q_OBJECT
+
+	/// Retrieve the associated model instance
+	Q_PROPERTY(MediaDataModel *model READ getModel CONSTANT)
+
+public:
+	MediaModelSource(QObject *parent = 0) : QObject(parent)
+	{
+		model = new MediaDataModel(this);
+	}
+
+	MediaDataModel *getModel() const { return model; }
+
+	/// Append an object to the model
+	Q_INVOKABLE void append(ItemInterface *obj) { model->append(obj); }
+
+	/// Remove all objects from the model
+	Q_INVOKABLE void clear() { model->clear(); }
+
+private:
+	MediaDataModel *model;
+};
+
 
 /*!
 	\ingroup Core
