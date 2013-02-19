@@ -18,7 +18,7 @@ SvgImage {
         shadowImage: "../images/common/btn_shadow_99x35.svg"
         text: qsTr("ok")
         font.pixelSize: 15
-        onClicked: control.okClicked()
+        onPressed: control.okClicked()
         anchors {
             verticalCenter: parent.verticalCenter
             left: parent.left
@@ -35,7 +35,7 @@ SvgImage {
         shadowImage: "../images/common/btn_shadow_99x35.svg"
         text: qsTr("cancel")
         font.pixelSize: 15
-        onClicked: control.cancelClicked()
+        onPressed: control.cancelClicked()
         anchors {
             verticalCenter: parent.verticalCenter
             right: parent.right
