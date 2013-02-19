@@ -119,7 +119,7 @@ Column {
                     }
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: {
+                        onPressed: {
                             descriptionInput.forceActiveFocus()
                             descriptionInput.openSoftwareInputPanel()
                         }
@@ -158,7 +158,7 @@ Column {
                     }
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: {
+                        onPressed: {
                             addressInput.forceActiveFocus()
                             addressInput.openSoftwareInputPanel()
                         }
@@ -185,7 +185,7 @@ Column {
                 shadowImage: "../images/common/btn_shadow_99x35.svg"
                 text: qsTr("ok")
                 font.pixelSize: 14
-                onClicked: {
+                onPressed: {
                     popup.okClicked()
                     closePopup()
                 }
@@ -198,7 +198,7 @@ Column {
                 shadowImage: "../images/common/btn_shadow_99x35.svg"
                 text: qsTr("cancel")
                 font.pixelSize: 14
-                onClicked: {
+                onPressed: {
                     popup.cancelClicked()
                     popup.closePopup()
                 }
