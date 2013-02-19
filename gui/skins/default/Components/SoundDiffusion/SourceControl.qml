@@ -41,7 +41,6 @@ MenuColumn {
             if (itemLoader.item && itemLoader.item.objModel === sourceObj)
                 return
 
-            sourceSelect.description = sourceObj.name
             var properties = {'objModel': sourceObj}
 
             switch (sourceObj.sourceType)
