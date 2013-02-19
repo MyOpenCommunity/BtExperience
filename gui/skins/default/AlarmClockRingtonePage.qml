@@ -263,7 +263,7 @@ Page {
         id: paginator
 
         visible: soundDiffusionModel.count > 0
-        elementsOnPage: 7
+        elementsOnPage: 5
         itemSpacing: 9
         anchors {
             top: ambientTextItem.bottom
