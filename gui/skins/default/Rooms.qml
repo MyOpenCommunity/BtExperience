@@ -103,7 +103,7 @@ Page {
 
             BeepingMouseArea {
                 anchors.fill: parent
-                onClicked: floorView.currentIndex = index
+                onPressed: floorView.currentIndex = index
             }
         }
 

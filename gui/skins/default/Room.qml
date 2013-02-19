@@ -96,7 +96,7 @@ Page {
                 BeepingMouseArea {
                     id: clickMouseArea
                     anchors.fill: parent
-                    onClicked: roomView.currentIndex = index
+                    onPressed: roomView.currentIndex = index
                 }
 
                 Rectangle {
