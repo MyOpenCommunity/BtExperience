@@ -231,7 +231,8 @@ QStringList MountWatcher::parseMounts() const
 		if (!parts[1].startsWith(MOUNT_PATH "/") || !parts[0].startsWith("/"))
 			continue;
 #if !defined(BT_HARDWARE_X11)
-		if (parts[1] != "/media/sda1" && parts[1] != "/media/mmcblk0p1")
+		// on touch there is an internal SD card mounted on /media/mmcblk1pX: ignore it
+		if (parts[1].startsWith("/media/mmcblk") && parts[1] != "/media/mmcblk0p1")
 			continue;
 #endif
 		dirs.append(parts[1]);
