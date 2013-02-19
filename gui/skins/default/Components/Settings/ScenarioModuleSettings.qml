@@ -111,7 +111,7 @@ CANCEL if you wish to abort the operation.")
                         shadowImage: "../../images/common/btn_shadow_99x35.svg"
                         text: qsTr("ok")
                         font.pixelSize: 14
-                        onClicked: {
+                        onPressed: {
                             column.dataModel.deleteScenario()
                             confirmDeleteColumn.closePopup()
                         }
@@ -124,7 +124,7 @@ CANCEL if you wish to abort the operation.")
                         shadowImage: "../../images/common/btn_shadow_99x35.svg"
                         text: qsTr("cancel")
                         font.pixelSize: 14
-                        onClicked: confirmDeleteColumn.closePopup()
+                        onPressed: confirmDeleteColumn.closePopup()
                     }
                 }
             }

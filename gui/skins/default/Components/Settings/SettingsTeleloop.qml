@@ -36,7 +36,7 @@ MenuColumn {
                 rightMargin: bg.width / 100 * 3
             }
             enabled: !privateProps.model.teleloopAssociating
-            onClicked: privateProps.model.startTeleloopAssociation()
+            onPressed: privateProps.model.startTeleloopAssociation()
         }
 
         UbuntuMediumText {
