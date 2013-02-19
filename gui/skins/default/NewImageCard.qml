@@ -191,7 +191,7 @@ BasePage {
         shadowImage: "images/common/btn_shadow_99x35.svg"
         text: qsTr("CANCEL")
         font.pixelSize: 14
-        onClicked: Stack.popPage()
+        onPressed: Stack.popPage()
         anchors {
             top: bgBottomBar.top
             topMargin: 7
@@ -208,7 +208,7 @@ BasePage {
         shadowImage: "images/common/btn_shadow_99x35.svg"
         text: qsTr("OK")
         font.pixelSize: 14
-        onClicked: {
+        onPressed: {
             privateProps.saveCard()
             Stack.popPage()
         }
