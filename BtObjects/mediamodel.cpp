@@ -328,7 +328,6 @@ MediaModel *MediaModel::getUnrangedModel()
 	// clones this model without range
 	MediaModel *result = new MediaModel(this);
 
-	MediaDataModel *s = this->getSource();
 	result->setSource(this->getSource());
 	result->setContainers(this->getContainers());
 
