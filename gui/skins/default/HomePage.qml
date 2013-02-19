@@ -257,7 +257,7 @@ BasePage {
                 iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_opzioni_P.svg" :
                                                                              "images/home/ico_opzioni.svg"
                 onClicked: Stack.goToPage("Settings.qml")
-                text: qsTr("options")
+                text: qsTr("settings")
                 enabled: EventManager.eventManager.scenarioRecording === false
             }
         }
