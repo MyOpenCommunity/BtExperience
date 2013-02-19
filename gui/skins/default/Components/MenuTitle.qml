@@ -9,6 +9,7 @@ SvgImage {
 
     source: "../images/menu_column/label_column-title.svg"
     opacity: menuColumn.opacity
+    width: menuColumn.width
 
     Constants {
         id: constants
