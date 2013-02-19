@@ -45,7 +45,7 @@ SvgImage {
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_indietro.svg"
         pressedImage: "../../images/common/ico_indietro_P.svg"
-        onClicked: view.back.trigger()
+        onPressed: view.back.trigger()
         anchors {
             left: parent.left
             leftMargin: 20
@@ -61,7 +61,7 @@ SvgImage {
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_avanti.svg"
         pressedImage: "../../images/common/ico_avanti_P.svg"
-        onClicked: view.forward.trigger()
+        onPressed: view.forward.trigger()
         anchors {
             left: backButton.right
             leftMargin: 4
@@ -77,7 +77,7 @@ SvgImage {
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_aggiorna.svg"
         pressedImage: "../../images/common/ico_aggiorna_P.svg"
-        onClicked: {
+        onPressed: {
             if (control.state === "") {
                 view.reload.trigger()
             }
@@ -117,7 +117,7 @@ SvgImage {
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/icon_browser-option.svg"
         pressedImage: "../../images/common/icon_browser-option_p.svg"
-        onClicked: control.zoomBarClicked()
+        onPressed: control.zoomBarClicked()
         anchors {
             left: bgText.right
             leftMargin: 10

@@ -90,7 +90,7 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: favoritesClicked()
+            onPressed: favoritesClicked()
         }
     }
 
