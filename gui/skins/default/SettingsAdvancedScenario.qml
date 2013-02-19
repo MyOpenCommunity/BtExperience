@@ -118,7 +118,7 @@ Page {
                         verticalCenter: parent.verticalCenter
                         right: cancelButton.left
                     }
-                    onClicked: {
+                    onPressed: {
                         scenarioObject.save()
                         Stack.popPage()
                     }
@@ -140,7 +140,7 @@ Page {
                         right: parent.right
                         rightMargin: parent.width / 100 * 1
                     }
-                    onClicked: {
+                    onPressed: {
                         // The reset must be called outside the page, before showing it
                         // otherwise the user can see the value changing during the
                         // transition effect.
