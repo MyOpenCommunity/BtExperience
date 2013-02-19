@@ -114,7 +114,7 @@ Page {
                     selectedImage: "images/common/btn_84x35_S.svg"
                     shadowImage: "images/common/btn_shadow_84x35.svg"
                     text: qsTr("day")
-                    onClicked: {
+                    onPressed: {
                         if (page.state === "day")
                             return
 
@@ -132,7 +132,7 @@ Page {
                     shadowImage: "images/common/btn_shadow_84x35.svg"
                     text: qsTr("month")
                     status: 1
-                    onClicked: {
+                    onPressed: {
                         if (page.state === "")
                             return
 
@@ -148,7 +148,7 @@ Page {
                     selectedImage: "images/common/btn_84x35_S.svg"
                     shadowImage: "images/common/btn_shadow_84x35.svg"
                     text: qsTr("year")
-                    onClicked: {
+                    onPressed: {
                         if (page.state === "year")
                             return
 
@@ -180,7 +180,7 @@ Page {
                         pressedImage: "images/energy/ico_graph_P.svg"
                         selectedImage: "images/energy/ico_graph_P.svg"
                         status: privateProps.showTable === false ? 1 : 0
-                        onClicked: {
+                        onPressed: {
                             if (privateProps.showTable) {
                                 privateProps.showTable = false
                                 if (page.state == "")
@@ -202,7 +202,7 @@ Page {
                         pressedImage: "images/energy/ico_table_P.svg"
                         selectedImage: "images/energy/ico_table_P.svg"
                         status: privateProps.showTable === true ? 1 : 0
-                        onClicked: {
+                        onPressed: {
                             if (!privateProps.showTable) {
                                 privateProps.showTable = true
                                 if (page.state == "")
@@ -240,7 +240,7 @@ Page {
                         shadowImage: "images/common/btn_shadow_66x35.svg"
                         text: energyData.rate.currencySymbol
                         status: privateProps.showCurrency === true ? 1 : 0
-                        onClicked: privateProps.showCurrency = true
+                        onPressed: privateProps.showCurrency = true
                         enabled: energyData.rate !== null
                     }
                     ButtonThreeStates {
@@ -252,7 +252,7 @@ Page {
                         shadowImage: "images/common/btn_shadow_66x35.svg"
                         text: energyData.cumulativeUnit
                         status: privateProps.showCurrency === false ? 1 : 0
-                        onClicked: privateProps.showCurrency = false
+                        onPressed: privateProps.showCurrency = false
                     }
                 }
             }

@@ -91,7 +91,7 @@ Page {
                 text: qsTr("€")
                 font.pixelSize: 14
                 status: privateProps.showCurrency === true ? 1 : 0
-                onClicked: privateProps.showCurrency = true
+                onPressed: privateProps.showCurrency = true
             }
             ButtonThreeStates {
                 id: consumptionButton
@@ -102,7 +102,7 @@ Page {
                 text: qsTr("units")
                 font.pixelSize: 14
                 status: privateProps.showCurrency === false ? 1 : 0
-                onClicked: privateProps.showCurrency = false
+                onPressed: privateProps.showCurrency = false
             }
         }
 
