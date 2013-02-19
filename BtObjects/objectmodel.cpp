@@ -37,6 +37,7 @@ ObjectModel::ObjectModel(QObject *parent)
 
 void ObjectModel::setSource(ObjectDataModel *s)
 {
+	Q_ASSERT_X(s, "ObjectModel::setSource", "Can't set NULL model source");
 	MediaModel::setSource(s);
 }
 

@@ -151,6 +151,7 @@ int MediaModel::getRangeCount() const
 
 void MediaModel::setSource(MediaDataModel *s)
 {
+	Q_ASSERT_X(s, "MediaModel::setSource", "Can't set NULL model source");
 	if (sourceModel())
 	{
 		disconnect(sourceModel(), SIGNAL(rowsRemoved(const QModelIndex &, int, int)));
