@@ -7,7 +7,7 @@ MenuColumn {
 
     ControlSwitch {
         text: pageObject.names.get('BEEP', global.guiSettings.beep)
-        onClicked: global.guiSettings.beep = !global.guiSettings.beep
+        onPressed: global.guiSettings.beep = !global.guiSettings.beep
         status: !global.guiSettings.beep
     }
 }

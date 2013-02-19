@@ -17,7 +17,7 @@ MenuColumn {
         ControlSwitch {
             upperText: column.dataModel.description
             text: column.dataModel.enabled ? qsTr("enabled") : qsTr("disabled")
-            onClicked: column.dataModel.enabled = !column.dataModel.enabled
+            onPressed: column.dataModel.enabled = !column.dataModel.enabled
             status: !column.dataModel.enabled
         }
 

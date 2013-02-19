@@ -13,7 +13,7 @@ MenuColumn {
 
     ControlSwitch {
         text: pageObject.names.get('AUTO_OPEN', vctModel.getObject(0).autoOpen)
-        onClicked: vctModel.getObject(0).autoOpen = !vctModel.getObject(0).autoOpen
+        onPressed: vctModel.getObject(0).autoOpen = !vctModel.getObject(0).autoOpen
         status: !vctModel.getObject(0).autoOpen
     }
 }

@@ -9,7 +9,7 @@ SvgImage {
     property string text
     property int pixelSize: 15
 
-    signal clicked
+    signal pressed
 
     source: "../images/common/panel_212x50.svg";
 
@@ -94,6 +94,6 @@ SvgImage {
         }
 
         status: 0
-        onClicked: control.clicked()
+        onPressed: control.pressed()
     }
 }

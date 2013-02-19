@@ -52,7 +52,7 @@ MenuColumn {
                     right: parent.right
                     rightMargin: width / 100 * 8
                 }
-                onClicked: element.dataModel.autoReset = !element.dataModel.autoReset
+                onPressed: element.dataModel.autoReset = !element.dataModel.autoReset
             }
 
             ButtonThreeStates {
@@ -115,7 +115,7 @@ MenuColumn {
                     rightMargin: width / 100 * 8
                     verticalCenter: parent.verticalCenter
                 }
-                onClicked: element.dataModel.diagnostic = !element.dataModel.diagnostic
+                onPressed: element.dataModel.diagnostic = !element.dataModel.diagnostic
             }
         }
     }

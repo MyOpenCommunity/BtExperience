@@ -44,7 +44,7 @@ MenuColumn {
                 // the switch is not visible
                 text: privateProps.loadEnabled() ? qsTr("Controlled") : qsTr("Not Controlled")
                 pixelSize: 14
-                onClicked: privateProps.loadEnabled() && element.dataModel.loadForced ?
+                onPressed: privateProps.loadEnabled() && element.dataModel.loadForced ?
                                element.dataModel.stopForcing() :
                                element.dataModel.forceOn()
                 status: !(privateProps.loadEnabled() && element.dataModel.loadForced)
@@ -102,7 +102,7 @@ MenuColumn {
                 // the switch is not visible
                 text: privateProps.loadEnabled() ? qsTr("Controlled") : qsTr("Not Controlled")
                 pixelSize: 14
-                onClicked: privateProps.loadEnabled() && element.dataModel.loadForced ?
+                onPressed: privateProps.loadEnabled() && element.dataModel.loadForced ?
                                element.dataModel.stopForcing() :
                                element.dataModel.forceOn()
                 status: !(privateProps.loadEnabled() && element.dataModel.loadForced)

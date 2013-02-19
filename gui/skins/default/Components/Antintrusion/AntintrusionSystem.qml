@@ -156,7 +156,7 @@ MenuColumn {
                 anchors.rightMargin: width / 100 * 10
                 anchors.verticalCenter: parent.verticalCenter
                 status: 1
-                onClicked: {
+                onPressed: {
                     column.closeChild()
                     var title = column.state === "" ? qsTr("enable system") : qsTr("disable system")
                     var okMessage = column.state === "" ? qsTr("system enabled") : qsTr("system disabled")

@@ -53,7 +53,7 @@ MenuColumn {
         ControlSwitch {
             text: qsTr("goals enabled")
             status: dataModel.goalsEnabled === true ? 0 : 1
-            onClicked: dataModel.goalsEnabled = !dataModel.goalsEnabled
+            onPressed: dataModel.goalsEnabled = !dataModel.goalsEnabled
         }
 
         Component {

@@ -82,7 +82,7 @@ SvgImage {
                     right: parent.right
                     rightMargin: 7
                 }
-                onClicked: itemObject.autoTurnOff = !itemObject.autoTurnOff
+                onPressed: itemObject.autoTurnOff = !itemObject.autoTurnOff
                 status: !itemObject.autoTurnOff
             }
 

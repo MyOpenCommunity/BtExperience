@@ -50,7 +50,7 @@ MenuColumn {
                     rightMargin: width / 100 * 8
                     verticalCenter: parent.verticalCenter
                 }
-                onClicked: element.dataModel.autoReset = !element.dataModel.autoReset
+                onPressed: element.dataModel.autoReset = !element.dataModel.autoReset
             }
         }
     }

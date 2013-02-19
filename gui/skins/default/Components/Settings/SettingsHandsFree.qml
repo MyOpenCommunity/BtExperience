@@ -13,7 +13,7 @@ MenuColumn {
 
     ControlSwitch {
         text: pageObject.names.get('HANDS_FREE', vctModel.getObject(0).handsFree)
-        onClicked: vctModel.getObject(0).handsFree = !vctModel.getObject(0).handsFree
+        onPressed: vctModel.getObject(0).handsFree = !vctModel.getObject(0).handsFree
         status: !vctModel.getObject(0).handsFree
     }
 }

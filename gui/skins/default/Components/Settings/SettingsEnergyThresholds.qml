@@ -18,7 +18,7 @@ MenuColumn {
         ControlSwitch {
             text: qsTr("alerts %1").arg(global.guiSettings.energyThresholdBeep ? qsTr("enabled") : qsTr("disabled"))
             status: global.guiSettings.energyThresholdBeep ? 0 : 1
-            onClicked: global.guiSettings.energyThresholdBeep = !global.guiSettings.energyThresholdBeep
+            onPressed: global.guiSettings.energyThresholdBeep = !global.guiSettings.energyThresholdBeep
         }
 
         PaginatorList {

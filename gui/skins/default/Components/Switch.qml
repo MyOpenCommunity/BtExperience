@@ -13,14 +13,14 @@ SvgImage {
     property alias rightImageBg: unlocked.source
     property alias rightImage: unlockedTop.source
 
-    signal clicked
+    signal pressed
 
     source: "../images/common/option_switch_background.svg"
 
     BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
-        onPressed: systemIcon.clicked()
+        onPressed: systemIcon.pressed()
     }
 
     SvgImage {

@@ -13,7 +13,7 @@ MenuColumn {
 
     ControlSwitch {
         text: pageObject.names.get('RING_EXCLUSION', vctModel.getObject(0).ringExclusion)
-        onClicked: vctModel.getObject(0).ringExclusion = !vctModel.getObject(0).ringExclusion
+        onPressed: vctModel.getObject(0).ringExclusion = !vctModel.getObject(0).ringExclusion
         status: !vctModel.getObject(0).ringExclusion
     }
 }
