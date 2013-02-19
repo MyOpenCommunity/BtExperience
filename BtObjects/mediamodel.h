@@ -24,8 +24,8 @@ friend class TestMediaModel;
 public:
 	MediaDataModel(QObject *parent = 0);
 
-	// Append an item to the model. The model takes the ownership of the item
-	// and reparent it.
+	// Append an item to the model. If the object has no parent, the model takes
+	// ownership of the item and reparents it.
 	MediaDataModel &operator<<(ItemInterface *item);
 
 	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;

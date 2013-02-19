@@ -50,7 +50,8 @@ bool MediaDataModel::removeRows(int row, int count, const QModelIndex &parent)
 		{
 			ItemInterface *it = item_list.takeAt(row);
 
-			it->deleteLater();
+			if (it->parent() == this)
+				it->deleteLater();
 		}
 		endRemoveRows();
 		return true;
