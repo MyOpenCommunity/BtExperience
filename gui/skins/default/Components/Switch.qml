@@ -20,7 +20,7 @@ SvgImage {
     BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked: systemIcon.clicked()
+        onPressed: systemIcon.clicked()
     }
 
     SvgImage {

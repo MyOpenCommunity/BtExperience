@@ -271,7 +271,7 @@ MenuColumn {
                     selectedImage: "../../images/common/btn_99x35_S.svg"
                     shadowImage: "../../images/common/btn_shadow_99x35.svg"
                     text: itemObject.name
-                    onClicked: itemObject.selected = !itemObject.selected
+                    onPressed: itemObject.selected = !itemObject.selected
                     status: itemObject.selected ? 1 : 0
                 }
 
@@ -292,7 +292,7 @@ MenuColumn {
                 text: qsTr("modify zones")
                 font.capitalization: Font.AllUppercase
                 font.pixelSize: 15
-                onClicked: privateProps.partialize()
+                onPressed: privateProps.partialize()
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: parent.height / 100 * 3
                 anchors.horizontalCenter: parent.horizontalCenter
