@@ -109,7 +109,7 @@ SvgImage {
     BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked: delegateClicked()
+        onPressed: delegateClicked()
     }
 
     states: [

@@ -41,7 +41,7 @@ MenuColumn {
             leftMargin: 10
         }
 
-        onClicked: theModel.exitDirectory()
+        onPressed: theModel.exitDirectory()
         visible: !theModel.isRoot
     }
 
@@ -63,7 +63,7 @@ MenuColumn {
             rightMargin: 10
         }
 
-        onClicked: {
+        onPressed: {
             privateProps.activeButton = 3
             theModel.filter = FileObject.Image | FileObject.Directory
         }
@@ -87,7 +87,7 @@ MenuColumn {
             right: photoButton.left
         }
 
-        onClicked: {
+        onPressed: {
             privateProps.activeButton = 2
             theModel.filter = FileObject.Video | FileObject.Directory
         }
@@ -111,7 +111,7 @@ MenuColumn {
             right: videoButton.left
         }
 
-        onClicked: {
+        onPressed: {
             privateProps.activeButton = 1
             theModel.filter = FileObject.Audio | FileObject.Directory
         }
@@ -135,7 +135,7 @@ MenuColumn {
             right: audioButton.left
         }
 
-        onClicked: {
+        onPressed: {
             privateProps.activeButton = 0
             theModel.filter = FileObject.All
         }
@@ -223,7 +223,7 @@ MenuColumn {
             shadowImage: "../images/common/btn_shadow_66x35.svg"
             defaultImage: "../images/common/icon_eject.svg"
             pressedImage: "../images/common/icon_eject_p.svg"
-            onClicked: dataModel.mountPoint.unmount()
+            onPressed: dataModel.mountPoint.unmount()
         }
 
         model: theModel
