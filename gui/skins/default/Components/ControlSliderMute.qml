@@ -151,7 +151,7 @@ SvgImage {
         shadowImage: "../images/common/btn_shadow_45x35.svg"
         defaultImage: "../images/common/ico_mute.svg"
         pressedImage: "../images/common/ico_mute.svg"
-        onClicked: muteClicked()
+        onPressed: muteClicked()
         anchors {
             top: imageSlider.bottom
             topMargin: buttonSlider.height / 100 * 5
