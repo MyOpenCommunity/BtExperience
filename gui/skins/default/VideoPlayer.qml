@@ -61,7 +61,7 @@ BasePage {
                 pressedImage: "images/common/ico_previous_track_P.svg"
 
                 onReleased: hidingTimer.restart()
-                onClicked: {
+                onPressed: {
                     if (goToPrevTrack.running) {
                         goToPrevTrack.restart()
                         page.player.prevTrack()
@@ -98,7 +98,7 @@ BasePage {
                     anchors.centerIn: parent
 
                     onReleased: hidingTimer.restart()
-                    onClicked: {
+                    onPressed: {
                         if (page.player.playing)
                             page.player.pause()
                         else
@@ -135,7 +135,7 @@ BasePage {
                 pressedImage: "images/common/ico_next_track_P.svg"
 
                 onReleased: hidingTimer.restart()
-                onClicked: page.player.nextTrack()
+                onPressed: page.player.nextTrack()
             }
         }
 
@@ -221,7 +221,7 @@ BasePage {
             defaultImage: "images/common/icon_resize.svg"
             pressedImage: "images/common/icon_resize_p.svg"
 
-            onClicked: Stack.popPage()
+            onPressed: Stack.popPage()
         }
 
         Timer {
