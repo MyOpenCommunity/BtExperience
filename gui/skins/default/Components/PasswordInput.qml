@@ -84,7 +84,7 @@ SvgImage {
         shadowImage: "../images/common/btn_shadow_99x35.svg"
         text: qsTr("Confirm")
         font.pixelSize: 14
-        onClicked: {
+        onPressed: {
             passwordRect.passwordConfirmed(password.text)
             password.text = ""
         }
