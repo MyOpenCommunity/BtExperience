@@ -63,7 +63,7 @@ Item {
         currentIndex: -1
         // see comments in PaginatorList
         width: delegateWidth
-        height: delegateHeight * elementsOnPage
+        height: delegateHeight * elementsOnPage + itemSpacing * (elementsOnPage - 1)
 
         anchors.left: parent.left
     }
