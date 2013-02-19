@@ -177,7 +177,7 @@ SvgImage {
                         pressedImage: "../images/common/button_keypad_press.svg"
                         shadowImage: "../images/common/shadow_button_keypad.svg"
                         text: index + 1
-                        onClicked: keypad.digitClicked(text)
+                        onPressed: keypad.digitClicked(text)
                         status: 0
                     }
                 }
@@ -191,7 +191,7 @@ SvgImage {
                         pressedImage: "../images/common/button_keypad_press.svg"
                         shadowImage: "../images/common/shadow_button_keypad.svg"
                         text: index + 4
-                        onClicked: keypad.digitClicked(text)
+                        onPressed: keypad.digitClicked(text)
                         status: 0
                     }
                 }
@@ -205,7 +205,7 @@ SvgImage {
                         pressedImage: "../images/common/button_keypad_press.svg"
                         shadowImage: "../images/common/shadow_button_keypad.svg"
                         text: index + 7
-                        onClicked: keypad.digitClicked(text)
+                        onPressed: keypad.digitClicked(text)
                         status: 0
                     }
                 }
@@ -219,7 +219,7 @@ SvgImage {
                     pressedImage: "../images/common/button_key_delete_press.svg"
                     shadowImage: "../images/common/shadow_button_key_delete.svg"
                     text: ""
-                    onClicked: keypad.digitClicked("C")
+                    onPressed: keypad.digitClicked("C")
 
                     SvgImage {
                         source: parent.state === "pressed" ? "../images/common/key_delete_press.svg" : "../images/common/key_delete.svg"
@@ -232,7 +232,7 @@ SvgImage {
                     pressedImage: "../images/common/button_keypad_press.svg"
                     shadowImage: "../images/common/shadow_button_keypad.svg"
                     text: "0"
-                    onClicked: keypad.digitClicked(text)
+                    onPressed: keypad.digitClicked(text)
                 }
             }
         }
