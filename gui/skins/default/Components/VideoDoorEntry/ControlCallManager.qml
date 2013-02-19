@@ -24,7 +24,7 @@ SvgImage {
         shadowImage: "../../images/common/ombra_btn_rispondi.svg"
         defaultImage: "../../images/common/ico_rispondi.svg"
         pressedImage: "../../images/common/ico_rispondi_P.svg"
-        onClicked: control.leftClicked()
+        onPressed: control.leftClicked()
         anchors {
             bottom: parent.bottom
             bottomMargin: 9
@@ -41,7 +41,7 @@ SvgImage {
         shadowImage: "../../images/common/ombra_btn_rispondi.svg"
         defaultImage: "../../images/common/ico_rifiuta.svg"
         pressedImage: "../../images/common/ico_rifiuta_P.svg"
-        onClicked: control.rightClicked()
+        onPressed: control.rightClicked()
         anchors {
             bottom: parent.bottom
             bottomMargin: 9

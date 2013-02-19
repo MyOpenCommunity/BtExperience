@@ -65,7 +65,7 @@ SvgImage {
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
         defaultImage: "../../images/common/ico_cicla.svg"
         pressedImage: "../../images/common/ico_cicla_P.svg"
-        onClicked: nextClicked()
+        onPressed: nextClicked()
         anchors {
             right: video.right
             rightMargin: 6
