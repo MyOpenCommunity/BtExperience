@@ -70,7 +70,7 @@ Image {
             shadowImage: "../images/common/btn_shadow_99x35.svg"
             defaultImage: "../images/common/ico_freccia_sx.svg"
             pressedImage: "../images/common/ico_freccia_sx_P.svg"
-            onClicked: leftClicked()
+            onPressed: leftClicked()
         }
 
         ButtonImageThreeStates {
@@ -79,7 +79,7 @@ Image {
             shadowImage: "../images/common/btn_shadow_99x35.svg"
             defaultImage: "../images/common/ico_freccia_dx.svg"
             pressedImage: "../images/common/ico_freccia_dx_P.svg"
-            onClicked: rightClicked()
+            onPressed: rightClicked()
         }
     }
 }
