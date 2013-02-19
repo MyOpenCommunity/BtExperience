@@ -18,6 +18,12 @@ Item {
             itemLoader.opacity = 0 // the createComponent is called after the opacity animation ends
     }
 
+    function destroyComponent() {
+        privateObj.pendingComponent = undefined
+        privateObj.pendingProperties = undefined
+        itemLoader.opacity = 0
+    }
+
     QtObject {
         id: privateObj
         property variant pendingComponent  // contains the component to create

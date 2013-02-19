@@ -303,6 +303,8 @@ MenuColumn {
         onCurrentSourceChanged: {
             if (column.dataModel.currentSource)
                 privateProps.updateSourceItem(column.dataModel.currentSource)
+            else
+                itemLoader.destroyComponent()
         }
     }
 
