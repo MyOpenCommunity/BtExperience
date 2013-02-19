@@ -98,7 +98,7 @@ Column {
             text: qsTr("dismiss")
             font.capitalization: Font.AllUppercase
             font.pixelSize: 14
-            onClicked: dismissClicked()
+            onPressed: dismissClicked()
             anchors {
                 right: bgBottom.right
                 rightMargin: bgTitle.width / 100 * 1.59
@@ -116,7 +116,7 @@ Column {
             text: qsTr("confirm")
             font.capitalization: Font.AllUppercase
             font.pixelSize: 14
-            onClicked: confirmClicked()
+            onPressed: confirmClicked()
             anchors {
                 right: buttonDismiss.visible ? buttonDismiss.left : bgBottom.right
                 rightMargin: buttonDismiss.visible ? 0 : bgTitle.width / 100 * 1.59
