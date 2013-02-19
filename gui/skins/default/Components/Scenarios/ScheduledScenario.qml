@@ -35,7 +35,7 @@ MenuColumn {
                     pressedImage: "../../images/common/icon_disabled_P.svg"
                     selectedImage: "../../images/common/icon_disabled_P.svg"
                     enabled: column.dataModel.hasDisable
-                    onClicked: column.dataModel.disable()
+                    onPressed: column.dataModel.disable()
                 }
 
                 ButtonImageThreeStates {
@@ -47,7 +47,7 @@ MenuColumn {
                     pressedImage: "../../images/common/icon_enabled_P.svg"
                     selectedImage: "../../images/common/icon_enabled_P.svg"
                     enabled: column.dataModel.hasEnable
-                    onClicked: column.dataModel.enable()
+                    onPressed: column.dataModel.enable()
                 }
             }
         }

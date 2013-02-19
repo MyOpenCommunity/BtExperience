@@ -23,7 +23,7 @@ MenuColumn {
                 selectedImage: "../../images/common/btn_apriporta_ok_on.svg"
                 shadowImage: "../../images/common/ombra_btn_apriporta_ok_on.svg"
                 text: "start"
-                onClicked: column.dataModel.start()
+                onPressed: column.dataModel.start()
             }
         }
 
