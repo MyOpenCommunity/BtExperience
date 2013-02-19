@@ -27,7 +27,7 @@ Item {
 
         text: qsTr("Video settings")
         textColor: "black"
-        onClicked: control.state = (control.state === "up") ? "down" : "up"
+        onPressed: control.state = (control.state === "up") ? "down" : "up"
         defaultImageBg: "../images/common/btn_impostazioni.svg"
         pressedImageBg: "../images/common/btn_impostazioni_P.svg"
         defaultImage: "../images/common/ico_apri_impostazioni.svg"
