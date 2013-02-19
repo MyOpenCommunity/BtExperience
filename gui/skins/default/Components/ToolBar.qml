@@ -251,11 +251,11 @@ Item {
             height: toolbar_top.height
             visible: EventManager.eventManager.vdeTeleloop
             defaultImage: homeProperties.skin === HomeProperties.Clear ?
-                              "../images/toolbar/icon_vde-mute.svg" :
-                              "../images/toolbar/icon_vde-mute_p.svg"
+                              "../images/toolbar/icon_teleloop.svg" :
+                              "../images/toolbar/icon_teleloop_p.svg"
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
-                              "../images/toolbar/icon_vde-mute_p.svg" :
-                              "../images/toolbar/icon_vde-mute.svg"
+                              "../images/toolbar/icon_teleloop_p.svg" :
+                              "../images/toolbar/icon_teleloop.svg"
             onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.VDE_TELELOOP})
