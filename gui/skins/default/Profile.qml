@@ -340,7 +340,7 @@ Page {
                         defaultImage: "images/profile-settings/icon_settings_profile.svg"
                         pressedImage: "images/profile-settings/icon_settings_profile_P.svg"
                         shadowImage: "images/common/btn_shadow_66x35.svg"
-                        onClicked: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.PROFILE, navigationData: profilePage.profile})
+                        onPressed: Stack.goToPage("Settings.qml", {navigationTarget: Navigation.PROFILE, navigationData: profilePage.profile})
                     }
 
                     Image {
@@ -389,7 +389,7 @@ Page {
 
                         shadowImage: "images/common/ombra_btn_cercapersone.svg"
 
-                        onClicked: privateProps.addNote()
+                        onPressed: privateProps.addNote()
                     }
                 }
             }
