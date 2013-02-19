@@ -45,7 +45,7 @@ Column {
 
             ControlRadio {
                 text: day
-                onClicked: {
+                onPressed: {
                     column.scenarioObject.setDayEnabled(numDay, !column.scenarioObject.isDayEnabled(numDay))
                     status = column.scenarioObject.isDayEnabled(numDay) // force the status update of the day
                 }

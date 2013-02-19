@@ -242,7 +242,7 @@ BasePage {
                 iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_stanze_P.svg" :
                                                                              "images/home/ico_stanze.svg"
                 text: qsTr("rooms")
-                onClicked: Stack.goToPage("Rooms.qml")
+                onPressed: Stack.goToPage("Rooms.qml")
             }
 
             ButtonHomePageLink {
@@ -256,7 +256,7 @@ BasePage {
                                                                       "images/home/ico_opzioni_P.svg"
                 iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_opzioni_P.svg" :
                                                                              "images/home/ico_opzioni.svg"
-                onClicked: Stack.goToPage("Settings.qml")
+                onPressed: Stack.goToPage("Settings.qml")
                 text: qsTr("options")
                 enabled: EventManager.eventManager.scenarioRecording === false
             }
@@ -288,7 +288,7 @@ BasePage {
                 iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_sistemi_P.svg" :
                                                                              "images/home/ico_sistemi.svg"
                 text: qsTr("systems")
-                onClicked: Stack.goToPage("Systems.qml")
+                onPressed: Stack.goToPage("Systems.qml")
             }
 
             ButtonHomePageLink {
@@ -303,7 +303,7 @@ BasePage {
                                                                       "images/home/ico_multimedia_P.svg"
                 iconPressed: homeProperties.skin === HomeProperties.Clear ? "images/home/ico_multimedia_P.svg" :
                                                                              "images/home/ico_multimedia.svg"
-                onClicked: Stack.goToPage("Multimedia.qml")
+                onPressed: Stack.goToPage("Multimedia.qml")
                 text: qsTr ("multimedia")
                 enabled: EventManager.eventManager.scenarioRecording === false
             }

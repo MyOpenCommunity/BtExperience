@@ -163,7 +163,7 @@ Page {
                 width: bg.width / 100 * 23.55
                 text: choices.get(index).type
                 pixelSize: 16
-                onClicked: {
+                onPressed: {
                     if (privateProps.currentIndex === index)
                         return
                     privateProps.currentIndex = index
@@ -338,7 +338,7 @@ Page {
                 width: bg.width / 100 * 54.95
                 text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name
                 pixelSize: 16
-                onClicked: page.currentLink = index
+                onPressed: page.currentLink = index
                 status: page.currentLink === index
 
                 ButtonImageThreeStates {

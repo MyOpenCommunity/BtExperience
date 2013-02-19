@@ -9,7 +9,7 @@ Item {
     property alias pixelSize: radioLabel.font.pixelSize
     property bool status: false
 
-    signal clicked
+    signal pressed
 
     width: radioBg.width
     height: radioLabel.height + radioBg.height
@@ -46,6 +46,6 @@ Item {
 
     BeepingMouseArea {
         anchors.fill: parent
-        onPressed: control.clicked()
+        onPressed: control.pressed()
     }
 }

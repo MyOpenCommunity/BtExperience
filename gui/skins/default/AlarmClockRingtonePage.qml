@@ -142,7 +142,7 @@ Page {
                 width: bg.width / 100 * 23.55
                 text: privateProps.getTypeText(index)
                 pixelSize: 16
-                onClicked: privateProps.setAlarmType(index)
+                onPressed: privateProps.setAlarmType(index)
                 status: index === page.alarmClock.alarmType
                 visible: privateProps.getTypeVisible(index, soundDiffusionModel.count)
             }
@@ -287,7 +287,7 @@ Page {
                 width: bg.width / 100 * 40
                 text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name
                 pixelSize: 16
-                onClicked: {
+                onPressed: {
                     if (page.state === "")
                         page.alarmClock.source = itemObject
                     else

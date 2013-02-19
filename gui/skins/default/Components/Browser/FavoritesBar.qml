@@ -83,7 +83,7 @@ Item {
                     delegate: ControlRadioHorizontal {
                         width: bg.width * 0.8
                         text: qsTr(choices.get(index).type)
-                        onClicked: {
+                        onPressed: {
                             if (privateProps.currentIndex === index)
                                 return
                             privateProps.currentIndex = index

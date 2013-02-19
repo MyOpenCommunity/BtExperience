@@ -167,7 +167,7 @@ Item {
                                (homeProperties.skin === HomeProperties.Clear ?
                                     "../images/toolbar/icon_alarm-disabled_p.svg" :
                                     "../images/toolbar/icon_alarm-disabled.svg")
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage(Script.getTarget(Container.IdAntintrusion))
             }
@@ -183,7 +183,7 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_alarm-clock_p.svg" :
                               "../images/toolbar/icon_alarm-clock.svg"
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 if (EventManager.eventManager.clockRinging) {
                     // the video camera page expects navigation to be managed in toolbar
@@ -208,7 +208,7 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-auto-open_p.svg" :
                               "../images/toolbar/icon_vde-auto-open.svg"
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.AUTO_OPEN})
             }
@@ -224,7 +224,7 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-auto-answer_p.svg" :
                               "../images/toolbar/icon_vde-auto-answer.svg"
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.HANDS_FREE})
             }
@@ -240,7 +240,7 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-mute_p.svg" :
                               "../images/toolbar/icon_vde-mute.svg"
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.VDE_MUTE})
             }
@@ -256,7 +256,7 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-mute_p.svg" :
                               "../images/toolbar/icon_vde-mute.svg"
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.VDE_TELELOOP})
             }
@@ -273,7 +273,7 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_alarm_p.svg" :
                               "../images/toolbar/icon_alarm.svg"
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Antintrusion.qml", {"navigationTarget": Navigation.ALARM_LOG})
             }
@@ -289,7 +289,7 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_source-play_p.svg" :
                               "../images/toolbar/icon_source-play.svg"
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("AudioPlayer.qml", {"upnp": global.audioVideoPlayer.isUpnp()})
             }
@@ -306,7 +306,7 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_new-message_p.svg" :
                               "../images/toolbar/icon_new-message.svg"
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage(Script.getTarget(Container.IdMessages))
             }
@@ -363,7 +363,7 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_energy_p.svg" :
                               "../images/toolbar/icon_energy.svg"
-            onClicked: {
+            onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
             }

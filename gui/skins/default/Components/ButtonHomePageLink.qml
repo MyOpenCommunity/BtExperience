@@ -13,12 +13,12 @@ SvgImage {
     property url sourcePressed: ""
     property bool enabled: true
 
-    signal clicked
+    signal pressed
 
     BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
-        onPressed: button.clicked()
+        onPressed: button.pressed()
     }
 
     Rectangle {

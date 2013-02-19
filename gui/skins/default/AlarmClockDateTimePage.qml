@@ -111,7 +111,7 @@ Page {
                     ControlRadio {
                         text: privateProps.getDay(index)
                         pixelSize: 16
-                        onClicked: privateProps.setStatus(index)
+                        onPressed: privateProps.setStatus(index)
                         status: privateProps.getStatus(index, privateProps.dummy)
                     }
                 }
@@ -126,7 +126,7 @@ Page {
                 width: parent.width * 0.70
                 text: qsTr("Only once")
                 pixelSize: 16
-                onClicked: privateProps.setStatus()
+                onPressed: privateProps.setStatus()
                 status: page.alarmClock.trigger === 0
                 anchors.horizontalCenter: parent.horizontalCenter
             }

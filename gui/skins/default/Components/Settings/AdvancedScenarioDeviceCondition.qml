@@ -57,7 +57,7 @@ Column {
                 ControlRadio {
                    status: scenarioDeviceObject.onOff === model.value
                    text: model.text
-                   onClicked: scenarioDeviceObject.onOff = model.value
+                   onPressed: scenarioDeviceObject.onOff = model.value
                 }
             }
         }

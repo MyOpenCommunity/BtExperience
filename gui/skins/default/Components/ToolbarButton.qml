@@ -10,7 +10,7 @@ Item {
     property alias enabled: button.enabled
     property int quantity: 0
 
-    signal clicked
+    signal pressed
 
     visible: quantity > 0
     width: separator.width + button.width
@@ -32,7 +32,7 @@ Item {
         visible: control.visible
         defaultImageBg: "../images/toolbar/_bg_alert.svg"
         pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-        onPressed: control.clicked()
+        onPressed: control.pressed()
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
 
