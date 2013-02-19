@@ -93,7 +93,7 @@ SvgImage {
             shadowImage: "../../images/common/btn_shadow_99x35.svg"
             defaultImage: "../../images/sound_diffusion/ico_indietro.svg"
             pressedImage: "../../images/sound_diffusion/ico_indietro_P.svg"
-            onClicked: previousTrack()
+            onPressed: previousTrack()
         }
 
         ButtonImageThreeStates {
@@ -102,7 +102,7 @@ SvgImage {
             shadowImage: "../../images/common/btn_shadow_99x35.svg"
             defaultImage: "../../images/sound_diffusion/ico_avanti.svg"
             pressedImage: "../../images/sound_diffusion/ico_avanti_P.svg"
-            onClicked: nextTrack()
+            onPressed: nextTrack()
         }
     }
 

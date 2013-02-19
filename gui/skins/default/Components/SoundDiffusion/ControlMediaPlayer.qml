@@ -99,7 +99,7 @@ SvgImage {
             shadowImage: "../../images/sound_diffusion/btn_45x35_shadow.svg"
             defaultImage: "../../images/common/ico_previous_track.svg"
             pressedImage: "../../images/common/ico_previous_track_P.svg"
-            onClicked: control.previousClicked()
+            onPressed: control.previousClicked()
         }
 
         ButtonImageThreeStates {
@@ -109,7 +109,7 @@ SvgImage {
             shadowImage: "../../images/common/btn_shadow_99x35.svg"
             defaultImage: "../../images/sound_diffusion/ico_play.svg"
             pressedImage: "../../images/sound_diffusion/ico_play_P.svg"
-            onClicked: control.playClicked()
+            onPressed: control.playClicked()
         }
 
         ButtonImageThreeStates {
@@ -118,7 +118,7 @@ SvgImage {
             shadowImage: "../../images/sound_diffusion/btn_45x35_shadow.svg"
             defaultImage: "../../images/common/ico_next_track.svg"
             pressedImage: "../../images/common/ico_next_track_P.svg"
-            onClicked: control.nextClicked()
+            onPressed: control.nextClicked()
         }
     }
 

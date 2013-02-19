@@ -30,7 +30,7 @@ Row {
             pressedImage: "../../images/common/ico_mute.svg"
             anchors.centerIn: parent
 
-            onClicked: row.muteClicked()
+            onPressed: row.muteClicked()
         }
 
         state: row.isPlayerMute ? "mute" : ""

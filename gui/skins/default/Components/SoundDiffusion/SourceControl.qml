@@ -249,7 +249,7 @@ MenuColumn {
                     defaultImage: imagesPath + "sound_diffusion/ico_indietro.svg"
                     pressedImage: imagesPath + "sound_diffusion/ico_indietro_P.svg"
 
-                    onClicked: objModel.previousTrack()
+                    onPressed: objModel.previousTrack()
                 }
                 ButtonImageThreeStates {
                     defaultImageBg: imagesPath + "common/btn_99x35.svg"
@@ -258,7 +258,7 @@ MenuColumn {
                     defaultImage: imagesPath + "sound_diffusion/ico_avanti.svg"
                     pressedImage: imagesPath + "sound_diffusion/ico_avanti_P.svg"
 
-                    onClicked: objModel.nextTrack()
+                    onPressed: objModel.nextTrack()
                 }
             }
         }
