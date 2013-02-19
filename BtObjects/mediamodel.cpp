@@ -70,7 +70,8 @@ void MediaDataModel::insertObject(ItemInterface *obj, bool prepend)
 	// delete the object. To avoid that, we set the model as a parent.
 	// See http://doc.trolltech.com/4.7/qdeclarativeengine.html#ObjectOwnership-enum
 	// for details.
-	obj->setParent(this);
+	if (!obj->parent())
+		obj->setParent(this);
 
 	connect(obj, SIGNAL(persistItem()), this, SLOT(persistItem()));
 
