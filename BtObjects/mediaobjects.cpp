@@ -161,6 +161,10 @@ QList<ObjectPair> parseGeneralAmplifier(const QDomNode &xml_node, int id)
 		Amplifier *amp = new Amplifier(0, v.value("descr"), d);
 		QList<Amplifier *> amplifiers;
 		amplifiers << amp;
+		// see comment in BtObjectsPlugin::createObjects(), below ObjectInterface::IdMultiGeneral
+		// basically the first instance is for the general ambient, the second for use in layout
+		if (obj_list.count() == 0 && id == ObjectInterface::IdMultiGeneral)
+			obj_list << ObjectPair(-1, new AmplifierGroup(v.value("descr"), amplifiers, true_id));
 		obj_list << ObjectPair(uii, new AmplifierGroup(v.value("descr"), amplifiers, true_id));
 	}
 	return obj_list;
