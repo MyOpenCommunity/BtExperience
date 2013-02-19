@@ -123,7 +123,7 @@ SvgImage {
             shadowImage: "../images/common/btn_shadow_99x35.svg"
             text: qsTr("OK")
             font.pixelSize: 14
-            onClicked: {
+            onPressed: {
                 bg.okClicked()
                 bg.closePopup()
             }
@@ -136,7 +136,7 @@ SvgImage {
             shadowImage: "../images/common/btn_shadow_99x35.svg"
             text: qsTr("CANCEL")
             font.pixelSize: 14
-            onClicked: {
+            onPressed: {
                 bg.cancelClicked()
                 bg.closePopup()
             }
