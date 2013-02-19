@@ -75,7 +75,7 @@ MenuColumn {
             text: qsTr("remove all")
             font.capitalization: Font.AllUppercase
             font.pixelSize: 12
-            onClicked: theModel.clear()
+            onPressed: theModel.clear()
         }
         model: theModel
     }

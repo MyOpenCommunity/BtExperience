@@ -26,7 +26,7 @@ Item {
         imageAnchors.right: undefined
         textAnchors.leftMargin: bg.width / 100 * 8.70
 
-        onClicked: delegateClicked()
+        onPressed: delegateClicked()
     }
 
     SvgImage {

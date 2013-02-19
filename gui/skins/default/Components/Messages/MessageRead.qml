@@ -55,7 +55,7 @@ MenuColumn {
             rightMargin: imageBg.width / 100 * 2.83
         }
 
-        onClicked: {
+        onPressed: {
             theModel.remove(column.dataModel)
             column.closeColumn()
         }
@@ -76,7 +76,7 @@ MenuColumn {
             rightMargin: imageBg.width / 100 * 2.83
         }
 
-        onClicked: {
+        onPressed: {
             console.log("reply pressed")
             column.closeColumn()
         }
