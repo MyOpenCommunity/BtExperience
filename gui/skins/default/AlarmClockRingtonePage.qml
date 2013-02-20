@@ -245,9 +245,8 @@ Page {
             topMargin: bg.height / 100 * 5
             bottom: bg.bottom
             bottomMargin: bg.height / 100 * 2.92
-            left: verticalSeparator.left
+            left: verticalSeparator.right
             leftMargin: bg.width / 100 * 3.92
-            right: verticalSeparator.right
         }
         model: page.actualModel
 
@@ -324,8 +323,8 @@ Page {
             height: bg.height / 100 * 5.72
             text: itemObject === undefined ? "" : itemObject.name
             pixelSize: 16
-            onPressed: page.alarmClock.amplifier = itemObject.amplifier
-            status: page.alarmClock.amplifier === itemObject.amplifier
+            onPressed: page.alarmClock.amplifier = itemObject
+            status: page.alarmClock.amplifier === itemObject
         }
     }
 
@@ -365,8 +364,10 @@ Page {
         anchors {
             top: horizontalSeparator.bottom
             topMargin: bg.height / 100 * 5.72
+            left: undefined
+            leftMargin: 0
             right: bg.right
-            rightMargin: bg.width / 100 * 3.92
+            rightMargin: bg.width / 100 * 7.84
         }
         onPressed: page.state = page.state === "" ? "amplifiers" : ""
     }
@@ -448,6 +449,17 @@ Page {
                 target: pageChanger
                 defaultImage: "images/common/alarm_clock/freccia_sx.svg"
                 pressedImage: "images/common/freccia_sx_P.svg"
+                anchors.leftMargin: bg.width / 100 * 3.92
+                anchors.rightMargin: 0
+            }
+            AnchorChanges {
+                target: pageChanger
+                anchors.left: verticalSeparator.right
+                anchors.right: undefined
+            }
+            AnchorChanges {
+                target: paginator
+                anchors.left: pageChanger.right
             }
         }
     ]
