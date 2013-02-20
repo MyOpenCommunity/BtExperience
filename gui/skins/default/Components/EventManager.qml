@@ -272,7 +272,7 @@ Item {
     Connections {
         id: messagesConnection
         target: null
-        onUnreadMessagesChanged: privateProps.addNotification({"type": Script.UNREAD_MESSAGES_UPDATING})
+        onNewUnreadMessages: privateProps.addNotification({"type": Script.UNREAD_MESSAGES_UPDATING})
     }
 
     function resendAlarmStarted() {
