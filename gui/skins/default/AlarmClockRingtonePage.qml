@@ -461,6 +461,14 @@ Page {
                 target: paginator
                 anchors.left: pageChanger.right
             }
+            StateChangeScript {
+                name: "selectAmplifier"
+                script: {
+                    var absIndex = outputModel.getAbsoluteIndexOf(page.alarmClock.amplifier)
+                    if (absIndex !== -1)
+                        paginator.openDelegate(absIndex, privateProps.dummy)
+                }
+            }
         }
     ]
 
@@ -497,6 +505,10 @@ Page {
             if (kind === 1)
                 return count > 0
             return false
+        }
+
+        function dummy(itemObject) {
+            return ""
         }
     }
 }
