@@ -50,7 +50,8 @@ bool MediaDataModel::removeRows(int row, int count, const QModelIndex &parent)
 		{
 			ItemInterface *it = item_list.takeAt(row);
 
-			it->deleteLater();
+			if (it->parent() == this)
+				it->deleteLater();
 		}
 		endRemoveRows();
 		return true;
@@ -70,7 +71,8 @@ void MediaDataModel::insertObject(ItemInterface *obj, bool prepend)
 	// delete the object. To avoid that, we set the model as a parent.
 	// See http://doc.trolltech.com/4.7/qdeclarativeengine.html#ObjectOwnership-enum
 	// for details.
-	obj->setParent(this);
+	if (!obj->parent())
+		obj->setParent(this);
 
 	connect(obj, SIGNAL(persistItem()), this, SLOT(persistItem()));
 
@@ -149,6 +151,7 @@ int MediaModel::getRangeCount() const
 
 void MediaModel::setSource(MediaDataModel *s)
 {
+	Q_ASSERT_X(s, "MediaModel::setSource", "Can't set NULL model source");
 	if (sourceModel())
 	{
 		disconnect(sourceModel(), SIGNAL(rowsRemoved(const QModelIndex &, int, int)));
@@ -327,7 +330,6 @@ MediaModel *MediaModel::getUnrangedModel()
 	// clones this model without range
 	MediaModel *result = new MediaModel(this);
 
-	MediaDataModel *s = this->getSource();
 	result->setSource(this->getSource());
 	result->setContainers(this->getContainers());
 

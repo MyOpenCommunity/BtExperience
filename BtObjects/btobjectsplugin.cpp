@@ -223,7 +223,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameReceiver::setClientsMonitor(monitors);
 	FrameSender::setClients(clients);
 
-	general_ambient_uii = -1;
+	general_amplifier = 0;
 	configurations = new ConfigFile(this);
 	global_models.setParent(this);
 	note_model.setParent(this);
@@ -539,12 +539,13 @@ void BtObjectsPlugin::createObjects()
 			break;
 		case ObjectInterface::IdMultiGeneral:
 			obj_list = parseGeneralAmplifier(xml_obj, id);
-			// The line below seems to assume that we can only have one general
-			// amplifier, but above we allow a list of them.
-			// In the end, we don't really care, since they will be always the
-			// same; here we take one uii from the above.
+			// Most of the time, there should only be a single general amplifier (though more
+			// than one are allowed) but since we need a general amplifier object for the general
+			// environment and the layout might add the general amplifier to the special environment,
+			// parseGeneralAmplifier() creates at least two instances, the first without UII for the general
+			// ambient, the secont that can be referred to in layout file
 			Q_ASSERT_X(obj_list.size() > 0, "IdMultiGeneral parsing", "You didn't define at least one ist for the general object");
-			general_ambient_uii = obj_list[0].first;
+			general_amplifier = qobject_cast<AmplifierGroup *>(obj_list[0].second);
 			break;
 		case ObjectInterface::IdMonoGeneral:
 			obj_list = parseGeneralAmplifier(xml_obj, id);
@@ -1136,29 +1137,20 @@ void BtObjectsPlugin::parseConfig()
 	// Since we don't have an ambient for the general, we build one. This way we can
 	// treat it like any other ambient in the GUI; it also naturally handles the concept
 	// of source, which normal amplifiers don't have.
-	if (general_ambient_uii > 0)
+	if (general_amplifier)
 		createGeneralAmbient();
 }
 
 void BtObjectsPlugin::createGeneralAmbient()
 {
-	QDomNode node = findNodeForUii(general_ambient_uii).first;
 	QList<SourceObject *> sources = getSoundSources(objmodel);
 
 	int ambient_uii = uii_map.nextUii();
-	SoundGeneralAmbient *general_ambient = new SoundGeneralAmbient(getAttribute(node, "descr"), ambient_uii);
+	SoundGeneralAmbient *general_ambient = new SoundGeneralAmbient(general_amplifier->getName(), ambient_uii);
 
 	uii_map.insert(ambient_uii, general_ambient);
 	uii_to_id[ambient_uii] = general_ambient->getObjectId();
-	AmplifierGroup *a = uii_map.value<AmplifierGroup>(general_ambient_uii);
-	if (!a)
-	{
-		qWarning() << "Invalid uii" << general_ambient_uii << "for general object";
-		Q_ASSERT_X(false, "createGeneralAmbient", "Invalid uii");
-	}
-	// don't put the general amplifier into the new ambient, we can retrieve it
-	// anyway in the GUI. This allows the user to put the general amplifier
-	// in another ambient as well (as an amplifier group).
+	general_amplifier->setContainerUii(ambient_uii);
 	objmodel.prepend(general_ambient);
 
 	general_ambient->connectSources(sources);
@@ -1555,7 +1547,9 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<MediaDataModel>(uri, 1, 0, "MediaDataModel", "");
 	qmlRegisterUncreatableType<HomeProperties>(uri, 1, 0, "HomeProperties", "");
 	qmlRegisterType<MediaModel>(uri, 1, 0, "MediaModel");
+	qmlRegisterType<MediaModelSource>(uri, 1, 0, "MediaModelSource");
 	qmlRegisterType<ObjectModel>(uri, 1, 0, "ObjectModel");
+	qmlRegisterType<ObjectModelSource>(uri, 1, 0, "ObjectModelSource");
 	qmlRegisterType<DirectoryListModel>(uri, 1, 0, "DirectoryListModel");
 	qmlRegisterType<UPnPListModel>(uri, 1, 0, "UPnPListModel");
 	qmlRegisterUncreatableType<ItemInterface>(uri, 1, 0, "ItemInterface",

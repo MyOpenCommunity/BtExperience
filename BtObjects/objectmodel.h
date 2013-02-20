@@ -117,6 +117,59 @@ private:
 
 /*!
 	\ingroup Core
+	\brief Create a data model instance from QML
+
+	Can be used when applying a filter to an existing model is not enough, for example:
+
+	\verbatim
+	ObjectModelSource {
+	    id: customModel
+	}
+
+	Component.onCompleted: {
+	    // contrived example
+	    for (var i = 0; i < amplifierModel.count; ++i)
+		if (i % 2 == 0)
+		    customModel.append(amplifierModel.getObject(i))
+	}
+
+	ObjectModel {
+	    id: filterModel
+	    filters: [
+		// ...
+	    ]
+	    range: // ...
+	    source: customModel.model
+	}
+	\endverbatim
+*/
+class ObjectModelSource : public QObject
+{
+	Q_OBJECT
+
+	/// Retrieve the associated model instance
+	Q_PROPERTY(ObjectDataModel *model READ getModel CONSTANT)
+
+public:
+	ObjectModelSource(QObject *parent = 0) : QObject(parent)
+	{
+		model = new ObjectDataModel(this);
+	}
+
+	ObjectDataModel *getModel() const { return model; }
+
+	/// Append an object to the model
+	Q_INVOKABLE void append(ItemInterface *obj) { model->append(obj); }
+
+	/// Remove all objects from the model
+	Q_INVOKABLE void clear() { model->clear(); }
+
+private:
+	ObjectDataModel *model;
+};
+
+/*!
+	\ingroup Core
 	\brief Helper class to simplify filter creation from C++
 
 	for example:

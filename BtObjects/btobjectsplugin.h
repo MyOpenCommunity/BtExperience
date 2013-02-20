@@ -13,6 +13,7 @@
 class ConfigFile;
 class QDomNode;
 class QDomDocument;
+class AmplifierGroup;
 
 
 class BtObjectsPlugin : public QDeclarativeExtensionPlugin
@@ -39,7 +40,7 @@ private:
 	UiiMapper uii_map;
 	QHash<int, int> uii_to_id;
 	ConfigFile *configurations;
-	int general_ambient_uii;
+	AmplifierGroup *general_amplifier;
 	HomeProperties home_properties;
 
 	void createObjects();

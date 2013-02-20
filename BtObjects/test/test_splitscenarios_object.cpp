@@ -331,7 +331,7 @@ void TestSplitScenarios::testSendAdvancedOffCommand()
 
 	// set off mode
 	obj_adv->setMode(SplitAdvancedProgram::ModeOff);
-	QCOMPARE(DAY, obj_adv->getProgramName());
+	QCOMPARE(QString(), obj_adv->getProgramName());
 
 	// confirms operations: the frame is sent
 	obj_adv->apply();
