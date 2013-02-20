@@ -45,7 +45,7 @@ MenuColumn {
         }
 
         function openSystemsMenu(navigationData) {
-            _openMenu(qsTr("Systems"))
+            _openMenu(qsTr("Functions"))
             return NavigationConstants.NAVIGATION_IN_PROGRESS
         }
 
@@ -128,7 +128,7 @@ MenuColumn {
             if (floorsModel.count > 0)
                 modelList.append({name: qsTr("Rooms"), component: floor})
             if (scenariosModule.count + cctvModel.count + energiesCounters.count > 0)
-                modelList.append({name: qsTr("Systems"), component: settingsSystems})
+                modelList.append({name: qsTr("Functions"), component: settingsSystems})
             modelList.append({name: qsTr("Alarm Clock"), component: settingsClocks})
             modelList.append({name: qsTr("Multimedia"), component: settingsMultimedia})
             modelList.append({name: qsTr("Ringtones"), component: settingsRingtones})
