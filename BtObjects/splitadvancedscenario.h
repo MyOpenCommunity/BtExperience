@@ -173,6 +173,11 @@ class SplitAdvancedScenario : public DeviceObjectInterface
 	Q_PROPERTY(bool temperatureEnabled READ getTemperatureEnabled CONSTANT)
 
 	/*!
+		\brief Returns if the \a temperature property contains a value received from the probe.
+	*/
+	Q_PROPERTY(bool temperatureIsValid READ getTemperatureIsValid NOTIFY temperatureIsValidChanged)
+
+	/*!
 		\brief Gets the modes list
 	*/
 	Q_PROPERTY(QObject *modes READ getModes CONSTANT)
@@ -217,6 +222,7 @@ public:
 	int getCount() const;
 	int getTemperature() const;
 	bool getTemperatureEnabled() const;
+	bool getTemperatureIsValid() const;
 	QObject *getModes() const;
 	QObject *getSpeeds() const;
 	QObject *getSwings() const;
@@ -244,6 +250,7 @@ signals:
 	void setPointChanged();
 	void speedChanged();
 	void temperatureChanged();
+	void temperatureIsValidChanged(bool isValid);
 	void programNameChanged();
 
 public slots:
@@ -265,6 +272,7 @@ private:
 	SplitAdvancedProgram actual_program; // name empty means custom programming
 	ObjectDataModel programs;
 	int temperature, setpoint_min, setpoint_max, setpoint_step;
+	bool is_temperature_valid;
 	ChoiceList *modes;
 	ChoiceList *speeds;
 	ChoiceList *swings;

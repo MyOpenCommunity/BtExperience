@@ -123,6 +123,7 @@ SplitBasicScenario::SplitBasicScenario(QString _name, QString _key, AirCondition
 		actual_program = p;
 	}
 	temperature = 1235; // -23.5
+	is_valid_temperature = false;
 }
 
 void SplitBasicScenario::valueReceived(const DeviceValues &values_list)
@@ -137,6 +138,11 @@ void SplitBasicScenario::valueReceived(const DeviceValues &values_list)
 			{
 				temperature = it.value().toInt();
 				emit temperatureChanged();
+				if (!is_valid_temperature)
+				{
+					is_valid_temperature = true;
+					emit temperatureIsValidChanged(is_valid_temperature);
+				}
 			}
 			break;
 		}
@@ -193,6 +199,11 @@ int SplitBasicScenario::getTemperature() const
 bool SplitBasicScenario::getTemperatureEnabled() const
 {
 	return dev_probe != 0;
+}
+
+bool SplitBasicScenario::getTemperatureIsValid() const
+{
+	return is_valid_temperature;
 }
 
 SplitBasicCommandGroup::SplitBasicCommandGroup(QString _name, QList<QPair<QString, SplitBasicProgram *> > _commands)

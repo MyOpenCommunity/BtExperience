@@ -90,6 +90,11 @@ class SplitBasicScenario : public DeviceObjectInterface
 	*/
 	Q_PROPERTY(bool temperatureEnabled READ getTemperatureEnabled CONSTANT)
 
+	/*!
+		\brief Returns if the \a temperature property contains a value received from the probe.
+	*/
+	Q_PROPERTY(bool temperatureIsValid READ getTemperatureIsValid NOTIFY temperatureIsValidChanged)
+
 public:
 	explicit SplitBasicScenario(QString name, QString key, AirConditioningDevice *d,
 			QString off_command, NonControlledProbeDevice *d_probe, QObject *parent = 0);
@@ -109,6 +114,7 @@ public:
 	ObjectDataModel *getPrograms() const;
 	int getTemperature() const;
 	bool getTemperatureEnabled() const;
+	bool getTemperatureIsValid() const;
 
 	Q_INVOKABLE void apply();
 
@@ -117,6 +123,7 @@ public:
 signals:
 	void programChanged();
 	void temperatureChanged();
+	void temperatureIsValidChanged(bool isValid);
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -128,6 +135,7 @@ private:
 	QString key;
 	SplitBasicProgram *actual_program;
 	int temperature;
+	bool is_valid_temperature;
 };
 
 
