@@ -15,6 +15,7 @@ Item {
 
     property string imagesPath: "../images/"
     property int fontSize: 14
+    property alias helpUrl: helpToolbarButton.helpUrl // sets url for context help
 
     signal homeClicked
     signal toolbarNavigationClicked
@@ -366,6 +367,28 @@ Item {
             onPressed: {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
+            }
+        }
+
+        // help
+        ToolbarButton {
+            id: helpToolbarButton
+
+            // fallback url for help system
+            property string helpUrl: "www.bticino.it"
+
+            height: toolbar_top.height
+            visible: true // on ToolbarButton visible property is binded to quantity
+            defaultImage: homeProperties.skin === HomeProperties.Clear ?
+                              "../images/toolbar/help_online.svg" :
+                              "../images/toolbar/help_online_p.svg"
+            pressedImage: homeProperties.skin === HomeProperties.Clear ?
+                              "../images/toolbar/help_online_p.svg" :
+                              "../images/toolbar/help_online.svg"
+            onPressed: {
+                toolbar.toolbarNavigationClicked()
+                Stack.currentPage().processLaunched(global.browser)
+                global.browser.displayUrl(helpUrl)
             }
         }
 
