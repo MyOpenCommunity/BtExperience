@@ -172,6 +172,7 @@ Item {
             global.audioState.disableState(AudioState.ScsVideoCall)
             global.audioState.disableState(AudioState.IpVideoCall)
             global.audioState.disableState(AudioState.Mute)
+            global.audioState.disableState(AudioState.Teleloop)
         }
         onRingtoneReceived: {
             if (!notificationsEnabled) {
@@ -215,6 +216,7 @@ Item {
             global.audioState.disableState(AudioState.ScsIntercomCall)
             global.audioState.disableState(AudioState.IpIntercomCall)
             global.audioState.disableState(AudioState.Mute)
+            global.audioState.disableState(AudioState.Teleloop)
         }
         onRingtoneReceived: {
             if (!notificationsEnabled) {
