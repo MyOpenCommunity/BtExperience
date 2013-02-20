@@ -108,8 +108,11 @@ void MessagesSystem::updateUnreadMessagesIfChanged()
 	}
 	if (unreads != unread_messages)
 	{
+		bool new_message = unreads > unread_messages;
 		unread_messages = unreads;
 		emit unreadMessagesChanged();
+		if (new_message)
+			emit newUnreadMessages();
 	}
 }
 

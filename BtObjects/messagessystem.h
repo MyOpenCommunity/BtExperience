@@ -67,6 +67,7 @@ public:
 signals:
 	void messagesChanged();
 	void unreadMessagesChanged();
+	void newUnreadMessages();
 
 private slots:
 	virtual void valueReceived(const DeviceValues &values_list);
