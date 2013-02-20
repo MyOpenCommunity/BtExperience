@@ -119,6 +119,7 @@ VDEBase::VDEBase(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	call_active = false;
 	exit_call = false;
 	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
+	is_teleloop = false;
 
 	foreach (ExternalPlace *ep, list)
 		external_places << ep;
