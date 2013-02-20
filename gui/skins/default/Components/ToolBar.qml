@@ -375,7 +375,7 @@ Item {
             id: helpToolbarButton
 
             // fallback url for help system
-            property string helpUrl: "www.bticino.it"
+            property string helpUrl: "localhost"
 
             height: toolbar_top.height
             visible: true // on ToolbarButton visible property is binded to quantity
