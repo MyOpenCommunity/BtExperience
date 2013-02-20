@@ -36,8 +36,8 @@ MouseArea {
             // if pressAndHold is not enabled emits a click
             // if pressAndHold is enabled emits a click only if held is not managed
             global.debugTiming.logTiming("Clicked on icon")
-            if (mouse.x >= 0 && mouse.x <= parent.width &&
-                mouse.y >= 0 && mouse.y <= parent.height)
+            if (mouse.x >= 0 && mouse.x <= width &&
+                mouse.y >= 0 && mouse.y <= height)
                 control.clicked(mouse)
         }
     }
