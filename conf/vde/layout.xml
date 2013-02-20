@@ -14,6 +14,13 @@
                         <link uii="9022" />
 		</ist>
 	</container>
+	<container id="23" descr="Device" img="device.png" >
+		<ist uii="321">
+			<link uii="11011" />
+			<link uii="11012" />
+			<link uii="11013" />
+		</ist>
+	</container>
 	<container id="100" > <!-- rooms -->
                 <ist uii="102" descr="living room" img="images/background/living_room.jpg" img_card="images/card/living_room.jpg">
 		</ist>

@@ -25,4 +25,13 @@
 	<obj id="10059" cid="10059" descr="Pager" dev="4">
 		<ist uii="13" />
 	</obj>
+	<obj cid="16007" id="16007" descr="USB">
+		<ist uii="11011" />
+	</obj>
+	<obj cid="16008" id="16008" descr="SD">
+		<ist uii="11012" />
+	</obj>
+	<obj cid="16006" id="16006" descr="Mediaserver">
+		<ist uii="11013" descr="My Mediaserver" />
+	</obj>
 </archive>
